@@ -1,0 +1,29 @@
+{
+  "templates": [
+    {
+      "template_id": "PRON_EAT_FOOD",
+      "concepts": [
+        "PRONOUN",
+        "EAT",
+        "FOOD"
+      ],
+      "stage": 1,
+      "exercise": "comprehension",
+      "questions": [
+        {
+          "type": "who_is_acting",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "THIRD_PERSON_SINGULAR"
+          ]
+        }
+      ],
+      "render": {
+        "pt": "Ele come comida.",
+        "en": "He eats food.",
+        "ja": "彼は食べ物を食べる。"
+      }
+    }
+  ]
+}

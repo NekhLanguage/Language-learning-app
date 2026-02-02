@@ -1,0 +1,105 @@
+{
+  "concepts": [
+    {
+      "concept_id": "ANY",
+      "type": "quantifier",
+      "semantic_role": "quantity_indefinite",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ONLY",
+      "type": "quantifier",
+      "semantic_role": "quantity_limit",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ANOTHER",
+      "type": "quantifier",
+      "semantic_role": "quantity_additional",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SOMETHING",
+      "type": "quantifier",
+      "semantic_role": "entity_indefinite",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "ANY": [
+          "any"
+        ],
+        "ONLY": [
+          "only"
+        ],
+        "ANOTHER": [
+          "another"
+        ],
+        "SOMETHING": [
+          "something"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "ANY": [
+          "qualquer"
+        ],
+        "ONLY": [
+          "só"
+        ],
+        "ANOTHER": [
+          "outro"
+        ],
+        "SOMETHING": [
+          "algo"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "ANY": [
+          "どれでも"
+        ],
+        "ONLY": [
+          "だけ"
+        ],
+        "ANOTHER": [
+          "別の"
+        ],
+        "SOMETHING": [
+          "何か"
+        ]
+      }
+    }
+  }
+}

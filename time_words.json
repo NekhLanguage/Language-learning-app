@@ -1,0 +1,210 @@
+{
+  "concepts": [
+    {
+      "concept_id": "TODAY",
+      "type": "time",
+      "semantic_role": "time_reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "YESTERDAY",
+      "type": "time",
+      "semantic_role": "time_reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "TOMORROW",
+      "type": "time",
+      "semantic_role": "time_reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "MORNING",
+      "type": "time",
+      "semantic_role": "time_period",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "DAY",
+      "type": "time",
+      "semantic_role": "time_period",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "NIGHT",
+      "type": "time",
+      "semantic_role": "time_period",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "WEEK",
+      "type": "time",
+      "semantic_role": "time_unit",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "MONTH",
+      "type": "time",
+      "semantic_role": "time_unit",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "YEAR",
+      "type": "time",
+      "semantic_role": "time_unit",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "TODAY": [
+          "today"
+        ],
+        "YESTERDAY": [
+          "yesterday"
+        ],
+        "TOMORROW": [
+          "tomorrow"
+        ],
+        "MORNING": [
+          "morning"
+        ],
+        "DAY": [
+          "day"
+        ],
+        "NIGHT": [
+          "night"
+        ],
+        "WEEK": [
+          "week"
+        ],
+        "MONTH": [
+          "month"
+        ],
+        "YEAR": [
+          "year"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "TODAY": [
+          "hoje"
+        ],
+        "YESTERDAY": [
+          "ontem"
+        ],
+        "TOMORROW": [
+          "amanhã"
+        ],
+        "MORNING": [
+          "manhã"
+        ],
+        "DAY": [
+          "dia"
+        ],
+        "NIGHT": [
+          "noite"
+        ],
+        "WEEK": [
+          "semana"
+        ],
+        "MONTH": [
+          "mês"
+        ],
+        "YEAR": [
+          "ano"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "TODAY": [
+          "今日"
+        ],
+        "YESTERDAY": [
+          "昨日"
+        ],
+        "TOMORROW": [
+          "明日"
+        ],
+        "MORNING": [
+          "朝"
+        ],
+        "DAY": [
+          "日"
+        ],
+        "NIGHT": [
+          "夜"
+        ],
+        "WEEK": [
+          "週"
+        ],
+        "MONTH": [
+          "月"
+        ],
+        "YEAR": [
+          "年"
+        ]
+      }
+    }
+  }
+}

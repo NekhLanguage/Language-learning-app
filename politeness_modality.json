@@ -1,0 +1,147 @@
+{
+  "concepts": [
+    {
+      "concept_id": "PLEASE",
+      "type": "politeness",
+      "semantic_role": "pragmatic_politeness",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "MAYBE",
+      "type": "modality",
+      "semantic_role": "epistemic_uncertainty",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "JUST",
+      "type": "modality",
+      "semantic_role": "pragmatic_focus",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "YES",
+      "type": "response",
+      "semantic_role": "affirmation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "NO",
+      "type": "response",
+      "semantic_role": "negation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "NOT",
+      "type": "modality",
+      "semantic_role": "logical_negation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "PLEASE": [
+          "please"
+        ],
+        "MAYBE": [
+          "maybe"
+        ],
+        "JUST": [
+          "just"
+        ],
+        "YES": [
+          "yes"
+        ],
+        "NO": [
+          "no"
+        ],
+        "NOT": [
+          "not"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "PLEASE": [
+          "por favor"
+        ],
+        "MAYBE": [
+          "talvez"
+        ],
+        "JUST": [
+          "só"
+        ],
+        "YES": [
+          "sim"
+        ],
+        "NO": [
+          "não"
+        ],
+        "NOT": [
+          "não"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "PLEASE": [
+          "お願いします"
+        ],
+        "MAYBE": [
+          "たぶん"
+        ],
+        "JUST": [
+          "だけ"
+        ],
+        "YES": [
+          "はい"
+        ],
+        "NO": [
+          "いいえ"
+        ],
+        "NOT": [
+          "ない"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "concepts": [
+    {
+      "concept_id": "FIRST_PERSON_SINGULAR",
+      "type": "pronoun",
+      "semantic_role": "reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "SECOND_PERSON",
+      "type": "pronoun",
+      "semantic_role": "reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "THIRD_PERSON_SINGULAR",
+      "type": "pronoun",
+      "semantic_role": "reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "FIRST_PERSON_PLURAL",
+      "type": "pronoun",
+      "semantic_role": "reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "THIRD_PERSON_PLURAL",
+      "type": "pronoun",
+      "semantic_role": "reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "FIRST_PERSON_SINGULAR": [
+          "I",
+          "me",
+          "my",
+          "mine"
+        ],
+        "SECOND_PERSON": [
+          "you",
+          "your",
+          "yours"
+        ],
+        "THIRD_PERSON_SINGULAR": [
+          "he",
+          "she",
+          "it",
+          "him",
+          "her",
+          "his"
+        ],
+        "FIRST_PERSON_PLURAL": [
+          "we",
+          "us",
+          "our",
+          "ours"
+        ],
+        "THIRD_PERSON_PLURAL": [
+          "they",
+          "them",
+          "their",
+          "theirs"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "FIRST_PERSON_SINGULAR": [
+          "eu",
+          "meu",
+          "minha"
+        ],
+        "SECOND_PERSON": [
+          "você",
+          "seu",
+          "sua"
+        ],
+        "THIRD_PERSON_SINGULAR": [
+          "ele",
+          "ela",
+          "dele",
+          "dela"
+        ],
+        "FIRST_PERSON_PLURAL": [
+          "nós",
+          "nosso",
+          "nossa"
+        ],
+        "THIRD_PERSON_PLURAL": [
+          "eles",
+          "elas",
+          "deles"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "FIRST_PERSON_SINGULAR": [
+          "私",
+          "僕"
+        ],
+        "SECOND_PERSON": [
+          "あなた"
+        ],
+        "THIRD_PERSON_SINGULAR": [
+          "彼",
+          "彼女"
+        ],
+        "FIRST_PERSON_PLURAL": [
+          "私たち"
+        ],
+        "THIRD_PERSON_PLURAL": [
+          "彼ら"
+        ]
+      }
+    }
+  }
+}

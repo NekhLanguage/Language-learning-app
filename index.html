@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zero to Hero – Language Learning</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- START SCREEN -->
+    <section id="start-screen" class="screen active" aria-label="Start screen">
+      <h1 class="title">ZERO TO HERO</h1>
+      <p class="subtitle">Language learning v1</p>
+
+      <div class="button-grid" role="navigation" aria-label="Main actions">
+        <button class="primary" id="open-app" type="button">OPEN APP</button>
+
+        <a class="secondary" id="link-blueprint" href="#" target="_blank" rel="noopener noreferrer">
+          NEKH'S LANGUAGE<br/>BLUEPRINT
+        </a>
+
+        <a class="secondary" id="link-skool" href="#" target="_blank" rel="noopener noreferrer">
+          SKOOL<br/>COMMUNITY
+        </a>
+
+        <a class="secondary" id="link-coaching" href="#" target="_blank" rel="noopener noreferrer">
+          COACHING CALL
+        </a>
+      </div>
+    </section>
+
+    <!-- LEARNING SCREEN -->
+    <section id="learning-screen" class="screen" aria-label="Learning screen">
+      <button id="quit-learning" class="quit-button" type="button">QUIT LEARNING</button>
+
+      <div class="learning-wrap">
+        <h2 class="title small">TODAY'S SESSION</h2>
+        <p class="subtitle" id="session-subtitle">Vocab demo (data-driven)</p>
+
+        <div class="controls">
+          <div class="control">
+            <label for="dataset">Set</label>
+            <select id="dataset">
+              <option value="pronouns.json">Pronouns</option>
+              <option value="verbs.json" selected>Verbs</option>
+              <option value="nouns.json">Nouns</option>
+            </select>
+          </div>
+
+          <div class="control">
+            <label for="targetLang">Target</label>
+            <select id="targetLang">
+              <option value="pt" selected>Portuguese</option>
+              <option value="ja">Japanese</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+
+          <div class="control">
+            <label for="supportLang">Support</label>
+            <select id="supportLang">
+              <option value="en" selected>English</option>
+              <option value="ja">Japanese</option>
+              <option value="pt">Portuguese</option>
+            </select>
+          </div>
+
+          <button id="load" class="primary small" type="button">LOAD</button>
+        </div>
+
+        <div id="content" class="content"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- User + run persistence (non-module) -->
+  <script src="user_state.js"></script>
+  <script src="app.js"></script>
+  <script src="scheduler.js"></script>
+</body>
+</html>

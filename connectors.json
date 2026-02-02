@@ -1,0 +1,126 @@
+{
+  "concepts": [
+    {
+      "concept_id": "AND",
+      "type": "connector",
+      "semantic_role": "logical_conjunction",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BUT",
+      "type": "connector",
+      "semantic_role": "logical_contrast",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ALSO",
+      "type": "connector",
+      "semantic_role": "logical_addition",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BECAUSE",
+      "type": "connector",
+      "semantic_role": "logical_cause",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "IF",
+      "type": "connector",
+      "semantic_role": "logical_condition",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "AND": [
+          "and"
+        ],
+        "BUT": [
+          "but"
+        ],
+        "ALSO": [
+          "also"
+        ],
+        "BECAUSE": [
+          "because"
+        ],
+        "IF": [
+          "if"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "AND": [
+          "e"
+        ],
+        "BUT": [
+          "mas"
+        ],
+        "ALSO": [
+          "também"
+        ],
+        "BECAUSE": [
+          "porque"
+        ],
+        "IF": [
+          "se"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "AND": [
+          "そして"
+        ],
+        "BUT": [
+          "でも"
+        ],
+        "ALSO": [
+          "も"
+        ],
+        "BECAUSE": [
+          "から"
+        ],
+        "IF": [
+          "もし"
+        ]
+      }
+    }
+  }
+}

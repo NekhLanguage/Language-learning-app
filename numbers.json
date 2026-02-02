@@ -1,0 +1,441 @@
+{
+  "concepts": [
+    {
+      "concept_id": "ONE",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "TWO",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "THREE",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FOUR",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FIVE",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SIX",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SEVEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "EIGHT",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "NINE",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "TEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ELEVEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "TWELVE",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "THIRTEEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FOURTEEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FIFTEEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SIXTEEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SEVENTEEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "EIGHTEEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "NINETEEN",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "TWENTY",
+      "type": "number",
+      "semantic_role": "quantity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "ONE": [
+          "one"
+        ],
+        "TWO": [
+          "two"
+        ],
+        "THREE": [
+          "three"
+        ],
+        "FOUR": [
+          "four"
+        ],
+        "FIVE": [
+          "five"
+        ],
+        "SIX": [
+          "six"
+        ],
+        "SEVEN": [
+          "seven"
+        ],
+        "EIGHT": [
+          "eight"
+        ],
+        "NINE": [
+          "nine"
+        ],
+        "TEN": [
+          "ten"
+        ],
+        "ELEVEN": [
+          "eleven"
+        ],
+        "TWELVE": [
+          "twelve"
+        ],
+        "THIRTEEN": [
+          "thirteen"
+        ],
+        "FOURTEEN": [
+          "fourteen"
+        ],
+        "FIFTEEN": [
+          "fifteen"
+        ],
+        "SIXTEEN": [
+          "sixteen"
+        ],
+        "SEVENTEEN": [
+          "seventeen"
+        ],
+        "EIGHTEEN": [
+          "eighteen"
+        ],
+        "NINETEEN": [
+          "nineteen"
+        ],
+        "TWENTY": [
+          "twenty"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "ONE": [
+          "um"
+        ],
+        "TWO": [
+          "dois"
+        ],
+        "THREE": [
+          "três"
+        ],
+        "FOUR": [
+          "quatro"
+        ],
+        "FIVE": [
+          "cinco"
+        ],
+        "SIX": [
+          "seis"
+        ],
+        "SEVEN": [
+          "sete"
+        ],
+        "EIGHT": [
+          "oito"
+        ],
+        "NINE": [
+          "nove"
+        ],
+        "TEN": [
+          "dez"
+        ],
+        "ELEVEN": [
+          "onze"
+        ],
+        "TWELVE": [
+          "doze"
+        ],
+        "THIRTEEN": [
+          "treze"
+        ],
+        "FOURTEEN": [
+          "quatorze"
+        ],
+        "FIFTEEN": [
+          "quinze"
+        ],
+        "SIXTEEN": [
+          "dezesseis"
+        ],
+        "SEVENTEEN": [
+          "dezessete"
+        ],
+        "EIGHTEEN": [
+          "dezoito"
+        ],
+        "NINETEEN": [
+          "dezenove"
+        ],
+        "TWENTY": [
+          "vinte"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "ONE": [
+          "一"
+        ],
+        "TWO": [
+          "二"
+        ],
+        "THREE": [
+          "三"
+        ],
+        "FOUR": [
+          "四"
+        ],
+        "FIVE": [
+          "五"
+        ],
+        "SIX": [
+          "六"
+        ],
+        "SEVEN": [
+          "七"
+        ],
+        "EIGHT": [
+          "八"
+        ],
+        "NINE": [
+          "九"
+        ],
+        "TEN": [
+          "十"
+        ],
+        "ELEVEN": [
+          "十一"
+        ],
+        "TWELVE": [
+          "十二"
+        ],
+        "THIRTEEN": [
+          "十三"
+        ],
+        "FOURTEEN": [
+          "十四"
+        ],
+        "FIFTEEN": [
+          "十五"
+        ],
+        "SIXTEEN": [
+          "十六"
+        ],
+        "SEVENTEEN": [
+          "十七"
+        ],
+        "EIGHTEEN": [
+          "十八"
+        ],
+        "NINETEEN": [
+          "十九"
+        ],
+        "TWENTY": [
+          "二十"
+        ]
+      }
+    }
+  }
+}

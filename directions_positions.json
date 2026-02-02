@@ -1,0 +1,357 @@
+{
+  "concepts": [
+    {
+      "concept_id": "TOP",
+      "type": "position",
+      "semantic_role": "spatial_position",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BOTTOM",
+      "type": "position",
+      "semantic_role": "spatial_position",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "UNDER",
+      "type": "position",
+      "semantic_role": "spatial_relation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "NEXT_TO",
+      "type": "position",
+      "semantic_role": "spatial_relation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FRONT",
+      "type": "position",
+      "semantic_role": "spatial_position",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BEHIND",
+      "type": "position",
+      "semantic_role": "spatial_relation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "IN",
+      "type": "position",
+      "semantic_role": "spatial_relation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ON",
+      "type": "position",
+      "semantic_role": "spatial_relation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "OFF",
+      "type": "position",
+      "semantic_role": "spatial_relation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BETWEEN",
+      "type": "position",
+      "semantic_role": "spatial_relation",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BACK",
+      "type": "position",
+      "semantic_role": "spatial_direction",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "OUT",
+      "type": "position",
+      "semantic_role": "spatial_direction",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "NORTH",
+      "type": "direction",
+      "semantic_role": "cardinal_direction",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SOUTH",
+      "type": "direction",
+      "semantic_role": "cardinal_direction",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "EAST",
+      "type": "direction",
+      "semantic_role": "cardinal_direction",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "WEST",
+      "type": "direction",
+      "semantic_role": "cardinal_direction",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "TOP": [
+          "top"
+        ],
+        "BOTTOM": [
+          "bottom"
+        ],
+        "UNDER": [
+          "under"
+        ],
+        "NEXT_TO": [
+          "next to"
+        ],
+        "FRONT": [
+          "front"
+        ],
+        "BEHIND": [
+          "behind"
+        ],
+        "IN": [
+          "in"
+        ],
+        "ON": [
+          "on"
+        ],
+        "OFF": [
+          "off"
+        ],
+        "BETWEEN": [
+          "between"
+        ],
+        "BACK": [
+          "back"
+        ],
+        "OUT": [
+          "out"
+        ],
+        "NORTH": [
+          "north"
+        ],
+        "SOUTH": [
+          "south"
+        ],
+        "EAST": [
+          "east"
+        ],
+        "WEST": [
+          "west"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "TOP": [
+          "topo"
+        ],
+        "BOTTOM": [
+          "baixo"
+        ],
+        "UNDER": [
+          "embaixo"
+        ],
+        "NEXT_TO": [
+          "ao lado"
+        ],
+        "FRONT": [
+          "frente"
+        ],
+        "BEHIND": [
+          "atrás"
+        ],
+        "IN": [
+          "em"
+        ],
+        "ON": [
+          "em cima"
+        ],
+        "OFF": [
+          "fora"
+        ],
+        "BETWEEN": [
+          "entre"
+        ],
+        "BACK": [
+          "volta"
+        ],
+        "OUT": [
+          "fora"
+        ],
+        "NORTH": [
+          "norte"
+        ],
+        "SOUTH": [
+          "sul"
+        ],
+        "EAST": [
+          "leste"
+        ],
+        "WEST": [
+          "oeste"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "TOP": [
+          "上"
+        ],
+        "BOTTOM": [
+          "下"
+        ],
+        "UNDER": [
+          "下に"
+        ],
+        "NEXT_TO": [
+          "隣に"
+        ],
+        "FRONT": [
+          "前"
+        ],
+        "BEHIND": [
+          "後ろ"
+        ],
+        "IN": [
+          "中に"
+        ],
+        "ON": [
+          "上に"
+        ],
+        "OFF": [
+          "外"
+        ],
+        "BETWEEN": [
+          "間に"
+        ],
+        "BACK": [
+          "戻る"
+        ],
+        "OUT": [
+          "外"
+        ],
+        "NORTH": [
+          "北"
+        ],
+        "SOUTH": [
+          "南"
+        ],
+        "EAST": [
+          "東"
+        ],
+        "WEST": [
+          "西"
+        ]
+      }
+    }
+  }
+}

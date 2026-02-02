@@ -1,0 +1,168 @@
+{
+  "concepts": [
+    {
+      "concept_id": "FOR",
+      "type": "glue",
+      "semantic_role": "relation_purpose",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "WITH",
+      "type": "glue",
+      "semantic_role": "relation_accompaniment",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "FROM",
+      "type": "glue",
+      "semantic_role": "relation_source",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "TO",
+      "type": "glue",
+      "semantic_role": "relation_target",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "BY",
+      "type": "glue",
+      "semantic_role": "relation_means",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "WHILE",
+      "type": "glue",
+      "semantic_role": "relation_simultaneity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "AS",
+      "type": "glue",
+      "semantic_role": "relation_role_or_time",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "FOR": [
+          "for"
+        ],
+        "WITH": [
+          "with"
+        ],
+        "FROM": [
+          "from"
+        ],
+        "TO": [
+          "to"
+        ],
+        "BY": [
+          "by"
+        ],
+        "WHILE": [
+          "while"
+        ],
+        "AS": [
+          "as"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "FOR": [
+          "para"
+        ],
+        "WITH": [
+          "com"
+        ],
+        "FROM": [
+          "de"
+        ],
+        "TO": [
+          "para"
+        ],
+        "BY": [
+          "por"
+        ],
+        "WHILE": [
+          "enquanto"
+        ],
+        "AS": [
+          "como"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "FOR": [
+          "ために"
+        ],
+        "WITH": [
+          "と"
+        ],
+        "FROM": [
+          "から"
+        ],
+        "TO": [
+          "へ"
+        ],
+        "BY": [
+          "で"
+        ],
+        "WHILE": [
+          "間に"
+        ],
+        "AS": [
+          "として"
+        ]
+      }
+    }
+  }
+}

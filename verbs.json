@@ -1,0 +1,212 @@
+{
+  "concepts": [
+    {
+      "concept_id": "DO",
+      "type": "verb",
+      "semantic_role": "action",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "GO",
+      "type": "verb",
+      "semantic_role": "movement",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "EAT",
+      "type": "verb",
+      "semantic_role": "consumption",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "READ",
+      "type": "verb",
+      "semantic_role": "cognition",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SEE",
+      "type": "verb",
+      "semantic_role": "perception",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BE",
+      "type": "verb",
+      "semantic_role": "state",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "START",
+      "type": "verb",
+      "semantic_role": "change",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "STOP",
+      "type": "verb",
+      "semantic_role": "change",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SLEEP",
+      "type": "verb",
+      "semantic_role": "state",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "DO": [
+          "do"
+        ],
+        "GO": [
+          "go"
+        ],
+        "EAT": [
+          "eat"
+        ],
+        "READ": [
+          "read"
+        ],
+        "SEE": [
+          "see"
+        ],
+        "BE": [
+          "be"
+        ],
+        "START": [
+          "start"
+        ],
+        "STOP": [
+          "stop"
+        ],
+        "SLEEP": [
+          "sleep"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "DO": [
+          "fazer"
+        ],
+        "GO": [
+          "ir"
+        ],
+        "EAT": [
+          "comer"
+        ],
+        "READ": [
+          "ler"
+        ],
+        "SEE": [
+          "ver"
+        ],
+        "BE": [
+          "ser",
+          "estar"
+        ],
+        "START": [
+          "começar"
+        ],
+        "STOP": [
+          "parar"
+        ],
+        "SLEEP": [
+          "dormir"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "DO": [
+          "する"
+        ],
+        "GO": [
+          "行く"
+        ],
+        "EAT": [
+          "食べる"
+        ],
+        "READ": [
+          "読む"
+        ],
+        "SEE": [
+          "見る"
+        ],
+        "BE": [
+          "だ",
+          "です"
+        ],
+        "START": [
+          "始める"
+        ],
+        "STOP": [
+          "止める"
+        ],
+        "SLEEP": [
+          "寝る"
+        ]
+      }
+    }
+  }
+}

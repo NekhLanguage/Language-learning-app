@@ -1,0 +1,168 @@
+{
+  "concepts": [
+    {
+      "concept_id": "WHO",
+      "type": "question_word",
+      "semantic_role": "interrogative_person",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "WHAT",
+      "type": "question_word",
+      "semantic_role": "interrogative_entity",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "WHEN",
+      "type": "question_word",
+      "semantic_role": "interrogative_time",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "WHERE",
+      "type": "question_word",
+      "semantic_role": "interrogative_location",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "WHY",
+      "type": "question_word",
+      "semantic_role": "interrogative_reason",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "HOW",
+      "type": "question_word",
+      "semantic_role": "interrogative_manner",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "WHICH",
+      "type": "question_word",
+      "semantic_role": "interrogative_selection",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": false,
+        "writing": false
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "WHO": [
+          "who"
+        ],
+        "WHAT": [
+          "what"
+        ],
+        "WHEN": [
+          "when"
+        ],
+        "WHERE": [
+          "where"
+        ],
+        "WHY": [
+          "why"
+        ],
+        "HOW": [
+          "how"
+        ],
+        "WHICH": [
+          "which"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "WHO": [
+          "quem"
+        ],
+        "WHAT": [
+          "o que"
+        ],
+        "WHEN": [
+          "quando"
+        ],
+        "WHERE": [
+          "onde"
+        ],
+        "WHY": [
+          "por que"
+        ],
+        "HOW": [
+          "como"
+        ],
+        "WHICH": [
+          "qual"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "WHO": [
+          "誰"
+        ],
+        "WHAT": [
+          "何"
+        ],
+        "WHEN": [
+          "いつ"
+        ],
+        "WHERE": [
+          "どこ"
+        ],
+        "WHY": [
+          "なぜ"
+        ],
+        "HOW": [
+          "どうやって"
+        ],
+        "WHICH": [
+          "どれ"
+        ]
+      }
+    }
+  }
+}

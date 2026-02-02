@@ -1,0 +1,189 @@
+{
+  "concepts": [
+    {
+      "concept_id": "BIG",
+      "type": "adjective",
+      "semantic_role": "property_size",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SMALL",
+      "type": "adjective",
+      "semantic_role": "property_size",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "GOOD",
+      "type": "adjective",
+      "semantic_role": "property_quality",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BAD",
+      "type": "adjective",
+      "semantic_role": "property_quality",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "NEW",
+      "type": "adjective",
+      "semantic_role": "property_time",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "OLD",
+      "type": "adjective",
+      "semantic_role": "property_time",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "EASY",
+      "type": "adjective",
+      "semantic_role": "property_difficulty",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "DIFFICULT",
+      "type": "adjective",
+      "semantic_role": "property_difficulty",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "BIG": [
+          "big"
+        ],
+        "SMALL": [
+          "small"
+        ],
+        "GOOD": [
+          "good"
+        ],
+        "BAD": [
+          "bad"
+        ],
+        "NEW": [
+          "new"
+        ],
+        "OLD": [
+          "old"
+        ],
+        "EASY": [
+          "easy"
+        ],
+        "DIFFICULT": [
+          "difficult"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "BIG": [
+          "grande"
+        ],
+        "SMALL": [
+          "pequeno"
+        ],
+        "GOOD": [
+          "bom"
+        ],
+        "BAD": [
+          "ruim"
+        ],
+        "NEW": [
+          "novo"
+        ],
+        "OLD": [
+          "velho"
+        ],
+        "EASY": [
+          "fácil"
+        ],
+        "DIFFICULT": [
+          "difícil"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "BIG": [
+          "大きい"
+        ],
+        "SMALL": [
+          "小さい"
+        ],
+        "GOOD": [
+          "良い"
+        ],
+        "BAD": [
+          "悪い"
+        ],
+        "NEW": [
+          "新しい"
+        ],
+        "OLD": [
+          "古い"
+        ],
+        "EASY": [
+          "簡単"
+        ],
+        "DIFFICULT": [
+          "難しい"
+        ]
+      }
+    }
+  }
+}

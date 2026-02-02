@@ -1,0 +1,204 @@
+/* =========================
+   Zero to Hero – Base Styles
+   ========================= */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root{
+  --bg1:#7a2c7d;
+  --bg2:#4a144c;
+  --ink:#ffffff;
+  --btnInk:#5a1f5f;
+  --grid: rgba(255,255,255,0.05);
+}
+
+body{
+  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+  min-height: 100vh;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* Grid background */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.screen{
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.screen.active{ display: flex; }
+
+/* Typography */
+.title{
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+.title.small{
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  opacity: 0.9;
+  margin-bottom: 2.25rem;
+}
+
+/* Button grid */
+.button-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 260px));
+  gap: 1.25rem;
+  align-items: stretch;
+  justify-items: stretch;
+}
+
+button, a.secondary{
+  border: none;
+  cursor: pointer;
+  padding: 1.05rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  background: #fff;
+  color: var(--btnInk);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+}
+
+a.secondary{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  line-height: 1.1;
+}
+
+button:hover, a.secondary:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+button.primary.small{
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+}
+
+/* Quit button */
+.quit-button{
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255,255,255,0.65);
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+}
+
+.quit-button:hover{
+  background: rgba(255,255,255,0.10);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Learning layout */
+.learning-wrap{
+  width: min(900px, 100%);
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls{
+  display: flex;
+  gap: 0.9rem;
+  align-items: end;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.control{
+  display:flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+label{
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+}
+
+select{
+  padding: 0.65rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.10);
+  color: white;
+  outline: none;
+}
+
+select option{
+  color: #1a1a1a;
+}
+
+.content{
+  width: min(720px, 100%);
+  text-align: left;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+}
+
+.row{
+  padding: 0.75rem 0.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.row:last-child{ border-bottom: none; }
+
+.row strong{
+  display:block;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.25rem;
+}
+
+.row .forms{
+  opacity: 0.95;
+  line-height: 1.45;
+}
+
+/* Mobile */
+@media (max-width: 520px){
+  .button-grid{ grid-template-columns: 1fr; }
+  .quit-button{ top: 1rem; left: 1rem; }
+}

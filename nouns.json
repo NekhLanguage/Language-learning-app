@@ -1,0 +1,756 @@
+{
+  "concepts": [
+    {
+      "concept_id": "WATER",
+      "type": "noun",
+      "semantic_role": "substance",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FOOD",
+      "type": "noun",
+      "semantic_role": "substance",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "HOUSE",
+      "type": "noun",
+      "semantic_role": "place",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "HOME",
+      "type": "noun",
+      "semantic_role": "place",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BOOK",
+      "type": "noun",
+      "semantic_role": "object",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "THING",
+      "type": "noun",
+      "semantic_role": "generic_object",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "JOB",
+      "type": "noun",
+      "semantic_role": "role",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ROOM",
+      "type": "noun",
+      "semantic_role": "place",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BOY",
+      "type": "noun",
+      "semantic_role": "person",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "GIRL",
+      "type": "noun",
+      "semantic_role": "person",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "MAN",
+      "type": "noun",
+      "semantic_role": "person",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "WOMAN",
+      "type": "noun",
+      "semantic_role": "person",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "MOM",
+      "type": "noun",
+      "semantic_role": "family",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "DAD",
+      "type": "noun",
+      "semantic_role": "family",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SON",
+      "type": "noun",
+      "semantic_role": "family",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "DAUGHTER",
+      "type": "noun",
+      "semantic_role": "family",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BROTHER",
+      "type": "noun",
+      "semantic_role": "family",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SISTER",
+      "type": "noun",
+      "semantic_role": "family",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "HEAD",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ARM",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "HAND",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "LEG",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FOOT",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FINGER",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "EYE",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "MOUTH",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "FACE",
+      "type": "noun",
+      "semantic_role": "body_part",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "BREAKFAST",
+      "type": "noun",
+      "semantic_role": "meal",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "LUNCH",
+      "type": "noun",
+      "semantic_role": "meal",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "DINNER",
+      "type": "noun",
+      "semantic_role": "meal",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "CLOTHES",
+      "type": "noun",
+      "semantic_role": "object",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SHIRT",
+      "type": "noun",
+      "semantic_role": "object",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "SHOES",
+      "type": "noun",
+      "semantic_role": "object",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "PHONE",
+      "type": "noun",
+      "semantic_role": "object",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "PANTS",
+      "type": "noun",
+      "semantic_role": "object",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "WATER": [
+          "water"
+        ],
+        "FOOD": [
+          "food"
+        ],
+        "HOUSE": [
+          "house"
+        ],
+        "HOME": [
+          "home"
+        ],
+        "BOOK": [
+          "book"
+        ],
+        "THING": [
+          "thing"
+        ],
+        "JOB": [
+          "job"
+        ],
+        "ROOM": [
+          "room"
+        ],
+        "BOY": [
+          "boy"
+        ],
+        "GIRL": [
+          "girl"
+        ],
+        "MAN": [
+          "man"
+        ],
+        "WOMAN": [
+          "woman"
+        ],
+        "MOM": [
+          "mom"
+        ],
+        "DAD": [
+          "dad"
+        ],
+        "SON": [
+          "son"
+        ],
+        "DAUGHTER": [
+          "daughter"
+        ],
+        "BROTHER": [
+          "brother"
+        ],
+        "SISTER": [
+          "sister"
+        ],
+        "HEAD": [
+          "head"
+        ],
+        "ARM": [
+          "arm"
+        ],
+        "HAND": [
+          "hand"
+        ],
+        "LEG": [
+          "leg"
+        ],
+        "FOOT": [
+          "foot"
+        ],
+        "FINGER": [
+          "finger"
+        ],
+        "EYE": [
+          "eye"
+        ],
+        "MOUTH": [
+          "mouth"
+        ],
+        "FACE": [
+          "face"
+        ],
+        "BREAKFAST": [
+          "breakfast"
+        ],
+        "LUNCH": [
+          "lunch"
+        ],
+        "DINNER": [
+          "dinner"
+        ],
+        "CLOTHES": [
+          "clothes"
+        ],
+        "SHIRT": [
+          "shirt"
+        ],
+        "SHOES": [
+          "shoes"
+        ],
+        "PHONE": [
+          "phone"
+        ],
+        "PANTS": [
+          "pants"
+        ]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "WATER": [
+          "água"
+        ],
+        "FOOD": [
+          "comida"
+        ],
+        "HOUSE": [
+          "casa"
+        ],
+        "HOME": [
+          "lar"
+        ],
+        "BOOK": [
+          "livro"
+        ],
+        "THING": [
+          "coisa"
+        ],
+        "JOB": [
+          "trabalho"
+        ],
+        "ROOM": [
+          "quarto"
+        ],
+        "BOY": [
+          "menino"
+        ],
+        "GIRL": [
+          "menina"
+        ],
+        "MAN": [
+          "homem"
+        ],
+        "WOMAN": [
+          "mulher"
+        ],
+        "MOM": [
+          "mãe"
+        ],
+        "DAD": [
+          "pai"
+        ],
+        "SON": [
+          "filho"
+        ],
+        "DAUGHTER": [
+          "filha"
+        ],
+        "BROTHER": [
+          "irmão"
+        ],
+        "SISTER": [
+          "irmã"
+        ],
+        "HEAD": [
+          "cabeça"
+        ],
+        "ARM": [
+          "braço"
+        ],
+        "HAND": [
+          "mão"
+        ],
+        "LEG": [
+          "perna"
+        ],
+        "FOOT": [
+          "pé"
+        ],
+        "FINGER": [
+          "dedo"
+        ],
+        "EYE": [
+          "olho"
+        ],
+        "MOUTH": [
+          "boca"
+        ],
+        "FACE": [
+          "rosto"
+        ],
+        "BREAKFAST": [
+          "café da manhã"
+        ],
+        "LUNCH": [
+          "almoço"
+        ],
+        "DINNER": [
+          "jantar"
+        ],
+        "CLOTHES": [
+          "roupas"
+        ],
+        "SHIRT": [
+          "camisa"
+        ],
+        "SHOES": [
+          "sapatos"
+        ],
+        "PHONE": [
+          "telefone"
+        ],
+        "PANTS": [
+          "calças"
+        ]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "WATER": [
+          "水"
+        ],
+        "FOOD": [
+          "食べ物"
+        ],
+        "HOUSE": [
+          "家"
+        ],
+        "HOME": [
+          "家"
+        ],
+        "BOOK": [
+          "本"
+        ],
+        "THING": [
+          "物"
+        ],
+        "JOB": [
+          "仕事"
+        ],
+        "ROOM": [
+          "部屋"
+        ],
+        "BOY": [
+          "男の子"
+        ],
+        "GIRL": [
+          "女の子"
+        ],
+        "MAN": [
+          "男"
+        ],
+        "WOMAN": [
+          "女"
+        ],
+        "MOM": [
+          "母"
+        ],
+        "DAD": [
+          "父"
+        ],
+        "SON": [
+          "息子"
+        ],
+        "DAUGHTER": [
+          "娘"
+        ],
+        "BROTHER": [
+          "兄"
+        ],
+        "SISTER": [
+          "姉"
+        ],
+        "HEAD": [
+          "頭"
+        ],
+        "ARM": [
+          "腕"
+        ],
+        "HAND": [
+          "手"
+        ],
+        "LEG": [
+          "脚"
+        ],
+        "FOOT": [
+          "足"
+        ],
+        "FINGER": [
+          "指"
+        ],
+        "EYE": [
+          "目"
+        ],
+        "MOUTH": [
+          "口"
+        ],
+        "FACE": [
+          "顔"
+        ],
+        "BREAKFAST": [
+          "朝ご飯"
+        ],
+        "LUNCH": [
+          "昼ご飯"
+        ],
+        "DINNER": [
+          "夕ご飯"
+        ],
+        "CLOTHES": [
+          "服"
+        ],
+        "SHIRT": [
+          "シャツ"
+        ],
+        "SHOES": [
+          "靴"
+        ],
+        "PHONE": [
+          "電話"
+        ],
+        "PANTS": [
+          "ズボン"
+        ]
+      }
+    }
+  }
+}
