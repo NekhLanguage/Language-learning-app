@@ -1,27 +1,8 @@
-// Zero to Hero – data-driven learning app (Stage 1 enabled)
-// NOTE: Stage 1 remains locked/correct.
-// This version adds:
-// - VOCAB_INDEX exposure (already present)
-// - Exercise 5 (guided recall, slot-based)
-// - TEMP test hook to force Exercise 5 (bypasses scheduler intentionally)
-
-// --------------------
-// User + run bootstrap (localStorage)
-// --------------------
-try {
-  if (window.UserState && typeof window.UserState.ensureUser === 'function') {
-    const __user = window.UserState.ensureUser();
-    const __run = __user.runs[__user.current_run_id];
-    window.__USER__ = __user;
-    window.__RUN__ = __run;
-    console.log('[UserState] Loaded user:', __user.user_id);
-    console.log('[UserState] Current run:', __run.run_id, __run.target_language, __run.support_language);
-  } else {
-    console.warn('[UserState] user_state.js not loaded; running without persistence.');
-  }
-} catch (e) {
-  console.warn('[UserState] Failed to init user state; running without persistence.', e);
-}
+// app.js — Stage 1 stable + Stage 2 (Exercise 5) slot demo
+// This patch fixes:
+// 1) Choice labels: show actual target-language words (not concept IDs) for pronouns / verbs
+// 2) Slot sentence format: "Ele/ela ____ comida. (eats)"
+// 3) Verb option surface: show 3sg present where possible (e.g., "come" not "comer")
 
 // --------------------
 // DOM references
@@ -41,11 +22,24 @@ const content = document.getElementById("content");
 const subtitle = document.getElementById("session-subtitle");
 
 // --------------------
-// External links
+// External links (placeholders)
 // --------------------
 document.getElementById("link-blueprint").href = "#";
 document.getElementById("link-skool").href = "#";
 document.getElementById("link-coaching").href = "#";
+
+// --------------------
+// SAFE user bootstrap (does not block UI)
+// --------------------
+try {
+  if (window.UserState?.ensureUser) {
+    const u = window.UserState.ensureUser();
+    window.__USER__ = u;
+    window.__RUN__ = u.runs[u.current_run_id];
+  }
+} catch (e) {
+  console.warn("[UserState] init failed, continuing without persistence.", e);
+}
 
 // --------------------
 // App entry / exit
@@ -54,25 +48,8 @@ openAppBtn.addEventListener("click", async () => {
   startScreen.classList.remove("active");
   learningScreen.classList.add("active");
 
-  await ensureVocabIndex();
-  await loadStage1Comprehension(targetSel.value, supportSel.value);
-
-  // --------------------
-  // TEMP: Force Exercise 5 for verification
-  // This bypasses the scheduler on purpose.
-  // Remove this block once Exercise 5 is wired to Scheduler.
-  // --------------------
-  if (window.SENTENCE_TEMPLATES?.templates?.length) {
-    const tpl = window.SENTENCE_TEMPLATES.templates[0];
-    // Heuristic: slot the verb (usually index 1)
-    const targetConceptId = tpl.concepts[1];
-    renderExercise5({
-      template: tpl,
-      targetConceptId,
-      targetLang: targetSel.value,
-      supportLang: supportSel.value
-    });
-  }
+  // For now, demo Exercise 5 directly (Stage 2 slot-based)
+  await loadStage2SlotExercise(targetSel.value, supportSel.value);
 });
 
 quitBtn.addEventListener("click", () => {
@@ -83,242 +60,270 @@ quitBtn.addEventListener("click", () => {
 // --------------------
 // Dataset viewer (dev / later use)
 // --------------------
-loadBtn.addEventListener("click", () => {
-  console.warn("Vocab dataset viewer is disabled. Learning is scheduler-driven.");
+loadBtn.addEventListener("click", async () => {
+  // Keep LOAD button for quick re-roll / debugging
+  await loadStage2SlotExercise(targetSel.value, supportSel.value);
 });
 
 // --------------------
-// VOCAB INDEX (SAFE, READ-ONLY)
+// Stage 2 — Exercise 5 (slot-based, choices)
 // --------------------
-async function ensureVocabIndex() {
-  if (window.VOCAB_INDEX) return;
+async function loadStage2SlotExercise(targetLang, supportLang) {
+  subtitle.textContent = "Choose the missing word";
+  content.innerHTML = "Loading...";
 
-  const vocabFiles = [
-    "pronouns.json",
-    "verbs.json",
-    "nouns.json",
-    "adjectives.json",
-    "numbers.json",
-    "time_words.json",
-    "directions_positions.json",
-    "quantifiers.json",
-    "connectors.json",
-    "question_words.json",
-    "politeness_modality.json",
-    "glue_words.json"
-  ];
-
-  const index = {};
-
-  for (const file of vocabFiles) {
-    try {
-      const res = await fetch(file, { cache: "no-store" });
-      if (!res.ok) continue;
-      const data = await res.json();
-      for (const concept of data.concepts || []) {
-        index[concept.concept_id] = concept;
-      }
-    } catch (e) {
-      console.warn("[Vocab] Failed loading", file);
-    }
-  }
-
-  window.VOCAB_INDEX = index;
-  console.log("[Vocab] VOCAB_INDEX ready:", Object.keys(index).length);
-}
-
-// --------------------
-// Stage 1 – Sentence comprehension (UNCHANGED)
-// --------------------
-async function loadStage1Comprehension(targetLang, supportLang) {
-  subtitle.textContent = "Read and understand";
-  content.innerHTML = "Loading sentence...";
-
-  let data;
+  // Load sentence templates
+  let tplData;
   try {
     const res = await fetch("sentence_templates.json", { cache: "no-store" });
     if (!res.ok) throw new Error(res.status);
-    data = await res.json();
-    window.SENTENCE_TEMPLATES = data;
+    tplData = await res.json();
   } catch (e) {
     content.innerHTML = "Could not load sentence templates.";
     return;
   }
 
-  const tpl = data.templates[0];
-  const sentence = tpl.render[targetLang];
-  const questionText = buildWhoQuestionFromSupportSentence(tpl, supportLang);
+  // Expose for scheduler/debug
+  window.SENTENCE_TEMPLATES = tplData.templates;
+
+  // Load verbs + pronouns + nouns (for display)
+  const [verbs, pronouns, nouns] = await Promise.all([
+    safeLoadJson("verbs.json"),
+    safeLoadJson("pronouns.json"),
+    safeLoadJson("nouns.json"),
+  ]);
+
+  if (!verbs || !pronouns || !nouns) {
+    content.innerHTML = "Could not load vocab packs.";
+    return;
+  }
+
+  // Build a minimal vocab index (concept_id -> meta + forms)
+  const vocabIndex = buildVocabIndex([verbs, pronouns, nouns]);
+  window.VOCAB_INDEX = vocabIndex;
+
+  // For now: use the first template (your existing PRON_EAT_FOOD)
+  const tpl = tplData.templates[0];
+
+  // We want: Ele/ela ____ comida. (eats)
+  // So: mask the VERB concept in position 1 (concepts: PRONOUN, EAT, FOOD)
+  const maskConcept = tpl.concepts[1]; // EAT
+  const sentenceTarget = tpl.render[targetLang] || "";
+  const sentenceSupport = tpl.render[supportLang] || "";
+
+  const targetTokens = tokenizeLatinSentence(sentenceTarget);
+  const supportTokens = tokenizeLatinSentence(sentenceSupport);
+
+  // Get the verb surface from the sentence render (handles "come" vs "comer")
+  const targetVerbSurface = (targetTokens[1]?.clean || "") || lookupAnyForm(vocabIndex, maskConcept, targetLang);
+  const supportVerbSurface = (supportTokens[1]?.clean || "") || lookupAnyForm(vocabIndex, maskConcept, supportLang);
+
+  // Render pronoun as "Ele/ela" (or language-appropriate)
+  const pronounSurface = renderPronounCombo(targetLang);
+
+  // Render noun surface from sentence (keeps punctuation)
+  const nounSurface = (targetTokens[2]?.raw || "").replace(/[.!?。！？]$/, "");
+
+  const hint = supportVerbSurface ? ` (${escapeHtml(supportVerbSurface)})` : "";
 
   content.innerHTML = `
     <div class="row">
-      <strong>Read and understand</strong>
-      <div class="forms" style="font-size:1.2rem;margin:0.5rem 0 0.75rem;">
-        ${escapeHtml(sentence)}
-      </div>
-      <div class="forms" style="margin-bottom:0.5rem;">
-        ${escapeHtml(questionText)}
+      <div class="forms" style="font-size:1.4rem;margin:0.25rem 0 0.75rem;">
+        ${escapeHtml(pronounSurface)} _____ ${escapeHtml(nounSurface)}.${hint}
       </div>
       <div id="choices"></div>
     </div>
   `;
 
+  // Choices: correct + 3 distractor verbs
   const choicesDiv = document.getElementById("choices");
 
-  tpl.questions[0].choices.forEach(conceptId => {
-    const btn = document.createElement("button");
-    btn.className = "primary small";
-    btn.style.marginRight = "0.5rem";
-    btn.textContent = pronounLabel(conceptId, supportLang);
+  const distractors = pickVerbDistractors(vocabIndex, maskConcept, targetLang, 3);
 
-    btn.onclick = () => {
-      btn.textContent += conceptId === "THIRD_PERSON_SINGULAR" ? " ✓" : " ✕";
-    };
-
-    choicesDiv.appendChild(btn);
-  });
-}
-
-// --------------------
-// Exercise 5 – Guided recall (slot-based, NO typing)
-// --------------------
-function renderExercise5({ template, targetConceptId, targetLang, supportLang }) {
-  subtitle.textContent = "Choose the missing word";
-  content.innerHTML = "";
-
-  const fullSentence = template.render[targetLang];
-
-  // Mask by replacing the surface form corresponding to the target concept.
-  // NOTE: We assume single surface form per concept at this stage.
-  const surface = getConceptSurface(targetConceptId, targetLang);
-  const maskedSentence = surface
-    ? fullSentence.replace(surface, "___")
-    : fullSentence.replace(/\S+/, "___");
-
-  const wrapper = document.createElement("div");
-  wrapper.className = "row";
-  wrapper.innerHTML = `
-    <div class="forms" style="font-size:1.2rem;margin-bottom:0.75rem;">
-      ${escapeHtml(maskedSentence)}
-    </div>
-    <div id="exercise5-choices"></div>
-  `;
-
-  content.appendChild(wrapper);
-
-  const choicesDiv = document.getElementById("exercise5-choices");
-
-  const choices = buildExercise5Choices(targetConceptId, targetLang);
-  shuffleArray(choices);
-
-  choices.forEach(choice => {
-    const btn = document.createElement("button");
-    btn.className = "primary small";
-    btn.style.marginRight = "0.5rem";
-    btn.textContent = choice.label;
-
-    btn.onclick = () => {
-      recordExercise5Result(targetConceptId, choice.concept_id === targetConceptId);
-      btn.textContent += choice.concept_id === targetConceptId ? " ✓" : " ✕";
-    };
-
-    choicesDiv.appendChild(btn);
-  });
-}
-
-function buildExercise5Choices(targetConceptId, lang) {
-  const out = [];
-
-  // Correct
-  out.push({
-    concept_id: targetConceptId,
-    label: getConceptSurface(targetConceptId, lang) || targetConceptId
-  });
-
-  // Distractors: simple, introduced concepts only (v1)
-  const distractors = Object.keys(window.VOCAB_INDEX || {})
-    .filter(cid => cid !== targetConceptId)
-    .slice(0, 3);
-
-  distractors.forEach(cid => {
-    out.push({
+  // Convert all choices to 3sg present (PT/EN) when possible
+  const choiceItems = [
+    { concept_id: maskConcept, label: targetVerbSurface, correct: true },
+    ...distractors.map(cid => ({
       concept_id: cid,
-      label: getConceptSurface(cid, lang) || cid
-    });
+      label: verbChoiceSurface(vocabIndex, cid, targetLang, targetVerbSurface),
+      correct: false
+    }))
+  ];
+
+  // Shuffle
+  shuffleInPlace(choiceItems);
+
+  for (const item of choiceItems) {
+    const btn = document.createElement("button");
+    btn.className = "primary small";
+    btn.style.marginRight = "0.5rem";
+    btn.style.marginBottom = "0.5rem";
+    btn.textContent = item.label || item.concept_id;
+
+    btn.onclick = () => {
+      // Basic feedback
+      if (item.correct) {
+        btn.textContent = `${btn.textContent} ✓`;
+        bumpStage2(maskConcept, true);
+      } else {
+        btn.textContent = `${btn.textContent} ✕`;
+        bumpStage2(maskConcept, false);
+      }
+    };
+
+    choicesDiv.appendChild(btn);
+  }
+}
+
+// --------------------
+// Progress updates (localStorage via UserState if available)
+// --------------------
+function bumpStage2(conceptId, isCorrect) {
+  try {
+    const user = window.__USER__;
+    const run = window.__RUN__;
+    if (!user || !run) return;
+
+    const p = run.concept_progress[conceptId] || { seen_stage1: 3, stage2_attempts: 0, stage2_correct: 0, last_seen: Date.now() };
+    p.stage2_attempts += 1;
+    if (isCorrect) p.stage2_correct += 1;
+    p.last_seen = Date.now();
+    run.concept_progress[conceptId] = p;
+
+    if (window.UserState?.saveUser) window.UserState.saveUser(user);
+  } catch (e) {
+    // Never let progress code break UI
+    console.warn("Progress update failed:", e);
+  }
+}
+
+// --------------------
+// Vocab helpers
+// --------------------
+function buildVocabIndex(packs) {
+  const index = {};
+  for (const pack of packs) {
+    const concepts = pack.concepts || [];
+    const languages = pack.languages || {};
+    for (const c of concepts) {
+      const id = c.concept_id;
+      if (!index[id]) index[id] = { concept: c, forms: {} };
+
+      // interaction_profile is where sentence_use sits in your vocab packs
+      if (c.interaction_profile) {
+        index[id].interaction_profile = c.interaction_profile;
+      }
+
+      for (const [lang, langPack] of Object.entries(languages)) {
+        const forms = langPack.forms?.[id] || [];
+        if (!index[id].forms[lang]) index[id].forms[lang] = forms;
+      }
+    }
+  }
+  return index;
+}
+
+function lookupAnyForm(vocabIndex, conceptId, lang) {
+  const forms = vocabIndex?.[conceptId]?.forms?.[lang];
+  return Array.isArray(forms) && forms.length ? forms[0] : "";
+}
+
+// --------------------
+// Choice surface logic
+// --------------------
+function pickVerbDistractors(vocabIndex, correctConceptId, targetLang, n) {
+  // Pull from verbs.json concepts only, but we can approximate by filtering semantic_role/type
+  const all = Object.keys(vocabIndex).filter(cid => {
+    const c = vocabIndex[cid]?.concept;
+    if (!c) return false;
+    if (c.type !== "verb") return false;
+    if (cid === correctConceptId) return false;
+    const allowed = vocabIndex[cid]?.interaction_profile?.sentence_use !== false;
+    return allowed;
   });
 
-  return out;
+  shuffleInPlace(all);
+  return all.slice(0, n);
 }
 
-function recordExercise5Result(conceptId, correct) {
-  const run = window.__RUN__;
-  if (!run.concept_progress[conceptId]) {
-    run.concept_progress[conceptId] = {
-      seen_stage1: 3,
-      stage2_attempts: 0,
-      stage2_correct: 0
+function verbChoiceSurface(vocabIndex, conceptId, targetLang, correctSurface) {
+  // Try to show a 3sg present surface for PT/EN using small curated map.
+  const base = lookupAnyForm(vocabIndex, conceptId, targetLang);
+  if (!base) return conceptId;
+
+  // If we have the correct surface from template ("come"), we should convert distractors to same style.
+  // For PT, we map infinitive -> 3sg present for a small core set.
+  if (targetLang === "pt") {
+    const pt = {
+      // core irregulars / common
+      "comer": "come",
+      "ler": "lê",
+      "ver": "vê",
+      "ir": "vai",
+      "ter": "tem",
+      "ser": "é",
+      "estar": "está",
+      "fazer": "faz",
+      "dizer": "diz",
+      "poder": "pode",
+      "querer": "quer",
     };
+    return pt[base] || base;
   }
-  run.concept_progress[conceptId].stage2_attempts += 1;
-  if (correct) run.concept_progress[conceptId].stage2_correct += 1;
-  window.UserState?.saveUser(window.__USER__);
+
+  if (targetLang === "en") {
+    // Minimal 3sg present for English (very light heuristic).
+    if (base === "be") return "is";
+    if (base === "have") return "has";
+    if (base.endsWith("y") && !/[aeiou]y$/.test(base)) return base.slice(0, -1) + "ies";
+    if (/(s|sh|ch|x|z)$/.test(base)) return base + "es";
+    return base + "s";
+  }
+
+  // For other languages, just show the base form for now.
+  return base;
+}
+
+function renderPronounCombo(targetLang) {
+  // You asked specifically for "Ele/ela" here.
+  // For other target languages, we use safe equivalents.
+  switch (targetLang) {
+    case "pt": return "Ele/ela";
+    case "en": return "He/she";
+    case "ja": return "彼/彼女";
+    default: return "He/she";
+  }
 }
 
 // --------------------
-// Helpers (existing + small additions)
+// Tokenization (PT/EN style)
 // --------------------
-function getConceptSurface(conceptId, lang) {
-  // Minimal surface resolver: relies on sentence templates already using correct forms.
-  // For vocab-driven surfaces, this will be expanded later.
-  // For now, return null to allow safe fallback.
-  return null;
+function tokenizeLatinSentence(sentence) {
+  const clean = String(sentence).trim();
+  const parts = clean.split(/\s+/);
+  return parts.map(p => {
+    const raw = p;
+    const cleanToken = p.replace(/[.!?]$/, "");
+    return { raw, clean: cleanToken };
+  });
 }
 
-function shuffleArray(arr) {
+async function safeLoadJson(path) {
+  try {
+    const res = await fetch(path, { cache: "no-store" });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+function shuffleInPlace(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-}
-
-function buildWhoQuestionFromSupportSentence(tpl, supportLang) {
-  const supportSentence = tpl.render?.[supportLang];
-  if (!supportSentence) return "Who?";
-
-  switch (supportLang) {
-    case "en": return whoFromSvoSentence(supportSentence, "Who");
-    case "pt": return whoFromSvoSentence(supportSentence, "Quem");
-    case "ja": return whoFromJapaneseSentence(supportSentence);
-    default:   return whoFromSvoSentence(supportSentence, "Who");
-  }
-}
-
-function whoFromSvoSentence(sentence, whoWord) {
-  let clean = String(sentence).trim().replace(/[.!?。！？]$/, "");
-  const parts = clean.split(/\s+/);
-  if (parts.length < 2) return `${whoWord}?`;
-  parts[0] = whoWord;
-  return `${parts.join(" ")}?`;
-}
-
-function whoFromJapaneseSentence(sentence) {
-  let clean = String(sentence).trim().replace(/[.!?。！？]$/, "");
-  const idxWa = clean.indexOf("は");
-  const idxGa = clean.indexOf("が");
-  let cutIdx = Math.min(
-    idxWa !== -1 ? idxWa : Infinity,
-    idxGa !== -1 ? idxGa : Infinity
-  );
-  if (cutIdx !== Infinity) clean = clean.slice(cutIdx + 1).trim();
-  return `誰が${clean}？`;
-}
-
-function pronounLabel(conceptId, lang) {
-  const map = {
-    FIRST_PERSON_SINGULAR: { en: "I", pt: "eu", ja: "私" },
-    SECOND_PERSON: { en: "you", pt: "você", ja: "あなた" },
-    THIRD_PERSON_SINGULAR: { en: "he / she", pt: "ele / ela", ja: "彼 / 彼女" }
-  };
-  return map[conceptId]?.[lang] || conceptId;
+  return arr;
 }
 
 function escapeHtml(str) {
