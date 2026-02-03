@@ -1,3 +1,4 @@
+
 // app.js — Scheduler-driven Exercise 5
 // TEMP Stage-1 + recall seeding
 // FIXED: wrapped in DOMContentLoaded so execution is guaranteed
@@ -98,7 +99,17 @@ document.addEventListener("DOMContentLoaded", () => {
       loadVocabIndex()
     ]);
 
-    
+    // -----------------------------------------
+    // TEMP: seed Stage-1 + recall readiness
+    // -----------------------------------------
+    const run = window.__RUN__;
+    ["PRONOUN", "EAT", "FOOD"].forEach(cid => {
+      run.concept_progress[cid] ??= {};
+      run.concept_progress[cid].seen_stage1 ??= 3;
+      run.concept_progress[cid].stage2_attempts ??= 1;
+      run.concept_progress[cid].stage2_correct ??= 0;
+    });
+
     console.log("SEEDED PROGRESS:", JSON.stringify(run.concept_progress));
 
     const decision = Scheduler.getNextExercise(
