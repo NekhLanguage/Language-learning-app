@@ -1,5 +1,7 @@
-// app.js — Exercise 5 + Exercise 6
-// Scheduler-driven, stable baseline
+
+// app.js — Scheduler-driven Exercise 5
+// TEMP Stage-1 + recall seeding
+// FIXED: wrapped in DOMContentLoaded so execution is guaranteed
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("APP BOOTSTRAP STARTED");
@@ -25,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const u = window.UserState.ensureUser();
       window.__USER__ = u;
       window.__RUN__ = u.runs[u.current_run_id];
-      console.log("USER INITIALIZED");
+      console.log("USER INITIALIZED", window.__RUN__);
     }
   } catch (e) {
     console.warn("User init failed", e);
@@ -35,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Navigation
   // --------------------
   openAppBtn.addEventListener("click", async () => {
+    console.log("OPEN APP CLICKED");
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
     await renderNext();
@@ -86,15 +89,28 @@ document.addEventListener("DOMContentLoaded", () => {
   // MAIN LOOP
   // --------------------
   async function renderNext() {
-    subtitle.textContent = "Loading…";
-    content.innerHTML = "Loading…";
+    console.log("RENDER NEXT RUNNING");
 
-    const run = window.__RUN__;
+    subtitle.textContent = "Choose the missing word";
+    content.innerHTML = "Loading...";
 
     const [templates, vocabIndex] = await Promise.all([
       loadTemplates(),
       loadVocabIndex()
     ]);
+
+    // -----------------------------------------
+    // TEMP: seed Stage-1 + recall readiness
+    // -----------------------------------------
+    const run = window.__RUN__;
+    ["PRONOUN", "EAT", "FOOD"].forEach(cid => {
+      run.concept_progress[cid] ??= {};
+      run.concept_progress[cid].seen_stage1 ??= 3;
+      run.concept_progress[cid].stage2_attempts ??= 1;
+      run.concept_progress[cid].stage2_correct ??= 0;
+    });
+
+    console.log("SEEDED PROGRESS:", JSON.stringify(run.concept_progress));
 
     const decision = Scheduler.getNextExercise(
       run,
@@ -102,41 +118,26 @@ document.addEventListener("DOMContentLoaded", () => {
       vocabIndex
     );
 
-    if (decision.exercise_type === 6) {
-      renderMatch(
-        decision.concept_ids,
-        targetSel.value,
-        supportSel.value,
-        vocabIndex
-      );
+    console.log("SCHEDULER DECISION:", decision);
+
+    if (!decision.template) {
+      content.innerHTML = "Waiting for recall-ready concept.";
       return;
     }
 
-    if (decision.exercise_type === 5 && decision.template) {
-      renderSlot(
-        decision.template,
-        decision.concept_id,
-        targetSel.value,
-        supportSel.value,
-        vocabIndex,
-        run
-      );
-      return;
-    }
-
-    content.innerHTML = "Waiting for recall-ready concept.";
+    renderSlot(
+      decision.template,
+      decision.concept_id,
+      targetSel.value,
+      supportSel.value,
+      vocabIndex
+    );
   }
 
   // --------------------
   // Exercise 5 renderer
   // --------------------
-  function renderSlot(template, cid, targetLang, supportLang, vocabIndex, run) {
-    // Stage 1 exposure: sentence introduces concepts
-    template.concepts.forEach(conceptId => {
-      run.concept_progress[conceptId] ??= {};
-      run.concept_progress[conceptId].seen_stage1 ??= 1;
-    });
-
+  function renderSlot(template, cid, targetLang, supportLang, vocabIndex) {
     const tgt = template.render[targetLang].split(" ");
     const sup = template.render[supportLang].split(" ");
 
@@ -144,8 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const verbSupport = sup[1];
     const noun = tgt[2].replace(".", "");
     const pronoun = targetLang === "pt" ? "Ele/ela" : "He/she";
-
-    subtitle.textContent = "Choose the missing word";
 
     content.innerHTML = `
       <div class="row">
@@ -176,77 +175,19 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = it.label;
       btn.onclick = () => {
         btn.textContent += it.ok ? " ✓" : " ✕";
-        updateProgress(run, cid, it.ok);
+        updateProgress(cid, it.ok);
       };
       choices.appendChild(btn);
     }
-
-    window.UserState?.saveUser?.(window.__USER__);
-  }
-
-  // --------------------
-  // Exercise 6 renderer
-  // --------------------
-  function renderMatch(conceptIds, targetLang, supportLang, vocabIndex) {
-    subtitle.textContent = "Match the words";
-
-    const pairs = conceptIds.map(cid => ({
-      cid,
-      target: vocabIndex[cid].forms[targetLang][0],
-      support: vocabIndex[cid].forms[supportLang][0]
-    }));
-
-    const left = [...pairs].sort(() => Math.random() - 0.5);
-    const right = [...pairs].sort(() => Math.random() - 0.5);
-
-    content.innerHTML = `
-      <div class="row match-grid">
-        <div class="match-col" id="match-left"></div>
-        <div class="match-col" id="match-right"></div>
-      </div>
-    `;
-
-    const leftCol = document.getElementById("match-left");
-    const rightCol = document.getElementById("match-right");
-
-    let selectedLeft = null;
-
-    left.forEach(item => {
-      const btn = document.createElement("button");
-      btn.className = "primary small";
-      btn.textContent = item.target;
-      btn.onclick = () => {
-        selectedLeft = item;
-        [...leftCol.children].forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-      };
-      leftCol.appendChild(btn);
-    });
-
-    right.forEach(item => {
-      const btn = document.createElement("button");
-      btn.className = "secondary small";
-      btn.textContent = item.support;
-      btn.onclick = () => {
-        if (!selectedLeft) return;
-
-        if (item.cid === selectedLeft.cid) {
-          btn.textContent += " ✓";
-          selectedLeft = null;
-        } else {
-          btn.textContent += " ✕";
-        }
-      };
-      rightCol.appendChild(btn);
-    });
   }
 
   // --------------------
   // Progress update
   // --------------------
-  function updateProgress(run, cid, correct) {
+  function updateProgress(cid, correct) {
+    const run = window.__RUN__;
     const p = run.concept_progress[cid] || {
-      seen_stage1: 1,
+      seen_stage1: 3,
       stage2_attempts: 0,
       stage2_correct: 0
     };
