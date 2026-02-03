@@ -1,6 +1,7 @@
-// scheduler.js — v2 (NON-MODULE)
+// scheduler.js — v3 (NON-MODULE)
 // Scheduler-driven exercise selection
-// Lexical concepts are gated, grammar/glue concepts are always allowed.
+// Exercise 5 = guided recall
+// Exercise 6 = matching (consolidation)
 
 (function () {
 
@@ -28,7 +29,6 @@
     const meta = window.VOCAB_INDEX?.[conceptId]?.concept;
     if (!meta) return false;
 
-    // Grammar glue should never block sentence usage
     return (
       meta.type === "pronoun" ||
       meta.type === "connector" ||
@@ -74,7 +74,25 @@
       };
     });
 
-    // Priority: guided recall first
+    // ---------- Exercise 6: Matching (consolidation) ----------
+    const matchable = concepts.filter(c =>
+      c.state === "STABLE" &&
+      c.meta?.interaction_profile?.match === true
+    );
+
+    const MATCH_COUNT = 3; // scalable later
+
+    // Make matching occasional
+    if (matchable.length >= MATCH_COUNT && Math.random() < 0.15) {
+      return {
+        exercise_type: 6,
+        concept_ids: matchable
+          .slice(0, MATCH_COUNT)
+          .map(c => c.concept_id)
+      };
+    }
+
+    // ---------- Exercise 5: Guided recall ----------
     const recallReady = concepts.find(c => c.state === "RECALL_READY");
     if (recallReady) {
       return {
@@ -88,7 +106,7 @@
       };
     }
 
-    // Fallback (Stage 1 / idle)
+    // ---------- Fallback ----------
     return {
       exercise_type: 3,
       concept_id: null,
