@@ -1,5 +1,5 @@
 // app.js — stable Exercise 5 + Exercise 6 baseline
-// UI invariant enforced: recall exercises require a template
+// Deadlock-safe: prevents infinite scheduler loops
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -16,9 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
   window.__USER__ = u;
   window.__RUN__ = u.runs[u.current_run_id];
 
+  let renderRetries = 0;
+  const MAX_RETRIES = 5;
+
   openAppBtn.onclick = async () => {
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
+    renderRetries = 0;
     renderNext();
   };
 
@@ -69,22 +73,38 @@ document.addEventListener("DOMContentLoaded", () => {
       vocabIndex
     );
 
-    // Exercise 6 — matching (no templates required)
+    // Exercise 6 — always valid
     if (decision.exercise_type === 6) {
+      renderRetries = 0;
       renderMatch(decision.concept_ids, vocabIndex);
       return;
     }
 
-    // 🔒 UI invariant: recall exercises REQUIRE a sentence template
+    // Recall exercise without template → retry, but bounded
     if (!decision.template) {
       console.warn(
-        "Scheduler emitted recall exercise without template:",
+        "Invalid recall decision (no template):",
         decision.concept_id
       );
+
+      renderRetries++;
+
+      if (renderRetries >= MAX_RETRIES) {
+        console.error(
+          "Scheduler deadlock: no valid recall exercises available."
+        );
+        subtitle.textContent = "No valid exercises available";
+        content.innerHTML =
+          "<div class='forms'>You’ve completed all available recall items.</div>";
+        return;
+      }
+
       renderNext();
       return;
     }
 
+    // Valid recall exercise
+    renderRetries = 0;
     renderSlot(decision.template, decision.concept_id, vocabIndex);
   }
 
