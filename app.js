@@ -1,5 +1,5 @@
 // app.js — Exercise 5 + Exercise 6
-// Scheduler-driven, stable baseline
+// Scheduler-driven, lifecycle-safe baseline
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("APP BOOTSTRAP STARTED");
@@ -86,10 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // MAIN LOOP
   // --------------------
   async function renderNext() {
-    subtitle.textContent = "Loading…";
-    content.innerHTML = "Loading…";
+    console.log("RENDER NEXT RUNNING");
 
     const run = window.__RUN__;
+
+    subtitle.textContent = "Loading…";
+    content.innerHTML = "Loading…";
 
     const [templates, vocabIndex] = await Promise.all([
       loadTemplates(),
@@ -102,6 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
       vocabIndex
     );
 
+    console.log("SCHEDULER DECISION:", decision);
+
+    // ---------- Exercise 6 ----------
     if (decision.exercise_type === 6) {
       renderMatch(
         decision.concept_ids,
@@ -112,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // ---------- Exercise 5 ----------
     if (decision.exercise_type === 5 && decision.template) {
       renderSlot(
         decision.template,
@@ -124,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // ---------- Honest fallback ----------
     content.innerHTML = "Waiting for recall-ready concept.";
   }
 
@@ -131,11 +138,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Exercise 5 renderer
   // --------------------
   function renderSlot(template, cid, targetLang, supportLang, vocabIndex, run) {
-    // Stage 1 exposure: sentence introduces concepts
+    // Stage 1 exposure: sentence introduces its concepts
     template.concepts.forEach(conceptId => {
       run.concept_progress[conceptId] ??= {};
       run.concept_progress[conceptId].seen_stage1 ??= 1;
     });
+
+    subtitle.textContent = "Choose the missing word";
 
     const tgt = template.render[targetLang].split(" ");
     const sup = template.render[supportLang].split(" ");
@@ -144,8 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const verbSupport = sup[1];
     const noun = tgt[2].replace(".", "");
     const pronoun = targetLang === "pt" ? "Ele/ela" : "He/she";
-
-    subtitle.textContent = "Choose the missing word";
 
     content.innerHTML = `
       <div class="row">
@@ -256,5 +263,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     run.concept_progress[cid] = p;
     window.UserState?.saveUser?.(window.__USER__);
+  }
+
+  // --------------------
+  // LIFECYCLE FIX
+  // --------------------
+  // If learning screen is already active (reload, back/forward),
+  // force a render so we never get stuck on "Loading…"
+  if (learningScreen.classList.contains("active")) {
+    renderNext();
   }
 });
