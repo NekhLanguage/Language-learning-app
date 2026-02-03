@@ -1,14 +1,9 @@
-// scheduler.js — v3 (NON-MODULE)
-// Scheduler-driven exercise selection
+// scheduler.js — stable
 // Exercise 5 = guided recall
 // Exercise 6 = matching (consolidation)
 
-
 (function () {
 
-  // --------------------
-  // Concept state
-  // --------------------
   function getConceptState(progress) {
     if (!progress || progress.seen_stage1 === 0) return "NEW";
     if (progress.seen_stage1 < 3) return "RECOGNIZING";
@@ -23,9 +18,6 @@
     return p && p.seen_stage1 >= 1;
   }
 
-  // --------------------
-  // Glue / grammar concepts
-  // --------------------
   function isGlueConcept(conceptId) {
     const meta = window.VOCAB_INDEX?.[conceptId]?.concept;
     if (!meta) return false;
@@ -38,9 +30,6 @@
     );
   }
 
-  // --------------------
-  // Template selection
-  // --------------------
   function pickTemplateForConcept(templates, run, conceptId) {
     if (!Array.isArray(templates)) return null;
 
@@ -55,9 +44,6 @@
     return candidates.length ? candidates[0] : null;
   }
 
-  // --------------------
-  // Main scheduler
-  // --------------------
   function getNextExercise(run, templates, vocabIndex) {
     const progressMap = run.concept_progress || {};
 
@@ -75,15 +61,14 @@
       };
     });
 
-    // ---------- Exercise 6: Matching (consolidation) ----------
+    // ---------- Exercise 6 (matching) ----------
     const matchable = concepts.filter(c =>
       c.state === "STABLE" &&
       c.meta?.interaction_profile?.match === true
     );
 
-    const MATCH_COUNT = 3; // scalable later
+    const MATCH_COUNT = 3; // later → 5
 
-    // Make matching occasional
     if (matchable.length >= MATCH_COUNT && Math.random() < 0.15) {
       return {
         exercise_type: 6,
@@ -93,7 +78,7 @@
       };
     }
 
-    // ---------- Exercise 5: Guided recall ----------
+    // ---------- Exercise 5 (guided recall) ----------
     const recallReady = concepts.find(c => c.state === "RECALL_READY");
     if (recallReady) {
       return {
@@ -107,7 +92,6 @@
       };
     }
 
-    // ---------- Fallback ----------
     return {
       exercise_type: 3,
       concept_id: null,
@@ -115,11 +99,6 @@
     };
   }
 
-  // --------------------
-  // Public API
-  // --------------------
-  window.Scheduler = {
-    getNextExercise
-  };
+  window.Scheduler = { getNextExercise };
 
 })();
