@@ -1,6 +1,7 @@
+
 // app.js — Scheduler-driven Exercise 5
-// Stage 1 exposure is recorded from real sentence usage
-// FIXED: proper scoping for `run`
+// TEMP Stage-1 + recall seeding
+// FIXED: wrapped in DOMContentLoaded so execution is guaranteed
 
 document.addEventListener("DOMContentLoaded", () => {
   console.log("APP BOOTSTRAP STARTED");
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const u = window.UserState.ensureUser();
       window.__USER__ = u;
       window.__RUN__ = u.runs[u.current_run_id];
-      console.log("USER INITIALIZED");
+      console.log("USER INITIALIZED", window.__RUN__);
     }
   } catch (e) {
     console.warn("User init failed", e);
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Navigation
   // --------------------
   openAppBtn.addEventListener("click", async () => {
+    console.log("OPEN APP CLICKED");
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
     await renderNext();
@@ -89,8 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
   async function renderNext() {
     console.log("RENDER NEXT RUNNING");
 
-    const run = window.__RUN__; // ✅ FIX: scoped once here
-
     subtitle.textContent = "Choose the missing word";
     content.innerHTML = "Loading...";
 
@@ -98,6 +98,19 @@ document.addEventListener("DOMContentLoaded", () => {
       loadTemplates(),
       loadVocabIndex()
     ]);
+
+    // -----------------------------------------
+    // TEMP: seed Stage-1 + recall readiness
+    // -----------------------------------------
+    const run = window.__RUN__;
+    ["PRONOUN", "EAT", "FOOD"].forEach(cid => {
+      run.concept_progress[cid] ??= {};
+      run.concept_progress[cid].seen_stage1 ??= 3;
+      run.concept_progress[cid].stage2_attempts ??= 1;
+      run.concept_progress[cid].stage2_correct ??= 0;
+    });
+
+    console.log("SEEDED PROGRESS:", JSON.stringify(run.concept_progress));
 
     const decision = Scheduler.getNextExercise(
       run,
@@ -117,21 +130,14 @@ document.addEventListener("DOMContentLoaded", () => {
       decision.concept_id,
       targetSel.value,
       supportSel.value,
-      vocabIndex,
-      run
+      vocabIndex
     );
   }
 
   // --------------------
   // Exercise 5 renderer
   // --------------------
-  function renderSlot(template, cid, targetLang, supportLang, vocabIndex, run) {
-    // Stage 1 exposure: seeing a sentence introduces its concepts
-    template.concepts.forEach(conceptId => {
-      run.concept_progress[conceptId] ??= {};
-      run.concept_progress[conceptId].seen_stage1 ??= 1;
-    });
-
+  function renderSlot(template, cid, targetLang, supportLang, vocabIndex) {
     const tgt = template.render[targetLang].split(" ");
     const sup = template.render[supportLang].split(" ");
 
@@ -169,20 +175,19 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = it.label;
       btn.onclick = () => {
         btn.textContent += it.ok ? " ✓" : " ✕";
-        updateProgress(run, cid, it.ok);
+        updateProgress(cid, it.ok);
       };
       choices.appendChild(btn);
     }
-
-    window.UserState?.saveUser?.(window.__USER__);
   }
 
   // --------------------
   // Progress update
   // --------------------
-  function updateProgress(run, cid, correct) {
+  function updateProgress(cid, correct) {
+    const run = window.__RUN__;
     const p = run.concept_progress[cid] || {
-      seen_stage1: 1,
+      seen_stage1: 3,
       stage2_attempts: 0,
       stage2_correct: 0
     };
