@@ -98,6 +98,9 @@ async function renderNext() {
     run.concept_progress[cid].stage2_correct ??= 0;
   });
 
+  console.log("SEEDED PROGRESS:", JSON.stringify(window.__RUN__.concept_progress));
+
+
   const decision = Scheduler.getNextExercise(run, templates, vocabIndex);
 
   if (!decision.template) {
