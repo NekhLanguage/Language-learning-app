@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // TEMP: seed Stage-1 + recall readiness
     // -----------------------------------------
     const run = window.__RUN__;
-    ["EAT", "FOOD"].forEach(cid => {
+    ["PRONOUN", "EAT", "FOOD"].forEach(cid => {
       run.concept_progress[cid] ??= {};
       run.concept_progress[cid].seen_stage1 ??= 3;
       run.concept_progress[cid].stage2_attempts ??= 1;
