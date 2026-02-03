@@ -1,5 +1,5 @@
-// app.js — stable Exercise 5 + Exercise 6 baseline
-// Deadlock-safe: prevents infinite scheduler loops
+// app.js — stable Exercise 5 + Exercise 6
+// Exercise 6 = active matching (target ↔ support)
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let renderRetries = 0;
   const MAX_RETRIES = 5;
 
-  openAppBtn.onclick = async () => {
+  openAppBtn.onclick = () => {
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
     renderRetries = 0;
@@ -73,37 +73,30 @@ document.addEventListener("DOMContentLoaded", () => {
       vocabIndex
     );
 
-    // Exercise 6 — always valid
+    // Exercise 6 — matching
     if (decision.exercise_type === 6) {
       renderRetries = 0;
       renderMatch(decision.concept_ids, vocabIndex);
       return;
     }
 
-    // Recall exercise without template → retry, but bounded
+    // Recall exercise must have template
     if (!decision.template) {
       console.warn(
         "Invalid recall decision (no template):",
         decision.concept_id
       );
-
       renderRetries++;
-
       if (renderRetries >= MAX_RETRIES) {
-        console.error(
-          "Scheduler deadlock: no valid recall exercises available."
-        );
         subtitle.textContent = "No valid exercises available";
         content.innerHTML =
           "<div class='forms'>You’ve completed all available recall items.</div>";
         return;
       }
-
       renderNext();
       return;
     }
 
-    // Valid recall exercise
     renderRetries = 0;
     renderSlot(decision.template, decision.concept_id, vocabIndex);
   }
@@ -141,12 +134,79 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ============================
+  // Exercise 6 — Active Matching
+  // ============================
   function renderMatch(conceptIds, vocabIndex) {
     subtitle.textContent = "Match the words";
 
-    content.innerHTML = conceptIds.map(cid =>
-      `<div>${vocabIndex[cid].forms[targetSel.value][0]} – ${vocabIndex[cid].forms[supportSel.value][0]}</div>`
-    ).join("");
+    const targetLang = targetSel.value;
+    const supportLang = supportSel.value;
+
+    const pairs = conceptIds.map(cid => ({
+      id: cid,
+      target: vocabIndex[cid].forms[targetLang][0],
+      support: vocabIndex[cid].forms[supportLang][0]
+    }));
+
+    const shuffle = arr => arr.sort(() => Math.random() - 0.5);
+
+    const left = shuffle([...pairs]);
+    const right = shuffle([...pairs]);
+
+    let selectedLeft = null;
+    const solved = new Set();
+
+    content.innerHTML = `
+      <div style="display:flex;gap:2rem;justify-content:center;">
+        <div id="left"></div>
+        <div id="right"></div>
+      </div>
+    `;
+
+    const leftDiv = document.getElementById("left");
+    const rightDiv = document.getElementById("right");
+
+    left.forEach(item => {
+      const btn = document.createElement("button");
+      btn.textContent = item.target;
+      btn.onclick = () => {
+        selectedLeft = item;
+        [...leftDiv.children].forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+      };
+      leftDiv.appendChild(btn);
+    });
+
+    right.forEach(item => {
+      const btn = document.createElement("button");
+      btn.textContent = item.support;
+      btn.onclick = () => {
+        if (!selectedLeft) return;
+
+        if (item.id === selectedLeft.id) {
+          solved.add(item.id);
+          btn.disabled = true;
+
+          [...leftDiv.children].forEach(b => {
+            if (b.textContent === selectedLeft.target) {
+              b.disabled = true;
+              b.classList.remove("selected");
+            }
+          });
+
+          selectedLeft = null;
+
+          if (solved.size === pairs.length) {
+            setTimeout(renderNext, 400);
+          }
+        } else {
+          btn.classList.add("wrong");
+          setTimeout(() => btn.classList.remove("wrong"), 300);
+        }
+      };
+      rightDiv.appendChild(btn);
+    });
   }
 
 });
