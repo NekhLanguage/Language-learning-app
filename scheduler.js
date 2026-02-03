@@ -83,7 +83,7 @@
     const MATCH_COUNT = 3; // scalable later
 
     // Make matching occasional
-    if (matchable.length >= MATCH_COUNT) {
+    if (matchable.length >= MATCH_COUNT && Math.random() < 0.15) {
       return {
         exercise_type: 6,
         concept_ids: matchable
