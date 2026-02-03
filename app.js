@@ -1,12 +1,8 @@
-// app.js — Exercise 5 + Exercise 6
-// Scheduler-driven, stable baseline
+// app.js — stable Exercise 5 + Exercise 6
+// Option A: temporary Stage-1 bridge
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("APP BOOTSTRAP STARTED");
 
-  // --------------------
-  // DOM refs
-  // --------------------
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
   const openAppBtn = document.getElementById("open-app");
@@ -17,41 +13,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
 
-  // --------------------
-  // Safe user init
-  // --------------------
-  try {
-    if (window.UserState?.ensureUser) {
-      const u = window.UserState.ensureUser();
-      window.__USER__ = u;
-      window.__RUN__ = u.runs[u.current_run_id];
-      console.log("USER INITIALIZED");
-    }
-  } catch (e) {
-    console.warn("User init failed", e);
+  // User init
+  if (window.UserState?.ensureUser) {
+    const u = window.UserState.ensureUser();
+    window.__USER__ = u;
+    window.__RUN__ = u.runs[u.current_run_id];
   }
 
-  // --------------------
-  // Navigation
-  // --------------------
-  openAppBtn.addEventListener("click", async () => {
+  openAppBtn.onclick = async () => {
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
     await renderNext();
-  });
+  };
 
-  quitBtn.addEventListener("click", () => {
+  quitBtn.onclick = () => {
     learningScreen.classList.remove("active");
     startScreen.classList.add("active");
-  });
+  };
 
-  loadBtn.addEventListener("click", async () => {
-    await renderNext();
-  });
+  loadBtn.onclick = renderNext;
 
-  // --------------------
-  // Data loaders
-  // --------------------
   async function loadTemplates() {
     const res = await fetch("sentence_templates.json", { cache: "no-store" });
     const json = await res.json();
@@ -61,9 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadVocabIndex() {
     const packs = await Promise.all([
-      fetch("verbs.json", { cache: "no-store" }).then(r => r.json()),
-      fetch("pronouns.json", { cache: "no-store" }).then(r => r.json()),
-      fetch("nouns.json", { cache: "no-store" }).then(r => r.json())
+      fetch("verbs.json").then(r => r.json()),
+      fetch("pronouns.json").then(r => r.json()),
+      fetch("nouns.json").then(r => r.json())
     ]);
 
     const index = {};
@@ -82,9 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return index;
   }
 
-  // --------------------
-  // MAIN LOOP
-  // --------------------
   async function renderNext() {
     subtitle.textContent = "Loading…";
     content.innerHTML = "Loading…";
@@ -95,56 +73,32 @@ document.addEventListener("DOMContentLoaded", () => {
       loadTemplates(),
       loadVocabIndex()
     ]);
-    // TEMP Stage-1 exposure bridge
-// Required until Stage-1 is scheduler-driven
-// TEMP Stage-1 exposure bridge
-Object.keys(vocabIndex).forEach(cid => {
-  run.concept_progress[cid] ??= {};
-  run.concept_progress[cid].seen_stage1 ??= 3;
-});
 
+    // ---- TEMP Stage-1 bridge (single source of truth) ----
+    Object.keys(vocabIndex).forEach(cid => {
+      run.concept_progress[cid] ??= {};
+      if (run.concept_progress[cid].seen_stage1 == null) {
+        run.concept_progress[cid].seen_stage1 = 3;
+      }
+    });
 
-    
-    const decision = Scheduler.getNextExercise(
-      run,
-      templates,
-      vocabIndex
-    );
+    const decision = Scheduler.getNextExercise(run, templates, vocabIndex);
 
     if (decision.exercise_type === 6) {
-      renderMatch(
-        decision.concept_ids,
-        targetSel.value,
-        supportSel.value,
-        vocabIndex
-      );
+      renderMatch(decision.concept_ids, targetSel.value, supportSel.value, vocabIndex);
       return;
     }
 
     if (decision.exercise_type === 5 && decision.template) {
-      renderSlot(
-        decision.template,
-        decision.concept_id,
-        targetSel.value,
-        supportSel.value,
-        vocabIndex,
-        run
-      );
+      renderSlot(decision.template, decision.concept_id, targetSel.value, supportSel.value, vocabIndex, run);
       return;
     }
 
     content.innerHTML = "Waiting for recall-ready concept.";
   }
 
-  // --------------------
-  // Exercise 5 renderer
-  // --------------------
   function renderSlot(template, cid, targetLang, supportLang, vocabIndex, run) {
-    // Stage 1 exposure: sentence introduces concepts
-    template.concepts.forEach(conceptId => {
-      run.concept_progress[conceptId] ??= {};
-      run.concept_progress[conceptId].seen_stage1 ??= 1;
-    });
+    subtitle.textContent = "Choose the missing word";
 
     const tgt = template.render[targetLang].split(" ");
     const sup = template.render[supportLang].split(" ");
@@ -154,13 +108,9 @@ Object.keys(vocabIndex).forEach(cid => {
     const noun = tgt[2].replace(".", "");
     const pronoun = targetLang === "pt" ? "Ele/ela" : "He/she";
 
-    subtitle.textContent = "Choose the missing word";
-
     content.innerHTML = `
       <div class="row">
-        <div class="forms" style="font-size:1.4rem;margin:.25rem 0 .75rem;">
-          ${pronoun} _____ ${noun}. (${verbSupport})
-        </div>
+        <div class="forms">${pronoun} _____ ${noun}. (${verbSupport})</div>
         <div id="choices"></div>
       </div>
     `;
@@ -174,28 +124,29 @@ Object.keys(vocabIndex).forEach(cid => {
     const items = [
       { label: verbTarget, ok: true },
       ...distractors.map(c => ({
-        label: vocabIndex[c].forms[targetLang]?.[0] || c,
+        label: vocabIndex[c].forms[targetLang][0],
         ok: false
       }))
     ].sort(() => Math.random() - 0.5);
 
     for (const it of items) {
       const btn = document.createElement("button");
-      btn.className = "primary small";
       btn.textContent = it.label;
       btn.onclick = () => {
-        btn.textContent += it.ok ? " ✓" : " ✕";
-        updateProgress(run, cid, it.ok);
+        if (it.ok) {
+          run.concept_progress[cid].stage2_correct =
+            (run.concept_progress[cid].stage2_correct || 0) + 1;
+        }
+        run.concept_progress[cid].stage2_attempts =
+          (run.concept_progress[cid].stage2_attempts || 0) + 1;
+
+        window.UserState?.saveUser?.(window.__USER__);
+        renderNext();
       };
       choices.appendChild(btn);
     }
-
-    window.UserState?.saveUser?.(window.__USER__);
   }
 
-  // --------------------
-  // Exercise 6 renderer
-  // --------------------
   function renderMatch(conceptIds, targetLang, supportLang, vocabIndex) {
     subtitle.textContent = "Match the words";
 
@@ -210,60 +161,33 @@ Object.keys(vocabIndex).forEach(cid => {
 
     content.innerHTML = `
       <div class="row match-grid">
-        <div class="match-col" id="match-left"></div>
-        <div class="match-col" id="match-right"></div>
+        <div id="match-left"></div>
+        <div id="match-right"></div>
       </div>
     `;
 
     const leftCol = document.getElementById("match-left");
     const rightCol = document.getElementById("match-right");
 
-    let selectedLeft = null;
+    let selected = null;
 
     left.forEach(item => {
-      const btn = document.createElement("button");
-      btn.className = "primary small";
-      btn.textContent = item.target;
-      btn.onclick = () => {
-        selectedLeft = item;
-        [...leftCol.children].forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-      };
-      leftCol.appendChild(btn);
+      const b = document.createElement("button");
+      b.textContent = item.target;
+      b.onclick = () => selected = item;
+      leftCol.appendChild(b);
     });
 
     right.forEach(item => {
-      const btn = document.createElement("button");
-      btn.className = "secondary small";
-      btn.textContent = item.support;
-      btn.onclick = () => {
-        if (!selectedLeft) return;
-
-        if (item.cid === selectedLeft.cid) {
-          btn.textContent += " ✓";
-          selectedLeft = null;
-        } else {
-          btn.textContent += " ✕";
+      const b = document.createElement("button");
+      b.textContent = item.support;
+      b.onclick = () => {
+        if (selected && selected.cid === item.cid) {
+          b.textContent += " ✓";
         }
       };
-      rightCol.appendChild(btn);
+      rightCol.appendChild(b);
     });
   }
 
-  // --------------------
-  // Progress update
-  // --------------------
-  function updateProgress(run, cid, correct) {
-    const p = run.concept_progress[cid] || {
-      seen_stage1: 1,
-      stage2_attempts: 0,
-      stage2_correct: 0
-    };
-
-    p.stage2_attempts++;
-    if (correct) p.stage2_correct++;
-
-    run.concept_progress[cid] = p;
-    window.UserState?.saveUser?.(window.__USER__);
-  }
 });
