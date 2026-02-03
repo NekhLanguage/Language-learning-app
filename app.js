@@ -1,5 +1,5 @@
 // app.js — stable Exercise 5 + Exercise 6
-// Exercise 6 = drag-and-drop matching (5 items, improved UX)
+// Exercise 6 = desktop drag + mobile tap matching (5 items)
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const subtitle = document.getElementById("session-subtitle");
   const targetSel = document.getElementById("targetLang");
   const supportSel = document.getElementById("supportLang");
+
+  const isTouch =
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0;
 
   const u = window.UserState.ensureUser();
   window.__USER__ = u;
@@ -32,8 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   async function loadTemplates() {
-    const res = await fetch("sentence_templates.json");
-    return (await res.json()).templates;
+    return (await fetch("sentence_templates.json").then(r => r.json())).templates;
   }
 
   async function loadVocab() {
@@ -128,33 +131,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ============================
-  // Exercise 6 — Drag & Drop Match (5 items)
+  // Exercise 6 — Matching
   // ============================
   function renderMatch(conceptIds, vocabIndex) {
     subtitle.textContent = "Match the words";
 
-    const targetLang = targetSel.value;
-    const supportLang = supportSel.value;
-
     const pairs = conceptIds.slice(0, 5).map(cid => ({
       id: cid,
-      target: vocabIndex[cid].forms[targetLang][0],
-      support: vocabIndex[cid].forms[supportLang][0]
+      target: vocabIndex[cid].forms[targetSel.value][0],
+      support: vocabIndex[cid].forms[supportSel.value][0]
     }));
 
     const shuffle = arr => arr.sort(() => Math.random() - 0.5);
     const left = shuffle([...pairs]);
     const right = shuffle([...pairs]);
 
+    let selected = null;
     let solved = 0;
 
     content.innerHTML = `
-      <div style="display:flex;gap:3rem;justify-content:center;">
-        <div id="left" style="min-width:200px;"></div>
-        <div id="right" style="min-width:200px;"></div>
+      <div style="display:flex;gap:2rem;justify-content:center;">
+        <div id="left"></div>
+        <div id="right"></div>
       </div>
-      <p class="forms" style="margin-top:1rem;opacity:0.8;text-align:center;">
-        Drag the words on the left to their meanings on the right
+      <p class="forms" style="opacity:0.8;text-align:center;margin-top:1rem;">
+        ${isTouch ? "Tap a word, then tap its meaning" : "Drag the word to its meaning"}
       </p>
     `;
 
@@ -164,24 +165,26 @@ document.addEventListener("DOMContentLoaded", () => {
     left.forEach(item => {
       const el = document.createElement("div");
       el.textContent = item.target;
-      el.draggable = true;
       el.dataset.id = item.id;
-
-      el.style.cursor = "grab";
-      el.style.margin = "0.5rem";
+      el.className = "match-left";
       el.style.padding = "0.6rem 1rem";
+      el.style.margin = "0.4rem";
       el.style.border = "2px solid rgba(255,255,255,0.5)";
       el.style.borderRadius = "12px";
       el.style.textAlign = "center";
-      el.style.background = "rgba(255,255,255,0.08)";
+      el.style.cursor = "pointer";
 
-      el.ondragstart = e => {
+      if (!isTouch) {
+        el.draggable = true;
+        el.ondragstart = e =>
+          e.dataTransfer.setData("text/plain", item.id);
+      }
+
+      el.onclick = () => {
+        if (!isTouch) return;
+        selected = item.id;
+        [...leftDiv.children].forEach(c => c.style.opacity = "1");
         el.style.opacity = "0.5";
-        e.dataTransfer.setData("text/plain", item.id);
-      };
-
-      el.ondragend = () => {
-        el.style.opacity = "1";
       };
 
       leftDiv.appendChild(el);
@@ -191,53 +194,41 @@ document.addEventListener("DOMContentLoaded", () => {
       const el = document.createElement("div");
       el.textContent = item.support;
       el.dataset.id = item.id;
-
-      el.style.margin = "0.5rem";
       el.style.padding = "0.6rem 1rem";
+      el.style.margin = "0.4rem";
       el.style.border = "2px dashed rgba(255,255,255,0.4)";
       el.style.borderRadius = "12px";
       el.style.textAlign = "center";
-      el.style.background = "rgba(255,255,255,0.04)";
-      el.style.transition = "background 0.2s, border-color 0.2s";
 
-      el.ondragover = e => {
-        e.preventDefault();
-        el.style.borderColor = "#ffffff";
-        el.style.background = "rgba(255,255,255,0.12)";
-      };
-
-      el.ondragleave = () => {
-        el.style.borderColor = "rgba(255,255,255,0.4)";
-        el.style.background = "rgba(255,255,255,0.04)";
-      };
-
-      el.ondrop = e => {
-        e.preventDefault();
-        const draggedId = e.dataTransfer.getData("text/plain");
-
-        el.style.borderColor = "rgba(255,255,255,0.4)";
-        el.style.background = "rgba(255,255,255,0.04)";
-
+      const checkMatch = draggedId => {
         if (draggedId === item.id) {
+          el.textContent = "✓ " + el.textContent;
           el.style.background = "#4caf50";
           el.style.borderStyle = "solid";
-          el.textContent = "✓ " + el.textContent;
-          el.ondrop = null;
-
-          const dragged = [...leftDiv.children].find(c => c.dataset.id === draggedId);
-          dragged.style.visibility = "hidden";
-
           solved++;
           if (solved === pairs.length) {
             setTimeout(renderNext, 600);
           }
         } else {
           el.style.background = "#e57373";
-          setTimeout(() => {
-            el.style.background = "rgba(255,255,255,0.04)";
-          }, 300);
+          setTimeout(() => el.style.background = "", 300);
         }
       };
+
+      if (!isTouch) {
+        el.ondragover = e => e.preventDefault();
+        el.ondrop = e => {
+          e.preventDefault();
+          checkMatch(e.dataTransfer.getData("text/plain"));
+        };
+      } else {
+        el.onclick = () => {
+          if (!selected) return;
+          checkMatch(selected);
+          selected = null;
+          [...leftDiv.children].forEach(c => c.style.opacity = "1");
+        };
+      }
 
       rightDiv.appendChild(el);
     });
