@@ -1,65 +1,21 @@
 // scheduler.js — stable
 // Exercise 5 = guided recall
-// Exercise 6 = matching (consolidation)
+// Exercise 6 = matching (15%)
 
 (function () {
 
   function getConceptState(progress) {
-    if (!progress || progress.seen_stage1 === 0) return "NEW";
-    if (progress.seen_stage1 < 3) return "RECOGNIZING";
-    if (progress.seen_stage1 >= 3 && progress.stage2_attempts === 0) return "UNDERSTOOD";
-    if (progress.stage2_attempts > 0 && progress.stage2_correct < 2) return "RECALL_READY";
+    if (!progress) return "RECALL_READY"; // TEMP: Stage 2 unlocked
     if (progress.stage2_correct >= 2) return "STABLE";
-    return "UNDERSTOOD";
-  }
-
-  function introduced(run, cid) {
-    const p = run.concept_progress?.[cid];
-    return p && p.seen_stage1 >= 1;
-  }
-
-  function isGlueConcept(conceptId) {
-    const meta = window.VOCAB_INDEX?.[conceptId]?.concept;
-    if (!meta) return false;
-
-    return (
-      meta.type === "pronoun" ||
-      meta.type === "connector" ||
-      meta.type === "article" ||
-      meta.grammar === true
-    );
-  }
-
-  function pickTemplateForConcept(templates, run, conceptId) {
-    if (!Array.isArray(templates)) return null;
-
-    const candidates = templates.filter(t =>
-      Array.isArray(t.concepts) &&
-      t.concepts.includes(conceptId) &&
-      t.concepts.every(cid =>
-        introduced(run, cid) || isGlueConcept(cid)
-      )
-    );
-
-    return candidates.length ? candidates[0] : null;
+    return "RECALL_READY";
   }
 
   function getNextExercise(run, templates, vocabIndex) {
-    const progressMap = run.concept_progress || {};
-
-    const concepts = Object.keys(vocabIndex).map(cid => {
-      const prog = progressMap[cid] || {
-        seen_stage1: 0,
-        stage2_attempts: 0,
-        stage2_correct: 0
-      };
-
-      return {
-        concept_id: cid,
-        state: getConceptState(prog),
-        meta: vocabIndex[cid].concept
-      };
-    });
+    const concepts = Object.keys(vocabIndex).map(cid => ({
+      concept_id: cid,
+      state: getConceptState(run.concept_progress[cid]),
+      meta: vocabIndex[cid].concept
+    }));
 
     // ---------- Exercise 6 (matching) ----------
     const matchable = concepts.filter(c =>
@@ -67,36 +23,24 @@
       c.meta?.interaction_profile?.match === true
     );
 
-    const MATCH_COUNT = 3; // later → 5
-
-    if (matchable.length >= MATCH_COUNT && Math.random() < 0.15) {
+    if (matchable.length >= 3 && Math.random() < 0.15) {
       return {
         exercise_type: 6,
-        concept_ids: matchable
-          .slice(0, MATCH_COUNT)
-          .map(c => c.concept_id)
+        concept_ids: matchable.slice(0, 3).map(c => c.concept_id)
       };
     }
 
-    // ---------- Exercise 5 (guided recall) ----------
+    // ---------- Exercise 5 ----------
     const recallReady = concepts.find(c => c.state === "RECALL_READY");
     if (recallReady) {
       return {
         exercise_type: 5,
         concept_id: recallReady.concept_id,
-        template: pickTemplateForConcept(
-          templates,
-          run,
-          recallReady.concept_id
-        )
+        template: templates.find(t => t.concepts.includes(recallReady.concept_id))
       };
     }
 
-    return {
-      exercise_type: 3,
-      concept_id: null,
-      template: null
-    };
+    return { exercise_type: 5 };
   }
 
   window.Scheduler = { getNextExercise };
