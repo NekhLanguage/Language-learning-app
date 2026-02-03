@@ -1,7 +1,6 @@
-// app.js — Stage 1 + Stage 2 stable
-// Exercise 3 = sentence comprehension
-// Exercise 5 = guided recall (select correct word)
-// Exercise 6 = matching
+// app.js — stable Exercise 5 + Exercise 6
+// FIX: Exercise 5 blanks the correct concept word (not the first token)
+// and options come from the same concept type as the tested concept.
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -52,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       for (const [lang, langPack] of Object.entries(pack.languages)) {
         for (const [cid, forms] of Object.entries(langPack.forms)) {
+          if (!index[cid]) continue;
           index[cid].forms[lang] = forms;
         }
       }
@@ -74,16 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
       vocabIndex
     );
 
-    if (decision.exercise_type === 3) {
-      renderStage1(decision.template, decision.concept_id, vocabIndex);
-      return;
-    }
-
     if (decision.exercise_type === 6) {
+      renderRetries = 0;
       renderMatch(decision.concept_ids, vocabIndex);
       return;
     }
 
+    // Exercise 5 (guided recall selection)
     if (!decision.template) {
       renderRetries++;
       if (renderRetries >= MAX_RETRIES) {
@@ -96,105 +93,104 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    renderRetries = 0;
     renderSlot(decision.template, decision.concept_id, vocabIndex);
   }
 
   // ============================
-  // Exercise 3 — Stage 1
-  // ============================
-  function renderStage1(template, cid, vocabIndex) {
-    subtitle.textContent = "Understand the sentence";
-
-    const targetLang = targetSel.value;
-    const supportLang = supportSel.value;
-    const q = template.questions[0];
-
-    content.innerHTML = `
-      <div class="forms" style="font-size:1.2rem;margin-bottom:1rem;">
-        ${template.render[targetLang]}
-      </div>
-      <div class="forms" style="margin-bottom:0.75rem;">
-        ${q.prompt[supportLang]}
-      </div>
-      <div id="choices"></div>
-    `;
-
-    const choicesDiv = document.getElementById("choices");
-
-    q.choices.forEach(choiceCid => {
-      const btn = document.createElement("button");
-      btn.textContent =
-        vocabIndex[choiceCid].forms[supportLang][0];
-
-      btn.onclick = () => {
-        const p = window.__RUN__.concept_progress[cid] ?? {};
-        p.stage1_seen = (p.stage1_seen || 0) + 1;
-
-        if (choiceCid === q.answer) {
-          p.stage1_correct = (p.stage1_correct || 0) + 1;
-        }
-
-        window.__RUN__.concept_progress[cid] = p;
-        window.UserState.saveUser(window.__USER__);
-        renderNext();
-      };
-
-      choicesDiv.appendChild(btn);
-    });
-  }
-
-  // ============================
-  // Exercise 5 — Guided recall
+  // Exercise 5 — Guided recall (select correct word)
   // ============================
   function renderSlot(template, cid, vocabIndex) {
     subtitle.textContent = "Choose the missing word";
 
-    const tgt = template.render[targetSel.value].split(" ");
-    const sup = template.render[supportSel.value].split(" ");
+    const targetLang = targetSel.value;
+    const supportLang = supportSel.value;
+
+    const targetSentence = template.render?.[targetLang] || "";
+    const supportHint = (vocabIndex[cid]?.forms?.[supportLang]?.[0]) || cid;
+
+    const missingForms = vocabIndex[cid]?.forms?.[targetLang] || [];
+    const missingType = vocabIndex[cid]?.concept?.type || null;
+
+    // Replace the FIRST occurrence of any known target form with a blank.
+    // If we can't find it (e.g., conjugation mismatch), we show blank + sentence as fallback.
+    let maskedSentence = targetSentence;
+    let replaced = false;
+
+    for (const form of missingForms) {
+      if (!form) continue;
+      const escaped = escapeRegex(form);
+      const re = new RegExp(`\\b${escaped}\\b`);
+      if (re.test(maskedSentence)) {
+        maskedSentence = maskedSentence.replace(re, "_____");
+        replaced = true;
+        break;
+      }
+    }
+
+    if (!replaced) {
+      // Fallback: put blank at the front to avoid misleading “wrong word blanked”
+      maskedSentence = `_____ ${targetSentence}`;
+    }
 
     content.innerHTML = `
-      <div class="forms">
-        _____ ${tgt.slice(1).join(" ")} (${sup[1]})
+      <div class="forms" style="font-size:1.2rem;margin-bottom:0.75rem;">
+        ${escapeHtml(maskedSentence)}
+      </div>
+      <div class="forms" style="opacity:0.85;margin-bottom:0.75rem;">
+        (${escapeHtml(supportHint)})
       </div>
       <div id="choices"></div>
     `;
 
     const choices = document.getElementById("choices");
 
-    const options = Object.keys(vocabIndex)
-      .filter(c => vocabIndex[c].concept.type === "verb")
-      .slice(0, 4);
+    // Build options from same concept type as cid (verbs with verbs, pronouns with pronouns, etc.)
+    // Ensure each option has a target form.
+    const pool = Object.keys(vocabIndex).filter(xid => {
+      if (xid === cid) return false;
+      const meta = vocabIndex[xid]?.concept;
+      const forms = vocabIndex[xid]?.forms?.[targetLang];
+      if (!meta || !forms || !forms[0]) return false;
+      return missingType ? meta.type === missingType : true;
+    });
 
-    options.forEach(v => {
+    // Pick 3 distractors + correct answer = 4 options total
+    const distractors = shuffle(pool).slice(0, 3);
+    const optionIds = shuffle([cid, ...distractors]);
+
+    optionIds.forEach(optId => {
       const btn = document.createElement("button");
-      btn.textContent = vocabIndex[v].forms[targetSel.value][0];
+      btn.textContent = vocabIndex[optId].forms[targetLang][0];
+
       btn.onclick = () => {
         const p = window.__RUN__.concept_progress[cid] ?? {};
         p.stage2_attempts = (p.stage2_attempts || 0) + 1;
-        if (v === cid) {
-          p.stage2_correct = (p.stage2_correct || 0) + 1;
-        }
+        if (optId === cid) p.stage2_correct = (p.stage2_correct || 0) + 1;
         window.__RUN__.concept_progress[cid] = p;
         window.UserState.saveUser(window.__USER__);
         renderNext();
       };
+
       choices.appendChild(btn);
     });
   }
 
   // ============================
-  // Exercise 6 — Matching
+  // Exercise 6 — Drag & Drop Match (5 items)
   // ============================
   function renderMatch(conceptIds, vocabIndex) {
     subtitle.textContent = "Match the words";
 
+    const targetLang = targetSel.value;
+    const supportLang = supportSel.value;
+
     const pairs = conceptIds.slice(0, 5).map(cid => ({
       id: cid,
-      target: vocabIndex[cid].forms[targetSel.value][0],
-      support: vocabIndex[cid].forms[supportSel.value][0]
+      target: vocabIndex[cid].forms[targetLang][0],
+      support: vocabIndex[cid].forms[supportLang][0]
     }));
 
-    const shuffle = arr => arr.sort(() => Math.random() - 0.5);
     const left = shuffle([...pairs]);
     const right = shuffle([...pairs]);
 
@@ -202,9 +198,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     content.innerHTML = `
       <div style="display:flex;gap:3rem;justify-content:center;">
-        <div id="left"></div>
-        <div id="right"></div>
+        <div id="left" style="min-width:200px;"></div>
+        <div id="right" style="min-width:200px;"></div>
       </div>
+      <p class="forms" style="margin-top:1rem;opacity:0.8;text-align:center;">
+        Drag the words on the left to their meanings on the right
+      </p>
     `;
 
     const leftDiv = document.getElementById("left");
@@ -215,12 +214,24 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent = item.target;
       el.draggable = true;
       el.dataset.id = item.id;
+
       el.style.cursor = "grab";
       el.style.margin = "0.5rem";
       el.style.padding = "0.6rem 1rem";
       el.style.border = "2px solid rgba(255,255,255,0.5)";
-      el.ondragstart = e =>
+      el.style.borderRadius = "12px";
+      el.style.textAlign = "center";
+      el.style.background = "rgba(255,255,255,0.08)";
+
+      el.ondragstart = e => {
+        el.style.opacity = "0.5";
         e.dataTransfer.setData("text/plain", item.id);
+      };
+
+      el.ondragend = () => {
+        el.style.opacity = "1";
+      };
+
       leftDiv.appendChild(el);
     });
 
@@ -228,23 +239,76 @@ document.addEventListener("DOMContentLoaded", () => {
       const el = document.createElement("div");
       el.textContent = item.support;
       el.dataset.id = item.id;
+
       el.style.margin = "0.5rem";
       el.style.padding = "0.6rem 1rem";
       el.style.border = "2px dashed rgba(255,255,255,0.4)";
-      el.ondragover = e => e.preventDefault();
+      el.style.borderRadius = "12px";
+      el.style.textAlign = "center";
+      el.style.background = "rgba(255,255,255,0.04)";
+      el.style.transition = "background 0.2s, border-color 0.2s";
+
+      el.ondragover = e => {
+        e.preventDefault();
+        el.style.borderColor = "#ffffff";
+        el.style.background = "rgba(255,255,255,0.12)";
+      };
+
+      el.ondragleave = () => {
+        el.style.borderColor = "rgba(255,255,255,0.4)";
+        el.style.background = "rgba(255,255,255,0.04)";
+      };
+
       el.ondrop = e => {
         e.preventDefault();
         const draggedId = e.dataTransfer.getData("text/plain");
+
+        el.style.borderColor = "rgba(255,255,255,0.4)";
+        el.style.background = "rgba(255,255,255,0.04)";
+
         if (draggedId === item.id) {
+          el.style.background = "#4caf50";
+          el.style.borderStyle = "solid";
           el.textContent = "✓ " + el.textContent;
+          el.ondrop = null;
+
+          const dragged = [...leftDiv.children].find(c => c.dataset.id === draggedId);
+          dragged.style.visibility = "hidden";
+
           solved++;
           if (solved === pairs.length) {
             setTimeout(renderNext, 600);
           }
+        } else {
+          el.style.background = "#e57373";
+          setTimeout(() => {
+            el.style.background = "rgba(255,255,255,0.04)";
+          }, 300);
         }
       };
+
       rightDiv.appendChild(el);
     });
+  }
+
+  // --------------------
+  // Helpers
+  // --------------------
+  function shuffle(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+  }
+
+  function escapeRegex(str) {
+    return String(str).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
 });
