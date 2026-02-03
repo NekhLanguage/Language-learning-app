@@ -1,5 +1,5 @@
 // app.js — stable Exercise 5 + Exercise 6
-// Exercise 6 = DRAG-AND-DROP matching (target → support)
+// Exercise 6 = drag-and-drop matching (5 items, improved UX)
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ============================
-  // Exercise 6 — Drag & Drop Match
+  // Exercise 6 — Drag & Drop Match (5 items)
   // ============================
   function renderMatch(conceptIds, vocabIndex) {
     subtitle.textContent = "Match the words";
@@ -136,14 +136,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const targetLang = targetSel.value;
     const supportLang = supportSel.value;
 
-    const pairs = conceptIds.map(cid => ({
+    const pairs = conceptIds.slice(0, 5).map(cid => ({
       id: cid,
       target: vocabIndex[cid].forms[targetLang][0],
       support: vocabIndex[cid].forms[supportLang][0]
     }));
 
     const shuffle = arr => arr.sort(() => Math.random() - 0.5);
-
     const left = shuffle([...pairs]);
     const right = shuffle([...pairs]);
 
@@ -151,9 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     content.innerHTML = `
       <div style="display:flex;gap:3rem;justify-content:center;">
-        <div id="left"></div>
-        <div id="right"></div>
+        <div id="left" style="min-width:200px;"></div>
+        <div id="right" style="min-width:200px;"></div>
       </div>
+      <p class="forms" style="margin-top:1rem;opacity:0.8;text-align:center;">
+        Drag the words on the left to their meanings on the right
+      </p>
     `;
 
     const leftDiv = document.getElementById("left");
@@ -164,13 +166,22 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent = item.target;
       el.draggable = true;
       el.dataset.id = item.id;
+
       el.style.cursor = "grab";
       el.style.margin = "0.5rem";
-      el.style.padding = "0.5rem 1rem";
-      el.style.border = "1px solid white";
+      el.style.padding = "0.6rem 1rem";
+      el.style.border = "2px solid rgba(255,255,255,0.5)";
+      el.style.borderRadius = "12px";
+      el.style.textAlign = "center";
+      el.style.background = "rgba(255,255,255,0.08)";
 
       el.ondragstart = e => {
+        el.style.opacity = "0.5";
         e.dataTransfer.setData("text/plain", item.id);
+      };
+
+      el.ondragend = () => {
+        el.style.opacity = "1";
       };
 
       leftDiv.appendChild(el);
@@ -180,18 +191,36 @@ document.addEventListener("DOMContentLoaded", () => {
       const el = document.createElement("div");
       el.textContent = item.support;
       el.dataset.id = item.id;
-      el.style.margin = "0.5rem";
-      el.style.padding = "0.5rem 1rem";
-      el.style.border = "1px solid white";
 
-      el.ondragover = e => e.preventDefault();
+      el.style.margin = "0.5rem";
+      el.style.padding = "0.6rem 1rem";
+      el.style.border = "2px dashed rgba(255,255,255,0.4)";
+      el.style.borderRadius = "12px";
+      el.style.textAlign = "center";
+      el.style.background = "rgba(255,255,255,0.04)";
+      el.style.transition = "background 0.2s, border-color 0.2s";
+
+      el.ondragover = e => {
+        e.preventDefault();
+        el.style.borderColor = "#ffffff";
+        el.style.background = "rgba(255,255,255,0.12)";
+      };
+
+      el.ondragleave = () => {
+        el.style.borderColor = "rgba(255,255,255,0.4)";
+        el.style.background = "rgba(255,255,255,0.04)";
+      };
 
       el.ondrop = e => {
         e.preventDefault();
         const draggedId = e.dataTransfer.getData("text/plain");
 
+        el.style.borderColor = "rgba(255,255,255,0.4)";
+        el.style.background = "rgba(255,255,255,0.04)";
+
         if (draggedId === item.id) {
           el.style.background = "#4caf50";
+          el.style.borderStyle = "solid";
           el.textContent = "✓ " + el.textContent;
           el.ondrop = null;
 
@@ -200,11 +229,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
           solved++;
           if (solved === pairs.length) {
-            setTimeout(renderNext, 500);
+            setTimeout(renderNext, 600);
           }
         } else {
           el.style.background = "#e57373";
-          setTimeout(() => (el.style.background = ""), 300);
+          setTimeout(() => {
+            el.style.background = "rgba(255,255,255,0.04)";
+          }, 300);
         }
       };
 
