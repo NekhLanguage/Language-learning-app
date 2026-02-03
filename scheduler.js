@@ -1,6 +1,6 @@
 // scheduler.js — stable
 // Exercise 5 = guided recall
-// Exercise 6 = matching (15%)
+// Exercise 6 = matching (fallback + 15% interleave)
 
 (function () {
 
@@ -17,12 +17,19 @@
       meta: vocabIndex[cid].concept
     }));
 
-    // ---------- Exercise 6 (matching) ----------
+    // ---------- Exercise 6 (matching candidates) ----------
     const matchable = concepts.filter(c =>
       c.state === "STABLE" &&
       c.meta?.interaction_profile?.match === true
     );
 
+    // ---------- Exercise 5 (recall candidates WITH templates) ----------
+    const recallWithTemplate = concepts.filter(c =>
+      c.state === "RECALL_READY" &&
+      templates.some(t => t.concepts.includes(c.concept_id))
+    );
+
+    // ---------- Interleave matching (15%) ----------
     if (matchable.length >= 3 && Math.random() < 0.15) {
       return {
         exercise_type: 6,
@@ -30,17 +37,26 @@
       };
     }
 
-    // ---------- Exercise 5 ----------
-    const recallReady = concepts.find(c => c.state === "RECALL_READY");
-    if (recallReady) {
+    // ---------- Primary recall path ----------
+    if (recallWithTemplate.length > 0) {
+      const c = recallWithTemplate[0];
       return {
         exercise_type: 5,
-        concept_id: recallReady.concept_id,
-        template: templates.find(t => t.concepts.includes(recallReady.concept_id))
+        concept_id: c.concept_id,
+        template: templates.find(t => t.concepts.includes(c.concept_id))
       };
     }
 
-    return { exercise_type: 5 };
+    // ---------- Fallback: matching ----------
+    if (matchable.length >= 3) {
+      return {
+        exercise_type: 6,
+        concept_ids: matchable.slice(0, 3).map(c => c.concept_id)
+      };
+    }
+
+    // ---------- Nothing valid ----------
+    return { exercise_type: null };
   }
 
   window.Scheduler = { getNextExercise };
