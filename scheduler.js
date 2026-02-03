@@ -1,6 +1,6 @@
 // scheduler.js — stable
 // Exercise 5 = guided recall
-// Exercise 6 = matching (temporary bridge until Stage 1 exists)
+// Exercise 6 = matching (5 items, demo-friendly)
 
 (function () {
 
@@ -22,17 +22,17 @@
       c.meta?.interaction_profile?.match === true
     );
 
-    // ---------- Exercise 5 candidates (MUST have template) ----------
+    // ---------- Exercise 5 candidates (must have template) ----------
     const recallWithTemplate = concepts.filter(c =>
       c.state === "RECALL_READY" &&
       templates.some(t => t.concepts.includes(c.concept_id))
     );
 
     // ---------- Interleave matching (15%) ----------
-    if (matchable.length >= 3 && Math.random() < 0.15) {
+    if (matchable.length >= 5 && Math.random() < 0.15) {
       return {
         exercise_type: 6,
-        concept_ids: matchable.slice(0, 3).map(c => c.concept_id)
+        concept_ids: matchable.slice(0, 5).map(c => c.concept_id)
       };
     }
 
@@ -47,10 +47,10 @@
     }
 
     // ---------- Fallback: matching ----------
-    if (matchable.length >= 3) {
+    if (matchable.length >= 5) {
       return {
         exercise_type: 6,
-        concept_ids: matchable.slice(0, 3).map(c => c.concept_id)
+        concept_ids: matchable.slice(0, 5).map(c => c.concept_id)
       };
     }
 
