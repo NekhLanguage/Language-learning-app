@@ -66,7 +66,6 @@ async function loadVocabIndex() {
   return index;
 }
 
-// Main render loop
 async function renderNext() {
   subtitle.textContent = "Choose the missing word";
   content.innerHTML = "Loading...";
@@ -76,7 +75,15 @@ async function renderNext() {
     loadVocabIndex()
   ]);
 
+  // TEMP: seed Stage 1 exposure so Stage 2 can run
+  const run = window.__RUN__;
+  ["EAT", "FOOD"].forEach(cid => {
+    run.concept_progress[cid] ??= {};
+    run.concept_progress[cid].seen_stage1 ??= 3;
+  });
+
   const d = Scheduler.getNextExercise(window.__RUN__, templates, vocabIndex);
+
   if (!d.template) {
     content.innerHTML = "Waiting for recall-ready concept.";
     return;
@@ -84,6 +91,7 @@ async function renderNext() {
 
   renderSlot(d.template, d.concept_id, targetSel.value, supportSel.value, vocabIndex);
 }
+
 
 // Slot exercise
 function renderSlot(template, cid, targetLang, supportLang, vocabIndex) {
