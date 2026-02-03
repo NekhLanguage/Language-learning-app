@@ -1,5 +1,5 @@
 // app.js — stable Exercise 5 + Exercise 6
-// Exercise 6 = active matching (target ↔ support)
+// Exercise 6 = DRAG-AND-DROP matching (target → support)
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -33,8 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadTemplates() {
     const res = await fetch("sentence_templates.json");
-    const json = await res.json();
-    return json.templates;
+    return (await res.json()).templates;
   }
 
   async function loadVocab() {
@@ -73,19 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
       vocabIndex
     );
 
-    // Exercise 6 — matching
     if (decision.exercise_type === 6) {
       renderRetries = 0;
       renderMatch(decision.concept_ids, vocabIndex);
       return;
     }
 
-    // Recall exercise must have template
     if (!decision.template) {
-      console.warn(
-        "Invalid recall decision (no template):",
-        decision.concept_id
-      );
       renderRetries++;
       if (renderRetries >= MAX_RETRIES) {
         subtitle.textContent = "No valid exercises available";
@@ -135,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ============================
-  // Exercise 6 — Active Matching
+  // Exercise 6 — Drag & Drop Match
   // ============================
   function renderMatch(conceptIds, vocabIndex) {
     subtitle.textContent = "Match the words";
@@ -154,11 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const left = shuffle([...pairs]);
     const right = shuffle([...pairs]);
 
-    let selectedLeft = null;
-    const solved = new Set();
+    let solved = 0;
 
     content.innerHTML = `
-      <div style="display:flex;gap:2rem;justify-content:center;">
+      <div style="display:flex;gap:3rem;justify-content:center;">
         <div id="left"></div>
         <div id="right"></div>
       </div>
@@ -168,44 +160,55 @@ document.addEventListener("DOMContentLoaded", () => {
     const rightDiv = document.getElementById("right");
 
     left.forEach(item => {
-      const btn = document.createElement("button");
-      btn.textContent = item.target;
-      btn.onclick = () => {
-        selectedLeft = item;
-        [...leftDiv.children].forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
+      const el = document.createElement("div");
+      el.textContent = item.target;
+      el.draggable = true;
+      el.dataset.id = item.id;
+      el.style.cursor = "grab";
+      el.style.margin = "0.5rem";
+      el.style.padding = "0.5rem 1rem";
+      el.style.border = "1px solid white";
+
+      el.ondragstart = e => {
+        e.dataTransfer.setData("text/plain", item.id);
       };
-      leftDiv.appendChild(btn);
+
+      leftDiv.appendChild(el);
     });
 
     right.forEach(item => {
-      const btn = document.createElement("button");
-      btn.textContent = item.support;
-      btn.onclick = () => {
-        if (!selectedLeft) return;
+      const el = document.createElement("div");
+      el.textContent = item.support;
+      el.dataset.id = item.id;
+      el.style.margin = "0.5rem";
+      el.style.padding = "0.5rem 1rem";
+      el.style.border = "1px solid white";
 
-        if (item.id === selectedLeft.id) {
-          solved.add(item.id);
-          btn.disabled = true;
+      el.ondragover = e => e.preventDefault();
 
-          [...leftDiv.children].forEach(b => {
-            if (b.textContent === selectedLeft.target) {
-              b.disabled = true;
-              b.classList.remove("selected");
-            }
-          });
+      el.ondrop = e => {
+        e.preventDefault();
+        const draggedId = e.dataTransfer.getData("text/plain");
 
-          selectedLeft = null;
+        if (draggedId === item.id) {
+          el.style.background = "#4caf50";
+          el.textContent = "✓ " + el.textContent;
+          el.ondrop = null;
 
-          if (solved.size === pairs.length) {
-            setTimeout(renderNext, 400);
+          const dragged = [...leftDiv.children].find(c => c.dataset.id === draggedId);
+          dragged.style.visibility = "hidden";
+
+          solved++;
+          if (solved === pairs.length) {
+            setTimeout(renderNext, 500);
           }
         } else {
-          btn.classList.add("wrong");
-          setTimeout(() => btn.classList.remove("wrong"), 300);
+          el.style.background = "#e57373";
+          setTimeout(() => (el.style.background = ""), 300);
         }
       };
-      rightDiv.appendChild(btn);
+
+      rightDiv.appendChild(el);
     });
   }
 
