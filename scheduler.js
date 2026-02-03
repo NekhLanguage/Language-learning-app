@@ -1,11 +1,11 @@
 // scheduler.js — stable
 // Exercise 5 = guided recall
-// Exercise 6 = matching (fallback + 15% interleave)
+// Exercise 6 = matching (temporary bridge until Stage 1 exists)
 
 (function () {
 
   function getConceptState(progress) {
-    if (!progress) return "RECALL_READY"; // TEMP: Stage 2 unlocked
+    if (!progress) return "RECALL_READY"; // TEMP bridge
     if (progress.stage2_correct >= 2) return "STABLE";
     return "RECALL_READY";
   }
@@ -17,13 +17,12 @@
       meta: vocabIndex[cid].concept
     }));
 
-    // ---------- Exercise 6 (matching candidates) ----------
+    // ---------- Exercise 6 candidates (TEMP: allow recall-ready) ----------
     const matchable = concepts.filter(c =>
-      c.state === "STABLE" &&
       c.meta?.interaction_profile?.match === true
     );
 
-    // ---------- Exercise 5 (recall candidates WITH templates) ----------
+    // ---------- Exercise 5 candidates (MUST have template) ----------
     const recallWithTemplate = concepts.filter(c =>
       c.state === "RECALL_READY" &&
       templates.some(t => t.concepts.includes(c.concept_id))
@@ -37,7 +36,7 @@
       };
     }
 
-    // ---------- Primary recall path ----------
+    // ---------- Primary recall ----------
     if (recallWithTemplate.length > 0) {
       const c = recallWithTemplate[0];
       return {
@@ -55,7 +54,6 @@
       };
     }
 
-    // ---------- Nothing valid ----------
     return { exercise_type: null };
   }
 
