@@ -95,7 +95,15 @@ document.addEventListener("DOMContentLoaded", () => {
       loadTemplates(),
       loadVocabIndex()
     ]);
+    // TEMP Stage-1 exposure bridge
+// Required until Stage-1 is scheduler-driven
+const run = window.__RUN__;
+Object.keys(vocabIndex).forEach(cid => {
+  run.concept_progress[cid] ??= {};
+  run.concept_progress[cid].seen_stage1 ??= 3;
+});
 
+    
     const decision = Scheduler.getNextExercise(
       run,
       templates,
