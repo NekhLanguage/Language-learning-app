@@ -1,3 +1,6 @@
+console.log("APP.JS EXECUTING");
+
+
 // app.js — Scheduler-driven Exercise 5 (TEMP Stage-1 seeding)
 
 const startScreen = document.getElementById("start-screen");
