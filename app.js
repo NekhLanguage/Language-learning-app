@@ -74,13 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
       loadVocabIndex()
     ]);
 
-    // ---- TEMP Stage-1 bridge (single source of truth) ----
-    Object.keys(vocabIndex).forEach(cid => {
-      run.concept_progress[cid] ??= {};
-      if (run.concept_progress[cid].seen_stage1 == null) {
-        run.concept_progress[cid].seen_stage1 = 3;
-      }
-    });
+   Object.keys(vocabIndex).forEach(cid => {
+  run.concept_progress[cid] ??= {};
+
+  // Stage 1 exposure bridge
+  if (run.concept_progress[cid].seen_stage1 == null) {
+    run.concept_progress[cid].seen_stage1 = 3;
+  }
+
+  // Stage 2 entry bridge (only once)
+  if (run.concept_progress[cid].stage2_attempts == null) {
+    run.concept_progress[cid].stage2_attempts = 1;
+    run.concept_progress[cid].stage2_correct = 0;
+  }
+});
+
 
     const decision = Scheduler.getNextExercise(run, templates, vocabIndex);
 
