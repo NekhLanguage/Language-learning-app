@@ -1,9 +1,12 @@
-// app.js — STABLE BASELINE
+// app.js — STABLE + INTERACTIVE
+// VERSION: v0.9.0-ex6-interactive
 // Exercise 3 = Stage 1 comprehension
 // Exercise 5 = Guided recall (blank + question + single hint + feedback)
-// Exercise 6 = Matching (non-interactive, confirm wiring)
+// Exercise 6 = Interactive matching (desktop drag + mobile tap)
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  const VERSION = "v0.9.0-ex6-interactive";
 
   // --------------------
   // DOM
@@ -17,6 +20,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const subtitle = document.getElementById("session-subtitle");
   const targetSel = document.getElementById("targetLang");
   const supportSel = document.getElementById("supportLang");
+
+  const isTouch =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  // --------------------
+  // Version stamp (visible)
+  // --------------------
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div style="
+      position:fixed;
+      bottom:4px;
+      right:6px;
+      font-size:10px;
+      opacity:0.5;
+      z-index:9999;
+    ">${VERSION}</div>`
+  );
+
+  console.log("APP LOADED:", VERSION);
 
   // --------------------
   // User state
@@ -142,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const q = template.questions[0];
 
     let sentence = template.render[tl];
-
     for (const f of vocabIndex[cid].forms[tl]) {
       const re = new RegExp(`\\b${escapeRegex(f)}\\b`, "i");
       if (re.test(sentence)) {
@@ -168,10 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.onclick = () => {
         const correct = opt === cid;
-
         [...choices.children].forEach(b => b.disabled = true);
-        btn.style.background = correct ? "#4caf50" : "#e57373";
 
+        btn.style.background = correct ? "#4caf50" : "#e57373";
         if (!correct) {
           [...choices.children].forEach(b => {
             if (b.textContent === vocabIndex[cid].forms[tl][0]) {
@@ -182,9 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const p = window.__RUN__.concept_progress[cid] ?? {};
         p.stage2_attempts = (p.stage2_attempts || 0) + 1;
-        if (correct) {
-          p.stage2_correct = (p.stage2_correct || 0) + 1;
-        }
+        if (correct) p.stage2_correct = (p.stage2_correct || 0) + 1;
         window.__RUN__.concept_progress[cid] = p;
 
         setTimeout(renderNext, correct ? 600 : 900);
@@ -195,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Exercise 6 — Matching (WIRING CONFIRMATION)
+     Exercise 6 — Matching (interactive)
      ========================= */
   function renderExercise6(ids, vocabIndex) {
     subtitle.textContent = "Exercise 6";
@@ -203,23 +222,88 @@ document.addEventListener("DOMContentLoaded", () => {
     const tl = targetSel.value;
     const sl = supportSel.value;
 
+    const pairs = ids.map(cid => ({
+      id: cid,
+      left: vocabIndex[cid].forms[tl][0],
+      right: vocabIndex[cid].forms[sl][0]
+    }));
+
+    const shuffle = arr => arr.sort(() => Math.random() - 0.5);
+    const left = shuffle([...pairs]);
+    const right = shuffle([...pairs]);
+
+    let selected = null;
+    let solved = 0;
+
     content.innerHTML = `
-      <div class="forms">Match the words (temporary view)</div>
-      <div id="pairs"></div>
-      <button id="continue">Continue</button>
+      <div class="forms">
+        ${isTouch ? "Tap a word, then tap its meaning" : "Drag the word to its meaning"}
+      </div>
+      <div style="display:flex;gap:2rem;">
+        <div id="left"></div>
+        <div id="right"></div>
+      </div>
     `;
 
-    const pairs = document.getElementById("pairs");
+    const leftDiv = document.getElementById("left");
+    const rightDiv = document.getElementById("right");
 
-    ids.forEach(cid => {
-      const row = document.createElement("div");
-      row.className = "forms";
-      row.textContent =
-        `${vocabIndex[cid].forms[tl][0]} — ${vocabIndex[cid].forms[sl][0]}`;
-      pairs.appendChild(row);
+    left.forEach(item => {
+      const el = document.createElement("button");
+      el.textContent = item.left;
+      el.dataset.id = item.id;
+
+      if (!isTouch) {
+        el.draggable = true;
+        el.ondragstart = e => e.dataTransfer.setData("text/plain", item.id);
+      }
+
+      el.onclick = () => {
+        if (!isTouch) return;
+        selected = item.id;
+        [...leftDiv.children].forEach(b => b.style.opacity = "1");
+        el.style.opacity = "0.5";
+      };
+
+      leftDiv.appendChild(el);
     });
 
-    document.getElementById("continue").onclick = renderNext;
+    right.forEach(item => {
+      const el = document.createElement("button");
+      el.textContent = item.right;
+      el.dataset.id = item.id;
+
+      const check = draggedId => {
+        if (draggedId === item.id) {
+          el.style.background = "#4caf50";
+          el.disabled = true;
+          solved++;
+          if (solved === pairs.length) {
+            setTimeout(renderNext, 600);
+          }
+        } else {
+          el.style.background = "#e57373";
+          setTimeout(() => el.style.background = "", 300);
+        }
+      };
+
+      if (!isTouch) {
+        el.ondragover = e => e.preventDefault();
+        el.ondrop = e => {
+          e.preventDefault();
+          check(e.dataTransfer.getData("text/plain"));
+        };
+      } else {
+        el.onclick = () => {
+          if (!selected) return;
+          check(selected);
+          selected = null;
+          [...leftDiv.children].forEach(b => b.style.opacity = "1");
+        };
+      }
+
+      rightDiv.appendChild(el);
+    });
   }
 
   function escapeRegex(str) {
