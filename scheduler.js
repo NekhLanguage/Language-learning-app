@@ -1,7 +1,7 @@
-// scheduler.js — Stage 1 introduced
-// Exercise 3 = sentence comprehension
-// Exercise 5 = guided recall (select word)
-// Exercise 6 = matching
+// scheduler.js — current, correct version
+// Exercise 3 = Stage 1 comprehension
+// Exercise 5 = Stage 2 guided recall (question-driven)
+// Exercise 6 = Stage 2 matching
 
 (function () {
 
@@ -26,7 +26,10 @@
       };
     });
 
-    // ---------- Stage 1: Exercise 3 ----------
+    /* =====================================================
+       Stage 1 — Exercise 3 (sentence comprehension)
+       ===================================================== */
+
     const stage1Candidates = concepts.filter(c =>
       (c.state === "NEW" || c.state === "SEEN") &&
       templates.some(t => t.concepts.includes(c.concept_id))
@@ -41,7 +44,10 @@
       };
     }
 
-    // ---------- Exercise 6 (interleave, demo-friendly) ----------
+    /* =====================================================
+       Stage 2 — Exercise 6 (matching, interleaved)
+       ===================================================== */
+
     const matchable = concepts.filter(c =>
       c.meta?.interaction_profile?.match === true
     );
@@ -53,28 +59,48 @@
       };
     }
 
-    // ---------- Stage 2: Exercise 5 ----------
-    const recallCandidates = concepts.filter(c =>
-      c.state === "RECALL_READY" &&
-      templates.some(t => t.concepts.includes(c.concept_id))
-    );
+    /* =====================================================
+       Stage 2 — Exercise 5 (guided recall, CORRECT)
+       ===================================================== */
+
+    const recallCandidates = templates
+      .map(t => {
+        const q = t.questions?.[0];
+        if (!q) return null;
+
+        const answerCid = q.answer;
+        const concept = concepts.find(c => c.concept_id === answerCid);
+        if (!concept) return null;
+
+        return { template: t, concept };
+      })
+      .filter(x => x && x.concept.state === "RECALL_READY");
 
     if (recallCandidates.length > 0) {
-      const c = recallCandidates[0];
+      const { template } = recallCandidates[0];
+      const q = template.questions[0];
+
       return {
         exercise_type: 5,
-        concept_id: c.concept_id,
-        template: templates.find(t => t.concepts.includes(c.concept_id))
+        concept_id: q.answer, // 🔒 authoritative concept
+        template
       };
     }
 
-    // ---------- Fallback: matching ----------
+    /* =====================================================
+       Fallback — Exercise 6 (matching)
+       ===================================================== */
+
     if (matchable.length >= 5) {
       return {
         exercise_type: 6,
         concept_ids: matchable.slice(0, 5).map(c => c.concept_id)
       };
     }
+
+    /* =====================================================
+       No valid exercise
+       ===================================================== */
 
     return { exercise_type: null };
   }
