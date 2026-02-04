@@ -1,7 +1,6 @@
-// app.js — Stage 1 + Stage 2 stable
-// Exercise 3 = sentence comprehension
-// Exercise 5 = guided recall (select correct word, ONE support hint)
-// Exercise 6 = matching
+// app.js — DEBUG VERSION
+// TEMP: exercise numbering enabled for clarity
+// REMOVE numbering once behavior is confirmed
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -76,42 +75,48 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (decision.exercise_type === 3) {
+      renderExerciseHeader(3, "Stage 1 – Comprehension");
       renderStage1(decision.template, decision.concept_id, vocabIndex);
       return;
     }
 
+    if (decision.exercise_type === 5) {
+      renderExerciseHeader(5, "Stage 2 – Guided Recall");
+      renderSlot(decision.template, decision.concept_id, vocabIndex);
+      return;
+    }
+
     if (decision.exercise_type === 6) {
+      renderExerciseHeader(6, "Stage 2 – Matching");
       renderMatch(decision.concept_ids, vocabIndex);
       return;
     }
 
-    if (!decision.template) {
-      renderRetries++;
-      if (renderRetries >= MAX_RETRIES) {
-        subtitle.textContent = "No valid exercises available";
-        content.innerHTML =
-          "<div class='forms'>You’ve completed all available recall items.</div>";
-        return;
-      }
-      renderNext();
-      return;
-    }
+    console.error("Unknown exercise type:", decision);
+    content.innerHTML = "<div class='forms'>⚠ Unknown exercise</div>";
+  }
 
-    renderRetries = 0;
-    renderSlot(decision.template, decision.concept_id, vocabIndex);
+  // --------------------
+  // Exercise header (TEMP)
+  // --------------------
+  function renderExerciseHeader(num, label) {
+    subtitle.textContent = `Exercise ${num}`;
+    content.innerHTML = `
+      <div class="forms" style="opacity:0.6;margin-bottom:0.5rem;">
+        [Exercise ${num} – ${label}]
+      </div>
+    `;
   }
 
   // ============================
   // Exercise 3 — Stage 1
   // ============================
   function renderStage1(template, cid, vocabIndex) {
-    subtitle.textContent = "Understand the sentence";
-
     const targetLang = targetSel.value;
     const supportLang = supportSel.value;
     const q = template.questions[0];
 
-    content.innerHTML = `
+    content.innerHTML += `
       <div class="forms" style="font-size:1.2rem;margin-bottom:1rem;">
         ${template.render[targetLang]}
       </div>
@@ -125,94 +130,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     q.choices.forEach(choiceCid => {
       const btn = document.createElement("button");
-      btn.textContent =
-        vocabIndex[choiceCid].forms[supportLang][0];
-
-      btn.onclick = () => {
-        const p = window.__RUN__.concept_progress[cid] ?? {};
-        p.stage1_seen = (p.stage1_seen || 0) + 1;
-
-        if (choiceCid === q.answer) {
-          p.stage1_correct = (p.stage1_correct || 0) + 1;
-        }
-
-        window.__RUN__.concept_progress[cid] = p;
-        window.UserState.saveUser(window.__USER__);
-        renderNext();
-      };
-
+      btn.textContent = vocabIndex[choiceCid].forms[supportLang][0];
+      btn.onclick = () => renderNext();
       choicesDiv.appendChild(btn);
     });
   }
 
   // ============================
-  // Exercise 5 — Guided recall (FIXED)
+  // Exercise 5 — Guided Recall
   // ============================
   function renderSlot(template, cid, vocabIndex) {
-    subtitle.textContent = "Choose the missing word";
-
     const targetLang = targetSel.value;
     const supportLang = supportSel.value;
+    const q = template.questions?.[0];
 
-    const targetSentence = template.render?.[targetLang] || "";
-    const missingForms = vocabIndex[cid]?.forms?.[targetLang] || [];
+    let sentence = template.render[targetLang];
+    const forms = vocabIndex[cid]?.forms?.[targetLang] || [];
 
-    let maskedSentence = targetSentence;
-    let replaced = false;
-
-    // Case-insensitive replacement of the correct surface form
-    for (const form of missingForms) {
-      if (!form) continue;
-      const escaped = escapeRegex(form);
-      const re = new RegExp(`\\b${escaped}\\b`, "i");
-      if (re.test(maskedSentence)) {
-        maskedSentence = maskedSentence.replace(re, "_____");
-        replaced = true;
+    for (const f of forms) {
+      const re = new RegExp(`\\b${escapeRegex(f)}\\b`, "i");
+      if (re.test(sentence)) {
+        sentence = sentence.replace(re, "_____");
         break;
       }
     }
 
-    if (!replaced) {
-      console.warn("Could not blank concept in sentence:", cid, targetSentence);
-    }
-
-    // 🔒 ONE support-language hint only
-    const supportForms = vocabIndex[cid]?.forms?.[supportLang] || [];
-    const supportHint = supportForms[0] || "";
-
-    content.innerHTML = `
+    content.innerHTML += `
       <div class="forms" style="font-size:1.2rem;margin-bottom:0.75rem;">
-        ${escapeHtml(maskedSentence)}
+        ${sentence}
       </div>
-      <div class="forms" style="opacity:0.85;margin-bottom:0.75rem;">
-        (${escapeHtml(supportHint)})
+      <div class="forms" style="margin-bottom:0.75rem;">
+        ${q?.prompt?.[supportLang] || "⚠ Missing question"}
       </div>
       <div id="choices"></div>
     `;
 
     const choicesDiv = document.getElementById("choices");
 
-    // Use template-defined semantic constraints if available
-    const q = template.questions?.[0];
-    const optionIds = q?.choices?.length
-      ? q.choices
-      : shuffle([cid]);
-
-    optionIds.forEach(optId => {
+    q.choices.forEach(optId => {
       const btn = document.createElement("button");
       btn.textContent = vocabIndex[optId].forms[targetLang][0];
-
-      btn.onclick = () => {
-        const p = window.__RUN__.concept_progress[cid] ?? {};
-        p.stage2_attempts = (p.stage2_attempts || 0) + 1;
-        if (optId === cid) {
-          p.stage2_correct = (p.stage2_correct || 0) + 1;
-        }
-        window.__RUN__.concept_progress[cid] = p;
-        window.UserState.saveUser(window.__USER__);
-        renderNext();
-      };
-
+      btn.onclick = () => renderNext();
       choicesDiv.appendChild(btn);
     });
   }
@@ -221,84 +179,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Exercise 6 — Matching
   // ============================
   function renderMatch(conceptIds, vocabIndex) {
-    subtitle.textContent = "Match the words";
-
-    const pairs = conceptIds.slice(0, 5).map(cid => ({
-      id: cid,
-      target: vocabIndex[cid].forms[targetSel.value][0],
-      support: vocabIndex[cid].forms[supportSel.value][0]
-    }));
-
-    const left = shuffle([...pairs]);
-    const right = shuffle([...pairs]);
-
-    let solved = 0;
-
-    content.innerHTML = `
-      <div style="display:flex;gap:3rem;justify-content:center;">
-        <div id="left"></div>
-        <div id="right"></div>
-      </div>
+    content.innerHTML += `
+      <div class="forms">[Matching exercise placeholder]</div>
     `;
-
-    const leftDiv = document.getElementById("left");
-    const rightDiv = document.getElementById("right");
-
-    left.forEach(item => {
-      const el = document.createElement("div");
-      el.textContent = item.target;
-      el.draggable = true;
-      el.dataset.id = item.id;
-      el.style.cursor = "grab";
-      el.style.margin = "0.5rem";
-      el.style.padding = "0.6rem 1rem";
-      el.style.border = "2px solid rgba(255,255,255,0.5)";
-      el.ondragstart = e =>
-        e.dataTransfer.setData("text/plain", item.id);
-      leftDiv.appendChild(el);
-    });
-
-    right.forEach(item => {
-      const el = document.createElement("div");
-      el.textContent = item.support;
-      el.dataset.id = item.id;
-      el.style.margin = "0.5rem";
-      el.style.padding = "0.6rem 1rem";
-      el.style.border = "2px dashed rgba(255,255,255,0.4)";
-      el.ondragover = e => e.preventDefault();
-      el.ondrop = e => {
-        e.preventDefault();
-        const draggedId = e.dataTransfer.getData("text/plain");
-        if (draggedId === item.id) {
-          el.textContent = "✓ " + el.textContent;
-          solved++;
-          if (solved === pairs.length) {
-            setTimeout(renderNext, 600);
-          }
-        }
-      };
-      rightDiv.appendChild(el);
-    });
-  }
-
-  // --------------------
-  // Helpers
-  // --------------------
-  function shuffle(arr) {
-    return arr.sort(() => Math.random() - 0.5);
   }
 
   function escapeRegex(str) {
     return String(str).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
   }
 
 });
