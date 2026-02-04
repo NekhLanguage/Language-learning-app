@@ -1,7 +1,7 @@
-// app.js — FINAL, WORKING ENTRY POINT
+// app.js — STABLE BASELINE
 // Exercise 3 = Stage 1 comprehension
-// Exercise 5 = Guided recall (question + single hint + feedback)
-// Exercise 6 = Matching
+// Exercise 5 = Guided recall (blank + question + single hint + feedback)
+// Exercise 6 = Matching (non-interactive, confirm wiring)
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -98,9 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
     content.innerHTML = "<div class='forms'>No valid exercise.</div>";
   }
 
-  // =========================
-  // Exercise 3 — Stage 1
-  // =========================
+  /* =========================
+     Exercise 3 — Stage 1
+     ========================= */
   function renderExercise3(template, cid, vocabIndex) {
     subtitle.textContent = "Exercise 3";
 
@@ -121,7 +121,9 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = vocabIndex[opt].forms[sl][0];
       btn.onclick = () => {
         const p = window.__RUN__.concept_progress[cid] ?? {};
-        p.stage1_correct = (p.stage1_correct || 0) + (opt === q.answer ? 1 : 0);
+        if (opt === q.answer) {
+          p.stage1_correct = (p.stage1_correct || 0) + 1;
+        }
         window.__RUN__.concept_progress[cid] = p;
         renderNext();
       };
@@ -129,9 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =========================
-  // Exercise 5 — Guided Recall
-  // =========================
+  /* =========================
+     Exercise 5 — Guided Recall
+     ========================= */
   function renderExercise5(template, cid, vocabIndex) {
     subtitle.textContent = "Exercise 5";
 
@@ -140,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const q = template.questions[0];
 
     let sentence = template.render[tl];
+
     for (const f of vocabIndex[cid].forms[tl]) {
       const re = new RegExp(`\\b${escapeRegex(f)}\\b`, "i");
       if (re.test(sentence)) {
@@ -165,9 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.onclick = () => {
         const correct = opt === cid;
-        [...choices.children].forEach(b => b.disabled = true);
 
+        [...choices.children].forEach(b => b.disabled = true);
         btn.style.background = correct ? "#4caf50" : "#e57373";
+
         if (!correct) {
           [...choices.children].forEach(b => {
             if (b.textContent === vocabIndex[cid].forms[tl][0]) {
@@ -178,7 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const p = window.__RUN__.concept_progress[cid] ?? {};
         p.stage2_attempts = (p.stage2_attempts || 0) + 1;
-        if (correct) p.stage2_correct = (p.stage2_correct || 0) + 1;
+        if (correct) {
+          p.stage2_correct = (p.stage2_correct || 0) + 1;
+        }
         window.__RUN__.concept_progress[cid] = p;
 
         setTimeout(renderNext, correct ? 600 : 900);
@@ -188,12 +194,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =========================
-  // Exercise 6 — Matching
-  // =========================
+  /* =========================
+     Exercise 6 — Matching (WIRING CONFIRMATION)
+     ========================= */
   function renderExercise6(ids, vocabIndex) {
     subtitle.textContent = "Exercise 6";
-    content.innerHTML = "<div class='forms'>[Matching exercise]</div>";
+
+    const tl = targetSel.value;
+    const sl = supportSel.value;
+
+    content.innerHTML = `
+      <div class="forms">Match the words (temporary view)</div>
+      <div id="pairs"></div>
+      <button id="continue">Continue</button>
+    `;
+
+    const pairs = document.getElementById("pairs");
+
+    ids.forEach(cid => {
+      const row = document.createElement("div");
+      row.className = "forms";
+      row.textContent =
+        `${vocabIndex[cid].forms[tl][0]} — ${vocabIndex[cid].forms[sl][0]}`;
+      pairs.appendChild(row);
+    });
+
+    document.getElementById("continue").onclick = renderNext;
   }
 
   function escapeRegex(str) {
