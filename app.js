@@ -1,21 +1,50 @@
-// app.js — FINAL
+// app.js — FINAL, WORKING ENTRY POINT
 // Exercise 3 = Stage 1 comprehension
-// Exercise 5 = Guided recall (with question + single hint + feedback)
+// Exercise 5 = Guided recall (question + single hint + feedback)
 // Exercise 6 = Matching
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  // --------------------
+  // DOM
+  // --------------------
+  const startScreen = document.getElementById("start-screen");
+  const learningScreen = document.getElementById("learning-screen");
+  const openAppBtn = document.getElementById("open-app");
+  const quitBtn = document.getElementById("quit-learning");
 
   const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
   const targetSel = document.getElementById("targetLang");
   const supportSel = document.getElementById("supportLang");
 
+  // --------------------
+  // User state
+  // --------------------
   const u = window.UserState.ensureUser();
   window.__USER__ = u;
   window.__RUN__ = u.runs[u.current_run_id];
 
+  // --------------------
+  // Entry / Exit
+  // --------------------
+  openAppBtn.onclick = () => {
+    startScreen.classList.remove("active");
+    learningScreen.classList.add("active");
+    renderNext();
+  };
+
+  quitBtn.onclick = () => {
+    learningScreen.classList.remove("active");
+    startScreen.classList.add("active");
+  };
+
+  // --------------------
+  // Loaders
+  // --------------------
   async function loadTemplates() {
-    return (await fetch("sentence_templates.json")).json().then(j => j.templates);
+    const res = await fetch("sentence_templates.json", { cache: "no-store" });
+    return (await res.json()).templates;
   }
 
   async function loadVocab() {
@@ -39,7 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return index;
   }
 
+  // --------------------
+  // Main loop
+  // --------------------
   async function renderNext() {
+    subtitle.textContent = "Loading…";
+    content.innerHTML = "Loading…";
+
     const [templates, vocabIndex] = await Promise.all([
       loadTemplates(),
       loadVocab()
@@ -52,24 +87,26 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     if (decision.exercise_type === 3)
-      return renderStage1(decision.template, decision.concept_id, vocabIndex);
+      return renderExercise3(decision.template, decision.concept_id, vocabIndex);
 
     if (decision.exercise_type === 5)
       return renderExercise5(decision.template, decision.concept_id, vocabIndex);
 
     if (decision.exercise_type === 6)
-      return renderMatch(decision.concept_ids, vocabIndex);
+      return renderExercise6(decision.concept_ids, vocabIndex);
+
+    content.innerHTML = "<div class='forms'>No valid exercise.</div>";
   }
 
-  /* =========================
-     Exercise 3 — Stage 1
-     ========================= */
-  function renderStage1(template, cid, vocabIndex) {
+  // =========================
+  // Exercise 3 — Stage 1
+  // =========================
+  function renderExercise3(template, cid, vocabIndex) {
     subtitle.textContent = "Exercise 3";
 
-    const q = template.questions[0];
     const tl = targetSel.value;
     const sl = supportSel.value;
+    const q = template.questions[0];
 
     content.innerHTML = `
       <div class="forms">${template.render[tl]}</div>
@@ -77,22 +114,24 @@ document.addEventListener("DOMContentLoaded", () => {
       <div id="choices"></div>
     `;
 
-    q.choices.forEach(c => {
-      const b = document.createElement("button");
-      b.textContent = vocabIndex[c].forms[sl][0];
-      b.onclick = () => {
+    const choices = document.getElementById("choices");
+
+    q.choices.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = vocabIndex[opt].forms[sl][0];
+      btn.onclick = () => {
         const p = window.__RUN__.concept_progress[cid] ?? {};
-        p.stage1_correct = (p.stage1_correct || 0) + (c === q.answer ? 1 : 0);
+        p.stage1_correct = (p.stage1_correct || 0) + (opt === q.answer ? 1 : 0);
         window.__RUN__.concept_progress[cid] = p;
         renderNext();
       };
-      choices.appendChild(b);
+      choices.appendChild(btn);
     });
   }
 
-  /* =========================
-     Exercise 5 — Guided Recall
-     ========================= */
+  // =========================
+  // Exercise 5 — Guided Recall
+  // =========================
   function renderExercise5(template, cid, vocabIndex) {
     subtitle.textContent = "Exercise 5";
 
@@ -101,9 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const q = template.questions[0];
 
     let sentence = template.render[tl];
-    const forms = vocabIndex[cid].forms[tl];
-
-    for (const f of forms) {
+    for (const f of vocabIndex[cid].forms[tl]) {
       const re = new RegExp(`\\b${escapeRegex(f)}\\b`, "i");
       if (re.test(sentence)) {
         sentence = sentence.replace(re, "_____");
@@ -120,19 +157,22 @@ document.addEventListener("DOMContentLoaded", () => {
       <div id="choices"></div>
     `;
 
+    const choices = document.getElementById("choices");
+
     q.choices.forEach(opt => {
-      const b = document.createElement("button");
-      b.textContent = vocabIndex[opt].forms[tl][0];
+      const btn = document.createElement("button");
+      btn.textContent = vocabIndex[opt].forms[tl][0];
 
-      b.onclick = () => {
+      btn.onclick = () => {
         const correct = opt === cid;
-        [...choices.children].forEach(x => x.disabled = true);
+        [...choices.children].forEach(b => b.disabled = true);
 
-        b.style.background = correct ? "#4caf50" : "#e57373";
+        btn.style.background = correct ? "#4caf50" : "#e57373";
         if (!correct) {
-          [...choices.children].forEach(x => {
-            if (x.textContent === vocabIndex[cid].forms[tl][0])
-              x.style.background = "#4caf50";
+          [...choices.children].forEach(b => {
+            if (b.textContent === vocabIndex[cid].forms[tl][0]) {
+              b.style.background = "#4caf50";
+            }
           });
         }
 
@@ -144,21 +184,20 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(renderNext, correct ? 600 : 900);
       };
 
-      choices.appendChild(b);
+      choices.appendChild(btn);
     });
   }
 
-  /* =========================
-     Exercise 6 — Matching
-     ========================= */
-  function renderMatch(ids, vocabIndex) {
+  // =========================
+  // Exercise 6 — Matching
+  // =========================
+  function renderExercise6(ids, vocabIndex) {
     subtitle.textContent = "Exercise 6";
-    content.innerHTML = "[Matching exercise placeholder]";
+    content.innerHTML = "<div class='forms'>[Matching exercise]</div>";
   }
 
   function escapeRegex(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
-  renderNext();
 });
