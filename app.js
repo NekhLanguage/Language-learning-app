@@ -1,14 +1,11 @@
-// app.js — FIXED
-// VERSION: v0.10.1-ex4-fix
-// Exercise 3, 4, 5, 6 — all wired correctly
+// app.js — Stage 1 + Stage 2
+// VERSION: v0.11.0-ex1-exposure
+// Exercise 1, 3, 4, 5, 6 implemented
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const VERSION = "v0.10.1-ex4-fix";
+  const VERSION = "v0.11.0-ex1-exposure";
 
-  // --------------------
-  // DOM
-  // --------------------
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
   const openAppBtn = document.getElementById("open-app");
@@ -19,31 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const targetSel = document.getElementById("targetLang");
   const supportSel = document.getElementById("supportLang");
 
-  const isTouch =
-    "ontouchstart" in window || navigator.maxTouchPoints > 0;
-
-  // --------------------
-  // Version stamp
-  // --------------------
   document.body.insertAdjacentHTML(
     "beforeend",
-    `<div style="position:fixed;bottom:4px;right:6px;font-size:10px;opacity:0.5;z-index:9999;">
+    `<div style="position:fixed;bottom:4px;right:6px;font-size:10px;opacity:0.5;">
       ${VERSION}
     </div>`
   );
 
-  console.log("APP LOADED:", VERSION);
-
-  // --------------------
-  // User state
-  // --------------------
   const u = window.UserState.ensureUser();
   window.__USER__ = u;
   window.__RUN__ = u.runs[u.current_run_id];
 
-  // --------------------
-  // Entry / Exit
-  // --------------------
   openAppBtn.onclick = () => {
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
@@ -55,9 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     startScreen.classList.add("active");
   };
 
-  // --------------------
-  // Loaders
-  // --------------------
   async function loadTemplates() {
     return (await fetch("sentence_templates.json", { cache: "no-store" }).then(r => r.json())).templates;
   }
@@ -71,9 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const index = {};
     for (const pack of packs) {
-      for (const c of pack.concepts) {
-        index[c.concept_id] = { concept: c, forms: {} };
-      }
+      for (const c of pack.concepts) index[c.concept_id] = { concept: c, forms: {} };
       for (const [lang, lp] of Object.entries(pack.languages)) {
         for (const [cid, forms] of Object.entries(lp.forms)) {
           if (index[cid]) index[cid].forms[lang] = forms;
@@ -83,9 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return index;
   }
 
-  // --------------------
-  // Main loop
-  // --------------------
   async function renderNext() {
     subtitle.textContent = "Loading…";
     content.innerHTML = "Loading…";
@@ -97,12 +72,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const d = Scheduler.getNextExercise(window.__RUN__, templates, vocabIndex);
 
+    if (d.exercise_type === 1) return renderExercise1(d.template, d.concept_id, vocabIndex);
     if (d.exercise_type === 3) return renderExercise3(d.template, d.concept_id, vocabIndex);
     if (d.exercise_type === 4) return renderExercise4(d.concept_id, vocabIndex);
     if (d.exercise_type === 5) return renderExercise5(d.template, d.concept_id, vocabIndex);
     if (d.exercise_type === 6) return renderExercise6(d.concept_ids, vocabIndex);
 
     content.innerHTML = "<div class='forms'>No valid exercise</div>";
+  }
+
+  /* =========================
+     Exercise 1 — Exposure
+     ========================= */
+  function renderExercise1(template, cid, vocabIndex) {
+    subtitle.textContent = "Exercise 1";
+
+    const tl = targetSel.value;
+    const sl = supportSel.value;
+
+    content.innerHTML = `
+      <div class="forms" style="font-size:1.4rem;">
+        ${vocabIndex[cid].forms[tl][0]}
+      </div>
+      <div class="forms" style="opacity:0.8;">
+        (${vocabIndex[cid].forms[sl][0]})
+      </div>
+      <div class="forms" style="margin-top:1rem;">
+        ${template.render[tl]}
+      </div>
+      <button id="continue">Continue</button>
+    `;
+
+    document.getElementById("continue").onclick = () => {
+      const p = window.__RUN__.concept_progress[cid] ?? {};
+      p.stage1_seen = (p.stage1_seen || 0) + 1;
+      window.__RUN__.concept_progress[cid] = p;
+      renderNext();
+    };
   }
 
   /* =========================
@@ -128,16 +134,16 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = vocabIndex[opt].forms[sl][0];
 
       btn.onclick = () => {
-        const correct = opt === q.answer;
+        const ok = opt === q.answer;
         [...choices.children].forEach(b => b.disabled = true);
-        btn.style.background = correct ? "#4caf50" : "#e57373";
+        btn.style.background = ok ? "#4caf50" : "#e57373";
 
         const p = window.__RUN__.concept_progress[cid] ?? {};
         p.stage1_seen = (p.stage1_seen || 0) + 1;
-        if (correct) p.stage1_correct = (p.stage1_correct || 0) + 1;
+        if (ok) p.stage1_correct = (p.stage1_correct || 0) + 1;
         window.__RUN__.concept_progress[cid] = p;
 
-        setTimeout(renderNext, correct ? 600 : 900);
+        setTimeout(renderNext, ok ? 600 : 900);
       };
 
       choices.appendChild(btn);
@@ -260,9 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let solved = 0;
 
     content.innerHTML = `
-      <div class="forms">
-        ${isTouch ? "Tap a word, then tap its meaning" : "Drag the word to its meaning"}
-      </div>
+      <div class="forms">Match the words</div>
       <div style="display:flex;gap:2rem;">
         <div id="left"></div>
         <div id="right"></div>
@@ -277,13 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent = item.left;
       el.dataset.id = item.id;
 
-      if (!isTouch) {
-        el.draggable = true;
-        el.ondragstart = e => e.dataTransfer.setData("text/plain", item.id);
-      }
-
       el.onclick = () => {
-        if (!isTouch) return;
         selected = item.id;
         [...leftDiv.children].forEach(b => b.style.opacity = "1");
         el.style.opacity = "0.5";
@@ -297,8 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
       el.textContent = item.right;
       el.dataset.id = item.id;
 
-      const check = draggedId => {
-        if (draggedId === item.id) {
+      el.onclick = () => {
+        if (!selected) return;
+        if (selected === item.id) {
           el.style.background = "#4caf50";
           el.disabled = true;
           solved++;
@@ -309,22 +308,9 @@ document.addEventListener("DOMContentLoaded", () => {
           el.style.background = "#e57373";
           setTimeout(() => el.style.background = "", 300);
         }
+        selected = null;
+        [...leftDiv.children].forEach(b => b.style.opacity = "1");
       };
-
-      if (!isTouch) {
-        el.ondragover = e => e.preventDefault();
-        el.ondrop = e => {
-          e.preventDefault();
-          check(e.dataTransfer.getData("text/plain"));
-        };
-      } else {
-        el.onclick = () => {
-          if (!selected) return;
-          check(selected);
-          selected = null;
-          [...leftDiv.children].forEach(b => b.style.opacity = "1");
-        };
-      }
 
       rightDiv.appendChild(el);
     });

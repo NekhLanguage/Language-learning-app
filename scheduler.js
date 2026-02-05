@@ -1,8 +1,9 @@
 // scheduler.js — Stage 1 + Stage 2
-// Exercise 3 = comprehension
-// Exercise 4 = click correct word
-// Exercise 5 = guided recall
-// Exercise 6 = matching
+// Exercise 1 = Exposure (word + context)
+// Exercise 3 = Comprehension
+// Exercise 4 = Click correct word
+// Exercise 5 = Guided recall
+// Exercise 6 = Matching
 
 (function () {
 
@@ -26,9 +27,26 @@
       };
     });
 
-    /* =========================
-       Stage 1 — Exercise 3
-       ========================= */
+    /* =====================================================
+       Stage 1 — Exercise 1 (Exposure: word + context)
+       ===================================================== */
+    const exposureCandidates = concepts.filter(c =>
+      c.state === "NEW" &&
+      templates.some(t => t.concepts.includes(c.concept_id))
+    );
+
+    if (exposureCandidates.length > 0) {
+      const c = exposureCandidates[0];
+      return {
+        exercise_type: 1,
+        concept_id: c.concept_id,
+        template: templates.find(t => t.concepts.includes(c.concept_id))
+      };
+    }
+
+    /* =====================================================
+       Stage 1 — Exercise 3 (Comprehension)
+       ===================================================== */
     const stage1WithTemplate = concepts.filter(c =>
       (c.state === "NEW" || c.state === "SEEN") &&
       templates.some(t => t.concepts.includes(c.concept_id))
@@ -43,9 +61,9 @@
       };
     }
 
-    /* =========================
-       Stage 1 — Exercise 4
-       ========================= */
+    /* =====================================================
+       Stage 1 — Exercise 4 (Click correct word)
+       ===================================================== */
     const stage1WordOnly = concepts.filter(c =>
       (c.state === "NEW" || c.state === "SEEN")
     );
@@ -57,9 +75,9 @@
       };
     }
 
-    /* =========================
-       Stage 2 — Exercise 6
-       ========================= */
+    /* =====================================================
+       Stage 2 — Exercise 6 (Matching, interleaved)
+       ===================================================== */
     const matchable = concepts.filter(c =>
       c.meta?.interaction_profile?.match === true
     );
@@ -71,9 +89,9 @@
       };
     }
 
-    /* =========================
-       Stage 2 — Exercise 5
-       ========================= */
+    /* =====================================================
+       Stage 2 — Exercise 5 (Guided recall)
+       ===================================================== */
     const recallCandidates = templates
       .map(t => {
         const q = t.questions?.[0];
