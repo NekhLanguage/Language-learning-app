@@ -32,6 +32,141 @@
           "answer": "THIRD_PERSON_SINGULAR"
         }
       ]
+    },
+
+    {
+      "template_id": "PRON_READ_BOOK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SECOND_PERSON",
+        "THIRD_PERSON_SINGULAR",
+        "READ",
+        "BOOK"
+      ],
+      "stage": 1,
+      "exercise": "comprehension",
+      "render": {
+        "pt": "Eu leio um livro.",
+        "en": "I read a book.",
+        "ja": "私は本を読む。"
+      },
+      "questions": [
+        {
+          "type": "who_is_acting",
+          "prompt": {
+            "en": "Who reads a book?",
+            "pt": "Quem lê um livro?",
+            "ja": "誰が本を読みますか？"
+          },
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "THIRD_PERSON_SINGULAR"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        }
+      ]
+    },
+
+    {
+      "template_id": "PRON_SEE_PERSON",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SECOND_PERSON",
+        "THIRD_PERSON_SINGULAR",
+        "SEE",
+        "PERSON"
+      ],
+      "stage": 1,
+      "exercise": "comprehension",
+      "render": {
+        "pt": "Eu vejo uma pessoa.",
+        "en": "I see a person.",
+        "ja": "私は人を見る。"
+      },
+      "questions": [
+        {
+          "type": "who_is_acting",
+          "prompt": {
+            "en": "Who sees a person?",
+            "pt": "Quem vê uma pessoa?",
+            "ja": "誰が人を見ますか？"
+          },
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "THIRD_PERSON_SINGULAR"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        }
+      ]
+    },
+
+    {
+      "template_id": "PRON_SLEEP",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SECOND_PERSON",
+        "THIRD_PERSON_SINGULAR",
+        "SLEEP"
+      ],
+      "stage": 1,
+      "exercise": "comprehension",
+      "render": {
+        "pt": "Ele dorme.",
+        "en": "He sleeps.",
+        "ja": "彼は寝る。"
+      },
+      "questions": [
+        {
+          "type": "who_is_acting",
+          "prompt": {
+            "en": "Who sleeps?",
+            "pt": "Quem dorme?",
+            "ja": "誰が寝ますか？"
+          },
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "THIRD_PERSON_SINGULAR"
+          ],
+          "answer": "THIRD_PERSON_SINGULAR"
+        }
+      ]
+    },
+
+    {
+      "template_id": "PRON_GO_PLACE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SECOND_PERSON",
+        "THIRD_PERSON_SINGULAR",
+        "GO",
+        "PLACE"
+      ],
+      "stage": 1,
+      "exercise": "comprehension",
+      "render": {
+        "pt": "Eu vou a um lugar.",
+        "en": "I go to a place.",
+        "ja": "私は場所に行く。"
+      },
+      "questions": [
+        {
+          "type": "who_is_acting",
+          "prompt": {
+            "en": "Who goes to a place?",
+            "pt": "Quem vai a um lugar?",
+            "ja": "誰が場所に行きますか？"
+          },
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "THIRD_PERSON_SINGULAR"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        }
+      ]
     }
   ]
 }
