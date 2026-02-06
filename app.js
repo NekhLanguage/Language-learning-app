@@ -1,10 +1,9 @@
-// app.js — Stage 1 + Stage 2
-// VERSION: v0.11.0-ex1-exposure
-// Exercise 1, 3, 4, 5, 6 implemented
+// app.js — Step 1+2 memory recording
+// VERSION: v0.12.0-memory-step12
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const VERSION = "v0.11.0-ex1-exposure";
+  const VERSION = "v0.12.0-memory-step12";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -26,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const u = window.UserState.ensureUser();
   window.__USER__ = u;
   window.__RUN__ = u.runs[u.current_run_id];
+
+  // --- STEP 1: initialize memory ---
+  if (window.__RUN__.step_counter === undefined) window.__RUN__.step_counter = 0;
+  if (!Array.isArray(window.__RUN__.history)) window.__RUN__.history = [];
 
   openAppBtn.onclick = () => {
     startScreen.classList.remove("active");
@@ -81,6 +84,31 @@ document.addEventListener("DOMContentLoaded", () => {
     content.innerHTML = "<div class='forms'>No valid exercise</div>";
   }
 
+  // --- helper to record result ---
+  function recordResult(concept_id, exercise_type, result) {
+    const run = window.__RUN__;
+    run.step_counter++;
+
+    run.history.push({
+      step: run.step_counter,
+      concept_id,
+      exercise_type,
+      result
+    });
+
+    const p = run.concept_progress[concept_id] ?? {};
+    if (!p.exercise_streaks) p.exercise_streaks = {};
+
+    if (result === "correct") {
+      p.exercise_streaks[exercise_type] =
+        (p.exercise_streaks[exercise_type] || 0) + 1;
+    } else if (result === "incorrect") {
+      p.exercise_streaks[exercise_type] = 0;
+    }
+
+    run.concept_progress[concept_id] = p;
+  }
+
   /* =========================
      Exercise 1 — Exposure
      ========================= */
@@ -91,28 +119,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const sl = supportSel.value;
 
     content.innerHTML = `
-      <div class="forms" style="font-size:1.4rem;">
-        ${vocabIndex[cid].forms[tl][0]}
-      </div>
-      <div class="forms" style="opacity:0.8;">
-        (${vocabIndex[cid].forms[sl][0]})
-      </div>
-      <div class="forms" style="margin-top:1rem;">
-        ${template.render[tl]}
-      </div>
+      <div class="forms">${vocabIndex[cid].forms[tl][0]}</div>
+      <div class="forms">(${vocabIndex[cid].forms[sl][0]})</div>
+      <div class="forms">${template.render[tl]}</div>
       <button id="continue">Continue</button>
     `;
 
     document.getElementById("continue").onclick = () => {
-      const p = window.__RUN__.concept_progress[cid] ?? {};
-      p.stage1_seen = (p.stage1_seen || 0) + 1;
-      window.__RUN__.concept_progress[cid] = p;
+      recordResult(cid, 1, "neutral");
       renderNext();
     };
   }
 
   /* =========================
-     Exercise 3 — Stage 1
+     Exercise 3 — Comprehension
      ========================= */
   function renderExercise3(template, cid, vocabIndex) {
     subtitle.textContent = "Exercise 3";
@@ -135,14 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.onclick = () => {
         const ok = opt === q.answer;
-        [...choices.children].forEach(b => b.disabled = true);
-        btn.style.background = ok ? "#4caf50" : "#e57373";
-
-        const p = window.__RUN__.concept_progress[cid] ?? {};
-        p.stage1_seen = (p.stage1_seen || 0) + 1;
-        if (ok) p.stage1_correct = (p.stage1_correct || 0) + 1;
-        window.__RUN__.concept_progress[cid] = p;
-
+        recordResult(cid, 3, ok ? "correct" : "incorrect");
         setTimeout(renderNext, ok ? 600 : 900);
       };
 
@@ -179,13 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.onclick = () => {
         const ok = opt === cid;
-        [...choices.children].forEach(b => b.disabled = true);
-        btn.style.background = ok ? "#4caf50" : "#e57373";
-
-        const p = window.__RUN__.concept_progress[cid] ?? {};
-        if (ok) p.stage1_correct = (p.stage1_correct || 0) + 1;
-        window.__RUN__.concept_progress[cid] = p;
-
+        recordResult(cid, 4, ok ? "correct" : "incorrect");
         setTimeout(renderNext, ok ? 600 : 900);
       };
 
@@ -194,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Exercise 5 — Guided Recall
+     Exercise 5 — Guided recall
      ========================= */
   function renderExercise5(template, cid, vocabIndex) {
     subtitle.textContent = "Exercise 5";
@@ -212,12 +219,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    const hint = vocabIndex[cid].forms[sl][0];
-
     content.innerHTML = `
       <div class="forms">${sentence}</div>
       <div class="forms">${q.prompt[sl]}</div>
-      <div class="forms">(${hint})</div>
+      <div class="forms">(${vocabIndex[cid].forms[sl][0]})</div>
       <div id="choices"></div>
     `;
 
@@ -229,14 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.onclick = () => {
         const ok = opt === cid;
-        [...choices.children].forEach(b => b.disabled = true);
-        btn.style.background = ok ? "#4caf50" : "#e57373";
-
-        const p = window.__RUN__.concept_progress[cid] ?? {};
-        p.stage2_attempts = (p.stage2_attempts || 0) + 1;
-        if (ok) p.stage2_correct = (p.stage2_correct || 0) + 1;
-        window.__RUN__.concept_progress[cid] = p;
-
+        recordResult(cid, 5, ok ? "correct" : "incorrect");
         setTimeout(renderNext, ok ? 600 : 900);
       };
 
@@ -259,61 +257,15 @@ document.addEventListener("DOMContentLoaded", () => {
       right: vocabIndex[cid].forms[sl][0]
     }));
 
-    const left = shuffle([...pairs]);
-    const right = shuffle([...pairs]);
-
-    let selected = null;
-    let solved = 0;
-
     content.innerHTML = `
       <div class="forms">Match the words</div>
-      <div style="display:flex;gap:2rem;">
-        <div id="left"></div>
-        <div id="right"></div>
-      </div>
+      <button id="continue">Continue</button>
     `;
 
-    const leftDiv = document.getElementById("left");
-    const rightDiv = document.getElementById("right");
-
-    left.forEach(item => {
-      const el = document.createElement("button");
-      el.textContent = item.left;
-      el.dataset.id = item.id;
-
-      el.onclick = () => {
-        selected = item.id;
-        [...leftDiv.children].forEach(b => b.style.opacity = "1");
-        el.style.opacity = "0.5";
-      };
-
-      leftDiv.appendChild(el);
-    });
-
-    right.forEach(item => {
-      const el = document.createElement("button");
-      el.textContent = item.right;
-      el.dataset.id = item.id;
-
-      el.onclick = () => {
-        if (!selected) return;
-        if (selected === item.id) {
-          el.style.background = "#4caf50";
-          el.disabled = true;
-          solved++;
-          if (solved === pairs.length) {
-            setTimeout(renderNext, 600);
-          }
-        } else {
-          el.style.background = "#e57373";
-          setTimeout(() => el.style.background = "", 300);
-        }
-        selected = null;
-        [...leftDiv.children].forEach(b => b.style.opacity = "1");
-      };
-
-      rightDiv.appendChild(el);
-    });
+    document.getElementById("continue").onclick = () => {
+      recordResult(ids[0], 6, "neutral");
+      renderNext();
+    };
   }
 
   function shuffle(arr) {
