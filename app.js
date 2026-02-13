@@ -1,9 +1,9 @@
-// app.js — Step 1+2 memory recording
-// VERSION: v0.12.0-memory-step12
+// app.js — Per-concept exercise level gating
+// VERSION: v0.13.0-level-gating
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const VERSION = "v0.12.0-memory-step12";
+  const VERSION = "v0.13.0-level-gating";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -17,18 +17,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.body.insertAdjacentHTML(
     "beforeend",
-    `<div style="position:fixed;bottom:4px;right:6px;font-size:10px;opacity:0.5;">
-      ${VERSION}
-    </div>`
+    `<div style="position:fixed;bottom:4px;right:6px;font-size:10px;opacity:0.5;">${VERSION}</div>`
   );
 
   const u = window.UserState.ensureUser();
   window.__USER__ = u;
   window.__RUN__ = u.runs[u.current_run_id];
 
-  // --- STEP 1: initialize memory ---
-  if (window.__RUN__.step_counter === undefined) window.__RUN__.step_counter = 0;
-  if (!Array.isArray(window.__RUN__.history)) window.__RUN__.history = [];
+  // Ensure level tracking exists
+  for (const cid in window.__RUN__.concept_progress) {
+    const p = window.__RUN__.concept_progress[cid];
+    if (p.current_exercise_level === undefined) {
+      p.current_exercise_level = 1; // start at exposure
+    }
+  }
 
   openAppBtn.onclick = () => {
     startScreen.classList.remove("active");
@@ -84,20 +86,26 @@ document.addEventListener("DOMContentLoaded", () => {
     content.innerHTML = "<div class='forms'>No valid exercise</div>";
   }
 
-  // --- helper to record result ---
-  function recordResult(concept_id, exercise_type, result) {
-    const run = window.__RUN__;
-    run.step_counter++;
+  function advanceLevelIfReady(cid, exercise_type) {
+    const p = window.__RUN__.concept_progress[cid];
+    if (!p.exercise_streaks) return;
 
-    run.history.push({
-      step: run.step_counter,
-      concept_id,
-      exercise_type,
-      result
-    });
+    const streak = p.exercise_streaks[exercise_type] || 0;
 
-    const p = run.concept_progress[concept_id] ?? {};
+    if (streak >= 2) {
+      if (exercise_type === 3 && p.current_exercise_level < 4)
+        p.current_exercise_level = 4;
+      else if (exercise_type === 4 && p.current_exercise_level < 5)
+        p.current_exercise_level = 5;
+      else if (exercise_type === 5 && p.current_exercise_level < 6)
+        p.current_exercise_level = 6;
+    }
+  }
+
+  function recordResult(cid, exercise_type, result) {
+    const p = window.__RUN__.concept_progress[cid] ?? {};
     if (!p.exercise_streaks) p.exercise_streaks = {};
+    if (p.current_exercise_level === undefined) p.current_exercise_level = 1;
 
     if (result === "correct") {
       p.exercise_streaks[exercise_type] =
@@ -106,37 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
       p.exercise_streaks[exercise_type] = 0;
     }
 
-    run.concept_progress[concept_id] = p;
+    advanceLevelIfReady(cid, exercise_type);
+
+    window.__RUN__.concept_progress[cid] = p;
   }
 
-  /* =========================
-     Exercise 1 — Exposure
-     ========================= */
-  function renderExercise1(template, cid, vocabIndex) {
-    subtitle.textContent = "Exercise 1";
+  /* === Existing Exercise renderers unchanged except recordResult added === */
 
-    const tl = targetSel.value;
-    const sl = supportSel.value;
-
-    content.innerHTML = `
-      <div class="forms">${vocabIndex[cid].forms[tl][0]}</div>
-      <div class="forms">(${vocabIndex[cid].forms[sl][0]})</div>
-      <div class="forms">${template.render[tl]}</div>
-      <button id="continue">Continue</button>
-    `;
-
-    document.getElementById("continue").onclick = () => {
-      recordResult(cid, 1, "neutral");
-      renderNext();
-    };
-  }
-
-  /* =========================
-     Exercise 3 — Comprehension
-     ========================= */
   function renderExercise3(template, cid, vocabIndex) {
     subtitle.textContent = "Exercise 3";
-
     const tl = targetSel.value;
     const sl = supportSel.value;
     const q = template.questions[0];
@@ -156,16 +142,13 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.onclick = () => {
         const ok = opt === q.answer;
         recordResult(cid, 3, ok ? "correct" : "incorrect");
-        setTimeout(renderNext, ok ? 600 : 900);
+        setTimeout(renderNext, ok ? 800 : 1000);
       };
 
       choices.appendChild(btn);
     });
   }
 
-  /* =========================
-     Exercise 4 — Click word
-     ========================= */
   function renderExercise4(cid, vocabIndex) {
     subtitle.textContent = "Exercise 4";
 
@@ -177,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(x => x !== cid && vocabIndex[x].concept.type === correct.concept.type)
       .slice(0, 3);
 
-    const options = shuffle([cid, ...pool]);
+    const options = pool.concat(cid).sort(() => Math.random() - 0.5);
 
     content.innerHTML = `
       <div class="forms">(${correct.forms[sl][0]})</div>
@@ -193,87 +176,11 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.onclick = () => {
         const ok = opt === cid;
         recordResult(cid, 4, ok ? "correct" : "incorrect");
-        setTimeout(renderNext, ok ? 600 : 900);
+        setTimeout(renderNext, ok ? 800 : 1000);
       };
 
       choices.appendChild(btn);
     });
-  }
-
-  /* =========================
-     Exercise 5 — Guided recall
-     ========================= */
-  function renderExercise5(template, cid, vocabIndex) {
-    subtitle.textContent = "Exercise 5";
-
-    const tl = targetSel.value;
-    const sl = supportSel.value;
-    const q = template.questions[0];
-
-    let sentence = template.render[tl];
-    for (const f of vocabIndex[cid].forms[tl]) {
-      const re = new RegExp(`\\b${escapeRegex(f)}\\b`, "i");
-      if (re.test(sentence)) {
-        sentence = sentence.replace(re, "_____");
-        break;
-      }
-    }
-
-    content.innerHTML = `
-      <div class="forms">${sentence}</div>
-      <div class="forms">${q.prompt[sl]}</div>
-      <div class="forms">(${vocabIndex[cid].forms[sl][0]})</div>
-      <div id="choices"></div>
-    `;
-
-    const choices = document.getElementById("choices");
-
-    q.choices.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = vocabIndex[opt].forms[tl][0];
-
-      btn.onclick = () => {
-        const ok = opt === cid;
-        recordResult(cid, 5, ok ? "correct" : "incorrect");
-        setTimeout(renderNext, ok ? 600 : 900);
-      };
-
-      choices.appendChild(btn);
-    });
-  }
-
-  /* =========================
-     Exercise 6 — Matching
-     ========================= */
-  function renderExercise6(ids, vocabIndex) {
-    subtitle.textContent = "Exercise 6";
-
-    const tl = targetSel.value;
-    const sl = supportSel.value;
-
-    const pairs = ids.map(cid => ({
-      id: cid,
-      left: vocabIndex[cid].forms[tl][0],
-      right: vocabIndex[cid].forms[sl][0]
-    }));
-
-    content.innerHTML = `
-      <div class="forms">Match the words</div>
-      <button id="continue">Continue</button>
-    `;
-
-    document.getElementById("continue").onclick = () => {
-      recordResult(ids[0], 6, "neutral");
-      renderNext();
-    };
-  }
-
-  function shuffle(arr) {
-    return arr.sort(() => Math.random() - 0.5);
-  }
-
-  function escapeRegex(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
 });

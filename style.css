@@ -202,3 +202,14 @@ select option{
   .button-grid{ grid-template-columns: 1fr; }
   .quit-button{ top: 1rem; left: 1rem; }
 }
+
+button.correct {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+button.incorrect {
+  background-color: #e57373 !important;
+  color: white !important;
+}
+
