@@ -1,5 +1,5 @@
-// scheduler.js — Level gating + adaptive memory
-// VERSION: v0.13.2-level-gating-integrated
+// scheduler.js — Fixed level initialization
+// VERSION: v0.13.3-level-init-fix
 
 (function () {
 
@@ -32,9 +32,7 @@
     const p = run.concept_progress[concept_id] || {};
     const streaks = p.exercise_streaks || {};
     const streak = streaks[exercise_type] || 0;
-
-    const streakScore = 10 - streak;
-    return streakScore;
+    return 10 - streak;
   }
 
   function pickBest(run, candidates, exercise_type) {
@@ -55,11 +53,22 @@
 
   function getNextExercise(run, templates, vocabIndex) {
 
-    if (run.step_counter === undefined) run.step_counter = 0;
-    if (!Array.isArray(run.history)) run.history = [];
+    if (!run.concept_progress) run.concept_progress = {};
+    if (!run.history) run.history = [];
+    if (!run.step_counter) run.step_counter = 0;
 
     const concepts = Object.keys(vocabIndex).map(cid => {
-      const progress = run.concept_progress[cid] || {};
+
+      // --- CRITICAL FIX: ensure concept_progress always exists ---
+      if (!run.concept_progress[cid]) {
+        run.concept_progress[cid] = {
+          current_exercise_level: 1,
+          exercise_streaks: {}
+        };
+      }
+
+      const progress = run.concept_progress[cid];
+
       return {
         concept_id: cid,
         current_exercise_level: progress.current_exercise_level ?? 1,
@@ -67,9 +76,9 @@
       };
     });
 
-    /* =====================================================
-       Exercise 1 — Exposure (Level 1 only)
-       ===================================================== */
+    /* =========================
+       Exercise 1 — Exposure
+       ========================= */
     let exposure = concepts.filter(c =>
       c.current_exercise_level === 1 &&
       templates.some(t => t.concepts.includes(c.concept_id))
@@ -86,9 +95,9 @@
       };
     }
 
-    /* =====================================================
-       Exercise 3 — Comprehension (Level >= 3)
-       ===================================================== */
+    /* =========================
+       Exercise 3
+       ========================= */
     let ex3 = concepts.filter(c =>
       c.current_exercise_level >= 3 &&
       templates.some(t => t.concepts.includes(c.concept_id))
@@ -105,9 +114,9 @@
       };
     }
 
-    /* =====================================================
-       Exercise 4 — Click Word (Level >= 4)
-       ===================================================== */
+    /* =========================
+       Exercise 4
+       ========================= */
     let ex4 = concepts.filter(c =>
       c.current_exercise_level >= 4
     );
@@ -120,18 +129,16 @@
       };
     }
 
-    /* =====================================================
-       Exercise 5 — Guided Recall (Level >= 5)
-       ===================================================== */
+    /* =========================
+       Exercise 5
+       ========================= */
     let ex5 = templates
       .map(t => {
         const q = t.questions?.[0];
         if (!q) return null;
 
-        const progress = run.concept_progress[q.answer] || {};
-        const level = progress.current_exercise_level ?? 1;
-
-        if (level < 5) return null;
+        const progress = run.concept_progress[q.answer];
+        if (!progress || progress.current_exercise_level < 5) return null;
 
         return { concept_id: q.answer, template: t };
       })
@@ -152,22 +159,6 @@
         exercise_type: 5,
         concept_id: best5.concept_id,
         template
-      };
-    }
-
-    /* =====================================================
-       Exercise 6 — Matching (Level >= 6)
-       ===================================================== */
-    let ex6 = concepts.filter(c =>
-      c.current_exercise_level >= 6 &&
-      c.meta?.interaction_profile?.match === true
-    );
-
-    const best6 = pickBest(run, ex6, 6);
-    if (best6 && ex6.length >= 5) {
-      return {
-        exercise_type: 6,
-        concept_ids: ex6.slice(0, 5).map(c => c.concept_id)
       };
     }
 
