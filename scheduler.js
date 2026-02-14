@@ -1,20 +1,10 @@
-// scheduler.js — Step 3b: Adaptive selection
-// VERSION: v0.12.1-adaptive
+// scheduler.js — Level gating + adaptive memory
+// VERSION: v0.13.2-level-gating-integrated
 
 (function () {
 
-  const STAGE1_THRESHOLD = 2;
-  const STAGE2_THRESHOLD = 2;
-
   const COOLDOWN_CORRECT = 3;
   const COOLDOWN_INCORRECT = 1;
-
-  function getConceptState(progress) {
-    if (!progress) return "NEW";
-    if (progress.stage2_correct >= STAGE2_THRESHOLD) return "STABLE";
-    if (progress.stage1_correct >= STAGE1_THRESHOLD) return "RECALL_READY";
-    return "SEEN";
-  }
 
   function last(arr) {
     return arr.length ? arr[arr.length - 1] : null;
@@ -27,14 +17,14 @@
   }
 
   function recentlySeenConcept(run, concept_id) {
-    const h = last(run.history);
+    const h = last(run.history || []);
     if (!h || h.concept_id !== concept_id) return false;
     const cooldown = cooldownFor(h.result);
     return (run.step_counter - h.step) <= cooldown;
   }
 
   function sameExerciseAsLast(run, exercise_type) {
-    const h = last(run.history);
+    const h = last(run.history || []);
     return h && h.exercise_type === exercise_type;
   }
 
@@ -43,14 +33,8 @@
     const streaks = p.exercise_streaks || {};
     const streak = streaks[exercise_type] || 0;
 
-    // Lower streak → higher score
     const streakScore = 10 - streak;
-
-    // Fewer total attempts → higher score
-    const attempts = p.stage1_correct + (p.stage2_attempts || 0) || 0;
-    const attemptScore = 5 - attempts;
-
-    return streakScore + attemptScore;
+    return streakScore;
   }
 
   function pickBest(run, candidates, exercise_type) {
@@ -75,19 +59,19 @@
     if (!Array.isArray(run.history)) run.history = [];
 
     const concepts = Object.keys(vocabIndex).map(cid => {
-      const progress = run.concept_progress[cid];
+      const progress = run.concept_progress[cid] || {};
       return {
         concept_id: cid,
-        state: getConceptState(progress),
+        current_exercise_level: progress.current_exercise_level ?? 1,
         meta: vocabIndex[cid].concept
       };
     });
 
-    // =========================
-    // Exercise 1 (Exposure)
-    // =========================
+    /* =====================================================
+       Exercise 1 — Exposure (Level 1 only)
+       ===================================================== */
     let exposure = concepts.filter(c =>
-      c.state === "NEW" &&
+      c.current_exercise_level === 1 &&
       templates.some(t => t.concepts.includes(c.concept_id))
     );
 
@@ -96,35 +80,39 @@
       return {
         exercise_type: 1,
         concept_id: bestExposure.concept_id,
-        template: templates.find(t => t.concepts.includes(bestExposure.concept_id))
+        template: templates.find(t =>
+          t.concepts.includes(bestExposure.concept_id)
+        )
       };
     }
 
-    // =========================
-    // Exercise 3
-    // =========================
-    let stage1WithTemplate = concepts.filter(c =>
-      (c.state === "NEW" || c.state === "SEEN") &&
+    /* =====================================================
+       Exercise 3 — Comprehension (Level >= 3)
+       ===================================================== */
+    let ex3 = concepts.filter(c =>
+      c.current_exercise_level >= 3 &&
       templates.some(t => t.concepts.includes(c.concept_id))
     );
 
-    const best3 = pickBest(run, stage1WithTemplate, 3);
+    const best3 = pickBest(run, ex3, 3);
     if (best3) {
       return {
         exercise_type: 3,
         concept_id: best3.concept_id,
-        template: templates.find(t => t.concepts.includes(best3.concept_id))
+        template: templates.find(t =>
+          t.concepts.includes(best3.concept_id)
+        )
       };
     }
 
-    // =========================
-    // Exercise 4
-    // =========================
-    let stage1WordOnly = concepts.filter(c =>
-      c.state === "NEW" || c.state === "SEEN"
+    /* =====================================================
+       Exercise 4 — Click Word (Level >= 4)
+       ===================================================== */
+    let ex4 = concepts.filter(c =>
+      c.current_exercise_level >= 4
     );
 
-    const best4 = pickBest(run, stage1WordOnly, 4);
+    const best4 = pickBest(run, ex4, 4);
     if (best4) {
       return {
         exercise_type: 4,
@@ -132,49 +120,54 @@
       };
     }
 
-    // =========================
-    // Exercise 6
-    // =========================
-    let matchable = concepts.filter(c =>
-      c.meta?.interaction_profile?.match === true
-    );
-
-    const best6 = pickBest(run, matchable, 6);
-    if (best6 && matchable.length >= 5) {
-      return {
-        exercise_type: 6,
-        concept_ids: matchable.slice(0, 5).map(c => c.concept_id)
-      };
-    }
-
-    // =========================
-    // Exercise 5
-    // =========================
-    let recallCandidates = templates
+    /* =====================================================
+       Exercise 5 — Guided Recall (Level >= 5)
+       ===================================================== */
+    let ex5 = templates
       .map(t => {
         const q = t.questions?.[0];
         if (!q) return null;
-        const c = concepts.find(x => x.concept_id === q.answer);
-        if (!c || c.state !== "RECALL_READY") return null;
-        return { concept: c, template: t };
+
+        const progress = run.concept_progress[q.answer] || {};
+        const level = progress.current_exercise_level ?? 1;
+
+        if (level < 5) return null;
+
+        return { concept_id: q.answer, template: t };
       })
       .filter(Boolean);
 
     const best5 = pickBest(
       run,
-      recallCandidates.map(x => x.concept),
+      ex5.map(x => ({ concept_id: x.concept_id })),
       5
     );
 
     if (best5) {
-      const template = recallCandidates.find(x =>
-        x.concept.concept_id === best5.concept_id
+      const template = ex5.find(x =>
+        x.concept_id === best5.concept_id
       ).template;
 
       return {
         exercise_type: 5,
         concept_id: best5.concept_id,
         template
+      };
+    }
+
+    /* =====================================================
+       Exercise 6 — Matching (Level >= 6)
+       ===================================================== */
+    let ex6 = concepts.filter(c =>
+      c.current_exercise_level >= 6 &&
+      c.meta?.interaction_profile?.match === true
+    );
+
+    const best6 = pickBest(run, ex6, 6);
+    if (best6 && ex6.length >= 5) {
+      return {
+        exercise_type: 6,
+        concept_ids: ex6.slice(0, 5).map(c => c.concept_id)
       };
     }
 
