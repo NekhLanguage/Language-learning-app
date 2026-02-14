@@ -38,6 +38,8 @@
       support_language,
       created_at: Date.now(),
       last_active: Date.now(),
+      step_counter: 0,
+      history: [],
       stage_state: {
         stage_1_unlocked: true,
         stage_2_unlocked: false,

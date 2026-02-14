@@ -1,9 +1,9 @@
-// app.js — Per-concept level gating (fixed)
-// VERSION: v0.13.1-level-gating-fixed
+// app.js — Progression rules + forward leakage enforcement
+// VERSION: v0.14.0-progression-rules
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const VERSION = "v0.13.1-level-gating-fixed";
+  const VERSION = "v0.14.0-progression-rules";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -26,17 +26,48 @@ document.addEventListener("DOMContentLoaded", () => {
   window.__USER__ = u;
   window.__RUN__ = u.runs[u.current_run_id];
 
-  // Initialize level tracking
-  for (const cid in window.__RUN__.concept_progress) {
+  // --------------------
+  // Run scaffolding
+  // --------------------
+  if (!window.__RUN__.concept_progress) window.__RUN__.concept_progress = {};
+  if (!window.__RUN__.history) window.__RUN__.history = [];
+  if (!window.__RUN__.step_counter) window.__RUN__.step_counter = 0;
+
+  function ensureProgress(cid) {
+    if (!window.__RUN__.concept_progress[cid]) {
+      window.__RUN__.concept_progress[cid] = {
+        current_exercise_level: 1,
+        exercise_streaks: {}
+      };
+    }
     const p = window.__RUN__.concept_progress[cid];
-    if (p.current_exercise_level === undefined) {
-      p.current_exercise_level = 1;
-    }
-    if (!p.exercise_streaks) {
-      p.exercise_streaks = {};
-    }
+    if (p.current_exercise_level === undefined) p.current_exercise_level = 1;
+    if (!p.exercise_streaks) p.exercise_streaks = {};
+    return p;
   }
 
+  function logHistory(exercise_type, concept_id, result) {
+    window.__RUN__.step_counter += 1;
+    window.__RUN__.history.push({
+      step: window.__RUN__.step_counter,
+      exercise_type,
+      concept_id,
+      result
+    });
+    window.UserState.saveUser(window.__USER__);
+  }
+
+  // Forward leakage guard: only allow concepts that have reached the exercise level.
+  function conceptsAtOrAboveLevel(vocabIndex, minLevel) {
+    return Object.keys(vocabIndex).filter(cid => {
+      const p = ensureProgress(cid);
+      return (p.current_exercise_level ?? 1) >= minLevel;
+    });
+  }
+
+  // --------------------
+  // App entry / exit
+  // --------------------
   openAppBtn.onclick = () => {
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
@@ -53,10 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function loadVocab() {
+    // NOTE: Keep this list explicit for now. Scaling later can move this into a manifest.
     const packs = await Promise.all([
       fetch("verbs.json").then(r => r.json()),
       fetch("pronouns.json").then(r => r.json()),
-      fetch("nouns.json").then(r => r.json())
+      fetch("nouns.json").then(r => r.json()),
+      fetch("connectors.json").then(r => r.json()),
+      fetch("numbers.json").then(r => r.json()),
+      fetch("question_words.json").then(r => r.json()),
+      fetch("time_words.json").then(r => r.json()),
+      fetch("directions_positions.json").then(r => r.json()),
+      fetch("quantifiers.json").then(r => r.json()),
+      fetch("politeness_modality.json").then(r => r.json()),
+      fetch("glue_words.json").then(r => r.json()),
+      fetch("adjectives.json").then(r => r.json())
     ]);
 
     const index = {};
@@ -80,6 +121,9 @@ document.addEventListener("DOMContentLoaded", () => {
       loadVocab()
     ]);
 
+    // Ensure progress objects exist for all known concepts (so scaling is safe).
+    for (const cid of Object.keys(vocabIndex)) ensureProgress(cid);
+
     const d = Scheduler.getNextExercise(window.__RUN__, templates, vocabIndex);
 
     if (d.exercise_type === 1) return renderExercise1(d.template, d.concept_id, vocabIndex);
@@ -91,30 +135,31 @@ document.addEventListener("DOMContentLoaded", () => {
     content.innerHTML = "<div class='forms'>No valid exercise</div>";
   }
 
+  // --------------------
+  // Progression rules
+  // --------------------
   function advanceLevelIfReady(cid, exercise_type) {
-    const p = window.__RUN__.concept_progress[cid];
+    const p = ensureProgress(cid);
     const streak = p.exercise_streaks[exercise_type] || 0;
 
+    // Two correct in a row gates advancement (Exercises 3+).
     if (streak >= 2) {
-      if (exercise_type === 3 && p.current_exercise_level < 4)
-        p.current_exercise_level = 4;
-      else if (exercise_type === 4 && p.current_exercise_level < 5)
-        p.current_exercise_level = 5;
-      else if (exercise_type === 5 && p.current_exercise_level < 6)
-        p.current_exercise_level = 6;
+      if (exercise_type === 3 && p.current_exercise_level < 4) p.current_exercise_level = 4;
+      else if (exercise_type === 4 && p.current_exercise_level < 5) p.current_exercise_level = 5;
+      else if (exercise_type === 5 && p.current_exercise_level < 6) p.current_exercise_level = 6;
     }
   }
 
   function recordResult(cid, exercise_type, result) {
-    const p = window.__RUN__.concept_progress[cid];
+    const p = ensureProgress(cid);
 
     if (result === "correct") {
-      p.exercise_streaks[exercise_type] =
-        (p.exercise_streaks[exercise_type] || 0) + 1;
+      p.exercise_streaks[exercise_type] = (p.exercise_streaks[exercise_type] || 0) + 1;
     } else if (result === "incorrect") {
       p.exercise_streaks[exercise_type] = 0;
     }
 
+    logHistory(exercise_type, cid, result);
     advanceLevelIfReady(cid, exercise_type);
   }
 
@@ -135,6 +180,12 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     document.getElementById("continue").onclick = () => {
+      // Exposure -> level 3 (immediate).
+      const p = ensureProgress(cid);
+      if ((p.current_exercise_level ?? 1) < 3) p.current_exercise_level = 3;
+
+      // Still log so cooldown/no-repeat works.
+      logHistory(1, cid, "correct");
       renderNext();
     };
   }
@@ -147,40 +198,48 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tl = targetSel.value;
     const sl = supportSel.value;
-    const q = template.questions[0];
+
+    const q = template.questions?.[0] || {};
+    const answerCid = q.answer || cid; // back-compat
+    const prompt = q.prompt?.[sl] || "Choose the correct answer.";
+
+    // Forward leakage: choices must be eligible for ex3.
+    const eligible = new Set(conceptsAtOrAboveLevel(vocabIndex, 3));
+    let choices = Array.isArray(q.choices) ? q.choices.filter(x => eligible.has(x)) : [];
+    if (!choices.includes(answerCid)) choices.push(answerCid);
+    choices = choices.slice(0, 4);
 
     content.innerHTML = `
       <div class="forms">${template.render[tl]}</div>
-      <div class="forms">${q.prompt[sl]}</div>
+      <div class="forms">${prompt}</div>
       <div id="choices"></div>
     `;
 
-    const choices = document.getElementById("choices");
+    const choicesEl = document.getElementById("choices");
 
-    q.choices.forEach(opt => {
+    choices.forEach(opt => {
       const btn = document.createElement("button");
-      btn.textContent = vocabIndex[opt].forms[sl][0];
+      btn.textContent = vocabIndex[opt]?.forms?.[sl]?.[0] || opt;
 
       btn.onclick = () => {
-        const ok = opt === q.answer;
+        const ok = opt === answerCid;
 
-        [...choices.children].forEach(b => b.disabled = true);
+        [...choicesEl.children].forEach(b => b.disabled = true);
         btn.classList.add(ok ? "correct" : "incorrect");
 
         if (!ok) {
-          [...choices.children].forEach(b => {
-            if (b.textContent === vocabIndex[q.answer].forms[sl][0]) {
+          [...choicesEl.children].forEach(b => {
+            if (b.textContent === (vocabIndex[answerCid]?.forms?.[sl]?.[0] || answerCid)) {
               b.classList.add("correct");
             }
           });
         }
 
-        recordResult(cid, 3, ok ? "correct" : "incorrect");
-
+        recordResult(answerCid, 3, ok ? "correct" : "incorrect");
         setTimeout(renderNext, ok ? 800 : 1000);
       };
 
-      choices.appendChild(btn);
+      choicesEl.appendChild(btn);
     });
   }
 
@@ -194,8 +253,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const sl = supportSel.value;
     const correct = vocabIndex[cid];
 
+    const eligible = new Set(conceptsAtOrAboveLevel(vocabIndex, 4));
     const pool = Object.keys(vocabIndex)
-      .filter(x => x !== cid && vocabIndex[x].concept.type === correct.concept.type)
+      .filter(x => x !== cid)
+      .filter(x => eligible.has(x))
+      .filter(x => vocabIndex[x].concept.type === correct.concept.type)
       .slice(0, 3);
 
     const options = pool.concat(cid).sort(() => Math.random() - 0.5);
@@ -226,7 +288,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         recordResult(cid, 4, ok ? "correct" : "incorrect");
-
         setTimeout(renderNext, ok ? 800 : 1000);
       };
 
@@ -242,11 +303,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const tl = targetSel.value;
     const sl = supportSel.value;
-    const q = template.questions[0];
+
+    const q = template.questions?.[0] || {};
 
     let sentence = template.render[tl];
     for (const f of vocabIndex[cid].forms[tl]) {
-      const re = new RegExp(`\\b${f}\\b`, "i");
+      const re = new RegExp(`\\b${escapeRegExp(f)}\\b`, "i");
       if (re.test(sentence)) {
         sentence = sentence.replace(re, "_____");
         break;
@@ -255,25 +317,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     content.innerHTML = `
       <div class="forms">${sentence}</div>
-      <div class="forms">${q.prompt[sl]}</div>
+      <div class="forms">${q.prompt?.[sl] || "Choose the missing word."}</div>
       <div class="forms">(${vocabIndex[cid].forms[sl][0]})</div>
       <div id="choices"></div>
     `;
 
-    const choices = document.getElementById("choices");
+    const choicesEl = document.getElementById("choices");
 
-    q.choices.forEach(opt => {
+    const eligible = new Set(conceptsAtOrAboveLevel(vocabIndex, 5));
+    let choices = (Array.isArray(q.choices) ? q.choices : []).filter(x => eligible.has(x));
+    if (!choices.includes(cid)) choices.push(cid);
+
+    if (choices.length < 4) {
+      const extra = Object.keys(vocabIndex)
+        .filter(x => x !== cid)
+        .filter(x => eligible.has(x))
+        .slice(0, 4 - choices.length);
+      choices.push(...extra);
+    }
+
+    choices = [...new Set(choices)].slice(0, 6).sort(() => Math.random() - 0.5);
+
+    choices.forEach(opt => {
       const btn = document.createElement("button");
       btn.textContent = vocabIndex[opt].forms[tl][0];
 
       btn.onclick = () => {
         const ok = opt === cid;
 
-        [...choices.children].forEach(b => b.disabled = true);
+        [...choicesEl.children].forEach(b => b.disabled = true);
         btn.classList.add(ok ? "correct" : "incorrect");
 
         if (!ok) {
-          [...choices.children].forEach(b => {
+          [...choicesEl.children].forEach(b => {
             if (b.textContent === vocabIndex[cid].forms[tl][0]) {
               b.classList.add("correct");
             }
@@ -281,11 +357,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         recordResult(cid, 5, ok ? "correct" : "incorrect");
-
         setTimeout(renderNext, ok ? 800 : 1000);
       };
 
-      choices.appendChild(btn);
+      choicesEl.appendChild(btn);
     });
   }
 
@@ -295,6 +370,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderExercise6(ids, vocabIndex) {
     subtitle.textContent = "Exercise 6";
     content.innerHTML = "<div class='forms'>Matching...</div>";
+  }
+
+  function escapeRegExp(str) {
+    return String(str).replace(/[.*+?^${}()|[\\]\\]/g, "\\$&");
   }
 
 });

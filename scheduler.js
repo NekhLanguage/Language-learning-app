@@ -1,5 +1,5 @@
-// scheduler.js — Fixed level initialization
-// VERSION: v0.13.3-level-init-fix
+// scheduler.js — Progression scheduling + forward leakage enforcement
+// VERSION: v0.14.0-progression-rules
 
 (function () {
 
@@ -33,6 +33,20 @@
     const streaks = p.exercise_streaks || {};
     const streak = streaks[exercise_type] || 0;
     return 10 - streak;
+  }
+
+  // Forward leakage guard: a template is only valid for an exercise if
+  // every real concept id it uses has reached that exercise level.
+  // (Placeholders like "PRONOUN" are ignored because they are not concept_ids.)
+  function templateAllowed(run, template, vocabIndex, minLevel) {
+    const list = Array.isArray(template?.concepts) ? template.concepts : [];
+    for (const cid of list) {
+      if (!vocabIndex[cid]) continue; // placeholder or unknown
+      const p = run.concept_progress?.[cid];
+      const lvl = p?.current_exercise_level ?? 1;
+      if (lvl < minLevel) return false;
+    }
+    return true;
   }
 
   function pickBest(run, candidates, exercise_type) {
@@ -81,7 +95,10 @@
        ========================= */
     let exposure = concepts.filter(c =>
       c.current_exercise_level === 1 &&
-      templates.some(t => t.concepts.includes(c.concept_id))
+      templates.some(t =>
+        t.concepts.includes(c.concept_id) &&
+        templateAllowed(run, t, vocabIndex, 1)
+      )
     );
 
     const bestExposure = pickBest(run, exposure, 1);
@@ -90,7 +107,8 @@
         exercise_type: 1,
         concept_id: bestExposure.concept_id,
         template: templates.find(t =>
-          t.concepts.includes(bestExposure.concept_id)
+          t.concepts.includes(bestExposure.concept_id) &&
+          templateAllowed(run, t, vocabIndex, 1)
         )
       };
     }
@@ -100,7 +118,10 @@
        ========================= */
     let ex3 = concepts.filter(c =>
       c.current_exercise_level >= 3 &&
-      templates.some(t => t.concepts.includes(c.concept_id))
+      templates.some(t =>
+        t.concepts.includes(c.concept_id) &&
+        templateAllowed(run, t, vocabIndex, 3)
+      )
     );
 
     const best3 = pickBest(run, ex3, 3);
@@ -109,7 +130,8 @@
         exercise_type: 3,
         concept_id: best3.concept_id,
         template: templates.find(t =>
-          t.concepts.includes(best3.concept_id)
+          t.concepts.includes(best3.concept_id) &&
+          templateAllowed(run, t, vocabIndex, 3)
         )
       };
     }
@@ -137,10 +159,14 @@
         const q = t.questions?.[0];
         if (!q) return null;
 
-        const progress = run.concept_progress[q.answer];
-        if (!progress || progress.current_exercise_level < 5) return null;
+        const answer = q.answer;
+        if (!answer) return null;
 
-        return { concept_id: q.answer, template: t };
+        const progress = run.concept_progress?.[answer];
+        if (!progress || (progress.current_exercise_level ?? 1) < 5) return null;
+        if (!templateAllowed(run, t, vocabIndex, 5)) return null;
+
+        return { concept_id: answer, template: t };
       })
       .filter(Boolean);
 
@@ -160,6 +186,21 @@
         concept_id: best5.concept_id,
         template
       };
+    }
+
+    /* =========================
+       Exercise 6 — Matching
+       ========================= */
+    // Note: app.js currently has a placeholder renderer; scheduler support is still useful
+    // so we can verify strict ladder + forward leakage.
+    const ex6Pool = concepts
+      .filter(c => c.current_exercise_level >= 6)
+      .map(c => c.concept_id);
+
+    if (!sameExerciseAsLast(run, 6) && ex6Pool.length >= 4) {
+      // simple deterministic pick: weakest concepts first by streak
+      ex6Pool.sort((a, b) => scoreConcept(run, b, 6) - scoreConcept(run, a, 6));
+      return { exercise_type: 6, concept_ids: ex6Pool.slice(0, 4) };
     }
 
     return { exercise_type: null };
