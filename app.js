@@ -147,7 +147,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "THIRD_PERSON_SINGULAR"
     ];
 
-    const correct = options.find(x => (tpl.concept_ids || []).includes(x)) || options[0];
+    const correct = options.find(x => (tpl.concepts || []).includes(x)) || options[0];
+
 
     content.innerHTML = `
       <div class="row">
