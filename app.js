@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 // ==============================
 // Utility Helpers
 // ==============================
@@ -171,6 +172,8 @@ function startSession() {
 
 document.getElementById("load-btn").addEventListener("click", startSession);
 =======
+=======
+>>>>>>> Stashed changes
 // Zero to Hero – data-driven learning app (Stage 1 enabled)
 // VERSION: v0.8.2-dom-guards
 //
