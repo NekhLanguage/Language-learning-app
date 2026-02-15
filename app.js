@@ -1,8 +1,14 @@
-
 // Zero to Hero – data-driven learning app
-// VERSION: v0.9.0-global-merge
+// VERSION: v0.9.1-global-merge+version-badge
+//
+// Purpose of this version:
+// - Global vocab merge (loads all vocab JSON files into one runtime universe)
+// - Shows a visible version badge so you can confirm the latest deploy is live
+// - Fixes template pronoun correctness check by using tpl.concepts (not tpl.concept_ids)
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  const APP_VERSION = "v0.9.1-global-merge+version-badge";
 
   // --------------------
   // DOM references (guarded)
@@ -30,9 +36,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --------------------
+  // Version badge (visible) + console tag
+  // --------------------
+  function setVersionBadge() {
+    // Console
+    console.log(`[Zero-to-Hero] app.js ${APP_VERSION}`);
+
+    // Visible: append to session subtitle if present
+    if (subtitle) {
+      const base = subtitle.textContent || "";
+      const tag = ` • ${APP_VERSION}`;
+      if (!base.includes(APP_VERSION)) subtitle.textContent = base + tag;
+    }
+
+    // Also set the document title suffix for easy tab confirmation
+    document.title = document.title.replace(/\s+•\s+v[\w.\-+]+$/i, "");
+    document.title += ` • ${APP_VERSION}`;
+  }
+
+  setVersionBadge();
+
+  // --------------------
   // GLOBAL MERGE – Load all vocab files
   // --------------------
-
   const VOCAB_FILES = [
     "adjectives.json",
     "connectors.json",
@@ -91,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------
   // App entry / exit
   // --------------------
-
   if (openAppBtn && startScreen && learningScreen) {
     openAppBtn.addEventListener("click", async () => {
       startScreen.classList.remove("active");
@@ -103,6 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
       await loadAndMergeVocab();
       await loadStage1Comprehension(tl, sl);
     });
+  } else {
+    mustHave(openAppBtn, "open-app");
+    mustHave(startScreen, "start-screen");
+    mustHave(learningScreen, "learning-screen");
   }
 
   if (quitBtn && startScreen && learningScreen) {
@@ -110,16 +139,70 @@ document.addEventListener("DOMContentLoaded", () => {
       learningScreen.classList.remove("active");
       startScreen.classList.add("active");
     });
+  } else {
+    mustHave(quitBtn, "quit-learning");
+  }
+
+  // --------------------
+  // Dataset viewer (dev / later use)
+  // --------------------
+  if (loadBtn) {
+    loadBtn.addEventListener("click", async () => {
+      const file = datasetSel?.value || "verbs.json";
+      const tl = targetSel?.value || "pt";
+      const sl = supportSel?.value || "en";
+      await renderDataset(file, tl, sl);
+    });
+  } else {
+    mustHave(loadBtn, "load");
+  }
+
+  async function renderDataset(file, targetLang, supportLang) {
+    if (!mustHave(subtitle, "session-subtitle") || !mustHave(content, "content")) return;
+
+    subtitle.textContent = `Showing: ${String(file).replace(".json", "")} | Target: ${String(targetLang).toUpperCase()} | Support: ${String(supportLang).toUpperCase()} • ${APP_VERSION}`;
+    content.innerHTML = "Loading...";
+
+    let data;
+    try {
+      const res = await fetch(file, { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      data = await res.json();
+    } catch (e) {
+      content.innerHTML = `Could not load <strong>${escapeHtml(file)}</strong>. Make sure it exists.`;
+      return;
+    }
+
+    const tPack = data.languages?.[targetLang];
+    const sPack = data.languages?.[supportLang];
+    if (!tPack || !sPack) {
+      const available = Object.keys(data.languages || {}).join(", ");
+      content.innerHTML = `Language missing in ${escapeHtml(file)}. Available: ${escapeHtml(available)}`;
+      return;
+    }
+
+    content.innerHTML = "";
+    for (const concept of data.concepts || []) {
+      const t = tPack.forms?.[concept.concept_id] || [];
+      const s = sPack.forms?.[concept.concept_id] || [];
+
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `
+        <strong>${escapeHtml(concept.concept_id)}</strong>
+        <div class="forms">${escapeHtml(t.join(", "))} — ${escapeHtml(s.join(", "))}</div>
+      `;
+      content.appendChild(row);
+    }
   }
 
   // --------------------
   // Stage 1 – Sentence comprehension
   // --------------------
-
   async function loadStage1Comprehension(targetLang, supportLang) {
     if (!mustHave(subtitle, "session-subtitle") || !mustHave(content, "content")) return;
 
-    subtitle.textContent = "Read and understand";
+    subtitle.textContent = `Read and understand • ${APP_VERSION}`;
     content.innerHTML = "Loading sentence...";
 
     let data;
@@ -132,6 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // For now: always first template
     const tpl = data.templates?.[0];
     if (!tpl) {
       content.innerHTML = "No templates found.";
@@ -141,14 +225,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const sentence = tpl.render?.[targetLang] || "";
     const questionText = buildWhoQuestionFromSupportSentence(tpl, supportLang);
 
+    // Current options (temporary scaffolding)
     const options = [
       "FIRST_PERSON_SINGULAR",
       "SECOND_PERSON",
       "THIRD_PERSON_SINGULAR"
     ];
 
+    // IMPORTANT: templates use `concepts`, not `concept_ids`
     const correct = options.find(x => (tpl.concepts || []).includes(x)) || options[0];
-
 
     content.innerHTML = `
       <div class="row">
@@ -173,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.onclick = () => {
         [...choicesDiv.children].forEach(b => (b.disabled = true));
+
         const ok = opt === correct;
         btn.textContent += ok ? " ✓" : " ✕";
       };
@@ -184,7 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --------------------
   // Helpers
   // --------------------
-
   function buildWhoQuestionFromSupportSentence(tpl, supportLang) {
     const supportSentence = tpl.render?.[supportLang];
     if (!supportSentence) return "Who?";
