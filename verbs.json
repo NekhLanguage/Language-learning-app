@@ -25,17 +25,22 @@
       }
     },
     {
-      "concept_id": "EAT",
-      "type": "verb",
-      "semantic_role": "consumption",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
+  "EAT": {
+    "inflections": {
+      "present": {
+        "1_singular": "eat",
+        "2_singular": "eat",
+        "3_singular": "eats",
+        "1_plural": "eat",
+        "2_plural": "eat",
+        "3_plural": "eat"
+      },
+      "past": {
+        "default": "ate"
       }
-    },
+    }
+  }
+}
     {
       "concept_id": "READ",
       "type": "verb",

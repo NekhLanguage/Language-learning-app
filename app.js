@@ -1,10 +1,10 @@
 
 // Zero to Hero – Blueprint Engine
-// VERSION: v0.9.5-blueprint-engine
+// VERSION: v0.9.6-blueprint-engine
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.5-blueprint-engine";
+  const APP_VERSION = "v0.9.6-blueprint-engine";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
