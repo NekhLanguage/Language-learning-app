@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.12-cooldown-spacing-clean
+// VERSION: v0.9.13-degrading-spacing
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.12-cooldown-spacing-clean";
+  const APP_VERSION = "v0.9.13-degrading-spacing";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -132,20 +132,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function chooseTemplate() {
-    const eligible = TEMPLATE_CACHE.filter(t => {
-      if (!templateEligible(t)) return false;
-      const target = determineTargetConcept(t);
-      return ensureProgress(target).cooldown <= 0;
-    });
+    const baseEligible = TEMPLATE_CACHE.filter(templateEligible);
+    if (!baseEligible.length) return null;
 
-    if (!eligible.length) {
-      return TEMPLATE_CACHE.find(templateEligible) || null;
+    // Try spacing thresholds from 4 down to 0
+    for (let threshold = 0; threshold <= 4; threshold++) {
+      const candidates = baseEligible.filter(tpl => {
+        const target = determineTargetConcept(tpl);
+        return ensureProgress(target).cooldown <= threshold;
+      });
+
+      if (candidates.length) {
+        return pickLowestLevelTemplate(candidates);
+      }
     }
 
-    let best = eligible[0];
+    return pickLowestLevelTemplate(baseEligible);
+  }
+
+  function pickLowestLevelTemplate(list) {
+    let best = list[0];
     let bestMin = Infinity;
 
-    for (const tpl of eligible) {
+    for (const tpl of list) {
       const minLevel = Math.min(...tpl.concepts.map(levelOf));
       if (minLevel < bestMin) {
         bestMin = minLevel;
