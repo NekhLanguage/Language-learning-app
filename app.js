@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.17-level-display-blank-fix
+// VERSION: v0.9.18-surface-aware-blanking
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.17-level-display-blank-fix";
+  const APP_VERSION = "v0.9.18-surface-aware-blanking";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -71,16 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function decrementCooldowns() {
     for (const cid of Object.keys(run.progress)) {
-      if (run.progress[cid].cooldown > 0) {
-        run.progress[cid].cooldown--;
-      }
+      if (run.progress[cid].cooldown > 0) run.progress[cid].cooldown--;
     }
   }
 
   function initRun() {
-    const allConcepts = [
-      ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
-    ];
+    const allConcepts = [...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))];
 
     run = {
       released: [],
@@ -169,14 +165,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!baseEligible.length) return null;
 
     for (let threshold = 4; threshold >= 0; threshold--) {
-
       const candidates = baseEligible.filter(tpl => {
         const target = determineTargetConcept(tpl);
         const prog = ensureProgress(target);
-
         if (prog.cooldown > threshold) return false;
         if (target === run.lastTargetConcept) return false;
-
         return true;
       });
 
@@ -224,13 +217,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const correctAnswer = tpl.questions[0].answer;
-    const options = shuffle([...tpl.questions[0].choices]);
+    const q = tpl.questions[0];
+    const correctAnswer = q.answer;
+    const options = shuffle([...q.choices]);
 
     content.innerHTML = `
       <div>
         <p>${tpl.render[targetLang]}</p>
-        <p>${tpl.questions[0].prompt[supportLang]}</p>
+        <p>${q.prompt[supportLang]}</p>
         <div id="choices"></div>
       </div>
     `;
@@ -245,9 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
         [...choicesDiv.children].forEach(b => b.disabled = true);
 
         const correct = opt === correctAnswer;
-
-        if (correct) btn.style.backgroundColor = "#4CAF50";
-        else btn.style.backgroundColor = "#D32F2F";
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
 
         decrementCooldowns();
         applyResult(targetConcept, correct);
@@ -260,31 +252,50 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function blankSentenceBySurface(sentence, surfaceToken) {
+    // token-based, punctuation-tolerant, case-insensitive
+    const tokens = sentence.split(" ");
+    let replaced = false;
+
+    const targetLower = String(surfaceToken || "").toLowerCase();
+
+    const out = tokens.map(token => {
+      const clean = token.replace(/[.,!?]/g, "").toLowerCase();
+      if (!replaced && clean === targetLower && targetLower.length > 0) {
+        replaced = true;
+        // preserve punctuation if token had it
+        const punct = token.match(/[.,!?]+$/);
+        return "_____" + (punct ? punct[0] : "");
+      }
+      return token;
+    });
+
+    return { blanked: out.join(" "), didReplace: replaced };
+  }
+
   function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const sentence = tpl.render[targetLang];
-    const correctWord = formOf(targetLang, targetConcept);
 
-    const tokens = sentence.split(" ");
-    let replaced = false;
+    // NEW: use explicit surface map if provided
+    const surface = tpl.surface?.[targetLang]?.[targetConcept];
 
-    const blanked = tokens.map(token => {
-      const clean = token.replace(/[.,!?]/g, "");
-      if (!replaced && clean === correctWord) {
-        replaced = true;
-        return "_____";
-      }
-      return token;
-    }).join(" ");
+    const { blanked, didReplace } = blankSentenceBySurface(sentence, surface);
 
-    const options = shuffle(
-      [targetConcept, ...run.released.filter(c => c !== targetConcept).slice(0,3)]
-    );
+    // If surface map missing/mismatch, we still show a warning line (dev-friendly)
+    const warning = didReplace ? "" : `<p style="opacity:0.7;font-size:0.9rem;">
+      (Dev) Could not blank: missing/incorrect surface for ${targetConcept} in ${targetLang}
+    </p>`;
+
+    // Options: correct + 3 random released
+    const distractors = shuffle(run.released.filter(c => c !== targetConcept)).slice(0, 3);
+    const options = shuffle([targetConcept, ...distractors]);
 
     content.innerHTML = `
       <div>
         <p>${blanked}</p>
+        ${warning}
         <div id="choices"></div>
       </div>
     `;
@@ -296,10 +307,10 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = formOf(targetLang, opt);
 
       btn.onclick = () => {
-        const correct = opt === targetConcept;
+        [...choicesDiv.children].forEach(b => b.disabled = true);
 
-        if (correct) btn.style.backgroundColor = "#4CAF50";
-        else btn.style.backgroundColor = "#D32F2F";
+        const correct = opt === targetConcept;
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
 
         decrementCooldowns();
         applyResult(targetConcept, correct);
@@ -322,13 +333,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const targetConcept = determineTargetConcept(tpl);
     const level = levelOf(targetConcept);
 
-    if (level === 1) {
-      renderExposure(targetLang, supportLang, tpl, targetConcept);
-    } else if (level === 2) {
-      renderComprehension(targetLang, supportLang, tpl, targetConcept);
-    } else {
-      renderFillBlank(targetLang, supportLang, tpl, targetConcept);
-    }
+    if (level === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
+    else if (level === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
+    else renderFillBlank(targetLang, supportLang, tpl, targetConcept);
   }
 
   openAppBtn?.addEventListener("click", async () => {

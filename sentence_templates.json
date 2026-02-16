@@ -2,17 +2,30 @@
   "templates": [
     {
       "template_id": "PRON_EAT_FOOD",
-      "concepts": [
-        "THIRD_PERSON_SINGULAR",
-        "EAT",
-        "FOOD"
-      ],
+      "concepts": ["THIRD_PERSON_SINGULAR","EAT","FOOD"],
       "stage": 1,
       "exercise": "comprehension",
       "render": {
         "pt": "Ele come comida.",
         "en": "He eats food.",
         "ja": "彼は食べ物を食べる。"
+      },
+      "surface": {
+        "pt": {
+          "THIRD_PERSON_SINGULAR": "Ele",
+          "EAT": "come",
+          "FOOD": "comida"
+        },
+        "en": {
+          "THIRD_PERSON_SINGULAR": "He",
+          "EAT": "eats",
+          "FOOD": "food"
+        },
+        "ja": {
+          "THIRD_PERSON_SINGULAR": "彼",
+          "EAT": "食べる",
+          "FOOD": "食べ物"
+        }
       },
       "questions": [
         {
@@ -22,11 +35,7 @@
             "pt": "Quem come comida?",
             "ja": "誰が食べ物を食べますか？"
           },
-          "choices": [
-            "FIRST_PERSON_SINGULAR",
-            "SECOND_PERSON",
-            "THIRD_PERSON_SINGULAR"
-          ],
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "THIRD_PERSON_SINGULAR"
         }
       ]
@@ -34,19 +43,30 @@
 
     {
       "template_id": "PRON_READ_BOOK",
-      "concepts": [
-        "FIRST_PERSON_SINGULAR",
-        "SECOND_PERSON",
-        "THIRD_PERSON_SINGULAR",
-        "READ",
-        "BOOK"
-      ],
+      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","READ","BOOK"],
       "stage": 1,
       "exercise": "comprehension",
       "render": {
         "pt": "Eu leio um livro.",
         "en": "I read a book.",
         "ja": "私は本を読む。"
+      },
+      "surface": {
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "READ": "leio",
+          "BOOK": "livro"
+        },
+        "en": {
+          "FIRST_PERSON_SINGULAR": "I",
+          "READ": "read",
+          "BOOK": "book"
+        },
+        "ja": {
+          "FIRST_PERSON_SINGULAR": "私",
+          "READ": "読む",
+          "BOOK": "本"
+        }
       },
       "questions": [
         {
@@ -56,11 +76,7 @@
             "pt": "Quem lê um livro?",
             "ja": "誰が本を読みますか？"
           },
-          "choices": [
-            "FIRST_PERSON_SINGULAR",
-            "SECOND_PERSON",
-            "THIRD_PERSON_SINGULAR"
-          ],
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "FIRST_PERSON_SINGULAR"
         }
       ]
@@ -68,19 +84,30 @@
 
     {
       "template_id": "PRON_SEE_PERSON",
-      "concepts": [
-        "FIRST_PERSON_SINGULAR",
-        "SECOND_PERSON",
-        "THIRD_PERSON_SINGULAR",
-        "SEE",
-        "PERSON"
-      ],
+      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","SEE","PERSON"],
       "stage": 1,
       "exercise": "comprehension",
       "render": {
         "pt": "Eu vejo uma pessoa.",
         "en": "I see a person.",
         "ja": "私は人を見る。"
+      },
+      "surface": {
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "SEE": "vejo",
+          "PERSON": "pessoa"
+        },
+        "en": {
+          "FIRST_PERSON_SINGULAR": "I",
+          "SEE": "see",
+          "PERSON": "person"
+        },
+        "ja": {
+          "FIRST_PERSON_SINGULAR": "私",
+          "SEE": "見る",
+          "PERSON": "人"
+        }
       },
       "questions": [
         {
@@ -90,11 +117,7 @@
             "pt": "Quem vê uma pessoa?",
             "ja": "誰が人を見ますか？"
           },
-          "choices": [
-            "FIRST_PERSON_SINGULAR",
-            "SECOND_PERSON",
-            "THIRD_PERSON_SINGULAR"
-          ],
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "FIRST_PERSON_SINGULAR"
         }
       ]
@@ -102,18 +125,27 @@
 
     {
       "template_id": "PRON_SLEEP",
-      "concepts": [
-        "FIRST_PERSON_SINGULAR",
-        "SECOND_PERSON",
-        "THIRD_PERSON_SINGULAR",
-        "SLEEP"
-      ],
+      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","SLEEP"],
       "stage": 1,
       "exercise": "comprehension",
       "render": {
         "pt": "Ele dorme.",
         "en": "He sleeps.",
         "ja": "彼は寝る。"
+      },
+      "surface": {
+        "pt": {
+          "THIRD_PERSON_SINGULAR": "Ele",
+          "SLEEP": "dorme"
+        },
+        "en": {
+          "THIRD_PERSON_SINGULAR": "He",
+          "SLEEP": "sleeps"
+        },
+        "ja": {
+          "THIRD_PERSON_SINGULAR": "彼",
+          "SLEEP": "寝る"
+        }
       },
       "questions": [
         {
@@ -123,11 +155,7 @@
             "pt": "Quem dorme?",
             "ja": "誰が寝ますか？"
           },
-          "choices": [
-            "FIRST_PERSON_SINGULAR",
-            "SECOND_PERSON",
-            "THIRD_PERSON_SINGULAR"
-          ],
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "THIRD_PERSON_SINGULAR"
         }
       ]
@@ -135,19 +163,30 @@
 
     {
       "template_id": "PRON_GO_PLACE",
-      "concepts": [
-        "FIRST_PERSON_SINGULAR",
-        "SECOND_PERSON",
-        "THIRD_PERSON_SINGULAR",
-        "GO",
-        "PLACE"
-      ],
+      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","GO","PLACE"],
       "stage": 1,
       "exercise": "comprehension",
       "render": {
         "pt": "Eu vou a um lugar.",
         "en": "I go to a place.",
         "ja": "私は場所に行く。"
+      },
+      "surface": {
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "GO": "vou",
+          "PLACE": "lugar"
+        },
+        "en": {
+          "FIRST_PERSON_SINGULAR": "I",
+          "GO": "go",
+          "PLACE": "place"
+        },
+        "ja": {
+          "FIRST_PERSON_SINGULAR": "私",
+          "GO": "行く",
+          "PLACE": "場所"
+        }
       },
       "questions": [
         {
@@ -157,11 +196,7 @@
             "pt": "Quem vai a um lugar?",
             "ja": "誰が場所に行きますか？"
           },
-          "choices": [
-            "FIRST_PERSON_SINGULAR",
-            "SECOND_PERSON",
-            "THIRD_PERSON_SINGULAR"
-          ],
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "FIRST_PERSON_SINGULAR"
         }
       ]
