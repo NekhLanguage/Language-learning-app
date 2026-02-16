@@ -30,5 +30,37 @@
       "person": 3,
       "number": "plural"
     }
-  ]
+  ],
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "FIRST_PERSON_SINGULAR": ["I"],
+        "SECOND_PERSON": ["you"],
+        "THIRD_PERSON_SINGULAR": ["he / she"],
+        "FIRST_PERSON_PLURAL": ["we"],
+        "THIRD_PERSON_PLURAL": ["they"]
+      }
+    },
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "FIRST_PERSON_SINGULAR": ["eu"],
+        "SECOND_PERSON": ["você"],
+        "THIRD_PERSON_SINGULAR": ["ele / ela"],
+        "FIRST_PERSON_PLURAL": ["nós"],
+        "THIRD_PERSON_PLURAL": ["eles / elas"]
+      }
+    },
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "FIRST_PERSON_SINGULAR": ["私"],
+        "SECOND_PERSON": ["あなた"],
+        "THIRD_PERSON_SINGULAR": ["彼 / 彼女"],
+        "FIRST_PERSON_PLURAL": ["私たち"],
+        "THIRD_PERSON_PLURAL": ["彼ら / 彼女ら"]
+      }
+    }
+  }
 }
