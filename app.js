@@ -87,13 +87,40 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ---------------- SCHEDULER ----------------
+let TEMPLATE_CACHE = null;
 
-  function selectNextConcept() {
-    const sorted = [...run.released].sort((a, b) =>
-      run.progress[a].level - run.progress[b].level
-    );
-    return sorted[0];
+async function loadTemplates() {
+  if (!TEMPLATE_CACHE) {
+    const res = await fetch("sentence_templates.json", { cache: "no-store" });
+    const data = await res.json();
+    TEMPLATE_CACHE = data.templates || [];
   }
+  return TEMPLATE_CACHE;
+}
+
+function hasTemplateForConcept(cid) {
+  if (!TEMPLATE_CACHE) return false;
+  return TEMPLATE_CACHE.some(t =>
+    (t.concepts || []).includes(cid)
+  );
+}
+
+function selectNextConcept() {
+  const validConcepts = run.released.filter(cid =>
+    hasTemplateForConcept(cid)
+  );
+
+  if (validConcepts.length === 0) {
+    console.warn("No concepts have matching templates.");
+    return null;
+  }
+
+  const sorted = validConcepts.sort((a, b) =>
+    run.progress[a].level - run.progress[b].level
+  );
+
+  return sorted[0];
+}
 
   function selectExerciseForConcept(cid) {
     return run.progress[cid].level;
@@ -129,15 +156,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ---------------- RENDER ----------------
 
-  async function renderNext(targetLang, supportLang) {
-    const { cid, exercise } = schedule();
+async function renderNext(targetLang, supportLang) {
+  await loadTemplates();
 
-    if (exercise === 1 || exercise === 2 || exercise === 3) {
-      await renderComprehension(targetLang, supportLang, cid);
-    } else {
-      content.innerHTML = `<div>Exercise ${exercise} not yet implemented.</div>`;
-    }
+  const result = schedule();
+  if (!result) {
+    content.innerHTML = "No available exercises yet.";
+    return;
   }
+
+  const { cid, exercise } = result;
+
+  if (exercise <= 3) {
+    await renderComprehension(targetLang, supportLang, cid);
+  } else {
+    content.innerHTML = `<div>Exercise ${exercise} not yet implemented.</div>`;
+  }
+}
 
   async function renderComprehension(targetLang, supportLang, targetConcept) {
     subtitle.textContent = `Exercise (Level ${run.progress[targetConcept].level}) • ${APP_VERSION}`;
