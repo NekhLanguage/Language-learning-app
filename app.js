@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.13-degrading-spacing
+// VERSION: v0.9.14-concept-spacing-stable
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.13-degrading-spacing";
+  const APP_VERSION = "v0.9.14-concept-spacing-stable";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
       released: [],
       future: [...allConcepts],
       progress: {},
-      lastTemplateId: null
+      lastTargetConcept: null
     };
 
     seedWithFirstTemplate();
@@ -131,40 +131,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return lowest;
   }
 
-  function chooseTemplate() {
-    const baseEligible = TEMPLATE_CACHE.filter(templateEligible);
-    if (!baseEligible.length) return null;
-
-    // Try spacing thresholds from 4 down to 0
-    for (let threshold = 0; threshold <= 4; threshold++) {
-      const candidates = baseEligible.filter(tpl => {
-        const target = determineTargetConcept(tpl);
-        return ensureProgress(target).cooldown <= threshold;
-      });
-
-      if (candidates.length) {
-        return pickLowestLevelTemplate(candidates);
-      }
-    }
-
-    return pickLowestLevelTemplate(baseEligible);
-  }
-
-  function pickLowestLevelTemplate(list) {
-    let best = list[0];
-    let bestMin = Infinity;
-
-    for (const tpl of list) {
-      const minLevel = Math.min(...tpl.concepts.map(levelOf));
-      if (minLevel < bestMin) {
-        bestMin = minLevel;
-        best = tpl;
-      }
-    }
-
-    return best;
-  }
-
   function getCooldown(level, correct) {
     if (!correct && level >= 2) return 2;
     return 4;
@@ -191,6 +157,48 @@ document.addEventListener("DOMContentLoaded", () => {
         releaseConcepts(1);
       }
     }
+  }
+
+  function chooseTemplate() {
+    const baseEligible = TEMPLATE_CACHE.filter(templateEligible);
+    if (!baseEligible.length) return null;
+
+    for (let threshold = 4; threshold >= 0; threshold--) {
+
+      const candidates = baseEligible.filter(tpl => {
+        const target = determineTargetConcept(tpl);
+        const prog = ensureProgress(target);
+
+        if (prog.cooldown > threshold) return false;
+
+        // Prevent immediate repetition unless no alternative
+        if (target === run.lastTargetConcept) return false;
+
+        return true;
+      });
+
+      if (candidates.length) {
+        return pickLowestLevelTemplate(candidates);
+      }
+    }
+
+    // Fallback (only if absolutely necessary)
+    return pickLowestLevelTemplate(baseEligible);
+  }
+
+  function pickLowestLevelTemplate(list) {
+    let best = list[0];
+    let bestMin = Infinity;
+
+    for (const tpl of list) {
+      const minLevel = Math.min(...tpl.concepts.map(levelOf));
+      if (minLevel < bestMin) {
+        bestMin = minLevel;
+        best = tpl;
+      }
+    }
+
+    return best;
   }
 
   function formOf(lang, cid) {
@@ -221,6 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("continue-btn").onclick = () => {
       decrementCooldowns();
       applyResult(targetConcept, true);
+      run.lastTargetConcept = targetConcept;
       renderNext(targetLang, supportLang);
     };
   }
@@ -255,6 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         decrementCooldowns();
         applyResult(targetConcept, correct);
+        run.lastTargetConcept = targetConcept;
 
         setTimeout(() => {
           renderNext(targetLang, supportLang);
