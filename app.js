@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.16-exercise-4-added
+// VERSION: v0.9.17-level-display-blank-fix
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.16-exercise-4-added";
+  const APP_VERSION = "v0.9.17-level-display-blank-fix";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     candidates = candidates.filter(cid => cid !== run.lastTargetConcept);
-    if (candidates.length === 0) candidates = tpl.concepts;
+    if (!candidates.length) candidates = tpl.concepts;
 
     return candidates[Math.floor(Math.random() * candidates.length)];
   }
@@ -169,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!baseEligible.length) return null;
 
     for (let threshold = 4; threshold >= 0; threshold--) {
+
       const candidates = baseEligible.filter(tpl => {
         const target = determineTargetConcept(tpl);
         const prog = ensureProgress(target);
@@ -199,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Exposure";
+    subtitle.textContent = "Level " + levelOf(targetConcept);
 
     content.innerHTML = `
       <div>
@@ -221,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Comprehension";
+    subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const correctAnswer = tpl.questions[0].answer;
     const options = shuffle([...tpl.questions[0].choices]);
@@ -260,12 +261,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Recognition";
+    subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const sentence = tpl.render[targetLang];
     const correctWord = formOf(targetLang, targetConcept);
 
-    const blanked = sentence.replace(correctWord, "_____");
+    const tokens = sentence.split(" ");
+    let replaced = false;
+
+    const blanked = tokens.map(token => {
+      const clean = token.replace(/[.,!?]/g, "");
+      if (!replaced && clean === correctWord) {
+        replaced = true;
+        return "_____";
+      }
+      return token;
+    }).join(" ");
 
     const options = shuffle(
       [targetConcept, ...run.released.filter(c => c !== targetConcept).slice(0,3)]
