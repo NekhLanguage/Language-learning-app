@@ -1,5 +1,5 @@
 // Zero to Hero – data-driven learning app
-// VERSION: v0.9.1-global-merge+version-badge
+// VERSION: v0.9.2-global-merge+version-badge
 //
 // Purpose of this version:
 // - Global vocab merge (loads all vocab JSON files into one runtime universe)
@@ -225,15 +225,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const sentence = tpl.render?.[targetLang] || "";
     const questionText = buildWhoQuestionFromSupportSentence(tpl, supportLang);
 
-    // Current options (temporary scaffolding)
-    const options = [
-      "FIRST_PERSON_SINGULAR",
-      "SECOND_PERSON",
-      "THIRD_PERSON_SINGULAR"
-    ];
+    // All singular pronouns from vocab
+const allPronouns = Object.keys(window.GLOBAL_VOCAB.concepts)
+  .filter(id => id.includes("PERSON") && id.includes("SINGULAR"));
 
-    // IMPORTANT: templates use `concepts`, not `concept_ids`
-    const correct = options.find(x => (tpl.concepts || []).includes(x)) || options[0];
+// Determine correct pronoun from template
+const correct = (tpl.concepts || [])
+  .find(id => allPronouns.includes(id));
+
+// Build distractors
+const distractors = allPronouns
+  .filter(id => id !== correct)
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 2);
+
+// Combine + shuffle
+const options = [correct, ...distractors]
+  .sort(() => Math.random() - 0.5);
 
     content.innerHTML = `
       <div class="row">
