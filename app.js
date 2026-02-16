@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.15-stable-tiebreak
+// VERSION: v0.9.16-exercise-4-added
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.15-stable-tiebreak";
+  const APP_VERSION = "v0.9.16-exercise-4-added";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -117,12 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function determineTargetConcept(tpl) {
-    const concepts = tpl.concepts || [];
-
     let minLevel = Infinity;
     let candidates = [];
 
-    for (const cid of concepts) {
+    for (const cid of tpl.concepts) {
       const lvl = levelOf(cid);
       if (lvl < minLevel) {
         minLevel = lvl;
@@ -132,12 +130,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Avoid immediate repetition if possible
     candidates = candidates.filter(cid => cid !== run.lastTargetConcept);
-
-    if (candidates.length === 0) {
-      candidates = tpl.concepts;
-    }
+    if (candidates.length === 0) candidates = tpl.concepts;
 
     return candidates[Math.floor(Math.random() * candidates.length)];
   }
@@ -175,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!baseEligible.length) return null;
 
     for (let threshold = 4; threshold >= 0; threshold--) {
-
       const candidates = baseEligible.filter(tpl => {
         const target = determineTargetConcept(tpl);
         const prog = ensureProgress(target);
@@ -206,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Exposure • Level 1";
+    subtitle.textContent = "Exposure";
 
     content.innerHTML = `
       <div>
@@ -228,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Comprehension • Level 2+";
+    subtitle.textContent = "Comprehension";
 
     const correctAnswer = tpl.questions[0].answer;
     const options = shuffle([...tpl.questions[0].choices]);
@@ -259,9 +252,49 @@ document.addEventListener("DOMContentLoaded", () => {
         applyResult(targetConcept, correct);
         run.lastTargetConcept = targetConcept;
 
-        setTimeout(() => {
-          renderNext(targetLang, supportLang);
-        }, 600);
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      choicesDiv.appendChild(btn);
+    });
+  }
+
+  function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
+    subtitle.textContent = "Recognition";
+
+    const sentence = tpl.render[targetLang];
+    const correctWord = formOf(targetLang, targetConcept);
+
+    const blanked = sentence.replace(correctWord, "_____");
+
+    const options = shuffle(
+      [targetConcept, ...run.released.filter(c => c !== targetConcept).slice(0,3)]
+    );
+
+    content.innerHTML = `
+      <div>
+        <p>${blanked}</p>
+        <div id="choices"></div>
+      </div>
+    `;
+
+    const choicesDiv = document.getElementById("choices");
+
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = formOf(targetLang, opt);
+
+      btn.onclick = () => {
+        const correct = opt === targetConcept;
+
+        if (correct) btn.style.backgroundColor = "#4CAF50";
+        else btn.style.backgroundColor = "#D32F2F";
+
+        decrementCooldowns();
+        applyResult(targetConcept, correct);
+        run.lastTargetConcept = targetConcept;
+
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
       };
 
       choicesDiv.appendChild(btn);
@@ -280,8 +313,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (level === 1) {
       renderExposure(targetLang, supportLang, tpl, targetConcept);
-    } else {
+    } else if (level === 2) {
       renderComprehension(targetLang, supportLang, tpl, targetConcept);
+    } else {
+      renderFillBlank(targetLang, supportLang, tpl, targetConcept);
     }
   }
 
