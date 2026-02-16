@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.14-concept-spacing-stable
+// VERSION: v0.9.15-stable-tiebreak
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.14-concept-spacing-stable";
+  const APP_VERSION = "v0.9.15-stable-tiebreak";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -117,18 +117,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function determineTargetConcept(tpl) {
-    let lowest = tpl.concepts[0];
-    let lowestLevel = levelOf(lowest);
+    const concepts = tpl.concepts || [];
 
-    for (const cid of tpl.concepts) {
+    let minLevel = Infinity;
+    let candidates = [];
+
+    for (const cid of concepts) {
       const lvl = levelOf(cid);
-      if (lvl < lowestLevel) {
-        lowestLevel = lvl;
-        lowest = cid;
+      if (lvl < minLevel) {
+        minLevel = lvl;
+        candidates = [cid];
+      } else if (lvl === minLevel) {
+        candidates.push(cid);
       }
     }
 
-    return lowest;
+    // Avoid immediate repetition if possible
+    candidates = candidates.filter(cid => cid !== run.lastTargetConcept);
+
+    if (candidates.length === 0) {
+      candidates = tpl.concepts;
+    }
+
+    return candidates[Math.floor(Math.random() * candidates.length)];
   }
 
   function getCooldown(level, correct) {
@@ -170,35 +181,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const prog = ensureProgress(target);
 
         if (prog.cooldown > threshold) return false;
-
-        // Prevent immediate repetition unless no alternative
         if (target === run.lastTargetConcept) return false;
 
         return true;
       });
 
       if (candidates.length) {
-        return pickLowestLevelTemplate(candidates);
+        return candidates[Math.floor(Math.random() * candidates.length)];
       }
     }
 
-    // Fallback (only if absolutely necessary)
-    return pickLowestLevelTemplate(baseEligible);
-  }
-
-  function pickLowestLevelTemplate(list) {
-    let best = list[0];
-    let bestMin = Infinity;
-
-    for (const tpl of list) {
-      const minLevel = Math.min(...tpl.concepts.map(levelOf));
-      if (minLevel < bestMin) {
-        bestMin = minLevel;
-        best = tpl;
-      }
-    }
-
-    return best;
+    return baseEligible[Math.floor(Math.random() * baseEligible.length)];
   }
 
   function formOf(lang, cid) {
