@@ -8,7 +8,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.1-global-merge+version-badge";
+  const APP_VERSION = "v0.9.2-global-merge+version-badge";
 
   // --------------------
   // DOM references (guarded)
