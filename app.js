@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.9-template-seeded-stable
+// VERSION: v0.9.10-template-seeded-feedback
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.9-template-seeded-stable";
+  const APP_VERSION = "v0.9.10-template-seeded-feedback";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Running:", APP_VERSION);
   document.title = (document.title || "Zero-to-Hero") + " • " + APP_VERSION;
 
+  // ---------------- GLOBAL MERGE ----------------
+
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadAndMergeVocab() {
     window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
+
     for (const file of VOCAB_FILES) {
       const res = await fetch(file, { cache: "no-store" });
       const data = await res.json();
@@ -45,6 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // ---------------- TEMPLATE CACHE ----------------
+
   let TEMPLATE_CACHE = null;
 
   async function loadTemplates() {
@@ -54,6 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
     TEMPLATE_CACHE = data.templates || [];
     return TEMPLATE_CACHE;
   }
+
+  // ---------------- RUN STATE ----------------
 
   let run = null;
 
@@ -204,9 +211,21 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = formOf(supportLang, opt);
 
       btn.onclick = () => {
+        [...choicesDiv.children].forEach(b => b.disabled = true);
+
         const correct = opt === correctAnswer;
+
+        if (correct) {
+          btn.style.backgroundColor = "#4CAF50";
+        } else {
+          btn.style.backgroundColor = "#D32F2F";
+        }
+
         applyResult(targetConcept, correct);
-        renderNext(targetLang, supportLang);
+
+        setTimeout(() => {
+          renderNext(targetLang, supportLang);
+        }, 600);
       };
 
       choicesDiv.appendChild(btn);
