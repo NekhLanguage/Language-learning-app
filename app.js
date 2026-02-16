@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.11-template-seeded-with-exposure
+// VERSION: v0.9.12-cooldown-spacing-clean
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.11-template-seeded-with-exposure";
+  const APP_VERSION = "v0.9.12-cooldown-spacing-clean";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function ensureProgress(cid) {
     if (!run.progress[cid]) {
-      run.progress[cid] = { level: 1, streak: 0 };
+      run.progress[cid] = { level: 1, streak: 0, cooldown: 0 };
     }
     return run.progress[cid];
   }
@@ -69,14 +69,22 @@ document.addEventListener("DOMContentLoaded", () => {
     return ensureProgress(cid).level;
   }
 
+  function decrementCooldowns() {
+    for (const cid of Object.keys(run.progress)) {
+      if (run.progress[cid].cooldown > 0) {
+        run.progress[cid].cooldown--;
+      }
+    }
+  }
+
   function initRun() {
-    const allTemplateConcepts = [
+    const allConcepts = [
       ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
     ];
 
     run = {
       released: [],
-      future: [...allTemplateConcepts],
+      future: [...allConcepts],
       progress: {},
       lastTemplateId: null
     };
@@ -86,15 +94,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function seedWithFirstTemplate() {
     if (!TEMPLATE_CACHE.length) return;
+    const first = TEMPLATE_CACHE[0].concepts || [];
 
-    const firstTemplateConcepts = TEMPLATE_CACHE[0].concepts || [];
-
-    for (const cid of firstTemplateConcepts) {
+    for (const cid of first) {
       run.released.push(cid);
       ensureProgress(cid);
     }
 
-    run.future = run.future.filter(cid => !firstTemplateConcepts.includes(cid));
+    run.future = run.future.filter(cid => !first.includes(cid));
   }
 
   function releaseConcepts(n) {
@@ -107,24 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function templateEligible(tpl) {
     return (tpl.concepts || []).every(cid => run.released.includes(cid));
-  }
-
-  function chooseTemplate() {
-    const eligible = TEMPLATE_CACHE.filter(templateEligible);
-    if (!eligible.length) return null;
-
-    let best = eligible[0];
-    let bestMin = Infinity;
-
-    for (const tpl of eligible) {
-      const minLevel = Math.min(...tpl.concepts.map(levelOf));
-      if (minLevel < bestMin) {
-        bestMin = minLevel;
-        best = tpl;
-      }
-    }
-
-    return best;
   }
 
   function determineTargetConcept(tpl) {
@@ -142,8 +131,41 @@ document.addEventListener("DOMContentLoaded", () => {
     return lowest;
   }
 
+  function chooseTemplate() {
+    const eligible = TEMPLATE_CACHE.filter(t => {
+      if (!templateEligible(t)) return false;
+      const target = determineTargetConcept(t);
+      return ensureProgress(target).cooldown <= 0;
+    });
+
+    if (!eligible.length) {
+      return TEMPLATE_CACHE.find(templateEligible) || null;
+    }
+
+    let best = eligible[0];
+    let bestMin = Infinity;
+
+    for (const tpl of eligible) {
+      const minLevel = Math.min(...tpl.concepts.map(levelOf));
+      if (minLevel < bestMin) {
+        bestMin = minLevel;
+        best = tpl;
+      }
+    }
+
+    return best;
+  }
+
+  function getCooldown(level, correct) {
+    if (!correct && level >= 2) return 2;
+    return 4;
+  }
+
   function applyResult(cid, correct) {
     const state = ensureProgress(cid);
+    const currentLevel = state.level;
+
+    state.cooldown = getCooldown(currentLevel, correct);
 
     if (!correct) {
       state.streak = 0;
@@ -169,8 +191,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return cid;
   }
 
+  function shuffle(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+  }
+
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Exposure • Level " + levelOf(targetConcept);
+    subtitle.textContent = "Exposure • Level 1";
 
     content.innerHTML = `
       <div>
@@ -184,16 +210,17 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     document.getElementById("continue-btn").onclick = () => {
+      decrementCooldowns();
       applyResult(targetConcept, true);
       renderNext(targetLang, supportLang);
     };
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Comprehension • Level " + levelOf(targetConcept);
+    subtitle.textContent = "Comprehension • Level 2+";
 
     const correctAnswer = tpl.questions[0].answer;
-    const options = tpl.questions[0].choices.sort(() => Math.random() - 0.5);
+    const options = shuffle([...tpl.questions[0].choices]);
 
     content.innerHTML = `
       <div>
@@ -217,9 +244,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (correct) btn.style.backgroundColor = "#4CAF50";
         else btn.style.backgroundColor = "#D32F2F";
 
+        decrementCooldowns();
         applyResult(targetConcept, correct);
 
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
+        setTimeout(() => {
+          renderNext(targetLang, supportLang);
+        }, 600);
       };
 
       choicesDiv.appendChild(btn);
@@ -228,17 +258,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderNext(targetLang, supportLang) {
     const tpl = chooseTemplate();
-
     if (!tpl) {
-      subtitle.textContent = "No eligible templates";
-      content.innerHTML = "No eligible templates yet.";
+      content.innerHTML = "No eligible templates.";
       return;
     }
 
     const targetConcept = determineTargetConcept(tpl);
     const level = levelOf(targetConcept);
 
-    if (level <= 2) {
+    if (level === 1) {
       renderExposure(targetLang, supportLang, tpl, targetConcept);
     } else {
       renderComprehension(targetLang, supportLang, tpl, targetConcept);
