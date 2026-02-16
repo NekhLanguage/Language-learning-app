@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.10-template-seeded-feedback
+// VERSION: v0.9.11-template-seeded-with-exposure
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.10-template-seeded-feedback";
+  const APP_VERSION = "v0.9.11-template-seeded-with-exposure";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -15,9 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const subtitle = document.getElementById("session-subtitle");
 
   console.log("Running:", APP_VERSION);
-  document.title = (document.title || "Zero-to-Hero") + " • " + APP_VERSION;
-
-  // ---------------- GLOBAL MERGE ----------------
+  document.title = "Zero-to-Hero • " + APP_VERSION;
 
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
@@ -48,8 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ---------------- TEMPLATE CACHE ----------------
-
   let TEMPLATE_CACHE = null;
 
   async function loadTemplates() {
@@ -59,8 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
     TEMPLATE_CACHE = data.templates || [];
     return TEMPLATE_CACHE;
   }
-
-  // ---------------- RUN STATE ----------------
 
   let run = null;
 
@@ -75,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return ensureProgress(cid).level;
   }
 
-  function initRunFromTemplates() {
+  function initRun() {
     const allTemplateConcepts = [
       ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
     ];
@@ -157,6 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     state.streak++;
+
     if (state.streak >= 2) {
       state.level++;
       state.streak = 0;
@@ -174,31 +169,35 @@ document.addEventListener("DOMContentLoaded", () => {
     return cid;
   }
 
-  function shuffle(arr) {
-    return arr.sort(() => Math.random() - 0.5);
-  }
-
-  async function renderNext(targetLang, supportLang) {
-    const tpl = chooseTemplate();
-
-    if (!tpl) {
-      subtitle.textContent = "No available templates • " + APP_VERSION;
-      content.innerHTML = "No eligible templates yet.";
-      return;
-    }
-
-    run.lastTemplateId = tpl.template_id;
-    const targetConcept = determineTargetConcept(tpl);
-
-    subtitle.textContent = "Level " + levelOf(targetConcept) + " • " + APP_VERSION;
-
-    const sentence = tpl.render[targetLang];
-    const correctAnswer = tpl.questions?.[0]?.answer;
-    const options = shuffle([...tpl.questions[0].choices]);
+  function renderExposure(targetLang, supportLang, tpl, targetConcept) {
+    subtitle.textContent = "Exposure • Level " + levelOf(targetConcept);
 
     content.innerHTML = `
       <div>
-        <p>${sentence}</p>
+        <h2>${formOf(targetLang, targetConcept)}</h2>
+        <p>${formOf(supportLang, targetConcept)}</p>
+        <hr>
+        <p>${tpl.render[targetLang]}</p>
+        <p>${tpl.render[supportLang]}</p>
+        <button id="continue-btn">Continue</button>
+      </div>
+    `;
+
+    document.getElementById("continue-btn").onclick = () => {
+      applyResult(targetConcept, true);
+      renderNext(targetLang, supportLang);
+    };
+  }
+
+  function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
+    subtitle.textContent = "Comprehension • Level " + levelOf(targetConcept);
+
+    const correctAnswer = tpl.questions[0].answer;
+    const options = tpl.questions[0].choices.sort(() => Math.random() - 0.5);
+
+    content.innerHTML = `
+      <div>
+        <p>${tpl.render[targetLang]}</p>
         <p>${tpl.questions[0].prompt[supportLang]}</p>
         <div id="choices"></div>
       </div>
@@ -215,21 +214,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const correct = opt === correctAnswer;
 
-        if (correct) {
-          btn.style.backgroundColor = "#4CAF50";
-        } else {
-          btn.style.backgroundColor = "#D32F2F";
-        }
+        if (correct) btn.style.backgroundColor = "#4CAF50";
+        else btn.style.backgroundColor = "#D32F2F";
 
         applyResult(targetConcept, correct);
 
-        setTimeout(() => {
-          renderNext(targetLang, supportLang);
-        }, 600);
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
       };
 
       choicesDiv.appendChild(btn);
     });
+  }
+
+  function renderNext(targetLang, supportLang) {
+    const tpl = chooseTemplate();
+
+    if (!tpl) {
+      subtitle.textContent = "No eligible templates";
+      content.innerHTML = "No eligible templates yet.";
+      return;
+    }
+
+    const targetConcept = determineTargetConcept(tpl);
+    const level = levelOf(targetConcept);
+
+    if (level <= 2) {
+      renderExposure(targetLang, supportLang, tpl, targetConcept);
+    } else {
+      renderComprehension(targetLang, supportLang, tpl, targetConcept);
+    }
   }
 
   openAppBtn?.addEventListener("click", async () => {
@@ -241,7 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     await loadAndMergeVocab();
     await loadTemplates();
-    initRunFromTemplates();
+    initRun();
     renderNext(tl, sl);
   });
 
