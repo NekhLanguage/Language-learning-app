@@ -130,8 +130,22 @@ document.addEventListener("DOMContentLoaded", () => {
       lastTemplateId: null
     };
 
-    releaseConcepts(5);
+   function seedWithFirstTemplate() {
+  if (!TEMPLATE_CACHE || TEMPLATE_CACHE.length === 0) return;
+
+  const firstTemplateConcepts = TEMPLATE_CACHE[0].concepts || [];
+
+  for (const cid of firstTemplateConcepts) {
+    if (!run.released.includes(cid)) {
+      run.released.push(cid);
+      ensureProgress(cid);
+    }
   }
+
+  // Remove seeded concepts from future
+  run.future = run.future.filter(cid => !firstTemplateConcepts.includes(cid));
+}
+
 
   function releaseConcepts(n) {
     for (let i = 0; i < n && run.future.length > 0; i++) {
