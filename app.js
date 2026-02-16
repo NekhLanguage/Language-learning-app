@@ -1,13 +1,11 @@
-// Zero to Hero – data-driven learning app
-// VERSION: v0.9.3-pronoun-metadata-engine
+
+// Zero to Hero – Blueprint Engine
+// VERSION: v0.9.4-blueprint-engine
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.3-pronoun-metadata-engine";
+  const APP_VERSION = "v0.9.4-blueprint-engine";
 
-  // --------------------
-  // DOM references
-  // --------------------
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
 
@@ -20,33 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
 
-  function mustHave(el, name) {
-    if (!el) {
-      console.warn(`[app.js] Missing required element: #${name}`);
-      return false;
-    }
-    return true;
-  }
+  function mustHave(el) { return !!el; }
 
-  // --------------------
-  // Version badge
-  // --------------------
-  function setVersionBadge() {
-    console.log(`[Zero-to-Hero] app.js ${APP_VERSION}`);
+  console.log("App version:", APP_VERSION);
 
-    if (subtitle) {
-      subtitle.textContent = `${subtitle.textContent || ""} • ${APP_VERSION}`;
-    }
+  // ---------------- GLOBAL MERGE ----------------
 
-    document.title = document.title.replace(/\s+•\s+v[\w.\-+]+$/i, "");
-    document.title += ` • ${APP_VERSION}`;
-  }
-
-  setVersionBadge();
-
-  // --------------------
-  // GLOBAL MERGE
-  // --------------------
   const VOCAB_FILES = [
     "adjectives.json",
     "connectors.json",
@@ -62,107 +39,128 @@ document.addEventListener("DOMContentLoaded", () => {
     "verbs.json"
   ];
 
-  window.GLOBAL_VOCAB = {
-    concepts: {},
-    languages: {}
-  };
+  window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
 
   async function loadAndMergeVocab() {
     for (const file of VOCAB_FILES) {
-      try {
-        const res = await fetch(file, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
+      const res = await fetch(file, { cache: "no-store" });
+      const data = await res.json();
 
-        for (const concept of data.concepts || []) {
-          window.GLOBAL_VOCAB.concepts[concept.concept_id] = concept;
+      for (const concept of data.concepts || []) {
+        window.GLOBAL_VOCAB.concepts[concept.concept_id] = concept;
+      }
+
+      for (const [langCode, langData] of Object.entries(data.languages || {})) {
+        if (!window.GLOBAL_VOCAB.languages[langCode]) {
+          window.GLOBAL_VOCAB.languages[langCode] = { label: langData.label, forms: {} };
         }
-
-        for (const [langCode, langData] of Object.entries(data.languages || {})) {
-          if (!window.GLOBAL_VOCAB.languages[langCode]) {
-            window.GLOBAL_VOCAB.languages[langCode] = {
-              label: langData.label,
-              forms: {}
-            };
-          }
-
-          Object.assign(
-            window.GLOBAL_VOCAB.languages[langCode].forms,
-            langData.forms || {}
-          );
-        }
-
-      } catch (e) {
-        console.error(`Failed to load ${file}`, e);
+        Object.assign(window.GLOBAL_VOCAB.languages[langCode].forms, langData.forms || {});
       }
     }
 
-    console.log("GLOBAL_VOCAB ready:", window.GLOBAL_VOCAB);
+    console.log("GLOBAL_VOCAB ready");
   }
 
-  // --------------------
-  // App entry
-  // --------------------
-  if (openAppBtn && startScreen && learningScreen) {
-    openAppBtn.addEventListener("click", async () => {
-      startScreen.classList.remove("active");
-      learningScreen.classList.add("active");
+  // ---------------- RUN STATE ----------------
 
-      const tl = targetSel?.value || "pt";
-      const sl = supportSel?.value || "en";
+  let run = null;
 
-      await loadAndMergeVocab();
-      await loadStage1Comprehension(tl, sl);
-    });
+  function initializeRun() {
+    const allConceptIds = Object.keys(window.GLOBAL_VOCAB.concepts);
+
+    run = {
+      released: [],
+      future: [...allConceptIds],
+      progress: {},
+      lastExercise: null
+    };
+
+    releaseNextConcepts(5);
   }
 
-  if (quitBtn && startScreen && learningScreen) {
-    quitBtn.addEventListener("click", () => {
-      learningScreen.classList.remove("active");
-      startScreen.classList.add("active");
-    });
-  }
-
-  // --------------------
-  // Stage 1 – Sentence comprehension
-  // --------------------
-  async function loadStage1Comprehension(targetLang, supportLang) {
-    if (!mustHave(subtitle, "session-subtitle") || !mustHave(content, "content")) return;
-
-    subtitle.textContent = `Read and understand • ${APP_VERSION}`;
-    content.innerHTML = "Loading sentence...";
-
-    let data;
-    try {
-      const res = await fetch("sentence_templates.json", { cache: "no-store" });
-      if (!res.ok) throw new Error(String(res.status));
-      data = await res.json();
-    } catch (e) {
-      content.innerHTML = "Could not load sentence templates.";
-      return;
+  function releaseNextConcepts(n) {
+    for (let i = 0; i < n && run.future.length > 0; i++) {
+      const cid = run.future.shift();
+      run.released.push(cid);
+      run.progress[cid] = { level: 1, streak: 0 };
     }
+  }
 
-    const tpl = data.templates?.[0];
+  // ---------------- SCHEDULER ----------------
+
+  function selectNextConcept() {
+    const sorted = [...run.released].sort((a, b) =>
+      run.progress[a].level - run.progress[b].level
+    );
+    return sorted[0];
+  }
+
+  function selectExerciseForConcept(cid) {
+    return run.progress[cid].level;
+  }
+
+  function schedule() {
+    const cid = selectNextConcept();
+    const exercise = selectExerciseForConcept(cid);
+
+    run.lastExercise = exercise;
+    return { cid, exercise };
+  }
+
+  // ---------------- ADVANCEMENT ----------------
+
+  function handleResult(cid, correct) {
+    const state = run.progress[cid];
+
+    if (correct) {
+      state.streak++;
+      if (state.streak >= 2) {
+        state.level++;
+        state.streak = 0;
+
+        if (state.level === 3) {
+          releaseNextConcepts(1);
+        }
+      }
+    } else {
+      state.streak = 0;
+    }
+  }
+
+  // ---------------- RENDER ----------------
+
+  async function renderNext(targetLang, supportLang) {
+    const { cid, exercise } = schedule();
+
+    if (exercise === 1 || exercise === 2 || exercise === 3) {
+      await renderComprehension(targetLang, supportLang, cid);
+    } else {
+      content.innerHTML = `<div>Exercise ${exercise} not yet implemented.</div>`;
+    }
+  }
+
+  async function renderComprehension(targetLang, supportLang, targetConcept) {
+    subtitle.textContent = `Exercise (Level ${run.progress[targetConcept].level}) • ${APP_VERSION}`;
+    content.innerHTML = "Loading...";
+
+    const res = await fetch("sentence_templates.json", { cache: "no-store" });
+    const data = await res.json();
+
+    const tpl = data.templates.find(t =>
+      (t.concepts || []).includes(targetConcept)
+    );
+
     if (!tpl) {
-      content.innerHTML = "No templates found.";
+      content.innerHTML = "No matching template.";
       return;
     }
 
-    const sentence = tpl.render?.[targetLang] || "";
-    const questionText = buildWhoQuestionFromSupportSentence(tpl, supportLang);
-
+    const sentence = tpl.render[targetLang];
     const allPronouns = Object.entries(window.GLOBAL_VOCAB.concepts)
-      .filter(([_, concept]) => concept.type === "pronoun")
+      .filter(([_, c]) => c.type === "pronoun")
       .map(([id]) => id);
 
-    const correct = (tpl.concepts || [])
-      .find(id => allPronouns.includes(id));
-
-    if (!correct) {
-      console.warn("No pronoun found in template concepts.");
-      content.innerHTML = "Template missing pronoun concept.";
-      return;
-    }
+    const correct = targetConcept;
 
     const distractors = allPronouns
       .filter(id => id !== correct)
@@ -173,13 +171,9 @@ document.addEventListener("DOMContentLoaded", () => {
       .sort(() => Math.random() - 0.5);
 
     content.innerHTML = `
-      <div class="row">
-        <strong>Read and understand</strong>
-        <div class="forms" style="font-size:1.2rem;margin:0.5rem 0 0.75rem;">
-          ${escapeHtml(sentence)}
-        </div>
-        <div class="forms">${escapeHtml(questionText)}</div>
-        <div id="choices" style="margin-top:0.75rem;display:flex;gap:10px;flex-wrap:wrap;"></div>
+      <div>
+        <p>${sentence}</p>
+        <div id="choices"></div>
       </div>
     `;
 
@@ -187,76 +181,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     options.forEach(opt => {
       const btn = document.createElement("button");
-      btn.className = "secondary small";
-      btn.type = "button";
-      btn.textContent = pronounLabel(opt, supportLang);
-
+      btn.textContent = opt;
       btn.onclick = () => {
-        [...choicesDiv.children].forEach(b => (b.disabled = true));
-        const ok = opt === correct;
-        btn.textContent += ok ? " ✓" : " ✕";
+        const isCorrect = opt === correct;
+        handleResult(targetConcept, isCorrect);
+        renderNext(targetLang, supportLang);
       };
-
       choicesDiv.appendChild(btn);
     });
   }
 
-  // --------------------
-  // Helpers
-  // --------------------
-  function buildWhoQuestionFromSupportSentence(tpl, supportLang) {
-    const supportSentence = tpl.render?.[supportLang];
-    if (!supportSentence) return "Who?";
+  // ---------------- ENTRY ----------------
 
-    switch (supportLang) {
-      case "en": return whoFromSvoSentence(supportSentence, "Who");
-      case "pt": return whoFromSvoSentence(supportSentence, "Quem");
-      case "ja": return whoFromJapaneseSentence(supportSentence);
-      default: return whoFromSvoSentence(supportSentence, "Who");
-    }
+  if (openAppBtn && startScreen && learningScreen) {
+    openAppBtn.addEventListener("click", async () => {
+      startScreen.classList.remove("active");
+      learningScreen.classList.add("active");
+
+      const tl = targetSel?.value || "pt";
+      const sl = supportSel?.value || "en";
+
+      await loadAndMergeVocab();
+      initializeRun();
+      renderNext(tl, sl);
+    });
   }
 
-  function whoFromSvoSentence(sentence, whoWord) {
-    let clean = String(sentence).trim().replace(/[.!?。！？]$/, "");
-    const parts = clean.split(/\s+/);
-    if (parts.length < 2) return `${whoWord}?`;
-    parts[0] = whoWord;
-    return `${parts.join(" ")}?`;
-  }
-
-  function whoFromJapaneseSentence(sentence) {
-    let clean = String(sentence).trim().replace(/[.!?。！？]$/, "");
-    const idxWa = clean.indexOf("は");
-    const idxGa = clean.indexOf("が");
-    let cutIdx = -1;
-
-    if (idxWa !== -1 && (idxGa === -1 || idxWa < idxGa)) cutIdx = idxWa;
-    if (idxGa !== -1 && (idxWa === -1 || idxGa < idxWa)) cutIdx = idxGa;
-
-    if (cutIdx !== -1) clean = clean.slice(cutIdx + 1).trim();
-
-    return `誰が${clean}？`;
-  }
-
-  function pronounLabel(conceptId, lang) {
-    const map = {
-      FIRST_PERSON_SINGULAR: { en: "I", pt: "eu", ja: "私" },
-      SECOND_PERSON: { en: "you", pt: "você", ja: "あなた" },
-      THIRD_PERSON_SINGULAR: { en: "he / she", pt: "ele / ela", ja: "彼 / 彼女" },
-      FIRST_PERSON_PLURAL: { en: "we", pt: "nós", ja: "私たち" },
-      THIRD_PERSON_PLURAL: { en: "they", pt: "eles / elas", ja: "彼ら / 彼女ら" }
-    };
-
-    return map[conceptId]?.[lang] || conceptId;
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  if (quitBtn && startScreen && learningScreen) {
+    quitBtn.addEventListener("click", () => {
+      learningScreen.classList.remove("active");
+      startScreen.classList.add("active");
+    });
   }
 
 });
