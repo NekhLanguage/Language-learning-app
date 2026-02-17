@@ -141,7 +141,52 @@
         }
       }
     },
-
+{
+  "template_id": "YOU_READ_BOOK",
+  "concepts": ["SECOND_PERSON","READ","BOOK"],
+  "render": {
+    "en": "You read a book.",
+    "pt": "Você lê um livro."
+  },
+  "surface": {
+    "en": {
+      "SECOND_PERSON": "you",
+      "READ": "read",
+      "BOOK": "book"
+    },
+    "pt": {
+      "SECOND_PERSON": "você",
+      "READ": "lê",
+      "BOOK": "livro"
+    }
+  },
+  "questions": {
+    "pronoun": {
+      "prompt": {
+        "en": "Who reads a book?",
+        "pt": "Quem lê um livro?"
+      },
+      "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","HE","SHE"],
+      "answer": "SECOND_PERSON"
+    },
+    "verb": {
+      "prompt": {
+        "en": "What do you do?",
+        "pt": "O que você faz?"
+      },
+      "choices": ["READ","EAT","SEE","HAVE"],
+      "answer": "READ"
+    },
+    "object": {
+      "prompt": {
+        "en": "What do you read?",
+        "pt": "O que você lê?"
+      },
+      "choices": ["BOOK","FOOD","PHONE","JOB"],
+      "answer": "BOOK"
+    }
+  }
+},
     {
       "template_id": "WE_HAVE_JOB",
       "concepts": ["FIRST_PERSON_PLURAL","HAVE","JOB"],
