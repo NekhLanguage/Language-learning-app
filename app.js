@@ -1,10 +1,10 @@
-// Zero to Hero – Strict Ladder Engine
-// VERSION: v0.9.23-strict-levels
+// Zero to Hero – Strict Ladder + Completion
+// VERSION: v0.9.24-stable
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.23-strict-levels";
-  const MAX_LEVEL = 4; // Temporary cap until Level 5 exists
+  const APP_VERSION = "v0.9.24-stable";
+  const MAX_LEVEL = 4;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -61,13 +61,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function ensureProgress(cid) {
     if (!run.progress[cid]) {
-      run.progress[cid] = { level: 1, streak: 0 };
+      run.progress[cid] = {
+        level: 1,
+        streak: 0,
+        cooldown: 0,
+        completed: false
+      };
     }
     return run.progress[cid];
   }
 
   function levelOf(cid) {
     return ensureProgress(cid).level;
+  }
+
+  function decrementCooldowns() {
+    Object.values(run.progress).forEach(p => {
+      if (p.cooldown > 0) p.cooldown--;
+    });
   }
 
   function initRun() {
@@ -105,7 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function templateEligible(tpl) {
-    return (tpl.concepts || []).every(cid => run.released.includes(cid));
+    return (tpl.concepts || []).every(cid => {
+      const state = ensureProgress(cid);
+      return run.released.includes(cid) && !state.completed;
+    });
   }
 
   function determineTargetConcept(tpl) {
@@ -113,11 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
     let candidates = [];
 
     tpl.concepts.forEach(cid => {
-      const lvl = levelOf(cid);
-      if (lvl < minLevel) {
-        minLevel = lvl;
+      const state = ensureProgress(cid);
+      if (state.completed) return;
+
+      if (state.level < minLevel) {
+        minLevel = state.level;
         candidates = [cid];
-      } else if (lvl === minLevel) {
+      } else if (state.level === minLevel) {
         candidates.push(cid);
       }
     });
@@ -130,15 +146,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!correct) {
       state.streak = 0;
+      state.cooldown = 2;
       return;
     }
 
     state.streak++;
+    state.cooldown = 4;
 
     if (state.streak >= 2) {
+
       if (state.level < MAX_LEVEL) {
         state.level++;
+      } else {
+        // Completed Level 4
+        state.completed = true;
       }
+
       state.streak = 0;
 
       if (state.level === 3) {
@@ -195,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     document.getElementById("continue-btn").onclick = () => {
+      decrementCooldowns();
       applyResult(targetConcept, true);
       renderNext(targetLang, supportLang);
     };
@@ -228,6 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.onclick = () => {
         const correct = opt === q.answer;
         btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+        decrementCooldowns();
         applyResult(targetConcept, correct);
         setTimeout(() => renderNext(targetLang, supportLang), 600);
       };
@@ -236,12 +261,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function renderRecognition(targetLang, tpl, targetConcept) {
+  function renderRecognition(targetLang, supportLang, tpl, targetConcept) {
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const surface = tpl.surface?.[targetLang]?.[targetConcept];
     if (!surface) {
-      renderComprehension(targetLang, targetLang, tpl, targetConcept);
+      renderComprehension(targetLang, supportLang, tpl, targetConcept);
       return;
     }
 
@@ -251,13 +276,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
 
     const distractors = run.released.filter(cid => {
+      const state = ensureProgress(cid);
       if (cid === targetConcept) return false;
+      if (state.completed) return false;
+
       const m = window.GLOBAL_VOCAB.concepts[cid];
       return m && m.type === meta.type;
     });
 
     if (distractors.length < 3) {
-      renderComprehension(targetLang, targetLang, tpl, targetConcept);
+      renderComprehension(targetLang, supportLang, tpl, targetConcept);
       return;
     }
 
@@ -279,8 +307,9 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.onclick = () => {
         const correct = opt === targetConcept;
         btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+        decrementCooldowns();
         applyResult(targetConcept, correct);
-        setTimeout(() => renderNext(targetLang, targetLang), 600);
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
       };
 
       choicesDiv.appendChild(btn);
@@ -290,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderNext(targetLang, supportLang) {
     const tpl = chooseTemplate();
     if (!tpl) {
-      content.innerHTML = "No eligible templates.";
+      content.innerHTML = "All concepts completed.";
       return;
     }
 
@@ -299,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (level === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
     else if (level === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
-    else renderRecognition(targetLang, tpl, targetConcept);
+    else renderRecognition(targetLang, supportLang, tpl, targetConcept);
   }
 
   openAppBtn?.addEventListener("click", async () => {
