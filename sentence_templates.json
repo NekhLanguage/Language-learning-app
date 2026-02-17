@@ -2,7 +2,7 @@
   "templates": [
 
     {
-      "template_id": "PRON_EAT_FOOD",
+      "template_id": "I_EAT_FOOD",
       "concepts": ["FIRST_PERSON_SINGULAR","EAT","FOOD"],
       "render": {
         "en": "I eat food.",
@@ -26,7 +26,7 @@
             "en": "Who eats food?",
             "pt": "Quem come comida?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","HE","SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -34,7 +34,7 @@
             "en": "What do I do?",
             "pt": "O que eu faço?"
           },
-          "choices": ["EAT","READ","SLEEP"],
+          "choices": ["EAT","READ","SLEEP","SEE"],
           "answer": "EAT"
         },
         "object": {
@@ -42,28 +42,28 @@
             "en": "What do I eat?",
             "pt": "O que eu como?"
           },
-          "choices": ["FOOD","BOOK","PHONE"],
+          "choices": ["FOOD","BOOK","PHONE","JOB"],
           "answer": "FOOD"
         }
       }
     },
 
     {
-      "template_id": "PRON_READ_BOOK",
-      "concepts": ["FIRST_PERSON_SINGULAR","READ","BOOK"],
+      "template_id": "HE_READ_BOOK",
+      "concepts": ["HE","READ","BOOK"],
       "render": {
-        "en": "I read a book.",
-        "pt": "Eu leio um livro."
+        "en": "He reads a book.",
+        "pt": "Ele lê um livro."
       },
       "surface": {
         "en": {
-          "FIRST_PERSON_SINGULAR": "I",
-          "READ": "read",
+          "HE": "he",
+          "READ": "reads",
           "BOOK": "book"
         },
         "pt": {
-          "FIRST_PERSON_SINGULAR": "Eu",
-          "READ": "leio",
+          "HE": "ele",
+          "READ": "lê",
           "BOOK": "livro"
         }
       },
@@ -73,43 +73,43 @@
             "en": "Who reads a book?",
             "pt": "Quem lê um livro?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "FIRST_PERSON_SINGULAR"
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","HE","SHE"],
+          "answer": "HE"
         },
         "verb": {
           "prompt": {
-            "en": "What do I do?",
-            "pt": "O que eu faço?"
+            "en": "What does he do?",
+            "pt": "O que ele faz?"
           },
-          "choices": ["READ","EAT","SLEEP"],
+          "choices": ["READ","EAT","SEE","SLEEP"],
           "answer": "READ"
         },
         "object": {
           "prompt": {
-            "en": "What do I read?",
-            "pt": "O que eu leio?"
+            "en": "What does he read?",
+            "pt": "O que ele lê?"
           },
-          "choices": ["BOOK","FOOD","PHONE"],
+          "choices": ["BOOK","FOOD","PHONE","JOB"],
           "answer": "BOOK"
         }
       }
     },
 
     {
-      "template_id": "PRON_SEE_PHONE",
-      "concepts": ["THIRD_PERSON_SINGULAR","SEE","PHONE"],
+      "template_id": "SHE_SEES_PHONE",
+      "concepts": ["SHE","SEE","PHONE"],
       "render": {
-        "en": "He sees a phone.",
-        "pt": "Ele vê um telefone."
+        "en": "She sees a phone.",
+        "pt": "Ela vê um telefone."
       },
       "surface": {
         "en": {
-          "THIRD_PERSON_SINGULAR": "He",
+          "SHE": "she",
           "SEE": "sees",
           "PHONE": "phone"
         },
         "pt": {
-          "THIRD_PERSON_SINGULAR": "Ele",
+          "SHE": "ela",
           "SEE": "vê",
           "PHONE": "telefone"
         }
@@ -120,24 +120,71 @@
             "en": "Who sees a phone?",
             "pt": "Quem vê um telefone?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "THIRD_PERSON_SINGULAR"
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","HE","SHE"],
+          "answer": "SHE"
         },
         "verb": {
           "prompt": {
-            "en": "What does he do?",
-            "pt": "O que ele faz?"
+            "en": "What does she do?",
+            "pt": "O que ela faz?"
           },
-          "choices": ["SEE","EAT","READ"],
+          "choices": ["SEE","EAT","READ","SLEEP"],
           "answer": "SEE"
         },
         "object": {
           "prompt": {
-            "en": "What does he see?",
-            "pt": "O que ele vê?"
+            "en": "What does she see?",
+            "pt": "O que ela vê?"
           },
-          "choices": ["PHONE","BOOK","FOOD"],
+          "choices": ["PHONE","BOOK","FOOD","JOB"],
           "answer": "PHONE"
+        }
+      }
+    },
+
+    {
+      "template_id": "WE_HAVE_JOB",
+      "concepts": ["FIRST_PERSON_PLURAL","HAVE","JOB"],
+      "render": {
+        "en": "We have a job.",
+        "pt": "Nós temos um trabalho."
+      },
+      "surface": {
+        "en": {
+          "FIRST_PERSON_PLURAL": "we",
+          "HAVE": "have",
+          "JOB": "job"
+        },
+        "pt": {
+          "FIRST_PERSON_PLURAL": "nós",
+          "HAVE": "temos",
+          "JOB": "trabalho"
+        }
+      },
+      "questions": {
+        "pronoun": {
+          "prompt": {
+            "en": "Who has a job?",
+            "pt": "Quem tem um trabalho?"
+          },
+          "choices": ["FIRST_PERSON_PLURAL","FIRST_PERSON_SINGULAR","HE","SHE"],
+          "answer": "FIRST_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt": {
+            "en": "What do we do?",
+            "pt": "O que nós fazemos?"
+          },
+          "choices": ["HAVE","READ","SEE","EAT"],
+          "answer": "HAVE"
+        },
+        "object": {
+          "prompt": {
+            "en": "What do we have?",
+            "pt": "O que nós temos?"
+          },
+          "choices": ["JOB","BOOK","FOOD","PHONE"],
+          "answer": "JOB"
         }
       }
     }

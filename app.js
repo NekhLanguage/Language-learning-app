@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.24-stable";
+  const APP_VERSION = "v0.9.24.1-stable";
   const MAX_LEVEL = 4;
 
   const startScreen = document.getElementById("start-screen");

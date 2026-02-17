@@ -13,10 +13,18 @@
       "number": "singular"
     },
     {
-      "concept_id": "THIRD_PERSON_SINGULAR",
+      "concept_id": "HE",
       "type": "pronoun",
       "person": 3,
-      "number": "singular"
+      "number": "singular",
+      "gender": "masc"
+    },
+    {
+      "concept_id": "SHE",
+      "type": "pronoun",
+      "person": 3,
+      "number": "singular",
+      "gender": "fem"
     },
     {
       "concept_id": "FIRST_PERSON_PLURAL",
@@ -37,7 +45,8 @@
       "forms": {
         "FIRST_PERSON_SINGULAR": ["I"],
         "SECOND_PERSON": ["you"],
-        "THIRD_PERSON_SINGULAR": ["he / she"],
+        "HE": ["he"],
+        "SHE": ["she"],
         "FIRST_PERSON_PLURAL": ["we"],
         "THIRD_PERSON_PLURAL": ["they"]
       }
@@ -47,9 +56,10 @@
       "forms": {
         "FIRST_PERSON_SINGULAR": ["eu"],
         "SECOND_PERSON": ["você"],
-        "THIRD_PERSON_SINGULAR": ["ele / ela"],
+        "HE": ["ele"],
+        "SHE": ["ela"],
         "FIRST_PERSON_PLURAL": ["nós"],
-        "THIRD_PERSON_PLURAL": ["eles / elas"]
+        "THIRD_PERSON_PLURAL": ["eles"]
       }
     },
     "ja": {
@@ -57,9 +67,10 @@
       "forms": {
         "FIRST_PERSON_SINGULAR": ["私"],
         "SECOND_PERSON": ["あなた"],
-        "THIRD_PERSON_SINGULAR": ["彼 / 彼女"],
+        "HE": ["彼"],
+        "SHE": ["彼女"],
         "FIRST_PERSON_PLURAL": ["私たち"],
-        "THIRD_PERSON_PLURAL": ["彼ら / 彼女ら"]
+        "THIRD_PERSON_PLURAL": ["彼ら"]
       }
     }
   }
