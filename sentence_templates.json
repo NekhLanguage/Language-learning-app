@@ -1,121 +1,61 @@
 {
   "templates": [
+
     {
       "template_id": "PRON_EAT_FOOD",
-      "concepts": ["THIRD_PERSON_SINGULAR","EAT","FOOD"],
-      "stage": 1,
-      "exercise": "comprehension",
+      "concepts": ["FIRST_PERSON_SINGULAR","EAT","FOOD"],
       "render": {
-        "pt": "Ele come comida.",
-        "en": "He eats food.",
-        "ja": "彼は食べ物を食べる。"
+        "en": "I eat food.",
+        "pt": "Eu como comida."
       },
       "surface": {
-        "pt": {
-          "THIRD_PERSON_SINGULAR": "Ele",
-          "EAT": "come",
-          "FOOD": "comida"
-        },
         "en": {
-          "THIRD_PERSON_SINGULAR": "He",
-          "EAT": "eats",
+          "FIRST_PERSON_SINGULAR": "I",
+          "EAT": "eat",
           "FOOD": "food"
         },
-        "ja": {
-          "THIRD_PERSON_SINGULAR": "彼",
-          "EAT": "食べる",
-          "FOOD": "食べ物"
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "EAT": "como",
+          "FOOD": "comida"
         }
       },
       "questions": [
         {
-          "type": "who_is_acting",
           "prompt": {
             "en": "Who eats food?",
-            "pt": "Quem come comida?",
-            "ja": "誰が食べ物を食べますか？"
+            "pt": "Quem come comida?"
           },
           "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "THIRD_PERSON_SINGULAR"
+          "answer": "FIRST_PERSON_SINGULAR"
         }
       ]
     },
 
     {
       "template_id": "PRON_READ_BOOK",
-      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","READ","BOOK"],
-      "stage": 1,
-      "exercise": "comprehension",
+      "concepts": ["FIRST_PERSON_SINGULAR","READ","BOOK"],
       "render": {
-        "pt": "Eu leio um livro.",
         "en": "I read a book.",
-        "ja": "私は本を読む。"
+        "pt": "Eu leio um livro."
       },
       "surface": {
-        "pt": {
-          "FIRST_PERSON_SINGULAR": "Eu",
-          "READ": "leio",
-          "BOOK": "livro"
-        },
         "en": {
           "FIRST_PERSON_SINGULAR": "I",
           "READ": "read",
           "BOOK": "book"
         },
-        "ja": {
-          "FIRST_PERSON_SINGULAR": "私",
-          "READ": "読む",
-          "BOOK": "本"
-        }
-      },
-      "questions": [
-        {
-          "type": "who_is_acting",
-          "prompt": {
-            "en": "Who reads a book?",
-            "pt": "Quem lê um livro?",
-            "ja": "誰が本を読みますか？"
-          },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "FIRST_PERSON_SINGULAR"
-        }
-      ]
-    },
-
-    {
-      "template_id": "PRON_SEE_PERSON",
-      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","SEE","PERSON"],
-      "stage": 1,
-      "exercise": "comprehension",
-      "render": {
-        "pt": "Eu vejo uma pessoa.",
-        "en": "I see a person.",
-        "ja": "私は人を見る。"
-      },
-      "surface": {
         "pt": {
           "FIRST_PERSON_SINGULAR": "Eu",
-          "SEE": "vejo",
-          "PERSON": "pessoa"
-        },
-        "en": {
-          "FIRST_PERSON_SINGULAR": "I",
-          "SEE": "see",
-          "PERSON": "person"
-        },
-        "ja": {
-          "FIRST_PERSON_SINGULAR": "私",
-          "SEE": "見る",
-          "PERSON": "人"
+          "READ": "leio",
+          "BOOK": "livro"
         }
       },
       "questions": [
         {
-          "type": "who_is_acting",
           "prompt": {
-            "en": "Who sees a person?",
-            "pt": "Quem vê uma pessoa?",
-            "ja": "誰が人を見ますか？"
+            "en": "Who reads a book?",
+            "pt": "Quem lê um livro?"
           },
           "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -124,36 +64,29 @@
     },
 
     {
-      "template_id": "PRON_SLEEP",
-      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","SLEEP"],
-      "stage": 1,
-      "exercise": "comprehension",
+      "template_id": "PRON_SEE_PHONE",
+      "concepts": ["THIRD_PERSON_SINGULAR","SEE","PHONE"],
       "render": {
-        "pt": "Ele dorme.",
-        "en": "He sleeps.",
-        "ja": "彼は寝る。"
+        "en": "He sees a phone.",
+        "pt": "Ele vê um telefone."
       },
       "surface": {
-        "pt": {
-          "THIRD_PERSON_SINGULAR": "Ele",
-          "SLEEP": "dorme"
-        },
         "en": {
           "THIRD_PERSON_SINGULAR": "He",
-          "SLEEP": "sleeps"
+          "SEE": "sees",
+          "PHONE": "phone"
         },
-        "ja": {
-          "THIRD_PERSON_SINGULAR": "彼",
-          "SLEEP": "寝る"
+        "pt": {
+          "THIRD_PERSON_SINGULAR": "Ele",
+          "SEE": "vê",
+          "PHONE": "telefone"
         }
       },
       "questions": [
         {
-          "type": "who_is_acting",
           "prompt": {
-            "en": "Who sleeps?",
-            "pt": "Quem dorme?",
-            "ja": "誰が寝ますか？"
+            "en": "Who sees a phone?",
+            "pt": "Quem vê um telefone?"
           },
           "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "THIRD_PERSON_SINGULAR"
@@ -162,44 +95,157 @@
     },
 
     {
-      "template_id": "PRON_GO_PLACE",
-      "concepts": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR","GO","PLACE"],
-      "stage": 1,
-      "exercise": "comprehension",
+      "template_id": "PRON_SLEEP",
+      "concepts": ["THIRD_PERSON_SINGULAR","SLEEP"],
       "render": {
-        "pt": "Eu vou a um lugar.",
-        "en": "I go to a place.",
-        "ja": "私は場所に行く。"
+        "en": "He sleeps.",
+        "pt": "Ele dorme."
       },
       "surface": {
-        "pt": {
-          "FIRST_PERSON_SINGULAR": "Eu",
-          "GO": "vou",
-          "PLACE": "lugar"
-        },
         "en": {
-          "FIRST_PERSON_SINGULAR": "I",
-          "GO": "go",
-          "PLACE": "place"
+          "THIRD_PERSON_SINGULAR": "He",
+          "SLEEP": "sleeps"
         },
-        "ja": {
-          "FIRST_PERSON_SINGULAR": "私",
-          "GO": "行く",
-          "PLACE": "場所"
+        "pt": {
+          "THIRD_PERSON_SINGULAR": "Ele",
+          "SLEEP": "dorme"
         }
       },
       "questions": [
         {
-          "type": "who_is_acting",
           "prompt": {
-            "en": "Who goes to a place?",
-            "pt": "Quem vai a um lugar?",
-            "ja": "誰が場所に行きますか？"
+            "en": "Who sleeps?",
+            "pt": "Quem dorme?"
+          },
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
+          "answer": "THIRD_PERSON_SINGULAR"
+        }
+      ]
+    },
+
+    {
+      "template_id": "PRON_GO_HOME",
+      "concepts": ["FIRST_PERSON_SINGULAR","GO","HOME"],
+      "render": {
+        "en": "I go home.",
+        "pt": "Eu vou para casa."
+      },
+      "surface": {
+        "en": {
+          "FIRST_PERSON_SINGULAR": "I",
+          "GO": "go",
+          "HOME": "home"
+        },
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "GO": "vou",
+          "HOME": "casa"
+        }
+      },
+      "questions": [
+        {
+          "prompt": {
+            "en": "Who goes home?",
+            "pt": "Quem vai para casa?"
           },
           "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "FIRST_PERSON_SINGULAR"
         }
       ]
+    },
+
+    {
+      "template_id": "PRON_HAVE_JOB",
+      "concepts": ["THIRD_PERSON_SINGULAR","HAVE","JOB"],
+      "render": {
+        "en": "She has a job.",
+        "pt": "Ela tem um trabalho."
+      },
+      "surface": {
+        "en": {
+          "THIRD_PERSON_SINGULAR": "She",
+          "HAVE": "has",
+          "JOB": "job"
+        },
+        "pt": {
+          "THIRD_PERSON_SINGULAR": "Ela",
+          "HAVE": "tem",
+          "JOB": "trabalho"
+        }
+      },
+      "questions": [
+        {
+          "prompt": {
+            "en": "Who has a job?",
+            "pt": "Quem tem um trabalho?"
+          },
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
+          "answer": "THIRD_PERSON_SINGULAR"
+        }
+      ]
+    },
+
+    {
+      "template_id": "PRON_USE_PHONE",
+      "concepts": ["FIRST_PERSON_SINGULAR","USE","PHONE"],
+      "render": {
+        "en": "I use the phone.",
+        "pt": "Eu uso o telefone."
+      },
+      "surface": {
+        "en": {
+          "FIRST_PERSON_SINGULAR": "I",
+          "USE": "use",
+          "PHONE": "phone"
+        },
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "USE": "uso",
+          "PHONE": "telefone"
+        }
+      },
+      "questions": [
+        {
+          "prompt": {
+            "en": "Who uses the phone?",
+            "pt": "Quem usa o telefone?"
+          },
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
+          "answer": "FIRST_PERSON_SINGULAR"
+        }
+      ]
+    },
+
+    {
+      "template_id": "PRON_GET_THING",
+      "concepts": ["THIRD_PERSON_SINGULAR","GET","THING"],
+      "render": {
+        "en": "He gets a thing.",
+        "pt": "Ele pega uma coisa."
+      },
+      "surface": {
+        "en": {
+          "THIRD_PERSON_SINGULAR": "He",
+          "GET": "gets",
+          "THING": "thing"
+        },
+        "pt": {
+          "THIRD_PERSON_SINGULAR": "Ele",
+          "GET": "pega",
+          "THING": "coisa"
+        }
+      },
+      "questions": [
+        {
+          "prompt": {
+            "en": "Who gets a thing?",
+            "pt": "Quem pega uma coisa?"
+          },
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
+          "answer": "THIRD_PERSON_SINGULAR"
+        }
+      ]
     }
+
   ]
 }

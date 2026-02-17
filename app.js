@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.18-surface-aware-blanking
+// VERSION: v0.9.19-strict-distractors
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.18-surface-aware-blanking";
+  const APP_VERSION = "v0.9.19-strict-distractors";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -168,8 +168,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const candidates = baseEligible.filter(tpl => {
         const target = determineTargetConcept(tpl);
         const prog = ensureProgress(target);
+
         if (prog.cooldown > threshold) return false;
         if (target === run.lastTargetConcept) return false;
+
         return true;
       });
 
@@ -190,6 +192,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
+  }
+
+  function blankSentence(sentence, surface) {
+    const tokens = sentence.split(" ");
+    let replaced = false;
+    const targetLower = String(surface).toLowerCase();
+
+    const out = tokens.map(token => {
+      const clean = token.replace(/[.,!?]/g, "").toLowerCase();
+      if (!replaced && clean === targetLower) {
+        replaced = true;
+        const punct = token.match(/[.,!?]+$/);
+        return "_____" + (punct ? punct[0] : "");
+      }
+      return token;
+    });
+
+    return out.join(" ");
+  }
+
+  function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
+    subtitle.textContent = "Level " + levelOf(targetConcept);
+
+    const sentence = tpl.render[targetLang];
+    const surface = tpl.surface?.[targetLang]?.[targetConcept];
+    const blanked = blankSentence(sentence, surface);
+
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+
+    // STRICT DISTRACTOR FILTERING
+    const distractorPool = run.released.filter(cid => {
+      if (cid === targetConcept) return false;
+      const m = window.GLOBAL_VOCAB.concepts[cid];
+      return (
+        m.type === meta.type &&
+        m.person === meta.person &&
+        m.number === meta.number
+      );
+    });
+
+    const distractors = shuffle(distractorPool).slice(0,3);
+    const options = shuffle([targetConcept, ...distractors]);
+
+    content.innerHTML = `
+      <div>
+        <p>${blanked}</p>
+        <div id="choices"></div>
+      </div>
+    `;
+
+    const choicesDiv = document.getElementById("choices");
+
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = formOf(targetLang, opt);
+
+      btn.onclick = () => {
+        const correct = opt === targetConcept;
+
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+
+        decrementCooldowns();
+        applyResult(targetConcept, correct);
+        run.lastTargetConcept = targetConcept;
+
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      choicesDiv.appendChild(btn);
+    });
   }
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
@@ -214,115 +286,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
-  function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Level " + levelOf(targetConcept);
-
-    const q = tpl.questions[0];
-    const correctAnswer = q.answer;
-    const options = shuffle([...q.choices]);
-
-    content.innerHTML = `
-      <div>
-        <p>${tpl.render[targetLang]}</p>
-        <p>${q.prompt[supportLang]}</p>
-        <div id="choices"></div>
-      </div>
-    `;
-
-    const choicesDiv = document.getElementById("choices");
-
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = formOf(supportLang, opt);
-
-      btn.onclick = () => {
-        [...choicesDiv.children].forEach(b => b.disabled = true);
-
-        const correct = opt === correctAnswer;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        run.lastTargetConcept = targetConcept;
-
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-
-      choicesDiv.appendChild(btn);
-    });
-  }
-
-  function blankSentenceBySurface(sentence, surfaceToken) {
-    // token-based, punctuation-tolerant, case-insensitive
-    const tokens = sentence.split(" ");
-    let replaced = false;
-
-    const targetLower = String(surfaceToken || "").toLowerCase();
-
-    const out = tokens.map(token => {
-      const clean = token.replace(/[.,!?]/g, "").toLowerCase();
-      if (!replaced && clean === targetLower && targetLower.length > 0) {
-        replaced = true;
-        // preserve punctuation if token had it
-        const punct = token.match(/[.,!?]+$/);
-        return "_____" + (punct ? punct[0] : "");
-      }
-      return token;
-    });
-
-    return { blanked: out.join(" "), didReplace: replaced };
-  }
-
-  function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Level " + levelOf(targetConcept);
-
-    const sentence = tpl.render[targetLang];
-
-    // NEW: use explicit surface map if provided
-    const surface = tpl.surface?.[targetLang]?.[targetConcept];
-
-    const { blanked, didReplace } = blankSentenceBySurface(sentence, surface);
-
-    // If surface map missing/mismatch, we still show a warning line (dev-friendly)
-    const warning = didReplace ? "" : `<p style="opacity:0.7;font-size:0.9rem;">
-      (Dev) Could not blank: missing/incorrect surface for ${targetConcept} in ${targetLang}
-    </p>`;
-
-    // Options: correct + 3 random released
-    const distractors = shuffle(run.released.filter(c => c !== targetConcept)).slice(0, 3);
-    const options = shuffle([targetConcept, ...distractors]);
-
-    content.innerHTML = `
-      <div>
-        <p>${blanked}</p>
-        ${warning}
-        <div id="choices"></div>
-      </div>
-    `;
-
-    const choicesDiv = document.getElementById("choices");
-
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = formOf(targetLang, opt);
-
-      btn.onclick = () => {
-        [...choicesDiv.children].forEach(b => b.disabled = true);
-
-        const correct = opt === targetConcept;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        run.lastTargetConcept = targetConcept;
-
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-
-      choicesDiv.appendChild(btn);
-    });
-  }
-
   function renderNext(targetLang, supportLang) {
     const tpl = chooseTemplate();
     if (!tpl) {
@@ -333,9 +296,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const targetConcept = determineTargetConcept(tpl);
     const level = levelOf(targetConcept);
 
-    if (level === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
-    else if (level === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
-    else renderFillBlank(targetLang, supportLang, tpl, targetConcept);
+    if (level === 1) {
+      renderExposure(targetLang, supportLang, tpl, targetConcept);
+    } else if (level === 2) {
+      // keep comprehension stage as before
+      renderExposure(targetLang, supportLang, tpl, targetConcept);
+    } else {
+      renderFillBlank(targetLang, supportLang, tpl, targetConcept);
+    }
   }
 
   openAppBtn?.addEventListener("click", async () => {
