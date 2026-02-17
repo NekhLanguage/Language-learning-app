@@ -33,7 +33,7 @@
     },
 
     {
-      {
+    
   "template_id": "PRON_READ_BOOK",
   "concepts": ["FIRST_PERSON_SINGULAR","READ","BOOK"],
   "render": {
@@ -77,10 +77,9 @@
       "choices": ["BOOK","FOOD","PHONE"],
       "answer": "BOOK"
     }
-  }
-},
+  },
 
-    {
+    
       "template_id": "PRON_SEE_PHONE",
       "concepts": ["THIRD_PERSON_SINGULAR","SEE","PHONE"],
       "render": {
