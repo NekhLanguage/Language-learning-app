@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.20.1-strict-distractors
+// VERSION: v0.9.21-stable-clean
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.20-strict-distractors";
+  const APP_VERSION = "v0.9.21-stable-clean";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -70,13 +70,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function decrementCooldowns() {
-    for (const cid of Object.keys(run.progress)) {
-      if (run.progress[cid].cooldown > 0) run.progress[cid].cooldown--;
-    }
+    Object.values(run.progress).forEach(p => {
+      if (p.cooldown > 0) p.cooldown--;
+    });
   }
 
   function initRun() {
-    const allConcepts = [...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))];
+    const allConcepts = [
+      ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
+    ];
 
     run = {
       released: [],
@@ -92,10 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!TEMPLATE_CACHE.length) return;
     const first = TEMPLATE_CACHE[0].concepts || [];
 
-    for (const cid of first) {
+    first.forEach(cid => {
       run.released.push(cid);
       ensureProgress(cid);
-    }
+    });
 
     run.future = run.future.filter(cid => !first.includes(cid));
   }
@@ -116,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let minLevel = Infinity;
     let candidates = [];
 
-    for (const cid of tpl.concepts) {
+    tpl.concepts.forEach(cid => {
       const lvl = levelOf(cid);
       if (lvl < minLevel) {
         minLevel = lvl;
@@ -124,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (lvl === minLevel) {
         candidates.push(cid);
       }
-    }
+    });
 
     candidates = candidates.filter(cid => cid !== run.lastTargetConcept);
     if (!candidates.length) candidates = tpl.concepts;
@@ -139,9 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function applyResult(cid, correct) {
     const state = ensureProgress(cid);
-    const currentLevel = state.level;
-
-    state.cooldown = getCooldown(currentLevel, correct);
+    state.cooldown = getCooldown(state.level, correct);
 
     if (!correct) {
       state.streak = 0;
@@ -168,10 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const candidates = baseEligible.filter(tpl => {
         const target = determineTargetConcept(tpl);
         const prog = ensureProgress(target);
-
         if (prog.cooldown > threshold) return false;
         if (target === run.lastTargetConcept) return false;
-
         return true;
       });
 
@@ -197,9 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function blankSentence(sentence, surface) {
     const tokens = sentence.split(" ");
     let replaced = false;
-    const targetLower = String(surface).toLowerCase();
+    const targetLower = String(surface || "").toLowerCase();
 
-    const out = tokens.map(token => {
+    return tokens.map(token => {
       const clean = token.replace(/[.,!?]/g, "").toLowerCase();
       if (!replaced && clean === targetLower) {
         replaced = true;
@@ -207,61 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return "_____" + (punct ? punct[0] : "");
       }
       return token;
-    });
-
-    return out.join(" ");
-  }
-
-  function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Level " + levelOf(targetConcept);
-
-    const sentence = tpl.render[targetLang];
-    const surface = tpl.surface?.[targetLang]?.[targetConcept];
-    const blanked = blankSentence(sentence, surface);
-
-    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-
-    // STRICT DISTRACTOR FILTERING
-    const distractorPool = run.released.filter(cid => {
-      if (cid === targetConcept) return false;
-      const m = window.GLOBAL_VOCAB.concepts[cid];
-      return (
-        m.type === meta.type &&
-        m.person === meta.person &&
-        m.number === meta.number
-      );
-    });
-
-    const distractors = shuffle(distractorPool).slice(0,3);
-    const options = shuffle([targetConcept, ...distractors]);
-
-    content.innerHTML = `
-      <div>
-        <p>${blanked}</p>
-        <div id="choices"></div>
-      </div>
-    `;
-
-    const choicesDiv = document.getElementById("choices");
-
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = formOf(targetLang, opt);
-
-      btn.onclick = () => {
-        const correct = opt === targetConcept;
-
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        run.lastTargetConcept = targetConcept;
-
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-
-      choicesDiv.appendChild(btn);
-    });
+    }).join(" ");
   }
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
@@ -286,6 +230,91 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
+    subtitle.textContent = "Level " + levelOf(targetConcept);
+
+    const q = tpl.questions[0];
+    const correctAnswer = q.answer;
+    const options = shuffle([...q.choices]);
+
+    content.innerHTML = `
+      <div>
+        <p>${tpl.render[targetLang]}</p>
+        <p>${q.prompt[supportLang]}</p>
+        <div id="choices"></div>
+      </div>
+    `;
+
+    const choicesDiv = document.getElementById("choices");
+
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = formOf(supportLang, opt);
+
+      btn.onclick = () => {
+        [...choicesDiv.children].forEach(b => b.disabled = true);
+
+        const correct = opt === correctAnswer;
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+
+        decrementCooldowns();
+        applyResult(targetConcept, correct);
+        run.lastTargetConcept = targetConcept;
+
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      choicesDiv.appendChild(btn);
+    });
+  }
+
+  function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
+    subtitle.textContent = "Level " + levelOf(targetConcept);
+
+    const sentence = tpl.render[targetLang];
+    const surface = tpl.surface?.[targetLang]?.[targetConcept];
+    const blanked = blankSentence(sentence, surface);
+
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+
+    const distractorPool = run.released.filter(cid => {
+      if (cid === targetConcept) return false;
+      const m = window.GLOBAL_VOCAB.concepts[cid];
+      return m.type === meta.type &&
+             m.person === meta.person &&
+             m.number === meta.number;
+    });
+
+    const options = shuffle([targetConcept, ...distractorPool.slice(0,3)]);
+
+    content.innerHTML = `
+      <div>
+        <p>${blanked}</p>
+        <div id="choices"></div>
+      </div>
+    `;
+
+    const choicesDiv = document.getElementById("choices");
+
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = formOf(targetLang, opt);
+
+      btn.onclick = () => {
+        const correct = opt === targetConcept;
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+
+        decrementCooldowns();
+        applyResult(targetConcept, correct);
+        run.lastTargetConcept = targetConcept;
+
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      choicesDiv.appendChild(btn);
+    });
+  }
+
   function renderNext(targetLang, supportLang) {
     const tpl = chooseTemplate();
     if (!tpl) {
@@ -295,24 +324,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const targetConcept = determineTargetConcept(tpl);
     const level = levelOf(targetConcept);
-function renderNext(targetLang, supportLang) {
-  const tpl = chooseTemplate();
-  if (!tpl) {
-    content.innerHTML = "No eligible templates.";
-    return;
-  }
 
-  const targetConcept = determineTargetConcept(tpl);
-  const level = levelOf(targetConcept);
-
-  if (level === 1) {
-    renderExposure(targetLang, supportLang, tpl, targetConcept);
-  } else if (level === 2) {
-    renderComprehension(targetLang, supportLang, tpl, targetConcept);
-  } else {
-    renderFillBlank(targetLang, supportLang, tpl, targetConcept);
+    if (level === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
+    else if (level === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
+    else renderFillBlank(targetLang, supportLang, tpl, targetConcept);
   }
-}
 
   openAppBtn?.addEventListener("click", async () => {
     startScreen.classList.remove("active");
