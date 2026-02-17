@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.23-stable-clean";
+  const APP_VERSION = "v0.9.23.1-stable-clean";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");

@@ -20,66 +20,82 @@
           "FOOD": "comida"
         }
       },
-      "questions": [
-        {
+      "questions": {
+        "pronoun": {
           "prompt": {
             "en": "Who eats food?",
             "pt": "Quem come comida?"
           },
           "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt": {
+            "en": "What do I do?",
+            "pt": "O que eu faço?"
+          },
+          "choices": ["EAT","READ","SLEEP"],
+          "answer": "EAT"
+        },
+        "object": {
+          "prompt": {
+            "en": "What do I eat?",
+            "pt": "O que eu como?"
+          },
+          "choices": ["FOOD","BOOK","PHONE"],
+          "answer": "FOOD"
         }
-      ]
+      }
     },
 
     {
-    
-  "template_id": "PRON_READ_BOOK",
-  "concepts": ["FIRST_PERSON_SINGULAR","READ","BOOK"],
-  "render": {
-    "en": "I read a book.",
-    "pt": "Eu leio um livro."
-  },
-  "surface": {
-    "en": {
-      "FIRST_PERSON_SINGULAR": "I",
-      "READ": "read",
-      "BOOK": "book"
-    },
-    "pt": {
-      "FIRST_PERSON_SINGULAR": "Eu",
-      "READ": "leio",
-      "BOOK": "livro"
-    }
-  },
-  "questions": {
-    "pronoun": {
-      "prompt": {
-        "en": "Who reads a book?",
-        "pt": "Quem lê um livro?"
+      "template_id": "PRON_READ_BOOK",
+      "concepts": ["FIRST_PERSON_SINGULAR","READ","BOOK"],
+      "render": {
+        "en": "I read a book.",
+        "pt": "Eu leio um livro."
       },
-      "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-      "answer": "FIRST_PERSON_SINGULAR"
-    },
-    "verb": {
-      "prompt": {
-        "en": "What do I do?",
-        "pt": "O que eu faço?"
+      "surface": {
+        "en": {
+          "FIRST_PERSON_SINGULAR": "I",
+          "READ": "read",
+          "BOOK": "book"
+        },
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "READ": "leio",
+          "BOOK": "livro"
+        }
       },
-      "choices": ["READ","EAT","SLEEP"],
-      "answer": "READ"
+      "questions": {
+        "pronoun": {
+          "prompt": {
+            "en": "Who reads a book?",
+            "pt": "Quem lê um livro?"
+          },
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt": {
+            "en": "What do I do?",
+            "pt": "O que eu faço?"
+          },
+          "choices": ["READ","EAT","SLEEP"],
+          "answer": "READ"
+        },
+        "object": {
+          "prompt": {
+            "en": "What do I read?",
+            "pt": "O que eu leio?"
+          },
+          "choices": ["BOOK","FOOD","PHONE"],
+          "answer": "BOOK"
+        }
+      }
     },
-    "object": {
-      "prompt": {
-        "en": "What do I read?",
-        "pt": "O que eu leio?"
-      },
-      "choices": ["BOOK","FOOD","PHONE"],
-      "answer": "BOOK"
-    }
-  },
 
-    
+    {
       "template_id": "PRON_SEE_PHONE",
       "concepts": ["THIRD_PERSON_SINGULAR","SEE","PHONE"],
       "render": {
@@ -98,169 +114,32 @@
           "PHONE": "telefone"
         }
       },
-      "questions": [
-        {
+      "questions": {
+        "pronoun": {
           "prompt": {
             "en": "Who sees a phone?",
             "pt": "Quem vê um telefone?"
           },
           "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
           "answer": "THIRD_PERSON_SINGULAR"
-        }
-      ]
-    },
-
-    {
-      "template_id": "PRON_SLEEP",
-      "concepts": ["THIRD_PERSON_SINGULAR","SLEEP"],
-      "render": {
-        "en": "He sleeps.",
-        "pt": "Ele dorme."
-      },
-      "surface": {
-        "en": {
-          "THIRD_PERSON_SINGULAR": "He",
-          "SLEEP": "sleeps"
         },
-        "pt": {
-          "THIRD_PERSON_SINGULAR": "Ele",
-          "SLEEP": "dorme"
-        }
-      },
-      "questions": [
-        {
+        "verb": {
           "prompt": {
-            "en": "Who sleeps?",
-            "pt": "Quem dorme?"
+            "en": "What does he do?",
+            "pt": "O que ele faz?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "THIRD_PERSON_SINGULAR"
-        }
-      ]
-    },
-
-    {
-      "template_id": "PRON_GO_HOME",
-      "concepts": ["FIRST_PERSON_SINGULAR","GO","HOME"],
-      "render": {
-        "en": "I go home.",
-        "pt": "Eu vou para casa."
-      },
-      "surface": {
-        "en": {
-          "FIRST_PERSON_SINGULAR": "I",
-          "GO": "go",
-          "HOME": "home"
+          "choices": ["SEE","EAT","READ"],
+          "answer": "SEE"
         },
-        "pt": {
-          "FIRST_PERSON_SINGULAR": "Eu",
-          "GO": "vou",
-          "HOME": "casa"
-        }
-      },
-      "questions": [
-        {
+        "object": {
           "prompt": {
-            "en": "Who goes home?",
-            "pt": "Quem vai para casa?"
+            "en": "What does he see?",
+            "pt": "O que ele vê?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "FIRST_PERSON_SINGULAR"
+          "choices": ["PHONE","BOOK","FOOD"],
+          "answer": "PHONE"
         }
-      ]
-    },
-
-    {
-      "template_id": "PRON_HAVE_JOB",
-      "concepts": ["THIRD_PERSON_SINGULAR","HAVE","JOB"],
-      "render": {
-        "en": "She has a job.",
-        "pt": "Ela tem um trabalho."
-      },
-      "surface": {
-        "en": {
-          "THIRD_PERSON_SINGULAR": "She",
-          "HAVE": "has",
-          "JOB": "job"
-        },
-        "pt": {
-          "THIRD_PERSON_SINGULAR": "Ela",
-          "HAVE": "tem",
-          "JOB": "trabalho"
-        }
-      },
-      "questions": [
-        {
-          "prompt": {
-            "en": "Who has a job?",
-            "pt": "Quem tem um trabalho?"
-          },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "THIRD_PERSON_SINGULAR"
-        }
-      ]
-    },
-
-    {
-      "template_id": "PRON_USE_PHONE",
-      "concepts": ["FIRST_PERSON_SINGULAR","USE","PHONE"],
-      "render": {
-        "en": "I use the phone.",
-        "pt": "Eu uso o telefone."
-      },
-      "surface": {
-        "en": {
-          "FIRST_PERSON_SINGULAR": "I",
-          "USE": "use",
-          "PHONE": "phone"
-        },
-        "pt": {
-          "FIRST_PERSON_SINGULAR": "Eu",
-          "USE": "uso",
-          "PHONE": "telefone"
-        }
-      },
-      "questions": [
-        {
-          "prompt": {
-            "en": "Who uses the phone?",
-            "pt": "Quem usa o telefone?"
-          },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "FIRST_PERSON_SINGULAR"
-        }
-      ]
-    },
-
-    {
-      "template_id": "PRON_GET_THING",
-      "concepts": ["THIRD_PERSON_SINGULAR","GET","THING"],
-      "render": {
-        "en": "He gets a thing.",
-        "pt": "Ele pega uma coisa."
-      },
-      "surface": {
-        "en": {
-          "THIRD_PERSON_SINGULAR": "He",
-          "GET": "gets",
-          "THING": "thing"
-        },
-        "pt": {
-          "THIRD_PERSON_SINGULAR": "Ele",
-          "GET": "pega",
-          "THING": "coisa"
-        }
-      },
-      "questions": [
-        {
-          "prompt": {
-            "en": "Who gets a thing?",
-            "pt": "Quem pega uma coisa?"
-          },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "THIRD_PERSON_SINGULAR"
-        }
-      ]
+      }
     }
 
   ]
