@@ -1,5 +1,5 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.20-strict-distractors
+// VERSION: v0.9.20.1-strict-distractors
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -295,15 +295,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const targetConcept = determineTargetConcept(tpl);
     const level = levelOf(targetConcept);
-
-   if (level === 1) {
-  renderExposure(...)
-} else if (level === 2) {
-  renderComprehension(...)
-} else {
-  renderFillBlank(...)
-}
+function renderNext(targetLang, supportLang) {
+  const tpl = chooseTemplate();
+  if (!tpl) {
+    content.innerHTML = "No eligible templates.";
+    return;
   }
+
+  const targetConcept = determineTargetConcept(tpl);
+  const level = levelOf(targetConcept);
+
+  if (level === 1) {
+    renderExposure(targetLang, supportLang, tpl, targetConcept);
+  } else if (level === 2) {
+    renderComprehension(targetLang, supportLang, tpl, targetConcept);
+  } else {
+    renderFillBlank(targetLang, supportLang, tpl, targetConcept);
+  }
+}
 
   openAppBtn?.addEventListener("click", async () => {
     startScreen.classList.remove("active");
