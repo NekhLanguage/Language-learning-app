@@ -1,9 +1,9 @@
 // Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.19-strict-distractors
+// VERSION: v0.9.20-strict-distractors
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.19-strict-distractors";
+  const APP_VERSION = "v0.9.20-strict-distractors";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -296,14 +296,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const targetConcept = determineTargetConcept(tpl);
     const level = levelOf(targetConcept);
 
-    if (level === 1) {
-      renderExposure(targetLang, supportLang, tpl, targetConcept);
-    } else if (level === 2) {
-      // keep comprehension stage as before
-      renderExposure(targetLang, supportLang, tpl, targetConcept);
-    } else {
-      renderFillBlank(targetLang, supportLang, tpl, targetConcept);
-    }
+   if (level === 1) {
+  renderExposure(...)
+} else if (level === 2) {
+  renderComprehension(...)
+} else {
+  renderFillBlank(...)
+}
   }
 
   openAppBtn?.addEventListener("click", async () => {
