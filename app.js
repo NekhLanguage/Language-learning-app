@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.22-stable-clean";
+  const APP_VERSION = "v0.9.23-stable-clean";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -231,42 +231,57 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Level " + levelOf(targetConcept);
+  subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const q = tpl.questions[0];
-    const correctAnswer = q.answer;
-    const options = shuffle([...q.choices]);
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
 
-    content.innerHTML = `
-      <div>
-        <p>${tpl.render[targetLang]}</p>
-        <p>${q.prompt[supportLang]}</p>
-        <div id="choices"></div>
-      </div>
-    `;
+  let role;
 
-    const choicesDiv = document.getElementById("choices");
+  if (meta.type === "pronoun") role = "pronoun";
+  else if (meta.type === "verb") role = "verb";
+  else role = "object"; // noun
 
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = formOf(supportLang, opt);
+  const q = tpl.questions?.[role];
 
-      btn.onclick = () => {
-        [...choicesDiv.children].forEach(b => b.disabled = true);
-
-        const correct = opt === correctAnswer;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        run.lastTargetConcept = targetConcept;
-
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-
-      choicesDiv.appendChild(btn);
-    });
+  if (!q) {
+    console.error("Missing question role:", role);
+    renderExposure(targetLang, supportLang, tpl, targetConcept);
+    return;
   }
+
+  const correctAnswer = q.answer;
+  const options = shuffle([...q.choices]);
+
+  content.innerHTML = `
+    <div>
+      <p>${tpl.render[targetLang]}</p>
+      <p>${q.prompt[supportLang]}</p>
+      <div id="choices"></div>
+    </div>
+  `;
+
+  const choicesDiv = document.getElementById("choices");
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = formOf(supportLang, opt);
+
+    btn.onclick = () => {
+      [...choicesDiv.children].forEach(b => b.disabled = true);
+
+      const correct = opt === correctAnswer;
+      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+      run.lastTargetConcept = targetConcept;
+
+      setTimeout(() => renderNext(targetLang, supportLang), 600);
+    };
+
+    choicesDiv.appendChild(btn);
+  });
+}
 
   function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
   subtitle.textContent = "Level " + levelOf(targetConcept);

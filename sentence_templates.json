@@ -33,35 +33,52 @@
     },
 
     {
-      "template_id": "PRON_READ_BOOK",
-      "concepts": ["FIRST_PERSON_SINGULAR","READ","BOOK"],
-      "render": {
-        "en": "I read a book.",
-        "pt": "Eu leio um livro."
-      },
-      "surface": {
-        "en": {
-          "FIRST_PERSON_SINGULAR": "I",
-          "READ": "read",
-          "BOOK": "book"
-        },
-        "pt": {
-          "FIRST_PERSON_SINGULAR": "Eu",
-          "READ": "leio",
-          "BOOK": "livro"
-        }
-      },
-      "questions": [
-        {
-          "prompt": {
-            "en": "Who reads a book?",
-            "pt": "Quem lê um livro?"
-          },
-          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
-          "answer": "FIRST_PERSON_SINGULAR"
-        }
-      ]
+      {
+  "template_id": "PRON_READ_BOOK",
+  "concepts": ["FIRST_PERSON_SINGULAR","READ","BOOK"],
+  "render": {
+    "en": "I read a book.",
+    "pt": "Eu leio um livro."
+  },
+  "surface": {
+    "en": {
+      "FIRST_PERSON_SINGULAR": "I",
+      "READ": "read",
+      "BOOK": "book"
     },
+    "pt": {
+      "FIRST_PERSON_SINGULAR": "Eu",
+      "READ": "leio",
+      "BOOK": "livro"
+    }
+  },
+  "questions": {
+    "pronoun": {
+      "prompt": {
+        "en": "Who reads a book?",
+        "pt": "Quem lê um livro?"
+      },
+      "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","THIRD_PERSON_SINGULAR"],
+      "answer": "FIRST_PERSON_SINGULAR"
+    },
+    "verb": {
+      "prompt": {
+        "en": "What do I do?",
+        "pt": "O que eu faço?"
+      },
+      "choices": ["READ","EAT","SLEEP"],
+      "answer": "READ"
+    },
+    "object": {
+      "prompt": {
+        "en": "What do I read?",
+        "pt": "O que eu leio?"
+      },
+      "choices": ["BOOK","FOOD","PHONE"],
+      "answer": "BOOK"
+    }
+  }
+},
 
     {
       "template_id": "PRON_SEE_PHONE",
