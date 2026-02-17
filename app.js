@@ -1,9 +1,10 @@
-// Zero to Hero – Stable Tier 1 Engine
-// VERSION: v0.9.22-level3-guarded
+// Zero to Hero – Strict Ladder Engine
+// VERSION: v0.9.23-strict-levels
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.22-level3-guarded";
+  const APP_VERSION = "v0.9.23-strict-levels";
+  const MAX_LEVEL = 4; // Temporary cap until Level 5 exists
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -103,6 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function templateEligible(tpl) {
+    return (tpl.concepts || []).every(cid => run.released.includes(cid));
+  }
+
   function determineTargetConcept(tpl) {
     let minLevel = Infinity;
     let candidates = [];
@@ -131,7 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
     state.streak++;
 
     if (state.streak >= 2) {
-      state.level++;
+      if (state.level < MAX_LEVEL) {
+        state.level++;
+      }
       state.streak = 0;
 
       if (state.level === 3) {
@@ -141,12 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function chooseTemplate() {
-    const eligible = TEMPLATE_CACHE.filter(t =>
-      (t.concepts || []).every(cid => run.released.includes(cid))
-    );
-
+    const eligible = TEMPLATE_CACHE.filter(templateEligible);
     if (!eligible.length) return null;
-
     return eligible[Math.floor(Math.random() * eligible.length)];
   }
 
@@ -233,12 +236,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
+  function renderRecognition(targetLang, tpl, targetConcept) {
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const surface = tpl.surface?.[targetLang]?.[targetConcept];
     if (!surface) {
-      renderComprehension(targetLang, supportLang, tpl, targetConcept);
+      renderComprehension(targetLang, targetLang, tpl, targetConcept);
       return;
     }
 
@@ -254,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (distractors.length < 3) {
-      renderComprehension(targetLang, supportLang, tpl, targetConcept);
+      renderComprehension(targetLang, targetLang, tpl, targetConcept);
       return;
     }
 
@@ -277,7 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const correct = opt === targetConcept;
         btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
         applyResult(targetConcept, correct);
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
+        setTimeout(() => renderNext(targetLang, targetLang), 600);
       };
 
       choicesDiv.appendChild(btn);
@@ -296,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (level === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
     else if (level === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
-    else renderFillBlank(targetLang, supportLang, tpl, targetConcept);
+    else renderRecognition(targetLang, tpl, targetConcept);
   }
 
   openAppBtn?.addEventListener("click", async () => {
