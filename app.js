@@ -1,9 +1,9 @@
-// Zero to Hero – Template-Driven Blueprint Engine
-// VERSION: v0.9.21-stable-clean
+// Zero to Hero – Stable Tier 1 Engine
+// VERSION: v0.9.22-level3-guarded
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.23.1-stable-clean";
+  const APP_VERSION = "v0.9.22-level3-guarded";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -60,19 +60,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function ensureProgress(cid) {
     if (!run.progress[cid]) {
-      run.progress[cid] = { level: 1, streak: 0, cooldown: 0 };
+      run.progress[cid] = { level: 1, streak: 0 };
     }
     return run.progress[cid];
   }
 
   function levelOf(cid) {
     return ensureProgress(cid).level;
-  }
-
-  function decrementCooldowns() {
-    Object.values(run.progress).forEach(p => {
-      if (p.cooldown > 0) p.cooldown--;
-    });
   }
 
   function initRun() {
@@ -83,8 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     run = {
       released: [],
       future: [...allConcepts],
-      progress: {},
-      lastTargetConcept: null
+      progress: {}
     };
 
     seedWithFirstTemplate();
@@ -110,10 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function templateEligible(tpl) {
-    return (tpl.concepts || []).every(cid => run.released.includes(cid));
-  }
-
   function determineTargetConcept(tpl) {
     let minLevel = Infinity;
     let candidates = [];
@@ -128,20 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    candidates = candidates.filter(cid => cid !== run.lastTargetConcept);
-    if (!candidates.length) candidates = tpl.concepts;
-
     return candidates[Math.floor(Math.random() * candidates.length)];
-  }
-
-  function getCooldown(level, correct) {
-    if (!correct && level >= 2) return 2;
-    return 4;
   }
 
   function applyResult(cid, correct) {
     const state = ensureProgress(cid);
-    state.cooldown = getCooldown(state.level, correct);
 
     if (!correct) {
       state.streak = 0;
@@ -161,24 +141,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function chooseTemplate() {
-    const baseEligible = TEMPLATE_CACHE.filter(templateEligible);
-    if (!baseEligible.length) return null;
+    const eligible = TEMPLATE_CACHE.filter(t =>
+      (t.concepts || []).every(cid => run.released.includes(cid))
+    );
 
-    for (let threshold = 4; threshold >= 0; threshold--) {
-      const candidates = baseEligible.filter(tpl => {
-        const target = determineTargetConcept(tpl);
-        const prog = ensureProgress(target);
-        if (prog.cooldown > threshold) return false;
-        if (target === run.lastTargetConcept) return false;
-        return true;
-      });
+    if (!eligible.length) return null;
 
-      if (candidates.length) {
-        return candidates[Math.floor(Math.random() * candidates.length)];
-      }
-    }
-
-    return baseEligible[Math.floor(Math.random() * baseEligible.length)];
+    return eligible[Math.floor(Math.random() * eligible.length)];
   }
 
   function formOf(lang, cid) {
@@ -223,123 +192,97 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     document.getElementById("continue-btn").onclick = () => {
-      decrementCooldowns();
       applyResult(targetConcept, true);
-      run.lastTargetConcept = targetConcept;
       renderNext(targetLang, supportLang);
     };
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-  subtitle.textContent = "Level " + levelOf(targetConcept);
+    subtitle.textContent = "Level " + levelOf(targetConcept);
 
-  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+    const role = meta.type === "pronoun" ? "pronoun"
+               : meta.type === "verb" ? "verb"
+               : "object";
 
-  let role;
+    const q = tpl.questions[role];
+    const options = shuffle([...q.choices]);
 
-  if (meta.type === "pronoun") role = "pronoun";
-  else if (meta.type === "verb") role = "verb";
-  else role = "object"; // noun
+    content.innerHTML = `
+      <div>
+        <p>${tpl.render[targetLang]}</p>
+        <p>${q.prompt[supportLang]}</p>
+        <div id="choices"></div>
+      </div>
+    `;
 
-  const q = tpl.questions?.[role];
+    const choicesDiv = document.getElementById("choices");
 
-  if (!q) {
-    console.error("Missing question role:", role);
-    renderExposure(targetLang, supportLang, tpl, targetConcept);
-    return;
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = formOf(supportLang, opt);
+
+      btn.onclick = () => {
+        const correct = opt === q.answer;
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+        applyResult(targetConcept, correct);
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      choicesDiv.appendChild(btn);
+    });
   }
-
-  const correctAnswer = q.answer;
-  const options = shuffle([...q.choices]);
-
-  content.innerHTML = `
-    <div>
-      <p>${tpl.render[targetLang]}</p>
-      <p>${q.prompt[supportLang]}</p>
-      <div id="choices"></div>
-    </div>
-  `;
-
-  const choicesDiv = document.getElementById("choices");
-
-  options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = formOf(supportLang, opt);
-
-    btn.onclick = () => {
-      [...choicesDiv.children].forEach(b => b.disabled = true);
-
-      const correct = opt === correctAnswer;
-      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-      decrementCooldowns();
-      applyResult(targetConcept, correct);
-      run.lastTargetConcept = targetConcept;
-
-      setTimeout(() => renderNext(targetLang, supportLang), 600);
-    };
-
-    choicesDiv.appendChild(btn);
-  });
-}
 
   function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
-  subtitle.textContent = "Level " + levelOf(targetConcept);
+    subtitle.textContent = "Level " + levelOf(targetConcept);
 
-  const sentence = tpl.render[targetLang];
-  const surface = tpl.surface?.[targetLang]?.[targetConcept];
+    const surface = tpl.surface?.[targetLang]?.[targetConcept];
+    if (!surface) {
+      renderComprehension(targetLang, supportLang, tpl, targetConcept);
+      return;
+    }
 
-  const blanked = blankSentence(sentence, surface);
+    const sentence = tpl.render[targetLang];
+    const blanked = blankSentence(sentence, surface);
 
-  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-  if (!meta) {
-    console.error("Missing concept definition:", targetConcept);
-    renderExposure(targetLang, supportLang, tpl, targetConcept);
-    return;
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+
+    const distractors = run.released.filter(cid => {
+      if (cid === targetConcept) return false;
+      const m = window.GLOBAL_VOCAB.concepts[cid];
+      return m && m.type === meta.type;
+    });
+
+    if (distractors.length < 3) {
+      renderComprehension(targetLang, supportLang, tpl, targetConcept);
+      return;
+    }
+
+    const options = shuffle([targetConcept, ...distractors.slice(0,3)]);
+
+    content.innerHTML = `
+      <div>
+        <p>${blanked}</p>
+        <div id="choices"></div>
+      </div>
+    `;
+
+    const choicesDiv = document.getElementById("choices");
+
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = tpl.surface[targetLang][opt] || formOf(targetLang, opt);
+
+      btn.onclick = () => {
+        const correct = opt === targetConcept;
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+        applyResult(targetConcept, correct);
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      choicesDiv.appendChild(btn);
+    });
   }
-
-  const distractorPool = run.released.filter(cid => {
-    if (cid === targetConcept) return false;
-
-    const m = window.GLOBAL_VOCAB.concepts[cid];
-    if (!m) return false;
-
-    return (
-      m.type === meta.type &&
-      m.person === meta.person &&
-      m.number === meta.number
-    );
-  });
-
-  const options = shuffle([targetConcept, ...distractorPool.slice(0,3)]);
-
-  content.innerHTML = `
-    <div>
-      <p>${blanked}</p>
-      <div id="choices"></div>
-    </div>
-  `;
-
-  const choicesDiv = document.getElementById("choices");
-
-  options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = formOf(targetLang, opt);
-
-    btn.onclick = () => {
-      const correct = opt === targetConcept;
-      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-      decrementCooldowns();
-      applyResult(targetConcept, correct);
-      run.lastTargetConcept = targetConcept;
-
-      setTimeout(() => renderNext(targetLang, supportLang), 600);
-    };
-
-    choicesDiv.appendChild(btn);
-  });
-}
 
   function renderNext(targetLang, supportLang) {
     const tpl = chooseTemplate();
