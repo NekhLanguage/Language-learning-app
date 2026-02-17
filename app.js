@@ -1,9 +1,9 @@
-// Zero to Hero – Strict Ladder + Strict Recognition Eligibility
-// VERSION: v0.9.26-strict-recognition-gating
+// Zero to Hero – Tier 1 Stable Density Engine
+// VERSION: v0.9.27-batch-seeded
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.26-strict-recognition-gating";
+  const APP_VERSION = "v0.9.27-batch-seeded";
   const MAX_LEVEL = 4;
 
   const startScreen = document.getElementById("start-screen");
@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initRun() {
+
     const allConcepts = [
       ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
     ];
@@ -92,28 +93,65 @@ document.addEventListener("DOMContentLoaded", () => {
       progress: {}
     };
 
-    seedInitial();
+    batchSeed();
   }
 
-  // Seed: first template concepts only (keep it minimal + deterministic)
-  // You can later expand this to include WE/THEY etc. explicitly if desired.
-  function seedInitial() {
-    if (!TEMPLATE_CACHE.length) return;
-    const first = TEMPLATE_CACHE[0].concepts || [];
+  function batchSeed() {
 
-    first.forEach(cid => {
-      if (!run.released.includes(cid)) run.released.push(cid);
-      ensureProgress(cid);
+    const initialBatch = [
+      // Pronouns
+      "FIRST_PERSON_SINGULAR",
+      "SECOND_PERSON",
+      "HE",
+      "SHE",
+      "FIRST_PERSON_PLURAL",
+      "THIRD_PERSON_PLURAL",
+
+      // Verbs
+      "EAT",
+      "READ",
+      "SEE",
+      "HAVE",
+
+      // Nouns
+      "FOOD",
+      "BOOK",
+      "PHONE",
+      "JOB"
+    ];
+
+    initialBatch.forEach(cid => {
+      if (!run.released.includes(cid)) {
+        run.released.push(cid);
+        ensureProgress(cid);
+      }
     });
 
     run.future = run.future.filter(cid => !run.released.includes(cid));
   }
 
-  function releaseConcepts(n) {
-    for (let i = 0; i < n && run.future.length > 0; i++) {
-      const cid = run.future.shift();
-      if (!run.released.includes(cid)) run.released.push(cid);
-      ensureProgress(cid);
+  function applyResult(cid, correct) {
+
+    const state = ensureProgress(cid);
+
+    if (!correct) {
+      state.streak = 0;
+      state.cooldown = 2;
+      return;
+    }
+
+    state.streak++;
+    state.cooldown = 4;
+
+    if (state.streak >= 2) {
+
+      if (state.level < MAX_LEVEL) {
+        state.level++;
+      } else {
+        state.completed = true;
+      }
+
+      state.streak = 0;
     }
   }
 
@@ -125,12 +163,14 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function determineTargetConcept(tpl) {
+
     let minLevel = Infinity;
     let candidates = [];
 
-    (tpl.concepts || []).forEach(cid => {
+    tpl.concepts.forEach(cid => {
       const st = ensureProgress(cid);
       if (st.completed) return;
+
       if (st.level < minLevel) {
         minLevel = st.level;
         candidates = [cid];
@@ -142,36 +182,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return candidates[Math.floor(Math.random() * candidates.length)];
   }
 
-  function getCooldown(level, correct) {
-    if (!correct && level >= 2) return 2;
-    return 4;
-  }
+  function chooseTemplate() {
 
-  function applyResult(cid, correct) {
-    const state = ensureProgress(cid);
+    const eligible = TEMPLATE_CACHE.filter(templateEligible);
 
-    if (!correct) {
-      state.streak = 0;
-      state.cooldown = getCooldown(state.level, false);
-      return;
-    }
+    if (!eligible.length) return null;
 
-    state.streak++;
-    state.cooldown = getCooldown(state.level, true);
-
-    if (state.streak >= 2) {
-      if (state.level < MAX_LEVEL) {
-        state.level++;
-      } else {
-        state.completed = true;
-      }
-      state.streak = 0;
-
-      // Release pacing: when a concept reaches level 3, release one more
-      if (state.level === 3) {
-        releaseConcepts(1);
-      }
-    }
+    return eligible[Math.floor(Math.random() * eligible.length)];
   }
 
   function formOf(lang, cid) {
@@ -186,6 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function blankSentence(sentence, surface) {
+
     const tokens = sentence.split(" ");
     let replaced = false;
     const targetLower = String(surface || "").toLowerCase();
@@ -201,96 +219,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }).join(" ");
   }
 
-  // ---------- Level 3/4 Recognition Eligibility ----------
-
-  function recognitionOptionsFor(tpl, targetLang, targetConcept) {
-    const lvl = levelOf(targetConcept);
-    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-    if (!meta) return null;
-
-    const surface = tpl.surface?.[targetLang]?.[targetConcept];
-    if (!surface) return null;
-
-    // Candidates: same type + reached current level or higher + surface exists
-    const candidates = run.released.filter(cid => {
-      if (cid === targetConcept) return false;
-      const st = ensureProgress(cid);
-      if (st.completed) return false;
-
-      const m = window.GLOBAL_VOCAB.concepts[cid];
-      if (!m) return false;
-      if (m.type !== meta.type) return false;
-
-      // Must have reached current level (or higher)
-      if (st.level < lvl) return false;
-
-      const s = tpl.surface?.[targetLang]?.[cid];
-      return !!s;
-    });
-
-    if (candidates.length < 3) return null;
-
-    const distractors = shuffle([...candidates]).slice(0, 3);
-    return shuffle([targetConcept, ...distractors]);
-  }
-
-  // Can this concept render at its level?
-  function canRenderConceptAtLevel(tpl, targetLang, supportLang, targetConcept) {
-    const lvl = levelOf(targetConcept);
-
-    if (lvl === 1) return true;
-    if (lvl === 2) return true;
-
-    // lvl 3 or 4: must have recognition options
-    const opts = recognitionOptionsFor(tpl, targetLang, targetConcept);
-    return !!opts;
-  }
-
-  // Choose next template such that its target concept can render at its level
-  function chooseRenderableTemplate(targetLang, supportLang) {
-    const eligible = TEMPLATE_CACHE.filter(templateEligible);
-
-    // Try to find a template whose target concept can render now
-    const candidates = eligible.filter(tpl => {
-      const target = determineTargetConcept(tpl);
-      const st = ensureProgress(target);
-      if (st.completed) return false;
-      if (st.cooldown > 0) return false;
-      return canRenderConceptAtLevel(tpl, targetLang, supportLang, target);
-    });
-
-    if (candidates.length > 0) {
-      return candidates[Math.floor(Math.random() * candidates.length)];
-    }
-
-    // If none can render at their level (usually because recognition pools too small),
-    // we "prep" by selecting a level 1 or 2 concept only (exposure/comprehension),
-    // never showing fake level 3/4 as comprehension.
-    const prepCandidates = eligible.filter(tpl => {
-      const target = determineTargetConcept(tpl);
-      const st = ensureProgress(target);
-      if (st.completed) return false;
-      if (st.cooldown > 0) return false;
-      return st.level === 1 || st.level === 2;
-    });
-
-    if (prepCandidates.length > 0) {
-      return prepCandidates[Math.floor(Math.random() * prepCandidates.length)];
-    }
-
-    // If everything is cooled down or blocked, ignore cooldown (last resort)
-    const lastResort = eligible.filter(tpl => {
-      const target = determineTargetConcept(tpl);
-      const st = ensureProgress(target);
-      return !st.completed && (st.level === 1 || st.level === 2);
-    });
-
-    return lastResort.length ? lastResort[Math.floor(Math.random() * lastResort.length)] : null;
-  }
-
-  // ---------- Renderers ----------
-
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
+
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     content.innerHTML = `
@@ -312,6 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
+
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
@@ -320,7 +251,14 @@ document.addEventListener("DOMContentLoaded", () => {
                : "object";
 
     const q = tpl.questions[role];
-    const options = shuffle([...q.choices]);
+
+    // Strict: distractors must have level >= 1
+    const validChoices = q.choices.filter(cid => {
+      const st = ensureProgress(cid);
+      return st.level >= 1;
+    });
+
+    const options = shuffle(validChoices);
 
     content.innerHTML = `
       <div>
@@ -349,19 +287,35 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderRecognition(targetLang, supportLang, tpl, targetConcept) {
+
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
     const surface = tpl.surface?.[targetLang]?.[targetConcept];
-    const sentence = tpl.render[targetLang];
-    const blanked = blankSentence(sentence, surface);
 
-    const options = recognitionOptionsFor(tpl, targetLang, targetConcept);
-    if (!options) {
-      // Strict rule: do not show level 3/4 unless recognition can render
-      // So we should never reach here — but if we do, just re-route.
+    if (!surface) {
+      renderComprehension(targetLang, supportLang, tpl, targetConcept);
+      return;
+    }
+
+    const candidates = run.released.filter(cid => {
+      const st = ensureProgress(cid);
+      if (cid === targetConcept) return false;
+      if (st.level < levelOf(targetConcept)) return false;
+
+      const m = window.GLOBAL_VOCAB.concepts[cid];
+      return m && m.type === meta.type;
+    });
+
+    if (candidates.length < 3) {
+      // Do not fallback; instead let another concept be chosen
       renderNext(targetLang, supportLang);
       return;
     }
+
+    const sentence = tpl.render[targetLang];
+    const blanked = blankSentence(sentence, surface);
+    const options = shuffle([targetConcept, ...candidates.slice(0,3)]);
 
     content.innerHTML = `
       <div>
@@ -389,22 +343,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderNext(targetLang, supportLang) {
-    const tpl = chooseRenderableTemplate(targetLang, supportLang);
+
+    const tpl = chooseTemplate();
 
     if (!tpl) {
-      content.innerHTML = "All concepts completed (or blocked by rules).";
+      content.innerHTML = "All concepts completed.";
       return;
     }
 
     const targetConcept = determineTargetConcept(tpl);
-    const lvl = levelOf(targetConcept);
+    const level = levelOf(targetConcept);
 
-    if (lvl === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
-    else if (lvl === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
+    if (level === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
+    else if (level === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
     else renderRecognition(targetLang, supportLang, tpl, targetConcept);
   }
 
   openAppBtn?.addEventListener("click", async () => {
+
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
 
