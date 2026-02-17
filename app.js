@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.21-stable-clean";
+  const APP_VERSION = "v0.9.22-stable-clean";
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -269,51 +269,62 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderFillBlank(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Level " + levelOf(targetConcept);
+  subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const sentence = tpl.render[targetLang];
-    const surface = tpl.surface?.[targetLang]?.[targetConcept];
-    const blanked = blankSentence(sentence, surface);
+  const sentence = tpl.render[targetLang];
+  const surface = tpl.surface?.[targetLang]?.[targetConcept];
 
-    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+  const blanked = blankSentence(sentence, surface);
 
-    const distractorPool = run.released.filter(cid => {
-      if (cid === targetConcept) return false;
-      const m = window.GLOBAL_VOCAB.concepts[cid];
-      return m.type === meta.type &&
-             m.person === meta.person &&
-             m.number === meta.number;
-    });
-
-    const options = shuffle([targetConcept, ...distractorPool.slice(0,3)]);
-
-    content.innerHTML = `
-      <div>
-        <p>${blanked}</p>
-        <div id="choices"></div>
-      </div>
-    `;
-
-    const choicesDiv = document.getElementById("choices");
-
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = formOf(targetLang, opt);
-
-      btn.onclick = () => {
-        const correct = opt === targetConcept;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        run.lastTargetConcept = targetConcept;
-
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-
-      choicesDiv.appendChild(btn);
-    });
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+  if (!meta) {
+    console.error("Missing concept definition:", targetConcept);
+    renderExposure(targetLang, supportLang, tpl, targetConcept);
+    return;
   }
+
+  const distractorPool = run.released.filter(cid => {
+    if (cid === targetConcept) return false;
+
+    const m = window.GLOBAL_VOCAB.concepts[cid];
+    if (!m) return false;
+
+    return (
+      m.type === meta.type &&
+      m.person === meta.person &&
+      m.number === meta.number
+    );
+  });
+
+  const options = shuffle([targetConcept, ...distractorPool.slice(0,3)]);
+
+  content.innerHTML = `
+    <div>
+      <p>${blanked}</p>
+      <div id="choices"></div>
+    </div>
+  `;
+
+  const choicesDiv = document.getElementById("choices");
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = formOf(targetLang, opt);
+
+    btn.onclick = () => {
+      const correct = opt === targetConcept;
+      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+      run.lastTargetConcept = targetConcept;
+
+      setTimeout(() => renderNext(targetLang, supportLang), 600);
+    };
+
+    choicesDiv.appendChild(btn);
+  });
+}
 
   function renderNext(targetLang, supportLang) {
     const tpl = chooseTemplate();

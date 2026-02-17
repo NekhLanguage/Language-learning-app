@@ -1,216 +1,68 @@
 {
   "concepts": [
-    {
-      "concept_id": "DO",
-      "type": "verb",
-      "semantic_role": "action",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
-    },
-    {
-      "concept_id": "GO",
-      "type": "verb",
-      "semantic_role": "movement",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
-    },
-    {
-  "EAT": {
-    "inflections": {
-      "present": {
-        "1_singular": "eat",
-        "2_singular": "eat",
-        "3_singular": "eats",
-        "1_plural": "eat",
-        "2_plural": "eat",
-        "3_plural": "eat"
-      },
-      "past": {
-        "default": "ate"
-      }
-    }
-  }
-},
-    {
-      "concept_id": "READ",
-      "type": "verb",
-      "semantic_role": "cognition",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
-    },
-    {
-      "concept_id": "SEE",
-      "type": "verb",
-      "semantic_role": "perception",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
-    },
-    {
-      "concept_id": "BE",
-      "type": "verb",
-      "semantic_role": "state",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": false
-      }
-    },
-    {
-      "concept_id": "START",
-      "type": "verb",
-      "semantic_role": "change",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
-    },
-    {
-      "concept_id": "STOP",
-      "type": "verb",
-      "semantic_role": "change",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
-    },
-    {
-      "concept_id": "SLEEP",
-      "type": "verb",
-      "semantic_role": "state",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
-    }
+    { "concept_id": "DO", "type": "verb" },
+    { "concept_id": "GO", "type": "verb" },
+    { "concept_id": "EAT", "type": "verb" },
+    { "concept_id": "READ", "type": "verb" },
+    { "concept_id": "SEE", "type": "verb" },
+    { "concept_id": "START", "type": "verb" },
+    { "concept_id": "STOP", "type": "verb" },
+    { "concept_id": "SLEEP", "type": "verb" },
+    { "concept_id": "HAVE", "type": "verb" },
+    { "concept_id": "COME", "type": "verb" },
+    { "concept_id": "USE", "type": "verb" },
+    { "concept_id": "GET", "type": "verb" }
   ],
   "languages": {
     "en": {
       "label": "English",
       "forms": {
-        "DO": [
-          "do"
-        ],
-        "GO": [
-          "go"
-        ],
-        "EAT": [
-          "eat"
-        ],
-        "READ": [
-          "read"
-        ],
-        "SEE": [
-          "see"
-        ],
-        "BE": [
-          "be"
-        ],
-        "START": [
-          "start"
-        ],
-        "STOP": [
-          "stop"
-        ],
-        "SLEEP": [
-          "sleep"
-        ]
+        "DO": ["do"],
+        "GO": ["go"],
+        "EAT": ["eat"],
+        "READ": ["read"],
+        "SEE": ["see"],
+        "START": ["start"],
+        "STOP": ["stop"],
+        "SLEEP": ["sleep"],
+        "HAVE": ["have"],
+        "COME": ["come"],
+        "USE": ["use"],
+        "GET": ["get"]
       }
     },
     "pt": {
       "label": "Portuguese",
       "forms": {
-        "DO": [
-          "fazer"
-        ],
-        "GO": [
-          "ir"
-        ],
-        "EAT": [
-          "comer"
-        ],
-        "READ": [
-          "ler"
-        ],
-        "SEE": [
-          "ver"
-        ],
-        "BE": [
-          "ser",
-          "estar"
-        ],
-        "START": [
-          "começar"
-        ],
-        "STOP": [
-          "parar"
-        ],
-        "SLEEP": [
-          "dormir"
-        ]
+        "DO": ["fazer"],
+        "GO": ["ir"],
+        "EAT": ["comer"],
+        "READ": ["ler"],
+        "SEE": ["ver"],
+        "START": ["começar"],
+        "STOP": ["parar"],
+        "SLEEP": ["dormir"],
+        "HAVE": ["ter"],
+        "COME": ["vir"],
+        "USE": ["usar"],
+        "GET": ["pegar"]
       }
     },
     "ja": {
       "label": "Japanese",
       "forms": {
-        "DO": [
-          "する"
-        ],
-        "GO": [
-          "行く"
-        ],
-        "EAT": [
-          "食べる"
-        ],
-        "READ": [
-          "読む"
-        ],
-        "SEE": [
-          "見る"
-        ],
-        "BE": [
-          "だ",
-          "です"
-        ],
-        "START": [
-          "始める"
-        ],
-        "STOP": [
-          "止める"
-        ],
-        "SLEEP": [
-          "寝る"
-        ]
+        "DO": ["する"],
+        "GO": ["行く"],
+        "EAT": ["食べる"],
+        "READ": ["読む"],
+        "SEE": ["見る"],
+        "START": ["始める"],
+        "STOP": ["止める"],
+        "SLEEP": ["寝る"],
+        "HAVE": ["持つ"],
+        "COME": ["来る"],
+        "USE": ["使う"],
+        "GET": ["得る"]
       }
     }
   }
