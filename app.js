@@ -1,11 +1,12 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.32.2-level4-devstart
+// VERSION: v0.9.33-level4-translation-dev
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.31-level4";
+  const APP_VERSION = "v0.9.33-level4-translation-dev";
   const MAX_LEVEL = 4;
   const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
+
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -398,16 +399,16 @@ function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
 
   subtitle.textContent = "Level " + levelOf(targetConcept);
 
-  // Use support language word as the prompt
+  // Prompt should be in SUPPORT language
   const supportWord = formOf(supportLang, targetConcept);
 
-  // Still respect strict distractor gating
+  // Strict distractor gating preserved
   const options = buildRecognitionOptions(tpl, targetConcept, 6);
   if (!options) return renderNext(targetLang, supportLang);
 
   content.innerHTML = `
     <p>Choose the correct translation for:</p>
-    <h2>${targetWord}</h2>
+    <h2>${supportWord}</h2>
     <div id="choices"></div>
   `;
 
@@ -415,8 +416,16 @@ function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
 
   options.forEach(opt => {
 
-    // Level 4 uses base form only (no conjugation, no template surface)
-    const text = formOf(targetLang, opt);
+    const meta = window.GLOBAL_VOCAB.concepts[opt];
+    let text;
+
+    // Always render options in TARGET language
+    if (meta?.type === "verb") {
+      const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[opt];
+      text = entry?.base || formOf(targetLang, opt);
+    } else {
+      text = formOf(targetLang, opt);
+    }
 
     const btn = document.createElement("button");
     btn.textContent = text;
