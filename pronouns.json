@@ -13,6 +13,12 @@
       "number": "singular"
     },
     {
+      "concept_id": "SECOND_PERSON_PLURAL",
+      "type": "pronoun",
+      "person": 2,
+      "number": "plural"
+    },
+    {
       "concept_id": "HE",
       "type": "pronoun",
       "person": 3,
@@ -45,6 +51,7 @@
       "forms": {
         "FIRST_PERSON_SINGULAR": ["I"],
         "SECOND_PERSON": ["you"],
+        "SECOND_PERSON_PLURAL": ["you"],
         "HE": ["he"],
         "SHE": ["she"],
         "FIRST_PERSON_PLURAL": ["we"],
@@ -56,6 +63,7 @@
       "forms": {
         "FIRST_PERSON_SINGULAR": ["eu"],
         "SECOND_PERSON": ["você"],
+        "SECOND_PERSON_PLURAL": ["vocês"],
         "HE": ["ele"],
         "SHE": ["ela"],
         "FIRST_PERSON_PLURAL": ["nós"],
@@ -67,6 +75,7 @@
       "forms": {
         "FIRST_PERSON_SINGULAR": ["私"],
         "SECOND_PERSON": ["あなた"],
+        "SECOND_PERSON_PLURAL": ["あなたたち"],
         "HE": ["彼"],
         "SHE": ["彼女"],
         "FIRST_PERSON_PLURAL": ["私たち"],
