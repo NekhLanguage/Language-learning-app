@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.33-level4-translation-dev
+// VERSION: v0.9.33.1-level4-translation-dev
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.33-level4-translation-dev";
+  const APP_VERSION = "v0.9.33.1-level4-translation-dev";
   const MAX_LEVEL = 4;
   const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
 
@@ -416,33 +416,44 @@ function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
 
   options.forEach(opt => {
 
-    const meta = window.GLOBAL_VOCAB.concepts[opt];
-    let text;
+  const meta = window.GLOBAL_VOCAB.concepts[opt];
+  let text = opt; // fallback only if everything fails
 
-    // Always render options in TARGET language
+  // HARD FORCE target language lookup
+  const targetForms = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms;
+
+  if (targetForms && targetForms[opt]) {
+
+    const entry = targetForms[opt];
+
     if (meta?.type === "verb") {
-      const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[opt];
-      text = entry?.base || formOf(targetLang, opt);
+      // Always base form for Level 4 verbs
+      text = entry.base || entry;
+    } else if (Array.isArray(entry)) {
+      text = entry[0];
+    } else if (typeof entry === "object" && entry.base) {
+      text = entry.base;
     } else {
-      text = formOf(targetLang, opt);
+      text = entry;
     }
 
-    const btn = document.createElement("button");
-    btn.textContent = text;
+  }
 
-    btn.onclick = () => {
-      const correct = opt === targetConcept;
-      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+  const btn = document.createElement("button");
+  btn.textContent = text;
 
-      decrementCooldowns();
-      applyResult(targetConcept, correct);
+  btn.onclick = () => {
+    const correct = opt === targetConcept;
+    btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
 
-      setTimeout(() => renderNext(targetLang, supportLang), 600);
-    };
+    decrementCooldowns();
+    applyResult(targetConcept, correct);
 
-    container.appendChild(btn);
-  });
-}
+    setTimeout(() => renderNext(targetLang, supportLang), 600);
+  };
+
+  container.appendChild(btn);
+});
 
 
   // -------------------------
