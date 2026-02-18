@@ -1,12 +1,11 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.33.1-level4-translation-dev
+// VERSION: v0.9.33.3-level4-translation-dev
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.33.1-level4-translation-dev";
+  const APP_VERSION = "v0.9.33.3-level4-translation-dev";
   const MAX_LEVEL = 4;
   const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
-
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -184,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!entry) return cid;
     if (Array.isArray(entry)) return entry[0];
     if (typeof entry === "object" && entry.base) return entry.base;
-    return cid;
+    return entry;
   }
 
   function getVerbForm(verbCid, subjectCid, lang) {
@@ -217,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let replaced = false;
     const targetLower = String(surface || "").toLowerCase();
 
-    // If we don't know what to blank, don't pretend we did.
     if (!targetLower) return String(sentence || "");
 
     return tokens.map(token => {
@@ -254,7 +252,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
     if (!meta) return null;
 
-    // Distractors must be same type, released, not completed, and have level >= currentLevel
     const pool = run.released.filter(cid => {
       if (cid === targetConcept) return false;
 
@@ -304,7 +301,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const q = tpl.questions?.[role];
 
-    // If template doesn't support this role, try another prompt rather than crashing
     if (!q?.choices?.length) return renderNext(targetLang, supportLang);
 
     const options = shuffle([...q.choices]);
@@ -392,75 +388,77 @@ document.addEventListener("DOMContentLoaded", () => {
       container.appendChild(btn);
     });
   }
-// -------------------------
-// Level 4 – Isolated Translation Recall
-// -------------------------
-function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
 
-  subtitle.textContent = "Level " + levelOf(targetConcept);
+  // -------------------------
+  // Level 4 – Isolated Translation Recall
+  // Prompt = support language
+  // Options = target language (verbs forced to base form)
+  // -------------------------
+  function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
 
-  // Prompt should be in SUPPORT language
-  const supportWord = formOf(supportLang, targetConcept);
+    subtitle.textContent = "Level " + levelOf(targetConcept);
 
-  // Strict distractor gating preserved
-  const options = buildRecognitionOptions(tpl, targetConcept, 6);
-  if (!options) return renderNext(targetLang, supportLang);
+    // Prompt in support language
+    const supportWord = formOf(supportLang, targetConcept);
 
-  content.innerHTML = `
-    <p>Choose the correct translation for:</p>
-    <h2>${supportWord}</h2>
-    <div id="choices"></div>
-  `;
+    // Strict distractor gating preserved
+    const options = buildRecognitionOptions(tpl, targetConcept, 6);
+    if (!options) return renderNext(targetLang, supportLang);
 
-  const container = document.getElementById("choices");
+    content.innerHTML = `
+      <p>Choose the correct translation for:</p>
+      <h2>${supportWord}</h2>
+      <div id="choices"></div>
+    `;
 
-  options.forEach(opt => {
+    const container = document.getElementById("choices");
 
-  const meta = window.GLOBAL_VOCAB.concepts[opt];
-  let text = opt; // fallback only if everything fails
+    const targetForms = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms || {};
 
-  // HARD FORCE target language lookup
-  const targetForms = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms;
+    options.forEach(opt => {
+      const meta = window.GLOBAL_VOCAB.concepts[opt];
+      let text = opt;
 
-  if (targetForms && targetForms[opt]) {
+      const entry = targetForms[opt];
 
-    const entry = targetForms[opt];
+      if (entry !== undefined) {
+        if (meta?.type === "verb") {
+          // Always base form for verbs at Level 4
+          if (typeof entry === "object" && entry.base) text = entry.base;
+          else text = formOf(targetLang, opt);
+        } else if (Array.isArray(entry)) {
+          text = entry[0];
+        } else if (typeof entry === "object" && entry.base) {
+          text = entry.base;
+        } else {
+          text = entry;
+        }
+      } else {
+        // fallback (should be rare)
+        text = formOf(targetLang, opt);
+      }
 
-    if (meta?.type === "verb") {
-      // Always base form for Level 4 verbs
-      text = entry.base || entry;
-    } else if (Array.isArray(entry)) {
-      text = entry[0];
-    } else if (typeof entry === "object" && entry.base) {
-      text = entry.base;
-    } else {
-      text = entry;
-    }
+      const btn = document.createElement("button");
+      btn.textContent = text;
 
+      btn.onclick = () => {
+        const correct = opt === targetConcept;
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+
+        decrementCooldowns();
+        applyResult(targetConcept, correct);
+
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      container.appendChild(btn);
+    });
   }
-
-  const btn = document.createElement("button");
-  btn.textContent = text;
-
-  btn.onclick = () => {
-    const correct = opt === targetConcept;
-    btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-
-    decrementCooldowns();
-    applyResult(targetConcept, correct);
-
-    setTimeout(() => renderNext(targetLang, supportLang), 600);
-  };
-
-  container.appendChild(btn);
-});
-
 
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
   // -------------------------
   function renderNext(targetLang, supportLang) {
-    // Try multiple times to find a renderable item without recursion loops.
     for (let attempts = 0; attempts < 30; attempts++) {
       const tpl = chooseTemplate();
       if (!tpl) {
@@ -484,7 +482,6 @@ function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
       return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
     }
 
-    // If we get here, it's almost always: "not enough eligible distractors at currentLevel"
     content.innerHTML = `
       <p><strong>No eligible items right now.</strong></p>
       <p>This usually means the strict distractor rule can't be satisfied yet (needs more concepts at the same level).</p>
