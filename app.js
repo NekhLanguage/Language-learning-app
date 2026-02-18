@@ -1,5 +1,5 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.32.1-level4-devstart
+// VERSION: v0.9.32.2-level4-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -407,7 +407,7 @@ function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
 
   content.innerHTML = `
     <p>Choose the correct translation for:</p>
-    <h2>${supportWord}</h2>
+    <h2>${targetWord}</h2>
     <div id="choices"></div>
   `;
 
