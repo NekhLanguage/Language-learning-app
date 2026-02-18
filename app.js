@@ -1,11 +1,11 @@
-// Zero to Hero – Strict Ladder + DEV Fast Forward
-// VERSION: v0.9.28-dev-fast-forward
+// Zero to Hero – Strict Ladder + Recognition Fixes
+// VERSION: v0.9.29-recognition-polish
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.28.1-dev-fast-forward";
+  const APP_VERSION = "v0.9.29-recognition-polish";
   const MAX_LEVEL = 4;
-  const DEV_START_AT_LEVEL_3 = true; // ← set to false to restore normal progression
+  const DEV_START_AT_LEVEL_3 = true; // turn off after stress testing
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -15,9 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const supportSel = document.getElementById("supportLang");
   const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
-
-  console.log("Running:", APP_VERSION);
-  document.title = "Zero-to-Hero • " + APP_VERSION;
 
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
@@ -83,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initRun() {
-
     const allConcepts = [
       ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
     ];
@@ -98,26 +94,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function batchSeed() {
-
     const initialBatch = [
-  "FIRST_PERSON_SINGULAR",
-  "SECOND_PERSON",
-  "SECOND_PERSON_PLURAL",
-  "HE",
-  "SHE",
-  "FIRST_PERSON_PLURAL",
-  "THIRD_PERSON_PLURAL",
-  "EAT",
-  "DRINK",
-  "READ",
-  "SEE",
-  "HAVE",
-  "FOOD",
-  "WATER",
-  "BOOK",
-  "PHONE",
-  "JOB"
-];
+      "FIRST_PERSON_SINGULAR",
+      "SECOND_PERSON",
+      "SECOND_PERSON_PLURAL",
+      "HE",
+      "SHE",
+      "FIRST_PERSON_PLURAL",
+      "THIRD_PERSON_PLURAL",
+      "EAT","DRINK","READ","SEE","HAVE",
+      "FOOD","WATER","BOOK","PHONE","JOB"
+    ];
 
     initialBatch.forEach(cid => {
       if (!run.released.includes(cid)) {
@@ -138,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applyResult(cid, correct) {
-
     const state = ensureProgress(cid);
 
     if (!correct) {
@@ -151,13 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
     state.cooldown = 4;
 
     if (state.streak >= 2) {
-
       if (state.level < MAX_LEVEL) {
         state.level++;
       } else {
         state.completed = true;
       }
-
       state.streak = 0;
     }
   }
@@ -170,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function determineTargetConcept(tpl) {
-
     let minLevel = Infinity;
     let candidates = [];
 
@@ -207,7 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function blankSentence(sentence, surface) {
-
     const tokens = sentence.split(" ");
     let replaced = false;
     const targetLower = String(surface || "").toLowerCase();
@@ -224,18 +206,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
-
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     content.innerHTML = `
-      <div>
-        <h2>${formOf(targetLang, targetConcept)}</h2>
-        <p>${formOf(supportLang, targetConcept)}</p>
-        <hr>
-        <p>${tpl.render[targetLang]}</p>
-        <p>${tpl.render[supportLang]}</p>
-        <button id="continue-btn">Continue</button>
-      </div>
+      <h2>${formOf(targetLang, targetConcept)}</h2>
+      <p>${formOf(supportLang, targetConcept)}</p>
+      <hr>
+      <p>${tpl.render[targetLang]}</p>
+      <p>${tpl.render[supportLang]}</p>
+      <button id="continue-btn">Continue</button>
     `;
 
     document.getElementById("continue-btn").onclick = () => {
@@ -246,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
@@ -255,28 +233,19 @@ document.addEventListener("DOMContentLoaded", () => {
                : "object";
 
     const q = tpl.questions[role];
-
-    const validChoices = q.choices.filter(cid => {
-      const st = ensureProgress(cid);
-      return st.level >= 1;
-    });
-
-    const options = shuffle(validChoices);
+    const options = shuffle([...q.choices]);
 
     content.innerHTML = `
-      <div>
-        <p>${tpl.render[targetLang]}</p>
-        <p><strong>In this sentence:</strong> ${q.prompt[supportLang]}</p>
-        <div id="choices"></div>
-      </div>
+      <p>${tpl.render[targetLang]}</p>
+      <p><strong>In this sentence:</strong> ${q.prompt[supportLang]}</p>
+      <div id="choices"></div>
     `;
 
-    const choicesDiv = document.getElementById("choices");
+    const container = document.getElementById("choices");
 
     options.forEach(opt => {
       const btn = document.createElement("button");
       btn.textContent = formOf(supportLang, opt);
-
       btn.onclick = () => {
         const correct = opt === q.answer;
         btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
@@ -284,19 +253,19 @@ document.addEventListener("DOMContentLoaded", () => {
         applyResult(targetConcept, correct);
         setTimeout(() => renderNext(targetLang, supportLang), 600);
       };
-
-      choicesDiv.appendChild(btn);
+      container.appendChild(btn);
     });
   }
 
   function renderRecognition(targetLang, supportLang, tpl, targetConcept) {
-
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+    const targetSentence = tpl.render[targetLang];
+    const supportSentence = tpl.render[supportLang];
     const surface = tpl.surface?.[targetLang]?.[targetConcept];
+    const blanked = blankSentence(targetSentence, surface);
 
-    if (!surface) return;
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
 
     const candidates = run.released.filter(cid => {
       const st = ensureProgress(cid);
@@ -306,28 +275,30 @@ document.addEventListener("DOMContentLoaded", () => {
       return m && m.type === meta.type;
     });
 
-    if (candidates.length < 3) return;
+    if (candidates.length < 3) return renderNext(targetLang, supportLang);
 
-    const sentence = tpl.render[targetLang];
-    const blanked = blankSentence(sentence, surface);
     const options = shuffle([targetConcept, ...candidates.slice(0,3)]);
 
     content.innerHTML = `
-      <div>
-        <p><strong>Original sentence:</strong></p>
-        <p>${sentence}</p>
-        <hr>
-        <p><strong>Fill in the missing word:</strong></p>
-        <p>${blanked}</p>
-        <div id="choices"></div>
-      </div>
+      <p><strong>Original sentence:</strong></p>
+      <p>${supportSentence}</p>
+      <hr>
+      <p><strong>Fill in the missing word:</strong></p>
+      <p>${blanked}</p>
+      <div id="choices"></div>
     `;
 
-    const choicesDiv = document.getElementById("choices");
+    const container = document.getElementById("choices");
+    const isSentenceStart = blanked.trim().startsWith("_____");
 
     options.forEach(opt => {
+      let text = tpl.surface[targetLang][opt] || formOf(targetLang, opt);
+      text = isSentenceStart
+        ? text.charAt(0).toUpperCase() + text.slice(1)
+        : text.charAt(0).toLowerCase() + text.slice(1);
+
       const btn = document.createElement("button");
-      btn.textContent = tpl.surface[targetLang][opt] || formOf(targetLang, opt);
+      btn.textContent = text;
 
       btn.onclick = () => {
         const correct = opt === targetConcept;
@@ -337,14 +308,12 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => renderNext(targetLang, supportLang), 600);
       };
 
-      choicesDiv.appendChild(btn);
+      container.appendChild(btn);
     });
   }
 
   function renderNext(targetLang, supportLang) {
-
     const tpl = chooseTemplate();
-
     if (!tpl) {
       content.innerHTML = "All concepts completed.";
       return;
@@ -359,7 +328,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   openAppBtn?.addEventListener("click", async () => {
-
     startScreen.classList.remove("active");
     learningScreen.classList.add("active");
 
