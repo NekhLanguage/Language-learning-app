@@ -1,11 +1,11 @@
-// Zero to Hero – Strict Ladder + Recognition Fixes
-// VERSION: v0.9.29-recognition-polish
+// Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
+// VERSION: v0.9.30-dynamic-verb
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.29-recognition-polish";
+  const APP_VERSION = "v0.9.30-dynamic-verb";
   const MAX_LEVEL = 4;
-  const DEV_START_AT_LEVEL_3 = true; // turn off after stress testing
+  const DEV_START_AT_LEVEL_3 = true; // set false after stress testing
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -182,7 +182,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
     if (!entry) return cid;
     if (Array.isArray(entry)) return entry[0];
+    if (typeof entry === "object" && entry.base) return entry.base;
     return cid;
+  }
+
+  function getVerbForm(verbCid, subjectCid, lang) {
+    const verbData = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[verbCid];
+    if (!verbData) return verbCid;
+
+    const subject = window.GLOBAL_VOCAB.concepts[subjectCid];
+    if (!subject) return verbData.base || verbCid;
+
+    const key =
+      subject.person === 3 && subject.number === "singular"
+        ? "3_singular"
+        : subject.person === 1 && subject.number === "singular"
+        ? "1_singular"
+        : subject.person === 1 && subject.number === "plural"
+        ? "1_plural"
+        : subject.person === 3 && subject.number === "plural"
+        ? "3_plural"
+        : "base";
+
+    return verbData[key] || verbData.base || verbCid;
   }
 
   function shuffle(arr) {
@@ -258,14 +280,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderRecognition(targetLang, supportLang, tpl, targetConcept) {
+
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const targetSentence = tpl.render[targetLang];
     const supportSentence = tpl.render[supportLang];
-    const surface = tpl.surface?.[targetLang]?.[targetConcept];
-    const blanked = blankSentence(targetSentence, surface);
 
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+
+    const subjectCid = tpl.concepts.find(c =>
+      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+    );
+
+    const surface = meta.type === "verb"
+      ? getVerbForm(targetConcept, subjectCid, targetLang)
+      : tpl.surface?.[targetLang]?.[targetConcept];
+
+    const blanked = blankSentence(targetSentence, surface);
 
     const candidates = run.released.filter(cid => {
       const st = ensureProgress(cid);
@@ -292,7 +323,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const isSentenceStart = blanked.trim().startsWith("_____");
 
     options.forEach(opt => {
-      let text = tpl.surface[targetLang][opt] || formOf(targetLang, opt);
+
+      let text;
+
+      if (window.GLOBAL_VOCAB.concepts[opt]?.type === "verb") {
+        text = getVerbForm(opt, subjectCid, targetLang);
+      } else {
+        text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
+      }
+
       text = isSentenceStart
         ? text.charAt(0).toUpperCase() + text.slice(1)
         : text.charAt(0).toLowerCase() + text.slice(1);

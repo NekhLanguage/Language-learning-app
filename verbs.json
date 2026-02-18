@@ -18,55 +18,39 @@
     "en": {
       "label": "English",
       "forms": {
-        "DO": ["do"],
-        "GO": ["go"],
-        "EAT": ["eat"],
-        "DRINK": ["drink"],
-        "READ": ["read"],
-        "SEE": ["see"],
-        "START": ["start"],
-        "STOP": ["stop"],
-        "SLEEP": ["sleep"],
-        "HAVE": ["have"],
-        "COME": ["come"],
-        "USE": ["use"],
-        "GET": ["get"]
+        "DO": { "base": "do", "3_singular": "does" },
+        "GO": { "base": "go", "3_singular": "goes" },
+        "EAT": { "base": "eat", "3_singular": "eats" },
+        "DRINK": { "base": "drink", "3_singular": "drinks" },
+        "READ": { "base": "read", "3_singular": "reads" },
+        "SEE": { "base": "see", "3_singular": "sees" },
+        "START": { "base": "start", "3_singular": "starts" },
+        "STOP": { "base": "stop", "3_singular": "stops" },
+        "SLEEP": { "base": "sleep", "3_singular": "sleeps" },
+        "HAVE": { "base": "have", "3_singular": "has" },
+        "COME": { "base": "come", "3_singular": "comes" },
+        "USE": { "base": "use", "3_singular": "uses" },
+        "GET": { "base": "get", "3_singular": "gets" }
       }
     },
     "pt": {
       "label": "Portuguese",
       "forms": {
-        "DO": ["fazer"],
-        "GO": ["ir"],
-        "EAT": ["comer"],
-        "DRINK": ["beber"],
-        "READ": ["ler"],
-        "SEE": ["ver"],
-        "START": ["começar"],
-        "STOP": ["parar"],
-        "SLEEP": ["dormir"],
-        "HAVE": ["ter"],
-        "COME": ["vir"],
-        "USE": ["usar"],
-        "GET": ["pegar"]
+        "EAT": { "1_singular": "como", "3_singular": "come", "1_plural": "comemos", "3_plural": "comem" },
+        "DRINK": { "1_singular": "bebo", "3_singular": "bebe", "1_plural": "bebemos", "3_plural": "bebem" },
+        "READ": { "1_singular": "leio", "3_singular": "lê", "1_plural": "lemos", "3_plural": "leem" },
+        "SEE": { "1_singular": "vejo", "3_singular": "vê", "1_plural": "vemos", "3_plural": "veem" },
+        "HAVE": { "1_singular": "tenho", "3_singular": "tem", "1_plural": "temos", "3_plural": "têm" }
       }
     },
     "ja": {
       "label": "Japanese",
       "forms": {
-        "DO": ["する"],
-        "GO": ["行く"],
-        "EAT": ["食べる"],
-        "DRINK": ["飲む"],
-        "READ": ["読む"],
-        "SEE": ["見る"],
-        "START": ["始める"],
-        "STOP": ["止める"],
-        "SLEEP": ["寝る"],
-        "HAVE": ["持つ"],
-        "COME": ["来る"],
-        "USE": ["使う"],
-        "GET": ["得る"]
+        "EAT": { "base": "食べる" },
+        "DRINK": { "base": "飲む" },
+        "READ": { "base": "読む" },
+        "SEE": { "base": "見る" },
+        "HAVE": { "base": "持つ" }
       }
     }
   }
