@@ -1,11 +1,11 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.30-dynamic-verb
+// VERSION: v0.9.32-level4-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.30-dynamic-verb";
+  const APP_VERSION = "v0.9.31-level4";
   const MAX_LEVEL = 4;
-  const DEV_START_AT_LEVEL_3 = true; // set false after stress testing
+  const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -115,10 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     run.future = run.future.filter(cid => !run.released.includes(cid));
 
-    if (DEV_START_AT_LEVEL_3) {
+    if (DEV_START_AT_LEVEL_4) {
       run.released.forEach(cid => {
         const state = ensureProgress(cid);
-        state.level = 3;
+        state.level = 4;
         state.streak = 0;
       });
     }
@@ -212,9 +212,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function blankSentence(sentence, surface) {
-    const tokens = sentence.split(" ");
+    const tokens = String(sentence || "").split(" ");
     let replaced = false;
     const targetLower = String(surface || "").toLowerCase();
+
+    // If we don't know what to blank, don't pretend we did.
+    if (!targetLower) return String(sentence || "");
 
     return tokens.map(token => {
       const clean = token.replace(/[.,!?]/g, "").toLowerCase();
@@ -225,6 +228,50 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       return token;
     }).join(" ");
+  }
+
+  function safeSurfaceForConcept(tpl, targetLang, targetConcept) {
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+    if (!meta) return null;
+
+    const subjectCid = (tpl.concepts || []).find(c =>
+      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+    );
+
+    if (meta.type === "verb") {
+      return getVerbForm(targetConcept, subjectCid, targetLang);
+    }
+
+    return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
+  }
+
+  // -------------------------
+  // Recognition option builder
+  // -------------------------
+  function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
+    const currentLevel = levelOf(targetConcept);
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+    if (!meta) return null;
+
+    // Distractors must be same type, released, not completed, and have level >= currentLevel
+    const pool = run.released.filter(cid => {
+      if (cid === targetConcept) return false;
+
+      const st = ensureProgress(cid);
+      if (st.completed) return false;
+      if (st.level < currentLevel) return false;
+
+      const m = window.GLOBAL_VOCAB.concepts[cid];
+      return m && m.type === meta.type;
+    });
+
+    // recognition requires >=4 options => need at least 3 distractors
+    if (pool.length < 3) return null;
+
+    const targetTotal = Math.max(4, Math.min(desiredTotalOptions, pool.length + 1));
+    const distractorCount = targetTotal - 1;
+
+    return shuffle([targetConcept, ...shuffle(pool).slice(0, distractorCount)]);
   }
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
@@ -250,16 +297,20 @@ document.addEventListener("DOMContentLoaded", () => {
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-    const role = meta.type === "pronoun" ? "pronoun"
-               : meta.type === "verb" ? "verb"
+    const role = meta?.type === "pronoun" ? "pronoun"
+               : meta?.type === "verb" ? "verb"
                : "object";
 
-    const q = tpl.questions[role];
+    const q = tpl.questions?.[role];
+
+    // If template doesn't support this role, try another prompt rather than crashing
+    if (!q?.choices?.length) return renderNext(targetLang, supportLang);
+
     const options = shuffle([...q.choices]);
 
     content.innerHTML = `
       <p>${tpl.render[targetLang]}</p>
-      <p><strong>In this sentence:</strong> ${q.prompt[supportLang]}</p>
+      <p><strong>In this sentence:</strong> ${q.prompt?.[supportLang] || ""}</p>
       <div id="choices"></div>
     `;
 
@@ -279,36 +330,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function renderRecognition(targetLang, supportLang, tpl, targetConcept) {
+  // -------------------------
+  // Level 3 – Recognition (with support sentence shown)
+  // -------------------------
+  function renderRecognitionL3(targetLang, supportLang, tpl, targetConcept) {
 
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const targetSentence = tpl.render[targetLang];
-    const supportSentence = tpl.render[supportLang];
+    const targetSentence = tpl.render?.[targetLang] || "";
+    const supportSentence = tpl.render?.[supportLang] || "";
 
-    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-
-    const subjectCid = tpl.concepts.find(c =>
-      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-    );
-
-    const surface = meta.type === "verb"
-      ? getVerbForm(targetConcept, subjectCid, targetLang)
-      : tpl.surface?.[targetLang]?.[targetConcept];
-
+    const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
     const blanked = blankSentence(targetSentence, surface);
 
-    const candidates = run.released.filter(cid => {
-      const st = ensureProgress(cid);
-      if (cid === targetConcept) return false;
-      if (st.level < levelOf(targetConcept)) return false;
-      const m = window.GLOBAL_VOCAB.concepts[cid];
-      return m && m.type === meta.type;
-    });
+    const options = buildRecognitionOptions(tpl, targetConcept, 4);
+    if (!options) return renderNext(targetLang, supportLang);
 
-    if (candidates.length < 3) return renderNext(targetLang, supportLang);
-
-    const options = shuffle([targetConcept, ...candidates.slice(0,3)]);
+    const subjectCid = (tpl.concepts || []).find(c =>
+      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+    );
 
     content.innerHTML = `
       <p><strong>Original sentence:</strong></p>
@@ -324,9 +364,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     options.forEach(opt => {
 
+      const m = window.GLOBAL_VOCAB.concepts[opt];
       let text;
 
-      if (window.GLOBAL_VOCAB.concepts[opt]?.type === "verb") {
+      if (m?.type === "verb") {
         text = getVerbForm(opt, subjectCid, targetLang);
       } else {
         text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
@@ -351,19 +392,117 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // -------------------------
+  // Level 4 – Recognition (no support sentence by default, more options, optional hint)
+  // -------------------------
+  function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
+
+    subtitle.textContent = "Level " + levelOf(targetConcept);
+
+    const targetSentence = tpl.render?.[targetLang] || "";
+    const supportSentence = tpl.render?.[supportLang] || "";
+
+    const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
+    const blanked = blankSentence(targetSentence, surface);
+
+    // Harder: aim for 6 options when possible (still respects strict distractor rules)
+    const options = buildRecognitionOptions(tpl, targetConcept, 6);
+    if (!options) return renderNext(targetLang, supportLang);
+
+    const subjectCid = (tpl.concepts || []).find(c =>
+      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+    );
+
+    content.innerHTML = `
+      <p><strong>Fill in the missing word:</strong></p>
+      <p>${blanked}</p>
+
+      <button id="toggle-hint" class="primary small" type="button" style="margin:0.75rem 0;">
+        Show hint
+      </button>
+      <div id="hint" style="display:none;opacity:0.95;">
+        <p style="margin-bottom:0.25rem;"><strong>Hint (support sentence):</strong></p>
+        <p>${supportSentence}</p>
+        <hr>
+      </div>
+
+      <div id="choices"></div>
+    `;
+
+    const hintBtn = document.getElementById("toggle-hint");
+    const hint = document.getElementById("hint");
+    hintBtn.onclick = () => {
+      const showing = hint.style.display !== "none";
+      hint.style.display = showing ? "none" : "block";
+      hintBtn.textContent = showing ? "Show hint" : "Hide hint";
+    };
+
+    const container = document.getElementById("choices");
+    const isSentenceStart = blanked.trim().startsWith("_____");
+
+    options.forEach(opt => {
+
+      const m = window.GLOBAL_VOCAB.concepts[opt];
+      let text;
+
+      if (m?.type === "verb") {
+        text = getVerbForm(opt, subjectCid, targetLang);
+      } else {
+        text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
+      }
+
+      text = isSentenceStart
+        ? text.charAt(0).toUpperCase() + text.slice(1)
+        : text.charAt(0).toLowerCase() + text.slice(1);
+
+      const btn = document.createElement("button");
+      btn.textContent = text;
+
+      btn.onclick = () => {
+        const correct = opt === targetConcept;
+        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+        decrementCooldowns();
+        applyResult(targetConcept, correct);
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      };
+
+      container.appendChild(btn);
+    });
+  }
+
+  // -------------------------
+  // Next item (with guard to avoid recursive stack blow-ups)
+  // -------------------------
   function renderNext(targetLang, supportLang) {
-    const tpl = chooseTemplate();
-    if (!tpl) {
-      content.innerHTML = "All concepts completed.";
-      return;
+    // Try multiple times to find a renderable item without recursion loops.
+    for (let attempts = 0; attempts < 30; attempts++) {
+      const tpl = chooseTemplate();
+      if (!tpl) {
+        content.innerHTML = "All concepts completed.";
+        return;
+      }
+
+      const targetConcept = determineTargetConcept(tpl);
+      const level = levelOf(targetConcept);
+
+      // Level 3/4 need recognition option integrity; if not possible, try again.
+      if (level >= 3) {
+        const desired = level === 4 ? 6 : 4;
+        const opts = buildRecognitionOptions(tpl, targetConcept, desired);
+        if (!opts) continue;
+      }
+
+      if (level === 1) return renderExposure(targetLang, supportLang, tpl, targetConcept);
+      if (level === 2) return renderComprehension(targetLang, supportLang, tpl, targetConcept);
+      if (level === 3) return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+      return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
     }
 
-    const targetConcept = determineTargetConcept(tpl);
-    const level = levelOf(targetConcept);
-
-    if (level === 1) renderExposure(targetLang, supportLang, tpl, targetConcept);
-    else if (level === 2) renderComprehension(targetLang, supportLang, tpl, targetConcept);
-    else renderRecognition(targetLang, supportLang, tpl, targetConcept);
+    // If we get here, it's almost always: "not enough eligible distractors at currentLevel"
+    content.innerHTML = `
+      <p><strong>No eligible items right now.</strong></p>
+      <p>This usually means the strict distractor rule can't be satisfied yet (needs more concepts at the same level).</p>
+    `;
   }
 
   openAppBtn?.addEventListener("click", async () => {
