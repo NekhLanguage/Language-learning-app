@@ -1,5 +1,5 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.32-level4-devstart
+// VERSION: v0.9.32.1-level4-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -391,84 +391,50 @@ document.addEventListener("DOMContentLoaded", () => {
       container.appendChild(btn);
     });
   }
+// -------------------------
+// Level 4 – Isolated Translation Recall
+// -------------------------
+function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
 
-  // -------------------------
-  // Level 4 – Recognition (no support sentence by default, more options, optional hint)
-  // -------------------------
-  function renderRecognitionL4(targetLang, supportLang, tpl, targetConcept) {
+  subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    subtitle.textContent = "Level " + levelOf(targetConcept);
+  // Use support language word as the prompt
+  const supportWord = formOf(supportLang, targetConcept);
 
-    const targetSentence = tpl.render?.[targetLang] || "";
-    const supportSentence = tpl.render?.[supportLang] || "";
+  // Still respect strict distractor gating
+  const options = buildRecognitionOptions(tpl, targetConcept, 6);
+  if (!options) return renderNext(targetLang, supportLang);
 
-    const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
-    const blanked = blankSentence(targetSentence, surface);
+  content.innerHTML = `
+    <p>Choose the correct translation for:</p>
+    <h2>${supportWord}</h2>
+    <div id="choices"></div>
+  `;
 
-    // Harder: aim for 6 options when possible (still respects strict distractor rules)
-    const options = buildRecognitionOptions(tpl, targetConcept, 6);
-    if (!options) return renderNext(targetLang, supportLang);
+  const container = document.getElementById("choices");
 
-    const subjectCid = (tpl.concepts || []).find(c =>
-      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-    );
+  options.forEach(opt => {
 
-    content.innerHTML = `
-      <p><strong>Fill in the missing word:</strong></p>
-      <p>${blanked}</p>
+    // Level 4 uses base form only (no conjugation, no template surface)
+    const text = formOf(targetLang, opt);
 
-      <button id="toggle-hint" class="primary small" type="button" style="margin:0.75rem 0;">
-        Show hint
-      </button>
-      <div id="hint" style="display:none;opacity:0.95;">
-        <p style="margin-bottom:0.25rem;"><strong>Hint (support sentence):</strong></p>
-        <p>${supportSentence}</p>
-        <hr>
-      </div>
+    const btn = document.createElement("button");
+    btn.textContent = text;
 
-      <div id="choices"></div>
-    `;
+    btn.onclick = () => {
+      const correct = opt === targetConcept;
+      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
 
-    const hintBtn = document.getElementById("toggle-hint");
-    const hint = document.getElementById("hint");
-    hintBtn.onclick = () => {
-      const showing = hint.style.display !== "none";
-      hint.style.display = showing ? "none" : "block";
-      hintBtn.textContent = showing ? "Show hint" : "Hide hint";
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+
+      setTimeout(() => renderNext(targetLang, supportLang), 600);
     };
 
-    const container = document.getElementById("choices");
-    const isSentenceStart = blanked.trim().startsWith("_____");
+    container.appendChild(btn);
+  });
+}
 
-    options.forEach(opt => {
-
-      const m = window.GLOBAL_VOCAB.concepts[opt];
-      let text;
-
-      if (m?.type === "verb") {
-        text = getVerbForm(opt, subjectCid, targetLang);
-      } else {
-        text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
-      }
-
-      text = isSentenceStart
-        ? text.charAt(0).toUpperCase() + text.slice(1)
-        : text.charAt(0).toLowerCase() + text.slice(1);
-
-      const btn = document.createElement("button");
-      btn.textContent = text;
-
-      btn.onclick = () => {
-        const correct = opt === targetConcept;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-
-      container.appendChild(btn);
-    });
-  }
 
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
