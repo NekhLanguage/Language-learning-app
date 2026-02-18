@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.28-dev-fast-forward";
+  const APP_VERSION = "v0.9.28.1-dev-fast-forward";
   const MAX_LEVEL = 4;
   const DEV_START_AT_LEVEL_3 = true; // ← set to false to restore normal progression
 
@@ -100,21 +100,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function batchSeed() {
 
     const initialBatch = [
-      "FIRST_PERSON_SINGULAR",
-      "SECOND_PERSON",
-      "HE",
-      "SHE",
-      "FIRST_PERSON_PLURAL",
-      "THIRD_PERSON_PLURAL",
-      "EAT",
-      "READ",
-      "SEE",
-      "HAVE",
-      "FOOD",
-      "BOOK",
-      "PHONE",
-      "JOB"
-    ];
+  "FIRST_PERSON_SINGULAR",
+  "SECOND_PERSON",
+  "SECOND_PERSON_PLURAL",
+  "HE",
+  "SHE",
+  "FIRST_PERSON_PLURAL",
+  "THIRD_PERSON_PLURAL",
+  "EAT",
+  "DRINK",
+  "READ",
+  "SEE",
+  "HAVE",
+  "FOOD",
+  "WATER",
+  "BOOK",
+  "PHONE",
+  "JOB"
+];
 
     initialBatch.forEach(cid => {
       if (!run.released.includes(cid)) {

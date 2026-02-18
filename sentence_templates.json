@@ -187,6 +187,184 @@
           "answer": "JOB"
         }
       }
+    },
+
+    {
+      "template_id": "I_DRINK_WATER",
+      "concepts": ["FIRST_PERSON_SINGULAR","DRINK","WATER"],
+      "render": {
+        "en": "I drink water.",
+        "pt": "Eu bebo água."
+      },
+      "surface": {
+        "en": {
+          "FIRST_PERSON_SINGULAR": "I",
+          "DRINK": "drink",
+          "WATER": "water"
+        },
+        "pt": {
+          "FIRST_PERSON_SINGULAR": "Eu",
+          "DRINK": "bebo",
+          "WATER": "água"
+        }
+      },
+      "questions": {
+        "pronoun": {
+          "prompt": {
+            "en": "Who drinks water?",
+            "pt": "Quem bebe água?"
+          },
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","HE","SHE"],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt": {
+            "en": "What do I do?",
+            "pt": "O que eu faço?"
+          },
+          "choices": ["DRINK","EAT","READ","SEE"],
+          "answer": "DRINK"
+        },
+        "object": {
+          "prompt": {
+            "en": "What do I drink?",
+            "pt": "O que eu bebo?"
+          },
+          "choices": ["WATER","FOOD","BOOK","PHONE"],
+          "answer": "WATER"
+        }
+      }
+    },
+
+    {
+      "template_id": "YOU_READ_BOOK",
+      "concepts": ["SECOND_PERSON","READ","BOOK"],
+      "render": {
+        "en": "You read a book.",
+        "pt": "Você lê um livro."
+      },
+      "surface": {
+        "en": {
+          "SECOND_PERSON": "you",
+          "READ": "read",
+          "BOOK": "book"
+        },
+        "pt": {
+          "SECOND_PERSON": "você",
+          "READ": "lê",
+          "BOOK": "livro"
+        }
+      },
+      "questions": {
+        "pronoun": {
+          "prompt": {
+            "en": "Who reads a book?",
+            "pt": "Quem lê um livro?"
+          },
+          "choices": ["FIRST_PERSON_SINGULAR","SECOND_PERSON","HE","SHE"],
+          "answer": "SECOND_PERSON"
+        },
+        "verb": {
+          "prompt": {
+            "en": "What do you do?",
+            "pt": "O que você faz?"
+          },
+          "choices": ["READ","EAT","DRINK","SEE"],
+          "answer": "READ"
+        },
+        "object": {
+          "prompt": {
+            "en": "What do you read?",
+            "pt": "O que você lê?"
+          },
+          "choices": ["BOOK","FOOD","PHONE","JOB"],
+          "answer": "BOOK"
+        }
+      }
+    },
+
+    {
+      "template_id": "YOU_PLURAL_DRINK_WATER",
+      "concepts": ["SECOND_PERSON_PLURAL","DRINK","WATER"],
+      "render": {
+        "en": "You drink water.",
+        "pt": "Vocês bebem água."
+      },
+      "surface": {
+        "en": {
+          "SECOND_PERSON_PLURAL": "you",
+          "DRINK": "drink",
+          "WATER": "water"
+        },
+        "pt": {
+          "SECOND_PERSON_PLURAL": "vocês",
+          "DRINK": "bebem",
+          "WATER": "água"
+        }
+      },
+      "questions": {
+        "pronoun": {
+          "prompt": {
+            "en": "Who drinks water?",
+            "pt": "Quem bebe água?"
+          },
+          "choices": ["SECOND_PERSON_PLURAL","FIRST_PERSON_PLURAL","HE","SHE"],
+          "answer": "SECOND_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt": {
+            "en": "What do you do?",
+            "pt": "O que vocês fazem?"
+          },
+          "choices": ["DRINK","EAT","READ","SEE"],
+          "answer": "DRINK"
+        },
+        "object": {
+          "prompt": {
+            "en": "What do you drink?",
+            "pt": "O que vocês bebem?"
+          },
+          "choices": ["WATER","FOOD","BOOK","PHONE"],
+          "answer": "WATER"
+        }
+      }
+    },
+
+    {
+      "template_id": "THEY_SLEEP",
+      "concepts": ["THIRD_PERSON_PLURAL","SLEEP"],
+      "render": {
+        "en": "They sleep.",
+        "pt": "Eles dormem."
+      },
+      "surface": {
+        "en": {
+          "THIRD_PERSON_PLURAL": "they",
+          "SLEEP": "sleep"
+        },
+        "pt": {
+          "THIRD_PERSON_PLURAL": "eles",
+          "SLEEP": "dormem"
+        }
+      },
+      "questions": {
+        "pronoun": {
+          "prompt": {
+            "en": "Who sleeps?",
+            "pt": "Quem dorme?"
+          },
+          "choices": ["THIRD_PERSON_PLURAL","FIRST_PERSON_PLURAL","HE","SHE"],
+          "answer": "THIRD_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt": {
+            "en": "What do they do?",
+            "pt": "O que eles fazem?"
+          },
+          "choices": ["SLEEP","READ","EAT","DRINK"],
+          "answer": "SLEEP"
+        }
+      }
     }
 
   ]
