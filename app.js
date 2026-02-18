@@ -1,10 +1,11 @@
-// Zero to Hero – Tier 1 Stable Density Engine
-// VERSION: v0.9.27-batch-seeded
+// Zero to Hero – Strict Ladder + DEV Fast Forward
+// VERSION: v0.9.28-dev-fast-forward
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.27-batch-seeded";
+  const APP_VERSION = "v0.9.28-dev-fast-forward";
   const MAX_LEVEL = 4;
+  const DEV_START_AT_LEVEL_3 = true; // ← set to false to restore normal progression
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -99,21 +100,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function batchSeed() {
 
     const initialBatch = [
-      // Pronouns
       "FIRST_PERSON_SINGULAR",
       "SECOND_PERSON",
       "HE",
       "SHE",
       "FIRST_PERSON_PLURAL",
       "THIRD_PERSON_PLURAL",
-
-      // Verbs
       "EAT",
       "READ",
       "SEE",
       "HAVE",
-
-      // Nouns
       "FOOD",
       "BOOK",
       "PHONE",
@@ -128,6 +124,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     run.future = run.future.filter(cid => !run.released.includes(cid));
+
+    if (DEV_START_AT_LEVEL_3) {
+      run.released.forEach(cid => {
+        const state = ensureProgress(cid);
+        state.level = 3;
+        state.streak = 0;
+      });
+    }
   }
 
   function applyResult(cid, correct) {
@@ -183,11 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function chooseTemplate() {
-
     const eligible = TEMPLATE_CACHE.filter(templateEligible);
-
     if (!eligible.length) return null;
-
     return eligible[Math.floor(Math.random() * eligible.length)];
   }
 
@@ -252,7 +253,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const q = tpl.questions[role];
 
-    // Strict: distractors must have level >= 1
     const validChoices = q.choices.filter(cid => {
       const st = ensureProgress(cid);
       return st.level >= 1;
@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     content.innerHTML = `
       <div>
         <p>${tpl.render[targetLang]}</p>
-        <p>${q.prompt[supportLang]}</p>
+        <p><strong>In this sentence:</strong> ${q.prompt[supportLang]}</p>
         <div id="choices"></div>
       </div>
     `;
@@ -293,25 +293,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
     const surface = tpl.surface?.[targetLang]?.[targetConcept];
 
-    if (!surface) {
-      renderComprehension(targetLang, supportLang, tpl, targetConcept);
-      return;
-    }
+    if (!surface) return;
 
     const candidates = run.released.filter(cid => {
       const st = ensureProgress(cid);
       if (cid === targetConcept) return false;
       if (st.level < levelOf(targetConcept)) return false;
-
       const m = window.GLOBAL_VOCAB.concepts[cid];
       return m && m.type === meta.type;
     });
 
-    if (candidates.length < 3) {
-      // Do not fallback; instead let another concept be chosen
-      renderNext(targetLang, supportLang);
-      return;
-    }
+    if (candidates.length < 3) return;
 
     const sentence = tpl.render[targetLang];
     const blanked = blankSentence(sentence, surface);
@@ -319,6 +311,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     content.innerHTML = `
       <div>
+        <p><strong>Original sentence:</strong></p>
+        <p>${sentence}</p>
+        <hr>
+        <p><strong>Fill in the missing word:</strong></p>
         <p>${blanked}</p>
         <div id="choices"></div>
       </div>
