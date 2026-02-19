@@ -406,31 +406,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const promptSupport = formOf(supportLang, targetConcept);
 
-    // Build a Level-4-specific option set that:
-    // - respects strict distractor rules (same as buildRecognitionOptions)
-    // - excludes same support-surface distractors (e.g., YOU singular/plural)
-    // - guarantees >= 4 options
     function resolveTargetSurface(cid) {
-      const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[cid];
+  const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[cid];
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
 
-      if (entry === undefined || entry === null) return cid;
+  if (entry === undefined || entry === null) return cid;
 
-      if (typeof entry === "string") return entry;
-
-      if (Array.isArray(entry)) return entry[0];
-
-      if (typeof entry === "object") {
-        // Prefer common base keys
-        if (typeof entry.base === "string") return entry.base;
-        if (typeof entry.infinitive === "string") return entry.infinitive;
-
-        // Otherwise take the first string value found
-        const firstString = Object.values(entry).find(v => typeof v === "string");
-        if (firstString) return firstString;
-      }
-
-      return cid;
+  // VERBS → strictly base / infinitive only
+  if (meta?.type === "verb") {
+    if (typeof entry === "object") {
+      if (typeof entry.base === "string") return entry.base;
+      if (typeof entry.infinitive === "string") return entry.infinitive;
     }
+    if (typeof entry === "string") return entry;
+    return cid; // do NOT fallback to random conjugation
+  }
+
+  // NON-VERBS
+  if (typeof entry === "string") return entry;
+
+  if (Array.isArray(entry)) return entry[0];
+
+  if (typeof entry === "object") {
+    const firstString = Object.values(entry).find(v => typeof v === "string");
+    if (firstString) return firstString;
+  }
+
+  return cid;
+}
 
     function buildLevel4Options() {
       const currentLevel = levelOf(targetConcept);
