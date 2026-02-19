@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.41-level4-devstart
+// VERSION: v0.9.42-level4-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.41-level4";
+  const APP_VERSION = "v0.9.42-level5";
   const MAX_LEVEL = 5;
   const DEV_START_AT_LEVEL_5 = true; // set false after stress testing
 
@@ -565,9 +565,9 @@ function renderMatchingL5(targetLang, supportLang) {
   const eligible = run.released.filter(cid => {
     const st = ensureProgress(cid);
     return (
-      st.level === 5 &&
-      !st.completed &&
-      passesSpacingRule(cid)
+        st.level === 5 &&
+  !st.completed &&
+  passesSpacingRule(cid)
     );
   });
 
@@ -586,18 +586,27 @@ function renderMatchingL5(targetLang, supportLang) {
   const selectedPairs = new Map();
 
   content.innerHTML = `
-  <div id="matching-container" style="
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:60px;
-    margin-top:20px;
-  ">
-    <div id="left-column" style="display:flex;flex-direction:column;gap:15px;"></div>
-    <div id="right-column" style="display:flex;flex-direction:column;gap:15px;"></div>
-  </div>
-  <div style="margin-top:30px;text-align:center;">
-    <button id="check-matches">Check</button>
+  <div id="matching-wrapper" style="position:relative;">
+
+    <svg id="wire-layer"
+         style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></svg>
+
+    <div id="matching-container" style="
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:80px;
+      margin-top:20px;
+      position:relative;
+    ">
+      <div id="left-column" style="display:flex;flex-direction:column;gap:20px;"></div>
+      <div id="right-column" style="display:flex;flex-direction:column;gap:20px;"></div>
+    </div>
+
+    <div style="margin-top:30px;text-align:center;">
+      <button id="check-matches">Check</button>
+    </div>
+
   </div>
 `;
 
@@ -605,6 +614,35 @@ function renderMatchingL5(targetLang, supportLang) {
   const rightColumn = document.getElementById("right-column");
 
   let activeSelection = null;
+const wireLayer = document.getElementById("wire-layer");
+const connectionLines = new Map();
+
+function drawConnection(leftBtn, rightBtn) {
+
+  const leftRect = leftBtn.getBoundingClientRect();
+  const rightRect = rightBtn.getBoundingClientRect();
+  const containerRect = document
+    .getElementById("matching-wrapper")
+    .getBoundingClientRect();
+
+  const x1 = leftRect.right - containerRect.left;
+  const y1 = leftRect.top + leftRect.height / 2 - containerRect.top;
+
+  const x2 = rightRect.left - containerRect.left;
+  const y2 = rightRect.top + rightRect.height / 2 - containerRect.top;
+
+  const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  line.setAttribute("x1", x1);
+  line.setAttribute("y1", y1);
+  line.setAttribute("x2", x2);
+  line.setAttribute("y2", y2);
+  line.setAttribute("stroke", "white");
+  line.setAttribute("stroke-width", "3");
+
+  wireLayer.appendChild(line);
+
+  return line;
+}
 
   function createButton(cid, side) {
   const btn = document.createElement("button");
@@ -650,8 +688,8 @@ function renderMatchingL5(targetLang, supportLang) {
     leftBtn.classList.remove("selected");
     rightBtn.classList.remove("selected");
 
-    leftBtn.classList.add("paired");
-    rightBtn.classList.add("paired");
+    const line = drawConnection(leftBtn, rightBtn);
+    connectionLines.set(leftBtn.dataset.cid, line);
 
     activeSelection = null;
   };
@@ -721,11 +759,16 @@ function renderMatchingL5(targetLang, supportLang) {
     setTimeout(() => {
       renderNext(targetLang, supportLang);
     }, 800);
-  } else {
-    setTimeout(() => {
-      renderMatchingL5(targetLang, supportLang);
-    }, 1000);
-  }
+  } } else {
+  setTimeout(() => {
+    connectionLines.forEach(line => wireLayer.removeChild(line));
+    connectionLines.clear();
+    selectedPairs.clear();
+
+    renderMatchingL5(targetLang, supportLang);
+
+  }, 1000);
+}
   };
 }
 
