@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.42-level4-devstart
+// VERSION: v0.9.42.1-level5-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.42-level5";
+  const APP_VERSION = "v0.9.42.1-level5";
   const MAX_LEVEL = 5;
   const DEV_START_AT_LEVEL_5 = true; // set false after stress testing
 
@@ -756,21 +756,28 @@ function drawConnection(leftBtn, rightBtn) {
   });
 
   if (allCorrect) {
-    setTimeout(() => {
-      renderNext(targetLang, supportLang);
-    }, 800);
-  } } else {
   setTimeout(() => {
-    connectionLines.forEach(line => wireLayer.removeChild(line));
+    renderNext(targetLang, supportLang);
+  }, 800);
+} else {
+  setTimeout(() => {
+
+    // Remove all existing lines (if any)
+    connectionLines.forEach(line => {
+      if (line && line.parentNode === wireLayer) {
+        wireLayer.removeChild(line);
+      }
+    });
     connectionLines.clear();
+
+    // Clear pairing memory
     selectedPairs.clear();
 
     renderMatchingL5(targetLang, supportLang);
 
   }, 1000);
 }
-  };
-}
+
 
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
