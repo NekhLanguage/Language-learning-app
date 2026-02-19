@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.50.1-level6-devstart
+// VERSION: v0.9.50.2-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.50.1-level6";
+  const APP_VERSION = "v0.9.50.2-level6";
   const MAX_LEVEL = 6;
   const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
 
@@ -591,7 +591,6 @@ function renderMatchingL5(targetLang, supportLang) {
   }
 
   return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-}
 }
 
   // Shuffle and take max 5
