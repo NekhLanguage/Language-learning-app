@@ -36,11 +36,41 @@
     "pt": {
       "label": "Portuguese",
       "forms": {
-        "EAT": { "1_singular": "como", "3_singular": "come", "1_plural": "comemos", "3_plural": "comem" },
-        "DRINK": { "1_singular": "bebo", "3_singular": "bebe", "1_plural": "bebemos", "3_plural": "bebem" },
-        "READ": { "1_singular": "leio", "3_singular": "lê", "1_plural": "lemos", "3_plural": "leem" },
-        "SEE": { "1_singular": "vejo", "3_singular": "vê", "1_plural": "vemos", "3_plural": "veem" },
-        "HAVE": { "1_singular": "tenho", "3_singular": "tem", "1_plural": "temos", "3_plural": "têm" }
+        "EAT": {
+          "base": "comer",
+          "1_singular": "como",
+          "3_singular": "come",
+          "1_plural": "comemos",
+          "3_plural": "comem"
+        },
+        "DRINK": {
+          "base": "beber",
+          "1_singular": "bebo",
+          "3_singular": "bebe",
+          "1_plural": "bebemos",
+          "3_plural": "bebem"
+        },
+        "READ": {
+          "base": "ler",
+          "1_singular": "leio",
+          "3_singular": "lê",
+          "1_plural": "lemos",
+          "3_plural": "leem"
+        },
+        "SEE": {
+          "base": "ver",
+          "1_singular": "vejo",
+          "3_singular": "vê",
+          "1_plural": "vemos",
+          "3_plural": "veem"
+        },
+        "HAVE": {
+          "base": "ter",
+          "1_singular": "tenho",
+          "3_singular": "tem",
+          "1_plural": "temos",
+          "3_plural": "têm"
+        }
       }
     },
     "ja": {
