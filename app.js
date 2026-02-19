@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.42.3-level5-devstart
+// VERSION: v0.9.43-level5-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.42.3-level5";
+  const APP_VERSION = "v0.9.43-level5";
   const MAX_LEVEL = 5;
   const DEV_START_AT_LEVEL_5 = true; // set false after stress testing
 
@@ -683,15 +683,35 @@ function drawConnection(leftBtn, rightBtn) {
     const leftBtn = activeSelection.dataset.side === "left" ? activeSelection : btn;
     const rightBtn = activeSelection.dataset.side === "right" ? activeSelection : btn;
 
-    selectedPairs.set(leftBtn.dataset.cid, rightBtn.dataset.cid);
+    const leftCid = leftBtn.dataset.cid;
+const rightCid = rightBtn.dataset.cid;
 
-    leftBtn.classList.remove("selected");
-    rightBtn.classList.remove("selected");
+// --- Remove existing connection for this LEFT concept ---
+if (connectionLines.has(leftCid)) {
+  wireLayer.removeChild(connectionLines.get(leftCid));
+  connectionLines.delete(leftCid);
+  selectedPairs.delete(leftCid);
+}
 
-    const line = drawConnection(leftBtn, rightBtn);
-    connectionLines.set(leftBtn.dataset.cid, line);
+// --- Remove existing connection for this RIGHT concept ---
+for (const [lCid, rCid] of selectedPairs.entries()) {
+  if (rCid === rightCid) {
+    if (connectionLines.has(lCid)) {
+      wireLayer.removeChild(connectionLines.get(lCid));
+      connectionLines.delete(lCid);
+    }
+    selectedPairs.delete(lCid);
+    break;
+  }
+}
 
-    activeSelection = null;
+// --- Create new connection ---
+selectedPairs.set(leftCid, rightCid);
+const line = drawConnection(leftBtn, rightBtn);
+connectionLines.set(leftCid, line);
+
+activeSelection = null;
+
   };
 
   return btn;
