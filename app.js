@@ -733,6 +733,10 @@ function renderMatchingL5(targetLang, supportLang) {
   // Next item (with guard to avoid recursive stack blow-ups)
   // -------------------------
   function renderNext(targetLang, supportLang) {
+    if (DEV_START_AT_LEVEL_5) {
+  return renderMatchingL5(targetLang, supportLang);
+}
+
   run.exerciseCounter++;
   for (let attempts = 0; attempts < 30; attempts++) {
       const tpl = chooseTemplate();
