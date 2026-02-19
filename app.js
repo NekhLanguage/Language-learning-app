@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const APP_VERSION = "v0.9.41-level4";
   const MAX_LEVEL = 5;
-  const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
+  const DEV_START_AT_LEVEL_5 = true; // set false after stress testing
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -149,10 +149,10 @@ function passesSpacingRule(cid) {
 
     run.future = run.future.filter(cid => !run.released.includes(cid));
 
-    if (DEV_START_AT_LEVEL_4) {
+    if (DEV_START_AT_LEVEL_5) {
       run.released.forEach(cid => {
         const state = ensureProgress(cid);
-        state.level = 4;
+        state.level = 5;
         state.streak = 0;
       });
     }
