@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.50.2-level6-devstart
+// VERSION: v0.9.51-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.50.2-level6";
+  const APP_VERSION = "v0.9.51-level6";
   const MAX_LEVEL = 6;
   const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
 
@@ -929,12 +929,25 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
     const builtSentence = correctWords.map((_, i) => assignments.get(i) || "").join(" ");
 
     if (builtSentence === cleanedTarget) {
-      applyResult(targetConcept, true);
-      setTimeout(() => renderNext(targetLang, supportLang), 800);
-    } else {
-      applyResult(targetConcept, false);
-      setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 1000);
-    }
+
+  // Visual confirmation (green slots)
+  document.querySelectorAll(".sentence-slot").forEach(slot => {
+    slot.style.backgroundColor = "#4CAF50";
+  });
+
+  applyResult(targetConcept, true);
+
+  setTimeout(() => renderNext(targetLang, supportLang), 800);
+} else {
+  // Visual feedback (red slots)
+  document.querySelectorAll(".sentence-slot").forEach(slot => {
+    slot.style.backgroundColor = "#D32F2F";
+  });
+
+  applyResult(targetConcept, false);
+
+  setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 1000);
+}
   };
 }
 
