@@ -1,11 +1,11 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.43-level5-devstart
+// VERSION: v0.9.50-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.43-level5";
-  const MAX_LEVEL = 5;
-  const DEV_START_AT_LEVEL_5 = true; // set false after stress testing
+  const APP_VERSION = "v0.9.50-level6";
+  const MAX_LEVEL = 6;
+  const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -149,10 +149,10 @@ function passesSpacingRule(cid) {
 
     run.future = run.future.filter(cid => !run.released.includes(cid));
 
-    if (DEV_START_AT_LEVEL_5) {
+    if (DEV_START_AT_LEVEL_6) {
       run.released.forEach(cid => {
         const state = ensureProgress(cid);
-        state.level = 5;
+        state.level = 6;
         state.streak = 0;
       });
     }
@@ -800,11 +800,131 @@ activeSelection = null;
   };
 }
 
+// -------------------------
+// Level 6 – Sentence Builder (Slot-based)
+// -------------------------
+function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
+
+  subtitle.textContent = "Level 6";
+
+  const supportSentence = tpl.render?.[supportLang] || "";
+  const targetSentence = tpl.render?.[targetLang] || "";
+
+  // Strip final punctuation for comparison logic
+  const cleanedTarget = targetSentence.replace(/[.?]$/, "");
+  const punctuationMatch = targetSentence.match(/[.?]$/);
+  const punctuation = punctuationMatch ? punctuationMatch[0] : "";
+
+  const correctWords = cleanedTarget.split(" ");
+
+  const wordBank = shuffle([...correctWords]);
+
+  const assignments = new Map(); // slotIndex → word
+  let selectedWord = null;
+
+  content.innerHTML = `
+    <div style="margin-bottom:20px;">
+      <strong>${supportSentence}</strong>
+    </div>
+
+    <div id="slot-container" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;"></div>
+
+    <div id="word-bank" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;"></div>
+
+    <div style="text-align:center;">
+      <button id="check-l6">Check</button>
+    </div>
+  `;
+
+  const slotContainer = document.getElementById("slot-container");
+  const bankContainer = document.getElementById("word-bank");
+
+  // Create slots
+  correctWords.forEach((_, index) => {
+    const slot = document.createElement("div");
+    slot.className = "sentence-slot";
+    slot.dataset.index = index;
+    slot.style.minWidth = "60px";
+    slot.style.padding = "8px 12px";
+    slot.style.borderRadius = "8px";
+    slot.style.backgroundColor = "#3e1f4f";
+    slot.style.border = "2px solid white";
+    slot.style.color = "white";
+    slot.style.textAlign = "center";
+    slot.style.cursor = "pointer";
+
+    slot.onclick = () => {
+      const i = Number(slot.dataset.index);
+
+      // If slot already filled → return word to bank
+      if (assignments.has(i)) {
+        const returnedWord = assignments.get(i);
+        assignments.delete(i);
+        slot.textContent = "";
+        createBankWord(returnedWord);
+      }
+    };
+
+    slotContainer.appendChild(slot);
+  });
+
+  // Create word bank items
+  function createBankWord(word) {
+    const btn = document.createElement("button");
+    btn.textContent = word;
+
+    btn.onclick = () => {
+      selectedWord = btn;
+      btn.classList.add("selected");
+    };
+
+    bankContainer.appendChild(btn);
+  }
+
+  wordBank.forEach(createBankWord);
+
+  // Slotting logic
+  slotContainer.addEventListener("click", e => {
+    if (!selectedWord) return;
+
+    const slot = e.target.closest(".sentence-slot");
+    if (!slot) return;
+
+    const slotIndex = Number(slot.dataset.index);
+    const word = selectedWord.textContent;
+
+    // If slot already filled, return previous word
+    if (assignments.has(slotIndex)) {
+      const oldWord = assignments.get(slotIndex);
+      createBankWord(oldWord);
+    }
+
+    assignments.set(slotIndex, word);
+    slot.textContent = word;
+
+    selectedWord.remove();
+    selectedWord = null;
+  });
+
+  document.getElementById("check-l6").onclick = () => {
+
+    const builtSentence = correctWords.map((_, i) => assignments.get(i) || "").join(" ");
+
+    if (builtSentence === cleanedTarget) {
+      applyResult(targetConcept, true);
+      setTimeout(() => renderNext(targetLang, supportLang), 800);
+    } else {
+      applyResult(targetConcept, false);
+      setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 1000);
+    }
+  };
+}
+
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
   // -------------------------
   function renderNext(targetLang, supportLang) {
-    if (DEV_START_AT_LEVEL_5) {
+    if (DEV_START_AT_LEVEL_6) {
   return renderMatchingL5(targetLang, supportLang);
 }
 
@@ -834,6 +954,8 @@ activeSelection = null;
       if (level === 3) return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
       if (level === 4) return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
       if (level === 5) return renderMatchingL5(targetLang, supportLang);
+      if (level === 6) return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+
 
 // Fallback safeguard (should never trigger if ladder is correct)
 return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);

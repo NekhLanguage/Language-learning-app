@@ -231,3 +231,11 @@ button.wrong {
   background-color: #D32F2F !important;
   color: white;
 }
+
+.sentence-slot {
+  transition: all 0.2s ease;
+}
+
+button.selected {
+  outline: 2px solid white;
+}
