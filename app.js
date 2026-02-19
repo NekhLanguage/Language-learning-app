@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.32-level4-devstart
+// VERSION: v0.9.36-level4-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.31-level4";
+  const APP_VERSION = "v0.9.36-level4";
   const MAX_LEVEL = 4;
   const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
 
@@ -58,16 +58,49 @@ document.addEventListener("DOMContentLoaded", () => {
   let run = null;
 
   function ensureProgress(cid) {
-    if (!run.progress[cid]) {
-      run.progress[cid] = {
-        level: 1,
-        streak: 0,
-        cooldown: 0,
-        completed: false
-      };
-    }
-    return run.progress[cid];
+  if (!run.progress[cid]) {
+    run.progress[cid] = {
+      level: 1,
+      streak: 0,
+      cooldown: 0,
+      completed: false,
+      lastShownAt: -Infinity,
+      lastResult: null
+    };
   }
+  return run.progress[cid];
+}
+function passesSpacingRule(cid) {
+
+  const state = ensureProgress(cid);
+  const level = state.level;
+  const currentIndex = run.exerciseCounter;
+
+  if (state.lastShownAt === -Infinity) return true;
+
+  const distance = currentIndex - state.lastShownAt;
+
+  // LEVEL 1 → always treated as correct
+  if (level === 1) {
+    return distance >= 4;
+  }
+
+  // LEVEL 7 special rule
+  if (level === 7) {
+    if (state.lastResult === false) {
+      return distance >= 2;
+    } else {
+      return distance >= 20;
+    }
+  }
+
+  // Normal levels (2–6)
+  if (state.lastResult === false) {
+    return distance >= 2;
+  } else {
+    return distance >= 4;
+  }
+}
 
   function levelOf(cid) {
     return ensureProgress(cid).level;
@@ -85,10 +118,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     run = {
-      released: [],
-      future: [...allConcepts],
-      progress: {}
-    };
+  released: [],
+  future: [...allConcepts],
+  progress: {},
+  exerciseCounter: 0
+};
 
     batchSeed();
   }
@@ -125,26 +159,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applyResult(cid, correct) {
-    const state = ensureProgress(cid);
+  const state = ensureProgress(cid);
 
-    if (!correct) {
-      state.streak = 0;
-      state.cooldown = 2;
-      return;
-    }
+  // 🔒 Spacing tracking (must happen for both correct and incorrect)
+  state.lastShownAt = run.exerciseCounter;
+  state.lastResult = correct;
 
-    state.streak++;
-    state.cooldown = 4;
-
-    if (state.streak >= 2) {
-      if (state.level < MAX_LEVEL) {
-        state.level++;
-      } else {
-        state.completed = true;
-      }
-      state.streak = 0;
-    }
+  if (!correct) {
+    state.streak = 0;
+    state.cooldown = 2;
+    return;
   }
+
+  state.streak++;
+  state.cooldown = 4;
+
+  if (state.streak >= 2) {
+    if (state.level < MAX_LEVEL) {
+      state.level++;
+    } else {
+      state.completed = true;
+    }
+    state.streak = 0;
+  }
+}
+
 
   function templateEligible(tpl) {
     return (tpl.concepts || []).every(cid => {
@@ -520,8 +559,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Next item (with guard to avoid recursive stack blow-ups)
   // -------------------------
   function renderNext(targetLang, supportLang) {
-    // Try multiple times to find a renderable item without recursion loops.
-    for (let attempts = 0; attempts < 30; attempts++) {
+  run.exerciseCounter++;
+  for (let attempts = 0; attempts < 30; attempts++) {
       const tpl = chooseTemplate();
       if (!tpl) {
         content.innerHTML = "All concepts completed.";
@@ -529,6 +568,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const targetConcept = determineTargetConcept(tpl);
+      if (!passesSpacingRule(targetConcept)) {
+      continue;
+      }
       const level = levelOf(targetConcept);
 
       // Level 3/4 need recognition option integrity; if not possible, try again.
