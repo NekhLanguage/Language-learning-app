@@ -777,6 +777,7 @@ function drawConnection(leftBtn, rightBtn) {
 
   }, 1000);
 }
+  };
 
 
   // -------------------------
