@@ -1,10 +1,10 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.36-level4-devstart
+// VERSION: v0.9.40-level4-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.36-level4";
-  const MAX_LEVEL = 4;
+  const APP_VERSION = "v0.9.40-level4";
+  const MAX_LEVEL = 5;
   const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
 
   const startScreen = document.getElementById("start-screen");
@@ -554,6 +554,148 @@ function passesSpacingRule(cid) {
       container.appendChild(btn);
     });
   }
+// -------------------------
+// Level 5 – Matching (Wire Style)
+// -------------------------
+function renderMatchingL5(targetLang, supportLang) {
+
+  subtitle.textContent = "Level 5";
+
+  // Gather eligible concepts
+  const eligible = run.released.filter(cid => {
+    const st = ensureProgress(cid);
+    return (
+      st.level === 5 &&
+      !st.completed &&
+      passesSpacingRule(cid)
+    );
+  });
+
+  if (eligible.length < 4) {
+  return renderNext(targetLang, supportLang);
+}
+
+  // Shuffle and take max 5
+  const shuffled = shuffle([...eligible]);
+  const selected = shuffled.slice(0, Math.min(5, shuffled.length));
+
+  // Build left (support) and right (target) columns
+  const leftItems = shuffle([...selected]);
+  const rightItems = shuffle([...selected]);
+
+  const selectedPairs = new Map();
+
+  content.innerHTML = `
+    <div id="matching-container" style="display:flex;justify-content:space-between;gap:40px;">
+      <div id="left-column"></div>
+      <div id="right-column"></div>
+    </div>
+    <div style="margin-top:20px;text-align:center;">
+      <button id="check-matches">Check</button>
+    </div>
+  `;
+
+  const leftColumn = document.getElementById("left-column");
+  const rightColumn = document.getElementById("right-column");
+
+  let activeSelection = null;
+
+  function createButton(cid, side) {
+    const btn = document.createElement("button");
+    btn.textContent = side === "left"
+      ? formOf(supportLang, cid)
+      : resolveTargetSurface(cid);
+
+    btn.dataset.cid = cid;
+    btn.dataset.side = side;
+
+    btn.onclick = () => {
+      if (!activeSelection) {
+        activeSelection = btn;
+        btn.classList.add("selected");
+        return;
+      }
+
+      if (activeSelection.dataset.side === btn.dataset.side) {
+        activeSelection.classList.remove("selected");
+        activeSelection = btn;
+        btn.classList.add("selected");
+        return;
+      }
+
+      const leftBtn = activeSelection.dataset.side === "left" ? activeSelection : btn;
+      const rightBtn = activeSelection.dataset.side === "right" ? activeSelection : btn;
+
+      selectedPairs.set(leftBtn.dataset.cid, rightBtn.dataset.cid);
+
+      leftBtn.classList.remove("selected");
+      rightBtn.classList.remove("selected");
+      activeSelection = null;
+
+      leftBtn.classList.add("paired");
+      rightBtn.classList.add("paired");
+    };
+
+    return btn;
+  }
+
+  function resolveTargetSurface(cid) {
+    const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[cid];
+    const meta = window.GLOBAL_VOCAB.concepts[cid];
+
+    if (!entry) return cid;
+
+    if (meta?.type === "verb") {
+      if (typeof entry === "object") {
+        if (entry.base) return entry.base;
+        if (entry.infinitive) return entry.infinitive;
+      }
+      if (typeof entry === "string") return entry;
+      return cid;
+    }
+
+    if (typeof entry === "string") return entry;
+    if (Array.isArray(entry)) return entry[0];
+    if (typeof entry === "object") {
+      const first = Object.values(entry).find(v => typeof v === "string");
+      if (first) return first;
+    }
+
+    return cid;
+  }
+
+  leftItems.forEach(cid => {
+    leftColumn.appendChild(createButton(cid, "left"));
+  });
+
+  rightItems.forEach(cid => {
+    rightColumn.appendChild(createButton(cid, "right"));
+  });
+
+  document.getElementById("check-matches").onclick = () => {
+
+    let allCorrect = true;
+
+    selected.forEach(cid => {
+      const matched = selectedPairs.get(cid);
+
+      if (matched === cid) {
+        applyResult(cid, true);
+      } else {
+        applyResult(cid, false);
+        allCorrect = false;
+      }
+    });
+
+    if (allCorrect) {
+      setTimeout(() => renderNext(targetLang, supportLang), 600);
+    } else {
+      // Clear wrong pairs only
+      selectedPairs.clear();
+      renderMatchingL5(targetLang, supportLang);
+    }
+  };
+}
 
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
@@ -583,7 +725,11 @@ function passesSpacingRule(cid) {
       if (level === 1) return renderExposure(targetLang, supportLang, tpl, targetConcept);
       if (level === 2) return renderComprehension(targetLang, supportLang, tpl, targetConcept);
       if (level === 3) return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-      return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+      if (level === 4) return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+      if (level === 5) return renderMatchingL5(targetLang, supportLang);
+
+// Fallback safeguard (should never trigger if ladder is correct)
+return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
     }
 
     // If we get here, it's almost always: "not enough eligible distractors at currentLevel"
