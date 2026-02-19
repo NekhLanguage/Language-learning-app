@@ -213,3 +213,21 @@ button.incorrect {
   color: white !important;
 }
 
+button.selected {
+  outline: 3px solid #ffffff;
+}
+
+button.paired {
+  background-color: #4CAF50 !important;
+  color: white;
+}
+
+button.matched {
+  background-color: #4CAF50 !important;
+  color: white;
+}
+
+button.wrong {
+  background-color: #D32F2F !important;
+  color: white;
+}

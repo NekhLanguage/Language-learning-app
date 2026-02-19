@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.40-level4-devstart
+// VERSION: v0.9.41-level4-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.40-level4";
+  const APP_VERSION = "v0.9.41-level4";
   const MAX_LEVEL = 5;
   const DEV_START_AT_LEVEL_4 = true; // set false after stress testing
 
@@ -586,14 +586,20 @@ function renderMatchingL5(targetLang, supportLang) {
   const selectedPairs = new Map();
 
   content.innerHTML = `
-    <div id="matching-container" style="display:flex;justify-content:space-between;gap:40px;">
-      <div id="left-column"></div>
-      <div id="right-column"></div>
-    </div>
-    <div style="margin-top:20px;text-align:center;">
-      <button id="check-matches">Check</button>
-    </div>
-  `;
+  <div id="matching-container" style="
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:60px;
+    margin-top:20px;
+  ">
+    <div id="left-column" style="display:flex;flex-direction:column;gap:15px;"></div>
+    <div id="right-column" style="display:flex;flex-direction:column;gap:15px;"></div>
+  </div>
+  <div style="margin-top:30px;text-align:center;">
+    <button id="check-matches">Check</button>
+  </div>
+`;
 
   const leftColumn = document.getElementById("left-column");
   const rightColumn = document.getElementById("right-column");
@@ -601,43 +607,58 @@ function renderMatchingL5(targetLang, supportLang) {
   let activeSelection = null;
 
   function createButton(cid, side) {
-    const btn = document.createElement("button");
-    btn.textContent = side === "left"
-      ? formOf(supportLang, cid)
-      : resolveTargetSurface(cid);
+  const btn = document.createElement("button");
+  btn.textContent = side === "left"
+    ? formOf(supportLang, cid)
+    : resolveTargetSurface(cid);
 
-    btn.dataset.cid = cid;
-    btn.dataset.side = side;
+  btn.dataset.cid = cid;
+  btn.dataset.side = side;
 
-    btn.onclick = () => {
-      if (!activeSelection) {
-        activeSelection = btn;
-        btn.classList.add("selected");
-        return;
-      }
+  btn.onclick = () => {
 
-      if (activeSelection.dataset.side === btn.dataset.side) {
-        activeSelection.classList.remove("selected");
-        activeSelection = btn;
-        btn.classList.add("selected");
-        return;
-      }
+    // Ignore clicks on already matched buttons
+    if (btn.classList.contains("matched")) return;
 
-      const leftBtn = activeSelection.dataset.side === "left" ? activeSelection : btn;
-      const rightBtn = activeSelection.dataset.side === "right" ? activeSelection : btn;
+    if (!activeSelection) {
+      activeSelection = btn;
+      btn.classList.add("selected");
+      return;
+    }
 
-      selectedPairs.set(leftBtn.dataset.cid, rightBtn.dataset.cid);
-
-      leftBtn.classList.remove("selected");
-      rightBtn.classList.remove("selected");
+    // Clicking same button deselects it
+    if (activeSelection === btn) {
+      btn.classList.remove("selected");
       activeSelection = null;
+      return;
+    }
 
-      leftBtn.classList.add("paired");
-      rightBtn.classList.add("paired");
-    };
+    // Clicking same side switches selection
+    if (activeSelection.dataset.side === btn.dataset.side) {
+      activeSelection.classList.remove("selected");
+      activeSelection = btn;
+      btn.classList.add("selected");
+      return;
+    }
 
-    return btn;
-  }
+    // Opposite side → attempt pairing
+    const leftBtn = activeSelection.dataset.side === "left" ? activeSelection : btn;
+    const rightBtn = activeSelection.dataset.side === "right" ? activeSelection : btn;
+
+    selectedPairs.set(leftBtn.dataset.cid, rightBtn.dataset.cid);
+
+    leftBtn.classList.remove("selected");
+    rightBtn.classList.remove("selected");
+
+    leftBtn.classList.add("paired");
+    rightBtn.classList.add("paired");
+
+    activeSelection = null;
+  };
+
+  return btn;
+}
+
 
   function resolveTargetSurface(cid) {
     const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[cid];
@@ -674,26 +695,37 @@ function renderMatchingL5(targetLang, supportLang) {
 
   document.getElementById("check-matches").onclick = () => {
 
-    let allCorrect = true;
+  let allCorrect = true;
 
-    selected.forEach(cid => {
-      const matched = selectedPairs.get(cid);
+  selected.forEach(cid => {
+    const matched = selectedPairs.get(cid);
 
-      if (matched === cid) {
-        applyResult(cid, true);
-      } else {
-        applyResult(cid, false);
-        allCorrect = false;
-      }
-    });
+    const leftBtn = [...leftColumn.children].find(b => b.dataset.cid === cid);
+    const rightBtn = [...rightColumn.children].find(b => b.dataset.cid === matched);
 
-    if (allCorrect) {
-      setTimeout(() => renderNext(targetLang, supportLang), 600);
+    if (matched === cid) {
+      leftBtn.classList.add("matched");
+      rightBtn.classList.add("matched");
+      applyResult(cid, true);
     } else {
-      // Clear wrong pairs only
-      selectedPairs.clear();
-      renderMatchingL5(targetLang, supportLang);
+      allCorrect = false;
+
+      if (leftBtn) leftBtn.classList.add("wrong");
+      if (rightBtn) rightBtn.classList.add("wrong");
+
+      applyResult(cid, false);
     }
+  });
+
+  if (allCorrect) {
+    setTimeout(() => {
+      renderNext(targetLang, supportLang);
+    }, 800);
+  } else {
+    setTimeout(() => {
+      renderMatchingL5(targetLang, supportLang);
+    }, 1000);
+  }
   };
 }
 
