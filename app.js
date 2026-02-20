@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.61-level6-devstart
+// VERSION: v0.9.61.1-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.61-level6";
+  const APP_VERSION = "v0.9.61.1-level6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = true; // set false after stress testing
 
@@ -168,7 +168,7 @@ function passesSpacingRule(cid) {
   run.future = run.future.filter(cid => !run.released.includes(cid));
 
   // 🔒 DEV START LOGIC (only affects initial state, not routing)
-  if (DEV_START_AT_LEVEL_6) {
+  if (DEV_START_AT_LEVEL_7) {
     run.released.forEach(cid => {
       const state = ensureProgress(cid);
       state.level = 7;
