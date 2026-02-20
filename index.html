@@ -30,7 +30,19 @@
         </a>
       </div>
     </section>
+    <!-- Language hub -->
+    <section id="language-screen" class="screen" aria-label="Language hub">
+  <h2 class="title small">LANGUAGES</h2>
+  <p class="subtitle">Choose a language to study</p>
 
+  <div class="button-grid" id="language-buttons">
+    <!-- Buttons will be rendered dynamically -->
+  </div>
+
+  <button id="back-home" class="secondary" type="button">
+    BACK
+  </button>
+</section>
     <!-- LEARNING SCREEN -->
     <section id="learning-screen" class="screen" aria-label="Learning screen">
       <button id="quit-learning" class="quit-button" type="button">QUIT LEARNING</button>
@@ -39,36 +51,6 @@
         <h2 class="title small">TODAY'S SESSION</h2>
         <p class="subtitle" id="session-subtitle">Vocab demo (data-driven)</p>
 
-        <div class="controls">
-          <div class="control">
-            <label for="dataset">Set</label>
-            <select id="dataset">
-              <option value="pronouns.json">Pronouns</option>
-              <option value="verbs.json" selected>Verbs</option>
-              <option value="nouns.json">Nouns</option>
-            </select>
-          </div>
-
-          <div class="control">
-            <label for="targetLang">Target</label>
-            <select id="targetLang">
-              <option value="pt" selected>Portuguese</option>
-              <option value="ja">Japanese</option>
-              <option value="en">English</option>
-            </select>
-          </div>
-
-          <div class="control">
-            <label for="supportLang">Support</label>
-            <select id="supportLang">
-              <option value="en" selected>English</option>
-              <option value="ja">Japanese</option>
-              <option value="pt">Portuguese</option>
-            </select>
-          </div>
-
-          <button id="load" class="primary small" type="button">LOAD</button>
-        </div>
 
         <div id="content" class="content"></div>
       </div>
