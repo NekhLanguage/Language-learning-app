@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.62-level6-devstart
+// VERSION: v0.9.63-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.62-level6";
+  const APP_VERSION = "v0.9.63-level6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = true; // set false after stress testing
 
@@ -849,7 +849,15 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
 
   subtitle.textContent = "Level 6";
 
-  const supportSentence = tpl.render?.[supportLang] || "";
+  let supportSentence = tpl.render?.[supportLang] || "";
+let disambiguation = "";
+
+if (tpl.concepts.includes("SECOND_PERSON_PLURAL")) {
+  disambiguation = "(plural)";
+}
+if (tpl.concepts.includes("SECOND_PERSON")) {
+  disambiguation = "(singular)";
+}
   const targetSentence = tpl.render?.[targetLang] || "";
 
   // Strip final punctuation for comparison logic
@@ -995,7 +1003,15 @@ function renderFreeProductionL7(targetLang, supportLang, tpl) {
 
   subtitle.textContent = "Level 7";
 
-  const supportSentence = tpl.render?.[supportLang] || "";
+  let supportSentence = tpl.render?.[supportLang] || "";
+let disambiguation = "";
+
+if (tpl.concepts.includes("SECOND_PERSON_PLURAL")) {
+  disambiguation = "(plural)";
+}
+if (tpl.concepts.includes("SECOND_PERSON")) {
+  disambiguation = "(singular)";
+}
   const correctSentence = tpl.render?.[targetLang] || "";
 
   content.innerHTML = `
