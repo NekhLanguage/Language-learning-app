@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.52.1-level6-devstart
+// VERSION: v0.9.53.1-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.52.1-level6";
+  const APP_VERSION = "v0.9.53.1-level6";
   const MAX_LEVEL = 6;
   const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
 
@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let run = null;
 
+
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
     run.progress[cid] = {
@@ -69,6 +70,20 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
   return run.progress[cid];
+}
+function ensureTemplateProgress(tpl) {
+  const id = tpl.template_id;
+
+  if (!run.templateProgress[id]) {
+    run.templateProgress[id] = {
+      streak: 0,
+      completed: false,
+      lastShownAt: -Infinity,
+      lastResult: null
+    };
+  }
+
+  return run.templateProgress[id];
 }
 function passesSpacingRule(cid) {
 
@@ -117,14 +132,14 @@ function passesSpacingRule(cid) {
       ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
     ];
 
-    run = {
+   run = {
   released: [],
   future: [...allConcepts],
   progress: {},
+  templateProgress: {},   // ← ADD THIS
   exerciseCounter: 0,
-  recentTemplates: []   // ← ADD THIS
+  recentTemplates: []
 };
-
 
     batchSeed();
   }
@@ -941,7 +956,15 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
     slot.style.backgroundColor = "#4CAF50";
   });
 
-  applyResult(targetConcept, true);
+  const tState = ensureTemplateProgress(tpl);
+
+tState.streak++;
+tState.lastResult = true;
+tState.lastShownAt = run.exerciseCounter;
+
+if (tState.streak >= 2) {
+  tState.completed = true;
+}
 
   setTimeout(() => renderNext(targetLang, supportLang), 800);
 } else {
@@ -950,7 +973,11 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
     slot.style.backgroundColor = "#D32F2F";
   });
 
-  applyResult(targetConcept, false);
+ const tState = ensureTemplateProgress(tpl);
+
+tState.streak = 0;
+tState.lastResult = false;
+tState.lastShownAt = run.exerciseCounter;
 
   setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 1000);
 }
@@ -962,22 +989,46 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
   // -------------------------
   function renderNext(targetLang, supportLang) {
     if (DEV_START_AT_LEVEL_6) {
-  return renderMatchingL5(targetLang, supportLang);
+  const tpl = chooseTemplate();
+  if (!tpl) return;
+  const targetConcept = determineTargetConcept(tpl);
+  return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
 }
 
   run.exerciseCounter++;
-  for (let attempts = 0; attempts < 30; attempts++) {
-      const tpl = chooseTemplate();
-      if (!tpl) {
-        content.innerHTML = "All concepts completed.";
-        return;
-      }
+ for (let attempts = 0; attempts < 30; attempts++) {
+
+  const tpl = chooseTemplate();
+  if (!tpl) {
+    content.innerHTML = "All concepts completed.";
+    return;
+  }
+
+  // 🔒 Skip completed Level 6 templates
+  if (run.templateProgress[tpl.template_id]?.completed) {
+    continue;
+  }
 
       const targetConcept = determineTargetConcept(tpl);
-      if (!passesSpacingRule(targetConcept)) {
-      continue;
-      }
-      const level = levelOf(targetConcept);
+const level = levelOf(targetConcept);
+
+// Concept-based spacing only for levels below 6
+if (level < 6) {
+  if (!passesSpacingRule(targetConcept)) {
+    continue;
+  }
+}
+
+// Template-based spacing for Level 6+
+if (level >= 6) {
+  const tState = ensureTemplateProgress(tpl);
+
+  const distance = run.exerciseCounter - tState.lastShownAt;
+
+  if (tState.lastShownAt !== -Infinity && distance < 4) {
+    continue;
+  }
+}
 
       // Level 3/4 need recognition option integrity; if not possible, try again.
       if (level >= 3) {
