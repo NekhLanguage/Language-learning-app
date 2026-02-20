@@ -855,7 +855,7 @@ let disambiguation = "";
 if (tpl.concepts.includes("SECOND_PERSON_PLURAL")) {
   disambiguation = "(plural)";
 }
-if (tpl.concepts.includes("SECOND_PERSON")) {
+else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
   const targetSentence = tpl.render?.[targetLang] || "";
@@ -875,9 +875,10 @@ if (tpl.concepts.includes("SECOND_PERSON")) {
   let selectedWord = null;
 
   content.innerHTML = `
-    <div style="margin-bottom:20px;">
-      <strong>${supportSentence}</strong>
-    </div>
+  <div style="margin-bottom:20px;">
+    <strong>${supportSentence}</strong>
+    ${disambiguation ? `<div style="font-size:12px;opacity:0.7;margin-top:4px;">${disambiguation}</div>` : ""}
+  </div>
 
     <div id="slot-container" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;"></div>
 
@@ -1015,10 +1016,11 @@ if (tpl.concepts.includes("SECOND_PERSON")) {
   const correctSentence = tpl.render?.[targetLang] || "";
 
   content.innerHTML = `
-    <div style="margin-bottom:20px;">
-      <strong>${supportSentence}</strong>
-    </div>
-
+  <div style="margin-bottom:20px;">
+    <strong>${supportSentence}</strong>
+    ${disambiguation ? `<div style="font-size:12px;opacity:0.7;margin-top:4px;">${disambiguation}</div>` : ""}
+  </div>
+  
     <div style="margin-bottom:20px;">
       <input id="l7-input" type="text" style="
         width:100%;
