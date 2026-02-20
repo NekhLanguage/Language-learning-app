@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.61.1-level6-devstart
+// VERSION: v0.9.62-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.61.1-level6";
+  const APP_VERSION = "v0.9.62-level6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = true; // set false after stress testing
 
@@ -1035,60 +1035,81 @@ function renderFreeProductionL7(targetLang, supportLang, tpl) {
       .replace(/[\u0300-\u036f]/g, "");
   }
 
-  document.getElementById("check-l7").onclick = () => {
+  const checkBtn = document.getElementById("check-l7");
+const feedbackDiv = document.getElementById("l7-feedback");
+const inputField = document.getElementById("l7-input");
 
-    const userInput = document.getElementById("l7-input").value;
+checkBtn.onclick = () => {
 
-    const strictUser = normalizeStrict(userInput);
-    const strictCorrect = normalizeStrict(correctSentence);
+  const userInput = inputField.value;
 
-    const looseUser = normalizeLoose(userInput);
-    const looseCorrect = normalizeLoose(correctSentence);
+  const strictUser = normalizeStrict(userInput);
+  const strictCorrect = normalizeStrict(correctSentence);
 
-    const tState = ensureTemplateProgress(tpl);
+  const looseUser = normalizeLoose(userInput);
+  const looseCorrect = normalizeLoose(correctSentence);
 
-    if (strictUser === strictCorrect) {
+  const tState = ensureTemplateProgress(tpl);
 
-      document.getElementById("l7-feedback").innerHTML = "";
-      document.getElementById("l7-input").style.borderColor = "#4CAF50";
+  let resultType = null;
 
-      tState.reinforcementStage++;
-      tState.lastShownAt = run.exerciseCounter;
+  if (strictUser === strictCorrect) {
+    resultType = "perfect";
+  }
+  else if (looseUser === looseCorrect) {
+    resultType = "accent";
+  }
+  else {
+    resultType = "incorrect";
+  }
 
-      if (tState.reinforcementStage >= 3) {
-        tState.completed = true;
-      }
+  // 🔒 Update progression state
+  if (resultType === "perfect" || resultType === "accent") {
 
-      setTimeout(() => renderNext(targetLang, supportLang), 800);
+    tState.reinforcementStage++;
+    tState.lastShownAt = run.exerciseCounter;
+
+    if (tState.reinforcementStage >= 3) {
+      tState.completed = true;
     }
 
-    else if (looseUser === looseCorrect) {
+  } else {
+    tState.reinforcementStage = 0;
+    tState.lastShownAt = run.exerciseCounter;
+  }
 
-      document.getElementById("l7-feedback").innerHTML =
-        `<div style="color:#4CAF50;">Correct. Proper form: ${correctSentence}</div>`;
+  // 🎨 Visual Feedback
+  inputField.disabled = true;
 
-      document.getElementById("l7-input").style.borderColor = "#4CAF50";
+  if (resultType === "perfect") {
+    inputField.style.borderColor = "#4CAF50";
+    feedbackDiv.innerHTML = `<div style="color:#4CAF50;">Correct.</div>`;
+  }
 
-      tState.reinforcementStage++;
-      tState.lastShownAt = run.exerciseCounter;
+  if (resultType === "accent") {
+    inputField.style.borderColor = "#4CAF50";
+    feedbackDiv.innerHTML = `
+      <div style="color:#4CAF50;">
+        Correct.<br/>
+        Proper form: <strong>${correctSentence}</strong>
+      </div>`;
+  }
 
-      if (tState.reinforcementStage >= 3) {
-        tState.completed = true;
-      }
+  if (resultType === "incorrect") {
+    inputField.style.borderColor = "#D32F2F";
+    feedbackDiv.innerHTML = `
+      <div style="color:#D32F2F;">
+        Incorrect.<br/>
+        Correct answer: <strong>${correctSentence}</strong>
+      </div>`;
+  }
 
-      setTimeout(() => renderNext(targetLang, supportLang), 1200);
-    }
-
-    else {
-
-      document.getElementById("l7-input").style.borderColor = "#D32F2F";
-
-      tState.reinforcementStage = 0;
-      tState.lastShownAt = run.exerciseCounter;
-
-      setTimeout(() => renderFreeProductionL7(targetLang, supportLang, tpl), 1000);
-    }
+  // 🔁 Replace Check with Continue
+  checkBtn.textContent = "Continue";
+  checkBtn.onclick = () => {
+    renderNext(targetLang, supportLang);
   };
+};
 }
 
   // -------------------------
