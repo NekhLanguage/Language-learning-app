@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const APP_VERSION = "v0.9.63-level6";
   const MAX_LEVEL = 7;
-  const DEV_START_AT_LEVEL_7 = true; // set false after stress testing
+  const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
