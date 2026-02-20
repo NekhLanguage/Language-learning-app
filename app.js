@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.54.1-level6-devstart
+// VERSION: v0.9.54.2-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.54.1-level6";
+  const APP_VERSION = "v0.9.54.2-level6";
   const MAX_LEVEL = 6;
   const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
 
@@ -144,29 +144,39 @@ function passesSpacingRule(cid) {
     batchSeed();
   }
 
-  function batchSeed() {
-    const initialBatch = [
-      "FIRST_PERSON_SINGULAR",
-      "SECOND_PERSON",
-      "SECOND_PERSON_PLURAL",
-      "HE",
-      "SHE",
-      "FIRST_PERSON_PLURAL",
-      "THIRD_PERSON_PLURAL",
-      "EAT","DRINK","READ","SEE","HAVE",
-      "FOOD","WATER","BOOK","PHONE","JOB"
-    ];
+ function batchSeed() {
 
-    initialBatch.forEach(cid => {
-      if (!run.released.includes(cid)) {
-        run.released.push(cid);
-        ensureProgress(cid);
-      }
+  const initialBatch = [
+    "FIRST_PERSON_SINGULAR",
+    "SECOND_PERSON",
+    "SECOND_PERSON_PLURAL",
+    "HE",
+    "SHE",
+    "FIRST_PERSON_PLURAL",
+    "THIRD_PERSON_PLURAL",
+    "EAT", "DRINK", "READ", "SEE", "HAVE",
+    "FOOD", "WATER", "BOOK", "PHONE", "JOB"
+  ];
+
+  initialBatch.forEach(cid => {
+    if (!run.released.includes(cid)) {
+      run.released.push(cid);
+      ensureProgress(cid);
+    }
+  });
+
+  run.future = run.future.filter(cid => !run.released.includes(cid));
+
+  // 🔒 DEV START LOGIC (only affects initial state, not routing)
+  if (DEV_START_AT_LEVEL_6) {
+    run.released.forEach(cid => {
+      const state = ensureProgress(cid);
+      state.level = 6;
+      state.streak = 0;
+      state.completed = false;
     });
-
-    run.future = run.future.filter(cid => !run.released.includes(cid));
-
   }
+}
 
   function applyResult(cid, correct) {
   const state = ensureProgress(cid);
