@@ -1,11 +1,11 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.60.0-level6-devstart
+// VERSION: v0.9.61-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.60.0-level6";
-  const MAX_LEVEL = 6;
-  const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
+  const APP_VERSION = "v0.9.61-level6";
+  const MAX_LEVEL = 7;
+  const DEV_START_AT_LEVEL_7 = true; // set false after stress testing
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -171,7 +171,7 @@ function passesSpacingRule(cid) {
   if (DEV_START_AT_LEVEL_6) {
     run.released.forEach(cid => {
       const state = ensureProgress(cid);
-      state.level = 6;
+      state.level = 7;
       state.streak = 0;
       state.completed = false;
     });
@@ -988,6 +988,108 @@ tState.lastShownAt = run.exerciseCounter;
 }
   };
 }
+// -------------------------
+// Level 7 – Free Sentence Production
+// -------------------------
+function renderFreeProductionL7(targetLang, supportLang, tpl) {
+
+  subtitle.textContent = "Level 7";
+
+  const supportSentence = tpl.render?.[supportLang] || "";
+  const correctSentence = tpl.render?.[targetLang] || "";
+
+  content.innerHTML = `
+    <div style="margin-bottom:20px;">
+      <strong>${supportSentence}</strong>
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <input id="l7-input" type="text" style="
+        width:100%;
+        padding:10px;
+        font-size:16px;
+        border-radius:8px;
+        border:2px solid white;
+        background:#3e1f4f;
+        color:white;
+      " />
+    </div>
+
+    <div style="text-align:center;">
+      <button id="check-l7">Check</button>
+    </div>
+
+    <div id="l7-feedback" style="margin-top:15px;text-align:center;"></div>
+  `;
+
+  function normalizeStrict(str) {
+    return str
+      .toLowerCase()
+      .trim()
+      .replace(/[.?]$/, "");
+  }
+
+  function normalizeLoose(str) {
+    return normalizeStrict(str)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  document.getElementById("check-l7").onclick = () => {
+
+    const userInput = document.getElementById("l7-input").value;
+
+    const strictUser = normalizeStrict(userInput);
+    const strictCorrect = normalizeStrict(correctSentence);
+
+    const looseUser = normalizeLoose(userInput);
+    const looseCorrect = normalizeLoose(correctSentence);
+
+    const tState = ensureTemplateProgress(tpl);
+
+    if (strictUser === strictCorrect) {
+
+      document.getElementById("l7-feedback").innerHTML = "";
+      document.getElementById("l7-input").style.borderColor = "#4CAF50";
+
+      tState.reinforcementStage++;
+      tState.lastShownAt = run.exerciseCounter;
+
+      if (tState.reinforcementStage >= 3) {
+        tState.completed = true;
+      }
+
+      setTimeout(() => renderNext(targetLang, supportLang), 800);
+    }
+
+    else if (looseUser === looseCorrect) {
+
+      document.getElementById("l7-feedback").innerHTML =
+        `<div style="color:#4CAF50;">Correct. Proper form: ${correctSentence}</div>`;
+
+      document.getElementById("l7-input").style.borderColor = "#4CAF50";
+
+      tState.reinforcementStage++;
+      tState.lastShownAt = run.exerciseCounter;
+
+      if (tState.reinforcementStage >= 3) {
+        tState.completed = true;
+      }
+
+      setTimeout(() => renderNext(targetLang, supportLang), 1200);
+    }
+
+    else {
+
+      document.getElementById("l7-input").style.borderColor = "#D32F2F";
+
+      tState.reinforcementStage = 0;
+      tState.lastShownAt = run.exerciseCounter;
+
+      setTimeout(() => renderFreeProductionL7(targetLang, supportLang, tpl), 1000);
+    }
+  };
+}
 
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
@@ -1064,6 +1166,7 @@ if (level >= 6) {
       if (level === 4) return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
       if (level === 5) return renderMatchingL5(targetLang, supportLang);
       if (level === 6) return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+      if (level === 7) return renderFreeProductionL7(targetLang, supportLang, tpl);
 
 
 // Fallback safeguard (should never trigger if ladder is correct)
