@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.55-level6-devstart
+// VERSION: v0.9.60.0-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.55-level6";
+  const APP_VERSION = "v0.9.60.0-level6";
   const MAX_LEVEL = 6;
   const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
 
@@ -136,7 +136,7 @@ function passesSpacingRule(cid) {
   released: [],
   future: [...allConcepts],
   progress: {},
-  templateProgress: {},   // ← ADD THIS
+  templateProgress: {},        // ← ADD
   exerciseCounter: 0,
   recentTemplates: []
 };
@@ -1002,6 +1002,18 @@ tState.lastShownAt = run.exerciseCounter;
     content.innerHTML = "All concepts completed.";
     return;
   }
+  // 🔒 Skip fully completed Level 7 templates
+if (run.templateProgress[tpl.template_id]?.completed) {
+  continue;
+}
+
+// 🔒 Future prerequisite gating (inactive unless "requires" exists)
+if (tpl.requires) {
+  const prereq = run.templateProgress[tpl.requires];
+  if (!prereq || prereq.reinforcementStage < 3) {
+    continue;
+  }
+}
 
   // 🔒 Skip completed Level 6 templates
   if (run.templateProgress[tpl.template_id]?.completed) {
@@ -1010,6 +1022,16 @@ tState.lastShownAt = run.exerciseCounter;
 
       const targetConcept = determineTargetConcept(tpl);
 const level = levelOf(targetConcept);
+
+// 🔒 Level 7 template spacing
+if (level >= 7) {
+  const tState = ensureTemplateProgress(tpl);
+  const distance = run.exerciseCounter - tState.lastShownAt;
+
+  if (tState.reinforcementStage === 0 && distance < 5) continue;
+  if (tState.reinforcementStage === 1 && distance < 10) continue;
+  if (tState.reinforcementStage === 2 && distance < 40) continue;
+}
 
 // Concept-based spacing only for levels below 6
 if (level < 6) {
