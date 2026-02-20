@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.54.2-level6-devstart
+// VERSION: v0.9.55-level6-devstart
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const APP_VERSION = "v0.9.54.2-level6";
+  const APP_VERSION = "v0.9.55-level6";
   const MAX_LEVEL = 6;
   const DEV_START_AT_LEVEL_6 = true; // set false after stress testing
 
@@ -857,7 +857,9 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
   const punctuationMatch = targetSentence.match(/[.?]$/);
   const punctuation = punctuationMatch ? punctuationMatch[0] : "";
 
-  const correctWords = cleanedTarget.split(" ");
+  const correctWords = cleanedTarget
+  .split(" ")
+  .map(w => w.toLowerCase());
 
   const wordBank = shuffle([...correctWords]);
 
@@ -952,7 +954,7 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
 
     const builtSentence = correctWords.map((_, i) => assignments.get(i) || "").join(" ");
 
-    if (builtSentence === cleanedTarget) {
+    if (builtSentence.toLowerCase() === cleanedTarget.toLowerCase()) {
 
   // Visual confirmation (green slots)
   document.querySelectorAll(".sentence-slot").forEach(slot => {
