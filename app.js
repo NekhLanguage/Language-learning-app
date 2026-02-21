@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.73.1-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.73.1";
+// VERSION: v0.9.74-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.74";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.73.1-level7";
+  const APP_VERSION = "v0.9.74-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -348,6 +348,29 @@ saveUser();
 
     return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
   }
+function buildSentence(lang, tpl) {
+  // If manual render exists, use it
+  if (tpl.render?.[lang]) {
+    return tpl.render[lang];
+  }
+
+  // Otherwise build from concepts
+  const words = (tpl.concepts || []).map(cid => {
+    const meta = window.GLOBAL_VOCAB.concepts[cid];
+    if (!meta) return cid;
+
+    if (meta.type === "verb") {
+      const subjectCid = tpl.concepts.find(c =>
+        window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+      );
+      return getVerbForm(cid, subjectCid, lang);
+    }
+
+    return formOf(lang, cid);
+  });
+
+  return words.join(" ") + ".";
+}
 
   // -------------------------
   // Recognition option builder
@@ -385,7 +408,7 @@ saveUser();
   <h2>${safe(formOf(targetLang, targetConcept))}</h2>
   <p>${safe(formOf(supportLang, targetConcept))}</p>
   <hr>
-  <p>${safe(tpl.render?.[targetLang])}</p>
+  <p>${safe(buildSentence(targetLang, tpl))}</p>
   <p>${safe(tpl.render?.[supportLang])}</p>
   <button id="continue-btn">Continue</button>
 `;
@@ -413,7 +436,7 @@ saveUser();
     const options = shuffle([...q.choices]);
 
     content.innerHTML = `
-    <p>${safe(tpl.render?.[targetLang])}</p>
+    <p>${safe(buildSentence(targetLang, tpl))}</p>
     <p><strong>In this sentence:</strong> ${safe(q.prompt?.[supportLang])}</p>
       <div id="choices"></div>
     `;
@@ -441,7 +464,7 @@ saveUser();
 
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const targetSentence = safe(tpl.render?.[targetLang]);
+    const targetSentence = safe(buildSentence(targetLang, tpl));
     const supportSentence = safe(tpl.render?.[supportLang]);
 
     const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
@@ -904,7 +927,7 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
 
-const targetSentence = safe(tpl.render?.[targetLang]);
+const targetSentence = safe(buildSentence(targetLang, tpl));
 
   // Strip final punctuation for comparison logic
   const cleanedTarget = targetSentence.replace(/[.?]$/, "");
@@ -1060,7 +1083,7 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
 
-const targetSentence = safe(tpl.render?.[targetLang]);
+const targetSentence = safe(buildSentence(targetLang, tpl));
 
   content.innerHTML = `
   <div style="margin-bottom:20px;">
