@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.74-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.74";
+// VERSION: v0.9.75-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.75";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.74-level7";
+  const APP_VERSION = "v0.9.75-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -315,6 +315,34 @@ saveUser();
   function safe(v) {
   return v ?? "";
 }
+function orderedConceptsForTemplate(tpl, lang) {
+  // 1) Use explicit order if present
+  const explicit = tpl.order?.[lang] || tpl.order?.default;
+  if (Array.isArray(explicit) && explicit.length) return explicit;
+
+  // 2) Fallback: derive order based on basic word order
+  //    This keeps things working even before you finish adding tpl.order everywhere.
+  const concepts = tpl.concepts || [];
+
+  const pronoun = concepts.find(c => window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun");
+  const verb = concepts.find(c => window.GLOBAL_VOCAB.concepts[c]?.type === "verb");
+  const object = concepts.find(c => {
+    const t = window.GLOBAL_VOCAB.concepts[c]?.type;
+    return t && t !== "pronoun" && t !== "verb";
+  });
+
+  const isSOV = (lang === "ja"); // later: make this a map or config
+
+  const ordered = isSOV
+    ? [pronoun, object, verb]
+    : [pronoun, verb, object];
+
+  // Add any remaining concepts (so we don't silently drop extras later)
+  const used = new Set(ordered.filter(Boolean));
+  concepts.forEach(c => { if (!used.has(c)) ordered.push(c); });
+
+  return ordered.filter(Boolean);
+}
   function blankSentence(sentence, surface) {
     const tokens = String(sentence || "").split(" ");
     let replaced = false;
@@ -349,23 +377,17 @@ saveUser();
     return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
   }
 function buildSentence(lang, tpl) {
-  // If manual render exists, use it
-  if (tpl.render?.[lang]) {
-    return tpl.render[lang];
-  }
+  const ordered = orderedConceptsForTemplate(tpl, lang);
 
-  // Otherwise build from concepts
-  const words = (tpl.concepts || []).map(cid => {
+  const subjectCid = ordered.find(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+  );
+
+  const words = ordered.map(cid => {
     const meta = window.GLOBAL_VOCAB.concepts[cid];
     if (!meta) return cid;
 
-    if (meta.type === "verb") {
-      const subjectCid = tpl.concepts.find(c =>
-        window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-      );
-      return getVerbForm(cid, subjectCid, lang);
-    }
-
+    if (meta.type === "verb") return getVerbForm(cid, subjectCid, lang);
     return formOf(lang, cid);
   });
 
@@ -465,7 +487,30 @@ function buildSentence(lang, tpl) {
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     const targetSentence = safe(buildSentence(targetLang, tpl));
-    const supportSentence = safe(tpl.render?.[supportLang]);
+    const ordered = orderedConceptsForTemplate(tpl, targetLang);
+
+const subjectCid = ordered.find(c =>
+  window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+);
+
+const words = ordered.map(cid => {
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+  if (!meta) return cid;
+
+  if (meta.type === "verb") {
+    return getVerbForm(cid, subjectCid, targetLang);
+  }
+
+  return formOf(targetLang, cid);
+});
+
+const blankIndex = ordered.indexOf(targetConcept);
+
+const blankedWords = words.map((w, i) =>
+  i === blankIndex ? "_____" : w
+);
+
+const blanked = blankedWords.join(" ");
 
     const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
     const blanked = blankSentence(targetSentence, surface);
@@ -928,15 +973,22 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
 }
 
 const targetSentence = safe(buildSentence(targetLang, tpl));
+const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
-  // Strip final punctuation for comparison logic
-  const cleanedTarget = targetSentence.replace(/[.?]$/, "");
-  const punctuationMatch = targetSentence.match(/[.?]$/);
-  const punctuation = punctuationMatch ? punctuationMatch[0] : "";
+const subjectCid = ordered.find(c =>
+  window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+);
 
-  const correctWords = cleanedTarget
-  .split(" ")
-  .map(w => w.toLowerCase());
+const correctWords = ordered.map(cid => {
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+  if (!meta) return String(cid).toLowerCase();
+
+  if (meta.type === "verb") {
+    return String(getVerbForm(cid, subjectCid, targetLang)).toLowerCase();
+  }
+
+  return String(formOf(targetLang, cid)).toLowerCase();
+});
 
   const wordBank = shuffle([...correctWords]);
 
@@ -1030,9 +1082,13 @@ const targetSentence = safe(buildSentence(targetLang, tpl));
 
   document.getElementById("check-l6").onclick = () => {
 
-    const builtSentence = correctWords.map((_, i) => assignments.get(i) || "").join(" ");
+  const builtWords = correctWords.map((_, i) => assignments.get(i) || "");
 
-    if (builtSentence.toLowerCase() === cleanedTarget.toLowerCase()) {
+const isCorrect = builtWords.every((w, i) => 
+  w.toLowerCase() === correctWords[i].toLowerCase()
+);
+
+if (isCorrect) {
 
   // Visual confirmation (green slots)
   document.querySelectorAll(".sentence-slot").forEach(slot => {
@@ -1114,7 +1170,7 @@ const targetSentence = safe(buildSentence(targetLang, tpl));
     return str
       .toLowerCase()
       .trim()
-      .replace(/[.?]$/, "");
+      .replace(/[.!?。！？]$/, "");
   }
 
   function normalizeLoose(str) {
