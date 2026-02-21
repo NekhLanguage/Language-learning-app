@@ -10,10 +10,22 @@
   --ink:#ffffff;
   --btnInk:#5a1f5f;
   --grid: rgba(255,255,255,0.05);
+  
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Meiryo",
+    "Noto Sans JP", "Noto Sans CJK JP",
+    sans-serif;
+
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New",
+    "Noto Sans Mono CJK JP", "Noto Sans JP",
+    "Yu Gothic", "Meiryo",
+    monospace;
 }
 
 body{
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-ui);
   background: radial-gradient(circle at top, var(--bg1), var(--bg2));
   min-height: 100vh;
   color: var(--ink);
@@ -59,9 +71,12 @@ body::before{
 }
 
 .subtitle{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: var(--font-mono);
   opacity: 0.9;
   margin-bottom: 2.25rem;
+}
+html[lang="ja"] .subtitle{
+  font-family: var(--font-ui);
 }
 
 /* Button grid */
