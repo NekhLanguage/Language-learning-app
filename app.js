@@ -1,9 +1,8 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.63-level6-devstart
-
+// VERSION: v0.9.71-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.71";
 document.addEventListener("DOMContentLoaded", () => {
-
-  const APP_VERSION = "v0.9.63-level6";
+  const APP_VERSION = "v0.9.71-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -11,11 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const learningScreen = document.getElementById("learning-screen");
   const openAppBtn = document.getElementById("open-app");
   const quitBtn = document.getElementById("quit-learning");
-  const targetSel = document.getElementById("targetLang");
-  const supportSel = document.getElementById("supportLang");
+  const hubQuitBtn = document.getElementById("hub-quit");
   const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
-
+  const languageScreen = document.getElementById("language-screen");
+  const languageButtonsContainer = document.getElementById("language-buttons");
+  const languageState = {
+  target: null,
+  support: "en" // default for now
+  };
+renderLanguageButtons();
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
@@ -24,7 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
 
   window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
+  function renderLanguageButtons() {
+  languageButtonsContainer.innerHTML = "";
 
+  AVAILABLE_LANGUAGES.forEach(lang => {
+    const btn = document.createElement("button");
+    btn.className = "primary";
+    btn.textContent = lang.label;
+
+    btn.onclick = () => enterLanguage(lang.code);
+
+    languageButtonsContainer.appendChild(btn);
+  });
+}
   async function loadAndMergeVocab() {
     window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
 
@@ -76,11 +92,12 @@ function ensureTemplateProgress(tpl) {
 
   if (!run.templateProgress[id]) {
     run.templateProgress[id] = {
-      streak: 0,
-      completed: false,
-      lastShownAt: -Infinity,
-      lastResult: null
-    };
+  streak: 0,
+  reinforcementStage: 0,
+  completed: false,
+  lastShownAt: -Infinity,
+  lastResult: null
+};
   }
 
   return run.templateProgress[id];
@@ -1133,9 +1150,25 @@ checkBtn.onclick = () => {
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
   // -------------------------
+  async function enterLanguage(langCode) {
+  languageState.target = langCode;
+
+  await loadAndMergeVocab();
+  await loadTemplates();
+  initRun();
+
+  languageScreen.classList.remove("active");
+  learningScreen.classList.add("active");
+
+  renderNext(languageState.target, languageState.support);
+}
+  // -------------------------
+  // Next item (with guard to avoid recursive stack blow-ups)
+  // -------------------------
   function renderNext(targetLang, supportLang) {
 
-  run.exerciseCounter++;
+  if (!run) return;
+run.exerciseCounter++;
  for (let attempts = 0; attempts < 30; attempts++) {
 
   const tpl = chooseTemplate();
@@ -1155,11 +1188,6 @@ if (tpl.requires) {
     continue;
   }
 }
-
-  // 🔒 Skip completed Level 6 templates
-  if (run.templateProgress[tpl.template_id]?.completed) {
-    continue;
-  }
 
       const targetConcept = determineTargetConcept(tpl);
 const level = levelOf(targetConcept);
@@ -1219,22 +1247,25 @@ return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
     `;
   }
 
-  openAppBtn?.addEventListener("click", async () => {
-    startScreen.classList.remove("active");
-    learningScreen.classList.add("active");
+  openAppBtn.addEventListener("click", () => {
+  startScreen.classList.remove("active");
+  languageScreen.classList.add("active");
+});
 
-    const tl = targetSel?.value || "pt";
-    const sl = supportSel?.value || "en";
+    
 
-    await loadAndMergeVocab();
-    await loadTemplates();
-    initRun();
-    renderNext(tl, sl);
-  });
+ function returnToHome() {
+  learningScreen.classList.remove("active");
+  languageScreen.classList.remove("active");
+  startScreen.classList.add("active");
+}
 
-  quitBtn?.addEventListener("click", () => {
-    learningScreen.classList.remove("active");
-    startScreen.classList.add("active");
-  });
+if (quitBtn) {
+  quitBtn.addEventListener("click", returnToHome);
+}
+
+if (hubQuitBtn) {
+  hubQuitBtn.addEventListener("click", returnToHome);
+});
 
 });
