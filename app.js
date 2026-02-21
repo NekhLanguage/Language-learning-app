@@ -1266,6 +1266,7 @@ if (quitBtn) {
 
 if (hubQuitBtn) {
   hubQuitBtn.addEventListener("click", returnToHome);
+}
 });
 
 });
