@@ -163,6 +163,34 @@
           "どれ"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "WHO": [
+          "hvem"
+        ],
+        "WHAT": [
+          "hva"
+        ],
+        "WHEN": [
+          "når"
+        ],
+        "WHERE": [
+          "hvor"
+        ],
+        "WHY": [
+          "hvorfor"
+        ],
+        "HOW": [
+          "hvordan"
+        ],
+        "WHICH": [
+          "hvilken",
+          "hvilket",
+          "hvilke"
+        ]
+      }
     }
   }
 }

@@ -184,6 +184,36 @@
           "難しい"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "BIG": [
+          "stor"
+        ],
+        "SMALL": [
+          "liten"
+        ],
+        "GOOD": [
+          "god",
+          "bra"
+        ],
+        "BAD": [
+          "dårlig"
+        ],
+        "NEW": [
+          "ny"
+        ],
+        "OLD": [
+          "gammel"
+        ],
+        "EASY": [
+          "lett"
+        ],
+        "DIFFICULT": [
+          "vanskelig"
+        ]
+      }
     }
   }
 }

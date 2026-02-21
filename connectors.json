@@ -121,6 +121,26 @@
           "もし"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "AND": [
+          "og"
+        ],
+        "BUT": [
+          "men"
+        ],
+        "ALSO": [
+          "også"
+        ],
+        "BECAUSE": [
+          "fordi"
+        ],
+        "IF": [
+          "hvis"
+        ]
+      }
     }
   }
 }

@@ -751,6 +751,118 @@
           "ズボン"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "WATER": [
+          "vann"
+        ],
+        "FOOD": [
+          "mat"
+        ],
+        "HOUSE": [
+          "hus"
+        ],
+        "HOME": [
+          "hjem"
+        ],
+        "BOOK": [
+          "bok"
+        ],
+        "THING": [
+          "ting"
+        ],
+        "JOB": [
+          "jobb"
+        ],
+        "ROOM": [
+          "rom"
+        ],
+        "BOY": [
+          "gutt"
+        ],
+        "GIRL": [
+          "jente"
+        ],
+        "MAN": [
+          "mann"
+        ],
+        "WOMAN": [
+          "kvinne"
+        ],
+        "MOM": [
+          "mamma",
+          "mor"
+        ],
+        "DAD": [
+          "pappa",
+          "far"
+        ],
+        "SON": [
+          "sønn"
+        ],
+        "DAUGHTER": [
+          "datter"
+        ],
+        "BROTHER": [
+          "bror"
+        ],
+        "SISTER": [
+          "søster"
+        ],
+        "HEAD": [
+          "hode"
+        ],
+        "ARM": [
+          "arm"
+        ],
+        "HAND": [
+          "hånd"
+        ],
+        "LEG": [
+          "bein"
+        ],
+        "FOOT": [
+          "fot"
+        ],
+        "FINGER": [
+          "finger"
+        ],
+        "EYE": [
+          "øye"
+        ],
+        "MOUTH": [
+          "munn"
+        ],
+        "FACE": [
+          "ansikt"
+        ],
+        "BREAKFAST": [
+          "frokost"
+        ],
+        "LUNCH": [
+          "lunsj"
+        ],
+        "DINNER": [
+          "middag"
+        ],
+        "CLOTHES": [
+          "klær"
+        ],
+        "SHIRT": [
+          "skjorte"
+        ],
+        "SHOES": [
+          "sko"
+        ],
+        "PHONE": [
+          "telefon"
+        ],
+        "PANTS": [
+          "bukser"
+        ]
+      }
     }
   }
 }

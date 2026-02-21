@@ -1,36 +1,114 @@
 {
   "concepts": [
-    { "concept_id": "DO", "type": "verb" },
-    { "concept_id": "GO", "type": "verb" },
-    { "concept_id": "EAT", "type": "verb" },
-    { "concept_id": "DRINK", "type": "verb" },
-    { "concept_id": "READ", "type": "verb" },
-    { "concept_id": "SEE", "type": "verb" },
-    { "concept_id": "START", "type": "verb" },
-    { "concept_id": "STOP", "type": "verb" },
-    { "concept_id": "SLEEP", "type": "verb" },
-    { "concept_id": "HAVE", "type": "verb" },
-    { "concept_id": "COME", "type": "verb" },
-    { "concept_id": "USE", "type": "verb" },
-    { "concept_id": "GET", "type": "verb" }
+    {
+      "concept_id": "DO",
+      "type": "verb"
+    },
+    {
+      "concept_id": "GO",
+      "type": "verb"
+    },
+    {
+      "concept_id": "EAT",
+      "type": "verb"
+    },
+    {
+      "concept_id": "DRINK",
+      "type": "verb"
+    },
+    {
+      "concept_id": "READ",
+      "type": "verb"
+    },
+    {
+      "concept_id": "SEE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "START",
+      "type": "verb"
+    },
+    {
+      "concept_id": "STOP",
+      "type": "verb"
+    },
+    {
+      "concept_id": "SLEEP",
+      "type": "verb"
+    },
+    {
+      "concept_id": "HAVE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "COME",
+      "type": "verb"
+    },
+    {
+      "concept_id": "USE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "GET",
+      "type": "verb"
+    }
   ],
   "languages": {
     "en": {
       "label": "English",
       "forms": {
-        "DO": { "base": "do", "3_singular": "does" },
-        "GO": { "base": "go", "3_singular": "goes" },
-        "EAT": { "base": "eat", "3_singular": "eats" },
-        "DRINK": { "base": "drink", "3_singular": "drinks" },
-        "READ": { "base": "read", "3_singular": "reads" },
-        "SEE": { "base": "see", "3_singular": "sees" },
-        "START": { "base": "start", "3_singular": "starts" },
-        "STOP": { "base": "stop", "3_singular": "stops" },
-        "SLEEP": { "base": "sleep", "3_singular": "sleeps" },
-        "HAVE": { "base": "have", "3_singular": "has" },
-        "COME": { "base": "come", "3_singular": "comes" },
-        "USE": { "base": "use", "3_singular": "uses" },
-        "GET": { "base": "get", "3_singular": "gets" }
+        "DO": {
+          "base": "do",
+          "3_singular": "does"
+        },
+        "GO": {
+          "base": "go",
+          "3_singular": "goes"
+        },
+        "EAT": {
+          "base": "eat",
+          "3_singular": "eats"
+        },
+        "DRINK": {
+          "base": "drink",
+          "3_singular": "drinks"
+        },
+        "READ": {
+          "base": "read",
+          "3_singular": "reads"
+        },
+        "SEE": {
+          "base": "see",
+          "3_singular": "sees"
+        },
+        "START": {
+          "base": "start",
+          "3_singular": "starts"
+        },
+        "STOP": {
+          "base": "stop",
+          "3_singular": "stops"
+        },
+        "SLEEP": {
+          "base": "sleep",
+          "3_singular": "sleeps"
+        },
+        "HAVE": {
+          "base": "have",
+          "3_singular": "has"
+        },
+        "COME": {
+          "base": "come",
+          "3_singular": "comes"
+        },
+        "USE": {
+          "base": "use",
+          "3_singular": "uses"
+        },
+        "GET": {
+          "base": "get",
+          "3_singular": "gets"
+        }
       }
     },
     "pt": {
@@ -76,11 +154,78 @@
     "ja": {
       "label": "Japanese",
       "forms": {
-        "EAT": { "base": "食べる" },
-        "DRINK": { "base": "飲む" },
-        "READ": { "base": "読む" },
-        "SEE": { "base": "見る" },
-        "HAVE": { "base": "持つ" }
+        "EAT": {
+          "base": "食べる"
+        },
+        "DRINK": {
+          "base": "飲む"
+        },
+        "READ": {
+          "base": "読む"
+        },
+        "SEE": {
+          "base": "見る"
+        },
+        "HAVE": {
+          "base": "持つ"
+        }
+      }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "DO": {
+          "base": "gjøre",
+          "3_singular": "gjør"
+        },
+        "GO": {
+          "base": "gå",
+          "3_singular": "går"
+        },
+        "EAT": {
+          "base": "spise",
+          "3_singular": "spiser"
+        },
+        "DRINK": {
+          "base": "drikke",
+          "3_singular": "drikker"
+        },
+        "READ": {
+          "base": "lese",
+          "3_singular": "leser"
+        },
+        "SEE": {
+          "base": "se",
+          "3_singular": "ser"
+        },
+        "START": {
+          "base": "starte",
+          "3_singular": "starter"
+        },
+        "STOP": {
+          "base": "stoppe",
+          "3_singular": "stopper"
+        },
+        "SLEEP": {
+          "base": "sove",
+          "3_singular": "sover"
+        },
+        "HAVE": {
+          "base": "ha",
+          "3_singular": "har"
+        },
+        "COME": {
+          "base": "komme",
+          "3_singular": "kommer"
+        },
+        "USE": {
+          "base": "bruke",
+          "3_singular": "bruker"
+        },
+        "GET": {
+          "base": "få",
+          "3_singular": "får"
+        }
       }
     }
   }

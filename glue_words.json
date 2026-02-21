@@ -163,6 +163,33 @@
           "として"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "FOR": [
+          "for"
+        ],
+        "WITH": [
+          "med"
+        ],
+        "FROM": [
+          "fra"
+        ],
+        "TO": [
+          "til"
+        ],
+        "BY": [
+          "med",
+          "av"
+        ],
+        "WHILE": [
+          "mens"
+        ],
+        "AS": [
+          "som"
+        ]
+      }
     }
   }
 }

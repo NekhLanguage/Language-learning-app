@@ -1,6 +1,7 @@
-// VERSION: v0.9.75-level6-devstart
+// VERSION: v0.9.76-level6-devstart
 export const AVAILABLE_LANGUAGES = [
   { code: "pt", label: "Portuguese" },
   { code: "ja", label: "Japanese" },
+  { code: "no", label: "Norwegian" },
   { code: "en", label: "English" }
 ];

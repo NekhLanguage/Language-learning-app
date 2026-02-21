@@ -436,6 +436,73 @@
           "二十"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "ONE": [
+          "en",
+          "ett"
+        ],
+        "TWO": [
+          "to"
+        ],
+        "THREE": [
+          "tre"
+        ],
+        "FOUR": [
+          "fire"
+        ],
+        "FIVE": [
+          "fem"
+        ],
+        "SIX": [
+          "seks"
+        ],
+        "SEVEN": [
+          "sju",
+          "syv"
+        ],
+        "EIGHT": [
+          "åtte"
+        ],
+        "NINE": [
+          "ni"
+        ],
+        "TEN": [
+          "ti"
+        ],
+        "ELEVEN": [
+          "elleve"
+        ],
+        "TWELVE": [
+          "tolv"
+        ],
+        "THIRTEEN": [
+          "tretten"
+        ],
+        "FOURTEEN": [
+          "fjorten"
+        ],
+        "FIFTEEN": [
+          "femten"
+        ],
+        "SIXTEEN": [
+          "seksten"
+        ],
+        "SEVENTEEN": [
+          "sytten"
+        ],
+        "EIGHTEEN": [
+          "atten"
+        ],
+        "NINETEEN": [
+          "nitten"
+        ],
+        "TWENTY": [
+          "tjue"
+        ]
+      }
     }
   }
 }

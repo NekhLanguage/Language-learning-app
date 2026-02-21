@@ -352,6 +352,59 @@
           "西"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "TOP": [
+          "topp"
+        ],
+        "BOTTOM": [
+          "bunn"
+        ],
+        "UNDER": [
+          "under"
+        ],
+        "NEXT_TO": [
+          "ved siden av"
+        ],
+        "FRONT": [
+          "foran"
+        ],
+        "BEHIND": [
+          "bak"
+        ],
+        "IN": [
+          "i"
+        ],
+        "ON": [
+          "på"
+        ],
+        "OFF": [
+          "av"
+        ],
+        "BETWEEN": [
+          "mellom"
+        ],
+        "BACK": [
+          "tilbake"
+        ],
+        "OUT": [
+          "ut"
+        ],
+        "NORTH": [
+          "nord"
+        ],
+        "SOUTH": [
+          "sør"
+        ],
+        "EAST": [
+          "øst"
+        ],
+        "WEST": [
+          "vest"
+        ]
+      }
     }
   }
 }

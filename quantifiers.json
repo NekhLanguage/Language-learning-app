@@ -100,6 +100,24 @@
           "何か"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "ANY": [
+          "noen",
+          "hvilken som helst"
+        ],
+        "ONLY": [
+          "bare"
+        ],
+        "ANOTHER": [
+          "en annen"
+        ],
+        "SOMETHING": [
+          "noe"
+        ]
+      }
     }
   }
 }

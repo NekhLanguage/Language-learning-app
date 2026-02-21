@@ -142,6 +142,29 @@
           "ない"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "PLEASE": [
+          "vær så snill"
+        ],
+        "MAYBE": [
+          "kanskje"
+        ],
+        "JUST": [
+          "bare"
+        ],
+        "YES": [
+          "ja"
+        ],
+        "NO": [
+          "nei"
+        ],
+        "NOT": [
+          "ikke"
+        ]
+      }
     }
   }
 }

@@ -205,6 +205,38 @@
           "年"
         ]
       }
+    },
+    "no": {
+      "label": "Norwegian (Bokmål)",
+      "forms": {
+        "TODAY": [
+          "i dag"
+        ],
+        "YESTERDAY": [
+          "i går"
+        ],
+        "TOMORROW": [
+          "i morgen"
+        ],
+        "MORNING": [
+          "morgen"
+        ],
+        "DAY": [
+          "dag"
+        ],
+        "NIGHT": [
+          "natt"
+        ],
+        "WEEK": [
+          "uke"
+        ],
+        "MONTH": [
+          "måned"
+        ],
+        "YEAR": [
+          "år"
+        ]
+      }
     }
   }
 }
