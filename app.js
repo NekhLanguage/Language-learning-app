@@ -1,8 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.72-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.71";
+// VERSION: v0.9.73-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.73";
+ let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.72-level7";
+  const APP_VERSION = "v0.9.73-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -19,6 +20,29 @@ document.addEventListener("DOMContentLoaded", () => {
   target: null,
   support: "en" // default for now
   };
+  function createEmptyUser() {
+  return {
+    id: crypto.randomUUID(),
+    supportLanguage: "en",
+    lastActiveLanguage: null,
+    runs: {} // languageCode -> run object
+  };
+}
+function loadUser() {
+  const raw = localStorage.getItem("zth_user");
+  if (!raw) {
+    USER = createEmptyUser();
+    saveUser();
+  } else {
+    USER = JSON.parse(raw);
+  }
+}
+
+function saveUser() {
+  localStorage.setItem("zth_user", JSON.stringify(USER));
+}
+
+loadUser();
 renderLanguageButtons();
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
@@ -219,6 +243,8 @@ function passesSpacingRule(cid) {
     }
     state.streak = 0;
   }
+  USER.runs[languageState.target] = run;
+saveUser();
 }
 
 
@@ -1155,7 +1181,14 @@ checkBtn.onclick = () => {
 
   await loadAndMergeVocab();
   await loadTemplates();
+
+if (!USER.runs[langCode]) {
   initRun();
+  USER.runs[langCode] = run;
+  saveUser();
+} else {
+  run = USER.runs[langCode];
+}
 
   languageScreen.classList.remove("active");
   learningScreen.classList.add("active");
