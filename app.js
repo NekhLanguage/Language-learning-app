@@ -486,8 +486,8 @@ function buildSentence(lang, tpl) {
 
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const targetSentence = safe(buildSentence(targetLang, tpl));
-    const ordered = orderedConceptsForTemplate(tpl, targetLang);
+   const supportSentence = safe(buildSentence(supportLang, tpl));
+const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
 const subjectCid = ordered.find(c =>
   window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
@@ -956,7 +956,6 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
 
   subtitle.textContent = "Level 6";
 
- let supportSentence = safe(tpl.render?.[supportLang]);
 let disambiguation = "";
 
 if (tpl.concepts.includes("SECOND_PERSON_PLURAL")) {
@@ -966,7 +965,6 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
 
-const targetSentence = safe(buildSentence(targetLang, tpl));
 const supportSentence = safe(buildSentence(supportLang, tpl));
 const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
