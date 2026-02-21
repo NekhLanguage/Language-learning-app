@@ -512,15 +512,9 @@ const blankedWords = words.map((w, i) =>
 
 const blanked = blankedWords.join(" ");
 
-    const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
-    const blanked = blankSentence(targetSentence, surface);
-
     const options = buildRecognitionOptions(tpl, targetConcept, 4);
     if (!options) return renderNext(targetLang, supportLang);
 
-    const subjectCid = (tpl.concepts || []).find(c =>
-      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-    );
 
     content.innerHTML = `
       <p><strong>Original sentence:</strong></p>
@@ -973,6 +967,7 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
 }
 
 const targetSentence = safe(buildSentence(targetLang, tpl));
+const supportSentence = safe(buildSentence(supportLang, tpl));
 const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
 const subjectCid = ordered.find(c =>
