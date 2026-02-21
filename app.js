@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.73-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.73";
+// VERSION: v0.9.73.1-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.73.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.73-level7";
+  const APP_VERSION = "v0.9.73.1-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -312,7 +312,9 @@ saveUser();
   function shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
   }
-
+  function safe(v) {
+  return v ?? "";
+}
   function blankSentence(sentence, surface) {
     const tokens = String(sentence || "").split(" ");
     let replaced = false;
@@ -380,13 +382,13 @@ saveUser();
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
     content.innerHTML = `
-      <h2>${formOf(targetLang, targetConcept)}</h2>
-      <p>${formOf(supportLang, targetConcept)}</p>
-      <hr>
-      <p>${tpl.render[targetLang]}</p>
-      <p>${tpl.render[supportLang]}</p>
-      <button id="continue-btn">Continue</button>
-    `;
+  <h2>${safe(formOf(targetLang, targetConcept))}</h2>
+  <p>${safe(formOf(supportLang, targetConcept))}</p>
+  <hr>
+  <p>${safe(tpl.render?.[targetLang])}</p>
+  <p>${safe(tpl.render?.[supportLang])}</p>
+  <button id="continue-btn">Continue</button>
+`;
 
     document.getElementById("continue-btn").onclick = () => {
       decrementCooldowns();
@@ -411,8 +413,8 @@ saveUser();
     const options = shuffle([...q.choices]);
 
     content.innerHTML = `
-      <p>${tpl.render[targetLang]}</p>
-      <p><strong>In this sentence:</strong> ${q.prompt?.[supportLang] || ""}</p>
+    <p>${safe(tpl.render?.[targetLang])}</p>
+    <p><strong>In this sentence:</strong> ${safe(q.prompt?.[supportLang])}</p>
       <div id="choices"></div>
     `;
 
@@ -439,8 +441,8 @@ saveUser();
 
     subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    const targetSentence = tpl.render?.[targetLang] || "";
-    const supportSentence = tpl.render?.[supportLang] || "";
+    const targetSentence = safe(tpl.render?.[targetLang]);
+    const supportSentence = safe(tpl.render?.[supportLang]);
 
     const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
     const blanked = blankSentence(targetSentence, surface);
@@ -892,7 +894,7 @@ function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
 
   subtitle.textContent = "Level 6";
 
-  let supportSentence = tpl.render?.[supportLang] || "";
+ let supportSentence = safe(tpl.render?.[supportLang]);
 let disambiguation = "";
 
 if (tpl.concepts.includes("SECOND_PERSON_PLURAL")) {
@@ -901,7 +903,8 @@ if (tpl.concepts.includes("SECOND_PERSON_PLURAL")) {
 else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
-  const targetSentence = tpl.render?.[targetLang] || "";
+
+const targetSentence = safe(tpl.render?.[targetLang]);
 
   // Strip final punctuation for comparison logic
   const cleanedTarget = targetSentence.replace(/[.?]$/, "");
@@ -1047,16 +1050,17 @@ function renderFreeProductionL7(targetLang, supportLang, tpl) {
 
   subtitle.textContent = "Level 7";
 
-  let supportSentence = tpl.render?.[supportLang] || "";
+ let supportSentence = safe(tpl.render?.[supportLang]);
 let disambiguation = "";
 
 if (tpl.concepts.includes("SECOND_PERSON_PLURAL")) {
   disambiguation = "(plural)";
 }
-if (tpl.concepts.includes("SECOND_PERSON")) {
+else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
-  const correctSentence = tpl.render?.[targetLang] || "";
+
+const targetSentence = safe(tpl.render?.[targetLang]);
 
   content.innerHTML = `
   <div style="margin-bottom:20px;">
