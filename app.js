@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.76-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.76";
+// VERSION: v0.9.77-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.77";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.76-level7";
+  const APP_VERSION = "v0.9.77-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -387,11 +387,33 @@ function buildSentence(lang, tpl) {
     const meta = window.GLOBAL_VOCAB.concepts[cid];
     if (!meta) return cid;
 
-    if (meta.type === "verb") return getVerbForm(cid, subjectCid, lang);
+    // Verb handling (unchanged)
+    if (meta.type === "verb") {
+      return getVerbForm(cid, subjectCid, lang);
+    }
+
+    // Noun handling (NEW: indefinite article injection for English)
+    if (meta.type === "noun") {
+      const surface = formOf(lang, cid);
+
+      if (lang === "en" && meta.countable) {
+        const startsWithVowel = /^[aeiou]/i.test(surface);
+        const article = startsWithVowel ? "an" : "a";
+        return article + " " + surface;
+      }
+
+      return surface;
+    }
+
     return formOf(lang, cid);
   });
 
-  return words.join(" ") + ".";
+  let sentence = words.join(" ");
+
+  // Capitalize first letter
+  sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+
+  return sentence + ".";
 }
 
   // -------------------------

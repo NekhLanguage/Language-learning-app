@@ -28,6 +28,7 @@
       "concept_id": "HOUSE",
       "type": "noun",
       "semantic_role": "place",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -40,6 +41,7 @@
       "concept_id": "HOME",
       "type": "noun",
       "semantic_role": "place",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -52,6 +54,7 @@
       "concept_id": "BOOK",
       "type": "noun",
       "semantic_role": "object",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -64,6 +67,7 @@
       "concept_id": "THING",
       "type": "noun",
       "semantic_role": "generic_object",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -76,6 +80,7 @@
       "concept_id": "JOB",
       "type": "noun",
       "semantic_role": "role",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -88,6 +93,7 @@
       "concept_id": "ROOM",
       "type": "noun",
       "semantic_role": "place",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -100,6 +106,7 @@
       "concept_id": "BOY",
       "type": "noun",
       "semantic_role": "person",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -112,6 +119,7 @@
       "concept_id": "GIRL",
       "type": "noun",
       "semantic_role": "person",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -124,6 +132,7 @@
       "concept_id": "MAN",
       "type": "noun",
       "semantic_role": "person",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -136,6 +145,7 @@
       "concept_id": "WOMAN",
       "type": "noun",
       "semantic_role": "person",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -148,6 +158,7 @@
       "concept_id": "MOM",
       "type": "noun",
       "semantic_role": "family",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -160,6 +171,7 @@
       "concept_id": "DAD",
       "type": "noun",
       "semantic_role": "family",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -172,6 +184,7 @@
       "concept_id": "SON",
       "type": "noun",
       "semantic_role": "family",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -184,6 +197,7 @@
       "concept_id": "DAUGHTER",
       "type": "noun",
       "semantic_role": "family",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -196,6 +210,7 @@
       "concept_id": "BROTHER",
       "type": "noun",
       "semantic_role": "family",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -208,6 +223,7 @@
       "concept_id": "SISTER",
       "type": "noun",
       "semantic_role": "family",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -220,6 +236,7 @@
       "concept_id": "HEAD",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -232,6 +249,7 @@
       "concept_id": "ARM",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -244,6 +262,7 @@
       "concept_id": "HAND",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -256,6 +275,7 @@
       "concept_id": "LEG",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -268,6 +288,7 @@
       "concept_id": "FOOT",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -280,6 +301,7 @@
       "concept_id": "FINGER",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -292,6 +314,7 @@
       "concept_id": "EYE",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -304,6 +327,7 @@
       "concept_id": "MOUTH",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -316,6 +340,7 @@
       "concept_id": "FACE",
       "type": "noun",
       "semantic_role": "body_part",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -328,6 +353,7 @@
       "concept_id": "BREAKFAST",
       "type": "noun",
       "semantic_role": "meal",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -340,6 +366,7 @@
       "concept_id": "LUNCH",
       "type": "noun",
       "semantic_role": "meal",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -352,6 +379,7 @@
       "concept_id": "DINNER",
       "type": "noun",
       "semantic_role": "meal",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -364,6 +392,7 @@
       "concept_id": "CLOTHES",
       "type": "noun",
       "semantic_role": "object",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -376,6 +405,7 @@
       "concept_id": "SHIRT",
       "type": "noun",
       "semantic_role": "object",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -388,6 +418,7 @@
       "concept_id": "SHOES",
       "type": "noun",
       "semantic_role": "object",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -400,6 +431,7 @@
       "concept_id": "PHONE",
       "type": "noun",
       "semantic_role": "object",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -412,6 +444,7 @@
       "concept_id": "PANTS",
       "type": "noun",
       "semantic_role": "object",
+      "countable": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
