@@ -394,16 +394,31 @@ function buildSentence(lang, tpl) {
 
     // Noun handling (NEW: indefinite article injection for English)
     if (meta.type === "noun") {
-      const surface = formOf(lang, cid);
+  const surface = formOf(lang, cid);
 
-      if (lang === "en" && meta.countable) {
-        const startsWithVowel = /^[aeiou]/i.test(surface);
-        const article = startsWithVowel ? "an" : "a";
-        return article + " " + surface;
-      }
+  if (meta.countable) {
 
-      return surface;
+    // English
+    if (lang === "en") {
+      const startsWithVowel = /^[aeiou]/i.test(surface);
+      const article = startsWithVowel ? "an" : "a";
+      return article + " " + surface;
     }
+
+    // Portuguese
+    if (lang === "pt") {
+
+      // Basic gender detection from form endings (simple but stable)
+      const isFeminine = surface.endsWith("a");
+
+      const article = isFeminine ? "uma" : "um";
+      return article + " " + surface;
+    }
+
+  }
+
+  return surface;
+}
 
     return formOf(lang, cid);
   });
