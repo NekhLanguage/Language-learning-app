@@ -296,16 +296,15 @@ saveUser();
     const subject = window.GLOBAL_VOCAB.concepts[subjectCid];
     if (!subject) return verbData.base || verbCid;
 
-    const key =
-      subject.person === 3 && subject.number === "singular"
-        ? "3_singular"
-        : subject.person === 1 && subject.number === "singular"
-        ? "1_singular"
-        : subject.person === 1 && subject.number === "plural"
-        ? "1_plural"
-        : subject.person === 3 && subject.number === "plural"
-        ? "3_plural"
-        : "base";
+    // Build conjugation key dynamically
+let key = "base";
+
+if (subject && subject.person && subject.number) {
+  key = `${subject.person}_${subject.number}`;
+}
+
+// Use conjugated form if available, otherwise fallback to base
+return verbData[key] || verbData.base || verbCid;
 
     return verbData[key] || verbData.base || verbCid;
   }

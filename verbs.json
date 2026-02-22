@@ -112,101 +112,141 @@
       }
     },
     "pt": {
-      "label": "Portuguese",
-      "forms": {
-        "EAT": {
-          "base": "comer",
-          "1_singular": "como",
-          "3_singular": "come",
-          "1_plural": "comemos",
-          "3_plural": "comem"
-        },
-        "DRINK": {
-          "base": "beber",
-          "1_singular": "bebo",
-          "3_singular": "bebe",
-          "1_plural": "bebemos",
-          "3_plural": "bebem"
-        },
-        "READ": {
-          "base": "ler",
-          "1_singular": "leio",
-          "3_singular": "lê",
-          "1_plural": "lemos",
-          "3_plural": "leem"
-        },
-        "SEE": {
-          "base": "ver",
-          "1_singular": "vejo",
-          "3_singular": "vê",
-          "1_plural": "vemos",
-          "3_plural": "veem"
-        },
-        "HAVE": {
-          "base": "ter",
-          "1_singular": "tenho",
-          "3_singular": "tem",
-          "1_plural": "temos",
-          "3_plural": "têm"
-        },
-              "DO": {
-        "base": "fazer",
-        "1_singular": "faço",
-        "3_singular": "faz",
-        "1_plural": "fazemos",
-        "3_plural": "fazem"
-      },
-      "GO": {
-        "base": "ir",
-        "1_singular": "vou",
-        "3_singular": "vai",
-        "1_plural": "vamos",
-        "3_plural": "vão"
-      },
-      "START": {
-        "base": "começar",
-        "1_singular": "começo",
-        "3_singular": "começa",
-        "1_plural": "começamos",
-        "3_plural": "começam"
-      },
-      "STOP": {
-        "base": "parar",
-        "1_singular": "paro",
-        "3_singular": "para",
-        "1_plural": "paramos",
-        "3_plural": "param"
-      },
-      "SLEEP": {
-        "base": "dormir",
-        "1_singular": "durmo",
-        "3_singular": "dorme",
-        "1_plural": "dormimos",
-        "3_plural": "dormem"
-      },
-      "COME": {
-        "base": "vir",
-        "1_singular": "venho",
-        "3_singular": "vem",
-        "1_plural": "vimos",
-        "3_plural": "vêm"
-      },
-      "USE": {
-        "base": "usar",
-        "1_singular": "uso",
-        "3_singular": "usa",
-        "1_plural": "usamos",
-        "3_plural": "usam"
-      },
-      "GET": {
-        "base": "pegar",
-        "1_singular": "pego",
-        "3_singular": "pega",
-        "1_plural": "pegamos",
-        "3_plural": "pegam"
-      }
-      }
+  "label": "Portuguese",
+  "forms": {
+
+    "EAT": {
+      "base": "comer",
+      "1_singular": "como",
+      "2_singular": "comes",
+      "3_singular": "come",
+      "1_plural": "comemos",
+      "2_plural": "comem",
+      "3_plural": "comem"
     },
+
+    "DRINK": {
+      "base": "beber",
+      "1_singular": "bebo",
+      "2_singular": "bebes",
+      "3_singular": "bebe",
+      "1_plural": "bebemos",
+      "2_plural": "bebem",
+      "3_plural": "bebem"
+    },
+
+    "READ": {
+      "base": "ler",
+      "1_singular": "leio",
+      "2_singular": "lês",
+      "3_singular": "lê",
+      "1_plural": "lemos",
+      "2_plural": "leem",
+      "3_plural": "leem"
+    },
+
+    "SEE": {
+      "base": "ver",
+      "1_singular": "vejo",
+      "2_singular": "vês",
+      "3_singular": "vê",
+      "1_plural": "vemos",
+      "2_plural": "veem",
+      "3_plural": "veem"
+    },
+
+    "HAVE": {
+      "base": "ter",
+      "1_singular": "tenho",
+      "2_singular": "tens",
+      "3_singular": "tem",
+      "1_plural": "temos",
+      "2_plural": "têm",
+      "3_plural": "têm"
+    },
+
+    "DO": {
+      "base": "fazer",
+      "1_singular": "faço",
+      "2_singular": "fazes",
+      "3_singular": "faz",
+      "1_plural": "fazemos",
+      "2_plural": "fazem",
+      "3_plural": "fazem"
+    },
+
+    "GO": {
+      "base": "ir",
+      "1_singular": "vou",
+      "2_singular": "vais",
+      "3_singular": "vai",
+      "1_plural": "vamos",
+      "2_plural": "vão",
+      "3_plural": "vão"
+    },
+
+    "START": {
+      "base": "começar",
+      "1_singular": "começo",
+      "2_singular": "começas",
+      "3_singular": "começa",
+      "1_plural": "começamos",
+      "2_plural": "começam",
+      "3_plural": "começam"
+    },
+
+    "STOP": {
+      "base": "parar",
+      "1_singular": "paro",
+      "2_singular": "paras",
+      "3_singular": "para",
+      "1_plural": "paramos",
+      "2_plural": "param",
+      "3_plural": "param"
+    },
+
+    "SLEEP": {
+      "base": "dormir",
+      "1_singular": "durmo",
+      "2_singular": "dormes",
+      "3_singular": "dorme",
+      "1_plural": "dormimos",
+      "2_plural": "dormem",
+      "3_plural": "dormem"
+    },
+
+    "COME": {
+      "base": "vir",
+      "1_singular": "venho",
+      "2_singular": "vens",
+      "3_singular": "vem",
+      "1_plural": "vimos",
+      "2_plural": "vêm",
+      "3_plural": "vêm"
+    },
+
+    "USE": {
+      "base": "usar",
+      "1_singular": "uso",
+      "2_singular": "usas",
+      "3_singular": "usa",
+      "1_plural": "usamos",
+      "2_plural": "usam",
+      "3_plural": "usam"
+    },
+
+    "GET": {
+      "base": "pegar",
+      "1_singular": "pego",
+      "2_singular": "pegas",
+      "3_singular": "pega",
+      "1_plural": "pegamos",
+      "2_plural": "pegam",
+      "3_plural": "pegam"
+    }
+
+  }
+},
     "ja": {
       "label": "Japanese",
       "forms": {
