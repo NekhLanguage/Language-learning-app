@@ -392,7 +392,7 @@ function buildSentence(lang, tpl) {
       return getVerbForm(cid, subjectCid, lang);
     }
 
-    // Noun handling (NEW: indefinite article injection for English)
+    // Noun handling (NEW: indefinite article injection for English and portuguese)
     if (meta.type === "noun") {
   const surface = formOf(lang, cid);
 
