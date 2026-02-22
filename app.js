@@ -447,7 +447,7 @@ if (pool.length < 3) return null;
     const distractorCount = targetTotal - 1;
 
     return shuffle([targetConcept, ...shuffle(pool).slice(0, distractorCount)]);
-  }
+  
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
     subtitle.textContent = "Level " + levelOf(targetConcept);
