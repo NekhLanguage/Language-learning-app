@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.77-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.77";
+// VERSION: v0.9.77.1-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.77.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.77-level7";
+  const APP_VERSION = "v0.9.77.1-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -92,6 +92,7 @@ renderLanguageButtons();
     const res = await fetch("sentence_templates.json", { cache: "no-store" });
     const data = await res.json();
     TEMPLATE_CACHE = data.templates || [];
+    window.DEBUG_TEMPLATES = TEMPLATE_CACHE;
     return TEMPLATE_CACHE;
   }
 
