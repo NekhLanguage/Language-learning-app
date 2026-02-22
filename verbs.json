@@ -148,7 +148,63 @@
           "3_singular": "tem",
           "1_plural": "temos",
           "3_plural": "têm"
-        }
+        },
+              "DO": {
+        "base": "fazer",
+        "1_singular": "faço",
+        "3_singular": "faz",
+        "1_plural": "fazemos",
+        "3_plural": "fazem"
+      },
+      "GO": {
+        "base": "ir",
+        "1_singular": "vou",
+        "3_singular": "vai",
+        "1_plural": "vamos",
+        "3_plural": "vão"
+      },
+      "START": {
+        "base": "começar",
+        "1_singular": "começo",
+        "3_singular": "começa",
+        "1_plural": "começamos",
+        "3_plural": "começam"
+      },
+      "STOP": {
+        "base": "parar",
+        "1_singular": "paro",
+        "3_singular": "para",
+        "1_plural": "paramos",
+        "3_plural": "param"
+      },
+      "SLEEP": {
+        "base": "dormir",
+        "1_singular": "durmo",
+        "3_singular": "dorme",
+        "1_plural": "dormimos",
+        "3_plural": "dormem"
+      },
+      "COME": {
+        "base": "vir",
+        "1_singular": "venho",
+        "3_singular": "vem",
+        "1_plural": "vimos",
+        "3_plural": "vêm"
+      },
+      "USE": {
+        "base": "usar",
+        "1_singular": "uso",
+        "3_singular": "usa",
+        "1_plural": "usamos",
+        "3_plural": "usam"
+      },
+      "GET": {
+        "base": "pegar",
+        "1_singular": "pego",
+        "3_singular": "pega",
+        "1_plural": "pegamos",
+        "3_plural": "pegam"
+      }
       }
     },
     "ja": {
@@ -171,6 +227,27 @@
         },
         "HAVE": {
           "base": "持つ"
+        },
+        "DO": { 
+          "base": "する" 
+        },
+        "GO": { 
+          "base": "行く" 
+        },
+        "START": { 
+          "base": "始める" 
+        },
+        "STOP": { 
+          "base": "止める" 
+        },
+        "COME": { 
+          "base": "来る" 
+        },
+        "USE": { 
+          "base": "使う" 
+        },
+        "GET": { 
+          "base": "得る" 
         }
       }
     },
