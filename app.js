@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.77.3-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.77.3";
+// VERSION: v0.9.77.4-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.77.4";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.77.3-level7";
+  const APP_VERSION = "v0.9.77.4-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -417,36 +417,7 @@ function buildSentence(lang, tpl) {
   return sentence + ".";
 }
 
-  // Build strict pool (preferred)
-const strictPool = run.released.filter(cid => {
-  if (cid === targetConcept) return false;
 
-  const st = ensureProgress(cid);
-  if (st.completed) return false;
-  if (st.level < currentLevel) return false;
-
-  const m = window.GLOBAL_VOCAB.concepts[cid];
-  return m && m.type === meta.type;
-});
-
-// Build relaxed pool (fallback: allow completed + any level)
-const relaxedPool = run.released.filter(cid => {
-  if (cid === targetConcept) return false;
-
-  const m = window.GLOBAL_VOCAB.concepts[cid];
-  return m && m.type === meta.type;
-});
-
-// Prefer strict pool, fallback to relaxed
-const pool = strictPool.length >= 3 ? strictPool : relaxedPool;
-
-// recognition requires >=4 options => need at least 3 distractors
-if (pool.length < 3) return null;
-
-    const targetTotal = Math.max(4, Math.min(desiredTotalOptions, pool.length + 1));
-    const distractorCount = targetTotal - 1;
-
-    return shuffle([targetConcept, ...shuffle(pool).slice(0, distractorCount)]);
   
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
@@ -508,6 +479,42 @@ if (pool.length < 3) return null;
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
   // -------------------------
+function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
+
+  const currentLevel = levelOf(targetConcept);
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+  if (!meta) return null;
+
+  // Strict pool
+  const strictPool = run.released.filter(cid => {
+    if (cid === targetConcept) return false;
+
+    const st = ensureProgress(cid);
+    if (st.completed) return false;
+    if (st.level < currentLevel) return false;
+
+    const m = window.GLOBAL_VOCAB.concepts[cid];
+    return m && m.type === meta.type;
+  });
+
+  // Relaxed pool
+  const relaxedPool = run.released.filter(cid => {
+    if (cid === targetConcept) return false;
+
+    const m = window.GLOBAL_VOCAB.concepts[cid];
+    return m && m.type === meta.type;
+  });
+
+  const pool = strictPool.length >= 3 ? strictPool : relaxedPool;
+
+  if (pool.length < 3) return null;
+
+  const targetTotal = Math.max(4, Math.min(desiredTotalOptions, pool.length + 1));
+  const distractorCount = targetTotal - 1;
+
+  return shuffle([targetConcept, ...shuffle(pool).slice(0, distractorCount)]);
+}
+
   function renderRecognitionL3(targetLang, supportLang, tpl, targetConcept) {
 
     subtitle.textContent = "Level " + levelOf(targetConcept);
