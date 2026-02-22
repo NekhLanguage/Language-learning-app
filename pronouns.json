@@ -29,7 +29,35 @@
       }
     },
     {
-      "concept_id": "THIRD_PERSON_SINGULAR",
+      "concept_id": "SECOND_PERSON_PLURAL",
+      "type": "pronoun",
+      "person": 2,
+      "number": "plural",
+      "semantic_role": "reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "HE",
+      "type": "pronoun",
+      "person": 3,
+      "number": "singular",
+      "semantic_role": "reference",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": false
+      }
+    },
+    {
+      "concept_id": "SHE",
       "type": "pronoun",
       "person": 3,
       "number": "singular",
@@ -75,41 +103,156 @@
     "en": {
       "label": "English",
       "forms": {
-        "FIRST_PERSON_SINGULAR": ["I","me","my","mine"],
-        "SECOND_PERSON": ["you","your","yours"],
-        "THIRD_PERSON_SINGULAR": ["he","she","it","him","her","his"],
-        "FIRST_PERSON_PLURAL": ["we","us","our","ours"],
-        "THIRD_PERSON_PLURAL": ["they","them","their","theirs"]
+        "FIRST_PERSON_SINGULAR": [
+          "I",
+          "me",
+          "my",
+          "mine"
+        ],
+        "SECOND_PERSON": [
+          "you",
+          "your",
+          "yours"
+        ],
+        "SECOND_PERSON_PLURAL": [
+          "you",
+          "your",
+          "yours"
+        ],
+        "HE": [
+          "he",
+          "him",
+          "his"
+        ],
+        "SHE": [
+          "she",
+          "her",
+          "hers"
+        ],
+        "FIRST_PERSON_PLURAL": [
+          "we",
+          "us",
+          "our",
+          "ours"
+        ],
+        "THIRD_PERSON_PLURAL": [
+          "they",
+          "them",
+          "their",
+          "theirs"
+        ]
       }
     },
     "pt": {
       "label": "Portuguese",
       "forms": {
-        "FIRST_PERSON_SINGULAR": ["eu","meu","minha"],
-        "SECOND_PERSON": ["você","seu","sua"],
-        "THIRD_PERSON_SINGULAR": ["ele","ela","dele","dela"],
-        "FIRST_PERSON_PLURAL": ["nós","nosso","nossa"],
-        "THIRD_PERSON_PLURAL": ["eles","elas","deles"]
+        "FIRST_PERSON_SINGULAR": [
+          "eu",
+          "meu",
+          "minha"
+        ],
+        "SECOND_PERSON": [
+          "você",
+          "seu",
+          "sua"
+        ],
+        "SECOND_PERSON_PLURAL": [
+          "vocês",
+          "seu",
+          "sua"
+        ],
+        "HE": [
+          "ele",
+          "dele"
+        ],
+        "SHE": [
+          "ela",
+          "dela"
+        ],
+        "FIRST_PERSON_PLURAL": [
+          "nós",
+          "nosso",
+          "nossa"
+        ],
+        "THIRD_PERSON_PLURAL": [
+          "eles",
+          "elas",
+          "deles",
+          "delas"
+        ]
       }
     },
     "ja": {
       "label": "Japanese",
       "forms": {
-        "FIRST_PERSON_SINGULAR": ["私","僕"],
-        "SECOND_PERSON": ["あなた"],
-        "THIRD_PERSON_SINGULAR": ["彼","彼女"],
-        "FIRST_PERSON_PLURAL": ["私たち"],
-        "THIRD_PERSON_PLURAL": ["彼ら"]
+        "FIRST_PERSON_SINGULAR": [
+          "私",
+          "僕"
+        ],
+        "SECOND_PERSON": [
+          "あなた"
+        ],
+        "SECOND_PERSON_PLURAL": [
+          "あなたたち"
+        ],
+        "HE": [
+          "彼"
+        ],
+        "SHE": [
+          "彼女"
+        ],
+        "FIRST_PERSON_PLURAL": [
+          "私たち"
+        ],
+        "THIRD_PERSON_PLURAL": [
+          "彼ら"
+        ]
       }
     },
     "no": {
       "label": "Norwegian (Bokmål)",
       "forms": {
-        "FIRST_PERSON_SINGULAR": ["jeg","meg","min","mitt","mine"],
-        "SECOND_PERSON": ["du","deg","din","ditt","dine"],
-        "THIRD_PERSON_SINGULAR": ["han","hun","det","ham","henne","hans","hennes","dens","dets"],
-        "FIRST_PERSON_PLURAL": ["vi","oss","vår","vårt","våre"],
-        "THIRD_PERSON_PLURAL": ["de","dem","deres"]
+        "FIRST_PERSON_SINGULAR": [
+          "jeg",
+          "meg",
+          "min",
+          "mitt",
+          "mine"
+        ],
+        "SECOND_PERSON": [
+          "du",
+          "deg",
+          "din",
+          "ditt",
+          "dine"
+        ],
+        "SECOND_PERSON_PLURAL": [
+          "dere",
+          "dere",
+          "deres"
+        ],
+        "HE": [
+          "han",
+          "ham",
+          "hans"
+        ],
+        "SHE": [
+          "hun",
+          "henne",
+          "hennes"
+        ],
+        "FIRST_PERSON_PLURAL": [
+          "vi",
+          "oss",
+          "vår",
+          "vårt",
+          "våre"
+        ],
+        "THIRD_PERSON_PLURAL": [
+          "de",
+          "dem",
+          "deres"
+        ]
       }
     }
   }
