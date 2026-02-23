@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.77.4-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.77.4";
+// VERSION: v0.9.78-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.78";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.77.4-level7";
+  const APP_VERSION = "v0.9.78-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -281,33 +281,61 @@ saveUser();
     return eligible[Math.floor(Math.random() * eligible.length)];
   }
 
-  function formOf(lang, cid) {
-    const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-    if (!entry) return cid;
-    if (Array.isArray(entry)) return entry[0];
-    if (typeof entry === "object" && entry.base) return entry.base;
-    return cid;
+ function formOf(lang, cid) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+
+  if (!entry) return cid;
+
+  // If noun object with {form, gender}
+  if (typeof entry === "object" && entry.form) {
+    return entry.form;
   }
 
-  function getVerbForm(verbCid, subjectCid, lang) {
-    const verbData = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[verbCid];
-    if (!verbData) return verbCid;
+  if (Array.isArray(entry)) return entry[0];
 
-    const subject = window.GLOBAL_VOCAB.concepts[subjectCid];
-    if (!subject) return verbData.base || verbCid;
+  if (typeof entry === "object" && entry.base) return entry.base;
 
-    // Build conjugation key dynamically
-let key = "base";
-
-if (subject && subject.person && subject.number) {
-  key = `${subject.person}_${subject.number}`;
+  return entry;
 }
 
-// Use conjugated form if available, otherwise fallback to base
-return verbData[key] || verbData.base || verbCid;
+  function getVerbForm(verbCid, subjectCid, lang) {
+  const verbData = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[verbCid];
+  if (!verbData) return verbCid;
 
-    return verbData[key] || verbData.base || verbCid;
+  const subject = window.GLOBAL_VOCAB.concepts[subjectCid];
+  if (!subject) return verbData.base || verbCid;
+
+  // Build dynamic key (e.g. "1_singular", "2_plural", etc.)
+  let key = "base";
+
+  if (subject.person && subject.number) {
+    key = `${subject.person}_${subject.number}`;
   }
+
+  // 1️⃣ Exact match (preferred)
+  if (verbData[key]) {
+    return verbData[key];
+  }
+
+  // 2️⃣ If language defines a uniform present form (e.g. Norwegian)
+  if (verbData.present) {
+    return verbData.present;
+  }
+
+  // 3️⃣ If only base + 3_singular exist, use 3_singular
+  const keys = Object.keys(verbData);
+  const onlyBaseAndThird =
+    keys.length === 2 &&
+    keys.includes("base") &&
+    keys.includes("3_singular");
+
+  if (onlyBaseAndThird) {
+    return verbData["3_singular"];
+  }
+
+  // 4️⃣ Final fallback
+  return verbData.base || verbCid;
+}
 
   function shuffle(arr) {
     return arr.sort(() => Math.random() - 0.5);
@@ -399,22 +427,29 @@ function buildSentence(lang, tpl) {
   if (meta.countable) {
 
     // English
-    if (lang === "en") {
-      const startsWithVowel = /^[aeiou]/i.test(surface);
-      const article = startsWithVowel ? "an" : "a";
-      return article + " " + surface;
-    }
+    if (lang === "en" && meta.countable) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+  const article = entry?.article || "a";
+  return article + " " + surface;
+}
 
     // Portuguese
-    if (lang === "pt") {
+    if (lang === "pt" && meta.countable) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+  const gender = entry?.gender;
 
-      // Basic gender detection from form endings (simple but stable)
-      const isFeminine = surface.endsWith("a");
-
-      const article = isFeminine ? "uma" : "um";
-      return article + " " + surface;
+  if (gender === "f") return "uma " + surface;
+  return "um " + surface;
+}
     }
+    if (lang === "no" && meta.countable) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+  const gender = entry?.gender;
 
+  if (gender === "n") return "et " + surface;
+  if (gender === "f") return "ei " + surface;
+  return "en " + surface;
+}
   }
 
   return surface;
@@ -432,7 +467,6 @@ function buildSentence(lang, tpl) {
 }
 
 
-  
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
     subtitle.textContent = "Level " + levelOf(targetConcept);
@@ -1228,10 +1262,10 @@ checkBtn.onclick = () => {
   const userInput = inputField.value;
 
   const strictUser = normalizeStrict(userInput);
-  const strictCorrect = normalizeStrict(correctSentence);
+  const strictCorrect = normalizeStrict(targetSentence);
 
   const looseUser = normalizeLoose(userInput);
-  const looseCorrect = normalizeLoose(correctSentence);
+  const looseCorrect = normalizeLoose(targetSentence);
 
   const tState = ensureTemplateProgress(tpl);
 
@@ -1275,7 +1309,7 @@ checkBtn.onclick = () => {
     feedbackDiv.innerHTML = `
       <div style="color:#4CAF50;">
         Correct.<br/>
-        Proper form: <strong>${correctSentence}</strong>
+        Proper form: <strong>${targetSentence}</strong>
       </div>`;
   }
 
@@ -1284,7 +1318,7 @@ checkBtn.onclick = () => {
     feedbackDiv.innerHTML = `
       <div style="color:#D32F2F;">
         Incorrect.<br/>
-        Correct answer: <strong>${correctSentence}</strong>
+        Correct answer: <strong>${targetSentence}</strong>
       </div>`;
   }
 
@@ -1377,7 +1411,7 @@ if (level >= 6) {
 }
 
       // Level 3/4 need recognition option integrity; if not possible, try again.
-      if (level >= 3) {
+      if (level === 3 || level === 4) {
         const desired = level === 4 ? 6 : 4;
         const opts = buildRecognitionOptions(tpl, targetConcept, desired);
         if (!opts) continue;

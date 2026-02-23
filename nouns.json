@@ -456,225 +456,99 @@
   ],
   "languages": {
     "en": {
-      "label": "English",
-      "forms": {
-        "WATER": [
-          "water"
-        ],
-        "FOOD": [
-          "food"
-        ],
-        "HOUSE": [
-          "house"
-        ],
-        "HOME": [
-          "home"
-        ],
-        "BOOK": [
-          "book"
-        ],
-        "THING": [
-          "thing"
-        ],
-        "JOB": [
-          "job"
-        ],
-        "ROOM": [
-          "room"
-        ],
-        "BOY": [
-          "boy"
-        ],
-        "GIRL": [
-          "girl"
-        ],
-        "MAN": [
-          "man"
-        ],
-        "WOMAN": [
-          "woman"
-        ],
-        "MOM": [
-          "mom"
-        ],
-        "DAD": [
-          "dad"
-        ],
-        "SON": [
-          "son"
-        ],
-        "DAUGHTER": [
-          "daughter"
-        ],
-        "BROTHER": [
-          "brother"
-        ],
-        "SISTER": [
-          "sister"
-        ],
-        "HEAD": [
-          "head"
-        ],
-        "ARM": [
-          "arm"
-        ],
-        "HAND": [
-          "hand"
-        ],
-        "LEG": [
-          "leg"
-        ],
-        "FOOT": [
-          "foot"
-        ],
-        "FINGER": [
-          "finger"
-        ],
-        "EYE": [
-          "eye"
-        ],
-        "MOUTH": [
-          "mouth"
-        ],
-        "FACE": [
-          "face"
-        ],
-        "BREAKFAST": [
-          "breakfast"
-        ],
-        "LUNCH": [
-          "lunch"
-        ],
-        "DINNER": [
-          "dinner"
-        ],
-        "CLOTHES": [
-          "clothes"
-        ],
-        "SHIRT": [
-          "shirt"
-        ],
-        "SHOES": [
-          "shoes"
-        ],
-        "PHONE": [
-          "phone"
-        ],
-        "PANTS": [
-          "pants"
-        ]
-      }
-    },
+  "label": "English",
+  "forms": {
+    "WATER": { "form": "water" },
+    "FOOD": { "form": "food" },
+
+    "HOUSE": { "form": "house", "article": "a" },
+    "HOME": { "form": "home", "article": "a" },
+    "BOOK": { "form": "book", "article": "a" },
+    "THING": { "form": "thing", "article": "a" },
+    "JOB": { "form": "job", "article": "a" },
+    "ROOM": { "form": "room", "article": "a" },
+
+    "BOY": { "form": "boy", "article": "a" },
+    "GIRL": { "form": "girl", "article": "a" },
+    "MAN": { "form": "man", "article": "a" },
+    "WOMAN": { "form": "woman", "article": "a" },
+
+    "MOM": { "form": "mom", "article": "a" },
+    "DAD": { "form": "dad", "article": "a" },
+
+    "SON": { "form": "son", "article": "a" },
+    "DAUGHTER": { "form": "daughter", "article": "a" },
+    "BROTHER": { "form": "brother", "article": "a" },
+    "SISTER": { "form": "sister", "article": "a" },
+
+    "HEAD": { "form": "head", "article": "a" },
+    "ARM": { "form": "arm", "article": "an" },
+    "HAND": { "form": "hand", "article": "a" },
+    "LEG": { "form": "leg", "article": "a" },
+    "FOOT": { "form": "foot", "article": "a" },
+    "FINGER": { "form": "finger", "article": "a" },
+    "EYE": { "form": "eye", "article": "an" },
+    "MOUTH": { "form": "mouth", "article": "a" },
+    "FACE": { "form": "face", "article": "a" },
+
+    "BREAKFAST": { "form": "breakfast" },
+    "LUNCH": { "form": "lunch" },
+    "DINNER": { "form": "dinner" },
+
+    "CLOTHES": { "form": "clothes" },
+    "SHIRT": { "form": "shirt", "article": "a" },
+    "SHOES": { "form": "shoes" },
+    "PHONE": { "form": "phone", "article": "a" },
+    "PANTS": { "form": "pants" }
+  }
+},
     "pt": {
-      "label": "Portuguese",
-      "forms": {
-        "WATER": [
-          "água"
-        ],
-        "FOOD": [
-          "comida"
-        ],
-        "HOUSE": [
-          "casa"
-        ],
-        "HOME": [
-          "lar"
-        ],
-        "BOOK": [
-          "livro"
-        ],
-        "THING": [
-          "coisa"
-        ],
-        "JOB": [
-          "trabalho"
-        ],
-        "ROOM": [
-          "quarto"
-        ],
-        "BOY": [
-          "menino"
-        ],
-        "GIRL": [
-          "menina"
-        ],
-        "MAN": [
-          "homem"
-        ],
-        "WOMAN": [
-          "mulher"
-        ],
-        "MOM": [
-          "mãe"
-        ],
-        "DAD": [
-          "pai"
-        ],
-        "SON": [
-          "filho"
-        ],
-        "DAUGHTER": [
-          "filha"
-        ],
-        "BROTHER": [
-          "irmão"
-        ],
-        "SISTER": [
-          "irmã"
-        ],
-        "HEAD": [
-          "cabeça"
-        ],
-        "ARM": [
-          "braço"
-        ],
-        "HAND": [
-          "mão"
-        ],
-        "LEG": [
-          "perna"
-        ],
-        "FOOT": [
-          "pé"
-        ],
-        "FINGER": [
-          "dedo"
-        ],
-        "EYE": [
-          "olho"
-        ],
-        "MOUTH": [
-          "boca"
-        ],
-        "FACE": [
-          "rosto"
-        ],
-        "BREAKFAST": [
-          "café da manhã"
-        ],
-        "LUNCH": [
-          "almoço"
-        ],
-        "DINNER": [
-          "jantar"
-        ],
-        "CLOTHES": [
-          "roupas"
-        ],
-        "SHIRT": [
-          "camisa"
-        ],
-        "SHOES": [
-          "sapatos"
-        ],
-        "PHONE": [
-          "telefone"
-        ],
-        "PANTS": [
-          "calças"
-        ]
-      }
-    },
+  "label": "Portuguese",
+  "forms": {
+    "WATER": { "form": "água" },
+    "FOOD": { "form": "comida" },
+
+    "HOUSE": { "form": "casa", "gender": "f" },
+    "HOME": { "form": "lar", "gender": "m" },
+    "BOOK": { "form": "livro", "gender": "m" },
+    "THING": { "form": "coisa", "gender": "f" },
+    "JOB": { "form": "trabalho", "gender": "m" },
+    "ROOM": { "form": "quarto", "gender": "m" },
+
+    "BOY": { "form": "menino", "gender": "m" },
+    "GIRL": { "form": "menina", "gender": "f" },
+    "MAN": { "form": "homem", "gender": "m" },
+    "WOMAN": { "form": "mulher", "gender": "f" },
+
+    "MOM": { "form": "mãe", "gender": "f" },
+    "DAD": { "form": "pai", "gender": "m" },
+
+    "SON": { "form": "filho", "gender": "m" },
+    "DAUGHTER": { "form": "filha", "gender": "f" },
+    "BROTHER": { "form": "irmão", "gender": "m" },
+    "SISTER": { "form": "irmã", "gender": "f" },
+
+    "HEAD": { "form": "cabeça", "gender": "f" },
+    "ARM": { "form": "braço", "gender": "m" },
+    "HAND": { "form": "mão", "gender": "f" },
+    "LEG": { "form": "perna", "gender": "f" },
+    "FOOT": { "form": "pé", "gender": "m" },
+    "FINGER": { "form": "dedo", "gender": "m" },
+    "EYE": { "form": "olho", "gender": "m" },
+    "MOUTH": { "form": "boca", "gender": "f" },
+    "FACE": { "form": "rosto", "gender": "m" },
+
+    "BREAKFAST": { "form": "café da manhã", "gender": "m" },
+    "LUNCH": { "form": "almoço", "gender": "m" },
+    "DINNER": { "form": "jantar", "gender": "m" },
+
+    "CLOTHES": { "form": "roupas" },
+    "SHIRT": { "form": "camisa", "gender": "f" },
+    "SHOES": { "form": "sapatos", "gender": "m" },
+    "PHONE": { "form": "telefone", "gender": "m" },
+    "PANTS": { "form": "calças", "gender": "f" }
+  }
+},
     "ja": {
       "label": "Japanese",
       "forms": {
@@ -786,116 +660,51 @@
       }
     },
     "no": {
-      "label": "Norwegian (Bokmål)",
-      "forms": {
-        "WATER": [
-          "vann"
-        ],
-        "FOOD": [
-          "mat"
-        ],
-        "HOUSE": [
-          "hus"
-        ],
-        "HOME": [
-          "hjem"
-        ],
-        "BOOK": [
-          "bok"
-        ],
-        "THING": [
-          "ting"
-        ],
-        "JOB": [
-          "jobb"
-        ],
-        "ROOM": [
-          "rom"
-        ],
-        "BOY": [
-          "gutt"
-        ],
-        "GIRL": [
-          "jente"
-        ],
-        "MAN": [
-          "mann"
-        ],
-        "WOMAN": [
-          "kvinne"
-        ],
-        "MOM": [
-          "mamma",
-          "mor"
-        ],
-        "DAD": [
-          "pappa",
-          "far"
-        ],
-        "SON": [
-          "sønn"
-        ],
-        "DAUGHTER": [
-          "datter"
-        ],
-        "BROTHER": [
-          "bror"
-        ],
-        "SISTER": [
-          "søster"
-        ],
-        "HEAD": [
-          "hode"
-        ],
-        "ARM": [
-          "arm"
-        ],
-        "HAND": [
-          "hånd"
-        ],
-        "LEG": [
-          "bein"
-        ],
-        "FOOT": [
-          "fot"
-        ],
-        "FINGER": [
-          "finger"
-        ],
-        "EYE": [
-          "øye"
-        ],
-        "MOUTH": [
-          "munn"
-        ],
-        "FACE": [
-          "ansikt"
-        ],
-        "BREAKFAST": [
-          "frokost"
-        ],
-        "LUNCH": [
-          "lunsj"
-        ],
-        "DINNER": [
-          "middag"
-        ],
-        "CLOTHES": [
-          "klær"
-        ],
-        "SHIRT": [
-          "skjorte"
-        ],
-        "SHOES": [
-          "sko"
-        ],
-        "PHONE": [
-          "telefon"
-        ],
-        "PANTS": [
-          "bukser"
-        ]
-      }
-    }
+  "label": "Norwegian (Bokmål)",
+  "forms": {
+    "WATER": { "form": "vann" },
+    "FOOD": { "form": "mat" },
+
+    "HOUSE": { "form": "hus", "gender": "n" },
+    "HOME": { "form": "hjem", "gender": "n" },
+    "BOOK": { "form": "bok", "gender": "m" },
+    "THING": { "form": "ting", "gender": "n" },
+    "JOB": { "form": "jobb", "gender": "m" },
+    "ROOM": { "form": "rom", "gender": "n" },
+
+    "BOY": { "form": "gutt", "gender": "m" },
+    "GIRL": { "form": "jente", "gender": "f" },
+    "MAN": { "form": "mann", "gender": "m" },
+    "WOMAN": { "form": "kvinne", "gender": "f" },
+
+    "MOM": { "form": "mamma", "gender": "f" },
+    "DAD": { "form": "pappa", "gender": "m" },
+
+    "SON": { "form": "sønn", "gender": "m" },
+    "DAUGHTER": { "form": "datter", "gender": "f" },
+    "BROTHER": { "form": "bror", "gender": "m" },
+    "SISTER": { "form": "søster", "gender": "f" },
+
+    "HEAD": { "form": "hode", "gender": "n" },
+    "ARM": { "form": "arm", "gender": "m" },
+    "HAND": { "form": "hånd", "gender": "f" },
+    "LEG": { "form": "bein", "gender": "n" },
+    "FOOT": { "form": "fot", "gender": "m" },
+    "FINGER": { "form": "finger", "gender": "m" },
+    "EYE": { "form": "øye", "gender": "n" },
+    "MOUTH": { "form": "munn", "gender": "m" },
+    "FACE": { "form": "ansikt", "gender": "n" },
+
+    "BREAKFAST": { "form": "frokost", "gender": "m" },
+    "LUNCH": { "form": "lunsj", "gender": "m" },
+    "DINNER": { "form": "middag", "gender": "m" },
+
+    "CLOTHES": { "form": "klær" },
+    "SHIRT": { "form": "skjorte", "gender": "f" },
+    "SHOES": { "form": "sko" },
+    "PHONE": { "form": "telefon", "gender": "m" },
+    "PANTS": { "form": "bukser" }
+  }
+}
   }
 }
