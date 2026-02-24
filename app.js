@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.80.2";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.81";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.80.2-level7";
+  const APP_VERSION = "v0.9.81-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -41,7 +41,6 @@ function saveUser() {
 }
 
 loadUser();
-renderLanguageButtons();
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
@@ -60,12 +59,14 @@ const SUPPORT_LANGUAGES = {
   ar: { short: "AR", label: "العربية" }
 };
 const UI_STRINGS = {
+  
   en: {
     openApp: "OPEN APP",
     languagesTitle: "LANGUAGES",
     chooseLanguage: "Choose a language to study",
     quitLearning: "QUIT LEARNING",
     sessionTitle: "TODAY'S SESSION"
+    startSubtitle: "Language learning"
   },
   pt: {
     openApp: "ABRIR APP",
@@ -73,6 +74,7 @@ const UI_STRINGS = {
     chooseLanguage: "Escolha um idioma para estudar",
     quitLearning: "SAIR",
     sessionTitle: "SESSÃO DE HOJE"
+    startSubtitle: "Aprendizado de idiomas"
   },
   ja: {
     openApp: "アプリを開く",
@@ -80,6 +82,7 @@ const UI_STRINGS = {
     chooseLanguage: "学習する言語を選んでください",
     quitLearning: "終了",
     sessionTitle: "今日のセッション"
+    startSubtitle: "言語学習"
   },
   no: {
     openApp: "ÅPNE APP",
@@ -87,6 +90,7 @@ const UI_STRINGS = {
     chooseLanguage: "Velg et språk å studere",
     quitLearning: "AVSLUTT",
     sessionTitle: "DAGENS ØKT"
+    startSubtitle: "Språklæring"
   },
   ar: {
     openApp: "افتح التطبيق",
@@ -94,6 +98,7 @@ const UI_STRINGS = {
     chooseLanguage: "اختر لغة للدراسة",
     quitLearning: "إنهاء",
     sessionTitle: "جلسة اليوم"
+    startSubtitle: "تعلم اللغات"
   }
 };
 const HUB_LANGUAGE_NAMES = {
@@ -142,6 +147,7 @@ const supportDropdown = document.getElementById("support-dropdown");
 languageState.support = USER.supportLanguage || "en";
 updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
+renderLanguageButtons();
 // Build dropdown
 supportDropdown.innerHTML = "";
 
@@ -251,6 +257,13 @@ function updateUIStrings(lang) {
   document.documentElement.dir = "rtl";
 } else {
   document.documentElement.dir = "ltr";
+}
+const startSubtitle = document.getElementById("start-subtitle");
+if (startSubtitle) {
+  startSubtitle.textContent =
+    (lang === "ar")
+      ? `تعلم اللغات ${APP_VERSION}`
+      : strings.startSubtitle + " " + APP_VERSION;
 }
 }
 
