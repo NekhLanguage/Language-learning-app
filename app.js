@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.79";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.80.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.80-level7";
+  const APP_VERSION = "v0.9.80.1-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -203,6 +203,11 @@ function updateUIStrings(lang) {
 
   const sessionTitle = document.querySelector("#learning-screen .title");
   sessionTitle.textContent = strings.sessionTitle;
+  if (lang === "ar") {
+  document.documentElement.dir = "rtl";
+} else {
+  document.documentElement.dir = "ltr";
+}
 }
 
   function ensureProgress(cid) {
