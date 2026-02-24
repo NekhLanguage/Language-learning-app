@@ -1,9 +1,7 @@
-// Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.78.1-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.78.1";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.79";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.78.1-level7";
+  const APP_VERSION = "v0.9.79-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -50,7 +48,61 @@ renderLanguageButtons();
     "politeness_modality.json","pronouns.json","quantifiers.json",
     "question_words.json","time_words.json","verbs.json"
   ];
+// --------------------
+// Support Language UI (Abbreviation + Native Name)
+// --------------------
 
+const SUPPORT_LANGUAGES = {
+  en: { short: "EN", label: "English" },
+  pt: { short: "PT", label: "Português" },
+  ja: { short: "JA", label: "日本語" },
+  no: { short: "NO", label: "Norsk" },
+  ar: { short: "AR", label: "العربية" }
+};
+
+const supportPill = document.getElementById("support-pill");
+const supportShort = document.getElementById("support-short");
+const supportLabel = document.getElementById("support-label");
+const supportDropdown = document.getElementById("support-dropdown");
+
+// Initialize from USER state
+languageState.support = USER.supportLanguage || "en";
+updateSupportUI(languageState.support);
+
+// Build dropdown
+supportDropdown.innerHTML = "";
+
+Object.entries(SUPPORT_LANGUAGES).forEach(([code, data]) => {
+
+  const option = document.createElement("div");
+  option.className = "support-option";
+
+  option.innerHTML = `
+    <span class="support-short">${data.short}</span>
+    <span>${data.label}</span>
+  `;
+
+  option.onclick = () => {
+    languageState.support = code;
+    USER.supportLanguage = code;
+    saveUser();
+    updateSupportUI(code);
+    supportDropdown.classList.add("hidden");
+  };
+
+  supportDropdown.appendChild(option);
+});
+
+// Toggle dropdown
+supportPill.addEventListener("click", () => {
+  supportDropdown.classList.toggle("hidden");
+});
+
+function updateSupportUI(code) {
+  const data = SUPPORT_LANGUAGES[code];
+  supportShort.textContent = data.short;
+  supportLabel.textContent = data.label;
+}
   window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
   function renderLanguageButtons() {
   languageButtonsContainer.innerHTML = "";
