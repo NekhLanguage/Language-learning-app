@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.81";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.81.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.81-level7";
+  const APP_VERSION = "v0.9.81.1-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -65,7 +65,7 @@ const UI_STRINGS = {
     languagesTitle: "LANGUAGES",
     chooseLanguage: "Choose a language to study",
     quitLearning: "QUIT LEARNING",
-    sessionTitle: "TODAY'S SESSION"
+    sessionTitle: "TODAY'S SESSION",
     startSubtitle: "Language learning"
   },
   pt: {
@@ -73,7 +73,7 @@ const UI_STRINGS = {
     languagesTitle: "IDIOMAS",
     chooseLanguage: "Escolha um idioma para estudar",
     quitLearning: "SAIR",
-    sessionTitle: "SESSÃO DE HOJE"
+    sessionTitle: "SESSÃO DE HOJE",
     startSubtitle: "Aprendizado de idiomas"
   },
   ja: {
@@ -81,7 +81,7 @@ const UI_STRINGS = {
     languagesTitle: "言語",
     chooseLanguage: "学習する言語を選んでください",
     quitLearning: "終了",
-    sessionTitle: "今日のセッション"
+    sessionTitle: "今日のセッション",
     startSubtitle: "言語学習"
   },
   no: {
@@ -89,7 +89,7 @@ const UI_STRINGS = {
     languagesTitle: "SPRÅK",
     chooseLanguage: "Velg et språk å studere",
     quitLearning: "AVSLUTT",
-    sessionTitle: "DAGENS ØKT"
+    sessionTitle: "DAGENS ØKT",
     startSubtitle: "Språklæring"
   },
   ar: {
@@ -97,7 +97,7 @@ const UI_STRINGS = {
     languagesTitle: "اللغات",
     chooseLanguage: "اختر لغة للدراسة",
     quitLearning: "إنهاء",
-    sessionTitle: "جلسة اليوم"
+    sessionTitle: "جلسة اليوم",
     startSubtitle: "تعلم اللغات"
   }
 };
