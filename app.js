@@ -1,9 +1,9 @@
 // Zero to Hero – Strict Ladder + Dynamic Verb Conjugation
-// VERSION: v0.9.78-level6-devstart
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.78";
+// VERSION: v0.9.78.1-level6-devstart
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.78.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.78-level7";
+  const APP_VERSION = "v0.9.78.1-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -421,35 +421,35 @@ function buildSentence(lang, tpl) {
     }
 
     // Noun handling (NEW: indefinite article injection for English and portuguese)
-    if (meta.type === "noun") {
+   // Noun handling (indefinite articles per language)
+if (meta.type === "noun") {
   const surface = formOf(lang, cid);
 
   if (meta.countable) {
 
     // English
-    if (lang === "en" && meta.countable) {
-  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-  const article = entry?.article || "a";
-  return article + " " + surface;
-}
+    if (lang === "en") {
+      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+      const article = entry?.article || "a";
+      return article + " " + surface;
+    }
 
     // Portuguese
-    if (lang === "pt" && meta.countable) {
-  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-  const gender = entry?.gender;
-
-  if (gender === "f") return "uma " + surface;
-  return "um " + surface;
-}
+    if (lang === "pt") {
+      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+      const gender = entry?.gender;
+      return (gender === "f" ? "uma " : "um ") + surface;
     }
-    if (lang === "no" && meta.countable) {
-  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-  const gender = entry?.gender;
 
-  if (gender === "n") return "et " + surface;
-  if (gender === "f") return "ei " + surface;
-  return "en " + surface;
-}
+    // Norwegian
+    if (lang === "no") {
+      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+      const gender = entry?.gender;
+
+      if (gender === "n") return "et " + surface;
+      if (gender === "f") return "ei " + surface;
+      return "en " + surface;
+    }
   }
 
   return surface;
