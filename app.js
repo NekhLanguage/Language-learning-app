@@ -1,7 +1,7 @@
  import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.79";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.79-level7";
+  const APP_VERSION = "v0.9.80-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -59,7 +59,43 @@ const SUPPORT_LANGUAGES = {
   no: { short: "NO", label: "Norsk" },
   ar: { short: "AR", label: "العربية" }
 };
-
+const UI_STRINGS = {
+  en: {
+    openApp: "OPEN APP",
+    languagesTitle: "LANGUAGES",
+    chooseLanguage: "Choose a language to study",
+    quitLearning: "QUIT LEARNING",
+    sessionTitle: "TODAY'S SESSION"
+  },
+  pt: {
+    openApp: "ABRIR APP",
+    languagesTitle: "IDIOMAS",
+    chooseLanguage: "Escolha um idioma para estudar",
+    quitLearning: "SAIR",
+    sessionTitle: "SESSÃO DE HOJE"
+  },
+  ja: {
+    openApp: "アプリを開く",
+    languagesTitle: "言語",
+    chooseLanguage: "学習する言語を選んでください",
+    quitLearning: "終了",
+    sessionTitle: "今日のセッション"
+  },
+  no: {
+    openApp: "ÅPNE APP",
+    languagesTitle: "SPRÅK",
+    chooseLanguage: "Velg et språk å studere",
+    quitLearning: "AVSLUTT",
+    sessionTitle: "DAGENS ØKT"
+  },
+  ar: {
+    openApp: "افتح التطبيق",
+    languagesTitle: "اللغات",
+    chooseLanguage: "اختر لغة للدراسة",
+    quitLearning: "إنهاء",
+    sessionTitle: "جلسة اليوم"
+  }
+};
 const supportPill = document.getElementById("support-pill");
 const supportShort = document.getElementById("support-short");
 const supportLabel = document.getElementById("support-label");
@@ -68,7 +104,7 @@ const supportDropdown = document.getElementById("support-dropdown");
 // Initialize from USER state
 languageState.support = USER.supportLanguage || "en";
 updateSupportUI(languageState.support);
-
+updateUIStrings(languageState.support);
 // Build dropdown
 supportDropdown.innerHTML = "";
 
@@ -83,12 +119,13 @@ Object.entries(SUPPORT_LANGUAGES).forEach(([code, data]) => {
   `;
 
   option.onclick = () => {
-    languageState.support = code;
-    USER.supportLanguage = code;
-    saveUser();
-    updateSupportUI(code);
-    supportDropdown.classList.add("hidden");
-  };
+  languageState.support = code;
+  USER.supportLanguage = code;
+  saveUser();
+  updateSupportUI(code);
+  updateUIStrings(code);
+  supportDropdown.classList.add("hidden");
+};
 
   supportDropdown.appendChild(option);
 });
@@ -149,7 +186,24 @@ function updateSupportUI(code) {
   }
 
   let run = null;
+function updateUIStrings(lang) {
 
+  const strings = UI_STRINGS[lang] || UI_STRINGS.en;
+
+  document.getElementById("open-app").textContent = strings.openApp;
+
+  const languageTitle = document.querySelector("#language-screen .title");
+  const languageSubtitle = document.querySelector("#language-screen .subtitle");
+
+  languageTitle.textContent = strings.languagesTitle;
+  languageSubtitle.textContent = strings.chooseLanguage;
+
+  document.getElementById("hub-quit").textContent = strings.quitLearning;
+  document.getElementById("quit-learning").textContent = strings.quitLearning;
+
+  const sessionTitle = document.querySelector("#learning-screen .title");
+  sessionTitle.textContent = strings.sessionTitle;
+}
 
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
