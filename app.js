@@ -87,7 +87,7 @@ const UI_STRINGS = {
   no: {
     openApp: "ÅPNE APP",
     languagesTitle: "SPRÅK",
-    chooseLanguage: "Velg et språk å studere",
+    chooseLanguage: "Velg et språk å lære",
     quitLearning: "AVSLUTT",
     sessionTitle: "DAGENS ØKT",
     startSubtitle: "Språklæring"
