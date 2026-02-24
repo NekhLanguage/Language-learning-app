@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.80.1";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.80.2";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.80.1-level7";
+  const APP_VERSION = "v0.9.80.2-level7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -96,6 +96,43 @@ const UI_STRINGS = {
     sessionTitle: "جلسة اليوم"
   }
 };
+const HUB_LANGUAGE_NAMES = {
+  en: {
+    en: "English",
+    pt: "Portuguese",
+    ja: "Japanese",
+    no: "Norwegian",
+    ar: "Arabic"
+  },
+  pt: {
+    en: "Inglês",
+    pt: "Português",
+    ja: "Japonês",
+    no: "Norueguês",
+    ar: "Árabe"
+  },
+  ja: {
+    en: "英語",
+    pt: "ポルトガル語",
+    ja: "日本語",
+    no: "ノルウェー語",
+    ar: "アラビア語"
+  },
+  no: {
+    en: "Engelsk",
+    pt: "Portugisisk",
+    ja: "Japansk",
+    no: "Norsk",
+    ar: "Arabisk"
+  },
+  ar: {
+    en: "الإنجليزية",
+    pt: "البرتغالية",
+    ja: "اليابانية",
+    no: "النرويجية",
+    ar: "العربية"
+  }
+};
 const supportPill = document.getElementById("support-pill");
 const supportShort = document.getElementById("support-short");
 const supportLabel = document.getElementById("support-label");
@@ -124,6 +161,7 @@ Object.entries(SUPPORT_LANGUAGES).forEach(([code, data]) => {
   saveUser();
   updateSupportUI(code);
   updateUIStrings(code);
+  renderLanguageButtons();
   supportDropdown.classList.add("hidden");
 };
 
@@ -142,12 +180,18 @@ function updateSupportUI(code) {
 }
   window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
   function renderLanguageButtons() {
+
   languageButtonsContainer.innerHTML = "";
 
+  const support = languageState.support || "en";
+  const names = HUB_LANGUAGE_NAMES[support] || HUB_LANGUAGE_NAMES.en;
+
   AVAILABLE_LANGUAGES.forEach(lang => {
+
     const btn = document.createElement("button");
     btn.className = "primary";
-    btn.textContent = lang.label;
+
+    btn.textContent = names[lang.code] || lang.label;
 
     btn.onclick = () => enterLanguage(lang.code);
 
