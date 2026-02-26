@@ -1539,7 +1539,7 @@ checkBtn.onclick = () => {
     inputField.style.borderColor = "#4CAF50";
     feedbackDiv.innerHTML = `
       <div style="color:#4CAF50;">
-        ui("correct").<br/>
+        ${ui("correct")}.<br/>
         Proper form: <strong>${targetSentence}</strong>
       </div>`;
   }
@@ -1548,7 +1548,7 @@ checkBtn.onclick = () => {
     inputField.style.borderColor = "#D32F2F";
     feedbackDiv.innerHTML = `
       <div style="color:#D32F2F;">
-        ui("incorrect").<br/>
+        ${ui("incorrect")}.<br/>
         Correct answer: <strong>${targetSentence}</strong>
       </div>`;
   }
