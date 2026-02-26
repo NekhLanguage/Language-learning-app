@@ -1,7 +1,7 @@
  import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.81.2";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.81.2";
+  const APP_VERSION = "v0.9.81.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -574,6 +574,27 @@ saveUser();
   function safe(v) {
   return v ?? "";
 }
+function resolvePrompt(q, supportLang) {
+  if (!q) return "";
+
+  // Most flexible:
+  // - if prompt is a string, use it
+  // - if prompt is an object, use q.prompt[supportLang]
+  // - otherwise fall back to English or the first available language
+  const p = q.prompt;
+
+  if (typeof p === "string") return p;
+
+  if (p && typeof p === "object") {
+    if (typeof p[supportLang] === "string") return p[supportLang];
+    if (typeof p.en === "string") return p.en;
+
+    const first = Object.values(p).find(v => typeof v === "string");
+    if (first) return first;
+  }
+
+  return "";
+}
 function orderedConceptsForTemplate(tpl, lang) {
   // 1) Use explicit order if present
   const explicit = tpl.order?.[lang] || tpl.order?.default;
@@ -733,11 +754,13 @@ if (meta.type === "noun") {
 
     const options = shuffle([...q.choices]);
 
-     content.innerHTML = `
-    <p>${safe(buildSentence(targetLang, tpl))}</p>
-    <p><strong>${ui("inThisSentence")}</strong> ${safe(q.prompt?.[supportLang])}</p>
-      <div id="choices"></div>
-    `;
+     const promptText = resolvePrompt(q, supportLang);
+
+content.innerHTML = `
+  <p>${safe(buildSentence(targetLang, tpl))}</p>
+  <p><strong>${safe(promptText) || ui("inThisSentence")}</strong></p>
+  <div id="choices"></div>
+`;
 
     const container = document.getElementById("choices");
 
