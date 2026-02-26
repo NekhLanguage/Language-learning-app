@@ -738,7 +738,7 @@ if (meta.type === "noun") {
     <p><strong>${ui("inThisSentence")}</strong> ${safe(q.prompt?.[supportLang])}</p>
       <div id="choices"></div>
     `;
-    
+
     const container = document.getElementById("choices");
 
     options.forEach(opt => {
@@ -829,7 +829,7 @@ const blanked = blankedWords.join(" ");
 
 
     content.innerHTML = `
-      <p><strong>Original sentence:</strong></p>
+      <p><strong>ui("originalSentence"):</strong></p>
       <p>${supportSentence}</p>
       <hr>
       <p><strong>${ui("fillMissing")}</strong></p>
