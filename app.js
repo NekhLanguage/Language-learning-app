@@ -719,7 +719,7 @@ if (meta.type === "noun") {
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Level " + levelOf(targetConcept);
+  subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
     const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
     const role = meta?.type === "pronoun" ? "pronoun"
@@ -733,12 +733,12 @@ if (meta.type === "noun") {
 
     const options = shuffle([...q.choices]);
 
-    content.innerHTML = `
+     content.innerHTML = `
     <p>${safe(buildSentence(targetLang, tpl))}</p>
-    <p><strong>In this sentence:</strong> ${safe(q.prompt?.[supportLang])}</p>
+    <p><strong>${ui("inThisSentence")}</strong> ${safe(q.prompt?.[supportLang])}</p>
       <div id="choices"></div>
     `;
-
+    
     const container = document.getElementById("choices");
 
     options.forEach(opt => {
