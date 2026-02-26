@@ -557,8 +557,12 @@ saveUser();
     keys.includes("3_singular");
 
   if (onlyBaseAndThird) {
+  // English-style verbs (base + 3_singular)
+  if (subject.person === 3 && subject.number === "singular") {
     return verbData["3_singular"];
   }
+  return verbData.base;
+}
 
   // 4️⃣ Final fallback
   return verbData.base || verbCid;
