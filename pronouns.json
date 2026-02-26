@@ -48,6 +48,7 @@
       "person": 3,
       "number": "singular",
       "semantic_role": "reference",
+      "gender": "m",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -62,6 +63,7 @@
       "person": 3,
       "number": "singular",
       "semantic_role": "reference",
+      "gender": "f",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -254,6 +256,18 @@
           "deres"
         ]
       }
-    }
+    },
+    "ar": {
+  "label": "Arabic",
+  "forms": {
+    "FIRST_PERSON_SINGULAR": ["أنا"],
+    "SECOND_PERSON": ["أنت"],
+    "SECOND_PERSON_PLURAL": ["أنتم"],
+    "HE": ["هو"],
+    "SHE": ["هي"],
+    "FIRST_PERSON_PLURAL": ["نحن"],
+    "THIRD_PERSON_PLURAL": ["هم"]
+  }
+}
   }
 }

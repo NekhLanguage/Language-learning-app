@@ -705,6 +705,16 @@
     "PHONE": { "form": "telefon", "gender": "m" },
     "PANTS": { "form": "bukser" }
   }
+},
+"ar": {
+  "label": "Arabic",
+  "forms": {
+    "FOOD": { "form": "طعام" },
+    "WATER": { "form": "ماء" },
+    "BOOK": { "form": "كتاب" },
+    "PHONE": { "form": "هاتف" },
+    "JOB": { "form": "عمل" }
+  }
 }
   }
 }
