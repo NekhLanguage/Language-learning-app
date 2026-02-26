@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.81.1";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.81.2";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.81.1";
+  const APP_VERSION = "v0.9.81.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -829,7 +829,7 @@ const blanked = blankedWords.join(" ");
 
 
     content.innerHTML = `
-      <p><strong>ui("originalSentence"):</strong></p>
+      <p><strong>${ui("originalSentence")}</strong></p>
       <p>${supportSentence}</p>
       <hr>
       <p><strong>${ui("fillMissing")}</strong></p>
