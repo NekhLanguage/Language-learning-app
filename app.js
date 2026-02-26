@@ -59,47 +59,102 @@ const SUPPORT_LANGUAGES = {
   ar: { short: "AR", label: "العربية" }
 };
 const UI_STRINGS = {
-  
+
   en: {
     openApp: "OPEN APP",
     languagesTitle: "LANGUAGES",
     chooseLanguage: "Choose a language to study",
     quitLearning: "QUIT LEARNING",
     sessionTitle: "TODAY'S SESSION",
-    startSubtitle: "Language learning"
+    startSubtitle: "Language learning",
+
+    chooseTranslation: "Choose the correct translation for:",
+    originalSentence: "Original sentence:",
+    fillMissing: "Fill in the missing word:",
+    inThisSentence: "In this sentence:",
+    check: "Check",
+    continue: "Continue",
+    correct: "Correct.",
+    incorrect: "Incorrect.",
+    level: "Level"
   },
+
   pt: {
     openApp: "ABRIR APP",
     languagesTitle: "IDIOMAS",
     chooseLanguage: "Escolha um idioma para estudar",
     quitLearning: "SAIR",
     sessionTitle: "SESSÃO DE HOJE",
-    startSubtitle: "Aprendizado de idiomas"
+    startSubtitle: "Aprendizado de idiomas",
+
+    chooseTranslation: "Escolha a tradução correta para:",
+    originalSentence: "Frase original:",
+    fillMissing: "Preencha a palavra que falta:",
+    inThisSentence: "Nesta frase:",
+    check: "Verificar",
+    continue: "Continuar",
+    correct: "Correto.",
+    incorrect: "Incorreto.",
+    level: "Nível"
   },
+
   ja: {
     openApp: "アプリを開く",
     languagesTitle: "言語",
     chooseLanguage: "学習する言語を選んでください",
     quitLearning: "終了",
     sessionTitle: "今日のセッション",
-    startSubtitle: "言語学習"
+    startSubtitle: "言語学習",
+
+    chooseTranslation: "正しい翻訳を選んでください:",
+    originalSentence: "元の文:",
+    fillMissing: "空欄を埋めてください:",
+    inThisSentence: "この文では:",
+    check: "確認",
+    continue: "続ける",
+    correct: "正解。",
+    incorrect: "不正解。",
+    level: "レベル"
   },
+
   no: {
     openApp: "ÅPNE APP",
     languagesTitle: "SPRÅK",
-    chooseLanguage: "Velg et språk å lære",
+    chooseLanguage: "Velg et språk å studere",
     quitLearning: "AVSLUTT",
     sessionTitle: "DAGENS ØKT",
-    startSubtitle: "Språklæring"
+    startSubtitle: "Språklæring",
+
+    chooseTranslation: "Velg riktig oversettelse for:",
+    originalSentence: "Original setning:",
+    fillMissing: "Fyll inn det manglende ordet:",
+    inThisSentence: "I denne setningen:",
+    check: "Sjekk",
+    continue: "Fortsett",
+    correct: "Riktig.",
+    incorrect: "Feil.",
+    level: "Nivå"
   },
+
   ar: {
     openApp: "افتح التطبيق",
     languagesTitle: "اللغات",
     chooseLanguage: "اختر لغة للدراسة",
     quitLearning: "إنهاء",
     sessionTitle: "جلسة اليوم",
-    startSubtitle: "تعلم اللغات"
+    startSubtitle: "تعلم اللغات",
+
+    chooseTranslation: "اختر الترجمة الصحيحة لـ:",
+    originalSentence: "الجملة الأصلية:",
+    fillMissing: "املأ الكلمة الناقصة:",
+    inThisSentence: "في هذه الجملة:",
+    check: "تحقق",
+    continue: "متابعة",
+    correct: "صحيح.",
+    incorrect: "خطأ.",
+    level: "المستوى"
   }
+
 };
 const HUB_LANGUAGE_NAMES = {
   en: {
@@ -266,7 +321,11 @@ if (startSubtitle) {
       : strings.startSubtitle + " " + APP_VERSION;
 }
 }
-
+function ui(key) {
+  const lang = languageState.support || "en";
+  const strings = UI_STRINGS[lang] || UI_STRINGS.en;
+  return strings[key] || UI_STRINGS.en[key] || key;
+}
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
     run.progress[cid] = {
@@ -637,7 +696,7 @@ if (meta.type === "noun") {
 
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = "Level " + levelOf(targetConcept);
+    subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
     content.innerHTML = `
   <h2>${safe(formOf(targetLang, targetConcept))}</h2>
@@ -769,7 +828,7 @@ const blanked = blankedWords.join(" ");
       <p><strong>Original sentence:</strong></p>
       <p>${supportSentence}</p>
       <hr>
-      <p><strong>Fill in the missing word:</strong></p>
+      <p><strong>${ui("fillMissing")}</strong></p>
       <p>${blanked}</p>
       <div id="choices"></div>
     `;
@@ -908,7 +967,7 @@ const blanked = blankedWords.join(" ");
     if (!options) return renderNext(targetLang, supportLang);
 
     content.innerHTML = `
-      <p>Choose the correct translation for:</p>
+      <p>${ui("chooseTranslation")}</p>
       <h2>${promptSupport}</h2>
       <div id="choices"></div>
     `;
@@ -1002,7 +1061,7 @@ if (run.recentTemplates.length > 3) {
     </div>
 
     <div style="margin-top:30px;text-align:center;">
-      <button id="check-matches">Check</button>
+      <button id="check-matches">${ui("check")}</button>
     </div>
 
   </div>
@@ -1248,7 +1307,7 @@ const correctWords = ordered.map(cid => {
     <div id="word-bank" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;"></div>
 
     <div style="text-align:center;">
-      <button id="check-l6">Check</button>
+      <button id="check-l6">${ui("check")}</button>
     </div>
   `;
 
@@ -1402,7 +1461,7 @@ const targetSentence = safe(buildSentence(targetLang, tpl));
     </div>
 
     <div style="text-align:center;">
-      <button id="check-l7">Check</button>
+      <button id="check-l7">${ui("check")}</button>
     </div>
 
     <div id="l7-feedback" style="margin-top:15px;text-align:center;"></div>
@@ -1476,7 +1535,7 @@ checkBtn.onclick = () => {
     inputField.style.borderColor = "#4CAF50";
     feedbackDiv.innerHTML = `
       <div style="color:#4CAF50;">
-        Correct.<br/>
+        ui("correct").<br/>
         Proper form: <strong>${targetSentence}</strong>
       </div>`;
   }
@@ -1485,7 +1544,7 @@ checkBtn.onclick = () => {
     inputField.style.borderColor = "#D32F2F";
     feedbackDiv.innerHTML = `
       <div style="color:#D32F2F;">
-        Incorrect.<br/>
+        ui("incorrect").<br/>
         Correct answer: <strong>${targetSentence}</strong>
       </div>`;
   }
