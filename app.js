@@ -748,6 +748,9 @@ if (meta.type === "noun") {
                : "object";
 
     const q = tpl.questions?.[role];
+if (!q) return renderNext(targetLang, supportLang);
+
+// Always resolve prompt in SUPPORT language
 
     // If template doesn't support this role, try another prompt rather than crashing
     if (!q?.choices?.length) return renderNext(targetLang, supportLang);
@@ -758,7 +761,7 @@ if (meta.type === "noun") {
 
 content.innerHTML = `
   <p>${safe(buildSentence(targetLang, tpl))}</p>
-  <p><strong>${safe(promptText) || ui("inThisSentence")}</strong></p>
+  <p><strong>${safe(promptText)}</strong></p>
   <div id="choices"></div>
 `;
 
