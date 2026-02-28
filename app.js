@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.83";
+  const APP_VERSION = "v0.9.83.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -402,14 +402,19 @@ function passesSpacingRule(cid) {
   ];
 
   run = {
-    released: [],
-    releaseQueue: [...allConcepts],
-    releaseIndex: 0,
-    progress: {},
-    templateProgress: {},
-    exerciseCounter: 0,
-    recentTemplates: []
-  };
+  released: [],
+  releaseQueue: [...allConcepts],
+  releaseIndex: 0,
+  progress: {},
+  templateProgress: {},
+  exerciseCounter: 0,
+  recentTemplates: [],
+
+  sessionNumber: 1,
+  sessionLevelUps: {},      // concept -> count this session
+  sessionAttempts: {},      // concept -> count at current level
+  sessionComplete: false
+};
 
   seedInitialCore();
 }
@@ -456,29 +461,63 @@ function seedInitialCore() {
   function applyResult(cid, correct) {
   const state = ensureProgress(cid);
 
-  // 🔒 Spacing tracking (must happen for both correct and incorrect)
+  // 🔒 Spacing tracking
   state.lastShownAt = run.exerciseCounter;
   state.lastResult = correct;
+
+  // Ensure session tracking exists
+  if (!run.sessionAttempts) run.sessionAttempts = {};
+  if (!run.sessionLevelUps) run.sessionLevelUps = {};
+  if (run.sessionComplete === undefined) run.sessionComplete = false;
+
+  // Track attempts this session
+  run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
 
   if (!correct) {
     state.streak = 0;
     state.cooldown = 2;
-    return;
-  }
+  } else {
+    state.streak++;
+    state.cooldown = 4;
 
-  state.streak++;
-  state.cooldown = 4;
+    let leveledUp = false;
 
-  if (state.streak >= 2) {
-    if (state.level < MAX_LEVEL) {
-      state.level++;
-    } else {
-      state.completed = true;
+    if (state.streak >= 2) {
+      if (state.level < MAX_LEVEL) {
+        state.level++;
+        leveledUp = true;
+      } else {
+        state.completed = true;
+      }
+      state.streak = 0;
     }
-    state.streak = 0;
+
+    if (leveledUp) {
+      run.sessionLevelUps[cid] = (run.sessionLevelUps[cid] || 0) + 1;
+    }
   }
+
+  // 🔥 RULE B — Check ALL active concepts for fatigue
+
+  const activeConcepts = run.released.filter(c => {
+    const s = ensureProgress(c);
+    return !s.completed;
+  });
+
+  const allFatigued =
+    activeConcepts.length > 0 &&
+    activeConcepts.every(c => {
+      const attempts = run.sessionAttempts[c] || 0;
+      const levelUps = run.sessionLevelUps[c] || 0;
+      return attempts >= 12 || levelUps >= 4;
+    });
+
+  if (allFatigued) {
+    run.sessionComplete = true;
+  }
+
   USER.runs[languageState.target] = run;
-saveUser();
+  saveUser();
 }
 
 
@@ -1629,11 +1668,38 @@ if (!USER.runs[langCode]) {
 
   renderNext(languageState.target, languageState.support);
 }
+function endSession(targetLang, supportLang) {
+
+  run.sessionNumber++;
+  run.sessionComplete = false;
+  run.sessionAttempts = {};
+  run.sessionLevelUps = {};
+
+  USER.runs[languageState.target] = run;
+  saveUser();
+
+  content.innerHTML = `
+    <h2>Session Complete</h2>
+    <p>Ready for the next session?</p>
+    <button id="start-next-session">${ui("continue")}</button>
+  `;
+
+  document.getElementById("start-next-session").onclick = () => {
+    renderNext(targetLang, supportLang);
+  };
+}
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
   // -------------------------
   function renderNext(targetLang, supportLang) {
 
+  if (!run) return;
+
+  if (run.sessionComplete) {
+    return endSession(targetLang, supportLang);
+  }
+
+  run.exerciseCounter++;
   if (!run) return;
 run.exerciseCounter++;
  for (let attempts = 0; attempts < 30; attempts++) {
