@@ -812,7 +812,13 @@ if (!q) return renderNext(targetLang, supportLang);
     // If template doesn't support this role, try another prompt rather than crashing
     if (!q?.choices?.length) return renderNext(targetLang, supportLang);
 
-    const options = shuffle([...q.choices]);
+    const options = shuffle(
+  q.choices.filter(opt => {
+    if (!run.released.includes(opt)) return false;
+    const st = ensureProgress(opt);
+    return !st.completed;
+  })
+);
 
      const promptText = resolvePrompt(q, supportLang);
 
