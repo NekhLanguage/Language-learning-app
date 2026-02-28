@@ -1677,9 +1677,45 @@ if (!USER.runs[langCode]) {
 
   renderNext(languageState.target, languageState.support);
 }
+function releaseNextBatch(count = 5) {
+
+  const requiredTypes = ["pronoun", "verb", "noun"];
+  const releasedNow = new Set();
+
+  // Ensure at least one structural concept if available
+  requiredTypes.forEach(type => {
+    const next = run.releaseQueue.find(cid => {
+      const meta = window.GLOBAL_VOCAB.concepts[cid];
+      return meta?.type === type && !releasedNow.has(cid);
+    });
+
+    if (next && releasedNow.size < count) {
+      run.released.push(next);
+      ensureProgress(next);
+      releasedNow.add(next);
+    }
+  });
+
+  // Fill remaining slots
+  for (const cid of run.releaseQueue) {
+    if (releasedNow.size >= count) break;
+    if (releasedNow.has(cid)) continue;
+
+    run.released.push(cid);
+    ensureProgress(cid);
+    releasedNow.add(cid);
+  }
+
+  run.releaseQueue = run.releaseQueue.filter(cid => !releasedNow.has(cid));
+}
 function endSession(targetLang, supportLang) {
 
   run.sessionNumber++;
+
+  // Release next 5 concepts
+  releaseNextBatch(5);
+
+  // Reset session tracking
   run.sessionComplete = false;
   run.sessionAttempts = {};
   run.sessionLevelUps = {};
@@ -1689,7 +1725,7 @@ function endSession(targetLang, supportLang) {
 
   content.innerHTML = `
     <h2>Session Complete</h2>
-    <p>Ready for the next session?</p>
+    <p>Session ${run.sessionNumber - 1} finished.</p>
     <button id="start-next-session">${ui("continue")}</button>
   `;
 
