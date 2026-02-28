@@ -818,8 +818,8 @@ if (meta.type === "noun") {
 
   // 🔥 Enforce strict 4-option minimum
   if (releasedOptions.length < 4) {
-    return renderNext(targetLang, supportLang);
-  }
+  return null;
+}
 
   const options = shuffle(releasedOptions).slice(0, 4);
 
@@ -1700,7 +1700,7 @@ function endSession(targetLang, supportLang) {
   // -------------------------
   // Next item (with guard to avoid recursive stack blow-ups)
   // -------------------------
-  function renderNext(targetLang, supportLang) {
+function renderNext(targetLang, supportLang) {
 
   if (!run) return;
 
@@ -1709,103 +1709,83 @@ function endSession(targetLang, supportLang) {
   }
 
   run.exerciseCounter++;
-  if (!run) return;
-run.exerciseCounter++;
- for (let attempts = 0; attempts < 30; attempts++) {
 
-  const tpl = chooseTemplate();
-  if (!tpl) {
-    content.innerHTML = "All concepts completed.";
-    return;
-  }
-  // 🔒 Skip fully completed Level 7 templates
-if (run.templateProgress[tpl.template_id]?.completed) {
-  continue;
-}
+  for (let attempts = 0; attempts < 30; attempts++) {
 
-// 🔒 Future prerequisite gating (inactive unless "requires" exists)
-if (tpl.requires) {
-  const prereq = run.templateProgress[tpl.requires];
-  if (!prereq || prereq.reinforcementStage < 3) {
-    continue;
-  }
-}
-
-      const targetConcept = determineTargetConcept(tpl);
-const level = levelOf(targetConcept);
-
-// 🔒 Level 7 template spacing
-if (level >= 7) {
-  const tState = ensureTemplateProgress(tpl);
-  const distance = run.exerciseCounter - tState.lastShownAt;
-
-  if (tState.reinforcementStage === 0 && distance < 5) continue;
-  if (tState.reinforcementStage === 1 && distance < 10) continue;
-  if (tState.reinforcementStage === 2 && distance < 40) continue;
-}
-
-// Concept-based spacing only for levels below 6
-if (level < 6) {
-  if (!passesSpacingRule(targetConcept)) {
-    continue;
-  }
-}
-
-// Template-based spacing for Level 6+
-if (level >= 6) {
-  const tState = ensureTemplateProgress(tpl);
-
-  const distance = run.exerciseCounter - tState.lastShownAt;
-
-  if (tState.lastShownAt !== -Infinity && distance < 4) {
-    continue;
-  }
-}
-
-      // Level 3/4 need recognition option integrity; if not possible, try again.
-      if (level === 3 || level === 4) {
-        const desired = level === 4 ? 6 : 4;
-        const opts = buildRecognitionOptions(tpl, targetConcept, desired);
-        if (!opts) continue;
-      }
-
-      if (level === 1) return renderExposure(targetLang, supportLang, tpl, targetConcept);
-      if (level === 2) return renderComprehension(targetLang, supportLang, tpl, targetConcept);
-      if (level === 3) return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-      if (level === 4) return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
-      if (level === 5) return renderMatchingL5(targetLang, supportLang);
-      if (level === 6) return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-      if (level === 7) return renderFreeProductionL7(targetLang, supportLang, tpl);
-
-
-// Fallback safeguard (should never trigger if ladder is correct)
-return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+    const tpl = chooseTemplate();
+    if (!tpl) {
+      content.innerHTML = "All concepts completed.";
+      return;
     }
 
-    // Fallback Phase — Prevent Freeze
+    if (run.templateProgress[tpl.template_id]?.completed) {
+      continue;
+    }
 
-// 1. Find lowest-level incomplete concept
-const candidates = run.released
-  .filter(cid => !ensureProgress(cid).completed)
-  .sort((a, b) => levelOf(a) - levelOf(b));
+    if (tpl.requires) {
+      const prereq = run.templateProgress[tpl.requires];
+      if (!prereq || prereq.reinforcementStage < 3) {
+        continue;
+      }
+    }
 
-if (candidates.length > 0) {
-  const fallbackConcept = candidates[0];
+    const targetConcept = determineTargetConcept(tpl);
+    const level = levelOf(targetConcept);
 
-  const fallbackTemplate = TEMPLATE_CACHE.find(tpl =>
-    tpl.concepts.includes(fallbackConcept)
-  );
+    // Spacing rules
+    if (level < 6 && !passesSpacingRule(targetConcept)) {
+      continue;
+    }
 
-  if (fallbackTemplate) {
-    return renderExposure(targetLang, supportLang, fallbackTemplate, fallbackConcept);
+    if (level >= 6) {
+      const tState = ensureTemplateProgress(tpl);
+      const distance = run.exerciseCounter - tState.lastShownAt;
+      if (tState.lastShownAt !== -Infinity && distance < 4) {
+        continue;
+      }
+    }
+
+    // Recognition integrity
+    if (level === 3 || level === 4) {
+      const desired = level === 4 ? 6 : 4;
+      const opts = buildRecognitionOptions(tpl, targetConcept, desired);
+      if (!opts) continue;
+    }
+
+    if (level === 1) {
+      return renderExposure(targetLang, supportLang, tpl, targetConcept);
+    }
+
+    if (level === 2) {
+
+      const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
+
+      if (result === null) {
+
+        const anyLevel1 = run.released.some(cid => levelOf(cid) === 1);
+
+        if (!anyLevel1) {
+          run.sessionComplete = true;
+          return endSession(targetLang, supportLang);
+        }
+
+        continue;
+      }
+
+      return result;
+    }
+
+    if (level === 3) return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+    if (level === 4) return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+    if (level === 5) return renderMatchingL5(targetLang, supportLang);
+    if (level === 6) return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+    if (level === 7) return renderFreeProductionL7(targetLang, supportLang, tpl);
   }
+
+  // If we reach here, session should end
+  run.sessionComplete = true;
+  return endSession(targetLang, supportLang);
 }
-
-// Absolute fallback (should never happen)
-content.innerHTML = `
-  <p><strong>${ui("noEligibleTitle") || "No eligible items right now."}</strong></p>
-`;
-  }
 
   openAppBtn.addEventListener("click", () => {
   startScreen.classList.remove("active");
