@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.81.2";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.82";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.81.3";
+  const APP_VERSION = "v0.9.82";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -611,7 +611,25 @@ function orderedConceptsForTemplate(tpl, lang) {
     return t && t !== "pronoun" && t !== "verb";
   });
 
-  const isSOV = (lang === "ja"); // later: make this a map or config
+  const WORD_ORDER = {
+  ja: "SOV",
+  ar: "VSO",
+  en: "SVO",
+  pt: "SVO",
+  no: "SVO"
+};
+
+const orderType = WORD_ORDER[lang] || "SVO";
+
+let ordered;
+
+if (orderType === "SOV") {
+  ordered = [pronoun, object, verb];
+} else if (orderType === "VSO") {
+  ordered = [verb, pronoun, object];
+} else {
+  ordered = [pronoun, verb, object];
+}
 
   const ordered = isSOV
     ? [pronoun, object, verb]
@@ -1687,11 +1705,29 @@ if (level >= 6) {
 return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
     }
 
-    // If we get here, it's almost always: "not enough eligible distractors at currentLevel"
-    content.innerHTML = `
-      <p><strong>No eligible items right now.</strong></p>
-      <p>This usually means the strict distractor rule can't be satisfied yet (needs more concepts at the same level).</p>
-    `;
+    // Fallback Phase — Prevent Freeze
+
+// 1. Find lowest-level incomplete concept
+const candidates = run.released
+  .filter(cid => !ensureProgress(cid).completed)
+  .sort((a, b) => levelOf(a) - levelOf(b));
+
+if (candidates.length > 0) {
+  const fallbackConcept = candidates[0];
+
+  const fallbackTemplate = TEMPLATE_CACHE.find(tpl =>
+    tpl.concepts.includes(fallbackConcept)
+  );
+
+  if (fallbackTemplate) {
+    return renderExposure(targetLang, supportLang, fallbackTemplate, fallbackConcept);
+  }
+}
+
+// Absolute fallback (should never happen)
+content.innerHTML = `
+  <p><strong>${ui("noEligibleTitle") || "No eligible items right now."}</strong></p>
+`;
   }
 
   openAppBtn.addEventListener("click", () => {
