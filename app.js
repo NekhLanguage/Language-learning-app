@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.8.1";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.82.1";
+  const APP_VERSION = "v0.9.83";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -397,25 +397,26 @@ function passesSpacingRule(cid) {
   }
 
   function initRun() {
-    const allConcepts = [
-      ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
-    ];
+  const allConcepts = [
+    ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
+  ];
 
-   run = {
-  released: [],
-  future: [...allConcepts],
-  progress: {},
-  templateProgress: {},        // ← ADD
-  exerciseCounter: 0,
-  recentTemplates: []
-};
+  run = {
+    released: [],
+    releaseQueue: [...allConcepts],
+    releaseIndex: 0,
+    progress: {},
+    templateProgress: {},
+    exerciseCounter: 0,
+    recentTemplates: []
+  };
 
-    batchSeed();
-  }
-
- function batchSeed() {
+  seedInitialCore();
+}
+function seedInitialCore() {
 
   const initialBatch = [
+    // Pronouns
     "FIRST_PERSON_SINGULAR",
     "SECOND_PERSON",
     "SECOND_PERSON_PLURAL",
@@ -423,7 +424,11 @@ function passesSpacingRule(cid) {
     "SHE",
     "FIRST_PERSON_PLURAL",
     "THIRD_PERSON_PLURAL",
+
+    // Core verbs
     "EAT", "DRINK", "READ", "SEE", "HAVE",
+
+    // Core nouns
     "FOOD", "WATER", "BOOK", "PHONE", "JOB"
   ];
 
@@ -434,9 +439,10 @@ function passesSpacingRule(cid) {
     }
   });
 
-  run.future = run.future.filter(cid => !run.released.includes(cid));
+  // Advance releaseIndex so we don't re-release these later
+  run.releaseQueue = run.releaseQueue.filter(cid => !run.released.includes(cid));
 
-  // 🔒 DEV START LOGIC (only affects initial state, not routing)
+  // DEV START LOGIC
   if (DEV_START_AT_LEVEL_7) {
     run.released.forEach(cid => {
       const state = ensureProgress(cid);
