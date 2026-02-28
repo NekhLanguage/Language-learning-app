@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.82";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.8.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.82";
+  const APP_VERSION = "v0.9.82.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -630,10 +630,6 @@ if (orderType === "SOV") {
 } else {
   ordered = [pronoun, verb, object];
 }
-
-  const ordered = isSOV
-    ? [pronoun, object, verb]
-    : [pronoun, verb, object];
 
   // Add any remaining concepts (so we don't silently drop extras later)
   const used = new Set(ordered.filter(Boolean));
