@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.1";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.2";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.83.1";
+  const APP_VERSION = "v0.9.83.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -420,34 +420,35 @@ function passesSpacingRule(cid) {
 }
 function seedInitialCore() {
 
-  const initialBatch = [
-    // Pronouns
-    "FIRST_PERSON_SINGULAR",
-    "SECOND_PERSON",
-    "SECOND_PERSON_PLURAL",
-    "HE",
-    "SHE",
-    "FIRST_PERSON_PLURAL",
-    "THIRD_PERSON_PLURAL",
+  const requiredTypes = ["pronoun", "verb", "noun"];
+  const releasedNow = new Set();
 
-    // Core verbs
-    "EAT", "DRINK", "READ", "SEE", "HAVE",
+  // Ensure at least one of each structural type
+  requiredTypes.forEach(type => {
+    const next = run.releaseQueue.find(cid => {
+      const meta = window.GLOBAL_VOCAB.concepts[cid];
+      return meta?.type === type && !releasedNow.has(cid);
+    });
 
-    // Core nouns
-    "FOOD", "WATER", "BOOK", "PHONE", "JOB"
-  ];
-
-  initialBatch.forEach(cid => {
-    if (!run.released.includes(cid)) {
-      run.released.push(cid);
-      ensureProgress(cid);
+    if (next) {
+      run.released.push(next);
+      ensureProgress(next);
+      releasedNow.add(next);
     }
   });
 
-  // Advance releaseIndex so we don't re-release these later
-  run.releaseQueue = run.releaseQueue.filter(cid => !run.released.includes(cid));
+  // Fill remaining slots up to 5
+  for (const cid of run.releaseQueue) {
+    if (releasedNow.size >= 5) break;
+    if (releasedNow.has(cid)) continue;
 
-  // DEV START LOGIC
+    run.released.push(cid);
+    ensureProgress(cid);
+    releasedNow.add(cid);
+  }
+
+  run.releaseQueue = run.releaseQueue.filter(cid => !releasedNow.has(cid));
+
   if (DEV_START_AT_LEVEL_7) {
     run.released.forEach(cid => {
       const state = ensureProgress(cid);
@@ -461,16 +462,14 @@ function seedInitialCore() {
   function applyResult(cid, correct) {
   const state = ensureProgress(cid);
 
-  // 🔒 Spacing tracking
+  // Spacing tracking
   state.lastShownAt = run.exerciseCounter;
   state.lastResult = correct;
 
-  // Ensure session tracking exists
   if (!run.sessionAttempts) run.sessionAttempts = {};
   if (!run.sessionLevelUps) run.sessionLevelUps = {};
   if (run.sessionComplete === undefined) run.sessionComplete = false;
 
-  // Track attempts this session
   run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
 
   if (!correct) {
@@ -497,8 +496,7 @@ function seedInitialCore() {
     }
   }
 
-  // 🔥 RULE B — Check ALL active concepts for fatigue
-
+  // 🔥 RULE B with NEW thresholds
   const activeConcepts = run.released.filter(c => {
     const s = ensureProgress(c);
     return !s.completed;
@@ -509,7 +507,7 @@ function seedInitialCore() {
     activeConcepts.every(c => {
       const attempts = run.sessionAttempts[c] || 0;
       const levelUps = run.sessionLevelUps[c] || 0;
-      return attempts >= 12 || levelUps >= 4;
+      return attempts >= 8 || levelUps >= 3;
     });
 
   if (allFatigued) {
