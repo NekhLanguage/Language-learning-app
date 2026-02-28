@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.2";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.3";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.83.2";
+  const APP_VERSION = "v0.9.83.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -797,52 +797,57 @@ if (meta.type === "noun") {
   }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
+
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
-    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-    const role = meta?.type === "pronoun" ? "pronoun"
-               : meta?.type === "verb" ? "verb"
-               : "object";
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+  const role =
+    meta?.type === "pronoun" ? "pronoun" :
+    meta?.type === "verb" ? "verb" :
+    "object";
 
-    const q = tpl.questions?.[role];
-if (!q) return renderNext(targetLang, supportLang);
+  const q = tpl.questions?.[role];
+  if (!q) return renderNext(targetLang, supportLang);
 
-// Always resolve prompt in SUPPORT language
-
-    // If template doesn't support this role, try another prompt rather than crashing
-    if (!q?.choices?.length) return renderNext(targetLang, supportLang);
-
-    const options = shuffle(
-  q.choices.filter(opt => {
+  // 🔒 Strict option filtering (released + not completed)
+  const releasedOptions = q.choices.filter(opt => {
     if (!run.released.includes(opt)) return false;
     const st = ensureProgress(opt);
     return !st.completed;
-  })
-);
+  });
 
-     const promptText = resolvePrompt(q, supportLang);
-
-content.innerHTML = `
-  <p>${safe(buildSentence(targetLang, tpl))}</p>
-  <p><strong>${safe(promptText)}</strong></p>
-  <div id="choices"></div>
-`;
-
-    const container = document.getElementById("choices");
-
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = formOf(supportLang, opt);
-      btn.onclick = () => {
-        const correct = opt === q.answer;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-      container.appendChild(btn);
-    });
+  // 🔥 Enforce strict 4-option minimum
+  if (releasedOptions.length < 4) {
+    return renderNext(targetLang, supportLang);
   }
+
+  const options = shuffle(releasedOptions).slice(0, 4);
+
+  const promptText = resolvePrompt(q, supportLang);
+
+  content.innerHTML = `
+    <p>${safe(buildSentence(targetLang, tpl))}</p>
+    <p><strong>${safe(promptText)}</strong></p>
+    <div id="choices"></div>
+  `;
+
+  const container = document.getElementById("choices");
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = formOf(supportLang, opt);
+
+    btn.onclick = () => {
+      const correct = opt === q.answer;
+      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+      setTimeout(() => renderNext(targetLang, supportLang), 600);
+    };
+
+    container.appendChild(btn);
+  });
+}
 
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
