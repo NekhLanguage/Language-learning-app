@@ -581,7 +581,11 @@ function seedInitialCore() {
   if (subject.person && subject.number) {
     key = `${subject.person}_${subject.number}`;
   }
-
+// Portuguese: "você/vocês" conjugate like 3rd person
+if (lang === "pt") {
+  if (subjectCid === "SECOND_PERSON") key = "3_singular";
+  if (subjectCid === "SECOND_PERSON_PLURAL") key = "3_plural";
+}
   // 1️⃣ Exact match (preferred)
   if (verbData[key]) {
     return verbData[key];
