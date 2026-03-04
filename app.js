@@ -1737,9 +1737,31 @@ function endSession(targetLang, supportLang) {
     renderNext(targetLang, supportLang);
   };
 }
-  // -------------------------
-  // Next item (with guard to avoid recursive stack blow-ups)
-  // -------------------------
+  
+function chooseConcept() {
+
+  const candidates = run.released.filter(cid => {
+    const st = ensureProgress(cid);
+    return !st.completed && passesSpacingRule(cid);
+  });
+
+  if (!candidates.length) return null;
+
+  // prioritize lowest level
+  candidates.sort((a, b) => levelOf(a) - levelOf(b));
+
+  return candidates[0];
+}
+function chooseTemplateForConcept(cid) {
+
+  const eligible = TEMPLATE_CACHE.filter(tpl =>
+    tpl.concepts.includes(cid) && templateEligible(tpl)
+  );
+
+  if (!eligible.length) return null;
+
+  return eligible[Math.floor(Math.random() * eligible.length)];
+}
 function renderNext(targetLang, supportLang) {
 
   if (!run) return;
@@ -1748,83 +1770,73 @@ function renderNext(targetLang, supportLang) {
     return endSession(targetLang, supportLang);
   }
 
-  run.exerciseCounter++;
+  const targetConcept = chooseConcept();
 
-  for (let attempts = 0; attempts < 30; attempts++) {
-
-    const tpl = chooseTemplate();
-    if (!tpl) {
-      content.innerHTML = "All concepts completed.";
-      return;
-    }
-
-    if (run.templateProgress[tpl.template_id]?.completed) {
-      continue;
-    }
-
-    if (tpl.requires) {
-      const prereq = run.templateProgress[tpl.requires];
-      if (!prereq || prereq.reinforcementStage < 3) {
-        continue;
-      }
-    }
-
-    const targetConcept = determineTargetConcept(tpl);
-    const level = levelOf(targetConcept);
-
-    // Spacing rules
-    if (level < 6 && !passesSpacingRule(targetConcept)) {
-      continue;
-    }
-
-    if (level >= 6) {
-      const tState = ensureTemplateProgress(tpl);
-      const distance = run.exerciseCounter - tState.lastShownAt;
-      if (tState.lastShownAt !== -Infinity && distance < 4) {
-        continue;
-      }
-    }
-
-    // Recognition integrity
-    if (level === 3 || level === 4) {
-      const desired = level === 4 ? 6 : 4;
-      const opts = buildRecognitionOptions(tpl, targetConcept, desired);
-      if (!opts) continue;
-    }
-
-    if (level === 1) {
-      return renderExposure(targetLang, supportLang, tpl, targetConcept);
-    }
-
-    if (level === 2) {
-
-      const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
-
-      if (result === null) {
-
-        const anyLevel1 = run.released.some(cid => levelOf(cid) === 1);
-
-        if (!anyLevel1) {
-          run.sessionComplete = true;
-          return endSession(targetLang, supportLang);
-        }
-
-        continue;
-      }
-
-      return result;
-    }
-
-    if (level === 3) return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-    if (level === 4) return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
-    if (level === 5) return renderMatchingL5(targetLang, supportLang);
-    if (level === 6) return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-    if (level === 7) return renderFreeProductionL7(targetLang, supportLang, tpl);
+  if (!targetConcept) {
+    run.sessionComplete = true;
+    return endSession(targetLang, supportLang);
   }
 
-  // If we reach here, session should end
-  run.sessionComplete = true;
-  return endSession(targetLang, supportLang);
+  const tpl = chooseTemplateForConcept(targetConcept);
+
+  if (!tpl) {
+    run.sessionComplete = true;
+    return endSession(targetLang, supportLang);
+  }
+
+  const level = levelOf(targetConcept);
+
+  // Level 2 density check
+  if (level === 2) {
+
+    const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
+
+    if (result === null) {
+
+      const anyLevel1 = run.released.some(cid => levelOf(cid) === 1);
+
+      if (!anyLevel1) {
+        run.sessionComplete = true;
+        return endSession(targetLang, supportLang);
+      }
+
+      return renderNext(targetLang, supportLang);
+    }
+
+    run.exerciseCounter++;
+    return;
+  }
+
+  if (level === 1) {
+    run.exerciseCounter++;
+    return renderExposure(targetLang, supportLang, tpl, targetConcept);
+  }
+
+  if (level === 3) {
+    run.exerciseCounter++;
+    return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+  }
+
+  if (level === 4) {
+    run.exerciseCounter++;
+    return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+  }
+
+  if (level === 5) {
+    run.exerciseCounter++;
+    return renderMatchingL5(targetLang, supportLang);
+  }
+
+  if (level === 6) {
+    run.exerciseCounter++;
+    return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+  }
+
+  if (level === 7) {
+    run.exerciseCounter++;
+    return renderFreeProductionL7(targetLang, supportLang, tpl);
+  }
+}
 }
 
   openAppBtn.addEventListener("click", () => {
@@ -1847,4 +1859,4 @@ if (quitBtn) {
 if (hubQuitBtn) {
   hubQuitBtn.addEventListener("click", returnToHome);
 }
-});
+);
