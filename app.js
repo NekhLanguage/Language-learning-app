@@ -1837,7 +1837,7 @@ function renderNext(targetLang, supportLang) {
     return renderFreeProductionL7(targetLang, supportLang, tpl);
   }
 }
-}
+
 
   openAppBtn.addEventListener("click", () => {
   startScreen.classList.remove("active");
@@ -1858,5 +1858,4 @@ if (quitBtn) {
 
 if (hubQuitBtn) {
   hubQuitBtn.addEventListener("click", returnToHome);
-}
-);
+});
