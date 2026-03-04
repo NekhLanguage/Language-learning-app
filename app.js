@@ -534,16 +534,30 @@ function seedInitialCore() {
 
   if (!entry) return cid;
 
-  // If noun object with {form, gender}
+  // nouns
   if (typeof entry === "object" && entry.form) {
     return entry.form;
   }
 
-  if (Array.isArray(entry)) return entry[0];
+  // pronouns
+  if (Array.isArray(entry)) {
+    return entry[0];
+  }
 
-  if (typeof entry === "object" && entry.base) return entry.base;
+  // verbs (base/infinitive)
+  if (typeof entry === "object" && entry.base) {
+    return entry.base;
+  }
 
-  return entry;
+  // fallback: pick first string value in object
+  if (typeof entry === "object") {
+    const first = Object.values(entry).find(v => typeof v === "string");
+    if (first) return first;
+  }
+
+  if (typeof entry === "string") return entry;
+
+  return cid;
 }
 
   function getVerbForm(verbCid, subjectCid, lang) {
