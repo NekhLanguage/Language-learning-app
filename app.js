@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.4";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.5";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.83.4";
+  const APP_VERSION = "v0.9.83.5";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -47,6 +47,20 @@ loadUser();
     "politeness_modality.json","pronouns.json","quantifiers.json",
     "question_words.json","time_words.json","verbs.json"
   ];
+  const CONCEPT_ORDER = [
+  // Bundle 1
+  "FIRST_PERSON_SINGULAR", "EAT", "FOOD",
+  // Bundle 2
+  "SECOND_PERSON", "DRINK", "WATER",
+  // Bundle 3
+  "HE", "READ", "BOOK",
+  // Bundle 4
+  "SHE", "SEE", "PHONE",
+  // Bundle 5
+  "FIRST_PERSON_PLURAL", "HAVE", "JOB",
+  // Bundle 6
+  "THIRD_PERSON_PLURAL", "SLEEP"
+];
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
 // --------------------
@@ -397,66 +411,30 @@ function passesSpacingRule(cid) {
   }
 
   function initRun() {
-  const allConcepts = [
-    ...new Set(TEMPLATE_CACHE.flatMap(t => t.concepts || []))
-  ];
+
+  const orderedConcepts = CONCEPT_ORDER.filter(
+    cid => window.GLOBAL_VOCAB.concepts[cid]
+  );
 
   run = {
-  released: [],
-  releaseQueue: [...allConcepts],
-  releaseIndex: 0,
-  progress: {},
-  templateProgress: {},
-  exerciseCounter: 0,
-  recentTemplates: [],
+    released: [],
+    releaseQueue: [...orderedConcepts],
+    releaseIndex: 0,
+    progress: {},
+    templateProgress: {},
+    exerciseCounter: 0,
+    recentTemplates: [],
 
-  sessionNumber: 1,
-  sessionLevelUps: {},      // concept -> count this session
-  sessionAttempts: {},      // concept -> count at current level
-  sessionComplete: false
-};
+    sessionNumber: 1,
+    sessionLevelUps: {},      // concept -> count this session
+    sessionAttempts: {},      // concept -> attempts at current level
+    sessionComplete: false
+  };
 
   seedInitialCore();
 }
 function seedInitialCore() {
-
-  const requiredTypes = ["pronoun", "verb", "noun"];
-  const releasedNow = new Set();
-
-  // Ensure at least one of each structural type
-  requiredTypes.forEach(type => {
-    const next = run.releaseQueue.find(cid => {
-      const meta = window.GLOBAL_VOCAB.concepts[cid];
-      return meta?.type === type && !releasedNow.has(cid);
-    });
-
-    if (next) {
-      run.released.push(next);
-      ensureProgress(next);
-      releasedNow.add(next);
-    }
-  });
-
-  // Fill remaining slots up to 5
-  for (const cid of run.releaseQueue) {
-    if (releasedNow.size >= 5) break;
-    if (releasedNow.has(cid)) continue;
-
-    run.released.push(cid);
-    ensureProgress(cid);
-    releasedNow.add(cid);
-  }
-
-  run.releaseQueue = run.releaseQueue.filter(cid => !releasedNow.has(cid));
-
-  if (DEV_START_AT_LEVEL_7) {
-    run.released.forEach(cid => {
-      const state = ensureProgress(cid);
-      state.level = 7;
-      state.streak = 0;
-      state.completed = false;
-    });
-  }
+  releaseNextBatch(5);
 }
 
   function applyResult(cid, correct) {
@@ -1682,44 +1660,31 @@ if (!USER.runs[langCode]) {
   renderNext(languageState.target, languageState.support);
 }
 function releaseNextBatch(count = 5) {
+  if (!run.releaseQueue) run.releaseQueue = [];
+  if (run.releaseIndex === undefined) run.releaseIndex = 0;
 
-  const requiredTypes = ["pronoun", "verb", "noun"];
-  const releasedNow = new Set();
+  let added = 0;
 
-  // Ensure at least one structural concept if available
-  requiredTypes.forEach(type => {
-    const next = run.releaseQueue.find(cid => {
-      const meta = window.GLOBAL_VOCAB.concepts[cid];
-      return meta?.type === type && !releasedNow.has(cid);
-    });
-
-    if (next && releasedNow.size < count) {
-      run.released.push(next);
-      ensureProgress(next);
-      releasedNow.add(next);
-    }
-  });
-
-  // Fill remaining slots
-  for (const cid of run.releaseQueue) {
-    if (releasedNow.size >= count) break;
-    if (releasedNow.has(cid)) continue;
+  while (added < count && run.releaseIndex < run.releaseQueue.length) {
+    const cid = run.releaseQueue[run.releaseIndex++];
+    if (!cid) continue;
+    if (run.released.includes(cid)) continue;
 
     run.released.push(cid);
     ensureProgress(cid);
-    releasedNow.add(cid);
+    added++;
   }
-
-  run.releaseQueue = run.releaseQueue.filter(cid => !releasedNow.has(cid));
 }
+
+ 
 function endSession(targetLang, supportLang) {
 
   run.sessionNumber++;
 
-  // Release next 5 concepts
-  releaseNextBatch(5);
+  if (run.releaseIndex < run.releaseQueue.length) {
+    releaseNextBatch(5);
+  }
 
-  // Reset session tracking
   run.sessionComplete = false;
   run.sessionAttempts = {};
   run.sessionLevelUps = {};
@@ -1789,23 +1754,25 @@ function renderNext(targetLang, supportLang) {
   // Level 2 density check
   if (level === 2) {
 
-    const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
+  const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
 
-    if (result === null) {
+  if (result === null) {
 
-      const anyLevel1 = run.released.some(cid => levelOf(cid) === 1);
+    const anyLevel1 = run.released.some(cid => levelOf(cid) === 1);
 
-      if (!anyLevel1) {
-        run.sessionComplete = true;
-        return endSession(targetLang, supportLang);
-      }
-
-      return renderNext(targetLang, supportLang);
+    if (!anyLevel1) {
+      run.sessionComplete = true;
+      return endSession(targetLang, supportLang);
     }
 
-    run.exerciseCounter++;
-    return;
+    // If Level-2 can't run but Level-1 still exists,
+    // just schedule the next concept
+    return renderNext(targetLang, supportLang);
   }
+
+  run.exerciseCounter++;
+  return;
+}
 
   if (level === 1) {
     run.exerciseCounter++;
