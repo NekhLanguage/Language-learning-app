@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.84.1";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.84.1";
+  const APP_VERSION = "v0.9.85";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
   const languageScreen = document.getElementById("language-screen");
+  const ttsToggle = document.getElementById("tts-toggle");
   const languageButtonsContainer = document.getElementById("language-buttons");
   const languageState = {
   target: null,
@@ -68,7 +69,14 @@ loadUser();
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
 // --------------------
-
+let ttsEnabled = false;
+let pendingSelection = null;
+if (ttsToggle) {
+  ttsToggle.onclick = () => {
+    ttsEnabled = !ttsEnabled;
+    ttsToggle.textContent = ttsEnabled ? "🔊 TTS ON" : "🔊 TTS OFF";
+  };
+}
 const SUPPORT_LANGUAGES = {
   en: { short: "EN", label: "English" },
   pt: { short: "PT", label: "Português" },
@@ -1787,7 +1795,9 @@ return candidates[0];
 function chooseTemplateForConcept(cid) {
 
   const eligible = TEMPLATE_CACHE.filter(tpl =>
-    tpl.concepts.includes(cid) && templateEligible(tpl)
+    tpl.concepts.includes(cid) &&
+    templateEligible(tpl) &&
+    !run.templateProgress[tpl.template_id]?.completed
   );
 
   if (!eligible.length) return null;

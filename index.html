@@ -58,8 +58,12 @@
       <button id="quit-learning" class="quit-button" type="button">QUIT LEARNING</button>
 
       <div class="learning-wrap">
-        <h2 class="title small">TODAY'S SESSION</h2>
-        <p class="subtitle" id="session-subtitle">Vocab demo (data-driven)</p>
+       <div style="display:flex;justify-content:space-between;align-items:center;">
+  <h2 class="title small">TODAY'S SESSION</h2>
+  <button id="tts-toggle" type="button">🔊 TTS OFF</button>
+</div>
+
+<p class="subtitle" id="session-subtitle">Vocab demo (data-driven)</p>
 
 
         <div id="content" class="content"></div>
@@ -70,6 +74,6 @@
 
   <!-- User + run persistence (non-module) -->
   <script src="user_state.js"></script>
-  <script type="module" src="app.js?v=0.9.84.1"></script>
+  <script type="module" src="app.js?v=0.9.85"></script>
 </body>
 </html>
