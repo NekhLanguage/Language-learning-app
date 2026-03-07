@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.83.5";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.84";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.83.5";
+  const APP_VERSION = "v0.9.84";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -59,7 +59,11 @@ loadUser();
   // Bundle 5
   "FIRST_PERSON_PLURAL", "HAVE", "JOB",
   // Bundle 6
-  "THIRD_PERSON_PLURAL", "SLEEP"
+  "THIRD_PERSON_PLURAL", "SLEEP",
+    // Bundle 7
+    "BIG","SMALL","NEW","OLD","BLACK","WHITE","GOOD","BAD","FAST","SLOW",  
+    // Bundle 8
+    "ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN"
 ];
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
@@ -728,36 +732,58 @@ function buildSentence(lang, tpl) {
     // Noun handling (NEW: indefinite article injection for English and portuguese)
    // Noun handling (indefinite articles per language)
 if (meta.type === "noun") {
-  const surface = formOf(lang, cid);
 
+  const surface = formOf(lang, cid);
+  let phrase = surface;
+
+  // optional adjective (always allowed)
+  const adjectives = run.released.filter(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "adjective"
+  );
+
+  if (adjectives.length) {
+    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    phrase = formOf(lang, adj) + " " + phrase;
+  }
+
+  // optional number (ONLY if noun is countable)
+  if (meta.countable) {
+    const numbers = run.released.filter(c =>
+      window.GLOBAL_VOCAB.concepts[c]?.type === "number"
+    );
+
+    if (numbers.length) {
+      const n = numbers[Math.floor(Math.random() * numbers.length)];
+      phrase = formOf(lang, n) + " " + phrase;
+    }
+  }
+
+  // article logic
   if (meta.countable) {
 
-    // English
     if (lang === "en") {
       const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
       const article = entry?.article || "a";
-      return article + " " + surface;
+      return article + " " + phrase;
     }
 
-    // Portuguese
     if (lang === "pt") {
       const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
       const gender = entry?.gender;
-      return (gender === "f" ? "uma " : "um ") + surface;
+      return (gender === "f" ? "uma " : "um ") + phrase;
     }
 
-    // Norwegian
     if (lang === "no") {
       const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
       const gender = entry?.gender;
 
-      if (gender === "n") return "et " + surface;
-      if (gender === "f") return "ei " + surface;
-      return "en " + surface;
+      if (gender === "n") return "et " + phrase;
+      if (gender === "f") return "ei " + phrase;
+      return "en " + phrase;
     }
   }
 
-  return surface;
+  return phrase;
 }
 
     return formOf(lang, cid);
@@ -1716,7 +1742,15 @@ function endSession(targetLang, supportLang) {
     renderNext(targetLang, supportLang);
   };
 }
-  
+  const TYPE_PRIORITY = {
+  pronoun: 1,
+  verb: 2,
+  noun: 3,
+  adjective: 4,
+  number: 5,
+  connector: 6,
+  quantifier: 7
+};
 function chooseConcept() {
 
   const candidates = run.released.filter(cid => {
@@ -1726,10 +1760,29 @@ function chooseConcept() {
 
   if (!candidates.length) return null;
 
-  // prioritize lowest level
-  candidates.sort((a, b) => levelOf(a) - levelOf(b));
+  candidates.sort((a, b) => {
 
-  return candidates[0];
+  const levelDiff = levelOf(a) - levelOf(b);
+  if (levelDiff !== 0) return levelDiff;
+
+  const typeA = window.GLOBAL_VOCAB.concepts[a]?.type;
+  const typeB = window.GLOBAL_VOCAB.concepts[b]?.type;
+
+  const TYPE_PRIORITY = {
+    pronoun: 1,
+    verb: 2,
+    noun: 3,
+    adjective: 4,
+    number: 5
+  };
+
+  const pa = TYPE_PRIORITY[typeA] || 99;
+  const pb = TYPE_PRIORITY[typeB] || 99;
+
+  return pa - pb;
+});
+
+return candidates[0];
 }
 function chooseTemplateForConcept(cid) {
 
