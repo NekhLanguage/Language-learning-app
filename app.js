@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.84";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.84.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.84";
+  const APP_VERSION = "v0.9.84.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -421,19 +421,19 @@ function passesSpacingRule(cid) {
   );
 
   run = {
-    released: [],
-    releaseQueue: [...orderedConcepts],
-    releaseIndex: 0,
-    progress: {},
-    templateProgress: {},
-    exerciseCounter: 0,
-    recentTemplates: [],
+  released: [],
+  releaseQueue: CONCEPT_ORDER.filter(cid => window.GLOBAL_VOCAB.concepts[cid]),
+  releaseIndex: 0,
+  progress: {},
+  templateProgress: {},
+  exerciseCounter: 0,
+  recentTemplates: [],
 
-    sessionNumber: 1,
-    sessionLevelUps: {},      // concept -> count this session
-    sessionAttempts: {},      // concept -> attempts at current level
-    sessionComplete: false
-  };
+  sessionNumber: 1,
+  sessionLevelUps: {},
+  sessionAttempts: {},
+  sessionComplete: false
+};
 
   seedInitialCore();
 }
@@ -1721,9 +1721,9 @@ function endSession(targetLang, supportLang) {
 
   run.sessionNumber++;
 
-  if (run.releaseIndex < run.releaseQueue.length) {
-    releaseNextBatch(5);
-  }
+ if (run.releaseQueue && run.releaseIndex < run.releaseQueue.length) {
+  releaseNextBatch(5);
+}
 
   run.sessionComplete = false;
   run.sessionAttempts = {};
@@ -1798,9 +1798,13 @@ function renderNext(targetLang, supportLang) {
 
   if (!run) return;
 
-  if (run.sessionComplete) {
-    return endSession(targetLang, supportLang);
-  }
+if (!run.releaseQueue || run.releaseIndex === undefined) {
+  initRun();
+}
+
+if (run.sessionComplete) {
+  return endSession(targetLang, supportLang);
+}
 
   const targetConcept = chooseConcept();
 
