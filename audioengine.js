@@ -1,8 +1,13 @@
 // audioEngine.js
 // Centralized TTS handler for the app
 console.log("Audio engine loaded");
+
 let ttsEnabled = false;
 let currentUtterance = null;
+
+speechSynthesis.onvoiceschanged = () => {
+  console.log("Voices loaded:", speechSynthesis.getVoices());
+};
 
 const voiceMap = {
   en: "en-US",
@@ -36,7 +41,6 @@ export function speak(text, lang) {
 
   speechSynthesis.cancel();
   speechSynthesis.speak(utter);
-  speechSynthesis.cancel();
 }
 
 // Plays automatically when exercise loads
