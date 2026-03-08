@@ -1,9 +1,10 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.1";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.3";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.2";
+  const APP_VERSION = "v0.9.85.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
+  const CONTENT_VERSION = 2;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -440,10 +441,26 @@ function passesSpacingRule(cid) {
   sessionNumber: 1,
   sessionLevelUps: {},
   sessionAttempts: {},
-  sessionComplete: false
+  sessionComplete: false,
+  contentVersion: CONTENT_VERSION,
 };
 
   seedInitialCore();
+}
+function migrateRunState() {
+
+  const orderedConcepts = CONCEPT_ORDER.filter(
+    cid => window.GLOBAL_VOCAB.concepts[cid]
+  );
+
+  run.releaseQueue = [...orderedConcepts];
+
+  run.releaseIndex = run.released.length;
+
+  run.contentVersion = CONTENT_VERSION;
+
+  USER.runs[languageState.target] = run;
+  saveUser();
 }
 function seedInitialCore() {
   releaseNextBatch(5);
