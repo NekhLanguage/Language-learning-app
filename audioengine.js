@@ -1,6 +1,6 @@
 // audioEngine.js
 // Centralized TTS handler for the app
-
+console.log("Audio engine loaded");
 let ttsEnabled = false;
 let currentUtterance = null;
 
@@ -14,6 +14,7 @@ const voiceMap = {
 
 export function setTTS(state) {
   ttsEnabled = state;
+  console.log("TTS ENGINE STATE:", state);
 }
 
 export function isTTSEnabled() {
@@ -21,6 +22,8 @@ export function isTTSEnabled() {
 }
 
 export function speak(text, lang) {
+
+  console.log("Speak called:", text, lang);
 
   if (!ttsEnabled) return;
   if (!text) return;
