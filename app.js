@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85";
+  const APP_VERSION = "v0.9.85.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -745,14 +745,20 @@ if (meta.type === "noun") {
   let phrase = surface;
 
   // optional adjective (always allowed)
-  const adjectives = run.released.filter(c =>
-    window.GLOBAL_VOCAB.concepts[c]?.type === "adjective"
-  );
+  const adjectives = run.released.filter(c => {
+  const meta = window.GLOBAL_VOCAB.concepts[c];
+  if (meta?.type !== "adjective") return false;
 
-  if (adjectives.length) {
-    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-    phrase = formOf(lang, adj) + " " + phrase;
-  }
+  const st = ensureProgress(c);
+
+  // allow adjectives only if they are at least Level 4
+  return !st.completed && st.level >= 4;
+});
+
+if (adjectives.length && Math.random() < 0.6) {
+  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+  phrase = formOf(lang, adj) + " " + phrase;
+}
 
   // optional number (ONLY if noun is countable)
   if (meta.countable) {
@@ -1776,14 +1782,6 @@ function chooseConcept() {
   const typeA = window.GLOBAL_VOCAB.concepts[a]?.type;
   const typeB = window.GLOBAL_VOCAB.concepts[b]?.type;
 
-  const TYPE_PRIORITY = {
-    pronoun: 1,
-    verb: 2,
-    noun: 3,
-    adjective: 4,
-    number: 5
-  };
-
   const pa = TYPE_PRIORITY[typeA] || 99;
   const pb = TYPE_PRIORITY[typeB] || 99;
 
@@ -1808,9 +1806,8 @@ function renderNext(targetLang, supportLang) {
 
   if (!run) return;
 
-if (!run.releaseQueue || run.releaseIndex === undefined) {
-  initRun();
-}
+if (!run.releaseQueue) run.releaseQueue = [];
+if (run.releaseIndex === undefined) run.releaseIndex = 0;
 
 if (run.sessionComplete) {
   return endSession(targetLang, supportLang);
@@ -1848,7 +1845,8 @@ if (run.sessionComplete) {
 
     // If Level-2 can't run but Level-1 still exists,
     // just schedule the next concept
-    return renderNext(targetLang, supportLang);
+    run.exerciseCounter++;
+return renderNext(targetLang, supportLang);
   }
 
   run.exerciseCounter++;
