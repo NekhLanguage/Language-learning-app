@@ -35,7 +35,7 @@ export function speak(text, lang) {
 
   const utter = new SpeechSynthesisUtterance(text);
 
-  const voices = speechSynthesis.getVoices();
+  const voices = voices;
 
   // Try exact language match
   let voice = voices.find(v => v.lang.toLowerCase() === lang);
