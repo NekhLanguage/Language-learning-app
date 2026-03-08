@@ -1,7 +1,7 @@
  import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.1";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.1";
+  const APP_VERSION = "v0.9.85.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
 
@@ -1905,5 +1905,5 @@ if (quitBtn) {
 if (hubQuitBtn) {
   hubQuitBtn.addEventListener("click", returnToHome);
 }
-
+window.__app = { get run(){ return run; } };
 });
