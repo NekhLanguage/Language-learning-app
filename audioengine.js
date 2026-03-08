@@ -24,8 +24,7 @@ export function speak(text, lang) {
   if (!ttsEnabled) return;
   if (!text) return;
 
-  // Prevent overlapping speech
-  if (speechSynthesis.speaking) return;
+  speechSynthesis.cancel();
 
   const utter = new SpeechSynthesisUtterance(text);
 
@@ -41,7 +40,6 @@ export function speak(text, lang) {
   utter.rate = 0.9;
   utter.pitch = 1;
 
-  speechSynthesis.cancel();
   speechSynthesis.speak(utter);
 }
 
