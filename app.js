@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.3";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.4";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.3";
+  const APP_VERSION = "v0.9.85.4";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -70,6 +70,24 @@ loadUser();
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
 // --------------------
+function speak(text, lang) {
+  if (!ttsEnabled) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+
+  const voiceMap = {
+    en: "en-US",
+    pt: "pt-BR",
+    no: "nb-NO",
+    ja: "ja-JP",
+    ar: "ar-SA"
+  };
+
+  utter.lang = voiceMap[lang] || lang;
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+}
 let ttsEnabled = false;
 let pendingSelection = null;
 if (ttsToggle) {
@@ -1786,26 +1804,36 @@ function chooseConcept() {
 
   const candidates = run.released.filter(cid => {
     const st = ensureProgress(cid);
-    return !st.completed && passesSpacingRule(cid);
+    if (st.completed) return false;
+    if (!passesSpacingRule(cid)) return false;
+
+    // NEW: ensure a template exists for this concept
+    const hasTemplate = TEMPLATE_CACHE.some(tpl =>
+      tpl.concepts.includes(cid) &&
+      templateEligible(tpl) &&
+      !run.templateProgress[tpl.template_id]?.completed
+    );
+
+    return hasTemplate;
   });
 
   if (!candidates.length) return null;
 
   candidates.sort((a, b) => {
 
-  const levelDiff = levelOf(a) - levelOf(b);
-  if (levelDiff !== 0) return levelDiff;
+    const levelDiff = levelOf(a) - levelOf(b);
+    if (levelDiff !== 0) return levelDiff;
 
-  const typeA = window.GLOBAL_VOCAB.concepts[a]?.type;
-  const typeB = window.GLOBAL_VOCAB.concepts[b]?.type;
+    const typeA = window.GLOBAL_VOCAB.concepts[a]?.type;
+    const typeB = window.GLOBAL_VOCAB.concepts[b]?.type;
 
-  const pa = TYPE_PRIORITY[typeA] || 99;
-  const pb = TYPE_PRIORITY[typeB] || 99;
+    const pa = TYPE_PRIORITY[typeA] || 99;
+    const pb = TYPE_PRIORITY[typeB] || 99;
 
-  return pa - pb;
-});
+    return pa - pb;
+  });
 
-return candidates[0];
+  return candidates[0];
 }
 function chooseTemplateForConcept(cid) {
 
