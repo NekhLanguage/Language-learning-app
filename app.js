@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.6";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.7";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.6";
+  const APP_VERSION = "v0.9.85.7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -1005,7 +1005,7 @@ const blankedWords = words.map((w, i) =>
 const blanked = blankedWords.join(" ");
 
     const options = buildRecognitionOptions(tpl, targetConcept, 4);
-if (!options) {
+if (!options || options.length === 0) {
   setTimeout(() => renderNext(targetLang, supportLang), 0);
   return;
 }
@@ -1151,7 +1151,7 @@ if (!options) {
     }
 
     const options = buildLevel4Options();
-if (!options) {
+if (!options || options.length === 0) {
   setTimeout(() => renderNext(targetLang, supportLang), 0);
   return;
 }
