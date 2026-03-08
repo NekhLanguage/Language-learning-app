@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.86.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.86.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.86.1";
+  const APP_VERSION = "v0.9.86.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -864,29 +864,30 @@ return;
 
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
+  let selectedOption = null;
+
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+
   const role =
     meta?.type === "pronoun" ? "pronoun" :
     meta?.type === "verb" ? "verb" :
     "object";
 
   const q = tpl.questions?.[role];
-if (!q) {
-  setTimeout(() => renderNext(targetLang, supportLang), 0);
-  return;
-}
 
-  // 🔒 Strict option filtering (released + not completed)
+  if (!q) {
+    setTimeout(() => renderNext(targetLang, supportLang), 0);
+    return;
+  }
+
+  // Filter valid options
   const releasedOptions = q.choices.filter(opt => {
     if (!run.released.includes(opt)) return false;
     const st = ensureProgress(opt);
     return !st.completed;
   });
 
-  // 🔥 Enforce strict 4-option minimum
-  if (releasedOptions.length < 4) {
-  return null;
-}
+  if (releasedOptions.length < 4) return null;
 
   const options = shuffle(releasedOptions).slice(0, 4);
 
@@ -894,40 +895,78 @@ if (!q) {
 
   const sentence = buildSentence(targetLang, tpl);
 
-content.innerHTML = `
-  <p class="tts-target">${safe(sentence)}</p>
-  <p><strong>${safe(promptText)}</strong></p>
-  <div id="choices"></div>
-`;
+  content.innerHTML = `
+    <p class="tts-target">${safe(sentence)}</p>
+    <p><strong>${safe(promptText)}</strong></p>
 
-speakSentenceOnLoad(sentence, targetLang);
+    <div id="choices"></div>
+
+    <div style="margin-top:20px;text-align:center;">
+      <button id="check-btn" disabled>${ui("check")}</button>
+    </div>
+  `;
+
+  speakSentenceOnLoad(sentence, targetLang);
 
   const container = document.getElementById("choices");
+  const checkBtn = document.getElementById("check-btn");
 
+  // Build option buttons
   options.forEach(opt => {
+
     const btn = document.createElement("button");
     btn.textContent = formOf(supportLang, opt);
-   btn.onclick = () => {
-  const spoken = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
-speak(spoken, targetLang);
 
-  const correct = opt === q.answer;
-  btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-  decrementCooldowns();
-  applyResult(targetConcept, correct);
-  setTimeout(() => renderNext(targetLang, supportLang), 600);
-};
+    btn.onclick = () => {
+
+      container.querySelectorAll("button").forEach(b => {
+        b.classList.remove("selected");
+      });
+
+      selectedOption = opt;
+      btn.classList.add("selected");
+
+      checkBtn.disabled = false;
+    };
 
     container.appendChild(btn);
   });
+
+  // Check button logic
+  checkBtn.onclick = () => {
+
+    if (!selectedOption) return;
+
+    const correct = selectedOption === q.answer;
+
+    container.querySelectorAll("button").forEach(btn => {
+
+      const value = options.find(o =>
+        formOf(supportLang, o) === btn.textContent
+      );
+
+      if (value === q.answer) {
+        btn.classList.add("correct");
+      }
+
+      if (value === selectedOption && !correct) {
+        btn.classList.add("incorrect");
+      }
+
+    });
+
+    decrementCooldowns();
+    applyResult(targetConcept, correct);
+
+    checkBtn.textContent = ui("continue");
+
+    checkBtn.onclick = () => {
+      renderNext(targetLang, supportLang);
+    };
+
+  };
+
 }
-content.addEventListener("click", e => {
-
-  if (e.target.classList.contains("tts-target")) {
-    speak(e.target.textContent, languageState.target);
-  }
-
-});
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
   // -------------------------
