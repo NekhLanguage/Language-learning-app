@@ -1,7 +1,8 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.9";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.86";
+import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.9";
+  const APP_VERSION = "v0.9.86";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -70,29 +71,14 @@ loadUser();
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
 // --------------------
-function speak(text, lang) {
-  if (!ttsEnabled) return;
 
-  const utter = new SpeechSynthesisUtterance(text);
-
-  const voiceMap = {
-    en: "en-US",
-    pt: "pt-BR",
-    no: "nb-NO",
-    ja: "ja-JP",
-    ar: "ar-SA"
-  };
-
-  utter.lang = voiceMap[lang] || lang;
-
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utter);
-}
 let ttsEnabled = false;
-let pendingSelection = null;
+
 if (ttsToggle) {
   ttsToggle.onclick = () => {
     ttsEnabled = !ttsEnabled;
+    setTTS(ttsEnabled);
+
     ttsToggle.textContent = ttsEnabled ? "🔊 TTS ON" : "🔊 TTS OFF";
   };
 }
@@ -851,14 +837,18 @@ if (adjectives.length && Math.random() < 0.6) {
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
     subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
-    content.innerHTML = `
+    const sentence = buildSentence(targetLang, tpl);
+
+content.innerHTML = `
   <h2>${safe(formOf(targetLang, targetConcept))}</h2>
   <p>${safe(formOf(supportLang, targetConcept))}</p>
   <hr>
-  <p class="tts-target">${safe(buildSentence(targetLang, tpl))}</p>
+  <p class="tts-target">${safe(sentence)}</p>
   <p>${safe(tpl.render?.[supportLang])}</p>
   <button id="continue-btn">Continue</button>
 `;
+
+speakSentenceOnLoad(sentence, targetLang);
 
     document.getElementById("continue-btn").onclick = () => {
       decrementCooldowns();
@@ -900,11 +890,15 @@ if (!q) {
 
   const promptText = resolvePrompt(q, supportLang);
 
-  content.innerHTML = `
-    <p>${safe(buildSentence(targetLang, tpl))}</p>
-    <p><strong>${safe(promptText)}</strong></p>
-    <div id="choices"></div>
-  `;
+  const sentence = buildSentence(targetLang, tpl);
+
+content.innerHTML = `
+  <p class="tts-target">${safe(sentence)}</p>
+  <p><strong>${safe(promptText)}</strong></p>
+  <div id="choices"></div>
+`;
+
+speakSentenceOnLoad(sentence, targetLang);
 
   const container = document.getElementById("choices");
 
@@ -912,9 +906,7 @@ if (!q) {
     const btn = document.createElement("button");
     btn.textContent = formOf(supportLang, opt);
    btn.onclick = () => {
-  if (ttsEnabled) {
-    speak(formOf(targetLang, opt), targetLang);
-  }
+  speak(formOf(targetLang, opt), targetLang);
 
   const correct = opt === q.answer;
   btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
@@ -927,8 +919,6 @@ if (!q) {
   });
 }
 content.addEventListener("click", e => {
-
-  if (!ttsEnabled) return;
 
   if (e.target.classList.contains("tts-target")) {
     speak(e.target.textContent, languageState.target);

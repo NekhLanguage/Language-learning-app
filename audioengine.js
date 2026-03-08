@@ -1,19 +1,78 @@
 // audioEngine.js
-// Centralized TTS handler – UI reads only
+// Centralized TTS handler for the app
 
-export function speak(item) {
-  if (!item?.listenable) return;
+let ttsEnabled = false;
+let currentUtterance = null;
 
-  if (!item?.tts?.lang) {
-    console.warn("TTS requested but no language set:", item);
-    return;
+const voiceMap = {
+  en: "en-US",
+  pt: "pt-BR",
+  no: "nb-NO",
+  ja: "ja-JP",
+  ar: "ar-SA"
+};
+
+export function setTTS(state) {
+  ttsEnabled = state;
+}
+
+export function isTTSEnabled() {
+  return ttsEnabled;
+}
+
+export function speak(text, lang) {
+
+  if (!ttsEnabled) return;
+  if (!text) return;
+
+  const utter = new SpeechSynthesisUtterance(text);
+
+  utter.lang = voiceMap[lang] || lang;
+  utter.rate = 0.9;
+  utter.pitch = 1;
+
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+  speechSynthesis.cancel();
+}
+
+// Plays automatically when exercise loads
+export function speakSentenceOnLoad(text, lang) {
+
+  if (!ttsEnabled) return;
+
+  setTimeout(() => {
+    speak(text, lang);
+  }, 150);
+}
+export function speakSentenceWithPause(words, lang, blankIndex) {
+
+  if (!ttsEnabled) return;
+
+  let i = 0;
+
+  function speakNext() {
+
+    if (i >= words.length) return;
+
+    if (i === blankIndex) {
+      i++;
+      setTimeout(speakNext, 500);
+      return;
+    }
+
+    const utter = new SpeechSynthesisUtterance(words[i]);
+    utter.lang = voiceMap[lang] || lang;
+    utter.rate = 0.9;
+
+    utter.onend = () => {
+      i++;
+      speakNext();
+    };
+
+    speechSynthesis.speak(utter);
   }
 
-  const utterance = new SpeechSynthesisUtterance(item.text);
-  utterance.lang = item.tts.lang;
-  utterance.rate = 0.9; // learner-friendly pace
-  utterance.pitch = 1.0;
-
-  speechSynthesis.cancel(); // prevents overlap
-  speechSynthesis.speak(utterance);
+  speechSynthesis.cancel();
+  speakNext();
 }
