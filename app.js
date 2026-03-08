@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.4";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.5";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.4";
+  const APP_VERSION = "v0.9.85.5";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -855,7 +855,7 @@ if (adjectives.length && Math.random() < 0.6) {
   <h2>${safe(formOf(targetLang, targetConcept))}</h2>
   <p>${safe(formOf(supportLang, targetConcept))}</p>
   <hr>
-  <p>${safe(buildSentence(targetLang, tpl))}</p>
+  <p class="tts-target">${safe(buildSentence(targetLang, tpl))}</p>
   <p>${safe(tpl.render?.[supportLang])}</p>
   <button id="continue-btn">Continue</button>
 `;
@@ -907,7 +907,14 @@ if (adjectives.length && Math.random() < 0.6) {
   options.forEach(opt => {
     const btn = document.createElement("button");
     btn.textContent = formOf(supportLang, opt);
+    btn.onclick = () => {
 
+  if (ttsEnabled) {
+    speak(formOf(targetLang, opt), targetLang);
+  }
+
+  // existing answer logic continues...
+};
     btn.onclick = () => {
       const correct = opt === q.answer;
       btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
@@ -919,7 +926,15 @@ if (adjectives.length && Math.random() < 0.6) {
     container.appendChild(btn);
   });
 }
+content.addEventListener("click", e => {
 
+  if (!ttsEnabled) return;
+
+  if (e.target.classList.contains("tts-target")) {
+    speak(e.target.textContent, languageState.target);
+  }
+
+});
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
   // -------------------------
