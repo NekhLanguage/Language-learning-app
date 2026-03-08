@@ -2,7 +2,14 @@
 // Centralized TTS handler
 
 let ttsEnabled = false;
+let voices = [];
 
+function loadVoices() {
+  voices = speechSynthesis.getVoices();
+}
+
+loadVoices();
+speechSynthesis.onvoiceschanged = loadVoices;
 const voiceMap = {
   en: "en-US",
   pt: "pt-BR",
@@ -28,26 +35,30 @@ export function speak(text, lang) {
 
   const utter = new SpeechSynthesisUtterance(text);
 
- const voices = speechSynthesis.getVoices();
+  const voicePrefixes = {
+    en: ["en"],
+    pt: ["pt"],
+    no: ["nb","no"],
+    ja: ["ja"],
+    ar: ["ar"]
+  };
 
-const voicePrefixes = {
-  en: ["en"],
-  pt: ["pt"],
-  no: ["nb", "no"],
-  ja: ["ja"],
-  ar: ["ar"]
-};
+  const prefixes = voicePrefixes[lang] || [lang];
 
-const prefixes = voicePrefixes[lang] || [lang];
+  const voice = voices.find(v =>
+    prefixes.some(prefix =>
+      v.lang.toLowerCase().startsWith(prefix)
+    )
+  );
 
-const voice = voices.find(v =>
-  prefixes.some(prefix => v.lang.toLowerCase().startsWith(prefix))
-);
+  if (voice) {
+    utter.voice = voice;
+  }
 
-if (voice) {
-  utter.voice = voice;
-} else {
-  utter.lang = voiceMap[lang] || lang;
+  utter.rate = 0.9;
+  utter.pitch = 1;
+
+  speechSynthesis.speak(utter);
 }
 
   utter.rate = 0.9;
