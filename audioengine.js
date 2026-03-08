@@ -61,11 +61,6 @@ export function speak(text, lang) {
   speechSynthesis.speak(utter);
 }
 
-  utter.rate = 0.9;
-  utter.pitch = 1;
-
-  speechSynthesis.speak(utter);
-}
 
 // Sentence autoplay (Levels 1–2)
 export function speakSentenceOnLoad(text, lang) {
