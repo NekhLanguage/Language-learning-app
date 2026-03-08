@@ -28,14 +28,27 @@ export function speak(text, lang) {
 
   const utter = new SpeechSynthesisUtterance(text);
 
-  const voices = speechSynthesis.getVoices();
-  const voice = voices.find(v => v.lang.startsWith(lang));
+ const voices = speechSynthesis.getVoices();
 
-  if (voice) {
-    utter.voice = voice;
-  } else {
-    utter.lang = voiceMap[lang] || lang;
-  }
+const voicePrefixes = {
+  en: ["en"],
+  pt: ["pt"],
+  no: ["nb", "no"],
+  ja: ["ja"],
+  ar: ["ar"]
+};
+
+const prefixes = voicePrefixes[lang] || [lang];
+
+const voice = voices.find(v =>
+  prefixes.some(prefix => v.lang.toLowerCase().startsWith(prefix))
+);
+
+if (voice) {
+  utter.voice = voice;
+} else {
+  utter.lang = voiceMap[lang] || lang;
+}
 
   utter.rate = 0.9;
   utter.pitch = 1;
