@@ -907,21 +907,17 @@ if (adjectives.length && Math.random() < 0.6) {
   options.forEach(opt => {
     const btn = document.createElement("button");
     btn.textContent = formOf(supportLang, opt);
-    btn.onclick = () => {
-
+   btn.onclick = () => {
   if (ttsEnabled) {
     speak(formOf(targetLang, opt), targetLang);
   }
 
-  // existing answer logic continues...
+  const correct = opt === q.answer;
+  btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+  decrementCooldowns();
+  applyResult(targetConcept, correct);
+  setTimeout(() => renderNext(targetLang, supportLang), 600);
 };
-    btn.onclick = () => {
-      const correct = opt === q.answer;
-      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-      decrementCooldowns();
-      applyResult(targetConcept, correct);
-      setTimeout(() => renderNext(targetLang, supportLang), 600);
-    };
 
     container.appendChild(btn);
   });
@@ -1756,6 +1752,9 @@ if (!USER.runs[langCode]) {
   saveUser();
 } else {
   run = USER.runs[langCode];
+  if (run.contentVersion !== CONTENT_VERSION) {
+  migrateRunState();
+}
 }
 
   languageScreen.classList.remove("active");
@@ -1815,14 +1814,15 @@ function endSession(targetLang, supportLang) {
   connector: 6,
   quantifier: 7
 };
-function chooseConcept() {
+function chooseConcept(excluded = new Set()) {
 
   const candidates = run.released.filter(cid => {
+    if (excluded.has(cid)) return false;
+
     const st = ensureProgress(cid);
     if (st.completed) return false;
     if (!passesSpacingRule(cid)) return false;
 
-    // NEW: ensure a template exists for this concept
     const hasTemplate = TEMPLATE_CACHE.some(tpl =>
       tpl.concepts.includes(cid) &&
       templateEligible(tpl) &&
@@ -1835,7 +1835,6 @@ function chooseConcept() {
   if (!candidates.length) return null;
 
   candidates.sort((a, b) => {
-
     const levelDiff = levelOf(a) - levelOf(b);
     if (levelDiff !== 0) return levelDiff;
 
@@ -1863,85 +1862,81 @@ function chooseTemplateForConcept(cid) {
   return eligible[Math.floor(Math.random() * eligible.length)];
 }
 function renderNext(targetLang, supportLang) {
-
   if (!run) return;
 
-if (!run.releaseQueue) run.releaseQueue = [];
-if (run.releaseIndex === undefined) run.releaseIndex = 0;
+  if (!run.releaseQueue) run.releaseQueue = [];
+  if (run.releaseIndex === undefined) run.releaseIndex = 0;
 
-if (run.sessionComplete) {
-  return endSession(targetLang, supportLang);
-}
-
-  const targetConcept = chooseConcept();
-
-  if (!targetConcept) {
-    run.sessionComplete = true;
+  if (run.sessionComplete) {
     return endSession(targetLang, supportLang);
   }
 
-  const tpl = chooseTemplateForConcept(targetConcept);
+  const excluded = new Set();
 
-  if (!tpl) {
-    run.sessionComplete = true;
-    return endSession(targetLang, supportLang);
-  }
+  for (let attempts = 0; attempts < 25; attempts++) {
+    const targetConcept = chooseConcept(excluded);
 
-  const level = levelOf(targetConcept);
-
-  // Level 2 density check
-  if (level === 2) {
-
-  const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
-
-  if (result === null) {
-
-    const anyLevel1 = run.released.some(cid => levelOf(cid) === 1);
-
-    if (!anyLevel1) {
+    if (!targetConcept) {
       run.sessionComplete = true;
       return endSession(targetLang, supportLang);
     }
 
-    // If Level-2 can't run but Level-1 still exists,
-    // just schedule the next concept
-    run.exerciseCounter++;
-return renderNext(targetLang, supportLang);
+    const tpl = chooseTemplateForConcept(targetConcept);
+
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    const level = levelOf(targetConcept);
+
+    if (level === 2) {
+      const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
+
+      if (result === null) {
+        excluded.add(targetConcept);
+        continue;
+      }
+
+      run.exerciseCounter++;
+      return;
+    }
+
+    if (level === 1) {
+      run.exerciseCounter++;
+      return renderExposure(targetLang, supportLang, tpl, targetConcept);
+    }
+
+    if (level === 3) {
+      run.exerciseCounter++;
+      return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+    }
+
+    if (level === 4) {
+      run.exerciseCounter++;
+      return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+    }
+
+    if (level === 5) {
+      run.exerciseCounter++;
+      return renderMatchingL5(targetLang, supportLang);
+    }
+
+    if (level === 6) {
+      run.exerciseCounter++;
+      return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+    }
+
+    if (level === 7) {
+      run.exerciseCounter++;
+      return renderFreeProductionL7(targetLang, supportLang, tpl);
+    }
+
+    excluded.add(targetConcept);
   }
 
-  run.exerciseCounter++;
-  return;
-}
-
-  if (level === 1) {
-    run.exerciseCounter++;
-    return renderExposure(targetLang, supportLang, tpl, targetConcept);
-  }
-
-  if (level === 3) {
-    run.exerciseCounter++;
-    return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-  }
-
-  if (level === 4) {
-    run.exerciseCounter++;
-    return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
-  }
-
-  if (level === 5) {
-    run.exerciseCounter++;
-    return renderMatchingL5(targetLang, supportLang);
-  }
-
-  if (level === 6) {
-    run.exerciseCounter++;
-    return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-  }
-
-  if (level === 7) {
-    run.exerciseCounter++;
-    return renderFreeProductionL7(targetLang, supportLang, tpl);
-  }
+  run.sessionComplete = true;
+  return endSession(targetLang, supportLang);
 }
 
 
