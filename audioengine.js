@@ -1,13 +1,7 @@
-// audioEngine.js
-// Centralized TTS handler for the app
-console.log("Audio engine loaded");
+// audioengine.js
+// Centralized TTS handler
 
 let ttsEnabled = false;
-let currentUtterance = null;
-
-speechSynthesis.onvoiceschanged = () => {
-  console.log("Voices loaded:", speechSynthesis.getVoices());
-};
 
 const voiceMap = {
   en: "en-US",
@@ -19,7 +13,6 @@ const voiceMap = {
 
 export function setTTS(state) {
   ttsEnabled = state;
-  console.log("TTS ENGINE STATE:", state);
 }
 
 export function isTTSEnabled() {
@@ -28,14 +21,23 @@ export function isTTSEnabled() {
 
 export function speak(text, lang) {
 
-  console.log("Speak called:", text, lang);
-
   if (!ttsEnabled) return;
   if (!text) return;
 
+  // Prevent overlapping speech
+  if (speechSynthesis.speaking) return;
+
   const utter = new SpeechSynthesisUtterance(text);
 
-  utter.lang = voiceMap[lang] || lang;
+  const voices = speechSynthesis.getVoices();
+  const voice = voices.find(v => v.lang.startsWith(lang));
+
+  if (voice) {
+    utter.voice = voice;
+  } else {
+    utter.lang = voiceMap[lang] || lang;
+  }
+
   utter.rate = 0.9;
   utter.pitch = 1;
 
@@ -43,15 +45,17 @@ export function speak(text, lang) {
   speechSynthesis.speak(utter);
 }
 
-// Plays automatically when exercise loads
+// Sentence autoplay (Levels 1–2)
 export function speakSentenceOnLoad(text, lang) {
 
   if (!ttsEnabled) return;
 
   setTimeout(() => {
     speak(text, lang);
-  }, 150);
+  }, 200);
 }
+
+// Sentence with blank pause (Level 3)
 export function speakSentenceWithPause(words, lang, blankIndex) {
 
   if (!ttsEnabled) return;
@@ -69,7 +73,16 @@ export function speakSentenceWithPause(words, lang, blankIndex) {
     }
 
     const utter = new SpeechSynthesisUtterance(words[i]);
-    utter.lang = voiceMap[lang] || lang;
+
+    const voices = speechSynthesis.getVoices();
+    const voice = voices.find(v => v.lang.startsWith(lang));
+
+    if (voice) {
+      utter.voice = voice;
+    } else {
+      utter.lang = voiceMap[lang] || lang;
+    }
+
     utter.rate = 0.9;
 
     utter.onend = () => {
