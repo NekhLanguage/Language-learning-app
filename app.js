@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.5";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.6";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.5";
+  const APP_VERSION = "v0.9.85.6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -449,7 +449,7 @@ function passesSpacingRule(cid) {
 
   run = {
   released: [],
-  releaseQueue: CONCEPT_ORDER.filter(cid => window.GLOBAL_VOCAB.concepts[cid]),
+  releaseQueue: [...orderedConcepts],
   releaseIndex: 0,
   progress: {},
   templateProgress: {},
@@ -863,7 +863,8 @@ if (adjectives.length && Math.random() < 0.6) {
     document.getElementById("continue-btn").onclick = () => {
       decrementCooldowns();
       applyResult(targetConcept, true);
-      renderNext(targetLang, supportLang);
+      setTimeout(() => renderNext(targetLang, supportLang), 0);
+return;
     };
   }
 
@@ -878,7 +879,10 @@ if (adjectives.length && Math.random() < 0.6) {
     "object";
 
   const q = tpl.questions?.[role];
-  if (!q) return renderNext(targetLang, supportLang);
+if (!q) {
+  setTimeout(() => renderNext(targetLang, supportLang), 0);
+  return;
+}
 
   // 🔒 Strict option filtering (released + not completed)
   const releasedOptions = q.choices.filter(opt => {
@@ -1001,7 +1005,10 @@ const blankedWords = words.map((w, i) =>
 const blanked = blankedWords.join(" ");
 
     const options = buildRecognitionOptions(tpl, targetConcept, 4);
-    if (!options) return renderNext(targetLang, supportLang);
+if (!options) {
+  setTimeout(() => renderNext(targetLang, supportLang), 0);
+  return;
+}
 
 
     content.innerHTML = `
@@ -1144,8 +1151,10 @@ const blanked = blankedWords.join(" ");
     }
 
     const options = buildLevel4Options();
-    if (!options) return renderNext(targetLang, supportLang);
-
+if (!options) {
+  setTimeout(() => renderNext(targetLang, supportLang), 0);
+  return;
+}
     content.innerHTML = `
       <p>${ui("chooseTranslation")}</p>
       <h2>${promptSupport}</h2>
@@ -1418,7 +1427,6 @@ activeSelection = null;
   }, 800);
 } else {
   setTimeout(() => {
-
     // Remove all existing lines (if any)
     connectionLines.forEach(line => {
       if (line && line.parentNode === wireLayer) {
@@ -1431,7 +1439,6 @@ activeSelection = null;
     selectedPairs.clear();
 
     renderMatchingL5(targetLang, supportLang);
-
   }, 1000);
 }
   };
@@ -1732,7 +1739,8 @@ checkBtn.onclick = () => {
   // 🔁 Replace Check with Continue
   checkBtn.textContent = "Continue";
   checkBtn.onclick = () => {
-    renderNext(targetLang, supportLang);
+    setTimeout(() => renderNext(targetLang, supportLang), 0);
+return;
   };
 };
 }
@@ -1802,7 +1810,8 @@ function endSession(targetLang, supportLang) {
   `;
 
   document.getElementById("start-next-session").onclick = () => {
-    renderNext(targetLang, supportLang);
+    setTimeout(() => renderNext(targetLang, supportLang), 0);
+return;
   };
 }
   const TYPE_PRIORITY = {
