@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.7";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.8";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.7";
+  const APP_VERSION = "v0.9.85.8";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -1833,10 +1833,9 @@ function chooseConcept(excluded = new Set()) {
     if (!passesSpacingRule(cid)) return false;
 
     const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-      tpl.concepts.includes(cid) &&
-      templateEligible(tpl) &&
-      !run.templateProgress[tpl.template_id]?.completed
-    );
+  tpl.concepts.includes(cid) &&
+  templateEligible(tpl)
+);
 
     return hasTemplate;
   });
@@ -1861,10 +1860,9 @@ function chooseConcept(excluded = new Set()) {
 function chooseTemplateForConcept(cid) {
 
   const eligible = TEMPLATE_CACHE.filter(tpl =>
-    tpl.concepts.includes(cid) &&
-    templateEligible(tpl) &&
-    !run.templateProgress[tpl.template_id]?.completed
-  );
+  tpl.concepts.includes(cid) &&
+  templateEligible(tpl)
+);
 
   if (!eligible.length) return null;
 
