@@ -1,7 +1,7 @@
- import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.8";
+ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.85.9";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.85.8";
+  const APP_VERSION = "v0.9.85.9";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -1152,8 +1152,7 @@ if (!options || options.length === 0) {
 
     const options = buildLevel4Options();
 if (!options || options.length === 0) {
-  setTimeout(() => renderNext(targetLang, supportLang), 0);
-  return;
+  return null;
 }
     content.innerHTML = `
       <p>${ui("chooseTranslation")}</p>
@@ -1920,9 +1919,17 @@ function renderNext(targetLang, supportLang) {
     }
 
     if (level === 4) {
-      run.exerciseCounter++;
-      return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
-    }
+
+  const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+
+  if (result === null) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  run.exerciseCounter++;
+  return;
+}
 
     if (level === 5) {
       run.exerciseCounter++;
