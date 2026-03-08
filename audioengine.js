@@ -35,21 +35,24 @@ export function speak(text, lang) {
 
   const utter = new SpeechSynthesisUtterance(text);
 
-  const voicePrefixes = {
-    en: ["en"],
-    pt: ["pt"],
-    no: ["nb","no"],
-    ja: ["ja"],
-    ar: ["ar"]
-  };
+  const voices = speechSynthesis.getVoices();
 
-  const prefixes = voicePrefixes[lang] || [lang];
+  // Try exact language match
+  let voice = voices.find(v => v.lang.toLowerCase() === lang);
 
-  const voice = voices.find(v =>
-    prefixes.some(prefix =>
-      v.lang.toLowerCase().startsWith(prefix)
-    )
-  );
+  // Try prefix match (ja → ja-JP)
+  if (!voice) {
+    voice = voices.find(v =>
+      v.lang.toLowerCase().startsWith(lang)
+    );
+  }
+
+  // Try partial match (nb-NO contains "no")
+  if (!voice) {
+    voice = voices.find(v =>
+      v.lang.toLowerCase().includes(lang)
+    );
+  }
 
   if (voice) {
     utter.voice = voice;
