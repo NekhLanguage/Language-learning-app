@@ -1121,7 +1121,7 @@ if (!options || options.length === 0) {
         return true;
       });
 
-      if (pool.length < 3) return null;
+      if (pool.length < 3) return [];
 
       // Try to build up to 6 options, but always >= 4
       const desiredTotal = Math.max(4, Math.min(6, pool.length + 1));
