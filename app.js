@@ -908,7 +908,8 @@ speakSentenceOnLoad(sentence, targetLang);
     const btn = document.createElement("button");
     btn.textContent = formOf(supportLang, opt);
    btn.onclick = () => {
-  speak(formOf(targetLang, opt), targetLang);
+  const spoken = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
+speak(spoken, targetLang);
 
   const correct = opt === q.answer;
   btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
@@ -1452,6 +1453,7 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
 }
 
 const supportSentence = safe(buildSentence(supportLang, tpl));
+
 const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
 const subjectCid = ordered.find(c =>
@@ -1523,16 +1525,22 @@ const correctWords = ordered.map(cid => {
 
   // Create word bank items
   function createBankWord(word) {
-    const btn = document.createElement("button");
-    btn.textContent = word;
+  const btn = document.createElement("button");
+  btn.textContent = word;
 
-    btn.onclick = () => {
-      selectedWord = btn;
-      btn.classList.add("selected");
-    };
+  btn.onclick = () => {
+    speak(word, targetLang);
 
-    bankContainer.appendChild(btn);
-  }
+    if (selectedWord && selectedWord !== btn) {
+      selectedWord.classList.remove("selected");
+    }
+
+    selectedWord = btn;
+    btn.classList.add("selected");
+  };
+
+  bankContainer.appendChild(btn);
+}
 
   wordBank.forEach(createBankWord);
 
