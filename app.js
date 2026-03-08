@@ -76,7 +76,9 @@ let ttsEnabled = false;
 
 if (ttsToggle) {
   ttsToggle.onclick = () => {
+
     ttsEnabled = !ttsEnabled;
+
     setTTS(ttsEnabled);
 
     ttsToggle.textContent = ttsEnabled ? "🔊 TTS ON" : "🔊 TTS OFF";
