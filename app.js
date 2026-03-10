@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.5";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.7";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.6";
+  const APP_VERSION = "v0.9.87.7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -784,6 +784,7 @@ function buildSentence(lang, tpl) {
   
   const ordered = orderedConceptsForTemplate(tpl, lang);
   if (!ordered || !ordered.length) return "";
+  const forcedConcept = run.lastTargetConcept;
   const subjectCid = ordered.find(c =>
     window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
   );
@@ -815,8 +816,10 @@ if (meta.type === "noun") {
   return !st.completed && st.level >= 4;
 });
 
-if (adjectives.length && Math.random() < 0.6) {
-  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+if (adjectives.length && (forcedConcept && window.GLOBAL_VOCAB.concepts[forcedConcept]?.type === "adjective" || Math.random() < 0.6)) {
+  const adj = forcedConcept && window.GLOBAL_VOCAB.concepts[forcedConcept]?.type === "adjective"
+    ? forcedConcept
+    : adjectives[Math.floor(Math.random() * adjectives.length)];
   phrase = formOf(lang, adj) + " " + phrase;
 }
 
@@ -829,9 +832,17 @@ if (meta.countable) {
   );
 
   if (numbers.length) {
-    const n = numbers[Math.floor(Math.random() * numbers.length)];
-    numberWord = formOf(lang, n);
+
+  let n;
+
+  if (forcedConcept && window.GLOBAL_VOCAB.concepts[forcedConcept]?.type === "number") {
+    n = forcedConcept;
+  } else {
+    n = numbers[Math.floor(Math.random() * numbers.length)];
   }
+
+  numberWord = formOf(lang, n);
+}
 }
 
   // article logic
