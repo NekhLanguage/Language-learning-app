@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.2";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.3";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.2";
+  const APP_VERSION = "v0.9.87.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -513,9 +513,15 @@ function seedInitialCore() {
 
   // 🔥 RULE B with NEW thresholds
   const activeConcepts = run.released.filter(c => {
-    const s = ensureProgress(c);
-    return !s.completed;
-  });
+
+  const s = ensureProgress(c);
+
+  // Only count concepts actually seen this session
+  const attempted = run.sessionAttempts[c] !== undefined;
+
+  return !s.completed && attempted;
+
+});
 
   const allFatigued =
     activeConcepts.length > 0 &&
