@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.3";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.4";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.3";
+  const APP_VERSION = "v0.9.87.4";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -1985,10 +1985,28 @@ function chooseConcept(excluded = new Set()) {
 }
 function chooseTemplateForConcept(cid) {
 
-  const eligible = TEMPLATE_CACHE.filter(tpl =>
-  tpl.concepts.includes(cid) &&
-  templateEligible(tpl)
-);
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+
+  let eligible;
+
+  if (meta?.type === "adjective" || meta?.type === "number") {
+
+    // Use any template containing a noun
+    eligible = TEMPLATE_CACHE.filter(tpl =>
+      tpl.concepts.some(c =>
+        window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+      ) &&
+      templateEligible(tpl)
+    );
+
+  } else {
+
+    eligible = TEMPLATE_CACHE.filter(tpl =>
+      tpl.concepts.includes(cid) &&
+      templateEligible(tpl)
+    );
+
+  }
 
   if (!eligible.length) return null;
 
