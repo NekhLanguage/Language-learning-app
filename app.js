@@ -745,9 +745,9 @@ if (orderType === "SOV") {
     return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
   }
 function buildSentence(lang, tpl) {
-  if (!ordered || !ordered.length) return "";
+  
   const ordered = orderedConceptsForTemplate(tpl, lang);
-
+  if (!ordered || !ordered.length) return "";
   const subjectCid = ordered.find(c =>
     window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
   );
