@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.12";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.13";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.12";
+  const APP_VERSION = "v0.9.87.13";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -2153,9 +2153,32 @@ function renderNext(targetLang, supportLang) {
     if (!targetConcept) {
 
       const remainingActive = run.released.filter(c => {
-        const s = ensureProgress(c);
-        return !s.completed;
-      });
+
+  const s = ensureProgress(c);
+
+  if (s.completed) return false;
+
+  const attempts = run.sessionAttempts?.[c] || 0;
+  const levelUps = run.sessionLevelUps?.[c] || 0;
+
+  if (attempts >= 8 || levelUps >= 3) return false;
+
+  if (!passesSpacingRule(c)) return false;
+
+  const meta = window.GLOBAL_VOCAB.concepts[c];
+
+  if (meta?.type === "adjective" || meta?.type === "number") {
+    return true;
+  }
+
+  const hasTemplate = TEMPLATE_CACHE.some(tpl =>
+    tpl.concepts.includes(c) &&
+    tpl.concepts.every(cid => run.released.includes(cid))
+  );
+
+  return hasTemplate;
+
+});
 
       if (remainingActive.length > 0) {
 
