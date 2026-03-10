@@ -529,8 +529,9 @@ if (state.level < levelCap) {
   }
 
   const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-    tpl.concepts.includes(c) && templateEligible(tpl)
-  );
+  tpl.concepts.includes(cid) &&
+  tpl.concepts.every(c => run.released.includes(c))
+);
 
   return hasTemplate;
 });
@@ -1054,9 +1055,12 @@ function buildSentence(lang, tpl, forcedConcept = null) {
     return !st.completed;
   });
 
-  if (releasedOptions.length < 4) return null;
+  if (releasedOptions.length < 2) return null;
 
-  const options = shuffle(releasedOptions).slice(0, 4);
+  const options = shuffle([
+  q.answer,
+  ...releasedOptions.filter(o => o !== q.answer)
+]).slice(0, 4);
   const promptText = resolvePrompt(q, supportLang);
   const sentence = buildSentence(targetLang, tpl);
 
@@ -1120,8 +1124,10 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
     if (cid === targetConcept) return false;
 
     const st = ensureProgress(cid);
+    
     if (st.completed) return false;
     if (st.level < currentLevel) return false;
+    
 
     const m = window.GLOBAL_VOCAB.concepts[cid];
     return m && m.type === meta.type;
@@ -2051,6 +2057,10 @@ function chooseConcept(excluded = new Set()) {
     const st = ensureProgress(cid);
 
     if (st.completed) return false;
+    const attempts = run.sessionAttempts?.[cid] || 0;
+const levelUps = run.sessionLevelUps?.[cid] || 0;
+
+if (attempts >= 8 || levelUps >= 3) return false;
     if (!passesSpacingRule(cid)) return false;
 
     const hasTemplate = TEMPLATE_CACHE.some(tpl =>
@@ -2068,7 +2078,6 @@ if (meta?.type === "adjective" || meta?.type === "number") {
 
 // Prevent concept starvation for other types
 if (!hasTemplate) {
-  st.completed = true;
   return false;
 }
 
