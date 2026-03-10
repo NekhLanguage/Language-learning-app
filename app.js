@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.7";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.8";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.7";
+  const APP_VERSION = "v0.9.87.8";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -399,8 +399,8 @@ function passesSpacingRule(cid) {
 
   // LEVEL 1 → always treated as correct
   if (level === 1) {
-    return distance >= 4;
-  }
+  return distance >= 1;
+}
 
   // LEVEL 7 special rule
   if (level === 7) {
@@ -920,7 +920,6 @@ return sentence + ".";
   // Capitalize first letter
   sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
-  return sentence + ".";
 }
 
 
@@ -2055,6 +2054,8 @@ function renderNext(targetLang, supportLang) {
 
   for (let attempts = 0; attempts < 25; attempts++) {
     const targetConcept = chooseConcept(excluded);
+
+run.lastTargetConcept = targetConcept;
 
     if (!targetConcept) {
       run.sessionComplete = true;
