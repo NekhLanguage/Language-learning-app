@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.1";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87";
+  const APP_VERSION = "v0.9.87.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -533,11 +533,23 @@ function seedInitialCore() {
 
 
   function templateEligible(tpl) {
-    return (tpl.concepts || []).every(cid => {
-      const st = ensureProgress(cid);
-      return run.released.includes(cid) && !st.completed;
-    });
-  }
+
+  const id = tpl.template_id;
+
+  const tState = ensureTemplateProgress(tpl);
+
+  // If template is completed, do not schedule again
+  if (tState.completed) return false;
+
+  return (tpl.concepts || []).every(cid => {
+
+    const st = ensureProgress(cid);
+
+    return run.released.includes(cid) && !st.completed;
+
+  });
+
+}
 
   function determineTargetConcept(tpl) {
     let minLevel = Infinity;
@@ -561,7 +573,21 @@ function seedInitialCore() {
   function chooseTemplate() {
     const eligible = TEMPLATE_CACHE.filter(templateEligible);
     if (!eligible.length) return null;
-    return eligible[Math.floor(Math.random() * eligible.length)];
+    const filtered = eligible.filter(tpl =>
+  !run.recentTemplates.includes(tpl.template_id)
+);
+
+const pool = filtered.length ? filtered : eligible;
+
+const tpl = pool[Math.floor(Math.random() * pool.length)];
+
+run.recentTemplates.push(tpl.template_id);
+
+if (run.recentTemplates.length > 3) {
+  run.recentTemplates.shift();
+}
+
+return tpl;
   }
 
  function formOf(lang, cid) {
@@ -1898,23 +1924,33 @@ return;
 function chooseConcept(excluded = new Set()) {
 
   const candidates = run.released.filter(cid => {
+
     if (excluded.has(cid)) return false;
 
     const st = ensureProgress(cid);
+
     if (st.completed) return false;
     if (!passesSpacingRule(cid)) return false;
 
     const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-  tpl.concepts.includes(cid) &&
-  templateEligible(tpl)
-);
+      tpl.concepts.includes(cid) &&
+      templateEligible(tpl)
+    );
 
-    return hasTemplate;
+    // Prevent concept starvation
+    if (!hasTemplate) {
+      st.completed = true;
+      return false;
+    }
+
+    return true;
+
   });
 
   if (!candidates.length) return null;
 
   candidates.sort((a, b) => {
+
     const levelDiff = levelOf(a) - levelOf(b);
     if (levelDiff !== 0) return levelDiff;
 
@@ -1925,6 +1961,7 @@ function chooseConcept(excluded = new Set()) {
     const pb = TYPE_PRIORITY[typeB] || 99;
 
     return pa - pb;
+
   });
 
   return candidates[0];
