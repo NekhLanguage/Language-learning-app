@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.9";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.10";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.9";
+  const APP_VERSION = "v0.9.87.10";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -499,12 +499,14 @@ function seedInitialCore() {
     const needed = state.level === 1 ? 1 : 2;
 
 if (state.streak >= needed) {
-      if (state.level < MAX_LEVEL) {
-        state.level++;
-        leveledUp = true;
-      } else {
-        state.completed = true;
-      }
+      const levelCap = isModifierConcept(cid) ? 5 : MAX_LEVEL;
+
+if (state.level < levelCap) {
+  state.level++;
+  leveledUp = true;
+} else {
+  state.completed = true;
+}
       state.streak = 0;
     }
 
@@ -780,14 +782,35 @@ if (orderType === "SOV") {
 
     return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
   }
-function buildSentence(lang, tpl) {
-  
+  function isModifierConcept(cid) {
+  const t = window.GLOBAL_VOCAB.concepts[cid]?.type;
+  return t === "adjective" || t === "number";
+}
+
+function buildSameTypeOptions(targetConcept, desiredTotal = 4) {
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+  if (!meta) return null;
+
+  const pool = run.released.filter(cid => {
+    if (cid === targetConcept) return false;
+    const st = ensureProgress(cid);
+    if (st.completed) return false;
+    return window.GLOBAL_VOCAB.concepts[cid]?.type === meta.type;
+  });
+
+  if (pool.length < desiredTotal - 1) return null;
+
+  return shuffle([targetConcept, ...shuffle(pool).slice(0, desiredTotal - 1)]);
+}
+function buildSentence(lang, tpl, forcedConcept = null) {
+
   const ordered = orderedConceptsForTemplate(tpl, lang);
   if (!ordered || !ordered.length) return "";
-  const forcedConcept = run.lastTargetConcept;
-const forcedMeta = forcedConcept
-  ? window.GLOBAL_VOCAB.concepts[forcedConcept]
-  : null;
+
+  const forcedMeta = forcedConcept
+    ? window.GLOBAL_VOCAB.concepts[forcedConcept]
+    : null;
+
   const subjectCid = ordered.find(c =>
     window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
   );
@@ -796,183 +819,227 @@ const forcedMeta = forcedConcept
     const meta = window.GLOBAL_VOCAB.concepts[cid];
     if (!meta) return cid;
 
-    // Verb handling (unchanged)
     if (meta.type === "verb") {
       return getVerbForm(cid, subjectCid, lang);
     }
 
-    // Noun handling (NEW: indefinite article injection for English and portuguese)
-   // Noun handling (indefinite articles per language)
-if (meta.type === "noun") {
+    if (meta.type === "noun") {
+      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
+      const baseSurface = formOf(lang, cid);
+      const pluralSurface = entry.plural || baseSurface;
 
-  const surface = formOf(lang, cid);
-  let phrase = surface;
+      let nounSurface = baseSurface;
+      let adjectiveWord = null;
+      let numberWord = null;
 
-  // optional adjective (always allowed)
-  const adjectives = run.released.filter(c => {
-  const meta = window.GLOBAL_VOCAB.concepts[c];
-  if (meta?.type !== "adjective") return false;
+      // forced adjective OR eligible learned adjective
+      if (forcedMeta?.type === "adjective") {
+        adjectiveWord = formOf(lang, forcedConcept);
+      } else {
+        const adjectives = run.released.filter(c => {
+          const m = window.GLOBAL_VOCAB.concepts[c];
+          if (m?.type !== "adjective") return false;
+          const st = ensureProgress(c);
+          return !st.completed && st.level >= 4;
+        });
 
-  const st = ensureProgress(c);
+        if (adjectives.length && Math.random() < 0.6) {
+          const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+          adjectiveWord = formOf(lang, adj);
+        }
+      }
 
-  // allow adjectives only if they are at least Level 4
-  return !st.completed && st.level >= 4;
-});
+      // forced number OR learned number
+      if (meta.countable) {
+        if (forcedMeta?.type === "number") {
+          numberWord = formOf(lang, forcedConcept);
+          nounSurface = pluralSurface;
+        } else {
+          const numbers = run.released.filter(c => {
+            const m = window.GLOBAL_VOCAB.concepts[c];
+            if (m?.type !== "number") return false;
+            const st = ensureProgress(c);
+            return !st.completed && st.level >= 4;
+          });
 
-if (adjectives.length && (forcedMeta?.type === "adjective" || Math.random() < 0.6)) {
+          if (numbers.length) {
+            const n = numbers[Math.floor(Math.random() * numbers.length)];
+            numberWord = formOf(lang, n);
+            nounSurface = pluralSurface;
+          }
+        }
+      }
 
-  const adj =
-    forcedMeta?.type === "adjective"
-      ? forcedConcept
-      : adjectives[Math.floor(Math.random() * adjectives.length)];
+      let phrase = nounSurface;
 
-  phrase = formOf(lang, adj) + " " + phrase;
-}
+      if (adjectiveWord) {
+        phrase = adjectiveWord + " " + phrase;
+      }
 
-  // optional number (ONLY if noun is countable)
-  let numberWord = null;
+      if (numberWord) {
+        return numberWord + " " + phrase;
+      }
 
-if (meta.countable) {
+      if (meta.countable) {
+        if (lang === "en") {
+          const article = entry.article || "a";
+          return article + " " + phrase;
+        }
 
-  const numbers = run.released.filter(c =>
-    window.GLOBAL_VOCAB.concepts[c]?.type === "number"
-  );
-
-  if (numbers.length) {
-
-    const n =
-      forcedMeta?.type === "number"
-        ? forcedConcept
-        : numbers[Math.floor(Math.random() * numbers.length)];
-
-    numberWord = formOf(lang, n);
-  }
-}
-
-  // article logic
-  if (meta.countable) {
-
-    if (lang === "en") {
+        if (lang === "pt") {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
+  const gender = entry?.gender;
 
   if (numberWord) {
     return numberWord + " " + phrase;
   }
 
-  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-  const article = entry?.article || "a";
-
-  return article + " " + phrase;
+  return (gender === "f" ? "uma " : "um ") + phrase;
 }
 
-    if (lang === "pt") {
-      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-      const gender = entry?.gender;
-      return (gender === "f" ? "uma " : "um ") + phrase;
-    }
+        if (lang === "no") {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
+  const gender = entry?.gender;
 
-    if (lang === "no") {
-      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-      const gender = entry?.gender;
-
-      if (gender === "n") return "et " + phrase;
-      if (gender === "f") return "ei " + phrase;
-      return "en " + phrase;
-    }
+  if (numberWord) {
+    return numberWord + " " + phrase;
   }
 
-  return phrase;
+  if (gender === "n") return "et " + phrase;
+  if (gender === "f") return "ei " + phrase;
+  return "en " + phrase;
 }
+      }
+
+      return phrase;
+    }
 
     return formOf(lang, cid);
   });
 
-  // --- Japanese particle injection ---
-if (lang === "ja") {
+  if (lang === "ja") {
+    const wordsWithParticles = [...words];
 
-  const wordsWithParticles = [...words];
+    const pronounIndex = ordered.findIndex(c =>
+      window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+    );
 
-  const pronounIndex = ordered.findIndex(c =>
-    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-  );
+    const nounIndex = ordered.findIndex(c =>
+      window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+    );
 
-  const nounIndex = ordered.findIndex(c =>
-    window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
-  );
+    if (pronounIndex !== -1) wordsWithParticles.splice(pronounIndex + 1, 0, "は");
+    if (nounIndex !== -1) wordsWithParticles.splice(nounIndex + 1, 0, "を");
 
-  if (pronounIndex !== -1) {
-    wordsWithParticles.splice(pronounIndex + 1, 0, "は");
+    return wordsWithParticles.join("");
   }
 
-  if (nounIndex !== -1) {
-    wordsWithParticles.splice(nounIndex + 1, 0, "を");
-  }
-
-  let sentence = wordsWithParticles.join("");
-
-  sentence = sentence.charAt(0) + sentence.slice(1);
-
-  return sentence;
-}
-
-// --- All other languages ---
-let sentence = words.join(" ");
-
-sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
-
-return sentence + ".";
-
-  // Capitalize first letter
+  let sentence = words.join(" ");
   sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
-
+  return sentence + ".";
 }
 
 
 
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
-    subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
+  subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
-    const sentence = buildSentence(targetLang, tpl);
+  const targetSentence = buildSentence(targetLang, tpl, targetConcept);
+  const supportSentence = buildSentence(supportLang, tpl, targetConcept);
 
-content.innerHTML = `
-  <h2>${safe(formOf(targetLang, targetConcept))}</h2>
-  <p>${safe(formOf(supportLang, targetConcept))}</p>
-  <hr>
-  <p class="tts-target">${safe(sentence)}</p>
-  <p>${safe(tpl.render?.[supportLang])}</p>
-  <button id="continue-btn">Continue</button>
-`;
-console.log("Auto TTS sentence:", sentence);
-speakSentenceOnLoad(sentence, targetLang);
+  content.innerHTML = `
+    <h2>${safe(formOf(targetLang, targetConcept))}</h2>
+    <p>${safe(formOf(supportLang, targetConcept))}</p>
+    <hr>
+    <p class="tts-target">${safe(targetSentence)}</p>
+    <p>${safe(supportSentence)}</p>
+    <button id="continue-btn">${ui("continue")}</button>
+  `;
 
-    document.getElementById("continue-btn").onclick = () => {
-      decrementCooldowns();
-      applyResult(targetConcept, true);
-      setTimeout(() => renderNext(targetLang, supportLang), 0);
-return;
-    };
-  }
+  speakSentenceOnLoad(targetSentence, targetLang);
+
+  document.getElementById("continue-btn").onclick = () => {
+    decrementCooldowns();
+    applyResult(targetConcept, true);
+    setTimeout(() => renderNext(targetLang, supportLang), 0);
+  };
+}
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
-
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
   let selectedOption = null;
-
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
 
+  // --- Modifier path ---
+  if (isModifierConcept(targetConcept)) {
+    const options = buildSameTypeOptions(targetConcept, 4);
+    if (!options) return null;
+
+    const sentence = buildSentence(targetLang, tpl, targetConcept);
+
+    content.innerHTML = `
+      <p class="tts-target">${safe(sentence)}</p>
+      <p><strong>${ui("chooseTranslation")}</strong></p>
+      <h2>${safe(formOf(targetLang, targetConcept))}</h2>
+      <div id="choices"></div>
+      <div style="margin-top:20px;text-align:center;">
+        <button id="check-btn" disabled>${ui("check")}</button>
+      </div>
+    `;
+
+    speakSentenceOnLoad(sentence, targetLang);
+
+    const container = document.getElementById("choices");
+    const checkBtn = document.getElementById("check-btn");
+
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = formOf(supportLang, opt);
+
+      btn.onclick = () => {
+        container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+        selectedOption = opt;
+        btn.classList.add("selected");
+        checkBtn.disabled = false;
+      };
+
+      container.appendChild(btn);
+    });
+
+    checkBtn.onclick = () => {
+      if (!selectedOption) return;
+
+      const correct = selectedOption === targetConcept;
+
+      container.querySelectorAll("button").forEach(btn => {
+        const value = options.find(o => formOf(supportLang, o) === btn.textContent);
+        if (value === targetConcept) btn.classList.add("correct");
+        if (value === selectedOption && !correct) btn.classList.add("incorrect");
+      });
+
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+
+      checkBtn.textContent = ui("continue");
+      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    };
+
+    return;
+  }
+
+  // --- Existing core path ---
   const role =
     meta?.type === "pronoun" ? "pronoun" :
     meta?.type === "verb" ? "verb" :
     "object";
 
   const q = tpl.questions?.[role];
-
   if (!q) {
     setTimeout(() => renderNext(targetLang, supportLang), 0);
     return;
   }
 
-  // Filter valid options
   const releasedOptions = q.choices.filter(opt => {
     if (!run.released.includes(opt)) return false;
     const st = ensureProgress(opt);
@@ -982,17 +1049,13 @@ return;
   if (releasedOptions.length < 4) return null;
 
   const options = shuffle(releasedOptions).slice(0, 4);
-
   const promptText = resolvePrompt(q, supportLang);
-
   const sentence = buildSentence(targetLang, tpl);
 
   content.innerHTML = `
     <p class="tts-target">${safe(sentence)}</p>
     <p><strong>${safe(promptText)}</strong></p>
-
     <div id="choices"></div>
-
     <div style="margin-top:20px;text-align:center;">
       <button id="check-btn" disabled>${ui("check")}</button>
     </div>
@@ -1003,61 +1066,37 @@ return;
   const container = document.getElementById("choices");
   const checkBtn = document.getElementById("check-btn");
 
-  // Build option buttons
   options.forEach(opt => {
-
     const btn = document.createElement("button");
     btn.textContent = formOf(supportLang, opt);
 
     btn.onclick = () => {
-
-      container.querySelectorAll("button").forEach(b => {
-        b.classList.remove("selected");
-      });
-
+      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
       selectedOption = opt;
       btn.classList.add("selected");
-
       checkBtn.disabled = false;
     };
 
     container.appendChild(btn);
   });
 
-  // Check button logic
   checkBtn.onclick = () => {
-
     if (!selectedOption) return;
 
     const correct = selectedOption === q.answer;
 
     container.querySelectorAll("button").forEach(btn => {
-
-      const value = options.find(o =>
-        formOf(supportLang, o) === btn.textContent
-      );
-
-      if (value === q.answer) {
-        btn.classList.add("correct");
-      }
-
-      if (value === selectedOption && !correct) {
-        btn.classList.add("incorrect");
-      }
-
+      const value = options.find(o => formOf(supportLang, o) === btn.textContent);
+      if (value === q.answer) btn.classList.add("correct");
+      if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
 
     decrementCooldowns();
     applyResult(targetConcept, correct);
 
     checkBtn.textContent = ui("continue");
-
-    checkBtn.onclick = () => {
-      renderNext(targetLang, supportLang);
-    };
-
+    checkBtn.onclick = () => renderNext(targetLang, supportLang);
   };
-
 }
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
@@ -1099,71 +1138,36 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
 }
 
   function renderRecognitionL3(targetLang, supportLang, tpl, targetConcept) {
+  subtitle.textContent = "Level " + levelOf(targetConcept);
 
-    subtitle.textContent = "Level " + levelOf(targetConcept);
+  // --- Modifier path ---
+  if (isModifierConcept(targetConcept)) {
+    const sentenceTarget = buildSentence(targetLang, tpl, targetConcept);
+    const sentenceSupport = buildSentence(supportLang, tpl, targetConcept);
 
-   const supportSentence = safe(buildSentence(supportLang, tpl));
-const ordered = orderedConceptsForTemplate(tpl, targetLang);
+    const targetSurface = formOf(targetLang, targetConcept);
+    const blanked = blankSentence(sentenceTarget, targetSurface);
 
-const subjectCid = ordered.find(c =>
-  window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-);
-
-const words = ordered.map(cid => {
-  const meta = window.GLOBAL_VOCAB.concepts[cid];
-  if (!meta) return cid;
-
-  if (meta.type === "verb") {
-    return getVerbForm(cid, subjectCid, targetLang);
-  }
-
-  return formOf(targetLang, cid);
-});
-
-const blankIndex = ordered.indexOf(targetConcept);
-
-const blankedWords = words.map((w, i) =>
-  i === blankIndex ? "_____" : w
-);
-
-const blanked = blankedWords.join(" ");
-
-    const options = buildRecognitionOptions(tpl, targetConcept, 4);
-if (!options || options.length === 0) {
-  setTimeout(() => renderNext(targetLang, supportLang), 0);
-  return;
-}
-
+    const options = buildSameTypeOptions(targetConcept, 4);
+    if (!options) {
+      setTimeout(() => renderNext(targetLang, supportLang), 0);
+      return;
+    }
 
     content.innerHTML = `
       <p><strong>${ui("originalSentence")}</strong></p>
-      <p>${supportSentence}</p>
+      <p>${safe(sentenceSupport)}</p>
       <hr>
       <p><strong>${ui("fillMissing")}</strong></p>
-      <p>${blanked}</p>
+      <p>${safe(blanked)}</p>
       <div id="choices"></div>
     `;
 
     const container = document.getElementById("choices");
-    const isSentenceStart = blanked.trim().startsWith("_____");
 
     options.forEach(opt => {
-
-      const m = window.GLOBAL_VOCAB.concepts[opt];
-      let text;
-
-      if (m?.type === "verb") {
-        text = getVerbForm(opt, subjectCid, targetLang);
-      } else {
-        text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
-      }
-
-      text = isSentenceStart
-        ? text.charAt(0).toUpperCase() + text.slice(1)
-        : text.charAt(0).toLowerCase() + text.slice(1);
-
       const btn = document.createElement("button");
-      btn.textContent = text;
+      btn.textContent = formOf(targetLang, opt);
 
       btn.onclick = () => {
         const correct = opt === targetConcept;
@@ -1175,7 +1179,75 @@ if (!options || options.length === 0) {
 
       container.appendChild(btn);
     });
+
+    return;
   }
+
+  // --- Existing core path ---
+  const supportSentence = safe(buildSentence(supportLang, tpl));
+  const ordered = orderedConceptsForTemplate(tpl, targetLang);
+
+  const subjectCid = ordered.find(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+  );
+
+  const words = ordered.map(cid => {
+    const meta = window.GLOBAL_VOCAB.concepts[cid];
+    if (!meta) return cid;
+    if (meta.type === "verb") return getVerbForm(cid, subjectCid, targetLang);
+    return formOf(targetLang, cid);
+  });
+
+  const blankIndex = ordered.indexOf(targetConcept);
+  const blankedWords = words.map((w, i) => i === blankIndex ? "_____" : w);
+  const blanked = blankedWords.join(" ");
+
+  const options = buildRecognitionOptions(tpl, targetConcept, 4);
+  if (!options || options.length === 0) {
+    setTimeout(() => renderNext(targetLang, supportLang), 0);
+    return;
+  }
+
+  content.innerHTML = `
+    <p><strong>${ui("originalSentence")}</strong></p>
+    <p>${supportSentence}</p>
+    <hr>
+    <p><strong>${ui("fillMissing")}</strong></p>
+    <p>${blanked}</p>
+    <div id="choices"></div>
+  `;
+
+  const container = document.getElementById("choices");
+  const isSentenceStart = blanked.trim().startsWith("_____");
+
+  options.forEach(opt => {
+    const m = window.GLOBAL_VOCAB.concepts[opt];
+    let text;
+
+    if (m?.type === "verb") {
+      text = getVerbForm(opt, subjectCid, targetLang);
+    } else {
+      text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
+    }
+
+    text = isSentenceStart
+      ? text.charAt(0).toUpperCase() + text.slice(1)
+      : text.charAt(0).toLowerCase() + text.slice(1);
+
+    const btn = document.createElement("button");
+    btn.textContent = text;
+
+    btn.onclick = () => {
+      const correct = opt === targetConcept;
+      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+      setTimeout(() => renderNext(targetLang, supportLang), 600);
+    };
+
+    container.appendChild(btn);
+  });
+}
 
   // -------------------------
   // Level 4 – Isolated Translation Recall
