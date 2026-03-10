@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.10";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.11";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.10";
+  const APP_VERSION = "v0.9.87.11";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -519,12 +519,20 @@ if (state.level < levelCap) {
   const activeConcepts = run.released.filter(c => {
 
   const s = ensureProgress(c);
+  if (s.completed) return false;
 
-  // Only count concepts actually seen this session
-  const attempted = run.sessionAttempts[c] !== undefined;
+  // concept must be schedulable
+  const meta = window.GLOBAL_VOCAB.concepts[c];
 
-  return !s.completed && attempted;
+  if (meta?.type === "adjective" || meta?.type === "number") {
+    return true;
+  }
 
+  const hasTemplate = TEMPLATE_CACHE.some(tpl =>
+    tpl.concepts.includes(c) && templateEligible(tpl)
+  );
+
+  return hasTemplate;
 });
 
   const allFatigued =
@@ -2134,9 +2142,21 @@ function renderNext(targetLang, supportLang) {
 run.lastTargetConcept = targetConcept;
 
     if (!targetConcept) {
-      run.sessionComplete = true;
-      return endSession(targetLang, supportLang);
-    }
+
+  const remainingActive = run.released.filter(c => {
+    const s = ensureProgress(c);
+    return !s.completed;
+  });
+
+  if (remainingActive.length > 0) {
+    // keep trying with spacing relaxed
+    decrementCooldowns();
+    return renderNext(targetLang, supportLang);
+  }
+
+  run.sessionComplete = true;
+  return endSession(targetLang, supportLang);
+}
 
     const tpl = chooseTemplateForConcept(targetConcept);
 
