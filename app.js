@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.11";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.12";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.11";
+  const APP_VERSION = "v0.9.87.12";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -2149,9 +2149,14 @@ run.lastTargetConcept = targetConcept;
   });
 
   if (remainingActive.length > 0) {
-    // keep trying with spacing relaxed
+
+    // relax spacing instead of recursion
     decrementCooldowns();
-    return renderNext(targetLang, supportLang);
+
+    // stop the current cycle and let next event loop run renderNext
+    setTimeout(() => renderNext(targetLang, supportLang), 0);
+    return;
+
   }
 
   run.sessionComplete = true;
