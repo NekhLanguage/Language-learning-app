@@ -1,4 +1,4 @@
-// VERSION: v0.9.86.2
+// VERSION: v0.9.87
 export const AVAILABLE_LANGUAGES = [
   { code: "pt", label: "Portuguese" },
   { code: "ja", label: "Japanese" },

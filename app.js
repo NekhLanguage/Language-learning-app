@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.86.2";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.86.2";
+  const APP_VERSION = "v0.9.87";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -745,6 +745,7 @@ if (orderType === "SOV") {
     return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
   }
 function buildSentence(lang, tpl) {
+  if (!ordered || !ordered.length) return "";
   const ordered = orderedConceptsForTemplate(tpl, lang);
 
   const subjectCid = ordered.find(c =>
@@ -826,7 +827,40 @@ if (adjectives.length && Math.random() < 0.6) {
     return formOf(lang, cid);
   });
 
-  let sentence = words.join(" ");
+  // --- Japanese particle injection ---
+if (lang === "ja") {
+
+  const wordsWithParticles = [...words];
+
+  const pronounIndex = ordered.findIndex(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+  );
+
+  const nounIndex = ordered.findIndex(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+  );
+
+  if (pronounIndex !== -1) {
+    wordsWithParticles.splice(pronounIndex + 1, 0, "は");
+  }
+
+  if (nounIndex !== -1) {
+    wordsWithParticles.splice(nounIndex + 1, 0, "を");
+  }
+
+  let sentence = wordsWithParticles.join("");
+
+  sentence = sentence.charAt(0) + sentence.slice(1);
+
+  return sentence;
+}
+
+// --- All other languages ---
+let sentence = words.join(" ");
+
+sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+
+return sentence + ".";
 
   // Capitalize first letter
   sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
