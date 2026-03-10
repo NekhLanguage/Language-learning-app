@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.4";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.5";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.4";
+  const APP_VERSION = "v0.9.87.5";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -1955,12 +1955,20 @@ function chooseConcept(excluded = new Set()) {
     );
 
     // Prevent concept starvation
-    if (!hasTemplate) {
-      st.completed = true;
-      return false;
-    }
+    const meta = window.GLOBAL_VOCAB.concepts[cid];
 
-    return true;
+// adjectives and numbers do not require templates
+if (meta?.type === "adjective" || meta?.type === "number") {
+  return true;
+}
+
+// Prevent concept starvation for other types
+if (!hasTemplate) {
+  st.completed = true;
+  return false;
+}
+
+return true;
 
   });
 
