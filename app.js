@@ -2148,29 +2148,26 @@ function renderNext(targetLang, supportLang) {
   for (let attempts = 0; attempts < 25; attempts++) {
     const targetConcept = chooseConcept(excluded);
 
-run.lastTargetConcept = targetConcept;
+    run.lastTargetConcept = targetConcept;
 
     if (!targetConcept) {
 
-  const remainingActive = run.released.filter(c => {
-    const s = ensureProgress(c);
-    return !s.completed;
-  });
+      const remainingActive = run.released.filter(c => {
+        const s = ensureProgress(c);
+        return !s.completed;
+      });
 
-  if (remainingActive.length > 0) {
+      if (remainingActive.length > 0) {
 
-    // relax spacing instead of recursion
-    decrementCooldowns();
+        decrementCooldowns();
 
-    // stop the current cycle and let next event loop run renderNext
-    setTimeout(() => renderNext(targetLang, supportLang), 0);
-    return;
+        setTimeout(() => renderNext(targetLang, supportLang), 0);
+        return;
+      }
 
-  }
-
-  run.sessionComplete = true;
-  return endSession(targetLang, supportLang);
-}
+      run.sessionComplete = true;
+      return endSession(targetLang, supportLang);
+    }
 
     const tpl = chooseTemplateForConcept(targetConcept);
 
@@ -2194,41 +2191,46 @@ run.lastTargetConcept = targetConcept;
     }
 
     if (level === 1) {
+      renderExposure(targetLang, supportLang, tpl, targetConcept);
       run.exerciseCounter++;
-      return renderExposure(targetLang, supportLang, tpl, targetConcept);
+      return;
     }
 
     if (level === 3) {
+      renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
       run.exerciseCounter++;
-      return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+      return;
     }
 
     if (level === 4) {
 
-  const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+      const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
 
-  if (result === null) {
-    excluded.add(targetConcept);
-    continue;
-  }
+      if (result === null) {
+        excluded.add(targetConcept);
+        continue;
+      }
 
-  run.exerciseCounter++;
-  return;
-}
+      run.exerciseCounter++;
+      return;
+    }
 
     if (level === 5) {
+      renderMatchingL5(targetLang, supportLang);
       run.exerciseCounter++;
-      return renderMatchingL5(targetLang, supportLang);
+      return;
     }
 
     if (level === 6) {
+      renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
       run.exerciseCounter++;
-      return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+      return;
     }
 
     if (level === 7) {
+      renderFreeProductionL7(targetLang, supportLang, tpl);
       run.exerciseCounter++;
-      return renderFreeProductionL7(targetLang, supportLang, tpl);
+      return;
     }
 
     excluded.add(targetConcept);
