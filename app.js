@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.8";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.9";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.8";
+  const APP_VERSION = "v0.9.87.9";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -785,6 +785,9 @@ function buildSentence(lang, tpl) {
   const ordered = orderedConceptsForTemplate(tpl, lang);
   if (!ordered || !ordered.length) return "";
   const forcedConcept = run.lastTargetConcept;
+const forcedMeta = forcedConcept
+  ? window.GLOBAL_VOCAB.concepts[forcedConcept]
+  : null;
   const subjectCid = ordered.find(c =>
     window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
   );
@@ -816,10 +819,13 @@ if (meta.type === "noun") {
   return !st.completed && st.level >= 4;
 });
 
-if (adjectives.length && (forcedConcept && window.GLOBAL_VOCAB.concepts[forcedConcept]?.type === "adjective" || Math.random() < 0.6)) {
-  const adj = forcedConcept && window.GLOBAL_VOCAB.concepts[forcedConcept]?.type === "adjective"
-    ? forcedConcept
-    : adjectives[Math.floor(Math.random() * adjectives.length)];
+if (adjectives.length && (forcedMeta?.type === "adjective" || Math.random() < 0.6)) {
+
+  const adj =
+    forcedMeta?.type === "adjective"
+      ? forcedConcept
+      : adjectives[Math.floor(Math.random() * adjectives.length)];
+
   phrase = formOf(lang, adj) + " " + phrase;
 }
 
@@ -827,22 +833,20 @@ if (adjectives.length && (forcedConcept && window.GLOBAL_VOCAB.concepts[forcedCo
   let numberWord = null;
 
 if (meta.countable) {
+
   const numbers = run.released.filter(c =>
     window.GLOBAL_VOCAB.concepts[c]?.type === "number"
   );
 
   if (numbers.length) {
 
-  let n;
+    const n =
+      forcedMeta?.type === "number"
+        ? forcedConcept
+        : numbers[Math.floor(Math.random() * numbers.length)];
 
-  if (forcedConcept && window.GLOBAL_VOCAB.concepts[forcedConcept]?.type === "number") {
-    n = forcedConcept;
-  } else {
-    n = numbers[Math.floor(Math.random() * numbers.length)];
+    numberWord = formOf(lang, n);
   }
-
-  numberWord = formOf(lang, n);
-}
 }
 
   // article logic
