@@ -2,7 +2,7 @@ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.5";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.5";
+  const APP_VERSION = "v0.9.87.6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -496,7 +496,9 @@ function seedInitialCore() {
 
     let leveledUp = false;
 
-    if (state.streak >= 2) {
+    const needed = state.level === 1 ? 1 : 2;
+
+if (state.streak >= needed) {
       if (state.level < MAX_LEVEL) {
         state.level++;
         leveledUp = true;
@@ -819,25 +821,33 @@ if (adjectives.length && Math.random() < 0.6) {
 }
 
   // optional number (ONLY if noun is countable)
-  if (meta.countable) {
-    const numbers = run.released.filter(c =>
-      window.GLOBAL_VOCAB.concepts[c]?.type === "number"
-    );
+  let numberWord = null;
 
-    if (numbers.length) {
-      const n = numbers[Math.floor(Math.random() * numbers.length)];
-      phrase = formOf(lang, n) + " " + phrase;
-    }
+if (meta.countable) {
+  const numbers = run.released.filter(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "number"
+  );
+
+  if (numbers.length) {
+    const n = numbers[Math.floor(Math.random() * numbers.length)];
+    numberWord = formOf(lang, n);
   }
+}
 
   // article logic
   if (meta.countable) {
 
     if (lang === "en") {
-      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
-      const article = entry?.article || "a";
-      return article + " " + phrase;
-    }
+
+  if (numberWord) {
+    return numberWord + " " + phrase;
+  }
+
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+  const article = entry?.article || "a";
+
+  return article + " " + phrase;
+}
 
     if (lang === "pt") {
       const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
