@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.1";
+  const APP_VERSION = "v0.9.87.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -461,7 +461,9 @@ function migrateRunState() {
 
   run.releaseQueue = [...orderedConcepts];
 
+if (run.releaseIndex === undefined) {
   run.releaseIndex = run.released.length;
+}
 
   run.contentVersion = CONTENT_VERSION;
 
@@ -1869,20 +1871,29 @@ if (!USER.runs[langCode]) {
   renderNext(languageState.target, languageState.support);
 }
 function releaseNextBatch(count = 5) {
+
   if (!run.releaseQueue) run.releaseQueue = [];
   if (run.releaseIndex === undefined) run.releaseIndex = 0;
 
   let added = 0;
 
-  while (added < count && run.releaseIndex < run.releaseQueue.length) {
-    const cid = run.releaseQueue[run.releaseIndex++];
+  while (
+    added < count &&
+    run.releaseIndex < run.releaseQueue.length
+  ) {
+
+    const cid = run.releaseQueue[run.releaseIndex];
+    run.releaseIndex++;
+
     if (!cid) continue;
     if (run.released.includes(cid)) continue;
 
     run.released.push(cid);
     ensureProgress(cid);
+
     added++;
   }
+
 }
 
  
