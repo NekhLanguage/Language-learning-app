@@ -1,0 +1,130 @@
+{
+  "concepts": [
+    { "concept_id": "POKEMON", "type": "noun" },
+    { "concept_id": "TRAINER", "type": "noun" },
+    { "concept_id": "GYM", "type": "noun" },
+    { "concept_id": "LEAGUE", "type": "noun" },
+    { "concept_id": "GYM_LEADER", "type": "noun" },
+    { "concept_id": "ELITE_FOUR", "type": "noun" },
+    { "concept_id": "POKEMON_CENTER", "type": "noun" },
+    { "concept_id": "FOREST", "type": "noun" },
+    { "concept_id": "CAVE", "type": "noun" },
+    { "concept_id": "TOWN", "type": "noun" },
+
+    { "concept_id": "BATTLE", "type": "noun" },
+    { "concept_id": "MOVE", "type": "noun" },
+    { "concept_id": "DAMAGE", "type": "noun" },
+    { "concept_id": "DEFENSE", "type": "noun" },
+    { "concept_id": "SPEED", "type": "noun" },
+    { "concept_id": "STAT", "type": "noun" },
+    { "concept_id": "ABILITY", "type": "noun" },
+    { "concept_id": "TYPE", "type": "noun" },
+
+    { "concept_id": "POTION", "type": "noun" },
+    { "concept_id": "REVIVE", "type": "noun" },
+    { "concept_id": "TECHNICAL_MACHINE", "type": "noun" },
+    { "concept_id": "BADGE", "type": "noun" },
+    { "concept_id": "ITEM", "type": "noun" },
+
+    { "concept_id": "LEVEL", "type": "noun" },
+    { "concept_id": "EXPERIENCE", "type": "noun" },
+    { "concept_id": "HEALTH", "type": "noun" },
+
+    { "concept_id": "BURN", "type": "verb" },
+    { "concept_id": "POISON", "type": "verb" },
+    { "concept_id": "SLEEP_STATUS", "type": "noun" },
+    { "concept_id": "PARALYZE", "type": "verb" },
+
+    { "concept_id": "SEEN", "type": "noun" },
+    { "concept_id": "CAPTURED", "type": "noun" },
+
+    { "concept_id": "ATTACK", "type": "verb" },
+    { "concept_id": "RUN", "type": "verb" },
+    { "concept_id": "CATCH", "type": "verb" },
+    { "concept_id": "DEFEAT", "type": "verb" },
+    { "concept_id": "SWITCH", "type": "verb" },
+    { "concept_id": "USE", "type": "verb" },
+    { "concept_id": "FLY", "type": "verb" },
+    { "concept_id": "PLAY", "type": "verb" },
+    { "concept_id": "HEAL", "type": "verb" },
+    { "concept_id": "RESTORE", "type": "verb" },
+    { "concept_id": "GAIN_EXPERIENCE", "type": "verb" },
+    { "concept_id": "EVOLVE", "type": "verb" },
+
+    { "concept_id": "WILD", "type": "adjective" },
+    { "concept_id": "STRONG", "type": "adjective" },
+    { "concept_id": "EFFECTIVE", "type": "adjective" },
+    { "concept_id": "SUPER_EFFECTIVE", "type": "adjective" },
+    { "concept_id": "VERY_EFFECTIVE", "type": "adjective" },
+    { "concept_id": "LEGENDARY", "type": "adjective" },
+    { "concept_id": "SHINY", "type": "adjective" }
+  ],
+
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+
+        "POKEMON": { "form": "pokemon" },
+        "TRAINER": { "form": "trainer", "article": "a" },
+        "GYM": { "form": "gym", "article": "a" },
+        "LEAGUE": { "form": "league", "article": "a" },
+        "GYM_LEADER": { "form": "gym leader", "article": "a" },
+        "ELITE_FOUR": { "form": "elite four" },
+        "POKEMON_CENTER": { "form": "pokemon center", "article": "a" },
+        "FOREST": { "form": "forest", "article": "a" },
+        "CAVE": { "form": "cave", "article": "a" },
+        "TOWN": { "form": "town", "article": "a" },
+
+        "BATTLE": { "form": "battle", "article": "a" },
+        "MOVE": { "form": "move", "article": "a" },
+        "DAMAGE": { "form": "damage" },
+        "DEFENSE": { "form": "defense" },
+        "SPEED": { "form": "speed" },
+        "STAT": { "form": "stat", "article": "a" },
+        "ABILITY": { "form": "ability", "article": "an" },
+        "TYPE": { "form": "type", "article": "a" },
+
+        "POTION": { "form": "potion", "article": "a" },
+        "REVIVE": { "form": "revive", "article": "a" },
+        "TECHNICAL_MACHINE": { "form": "technical machine", "article": "a" },
+        "BADGE": { "form": "badge", "article": "a" },
+        "ITEM": { "form": "item", "article": "an" },
+
+        "LEVEL": { "form": "level", "article": "a" },
+        "EXPERIENCE": { "form": "experience" },
+        "HEALTH": { "form": "health" },
+
+        "BURN": { "base": "burn", "3_singular": "burns" },
+        "POISON": { "base": "poison", "3_singular": "poisons" },
+        "SLEEP_STATUS": { "form": "sleep" },
+        "PARALYZE": { "base": "paralyze", "3_singular": "paralyzes" },
+
+        "SEEN": { "form": "seen" },
+        "CAPTURED": { "form": "captured" },
+
+        "ATTACK": { "base": "attack", "3_singular": "attacks" },
+        "RUN": { "base": "run", "3_singular": "runs" },
+        "CATCH": { "base": "catch", "3_singular": "catches" },
+        "DEFEAT": { "base": "defeat", "3_singular": "defeats" },
+        "SWITCH": { "base": "switch", "3_singular": "switches" },
+        "USE": { "base": "use", "3_singular": "uses" },
+        "FLY": { "base": "fly", "3_singular": "flies" },
+        "PLAY": { "base": "play", "3_singular": "plays" },
+        "HEAL": { "base": "heal", "3_singular": "heals" },
+        "RESTORE": { "base": "restore", "3_singular": "restores" },
+        "GAIN_EXPERIENCE": { "base": "gain experience", "3_singular": "gains experience" },
+        "EVOLVE": { "base": "evolve", "3_singular": "evolves" },
+
+        "WILD": ["wild"],
+        "STRONG": ["strong"],
+        "EFFECTIVE": ["effective"],
+        "SUPER_EFFECTIVE": ["super effective"],
+        "VERY_EFFECTIVE": ["very effective"],
+        "LEGENDARY": ["legendary"],
+        "SHINY": ["shiny"]
+
+      }
+    }
+  }
+}
