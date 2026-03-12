@@ -95,7 +95,79 @@
         "sentence_use": true,
         "writing": true
       }
-    }
+    },
+    {
+  "concept_id": "MY",
+  "type": "adjective",
+  "semantic_role": "possessive",
+  "core": true,
+  "interaction_profile": {
+    "see_translate": true,
+    "match": true,
+    "sentence_use": true,
+    "writing": true
+  }
+},
+{
+  "concept_id": "YOUR",
+  "type": "adjective",
+  "semantic_role": "possessive",
+  "core": true,
+  "interaction_profile": {
+    "see_translate": true,
+    "match": true,
+    "sentence_use": true,
+    "writing": true
+  }
+},
+{
+  "concept_id": "HIS",
+  "type": "adjective",
+  "semantic_role": "possessive",
+  "core": true,
+  "interaction_profile": {
+    "see_translate": true,
+    "match": true,
+    "sentence_use": true,
+    "writing": true
+  }
+},
+{
+  "concept_id": "HER",
+  "type": "adjective",
+  "semantic_role": "possessive",
+  "core": true,
+  "interaction_profile": {
+    "see_translate": true,
+    "match": true,
+    "sentence_use": true,
+    "writing": true
+  }
+},
+{
+  "concept_id": "OUR",
+  "type": "adjective",
+  "semantic_role": "possessive",
+  "core": true,
+  "interaction_profile": {
+    "see_translate": true,
+    "match": true,
+    "sentence_use": true,
+    "writing": true
+  }
+},
+{
+  "concept_id": "THEIR",
+  "type": "adjective",
+  "semantic_role": "possessive",
+  "core": true,
+  "interaction_profile": {
+    "see_translate": true,
+    "match": true,
+    "sentence_use": true,
+    "writing": true
+  }
+}
   ],
   "languages": {
     "en": {
@@ -124,7 +196,13 @@
         ],
         "DIFFICULT": [
           "difficult"
-        ]
+        ],
+        "MY": ["my"],
+"YOUR": ["your"],
+"HIS": ["his"],
+"HER": ["her"],
+"OUR": ["our"],
+"THEIR": ["their"]
       }
     },
     "pt": {
@@ -153,7 +231,13 @@
         ],
         "DIFFICULT": [
           "difícil"
-        ]
+        ],
+        "MY": ["meu"],
+"YOUR": ["seu"],
+"HIS": ["dele"],
+"HER": ["dela"],
+"OUR": ["nosso"],
+"THEIR": ["deles"]
       }
     },
     "ja": {
@@ -182,7 +266,13 @@
         ],
         "DIFFICULT": [
           "難しい"
-        ]
+        ],
+        "MY": ["私の"],
+"YOUR": ["あなたの"],
+"HIS": ["彼の"],
+"HER": ["彼女の"],
+"OUR": ["私たちの"],
+"THEIR": ["彼らの"]
       }
     },
     "no": {
@@ -212,8 +302,34 @@
         ],
         "DIFFICULT": [
           "vanskelig"
-        ]
+        ],
+        "MY": ["min"],
+"YOUR": ["din"],
+"HIS": ["hans"],
+"HER": ["hennes"],
+"OUR": ["vår"],
+"THEIR": ["deres"]
       }
-    }
+    },
+    "ar": {
+  "label": "Arabic",
+  "forms": {
+    "BIG": ["كبير"],
+    "SMALL": ["صغير"],
+    "GOOD": ["جيد"],
+    "BAD": ["سيئ"],
+    "NEW": ["جديد"],
+    "OLD": ["قديم"],
+    "EASY": ["سهل"],
+    "DIFFICULT": ["صعب"],
+
+    "MY": ["لي"],
+    "YOUR": ["لك"],
+    "HIS": ["له"],
+    "HER": ["لها"],
+    "OUR": ["لنا"],
+    "THEIR": ["لهم"]
+  }
+}
   }
 }

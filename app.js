@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.14";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.15";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.14";
+  const APP_VERSION = "v0.9.87.15";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -66,7 +66,9 @@ loadUser();
     // Bundle 7
     "BIG","SMALL","NEW","OLD","BLACK","WHITE","GOOD","BAD","FAST","SLOW",  
     // Bundle 8
-    "ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN"
+    "ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN",
+    // Bundle 9
+    "my","Syour","her","his","our","their"
 ];
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
