@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.13";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.14";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.13";
+  const APP_VERSION = "v0.9.87.14";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 2;
@@ -641,7 +641,33 @@ return tpl;
 
   return cid;
 }
+function nounPhrase(lang, cid) {
 
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
+
+  const base = entry.form || formOf(lang, cid);
+
+  if (!meta?.countable) return base;
+
+  if (lang === "en") {
+    const article = entry.article || "a";
+    return article + " " + base;
+  }
+
+  if (lang === "pt") {
+    const article = entry.gender === "f" ? "uma" : "um";
+    return article + " " + base;
+  }
+
+  if (lang === "no") {
+    if (entry.gender === "n") return "et " + base;
+    if (entry.gender === "f") return "ei " + base;
+    return "en " + base;
+  }
+
+  return base;
+}
   function getVerbForm(verbCid, subjectCid, lang) {
   const verbData = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[verbCid];
   if (!verbData) return verbCid;
@@ -1004,7 +1030,10 @@ function buildSentence(lang, tpl, forcedConcept = null) {
 
     options.forEach(opt => {
       const btn = document.createElement("button");
-      btn.textContent = formOf(supportLang, opt);
+      const meta = window.GLOBAL_VOCAB.concepts[opt];
+btn.textContent = meta?.type === "noun"
+  ? nounPhrase(supportLang, opt)
+  : formOf(supportLang, opt);
 
       btn.onclick = () => {
         container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
@@ -1056,13 +1085,6 @@ function buildSentence(lang, tpl, forcedConcept = null) {
 if (releasedOptions.length !== 4) return null;
 
 const options = shuffle([...releasedOptions]);
-
-  if (releasedOptions.length < 2) return null;
-
-  const options = shuffle([
-  q.answer,
-  ...releasedOptions.filter(o => o !== q.answer)
-]).slice(0, 4);
   const promptText = resolvePrompt(q, supportLang);
   const sentence = buildSentence(targetLang, tpl);
 
@@ -1244,7 +1266,11 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
       text = getVerbForm(opt, subjectCid, targetLang);
     } else {
       text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
-    }
+    }const meta = window.GLOBAL_VOCAB.concepts[opt];
+
+text = meta?.type === "noun"
+  ? nounPhrase(targetLang, opt)
+  : (tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt));
 
     text = isSentenceStart
       ? text.charAt(0).toUpperCase() + text.slice(1)
@@ -1280,10 +1306,16 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
     const promptSupport = formOf(supportLang, targetConcept);
 
     function resolveTargetSurface(cid) {
+
   const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[cid];
   const meta = window.GLOBAL_VOCAB.concepts[cid];
 
   if (entry === undefined || entry === null) return cid;
+
+  // NOUNS → use noun phrase (adds articles)
+  if (meta?.type === "noun") {
+    return nounPhrase(targetLang, cid);
+  }
 
   // VERBS → strictly base / infinitive only
   if (meta?.type === "verb") {
@@ -1292,10 +1324,10 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
       if (typeof entry.infinitive === "string") return entry.infinitive;
     }
     if (typeof entry === "string") return entry;
-    return cid; // do NOT fallback to random conjugation
+    return cid;
   }
 
-  // NON-VERBS
+  // OTHER TYPES
   if (typeof entry === "string") return entry;
 
   if (Array.isArray(entry)) return entry[0];
@@ -1416,33 +1448,7 @@ function renderMatchingL5(targetLang, supportLang) {
 
   const targetConcept = determineTargetConcept(tpl);
   const level = levelOf(targetConcept);
-  // ---------- Level 2 strict option rule ----------
-if (level === 2) {
 
-  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-
-  const role =
-    meta?.type === "pronoun" ? "pronoun" :
-    meta?.type === "verb" ? "verb" :
-    "object";
-
-  const q = tpl.questions?.[role];
-
-  if (!q) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  const releasedOptions = q.choices.filter(opt =>
-    run.released.includes(opt)
-  );
-
-  // Level 2 must always have exactly 4 options
-  if (releasedOptions.length !== 4) {
-    excluded.add(targetConcept);
-    continue;
-  }
-}
 
   if (level === 6) {run.recentTemplates.push(tpl);
 if (run.recentTemplates.length > 3) {
@@ -2229,7 +2235,31 @@ function renderNext(targetLang, supportLang) {
     }
 
     const level = levelOf(targetConcept);
+// ---------- Level 2 strict option rule ----------
+if (level === 2) {
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
 
+  const role =
+    meta?.type === "pronoun" ? "pronoun" :
+    meta?.type === "verb" ? "verb" :
+    "object";
+
+  const q = tpl.questions?.[role];
+
+  if (!q) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  const releasedOptions = q.choices.filter(opt =>
+    run.released.includes(opt)
+  );
+
+  if (releasedOptions.length !== 4) {
+    excluded.add(targetConcept);
+    continue;
+  }
+}
     if (level === 2) {
       const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
 
