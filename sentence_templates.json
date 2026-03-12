@@ -434,8 +434,214 @@
       "answer": "SLEEP"
     }
   }
+},
+{
+  "template_id": "I_AM_MAN",
+  "concepts": ["FIRST_PERSON_SINGULAR", "BE", "MAN"],
+  "render": {
+    "en": "I am a man.",
+    "pt": "Eu sou um homem.",
+    "ar": "أنا رجل."
+  },
+  "surface": {
+    "en": {
+      "FIRST_PERSON_SINGULAR": "I",
+      "BE": "am",
+      "MAN": "man"
+    },
+    "pt": {
+      "FIRST_PERSON_SINGULAR": "Eu",
+      "BE": "sou",
+      "MAN": "homem"
+    },
+    "ar": {
+      "FIRST_PERSON_SINGULAR": "أنا",
+      "MAN": "رجل"
+    }
+  },
+  "questions": {
+    "verb": {
+      "prompt": {
+        "en": "What am I?",
+        "pt": "O que eu sou?",
+        "ar": "ماذا أنا؟"
+      },
+      "choices": ["BE", "EAT", "READ", "SEE"],
+      "answer": "BE"
+    },
+    "object": {
+      "prompt": {
+        "en": "What am I?",
+        "pt": "Eu sou o quê?",
+        "ar": "أنا ماذا؟"
+      },
+      "choices": ["MAN", "WOMAN", "BOY", "GIRL"],
+      "answer": "MAN"
+    }
+  }
+},
+{
+  "template_id": "SHE_IS_WOMAN",
+  "concepts": ["SHE", "BE", "WOMAN"],
+  "render": {
+    "en": "She is a woman.",
+    "pt": "Ela é uma mulher.",
+    "ar": "هي امرأة."
+  },
+  "surface": {
+    "en": {
+      "SHE": "she",
+      "BE": "is",
+      "WOMAN": "woman"
+    },
+    "pt": {
+      "SHE": "ela",
+      "BE": "é",
+      "WOMAN": "mulher"
+    },
+    "ar": {
+      "SHE": "هي",
+      "WOMAN": "امرأة"
+    }
+  },
+  "questions": {
+    "pronoun": {
+      "prompt": {
+        "en": "Who is a woman?",
+        "pt": "Quem é uma mulher?",
+        "ar": "من امرأة؟"
+      },
+      "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+      "answer": "SHE"
+    },
+    "verb": {
+      "prompt": {
+        "en": "What is she?",
+        "pt": "O que ela é?",
+        "ar": "ماذا هي؟"
+      },
+      "choices": ["BE", "EAT", "READ", "SEE"],
+      "answer": "BE"
+    },
+    "object": {
+      "prompt": {
+        "en": "What is she?",
+        "pt": "Ela é o quê?",
+        "ar": "هي ماذا؟"
+      },
+      "choices": ["WOMAN", "MAN", "BOY", "GIRL"],
+      "answer": "WOMAN"
+    }
+  }
+},
+{
+  "template_id": "YOU_ARE_GIRL",
+  "concepts": ["SECOND_PERSON", "BE", "GIRL"],
+  "render": {
+    "en": "You are a girl.",
+    "pt": "Você é uma menina.",
+    "ar": "أنت بنت."
+  },
+  "surface": {
+    "en": {
+      "SECOND_PERSON": "you",
+      "BE": "are",
+      "GIRL": "girl"
+    },
+    "pt": {
+      "SECOND_PERSON": "você",
+      "BE": "é",
+      "GIRL": "menina"
+    },
+    "ar": {
+      "SECOND_PERSON": "أنت",
+      "GIRL": "بنت"
+    }
+  },
+  "questions": {
+    "pronoun": {
+      "prompt": {
+        "en": "Who is a girl?",
+        "pt": "Quem é uma menina?",
+        "ar": "من بنت؟"
+      },
+      "choices": ["SECOND_PERSON", "FIRST_PERSON_SINGULAR", "HE", "SHE"],
+      "answer": "SECOND_PERSON"
+    },
+    "verb": {
+      "prompt": {
+        "en": "What are you?",
+        "pt": "O que você é?",
+        "ar": "ماذا أنت؟"
+      },
+      "choices": ["BE", "EAT", "READ", "SEE"],
+      "answer": "BE"
+    },
+    "object": {
+      "prompt": {
+        "en": "What are you?",
+        "pt": "Você é o quê?",
+        "ar": "أنت ماذا؟"
+      },
+      "choices": ["GIRL", "BOY", "MAN", "WOMAN"],
+      "answer": "GIRL"
+    }
+  }
+},
+{
+  "template_id": "HE_IS_BOY",
+  "concepts": ["HE", "BE", "BOY"],
+  "render": {
+    "en": "He is a boy.",
+    "pt": "Ele é um menino.",
+    "ar": "هو ولد."
+  },
+  "surface": {
+    "en": {
+      "HE": "he",
+      "BE": "is",
+      "BOY": "boy"
+    },
+    "pt": {
+      "HE": "ele",
+      "BE": "é",
+      "BOY": "menino"
+    },
+    "ar": {
+      "HE": "هو",
+      "BOY": "ولد"
+    }
+  },
+  "questions": {
+    "pronoun": {
+      "prompt": {
+        "en": "Who is a boy?",
+        "pt": "Quem é um menino?",
+        "ar": "من ولد؟"
+      },
+      "choices": ["HE", "SHE", "SECOND_PERSON", "FIRST_PERSON_SINGULAR"],
+      "answer": "HE"
+    },
+    "verb": {
+      "prompt": {
+        "en": "What is he?",
+        "pt": "O que ele é?",
+        "ar": "ماذا هو؟"
+      },
+      "choices": ["BE", "EAT", "READ", "SEE"],
+      "answer": "BE"
+    },
+    "object": {
+      "prompt": {
+        "en": "What is he?",
+        "pt": "Ele é o quê?",
+        "ar": "هو ماذا؟"
+      },
+      "choices": ["BOY", "GIRL", "MAN", "WOMAN"],
+      "answer": "BOY"
+    }
+  }
 }
-
 
   ]
 }
