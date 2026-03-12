@@ -1050,10 +1050,12 @@ function buildSentence(lang, tpl, forcedConcept = null) {
   }
 
   const releasedOptions = q.choices.filter(opt => {
-    if (!run.released.includes(opt)) return false;
-    const st = ensureProgress(opt);
-    return !st.completed;
-  });
+  return run.released.includes(opt);
+});
+
+if (releasedOptions.length !== 4) return null;
+
+const options = shuffle([...releasedOptions]);
 
   if (releasedOptions.length < 2) return null;
 
@@ -1414,6 +1416,33 @@ function renderMatchingL5(targetLang, supportLang) {
 
   const targetConcept = determineTargetConcept(tpl);
   const level = levelOf(targetConcept);
+  // ---------- Level 2 strict option rule ----------
+if (level === 2) {
+
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+
+  const role =
+    meta?.type === "pronoun" ? "pronoun" :
+    meta?.type === "verb" ? "verb" :
+    "object";
+
+  const q = tpl.questions?.[role];
+
+  if (!q) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  const releasedOptions = q.choices.filter(opt =>
+    run.released.includes(opt)
+  );
+
+  // Level 2 must always have exactly 4 options
+  if (releasedOptions.length !== 4) {
+    excluded.add(targetConcept);
+    continue;
+  }
+}
 
   if (level === 6) {run.recentTemplates.push(tpl);
 if (run.recentTemplates.length > 3) {
