@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.16";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.17";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.16";
+  const APP_VERSION = "v0.9.87.17";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 3;
@@ -1171,7 +1171,11 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
 
   const pool = strictPool.length >= 3 ? strictPool : relaxedPool;
 
-  if (pool.length < 3) return null;
+  if (pool.length < 3) {
+  const fallback = run.released.filter(cid => cid !== targetConcept);
+  if (fallback.length < 3) return null;
+  return shuffle([targetConcept, ...shuffle(fallback).slice(0,3)]);
+}
 
   const targetTotal = Math.max(4, Math.min(desiredTotalOptions, pool.length + 1));
   const distractorCount = targetTotal - 1;
@@ -1246,9 +1250,9 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
 
   const options = buildRecognitionOptions(tpl, targetConcept, 4);
   if (!options || options.length === 0) {
-    setTimeout(() => renderNext(targetLang, supportLang), 0);
-    return;
-  }
+  renderNext(targetLang, supportLang);
+  return;
+}
 
   content.innerHTML = `
     <p><strong>${ui("originalSentence")}</strong></p>
