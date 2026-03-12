@@ -30,10 +30,10 @@
     { "concept_id": "EXPERIENCE", "type": "noun" },
     { "concept_id": "HEALTH", "type": "noun" },
 
-    { "concept_id": "BURN", "type": "noun" },
-    { "concept_id": "POISON", "type": "noun" },
+    { "concept_id": "BURN", "type": "verb" },
+    { "concept_id": "POISON", "type": "verb" },
     { "concept_id": "SLEEP_STATUS", "type": "noun" },
-    { "concept_id": "PARALYZE", "type": "noun" },
+    { "concept_id": "PARALYZE", "type": "verb" },
 
     { "concept_id": "SEEN", "type": "noun" },
     { "concept_id": "CAPTURED", "type": "noun" },
@@ -95,10 +95,10 @@
         "EXPERIENCE": { "form": "experience" },
         "HEALTH": { "form": "health" },
 
-        "BURN": { "form": "burn", "article": "a" },
-        "POISON": { "form": "poison" },
+        "BURN": { "base": "burn", "3_singular": "burns" },
+        "POISON": { "base": "poison", "3_singular": "poisons" },
         "SLEEP_STATUS": { "form": "sleep" },
-        "PARALYZE": { "form": "paralysis" },
+        "PARALYZE": { "base": "paralyze", "3_singular": "paralyzes" },
 
         "SEEN": { "form": "seen" },
         "CAPTURED": { "form": "captured" },
@@ -123,6 +123,206 @@
         "VERY_EFFECTIVE": ["very effective"],
         "LEGENDARY": ["legendary"],
         "SHINY": ["shiny"]
+
+      }
+    },
+
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+
+        "POKEMON": { "form": "pokémon" },
+        "TRAINER": { "form": "treinador", "gender": "m" },
+        "GYM": { "form": "ginásio", "gender": "m" },
+        "LEAGUE": { "form": "liga", "gender": "f" },
+        "GYM_LEADER": { "form": "líder de ginásio", "gender": "m" },
+        "ELITE_FOUR": { "form": "elite dos quatro" },
+        "POKEMON_CENTER": { "form": "centro pokémon", "gender": "m" },
+        "FOREST": { "form": "floresta", "gender": "f" },
+        "CAVE": { "form": "caverna", "gender": "f" },
+        "TOWN": { "form": "cidade", "gender": "f" },
+
+        "BATTLE": { "form": "batalha", "gender": "f" },
+        "MOVE": { "form": "golpe", "gender": "m" },
+        "DAMAGE": { "form": "dano", "gender": "m" },
+        "DEFENSE": { "form": "defesa", "gender": "f" },
+        "SPEED": { "form": "velocidade", "gender": "f" },
+        "STAT": { "form": "estatística", "gender": "f" },
+        "ABILITY": { "form": "habilidade", "gender": "f" },
+        "TYPE": { "form": "tipo", "gender": "m" },
+
+        "POTION": { "form": "poção", "gender": "f" },
+        "REVIVE": { "form": "reviver", "gender": "m" },
+        "TECHNICAL_MACHINE": { "form": "máquina técnica", "gender": "f" },
+        "BADGE": { "form": "insígnia", "gender": "f" },
+        "ITEM": { "form": "item", "gender": "m" },
+
+        "LEVEL": { "form": "nível", "gender": "m" },
+        "EXPERIENCE": { "form": "experiência", "gender": "f" },
+        "HEALTH": { "form": "saúde", "gender": "f" },
+
+        "BURN": {
+          "base": "queimar",
+          "1_singular": "queimo",
+          "2_singular": "queimas",
+          "3_singular": "queima",
+          "1_plural": "queimamos",
+          "2_plural": "queimam",
+          "3_plural": "queimam"
+        },
+
+        "POISON": {
+          "base": "envenenar",
+          "1_singular": "enveneno",
+          "2_singular": "envenenas",
+          "3_singular": "envenena",
+          "1_plural": "envenenamos",
+          "2_plural": "envenenam",
+          "3_plural": "envenenam"
+        },
+
+        "SLEEP_STATUS": { "form": "sono" },
+
+        "PARALYZE": {
+          "base": "paralisar",
+          "1_singular": "paraliso",
+          "2_singular": "paralisas",
+          "3_singular": "paralisa",
+          "1_plural": "paralisamos",
+          "2_plural": "paralisam",
+          "3_plural": "paralisam"
+        },
+
+        "SEEN": { "form": "visto" },
+        "CAPTURED": { "form": "capturado" },
+
+        "ATTACK": {
+          "base": "atacar",
+          "1_singular": "ataco",
+          "2_singular": "atacas",
+          "3_singular": "ataca",
+          "1_plural": "atacamos",
+          "2_plural": "atacam",
+          "3_plural": "atacam"
+        },
+
+        "RUN": {
+          "base": "fugir",
+          "1_singular": "fujo",
+          "2_singular": "fuges",
+          "3_singular": "foge",
+          "1_plural": "fugimos",
+          "2_plural": "fogem",
+          "3_plural": "fogem"
+        },
+
+        "CATCH": {
+          "base": "capturar",
+          "1_singular": "capturo",
+          "2_singular": "capturas",
+          "3_singular": "captura",
+          "1_plural": "capturamos",
+          "2_plural": "capturam",
+          "3_plural": "capturam"
+        },
+
+        "DEFEAT": {
+          "base": "derrotar",
+          "1_singular": "derroto",
+          "2_singular": "derrotas",
+          "3_singular": "derrota",
+          "1_plural": "derrotamos",
+          "2_plural": "derrotam",
+          "3_plural": "derrotam"
+        },
+
+        "SWITCH": {
+          "base": "trocar",
+          "1_singular": "troco",
+          "2_singular": "trocas",
+          "3_singular": "troca",
+          "1_plural": "trocamos",
+          "2_plural": "trocam",
+          "3_plural": "trocam"
+        },
+
+        "USE": {
+          "base": "usar",
+          "1_singular": "uso",
+          "2_singular": "usas",
+          "3_singular": "usa",
+          "1_plural": "usamos",
+          "2_plural": "usam",
+          "3_plural": "usam"
+        },
+
+        "FLY": {
+          "base": "voar",
+          "1_singular": "voo",
+          "2_singular": "voas",
+          "3_singular": "voa",
+          "1_plural": "voamos",
+          "2_plural": "voam",
+          "3_plural": "voam"
+        },
+
+        "PLAY": {
+          "base": "jogar",
+          "1_singular": "jogo",
+          "2_singular": "jogas",
+          "3_singular": "joga",
+          "1_plural": "jogamos",
+          "2_plural": "jogam",
+          "3_plural": "jogam"
+        },
+
+        "HEAL": {
+          "base": "curar",
+          "1_singular": "curo",
+          "2_singular": "curas",
+          "3_singular": "cura",
+          "1_plural": "curamos",
+          "2_plural": "curam",
+          "3_plural": "curam"
+        },
+
+        "RESTORE": {
+          "base": "restaurar",
+          "1_singular": "restauro",
+          "2_singular": "restauras",
+          "3_singular": "restaura",
+          "1_plural": "restauramos",
+          "2_plural": "restauram",
+          "3_plural": "restauram"
+        },
+
+        "GAIN_EXPERIENCE": {
+          "base": "ganhar experiência",
+          "1_singular": "ganho experiência",
+          "2_singular": "ganhas experiência",
+          "3_singular": "ganha experiência",
+          "1_plural": "ganhamos experiência",
+          "2_plural": "ganham experiência",
+          "3_plural": "ganham experiência"
+        },
+
+        "EVOLVE": {
+          "base": "evoluir",
+          "1_singular": "evoluo",
+          "2_singular": "evoluis",
+          "3_singular": "evolui",
+          "1_plural": "evoluímos",
+          "2_plural": "evoluem",
+          "3_plural": "evoluem"
+        },
+
+        "WILD": ["selvagem"],
+        "STRONG": ["forte"],
+        "EFFECTIVE": ["eficaz"],
+        "SUPER_EFFECTIVE": ["super eficaz"],
+        "VERY_EFFECTIVE": ["muito eficaz"],
+        "LEGENDARY": ["lendário"],
+        "SHINY": ["brilhante"]
 
       }
     }
