@@ -709,11 +709,50 @@
 "ar": {
   "label": "Arabic",
   "forms": {
-    "FOOD": { "form": "طعام" },
+
     "WATER": { "form": "ماء" },
-    "BOOK": { "form": "كتاب" },
-    "PHONE": { "form": "هاتف" },
-    "JOB": { "form": "عمل" }
+    "FOOD": { "form": "طعام" },
+
+    "HOUSE": { "form": "بيت", "gender": "m" },
+    "HOME": { "form": "منزل", "gender": "m" },
+    "BOOK": { "form": "كتاب", "gender": "m" },
+    "THING": { "form": "شيء", "gender": "m" },
+    "JOB": { "form": "وظيفة", "gender": "f" },
+    "ROOM": { "form": "غرفة", "gender": "f" },
+
+    "BOY": { "form": "ولد", "gender": "m" },
+    "GIRL": { "form": "بنت", "gender": "f" },
+    "MAN": { "form": "رجل", "gender": "m" },
+    "WOMAN": { "form": "امرأة", "gender": "f" },
+
+    "MOM": { "form": "أم", "gender": "f" },
+    "DAD": { "form": "أب", "gender": "m" },
+
+    "SON": { "form": "ابن", "gender": "m" },
+    "DAUGHTER": { "form": "ابنة", "gender": "f" },
+    "BROTHER": { "form": "أخ", "gender": "m" },
+    "SISTER": { "form": "أخت", "gender": "f" },
+
+    "HEAD": { "form": "رأس", "gender": "m" },
+    "ARM": { "form": "ذراع", "gender": "m" },
+    "HAND": { "form": "يد", "gender": "f" },
+    "LEG": { "form": "ساق", "gender": "f" },
+    "FOOT": { "form": "قدم", "gender": "f" },
+    "FINGER": { "form": "إصبع", "gender": "m" },
+    "EYE": { "form": "عين", "gender": "f" },
+    "MOUTH": { "form": "فم", "gender": "m" },
+    "FACE": { "form": "وجه", "gender": "m" },
+
+    "BREAKFAST": { "form": "فطور", "gender": "m" },
+    "LUNCH": { "form": "غداء", "gender": "m" },
+    "DINNER": { "form": "عشاء", "gender": "m" },
+
+    "CLOTHES": { "form": "ملابس" },
+    "SHIRT": { "form": "قميص", "gender": "m" },
+    "SHOES": { "form": "حذاء" },
+    "PHONE": { "form": "هاتف", "gender": "m" },
+    "PANTS": { "form": "بنطال" }
+
   }
 }
   }
