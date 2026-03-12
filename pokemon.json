@@ -326,5 +326,468 @@
 
       }
     }
+    "no": {
+  "label": "Norwegian",
+  "forms": {
+
+    "POKEMON": { "form": "pokemon" },
+    "TRAINER": { "form": "trener", "gender": "m" },
+    "GYM": { "form": "gym", "gender": "n" },
+    "LEAGUE": { "form": "liga", "gender": "f" },
+    "GYM_LEADER": { "form": "gymleder", "gender": "m" },
+    "ELITE_FOUR": { "form": "elite fire" },
+    "POKEMON_CENTER": { "form": "pokemonsenter", "gender": "n" },
+    "FOREST": { "form": "skog", "gender": "m" },
+    "CAVE": { "form": "hule", "gender": "f" },
+    "TOWN": { "form": "by", "gender": "m" },
+
+    "BATTLE": { "form": "kamp", "gender": "m" },
+    "MOVE": { "form": "angrep", "gender": "n" },
+    "DAMAGE": { "form": "skade", "gender": "f" },
+    "DEFENSE": { "form": "forsvar", "gender": "n" },
+    "SPEED": { "form": "hastighet", "gender": "f" },
+    "STAT": { "form": "statistikk", "gender": "f" },
+    "ABILITY": { "form": "evne", "gender": "f" },
+    "TYPE": { "form": "type", "gender": "m" },
+
+    "POTION": { "form": "potion", "gender": "m" },
+    "REVIVE": { "form": "revive", "gender": "m" },
+    "TECHNICAL_MACHINE": { "form": "teknisk maskin", "gender": "f" },
+    "BADGE": { "form": "merke", "gender": "n" },
+    "ITEM": { "form": "gjenstand", "gender": "m" },
+
+    "LEVEL": { "form": "nivå", "gender": "n" },
+    "EXPERIENCE": { "form": "erfaring", "gender": "f" },
+    "HEALTH": { "form": "helse", "gender": "f" },
+
+    "BURN": {
+      "base": "brenne",
+      "1_singular": "brenner",
+      "2_singular": "brenner",
+      "3_singular": "brenner",
+      "1_plural": "brenner",
+      "2_plural": "brenner",
+      "3_plural": "brenner"
+    },
+
+    "POISON": {
+      "base": "forgifte",
+      "1_singular": "forgifter",
+      "2_singular": "forgifter",
+      "3_singular": "forgifter",
+      "1_plural": "forgifter",
+      "2_plural": "forgifter",
+      "3_plural": "forgifter"
+    },
+
+    "SLEEP_STATUS": { "form": "søvn", "gender": "m" },
+
+    "PARALYZE": {
+      "base": "lamme",
+      "1_singular": "lammer",
+      "2_singular": "lammer",
+      "3_singular": "lammer",
+      "1_plural": "lammer",
+      "2_plural": "lammer",
+      "3_plural": "lammer"
+    },
+
+    "SEEN": { "form": "sett" },
+    "CAPTURED": { "form": "fanget" },
+
+    "ATTACK": {
+      "base": "angripe",
+      "1_singular": "angriper",
+      "2_singular": "angriper",
+      "3_singular": "angriper",
+      "1_plural": "angriper",
+      "2_plural": "angriper",
+      "3_plural": "angriper"
+    },
+
+    "RUN": {
+      "base": "flykte",
+      "1_singular": "flykter",
+      "2_singular": "flykter",
+      "3_singular": "flykter",
+      "1_plural": "flykter",
+      "2_plural": "flykter",
+      "3_plural": "flykter"
+    },
+
+    "CATCH": {
+      "base": "fange",
+      "1_singular": "fanger",
+      "2_singular": "fanger",
+      "3_singular": "fanger",
+      "1_plural": "fanger",
+      "2_plural": "fanger",
+      "3_plural": "fanger"
+    },
+
+    "DEFEAT": {
+      "base": "beseire",
+      "1_singular": "beseirer",
+      "2_singular": "beseirer",
+      "3_singular": "beseirer",
+      "1_plural": "beseirer",
+      "2_plural": "beseirer",
+      "3_plural": "beseirer"
+    },
+
+    "SWITCH": {
+      "base": "bytte",
+      "1_singular": "bytter",
+      "2_singular": "bytter",
+      "3_singular": "bytter",
+      "1_plural": "bytter",
+      "2_plural": "bytter",
+      "3_plural": "bytter"
+    },
+
+    "USE": {
+      "base": "bruke",
+      "1_singular": "bruker",
+      "2_singular": "bruker",
+      "3_singular": "bruker",
+      "1_plural": "bruker",
+      "2_plural": "bruker",
+      "3_plural": "bruker"
+    },
+
+    "FLY": {
+      "base": "fly",
+      "1_singular": "flyr",
+      "2_singular": "flyr",
+      "3_singular": "flyr",
+      "1_plural": "flyr",
+      "2_plural": "flyr",
+      "3_plural": "flyr"
+    },
+
+    "PLAY": {
+      "base": "spille",
+      "1_singular": "spiller",
+      "2_singular": "spiller",
+      "3_singular": "spiller",
+      "1_plural": "spiller",
+      "2_plural": "spiller",
+      "3_plural": "spiller"
+    },
+
+    "HEAL": {
+      "base": "helbrede",
+      "1_singular": "helbreder",
+      "2_singular": "helbreder",
+      "3_singular": "helbreder",
+      "1_plural": "helbreder",
+      "2_plural": "helbreder",
+      "3_plural": "helbreder"
+    },
+
+    "RESTORE": {
+      "base": "gjenopprette",
+      "1_singular": "gjenoppretter",
+      "2_singular": "gjenoppretter",
+      "3_singular": "gjenoppretter",
+      "1_plural": "gjenoppretter",
+      "2_plural": "gjenoppretter",
+      "3_plural": "gjenoppretter"
+    },
+
+    "GAIN_EXPERIENCE": {
+      "base": "få erfaring",
+      "1_singular": "får erfaring",
+      "2_singular": "får erfaring",
+      "3_singular": "får erfaring",
+      "1_plural": "får erfaring",
+      "2_plural": "får erfaring",
+      "3_plural": "får erfaring"
+    },
+
+    "EVOLVE": {
+      "base": "utvikle seg",
+      "1_singular": "utvikler seg",
+      "2_singular": "utvikler seg",
+      "3_singular": "utvikler seg",
+      "1_plural": "utvikler seg",
+      "2_plural": "utvikler seg",
+      "3_plural": "utvikler seg"
+    },
+
+    "WILD": ["vill"],
+    "STRONG": ["sterk"],
+    "EFFECTIVE": ["effektiv"],
+    "SUPER_EFFECTIVE": ["supereffektiv"],
+    "VERY_EFFECTIVE": ["svært effektiv"],
+    "LEGENDARY": ["legendarisk"],
+    "SHINY": ["skinnende"]
+
+  }
+}
+"ja": {
+  "label": "Japanese",
+  "forms": {
+
+    "POKEMON": { "form": "ポケモン" },
+    "TRAINER": { "form": "トレーナー" },
+    "GYM": { "form": "ジム" },
+    "LEAGUE": { "form": "リーグ" },
+    "GYM_LEADER": { "form": "ジムリーダー" },
+    "ELITE_FOUR": { "form": "四天王" },
+    "POKEMON_CENTER": { "form": "ポケモンセンター" },
+    "FOREST": { "form": "森" },
+    "CAVE": { "form": "洞窟" },
+    "TOWN": { "form": "町" },
+
+    "BATTLE": { "form": "バトル" },
+    "MOVE": { "form": "わざ" },
+    "DAMAGE": { "form": "ダメージ" },
+    "DEFENSE": { "form": "ぼうぎょ" },
+    "SPEED": { "form": "すばやさ" },
+    "STAT": { "form": "ステータス" },
+    "ABILITY": { "form": "とくせい" },
+    "TYPE": { "form": "タイプ" },
+
+    "POTION": { "form": "ポーション" },
+    "REVIVE": { "form": "げんきのかけら" },
+    "TECHNICAL_MACHINE": { "form": "わざマシン" },
+    "BADGE": { "form": "バッジ" },
+    "ITEM": { "form": "どうぐ" },
+
+    "LEVEL": { "form": "レベル" },
+    "EXPERIENCE": { "form": "けいけんち" },
+    "HEALTH": { "form": "たいりょく" },
+
+    "BURN": { "base": "やけどさせる" },
+    "POISON": { "base": "どくにする" },
+    "SLEEP_STATUS": { "form": "ねむり" },
+    "PARALYZE": { "base": "まひさせる" },
+
+    "SEEN": { "form": "みた" },
+    "CAPTURED": { "form": "つかまえた" },
+
+    "ATTACK": { "base": "こうげきする" },
+    "RUN": { "base": "にげる" },
+    "CATCH": { "base": "つかまえる" },
+    "DEFEAT": { "base": "たおす" },
+    "SWITCH": { "base": "こうたいする" },
+    "USE": { "base": "つかう" },
+    "FLY": { "base": "とぶ" },
+    "PLAY": { "base": "あそぶ" },
+    "HEAL": { "base": "かいふくする" },
+    "RESTORE": { "base": "もとにもどす" },
+    "GAIN_EXPERIENCE": { "base": "けいけんちをえる" },
+    "EVOLVE": { "base": "しんかする" },
+
+    "WILD": ["やせいの"],
+    "STRONG": ["つよい"],
+    "EFFECTIVE": ["こうかてき"],
+    "SUPER_EFFECTIVE": ["ばつぐん"],
+    "VERY_EFFECTIVE": ["とてもこうかてき"],
+    "LEGENDARY": ["でんせつの"],
+    "SHINY": ["いろちがい"]
+
+  }
+}
+"ar": {
+  "label": "Arabic",
+  "forms": {
+
+    "POKEMON": { "form": "بوكيمون" },
+    "TRAINER": { "form": "مدرب" },
+    "GYM": { "form": "صالة تدريب" },
+    "LEAGUE": { "form": "الدوري" },
+    "GYM_LEADER": { "form": "قائد الصالة" },
+    "ELITE_FOUR": { "form": "النخبة الأربعة" },
+    "POKEMON_CENTER": { "form": "مركز بوكيمون" },
+    "FOREST": { "form": "غابة" },
+    "CAVE": { "form": "كهف" },
+    "TOWN": { "form": "مدينة" },
+
+    "BATTLE": { "form": "معركة" },
+    "MOVE": { "form": "هجوم" },
+    "DAMAGE": { "form": "ضرر" },
+    "DEFENSE": { "form": "دفاع" },
+    "SPEED": { "form": "سرعة" },
+    "STAT": { "form": "إحصائية" },
+    "ABILITY": { "form": "قدرة" },
+    "TYPE": { "form": "نوع" },
+
+    "POTION": { "form": "جرعة" },
+    "REVIVE": { "form": "إحياء" },
+    "TECHNICAL_MACHINE": { "form": "آلة تقنية" },
+    "BADGE": { "form": "شارة" },
+    "ITEM": { "form": "عنصر" },
+
+    "LEVEL": { "form": "مستوى" },
+    "EXPERIENCE": { "form": "خبرة" },
+    "HEALTH": { "form": "صحة" },
+
+    "BURN": {
+      "base": "يحرق",
+      "1_singular": "أحرق",
+      "2_singular": "تحرق",
+      "3_singular": "يحرق",
+      "1_plural": "نحرق",
+      "2_plural": "تحرقون",
+      "3_plural": "يحرقون"
+    },
+
+    "POISON": {
+      "base": "يسمم",
+      "1_singular": "أسمم",
+      "2_singular": "تسمم",
+      "3_singular": "يسمم",
+      "1_plural": "نسمم",
+      "2_plural": "تسممون",
+      "3_plural": "يسممون"
+    },
+
+    "SLEEP_STATUS": { "form": "نوم" },
+
+    "PARALYZE": {
+      "base": "يشل",
+      "1_singular": "أشل",
+      "2_singular": "تشل",
+      "3_singular": "يشل",
+      "1_plural": "نشل",
+      "2_plural": "تشلون",
+      "3_plural": "يشلون"
+    },
+
+    "SEEN": { "form": "مرئي" },
+    "CAPTURED": { "form": "ممسوك" },
+
+    "ATTACK": {
+      "base": "يهاجم",
+      "1_singular": "أهاجم",
+      "2_singular": "تهاجم",
+      "3_singular": "يهاجم",
+      "1_plural": "نهاجم",
+      "2_plural": "تهاجمون",
+      "3_plural": "يهاجمون"
+    },
+
+    "RUN": {
+      "base": "يهرب",
+      "1_singular": "أهرب",
+      "2_singular": "تهرب",
+      "3_singular": "يهرب",
+      "1_plural": "نهرب",
+      "2_plural": "تهربون",
+      "3_plural": "يهربون"
+    },
+
+    "CATCH": {
+      "base": "يمسك",
+      "1_singular": "أمسك",
+      "2_singular": "تمسك",
+      "3_singular": "يمسك",
+      "1_plural": "نمسك",
+      "2_plural": "تمسكون",
+      "3_plural": "يمسكون"
+    },
+
+    "DEFEAT": {
+      "base": "يهزم",
+      "1_singular": "أهزم",
+      "2_singular": "تهزم",
+      "3_singular": "يهزم",
+      "1_plural": "نهزم",
+      "2_plural": "تهزمون",
+      "3_plural": "يهزمون"
+    },
+
+    "SWITCH": {
+      "base": "يبدل",
+      "1_singular": "أبدل",
+      "2_singular": "تبدل",
+      "3_singular": "يبدل",
+      "1_plural": "نبدل",
+      "2_plural": "تبدلون",
+      "3_plural": "يبدلون"
+    },
+
+    "USE": {
+      "base": "يستخدم",
+      "1_singular": "أستخدم",
+      "2_singular": "تستخدم",
+      "3_singular": "يستخدم",
+      "1_plural": "نستخدم",
+      "2_plural": "تستخدمون",
+      "3_plural": "يستخدمون"
+    },
+
+    "FLY": {
+      "base": "يطير",
+      "1_singular": "أطير",
+      "2_singular": "تطير",
+      "3_singular": "يطير",
+      "1_plural": "نطير",
+      "2_plural": "تطيرون",
+      "3_plural": "يطيرون"
+    },
+
+    "PLAY": {
+      "base": "يلعب",
+      "1_singular": "ألعب",
+      "2_singular": "تلعب",
+      "3_singular": "يلعب",
+      "1_plural": "نلعب",
+      "2_plural": "تلعبون",
+      "3_plural": "يلعبون"
+    },
+
+    "HEAL": {
+      "base": "يعالج",
+      "1_singular": "أعالج",
+      "2_singular": "تعالج",
+      "3_singular": "يعالج",
+      "1_plural": "نعالج",
+      "2_plural": "تعالجون",
+      "3_plural": "يعالجون"
+    },
+
+    "RESTORE": {
+      "base": "يعيد",
+      "1_singular": "أعيد",
+      "2_singular": "تعيد",
+      "3_singular": "يعيد",
+      "1_plural": "نعيد",
+      "2_plural": "تعيدون",
+      "3_plural": "يعيدون"
+    },
+
+    "GAIN_EXPERIENCE": {
+      "base": "يكتسب خبرة",
+      "1_singular": "أكتسب خبرة",
+      "2_singular": "تكتسب خبرة",
+      "3_singular": "يكتسب خبرة",
+      "1_plural": "نكتسب خبرة",
+      "2_plural": "تكتسبون خبرة",
+      "3_plural": "يكتسبون خبرة"
+    },
+
+    "EVOLVE": {
+      "base": "يتطور",
+      "1_singular": "أتطور",
+      "2_singular": "تتطور",
+      "3_singular": "يتطور",
+      "1_plural": "نتطور",
+      "2_plural": "تتطورون",
+      "3_plural": "يتطورون"
+    },
+
+    "WILD": ["بري"],
+    "STRONG": ["قوي"],
+    "EFFECTIVE": ["فعال"],
+    "SUPER_EFFECTIVE": ["فعال جداً"],
+    "VERY_EFFECTIVE": ["فعال للغاية"],
+    "LEGENDARY": ["أسطوري"],
+    "SHINY": ["لامع"]
+
+  }
+}
   }
 }
