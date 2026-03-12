@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.17";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.18";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.17";
+  const APP_VERSION = "v0.9.87.18";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 3;
@@ -2215,9 +2215,9 @@ function renderNext(targetLang, supportLang) {
   }
 
   const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-    tpl.concepts.includes(c) &&
-    tpl.concepts.every(cid => run.released.includes(cid))
-  );
+  tpl.concepts.includes(c) &&
+  tpl.concepts.every(cid => run.released.includes(cid))
+);
 
   return hasTemplate;
 
