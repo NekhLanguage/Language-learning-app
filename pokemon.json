@@ -30,10 +30,10 @@
     { "concept_id": "EXPERIENCE", "type": "noun" },
     { "concept_id": "HEALTH", "type": "noun" },
 
-    { "concept_id": "BURN", "type": "verb" },
-    { "concept_id": "POISON", "type": "verb" },
+    { "concept_id": "BURN", "type": "noun" },
+    { "concept_id": "POISON", "type": "noun" },
     { "concept_id": "SLEEP_STATUS", "type": "noun" },
-    { "concept_id": "PARALYZE", "type": "verb" },
+    { "concept_id": "PARALYZE", "type": "noun" },
 
     { "concept_id": "SEEN", "type": "noun" },
     { "concept_id": "CAPTURED", "type": "noun" },
@@ -95,10 +95,10 @@
         "EXPERIENCE": { "form": "experience" },
         "HEALTH": { "form": "health" },
 
-        "BURN": { "base": "burn", "3_singular": "burns" },
-        "POISON": { "base": "poison", "3_singular": "poisons" },
+        "BURN": { "form": "burn", "article": "a" },
+        "POISON": { "form": "poison" },
         "SLEEP_STATUS": { "form": "sleep" },
-        "PARALYZE": { "base": "paralyze", "3_singular": "paralyzes" },
+        "PARALYZE": { "form": "paralysis" },
 
         "SEEN": { "form": "seen" },
         "CAPTURED": { "form": "captured" },
