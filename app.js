@@ -72,23 +72,25 @@ loadUser();
     // Bundle 10
     "GIRL","BOY","WOMAN","MAN","BE",
      // Bundle 11
-     "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY",
-     // Bundle 12
+     "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN",
+     // Bundle 12 
+     "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY",
+     // Bundle 13
 "HOUSE","ROOM","HOME",
 
-// Bundle 13
+// Bundle 14
 "SHIRT","SHOES","PANTS",
 
-// Bundle 14
+// Bundle 15
 "CLOTHES","HAND","FACE",
 
-// Bundle 15
+// Bundle 16
 "EYE","BREAKFAST","LUNCH",
 
-// Bundle 16
+// Bundle 17
 "DINNER","GO","COME",
 
-// Bundle 17
+// Bundle 18
 "USE","GET","START","STOP",
 
 ];
