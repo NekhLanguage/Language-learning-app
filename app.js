@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const APP_VERSION = "v0.9.89.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 5;
+  const CONTENT_VERSION = 6;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -70,7 +70,9 @@ loadUser();
     // Bundle 9
     "MY","YOUR","HER","HIS","OUR","THEIR",
     // Bundle 10
-    "GIRL","BOY","WOMAN","MAN","BE"
+    "GIRL","BOY","WOMAN","MAN","BE",
+     // Bundle 10
+     "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY"
 ];
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
