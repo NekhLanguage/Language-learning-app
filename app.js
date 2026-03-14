@@ -1,11 +1,11 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.89.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.89.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.89.1";
+  const APP_VERSION = "v0.9.89.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 6;
+  const CONTENT_VERSION = 7;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -71,8 +71,26 @@ loadUser();
     "MY","YOUR","HER","HIS","OUR","THEIR",
     // Bundle 10
     "GIRL","BOY","WOMAN","MAN","BE",
-     // Bundle 10
-     "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY"
+     // Bundle 11
+     "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY",
+     // Bundle 12
+"HOUSE","ROOM","HOME"
+
+// Bundle 13
+"SHIRT","SHOES","PANTS",
+
+// Bundle 14
+"CLOTHES","HAND","FACE",
+
+// Bundle 15
+"EYE","BREAKFAST","LUNCH",
+
+// Bundle 16
+"DINNER","GO","COME",
+
+// Bundle 17
+"USE","GET","START","STOP",
+
 ];
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
