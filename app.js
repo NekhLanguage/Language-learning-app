@@ -1,11 +1,11 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.89.2";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.90";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.89.2";
+  const APP_VERSION = "v0.9.90";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 7;
+  const CONTENT_VERSION = 8;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -92,6 +92,23 @@ loadUser();
 
 // Bundle 18
 "USE","GET","START","STOP",
+// Bundle 19
+"THIS","THAT","AND",
+
+// Bundle 20
+"HAND","HEAD","ARM",
+
+// Bundle 21
+"LEG","FOOT","FINGER",
+
+// Bundle 22
+"MOUTH","FACE","EYE",
+
+// Bundle 23
+"MOM","DAD","BROTHER",
+
+// Bundle 24
+"SISTER","SON","DAUGHTER"
 
 ];
 // --------------------

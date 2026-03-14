@@ -1147,6 +1147,109 @@
     "pt": {"THIRD_PERSON_PLURAL":"eles","EAT":"comem","DINNER":"jantar"},
     "ar": {"THIRD_PERSON_PLURAL":"هم","EAT":"يأكلون","DINNER":"العشاء"}
   }
+},
+,
+{
+  "template_id": "THIS_IS_MY_HAND",
+  "concepts": ["THIS","BE","MY","HAND"],
+  "render": {
+    "en": "This is my hand.",
+    "pt": "Esta é minha mão.",
+    "ar": "هذه يدي."
+  },
+  "surface": {
+    "en": {"THIS":"this","BE":"is","MY":"my","HAND":"hand"},
+    "pt": {"THIS":"esta","BE":"é","MY":"minha","HAND":"mão"},
+    "ar": {"THIS":"هذه","MY":"يدي","HAND":"يد"}
+  }
+},
+{
+  "template_id": "THIS_IS_YOUR_HEAD",
+  "concepts": ["THIS","BE","YOUR","HEAD"],
+  "render": {
+    "en": "This is your head.",
+    "pt": "Esta é sua cabeça.",
+    "ar": "هذه رأسك."
+  },
+  "surface": {
+    "en": {"THIS":"this","BE":"is","YOUR":"your","HEAD":"head"},
+    "pt": {"THIS":"esta","BE":"é","YOUR":"sua","HEAD":"cabeça"},
+    "ar": {"THIS":"هذه","YOUR":"رأسك","HEAD":"رأس"}
+  }
+},
+{
+  "template_id": "THAT_IS_MY_ARM",
+  "concepts": ["THAT","BE","MY","ARM"],
+  "render": {
+    "en": "That is my arm.",
+    "pt": "Esse é meu braço.",
+    "ar": "ذلك ذراعي."
+  },
+  "surface": {
+    "en": {"THAT":"that","BE":"is","MY":"my","ARM":"arm"},
+    "pt": {"THAT":"esse","BE":"é","MY":"meu","ARM":"braço"},
+    "ar": {"THAT":"ذلك","MY":"ذراعي","ARM":"ذراع"}
+  }
+},
+{
+  "template_id": "THAT_IS_YOUR_LEG",
+  "concepts": ["THAT","BE","YOUR","LEG"],
+  "render": {
+    "en": "That is your leg.",
+    "pt": "Essa é sua perna.",
+    "ar": "ذلك ساقك."
+  },
+  "surface": {
+    "en": {"THAT":"that","BE":"is","YOUR":"your","LEG":"leg"},
+    "pt": {"THAT":"essa","BE":"é","YOUR":"sua","LEG":"perna"},
+    "ar": {"THAT":"ذلك","YOUR":"ساقك","LEG":"ساق"}
+  }
+},
+{
+  "template_id": "SHE_IS_MY_MOM",
+  "concepts": ["SHE","BE","MY","MOM"],
+  "render": {
+    "en": "She is my mom.",
+    "pt": "Ela é minha mãe.",
+    "ar": "هي أمي."
+  },
+  "surface": {
+    "en": {"SHE":"she","BE":"is","MY":"my","MOM":"mom"},
+    "pt": {"SHE":"ela","BE":"é","MY":"minha","MOM":"mãe"},
+    "ar": {"SHE":"هي","MY":"أمي","MOM":"أم"}
+  }
+},
+{
+  "template_id": "HE_IS_MY_DAD",
+  "concepts": ["HE","BE","MY","DAD"],
+  "render": {
+    "en": "He is my dad.",
+    "pt": "Ele é meu pai.",
+    "ar": "هو أبي."
+  },
+  "surface": {
+    "en": {"HE":"he","BE":"is","MY":"my","DAD":"dad"},
+    "pt": {"HE":"ele","BE":"é","MY":"meu","DAD":"pai"},
+    "ar": {"HE":"هو","MY":"أبي","DAD":"أب"}
+  }
+},
+{
+  "template_id": "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD",
+  "concepts": ["THIS","BE","MY","HAND","AND","THIS","BE","YOUR","HEAD"],
+  "render": {
+    "en": "This is my hand and this is your head.",
+    "pt": "Esta é minha mão e esta é sua cabeça.",
+    "ar": "هذه يدي وهذه رأسك."
+  }
+},
+{
+  "template_id": "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD",
+  "concepts": ["SHE","BE","MY","MOM","AND","HE","BE","MY","DAD"],
+  "render": {
+    "en": "She is my mom and he is my dad.",
+    "pt": "Ela é minha mãe e ele é meu pai.",
+    "ar": "هي أمي وهو أبي."
+  }
 }
 
   ]
