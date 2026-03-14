@@ -754,6 +754,55 @@
     "PANTS": { "form": "بنطال" }
 
   }
+},
+"ko": {
+  "label": "한국어",
+  "forms": {
+
+    "WATER": { "form": "물" },
+    "FOOD": { "form": "음식" },
+
+    "HOUSE": { "form": "집" },
+    "HOME": { "form": "집" },
+    "BOOK": { "form": "책" },
+    "THING": { "form": "것" },
+    "JOB": { "form": "일" },
+    "ROOM": { "form": "방" },
+
+    "BOY": { "form": "소년" },
+    "GIRL": { "form": "소녀" },
+    "MAN": { "form": "남자" },
+    "WOMAN": { "form": "여자" },
+
+    "MOM": { "form": "엄마" },
+    "DAD": { "form": "아빠" },
+
+    "SON": { "form": "아들" },
+    "DAUGHTER": { "form": "딸" },
+    "BROTHER": { "form": "형제" },
+    "SISTER": { "form": "자매" },
+
+    "HEAD": { "form": "머리" },
+    "ARM": { "form": "팔" },
+    "HAND": { "form": "손" },
+    "LEG": { "form": "다리" },
+    "FOOT": { "form": "발" },
+    "FINGER": { "form": "손가락" },
+    "EYE": { "form": "눈" },
+    "MOUTH": { "form": "입" },
+    "FACE": { "form": "얼굴" },
+
+    "BREAKFAST": { "form": "아침식사" },
+    "LUNCH": { "form": "점심식사" },
+    "DINNER": { "form": "저녁식사" },
+
+    "CLOTHES": { "form": "옷" },
+    "SHIRT": { "form": "셔츠" },
+    "SHOES": { "form": "신발" },
+    "PHONE": { "form": "전화" },
+    "PANTS": { "form": "바지" }
+
+  }
 }
   }
 }

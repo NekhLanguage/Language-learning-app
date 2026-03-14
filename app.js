@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.88";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.89";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.88";
+  const APP_VERSION = "v0.9.89";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 4;
@@ -93,7 +93,8 @@ const SUPPORT_LANGUAGES = {
   pt: { short: "PT", label: "Português" },
   ja: { short: "JA", label: "日本語" },
   no: { short: "NO", label: "Norsk" },
-  ar: { short: "AR", label: "العربية" }
+  ar: { short: "AR", label: "العربية" },
+  ko: { short: "KO", label: "한국어" }
 };
 const UI_STRINGS = {
 
@@ -190,7 +191,25 @@ const UI_STRINGS = {
     correct: "صحيح.",
     incorrect: "خطأ.",
     level: "المستوى"
-  }
+  },
+  ko: {
+  openApp: "앱 열기",
+  languagesTitle: "언어",
+  chooseLanguage: "공부할 언어를 선택하세요",
+  quitLearning: "종료",
+  sessionTitle: "오늘의 세션",
+  startSubtitle: "언어 학습",
+
+  chooseTranslation: "올바른 번역을 선택하세요:",
+  originalSentence: "원문:",
+  fillMissing: "빈칸을 채우세요:",
+  inThisSentence: "이 문장에서:",
+  check: "확인",
+  continue: "계속",
+  correct: "정답입니다.",
+  incorrect: "틀렸습니다.",
+  level: "레벨"
+}
 
 };
 const HUB_LANGUAGE_NAMES = {
@@ -199,35 +218,53 @@ const HUB_LANGUAGE_NAMES = {
     pt: "Portuguese",
     ja: "Japanese",
     no: "Norwegian",
-    ar: "Arabic"
+    ar: "Arabic",
+    ko: "Korean"
   },
+
   pt: {
     en: "Inglês",
     pt: "Português",
     ja: "Japonês",
     no: "Norueguês",
-    ar: "Árabe"
+    ar: "Árabe",
+    ko: "Coreano"
   },
+
   ja: {
     en: "英語",
     pt: "ポルトガル語",
     ja: "日本語",
     no: "ノルウェー語",
-    ar: "アラビア語"
+    ar: "アラビア語",
+    ko: "韓国語"
   },
+
   no: {
     en: "Engelsk",
     pt: "Portugisisk",
     ja: "Japansk",
     no: "Norsk",
-    ar: "Arabisk"
+    ar: "Arabisk",
+    ko: "Koreansk"
   },
+
   ar: {
     en: "الإنجليزية",
     pt: "البرتغالية",
     ja: "اليابانية",
     no: "النرويجية",
-    ar: "العربية"
+    ar: "العربية",
+    ko: "الكورية"
+  },
+
+  ko: {
+    en: "영어",
+    pt: "포르투갈어",
+    ja: "일본어",
+    no: "노르웨이어",
+    ar: "아랍어",
+    ko: "한국어"
   }
 };
 const supportPill = document.getElementById("support-pill");
@@ -767,7 +804,8 @@ function orderedConceptsForTemplate(tpl, lang) {
   ar: "VSO",
   en: "SVO",
   pt: "SVO",
-  no: "SVO"
+  no: "SVO",
+  ko: "SOV"
 };
 
 const orderType = WORD_ORDER[lang] || "SVO";

@@ -375,9 +375,10 @@
 }
       }
     },
-    "ar": {
+   "ar": {
   "label": "Arabic",
   "forms": {
+
     "EAT": {
       "1_singular": "آكل",
       "2_singular": "تأكل",
@@ -386,6 +387,7 @@
       "2_plural": "تأكلون",
       "3_plural": "يأكلون"
     },
+
     "DRINK": {
       "1_singular": "أشرب",
       "2_singular": "تشرب",
@@ -394,6 +396,7 @@
       "2_plural": "تشربون",
       "3_plural": "يشربون"
     },
+
     "READ": {
       "1_singular": "أقرأ",
       "2_singular": "تقرأ",
@@ -402,6 +405,7 @@
       "2_plural": "تقرأون",
       "3_plural": "يقرأون"
     },
+
     "SEE": {
       "1_singular": "أرى",
       "2_singular": "ترى",
@@ -410,6 +414,7 @@
       "2_plural": "ترون",
       "3_plural": "يرون"
     },
+
     "HAVE": {
       "1_singular": "لدي",
       "2_singular": "لديك",
@@ -418,10 +423,106 @@
       "2_plural": "لديكم",
       "3_plural": "لديهم"
     },
-    "BE": {
-  "base": "يكون",
-  "present": ""
-}
+
+    "DO": {
+      "1_singular": "أفعل",
+      "2_singular": "تفعل",
+      "3_singular": "يفعل",
+      "1_plural": "نفعل",
+      "2_plural": "تفعلون",
+      "3_plural": "يفعلون"
+    },
+
+    "GO": {
+      "1_singular": "أذهب",
+      "2_singular": "تذهب",
+      "3_singular": "يذهب",
+      "1_plural": "نذهب",
+      "2_plural": "تذهبون",
+      "3_plural": "يذهبون"
+    },
+
+    "START": {
+      "1_singular": "أبدأ",
+      "2_singular": "تبدأ",
+      "3_singular": "يبدأ",
+      "1_plural": "نبدأ",
+      "2_plural": "تبدؤون",
+      "3_plural": "يبدؤون"
+    },
+
+    "STOP": {
+      "1_singular": "أتوقف",
+      "2_singular": "تتوقف",
+      "3_singular": "يتوقف",
+      "1_plural": "نتوقف",
+      "2_plural": "تتوقفون",
+      "3_plural": "يتوقفون"
+    },
+
+    "SLEEP": {
+      "1_singular": "أنام",
+      "2_singular": "تنام",
+      "3_singular": "ينام",
+      "1_plural": "ننام",
+      "2_plural": "تنامون",
+      "3_plural": "ينامون"
+    },
+
+    "COME": {
+      "1_singular": "آتي",
+      "2_singular": "تأتي",
+      "3_singular": "يأتي",
+      "1_plural": "نأتي",
+      "2_plural": "تأتون",
+      "3_plural": "يأتون"
+    },
+
+    "USE": {
+      "1_singular": "أستخدم",
+      "2_singular": "تستخدم",
+      "3_singular": "يستخدم",
+      "1_plural": "نستخدم",
+      "2_plural": "تستخدمون",
+      "3_plural": "يستخدمون"
+    },
+
+    "GET": {
+      "1_singular": "أحصل",
+      "2_singular": "تحصل",
+      "3_singular": "يحصل",
+      "1_plural": "نحصل",
+      "2_plural": "تحصلون",
+      "3_plural": "يحصلون"
+    }
+
+  }
+},
+"ko": {
+  "label": "한국어",
+  "forms": {
+
+    "EAT": { "base": "먹다" },
+    "DRINK": { "base": "마시다" },
+    "READ": { "base": "읽다" },
+    "SEE": { "base": "보다" },
+
+    "HAVE": { "base": "가지다" },
+
+    "DO": { "base": "하다" },
+    "GO": { "base": "가다" },
+
+    "START": { "base": "시작하다" },
+    "STOP": { "base": "멈추다" },
+
+    "SLEEP": { "base": "자다" },
+
+    "COME": { "base": "오다" },
+
+    "USE": { "base": "사용하다" },
+
+    "GET": { "base": "얻다" }
+
   }
 }
   }

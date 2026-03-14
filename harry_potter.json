@@ -352,6 +352,65 @@
     "BRAVE": ["شجاع"]
 
   }
+},
+"ko": {
+  "label": "한국어",
+  "forms": {
+
+    "WAND": { "form": "지팡이" },
+    "MAGIC": { "form": "마법" },
+    "WIZARD": { "form": "마법사" },
+    "WITCH": { "form": "마녀" },
+    "SPELL": { "form": "주문" },
+    "POTION": { "form": "물약" },
+    "SCHOOL": { "form": "학교" },
+    "CAULDRON": { "form": "가마솥" },
+    "BROOM": { "form": "빗자루" },
+    "OWL": { "form": "부엉이" },
+
+    "CASTLE": { "form": "성" },
+    "PROFESSOR": { "form": "교수" },
+    "STUDENT": { "form": "학생" },
+    "ELF": { "form": "엘프" },
+    "UNICORN": { "form": "유니콘" },
+    "GIANT": { "form": "거인" },
+    "TROLL": { "form": "트롤" },
+    "GHOST": { "form": "유령" },
+
+    "FOREST": { "form": "숲" },
+    "SPIDER": { "form": "거미" },
+    "LIBRARY": { "form": "도서관" },
+    "CLASS": { "form": "수업" },
+    "LESSON": { "form": "수업" },
+    "HOMEWORK": { "form": "숙제" },
+    "EXAM": { "form": "시험" },
+    "QUESTION": { "form": "질문" },
+    "ANSWER": { "form": "답" },
+    "IDEA": { "form": "생각" },
+    "CHANCE": { "form": "기회" },
+    "MYSTERY": { "form": "수수께끼" },
+    "SECRET": { "form": "비밀" },
+    "FRIEND": { "form": "친구" },
+    "ENEMY": { "form": "적" },
+    "CLOAK": { "form": "망토" },
+    "DOOR": { "form": "문" },
+
+    "CAST": { "base": "외우다" },
+    "PROTECT": { "base": "보호하다" },
+    "CHARM": { "base": "매혹하다" },
+    "CURSE": { "base": "저주하다" },
+    "LEARN": { "base": "배우다" },
+    "WRITE": { "base": "쓰다" },
+    "STUDY": { "base": "공부하다" },
+    "VANISH": { "base": "사라지다" },
+    "TRANSFORM": { "base": "변하다" },
+    "FLY": { "base": "날다" },
+    "SHOUT": { "base": "외치다" },
+
+    "MAGICAL": ["마법의"],
+    "BRAVE": ["용감한"]
+
+  }
 }
 
   }

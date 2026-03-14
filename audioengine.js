@@ -15,7 +15,8 @@ const voiceMap = {
   pt: "pt-BR",
   no: "nb-NO",
   ja: "ja-JP",
-  ar: "ar-SA"
+  ar: "ar-SA",
+  ko: "ko-KR"
 };
 
 export function setTTS(state) {

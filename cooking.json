@@ -440,6 +440,68 @@
     "RAW": ["نيء"]
 
   }
+},
+"ko": {
+  "label": "한국어",
+  "forms": {
+
+    "COOK": { "base": "요리하다" },
+    "CUT": { "base": "자르다" },
+    "BOIL": { "base": "끓이다" },
+    "PEEL": { "base": "껍질을 벗기다" },
+    "FRY": { "base": "튀기다" },
+    "STIR": { "base": "젓다" },
+    "MIX": { "base": "섞다" },
+    "WASH": { "base": "씻다" },
+    "HEAT": { "base": "데우다" },
+
+    "PAN": { "form": "팬" },
+    "KNIFE": { "form": "칼" },
+    "FORK": { "form": "포크" },
+    "SPOON": { "form": "숟가락" },
+    "SPATULA": { "form": "주걱" },
+    "POT": { "form": "냄비" },
+    "GLASS": { "form": "컵" },
+
+    "LITRE": { "form": "리터" },
+    "DECILITRE": { "form": "데시리터" },
+    "MILLILITRE": { "form": "밀리리터" },
+    "GRAM": { "form": "그램" },
+    "KILOGRAM": { "form": "킬로그램" },
+
+    "MEAT": { "form": "고기" },
+    "CHICKEN": { "form": "닭고기" },
+    "FISH": { "form": "생선" },
+    "VEGETABLE": { "form": "채소" },
+    "POTATO": { "form": "감자" },
+    "SALAD": { "form": "샐러드" },
+    "FRUIT": { "form": "과일" },
+    "BANANA": { "form": "바나나" },
+    "SOUP": { "form": "수프" },
+    "DOUGH": { "form": "반죽" },
+    "SAUCE": { "form": "소스" },
+    "INGREDIENT": { "form": "재료" },
+
+    "KITCHEN": { "form": "부엌" },
+    "OVEN": { "form": "오븐" },
+    "STOVE": { "form": "가스레인지" },
+    "SINK": { "form": "싱크대" },
+    "FREEZER": { "form": "냉동고" },
+
+    "SALT": { "form": "소금" },
+    "PEPPER": { "form": "후추" },
+    "BUTTER": { "form": "버터" },
+    "SPICE": { "form": "향신료" },
+    "RECIPE": { "form": "레시피" },
+
+    "SWEET": ["달콤한"],
+    "SALTY": ["짠"],
+    "SOUR": ["신"],
+    "FRESH": ["신선한"],
+    "FROZEN": ["냉동된"],
+    "RAW": ["생"]
+
+  }
 }
   }
 }

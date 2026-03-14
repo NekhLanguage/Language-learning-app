@@ -325,7 +325,7 @@
         "SHINY": ["brilhante"]
 
       }
-    }
+    },
     "no": {
   "label": "Norwegian",
   "forms": {
@@ -524,7 +524,7 @@
     "SHINY": ["skinnende"]
 
   }
-}
+},
 "ja": {
   "label": "Japanese",
   "forms": {
@@ -589,7 +589,7 @@
     "SHINY": ["いろちがい"]
 
   }
-}
+},
 "ar": {
   "label": "Arabic",
   "forms": {
@@ -786,6 +786,71 @@
     "VERY_EFFECTIVE": ["فعال للغاية"],
     "LEGENDARY": ["أسطوري"],
     "SHINY": ["لامع"]
+
+  }
+},
+"ko": {
+  "label": "Korean",
+  "forms": {
+
+    "POKEMON": { "form": "포켓몬" },
+    "TRAINER": { "form": "트레이너" },
+    "GYM": { "form": "체육관" },
+    "LEAGUE": { "form": "리그" },
+    "GYM_LEADER": { "form": "체육관 관장" },
+    "ELITE_FOUR": { "form": "사천왕" },
+    "POKEMON_CENTER": { "form": "포켓몬 센터" },
+    "FOREST": { "form": "숲" },
+    "CAVE": { "form": "동굴" },
+    "TOWN": { "form": "마을" },
+
+    "BATTLE": { "form": "배틀" },
+    "MOVE": { "form": "기술" },
+    "DAMAGE": { "form": "데미지" },
+    "DEFENSE": { "form": "방어" },
+    "SPEED": { "form": "스피드" },
+    "STAT": { "form": "능력치" },
+    "ABILITY": { "form": "특성" },
+    "TYPE": { "form": "타입" },
+
+    "POTION": { "form": "포션" },
+    "REVIVE": { "form": "기력의조각" },
+    "TECHNICAL_MACHINE": { "form": "기술머신" },
+    "BADGE": { "form": "배지" },
+    "ITEM": { "form": "도구" },
+
+    "LEVEL": { "form": "레벨" },
+    "EXPERIENCE": { "form": "경험치" },
+    "HEALTH": { "form": "체력" },
+
+    "BURN": { "base": "화상을 입히다" },
+    "POISON": { "base": "독에 걸리게 하다" },
+    "SLEEP_STATUS": { "form": "수면" },
+    "PARALYZE": { "base": "마비시키다" },
+
+    "SEEN": { "form": "본 것" },
+    "CAPTURED": { "form": "잡은 것" },
+
+    "ATTACK": { "base": "공격하다" },
+    "RUN": { "base": "도망치다" },
+    "CATCH": { "base": "잡다" },
+    "DEFEAT": { "base": "쓰러뜨리다" },
+    "SWITCH": { "base": "교체하다" },
+    "USE": { "base": "사용하다" },
+    "FLY": { "base": "날다" },
+    "PLAY": { "base": "놀다" },
+    "HEAL": { "base": "회복하다" },
+    "RESTORE": { "base": "복구하다" },
+    "GAIN_EXPERIENCE": { "base": "경험치를 얻다" },
+    "EVOLVE": { "base": "진화하다" },
+
+    "WILD": ["야생의"],
+    "STRONG": ["강한"],
+    "EFFECTIVE": ["효과적인"],
+    "SUPER_EFFECTIVE": ["효과가 굉장한"],
+    "VERY_EFFECTIVE": ["매우 효과적인"],
+    "LEGENDARY": ["전설의"],
+    "SHINY": ["색이 다른"]
 
   }
 }

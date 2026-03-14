@@ -268,6 +268,42 @@
     "FIRST_PERSON_PLURAL": ["نحن"],
     "THIRD_PERSON_PLURAL": ["هم"]
   }
+},
+"ko": {
+  "label": "한국어",
+  "forms": {
+
+    "FIRST_PERSON_SINGULAR": [
+      "나",
+      "내"
+    ],
+
+    "SECOND_PERSON": [
+      "너",
+      "네"
+    ],
+
+    "SECOND_PERSON_PLURAL": [
+      "너희"
+    ],
+
+    "HE": [
+      "그"
+    ],
+
+    "SHE": [
+      "그녀"
+    ],
+
+    "FIRST_PERSON_PLURAL": [
+      "우리"
+    ],
+
+    "THIRD_PERSON_PLURAL": [
+      "그들"
+    ]
+
+  }
 }
   }
 }
