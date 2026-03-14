@@ -1,11 +1,11 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.89";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.89.1";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.89";
+  const APP_VERSION = "v0.9.89.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 4;
+  const CONTENT_VERSION = 5;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
