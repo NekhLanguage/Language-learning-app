@@ -1,0 +1,445 @@
+{
+  "concepts": [
+
+    { "concept_id": "COOK", "type": "verb" },
+    { "concept_id": "CUT", "type": "verb" },
+    { "concept_id": "BOIL", "type": "verb" },
+    { "concept_id": "PEEL", "type": "verb" },
+    { "concept_id": "FRY", "type": "verb" },
+    { "concept_id": "STIR", "type": "verb" },
+    { "concept_id": "MIX", "type": "verb" },
+    { "concept_id": "WASH", "type": "verb" },
+    { "concept_id": "HEAT", "type": "verb" },
+
+    { "concept_id": "PAN", "type": "noun" },
+    { "concept_id": "KNIFE", "type": "noun" },
+    { "concept_id": "FORK", "type": "noun" },
+    { "concept_id": "SPOON", "type": "noun" },
+    { "concept_id": "SPATULA", "type": "noun" },
+    { "concept_id": "POT", "type": "noun" },
+    { "concept_id": "GLASS", "type": "noun" },
+
+    { "concept_id": "LITRE", "type": "measure" },
+    { "concept_id": "DECILITRE", "type": "measure" },
+    { "concept_id": "MILLILITRE", "type": "measure" },
+    { "concept_id": "GRAM", "type": "measure" },
+    { "concept_id": "KILOGRAM", "type": "measure" },
+
+    { "concept_id": "MEAT", "type": "noun" },
+    { "concept_id": "CHICKEN", "type": "noun" },
+    { "concept_id": "FISH", "type": "noun" },
+    { "concept_id": "VEGETABLE", "type": "noun" },
+    { "concept_id": "POTATO", "type": "noun" },
+    { "concept_id": "SALAD", "type": "noun" },
+    { "concept_id": "FRUIT", "type": "noun" },
+    { "concept_id": "BANANA", "type": "noun" },
+    { "concept_id": "SOUP", "type": "noun" },
+    { "concept_id": "DOUGH", "type": "noun" },
+    { "concept_id": "SAUCE", "type": "noun" },
+    { "concept_id": "INGREDIENT", "type": "noun" },
+
+    { "concept_id": "KITCHEN", "type": "noun" },
+    { "concept_id": "OVEN", "type": "noun" },
+    { "concept_id": "STOVE", "type": "noun" },
+    { "concept_id": "SINK", "type": "noun" },
+    { "concept_id": "FREEZER", "type": "noun" },
+
+    { "concept_id": "SALT", "type": "noun" },
+    { "concept_id": "PEPPER", "type": "noun" },
+    { "concept_id": "BUTTER", "type": "noun" },
+    { "concept_id": "SPICE", "type": "noun" },
+    { "concept_id": "RECIPE", "type": "noun" },
+
+    { "concept_id": "SWEET", "type": "adjective" },
+    { "concept_id": "SALTY", "type": "adjective" },
+    { "concept_id": "SOUR", "type": "adjective" },
+    { "concept_id": "FRESH", "type": "adjective" },
+    { "concept_id": "FROZEN", "type": "adjective" },
+    { "concept_id": "RAW", "type": "adjective" }
+  ],
+
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+
+        "COOK": { "base": "cook", "3_singular": "cooks" },
+        "CUT": { "base": "cut", "3_singular": "cuts" },
+        "BOIL": { "base": "boil", "3_singular": "boils" },
+        "PEEL": { "base": "peel", "3_singular": "peels" },
+        "FRY": { "base": "fry", "3_singular": "fries" },
+        "STIR": { "base": "stir", "3_singular": "stirs" },
+        "MIX": { "base": "mix", "3_singular": "mixes" },
+        "WASH": { "base": "wash", "3_singular": "washes" },
+        "HEAT": { "base": "heat", "3_singular": "heats" },
+
+        "PAN": { "form": "pan", "article": "a" },
+        "KNIFE": { "form": "knife", "article": "a" },
+        "FORK": { "form": "fork", "article": "a" },
+        "SPOON": { "form": "spoon", "article": "a" },
+        "SPATULA": { "form": "spatula", "article": "a" },
+        "POT": { "form": "pot", "article": "a" },
+        "GLASS": { "form": "glass", "article": "a" },
+
+        "LITRE": { "form": "litre" },
+        "DECILITRE": { "form": "decilitre" },
+        "MILLILITRE": { "form": "millilitre" },
+        "GRAM": { "form": "gram" },
+        "KILOGRAM": { "form": "kilogram" },
+
+        "MEAT": { "form": "meat" },
+        "CHICKEN": { "form": "chicken" },
+        "FISH": { "form": "fish" },
+        "VEGETABLE": { "form": "vegetable", "article": "a" },
+        "POTATO": { "form": "potato", "article": "a" },
+        "SALAD": { "form": "salad", "article": "a" },
+        "FRUIT": { "form": "fruit" },
+        "BANANA": { "form": "banana", "article": "a" },
+        "SOUP": { "form": "soup" },
+        "DOUGH": { "form": "dough" },
+        "SAUCE": { "form": "sauce" },
+        "INGREDIENT": { "form": "ingredient", "article": "an" },
+
+        "KITCHEN": { "form": "kitchen", "article": "a" },
+        "OVEN": { "form": "oven", "article": "an" },
+        "STOVE": { "form": "stove", "article": "a" },
+        "SINK": { "form": "sink", "article": "a" },
+        "FREEZER": { "form": "freezer", "article": "a" },
+
+        "SALT": { "form": "salt" },
+        "PEPPER": { "form": "pepper" },
+        "BUTTER": { "form": "butter" },
+        "SPICE": { "form": "spice", "article": "a" },
+        "RECIPE": { "form": "recipe", "article": "a" },
+
+        "SWEET": ["sweet"],
+        "SALTY": ["salty"],
+        "SOUR": ["sour"],
+        "FRESH": ["fresh"],
+        "FROZEN": ["frozen"],
+        "RAW": ["raw"]
+
+      }
+    },
+    "pt": {
+  "label": "Portuguese",
+  "forms": {
+
+    "COOK": {
+      "base": "cozinhar",
+      "1_singular": "cozinho",
+      "2_singular": "cozinhas",
+      "3_singular": "cozinha",
+      "1_plural": "cozinhamos",
+      "2_plural": "cozinham",
+      "3_plural": "cozinham"
+    },
+    "CUT": {
+      "base": "cortar",
+      "1_singular": "corto",
+      "2_singular": "cortas",
+      "3_singular": "corta",
+      "1_plural": "cortamos",
+      "2_plural": "cortam",
+      "3_plural": "cortam"
+    },
+    "BOIL": {
+      "base": "ferver",
+      "1_singular": "fervo",
+      "2_singular": "ferves",
+      "3_singular": "ferve",
+      "1_plural": "fervemos",
+      "2_plural": "fervem",
+      "3_plural": "fervem"
+    },
+    "PEEL": {
+      "base": "descascar",
+      "1_singular": "descasco",
+      "2_singular": "descascas",
+      "3_singular": "descasca",
+      "1_plural": "descascamos",
+      "2_plural": "descascam",
+      "3_plural": "descascam"
+    },
+    "FRY": {
+      "base": "fritar",
+      "1_singular": "frito",
+      "2_singular": "fritas",
+      "3_singular": "frita",
+      "1_plural": "fritamos",
+      "2_plural": "fritam",
+      "3_plural": "fritam"
+    },
+    "STIR": {
+      "base": "mexer",
+      "1_singular": "mexo",
+      "2_singular": "mexes",
+      "3_singular": "mexe",
+      "1_plural": "mexemos",
+      "2_plural": "mexem",
+      "3_plural": "mexem"
+    },
+    "MIX": {
+      "base": "misturar",
+      "1_singular": "misturo",
+      "2_singular": "misturas",
+      "3_singular": "mistura",
+      "1_plural": "misturamos",
+      "2_plural": "misturam",
+      "3_plural": "misturam"
+    },
+    "WASH": {
+      "base": "lavar",
+      "1_singular": "lavo",
+      "2_singular": "lavas",
+      "3_singular": "lava",
+      "1_plural": "lavamos",
+      "2_plural": "lavam",
+      "3_plural": "lavam"
+    },
+    "HEAT": {
+      "base": "aquecer",
+      "1_singular": "aqueço",
+      "2_singular": "aqueces",
+      "3_singular": "aquece",
+      "1_plural": "aquecemos",
+      "2_plural": "aquecem",
+      "3_plural": "aquecem"
+    },
+
+    "PAN": { "form": "frigideira", "gender": "f" },
+    "KNIFE": { "form": "faca", "gender": "f" },
+    "FORK": { "form": "garfo", "gender": "m" },
+    "SPOON": { "form": "colher", "gender": "f" },
+    "SPATULA": { "form": "espátula", "gender": "f" },
+    "POT": { "form": "panela", "gender": "f" },
+    "GLASS": { "form": "copo", "gender": "m" },
+
+    "LITRE": { "form": "litro" },
+    "DECILITRE": { "form": "decilitro" },
+    "MILLILITRE": { "form": "mililitro" },
+    "GRAM": { "form": "grama" },
+    "KILOGRAM": { "form": "quilograma" },
+
+    "MEAT": { "form": "carne", "gender": "f" },
+    "CHICKEN": { "form": "frango", "gender": "m" },
+    "FISH": { "form": "peixe", "gender": "m" },
+    "VEGETABLE": { "form": "vegetal", "gender": "m" },
+    "POTATO": { "form": "batata", "gender": "f" },
+    "SALAD": { "form": "salada", "gender": "f" },
+    "FRUIT": { "form": "fruta", "gender": "f" },
+    "BANANA": { "form": "banana", "gender": "f" },
+    "SOUP": { "form": "sopa", "gender": "f" },
+    "DOUGH": { "form": "massa", "gender": "f" },
+    "SAUCE": { "form": "molho", "gender": "m" },
+    "INGREDIENT": { "form": "ingrediente", "gender": "m" },
+
+    "KITCHEN": { "form": "cozinha", "gender": "f" },
+    "OVEN": { "form": "forno", "gender": "m" },
+    "STOVE": { "form": "fogão", "gender": "m" },
+    "SINK": { "form": "pia", "gender": "f" },
+    "FREEZER": { "form": "congelador", "gender": "m" },
+
+    "SALT": { "form": "sal", "gender": "m" },
+    "PEPPER": { "form": "pimenta", "gender": "f" },
+    "BUTTER": { "form": "manteiga", "gender": "f" },
+    "SPICE": { "form": "tempero", "gender": "m" },
+    "RECIPE": { "form": "receita", "gender": "f" },
+
+    "SWEET": ["doce"],
+    "SALTY": ["salgado"],
+    "SOUR": ["azedo"],
+    "FRESH": ["fresco"],
+    "FROZEN": ["congelado"],
+    "RAW": ["cru"]
+
+  }
+},
+"ja": {
+  "label": "Japanese",
+  "forms": {
+
+    "COOK": { "base": "料理する" },
+    "CUT": { "base": "切る" },
+    "BOIL": { "base": "ゆでる" },
+    "PEEL": { "base": "皮をむく" },
+    "FRY": { "base": "揚げる" },
+    "STIR": { "base": "かき混ぜる" },
+    "MIX": { "base": "混ぜる" },
+    "WASH": { "base": "洗う" },
+    "HEAT": { "base": "温める" },
+
+    "PAN": { "form": "フライパン" },
+    "KNIFE": { "form": "ナイフ" },
+    "FORK": { "form": "フォーク" },
+    "SPOON": { "form": "スプーン" },
+    "SPATULA": { "form": "へら" },
+    "POT": { "form": "鍋" },
+    "GLASS": { "form": "コップ" },
+
+    "LITRE": { "form": "リットル" },
+    "DECILITRE": { "form": "デシリットル" },
+    "MILLILITRE": { "form": "ミリリットル" },
+    "GRAM": { "form": "グラム" },
+    "KILOGRAM": { "form": "キログラム" },
+
+    "MEAT": { "form": "肉" },
+    "CHICKEN": { "form": "鶏肉" },
+    "FISH": { "form": "魚" },
+    "VEGETABLE": { "form": "野菜" },
+    "POTATO": { "form": "じゃがいも" },
+    "SALAD": { "form": "サラダ" },
+    "FRUIT": { "form": "果物" },
+    "BANANA": { "form": "バナナ" },
+    "SOUP": { "form": "スープ" },
+    "DOUGH": { "form": "生地" },
+    "SAUCE": { "form": "ソース" },
+    "INGREDIENT": { "form": "材料" },
+
+    "KITCHEN": { "form": "台所" },
+    "OVEN": { "form": "オーブン" },
+    "STOVE": { "form": "コンロ" },
+    "SINK": { "form": "流し台" },
+    "FREEZER": { "form": "冷凍庫" },
+
+    "SALT": { "form": "塩" },
+    "PEPPER": { "form": "こしょう" },
+    "BUTTER": { "form": "バター" },
+    "SPICE": { "form": "香辛料" },
+    "RECIPE": { "form": "レシピ" },
+
+    "SWEET": ["甘い"],
+    "SALTY": ["塩辛い"],
+    "SOUR": ["酸っぱい"],
+    "FRESH": ["新鮮な"],
+    "FROZEN": ["冷凍の"],
+    "RAW": ["生の"]
+
+  }
+},
+"no": {
+  "label": "Norsk",
+  "forms": {
+
+    "COOK": { "base": "lage", "present": "lager" },
+    "CUT": { "base": "kutte", "present": "kutter" },
+    "BOIL": { "base": "koke", "present": "koker" },
+    "PEEL": { "base": "skrelle", "present": "skreller" },
+    "FRY": { "base": "steke", "present": "steker" },
+    "STIR": { "base": "røre", "present": "rører" },
+    "MIX": { "base": "blande", "present": "blander" },
+    "WASH": { "base": "vaske", "present": "vasker" },
+    "HEAT": { "base": "varme", "present": "varmer" },
+
+    "PAN": { "form": "panne", "gender": "m" },
+    "KNIFE": { "form": "kniv", "gender": "m" },
+    "FORK": { "form": "gaffel", "gender": "m" },
+    "SPOON": { "form": "skje", "gender": "f" },
+    "SPATULA": { "form": "stekespade", "gender": "m" },
+    "POT": { "form": "gryte", "gender": "f" },
+    "GLASS": { "form": "glass", "gender": "n" },
+
+    "LITRE": { "form": "liter" },
+    "DECILITRE": { "form": "desiliter" },
+    "MILLILITRE": { "form": "milliliter" },
+    "GRAM": { "form": "gram" },
+    "KILOGRAM": { "form": "kilogram" },
+
+    "MEAT": { "form": "kjøtt", "gender": "n" },
+    "CHICKEN": { "form": "kylling", "gender": "m" },
+    "FISH": { "form": "fisk", "gender": "m" },
+    "VEGETABLE": { "form": "grønnsak", "gender": "m" },
+    "POTATO": { "form": "potet", "gender": "m" },
+    "SALAD": { "form": "salat", "gender": "m" },
+    "FRUIT": { "form": "frukt", "gender": "f" },
+    "BANANA": { "form": "banan", "gender": "m" },
+    "SOUP": { "form": "suppe", "gender": "f" },
+    "DOUGH": { "form": "deig", "gender": "m" },
+    "SAUCE": { "form": "saus", "gender": "m" },
+    "INGREDIENT": { "form": "ingrediens", "gender": "m" },
+
+    "KITCHEN": { "form": "kjøkken", "gender": "n" },
+    "OVEN": { "form": "ovn", "gender": "m" },
+    "STOVE": { "form": "komfyr", "gender": "m" },
+    "SINK": { "form": "vask", "gender": "m" },
+    "FREEZER": { "form": "fryser", "gender": "m" },
+
+    "SALT": { "form": "salt", "gender": "n" },
+    "PEPPER": { "form": "pepper", "gender": "n" },
+    "BUTTER": { "form": "smør", "gender": "n" },
+    "SPICE": { "form": "krydder", "gender": "n" },
+    "RECIPE": { "form": "oppskrift", "gender": "f" },
+
+    "SWEET": ["søt"],
+    "SALTY": ["salt"],
+    "SOUR": ["sur"],
+    "FRESH": ["fersk"],
+    "FROZEN": ["frossen"],
+    "RAW": ["rå"]
+
+  }
+},
+"ar": {
+  "label": "العربية",
+  "forms": {
+
+    "COOK": { "base": "يطبخ" },
+    "CUT": { "base": "يقطع" },
+    "BOIL": { "base": "يغلي" },
+    "PEEL": { "base": "يقشر" },
+    "FRY": { "base": "يقلي" },
+    "STIR": { "base": "يحرك" },
+    "MIX": { "base": "يخلط" },
+    "WASH": { "base": "يغسل" },
+    "HEAT": { "base": "يسخن" },
+
+    "PAN": { "form": "مقلاة" },
+    "KNIFE": { "form": "سكين" },
+    "FORK": { "form": "شوكة" },
+    "SPOON": { "form": "ملعقة" },
+    "SPATULA": { "form": "ملعقة تقليب" },
+    "POT": { "form": "قدر" },
+    "GLASS": { "form": "كوب" },
+
+    "LITRE": { "form": "لتر" },
+    "DECILITRE": { "form": "ديسيلتر" },
+    "MILLILITRE": { "form": "ملليلتر" },
+    "GRAM": { "form": "غرام" },
+    "KILOGRAM": { "form": "كيلوغرام" },
+
+    "MEAT": { "form": "لحم" },
+    "CHICKEN": { "form": "دجاج" },
+    "FISH": { "form": "سمك" },
+    "VEGETABLE": { "form": "خضار" },
+    "POTATO": { "form": "بطاطا" },
+    "SALAD": { "form": "سلطة" },
+    "FRUIT": { "form": "فاكهة" },
+    "BANANA": { "form": "موز" },
+    "SOUP": { "form": "حساء" },
+    "DOUGH": { "form": "عجين" },
+    "SAUCE": { "form": "صلصة" },
+    "INGREDIENT": { "form": "مكون" },
+
+    "KITCHEN": { "form": "مطبخ" },
+    "OVEN": { "form": "فرن" },
+    "STOVE": { "form": "موقد" },
+    "SINK": { "form": "حوض" },
+    "FREEZER": { "form": "مجمد" },
+
+    "SALT": { "form": "ملح" },
+    "PEPPER": { "form": "فلفل" },
+    "BUTTER": { "form": "زبدة" },
+    "SPICE": { "form": "بهار" },
+    "RECIPE": { "form": "وصفة" },
+
+    "SWEET": ["حلو"],
+    "SALTY": ["مالح"],
+    "SOUR": ["حامض"],
+    "FRESH": ["طازج"],
+    "FROZEN": ["مجمد"],
+    "RAW": ["نيء"]
+
+  }
+}
+  }
+}

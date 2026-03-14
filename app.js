@@ -1,11 +1,11 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.87.18";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.88";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.87.18";
+  const APP_VERSION = "v0.9.88";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 3;
+  const CONTENT_VERSION = 4;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -48,7 +48,7 @@ loadUser();
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
     "politeness_modality.json","pronouns.json","quantifiers.json",
-    "question_words.json","time_words.json","verbs.json"
+    "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json"
   ];
   const CONCEPT_ORDER = [
   // Bundle 1
