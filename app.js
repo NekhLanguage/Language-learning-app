@@ -74,7 +74,7 @@ loadUser();
      // Bundle 11
      "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY",
      // Bundle 12
-"HOUSE","ROOM","HOME"
+"HOUSE","ROOM","HOME",
 
 // Bundle 13
 "SHIRT","SHOES","PANTS",
