@@ -1,5 +1,6 @@
 const textToSpeech = require("@google-cloud/text-to-speech");
 
+
 exports.handler = async (event) => {
   try {
     const { text, lang } = JSON.parse(event.body);
