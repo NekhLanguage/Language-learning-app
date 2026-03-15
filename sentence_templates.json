@@ -1148,7 +1148,7 @@
     "ar": {"THIRD_PERSON_PLURAL":"هم","EAT":"يأكلون","DINNER":"العشاء"}
   }
 },
-,
+
 {
   "template_id": "THIS_IS_MY_HAND",
   "concepts": ["THIS","BE","MY","HAND"],
