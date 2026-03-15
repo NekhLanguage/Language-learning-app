@@ -50,67 +50,153 @@ loadUser();
     "politeness_modality.json","pronouns.json","quantifiers.json",
     "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json"
   ];
-  const CONCEPT_ORDER = [
-  // Bundle 1
-  "FIRST_PERSON_SINGULAR", "EAT", "FOOD",
-  // Bundle 2
-  "SECOND_PERSON", "DRINK", "WATER",
-  // Bundle 3
-  "HE", "READ", "BOOK",
-  // Bundle 4
-  "SHE", "SEE", "PHONE",
-  // Bundle 5
-  "FIRST_PERSON_PLURAL", "HAVE", "JOB",
-  // Bundle 6
-  "THIRD_PERSON_PLURAL", "SLEEP",
-    // Bundle 7
-    "BIG","SMALL","NEW","OLD","BLACK","WHITE","GOOD","BAD","FAST","SLOW",  
-    // Bundle 8
-    "ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN",
-    // Bundle 9
-    "MY","YOUR","HER","HIS","OUR","THEIR",
-    // Bundle 10
-    "GIRL","BOY","WOMAN","MAN","BE",
-     // Bundle 11
-     "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN",
-     // Bundle 12 
-     "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN", "TWENTY",
-     // Bundle 13
-"HOUSE","ROOM","HOME",
+const CORE_BUNDLES = [
 
-// Bundle 14
-"SHIRT","SHOES","PANTS",
+  { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
 
-// Bundle 15
-"CLOTHES","HAND","FACE",
+  { id: "core_02", concepts: ["WATER","HE","READ","BOOK","SHE"] },
 
-// Bundle 16
-"EYE","BREAKFAST","LUNCH",
+  { id: "core_03", concepts: ["SEE","PHONE","FIRST_PERSON_PLURAL","HAVE","JOB"] },
 
-// Bundle 17
-"DINNER","GO","COME",
+  { id: "core_04", concepts: ["THIRD_PERSON_PLURAL","SLEEP","BIG","SMALL","NEW"] },
 
-// Bundle 18
-"USE","GET","START","STOP",
-// Bundle 19
-"THIS","THAT","AND",
+  { id: "core_05", concepts: ["OLD","BLACK","WHITE","GOOD","BAD"] },
 
-// Bundle 20
-"HAND","HEAD","ARM",
+  { id: "core_06", concepts: ["FAST","SLOW","ONE","TWO","THREE"] },
 
-// Bundle 21
-"LEG","FOOT","FINGER",
+  { id: "core_07", concepts: ["FOUR","FIVE","SIX","SEVEN","EIGHT"] },
 
-// Bundle 22
-"MOUTH","FACE","EYE",
+  { id: "core_08", concepts: ["NINE","TEN","MY","YOUR","HER"] },
 
-// Bundle 23
-"MOM","DAD","BROTHER",
+  { id: "core_09", concepts: ["HIS","OUR","THEIR","GIRL","BOY"] },
 
-// Bundle 24
-"SISTER","SON","DAUGHTER"
+  { id: "core_10", concepts: ["WOMAN","MAN","BE","ELEVEN","TWELVE"] },
+
+  { id: "core_11", concepts: ["THIRTEEN","FOURTEEN","FIFTEEN","SIXTEEN","SEVENTEEN"] },
+
+  { id: "core_12", concepts: ["EIGHTEEN","NINETEEN","TWENTY","HOUSE","ROOM"] },
+
+  { id: "core_13", concepts: ["HOME","SHIRT","SHOES","PANTS","CLOTHES"] },
+
+  { id: "core_14", concepts: ["HAND","FACE","EYE","BREAKFAST","LUNCH"] },
+
+  { id: "core_15", concepts: ["DINNER","GO","COME","USE","GET"] },
+
+  { id: "core_16", concepts: ["START","STOP","THIS","THAT","AND"] },
+
+  { id: "core_17", concepts: ["HAND","HEAD","ARM","LEG","FOOT"] },
+
+  { id: "core_18", concepts: ["FINGER","MOUTH","FACE","EYE","MOM"] },
+
+  { id: "core_19", concepts: ["DAD","BROTHER","SISTER","SON","DAUGHTER"] },
+
+  { id: "core_20", concepts: ["BREAKFAST","LUNCH","DINNER","JOB","BOOK"] }
 
 ];
+const RESOURCE_PACKS = {
+  pokemon: {
+    vocabFile: "pokemon.json",
+    templateFile: "sentence_templates_pokemon.json",
+    bundles: []
+  },
+  harry_potter: {
+    vocabFile: "harry_potter.json",
+    templateFile: "sentence_templates_harry_potter.json",
+    bundles: []
+  },
+  cooking: {
+    vocabFile: "cooking.json",
+    templateFile: "sentence_templates_cooking.json",
+    bundles: []
+  }
+};
+
+function createRunState() {
+  return {
+    selectedResourcePacks: [],
+    setupComplete: false,
+    releasePlan: [],
+    releasePlanIndex: 0,
+    releasedBundleIds: [],
+
+    released: [],
+    progress: {},
+    templateProgress: {},
+    exerciseCounter: 0,
+    recentTemplates: [],
+
+    sessionNumber: 1,
+    sessionLevelUps: {},
+    sessionAttempts: {},
+    sessionComplete: false,
+
+    contentVersion: 6
+  };
+}
+function buildReleasePlan(selectedPacks) {
+
+  const plan = [];
+
+  const coreQueue = [...CORE_BUNDLES];
+  const packQueues = selectedPacks.map(packId =>
+    [...RESOURCE_PACKS[packId].bundles]
+  );
+
+  while (coreQueue.length) {
+
+    // release 4 core bundles
+    for (let i = 0; i < 4 && coreQueue.length; i++) {
+      plan.push(coreQueue.shift().id);
+    }
+
+    // release pack bundles
+    for (const queue of packQueues) {
+      if (queue.length) {
+        plan.push(queue.shift().id);
+      }
+    }
+  }
+
+  return plan;
+}
+function buildBundleIndex() {
+
+  const allBundles = [
+    ...CORE_BUNDLES,
+    ...Object.values(RESOURCE_PACKS).flatMap(pack => pack.bundles)
+  ];
+
+  return Object.fromEntries(
+    allBundles.map(bundle => [bundle.id, bundle])
+  );
+}
+
+const BUNDLE_INDEX = buildBundleIndex();
+function releaseNextBundle(run) {
+
+  if (!run.releasePlan || run.releasePlanIndex >= run.releasePlan.length) {
+    return;
+  }
+
+  const bundleId = run.releasePlan[run.releasePlanIndex];
+  const bundle = BUNDLE_INDEX[bundleId];
+
+  if (!bundle) return;
+
+  bundle.concepts.forEach(cid => {
+
+    if (!run.released.includes(cid)) {
+      run.released.push(cid);
+      ensureProgress(cid);
+    }
+
+  });
+
+  run.releasedBundleIds.push(bundleId);
+  run.releasePlanIndex++;
+
+}run.releasePlanIndex++;
+}
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
 // --------------------
@@ -550,8 +636,8 @@ if (run.releaseIndex === undefined) {
   USER.runs[languageState.target] = run;
   saveUser();
 }
-function seedInitialCore() {
-  releaseNextBatch(5);
+function seedInitialBundles(run) {
+  releaseNextBundle(run);
 }
 
   function applyResult(cid, correct) {
@@ -2106,31 +2192,7 @@ if (!USER.runs[langCode]) {
 
   renderNext(languageState.target, languageState.support);
 }
-function releaseNextBatch(count = 5) {
 
-  if (!run.releaseQueue) run.releaseQueue = [];
-  if (run.releaseIndex === undefined) run.releaseIndex = 0;
-
-  let added = 0;
-
-  while (
-    added < count &&
-    run.releaseIndex < run.releaseQueue.length
-  ) {
-
-    const cid = run.releaseQueue[run.releaseIndex];
-    run.releaseIndex++;
-
-    if (!cid) continue;
-    if (run.released.includes(cid)) continue;
-
-    run.released.push(cid);
-    ensureProgress(cid);
-
-    added++;
-  }
-
-}
 
  
 function endSession(targetLang, supportLang) {
