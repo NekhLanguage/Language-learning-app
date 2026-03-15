@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.90";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.91";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.90";
+  const APP_VERSION = "v0.9.91";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 8;
@@ -130,7 +130,7 @@ function createRunState() {
     sessionAttempts: {},
     sessionComplete: false,
 
-    contentVersion: 6
+    contentVersion: CONTENT_VERSION
   };
 }
 function buildReleasePlan(selectedPacks) {
@@ -195,7 +195,6 @@ function releaseNextBundle(run) {
   run.releasedBundleIds.push(bundleId);
   run.releasePlanIndex++;
 
-}run.releasePlanIndex++;
 }
 // --------------------
 // Support Language UI (Abbreviation + Native Name)
@@ -595,49 +594,31 @@ function passesSpacingRule(cid) {
     });
   }
 
-  function initRun() {
+ function initRun() {
 
-  const orderedConcepts = CONCEPT_ORDER.filter(
-    cid => window.GLOBAL_VOCAB.concepts[cid]
-  );
+  run = createRunState();
 
-  run = {
-  released: [],
-  releaseQueue: [...orderedConcepts],
-  releaseIndex: 0,
-  progress: {},
-  templateProgress: {},
-  exerciseCounter: 0,
-  recentTemplates: [],
+  run.selectedResourcePacks = [];
 
-  sessionNumber: 1,
-  sessionLevelUps: {},
-  sessionAttempts: {},
-  sessionComplete: false,
-  contentVersion: CONTENT_VERSION,
-};
+  run.releasePlan = buildReleasePlan(run.selectedResourcePacks);
 
-  seedInitialCore();
+  run.releasePlanIndex = 0;
+
+  seedInitialBundles(run);
+
 }
 function migrateRunState() {
 
-  const orderedConcepts = CONCEPT_ORDER.filter(
-    cid => window.GLOBAL_VOCAB.concepts[cid]
-  );
+  if (!run.releasePlan) {
+    run.releasePlan = buildReleasePlan(run.selectedResourcePacks || []);
+  }
 
-  run.releaseQueue = [...orderedConcepts];
-
-if (run.releaseIndex === undefined) {
-  run.releaseIndex = run.released.length;
-}
-
-  run.contentVersion = CONTENT_VERSION;
+  if (run.releasePlanIndex === undefined) {
+    run.releasePlanIndex = 0;
+  }
 
   USER.runs[languageState.target] = run;
   saveUser();
-}
-function seedInitialBundles(run) {
-  releaseNextBundle(run);
 }
 
   function applyResult(cid, correct) {
@@ -2199,9 +2180,7 @@ function endSession(targetLang, supportLang) {
 
   run.sessionNumber++;
 
- if (run.releaseQueue && run.releaseIndex < run.releaseQueue.length) {
-  releaseNextBatch(5);
-}
+ releaseNextBundle(run);
 
   run.sessionComplete = false;
   run.sessionAttempts = {};
@@ -2318,8 +2297,6 @@ function chooseTemplateForConcept(cid) {
 function renderNext(targetLang, supportLang) {
   if (!run) return;
 
-  if (!run.releaseQueue) run.releaseQueue = [];
-  if (run.releaseIndex === undefined) run.releaseIndex = 0;
 
   if (run.sessionComplete) {
     return endSession(targetLang, supportLang);
