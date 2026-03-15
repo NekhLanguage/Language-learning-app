@@ -1,4 +1,6 @@
-// current version //
+[build]
+  command = "npm install"
+  publish = "."
 
 [functions]
-directory = "netlify/functions"
+  directory = "netlify/functions"
