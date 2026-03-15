@@ -1,7 +1,8 @@
 [build]
-command = "npm install"
-publish = "."
+  base = "."
+  command = "npm install"
+  publish = "."
 
 [functions]
-directory = "netlify/functions"
-node_bundler = "esbuild"
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
