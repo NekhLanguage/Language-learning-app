@@ -1,8 +1,7 @@
-import textToSpeech from "@google-cloud/text-to-speech";
+const textToSpeech = require("@google-cloud/text-to-speech");
 
-export async function handler(event) {
+exports.handler = async (event) => {
   try {
-
     const { text, lang } = JSON.parse(event.body);
 
     const credentials = JSON.parse(process.env.GOOGLE_TTS_KEY);
@@ -32,13 +31,11 @@ export async function handler(event) {
     };
 
   } catch (err) {
-
     console.error(err);
 
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "TTS failed" })
     };
-
   }
-}
+};
