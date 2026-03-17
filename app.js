@@ -1297,9 +1297,8 @@ btn.textContent = meta?.type === "noun"
 
   const q = tpl.questions?.[role];
   if (!q) {
-    setTimeout(() => renderNext(targetLang, supportLang), 0);
-    return;
-  }
+  return null;
+}
 
   const releasedOptions = q.choices.filter(opt => {
   return run.released.includes(opt);
@@ -1356,6 +1355,7 @@ const options = shuffle([...releasedOptions]);
     checkBtn.textContent = ui("continue");
     checkBtn.onclick = () => renderNext(targetLang, supportLang);
   };
+  return true;
 }
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
@@ -2466,16 +2466,16 @@ if (level === 2) {
   }
 }
     if (level === 2) {
-      const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
+  const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
 
-      if (result === null) {
-        excluded.add(targetConcept);
-        continue;
-      }
+  if (!result) {
+    excluded.add(targetConcept);
+    continue;
+  }
 
-      run.exerciseCounter++;
-      return;
-    }
+  run.exerciseCounter++;
+  return;
+}
 
     if (level === 1) {
       renderExposure(targetLang, supportLang, tpl, targetConcept);
@@ -2523,8 +2523,43 @@ if (level === 2) {
     excluded.add(targetConcept);
   }
 
+  // If we tried everything and still couldn't render anything
+const remainingActive = run.released.filter(c => {
+
+  const s = ensureProgress(c);
+
+  if (s.completed) return false;
+
+  const attempts = run.sessionAttempts?.[c] || 0;
+  const levelUps = run.sessionLevelUps?.[c] || 0;
+
+  if (attempts >= 8 || levelUps >= 3) return false;
+
+  if (!passesSpacingRule(c)) return false;
+
+  const meta = window.GLOBAL_VOCAB.concepts[c];
+
+  if (meta?.type === "adjective" || meta?.type === "number") {
+    return true;
+  }
+
+  const hasTemplate = TEMPLATE_CACHE.some(tpl =>
+    tpl.concepts.includes(c) &&
+    tpl.concepts.every(cid => run.released.includes(cid))
+  );
+
+  return hasTemplate;
+});
+
+// ✅ If nothing left → END SESSION
+if (remainingActive.length === 0) {
   run.sessionComplete = true;
   return endSession(targetLang, supportLang);
+}
+
+// Otherwise try again safely
+setTimeout(() => renderNext(targetLang, supportLang), 0);
+return;
 }
 
 
