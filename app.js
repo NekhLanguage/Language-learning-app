@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.92";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.93";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.92";
+  const APP_VERSION = "v0.9.93";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -2352,9 +2352,9 @@ function chooseTemplateForConcept(cid) {
 
   let eligible;
 
+  // Modifier concepts (adjective/number)
   if (meta?.type === "adjective" || meta?.type === "number") {
 
-    // Use any template containing a noun
     eligible = TEMPLATE_CACHE.filter(tpl =>
       tpl.concepts.some(c =>
         window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
@@ -2364,10 +2364,16 @@ function chooseTemplateForConcept(cid) {
 
   } else {
 
+    // 🔥 PRIMARY MATCH
     eligible = TEMPLATE_CACHE.filter(tpl =>
       tpl.concepts.includes(cid) &&
       templateEligible(tpl)
     );
+
+    // 🔥 FALLBACK — THIS IS THE KEY FIX
+    if (!eligible.length) {
+      eligible = TEMPLATE_CACHE.filter(templateEligible);
+    }
 
   }
 
@@ -2390,48 +2396,48 @@ function renderNext(targetLang, supportLang) {
 
     run.lastTargetConcept = targetConcept;
 
-    if (!targetConcept) {
+   if (!targetConcept) {
 
-      const remainingActive = run.released.filter(c => {
+  // 🔥 Check if ANY concept is truly renderable
+  const canRenderSomething = run.released.some(c => {
 
-  const s = ensureProgress(c);
+    const s = ensureProgress(c);
 
-  if (s.completed) return false;
+    if (s.completed) return false;
 
-  const attempts = run.sessionAttempts?.[c] || 0;
-  const levelUps = run.sessionLevelUps?.[c] || 0;
+    const attempts = run.sessionAttempts?.[c] || 0;
+    const levelUps = run.sessionLevelUps?.[c] || 0;
 
-  if (attempts >= 8 || levelUps >= 3) return false;
+    if (attempts >= 8 || levelUps >= 3) return false;
 
-  if (!passesSpacingRule(c)) return false;
+    if (!passesSpacingRule(c)) return false;
 
-  const meta = window.GLOBAL_VOCAB.concepts[c];
+    const meta = window.GLOBAL_VOCAB.concepts[c];
 
-  if (meta?.type === "adjective" || meta?.type === "number") {
-    return true;
-  }
-
-  const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-  tpl.concepts.includes(c) &&
-  tpl.concepts.every(cid => run.released.includes(cid))
-);
-
-  return hasTemplate;
-
-});
-
-      if (remainingActive.length > 0) {
-
-        decrementCooldowns();
-
-        setTimeout(() => renderNext(targetLang, supportLang), 0);
-        return;
-      }
-
-      run.sessionComplete = true;
-      return endSession(targetLang, supportLang);
+    // Modifiers are always renderable
+    if (meta?.type === "adjective" || meta?.type === "number") {
+      return true;
     }
 
+    // 🔥 KEY: must have at least ONE eligible template
+    return TEMPLATE_CACHE.some(tpl =>
+      tpl.concepts.includes(c) &&
+      templateEligible(tpl)
+    );
+
+  });
+
+  // 🔥 If nothing can render → END SESSION
+  if (!canRenderSomething) {
+    run.sessionComplete = true;
+    return endSession(targetLang, supportLang);
+  }
+
+  // 🔥 Otherwise: try again safely
+  decrementCooldowns();
+  setTimeout(() => renderNext(targetLang, supportLang), 0);
+  return;
+}
     const tpl = chooseTemplateForConcept(targetConcept);
 
     if (!tpl) {
