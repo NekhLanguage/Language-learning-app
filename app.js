@@ -676,7 +676,10 @@ function passesSpacingRule(cid) {
 
   run.releasePlanIndex = 0;
 
-  seedInitialBundles(run);
+  // Seed first bundles manually
+for (let i = 0; i < 2; i++) {
+  releaseNextBundle(run);
+}
 
 }
 function migrateRunState() {
