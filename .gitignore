@@ -1,2 +1,11 @@
-# Local Netlify folder
+# Netlify local state
 .netlify
+
+# Node dependencies
+node_modules
+
+# Lock files (not needed for your setup)
+package-lock.json
+
+# Environment variables (important later for API keys)
+.env
