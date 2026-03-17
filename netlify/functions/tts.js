@@ -2,7 +2,23 @@ const textToSpeech = require("@google-cloud/text-to-speech");
 
 exports.handler = async (event) => {
   try {
-    const { text, lang } = JSON.parse(event.body);
+    if (!event.body) {
+      throw new Error("Missing request body");
+    }
+
+    let parsed;
+
+    try {
+      parsed = JSON.parse(event.body);
+    } catch (e) {
+      throw new Error("Invalid JSON body");
+    }
+
+    const { text, lang } = parsed;
+
+    if (!text || !lang) {
+      throw new Error("Missing text or lang");
+    }
 
     if (!process.env.GOOGLE_CLIENT_EMAIL) {
       throw new Error("Missing GOOGLE_CLIENT_EMAIL");
@@ -38,6 +54,7 @@ exports.handler = async (event) => {
       body: response.audioContent.toString("base64"),
       isBase64Encoded: true
     };
+
   } catch (err) {
     console.error("TTS ERROR:", err);
 
