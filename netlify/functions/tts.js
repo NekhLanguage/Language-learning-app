@@ -4,7 +4,9 @@ exports.handler = async (event) => {
   try {
     const { text, lang } = JSON.parse(event.body);
 
-    const credentials = JSON.parse(process.env.GOOGLE_TTS_KEY);
+    const credentials = JSON.parse(
+  process.env.GOOGLE_TTS_KEY.replace(/\\n/g, '\n')
+);
 
     const client = new textToSpeech.TextToSpeechClient({
       credentials
