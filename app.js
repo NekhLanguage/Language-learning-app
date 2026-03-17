@@ -92,7 +92,7 @@ const CORE_BUNDLES = [
 
   { id: "core_20", concepts: ["BREAKFAST","LUNCH","DINNER","JOB","BOOK"] },
 
-  { id: "core_20", concepts: ["ROOM","","","",""] }
+  { id: "core_21", concepts: ["ROOM"] }
 
 ];
 const RESOURCE_PACKS = {
@@ -206,23 +206,14 @@ function buildReleasePlan(selectedPacks) {
   const plan = [];
 
   const coreQueue = [...CORE_BUNDLES];
-  const packQueues = selectedPacks.map(packId =>
-    [...RESOURCE_PACKS[packId].bundles]
-  );
 
+  // 🚫 TEMP: ignore resource packs completely
   while (coreQueue.length) {
 
-    // release 4 core bundles
     for (let i = 0; i < 4 && coreQueue.length; i++) {
       plan.push(coreQueue.shift().id);
     }
 
-    // release pack bundles
-    for (const queue of packQueues) {
-      if (queue.length) {
-        plan.push(queue.shift().id);
-      }
-    }
   }
 
   return plan;
@@ -548,10 +539,7 @@ function updateSupportUI(code) {
   let TEMPLATE_CACHE = null;
 
   const TEMPLATE_FILES = [
-  "sentence_templates.json",
-  "sentence_templates_pokemon.json",
-  "sentence_templates_harry_potter.json",
-  "sentence_templates_cooking.json"
+  "sentence_templates.json"
 ];
 
 async function loadTemplates() {
