@@ -1406,47 +1406,48 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
   subtitle.textContent = "Level " + levelOf(targetConcept);
 
   // --- Modifier path ---
-  if (isModifierConcept(targetConcept)) {
-    const sentenceTarget = buildSentence(targetLang, tpl, targetConcept);
-    const sentenceSupport = buildSentence(supportLang, tpl, targetConcept);
+if (isModifierConcept(targetConcept)) {
 
-    const targetSurface = formOf(targetLang, targetConcept);
-    const blanked = blankSentence(sentenceTarget, targetSurface);
+  const sentenceTarget = buildSentence(targetLang, tpl, targetConcept);
+  const sentenceSupport = buildSentence(supportLang, tpl, targetConcept);
 
-    const options = buildSameTypeOptions(targetConcept, 4);
-    if (!options) {
-      setTimeout(() => renderNext(targetLang, supportLang), 0);
-      return;
-    }
+  const targetSurface = formOf(targetLang, targetConcept);
+  const blanked = blankSentence(sentenceTarget, targetSurface);
 
-    content.innerHTML = `
-      <p><strong>${ui("originalSentence")}</strong></p>
-      <p>${safe(sentenceSupport)}</p>
-      <hr>
-      <p><strong>${ui("fillMissing")}</strong></p>
-      <p>${safe(blanked)}</p>
-      <div id="choices"></div>
-    `;
+  const options = buildSameTypeOptions(targetConcept, 4);
 
-    const container = document.getElementById("choices");
-
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = formOf(targetLang, opt);
-
-      btn.onclick = () => {
-        const correct = opt === targetConcept;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      };
-
-      container.appendChild(btn);
-    });
-
-    return;
+  if (!options) {
+    return null;
   }
+
+  content.innerHTML = `
+    <p><strong>${ui("originalSentence")}</strong></p>
+    <p>${safe(sentenceSupport)}</p>
+    <hr>
+    <p><strong>${ui("fillMissing")}</strong></p>
+    <p>${safe(blanked)}</p>
+    <div id="choices"></div>
+  `;
+
+  const container = document.getElementById("choices");
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = formOf(targetLang, opt);
+
+    btn.onclick = () => {
+      const correct = opt === targetConcept;
+      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+      setTimeout(() => renderNext(targetLang, supportLang), 600);
+    };
+
+    container.appendChild(btn);
+  });
+
+  return true; // 🔥 CRITICAL
+}
 
   // --- Existing core path ---
   const supportSentence = safe(buildSentence(supportLang, tpl));
