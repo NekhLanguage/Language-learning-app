@@ -1,5 +1,7 @@
 // audioengine.js
-// Centralized TTS handler
+// Centralized TTS handler (Cloud + fallback)
+
+const TTS_CACHE = new Map();
 
 let ttsEnabled = false;
 let voices = [];
@@ -10,6 +12,7 @@ function loadVoices() {
 
 loadVoices();
 speechSynthesis.onvoiceschanged = loadVoices;
+
 const voiceMap = {
   en: "en-US",
   pt: "pt-BR",
@@ -19,6 +22,10 @@ const voiceMap = {
   ko: "ko-KR"
 };
 
+// --------------------
+// Public controls
+// --------------------
+
 export function setTTS(state) {
   ttsEnabled = state;
 }
@@ -27,28 +34,59 @@ export function isTTSEnabled() {
   return ttsEnabled;
 }
 
-export function speak(text, lang) {
+// --------------------
+// Cloud TTS (primary)
+// --------------------
 
-  if (!ttsEnabled) return;
-  if (!text) return;
+async function fetchCloudTTS(text, lang) {
+
+  const key = lang + ":" + text;
+
+  if (TTS_CACHE.has(key)) {
+    const audio = new Audio(TTS_CACHE.get(key));
+    await audio.play();
+    return;
+  }
+
+  const res = await fetch("/.netlify/functions/tts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ text, lang })
+  });
+
+  if (!res.ok) {
+    throw new Error("Cloud TTS failed");
+  }
+
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+
+  TTS_CACHE.set(key, url);
+
+  const audio = new Audio(url);
+  await audio.play();
+}
+
+// --------------------
+// Browser fallback
+// --------------------
+
+function speakBrowser(text, lang) {
 
   speechSynthesis.cancel();
 
   const utter = new SpeechSynthesisUtterance(text);
 
-  const voices = voices;
-
-  // Try exact language match
   let voice = voices.find(v => v.lang.toLowerCase() === lang);
 
-  // Try prefix match (ja → ja-JP)
   if (!voice) {
     voice = voices.find(v =>
       v.lang.toLowerCase().startsWith(lang)
     );
   }
 
-  // Try partial match (nb-NO contains "no")
   if (!voice) {
     voice = voices.find(v =>
       v.lang.toLowerCase().includes(lang)
@@ -57,6 +95,8 @@ export function speak(text, lang) {
 
   if (voice) {
     utter.voice = voice;
+  } else {
+    utter.lang = voiceMap[lang] || lang;
   }
 
   utter.rate = 0.9;
@@ -65,8 +105,28 @@ export function speak(text, lang) {
   speechSynthesis.speak(utter);
 }
 
+// --------------------
+// Main speak function
+// --------------------
 
-// Sentence autoplay (Levels 1–2)
+export async function speak(text, lang) {
+
+  if (!ttsEnabled) return;
+  if (!text) return;
+
+  try {
+    const cloudLang = voiceMap[lang] || lang;
+    await fetchCloudTTS(text, cloudLang);
+  } catch (err) {
+    console.warn("Cloud TTS failed, using browser fallback");
+    speakBrowser(text, lang);
+  }
+}
+
+// --------------------
+// Sentence autoplay
+// --------------------
+
 export function speakSentenceOnLoad(text, lang) {
 
   if (!ttsEnabled) return;
@@ -76,14 +136,17 @@ export function speakSentenceOnLoad(text, lang) {
   }, 200);
 }
 
-// Sentence with blank pause (Level 3)
+// --------------------
+// Sentence with pause (Level 3)
+// --------------------
+
 export function speakSentenceWithPause(words, lang, blankIndex) {
 
   if (!ttsEnabled) return;
 
   let i = 0;
 
-  function speakNext() {
+  async function speakNext() {
 
     if (i >= words.length) return;
 
@@ -93,27 +156,15 @@ export function speakSentenceWithPause(words, lang, blankIndex) {
       return;
     }
 
-    const utter = new SpeechSynthesisUtterance(words[i]);
-
-    const voices = speechSynthesis.getVoices();
-    const voice = voices.find(v => v.lang.startsWith(lang));
-
-    if (voice) {
-      utter.voice = voice;
-    } else {
-      utter.lang = voiceMap[lang] || lang;
+    try {
+      await speak(words[i], lang);
+    } catch {
+      // fallback handled inside speak()
     }
 
-    utter.rate = 0.9;
-
-    utter.onend = () => {
-      i++;
-      speakNext();
-    };
-
-    speechSynthesis.speak(utter);
+    i++;
+    setTimeout(speakNext, 150);
   }
 
-  speechSynthesis.cancel();
   speakNext();
 }
