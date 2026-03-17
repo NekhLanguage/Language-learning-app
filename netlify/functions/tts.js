@@ -4,12 +4,19 @@ exports.handler = async (event) => {
   try {
     const { text, lang } = JSON.parse(event.body);
 
-    const credentials = JSON.parse(
-  process.env.GOOGLE_TTS_KEY.replace(/\\n/g, '\n')
-);
+    if (!process.env.GOOGLE_CLIENT_EMAIL) {
+      throw new Error("Missing GOOGLE_CLIENT_EMAIL");
+    }
+
+    if (!process.env.GOOGLE_PRIVATE_KEY) {
+      throw new Error("Missing GOOGLE_PRIVATE_KEY");
+    }
 
     const client = new textToSpeech.TextToSpeechClient({
-      credentials
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY
+      }
     });
 
     const request = {
@@ -31,13 +38,14 @@ exports.handler = async (event) => {
       body: response.audioContent.toString("base64"),
       isBase64Encoded: true
     };
-
   } catch (err) {
-    console.error(err);
+    console.error("TTS ERROR:", err);
 
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "TTS failed" })
+      body: JSON.stringify({
+        error: err.message
+      })
     };
   }
 };
