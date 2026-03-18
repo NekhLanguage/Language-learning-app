@@ -109,9 +109,9 @@ const RESOURCE_PACKS = {
 
     { id: "pokemon_04", concepts: ["STAT","ABILITY","TYPE","LEVEL","EXPERIENCE"] },
 
-    { id: "pokemon_05", concepts: ["HEALTH","POTION","REVIVE","TECHNICAL_MACHINE","BADGE"] },
+    { id: "pokemon_05", concepts: ["ITEM","POTION","REVIVE","HEALTH","BADGE"] },
 
-    { id: "pokemon_06", concepts: ["ITEM","BURN","POISON","SLEEP_STATUS","PARALYZE"] },
+    { id: "pokemon_06", concepts: ["TECHNICAL_MACHINE","BURN","POISON","SLEEP_STATUS","PARALYZE"] },
 
     { id: "pokemon_07", concepts: ["SEEN","CAPTURED","ATTACK","RUN","CATCH"] },
 
