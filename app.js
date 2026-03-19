@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.94.1";
+  const APP_VERSION = "v0.9.94.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -691,6 +691,34 @@ function passesSpacingRule(cid) {
     return distance >= 4;
   }
 }
+function canConceptBeTested(cid) {
+
+  const s = ensureProgress(cid);
+
+  if (s.completed) return false;
+
+  const attempts = run.sessionAttempts?.[cid] || 0;
+  const levelUps = run.sessionLevelUps?.[cid] || 0;
+
+  // ❌ fatigue rule
+  if (attempts >= 8 || levelUps >= 3) return false;
+
+  // ❌ spacing rule
+  if (!passesSpacingRule(cid)) return false;
+
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+
+  // modifiers always allowed
+  if (meta?.type === "adjective" || meta?.type === "number") {
+    return true;
+  }
+
+  // ❌ must have at least one valid template
+  return TEMPLATE_CACHE.some(tpl =>
+    tpl.concepts.includes(cid) &&
+    templateEligible(tpl)
+  );
+}
 
   function levelOf(cid) {
     return ensureProgress(cid).level;
@@ -713,9 +741,7 @@ function passesSpacingRule(cid) {
   run.releasePlanIndex = 0;
 
   // Seed first bundles manually
-for (let i = 0; i < 2; i++) {
-  releaseNextBundle(run);
-}
+releaseNextBundle(run);
 
 }
 function migrateRunState() {
@@ -758,6 +784,12 @@ function migrateRunState() {
 
 if (state.streak >= needed) {
       const levelCap = isModifierConcept(cid) ? 5 : MAX_LEVEL;
+      const levelUps = run.sessionLevelUps[cid] || 0;
+
+if (levelUps >= 3) {
+  state.streak = 0;
+  return;
+}
 
 if (state.level < levelCap) {
   state.level++;
@@ -2432,42 +2464,17 @@ function renderNext(targetLang, supportLang) {
 
    if (!targetConcept) {
 
-  // 🔥 Check if ANY concept is truly renderable
-  const canRenderSomething = run.released.some(c => {
+  const hasValidConcept = run.released.some(cid =>
+    canConceptBeTested(cid)
+  );
 
-    const s = ensureProgress(c);
-
-    if (s.completed) return false;
-
-    const attempts = run.sessionAttempts?.[c] || 0;
-    const levelUps = run.sessionLevelUps?.[c] || 0;
-
-    if (attempts >= 8 || levelUps >= 3) return false;
-
-    if (!passesSpacingRule(c)) return false;
-
-    const meta = window.GLOBAL_VOCAB.concepts[c];
-
-    // Modifiers are always renderable
-    if (meta?.type === "adjective" || meta?.type === "number") {
-      return true;
-    }
-
-    // 🔥 KEY: must have at least ONE eligible template
-    return TEMPLATE_CACHE.some(tpl =>
-      tpl.concepts.includes(c) &&
-      templateEligible(tpl)
-    );
-
-  });
-
-  // 🔥 If nothing can render → END SESSION
-  if (!canRenderSomething) {
+  // ✅ If NOTHING can be tested → end session
+  if (!hasValidConcept) {
     run.sessionComplete = true;
     return endSession(targetLang, supportLang);
   }
 
-  // 🔥 Otherwise: try again safely
+  // Otherwise try again safely
   decrementCooldowns();
   setTimeout(() => renderNext(targetLang, supportLang), 0);
   return;
@@ -2564,35 +2571,11 @@ if (level === 2) {
   }
 
   // If we tried everything and still couldn't render anything
-const remainingActive = run.released.filter(c => {
+const hasValidConcept = run.released.some(cid =>
+  canConceptBeTested(cid)
+);
 
-  const s = ensureProgress(c);
-
-  if (s.completed) return false;
-
-  const attempts = run.sessionAttempts?.[c] || 0;
-  const levelUps = run.sessionLevelUps?.[c] || 0;
-
-  if (attempts >= 8 || levelUps >= 3) return false;
-
-  if (!passesSpacingRule(c)) return false;
-
-  const meta = window.GLOBAL_VOCAB.concepts[c];
-
-  if (meta?.type === "adjective" || meta?.type === "number") {
-    return true;
-  }
-
-  const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-    tpl.concepts.includes(c) &&
-    tpl.concepts.every(cid => run.released.includes(cid))
-  );
-
-  return hasTemplate;
-});
-
-// ✅ If nothing left → END SESSION
-if (remainingActive.length === 0) {
+if (!hasValidConcept) {
   run.sessionComplete = true;
   return endSession(targetLang, supportLang);
 }
