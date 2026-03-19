@@ -1,0 +1,132 @@
+{
+  "templates": [
+
+    {
+      "template_id": "I_SEE_POKEMON",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "POKEMON"],
+      "render": { "en": "I see a pokemon." }
+    },
+    {
+      "template_id": "YOU_SEE_TRAINER",
+      "concepts": ["SECOND_PERSON", "SEE", "TRAINER"],
+      "render": { "en": "You see a trainer." }
+    },
+    {
+      "template_id": "HE_SEES_GYM",
+      "concepts": ["HE", "SEE", "GYM"],
+      "render": { "en": "He sees a gym." }
+    },
+    {
+      "template_id": "SHE_SEES_LEAGUE",
+      "concepts": ["SHE", "SEE", "LEAGUE"],
+      "render": { "en": "She sees a league." }
+    },
+    {
+      "template_id": "THEY_SEE_GYM_LEADER",
+      "concepts": ["THIRD_PERSON_PLURAL", "SEE", "GYM_LEADER"],
+      "render": { "en": "They see a gym leader." }
+    },
+
+    {
+      "template_id": "I_HAVE_POKEMON",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "POKEMON"],
+      "render": { "en": "I have a pokemon." }
+    },
+    {
+      "template_id": "YOU_HAVE_TRAINER",
+      "concepts": ["SECOND_PERSON", "HAVE", "TRAINER"],
+      "render": { "en": "You have a trainer." }
+    },
+    {
+      "template_id": "HE_HAS_POKEMON",
+      "concepts": ["HE", "HAVE", "POKEMON"],
+      "render": { "en": "He has a pokemon." }
+    },
+    {
+      "template_id": "SHE_HAS_TRAINER",
+      "concepts": ["SHE", "HAVE", "TRAINER"],
+      "render": { "en": "She has a trainer." }
+    },
+    {
+      "template_id": "WE_HAVE_POKEMON",
+      "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "POKEMON"],
+      "render": { "en": "We have a pokemon." }
+    },
+
+    {
+      "template_id": "HE_IS_TRAINER",
+      "concepts": ["HE", "BE", "TRAINER"],
+      "render": { "en": "He is a trainer." }
+    },
+    {
+      "template_id": "SHE_IS_TRAINER",
+      "concepts": ["SHE", "BE", "TRAINER"],
+      "render": { "en": "She is a trainer." }
+    },
+    {
+      "template_id": "HE_IS_GYM_LEADER",
+      "concepts": ["HE", "BE", "GYM_LEADER"],
+      "render": { "en": "He is a gym leader." }
+    },
+    {
+      "template_id": "SHE_IS_GYM_LEADER",
+      "concepts": ["SHE", "BE", "GYM_LEADER"],
+      "render": { "en": "She is a gym leader." }
+    },
+
+    {
+      "template_id": "I_SEE_FOREST",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "FOREST"],
+      "render": { "en": "I see a forest." }
+    },
+    {
+      "template_id": "YOU_SEE_CAVE",
+      "concepts": ["SECOND_PERSON", "SEE", "CAVE"],
+      "render": { "en": "You see a cave." }
+    },
+    {
+      "template_id": "HE_SEES_TOWN",
+      "concepts": ["HE", "SEE", "TOWN"],
+      "render": { "en": "He sees a town." }
+    },
+
+    {
+      "template_id": "I_HAVE_BATTLE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "BATTLE"],
+      "render": { "en": "I have a battle." }
+    },
+    {
+      "template_id": "POKEMON_HAVE_MOVE",
+      "concepts": ["POKEMON", "HAVE", "MOVE"],
+      "render": { "en": "Pokemon have a move." }
+    },
+
+    {
+      "template_id": "I_HAVE_LEVEL",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "LEVEL"],
+      "render": { "en": "I have a level." }
+    },
+    {
+      "template_id": "HE_HAS_EXPERIENCE",
+      "concepts": ["HE", "HAVE", "EXPERIENCE"],
+      "render": { "en": "He has experience." }
+    },
+    {
+      "template_id": "SHE_HAS_HEALTH",
+      "concepts": ["SHE", "HAVE", "HEALTH"],
+      "render": { "en": "She has health." }
+    },
+
+    {
+      "template_id": "I_HAVE_POTION",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "POTION"],
+      "render": { "en": "I have a potion." }
+    },
+    {
+      "template_id": "YOU_HAVE_REVIVE",
+      "concepts": ["SECOND_PERSON", "HAVE", "REVIVE"],
+      "render": { "en": "You have a revive." }
+    }
+
+  ]
+}
