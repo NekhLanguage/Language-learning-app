@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.1";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.94";
+  const APP_VERSION = "v0.9.94.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -2617,9 +2617,12 @@ document.getElementById("start-run").onclick = () => {
   run.releasePlan = buildReleasePlan(run.selectedResourcePacks);
   run.releasePlanIndex = 0;
 
-  seedInitialBundles(run);
+  // ✅ FIXED
+  for (let i = 0; i < 2; i++) {
+    releaseNextBundle(run);
+  }
 
-  run.setupComplete = true; // 🔥 IMPORTANT
+  run.setupComplete = true;
 
   USER.runs[languageState.target] = run;
   saveUser();
