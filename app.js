@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.6";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.7";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.94.6";
+  const APP_VERSION = "v0.9.94.7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -1573,25 +1573,27 @@ if (isModifierConcept(targetConcept)) {
   const isSentenceStart = blanked.trim().startsWith("_____");
 
   options.forEach(opt => {
-    const m = window.GLOBAL_VOCAB.concepts[opt];
-    let text;
 
-    if (m?.type === "verb") {
-      text = getVerbForm(opt, subjectCid, targetLang);
-    } else {
-      text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
-    }const meta = window.GLOBAL_VOCAB.concepts[opt];
+  const meta = window.GLOBAL_VOCAB.concepts[opt];
+  let text;
 
-text = meta?.type === "noun"
-  ? nounPhrase(targetLang, opt)
-  : (tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt));
+  if (meta?.type === "verb") {
+    // ✅ Conjugate ALL verbs consistently
+    text = getVerbForm(opt, subjectCid, targetLang);
+  }
+  else if (meta?.type === "noun") {
+    text = nounPhrase(targetLang, opt);
+  }
+  else {
+    text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
+  }
 
-    text = isSentenceStart
-      ? text.charAt(0).toUpperCase() + text.slice(1)
-      : text.charAt(0).toLowerCase() + text.slice(1);
+  text = isSentenceStart
+    ? text.charAt(0).toUpperCase() + text.slice(1)
+    : text.charAt(0).toLowerCase() + text.slice(1);
 
-    const btn = document.createElement("button");
-    btn.textContent = text;
+  const btn = document.createElement("button");
+  btn.textContent = text;
 
     btn.onclick = () => {
       const correct = opt === targetConcept;
