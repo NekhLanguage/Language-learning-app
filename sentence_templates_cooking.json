@@ -1,0 +1,127 @@
+{
+  "templates": [
+
+    {
+      "template_id": "I_SEE_PAN",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "PAN"],
+      "render": { "en": "I see a pan." }
+    },
+    {
+      "template_id": "YOU_SEE_KNIFE",
+      "concepts": ["SECOND_PERSON", "SEE", "KNIFE"],
+      "render": { "en": "You see a knife." }
+    },
+    {
+      "template_id": "HE_SEES_POT",
+      "concepts": ["HE", "SEE", "POT"],
+      "render": { "en": "He sees a pot." }
+    },
+    {
+      "template_id": "SHE_SEES_FORK",
+      "concepts": ["SHE", "SEE", "FORK"],
+      "render": { "en": "She sees a fork." }
+    },
+    {
+      "template_id": "I_HAVE_SPOON",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "SPOON"],
+      "render": { "en": "I have a spoon." }
+    },
+
+    {
+      "template_id": "I_HAVE_PAN",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "PAN"],
+      "render": { "en": "I have a pan." }
+    },
+    {
+      "template_id": "YOU_HAVE_KNIFE",
+      "concepts": ["SECOND_PERSON", "HAVE", "KNIFE"],
+      "render": { "en": "You have a knife." }
+    },
+    {
+      "template_id": "HE_HAS_POT",
+      "concepts": ["HE", "HAVE", "POT"],
+      "render": { "en": "He has a pot." }
+    },
+    {
+      "template_id": "SHE_HAS_SPOON",
+      "concepts": ["SHE", "HAVE", "SPOON"],
+      "render": { "en": "She has a spoon." }
+    },
+    {
+      "template_id": "WE_HAVE_PAN",
+      "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "PAN"],
+      "render": { "en": "We have a pan." }
+    },
+
+    {
+      "template_id": "HE_IS_COOK",
+      "concepts": ["HE", "BE", "COOK"],
+      "render": { "en": "He is a cook." }
+    },
+    {
+      "template_id": "SHE_IS_COOK",
+      "concepts": ["SHE", "BE", "COOK"],
+      "render": { "en": "She is a cook." }
+    },
+
+    {
+      "template_id": "I_SEE_KITCHEN",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "KITCHEN"],
+      "render": { "en": "I see a kitchen." }
+    },
+    {
+      "template_id": "YOU_SEE_OVEN",
+      "concepts": ["SECOND_PERSON", "SEE", "OVEN"],
+      "render": { "en": "You see an oven." }
+    },
+    {
+      "template_id": "HE_SEES_STOVE",
+      "concepts": ["HE", "SEE", "STOVE"],
+      "render": { "en": "He sees a stove." }
+    },
+
+    {
+      "template_id": "I_HAVE_FOOD",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "FOOD"],
+      "render": { "en": "I have food." }
+    },
+    {
+      "template_id": "YOU_HAVE_MEAT",
+      "concepts": ["SECOND_PERSON", "HAVE", "MEAT"],
+      "render": { "en": "You have meat." }
+    },
+    {
+      "template_id": "HE_HAS_FISH",
+      "concepts": ["HE", "HAVE", "FISH"],
+      "render": { "en": "He has a fish." }
+    },
+    {
+      "template_id": "SHE_HAS_FRUIT",
+      "concepts": ["SHE", "HAVE", "FRUIT"],
+      "render": { "en": "She eats fruit." }
+    },
+
+    {
+      "template_id": "I_HAVE_SOUP",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SOUP"],
+      "render": { "en": "I have soup." }
+    },
+    {
+      "template_id": "YOU_HAVE_SAUCE",
+      "concepts": ["SECOND_PERSON", "HAVE", "SAUCE"],
+      "render": { "en": "You have sauce." }
+    },
+
+    {
+      "template_id": "HE_HAS_SALT",
+      "concepts": ["HE", "HAVE", "SALT"],
+      "render": { "en": "He has salt." }
+    },
+    {
+      "template_id": "SHE_HAS_PEPPER",
+      "concepts": ["SHE", "HAVE", "PEPPER"],
+      "render": { "en": "She has pepper." }
+    }
+
+  ]
+}

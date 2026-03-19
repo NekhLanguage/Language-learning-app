@@ -1,0 +1,112 @@
+{
+  "templates": [
+
+    {
+      "template_id": "I_SEE_WAND",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "WAND"],
+      "render": { "en": "I see a wand." }
+    },
+    {
+      "template_id": "YOU_SEE_WIZARD",
+      "concepts": ["SECOND_PERSON", "SEE", "WIZARD"],
+      "render": { "en": "You see a wizard." }
+    },
+    {
+      "template_id": "HE_SEES_WITCH",
+      "concepts": ["HE", "SEE", "WITCH"],
+      "render": { "en": "He sees a witch." }
+    },
+    {
+      "template_id": "SHE_SEES_SPELL",
+      "concepts": ["SHE", "SEE", "SPELL"],
+      "render": { "en": "She sees a spell." }
+    },
+    {
+      "template_id": "THEY_SEE_BROOM",
+      "concepts": ["THIRD_PERSON_PLURAL", "SEE", "BROOM"],
+      "render": { "en": "They see a broom." }
+    },
+
+    {
+      "template_id": "I_HAVE_WAND",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "WAND"],
+      "render": { "en": "I have a wand." }
+    },
+    {
+      "template_id": "YOU_HAVE_BROOM",
+      "concepts": ["SECOND_PERSON", "HAVE", "BROOM"],
+      "render": { "en": "You have a broom." }
+    },
+    {
+      "template_id": "HE_HAS_OWL",
+      "concepts": ["HE", "HAVE", "OWL"],
+      "render": { "en": "He has an owl." }
+    },
+    {
+      "template_id": "SHE_HAS_POTION",
+      "concepts": ["SHE", "HAVE", "POTION"],
+      "render": { "en": "She has a potion." }
+    },
+    {
+      "template_id": "WE_HAVE_WAND",
+      "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "WAND"],
+      "render": { "en": "We have a wand." }
+    },
+
+    {
+      "template_id": "HE_IS_WIZARD",
+      "concepts": ["HE", "BE", "WIZARD"],
+      "render": { "en": "He is a wizard." }
+    },
+    {
+      "template_id": "SHE_IS_WITCH",
+      "concepts": ["SHE", "BE", "WITCH"],
+      "render": { "en": "She is a witch." }
+    },
+
+    {
+      "template_id": "I_SEE_CASTLE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "CASTLE"],
+      "render": { "en": "I see a castle." }
+    },
+    {
+      "template_id": "YOU_SEE_SCHOOL",
+      "concepts": ["SECOND_PERSON", "SEE", "SCHOOL"],
+      "render": { "en": "You see a school." }
+    },
+    {
+      "template_id": "HE_SEES_FOREST",
+      "concepts": ["HE", "SEE", "FOREST"],
+      "render": { "en": "He sees a forest." }
+    },
+
+    {
+      "template_id": "I_HAVE_SPELL",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SPELL"],
+      "render": { "en": "I have a spell." }
+    },
+    {
+      "template_id": "YOU_HAVE_POTION",
+      "concepts": ["SECOND_PERSON", "HAVE", "POTION"],
+      "render": { "en": "You have a potion." }
+    },
+
+    {
+      "template_id": "HE_HAS_BOOK",
+      "concepts": ["HE", "HAVE", "BOOK"],
+      "render": { "en": "He has a book." }
+    },
+    {
+      "template_id": "SHE_HAS_OWL",
+      "concepts": ["SHE", "HAVE", "OWL"],
+      "render": { "en": "She has an owl." }
+    },
+
+    {
+      "template_id": "I_HAVE_DOOR",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "DOOR"],
+      "render": { "en": "I have a door." }
+    }
+
+  ]
+}
