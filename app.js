@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.93.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.93.1";
+  const APP_VERSION = "v0.9.94";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     runs: {} // languageCode -> run object
   };
 }
+
 function loadUser() {
   const raw = localStorage.getItem("zth_user");
   if (!raw) {
@@ -217,6 +218,41 @@ function buildReleasePlan(selectedPacks) {
   }
 
   return plan;
+}
+function renderPackSelection() {
+
+  const container = document.getElementById("pack-buttons");
+  container.innerHTML = "";
+
+  Object.keys(RESOURCE_PACKS).forEach(packId => {
+
+    const btn = document.createElement("button");
+    btn.className = "primary";
+    btn.textContent = packId.replace("_", " ").toUpperCase();
+
+    btn.dataset.pack = packId;
+
+    btn.onclick = () => {
+
+      const selected = new Set(run.selectedResourcePacks);
+
+      if (selected.has(packId)) {
+        selected.delete(packId);
+        btn.classList.remove("selected");
+      } else {
+        if (selected.size >= 2) return; // limit to 2
+        selected.add(packId);
+        btn.classList.add("selected");
+      }
+
+      run.selectedResourcePacks = Array.from(selected);
+
+    };
+
+    container.appendChild(btn);
+
+  });
+
 }
 function buildBundleIndex() {
 
@@ -2225,30 +2261,27 @@ return;
 }
 
   async function enterLanguage(langCode) {
+
   languageState.target = langCode;
 
   await loadAndMergeVocab();
   await loadTemplates();
 
-  // Always rebuild bundle index
   BUNDLE_INDEX = buildBundleIndex();
 
   if (!USER.runs[langCode]) {
+    run = createRunState();
 
-    initRun();
+    // 👇 NEW STEP
+    languageScreen.classList.remove("active");
+    document.getElementById("pack-screen").classList.add("active");
 
-    USER.runs[langCode] = run;
-    saveUser();
+    renderPackSelection();
 
-  } else {
-
-    run = USER.runs[langCode];
-
-    if (run.contentVersion !== CONTENT_VERSION) {
-      migrateRunState();
-    }
-
+    return;
   }
+
+  run = USER.runs[langCode];
 
   languageScreen.classList.remove("active");
   learningScreen.classList.add("active");
@@ -2574,6 +2607,28 @@ return;
   startScreen.classList.remove("active");
   languageScreen.classList.add("active");
 });
+document.getElementById("start-run").onclick = () => {
+
+  if (!run.selectedResourcePacks || run.selectedResourcePacks.length === 0) {
+    alert("Select at least 1 resource pack");
+    return;
+  }
+
+  run.releasePlan = buildReleasePlan(run.selectedResourcePacks);
+  run.releasePlanIndex = 0;
+
+  seedInitialBundles(run);
+
+  run.setupComplete = true; // 🔥 IMPORTANT
+
+  USER.runs[languageState.target] = run;
+  saveUser();
+
+  document.getElementById("pack-screen").classList.remove("active");
+  learningScreen.classList.add("active");
+
+  renderNext(languageState.target, languageState.support);
+};
 
     
 
