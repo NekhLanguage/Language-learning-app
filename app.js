@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.7";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.95";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.94.7";
+  const APP_VERSION = "v0.9.95";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -40,11 +40,82 @@ function loadUser() {
   }
 }
 
-function saveUser() {
+async function saveUser() {
+
   localStorage.setItem("zth_user", JSON.stringify(USER));
+
+  const email = localStorage.getItem("zth_email");
+  if (!email) return;
+
+  await fetch("/.netlify/functions/saveUser", {
+    method: "POST",
+    body: JSON.stringify({
+      email,
+      user: USER
+    })
+  });
 }
 
 loadUser();
+
+async function loadUserFromServer(email) {
+
+  const res = await fetch("/.netlify/functions/loadUser", {
+    method: "POST",
+    body: JSON.stringify({ email })
+  });
+
+  const data = await res.json();
+
+  if (data.user) {
+    USER = data.user;
+  } else {
+    USER = createEmptyUser();
+  }
+
+  saveUser();
+}
+
+function hasAccess() {
+  return localStorage.getItem("zth_email") !== null;
+}
+
+if (!hasAccess()) {
+
+  document.body.innerHTML = `
+    <div style="text-align:center;margin-top:100px;">
+      <h2>Enter your email</h2>
+      <input id="email-input" placeholder="your@email.com" />
+      <br><br>
+      <button id="login-btn">Continue</button>
+    </div>
+  `;
+
+  document.getElementById("login-btn").onclick = async () => {
+
+    const email = document.getElementById("email-input").value;
+
+    const res = await fetch("/.netlify/functions/checkAccess", {
+      method: "POST",
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+
+    if (data.allowed) {
+      localStorage.setItem("zth_email", email);
+
+      // 🔥 THIS IS THE NEW PART
+      await loadUserFromServer(email);
+
+      location.reload();
+    } else {
+      alert("No access found for this email");
+    }
+  };
+
+  return;
+}
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
