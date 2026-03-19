@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.5";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.94.6";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.94.5";
+  const APP_VERSION = "v0.9.94.6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -714,10 +714,28 @@ function canConceptBeTested(cid) {
   }
 
   // ❌ must have at least one valid template
-  return TEMPLATE_CACHE.some(tpl =>
-    tpl.concepts.includes(cid) &&
-    templateEligible(tpl)
+  return TEMPLATE_CACHE.some(tpl => {
+
+  if (!tpl.concepts.includes(cid)) return false;
+  if (!templateEligible(tpl)) return false;
+
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+
+  const role =
+    meta?.type === "pronoun" ? "pronoun" :
+    meta?.type === "verb" ? "verb" :
+    "object";
+
+  const q = tpl.questions?.[role];
+  if (!q) return false;
+
+  const releasedOptions = q.choices.filter(opt =>
+    run.released.includes(opt)
   );
+
+  // 🔥 THIS is the key
+  return releasedOptions.length === 4;
+});
 }
 
   function levelOf(cid) {
