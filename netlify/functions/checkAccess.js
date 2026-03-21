@@ -4,7 +4,13 @@ exports.handler = async (event) => {
 
   // 🔥 TEMP: manually allowed emails
   const allowedEmails = [
-    "nekhbrazil@gmail.com"
+    "nekhbrazil@gmail.com",
+    "teodor@skjaeveland.eu",
+    "olegeorg.torvolt@gmail.com",
+    "eocmodernrs@gmail.com",
+    "georgboy94@gmail.com"
+
+
   ];
 
   const normalized = email.toLowerCase();
