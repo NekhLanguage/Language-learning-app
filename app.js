@@ -440,7 +440,7 @@ const SUPPORT_LANGUAGES = {
 const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
-  offer: "https://stan.store/Nekhslanguageblueprint/p/zero-to-hero-app-beta" // rename from coaching
+  offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" // rename from coaching
 };
 const UI_STRINGS = {
 
