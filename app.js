@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.95";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.96";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.95";
+  const APP_VERSION = "v0.9.96";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 9;
@@ -82,15 +82,66 @@ function hasAccess() {
 
 if (!hasAccess()) {
 
+  const supportLang = USER?.supportLanguage || "en";
+  const strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
+
   document.body.innerHTML = `
     <div style="text-align:center;margin-top:100px;">
-      <h2>Enter your email</h2>
-      <input id="email-input" placeholder="your@email.com" />
+      
+      <h2>${strings.enterEmail || "Enter your email"}</h2>
+      
+      <input 
+        id="email-input" 
+        type="email"
+        placeholder="your@email.com" 
+        style="
+          padding:8px;
+          border-radius:6px;
+          border:none;
+          margin-top:10px;
+        "
+      />
+
       <br><br>
-      <button id="login-btn">Continue</button>
+
+      <button id="login-btn" style="
+        padding:12px 24px;
+        border-radius:999px;
+        border:none;
+        font-weight:800;
+        cursor:pointer;
+      ">
+        ${strings.continue}
+      </button>
+
+      <div style="margin-top:20px;">
+        <a 
+          id="link-buy-access" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style="
+            font-size:0.85rem;
+            opacity:0.85;
+            text-decoration:underline;
+            cursor:pointer;
+            display:inline-block;
+            margin-top:10px;
+          "
+        >
+        </a>
+      </div>
+
     </div>
   `;
 
+  // 🔗 Wire BUY ACCESS link
+  const buyAccess = document.getElementById("link-buy-access");
+  if (buyAccess) {
+    buyAccess.href = EXTERNAL_LINKS.offer;
+    buyAccess.textContent = strings.buyAccess || "Not a user? Get access";
+  }
+
+  // 🔐 LOGIN LOGIC (unchanged, just slightly cleaned)
   document.getElementById("login-btn").onclick = async () => {
 
     const email = document.getElementById("email-input").value;
@@ -105,12 +156,12 @@ if (!hasAccess()) {
     if (data.allowed) {
       localStorage.setItem("zth_email", email);
 
-      // 🔥 THIS IS THE NEW PART
+      // 🔥 your sync logic
       await loadUserFromServer(email);
 
       location.reload();
     } else {
-      alert("No access found for this email");
+      alert(strings.noAccess || "No access found for this email");
     }
   };
 
@@ -386,26 +437,43 @@ const SUPPORT_LANGUAGES = {
   ar: { short: "AR", label: "العربية" },
   ko: { short: "KO", label: "한국어" }
 };
+const EXTERNAL_LINKS = {
+  blueprint: "https://nekhslanguageblueprint.com",
+  skool: "https://www.skool.com/nekhs-language-blueprint-7842",
+  offer: "https://stan.store/Nekhslanguageblueprint/p/zero-to-hero-app-beta" // rename from coaching
+};
 const UI_STRINGS = {
 
   en: {
-    openApp: "OPEN APP",
-    languagesTitle: "LANGUAGES",
-    chooseLanguage: "Choose a language to study",
-    quitLearning: "QUIT LEARNING",
-    sessionTitle: "TODAY'S SESSION",
-    startSubtitle: "Language learning",
+  openApp: "OPEN APP",
+  languagesTitle: "LANGUAGES",
+  chooseLanguage: "Choose a language to study",
+  quitLearning: "QUIT LEARNING",
+  sessionTitle: "TODAY'S SESSION",
+  startSubtitle: "Language learning",
 
-    chooseTranslation: "Choose the correct translation for:",
-    originalSentence: "Original sentence:",
-    fillMissing: "Fill in the missing word:",
-    inThisSentence: "In this sentence:",
-    check: "Check",
-    continue: "Continue",
-    correct: "Correct.",
-    incorrect: "Incorrect.",
-    level: "Level"
-  },
+  chooseTranslation: "Choose the correct translation for:",
+  originalSentence: "Original sentence:",
+  fillMissing: "Fill in the missing word:",
+  inThisSentence: "In this sentence:",
+  check: "Check",
+  continue: "Continue",
+  correct: "Correct.",
+  incorrect: "Incorrect.",
+  level: "Level",
+
+  blueprint: "Nekh's Language Blueprint",
+  skool: "Skool Community",
+  offer: "Upgrade your language system",
+
+  sessionComplete: "Session Complete",
+  sessionFinished: "Session {n} finished.",
+
+  // ✅ FIXED KEYS
+  enterEmail: "Enter your email",
+  buyAccess: "Not a user? Get access",
+  noAccess: "No access found for this email"
+},
 
   pt: {
     openApp: "ABRIR APP",
@@ -423,7 +491,12 @@ const UI_STRINGS = {
     continue: "Continuar",
     correct: "Correto.",
     incorrect: "Incorreto.",
-    level: "Nível"
+    level: "Nível",
+    blueprint: "Plano de Idiomas do Nekh",
+skool: "Comunidade Skool",
+offer: "Melhore seu sistema de idiomas",
+sessionComplete: "Sessão concluída",
+sessionFinished: "Sessão {n} concluída."
   },
 
   ja: {
@@ -442,7 +515,12 @@ const UI_STRINGS = {
     continue: "続ける",
     correct: "正解。",
     incorrect: "不正解。",
-    level: "レベル"
+    level: "レベル",
+    blueprint: "Nekhの言語プラン",
+skool: "Skoolコミュニティ",
+offer: "語学システムをアップグレードする",
+sessionComplete: "セッション完了",
+sessionFinished: "セッション {n} が完了しました。"
   },
 
   no: {
@@ -461,7 +539,11 @@ const UI_STRINGS = {
     continue: "Fortsett",
     correct: "Riktig.",
     incorrect: "Feil.",
-    level: "Nivå"
+    level: "Nivå",
+    blueprint: "Nekh's språkplan",
+skool: "Skool-fellesskap",
+sessionComplete: "Økt fullført",
+sessionFinished: "Økt {n} fullført."
   },
 
   ar: {
@@ -480,7 +562,12 @@ const UI_STRINGS = {
     continue: "متابعة",
     correct: "صحيح.",
     incorrect: "خطأ.",
-    level: "المستوى"
+    level: "المستوى",
+    blueprint: "مخطط اللغة لنخ",
+skool: "مجتمع سكول",
+offer: "قم بتطوير نظامك اللغوي",
+sessionComplete: "اكتملت الجلسة",
+sessionFinished: "تم إنهاء الجلسة {n}."
   },
   ko: {
   openApp: "앱 열기",
@@ -498,7 +585,12 @@ const UI_STRINGS = {
   continue: "계속",
   correct: "정답입니다.",
   incorrect: "틀렸습니다.",
-  level: "레벨"
+  level: "레벨",
+  blueprint: "Nekh의 언어 설계",
+skool: "Skool 커뮤니티",
+offer: "언어 학습 시스템을 업그레이드하세요",
+sessionComplete: "세션 완료",
+sessionFinished: "세션 {n}이 완료되었습니다."
 }
 
 };
@@ -682,6 +774,12 @@ function updateUIStrings(lang) {
 
   document.getElementById("hub-quit").textContent = strings.quitLearning;
   document.getElementById("quit-learning").textContent = strings.quitLearning;
+  const buyAccess = document.getElementById("link-buy-access");
+
+if (buyAccess) {
+  buyAccess.href = EXTERNAL_LINKS.offer;
+  buyAccess.textContent = strings.buyAccess;
+}
 
   const sessionTitle = document.querySelector("#learning-screen .title");
   sessionTitle.textContent = strings.sessionTitle;
@@ -2427,11 +2525,13 @@ function endSession(targetLang, supportLang) {
   USER.runs[languageState.target] = run;
   saveUser();
 
-  content.innerHTML = `
-    <h2>Session Complete</h2>
-    <p>Session ${run.sessionNumber - 1} finished.</p>
-    <button id="start-next-session">${ui("continue")}</button>
-  `;
+  const strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
+
+content.innerHTML = `
+  <h2>${strings.sessionComplete}</h2>
+  <p>${strings.sessionFinished.replace("{n}", run.sessionNumber - 1)}</p>
+  <button id="start-next-session">${strings.continue}</button>
+`;
 
   document.getElementById("start-next-session").onclick = () => {
     setTimeout(() => renderNext(targetLang, supportLang), 0);
