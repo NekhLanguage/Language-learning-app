@@ -765,6 +765,24 @@ function updateUIStrings(lang) {
   const strings = UI_STRINGS[lang] || UI_STRINGS.en;
 
   document.getElementById("open-app").textContent = strings.openApp;
+  const blueprintLink = document.getElementById("link-blueprint");
+const skoolLink = document.getElementById("link-skool");
+const offerLink = document.getElementById("link-offer");
+
+if (blueprintLink) {
+  blueprintLink.textContent = strings.blueprint;
+  blueprintLink.href = EXTERNAL_LINKS.blueprint;
+}
+
+if (skoolLink) {
+  skoolLink.textContent = strings.skool;
+  skoolLink.href = EXTERNAL_LINKS.skool;
+}
+
+if (offerLink) {
+  offerLink.textContent = strings.offer;
+  offerLink.href = EXTERNAL_LINKS.offer;
+}
 
   const languageTitle = document.querySelector("#language-screen .title");
   const languageSubtitle = document.querySelector("#language-screen .subtitle");
