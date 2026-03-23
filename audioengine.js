@@ -19,7 +19,8 @@ const voiceMap = {
   no: "nb-NO",
   ja: "ja-JP",
   ar: "ar-SA",
-  ko: "ko-KR"
+  ko: "ko-KR",
+  uk: "uk-UA"
 };
 
 // --------------------

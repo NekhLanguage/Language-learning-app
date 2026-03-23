@@ -524,6 +524,152 @@
     "GET": { "base": "얻다" }
 
   }
+},
+"uk": {
+  "label": "Українська",
+  "forms": {
+
+    "DO": {
+      "base": "робити",
+      "1_singular": "роблю",
+      "2_singular": "робиш",
+      "3_singular": "робить",
+      "1_plural": "робимо",
+      "2_plural": "робите",
+      "3_plural": "роблять"
+    },
+
+    "GO": {
+      "base": "йти",
+      "1_singular": "йду",
+      "2_singular": "йдеш",
+      "3_singular": "йде",
+      "1_plural": "йдемо",
+      "2_plural": "йдете",
+      "3_plural": "йдуть"
+    },
+
+    "EAT": {
+      "base": "їсти",
+      "1_singular": "їм",
+      "2_singular": "їси",
+      "3_singular": "їсть",
+      "1_plural": "їмо",
+      "2_plural": "їсте",
+      "3_plural": "їдять"
+    },
+
+    "DRINK": {
+      "base": "пити",
+      "1_singular": "п'ю",
+      "2_singular": "п'єш",
+      "3_singular": "п'є",
+      "1_plural": "п'ємо",
+      "2_plural": "п'єте",
+      "3_plural": "п'ють"
+    },
+
+    "READ": {
+      "base": "читати",
+      "1_singular": "читаю",
+      "2_singular": "читаєш",
+      "3_singular": "читає",
+      "1_plural": "читаємо",
+      "2_plural": "читаєте",
+      "3_plural": "читають"
+    },
+
+    "SEE": {
+      "base": "бачити",
+      "1_singular": "бачу",
+      "2_singular": "бачиш",
+      "3_singular": "бачить",
+      "1_plural": "бачимо",
+      "2_plural": "бачите",
+      "3_plural": "бачать"
+    },
+
+    "START": {
+      "base": "починати",
+      "1_singular": "починаю",
+      "2_singular": "починаєш",
+      "3_singular": "починає",
+      "1_plural": "починаємо",
+      "2_plural": "починаєте",
+      "3_plural": "починають"
+    },
+
+    "STOP": {
+      "base": "зупинятися",
+      "1_singular": "зупиняюся",
+      "2_singular": "зупиняєшся",
+      "3_singular": "зупиняється",
+      "1_plural": "зупиняємося",
+      "2_plural": "зупиняєтеся",
+      "3_plural": "зупиняються"
+    },
+
+    "SLEEP": {
+      "base": "спати",
+      "1_singular": "сплю",
+      "2_singular": "спиш",
+      "3_singular": "спить",
+      "1_plural": "спимо",
+      "2_plural": "спите",
+      "3_plural": "сплять"
+    },
+
+    "HAVE": {
+      "base": "мати",
+      "1_singular": "маю",
+      "2_singular": "маєш",
+      "3_singular": "має",
+      "1_plural": "маємо",
+      "2_plural": "маєте",
+      "3_plural": "мають"
+    },
+
+    "COME": {
+      "base": "приходити",
+      "1_singular": "приходжу",
+      "2_singular": "приходиш",
+      "3_singular": "приходить",
+      "1_plural": "приходимо",
+      "2_plural": "приходите",
+      "3_plural": "приходять"
+    },
+
+    "USE": {
+      "base": "використовувати",
+      "1_singular": "використовую",
+      "2_singular": "використовуєш",
+      "3_singular": "використовує",
+      "1_plural": "використовуємо",
+      "2_plural": "використовуєте",
+      "3_plural": "використовують"
+    },
+
+    "GET": {
+      "base": "отримувати",
+      "1_singular": "отримую",
+      "2_singular": "отримуєш",
+      "3_singular": "отримує",
+      "1_plural": "отримуємо",
+      "2_plural": "отримуєте",
+      "3_plural": "отримують"
+    },
+
+    "BE": {
+      "base": "бути",
+      "1_singular": "є",
+      "2_singular": "є",
+      "3_singular": "є",
+      "1_plural": "є",
+      "2_plural": "є",
+      "3_plural": "є"
+    }
+
+  }
 }
   }
 }

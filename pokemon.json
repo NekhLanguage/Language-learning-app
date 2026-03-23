@@ -853,6 +853,71 @@
     "SHINY": ["색이 다른"]
 
   }
+},
+"uk": {
+  "label": "Українська",
+  "forms": {
+
+    "POKEMON": { "form": "покемон" },
+    "TRAINER": { "form": "тренер" },
+    "GYM": { "form": "зал" },
+    "LEAGUE": { "form": "ліга" },
+    "GYM_LEADER": { "form": "лідер залу" },
+    "ELITE_FOUR": { "form": "еліта чотири" },
+    "POKEMON_CENTER": { "form": "центр покемонів" },
+    "FOREST": { "form": "ліс" },
+    "CAVE": { "form": "печера" },
+    "TOWN": { "form": "місто" },
+
+    "BATTLE": { "form": "битва" },
+    "MOVE": { "form": "атака" },
+    "DAMAGE": { "form": "шкода" },
+    "DEFENSE": { "form": "захист" },
+    "SPEED": { "form": "швидкість" },
+    "STAT": { "form": "статистика" },
+    "ABILITY": { "form": "здібність" },
+    "TYPE": { "form": "тип" },
+
+    "POTION": { "form": "зілля" },
+    "REVIVE": { "form": "відродження" },
+    "TECHNICAL_MACHINE": { "form": "технічна машина" },
+    "BADGE": { "form": "значок" },
+    "ITEM": { "form": "предмет" },
+
+    "LEVEL": { "form": "рівень" },
+    "EXPERIENCE": { "form": "досвід" },
+    "HEALTH": { "form": "здоров’я" },
+
+    "SLEEP_STATUS": { "form": "сон" },
+    "SEEN": { "form": "побачене" },
+    "CAPTURED": { "form": "спіймане" },
+
+    "BURN": { "base": "спалювати" },
+    "POISON": { "base": "отруювати" },
+    "PARALYZE": { "base": "паралізувати" },
+
+    "ATTACK": { "base": "атакувати" },
+    "RUN": { "base": "тікати" },
+    "CATCH": { "base": "ловити" },
+    "DEFEAT": { "base": "перемагати" },
+    "SWITCH": { "base": "міняти" },
+    "USE": { "base": "використовувати" },
+    "FLY": { "base": "літати" },
+    "PLAY": { "base": "грати" },
+    "HEAL": { "base": "лікувати" },
+    "RESTORE": { "base": "відновлювати" },
+    "GAIN_EXPERIENCE": { "base": "отримувати досвід" },
+    "EVOLVE": { "base": "еволюціонувати" },
+
+    "WILD": ["дикий"],
+    "STRONG": ["сильний"],
+    "EFFECTIVE": ["ефективний"],
+    "SUPER_EFFECTIVE": ["надзвичайно ефективний"],
+    "VERY_EFFECTIVE": ["дуже ефективний"],
+    "LEGENDARY": ["легендарний"],
+    "SHINY": ["блискучий"]
+
+  }
 }
   }
 }

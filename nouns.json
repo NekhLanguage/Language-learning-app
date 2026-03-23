@@ -803,6 +803,55 @@
     "PANTS": { "form": "바지" }
 
   }
+},
+"uk": {
+  "label": "Українська",
+  "forms": {
+
+    "WATER": { "form": "вода" },
+    "FOOD": { "form": "їжа" },
+
+    "HOUSE": { "form": "будинок" },
+    "HOME": { "form": "дім" },
+    "BOOK": { "form": "книга" },
+    "THING": { "form": "річ" },
+    "JOB": { "form": "робота" },
+    "ROOM": { "form": "кімната" },
+
+    "BOY": { "form": "хлопець" },
+    "GIRL": { "form": "дівчина" },
+    "MAN": { "form": "чоловік" },
+    "WOMAN": { "form": "жінка" },
+
+    "MOM": { "form": "мама" },
+    "DAD": { "form": "тато" },
+
+    "SON": { "form": "син" },
+    "DAUGHTER": { "form": "дочка" },
+    "BROTHER": { "form": "брат" },
+    "SISTER": { "form": "сестра" },
+
+    "HEAD": { "form": "голова" },
+    "ARM": { "form": "рука" },
+    "HAND": { "form": "кисть" },
+    "LEG": { "form": "нога" },
+    "FOOT": { "form": "ступня" },
+    "FINGER": { "form": "палець" },
+    "EYE": { "form": "око" },
+    "MOUTH": { "form": "рот" },
+    "FACE": { "form": "обличчя" },
+
+    "BREAKFAST": { "form": "сніданок" },
+    "LUNCH": { "form": "обід" },
+    "DINNER": { "form": "вечеря" },
+
+    "CLOTHES": { "form": "одяг" },
+    "SHIRT": { "form": "сорочка" },
+    "SHOES": { "form": "взуття" },
+    "PHONE": { "form": "телефон" },
+    "PANTS": { "form": "штани" }
+
+  }
 }
   }
 }

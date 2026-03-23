@@ -1,11 +1,11 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.96";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.96";
+  const APP_VERSION = "v0.9.97";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 9;
+  const CONTENT_VERSION = 10;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -435,7 +435,8 @@ const SUPPORT_LANGUAGES = {
   ja: { short: "JA", label: "日本語" },
   no: { short: "NO", label: "Norsk" },
   ar: { short: "AR", label: "العربية" },
-  ko: { short: "KO", label: "한국어" }
+  ko: { short: "KO", label: "한국어" },
+  uk: { short: "UK", label: "Українська" }
 };
 const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
@@ -591,6 +592,35 @@ skool: "Skool 커뮤니티",
 offer: "언어 학습 시스템을 업그레이드하세요",
 sessionComplete: "세션 완료",
 sessionFinished: "세션 {n}이 완료되었습니다."
+},
+uk: {
+  openApp: "ВІДКРИТИ ДОДАТОК",
+  languagesTitle: "МОВИ",
+  chooseLanguage: "Оберіть мову для вивчення",
+  quitLearning: "ВИЙТИ",
+  sessionTitle: "СЬОГОДНІШНЯ СЕСІЯ",
+  startSubtitle: "Вивчення мов",
+
+  chooseTranslation: "Оберіть правильний переклад:",
+  originalSentence: "Оригінальне речення:",
+  fillMissing: "Заповніть пропущене слово:",
+  inThisSentence: "У цьому реченні:",
+  check: "Перевірити",
+  continue: "Продовжити",
+  correct: "Правильно.",
+  incorrect: "Неправильно.",
+  level: "Рівень",
+
+  blueprint: "Мовна система Некха",
+  skool: "Спільнота Skool",
+  offer: "Покращіть свою мовну систему",
+
+  sessionComplete: "Сесію завершено",
+  sessionFinished: "Сесію {n} завершено.",
+
+  enterEmail: "Введіть вашу електронну пошту",
+  buyAccess: "Немає доступу? Отримати доступ",
+  noAccess: "Доступ для цієї пошти не знайдено"
 }
 
 };
@@ -647,6 +677,15 @@ const HUB_LANGUAGE_NAMES = {
     no: "노르웨이어",
     ar: "아랍어",
     ko: "한국어"
+  },
+  uk: {
+    en: "Англійська",
+    pt: "Португальська",
+    ja: "Японська",
+    no: "Норвезька",
+    ar: "Арабська",
+    ko: "Корейська",
+    uk: "Українська"
   }
 };
 const supportPill = document.getElementById("support-pill");
@@ -1259,7 +1298,8 @@ function orderedConceptsForTemplate(tpl, lang) {
   en: "SVO",
   pt: "SVO",
   no: "SVO",
-  ko: "SOV"
+  ko: "SOV",
+  uk: "SVO"
 };
 
 const orderType = WORD_ORDER[lang] || "SVO";

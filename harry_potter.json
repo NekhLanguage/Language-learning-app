@@ -411,6 +411,65 @@
     "BRAVE": ["용감한"]
 
   }
+},
+"uk": {
+  "label": "Українська",
+  "forms": {
+
+    "WAND": { "form": "паличка" },
+    "MAGIC": { "form": "магія" },
+    "WIZARD": { "form": "чарівник" },
+    "WITCH": { "form": "відьма" },
+    "SPELL": { "form": "закляття" },
+    "POTION": { "form": "зілля" },
+    "SCHOOL": { "form": "школа" },
+    "CAULDRON": { "form": "казан" },
+    "BROOM": { "form": "мітла" },
+    "OWL": { "form": "сова" },
+
+    "CASTLE": { "form": "замок" },
+    "PROFESSOR": { "form": "професор" },
+    "STUDENT": { "form": "студент" },
+    "ELF": { "form": "ельф" },
+    "UNICORN": { "form": "єдиноріг" },
+    "GIANT": { "form": "велетень" },
+    "TROLL": { "form": "троль" },
+    "GHOST": { "form": "привид" },
+
+    "FOREST": { "form": "ліс" },
+    "SPIDER": { "form": "павук" },
+    "LIBRARY": { "form": "бібліотека" },
+    "CLASS": { "form": "клас" },
+    "LESSON": { "form": "урок" },
+    "HOMEWORK": { "form": "домашнє завдання" },
+    "EXAM": { "form": "іспит" },
+    "QUESTION": { "form": "питання" },
+    "ANSWER": { "form": "відповідь" },
+    "IDEA": { "form": "ідея" },
+    "CHANCE": { "form": "шанс" },
+    "MYSTERY": { "form": "таємниця" },
+    "SECRET": { "form": "секрет" },
+    "FRIEND": { "form": "друг" },
+    "ENEMY": { "form": "ворог" },
+    "CLOAK": { "form": "мантія" },
+    "DOOR": { "form": "двері" },
+
+    "CAST": { "base": "чаклувати" },
+    "PROTECT": { "base": "захищати" },
+    "CHARM": { "base": "зачаровувати" },
+    "CURSE": { "base": "проклинати" },
+    "LEARN": { "base": "вчитися" },
+    "WRITE": { "base": "писати" },
+    "STUDY": { "base": "вчитися" },
+    "VANISH": { "base": "зникати" },
+    "TRANSFORM": { "base": "перетворювати" },
+    "FLY": { "base": "літати" },
+    "SHOUT": { "base": "кричати" },
+
+    "MAGICAL": ["магічний"],
+    "BRAVE": ["хоробрий"]
+
+  }
 }
 
   }

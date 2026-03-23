@@ -8,7 +8,8 @@ exports.handler = async (event) => {
     "teodor@skjaeveland.eu",
     "olegeorg.torvolt@gmail.com",
     "eocmodernrs@gmail.com",
-    "georgboy94@gmail.com"
+    "georgboy94@gmail.com",
+    "biagomes1217@gmail.com"
 
 
   ];

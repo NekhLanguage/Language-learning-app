@@ -502,6 +502,68 @@
     "RAW": ["생"]
 
   }
+},
+"uk": {
+  "label": "Українська",
+  "forms": {
+
+    "COOK": { "base": "готувати" },
+    "CUT": { "base": "різати" },
+    "BOIL": { "base": "варити" },
+    "PEEL": { "base": "чистити" },
+    "FRY": { "base": "смажити" },
+    "STIR": { "base": "мішати" },
+    "MIX": { "base": "змішувати" },
+    "WASH": { "base": "мити" },
+    "HEAT": { "base": "нагрівати" },
+
+    "PAN": { "form": "сковорода" },
+    "KNIFE": { "form": "ніж" },
+    "FORK": { "form": "виделка" },
+    "SPOON": { "form": "ложка" },
+    "SPATULA": { "form": "лопатка" },
+    "POT": { "form": "каструля" },
+    "GLASS": { "form": "склянка" },
+
+    "LITRE": { "form": "літр" },
+    "DECILITRE": { "form": "децилітр" },
+    "MILLILITRE": { "form": "мілілітр" },
+    "GRAM": { "form": "грам" },
+    "KILOGRAM": { "form": "кілограм" },
+
+    "MEAT": { "form": "м’ясо" },
+    "CHICKEN": { "form": "курка" },
+    "FISH": { "form": "риба" },
+    "VEGETABLE": { "form": "овоч" },
+    "POTATO": { "form": "картопля" },
+    "SALAD": { "form": "салат" },
+    "FRUIT": { "form": "фрукт" },
+    "BANANA": { "form": "банан" },
+    "SOUP": { "form": "суп" },
+    "DOUGH": { "form": "тісто" },
+    "SAUCE": { "form": "соус" },
+    "INGREDIENT": { "form": "інгредієнт" },
+
+    "KITCHEN": { "form": "кухня" },
+    "OVEN": { "form": "духовка" },
+    "STOVE": { "form": "плита" },
+    "SINK": { "form": "раковина" },
+    "FREEZER": { "form": "морозильник" },
+
+    "SALT": { "form": "сіль" },
+    "PEPPER": { "form": "перець" },
+    "BUTTER": { "form": "масло" },
+    "SPICE": { "form": "спеція" },
+    "RECIPE": { "form": "рецепт" },
+
+    "SWEET": ["солодкий"],
+    "SALTY": ["солоний"],
+    "SOUR": ["кислий"],
+    "FRESH": ["свіжий"],
+    "FROZEN": ["заморожений"],
+    "RAW": ["сирий"]
+
+  }
 }
   }
 }

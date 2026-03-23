@@ -304,6 +304,45 @@
     ]
 
   }
+},
+"uk": {
+  "label": "Українська",
+  "forms": {
+
+    "FIRST_PERSON_SINGULAR": [
+      "я",
+      "мій"
+    ],
+
+    "SECOND_PERSON": [
+      "ти",
+      "твій"
+    ],
+
+    "SECOND_PERSON_PLURAL": [
+      "ви",
+      "ваш"
+    ],
+
+    "HE": [
+      "він"
+    ],
+
+    "SHE": [
+      "вона"
+    ],
+
+    "FIRST_PERSON_PLURAL": [
+      "ми",
+      "наш"
+    ],
+
+    "THIRD_PERSON_PLURAL": [
+      "вони",
+      "їхній"
+    ]
+
+  }
 }
   }
 }
