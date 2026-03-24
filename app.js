@@ -83,7 +83,19 @@ function hasAccess() {
 if (!hasAccess()) {
 
   const supportLang = USER?.supportLanguage || "en";
-  const strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
+
+  // 🔒 SAFE ACCESS (prevents crash even if UI_STRINGS isn't ready yet)
+  const strings =
+    (typeof UI_STRINGS !== "undefined" &&
+      UI_STRINGS[supportLang]) ||
+    (typeof UI_STRINGS !== "undefined" &&
+      UI_STRINGS.en) ||
+    {
+      enterEmail: "Enter your email",
+      continue: "Continue",
+      buyAccess: "Not a user? Get access",
+      noAccess: "No access found for this email"
+    };
 
   document.body.innerHTML = `
     <div style="text-align:center;margin-top:100px;">
