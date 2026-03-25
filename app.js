@@ -57,6 +57,265 @@ async function saveUser() {
 }
 
 loadUser();
+const SUPPORT_LANGUAGES = {
+  en: { short: "EN", label: "English" },
+  pt: { short: "PT", label: "Português" },
+  ja: { short: "JA", label: "日本語" },
+  no: { short: "NO", label: "Norsk" },
+  ar: { short: "AR", label: "العربية" },
+  ko: { short: "KO", label: "한국어" },
+  uk: { short: "UK", label: "Українська" }
+};
+const EXTERNAL_LINKS = {
+  blueprint: "https://nekhslanguageblueprint.com",
+  skool: "https://www.skool.com/nekhs-language-blueprint-7842",
+  offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" // rename from coaching
+};
+const UI_STRINGS = {
+
+  en: {
+  openApp: "OPEN APP",
+  languagesTitle: "LANGUAGES",
+  chooseLanguage: "Choose a language to study",
+  quitLearning: "QUIT LEARNING",
+  sessionTitle: "TODAY'S SESSION",
+  startSubtitle: "Language learning",
+
+  chooseTranslation: "Choose the correct translation for:",
+  originalSentence: "Original sentence:",
+  fillMissing: "Fill in the missing word:",
+  inThisSentence: "In this sentence:",
+  check: "Check",
+  continue: "Continue",
+  correct: "Correct.",
+  incorrect: "Incorrect.",
+  level: "Level",
+
+  blueprint: "Nekh's Language Blueprint",
+  skool: "Skool Community",
+  offer: "Upgrade your language system",
+
+  sessionComplete: "Session Complete",
+  sessionFinished: "Session {n} finished.",
+
+  // ✅ FIXED KEYS
+  enterEmail: "Enter your email",
+  buyAccess: "Not a user? Get access",
+  noAccess: "No access found for this email"
+},
+
+  pt: {
+    openApp: "ABRIR APP",
+    languagesTitle: "IDIOMAS",
+    chooseLanguage: "Escolha um idioma para estudar",
+    quitLearning: "SAIR",
+    sessionTitle: "SESSÃO DE HOJE",
+    startSubtitle: "Aprendizado de idiomas",
+
+    chooseTranslation: "Escolha a tradução correta para:",
+    originalSentence: "Frase original:",
+    fillMissing: "Preencha a palavra que falta:",
+    inThisSentence: "Nesta frase:",
+    check: "Verificar",
+    continue: "Continuar",
+    correct: "Correto.",
+    incorrect: "Incorreto.",
+    level: "Nível",
+    blueprint: "Plano de Idiomas do Nekh",
+skool: "Comunidade Skool",
+offer: "Melhore seu sistema de idiomas",
+sessionComplete: "Sessão concluída",
+sessionFinished: "Sessão {n} concluída."
+  },
+
+  ja: {
+    openApp: "アプリを開く",
+    languagesTitle: "言語",
+    chooseLanguage: "学習する言語を選んでください",
+    quitLearning: "終了",
+    sessionTitle: "今日のセッション",
+    startSubtitle: "言語学習",
+
+    chooseTranslation: "正しい翻訳を選んでください:",
+    originalSentence: "元の文:",
+    fillMissing: "空欄を埋めてください:",
+    inThisSentence: "この文では:",
+    check: "確認",
+    continue: "続ける",
+    correct: "正解。",
+    incorrect: "不正解。",
+    level: "レベル",
+    blueprint: "Nekhの言語プラン",
+skool: "Skoolコミュニティ",
+offer: "語学システムをアップグレードする",
+sessionComplete: "セッション完了",
+sessionFinished: "セッション {n} が完了しました。"
+  },
+
+  no: {
+    openApp: "ÅPNE APP",
+    languagesTitle: "SPRÅK",
+    chooseLanguage: "Velg et språk å studere",
+    quitLearning: "AVSLUTT",
+    sessionTitle: "DAGENS ØKT",
+    startSubtitle: "Språklæring",
+
+    chooseTranslation: "Velg riktig oversettelse for:",
+    originalSentence: "Original setning:",
+    fillMissing: "Fyll inn det manglende ordet:",
+    inThisSentence: "I denne setningen:",
+    check: "Sjekk",
+    continue: "Fortsett",
+    correct: "Riktig.",
+    incorrect: "Feil.",
+    level: "Nivå",
+    blueprint: "Nekh's språkplan",
+skool: "Skool-fellesskap",
+sessionComplete: "Økt fullført",
+sessionFinished: "Økt {n} fullført."
+  },
+
+  ar: {
+    openApp: "افتح التطبيق",
+    languagesTitle: "اللغات",
+    chooseLanguage: "اختر لغة للدراسة",
+    quitLearning: "إنهاء",
+    sessionTitle: "جلسة اليوم",
+    startSubtitle: "تعلم اللغات",
+
+    chooseTranslation: "اختر الترجمة الصحيحة لـ:",
+    originalSentence: "الجملة الأصلية:",
+    fillMissing: "املأ الكلمة الناقصة:",
+    inThisSentence: "في هذه الجملة:",
+    check: "تحقق",
+    continue: "متابعة",
+    correct: "صحيح.",
+    incorrect: "خطأ.",
+    level: "المستوى",
+    blueprint: "مخطط اللغة لنخ",
+skool: "مجتمع سكول",
+offer: "قم بتطوير نظامك اللغوي",
+sessionComplete: "اكتملت الجلسة",
+sessionFinished: "تم إنهاء الجلسة {n}."
+  },
+  ko: {
+  openApp: "앱 열기",
+  languagesTitle: "언어",
+  chooseLanguage: "공부할 언어를 선택하세요",
+  quitLearning: "종료",
+  sessionTitle: "오늘의 세션",
+  startSubtitle: "언어 학습",
+
+  chooseTranslation: "올바른 번역을 선택하세요:",
+  originalSentence: "원문:",
+  fillMissing: "빈칸을 채우세요:",
+  inThisSentence: "이 문장에서:",
+  check: "확인",
+  continue: "계속",
+  correct: "정답입니다.",
+  incorrect: "틀렸습니다.",
+  level: "레벨",
+  blueprint: "Nekh의 언어 설계",
+skool: "Skool 커뮤니티",
+offer: "언어 학습 시스템을 업그레이드하세요",
+sessionComplete: "세션 완료",
+sessionFinished: "세션 {n}이 완료되었습니다."
+},
+uk: {
+  openApp: "ВІДКРИТИ ДОДАТОК",
+  languagesTitle: "МОВИ",
+  chooseLanguage: "Оберіть мову для вивчення",
+  quitLearning: "ВИЙТИ",
+  sessionTitle: "СЬОГОДНІШНЯ СЕСІЯ",
+  startSubtitle: "Вивчення мов",
+
+  chooseTranslation: "Оберіть правильний переклад:",
+  originalSentence: "Оригінальне речення:",
+  fillMissing: "Заповніть пропущене слово:",
+  inThisSentence: "У цьому реченні:",
+  check: "Перевірити",
+  continue: "Продовжити",
+  correct: "Правильно.",
+  incorrect: "Неправильно.",
+  level: "Рівень",
+
+  blueprint: "Мовна система Некха",
+  skool: "Спільнота Skool",
+  offer: "Покращіть свою мовну систему",
+
+  sessionComplete: "Сесію завершено",
+  sessionFinished: "Сесію {n} завершено.",
+
+  enterEmail: "Введіть вашу електронну пошту",
+  buyAccess: "Немає доступу? Отримати доступ",
+  noAccess: "Доступ для цієї пошти не знайдено"
+}
+
+};
+const HUB_LANGUAGE_NAMES = {
+  en: {
+    en: "English",
+    pt: "Portuguese",
+    ja: "Japanese",
+    no: "Norwegian",
+    ar: "Arabic",
+    ko: "Korean"
+  },
+
+  pt: {
+    en: "Inglês",
+    pt: "Português",
+    ja: "Japonês",
+    no: "Norueguês",
+    ar: "Árabe",
+    ko: "Coreano"
+  },
+
+  ja: {
+    en: "英語",
+    pt: "ポルトガル語",
+    ja: "日本語",
+    no: "ノルウェー語",
+    ar: "アラビア語",
+    ko: "韓国語"
+  },
+
+  no: {
+    en: "Engelsk",
+    pt: "Portugisisk",
+    ja: "Japansk",
+    no: "Norsk",
+    ar: "Arabisk",
+    ko: "Koreansk"
+  },
+
+  ar: {
+    en: "الإنجليزية",
+    pt: "البرتغالية",
+    ja: "اليابانية",
+    no: "النرويجية",
+    ar: "العربية",
+    ko: "الكورية"
+  },
+
+  ko: {
+    en: "영어",
+    pt: "포르투갈어",
+    ja: "일본어",
+    no: "노르웨이어",
+    ar: "아랍어",
+    ko: "한국어"
+  },
+  uk: {
+    en: "Англійська",
+    pt: "Португальська",
+    ja: "Японська",
+    no: "Норвезька",
+    ar: "Арабська",
+    ko: "Корейська",
+    uk: "Українська"
+  }
+};
 
 async function loadUserFromServer(email) {
 
@@ -180,6 +439,11 @@ if (!hasAccess()) {
 
   return;
 }
+// ✅ SAFE INIT — only runs when app UI exists
+languageState.support = USER.supportLanguage || "en";
+updateSupportUI(languageState.support);
+updateUIStrings(languageState.support);
+renderLanguageButtons();
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
@@ -442,275 +706,13 @@ if (ttsToggle) {
     ttsToggle.textContent = ttsEnabled ? "🔊 TTS ON" : "🔊 TTS OFF";
   };
 }
-const SUPPORT_LANGUAGES = {
-  en: { short: "EN", label: "English" },
-  pt: { short: "PT", label: "Português" },
-  ja: { short: "JA", label: "日本語" },
-  no: { short: "NO", label: "Norsk" },
-  ar: { short: "AR", label: "العربية" },
-  ko: { short: "KO", label: "한국어" },
-  uk: { short: "UK", label: "Українська" }
-};
-const EXTERNAL_LINKS = {
-  blueprint: "https://nekhslanguageblueprint.com",
-  skool: "https://www.skool.com/nekhs-language-blueprint-7842",
-  offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" // rename from coaching
-};
-const UI_STRINGS = {
 
-  en: {
-  openApp: "OPEN APP",
-  languagesTitle: "LANGUAGES",
-  chooseLanguage: "Choose a language to study",
-  quitLearning: "QUIT LEARNING",
-  sessionTitle: "TODAY'S SESSION",
-  startSubtitle: "Language learning",
-
-  chooseTranslation: "Choose the correct translation for:",
-  originalSentence: "Original sentence:",
-  fillMissing: "Fill in the missing word:",
-  inThisSentence: "In this sentence:",
-  check: "Check",
-  continue: "Continue",
-  correct: "Correct.",
-  incorrect: "Incorrect.",
-  level: "Level",
-
-  blueprint: "Nekh's Language Blueprint",
-  skool: "Skool Community",
-  offer: "Upgrade your language system",
-
-  sessionComplete: "Session Complete",
-  sessionFinished: "Session {n} finished.",
-
-  // ✅ FIXED KEYS
-  enterEmail: "Enter your email",
-  buyAccess: "Not a user? Get access",
-  noAccess: "No access found for this email"
-},
-
-  pt: {
-    openApp: "ABRIR APP",
-    languagesTitle: "IDIOMAS",
-    chooseLanguage: "Escolha um idioma para estudar",
-    quitLearning: "SAIR",
-    sessionTitle: "SESSÃO DE HOJE",
-    startSubtitle: "Aprendizado de idiomas",
-
-    chooseTranslation: "Escolha a tradução correta para:",
-    originalSentence: "Frase original:",
-    fillMissing: "Preencha a palavra que falta:",
-    inThisSentence: "Nesta frase:",
-    check: "Verificar",
-    continue: "Continuar",
-    correct: "Correto.",
-    incorrect: "Incorreto.",
-    level: "Nível",
-    blueprint: "Plano de Idiomas do Nekh",
-skool: "Comunidade Skool",
-offer: "Melhore seu sistema de idiomas",
-sessionComplete: "Sessão concluída",
-sessionFinished: "Sessão {n} concluída."
-  },
-
-  ja: {
-    openApp: "アプリを開く",
-    languagesTitle: "言語",
-    chooseLanguage: "学習する言語を選んでください",
-    quitLearning: "終了",
-    sessionTitle: "今日のセッション",
-    startSubtitle: "言語学習",
-
-    chooseTranslation: "正しい翻訳を選んでください:",
-    originalSentence: "元の文:",
-    fillMissing: "空欄を埋めてください:",
-    inThisSentence: "この文では:",
-    check: "確認",
-    continue: "続ける",
-    correct: "正解。",
-    incorrect: "不正解。",
-    level: "レベル",
-    blueprint: "Nekhの言語プラン",
-skool: "Skoolコミュニティ",
-offer: "語学システムをアップグレードする",
-sessionComplete: "セッション完了",
-sessionFinished: "セッション {n} が完了しました。"
-  },
-
-  no: {
-    openApp: "ÅPNE APP",
-    languagesTitle: "SPRÅK",
-    chooseLanguage: "Velg et språk å studere",
-    quitLearning: "AVSLUTT",
-    sessionTitle: "DAGENS ØKT",
-    startSubtitle: "Språklæring",
-
-    chooseTranslation: "Velg riktig oversettelse for:",
-    originalSentence: "Original setning:",
-    fillMissing: "Fyll inn det manglende ordet:",
-    inThisSentence: "I denne setningen:",
-    check: "Sjekk",
-    continue: "Fortsett",
-    correct: "Riktig.",
-    incorrect: "Feil.",
-    level: "Nivå",
-    blueprint: "Nekh's språkplan",
-skool: "Skool-fellesskap",
-sessionComplete: "Økt fullført",
-sessionFinished: "Økt {n} fullført."
-  },
-
-  ar: {
-    openApp: "افتح التطبيق",
-    languagesTitle: "اللغات",
-    chooseLanguage: "اختر لغة للدراسة",
-    quitLearning: "إنهاء",
-    sessionTitle: "جلسة اليوم",
-    startSubtitle: "تعلم اللغات",
-
-    chooseTranslation: "اختر الترجمة الصحيحة لـ:",
-    originalSentence: "الجملة الأصلية:",
-    fillMissing: "املأ الكلمة الناقصة:",
-    inThisSentence: "في هذه الجملة:",
-    check: "تحقق",
-    continue: "متابعة",
-    correct: "صحيح.",
-    incorrect: "خطأ.",
-    level: "المستوى",
-    blueprint: "مخطط اللغة لنخ",
-skool: "مجتمع سكول",
-offer: "قم بتطوير نظامك اللغوي",
-sessionComplete: "اكتملت الجلسة",
-sessionFinished: "تم إنهاء الجلسة {n}."
-  },
-  ko: {
-  openApp: "앱 열기",
-  languagesTitle: "언어",
-  chooseLanguage: "공부할 언어를 선택하세요",
-  quitLearning: "종료",
-  sessionTitle: "오늘의 세션",
-  startSubtitle: "언어 학습",
-
-  chooseTranslation: "올바른 번역을 선택하세요:",
-  originalSentence: "원문:",
-  fillMissing: "빈칸을 채우세요:",
-  inThisSentence: "이 문장에서:",
-  check: "확인",
-  continue: "계속",
-  correct: "정답입니다.",
-  incorrect: "틀렸습니다.",
-  level: "레벨",
-  blueprint: "Nekh의 언어 설계",
-skool: "Skool 커뮤니티",
-offer: "언어 학습 시스템을 업그레이드하세요",
-sessionComplete: "세션 완료",
-sessionFinished: "세션 {n}이 완료되었습니다."
-},
-uk: {
-  openApp: "ВІДКРИТИ ДОДАТОК",
-  languagesTitle: "МОВИ",
-  chooseLanguage: "Оберіть мову для вивчення",
-  quitLearning: "ВИЙТИ",
-  sessionTitle: "СЬОГОДНІШНЯ СЕСІЯ",
-  startSubtitle: "Вивчення мов",
-
-  chooseTranslation: "Оберіть правильний переклад:",
-  originalSentence: "Оригінальне речення:",
-  fillMissing: "Заповніть пропущене слово:",
-  inThisSentence: "У цьому реченні:",
-  check: "Перевірити",
-  continue: "Продовжити",
-  correct: "Правильно.",
-  incorrect: "Неправильно.",
-  level: "Рівень",
-
-  blueprint: "Мовна система Некха",
-  skool: "Спільнота Skool",
-  offer: "Покращіть свою мовну систему",
-
-  sessionComplete: "Сесію завершено",
-  sessionFinished: "Сесію {n} завершено.",
-
-  enterEmail: "Введіть вашу електронну пошту",
-  buyAccess: "Немає доступу? Отримати доступ",
-  noAccess: "Доступ для цієї пошти не знайдено"
-}
-
-};
-const HUB_LANGUAGE_NAMES = {
-  en: {
-    en: "English",
-    pt: "Portuguese",
-    ja: "Japanese",
-    no: "Norwegian",
-    ar: "Arabic",
-    ko: "Korean"
-  },
-
-  pt: {
-    en: "Inglês",
-    pt: "Português",
-    ja: "Japonês",
-    no: "Norueguês",
-    ar: "Árabe",
-    ko: "Coreano"
-  },
-
-  ja: {
-    en: "英語",
-    pt: "ポルトガル語",
-    ja: "日本語",
-    no: "ノルウェー語",
-    ar: "アラビア語",
-    ko: "韓国語"
-  },
-
-  no: {
-    en: "Engelsk",
-    pt: "Portugisisk",
-    ja: "Japansk",
-    no: "Norsk",
-    ar: "Arabisk",
-    ko: "Koreansk"
-  },
-
-  ar: {
-    en: "الإنجليزية",
-    pt: "البرتغالية",
-    ja: "اليابانية",
-    no: "النرويجية",
-    ar: "العربية",
-    ko: "الكورية"
-  },
-
-  ko: {
-    en: "영어",
-    pt: "포르투갈어",
-    ja: "일본어",
-    no: "노르웨이어",
-    ar: "아랍어",
-    ko: "한국어"
-  },
-  uk: {
-    en: "Англійська",
-    pt: "Португальська",
-    ja: "Японська",
-    no: "Норвезька",
-    ar: "Арабська",
-    ko: "Корейська",
-    uk: "Українська"
-  }
-};
 const supportPill = document.getElementById("support-pill");
 const supportShort = document.getElementById("support-short");
 const supportLabel = document.getElementById("support-label");
 const supportDropdown = document.getElementById("support-dropdown");
 
-// Initialize from USER state
-languageState.support = USER.supportLanguage || "en";
-updateSupportUI(languageState.support);
-updateUIStrings(languageState.support);
-renderLanguageButtons();
+
 // Build dropdown
 supportDropdown.innerHTML = "";
 
