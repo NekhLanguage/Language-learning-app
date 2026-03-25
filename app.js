@@ -316,7 +316,15 @@ const HUB_LANGUAGE_NAMES = {
     uk: "Українська"
   }
 };
-
+ const supportPill = document.getElementById("support-pill");
+const supportShort = document.getElementById("support-short");
+const supportLabel = document.getElementById("support-label");
+const supportDropdown = document.getElementById("support-dropdown");
+// ✅ SAFE INIT — only runs when app UI exists
+languageState.support = USER.supportLanguage || "en";
+updateSupportUI(languageState.support);
+updateUIStrings(languageState.support);
+renderLanguageButtons();
 async function loadUserFromServer(email) {
 
   const res = await fetch("/.netlify/functions/loadUser", {
@@ -439,11 +447,7 @@ if (!hasAccess()) {
 
   return;
 }
-// ✅ SAFE INIT — only runs when app UI exists
-languageState.support = USER.supportLanguage || "en";
-updateSupportUI(languageState.support);
-updateUIStrings(languageState.support);
-renderLanguageButtons();
+
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
@@ -707,10 +711,7 @@ if (ttsToggle) {
   };
 }
 
-const supportPill = document.getElementById("support-pill");
-const supportShort = document.getElementById("support-short");
-const supportLabel = document.getElementById("support-label");
-const supportDropdown = document.getElementById("support-dropdown");
+
 
 
 // Build dropdown
