@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const APP_VERSION = "v0.9.97";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 10;
+  const CONTENT_VERSION = 11;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -336,6 +336,17 @@ async function loadUserFromServer(email) {
 
   if (data.user) {
     USER = data.user;
+    // 🔥 GLOBAL VERSION MIGRATION CHECK
+Object.keys(USER.runs || {}).forEach(lang => {
+  const run = USER.runs[lang];
+
+  if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
+    console.warn("Resetting outdated run from server:", lang);
+    USER.runs[lang] = createRunState();
+  }
+});
+
+saveUser();
   } else {
     USER = createEmptyUser();
   }
