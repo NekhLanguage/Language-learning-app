@@ -2993,6 +2993,34 @@ if (quitBtn) {
 if (hubQuitBtn) {
   hubQuitBtn.addEventListener("click", returnToHome);
 }
+if (resetBtn) {
+  resetBtn.onclick = async () => {
+
+    const confirmed = confirm("Reset ALL progress? This cannot be undone.");
+    if (!confirmed) return;
+
+    const email = localStorage.getItem("zth_email");
+
+    // 🔥 Reset user structure (clean, safe)
+    USER = createEmptyUser();
+
+    // 🔥 Save locally
+    localStorage.setItem("zth_user", JSON.stringify(USER));
+
+    // 🔥 Sync to server (IMPORTANT)
+    if (email) {
+      await fetch("/.netlify/functions/saveUser", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          user: USER
+        })
+      });
+    }
+
+    location.reload();
+  };
+}
 window.canConceptBeTested = canConceptBeTested;
 window.__app = { get run(){ return run; } };
 });
