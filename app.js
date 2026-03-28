@@ -2577,6 +2577,15 @@ return;
   }
 
   run = USER.runs[langCode];
+  // 🔥 CONTENT VERSION CHECK
+if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
+  console.warn("Content version mismatch → resetting run");
+
+  run = createRunState();
+
+  USER.runs[langCode] = run;
+  saveUser();
+}
 
   languageScreen.classList.remove("active");
   learningScreen.classList.add("active");
