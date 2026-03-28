@@ -2668,35 +2668,42 @@ function chooseConcept(excluded = new Set()) {
 
   return candidates[0];
 }
-function chooseTemplateForConcept(cid) {
+function chooseTemplateForConcept(cid, allowUnreleased = false) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
 
   let eligible;
 
-  // Modifier concepts (adjective/number)
-  if (meta?.type === "adjective" || meta?.type === "number") {
+  // 🔥 LEVEL 1 MODE (loose)
+  if (allowUnreleased) {
 
     eligible = TEMPLATE_CACHE.filter(tpl =>
-      tpl.concepts.some(c =>
-        window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
-      ) &&
-      templateEligible(tpl)
+      tpl.concepts.includes(cid) // ONLY requirement
     );
 
   } else {
 
-    // 🔥 PRIMARY MATCH
-    eligible = TEMPLATE_CACHE.filter(tpl =>
-      tpl.concepts.includes(cid) &&
-      templateEligible(tpl)
-    );
+    // 🔒 NORMAL STRICT MODE
+    if (meta?.type === "adjective" || meta?.type === "number") {
 
-    // 🔥 FALLBACK — THIS IS THE KEY FIX
-    if (!eligible.length) {
-      eligible = TEMPLATE_CACHE.filter(templateEligible);
+      eligible = TEMPLATE_CACHE.filter(tpl =>
+        tpl.concepts.some(c =>
+          window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+        ) &&
+        templateEligible(tpl)
+      );
+
+    } else {
+
+      eligible = TEMPLATE_CACHE.filter(tpl =>
+        tpl.concepts.includes(cid) &&
+        templateEligible(tpl)
+      );
+
+      if (!eligible.length) {
+        eligible = TEMPLATE_CACHE.filter(templateEligible);
+      }
     }
-
   }
 
   if (!eligible.length) return null;
@@ -2755,7 +2762,7 @@ const level = levelOf(targetConcept);
 
 // ✅ 🔥 FIX 1 — HANDLE LEVEL 1 BEFORE ANY VALIDATION
 if (level === 1) {
-  const tpl = chooseTemplateForConcept(targetConcept);
+  const tpl = chooseTemplateForConcept(targetConcept, true);
 
   if (!tpl) {
     excluded.add(targetConcept);
