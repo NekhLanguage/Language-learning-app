@@ -1250,6 +1250,27 @@
     "pt": "Ela é minha mãe e ele é meu pai.",
     "ar": "هي أمي وهو أبي."
   }
+},
+{
+  "template_id": "I_EAT_AND_DRINK",
+  "concepts": ["FIRST_PERSON_SINGULAR","EAT","AND","DRINK"],
+  "render": {
+    "en": "I eat and drink."
+  }
+},
+{
+  "template_id": "HE_EAT_BREAKFAST_BUT_NOT_LUNCH",
+  "concepts": ["HE","EAT","BREAKFAST","BUT","NOT","LUNCH"],
+  "render": {
+    "en": "He eats breakfast but not lunch."
+  }
+},
+{
+  "template_id": "SHE_GO_TO_HER_ROOM",
+  "concepts": ["SHE","GO","TO","HER","ROOM"],
+  "render": {
+    "en": "She goes to her room."
+  }
 }
 
   ]

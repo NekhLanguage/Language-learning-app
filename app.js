@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const APP_VERSION = "v0.9.97";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 10;
+  const CONTENT_VERSION = 11;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -508,7 +508,7 @@ const CORE_BUNDLES = [
 
   { id: "core_20", concepts: ["BREAKFAST","LUNCH","DINNER","JOB","BOOK"] },
 
-  { id: "core_21", concepts: ["ROOM"] }
+  { id: "core_21", concepts: ["ROOM", "AND", "BUT", "NOT", "TO"] }
 
 ];
 const RESOURCE_PACKS = {
