@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const APP_VERSION = "v0.9.97";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 11;
+  const CONTENT_VERSION = 10;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -925,7 +925,7 @@ function passesSpacingRule(cid) {
 
   // LEVEL 1 → always treated as correct
   if (level === 1) {
-  return distance >= 1;
+  return true;
 }
 
   // LEVEL 7 special rule
@@ -2727,12 +2727,20 @@ run.lastTargetConcept = targetConcept;
 
 if (!targetConcept) {
 
-  const hasAnyUnfinishedConcept = run.released.some(cid => {
+  const canShowAnything = run.released.some(cid => {
+
     const st = ensureProgress(cid);
-    return !st.completed;
+    if (st.completed) return false;
+
+    const level = st.level;
+
+    // Level 1 is always allowed
+    if (level === 1) return true;
+
+    return canConceptBeTested(cid);
   });
 
-  if (!hasAnyUnfinishedConcept) {
+  if (!canShowAnything) {
     run.sessionComplete = true;
     return endSession(targetLang, supportLang);
   }
