@@ -2744,18 +2744,20 @@ run.lastTargetConcept = targetConcept;
 
 if (!targetConcept) {
 
-  const canShowAnything = run.released.some(cid => {
+ const canShowAnything = run.released.some(cid => {
 
-    const st = ensureProgress(cid);
-    if (st.completed) return false;
+  const st = ensureProgress(cid);
+  if (st.completed) return false;
 
-    const level = st.level;
+  const level = st.level;
 
-    // Level 1 is always allowed
-    if (level === 1) return true;
+  // 🔥 NEW: Level 1 must also be introducible
+  if (level === 1) {
+    return canConceptBeIntroduced(cid);
+  }
 
-    return canConceptBeTested(cid);
-  });
+  return canConceptBeTested(cid);
+});
 
   if (!canShowAnything) {
     run.sessionComplete = true;
