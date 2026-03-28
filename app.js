@@ -2625,28 +2625,25 @@ function chooseConcept(excluded = new Set()) {
 
   const candidates = run.released.filter(cid => {
 
-  if (excluded.has(cid)) return false;
+    if (excluded.has(cid)) return false;
 
-  return canConceptBeTested(cid);
+    const st = ensureProgress(cid);
 
-});
+    if (st.completed) return false;
+
+    // ❌ remove canConceptBeTested here for L1
+    return true;
+  });
 
   if (!candidates.length) return null;
 
+  // Prioritize lowest level
   candidates.sort((a, b) => {
+  const levelDiff = levelOf(a) - levelOf(b);
+  if (levelDiff !== 0) return levelDiff;
 
-    const levelDiff = levelOf(a) - levelOf(b);
-    if (levelDiff !== 0) return levelDiff;
-
-    const typeA = window.GLOBAL_VOCAB.concepts[a]?.type;
-    const typeB = window.GLOBAL_VOCAB.concepts[b]?.type;
-
-    const pa = TYPE_PRIORITY[typeA] || 99;
-    const pb = TYPE_PRIORITY[typeB] || 99;
-
-    return pa - pb;
-
-  });
+  return Math.random() - 0.5;
+});
 
   return candidates[0];
 }
@@ -2696,37 +2693,66 @@ function renderNext(targetLang, supportLang) {
   const excluded = new Set();
 
   for (let attempts = 0; attempts < 25; attempts++) {
-    const targetConcept = chooseConcept(excluded);
 
-    run.lastTargetConcept = targetConcept;
+  if (attempts >= 24) {
+    console.warn("RenderNext fallback triggered");
 
-   if (!targetConcept) {
-
-  const hasValidConcept = run.released.some(cid =>
-    canConceptBeTested(cid)
-  );
-
-  // ✅ If NOTHING can be tested → end session
-  if (!hasValidConcept) {
     run.sessionComplete = true;
     return endSession(targetLang, supportLang);
   }
 
-  // Otherwise try again safely
+  const targetConcept = chooseConcept(excluded);
+
+run.lastTargetConcept = targetConcept;
+
+if (!targetConcept) {
+
+  const hasAnyUnfinishedConcept = run.released.some(cid => {
+    const st = ensureProgress(cid);
+    return !st.completed;
+  });
+
+  if (!hasAnyUnfinishedConcept) {
+    run.sessionComplete = true;
+    return endSession(targetLang, supportLang);
+  }
+
   decrementCooldowns();
   setTimeout(() => renderNext(targetLang, supportLang), 0);
   return;
 }
-    const tpl = chooseTemplateForConcept(targetConcept);
 
-    if (!tpl) {
-      excluded.add(targetConcept);
-      continue;
-    }
+const level = levelOf(targetConcept);
 
-    const level = levelOf(targetConcept);
+// ✅ 🔥 FIX 1 — HANDLE LEVEL 1 BEFORE ANY VALIDATION
+if (level === 1) {
+  const tpl = chooseTemplateForConcept(targetConcept);
+
+  if (!tpl) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  renderExposure(targetLang, supportLang, tpl, targetConcept);
+  run.exerciseCounter++;
+  return;
+}
+
+// ❗ ONLY AFTER LEVEL 1 — apply strict validation
+if (!canConceptBeTested(targetConcept)) {
+  excluded.add(targetConcept);
+  continue;
+}
+
 // ---------- Level 2 strict option rule ----------
 if (level === 2) {
+
+  const tpl = chooseTemplateForConcept(targetConcept);
+  if (!tpl) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
 
   const role =
@@ -2749,8 +2775,7 @@ if (level === 2) {
     excluded.add(targetConcept);
     continue;
   }
-}
-    if (level === 2) {
+
   const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
 
   if (!result) {
@@ -2762,30 +2787,37 @@ if (level === 2) {
   return;
 }
 
-    if (level === 1) {
-      renderExposure(targetLang, supportLang, tpl, targetConcept);
-      run.exerciseCounter++;
-      return;
-    }
-
     if (level === 3) {
-      renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-      run.exerciseCounter++;
-      return;
-    }
+
+  const tpl = chooseTemplateForConcept(targetConcept);
+  if (!tpl) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+  run.exerciseCounter++;
+  return;
+}
 
     if (level === 4) {
 
-      const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+  const tpl = chooseTemplateForConcept(targetConcept);
+  if (!tpl) {
+    excluded.add(targetConcept);
+    continue;
+  }
 
-      if (result === null) {
-        excluded.add(targetConcept);
-        continue;
-      }
+  const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
 
-      run.exerciseCounter++;
-      return;
-    }
+  if (result === null) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  run.exerciseCounter++;
+  return;
+}
 
     if (level === 5) {
       renderMatchingL5(targetLang, supportLang);
@@ -2794,26 +2826,91 @@ if (level === 2) {
     }
 
     if (level === 6) {
-      renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-      run.exerciseCounter++;
-      return;
-    }
+
+  const tpl = chooseTemplateForConcept(targetConcept);
+  if (!tpl) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+  run.exerciseCounter++;
+  return;
+}
 
     if (level === 7) {
-      renderFreeProductionL7(targetLang, supportLang, tpl);
-      run.exerciseCounter++;
-      return;
-    }
+
+  const tpl = chooseTemplateForConcept(targetConcept);
+  if (!tpl) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  renderFreeProductionL7(targetLang, supportLang, tpl);
+  run.exerciseCounter++;
+  return;
+}
 
     excluded.add(targetConcept);
   }
 
-  // If we tried everything and still couldn't render anything
-const hasValidConcept = run.released.some(cid =>
-  canConceptBeTested(cid)
-);
+let canRenderAnything = false;
 
-if (!hasValidConcept) {
+for (const cid of run.released) {
+
+  const st = ensureProgress(cid);
+
+  if (st.completed) continue;
+
+  const level = st.level;
+
+  // Level 1 → always renderable
+  if (level === 1) {
+    canRenderAnything = true;
+    break;
+  }
+
+  // Level 2–4 → must pass validation
+  if (level >= 2 && level <= 4) {
+    if (canConceptBeTested(cid)) {
+      canRenderAnything = true;
+      break;
+    }
+  }
+
+  // Level 5 → matching requires enough items
+  if (level === 5) {
+    const eligible = run.released.filter(c => {
+      const s = ensureProgress(c);
+      return s.level === 5 && !s.completed;
+    });
+
+    if (eligible.length >= 4) {
+      canRenderAnything = true;
+      break;
+    }
+  }
+
+  // Level 6 → template-based
+  if (level === 6) {
+    const hasTemplate = TEMPLATE_CACHE.some(tpl =>
+      tpl.concepts.includes(cid) && templateEligible(tpl)
+    );
+
+    if (hasTemplate) {
+      canRenderAnything = true;
+      break;
+    }
+  }
+
+  // Level 7 → always renderable if not completed
+  if (level === 7) {
+    canRenderAnything = true;
+    break;
+  }
+}
+
+if (!canRenderAnything) {
   run.sessionComplete = true;
   return endSession(targetLang, supportLang);
 }
