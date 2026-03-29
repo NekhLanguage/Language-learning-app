@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.2";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.3";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.97.2";
+  const APP_VERSION = "v0.9.97.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -987,8 +987,18 @@ function canConceptBeTested(cid) {
   run.released.includes(opt)
 );
 
-// ✅ allow MORE than 4, but require at least 4
-return releasedOptions.length >= 4;
+if (releasedOptions.length < 4) return false;
+
+// 🔥 NEW: ensure it can actually render
+if (meta?.type === "adjective" || meta?.type === "number") {
+  return true;
+}
+
+const options = buildRecognitionOptions(tpl, cid, 4);
+
+if (!options || options.length < 4) return false;
+
+return true;
 });
 }
 function canConceptBeIntroduced(cid) {
