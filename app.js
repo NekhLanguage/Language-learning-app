@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.3";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.4";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.97.3";
+  const APP_VERSION = "v0.9.97.4";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -2758,7 +2758,7 @@ function renderNext(targetLang, supportLang) {
   const excluded = new Set();
   let renderedSomething = false;
 
-  for (let attempts = 0; attempts < 25; attempts++) {
+for (let attempts = 0; attempts < 25; attempts++) {
 
   if (attempts >= 24) {
     console.warn("RenderNext fallback triggered");
@@ -2768,180 +2768,191 @@ function renderNext(targetLang, supportLang) {
   }
 
   const targetConcept = chooseConcept(excluded);
+  run.lastTargetConcept = targetConcept;
 
-run.lastTargetConcept = targetConcept;
-
-if (!targetConcept) {
-
- const canShowAnything = run.released.some(cid => {
-
-  const st = ensureProgress(cid);
-  if (st.completed) return false;
-
-  const level = st.level;
-
-  // 🔥 NEW: Level 1 must also be introducible
-  if (level === 1) {
-    return canConceptBeIntroduced(cid);
-  }
-
-  return canConceptBeTested(cid);
-});
-
-  if (!canShowAnything) {
+  // 🔥 HARD STOP: nothing left to try
+  if (excluded.size >= run.released.length) {
     run.sessionComplete = true;
     return endSession(targetLang, supportLang);
   }
 
-  decrementCooldowns();
-  setTimeout(() => renderNext(targetLang, supportLang), 0);
-  return;
-}
+  if (!targetConcept) {
 
-const level = levelOf(targetConcept);
+    const canShowAnything = run.released.some(cid => {
 
-// ✅ 🔥 FIX 1 — HANDLE LEVEL 1 BEFORE ANY VALIDATION
-if (level === 1) {
-  const tpl = chooseTemplateForConcept(targetConcept);
+      if (excluded.has(cid)) return false; // 🔥 NEW: respect exclusions
 
-  if (!tpl) {
-    excluded.add(targetConcept);
-    continue;
-  }
+      const st = ensureProgress(cid);
+      if (st.completed) return false;
 
-  renderExposure(targetLang, supportLang, tpl, targetConcept);
-renderedSomething = true;
-run.exerciseCounter++;
-return;
-}
+      const level = st.level;
 
-// ❗ ONLY AFTER LEVEL 1 — apply strict validation
-if (!canConceptBeTested(targetConcept)) {
-  excluded.add(targetConcept);
-  continue;
-}
+      if (level === 1) {
+        return canConceptBeIntroduced(cid);
+      }
 
-// ---------- Level 2 strict option rule ----------
-if (level === 2) {
+      return canConceptBeTested(cid);
+    });
 
-  const tpl = chooseTemplateForConcept(targetConcept);
-  if (!tpl) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-
-  const role =
-    meta?.type === "pronoun" ? "pronoun" :
-    meta?.type === "verb" ? "verb" :
-    "object";
-
-  const q = tpl.questions?.[role];
-
-  if (!q) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  const releasedOptions = q.choices.filter(opt =>
-    run.released.includes(opt)
-  );
-
-  if (releasedOptions.length < 4) {
-  excluded.add(targetConcept);
-  continue;
-}
-
-  const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
-
-  if (!result) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  renderedSomething = true;
-run.exerciseCounter++;
-return;
-}
-
-    if (level === 3) {
-
-  const tpl = chooseTemplateForConcept(targetConcept);
-  if (!tpl) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  const result = renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-
-  if (result === null) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  renderedSomething = true;
-  run.exerciseCounter++;
-  return;
-}
-
-    if (level === 4) {
-
-  const tpl = chooseTemplateForConcept(targetConcept);
-  if (!tpl) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
-
-  if (result === null) {
-    excluded.add(targetConcept);
-    continue;
-  }
-
-  renderedSomething = true;
-run.exerciseCounter++;
-return;
-}
-
-    if (level === 5) {
-      renderMatchingL5(targetLang, supportLang);
-      renderedSomething = true;
-run.exerciseCounter++;
-return;
+    if (!canShowAnything) {
+      run.sessionComplete = true;
+      return endSession(targetLang, supportLang);
     }
 
-    if (level === 6) {
+    decrementCooldowns();
+    setTimeout(() => renderNext(targetLang, supportLang), 0);
+    return;
+  }
 
-  const tpl = chooseTemplateForConcept(targetConcept);
-  if (!tpl) {
+  const level = levelOf(targetConcept);
+
+  // ✅ Level 1
+  if (level === 1) {
+    const tpl = chooseTemplateForConcept(targetConcept);
+
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    renderExposure(targetLang, supportLang, tpl, targetConcept);
+    renderedSomething = true;
+    run.exerciseCounter++;
+    return;
+  }
+
+  // ❗ validation
+  if (!canConceptBeTested(targetConcept)) {
     excluded.add(targetConcept);
     continue;
   }
 
-  renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-  renderedSomething = true;
-run.exerciseCounter++;
-return;
-}
+  // ---------- Level 2 ----------
+  if (level === 2) {
 
-    if (level === 7) {
+    const tpl = chooseTemplateForConcept(targetConcept);
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
 
-  const tpl = chooseTemplateForConcept(targetConcept);
-  if (!tpl) {
-    excluded.add(targetConcept);
-    continue;
+    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+
+    const role =
+      meta?.type === "pronoun" ? "pronoun" :
+      meta?.type === "verb" ? "verb" :
+      "object";
+
+    const q = tpl.questions?.[role];
+
+    if (!q) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    const releasedOptions = q.choices.filter(opt =>
+      run.released.includes(opt)
+    );
+
+    if (releasedOptions.length < 4) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
+
+    if (!result) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    renderedSomething = true;
+    run.exerciseCounter++;
+    return;
   }
 
-  renderFreeProductionL7(targetLang, supportLang, tpl);
-  renderedSomething = true;
-run.exerciseCounter++;
-return;
-}
+  // ---------- Level 3 ----------
+  if (level === 3) {
 
-    excluded.add(targetConcept);
+    const tpl = chooseTemplateForConcept(targetConcept);
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    const result = renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+
+    if (result === null) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    renderedSomething = true;
+    run.exerciseCounter++;
+    return;
   }
+
+  // ---------- Level 4 ----------
+  if (level === 4) {
+
+    const tpl = chooseTemplateForConcept(targetConcept);
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+
+    if (result === null) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    renderedSomething = true;
+    run.exerciseCounter++;
+    return;
+  }
+
+  // ---------- Level 5 ----------
+  if (level === 5) {
+    renderMatchingL5(targetLang, supportLang);
+    renderedSomething = true;
+    run.exerciseCounter++;
+    return;
+  }
+
+  // ---------- Level 6 ----------
+  if (level === 6) {
+
+    const tpl = chooseTemplateForConcept(targetConcept);
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+    renderedSomething = true;
+    run.exerciseCounter++;
+    return;
+  }
+
+  // ---------- Level 7 ----------
+  if (level === 7) {
+
+    const tpl = chooseTemplateForConcept(targetConcept);
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
+    renderFreeProductionL7(targetLang, supportLang, tpl);
+    renderedSomething = true;
+    run.exerciseCounter++;
+    return;
+  }
+
+  excluded.add(targetConcept);
+}
 
 if (!renderedSomething) {
   run.sessionComplete = true;
