@@ -984,11 +984,11 @@ function canConceptBeTested(cid) {
   if (!q) return false;
 
   const releasedOptions = q.choices.filter(opt =>
-    run.released.includes(opt)
-  );
+  run.released.includes(opt)
+);
 
-  // 🔥 THIS is the key
-  return releasedOptions.length === 4;
+// ✅ allow MORE than 4, but require at least 4
+return releasedOptions.length >= 4;
 });
 }
 function canConceptBeIntroduced(cid) {
@@ -1657,9 +1657,9 @@ btn.textContent = meta?.type === "noun"
   return run.released.includes(opt);
 });
 
-if (releasedOptions.length !== 4) return null;
+if (releasedOptions.length < 4) return null;
 
-const options = shuffle([...releasedOptions]);
+const options = shuffle([...releasedOptions]).slice(0, 4);
   const promptText = resolvePrompt(q, supportLang);
   const sentence = buildSentence(targetLang, tpl);
 
@@ -1821,11 +1821,14 @@ if (isModifierConcept(targetConcept)) {
   const blankedWords = words.map((w, i) => i === blankIndex ? "_____" : w);
   const blanked = blankedWords.join(" ");
 
-  const options = buildRecognitionOptions(tpl, targetConcept, 4);
-  if (!options || options.length === 0) {
-  renderNext(targetLang, supportLang);
-  return;
+ const options = buildRecognitionOptions(tpl, targetConcept, 4);
+
+if (!options || options.length < 4) {
+  return null;
 }
+
+// ✅ enforce exactly 4 shown
+const finalOptions = options.slice(0, 4);
 
   content.innerHTML = `
     <p><strong>${ui("originalSentence")}</strong></p>
@@ -1839,7 +1842,7 @@ if (isModifierConcept(targetConcept)) {
   const container = document.getElementById("choices");
   const isSentenceStart = blanked.trim().startsWith("_____");
 
-  options.forEach(opt => {
+  finalOptions.forEach(opt => {
 
   const meta = window.GLOBAL_VOCAB.concepts[opt];
   let text;
@@ -1978,9 +1981,12 @@ if (isModifierConcept(targetConcept)) {
     }
 
     const options = buildLevel4Options();
-if (!options || options.length === 0) {
+
+if (!options || options.length < 4) {
   return null;
 }
+
+const finalOptions = options.slice(0, 4);
     content.innerHTML = `
       <p>${ui("chooseTranslation")}</p>
       <h2>${promptSupport}</h2>
@@ -1989,7 +1995,7 @@ if (!options || options.length === 0) {
 
     const container = document.getElementById("choices");
 
-    options.forEach(opt => {
+    finalOptions.forEach(opt => {
       const btn = document.createElement("button");
       btn.textContent = resolveTargetSurface(opt);
 
@@ -2845,10 +2851,16 @@ return;
     continue;
   }
 
-  renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+  const result = renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
+
+  if (result === null) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
   renderedSomething = true;
-run.exerciseCounter++;
-return;
+  run.exerciseCounter++;
+  return;
 }
 
     if (level === 4) {
