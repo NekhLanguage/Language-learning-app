@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.4";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.5";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.97.4";
+  const APP_VERSION = "v0.9.97.5";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -617,19 +617,29 @@ function createRunState() {
     contentVersion: CONTENT_VERSION
   };
 }
-function buildReleasePlan(selectedPacks) {
-
+function buildReleasePlan(selectedPacks = []) {
   const plan = [];
 
   const coreQueue = [...CORE_BUNDLES];
+  const packQueues = (selectedPacks || [])
+    .filter(packId => RESOURCE_PACKS[packId])
+    .map(packId => ({
+      packId,
+      bundles: [...RESOURCE_PACKS[packId].bundles]
+    }));
 
-  // 🚫 TEMP: ignore resource packs completely
-  while (coreQueue.length) {
-
+  while (coreQueue.length || packQueues.some(p => p.bundles.length)) {
+    // 4 core bundles
     for (let i = 0; i < 4 && coreQueue.length; i++) {
       plan.push(coreQueue.shift().id);
     }
 
+    // then 1 bundle from each selected pack (max 2)
+    for (const pack of packQueues) {
+      if (pack.bundles.length) {
+        plan.push(pack.bundles.shift().id);
+      }
+    }
   }
 
   return plan;
@@ -804,23 +814,22 @@ function updateSupportUI(code) {
 
   let TEMPLATE_CACHE = null;
 
-  const TEMPLATE_FILES = [
-  "sentence_templates.json"
-];
+async function loadTemplates(selectedPacks = []) {
+  const files = ["sentence_templates.json"];
 
-async function loadTemplates() {
-
-  if (TEMPLATE_CACHE) return TEMPLATE_CACHE;
+  (selectedPacks || []).forEach(packId => {
+    const pack = RESOURCE_PACKS[packId];
+    if (pack?.templateFile) {
+      files.push(pack.templateFile);
+    }
+  });
 
   TEMPLATE_CACHE = [];
 
-  for (const file of TEMPLATE_FILES) {
-
+  for (const file of files) {
     const res = await fetch(file, { cache: "no-store" });
     const data = await res.json();
-
     TEMPLATE_CACHE.push(...(data.templates || []));
-
   }
 
   return TEMPLATE_CACHE;
@@ -2612,13 +2621,12 @@ return;
   languageState.target = langCode;
 
   await loadAndMergeVocab();
-  await loadTemplates();
 
   BUNDLE_INDEX = buildBundleIndex();
 
   if (!USER.runs[langCode]) {
     run = createRunState();
-
+    await loadTemplates([]);
     // 👇 NEW STEP
     languageScreen.classList.remove("active");
     document.getElementById("pack-screen").classList.add("active");
@@ -2629,6 +2637,7 @@ return;
   }
 
   run = USER.runs[langCode];
+  
   // 🔥 CONTENT VERSION CHECK
 if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   console.warn("Content version mismatch → resetting run");
@@ -2638,7 +2647,7 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   USER.runs[langCode] = run;
   saveUser();
 }
-
+  await loadTemplates(run.selectedResourcePacks || []);
   languageScreen.classList.remove("active");
   learningScreen.classList.add("active");
 
@@ -2683,32 +2692,30 @@ return;
   quantifier: 7
 };
 function chooseConcept(excluded = new Set()) {
+  const candidates = run.released.filter(cid => {
+    if (excluded.has(cid)) return false;
 
- const candidates = run.released.filter(cid => {
+    const st = ensureProgress(cid);
+    if (st.completed) return false;
 
-  if (excluded.has(cid)) return false;
+    const meta = window.GLOBAL_VOCAB.concepts[cid];
+    const isModifier = meta?.type === "adjective" || meta?.type === "number";
 
-  const st = ensureProgress(cid);
+    // Level 1 intro gate
+    if (st.level === 1 && !isModifier && !canConceptBeIntroduced(cid)) {
+      return false;
+    }
 
-  if (st.completed) return false;
-
-  // 🔥 NEW: block unusable Level 1 concepts
-  if (st.level === 1 && !canConceptBeIntroduced(cid)) {
-    return false;
-  }
-
-  return true;
-});
+    return true;
+  });
 
   if (!candidates.length) return null;
 
-  // Prioritize lowest level
   candidates.sort((a, b) => {
-  const levelDiff = levelOf(a) - levelOf(b);
-  if (levelDiff !== 0) return levelDiff;
-
-  return Math.random() - 0.5;
-});
+    const levelDiff = levelOf(a) - levelOf(b);
+    if (levelDiff !== 0) return levelDiff;
+    return Math.random() - 0.5;
+  });
 
   return candidates[0];
 }
@@ -2969,7 +2976,7 @@ return;
   startScreen.classList.remove("active");
   languageScreen.classList.add("active");
 });
-document.getElementById("start-run").onclick = () => {
+document.getElementById("start-run").onclick = async () => {
 
   if (!run.selectedResourcePacks || run.selectedResourcePacks.length === 0) {
     alert("Select at least 1 resource pack");
@@ -2978,6 +2985,7 @@ document.getElementById("start-run").onclick = () => {
 
   run.releasePlan = buildReleasePlan(run.selectedResourcePacks);
   run.releasePlanIndex = 0;
+  await loadTemplates(run.selectedResourcePacks);
 
   // ✅ Only 1 bundle at start
 releaseNextBundle(run);
