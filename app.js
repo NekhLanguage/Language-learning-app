@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.97.1";
+  const APP_VERSION = "v0.9.97.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -1828,7 +1828,13 @@ if (!options || options.length < 4) {
 }
 
 // ✅ enforce exactly 4 shown
-const finalOptions = options.slice(0, 4);
+let finalOptions = options.slice(0, 4);
+
+// 🔥 ensure correct answer is always included
+if (!finalOptions.includes(targetConcept)) {
+  finalOptions[0] = targetConcept;
+  finalOptions = shuffle(finalOptions);
+}
 
   content.innerHTML = `
     <p><strong>${ui("originalSentence")}</strong></p>
@@ -1986,7 +1992,13 @@ if (!options || options.length < 4) {
   return null;
 }
 
-const finalOptions = options.slice(0, 4);
+let finalOptions = options.slice(0, 4);
+
+// 🔥 ensure correct answer is always included
+if (!finalOptions.includes(targetConcept)) {
+  finalOptions[0] = targetConcept;
+  finalOptions = shuffle(finalOptions);
+}
     content.innerHTML = `
       <p>${ui("chooseTranslation")}</p>
       <h2>${promptSupport}</h2>
