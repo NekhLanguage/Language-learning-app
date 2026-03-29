@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.1";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.97";
+  const APP_VERSION = "v0.9.97.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -2728,6 +2728,7 @@ function renderNext(targetLang, supportLang) {
   }
 
   const excluded = new Set();
+  let renderedSomething = false;
 
   for (let attempts = 0; attempts < 25; attempts++) {
 
@@ -2781,8 +2782,9 @@ if (level === 1) {
   }
 
   renderExposure(targetLang, supportLang, tpl, targetConcept);
-  run.exerciseCounter++;
-  return;
+renderedSomething = true;
+run.exerciseCounter++;
+return;
 }
 
 // ❗ ONLY AFTER LEVEL 1 — apply strict validation
@@ -2818,10 +2820,10 @@ if (level === 2) {
     run.released.includes(opt)
   );
 
-  if (releasedOptions.length !== 4) {
-    excluded.add(targetConcept);
-    continue;
-  }
+  if (releasedOptions.length < 4) {
+  excluded.add(targetConcept);
+  continue;
+}
 
   const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
 
@@ -2830,8 +2832,9 @@ if (level === 2) {
     continue;
   }
 
-  run.exerciseCounter++;
-  return;
+  renderedSomething = true;
+run.exerciseCounter++;
+return;
 }
 
     if (level === 3) {
@@ -2843,8 +2846,9 @@ if (level === 2) {
   }
 
   renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-  run.exerciseCounter++;
-  return;
+  renderedSomething = true;
+run.exerciseCounter++;
+return;
 }
 
     if (level === 4) {
@@ -2862,14 +2866,16 @@ if (level === 2) {
     continue;
   }
 
-  run.exerciseCounter++;
-  return;
+  renderedSomething = true;
+run.exerciseCounter++;
+return;
 }
 
     if (level === 5) {
       renderMatchingL5(targetLang, supportLang);
-      run.exerciseCounter++;
-      return;
+      renderedSomething = true;
+run.exerciseCounter++;
+return;
     }
 
     if (level === 6) {
@@ -2881,8 +2887,9 @@ if (level === 2) {
   }
 
   renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-  run.exerciseCounter++;
-  return;
+  renderedSomething = true;
+run.exerciseCounter++;
+return;
 }
 
     if (level === 7) {
@@ -2894,70 +2901,15 @@ if (level === 2) {
   }
 
   renderFreeProductionL7(targetLang, supportLang, tpl);
-  run.exerciseCounter++;
-  return;
+  renderedSomething = true;
+run.exerciseCounter++;
+return;
 }
 
     excluded.add(targetConcept);
   }
 
-let canRenderAnything = false;
-
-for (const cid of run.released) {
-
-  const st = ensureProgress(cid);
-
-  if (st.completed) continue;
-
-  const level = st.level;
-
-  // Level 1 → always renderable
-  if (level === 1) {
-    canRenderAnything = true;
-    break;
-  }
-
-  // Level 2–4 → must pass validation
-  if (level >= 2 && level <= 4) {
-    if (canConceptBeTested(cid)) {
-      canRenderAnything = true;
-      break;
-    }
-  }
-
-  // Level 5 → matching requires enough items
-  if (level === 5) {
-    const eligible = run.released.filter(c => {
-      const s = ensureProgress(c);
-      return s.level === 5 && !s.completed;
-    });
-
-    if (eligible.length >= 4) {
-      canRenderAnything = true;
-      break;
-    }
-  }
-
-  // Level 6 → template-based
-  if (level === 6) {
-    const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-      tpl.concepts.includes(cid) && templateEligible(tpl)
-    );
-
-    if (hasTemplate) {
-      canRenderAnything = true;
-      break;
-    }
-  }
-
-  // Level 7 → always renderable if not completed
-  if (level === 7) {
-    canRenderAnything = true;
-    break;
-  }
-}
-
-if (!canRenderAnything) {
+if (!renderedSomething) {
   run.sessionComplete = true;
   return endSession(targetLang, supportLang);
 }
