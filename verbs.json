@@ -115,14 +115,13 @@
           "3_singular": "gets"
         },
         "BE": {
-  "BE": {
   "base": "be",
   "1_singular": "am",
   "2_singular": "are",
   "3_singular": "is",
   "1_plural": "are",
   "2_plural": "are",
-  "3_plural": "are"  
+  "3_plural": "are"
 }
       }
     },

@@ -1,8 +1,8 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.97.5";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
  let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.97.5";
+  const APP_VERSION = "v0.9.98";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -508,8 +508,9 @@ const CORE_BUNDLES = [
 
   { id: "core_20", concepts: ["BREAKFAST","LUNCH","DINNER","JOB","BOOK"] },
 
-  { id: "core_21", concepts: ["ROOM", "AND", "BUT", "NOT", "TO"] }
+  { id: "core_21", concepts: ["ROOM", "AND", "BUT", "NOT", "TO"] },
 
+  { id: "core_22", concepts: ["BECAUSE", "IF", "THIS", "THAT", "WITH"] }
 ];
 const RESOURCE_PACKS = {
   pokemon: {
@@ -1432,8 +1433,140 @@ function buildSameTypeOptions(targetConcept, desiredTotal = 4) {
 
   return shuffle([targetConcept, ...shuffle(pool).slice(0, desiredTotal - 1)]);
 }
-function buildSentence(lang, tpl, forcedConcept = null) {
+function capitalizeFirst(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
+function joinSentence(words, punctuation = ".") {
+  return capitalizeFirst(words.filter(Boolean).join(" ")) + punctuation;
+}
+function possessiveWord(lang, cid) {
+  return formOf(lang, cid);
+}
+
+function nounWithPossessive(lang, possessiveCid, nounCid) {
+  return `${possessiveWord(lang, possessiveCid)} ${formOf(lang, nounCid)}`;
+}
+
+function adjectiveNounPhrase(lang, adjectiveCid, nounCid) {
+  const adjective = formOf(lang, adjectiveCid);
+  const noun = nounPhrase(lang, nounCid);
+  return `${adjective} ${noun}`;
+}
+function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
+  const subject = formOf(lang, subjectCid);
+  const be = getVerbForm(beCid, subjectCid, lang);
+  const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid);
+  return joinSentence([subject, be, complement]);
+}
+
+function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
+  const subject = formOf(lang, subjectCid);
+  const be = getVerbForm(beCid, subjectCid, lang);
+  const complement = nounWithPossessive(lang, possessiveCid, nounCid);
+
+  if (lang === "en") {
+    return capitalizeFirst(`${be} ${subject} ${complement}?`);
+  }
+
+  return capitalizeFirst(`${be} ${subject} ${complement}?`);
+}
+function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
+  const subject = formOf(lang, subjectCid);
+  const be = getVerbForm(beCid, subjectCid, lang);
+  const noun = nounPhrase(lang, nounCid);
+  return `${subject} ${be} ${noun}`;
+}
+
+function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
+  const subject = formOf(lang, subjectCid);
+  const verb = getVerbForm(verbCid, subjectCid, lang);
+  const object = formOf(lang, objectCid);
+  const withWord = formOf(lang, withCid);
+  const companion = nounWithPossessive(lang, possessiveCid, nounCid);
+
+  return `${subject} ${verb} ${object} ${withWord} ${companion}`;
+}
+
+function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid, possessiveCid, nounCid) {
+  const subject = formOf(lang, subjectCid);
+  const verb = getVerbForm(verbCid, subjectCid, lang);
+  const withWord = formOf(lang, withCid);
+  const companion = nounWithPossessive(lang, possessiveCid, nounCid);
+
+  return `${subject} ${verb} ${withWord} ${companion}`;
+}
+function buildComplexClauseSentence(lang, linkerCid, clauseA, clauseB, subordinateFirst = false) {
+  const linker = formOf(lang, linkerCid);
+
+  if (subordinateFirst) {
+    return capitalizeFirst(`${linker} ${clauseA}, ${clauseB}.`);
+  }
+
+  return capitalizeFirst(`${clauseA} ${linker} ${clauseB}.`);
+}
+function buildSentence(lang, tpl, forcedConcept = null) {
+if (tpl.structure?.type === "copular_demonstrative") {
+  const s = tpl.slots;
+  return buildCopularDemonstrative(
+    lang,
+    s.subject,
+    s.verb,
+    s.adjective,
+    s.noun
+  );
+}
+if (tpl.structure?.type === "yes_no_question_copular") {
+  const s = tpl.slots;
+  return buildYesNoQuestionCopular(
+    lang,
+    s.subject,
+    s.verb,
+    s.possessive,
+    s.noun
+  );
+}
+if (tpl.structure?.type === "complex_clause") {
+  const s = tpl.slots;
+
+  const subClause = buildSubjectBeNounClause(
+    lang,
+    s.sub_subject,
+    s.sub_verb,
+    s.sub_noun
+  );
+
+  let mainClause;
+
+  if (s.main_object) {
+    mainClause = buildSubjectVerbObjectWithPossessiveClause(
+      lang,
+      s.main_subject,
+      s.main_verb,
+      s.main_object,
+      s.main_prep,
+      s.main_possessive,
+      s.main_noun
+    );
+  } else {
+    mainClause = buildSubjectVerbWithPossessiveClause(
+      lang,
+      s.main_subject,
+      s.main_verb,
+      s.main_prep,
+      s.main_possessive,
+      s.main_noun
+    );
+  }
+
+  return buildComplexClauseSentence(
+    lang,
+    tpl.structure.linker,
+    subClause,
+    mainClause,
+    tpl.structure.subordinate_first
+  );
+}
   const ordered = orderedConceptsForTemplate(tpl, lang);
   if (!ordered || !ordered.length) return "";
 

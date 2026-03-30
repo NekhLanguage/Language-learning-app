@@ -1271,7 +1271,76 @@
   "render": {
     "en": "She goes to her room."
   }
-}
+},
+{
+  "template_id": "THIS_IS_A_GOOD_BOOK",
+  "concepts": ["THIS", "BE", "GOOD", "BOOK"],
+  "structure": { "type": "copular_demonstrative" },
+  "slots": {
+    "subject": "THIS",
+    "verb": "BE",
+    "adjective": "GOOD",
+    "noun": "BOOK"
+  },
+  "render": { "en": "This is a good book." }
+},
+{
+  "template_id": "IS_THAT_YOUR_PHONE",
+  "concepts": ["THAT", "BE", "YOUR", "PHONE"],
+  "structure": { "type": "yes_no_question_copular" },
+  "slots": {
+    "subject": "THAT",
+    "verb": "BE",
+    "possessive": "YOUR",
+    "noun": "PHONE"
+  },
+  "render": { "en": "Is that your phone?" }
+},
+{
+  "template_id": "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME",
+  "concepts": ["HE", "EAT", "DINNER", "WITH", "HIS", "MOM", "BECAUSE", "HE", "BE", "HOME"],
+  "structure": {
+    "type": "complex_clause",
+    "linker": "BECAUSE",
+    "subordinate_first": false
+  },
+  "slots": {
+    "main_subject": "HE",
+    "main_verb": "EAT",
+    "main_object": "DINNER",
+    "main_prep": "WITH",
+    "main_possessive": "HIS",
+    "main_noun": "MOM",
+    "sub_subject": "HE",
+    "sub_verb": "BE",
+    "sub_noun": "HOME"
+  },
+  "render": {
+    "en": "He eats dinner with his mom because he is home."
+  }
+},
 
+  {
+  "template_id": "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER",
+  "concepts": ["IF", "HE", "BE", "HOME", "HE", "EAT", "WITH", "HIS", "DAUGHTER"],
+  "structure": {
+    "type": "complex_clause",
+    "linker": "IF",
+    "subordinate_first": true
+  },
+  "slots": {
+    "sub_subject": "HE",
+    "sub_verb": "BE",
+    "sub_noun": "HOME",
+    "main_subject": "HE",
+    "main_verb": "EAT",
+    "main_prep": "WITH",
+    "main_possessive": "HIS",
+    "main_noun": "DAUGHTER"
+  },
+  "render": {
+    "en": "If he is home, he eats with his daughter."
+  }
+}
   ]
 }
