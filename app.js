@@ -1454,95 +1454,46 @@ function buildSentence(lang, tpl, forcedConcept = null) {
     }
 
     if (meta.type === "noun") {
-      const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
-      const baseSurface = formOf(lang, cid);
-      const pluralSurface = entry.plural || baseSurface;
 
-      let nounSurface = baseSurface;
-      let adjectiveWord = null;
-      let numberWord = null;
+  let phrase = nounPhrase(lang, cid);
 
-      // forced adjective OR eligible learned adjective
-      if (forcedMeta?.type === "adjective") {
-        adjectiveWord = formOf(lang, forcedConcept);
-      } else {
-        const adjectives = run.released.filter(c => {
-          const m = window.GLOBAL_VOCAB.concepts[c];
-          if (m?.type !== "adjective") return false;
-          const st = ensureProgress(c);
-          return !st.completed && st.level >= 4;
-        });
+  let adjectiveWord = null;
+  let numberWord = null;
 
-        if (adjectives.length && Math.random() < 0.6) {
-          const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-          adjectiveWord = formOf(lang, adj);
-        }
-      }
+  // adjective
+  if (forcedMeta?.type === "adjective") {
+    adjectiveWord = formOf(lang, forcedConcept);
+  } else {
+    const adjectives = run.released.filter(c => {
+      const m = window.GLOBAL_VOCAB.concepts[c];
+      if (m?.type !== "adjective") return false;
+      const st = ensureProgress(c);
+      return !st.completed && st.level >= 4;
+    });
 
-      // forced number OR learned number
-      if (meta.countable) {
-        if (forcedMeta?.type === "number") {
-          numberWord = formOf(lang, forcedConcept);
-          nounSurface = pluralSurface;
-        } else {
-          const numbers = run.released.filter(c => {
-            const m = window.GLOBAL_VOCAB.concepts[c];
-            if (m?.type !== "number") return false;
-            const st = ensureProgress(c);
-            return !st.completed && st.level >= 4;
-          });
-
-          if (numbers.length) {
-            const n = numbers[Math.floor(Math.random() * numbers.length)];
-            numberWord = formOf(lang, n);
-            nounSurface = pluralSurface;
-          }
-        }
-      }
-
-      let phrase = nounSurface;
-
-      if (adjectiveWord) {
-        phrase = adjectiveWord + " " + phrase;
-      }
-
-      if (numberWord) {
-        return numberWord + " " + phrase;
-      }
-
-      if (meta.countable) {
-        if (lang === "en") {
-          const article = entry.article || "a";
-          return article + " " + phrase;
-        }
-
-        if (lang === "pt") {
-  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
-  const gender = entry?.gender;
-
-  if (numberWord) {
-    return numberWord + " " + phrase;
-  }
-
-  return (gender === "f" ? "uma " : "um ") + phrase;
-}
-
-        if (lang === "no") {
-  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
-  const gender = entry?.gender;
-
-  if (numberWord) {
-    return numberWord + " " + phrase;
-  }
-
-  if (gender === "n") return "et " + phrase;
-  if (gender === "f") return "ei " + phrase;
-  return "en " + phrase;
-}
-      }
-
-      return phrase;
+    if (adjectives.length && Math.random() < 0.6) {
+      const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+      adjectiveWord = formOf(lang, adj);
     }
+  }
+
+  // number
+  if (forcedMeta?.type === "number") {
+    numberWord = formOf(lang, forcedConcept);
+  }
+
+  // apply modifiers
+  if (numberWord) {
+    const base = formOf(lang, cid);
+    return numberWord + " " + base;
+  }
+
+  if (adjectiveWord) {
+    phrase = adjectiveWord + " " + phrase;
+  }
+
+  return phrase;
+}
 
     return formOf(lang, cid);
   });
@@ -1830,11 +1781,19 @@ if (isModifierConcept(targetConcept)) {
   );
 
   const words = ordered.map(cid => {
-    const meta = window.GLOBAL_VOCAB.concepts[cid];
-    if (!meta) return cid;
-    if (meta.type === "verb") return getVerbForm(cid, subjectCid, targetLang);
-    return formOf(targetLang, cid);
-  });
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+  if (!meta) return cid;
+
+  if (meta.type === "verb") {
+    return getVerbForm(cid, subjectCid, targetLang);
+  }
+
+  if (meta.type === "noun") {
+    return nounPhrase(targetLang, cid);
+  }
+
+  return formOf(targetLang, cid);
+});
 
   const blankIndex = ordered.indexOf(targetConcept);
   const blankedWords = words.map((w, i) => i === blankIndex ? "_____" : w);
@@ -2340,7 +2299,9 @@ const correctWords = ordered.map(cid => {
     return String(getVerbForm(cid, subjectCid, targetLang)).toLowerCase();
   }
 
-  return String(formOf(targetLang, cid)).toLowerCase();
+  if (meta.type === "noun") {
+  return String(nounPhrase(targetLang, cid)).toLowerCase();
+}
 });
 
   const wordBank = shuffle([...correctWords]);

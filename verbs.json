@@ -115,10 +115,14 @@
           "3_singular": "gets"
         },
         "BE": {
+  "BE": {
   "base": "be",
   "1_singular": "am",
-  "3_singular": "is"
-  
+  "2_singular": "are",
+  "3_singular": "is",
+  "1_plural": "are",
+  "2_plural": "are",
+  "3_plural": "are"  
 }
       }
     },
@@ -319,55 +323,55 @@
       "forms": {
         "DO": {
           "base": "gjøre",
-          "3_singular": "gjør"
+          "present": "gjør"
         },
         "GO": {
           "base": "gå",
-          "3_singular": "går"
+          "present": "går"
         },
         "EAT": {
           "base": "spise",
-          "3_singular": "spiser"
+          "present": "spiser"
         },
         "DRINK": {
           "base": "drikke",
-          "3_singular": "drikker"
+          "present": "drikker"
         },
         "READ": {
           "base": "lese",
-          "3_singular": "leser"
+          "present": "leser"
         },
         "SEE": {
           "base": "se",
-          "3_singular": "ser"
+          "present": "ser"
         },
         "START": {
           "base": "starte",
-          "3_singular": "starter"
+          "present": "starter"
         },
         "STOP": {
           "base": "stoppe",
-          "3_singular": "stopper"
+          "present": "stopper"
         },
         "SLEEP": {
           "base": "sove",
-          "3_singular": "sover"
+          "present": "sover"
         },
         "HAVE": {
           "base": "ha",
-          "3_singular": "har"
+          "present": "har"
         },
         "COME": {
           "base": "komme",
-          "3_singular": "kommer"
+          "present": "kommer"
         },
         "USE": {
           "base": "bruke",
-          "3_singular": "bruker"
+          "present": "bruker"
         },
         "GET": {
           "base": "få",
-          "3_singular": "får"
+          "present": "får"
         },
         "BE": {
   "base": "være",
@@ -380,6 +384,7 @@
   "forms": {
 
     "EAT": {
+      "base": "أكل",
       "1_singular": "آكل",
       "2_singular": "تأكل",
       "3_singular": "يأكل",
@@ -389,6 +394,7 @@
     },
 
     "DRINK": {
+      "base": "شرب",
       "1_singular": "أشرب",
       "2_singular": "تشرب",
       "3_singular": "يشرب",
@@ -398,6 +404,7 @@
     },
 
     "READ": {
+      "base": "قرأ",
       "1_singular": "أقرأ",
       "2_singular": "تقرأ",
       "3_singular": "يقرأ",
@@ -407,6 +414,7 @@
     },
 
     "SEE": {
+      "base": "رأى",
       "1_singular": "أرى",
       "2_singular": "ترى",
       "3_singular": "يرى",
@@ -416,6 +424,7 @@
     },
 
     "HAVE": {
+      "base": "ملك",
       "1_singular": "لدي",
       "2_singular": "لديك",
       "3_singular": "لديه",
@@ -425,6 +434,7 @@
     },
 
     "DO": {
+      "base": "فعل",
       "1_singular": "أفعل",
       "2_singular": "تفعل",
       "3_singular": "يفعل",
@@ -434,6 +444,7 @@
     },
 
     "GO": {
+      "base": "ذهب",
       "1_singular": "أذهب",
       "2_singular": "تذهب",
       "3_singular": "يذهب",
@@ -443,6 +454,7 @@
     },
 
     "START": {
+      "base": "بدأ",
       "1_singular": "أبدأ",
       "2_singular": "تبدأ",
       "3_singular": "يبدأ",
@@ -452,6 +464,7 @@
     },
 
     "STOP": {
+      "base": "توقف",
       "1_singular": "أتوقف",
       "2_singular": "تتوقف",
       "3_singular": "يتوقف",
@@ -461,6 +474,7 @@
     },
 
     "SLEEP": {
+      "base": "نام",
       "1_singular": "أنام",
       "2_singular": "تنام",
       "3_singular": "ينام",
@@ -470,6 +484,7 @@
     },
 
     "COME": {
+      "base": "أتى",
       "1_singular": "آتي",
       "2_singular": "تأتي",
       "3_singular": "يأتي",
@@ -479,6 +494,7 @@
     },
 
     "USE": {
+      "base": "استخدم",
       "1_singular": "أستخدم",
       "2_singular": "تستخدم",
       "3_singular": "يستخدم",
@@ -488,14 +504,24 @@
     },
 
     "GET": {
+      "base": "حصل",
       "1_singular": "أحصل",
       "2_singular": "تحصل",
       "3_singular": "يحصل",
       "1_plural": "نحصل",
       "2_plural": "تحصلون",
       "3_plural": "يحصلون"
-    }
+    },
 
+    "BE": {
+      "base": "كان",
+      "1_singular": "أكون",
+      "2_singular": "تكون",
+      "3_singular": "يكون",
+      "1_plural": "نكون",
+      "2_plural": "تكونون",
+      "3_plural": "يكونون"
+    }
   }
 },
 "ko": {
