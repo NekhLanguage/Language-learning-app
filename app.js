@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.6";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.7";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.98.6";
+  const APP_VERSION = "v0.9.98.7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -3122,9 +3122,24 @@ for (let attempts = 0; attempts < 25; attempts++) {
     continue;
   }
 
-  // ---------- Level 2 ----------
+ // ---------- Level 2 ----------
 if (level === 2) {
 
+  // ✅ 1. Get a template for sentence context
+  const tpl = chooseTemplateForConcept(targetConcept);
+
+  if (!tpl) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  // ✅ 2. Enforce spacing rule (FIXES repeat bug)
+  if (!passesSpacingRule(targetConcept)) {
+    excluded.add(targetConcept);
+    continue;
+  }
+
+  // ✅ 3. Build concept-based question
   const q = buildLevel2Question(targetConcept, targetLang, supportLang);
 
   if (!q) {
@@ -3132,12 +3147,15 @@ if (level === 2) {
     continue;
   }
 
-  // Render directly (no template dependency)
+  // ✅ 4. Build sentence (THIS was missing)
+  const sentence = buildSentence(targetLang, tpl, targetConcept);
+
   subtitle.textContent = ui("level") + " " + level;
 
   let selectedOption = null;
 
   content.innerHTML = `
+    <p class="tts-target">${safe(sentence)}</p>
     <p><strong>${ui("chooseTranslation")}</strong></p>
     <h2>${safe(q.prompt)}</h2>
     <div id="choices"></div>
@@ -3145,6 +3163,9 @@ if (level === 2) {
       <button id="check-btn" disabled>${ui("check")}</button>
     </div>
   `;
+
+  // ✅ TTS restored
+  speakSentenceOnLoad(sentence, targetLang);
 
   const container = document.getElementById("choices");
   const checkBtn = document.getElementById("check-btn");
