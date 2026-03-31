@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.7";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.8";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.98.7";
+  const APP_VERSION = "v0.9.98.8";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -2009,7 +2009,8 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
   const currentLevel = levelOf(targetConcept);
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
   if (!meta) return null;
-
+const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
+if (!surface) return null;
   // Strict pool
   const strictPool = run.released.filter(cid => {
     if (cid === targetConcept) return false;
@@ -2095,39 +2096,46 @@ if (isModifierConcept(targetConcept)) {
 
   // --- Existing core path ---
   const supportSentence = safe(buildSentence(supportLang, tpl));
-  const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
-  const subjectCid = ordered.find(c =>
-    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-  );
+// ✅ Build actual sentence
+const sentenceTarget = buildSentence(targetLang, tpl);
 
-  const words = ordered.map(cid => {
-  const meta = window.GLOBAL_VOCAB.concepts[cid];
-  if (!meta) return cid;
+// ✅ Get correct surface form (CRITICAL)
+const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
 
-  if (meta.type === "verb") {
-    return getVerbForm(cid, subjectCid, targetLang);
-  }
+if (!surface) return null;
 
-  if (meta.type === "noun") {
-    return nounPhrase(targetLang, cid);
-  }
-
-  return formOf(targetLang, cid);
-});
-
-  const blankIndex = ordered.indexOf(targetConcept);
-  const blankedWords = words.map((w, i) => i === blankIndex ? "_____" : w);
-  const blanked = blankedWords.join(" ");
+// ✅ Blank based on REAL word, not position
+const blanked = blankSentence(sentenceTarget, surface);
 
  const options = buildRecognitionOptions(tpl, targetConcept, 4);
+ // 🔥 Remove duplicate meanings (same fix as Level 2)
+const usedSupport = new Set();
+const filteredOptions = [];
+
+for (const cid of options) {
+  const s = formOf(supportLang, cid);
+  if (usedSupport.has(s)) continue;
+
+  usedSupport.add(s);
+  filteredOptions.push(cid);
+}
+
+if (filteredOptions.length < 4) return null;
+
+let finalOptions = filteredOptions.slice(0, 4);
+
+// ensure correct answer always included
+if (!finalOptions.includes(targetConcept)) {
+  finalOptions[0] = targetConcept;
+  finalOptions = shuffle(finalOptions);
+}
 
 if (!options || options.length < 4) {
   return null;
 }
 
-// ✅ enforce exactly 4 shown
-let finalOptions = options.slice(0, 4);
+
 
 // 🔥 ensure correct answer is always included
 if (!finalOptions.includes(targetConcept)) {
