@@ -1094,6 +1094,12 @@ function canConceptBeTested(cid) {
   const s = ensureProgress(cid);
 
   if (s.completed) return false;
+  const level = s.level;
+
+// 🔥 LEVEL 2: no template dependency anymore
+if (level === 2) {
+  return true;
+}
 
   const attempts = run.sessionAttempts?.[cid] || 0;
   const levelUps = run.sessionLevelUps?.[cid] || 0;
@@ -1946,6 +1952,54 @@ const options = shuffle([...releasedOptions]).slice(0, 4);
     checkBtn.onclick = () => renderNext(targetLang, supportLang);
   };
   return true;
+}
+// -------------------------
+// Level 2 – Concept-based questions
+// -------------------------
+function buildLevel2Question(targetConcept, targetLang, supportLang) {
+
+  const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
+  if (!meta) return null;
+
+  const type = meta.type;
+
+  // Prompt = target word (clean + language agnostic)
+  const prompt = formOf(targetLang, targetConcept);
+
+ const pool = run.released.filter(cid => {
+  if (cid === targetConcept) return false;
+
+  const m = window.GLOBAL_VOCAB.concepts[cid];
+  if (!m) return false;
+
+  return m.type === type;
+});
+
+// 🔥 REMOVE DUPLICATE MEANINGS
+const usedSupport = new Set();
+const filteredPool = [];
+
+for (const cid of pool) {
+  const s = formOf(supportLang, cid);
+
+  if (usedSupport.has(s)) continue;
+
+  usedSupport.add(s);
+  filteredPool.push(cid);
+}
+
+if (filteredPool.length < 3) return null;
+
+const options = shuffle([
+  targetConcept,
+  ...shuffle(filteredPool).slice(0, 3)
+]);
+
+  return {
+    prompt,
+    options,
+    answer: targetConcept
+  };
 }
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
@@ -3069,48 +3123,68 @@ for (let attempts = 0; attempts < 25; attempts++) {
   }
 
   // ---------- Level 2 ----------
-  if (level === 2) {
+if (level === 2) {
 
-    const tpl = chooseTemplateForConcept(targetConcept);
-    if (!tpl) {
-      excluded.add(targetConcept);
-      continue;
-    }
+  const q = buildLevel2Question(targetConcept, targetLang, supportLang);
 
-    const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-
-    const role =
-      meta?.type === "pronoun" ? "pronoun" :
-      meta?.type === "verb" ? "verb" :
-      "object";
-
-    const q = tpl.questions?.[role];
-
-    if (!q) {
-      excluded.add(targetConcept);
-      continue;
-    }
-
-    const releasedOptions = q.choices.filter(opt =>
-      run.released.includes(opt)
-    );
-
-    if (releasedOptions.length < 4) {
-      excluded.add(targetConcept);
-      continue;
-    }
-
-    const result = renderComprehension(targetLang, supportLang, tpl, targetConcept);
-
-    if (!result) {
-      excluded.add(targetConcept);
-      continue;
-    }
-
-    renderedSomething = true;
-    run.exerciseCounter++;
-    return;
+  if (!q) {
+    excluded.add(targetConcept);
+    continue;
   }
+
+  // Render directly (no template dependency)
+  subtitle.textContent = ui("level") + " " + level;
+
+  let selectedOption = null;
+
+  content.innerHTML = `
+    <p><strong>${ui("chooseTranslation")}</strong></p>
+    <h2>${safe(q.prompt)}</h2>
+    <div id="choices"></div>
+    <div style="margin-top:20px;text-align:center;">
+      <button id="check-btn" disabled>${ui("check")}</button>
+    </div>
+  `;
+
+  const container = document.getElementById("choices");
+  const checkBtn = document.getElementById("check-btn");
+
+  q.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.textContent = formOf(supportLang, opt);
+
+    btn.onclick = () => {
+      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+      selectedOption = opt;
+      btn.classList.add("selected");
+      checkBtn.disabled = false;
+    };
+
+    container.appendChild(btn);
+  });
+
+  checkBtn.onclick = () => {
+    if (!selectedOption) return;
+
+    const correct = selectedOption === q.answer;
+
+    container.querySelectorAll("button").forEach(btn => {
+      const value = q.options.find(o => formOf(supportLang, o) === btn.textContent);
+      if (value === q.answer) btn.classList.add("correct");
+      if (value === selectedOption && !correct) btn.classList.add("incorrect");
+    });
+
+    decrementCooldowns();
+    applyResult(targetConcept, correct);
+
+    checkBtn.textContent = ui("continue");
+    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+  };
+
+  renderedSomething = true;
+  run.exerciseCounter++;
+  return;
+}
 
   // ---------- Level 3 ----------
   if (level === 3) {
