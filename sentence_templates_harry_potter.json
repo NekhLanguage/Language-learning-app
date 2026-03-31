@@ -106,7 +106,212 @@
       "template_id": "I_HAVE_DOOR",
       "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "DOOR"],
       "render": { "en": "I have a door." }
-    }
+    },
+    {
+  "template_id": "HE_IS_STUDENT",
+  "concepts": ["HE", "BE", "STUDENT"],
+  "render": { "en": "He is a student." }
+},
+{
+  "template_id": "SHE_IS_PROFESSOR",
+  "concepts": ["SHE", "BE", "PROFESSOR"],
+  "render": { "en": "She is a professor." }
+},
+{
+  "template_id": "I_HAVE_CLASS",
+  "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "CLASS"],
+  "render": { "en": "I have a class." }
+},
+{
+  "template_id": "YOU_HAVE_LESSON",
+  "concepts": ["SECOND_PERSON", "HAVE", "LESSON"],
+  "render": { "en": "You have a lesson." }
+},
+{
+  "template_id": "HE_HAS_HOMEWORK",
+  "concepts": ["HE", "HAVE", "HOMEWORK"],
+  "render": { "en": "He has homework." }
+},
+{
+  "template_id": "SHE_HAS_EXAM",
+  "concepts": ["SHE", "HAVE", "EXAM"],
+  "render": { "en": "She has an exam." }
+},
+{
+  "template_id": "I_SEE_LIBRARY",
+  "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "LIBRARY"],
+  "render": { "en": "I see a library." }
+},
+{
+  "template_id": "I_HAVE_QUESTION",
+  "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "QUESTION"],
+  "render": { "en": "I have a question." }
+},
+{
+  "template_id": "YOU_HAVE_ANSWER",
+  "concepts": ["SECOND_PERSON", "HAVE", "ANSWER"],
+  "render": { "en": "You have an answer." }
+},
+{
+  "template_id": "HE_HAS_IDEA",
+  "concepts": ["HE", "HAVE", "IDEA"],
+  "render": { "en": "He has an idea." }
+},
+{
+  "template_id": "SHE_HAS_SECRET",
+  "concepts": ["SHE", "HAVE", "SECRET"],
+  "render": { "en": "She has a secret." }
+},
+{
+  "template_id": "HE_HAS_FRIEND",
+  "concepts": ["HE", "HAVE", "FRIEND"],
+  "render": { "en": "He has a friend." }
+},
+{
+  "template_id": "HE_HAS_ENEMY",
+  "concepts": ["HE", "HAVE", "ENEMY"],
+  "render": { "en": "He has an enemy." }
+},
+{
+  "template_id": "I_SEE_DOOR",
+  "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "DOOR"],
+  "render": { "en": "I see a door." }
+},
+{
+  "template_id": "HE_CAST_SPELL",
+  "concepts": ["HE", "CAST", "SPELL"],
+  "render": { "en": "He casts a spell." }
+},
+{
+  "template_id": "SHE_PROTECT_FRIEND",
+  "concepts": ["SHE", "PROTECT", "FRIEND"],
+  "render": { "en": "She protects a friend." }
+},
+{
+  "template_id": "HE_CURSE_ENEMY",
+  "concepts": ["HE", "CURSE", "ENEMY"],
+  "render": { "en": "He curses an enemy." }
+},
+{
+  "template_id": "I_LEARN_MAGIC",
+  "concepts": ["FIRST_PERSON_SINGULAR", "LEARN", "MAGIC"],
+  "render": { "en": "I learn magic." }
+},
+{
+  "template_id": "I_WRITE_LESSON",
+  "concepts": ["FIRST_PERSON_SINGULAR", "WRITE", "LESSON"],
+  "render": { "en": "I write a lesson." }
+},
+{
+  "template_id": "HE_STUDY_SPELL",
+  "concepts": ["HE", "STUDY", "SPELL"],
+  "render": { "en": "He studies a spell." }
+},
+{
+  "template_id": "SHE_VANISH",
+  "concepts": ["SHE", "VANISH"],
+  "render": { "en": "She vanishes." }
+},
+{
+  "template_id": "HE_TRANSFORM",
+  "concepts": ["HE", "TRANSFORM"],
+  "render": { "en": "He transforms." }
+},
+{
+  "template_id": "SPELL_IS_MAGICAL",
+  "concepts": ["SPELL", "BE", "MAGICAL"],
+  "render": { "en": "The spell is magical." }
+},
+{
+  "template_id": "WIZARD_IS_BRAVE",
+  "concepts": ["WIZARD", "BE", "BRAVE"],
+  "render": { "en": "The wizard is brave." }
+},
+{
+  "template_id": "HE_SHOUT",
+  "concepts": ["HE", "SHOUT"],
+  "render": { "en": "He shouts." }
+},
+{
+  "template_id": "HE_LEARN_MAGIC_BECAUSE_HE_IS_STUDENT",
+  "concepts": ["HE","LEARN","MAGIC","BECAUSE","HE","BE","STUDENT"],
+  "structure": {
+    "type": "complex_clause",
+    "linker": "BECAUSE",
+    "subordinate_first": false
+  },
+  "slots": {
+    "main_subject": "HE",
+    "main_verb": "LEARN",
+    "main_object": "MAGIC",
+    "sub_subject": "HE",
+    "sub_verb": "BE",
+    "sub_noun": "STUDENT"
+  },
+  "render": {
+    "en": "He learns magic because he is a student."
+  }
+},
+{
+  "template_id": "IF_HE_IS_WIZARD_HE_CAST_SPELL",
+  "concepts": ["IF","HE","BE","WIZARD","HE","CAST","SPELL"],
+  "structure": {
+    "type": "complex_clause",
+    "linker": "IF",
+    "subordinate_first": true
+  },
+  "slots": {
+    "sub_subject": "HE",
+    "sub_verb": "BE",
+    "sub_noun": "WIZARD",
+    "main_subject": "HE",
+    "main_verb": "CAST",
+    "main_object": "SPELL"
+  },
+  "render": {
+    "en": "If he is a wizard, he casts a spell."
+  }
+},
+{
+  "template_id": "SHE_PROTECT_FRIEND_BECAUSE_ENEMY_IS_STRONG",
+  "concepts": ["SHE","PROTECT","FRIEND","BECAUSE","ENEMY","BE","STRONG"],
+  "structure": {
+    "type": "complex_clause",
+    "linker": "BECAUSE",
+    "subordinate_first": false
+  },
+  "slots": {
+    "main_subject": "SHE",
+    "main_verb": "PROTECT",
+    "main_object": "FRIEND",
+    "sub_subject": "ENEMY",
+    "sub_verb": "BE",
+    "sub_noun": "STRONG"
+  },
+  "render": {
+    "en": "She protects a friend because the enemy is strong."
+  }
+},
+{
+  "template_id": "IF_SHE_HAS_SPELL_SHE_USE_MAGIC",
+  "concepts": ["IF","SHE","HAVE","SPELL","SHE","USE","MAGIC"],
+  "structure": {
+    "type": "complex_clause",
+    "linker": "IF",
+    "subordinate_first": true
+  },
+  "slots": {
+    "sub_subject": "SHE",
+    "sub_verb": "HAVE",
+    "sub_noun": "SPELL",
+    "main_subject": "SHE",
+    "main_verb": "USE",
+    "main_object": "MAGIC"
+  },
+  "render": {
+    "en": "If she has a spell, she uses magic."
+  }
+}
 
   ]
 }

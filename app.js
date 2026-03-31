@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.5";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.6";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -90,23 +90,23 @@ const RESOURCE_PACKS = {
 
     { id: "pokemon_01", concepts: ["POKEMON","TRAINER","GYM","LEAGUE","GYM_LEADER"] },
 
-    { id: "pokemon_02", concepts: ["ELITE_FOUR","POKEMON_CENTER","FOREST","CAVE","TOWN"] },
+{ id: "pokemon_02", concepts: ["ELITE_FOUR","POKEMON_CENTER","FOREST","CAVE","TOWN"] },
 
-    { id: "pokemon_03", concepts: ["BATTLE","MOVE","DAMAGE","DEFENSE","SPEED"] },
+{ id: "pokemon_03", concepts: ["BATTLE","MOVE","DAMAGE","DEFENSE","SPEED"] },
 
-    { id: "pokemon_04", concepts: ["STAT","ABILITY","TYPE","LEVEL","EXPERIENCE"] },
+{ id: "pokemon_04", concepts: ["STAT","ABILITY","TYPE","LEVEL","EXPERIENCE"] },
 
-    { id: "pokemon_05", concepts: ["ITEM","POTION","REVIVE","HEALTH","BADGE"] },
+{ id: "pokemon_05", concepts: ["ITEM","POTION","REVIVE","HEALTH","BADGE"] },
 
-    { id: "pokemon_06", concepts: ["TECHNICAL_MACHINE","BURN","POISON","SLEEP_STATUS","PARALYZE"] },
+{ id: "pokemon_06", concepts: ["TECHNICAL_MACHINE","BURN","POISON","SLEEP_STATUS","PARALYZE"] },
 
-    { id: "pokemon_07", concepts: ["SEEN","CAPTURED","ATTACK","RUN","CATCH"] },
+{ id: "pokemon_07", concepts: ["SEEN","CAPTURED","ATTACK","RUN","CATCH"] },
 
-    { id: "pokemon_08", concepts: ["DEFEAT","SWITCH","USE","FLY","PLAY"] },
+{ id: "pokemon_08", concepts: ["DEFEAT","SWITCH","USE","FLY","PLAY"] },
 
-    { id: "pokemon_09", concepts: ["HEAL","RESTORE","GAIN_EXPERIENCE","EVOLVE","WILD"] },
+{ id: "pokemon_09", concepts: ["HEAL","RESTORE","GAIN_EXPERIENCE","EVOLVE","WILD"] },
 
-    { id: "pokemon_10", concepts: ["STRONG","EFFECTIVE","SUPER_EFFECTIVE","VERY_EFFECTIVE","LEGENDARY"] }
+{ id: "pokemon_10", concepts: ["STRONG","EFFECTIVE","SUPER_EFFECTIVE","VERY_EFFECTIVE","LEGENDARY","SHINY"] }
 
   ]
 },
@@ -160,14 +160,14 @@ const RESOURCE_PACKS = {
 
     { id: "cook_09", concepts: ["BUTTER","SPICE","RECIPE","SWEET","SALTY"] },
 
-    { id: "cook_10", concepts: ["SOUR","FRESH","FROZEN","RAW"] }
+    { id: "cook_10", concepts: ["SOUR","FRESH","FROZEN","RAW","HEAT"] }
 
   ]
 }
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.98.5";
+  const APP_VERSION = "v0.9.98.6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;

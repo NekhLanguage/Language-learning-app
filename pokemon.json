@@ -10,7 +10,6 @@
     { "concept_id": "FOREST", "type": "noun" },
     { "concept_id": "CAVE", "type": "noun" },
     { "concept_id": "TOWN", "type": "noun" },
-
     { "concept_id": "BATTLE", "type": "noun" },
     { "concept_id": "MOVE", "type": "noun" },
     { "concept_id": "DAMAGE", "type": "noun" },
@@ -19,25 +18,20 @@
     { "concept_id": "STAT", "type": "noun" },
     { "concept_id": "ABILITY", "type": "noun" },
     { "concept_id": "TYPE", "type": "noun" },
-
     { "concept_id": "POTION", "type": "noun" },
     { "concept_id": "REVIVE", "type": "noun" },
     { "concept_id": "TECHNICAL_MACHINE", "type": "noun" },
     { "concept_id": "BADGE", "type": "noun" },
     { "concept_id": "ITEM", "type": "noun" },
-
     { "concept_id": "LEVEL", "type": "noun" },
     { "concept_id": "EXPERIENCE", "type": "noun" },
     { "concept_id": "HEALTH", "type": "noun" },
-
     { "concept_id": "BURN", "type": "verb" },
     { "concept_id": "POISON", "type": "verb" },
     { "concept_id": "SLEEP_STATUS", "type": "noun" },
     { "concept_id": "PARALYZE", "type": "verb" },
-
     { "concept_id": "SEEN", "type": "noun" },
     { "concept_id": "CAPTURED", "type": "noun" },
-
     { "concept_id": "ATTACK", "type": "verb" },
     { "concept_id": "RUN", "type": "verb" },
     { "concept_id": "CATCH", "type": "verb" },
@@ -50,7 +44,6 @@
     { "concept_id": "RESTORE", "type": "verb" },
     { "concept_id": "GAIN_EXPERIENCE", "type": "verb" },
     { "concept_id": "EVOLVE", "type": "verb" },
-
     { "concept_id": "WILD", "type": "adjective" },
     { "concept_id": "STRONG", "type": "adjective" },
     { "concept_id": "EFFECTIVE", "type": "adjective" },

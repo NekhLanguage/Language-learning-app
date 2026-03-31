@@ -23,7 +23,7 @@
     },
     {
       "template_id": "I_HAVE_SPOON",
-      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "SPOON"],
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SPOON"],
       "render": { "en": "I have a spoon." }
     },
 
@@ -96,8 +96,8 @@
       "render": { "en": "He has a fish." }
     },
     {
-      "template_id": "SHE_HAS_FRUIT",
-      "concepts": ["SHE", "HAVE", "FRUIT"],
+      "template_id": "SHE_EAT_FRUIT",
+      "concepts": ["SHE", "EAT", "FRUIT"],
       "render": { "en": "She eats fruit." }
     },
 
@@ -121,7 +121,127 @@
       "template_id": "SHE_HAS_PEPPER",
       "concepts": ["SHE", "HAVE", "PEPPER"],
       "render": { "en": "She has pepper." }
-    }
+    },
+    {
+  "template_id": "I_COOK_FOOD",
+  "concepts": ["FIRST_PERSON_SINGULAR","COOK","FOOD"],
+  "render": { "en": "I cook food." }
+},
+{
+  "template_id": "HE_CUT_MEAT",
+  "concepts": ["HE","CUT","MEAT"],
+  "render": { "en": "He cuts meat." }
+},
+{
+  "template_id": "SHE_BOIL_SOUP",
+  "concepts": ["SHE","BOIL","SOUP"],
+  "render": { "en": "She boils soup." }
+},
+{
+  "template_id": "I_PEEL_POTATO",
+  "concepts": ["FIRST_PERSON_SINGULAR","PEEL","POTATO"],
+  "render": { "en": "I peel a potato." }
+},
+{
+  "template_id": "HE_FRY_CHICKEN",
+  "concepts": ["HE","FRY","CHICKEN"],
+  "render": { "en": "He fries chicken." }
+},
+{
+  "template_id": "I_STIR_SOUP",
+  "concepts": ["FIRST_PERSON_SINGULAR","STIR","SOUP"],
+  "render": { "en": "I stir soup." }
+},
+{
+  "template_id": "SHE_MIX_DOUGH",
+  "concepts": ["SHE","MIX","DOUGH"],
+  "render": { "en": "She mixes dough." }
+},
+{
+  "template_id": "I_WASH_VEGETABLE",
+  "concepts": ["FIRST_PERSON_SINGULAR","WASH","VEGETABLE"],
+  "render": { "en": "I wash a vegetable." }
+},
+{
+  "template_id": "HE_HEAT_PAN",
+  "concepts": ["HE","HEAT","PAN"],
+  "render": { "en": "He heats a pan." }
+},
+{
+  "template_id": "I_HAVE_BUTTER",
+  "concepts": ["FIRST_PERSON_SINGULAR","HAVE","BUTTER"],
+  "render": { "en": "I have butter." }
+},
+{
+  "template_id": "YOU_HAVE_SPICE",
+  "concepts": ["SECOND_PERSON","HAVE","SPICE"],
+  "render": { "en": "You have spice." }
+},
+{
+  "template_id": "I_SEE_SINK",
+  "concepts": ["FIRST_PERSON_SINGULAR","SEE","SINK"],
+  "render": { "en": "I see a sink." }
+},
+{
+  "template_id": "I_SEE_FREEZER",
+  "concepts": ["FIRST_PERSON_SINGULAR","SEE","FREEZER"],
+  "render": { "en": "I see a freezer." }
+},
+{
+  "template_id": "I_HAVE_RECIPE",
+  "concepts": ["FIRST_PERSON_SINGULAR","HAVE","RECIPE"],
+  "render": { "en": "I have a recipe." }
+},
+{
+  "template_id": "I_HAVE_INGREDIENT",
+  "concepts": ["FIRST_PERSON_SINGULAR","HAVE","INGREDIENT"],
+  "render": { "en": "I have an ingredient." }
+},
+{
+  "template_id": "I_HAVE_LITRE",
+  "concepts": ["FIRST_PERSON_SINGULAR","HAVE","LITRE"],
+  "render": { "en": "I have a litre." }
+},
+{
+  "template_id": "I_HAVE_GRAM",
+  "concepts": ["FIRST_PERSON_SINGULAR","HAVE","GRAM"],
+  "render": { "en": "I have a gram." }
+},
+{
+  "template_id": "I_HAVE_KILOGRAM",
+  "concepts": ["FIRST_PERSON_SINGULAR","HAVE","KILOGRAM"],
+  "render": { "en": "I have a kilogram." }
+},
+{
+  "template_id": "FOOD_IS_FRESH",
+  "concepts": ["FOOD","BE","FRESH"],
+  "render": { "en": "The food is fresh." }
+},
+{
+  "template_id": "FOOD_IS_RAW",
+  "concepts": ["FOOD","BE","RAW"],
+  "render": { "en": "The food is raw." }
+},
+{
+  "template_id": "FOOD_IS_FROZEN",
+  "concepts": ["FOOD","BE","FROZEN"],
+  "render": { "en": "The food is frozen." }
+},
+{
+  "template_id": "FOOD_IS_SWEET",
+  "concepts": ["FOOD","BE","SWEET"],
+  "render": { "en": "The food is sweet." }
+},
+{
+  "template_id": "FOOD_IS_SALTY",
+  "concepts": ["FOOD","BE","SALTY"],
+  "render": { "en": "The food is salty." }
+},
+{
+  "template_id": "FOOD_IS_SOUR",
+  "concepts": ["FOOD","BE","SOUR"],
+  "render": { "en": "The food is sour." }
+}
 
   ]
 }

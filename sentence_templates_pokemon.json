@@ -126,7 +126,188 @@
       "template_id": "YOU_HAVE_REVIVE",
       "concepts": ["SECOND_PERSON", "HAVE", "REVIVE"],
       "render": { "en": "You have a revive." }
-    }
+    },
+    {
+  "template_id": "I_USE_POTION",
+  "concepts": ["FIRST_PERSON_SINGULAR", "USE", "POTION"],
+  "render": { "en": "I use a potion." }
+},
+{
+  "template_id": "HE_HAS_STRONG_POKEMON",
+  "concepts": ["HE", "HAVE", "STRONG", "POKEMON"],
+  "render": { "en": "He has a strong pokemon." }
+},
+{
+  "template_id": "SHE_USE_REVIVE",
+  "concepts": ["SHE", "USE", "REVIVE"],
+  "render": { "en": "She uses a revive." }
+},
+{
+  "template_id": "I_SEE_SHINY_POKEMON",
+  "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "SHINY", "POKEMON"],
+  "render": { "en": "I see a shiny pokemon." }
+},
+{
+  "template_id": "HE_HAS_HIGH_LEVEL",
+  "concepts": ["HE", "HAVE", "LEVEL"],
+  "render": { "en": "He has a high level." }
+},
+{
+  "template_id": "POKEMON_GAIN_EXPERIENCE",
+  "concepts": ["POKEMON", "GAIN_EXPERIENCE"],
+  "render": { "en": "Pokemon gain experience." }
+},
+{
+  "template_id": "POKEMON_EVOLVE",
+  "concepts": ["POKEMON", "EVOLVE"],
+  "render": { "en": "Pokemon evolve." }
+},
+{
+  "template_id": "HEAL_POKEMON_CENTER",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "POKEMON_CENTER"],
+  "render": { "en": "I go to the pokemon center." }
+},
+{
+  "template_id": "POKEMON_HAS_ABILITY",
+  "concepts": ["POKEMON", "HAVE", "ABILITY"],
+  "render": { "en": "Pokemon have an ability." }
+},
+{
+  "template_id": "MOVE_DO_DAMAGE",
+  "concepts": ["MOVE", "DO", "DAMAGE"],
+  "render": { "en": "A move does damage." }
+},
+{
+  "template_id": "ATTACK_IS_STRONG",
+  "concepts": ["ATTACK", "BE", "STRONG"],
+  "render": { "en": "The attack is strong." }
+},
+{
+  "template_id": "DEFENSE_IS_HIGH",
+  "concepts": ["DEFENSE", "BE", "GOOD"],
+  "render": { "en": "The defense is good." }
+},
+{
+  "template_id": "SPEED_IS_FAST",
+  "concepts": ["SPEED", "BE", "FAST"],
+  "render": { "en": "The speed is fast." }
+},
+{
+  "template_id": "POKEMON_USE_MOVE",
+  "concepts": ["POKEMON", "USE", "MOVE"],
+  "render": { "en": "Pokemon use a move." }
+},
+{
+  "template_id": "HE_ATTACK",
+  "concepts": ["HE", "ATTACK"],
+  "render": { "en": "He attacks." }
+},
+{
+  "template_id": "HE_DEFEAT_TRAINER",
+  "concepts": ["HE", "DEFEAT", "TRAINER"],
+  "render": { "en": "He defeats a trainer." }
+},
+{
+  "template_id": "I_CATCH_POKEMON",
+  "concepts": ["FIRST_PERSON_SINGULAR", "CATCH", "POKEMON"],
+  "render": { "en": "I catch a pokemon." }
+},
+{
+  "template_id": "HE_RUN",
+  "concepts": ["HE", "RUN"],
+  "render": { "en": "He runs." }
+},
+{
+  "template_id": "I_SWITCH_POKEMON",
+  "concepts": ["FIRST_PERSON_SINGULAR", "SWITCH", "POKEMON"],
+  "render": { "en": "I switch pokemon." }
+},
+{
+  "template_id": "POKEMON_IS_BURN",
+  "concepts": ["POKEMON", "BE", "BURN"],
+  "render": { "en": "The pokemon is burned." }
+},
+{
+  "template_id": "POKEMON_IS_POISON",
+  "concepts": ["POKEMON", "BE", "POISON"],
+  "render": { "en": "The pokemon is poisoned." }
+},
+{
+  "template_id": "POKEMON_IS_SLEEP",
+  "concepts": ["POKEMON", "BE", "SLEEP_STATUS"],
+  "render": { "en": "The pokemon is asleep." }
+},
+{
+  "template_id": "POKEMON_IS_PARALYZE",
+  "concepts": ["POKEMON", "BE", "PARALYZE"],
+  "render": { "en": "The pokemon is paralyzed." }
+},
+{
+  "template_id": "MOVE_IS_SUPER_EFFECTIVE",
+  "concepts": ["MOVE", "BE", "SUPER_EFFECTIVE"],
+  "render": { "en": "The move is super effective." }
+},
+{
+  "template_id": "MOVE_IS_EFFECTIVE",
+  "concepts": ["MOVE", "BE", "EFFECTIVE"],
+  "render": { "en": "The move is effective." }
+},
+{
+  "template_id": "POKEMON_IS_LEGENDARY",
+  "concepts": ["POKEMON", "BE", "LEGENDARY"],
+  "render": { "en": "The pokemon is legendary." }
+},
+{
+  "template_id": "I_GO_TO_GYM",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "GYM"],
+  "render": { "en": "I go to a gym." }
+},
+{
+  "template_id": "HE_IS_GYM_LEADER",
+  "concepts": ["HE", "BE", "GYM_LEADER"],
+  "render": { "en": "He is a gym leader." }
+},
+{
+  "template_id": "I_GET_BADGE",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GET", "BADGE"],
+  "render": { "en": "I get a badge." }
+},
+{
+  "template_id": "I_GO_TO_LEAGUE",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "LEAGUE"],
+  "render": { "en": "I go to the league." }
+},
+
+{
+  "template_id": "POKEMON_HAVE_TYPE",
+  "concepts": ["POKEMON", "HAVE", "TYPE"],
+  "render": { "en": "Pokemon have a type." }
+},
+{
+  "template_id": "POKEMON_HAVE_TYPES",
+  "concepts": ["POKEMON", "HAVE", "TYPES"],
+  "render": { "en": "Pokemon have types." }
+},
+{
+  "template_id": "I_GO_TO_CENTER",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "CENTER"],
+  "render": { "en": "I go to the center." }
+},
+{
+  "template_id": "I_USE_TECHNICAL_MACHINE",
+  "concepts": ["FIRST_PERSON_SINGULAR", "USE", "TECHNICAL_MACHINE"],
+  "render": { "en": "I use a technical machine." }
+},
+{
+  "template_id": "MOVE_IS_NOT_VERY_EFFECTIVE",
+  "concepts": ["MOVE", "BE", "NOT", "VERY_EFFECTIVE"],
+  "render": { "en": "The move is not very effective." }
+},
+{
+  "template_id": "I_GAIN_EXPERIENCE",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GAIN", "EXPERIENCE"],
+  "render": { "en": "I gain experience." }
+}
 
   ]
 }
