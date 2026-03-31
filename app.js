@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.2";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.3";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -131,7 +131,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.98.2";
+  const APP_VERSION = "v0.9.98.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -142,6 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const quitBtn = document.getElementById("quit-learning");
 const hubQuitBtn = document.getElementById("hub-quit");
 const resetBtn = document.getElementById("reset-user");
+const logoutBtn = document.getElementById("logout-btn");
 const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
   const languageScreen = document.getElementById("language-screen");
@@ -3207,6 +3208,22 @@ if (resetBtn) {
         })
       });
     }
+
+    location.reload();
+  };
+}
+if (logoutBtn) {
+  logoutBtn.onclick = () => {
+
+    const confirmed = confirm("Log out and reset local data?");
+    if (!confirmed) return;
+
+    // 🔥 Clear auth + user
+    localStorage.removeItem("zth_email");
+    localStorage.removeItem("zth_user");
+
+    // Optional: clear everything (safer fail-safe)
+    // localStorage.clear();
 
     location.reload();
   };

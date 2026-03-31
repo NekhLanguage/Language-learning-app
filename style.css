@@ -355,3 +355,8 @@ button.selected {
   background: white;
   transition: width 0.3s ease;
 }
+#logout-btn {
+  top: 1.25rem;
+  left: 1.25rem;
+  position: absolute;
+}
