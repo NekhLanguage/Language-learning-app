@@ -2009,8 +2009,7 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
   const currentLevel = levelOf(targetConcept);
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
   if (!meta) return null;
-const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
-if (!surface) return null;
+
   // Strict pool
   const strictPool = run.released.filter(cid => {
     if (cid === targetConcept) return false;
@@ -2154,7 +2153,9 @@ if (!finalOptions.includes(targetConcept)) {
 
   const container = document.getElementById("choices");
   const isSentenceStart = blanked.trim().startsWith("_____");
-
+const subjectCid = tpl.concepts.find(c =>
+  window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+);
   finalOptions.forEach(opt => {
 
   const meta = window.GLOBAL_VOCAB.concepts[opt];
@@ -2301,11 +2302,7 @@ if (!options || options.length < 4) {
 
 let finalOptions = options.slice(0, 4);
 
-// 🔥 ensure correct answer is always included
-if (!finalOptions.includes(targetConcept)) {
-  finalOptions[0] = targetConcept;
-  finalOptions = shuffle(finalOptions);
-}
+
     content.innerHTML = `
       <p>${ui("chooseTranslation")}</p>
       <h2>${promptSupport}</h2>
@@ -3157,6 +3154,7 @@ if (level === 2) {
 
   // ✅ 4. Build sentence (THIS was missing)
   const sentence = buildSentence(targetLang, tpl, targetConcept);
+  const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
 
   subtitle.textContent = ui("level") + " " + level;
 
@@ -3165,7 +3163,7 @@ if (level === 2) {
   content.innerHTML = `
     <p class="tts-target">${safe(sentence)}</p>
     <p><strong>${ui("chooseTranslation")}</strong></p>
-    <h2>${safe(q.prompt)}</h2>
+    <h2>${safe(surface)}</h2>
     <div id="choices"></div>
     <div style="margin-top:20px;text-align:center;">
       <button id="check-btn" disabled>${ui("check")}</button>
