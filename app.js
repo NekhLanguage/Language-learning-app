@@ -2134,14 +2134,6 @@ if (!options || options.length < 4) {
   return null;
 }
 
-
-
-// 🔥 ensure correct answer is always included
-if (!finalOptions.includes(targetConcept)) {
-  finalOptions[0] = targetConcept;
-  finalOptions = shuffle(finalOptions);
-}
-
   content.innerHTML = `
     <p><strong>${ui("originalSentence")}</strong></p>
     <p>${supportSentence}</p>
@@ -2300,7 +2292,21 @@ if (!options || options.length < 4) {
   return null;
 }
 
-let finalOptions = options.slice(0, 4);
+// 🔥 Ensure correct answer is always included BEFORE slicing
+let pool = [...options];
+
+if (!pool.includes(targetConcept)) {
+  pool.unshift(targetConcept);
+}
+
+// 🔥 Now slice
+let finalOptions = shuffle(pool).slice(0, 4);
+
+// 🔥 Safety net (guarantee)
+if (!finalOptions.includes(targetConcept)) {
+  finalOptions[0] = targetConcept;
+  finalOptions = shuffle(finalOptions);
+}
 
 
     content.innerHTML = `
