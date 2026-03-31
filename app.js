@@ -1,8 +1,137 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.1";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
- let USER = null;
+const CORE_BUNDLES = [
+
+  { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
+
+  { id: "core_02", concepts: ["WATER","HE","READ","BOOK","SHE"] },
+
+  { id: "core_03", concepts: ["SEE","PHONE","FIRST_PERSON_PLURAL","HAVE","JOB"] },
+
+  { id: "core_04", concepts: ["THIRD_PERSON_PLURAL","SLEEP","BE","DO","NEW"] },
+
+  { id: "core_05", concepts: ["OLD","BLACK","WHITE","GOOD","BAD"] },
+
+  { id: "core_06", concepts: ["FAST","SLOW","SMALL","ONE","TWO"] },
+
+  { id: "core_07", concepts: ["THREE","FOUR","FIVE","SIX","SEVEN"] },
+
+  { id: "core_08", concepts: ["EIGHT","NINE","TEN","MY","HER"] },
+
+  { id: "core_09", concepts: ["HIS","OUR","THEIR","YOUR","GIRL"] },
+
+  { id: "core_10", concepts: ["BOY","WOMAN","MAN","BIG","ELEVEN"] },
+
+  { id: "core_11", concepts: ["TWELVE","THIRTEEN","FOURTEEN","FIFTEEN","SIXTEEN"] },
+
+  { id: "core_12", concepts: ["SEVENTEEN","EIGHTEEN","NINETEEN","TWENTY","HOUSE"] },
+
+  { id: "core_13", concepts: ["HOME","SHIRT","SHOES","PANTS","CLOTHES"] },
+
+  { id: "core_14", concepts: ["HAND","FACE","EYE","BREAKFAST","LUNCH"] },
+
+  { id: "core_15", concepts: ["DINNER","GO","COME","USE","GET"] },
+
+  { id: "core_16", concepts: ["START","STOP","THIS","THAT","AND"] },
+
+  { id: "core_17", concepts: ["HAND","HEAD","ARM","LEG","FOOT"] },
+
+  { id: "core_18", concepts: ["FINGER","MOUTH","FACE","EYE","MOM"] },
+
+  { id: "core_19", concepts: ["DAD","BROTHER","SISTER","SON","DAUGHTER"] },
+
+  { id: "core_20", concepts: ["BREAKFAST","LUNCH","DINNER","JOB","BOOK"] },
+
+  { id: "core_21", concepts: ["ROOM", "AND", "BUT", "NOT", "TO"] },
+
+  { id: "core_22", concepts: ["BECAUSE", "IF", "THIS", "THAT", "WITH"] }
+];
+const RESOURCE_PACKS = {
+  pokemon: {
+  vocabFile: "pokemon.json",
+  templateFile: "sentence_templates_pokemon.json",
+  bundles: [
+
+    { id: "pokemon_01", concepts: ["POKEMON","TRAINER","GYM","LEAGUE","GYM_LEADER"] },
+
+    { id: "pokemon_02", concepts: ["ELITE_FOUR","POKEMON_CENTER","FOREST","CAVE","TOWN"] },
+
+    { id: "pokemon_03", concepts: ["BATTLE","MOVE","DAMAGE","DEFENSE","SPEED"] },
+
+    { id: "pokemon_04", concepts: ["STAT","ABILITY","TYPE","LEVEL","EXPERIENCE"] },
+
+    { id: "pokemon_05", concepts: ["ITEM","POTION","REVIVE","HEALTH","BADGE"] },
+
+    { id: "pokemon_06", concepts: ["TECHNICAL_MACHINE","BURN","POISON","SLEEP_STATUS","PARALYZE"] },
+
+    { id: "pokemon_07", concepts: ["SEEN","CAPTURED","ATTACK","RUN","CATCH"] },
+
+    { id: "pokemon_08", concepts: ["DEFEAT","SWITCH","USE","FLY","PLAY"] },
+
+    { id: "pokemon_09", concepts: ["HEAL","RESTORE","GAIN_EXPERIENCE","EVOLVE","WILD"] },
+
+    { id: "pokemon_10", concepts: ["STRONG","EFFECTIVE","SUPER_EFFECTIVE","VERY_EFFECTIVE","LEGENDARY"] }
+
+  ]
+},
+  harry_potter: {
+  vocabFile: "harry_potter.json",
+  templateFile: "sentence_templates_harry_potter.json",
+  bundles: [
+
+    { id: "hp_01", concepts: ["WAND","MAGIC","WIZARD","WITCH","SPELL"] },
+
+    { id: "hp_02", concepts: ["POTION","SCHOOL","CAULDRON","BROOM","OWL"] },
+
+    { id: "hp_03", concepts: ["CASTLE","PROFESSOR","STUDENT","ELF","UNICORN"] },
+
+    { id: "hp_04", concepts: ["GIANT","TROLL","GHOST","FOREST","SPIDER"] },
+
+    { id: "hp_05", concepts: ["LIBRARY","CLASS","LESSON","HOMEWORK","EXAM"] },
+
+    { id: "hp_06", concepts: ["QUESTION","ANSWER","IDEA","CHANCE","MYSTERY"] },
+
+    { id: "hp_07", concepts: ["SECRET","FRIEND","ENEMY","CLOAK","DOOR"] },
+
+    { id: "hp_08", concepts: ["CAST","PROTECT","CHARM","CURSE","LEARN"] },
+
+    { id: "hp_09", concepts: ["WRITE","STUDY","VANISH","TRANSFORM","FLY"] },
+
+    { id: "hp_10", concepts: ["SHOUT","MAGICAL","BRAVE"] }
+
+  ]
+},
+  cooking: {
+  vocabFile: "cooking.json",
+  templateFile: "sentence_templates_cooking.json",
+  bundles: [
+
+    { id: "cook_01", concepts: ["COOK","CUT","BOIL","PEEL","FRY"] },
+
+    { id: "cook_02", concepts: ["STIR","MIX","WASH","HEAT","PAN"] },
+
+    { id: "cook_03", concepts: ["KNIFE","FORK","SPOON","SPATULA","POT"] },
+
+    { id: "cook_04", concepts: ["GLASS","LITRE","DECILITRE","MILLILITRE","GRAM"] },
+
+    { id: "cook_05", concepts: ["KILOGRAM","MEAT","CHICKEN","FISH","VEGETABLE"] },
+
+    { id: "cook_06", concepts: ["POTATO","SALAD","FRUIT","BANANA","SOUP"] },
+
+    { id: "cook_07", concepts: ["DOUGH","SAUCE","INGREDIENT","KITCHEN","OVEN"] },
+
+    { id: "cook_08", concepts: ["STOVE","SINK","FREEZER","SALT","PEPPER"] },
+
+    { id: "cook_09", concepts: ["BUTTER","SPICE","RECIPE","SWEET","SALTY"] },
+
+    { id: "cook_10", concepts: ["SOUR","FRESH","FROZEN","RAW"] }
+
+  ]
+}
+}; 
+let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.98";
+  const APP_VERSION = "v0.9.98.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -466,135 +595,6 @@ if (!hasAccess()) {
     "politeness_modality.json","pronouns.json","quantifiers.json",
     "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json"
   ];
-const CORE_BUNDLES = [
-
-  { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
-
-  { id: "core_02", concepts: ["WATER","HE","READ","BOOK","SHE"] },
-
-  { id: "core_03", concepts: ["SEE","PHONE","FIRST_PERSON_PLURAL","HAVE","JOB"] },
-
-  { id: "core_04", concepts: ["THIRD_PERSON_PLURAL","SLEEP","BE","DO","NEW"] },
-
-  { id: "core_05", concepts: ["OLD","BLACK","WHITE","GOOD","BAD"] },
-
-  { id: "core_06", concepts: ["FAST","SLOW","SMALL","ONE","TWO"] },
-
-  { id: "core_07", concepts: ["THREE","FOUR","FIVE","SIX","SEVEN"] },
-
-  { id: "core_08", concepts: ["EIGHT","NINE","TEN","MY","HER"] },
-
-  { id: "core_09", concepts: ["HIS","OUR","THEIR","YOUR","GIRL"] },
-
-  { id: "core_10", concepts: ["BOY","WOMAN","MAN","BIG","ELEVEN"] },
-
-  { id: "core_11", concepts: ["TWELVE","THIRTEEN","FOURTEEN","FIFTEEN","SIXTEEN"] },
-
-  { id: "core_12", concepts: ["SEVENTEEN","EIGHTEEN","NINETEEN","TWENTY","HOUSE"] },
-
-  { id: "core_13", concepts: ["HOME","SHIRT","SHOES","PANTS","CLOTHES"] },
-
-  { id: "core_14", concepts: ["HAND","FACE","EYE","BREAKFAST","LUNCH"] },
-
-  { id: "core_15", concepts: ["DINNER","GO","COME","USE","GET"] },
-
-  { id: "core_16", concepts: ["START","STOP","THIS","THAT","AND"] },
-
-  { id: "core_17", concepts: ["HAND","HEAD","ARM","LEG","FOOT"] },
-
-  { id: "core_18", concepts: ["FINGER","MOUTH","FACE","EYE","MOM"] },
-
-  { id: "core_19", concepts: ["DAD","BROTHER","SISTER","SON","DAUGHTER"] },
-
-  { id: "core_20", concepts: ["BREAKFAST","LUNCH","DINNER","JOB","BOOK"] },
-
-  { id: "core_21", concepts: ["ROOM", "AND", "BUT", "NOT", "TO"] },
-
-  { id: "core_22", concepts: ["BECAUSE", "IF", "THIS", "THAT", "WITH"] }
-];
-const RESOURCE_PACKS = {
-  pokemon: {
-  vocabFile: "pokemon.json",
-  templateFile: "sentence_templates_pokemon.json",
-  bundles: [
-
-    { id: "pokemon_01", concepts: ["POKEMON","TRAINER","GYM","LEAGUE","GYM_LEADER"] },
-
-    { id: "pokemon_02", concepts: ["ELITE_FOUR","POKEMON_CENTER","FOREST","CAVE","TOWN"] },
-
-    { id: "pokemon_03", concepts: ["BATTLE","MOVE","DAMAGE","DEFENSE","SPEED"] },
-
-    { id: "pokemon_04", concepts: ["STAT","ABILITY","TYPE","LEVEL","EXPERIENCE"] },
-
-    { id: "pokemon_05", concepts: ["ITEM","POTION","REVIVE","HEALTH","BADGE"] },
-
-    { id: "pokemon_06", concepts: ["TECHNICAL_MACHINE","BURN","POISON","SLEEP_STATUS","PARALYZE"] },
-
-    { id: "pokemon_07", concepts: ["SEEN","CAPTURED","ATTACK","RUN","CATCH"] },
-
-    { id: "pokemon_08", concepts: ["DEFEAT","SWITCH","USE","FLY","PLAY"] },
-
-    { id: "pokemon_09", concepts: ["HEAL","RESTORE","GAIN_EXPERIENCE","EVOLVE","WILD"] },
-
-    { id: "pokemon_10", concepts: ["STRONG","EFFECTIVE","SUPER_EFFECTIVE","VERY_EFFECTIVE","LEGENDARY"] }
-
-  ]
-},
-  harry_potter: {
-  vocabFile: "harry_potter.json",
-  templateFile: "sentence_templates_harry_potter.json",
-  bundles: [
-
-    { id: "hp_01", concepts: ["WAND","MAGIC","WIZARD","WITCH","SPELL"] },
-
-    { id: "hp_02", concepts: ["POTION","SCHOOL","CAULDRON","BROOM","OWL"] },
-
-    { id: "hp_03", concepts: ["CASTLE","PROFESSOR","STUDENT","ELF","UNICORN"] },
-
-    { id: "hp_04", concepts: ["GIANT","TROLL","GHOST","FOREST","SPIDER"] },
-
-    { id: "hp_05", concepts: ["LIBRARY","CLASS","LESSON","HOMEWORK","EXAM"] },
-
-    { id: "hp_06", concepts: ["QUESTION","ANSWER","IDEA","CHANCE","MYSTERY"] },
-
-    { id: "hp_07", concepts: ["SECRET","FRIEND","ENEMY","CLOAK","DOOR"] },
-
-    { id: "hp_08", concepts: ["CAST","PROTECT","CHARM","CURSE","LEARN"] },
-
-    { id: "hp_09", concepts: ["WRITE","STUDY","VANISH","TRANSFORM","FLY"] },
-
-    { id: "hp_10", concepts: ["SHOUT","MAGICAL","BRAVE"] }
-
-  ]
-},
-  cooking: {
-  vocabFile: "cooking.json",
-  templateFile: "sentence_templates_cooking.json",
-  bundles: [
-
-    { id: "cook_01", concepts: ["COOK","CUT","BOIL","PEEL","FRY"] },
-
-    { id: "cook_02", concepts: ["STIR","MIX","WASH","HEAT","PAN"] },
-
-    { id: "cook_03", concepts: ["KNIFE","FORK","SPOON","SPATULA","POT"] },
-
-    { id: "cook_04", concepts: ["GLASS","LITRE","DECILITRE","MILLILITRE","GRAM"] },
-
-    { id: "cook_05", concepts: ["KILOGRAM","MEAT","CHICKEN","FISH","VEGETABLE"] },
-
-    { id: "cook_06", concepts: ["POTATO","SALAD","FRUIT","BANANA","SOUP"] },
-
-    { id: "cook_07", concepts: ["DOUGH","SAUCE","INGREDIENT","KITCHEN","OVEN"] },
-
-    { id: "cook_08", concepts: ["STOVE","SINK","FREEZER","SALT","PEPPER"] },
-
-    { id: "cook_09", concepts: ["BUTTER","SPICE","RECIPE","SWEET","SALTY"] },
-
-    { id: "cook_10", concepts: ["SOUR","FRESH","FROZEN","RAW"] }
-
-  ]
-}
-};
 
 function createRunState() {
   return {
