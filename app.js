@@ -693,6 +693,57 @@ function buildBundleIndex() {
 }
 
 let BUNDLE_INDEX = {};
+function getAllConceptsForRun(run) {
+  const concepts = new Set();
+
+  // Core bundles
+  CORE_BUNDLES.forEach(bundle => {
+    bundle.concepts.forEach(c => concepts.add(c));
+  });
+
+  // Resource packs
+  (run.selectedResourcePacks || []).forEach(packId => {
+    const pack = RESOURCE_PACKS[packId];
+    if (!pack) return;
+
+    pack.bundles.forEach(bundle => {
+      bundle.concepts.forEach(c => concepts.add(c));
+    });
+  });
+
+  return Array.from(concepts);
+}
+function calculateWeightedProgress(run) {
+
+  const allConcepts = getAllConceptsForRun(run);
+
+  if (!allConcepts.length) return 0;
+
+  let totalValue = 0;
+
+  allConcepts.forEach(cid => {
+
+    // Not released → 0
+    if (!run.released.includes(cid)) {
+      return;
+    }
+
+    const st = ensureProgress(cid);
+
+    // Completed → 8
+    if (st.completed) {
+      totalValue += 8;
+      return;
+    }
+
+    // Otherwise level (1–7)
+    totalValue += st.level || 1;
+  });
+
+  const maxValue = allConcepts.length * 8;
+
+  return Math.round((totalValue / maxValue) * 100);
+}
 function releaseNextBundle(run) {
 
   if (!run.releasePlan || run.releasePlanIndex >= run.releasePlan.length) {
@@ -786,7 +837,20 @@ function updateSupportUI(code) {
     const btn = document.createElement("button");
     btn.className = "primary";
 
-    btn.textContent = names[lang.code] || lang.label;
+    const runForLang = USER.runs[lang.code];
+
+let progress = 0;
+
+if (runForLang) {
+  progress = calculateWeightedProgress(runForLang);
+}
+
+btn.innerHTML = `
+  <div>${names[lang.code] || lang.label}</div>
+  <div style="font-size:12px;opacity:0.7;margin-top:4px;">
+    ${progress}%
+  </div>
+`;
 
     btn.onclick = () => enterLanguage(lang.code);
 
@@ -2849,6 +2913,12 @@ function chooseTemplateForConcept(cid) {
   return eligible[Math.floor(Math.random() * eligible.length)];
 }
 function renderNext(targetLang, supportLang) {
+  // --- Progress bar update ---
+const progress = calculateWeightedProgress(run);
+const bar = document.getElementById("progress-bar-fill");
+if (bar) {
+  bar.style.width = progress + "%";
+}
   if (!run) return;
 
 
