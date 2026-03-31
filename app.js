@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.3";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.4";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -130,8 +130,8 @@ const RESOURCE_PACKS = {
 }
 }; 
 let USER = null;
-document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.98.3";
+document.addEventListener("DOMContentLoaded", async () => {
+  const APP_VERSION = "v0.9.98.4";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -173,18 +173,31 @@ function loadUser() {
 
 async function saveUser() {
 
+  // 🔥 mark local change
+  USER.lastLocalChange = Date.now();
+
   localStorage.setItem("zth_user", JSON.stringify(USER));
 
   const email = localStorage.getItem("zth_email");
   if (!email) return;
 
-  await fetch("/.netlify/functions/saveUser", {
-    method: "POST",
-    body: JSON.stringify({
-      email,
-      user: USER
-    })
-  });
+  try {
+    await fetch("/.netlify/functions/saveUser", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        user: USER
+      })
+    });
+
+    // ✅ mark successful sync
+    USER.lastSyncedAt = Date.now();
+    localStorage.setItem("zth_user", JSON.stringify(USER));
+
+  } catch (err) {
+    console.warn("Sync failed (offline?):", err);
+    // ❗ Do nothing → local data stays safe
+  }
 }
 
 loadUser();
@@ -451,7 +464,13 @@ const HUB_LANGUAGE_NAMES = {
 const supportShort = document.getElementById("support-short");
 const supportLabel = document.getElementById("support-label");
 const supportDropdown = document.getElementById("support-dropdown");
-// ✅ SAFE INIT — only runs when app UI exists
+const email = localStorage.getItem("zth_email");
+
+if (email) {
+  await loadUserFromServer(email);
+}
+
+// ✅ THEN initialize UI
 languageState.support = USER.supportLanguage || "en";
 updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
@@ -466,18 +485,29 @@ async function loadUserFromServer(email) {
   const data = await res.json();
 
   if (data.user) {
-    USER = data.user;
-    // 🔥 GLOBAL VERSION MIGRATION CHECK
-Object.keys(USER.runs || {}).forEach(lang => {
-  const run = USER.runs[lang];
 
-  if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
-    console.warn("Resetting outdated run from server:", lang);
-    USER.runs[lang] = createRunState();
-  }
-});
+    const serverUser = data.user;
 
-saveUser();
+    const localChange = USER?.lastLocalChange || 0;
+    const lastSync = USER?.lastSyncedAt || 0;
+
+    if (localChange > lastSync) {
+      console.warn("Local progress is newer → pushing to server");
+      await saveUser();
+    } else {
+      USER = serverUser;
+    }
+
+    // 🔥 version migration
+    Object.keys(USER.runs || {}).forEach(lang => {
+      const run = USER.runs[lang];
+
+      if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
+        console.warn("Resetting outdated run from server:", lang);
+        USER.runs[lang] = createRunState();
+      }
+    });
+
   } else {
     USER = createEmptyUser();
   }
