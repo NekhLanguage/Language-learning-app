@@ -1341,6 +1341,518 @@
   "render": {
     "en": "If he is home, he eats with his daughter."
   }
+},
+    {
+      "template_id": "BOOK_IS_RED",
+      "concepts": ["BOOK", "BE", "RED"],
+      "structure": { "type": "copular" },
+      "slots": {
+        "subject": "BOOK",
+        "verb": "BE",
+        "complement": "RED"
+      },
+      "render": { "en": "The book is red." }
+    },
+    {
+      "template_id": "PHONE_IS_BLUE",
+      "concepts": ["PHONE", "BE", "BLUE"],
+      "structure": { "type": "copular" },
+      "slots": {
+        "subject": "PHONE",
+        "verb": "BE",
+        "complement": "BLUE"
+      },
+      "render": { "en": "The phone is blue." }
+    },
+    {
+      "template_id": "SHIRT_IS_GREEN",
+      "concepts": ["SHIRT", "BE", "GREEN"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The shirt is green." }
+    },
+    {
+      "template_id": "HOUSE_IS_WHITE",
+      "concepts": ["HOUSE", "BE", "WHITE"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The house is white." }
+    },
+    {
+      "template_id": "PANTS_ARE_BLACK",
+      "concepts": ["PANTS", "BE", "BLACK"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The pants are black." }
+    },
+
+
+
+    {
+      "template_id": "I_EAT_TODAY",
+      "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "TODAY"],
+      "structure": { "type": "time_statement" },
+      "render": { "en": "I eat today." }
+    },
+    {
+      "template_id": "HE_READS_TODAY",
+      "concepts": ["HE", "READ", "TODAY"],
+      "structure": { "type": "time_statement" },
+      "render": { "en": "He reads today." }
+    },
+    {
+      "template_id": "WE_GO_TOMORROW",
+      "concepts": ["FIRST_PERSON_PLURAL", "GO", "TOMORROW"],
+      "structure": { "type": "time_statement" },
+      "render": { "en": "We go tomorrow." }
+    },
+    {
+      "template_id": "I_READ_NOW",
+      "concepts": ["FIRST_PERSON_SINGULAR", "READ", "NOW"],
+      "structure": { "type": "time_statement" },
+      "render": { "en": "I read now." }
+    },
+    {
+      "template_id": "HE_WORKS_YESTERDAY",
+      "concepts": ["HE", "DO", "YESTERDAY"],
+      "structure": { "type": "time_statement" },
+      "render": { "en": "He does work yesterday." }
+    },
+
+    {
+      "template_id": "WHO_EATS",
+      "concepts": ["WHO", "EAT"],
+      "structure": { "type": "question" },
+      "render": { "en": "Who eats?" }
+    },
+    {
+      "template_id": "WHY_DO_YOU_GO",
+      "concepts": ["WHY", "SECOND_PERSON", "GO"],
+      "structure": { "type": "question" },
+      "render": { "en": "Why do you go?" }
+    },
+    {
+      "template_id": "WHEN_DO_WE_EAT",
+      "concepts": ["WHEN", "FIRST_PERSON_PLURAL", "EAT"],
+      "structure": { "type": "question" },
+      "render": { "en": "When do we eat?" }
+    },
+    {
+      "template_id": "I_EAT_BEFORE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "BEFORE"],
+      "structure": { "type": "time_relation" },
+      "render": { "en": "I eat before." }
+    },
+    {
+      "template_id": "WE_GO_AFTER",
+      "concepts": ["FIRST_PERSON_PLURAL", "GO", "AFTER"],
+      "structure": { "type": "time_relation" },
+      "render": { "en": "We go after." }
+    },
+
+    {
+      "template_id": "WHERE_IS_BOOK",
+      "concepts": ["WHERE", "BE", "BOOK"],
+      "structure": { "type": "question" },
+      "render": { "en": "Where is the book?" }
+    },
+    {
+      "template_id": "HOW_DO_YOU_READ",
+      "concepts": ["HOW", "SECOND_PERSON", "READ"],
+      "structure": { "type": "question" },
+      "render": { "en": "How do you read?" }
+    },
+    {
+      "template_id": "WHAT_DO_I_HAVE",
+      "concepts": ["WHAT", "FIRST_PERSON_SINGULAR", "HAVE"],
+      "structure": { "type": "question" },
+      "render": { "en": "What do I have?" }
+    },
+    {
+      "template_id": "WHICH_BOOK",
+      "concepts": ["WHICH", "BOOK"],
+      "structure": { "type": "selection" },
+      "render": { "en": "Which book?" }
+    },
+    {
+      "template_id": "WE_EAT_ALL",
+      "concepts": ["FIRST_PERSON_PLURAL", "EAT", "ALL"],
+      "structure": { "type": "quantifier" },
+      "render": { "en": "We eat all." }
+    },
+
+    {
+      "template_id": "BOOK_ON_THIS",
+      "concepts": ["BOOK", "BE", "ON", "THIS"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The book is on this." }
+    },
+    {
+      "template_id": "PHONE_IN_THAT",
+      "concepts": ["PHONE", "BE", "IN", "THAT"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The phone is in that." }
+    },
+    {
+      "template_id": "SHOES_UNDER_THIS",
+      "concepts": ["SHOES", "BE", "UNDER", "THIS"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The shoes are under this." }
+    },
+    {
+      "template_id": "BOOK_NEXT_TO_PHONE",
+      "concepts": ["BOOK", "BE", "NEXT_TO", "PHONE"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The book is next to the phone." }
+    },
+    {
+      "template_id": "PHONE_IN_FRONT_OF_BOOK",
+      "concepts": ["PHONE", "BE", "FRONT", "BOOK"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The phone is in front of the book." }
+    },
+    
+
+    {
+      "template_id": "BOOK_BEHIND_PHONE",
+      "concepts": ["BOOK", "BE", "BEHIND", "PHONE"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The book is behind the phone." }
+    },
+    {
+      "template_id": "PHONE_OFF_THIS",
+      "concepts": ["PHONE", "BE", "OFF", "THIS"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The phone is off this." }
+    },
+    {
+      "template_id": "BOOK_BETWEEN_THIS_AND_THAT",
+      "concepts": ["BOOK", "BE", "BETWEEN", "THIS", "AND", "THAT"],
+      "structure": { "type": "spatial_relation_complex" },
+      "render": { "en": "The book is between this and that." }
+    },
+    {
+      "template_id": "SHOES_IN_THIS",
+      "concepts": ["SHOES", "BE", "IN", "THIS"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The shoes are in this." }
+    },
+    {
+      "template_id": "PHONE_ON_THAT",
+      "concepts": ["PHONE", "BE", "ON", "THAT"],
+      "structure": { "type": "spatial_relation" },
+      "render": { "en": "The phone is on that." }
+    },
+
+    {
+      "template_id": "WE_GO_BACK",
+      "concepts": ["FIRST_PERSON_PLURAL", "GO", "BACK"],
+      "structure": { "type": "direction" },
+      "render": { "en": "We go back." }
+    },
+    {
+      "template_id": "I_GO_OUT",
+      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "OUT"],
+      "structure": { "type": "direction" },
+      "render": { "en": "I go out." }
+    },
+    {
+      "template_id": "WE_GO_NORTH",
+      "concepts": ["FIRST_PERSON_PLURAL", "GO", "NORTH"],
+      "structure": { "type": "direction" },
+      "render": { "en": "We go north." }
+    },
+    {
+      "template_id": "WE_GO_SOUTH",
+      "concepts": ["FIRST_PERSON_PLURAL", "GO", "SOUTH"],
+      "structure": { "type": "direction" },
+      "render": { "en": "We go south." }
+    },
+    {
+      "template_id": "WE_GO_EAST",
+      "concepts": ["FIRST_PERSON_PLURAL", "GO", "EAST"],
+      "structure": { "type": "direction" },
+      "render": { "en": "We go east." }
+    },
+
+
+    {
+      "template_id": "WE_GO_WEST",
+      "concepts": ["FIRST_PERSON_PLURAL", "GO", "WEST"],
+      "structure": { "type": "direction" },
+      "render": { "en": "We go west." }
+    },
+    {
+      "template_id": "BOOK_IS_LONG",
+      "concepts": ["BOOK", "BE", "LONG"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The book is long." }
+    },
+    {
+      "template_id": "DAY_IS_SHORT",
+      "concepts": ["DAY", "BE", "SHORT"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The day is short." }
+    },
+    {
+      "template_id": "BOOK_IS_HEAVY",
+      "concepts": ["BOOK", "BE", "HEAVY"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The book is heavy." }
+    },
+    {
+      "template_id": "PHONE_IS_LIGHT",
+      "concepts": ["PHONE", "BE", "LIGHT"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The phone is light." }
+    },
+
+
+    {
+      "template_id": "NIGHT_IS_DARK",
+      "concepts": ["NIGHT", "BE", "DARK"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The night is dark." }
+    },
+    {
+      "template_id": "BOY_IS_YOUNG",
+      "concepts": ["BOY", "BE", "YOUNG"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The boy is young." }
+    },
+    {
+      "template_id": "BOOK_IS_EASY",
+      "concepts": ["BOOK", "BE", "EASY"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The book is easy." }
+    },
+    {
+      "template_id": "BOOK_IS_DIFFICULT",
+      "concepts": ["BOOK", "BE", "DIFFICULT"],
+      "structure": { "type": "copular" },
+      "render": { "en": "The book is difficult." }
+    },
+    {
+      "template_id": "THIS_IS_RIGHT",
+      "concepts": ["THIS", "BE", "RIGHT"],
+      "structure": { "type": "evaluation" },
+      "render": { "en": "This is right." }
+    },
+
+
+    {
+      "template_id": "THIS_IS_LEFT",
+      "concepts": ["THIS", "BE", "LEFT"],
+      "structure": { "type": "evaluation" },
+      "render": { "en": "This is left." }
+    },
+    {
+      "template_id": "THIS_IS_CORRECT",
+      "concepts": ["THIS", "BE", "CORRECT"],
+      "structure": { "type": "evaluation" },
+      "render": { "en": "This is correct." }
+    },
+    {
+      "template_id": "THIS_IS_WRONG",
+      "concepts": ["THIS", "BE", "WRONG"],
+      "structure": { "type": "evaluation" },
+      "render": { "en": "This is wrong." }
+    },
+    {
+      "template_id": "THIS_IS_NICE",
+      "concepts": ["THIS", "BE", "NICE"],
+      "structure": { "type": "evaluation" },
+      "render": { "en": "This is nice." }
+    },
+    {
+      "template_id": "YEAR_IS_LONG",
+      "concepts": ["YEAR", "BE", "LONG"],
+      "structure": { "type": "time_description" },
+      "render": { "en": "The year is long." }
+    },
+    {
+  "template_id": "MONTH_IS_LONG",
+  "concepts": ["MONTH", "BE", "LONG"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The month is long." }
+},
+{
+  "template_id": "WEEK_IS_SHORT",
+  "concepts": ["WEEK", "BE", "SHORT"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The week is short." }
+},
+{
+  "template_id": "DAY_IS_LONG",
+  "concepts": ["DAY", "BE", "LONG"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The day is long." }
+},
+{
+  "template_id": "HOUR_IS_SHORT",
+  "concepts": ["HOUR", "BE", "SHORT"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The hour is short." }
+},
+{
+  "template_id": "MINUTE_IS_SHORT",
+  "concepts": ["MINUTE", "BE", "SHORT"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The minute is short." }
+},
+{
+  "template_id": "SECOND_IS_SHORT",
+  "concepts": ["SECOND", "BE", "SHORT"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The second is short." }
+},
+{
+  "template_id": "MORNING_IS_GOOD",
+  "concepts": ["MORNING", "BE", "GOOD"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The morning is good." }
+},
+{
+  "template_id": "NIGHT_IS_BAD",
+  "concepts": ["NIGHT", "BE", "BAD"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "The night is bad." }
+},
+{
+  "template_id": "WINTER_IS_COLD",
+  "concepts": ["WINTER", "BE", "COLD"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "Winter is cold." }
+},
+{
+  "template_id": "SUMMER_IS_GOOD",
+  "concepts": ["SUMMER", "BE", "GOOD"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "Summer is good." }
+},
+{
+  "template_id": "SPRING_IS_NEW",
+  "concepts": ["SPRING", "BE", "NEW"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "Spring is new." }
+},
+{
+  "template_id": "AUTUMN_IS_OLD",
+  "concepts": ["AUTUMN", "BE", "OLD"],
+  "structure": { "type": "time_description" },
+  "render": { "en": "Autumn is old." }
+},
+{
+  "template_id": "THIS_IS_THING",
+  "concepts": ["THIS", "BE", "THING"],
+  "structure": { "type": "copular" },
+  "render": { "en": "This is a thing." }
+},
+{
+  "template_id": "PLEASE_READ",
+  "concepts": ["PLEASE", "READ"],
+  "structure": { "type": "politeness" },
+  "render": { "en": "Please read." }
+},
+{
+  "template_id": "MAYBE_I_GO",
+  "concepts": ["MAYBE", "FIRST_PERSON_SINGULAR", "GO"],
+  "structure": { "type": "modality" },
+  "render": { "en": "Maybe I go." }
+},
+{
+  "template_id": "THANKS",
+  "concepts": ["THANKS"],
+  "structure": { "type": "response" },
+  "render": { "en": "Thanks." }
+},
+{
+  "template_id": "I_GO_FOR_FOOD",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "FOR", "FOOD"],
+  "structure": { "type": "relation" },
+  "render": { "en": "I go for food." }
+},
+{
+  "template_id": "I_HAVE_SOMETHING",
+  "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SOMETHING"],
+  "structure": { "type": "quantifier" },
+  "render": { "en": "I have something." }
+},
+{
+  "template_id": "I_HAVE_ANOTHER_BOOK",
+  "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "ANOTHER", "BOOK"],
+  "structure": { "type": "quantifier" },
+  "render": { "en": "I have another book." }
+},
+{
+  "template_id": "I_READ_ONLY_BOOK",
+  "concepts": ["FIRST_PERSON_SINGULAR", "READ", "ONLY", "BOOK"],
+  "structure": { "type": "quantifier" },
+  "render": { "en": "I read only the book." }
+},
+{
+  "template_id": "I_GO_FROM_HOME",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "FROM", "HOME"],
+  "structure": { "type": "relation" },
+  "render": { "en": "I go from home." }
+},
+{
+  "template_id": "I_GO_TO_HOUSE",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "TO", "HOUSE"],
+  "structure": { "type": "relation" },
+  "render": { "en": "I go to the house." }
+},
+{
+  "template_id": "I_GO_AROUND",
+  "concepts": ["FIRST_PERSON_SINGULAR", "GO", "AROUND"],
+  "structure": { "type": "relation" },
+  "render": { "en": "I go around." }
+},
+{
+  "template_id": "I_DO_THIS_BY_HAND",
+  "concepts": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"],
+  "structure": { "type": "relation" },
+  "render": { "en": "I do this by hand." }
+},
+{
+  "template_id": "YES_I_DO",
+  "concepts": ["YES", "FIRST_PERSON_SINGULAR", "DO"],
+  "structure": { "type": "response" },
+  "render": { "en": "Yes, I do." }
+},
+{
+  "template_id": "NO_I_DO_NOT",
+  "concepts": ["NO", "FIRST_PERSON_SINGULAR", "DO", "NOT"],
+  "structure": { "type": "response" },
+  "render": { "en": "No, I do not." }
+},
+{
+  "template_id": "THIS_IS_MINE",
+  "concepts": ["THIS", "BE", "MINE"],
+  "structure": { "type": "possessive" },
+  "render": { "en": "This is mine." }
+},
+{
+  "template_id": "THIS_IS_YOURS",
+  "concepts": ["THIS", "BE", "YOURS"],
+  "structure": { "type": "possessive" },
+  "render": { "en": "This is yours." }
+},
+{
+  "template_id": "THIS_IS_HERS",
+  "concepts": ["THIS", "BE", "HERS"],
+  "structure": { "type": "possessive" },
+  "render": { "en": "This is hers." }
+},
+{
+  "template_id": "THIS_IS_OURS",
+  "concepts": ["THIS", "BE", "OURS"],
+  "structure": { "type": "possessive" },
+  "render": { "en": "This is ours." }
+},
+{
+  "template_id": "THIS_IS_THEIRS",
+  "concepts": ["THIS", "BE", "THEIRS"],
+  "structure": { "type": "possessive" },
+  "render": { "en": "This is theirs." }
 }
+
   ]
 }

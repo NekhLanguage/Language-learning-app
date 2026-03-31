@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.4";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.5";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -44,7 +44,43 @@ const CORE_BUNDLES = [
 
   { id: "core_21", concepts: ["ROOM", "AND", "BUT", "NOT", "TO"] },
 
-  { id: "core_22", concepts: ["BECAUSE", "IF", "THIS", "THAT", "WITH"] }
+  { id: "core_22", concepts: ["BECAUSE", "IF", "THIS", "THAT", "WITH"] },
+
+  { id: "core_23", concepts: ["RED","BLUE","GREEN","YELLOW","PURPLE"] },
+
+{ id: "core_24", concepts: ["ORANGE","TODAY","YESTERDAY","TOMORROW","NOW"] },
+
+{ id: "core_25", concepts: ["BEFORE","AFTER","WHY","WHO","WHEN"] },
+
+{ id: "core_26", concepts: ["WHERE","HOW","WHICH","WHAT","ALL"] },
+
+{ id: "core_27", concepts: ["TOP","BOTTOM","UNDER","NEXT_TO","FRONT"] },
+
+{ id: "core_28", concepts: ["BEHIND","IN","ON","OFF","BETWEEN"] },
+
+{ id: "core_29", concepts: ["BACK","OUT","NORTH","SOUTH","EAST"] },
+
+{ id: "core_30", concepts: ["WEST","LONG","SHORT","HEAVY","LIGHT"] },
+
+{ id: "core_31", concepts: ["DARK","YOUNG","EASY","DIFFICULT","RIGHT"] },
+
+{ id: "core_32", concepts: ["LEFT","CORRECT","WRONG","NICE","YEAR"] },
+
+{ id: "core_33", concepts: ["MONTH","WEEK","DAY","HOUR","MINUTE"] },
+
+{ id: "core_34", concepts: ["SECOND","MORNING","NIGHT","WINTER","SUMMER"] },
+
+{ id: "core_35", concepts: ["SPRING","AUTUMN","THING","PLEASE","MAYBE"] },
+
+{ id: "core_36", concepts: ["THANKS","FOR","ANY","NEXT","LATER"] },
+
+{ id: "core_37", concepts: ["AS","WHILE","MAY","SOMETHING","JUST"] },
+
+{ id: "core_38", concepts: ["ANOTHER","FROM","AROUND","ONLY","BY"] },
+
+{ id: "core_39", concepts: ["YES","NO","IT","ITS","MINE"] },
+
+{ id: "core_40", concepts: ["YOURS","HERS","OURS","THEIRS"] }
 ];
 const RESOURCE_PACKS = {
   pokemon: {
@@ -131,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.98.4";
+  const APP_VERSION = "v0.9.98.5";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
