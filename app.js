@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.98.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -131,7 +131,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", () => {
-  const APP_VERSION = "v0.9.98.1";
+  const APP_VERSION = "v0.9.98.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -715,8 +715,9 @@ function getAllConceptsForRun(run) {
 }
 function calculateWeightedProgress(run) {
 
-  const allConcepts = getAllConceptsForRun(run);
+  if (!run) return 0;
 
+  const allConcepts = getAllConceptsForRun(run);
   if (!allConcepts.length) return 0;
 
   let totalValue = 0;
@@ -724,19 +725,21 @@ function calculateWeightedProgress(run) {
   allConcepts.forEach(cid => {
 
     // Not released → 0
-    if (!run.released.includes(cid)) {
+    if (!run.released.includes(cid)) return;
+
+    const st = run.progress?.[cid];
+
+    // If no progress yet → treat as level 1
+    if (!st) {
+      totalValue += 1;
       return;
     }
 
-    const st = ensureProgress(cid);
-
-    // Completed → 8
     if (st.completed) {
       totalValue += 8;
       return;
     }
 
-    // Otherwise level (1–7)
     totalValue += st.level || 1;
   });
 
