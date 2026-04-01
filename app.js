@@ -623,6 +623,7 @@ if (!hasAccess()) {
 
   return;
 }
+updateUIStrings(code);
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
@@ -843,7 +844,6 @@ Object.entries(SUPPORT_LANGUAGES).forEach(([code, data]) => {
   USER.supportLanguage = code;
   saveUser();
   updateSupportUI(code);
-  updateUIStrings(code);
   renderLanguageButtons();
   supportDropdown.classList.add("hidden");
 };
