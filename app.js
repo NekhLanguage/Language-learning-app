@@ -639,9 +639,13 @@ renderLanguageButtons();
   return;
 }
 if (hasAccess()) {
+  document.getElementById("login-screen").classList.remove("active");
+  document.getElementById("start-screen").classList.add("active");
+
   updateUIStrings(languageState.support);
   renderLanguageButtons();
 }
+
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
