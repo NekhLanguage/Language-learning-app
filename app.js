@@ -573,60 +573,56 @@ function hasAccess() {
 if (!hasAccess()) {
 
   const supportLang = USER?.supportLanguage || "en";
+  const strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
 
-  // 🔒 Fully safe — no direct UI_STRINGS access
-  let strings;
+  function setupLogin() {
+    const loginBtn = document.getElementById("login-btn");
+    const buyAccess = document.getElementById("link-buy-access");
 
-  if (typeof UI_STRINGS !== "undefined") {
-    strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
-  } else {
-    strings = {
-      enterEmail: "Enter your email",
-      continue: "Continue",
-      buyAccess: "Not a user? Get access",
-      noAccess: "No access found for this email"
+    if (!loginBtn || !buyAccess) {
+      console.error("Login elements not found");
+      return;
+    }
+
+    // Set link
+    buyAccess.href = EXTERNAL_LINKS.app;
+    buyAccess.textContent = strings.buyAccess;
+
+    // Bind click
+    loginBtn.onclick = async () => {
+      try {
+        const email = document.getElementById("email-input").value;
+
+        console.log("Login attempt:", email);
+
+        const res = await fetch("/.netlify/functions/checkAccess", {
+          method: "POST",
+          body: JSON.stringify({ email })
+        });
+
+        const data = await res.json();
+
+        console.log("Data:", data);
+
+        if (data.allowed) {
+          localStorage.setItem("zth_email", email);
+          await loadUserFromServer(email);
+          location.reload();
+        } else {
+          alert(strings.noAccess);
+        }
+
+      } catch (err) {
+        console.error("LOGIN ERROR:", err);
+        alert("Login failed");
+      }
     };
   }
 
-const buyAccess = document.getElementById("link-buy-access");
-buyAccess.href = EXTERNAL_LINKS.app;
-buyAccess.textContent = strings.buyAccess;
+  setupLogin();
 
-const loginBtn = document.getElementById("login-btn");
-
-if (loginBtn) {
-  loginBtn.onclick = async () => {
-    try {
-      const email = document.getElementById("email-input").value;
-
-      console.log("Login attempt:", email);
-
-      const res = await fetch("/.netlify/functions/checkAccess", {
-        method: "POST",
-        body: JSON.stringify({ email })
-      });
-
-      const data = await res.json();
-
-      console.log("Data:", data);
-
-      if (data.allowed) {
-        localStorage.setItem("zth_email", email);
-        await loadUserFromServer(email);
-        location.reload();
-      } else {
-        alert(strings.noAccess || "No access found for this email");
-      }
-
-    } catch (err) {
-      console.error("LOGIN ERROR:", err);
-      alert("Login failed");
-    }
-  };
-}
   return;
 }
-
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
@@ -961,10 +957,6 @@ if (skoolLink) {
   skoolLink.href = EXTERNAL_LINKS.skool;
 }
 
-if (offerLink) {
-  offerLink.textContent = strings.offer;
-  offerLink.href = EXTERNAL_LINKS.offer;
-}
 
   const languageTitle = document.querySelector("#language-screen .title");
   const languageSubtitle = document.querySelector("#language-screen .subtitle");
