@@ -593,22 +593,38 @@ buyAccess.href = EXTERNAL_LINKS.app;
 buyAccess.textContent = strings.buyAccess;
 
 document.getElementById("login-btn").onclick = async () => {
-  const email = document.getElementById("email-input").value;
+  try {
+    const email = document.getElementById("email-input").value;
 
-  const res = await fetch("/.netlify/functions/checkAccess", {
-    method: "POST",
-    body: JSON.stringify({ email })
-  });
+    console.log("Login attempt:", email);
 
-  const data = await res.json();
+    const res = await fetch("/.netlify/functions/checkAccess", {
+      method: "POST",
+      body: JSON.stringify({ email })
+    });
 
-  if (data.allowed) {
-  localStorage.setItem("zth_email", email);
-  await loadUserFromServer(email);
-  location.reload();
-} else {
-  alert(strings.noAccess || "No access found for this email");
-}
+    console.log("Response:", res);
+
+    const data = await res.json();
+
+    console.log("Data:", data);
+
+    if (data.allowed) {
+      console.log("Access granted");
+
+      localStorage.setItem("zth_email", email);
+      await loadUserFromServer(email);
+
+      location.reload();
+    } else {
+      console.log("Access denied");
+      alert(strings.noAccess || "No access found for this email");
+    }
+
+  } catch (err) {
+    console.error("LOGIN ERROR:", err);
+    alert("Login failed. Check console.");
+  }
 };
   return;
 }
