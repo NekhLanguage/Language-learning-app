@@ -379,3 +379,41 @@ button.selected {
   left: 1.25rem;
   position: absolute;
 }
+/* =========================
+   Login Screen
+   ========================= */
+
+.email-input {
+  padding: 1rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  width: min(320px, 90%);
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+/* Make Continue button slightly larger here */
+#login-btn {
+  margin-bottom: 1.2rem;
+}
+
+/* Secondary action (Get access) */
+.small-link {
+  background: transparent;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.small-link:hover {
+  opacity: 1;
+  background: rgba(255,255,255,0.1);
+}

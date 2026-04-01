@@ -8,7 +8,30 @@
 </head>
 <body>
   <div id="app">
+    <section id="login-screen" class="screen active" aria-label="Login screen">
 
+  <h1 class="title small" id="login-title">ENTER YOUR EMAIL</h1>
+
+  <input 
+    id="email-input"
+    type="email"
+    placeholder="your@email.com"
+    class="email-input"
+  />
+
+  <button id="login-btn" class="primary">
+    CONTINUE
+  </button>
+
+  <a 
+    id="link-buy-access"
+    class="small-link"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+  </a>
+
+</section>
     <!-- START SCREEN -->
     <section id="start-screen" class="screen active" aria-label="Start screen">
       <button id="logout-btn" class="quit-button" type="button">
@@ -90,6 +113,6 @@
 
   <!-- User + run persistence (non-module) -->
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=0.9.99.1"></script>
+<script type="module" src="app.js?v=0.9.99.2"></script>
 </body>
 </html>

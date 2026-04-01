@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.1";
+  const APP_VERSION = "v0.9.99.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -585,79 +585,32 @@ if (!hasAccess()) {
       noAccess: "No access found for this email"
     };
   }
+  const loginScreen = document.getElementById("login-screen");
 
-  document.body.innerHTML = `
-    <div style="text-align:center;margin-top:100px;">
-      
-      <h2>${strings.enterEmail || "Enter your email"}</h2>
-      
-      <input 
-        id="email-input" 
-        type="email"
-        placeholder="your@email.com" 
-        style="
-          padding:8px;
-          border-radius:6px;
-          border:none;
-          margin-top:10px;
-        "
-      />
+const buyAccess = document.getElementById("link-buy-access");
+buyAccess.href = EXTERNAL_LINKS.offer;
+buyAccess.textContent = ui("buyAccess");
 
-      <br><br>
+document.getElementById("login-btn").onclick = async () => {
+  const email = document.getElementById("email-input").value;
 
-      <button id="login-btn" style="
-        padding:12px 24px;
-        border-radius:999px;
-        border:none;
-        font-weight:800;
-        cursor:pointer;
-      ">
-        ${strings.continue}
-      </button>
+  const res = await fetch("/.netlify/functions/checkAccess", {
+    method: "POST",
+    body: JSON.stringify({ email })
+  });
 
-     <div style="margin-top:20px;">
-  <a 
-    id="link-buy-access"
-    class="small-link"
-    target="_blank"
-    rel="noopener noreferrer"
-  ></a>
-</div>
+  const data = await res.json();
 
-    </div>
-  `;
+  if (data.allowed) {
+    localStorage.setItem("zth_email", email);
+    await loadUserFromServer(email);
 
-  // 🔗 Wire BUY ACCESS link
-  const buyAccess = document.getElementById("link-buy-access");
-  if (buyAccess) {
-    buyAccess.href = EXTERNAL_LINKS.offer;
-    buyAccess.textContent = strings.buyAccess || "Not a user? Get access";
+    loginScreen.classList.remove("active");
+    startScreen.classList.add("active");
+  } else {
+    alert(ui("noAccess"));
   }
-
-  // 🔐 LOGIN LOGIC (unchanged, just slightly cleaned)
-  document.getElementById("login-btn").onclick = async () => {
-
-    const email = document.getElementById("email-input").value;
-
-    const res = await fetch("/.netlify/functions/checkAccess", {
-      method: "POST",
-      body: JSON.stringify({ email })
-    });
-
-    const data = await res.json();
-
-    if (data.allowed) {
-      localStorage.setItem("zth_email", email);
-
-      // 🔥 your sync logic
-      await loadUserFromServer(email);
-
-      location.reload();
-    } else {
-      alert(strings.noAccess || "No access found for this email");
-    }
-  };
-
+};
   return;
 }
 
