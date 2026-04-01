@@ -585,8 +585,13 @@ if (!hasAccess()) {
     buyAccess.href = EXTERNAL_LINKS.app;
     buyAccess.textContent = strings.buyAccess;
 
-    // 🔥 CRITICAL FIX: use addEventListener instead of onclick
-    loginBtn.addEventListener("click", async (e) => {
+const originalBtn = document.getElementById("login-btn");
+
+// 🔥 prevent duplicate listeners
+const newLoginBtn = originalBtn.cloneNode(true);
+originalBtn.replaceWith(newLoginBtn);
+
+newLoginBtn.addEventListener("click", async (e) => {
       e.preventDefault();
 
       try {
@@ -610,9 +615,16 @@ if (!hasAccess()) {
         console.log("Data:", data);
 
         if (data.allowed) {
-          localStorage.setItem("zth_email", email);
-          await loadUserFromServer(email);
-          location.reload();
+          // After successful login
+localStorage.setItem("zth_email", email);
+await loadUserFromServer(email);
+
+// 🔥 FORCE UI STATE CHANGE INSTEAD OF RELOAD
+document.getElementById("login-screen").classList.remove("active");
+document.getElementById("start-screen").classList.add("active");
+
+updateUIStrings(languageState.support);
+renderLanguageButtons();
         } else {
           alert(strings.noAccess);
         }
