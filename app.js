@@ -623,7 +623,6 @@ if (!hasAccess()) {
 
   return;
 }
-updateUIStrings(code);
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
