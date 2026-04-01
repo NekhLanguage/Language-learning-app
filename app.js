@@ -511,8 +511,7 @@ if (email) {
 // ✅ THEN initialize UI
 languageState.support = USER.supportLanguage || "en";
 updateSupportUI(languageState.support);
-updateUIStrings(languageState.support);
-renderLanguageButtons();
+
 async function loadUserFromServer(email) {
 
   try {
@@ -623,6 +622,9 @@ if (!hasAccess()) {
 
   return;
 }
+// 👇 MOVE HERE
+updateUIStrings(languageState.support);
+renderLanguageButtons();
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
