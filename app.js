@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.4";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.5";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.4";
+  const APP_VERSION = "v0.9.99.5";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -644,7 +644,9 @@ if (hasAccess()) {
 
   updateUIStrings(languageState.support);
   renderLanguageButtons();
+  bindStartScreenUI();
 }
+bindStartScreenUI();
 
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
@@ -3301,10 +3303,25 @@ return;
 }
 
 
-  openAppBtn.addEventListener("click", () => {
-  startScreen.classList.remove("active");
-  languageScreen.classList.add("active");
-});
+  function bindStartScreenUI() {
+
+  const openAppBtn = document.getElementById("open-app");
+  const supportPill = document.getElementById("support-pill");
+  const supportDropdown = document.getElementById("support-dropdown");
+
+  if (openAppBtn) {
+    openAppBtn.onclick = () => {
+      document.getElementById("start-screen").classList.remove("active");
+      document.getElementById("language-screen").classList.add("active");
+    };
+  }
+
+  if (supportPill && supportDropdown) {
+    supportPill.onclick = () => {
+      supportDropdown.classList.toggle("hidden");
+    };
+  }
+}
 document.getElementById("start-run").onclick = async () => {
 
   if (!run.selectedResourcePacks || run.selectedResourcePacks.length === 0) {
