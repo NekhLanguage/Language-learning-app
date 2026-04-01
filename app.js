@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.2";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.3";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.2";
+  const APP_VERSION = "v0.9.99.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -247,7 +247,9 @@ const SUPPORT_LANGUAGES = {
 const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
-  offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" // rename from coaching
+
+  app: "https://stan.store/Nekhslanguageblueprint/p/zero-to-hero-app-beta-copy", // 🔥 ADD THIS
+  fluencyCall: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call"
 };
 const UI_STRINGS = {
 
@@ -585,11 +587,10 @@ if (!hasAccess()) {
       noAccess: "No access found for this email"
     };
   }
-  const loginScreen = document.getElementById("login-screen");
 
 const buyAccess = document.getElementById("link-buy-access");
-buyAccess.href = EXTERNAL_LINKS.offer;
-buyAccess.textContent = ui("buyAccess");
+buyAccess.href = EXTERNAL_LINKS.app;
+buyAccess.textContent = strings.buyAccess;
 
 document.getElementById("login-btn").onclick = async () => {
   const email = document.getElementById("email-input").value;
@@ -602,14 +603,12 @@ document.getElementById("login-btn").onclick = async () => {
   const data = await res.json();
 
   if (data.allowed) {
-    localStorage.setItem("zth_email", email);
-    await loadUserFromServer(email);
-
-    loginScreen.classList.remove("active");
-    startScreen.classList.add("active");
-  } else {
-    alert(ui("noAccess"));
-  }
+  localStorage.setItem("zth_email", email);
+  await loadUserFromServer(email);
+  location.reload();
+} else {
+  alert(strings.noAccess || "No access found for this email");
+}
 };
   return;
 }
@@ -938,9 +937,9 @@ function updateUIStrings(lang) {
 const skoolLink = document.getElementById("link-skool");
 const offerLink = document.getElementById("link-offer");
 
-if (blueprintLink) {
-  blueprintLink.textContent = strings.blueprint;
-  blueprintLink.href = EXTERNAL_LINKS.blueprint;
+if (offerLink) {
+  offerLink.textContent = strings.offer;
+  offerLink.href = EXTERNAL_LINKS.fluencyCall;
 }
 
 if (skoolLink) {
@@ -961,10 +960,10 @@ if (offerLink) {
 
   document.getElementById("hub-quit").textContent = strings.quitLearning;
   document.getElementById("quit-learning").textContent = strings.quitLearning;
-  const buyAccess = document.getElementById("link-buy-access");
+ const buyAccess = document.getElementById("link-buy-access");
 
 if (buyAccess) {
-  buyAccess.href = EXTERNAL_LINKS.offer;
+  buyAccess.href = EXTERNAL_LINKS.app;
   buyAccess.textContent = strings.buyAccess;
 }
 
