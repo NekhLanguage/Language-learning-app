@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.5";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.6";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.5";
+  const APP_VERSION = "v0.9.99.6";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -646,6 +646,8 @@ if (hasAccess()) {
   renderLanguageButtons();
   bindStartScreenUI();
 }
+
+// 🔥 ALWAYS bind AFTER DOM + UI is ready
 bindStartScreenUI();
 
   const VOCAB_FILES = [
@@ -873,11 +875,6 @@ Object.entries(SUPPORT_LANGUAGES).forEach(([code, data]) => {
 };
 
   supportDropdown.appendChild(option);
-});
-
-// Toggle dropdown
-supportPill.addEventListener("click", () => {
-  supportDropdown.classList.toggle("hidden");
 });
 
 function updateSupportUI(code) {
