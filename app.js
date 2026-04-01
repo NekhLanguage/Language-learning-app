@@ -208,7 +208,7 @@ function loadUser() {
 }
 
 async function saveUser() {
-
+console.log("SAVING USER", USER);
   // 🔥 mark local change
   USER.lastLocalChange = Date.now();
 
@@ -512,7 +512,7 @@ updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
 renderLanguageButtons();
 async function loadUserFromServer(email) {
-
+console.log("LOADED FROM SERVER", data.user);
   const res = await fetch("/.netlify/functions/loadUser", {
     method: "POST",
     body: JSON.stringify({ email })
