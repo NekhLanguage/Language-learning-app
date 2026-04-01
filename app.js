@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.6";
+  const APP_VERSION = "v0.9.99.7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -3302,14 +3302,10 @@ return;
 
   function bindStartScreenUI() {
 
-  const openAppBtn = document.getElementById("open-app");
-  const supportPill = document.getElementById("support-pill");
-  const supportDropdown = document.getElementById("support-dropdown");
-
   if (openAppBtn) {
     openAppBtn.onclick = () => {
-      document.getElementById("start-screen").classList.remove("active");
-      document.getElementById("language-screen").classList.add("active");
+      startScreen.classList.remove("active");
+      languageScreen.classList.add("active");
     };
   }
 
