@@ -574,23 +574,29 @@ if (!hasAccess()) {
   const supportLang = USER?.supportLanguage || "en";
   const strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
 
-  function setupLogin() {
-    const loginBtn = document.getElementById("login-btn");
-    const buyAccess = document.getElementById("link-buy-access");
+  const loginBtn = document.getElementById("login-btn");
+  const buyAccess = document.getElementById("link-buy-access");
 
-    if (!loginBtn || !buyAccess) {
-      console.error("Login elements not found");
-      return;
-    }
+  if (!loginBtn || !buyAccess) {
+    console.error("Login elements not found");
+  } else {
 
     // Set link
     buyAccess.href = EXTERNAL_LINKS.app;
     buyAccess.textContent = strings.buyAccess;
 
-    // Bind click
-    loginBtn.onclick = async () => {
+    // 🔥 CRITICAL FIX: use addEventListener instead of onclick
+    loginBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+
       try {
-        const email = document.getElementById("email-input").value;
+        const emailInput = document.getElementById("email-input");
+        const email = emailInput?.value?.trim();
+
+        if (!email) {
+          alert("Enter an email");
+          return;
+        }
 
         console.log("Login attempt:", email);
 
@@ -615,10 +621,8 @@ if (!hasAccess()) {
         console.error("LOGIN ERROR:", err);
         alert("Login failed");
       }
-    };
+    });
   }
-
-  setupLogin();
 
   return;
 }
