@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.1";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99";
+  const APP_VERSION = "v0.9.99.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -208,7 +208,7 @@ function loadUser() {
 }
 
 async function saveUser() {
-console.log("SAVING USER", USER);
+
   // 🔥 mark local change
   USER.lastLocalChange = Date.now();
 
@@ -512,43 +512,56 @@ updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
 renderLanguageButtons();
 async function loadUserFromServer(email) {
-console.log("LOADED FROM SERVER", data.user);
-  const res = await fetch("/.netlify/functions/loadUser", {
-    method: "POST",
-    body: JSON.stringify({ email })
-  });
 
-  const data = await res.json();
-
-  if (data.user) {
-
-    const serverUser = data.user;
-
-    const localChange = USER?.lastLocalChange || 0;
-    const lastSync = USER?.lastSyncedAt || 0;
-
-    if (localChange > lastSync) {
-      console.warn("Local progress is newer → pushing to server");
-      await saveUser();
-    } else {
-      USER = serverUser;
-    }
-
-    // 🔥 version migration
-    Object.keys(USER.runs || {}).forEach(lang => {
-      const run = USER.runs[lang];
-
-      if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
-        console.warn("Resetting outdated run from server:", lang);
-        USER.runs[lang] = createRunState();
-      }
+  try {
+    const res = await fetch("/.netlify/functions/loadUser", {
+      method: "POST",
+      body: JSON.stringify({ email })
     });
 
-  } else {
-    USER = createEmptyUser();
-  }
+    const data = await res.json();
 
-  saveUser();
+    // ✅ Case 1: Server has user → use it
+    if (data && data.user) {
+
+      USER = data.user;
+
+      // 🔥 Version migration (keep this)
+      Object.keys(USER.runs || {}).forEach(lang => {
+        const run = USER.runs[lang];
+
+        if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
+          console.warn("Resetting outdated run from server:", lang);
+          USER.runs[lang] = createRunState();
+        }
+      });
+
+      // 🔒 IMPORTANT: do NOT save here
+      return;
+    }
+
+    // ✅ Case 2: Server returned nothing → fallback to local
+    const local = localStorage.getItem("zth_user");
+
+    if (local) {
+      USER = JSON.parse(local);
+    } else {
+      USER = createEmptyUser();
+    }
+
+  } catch (err) {
+
+    console.warn("Failed to load from server, using local:", err);
+
+    // ✅ Case 3: Network error → fallback to local
+    const local = localStorage.getItem("zth_user");
+
+    if (local) {
+      USER = JSON.parse(local);
+    } else {
+      USER = createEmptyUser();
+    }
+  }
 }
 
 function hasAccess() {
