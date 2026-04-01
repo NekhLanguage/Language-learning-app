@@ -592,40 +592,38 @@ const buyAccess = document.getElementById("link-buy-access");
 buyAccess.href = EXTERNAL_LINKS.app;
 buyAccess.textContent = strings.buyAccess;
 
-document.getElementById("login-btn").onclick = async () => {
-  try {
-    const email = document.getElementById("email-input").value;
+const loginBtn = document.getElementById("login-btn");
 
-    console.log("Login attempt:", email);
+if (loginBtn) {
+  loginBtn.onclick = async () => {
+    try {
+      const email = document.getElementById("email-input").value;
 
-    const res = await fetch("/.netlify/functions/checkAccess", {
-      method: "POST",
-      body: JSON.stringify({ email })
-    });
+      console.log("Login attempt:", email);
 
-    console.log("Response:", res);
+      const res = await fetch("/.netlify/functions/checkAccess", {
+        method: "POST",
+        body: JSON.stringify({ email })
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    console.log("Data:", data);
+      console.log("Data:", data);
 
-    if (data.allowed) {
-      console.log("Access granted");
+      if (data.allowed) {
+        localStorage.setItem("zth_email", email);
+        await loadUserFromServer(email);
+        location.reload();
+      } else {
+        alert(strings.noAccess || "No access found for this email");
+      }
 
-      localStorage.setItem("zth_email", email);
-      await loadUserFromServer(email);
-
-      location.reload();
-    } else {
-      console.log("Access denied");
-      alert(strings.noAccess || "No access found for this email");
+    } catch (err) {
+      console.error("LOGIN ERROR:", err);
+      alert("Login failed");
     }
-
-  } catch (err) {
-    console.error("LOGIN ERROR:", err);
-    alert("Login failed. Check console.");
-  }
-};
+  };
+}
   return;
 }
 
