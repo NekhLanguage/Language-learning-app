@@ -622,9 +622,10 @@ if (!hasAccess()) {
 
   return;
 }
-// 👇 MOVE HERE
-updateUIStrings(languageState.support);
-renderLanguageButtons();
+if (hasAccess()) {
+  updateUIStrings(languageState.support);
+  renderLanguageButtons();
+}
   const VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
