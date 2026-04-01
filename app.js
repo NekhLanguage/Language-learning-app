@@ -615,22 +615,14 @@ if (!hasAccess()) {
         ${strings.continue}
       </button>
 
-      <div style="margin-top:20px;">
-        <a 
-          id="link-buy-access" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style="
-            font-size:0.85rem;
-            opacity:0.85;
-            text-decoration:underline;
-            cursor:pointer;
-            display:inline-block;
-            margin-top:10px;
-          "
-        >
-        </a>
-      </div>
+     <div style="margin-top:20px;">
+  <a 
+    id="link-buy-access"
+    class="small-link"
+    target="_blank"
+    rel="noopener noreferrer"
+  ></a>
+</div>
 
     </div>
   `;
