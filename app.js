@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.4";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.5";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.4";
+  const APP_VERSION = "v0.9.99.5";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -215,7 +215,7 @@ async function saveUser() {
 
   localStorage.setItem("zth_user", JSON.stringify(USER));
 
-  const email = localStorage.getItem("zth_email");
+  const email = localStorage.getItem("zth_email")?.toLowerCase();
   if (!email) return;
 
   try {
@@ -499,7 +499,7 @@ const HUB_LANGUAGE_NAMES = {
 const supportShort = document.getElementById("support-short");
 const supportLabel = document.getElementById("support-label");
 const supportDropdown = document.getElementById("support-dropdown");
-const email = localStorage.getItem("zth_email");
+const email = localStorage.getItem("zth_email")?.toLowerCase();
 
 if (email) {
   await loadUserFromServer(email);
@@ -513,7 +513,7 @@ updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
 renderLanguageButtons();
 async function loadUserFromServer(email) {
-
+email = email?.toLowerCase().trim();
   const res = await fetch("/.netlify/functions/loadUser", {
     method: "POST",
     body: JSON.stringify({ email })
@@ -545,7 +545,8 @@ async function loadUserFromServer(email) {
 }
 
 function hasAccess() {
-  return localStorage.getItem("zth_email") !== null;
+  const email = localStorage.getItem("zth_email");
+  return !!email;
 }
 
 if (!hasAccess()) {
@@ -625,7 +626,7 @@ if (!hasAccess()) {
   // 🔐 LOGIN LOGIC (unchanged, just slightly cleaned)
   document.getElementById("login-btn").onclick = async () => {
 
-    const email = document.getElementById("email-input").value;
+    const email = document.getElementById("email-input").value.trim().toLowerCase();
 
     const res = await fetch("/.netlify/functions/checkAccess", {
       method: "POST",
@@ -635,7 +636,7 @@ if (!hasAccess()) {
     const data = await res.json();
 
     if (data.allowed) {
-      localStorage.setItem("zth_email", email);
+      localStorage.setItem("zth_email", email.toLowerCase());
 
       // 🔥 your sync logic
       await loadUserFromServer(email);
@@ -3356,7 +3357,7 @@ if (resetBtn) {
     const confirmed = confirm("Reset ALL progress? This cannot be undone.");
     if (!confirmed) return;
 
-    const email = localStorage.getItem("zth_email");
+    const email = localStorage.getItem("zth_email")?.toLowerCase();
 
     // 🔥 Reset user structure (clean, safe)
     USER = createEmptyUser();

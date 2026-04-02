@@ -2,6 +2,7 @@ exports.handler = async (event) => {
 
   const { email } = JSON.parse(event.body);
 
+
   // 🔥 TEMP: manually allowed emails
   const allowedEmails = [
     "nekhbrazil@gmail.com",
@@ -15,7 +16,7 @@ exports.handler = async (event) => {
 
   ];
 
-  const normalized = email.toLowerCase();
+  const normalized = email?.toLowerCase().trim();
 
 return {
   statusCode: 200,
