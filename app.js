@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.6";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.7";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.6";
+  const APP_VERSION = "v0.9.99.7";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -248,7 +248,8 @@ const SUPPORT_LANGUAGES = {
 const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
-  offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" // rename from coaching
+  offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call",
+  buyAccess: "https://stan.store/Nekhslanguageblueprint/p/zero-to-hero-app-beta-copy"
 };
 const UI_STRINGS = {
 
@@ -597,20 +598,21 @@ if (!hasAccess()) {
       </button>
 
       <div style="margin-top:20px;">
-        <a 
-          id="link-buy-access" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          style="
-            font-size:0.85rem;
-            opacity:0.85;
-            text-decoration:underline;
-            cursor:pointer;
-            display:inline-block;
-            margin-top:10px;
-          "
-        >
-        </a>
+        <button 
+  id="link-buy-access"
+  style="
+    margin-top:16px;
+    padding:10px 20px;
+    border-radius:999px;
+    border:none;
+    font-weight:700;
+    cursor:pointer;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    backdrop-filter:blur(4px);
+  "
+>
+</button>
       </div>
 
     </div>
@@ -618,10 +620,14 @@ if (!hasAccess()) {
 
   // 🔗 Wire BUY ACCESS link
   const buyAccess = document.getElementById("link-buy-access");
-  if (buyAccess) {
-    buyAccess.href = EXTERNAL_LINKS.offer;
-    buyAccess.textContent = strings.buyAccess || "Not a user? Get access";
-  }
+
+if (buyAccess) {
+  buyAccess.textContent = strings.buyAccess || "Not a user? Get access";
+
+  buyAccess.onclick = () => {
+  window.open(EXTERNAL_LINKS.buyAccess, "_blank");
+};
+}
 
   // 🔐 LOGIN LOGIC (unchanged, just slightly cleaned)
   document.getElementById("login-btn").onclick = async () => {
