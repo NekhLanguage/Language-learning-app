@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99";
+  const APP_VERSION = "v0.9.99.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
