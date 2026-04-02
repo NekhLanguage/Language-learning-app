@@ -512,14 +512,14 @@ updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
 renderLanguageButtons();
 async function loadUserFromServer(email) {
-console.log("LOADED FROM SERVER", data.user);
+
   const res = await fetch("/.netlify/functions/loadUser", {
     method: "POST",
     body: JSON.stringify({ email })
   });
 
   const data = await res.json();
-
+console.log("LOADED FROM SERVER", data.user);
   if (data.user) {
 
     const serverUser = data.user;
