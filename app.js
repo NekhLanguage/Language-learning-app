@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.2";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.3";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.2";
+  const APP_VERSION = "v0.9.99.3";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -521,22 +521,12 @@ async function loadUserFromServer(email) {
   });
 
   const data = await res.json();
-console.log("LOADED FROM SERVER", data.user);
+  console.log("LOADED FROM SERVER", data.user);
+
   if (data.user) {
+    USER = data.user;
 
-    const serverUser = data.user;
-
-    const localChange = USER?.lastLocalChange || 0;
-    const lastSync = USER?.lastSyncedAt || 0;
-
-    if (localChange > lastSync) {
-      console.warn("Local progress is newer → pushing to server");
-      await saveUser();
-    } else {
-      USER = serverUser;
-    }
-
-    // 🔥 version migration
+    // 🔥 version migration only
     Object.keys(USER.runs || {}).forEach(lang => {
       const run = USER.runs[lang];
 
@@ -547,10 +537,12 @@ console.log("LOADED FROM SERVER", data.user);
     });
 
   } else {
+    console.warn("No server user found → creating new");
     USER = createEmptyUser();
   }
 
-  saveUser();
+  // ✅ ONLY save locally
+  localStorage.setItem("zth_user", JSON.stringify(USER));
 }
 
 function hasAccess() {
