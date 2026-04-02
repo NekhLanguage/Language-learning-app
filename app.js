@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.1";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.2";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.1";
+  const APP_VERSION = "v0.9.99.2";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -231,7 +231,7 @@ async function saveUser() {
     });
 
     USER.lastSyncedAt = Date.now();
-    localStorage.setItem("zth_user", JSON.stringify(USER);
+    localStorage.setItem("zth_user", JSON.stringify(USER));
 
   } catch (err) {
     console.warn("Sync failed:", err);
