@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.3";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.4";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.3";
+  const APP_VERSION = "v0.9.99.4";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -209,10 +209,7 @@ function loadUser() {
 
 async function saveUser() {
 
-  if (!USER || !USER.runs) {
-    console.warn("Prevented saving invalid user");
-    return;
-  }
+  if (!USER || !USER.runs) return;
 
   USER.lastLocalChange = Date.now();
 
@@ -231,7 +228,9 @@ async function saveUser() {
     });
 
     USER.lastSyncedAt = Date.now();
-    localStorage.setItem("zth_user", JSON.stringify(USER));
+
+    // 🔥 THIS IS THE KEY LINE
+    await loadUserFromServer(email);
 
   } catch (err) {
     console.warn("Sync failed:", err);
