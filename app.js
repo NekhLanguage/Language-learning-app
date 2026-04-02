@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.1";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99";
+  const APP_VERSION = "v0.9.99.1";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -208,8 +208,12 @@ function loadUser() {
 }
 
 async function saveUser() {
-console.log("SAVING USER", USER);
-  // 🔥 mark local change
+
+  if (!USER || !USER.runs) {
+    console.warn("Prevented saving invalid user");
+    return;
+  }
+
   USER.lastLocalChange = Date.now();
 
   localStorage.setItem("zth_user", JSON.stringify(USER));
@@ -226,13 +230,11 @@ console.log("SAVING USER", USER);
       })
     });
 
-    // ✅ mark successful sync
     USER.lastSyncedAt = Date.now();
-    localStorage.setItem("zth_user", JSON.stringify(USER));
+    localStorage.setItem("zth_user", JSON.stringify(USER);
 
   } catch (err) {
-    console.warn("Sync failed (offline?):", err);
-    // ❗ Do nothing → local data stays safe
+    console.warn("Sync failed:", err);
   }
 }
 const SUPPORT_LANGUAGES = {
