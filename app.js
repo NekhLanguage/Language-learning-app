@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.7";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.8";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.7";
+  const APP_VERSION = "v0.9.99.8";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 11;
@@ -351,6 +351,7 @@ sessionFinished: "セッション {n} が完了しました。"
     level: "Nivå",
     blueprint: "Nekh's språkplan",
 skool: "Skool-fellesskap",
+offer: "Forbedre din egen språkplan",
 sessionComplete: "Økt fullført",
 sessionFinished: "Økt {n} fullført."
   },
@@ -597,23 +598,28 @@ if (!hasAccess()) {
         ${strings.continue}
       </button>
 
-      <div style="margin-top:20px;">
-        <button 
-  id="link-buy-access"
-  style="
-    margin-top:16px;
-    padding:10px 20px;
-    border-radius:999px;
-    border:none;
-    font-weight:700;
-    cursor:pointer;
-    background:rgba(255,255,255,0.15);
-    color:white;
-    backdrop-filter:blur(4px);
-  "
->
-</button>
-      </div>
+      <div style="margin-top:24px;text-align:center;max-width:300px;">
+
+  <div style="font-size:0.9rem;opacity:0.85;margin-bottom:10px;">
+    Start learning with the Zero to Hero app
+  </div>
+
+  <button 
+    id="link-buy-access"
+    style="
+      padding:12px 24px;
+      border-radius:999px;
+      border:none;
+      font-weight:800;
+      cursor:pointer;
+      background:white;
+      color:#5a1f5f;
+      width:100%;
+    "
+  >
+  </button>
+
+</div>
 
     </div>
   `;
@@ -622,7 +628,7 @@ if (!hasAccess()) {
   const buyAccess = document.getElementById("link-buy-access");
 
 if (buyAccess) {
-  buyAccess.textContent = strings.buyAccess || "Not a user? Get access";
+  buyAccess.textContent = "Get access to the app";
 
   buyAccess.onclick = () => {
   window.open(EXTERNAL_LINKS.buyAccess, "_blank");
