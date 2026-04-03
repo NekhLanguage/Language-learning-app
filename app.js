@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.9";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.10";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,10 +167,10 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.9";
+  const APP_VERSION = "v0.9.99.10";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 11;
+  const CONTENT_VERSION = 12;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -1408,6 +1408,17 @@ function nounPhrase(lang, cid) {
 
   return base;
 }
+function surfaceForm(lang, cid) {
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+
+  if (!meta) return cid;
+
+  if (meta.type === "noun") {
+    return nounPhrase(lang, cid);
+  }
+
+  return formOf(lang, cid); // ✅ THIS is the correct fallback
+}
   function getVerbForm(verbCid, subjectCid, lang) {
   const verbData = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[verbCid];
   if (!verbData) return verbCid;
@@ -1587,7 +1598,7 @@ function joinSentence(words, punctuation = ".") {
   return capitalizeFirst(words.filter(Boolean).join(" ")) + punctuation;
 }
 function possessiveWord(lang, cid) {
-  return formOf(lang, cid);
+  return surfaceForm(lang, cid);
 }
 
 function nounWithPossessive(lang, possessiveCid, nounCid) {
@@ -1763,7 +1774,7 @@ if (tpl.structure?.type === "complex_clause") {
 
   // apply modifiers
   if (numberWord) {
-    const base = formOf(lang, cid);
+    const base = surfaceForm(lang, cid);
     return numberWord + " " + base;
   }
 
@@ -1774,7 +1785,7 @@ if (tpl.structure?.type === "complex_clause") {
   return phrase;
 }
 
-    return formOf(lang, cid);
+    return surfaceForm(lang, cid);
   });
 
   if (lang === "ja") {
@@ -1808,8 +1819,8 @@ if (tpl.structure?.type === "complex_clause") {
   const supportSentence = buildSentence(supportLang, tpl, targetConcept);
 
   content.innerHTML = `
-    <h2>${safe(formOf(targetLang, targetConcept))}</h2>
-    <p>${safe(formOf(supportLang, targetConcept))}</p>
+    <h2>${safe(surfaceForm(targetLang, targetConcept))}</h2>
+<p>${safe(surfaceForm(supportLang, targetConcept))}</p>
     <hr>
     <p class="tts-target">${safe(targetSentence)}</p>
     <p>${safe(supportSentence)}</p>
@@ -1928,7 +1939,7 @@ const options = shuffle([...releasedOptions]).slice(0, 4);
 
   options.forEach(opt => {
     const btn = document.createElement("button");
-    btn.textContent = formOf(supportLang, opt);
+    btn.textContent = surfaceForm(supportLang, opt);
 
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
@@ -1986,7 +1997,7 @@ const usedSupport = new Set();
 const filteredPool = [];
 
 for (const cid of pool) {
-  const s = formOf(supportLang, cid);
+  const s = surfaceForm(supportLang, cid);
 
   if (usedSupport.has(s)) continue;
 
@@ -2119,7 +2130,7 @@ const usedSupport = new Set();
 const filteredOptions = [];
 
 for (const cid of options) {
-  const s = formOf(supportLang, cid);
+  const s = surfaceForm(supportLang, cid);
   if (usedSupport.has(s)) continue;
 
   usedSupport.add(s);
@@ -2454,7 +2465,7 @@ function drawConnection(leftBtn, rightBtn) {
   function createButton(cid, side) {
   const btn = document.createElement("button");
   btn.textContent = side === "left"
-    ? formOf(supportLang, cid)
+    ? surfaceForm(supportLang, cid)
     : resolveTargetSurface(cid);
 
   btn.dataset.cid = cid;
@@ -2643,7 +2654,7 @@ const correctWords = ordered.map(cid => {
   }
 
   // ✅ ADD THIS FALLBACK (CRITICAL)
-  return String(formOf(targetLang, cid)).toLowerCase();
+  return String(surfaceForm(targetLang, cid)).toLowerCase();
 });
 
   const wordBank = shuffle([...correctWords]);
