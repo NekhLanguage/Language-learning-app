@@ -2631,6 +2631,7 @@ const subjectCid = ordered.find(c =>
 
 const correctWords = ordered.map(cid => {
   const meta = window.GLOBAL_VOCAB.concepts[cid];
+
   if (!meta) return String(cid).toLowerCase();
 
   if (meta.type === "verb") {
@@ -2638,8 +2639,11 @@ const correctWords = ordered.map(cid => {
   }
 
   if (meta.type === "noun") {
-  return String(nounPhrase(targetLang, cid)).toLowerCase();
-}
+    return String(nounPhrase(targetLang, cid)).toLowerCase();
+  }
+
+  // ✅ ADD THIS FALLBACK (CRITICAL)
+  return String(formOf(targetLang, cid)).toLowerCase();
 });
 
   const wordBank = shuffle([...correctWords]);
