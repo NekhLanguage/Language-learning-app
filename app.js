@@ -3205,7 +3205,7 @@ if (level === 2) {
 
   q.options.forEach(opt => {
     const btn = document.createElement("button");
-    btn.textContent = formOf(supportLang, opt);
+    btn.textContent = surfaceForm(supportLang, opt);
 
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
