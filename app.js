@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.11";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.12";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.11";
+  const APP_VERSION = "v0.9.99.12";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
@@ -530,11 +530,21 @@ email = email?.toLowerCase().trim();
     // 🔥 version migration only
     Object.keys(USER.runs || {}).forEach(lang => {
       const run = USER.runs[lang];
+if (!run.contentVersion) {
+  run.contentVersion = CONTENT_VERSION;
+}
 
-      if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
-        console.warn("Resetting outdated run from server:", lang);
-        USER.runs[lang] = createRunState();
-      }
+if (run.contentVersion !== CONTENT_VERSION) {
+
+  console.warn(
+    `Updating run from content version ${run.contentVersion} → ${CONTENT_VERSION}:`,
+    lang
+  );
+
+  migrateRun(run, run.contentVersion, CONTENT_VERSION);
+
+  run.contentVersion = CONTENT_VERSION;
+}
     });
 
   } else {
@@ -690,6 +700,45 @@ function createRunState() {
 
     contentVersion: CONTENT_VERSION
   };
+}
+function migrateRun(run, fromVersion, toVersion) {
+
+  console.warn(`Migrating run from v${fromVersion} → v${toVersion}`);
+
+  // -----------------------------
+  // v11 → v12 (your current fix)
+  // -----------------------------
+  if (fromVersion < 12) {
+
+    // Ensure required structures exist
+    run.progress = run.progress || {};
+    run.templateProgress = run.templateProgress || {};
+    run.released = run.released || [];
+
+    // Fix any missing concept progress entries
+    (run.released || []).forEach(cid => {
+      if (!run.progress[cid]) {
+        run.progress[cid] = {
+          level: 1,
+          streak: 0,
+          cooldown: 0,
+          completed: false,
+          lastShownAt: -Infinity,
+          lastResult: null
+        };
+      }
+    });
+
+  }
+if (fromVersion < 13) {
+  // No structural changes needed
+  // Display logic updated (surfaceForm + article handling)
+}
+  // -----------------------------
+  // Future migrations go here
+  
+
+  return run;
 }
 function buildReleasePlan(selectedPacks = []) {
   const plan = [];
