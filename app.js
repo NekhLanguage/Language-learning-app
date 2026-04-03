@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.10";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.11";
 import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,10 +167,10 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.10";
+  const APP_VERSION = "v0.9.99.11";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
-  const CONTENT_VERSION = 12;
+  const CONTENT_VERSION = 13;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -3223,7 +3223,7 @@ if (level === 2) {
     const correct = selectedOption === q.answer;
 
     container.querySelectorAll("button").forEach(btn => {
-      const value = q.options.find(o => formOf(supportLang, o) === btn.textContent);
+      const value = q.options.find(o => surfaceForm(supportLang, o) === btn.textContent);
       if (value === q.answer) btn.classList.add("correct");
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
