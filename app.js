@@ -771,15 +771,19 @@ btn.innerHTML = `
       }
     }
 
-    // Load core vocabulary for the selected target language from its
-    // dedicated file.  getLangFileData() caches the result so a second
-    // call (e.g. when the same language is also the support language)
-    // is free.
-    const langData = await getLangFileData(targetLang);
-    if (!window.GLOBAL_VOCAB.languages[targetLang]) {
-      window.GLOBAL_VOCAB.languages[targetLang] = { forms: {} };
+    // Load core vocabulary for the target language and — separately — for
+    // the support language so buildSentence() can produce the support-language
+    // sentence without falling back to raw concept IDs.
+    // getLangFileData() caches results, so if both are the same language or
+    // the support lang was already fetched at startup the cost is near-zero.
+    for (const code of [targetLang, languageState.support]) {
+      if (!code) continue;
+      const langData = await getLangFileData(code);
+      if (!window.GLOBAL_VOCAB.languages[code]) {
+        window.GLOBAL_VOCAB.languages[code] = { forms: {} };
+      }
+      Object.assign(window.GLOBAL_VOCAB.languages[code].forms, langData.forms || {});
     }
-    Object.assign(window.GLOBAL_VOCAB.languages[targetLang].forms, langData.forms || {});
   }
 
   let TEMPLATE_CACHE = null;
@@ -1212,7 +1216,11 @@ function nounPhrase(lang, cid) {
 
   const base = entry.form || formOf(lang, cid);
 
-  if (!meta?.countable) return base;
+  // Apply article logic when the concept is marked countable OR when the
+  // form itself carries article/gender data (covers resource-pack nouns that
+  // define articles without a countable flag on the concept).
+  const hasArticleInfo = meta?.countable || entry.article || entry.gender;
+  if (!hasArticleInfo) return base;
 
   if (lang === "en") {
     const article = entry.article || "a";
@@ -1362,22 +1370,18 @@ if (orderType === "SOV") {
   return ordered.filter(Boolean);
 }
   function blankSentence(sentence, surface) {
-    const tokens = String(sentence || "").split(" ");
-    let replaced = false;
-    const targetLower = String(surface || "").toLowerCase();
+    const str = String(sentence || "");
+    const target = String(surface || "").toLowerCase().trim();
 
     // If we don't know what to blank, don't pretend we did.
-    if (!targetLower) return String(sentence || "");
+    if (!target) return str;
 
-    return tokens.map(token => {
-      const clean = token.replace(/[.,!?]/g, "").toLowerCase();
-      if (!replaced && clean === targetLower) {
-        replaced = true;
-        const punct = token.match(/[.,!?]+$/);
-        return "_____" + (punct ? punct[0] : "");
-      }
-      return token;
-    }).join(" ");
+    // Use substring matching so multi-word surface forms (e.g. "gym leader",
+    // "лідер залу") are found and blanked correctly.
+    const idx = str.toLowerCase().indexOf(target);
+    if (idx === -1) return str;
+
+    return str.slice(0, idx) + "_____" + str.slice(idx + target.length);
   }
 
   function safeSurfaceForConcept(tpl, targetLang, targetConcept) {
