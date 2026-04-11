@@ -1244,6 +1244,13 @@ function nounPhrase(lang, cid) {
     return "ein " + base; // m and n both use "ein"
   }
 
+  if (lang === "el") {
+    if (!entry.gender) return base; // mass nouns / uncountable — no article
+    if (entry.gender === "m") return "ένας " + base;
+    if (entry.gender === "f") return "μία " + base;
+    return "ένα " + base; // neuter
+  }
+
   return base;
 }
 function surfaceForm(lang, cid) {

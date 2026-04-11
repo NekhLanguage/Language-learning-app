@@ -32,7 +32,8 @@
     "ar": "Arabisch",
     "ko": "Koreanisch",
     "uk": "Ukrainisch",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "el": "Griechisch"
   },
   "forms": {
     "BIG": ["groß"],

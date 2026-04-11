@@ -1,4 +1,4 @@
-// VERSION: v0.9.99.12
+// VERSION: v0.9.9.13
 export const AVAILABLE_LANGUAGES = [
   { code: "pt", label: "Portuguese", nativeLabel: "Português",  short: "PT", ttsCode: "pt-BR", isRTL: false },
   { code: "ja", label: "Japanese",   nativeLabel: "日本語",      short: "JA", ttsCode: "ja-JP", isRTL: false },
@@ -7,5 +7,6 @@ export const AVAILABLE_LANGUAGES = [
   { code: "ar", label: "Arabic",     nativeLabel: "العربية",     short: "AR", ttsCode: "ar-SA", isRTL: true  },
   { code: "ko", label: "Korean",     nativeLabel: "한국어",       short: "KO", ttsCode: "ko-KR", isRTL: false },
   { code: "uk", label: "Ukrainian",  nativeLabel: "Українська",  short: "UK", ttsCode: "uk-UA", isRTL: false },
-  { code: "de", label: "German",     nativeLabel: "Deutsch",      short: "DE", ttsCode: "de-DE", isRTL: false }
+  { code: "de", label: "German",     nativeLabel: "Deutsch",     short: "DE", ttsCode: "de-DE", isRTL: false },
+  { code: "el", label: "Greek",      nativeLabel: "Ελληνικά",    short: "EL", ttsCode: "el-GR", isRTL: false }
 ];
