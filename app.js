@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.12";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.13";
 import { speak, speakAlways, setTTS, speakSentenceOnLoad, setVoiceMap } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.12";
+  const APP_VERSION = "v0.9.99.13";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
@@ -723,28 +723,32 @@ function updateSupportUI(code) {
   const support = languageState.support || "en";
   const names = LANG_FILE_CACHE[support]?.hubNames || LANG_FILE_CACHE["en"]?.hubNames || {};
 
-  AVAILABLE_LANGUAGES.forEach(lang => {
+  // Build list with progress and display name
+  const entries = AVAILABLE_LANGUAGES.map(lang => {
+    const runForLang = USER.runs[lang.code];
+    const progress = runForLang ? calculateWeightedProgress(runForLang) : 0;
+    const name = names[lang.code] || lang.label;
+    return { lang, progress, name };
+  });
 
+  // Sort: started languages (progress > 0) by % descending then name;
+  //       unstarted languages alphabetically after all started ones.
+  entries.sort((a, b) => {
+    const aStarted = a.progress > 0;
+    const bStarted = b.progress > 0;
+    if (aStarted !== bStarted) return aStarted ? -1 : 1;
+    if (aStarted && a.progress !== b.progress) return b.progress - a.progress;
+    return a.name.localeCompare(b.name);
+  });
+
+  entries.forEach(({ lang, progress, name }) => {
     const btn = document.createElement("button");
     btn.className = "primary";
-
-    const runForLang = USER.runs[lang.code];
-
-let progress = 0;
-
-if (runForLang) {
-  progress = calculateWeightedProgress(runForLang);
-}
-
-btn.innerHTML = `
-  <div>${names[lang.code] || lang.label}</div>
-  <div style="font-size:12px;opacity:0.7;margin-top:4px;">
-    ${progress}%
-  </div>
-`;
-
+    btn.innerHTML = `
+      <div>${name}</div>
+      <div style="font-size:12px;opacity:0.7;margin-top:4px;">${progress}%</div>
+    `;
     btn.onclick = () => enterLanguage(lang.code);
-
     languageButtonsContainer.appendChild(btn);
   });
 }

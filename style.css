@@ -212,10 +212,26 @@ select option{
   line-height: 1.45;
 }
 
+/* Language hub — push content below the absolute quit/reset buttons,
+   allow scrolling when many languages are listed */
+#language-screen {
+  justify-content: flex-start;
+  padding-top: 5rem;
+  overflow-y: auto;
+}
+
+#language-screen #language-buttons {
+  grid-template-columns: minmax(200px, 400px);
+  width: min(400px, 100%);
+  margin-top: 0.75rem;
+}
+
 /* Mobile */
 @media (max-width: 520px){
   .button-grid{ grid-template-columns: 1fr; }
   .quit-button{ top: 1rem; left: 1rem; }
+  #language-screen { padding-top: 4.5rem; }
+  #language-screen #language-buttons { width: 100%; }
 }
 
 button.correct {
