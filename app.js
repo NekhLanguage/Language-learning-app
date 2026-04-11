@@ -2184,44 +2184,13 @@ function renderMatchingL5(targetLang, supportLang) {
 
   subtitle.textContent = "Level 5";
 
-  // Gather eligible concepts
+  // Gather eligible concepts (caller guarantees >= 5 are available)
   const eligible = run.released.filter(cid => {
     const st = ensureProgress(cid);
-    return (
-        st.level === 5 &&
-  !st.completed &&
-  passesSpacingRule(cid)
-    );
+    return st.level === 5 && !st.completed && passesSpacingRule(cid);
   });
 
-  if (eligible.length < 4) {
-  // Not enough level-5 concepts — fall back to template-driven routing
-  const tpl = chooseTemplate();
-  if (!tpl) {
-    content.innerHTML = "All concepts completed.";
-    return;
-  }
-
-  const targetConcept = determineTargetConcept(tpl);
-  const level = levelOf(targetConcept);
-
-
-  if (level === 6) {run.recentTemplates.push(tpl);
-if (run.recentTemplates.length > 3) {
-  run.recentTemplates.shift();
-}
-
-    return renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-  }
-
-  if (level === 4) {
-    return renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
-  }
-
-  return renderRecognitionL3(targetLang, supportLang, tpl, targetConcept);
-}
-
-  // Shuffle and take max 5
+  // Shuffle and pick exactly 5
   const shuffled = shuffle([...eligible]);
   const selected = shuffled.slice(0, Math.min(5, shuffled.length));
 
@@ -3198,7 +3167,30 @@ if (level === 2) {
 
   // ---------- Level 5 ----------
   if (level === 5) {
-    renderMatchingL5(targetLang, supportLang);
+    // Only run matching if there are 5+ eligible level-5 concepts
+    const eligibleL5 = run.released.filter(cid => {
+      const st = ensureProgress(cid);
+      return st.level === 5 && !st.completed && passesSpacingRule(cid);
+    });
+
+    if (eligibleL5.length >= 5) {
+      renderMatchingL5(targetLang, supportLang);
+      renderedSomething = true;
+      run.exerciseCounter++;
+      return;
+    }
+
+    // Not enough peers — treat as level 4 until more concepts reach level 5
+    const tpl = chooseTemplateForConcept(targetConcept);
+    if (!tpl) {
+      excluded.add(targetConcept);
+      continue;
+    }
+    const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
+    if (result === null) {
+      excluded.add(targetConcept);
+      continue;
+    }
     renderedSomething = true;
     run.exerciseCounter++;
     return;
