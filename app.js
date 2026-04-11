@@ -2781,7 +2781,6 @@ function renderAlphabetOverlay(langCode) {
   if (!data?.alphabet) return;
 
   const langMeta  = AVAILABLE_LANGUAGES.find(l => l.code === langCode);
-  const ttsCode   = langMeta?.ttsCode || langCode;
   const titleEl   = document.getElementById("alphabet-overlay-title");
   const contentEl = document.getElementById("alphabet-content");
 
@@ -2820,7 +2819,7 @@ function renderAlphabetOverlay(langCode) {
         card.appendChild(soundEl);
       }
 
-      card.addEventListener("click", () => speakAlways(letter.char, ttsCode));
+      card.addEventListener("click", () => speakAlways(letter.char, langCode));
 
       grid.appendChild(card);
     }

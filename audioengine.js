@@ -76,18 +76,19 @@ function speakBrowser(text, lang) {
   speechSynthesis.cancel();
 
   const utter = new SpeechSynthesisUtterance(text);
+  const langLower = (lang || "").toLowerCase();
 
-  let voice = voices.find(v => v.lang.toLowerCase() === lang);
+  let voice = voices.find(v => v.lang.toLowerCase() === langLower);
 
   if (!voice) {
     voice = voices.find(v =>
-      v.lang.toLowerCase().startsWith(lang)
+      v.lang.toLowerCase().startsWith(langLower)
     );
   }
 
   if (!voice) {
     voice = voices.find(v =>
-      v.lang.toLowerCase().includes(lang)
+      v.lang.toLowerCase().includes(langLower)
     );
   }
 
