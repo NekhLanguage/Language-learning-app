@@ -1238,6 +1238,11 @@ function nounPhrase(lang, cid) {
     return "en " + base;
   }
 
+  if (lang === "de") {
+    if (entry.gender === "f") return "eine " + base;
+    return "ein " + base; // m and n both use "ein"
+  }
+
   return base;
 }
 function surfaceForm(lang, cid) {

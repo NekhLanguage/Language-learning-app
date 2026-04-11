@@ -6,5 +6,6 @@ export const AVAILABLE_LANGUAGES = [
   { code: "en", label: "English",    nativeLabel: "English",     short: "EN", ttsCode: "en-US", isRTL: false },
   { code: "ar", label: "Arabic",     nativeLabel: "العربية",     short: "AR", ttsCode: "ar-SA", isRTL: true  },
   { code: "ko", label: "Korean",     nativeLabel: "한국어",       short: "KO", ttsCode: "ko-KR", isRTL: false },
-  { code: "uk", label: "Ukrainian",  nativeLabel: "Українська",  short: "UK", ttsCode: "uk-UA", isRTL: false }
+  { code: "uk", label: "Ukrainian",  nativeLabel: "Українська",  short: "UK", ttsCode: "uk-UA", isRTL: false },
+  { code: "de", label: "German",     nativeLabel: "Deutsch",      short: "DE", ttsCode: "de-DE", isRTL: false }
 ];
