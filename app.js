@@ -3167,7 +3167,6 @@ if (level === 2) {
 
   // ---------- Level 5 ----------
   if (level === 5) {
-    // Only run matching if there are 5+ eligible level-5 concepts
     const eligibleL5 = run.released.filter(cid => {
       const st = ensureProgress(cid);
       return st.level === 5 && !st.completed && passesSpacingRule(cid);
@@ -3180,20 +3179,9 @@ if (level === 2) {
       return;
     }
 
-    // Not enough peers — treat as level 4 until more concepts reach level 5
-    const tpl = chooseTemplateForConcept(targetConcept);
-    if (!tpl) {
-      excluded.add(targetConcept);
-      continue;
-    }
-    const result = renderRecognitionL4(targetLang, supportLang, tpl, targetConcept);
-    if (result === null) {
-      excluded.add(targetConcept);
-      continue;
-    }
-    renderedSomething = true;
-    run.exerciseCounter++;
-    return;
+    // Not enough peers for a matching exercise — skip this concept entirely
+    excluded.add(targetConcept);
+    continue;
   }
 
   // ---------- Level 6 ----------
