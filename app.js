@@ -1239,6 +1239,7 @@ function nounPhrase(lang, cid) {
   }
 
   if (lang === "de") {
+    if (!entry.gender) return base; // mass nouns / uncountable — no article
     if (entry.gender === "f") return "eine " + base;
     return "ein " + base; // m and n both use "ein"
   }
