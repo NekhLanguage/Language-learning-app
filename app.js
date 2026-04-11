@@ -1653,8 +1653,8 @@ if (tpl.structure?.type === "complex_clause") {
   const supportSentence = buildSentence(supportLang, tpl, targetConcept);
 
   content.innerHTML = `
-    <h2>${safe(surfaceForm(targetLang, targetConcept))}</h2>
-<p>${safe(surfaceForm(supportLang, targetConcept))}</p>
+    <h2>${safe(formOf(targetLang, targetConcept))}</h2>
+    <p>${safe(formOf(supportLang, targetConcept))}</p>
     <hr>
     <p class="tts-target">${safe(targetSentence)}</p>
     <p>${safe(supportSentence)}</p>
