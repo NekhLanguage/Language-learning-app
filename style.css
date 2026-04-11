@@ -369,8 +369,9 @@ button.selected {
   top: auto;
   bottom: 1.5rem;
   left: 1.25rem;
-  font-size: 0.7rem;
+  font-size: 1.4rem;
   letter-spacing: 0.14em;
+  padding: 1.1rem 1.9rem;
 }
 
 /* =========================
