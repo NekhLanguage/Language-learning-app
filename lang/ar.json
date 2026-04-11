@@ -1,0 +1,581 @@
+{
+  "uiStrings": {
+    "openApp": "افتح التطبيق",
+    "languagesTitle": "اللغات",
+    "chooseLanguage": "اختر لغة للدراسة",
+    "quitLearning": "إنهاء",
+    "sessionTitle": "جلسة اليوم",
+    "startSubtitle": "تعلم اللغات",
+    "chooseTranslation": "اختر الترجمة الصحيحة لـ:",
+    "originalSentence": "الجملة الأصلية:",
+    "fillMissing": "املأ الكلمة الناقصة:",
+    "inThisSentence": "في هذه الجملة:",
+    "check": "تحقق",
+    "continue": "متابعة",
+    "correct": "صحيح.",
+    "incorrect": "خطأ.",
+    "level": "المستوى",
+    "blueprint": "مخطط اللغة لنخ",
+    "skool": "مجتمع سكول",
+    "offer": "قم بتطوير نظامك اللغوي",
+    "sessionComplete": "اكتملت الجلسة",
+    "sessionFinished": "تم إنهاء الجلسة {n}."
+  },
+  "hubNames": {
+    "en": "الإنجليزية",
+    "pt": "البرتغالية",
+    "ja": "اليابانية",
+    "no": "النرويجية",
+    "ar": "العربية",
+    "ko": "الكورية",
+    "uk": "الأوكرانية"
+  },
+  "forms": {
+    "BIG": [
+      "كبير"
+    ],
+    "SMALL": [
+      "صغير"
+    ],
+    "GOOD": [
+      "جيد"
+    ],
+    "BAD": [
+      "سيئ"
+    ],
+    "NEW": [
+      "جديد"
+    ],
+    "OLD": [
+      "قديم"
+    ],
+    "EASY": [
+      "سهل"
+    ],
+    "DIFFICULT": [
+      "صعب"
+    ],
+    "MY": [
+      "لي"
+    ],
+    "YOUR": [
+      "لك"
+    ],
+    "HIS": [
+      "له"
+    ],
+    "HER": [
+      "لها"
+    ],
+    "OUR": [
+      "لنا"
+    ],
+    "THEIR": [
+      "لهم"
+    ],
+    "AND": [
+      "و"
+    ],
+    "BUT": [
+      "لكن"
+    ],
+    "ALSO": [
+      "أيضًا"
+    ],
+    "BECAUSE": [
+      "لأن"
+    ],
+    "IF": [
+      "إذا"
+    ],
+    "TOP": [
+      "أعلى"
+    ],
+    "BOTTOM": [
+      "أسفل"
+    ],
+    "UNDER": [
+      "تحت"
+    ],
+    "NEXT_TO": [
+      "بجانب"
+    ],
+    "FRONT": [
+      "أمام"
+    ],
+    "BEHIND": [
+      "خلف"
+    ],
+    "IN": [
+      "في"
+    ],
+    "ON": [
+      "على"
+    ],
+    "OFF": [
+      "خارج"
+    ],
+    "BETWEEN": [
+      "بين"
+    ],
+    "BACK": [
+      "عودة"
+    ],
+    "OUT": [
+      "خارج"
+    ],
+    "NORTH": [
+      "شمال"
+    ],
+    "SOUTH": [
+      "جنوب"
+    ],
+    "EAST": [
+      "شرق"
+    ],
+    "WEST": [
+      "غرب"
+    ],
+    "FOR": [
+      "لـ"
+    ],
+    "WITH": [
+      "مع"
+    ],
+    "FROM": [
+      "من"
+    ],
+    "TO": [
+      "إلى"
+    ],
+    "BY": [
+      "بواسطة"
+    ],
+    "WHILE": [
+      "بينما"
+    ],
+    "AS": [
+      "كـ"
+    ],
+    "WATER": {
+      "form": "ماء"
+    },
+    "FOOD": {
+      "form": "طعام"
+    },
+    "HOUSE": {
+      "form": "بيت",
+      "gender": "m"
+    },
+    "HOME": {
+      "form": "منزل",
+      "gender": "m"
+    },
+    "BOOK": {
+      "form": "كتاب",
+      "gender": "m"
+    },
+    "THING": {
+      "form": "شيء",
+      "gender": "m"
+    },
+    "JOB": {
+      "form": "وظيفة",
+      "gender": "f"
+    },
+    "ROOM": {
+      "form": "غرفة",
+      "gender": "f"
+    },
+    "BOY": {
+      "form": "ولد",
+      "gender": "m"
+    },
+    "GIRL": {
+      "form": "بنت",
+      "gender": "f"
+    },
+    "MAN": {
+      "form": "رجل",
+      "gender": "m"
+    },
+    "WOMAN": {
+      "form": "امرأة",
+      "gender": "f"
+    },
+    "MOM": {
+      "form": "أم",
+      "gender": "f"
+    },
+    "DAD": {
+      "form": "أب",
+      "gender": "m"
+    },
+    "SON": {
+      "form": "ابن",
+      "gender": "m"
+    },
+    "DAUGHTER": {
+      "form": "ابنة",
+      "gender": "f"
+    },
+    "BROTHER": {
+      "form": "أخ",
+      "gender": "m"
+    },
+    "SISTER": {
+      "form": "أخت",
+      "gender": "f"
+    },
+    "HEAD": {
+      "form": "رأس",
+      "gender": "m"
+    },
+    "ARM": {
+      "form": "ذراع",
+      "gender": "m"
+    },
+    "HAND": {
+      "form": "يد",
+      "gender": "f"
+    },
+    "LEG": {
+      "form": "ساق",
+      "gender": "f"
+    },
+    "FOOT": {
+      "form": "قدم",
+      "gender": "f"
+    },
+    "FINGER": {
+      "form": "إصبع",
+      "gender": "m"
+    },
+    "EYE": {
+      "form": "عين",
+      "gender": "f"
+    },
+    "MOUTH": {
+      "form": "فم",
+      "gender": "m"
+    },
+    "FACE": {
+      "form": "وجه",
+      "gender": "m"
+    },
+    "BREAKFAST": {
+      "form": "فطور",
+      "gender": "m"
+    },
+    "LUNCH": {
+      "form": "غداء",
+      "gender": "m"
+    },
+    "DINNER": {
+      "form": "عشاء",
+      "gender": "m"
+    },
+    "CLOTHES": {
+      "form": "ملابس"
+    },
+    "SHIRT": {
+      "form": "قميص",
+      "gender": "m"
+    },
+    "SHOES": {
+      "form": "حذاء"
+    },
+    "PHONE": {
+      "form": "هاتف",
+      "gender": "m"
+    },
+    "PANTS": {
+      "form": "بنطال"
+    },
+    "ONE": [
+      "واحد"
+    ],
+    "TWO": [
+      "اثنان"
+    ],
+    "THREE": [
+      "ثلاثة"
+    ],
+    "FOUR": [
+      "أربعة"
+    ],
+    "FIVE": [
+      "خمسة"
+    ],
+    "SIX": [
+      "ستة"
+    ],
+    "SEVEN": [
+      "سبعة"
+    ],
+    "EIGHT": [
+      "ثمانية"
+    ],
+    "NINE": [
+      "تسعة"
+    ],
+    "TEN": [
+      "عشرة"
+    ],
+    "ELEVEN": [
+      "أحد عشر"
+    ],
+    "TWELVE": [
+      "اثنا عشر"
+    ],
+    "THIRTEEN": [
+      "ثلاثة عشر"
+    ],
+    "FOURTEEN": [
+      "أربعة عشر"
+    ],
+    "FIFTEEN": [
+      "خمسة عشر"
+    ],
+    "SIXTEEN": [
+      "ستة عشر"
+    ],
+    "SEVENTEEN": [
+      "سبعة عشر"
+    ],
+    "EIGHTEEN": [
+      "ثمانية عشر"
+    ],
+    "NINETEEN": [
+      "تسعة عشر"
+    ],
+    "TWENTY": [
+      "عشرون"
+    ],
+    "PLEASE": [
+      "من فضلك"
+    ],
+    "MAYBE": [
+      "ربما"
+    ],
+    "JUST": [
+      "فقط"
+    ],
+    "YES": [
+      "نعم"
+    ],
+    "NO": [
+      "لا"
+    ],
+    "NOT": [
+      "ليس"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "أنا"
+    ],
+    "SECOND_PERSON": [
+      "أنت"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "أنتم"
+    ],
+    "HE": [
+      "هو"
+    ],
+    "SHE": [
+      "هي"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "نحن"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "هم"
+    ],
+    "ANY": [
+      "أي"
+    ],
+    "ONLY": [
+      "فقط"
+    ],
+    "ANOTHER": [
+      "آخر"
+    ],
+    "SOMETHING": [
+      "شيء"
+    ],
+    "WHO": [
+      "من"
+    ],
+    "WHAT": [
+      "ماذا"
+    ],
+    "WHEN": [
+      "متى"
+    ],
+    "WHERE": [
+      "أين"
+    ],
+    "WHY": [
+      "لماذا"
+    ],
+    "HOW": [
+      "كيف"
+    ],
+    "WHICH": [
+      "أي"
+    ],
+    "TODAY": [
+      "اليوم"
+    ],
+    "YESTERDAY": [
+      "أمس"
+    ],
+    "TOMORROW": [
+      "غدًا"
+    ],
+    "MORNING": [
+      "الصباح"
+    ],
+    "DAY": [
+      "يوم"
+    ],
+    "NIGHT": [
+      "الليل"
+    ],
+    "WEEK": [
+      "أسبوع"
+    ],
+    "MONTH": [
+      "شهر"
+    ],
+    "YEAR": [
+      "سنة"
+    ],
+    "EAT": {
+      "base": "أكل",
+      "1_singular": "آكل",
+      "2_singular": "تأكل",
+      "3_singular": "يأكل",
+      "1_plural": "نأكل",
+      "2_plural": "تأكلون",
+      "3_plural": "يأكلون"
+    },
+    "DRINK": {
+      "base": "شرب",
+      "1_singular": "أشرب",
+      "2_singular": "تشرب",
+      "3_singular": "يشرب",
+      "1_plural": "نشرب",
+      "2_plural": "تشربون",
+      "3_plural": "يشربون"
+    },
+    "READ": {
+      "base": "قرأ",
+      "1_singular": "أقرأ",
+      "2_singular": "تقرأ",
+      "3_singular": "يقرأ",
+      "1_plural": "نقرأ",
+      "2_plural": "تقرأون",
+      "3_plural": "يقرأون"
+    },
+    "SEE": {
+      "base": "رأى",
+      "1_singular": "أرى",
+      "2_singular": "ترى",
+      "3_singular": "يرى",
+      "1_plural": "نرى",
+      "2_plural": "ترون",
+      "3_plural": "يرون"
+    },
+    "HAVE": {
+      "base": "ملك",
+      "1_singular": "لدي",
+      "2_singular": "لديك",
+      "3_singular": "لديه",
+      "1_plural": "لدينا",
+      "2_plural": "لديكم",
+      "3_plural": "لديهم"
+    },
+    "DO": {
+      "base": "فعل",
+      "1_singular": "أفعل",
+      "2_singular": "تفعل",
+      "3_singular": "يفعل",
+      "1_plural": "نفعل",
+      "2_plural": "تفعلون",
+      "3_plural": "يفعلون"
+    },
+    "GO": {
+      "base": "ذهب",
+      "1_singular": "أذهب",
+      "2_singular": "تذهب",
+      "3_singular": "يذهب",
+      "1_plural": "نذهب",
+      "2_plural": "تذهبون",
+      "3_plural": "يذهبون"
+    },
+    "START": {
+      "base": "بدأ",
+      "1_singular": "أبدأ",
+      "2_singular": "تبدأ",
+      "3_singular": "يبدأ",
+      "1_plural": "نبدأ",
+      "2_plural": "تبدؤون",
+      "3_plural": "يبدؤون"
+    },
+    "STOP": {
+      "base": "توقف",
+      "1_singular": "أتوقف",
+      "2_singular": "تتوقف",
+      "3_singular": "يتوقف",
+      "1_plural": "نتوقف",
+      "2_plural": "تتوقفون",
+      "3_plural": "يتوقفون"
+    },
+    "SLEEP": {
+      "base": "نام",
+      "1_singular": "أنام",
+      "2_singular": "تنام",
+      "3_singular": "ينام",
+      "1_plural": "ننام",
+      "2_plural": "تنامون",
+      "3_plural": "ينامون"
+    },
+    "COME": {
+      "base": "أتى",
+      "1_singular": "آتي",
+      "2_singular": "تأتي",
+      "3_singular": "يأتي",
+      "1_plural": "نأتي",
+      "2_plural": "تأتون",
+      "3_plural": "يأتون"
+    },
+    "USE": {
+      "base": "استخدم",
+      "1_singular": "أستخدم",
+      "2_singular": "تستخدم",
+      "3_singular": "يستخدم",
+      "1_plural": "نستخدم",
+      "2_plural": "تستخدمون",
+      "3_plural": "يستخدمون"
+    },
+    "GET": {
+      "base": "حصل",
+      "1_singular": "أحصل",
+      "2_singular": "تحصل",
+      "3_singular": "يحصل",
+      "1_plural": "نحصل",
+      "2_plural": "تحصلون",
+      "3_plural": "يحصلون"
+    },
+    "BE": {
+      "base": "كان",
+      "1_singular": "أكون",
+      "2_singular": "تكون",
+      "3_singular": "يكون",
+      "1_plural": "نكون",
+      "2_plural": "تكونون",
+      "3_plural": "يكونون"
+    }
+  }
+}

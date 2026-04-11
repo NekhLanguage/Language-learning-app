@@ -13,15 +13,12 @@ function loadVoices() {
 loadVoices();
 speechSynthesis.onvoiceschanged = loadVoices;
 
-const voiceMap = {
-  en: "en-US",
-  pt: "pt-BR",
-  no: "nb-NO",
-  ja: "ja-JP",
-  ar: "ar-SA",
-  ko: "ko-KR",
-  uk: "uk-UA"
-};
+// Populated at startup by app.js via setVoiceMap()
+let voiceMap = {};
+
+export function setVoiceMap(map) {
+  voiceMap = map;
+}
 
 // --------------------
 // Public controls

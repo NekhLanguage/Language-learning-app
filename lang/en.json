@@ -1,0 +1,533 @@
+{
+  "uiStrings": {
+    "openApp": "OPEN APP",
+    "languagesTitle": "LANGUAGES",
+    "chooseLanguage": "Choose a language to study",
+    "quitLearning": "QUIT LEARNING",
+    "sessionTitle": "TODAY'S SESSION",
+    "startSubtitle": "Language learning",
+    "chooseTranslation": "Choose the correct translation for:",
+    "originalSentence": "Original sentence:",
+    "fillMissing": "Fill in the missing word:",
+    "inThisSentence": "In this sentence:",
+    "check": "Check",
+    "continue": "Continue",
+    "correct": "Correct.",
+    "incorrect": "Incorrect.",
+    "level": "Level",
+    "blueprint": "Nekh's Language Blueprint",
+    "skool": "Skool Community",
+    "offer": "Upgrade your language system",
+    "sessionComplete": "Session Complete",
+    "sessionFinished": "Session {n} finished.",
+    "enterEmail": "Enter your email",
+    "buyAccess": "Not a user? Get access",
+    "noAccess": "No access found for this email"
+  },
+  "hubNames": {
+    "en": "English",
+    "pt": "Portuguese",
+    "ja": "Japanese",
+    "no": "Norwegian",
+    "ar": "Arabic",
+    "ko": "Korean",
+    "uk": "Ukrainian"
+  },
+  "forms": {
+    "BIG": [
+      "big"
+    ],
+    "SMALL": [
+      "small"
+    ],
+    "GOOD": [
+      "good"
+    ],
+    "BAD": [
+      "bad"
+    ],
+    "NEW": [
+      "new"
+    ],
+    "OLD": [
+      "old"
+    ],
+    "EASY": [
+      "easy"
+    ],
+    "DIFFICULT": [
+      "difficult"
+    ],
+    "MY": [
+      "my"
+    ],
+    "YOUR": [
+      "your"
+    ],
+    "HIS": [
+      "his"
+    ],
+    "HER": [
+      "her"
+    ],
+    "OUR": [
+      "our"
+    ],
+    "THEIR": [
+      "their"
+    ],
+    "AND": [
+      "and"
+    ],
+    "BUT": [
+      "but"
+    ],
+    "ALSO": [
+      "also"
+    ],
+    "BECAUSE": [
+      "because"
+    ],
+    "IF": [
+      "if"
+    ],
+    "TOP": [
+      "top"
+    ],
+    "BOTTOM": [
+      "bottom"
+    ],
+    "UNDER": [
+      "under"
+    ],
+    "NEXT_TO": [
+      "next to"
+    ],
+    "FRONT": [
+      "front"
+    ],
+    "BEHIND": [
+      "behind"
+    ],
+    "IN": [
+      "in"
+    ],
+    "ON": [
+      "on"
+    ],
+    "OFF": [
+      "off"
+    ],
+    "BETWEEN": [
+      "between"
+    ],
+    "BACK": [
+      "back"
+    ],
+    "OUT": [
+      "out"
+    ],
+    "NORTH": [
+      "north"
+    ],
+    "SOUTH": [
+      "south"
+    ],
+    "EAST": [
+      "east"
+    ],
+    "WEST": [
+      "west"
+    ],
+    "FOR": [
+      "for"
+    ],
+    "WITH": [
+      "with"
+    ],
+    "FROM": [
+      "from"
+    ],
+    "TO": [
+      "to"
+    ],
+    "BY": [
+      "by"
+    ],
+    "WHILE": [
+      "while"
+    ],
+    "AS": [
+      "as"
+    ],
+    "WATER": {
+      "form": "water"
+    },
+    "FOOD": {
+      "form": "food"
+    },
+    "HOUSE": {
+      "form": "house",
+      "article": "a"
+    },
+    "HOME": {
+      "form": "home",
+      "article": "a"
+    },
+    "BOOK": {
+      "form": "book",
+      "article": "a"
+    },
+    "THING": {
+      "form": "thing",
+      "article": "a"
+    },
+    "JOB": {
+      "form": "job",
+      "article": "a"
+    },
+    "ROOM": {
+      "form": "room",
+      "article": "a"
+    },
+    "BOY": {
+      "form": "boy",
+      "article": "a"
+    },
+    "GIRL": {
+      "form": "girl",
+      "article": "a"
+    },
+    "MAN": {
+      "form": "man",
+      "article": "a"
+    },
+    "WOMAN": {
+      "form": "woman",
+      "article": "a"
+    },
+    "MOM": {
+      "form": "mom",
+      "article": "a"
+    },
+    "DAD": {
+      "form": "dad",
+      "article": "a"
+    },
+    "SON": {
+      "form": "son",
+      "article": "a"
+    },
+    "DAUGHTER": {
+      "form": "daughter",
+      "article": "a"
+    },
+    "BROTHER": {
+      "form": "brother",
+      "article": "a"
+    },
+    "SISTER": {
+      "form": "sister",
+      "article": "a"
+    },
+    "HEAD": {
+      "form": "head",
+      "article": "a"
+    },
+    "ARM": {
+      "form": "arm",
+      "article": "an"
+    },
+    "HAND": {
+      "form": "hand",
+      "article": "a"
+    },
+    "LEG": {
+      "form": "leg",
+      "article": "a"
+    },
+    "FOOT": {
+      "form": "foot",
+      "article": "a"
+    },
+    "FINGER": {
+      "form": "finger",
+      "article": "a"
+    },
+    "EYE": {
+      "form": "eye",
+      "article": "an"
+    },
+    "MOUTH": {
+      "form": "mouth",
+      "article": "a"
+    },
+    "FACE": {
+      "form": "face",
+      "article": "a"
+    },
+    "BREAKFAST": {
+      "form": "breakfast"
+    },
+    "LUNCH": {
+      "form": "lunch"
+    },
+    "DINNER": {
+      "form": "dinner"
+    },
+    "CLOTHES": {
+      "form": "clothes"
+    },
+    "SHIRT": {
+      "form": "shirt",
+      "article": "a"
+    },
+    "SHOES": {
+      "form": "shoes"
+    },
+    "PHONE": {
+      "form": "phone",
+      "article": "a"
+    },
+    "PANTS": {
+      "form": "pants"
+    },
+    "ONE": [
+      "one"
+    ],
+    "TWO": [
+      "two"
+    ],
+    "THREE": [
+      "three"
+    ],
+    "FOUR": [
+      "four"
+    ],
+    "FIVE": [
+      "five"
+    ],
+    "SIX": [
+      "six"
+    ],
+    "SEVEN": [
+      "seven"
+    ],
+    "EIGHT": [
+      "eight"
+    ],
+    "NINE": [
+      "nine"
+    ],
+    "TEN": [
+      "ten"
+    ],
+    "ELEVEN": [
+      "eleven"
+    ],
+    "TWELVE": [
+      "twelve"
+    ],
+    "THIRTEEN": [
+      "thirteen"
+    ],
+    "FOURTEEN": [
+      "fourteen"
+    ],
+    "FIFTEEN": [
+      "fifteen"
+    ],
+    "SIXTEEN": [
+      "sixteen"
+    ],
+    "SEVENTEEN": [
+      "seventeen"
+    ],
+    "EIGHTEEN": [
+      "eighteen"
+    ],
+    "NINETEEN": [
+      "nineteen"
+    ],
+    "TWENTY": [
+      "twenty"
+    ],
+    "PLEASE": [
+      "please"
+    ],
+    "MAYBE": [
+      "maybe"
+    ],
+    "JUST": [
+      "just"
+    ],
+    "YES": [
+      "yes"
+    ],
+    "NO": [
+      "no"
+    ],
+    "NOT": [
+      "not"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "I",
+      "me",
+      "my",
+      "mine"
+    ],
+    "SECOND_PERSON": [
+      "you",
+      "your",
+      "yours"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "you",
+      "your",
+      "yours"
+    ],
+    "HE": [
+      "he",
+      "him",
+      "his"
+    ],
+    "SHE": [
+      "she",
+      "her",
+      "hers"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "we",
+      "us",
+      "our",
+      "ours"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "they",
+      "them",
+      "their",
+      "theirs"
+    ],
+    "ANY": [
+      "any"
+    ],
+    "ONLY": [
+      "only"
+    ],
+    "ANOTHER": [
+      "another"
+    ],
+    "SOMETHING": [
+      "something"
+    ],
+    "WHO": [
+      "who"
+    ],
+    "WHAT": [
+      "what"
+    ],
+    "WHEN": [
+      "when"
+    ],
+    "WHERE": [
+      "where"
+    ],
+    "WHY": [
+      "why"
+    ],
+    "HOW": [
+      "how"
+    ],
+    "WHICH": [
+      "which"
+    ],
+    "TODAY": [
+      "today"
+    ],
+    "YESTERDAY": [
+      "yesterday"
+    ],
+    "TOMORROW": [
+      "tomorrow"
+    ],
+    "MORNING": [
+      "morning"
+    ],
+    "DAY": [
+      "day"
+    ],
+    "NIGHT": [
+      "night"
+    ],
+    "WEEK": [
+      "week"
+    ],
+    "MONTH": [
+      "month"
+    ],
+    "YEAR": [
+      "year"
+    ],
+    "DO": {
+      "base": "do",
+      "3_singular": "does"
+    },
+    "GO": {
+      "base": "go",
+      "3_singular": "goes"
+    },
+    "EAT": {
+      "base": "eat",
+      "3_singular": "eats"
+    },
+    "DRINK": {
+      "base": "drink",
+      "3_singular": "drinks"
+    },
+    "READ": {
+      "base": "read",
+      "3_singular": "reads"
+    },
+    "SEE": {
+      "base": "see",
+      "3_singular": "sees"
+    },
+    "START": {
+      "base": "start",
+      "3_singular": "starts"
+    },
+    "STOP": {
+      "base": "stop",
+      "3_singular": "stops"
+    },
+    "SLEEP": {
+      "base": "sleep",
+      "3_singular": "sleeps"
+    },
+    "HAVE": {
+      "base": "have",
+      "3_singular": "has"
+    },
+    "COME": {
+      "base": "come",
+      "3_singular": "comes"
+    },
+    "USE": {
+      "base": "use",
+      "3_singular": "uses"
+    },
+    "GET": {
+      "base": "get",
+      "3_singular": "gets"
+    },
+    "BE": {
+      "base": "be",
+      "1_singular": "am",
+      "2_singular": "are",
+      "3_singular": "is",
+      "1_plural": "are",
+      "2_plural": "are",
+      "3_plural": "are"
+    }
+  }
+}

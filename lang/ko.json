@@ -1,0 +1,448 @@
+{
+  "uiStrings": {
+    "openApp": "앱 열기",
+    "languagesTitle": "언어",
+    "chooseLanguage": "공부할 언어를 선택하세요",
+    "quitLearning": "종료",
+    "sessionTitle": "오늘의 세션",
+    "startSubtitle": "언어 학습",
+    "chooseTranslation": "올바른 번역을 선택하세요:",
+    "originalSentence": "원문:",
+    "fillMissing": "빈칸을 채우세요:",
+    "inThisSentence": "이 문장에서:",
+    "check": "확인",
+    "continue": "계속",
+    "correct": "정답입니다.",
+    "incorrect": "틀렸습니다.",
+    "level": "레벨",
+    "blueprint": "Nekh의 언어 설계",
+    "skool": "Skool 커뮤니티",
+    "offer": "언어 학습 시스템을 업그레이드하세요",
+    "sessionComplete": "세션 완료",
+    "sessionFinished": "세션 {n}이 완료되었습니다."
+  },
+  "hubNames": {
+    "en": "영어",
+    "pt": "포르투갈어",
+    "ja": "일본어",
+    "no": "노르웨이어",
+    "ar": "아랍어",
+    "ko": "한국어",
+    "uk": "우크라이나어"
+  },
+  "forms": {
+    "BIG": [
+      "큰"
+    ],
+    "SMALL": [
+      "작은"
+    ],
+    "GOOD": [
+      "좋은"
+    ],
+    "BAD": [
+      "나쁜"
+    ],
+    "NEW": [
+      "새로운"
+    ],
+    "OLD": [
+      "오래된"
+    ],
+    "EASY": [
+      "쉬운"
+    ],
+    "DIFFICULT": [
+      "어려운"
+    ],
+    "AND": [
+      "그리고"
+    ],
+    "BUT": [
+      "하지만"
+    ],
+    "ALSO": [
+      "또한"
+    ],
+    "BECAUSE": [
+      "왜냐하면"
+    ],
+    "IF": [
+      "만약"
+    ],
+    "TOP": [
+      "위"
+    ],
+    "BOTTOM": [
+      "아래"
+    ],
+    "UNDER": [
+      "밑에"
+    ],
+    "NEXT_TO": [
+      "옆에"
+    ],
+    "FRONT": [
+      "앞"
+    ],
+    "BEHIND": [
+      "뒤"
+    ],
+    "IN": [
+      "안"
+    ],
+    "ON": [
+      "위에"
+    ],
+    "OFF": [
+      "밖"
+    ],
+    "BETWEEN": [
+      "사이"
+    ],
+    "BACK": [
+      "뒤로"
+    ],
+    "OUT": [
+      "밖으로"
+    ],
+    "NORTH": [
+      "북"
+    ],
+    "SOUTH": [
+      "남"
+    ],
+    "EAST": [
+      "동"
+    ],
+    "WEST": [
+      "서"
+    ],
+    "FOR": [
+      "위해"
+    ],
+    "WITH": [
+      "함께"
+    ],
+    "FROM": [
+      "에서"
+    ],
+    "TO": [
+      "에게"
+    ],
+    "BY": [
+      "에 의해"
+    ],
+    "WHILE": [
+      "동안"
+    ],
+    "AS": [
+      "로서"
+    ],
+    "WATER": {
+      "form": "물"
+    },
+    "FOOD": {
+      "form": "음식"
+    },
+    "HOUSE": {
+      "form": "집"
+    },
+    "HOME": {
+      "form": "집"
+    },
+    "BOOK": {
+      "form": "책"
+    },
+    "THING": {
+      "form": "것"
+    },
+    "JOB": {
+      "form": "일"
+    },
+    "ROOM": {
+      "form": "방"
+    },
+    "BOY": {
+      "form": "소년"
+    },
+    "GIRL": {
+      "form": "소녀"
+    },
+    "MAN": {
+      "form": "남자"
+    },
+    "WOMAN": {
+      "form": "여자"
+    },
+    "MOM": {
+      "form": "엄마"
+    },
+    "DAD": {
+      "form": "아빠"
+    },
+    "SON": {
+      "form": "아들"
+    },
+    "DAUGHTER": {
+      "form": "딸"
+    },
+    "BROTHER": {
+      "form": "형제"
+    },
+    "SISTER": {
+      "form": "자매"
+    },
+    "HEAD": {
+      "form": "머리"
+    },
+    "ARM": {
+      "form": "팔"
+    },
+    "HAND": {
+      "form": "손"
+    },
+    "LEG": {
+      "form": "다리"
+    },
+    "FOOT": {
+      "form": "발"
+    },
+    "FINGER": {
+      "form": "손가락"
+    },
+    "EYE": {
+      "form": "눈"
+    },
+    "MOUTH": {
+      "form": "입"
+    },
+    "FACE": {
+      "form": "얼굴"
+    },
+    "BREAKFAST": {
+      "form": "아침식사"
+    },
+    "LUNCH": {
+      "form": "점심식사"
+    },
+    "DINNER": {
+      "form": "저녁식사"
+    },
+    "CLOTHES": {
+      "form": "옷"
+    },
+    "SHIRT": {
+      "form": "셔츠"
+    },
+    "SHOES": {
+      "form": "신발"
+    },
+    "PHONE": {
+      "form": "전화"
+    },
+    "PANTS": {
+      "form": "바지"
+    },
+    "ONE": [
+      "하나"
+    ],
+    "TWO": [
+      "둘"
+    ],
+    "THREE": [
+      "셋"
+    ],
+    "FOUR": [
+      "넷"
+    ],
+    "FIVE": [
+      "다섯"
+    ],
+    "SIX": [
+      "여섯"
+    ],
+    "SEVEN": [
+      "일곱"
+    ],
+    "EIGHT": [
+      "여덟"
+    ],
+    "NINE": [
+      "아홉"
+    ],
+    "TEN": [
+      "열"
+    ],
+    "ELEVEN": [
+      "열하나"
+    ],
+    "TWELVE": [
+      "열둘"
+    ],
+    "THIRTEEN": [
+      "열셋"
+    ],
+    "FOURTEEN": [
+      "열넷"
+    ],
+    "FIFTEEN": [
+      "열다섯"
+    ],
+    "SIXTEEN": [
+      "열여섯"
+    ],
+    "SEVENTEEN": [
+      "열일곱"
+    ],
+    "EIGHTEEN": [
+      "열여덟"
+    ],
+    "NINETEEN": [
+      "열아홉"
+    ],
+    "TWENTY": [
+      "스물"
+    ],
+    "PLEASE": [
+      "제발"
+    ],
+    "MAYBE": [
+      "아마"
+    ],
+    "JUST": [
+      "그냥"
+    ],
+    "YES": [
+      "네"
+    ],
+    "NO": [
+      "아니요"
+    ],
+    "NOT": [
+      "아니다"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "나",
+      "내"
+    ],
+    "SECOND_PERSON": [
+      "너",
+      "네"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "너희"
+    ],
+    "HE": [
+      "그"
+    ],
+    "SHE": [
+      "그녀"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "우리"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "그들"
+    ],
+    "ANY": [
+      "어떤"
+    ],
+    "ONLY": [
+      "오직"
+    ],
+    "ANOTHER": [
+      "다른"
+    ],
+    "SOMETHING": [
+      "무언가"
+    ],
+    "WHO": [
+      "누구"
+    ],
+    "WHAT": [
+      "무엇"
+    ],
+    "WHEN": [
+      "언제"
+    ],
+    "WHERE": [
+      "어디"
+    ],
+    "WHY": [
+      "왜"
+    ],
+    "HOW": [
+      "어떻게"
+    ],
+    "WHICH": [
+      "어느"
+    ],
+    "TODAY": [
+      "오늘"
+    ],
+    "YESTERDAY": [
+      "어제"
+    ],
+    "TOMORROW": [
+      "내일"
+    ],
+    "MORNING": [
+      "아침"
+    ],
+    "DAY": [
+      "날"
+    ],
+    "NIGHT": [
+      "밤"
+    ],
+    "WEEK": [
+      "주"
+    ],
+    "MONTH": [
+      "달"
+    ],
+    "YEAR": [
+      "년"
+    ],
+    "EAT": {
+      "base": "먹다"
+    },
+    "DRINK": {
+      "base": "마시다"
+    },
+    "READ": {
+      "base": "읽다"
+    },
+    "SEE": {
+      "base": "보다"
+    },
+    "HAVE": {
+      "base": "가지다"
+    },
+    "DO": {
+      "base": "하다"
+    },
+    "GO": {
+      "base": "가다"
+    },
+    "START": {
+      "base": "시작하다"
+    },
+    "STOP": {
+      "base": "멈추다"
+    },
+    "SLEEP": {
+      "base": "자다"
+    },
+    "COME": {
+      "base": "오다"
+    },
+    "USE": {
+      "base": "사용하다"
+    },
+    "GET": {
+      "base": "얻다"
+    }
+  }
+}

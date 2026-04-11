@@ -97,276 +97,76 @@
       }
     },
     {
-  "concept_id": "MY",
-  "type": "adjective",
-  "semantic_role": "possessive",
-  "core": true,
-  "interaction_profile": {
-    "see_translate": true,
-    "match": true,
-    "sentence_use": true,
-    "writing": true
-  }
-},
-{
-  "concept_id": "YOUR",
-  "type": "adjective",
-  "semantic_role": "possessive",
-  "core": true,
-  "interaction_profile": {
-    "see_translate": true,
-    "match": true,
-    "sentence_use": true,
-    "writing": true
-  }
-},
-{
-  "concept_id": "HIS",
-  "type": "adjective",
-  "semantic_role": "possessive",
-  "core": true,
-  "interaction_profile": {
-    "see_translate": true,
-    "match": true,
-    "sentence_use": true,
-    "writing": true
-  }
-},
-{
-  "concept_id": "HER",
-  "type": "adjective",
-  "semantic_role": "possessive",
-  "core": true,
-  "interaction_profile": {
-    "see_translate": true,
-    "match": true,
-    "sentence_use": true,
-    "writing": true
-  }
-},
-{
-  "concept_id": "OUR",
-  "type": "adjective",
-  "semantic_role": "possessive",
-  "core": true,
-  "interaction_profile": {
-    "see_translate": true,
-    "match": true,
-    "sentence_use": true,
-    "writing": true
-  }
-},
-{
-  "concept_id": "THEIR",
-  "type": "adjective",
-  "semantic_role": "possessive",
-  "core": true,
-  "interaction_profile": {
-    "see_translate": true,
-    "match": true,
-    "sentence_use": true,
-    "writing": true
-  }
-}
-  ],
-  "languages": {
-    "en": {
-      "label": "English",
-      "forms": {
-        "BIG": [
-          "big"
-        ],
-        "SMALL": [
-          "small"
-        ],
-        "GOOD": [
-          "good"
-        ],
-        "BAD": [
-          "bad"
-        ],
-        "NEW": [
-          "new"
-        ],
-        "OLD": [
-          "old"
-        ],
-        "EASY": [
-          "easy"
-        ],
-        "DIFFICULT": [
-          "difficult"
-        ],
-        "MY": ["my"],
-"YOUR": ["your"],
-"HIS": ["his"],
-"HER": ["her"],
-"OUR": ["our"],
-"THEIR": ["their"]
+      "concept_id": "MY",
+      "type": "adjective",
+      "semantic_role": "possessive",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
       }
     },
-    "pt": {
-      "label": "Portuguese",
-      "forms": {
-        "BIG": [
-          "grande"
-        ],
-        "SMALL": [
-          "pequeno"
-        ],
-        "GOOD": [
-          "bom"
-        ],
-        "BAD": [
-          "ruim"
-        ],
-        "NEW": [
-          "novo"
-        ],
-        "OLD": [
-          "velho"
-        ],
-        "EASY": [
-          "fácil"
-        ],
-        "DIFFICULT": [
-          "difícil"
-        ],
-        "MY": ["meu"],
-"YOUR": ["seu"],
-"HIS": ["dele"],
-"HER": ["dela"],
-"OUR": ["nosso"],
-"THEIR": ["deles"]
+    {
+      "concept_id": "YOUR",
+      "type": "adjective",
+      "semantic_role": "possessive",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
       }
     },
-    "ja": {
-      "label": "Japanese",
-      "forms": {
-        "BIG": [
-          "大きい"
-        ],
-        "SMALL": [
-          "小さい"
-        ],
-        "GOOD": [
-          "良い"
-        ],
-        "BAD": [
-          "悪い"
-        ],
-        "NEW": [
-          "新しい"
-        ],
-        "OLD": [
-          "古い"
-        ],
-        "EASY": [
-          "簡単"
-        ],
-        "DIFFICULT": [
-          "難しい"
-        ],
-        "MY": ["私の"],
-"YOUR": ["あなたの"],
-"HIS": ["彼の"],
-"HER": ["彼女の"],
-"OUR": ["私たちの"],
-"THEIR": ["彼らの"]
+    {
+      "concept_id": "HIS",
+      "type": "adjective",
+      "semantic_role": "possessive",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
       }
     },
-    "no": {
-      "label": "Norwegian (Bokmål)",
-      "forms": {
-        "BIG": [
-          "stor"
-        ],
-        "SMALL": [
-          "liten"
-        ],
-        "GOOD": [
-          "god",
-          "bra"
-        ],
-        "BAD": [
-          "dårlig"
-        ],
-        "NEW": [
-          "ny"
-        ],
-        "OLD": [
-          "gammel"
-        ],
-        "EASY": [
-          "lett"
-        ],
-        "DIFFICULT": [
-          "vanskelig"
-        ],
-        "MY": ["min"],
-"YOUR": ["din"],
-"HIS": ["hans"],
-"HER": ["hennes"],
-"OUR": ["vår"],
-"THEIR": ["deres"]
+    {
+      "concept_id": "HER",
+      "type": "adjective",
+      "semantic_role": "possessive",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
       }
     },
-    "ar": {
-  "label": "Arabic",
-  "forms": {
-    "BIG": ["كبير"],
-    "SMALL": ["صغير"],
-    "GOOD": ["جيد"],
-    "BAD": ["سيئ"],
-    "NEW": ["جديد"],
-    "OLD": ["قديم"],
-    "EASY": ["سهل"],
-    "DIFFICULT": ["صعب"],
-
-    "MY": ["لي"],
-    "YOUR": ["لك"],
-    "HIS": ["له"],
-    "HER": ["لها"],
-    "OUR": ["لنا"],
-    "THEIR": ["لهم"]
-  }
-},
-"ko": {
-  "label": "한국어",
-  "forms": {
-
-    "BIG": ["큰"],
-    "SMALL": ["작은"],
-    "GOOD": ["좋은"],
-    "BAD": ["나쁜"],
-    "NEW": ["새로운"],
-    "OLD": ["오래된"],
-    "EASY": ["쉬운"],
-    "DIFFICULT": ["어려운"]
-
-  }
-},
-"uk": {
-  "label": "Українська",
-  "forms": {
-
-    "BIG": ["великий"],
-    "SMALL": ["малий"],
-    "GOOD": ["добрий"],
-    "BAD": ["поганий"],
-    "NEW": ["новий"],
-    "OLD": ["старий"],
-    "EASY": ["легкий"],
-    "DIFFICULT": ["важкий"],
-
-    "MY": ["мій"],
-    "YOUR": ["твій"],
-    "HIS": ["його"],
-    "HER": ["її"],
-    "OUR": ["наш"],
-    "THEIR": ["їхній"]
-
-  }
-}
-  }
+    {
+      "concept_id": "OUR",
+      "type": "adjective",
+      "semantic_role": "possessive",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "THEIR",
+      "type": "adjective",
+      "semantic_role": "possessive",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    }
+  ]
 }

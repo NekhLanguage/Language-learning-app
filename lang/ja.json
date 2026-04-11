@@ -1,0 +1,469 @@
+{
+  "uiStrings": {
+    "openApp": "アプリを開く",
+    "languagesTitle": "言語",
+    "chooseLanguage": "学習する言語を選んでください",
+    "quitLearning": "終了",
+    "sessionTitle": "今日のセッション",
+    "startSubtitle": "言語学習",
+    "chooseTranslation": "正しい翻訳を選んでください:",
+    "originalSentence": "元の文:",
+    "fillMissing": "空欄を埋めてください:",
+    "inThisSentence": "この文では:",
+    "check": "確認",
+    "continue": "続ける",
+    "correct": "正解。",
+    "incorrect": "不正解。",
+    "level": "レベル",
+    "blueprint": "Nekhの言語プラン",
+    "skool": "Skoolコミュニティ",
+    "offer": "語学システムをアップグレードする",
+    "sessionComplete": "セッション完了",
+    "sessionFinished": "セッション {n} が完了しました。"
+  },
+  "hubNames": {
+    "en": "英語",
+    "pt": "ポルトガル語",
+    "ja": "日本語",
+    "no": "ノルウェー語",
+    "ar": "アラビア語",
+    "ko": "韓国語",
+    "uk": "ウクライナ語"
+  },
+  "forms": {
+    "BIG": [
+      "大きい"
+    ],
+    "SMALL": [
+      "小さい"
+    ],
+    "GOOD": [
+      "良い"
+    ],
+    "BAD": [
+      "悪い"
+    ],
+    "NEW": [
+      "新しい"
+    ],
+    "OLD": [
+      "古い"
+    ],
+    "EASY": [
+      "簡単"
+    ],
+    "DIFFICULT": [
+      "難しい"
+    ],
+    "MY": [
+      "私の"
+    ],
+    "YOUR": [
+      "あなたの"
+    ],
+    "HIS": [
+      "彼の"
+    ],
+    "HER": [
+      "彼女の"
+    ],
+    "OUR": [
+      "私たちの"
+    ],
+    "THEIR": [
+      "彼らの"
+    ],
+    "AND": [
+      "そして"
+    ],
+    "BUT": [
+      "でも"
+    ],
+    "ALSO": [
+      "も"
+    ],
+    "BECAUSE": [
+      "から"
+    ],
+    "IF": [
+      "もし"
+    ],
+    "TOP": [
+      "上"
+    ],
+    "BOTTOM": [
+      "下"
+    ],
+    "UNDER": [
+      "下に"
+    ],
+    "NEXT_TO": [
+      "隣に"
+    ],
+    "FRONT": [
+      "前"
+    ],
+    "BEHIND": [
+      "後ろ"
+    ],
+    "IN": [
+      "中に"
+    ],
+    "ON": [
+      "上に"
+    ],
+    "OFF": [
+      "外"
+    ],
+    "BETWEEN": [
+      "間に"
+    ],
+    "BACK": [
+      "戻る"
+    ],
+    "OUT": [
+      "外"
+    ],
+    "NORTH": [
+      "北"
+    ],
+    "SOUTH": [
+      "南"
+    ],
+    "EAST": [
+      "東"
+    ],
+    "WEST": [
+      "西"
+    ],
+    "FOR": [
+      "ために"
+    ],
+    "WITH": [
+      "と"
+    ],
+    "FROM": [
+      "から"
+    ],
+    "TO": [
+      "へ"
+    ],
+    "BY": [
+      "で"
+    ],
+    "WHILE": [
+      "間に"
+    ],
+    "AS": [
+      "として"
+    ],
+    "WATER": [
+      "水"
+    ],
+    "FOOD": [
+      "食べ物"
+    ],
+    "HOUSE": [
+      "家"
+    ],
+    "HOME": [
+      "家"
+    ],
+    "BOOK": [
+      "本"
+    ],
+    "THING": [
+      "物"
+    ],
+    "JOB": [
+      "仕事"
+    ],
+    "ROOM": [
+      "部屋"
+    ],
+    "BOY": [
+      "男の子"
+    ],
+    "GIRL": [
+      "女の子"
+    ],
+    "MAN": [
+      "男"
+    ],
+    "WOMAN": [
+      "女"
+    ],
+    "MOM": [
+      "母"
+    ],
+    "DAD": [
+      "父"
+    ],
+    "SON": [
+      "息子"
+    ],
+    "DAUGHTER": [
+      "娘"
+    ],
+    "BROTHER": [
+      "兄"
+    ],
+    "SISTER": [
+      "姉"
+    ],
+    "HEAD": [
+      "頭"
+    ],
+    "ARM": [
+      "腕"
+    ],
+    "HAND": [
+      "手"
+    ],
+    "LEG": [
+      "脚"
+    ],
+    "FOOT": [
+      "足"
+    ],
+    "FINGER": [
+      "指"
+    ],
+    "EYE": [
+      "目"
+    ],
+    "MOUTH": [
+      "口"
+    ],
+    "FACE": [
+      "顔"
+    ],
+    "BREAKFAST": [
+      "朝ご飯"
+    ],
+    "LUNCH": [
+      "昼ご飯"
+    ],
+    "DINNER": [
+      "夕ご飯"
+    ],
+    "CLOTHES": [
+      "服"
+    ],
+    "SHIRT": [
+      "シャツ"
+    ],
+    "SHOES": [
+      "靴"
+    ],
+    "PHONE": [
+      "電話"
+    ],
+    "PANTS": [
+      "ズボン"
+    ],
+    "ONE": [
+      "一"
+    ],
+    "TWO": [
+      "二"
+    ],
+    "THREE": [
+      "三"
+    ],
+    "FOUR": [
+      "四"
+    ],
+    "FIVE": [
+      "五"
+    ],
+    "SIX": [
+      "六"
+    ],
+    "SEVEN": [
+      "七"
+    ],
+    "EIGHT": [
+      "八"
+    ],
+    "NINE": [
+      "九"
+    ],
+    "TEN": [
+      "十"
+    ],
+    "ELEVEN": [
+      "十一"
+    ],
+    "TWELVE": [
+      "十二"
+    ],
+    "THIRTEEN": [
+      "十三"
+    ],
+    "FOURTEEN": [
+      "十四"
+    ],
+    "FIFTEEN": [
+      "十五"
+    ],
+    "SIXTEEN": [
+      "十六"
+    ],
+    "SEVENTEEN": [
+      "十七"
+    ],
+    "EIGHTEEN": [
+      "十八"
+    ],
+    "NINETEEN": [
+      "十九"
+    ],
+    "TWENTY": [
+      "二十"
+    ],
+    "PLEASE": [
+      "お願いします"
+    ],
+    "MAYBE": [
+      "たぶん"
+    ],
+    "JUST": [
+      "だけ"
+    ],
+    "YES": [
+      "はい"
+    ],
+    "NO": [
+      "いいえ"
+    ],
+    "NOT": [
+      "ない"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "私",
+      "僕"
+    ],
+    "SECOND_PERSON": [
+      "あなた"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "あなたたち"
+    ],
+    "HE": [
+      "彼"
+    ],
+    "SHE": [
+      "彼女"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "私たち"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "彼ら"
+    ],
+    "ANY": [
+      "どれでも"
+    ],
+    "ONLY": [
+      "だけ"
+    ],
+    "ANOTHER": [
+      "別の"
+    ],
+    "SOMETHING": [
+      "何か"
+    ],
+    "WHO": [
+      "誰"
+    ],
+    "WHAT": [
+      "何"
+    ],
+    "WHEN": [
+      "いつ"
+    ],
+    "WHERE": [
+      "どこ"
+    ],
+    "WHY": [
+      "なぜ"
+    ],
+    "HOW": [
+      "どうやって"
+    ],
+    "WHICH": [
+      "どれ"
+    ],
+    "TODAY": [
+      "今日"
+    ],
+    "YESTERDAY": [
+      "昨日"
+    ],
+    "TOMORROW": [
+      "明日"
+    ],
+    "MORNING": [
+      "朝"
+    ],
+    "DAY": [
+      "日"
+    ],
+    "NIGHT": [
+      "夜"
+    ],
+    "WEEK": [
+      "週"
+    ],
+    "MONTH": [
+      "月"
+    ],
+    "YEAR": [
+      "年"
+    ],
+    "EAT": {
+      "base": "食べる"
+    },
+    "DRINK": {
+      "base": "飲む"
+    },
+    "READ": {
+      "base": "読む"
+    },
+    "SEE": {
+      "base": "見る"
+    },
+    "SLEEP": {
+      "base": "寝る"
+    },
+    "HAVE": {
+      "base": "持つ"
+    },
+    "DO": {
+      "base": "する"
+    },
+    "GO": {
+      "base": "行く"
+    },
+    "START": {
+      "base": "始める"
+    },
+    "STOP": {
+      "base": "止める"
+    },
+    "COME": {
+      "base": "来る"
+    },
+    "USE": {
+      "base": "使う"
+    },
+    "GET": {
+      "base": "得る"
+    },
+    "BE": {
+      "base": "だ",
+      "present": "です"
+    }
+  }
+}

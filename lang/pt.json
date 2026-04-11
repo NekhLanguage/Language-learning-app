@@ -1,0 +1,595 @@
+{
+  "uiStrings": {
+    "openApp": "ABRIR APP",
+    "languagesTitle": "IDIOMAS",
+    "chooseLanguage": "Escolha um idioma para estudar",
+    "quitLearning": "SAIR",
+    "sessionTitle": "SESSÃO DE HOJE",
+    "startSubtitle": "Aprendizado de idiomas",
+    "chooseTranslation": "Escolha a tradução correta para:",
+    "originalSentence": "Frase original:",
+    "fillMissing": "Preencha a palavra que falta:",
+    "inThisSentence": "Nesta frase:",
+    "check": "Verificar",
+    "continue": "Continuar",
+    "correct": "Correto.",
+    "incorrect": "Incorreto.",
+    "level": "Nível",
+    "blueprint": "Plano de Idiomas do Nekh",
+    "skool": "Comunidade Skool",
+    "offer": "Melhore seu sistema de idiomas",
+    "sessionComplete": "Sessão concluída",
+    "sessionFinished": "Sessão {n} concluída."
+  },
+  "hubNames": {
+    "en": "Inglês",
+    "pt": "Português",
+    "ja": "Japonês",
+    "no": "Norueguês",
+    "ar": "Árabe",
+    "ko": "Coreano",
+    "uk": "Ucraniano"
+  },
+  "forms": {
+    "BIG": [
+      "grande"
+    ],
+    "SMALL": [
+      "pequeno"
+    ],
+    "GOOD": [
+      "bom"
+    ],
+    "BAD": [
+      "ruim"
+    ],
+    "NEW": [
+      "novo"
+    ],
+    "OLD": [
+      "velho"
+    ],
+    "EASY": [
+      "fácil"
+    ],
+    "DIFFICULT": [
+      "difícil"
+    ],
+    "MY": [
+      "meu"
+    ],
+    "YOUR": [
+      "seu"
+    ],
+    "HIS": [
+      "dele"
+    ],
+    "HER": [
+      "dela"
+    ],
+    "OUR": [
+      "nosso"
+    ],
+    "THEIR": [
+      "deles"
+    ],
+    "AND": [
+      "e"
+    ],
+    "BUT": [
+      "mas"
+    ],
+    "ALSO": [
+      "também"
+    ],
+    "BECAUSE": [
+      "porque"
+    ],
+    "IF": [
+      "se"
+    ],
+    "TOP": [
+      "topo"
+    ],
+    "BOTTOM": [
+      "baixo"
+    ],
+    "UNDER": [
+      "embaixo"
+    ],
+    "NEXT_TO": [
+      "ao lado"
+    ],
+    "FRONT": [
+      "frente"
+    ],
+    "BEHIND": [
+      "atrás"
+    ],
+    "IN": [
+      "em"
+    ],
+    "ON": [
+      "em cima"
+    ],
+    "OFF": [
+      "fora"
+    ],
+    "BETWEEN": [
+      "entre"
+    ],
+    "BACK": [
+      "volta"
+    ],
+    "OUT": [
+      "fora"
+    ],
+    "NORTH": [
+      "norte"
+    ],
+    "SOUTH": [
+      "sul"
+    ],
+    "EAST": [
+      "leste"
+    ],
+    "WEST": [
+      "oeste"
+    ],
+    "FOR": [
+      "para"
+    ],
+    "WITH": [
+      "com"
+    ],
+    "FROM": [
+      "de"
+    ],
+    "TO": [
+      "para"
+    ],
+    "BY": [
+      "por"
+    ],
+    "WHILE": [
+      "enquanto"
+    ],
+    "AS": [
+      "como"
+    ],
+    "WATER": {
+      "form": "água"
+    },
+    "FOOD": {
+      "form": "comida"
+    },
+    "HOUSE": {
+      "form": "casa",
+      "gender": "f"
+    },
+    "HOME": {
+      "form": "lar",
+      "gender": "m"
+    },
+    "BOOK": {
+      "form": "livro",
+      "gender": "m"
+    },
+    "THING": {
+      "form": "coisa",
+      "gender": "f"
+    },
+    "JOB": {
+      "form": "trabalho",
+      "gender": "m"
+    },
+    "ROOM": {
+      "form": "quarto",
+      "gender": "m"
+    },
+    "BOY": {
+      "form": "menino",
+      "gender": "m"
+    },
+    "GIRL": {
+      "form": "menina",
+      "gender": "f"
+    },
+    "MAN": {
+      "form": "homem",
+      "gender": "m"
+    },
+    "WOMAN": {
+      "form": "mulher",
+      "gender": "f"
+    },
+    "MOM": {
+      "form": "mãe",
+      "gender": "f"
+    },
+    "DAD": {
+      "form": "pai",
+      "gender": "m"
+    },
+    "SON": {
+      "form": "filho",
+      "gender": "m"
+    },
+    "DAUGHTER": {
+      "form": "filha",
+      "gender": "f"
+    },
+    "BROTHER": {
+      "form": "irmão",
+      "gender": "m"
+    },
+    "SISTER": {
+      "form": "irmã",
+      "gender": "f"
+    },
+    "HEAD": {
+      "form": "cabeça",
+      "gender": "f"
+    },
+    "ARM": {
+      "form": "braço",
+      "gender": "m"
+    },
+    "HAND": {
+      "form": "mão",
+      "gender": "f"
+    },
+    "LEG": {
+      "form": "perna",
+      "gender": "f"
+    },
+    "FOOT": {
+      "form": "pé",
+      "gender": "m"
+    },
+    "FINGER": {
+      "form": "dedo",
+      "gender": "m"
+    },
+    "EYE": {
+      "form": "olho",
+      "gender": "m"
+    },
+    "MOUTH": {
+      "form": "boca",
+      "gender": "f"
+    },
+    "FACE": {
+      "form": "rosto",
+      "gender": "m"
+    },
+    "BREAKFAST": {
+      "form": "café da manhã",
+      "gender": "m"
+    },
+    "LUNCH": {
+      "form": "almoço",
+      "gender": "m"
+    },
+    "DINNER": {
+      "form": "jantar",
+      "gender": "m"
+    },
+    "CLOTHES": {
+      "form": "roupas"
+    },
+    "SHIRT": {
+      "form": "camisa",
+      "gender": "f"
+    },
+    "SHOES": {
+      "form": "sapatos",
+      "gender": "m"
+    },
+    "PHONE": {
+      "form": "telefone",
+      "gender": "m"
+    },
+    "PANTS": {
+      "form": "calças",
+      "gender": "f"
+    },
+    "ONE": [
+      "um"
+    ],
+    "TWO": [
+      "dois"
+    ],
+    "THREE": [
+      "três"
+    ],
+    "FOUR": [
+      "quatro"
+    ],
+    "FIVE": [
+      "cinco"
+    ],
+    "SIX": [
+      "seis"
+    ],
+    "SEVEN": [
+      "sete"
+    ],
+    "EIGHT": [
+      "oito"
+    ],
+    "NINE": [
+      "nove"
+    ],
+    "TEN": [
+      "dez"
+    ],
+    "ELEVEN": [
+      "onze"
+    ],
+    "TWELVE": [
+      "doze"
+    ],
+    "THIRTEEN": [
+      "treze"
+    ],
+    "FOURTEEN": [
+      "quatorze"
+    ],
+    "FIFTEEN": [
+      "quinze"
+    ],
+    "SIXTEEN": [
+      "dezesseis"
+    ],
+    "SEVENTEEN": [
+      "dezessete"
+    ],
+    "EIGHTEEN": [
+      "dezoito"
+    ],
+    "NINETEEN": [
+      "dezenove"
+    ],
+    "TWENTY": [
+      "vinte"
+    ],
+    "PLEASE": [
+      "por favor"
+    ],
+    "MAYBE": [
+      "talvez"
+    ],
+    "JUST": [
+      "só"
+    ],
+    "YES": [
+      "sim"
+    ],
+    "NO": [
+      "não"
+    ],
+    "NOT": [
+      "não"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "eu",
+      "meu",
+      "minha"
+    ],
+    "SECOND_PERSON": [
+      "você",
+      "seu",
+      "sua"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "vocês",
+      "seu",
+      "sua"
+    ],
+    "HE": [
+      "ele",
+      "dele"
+    ],
+    "SHE": [
+      "ela",
+      "dela"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "nós",
+      "nosso",
+      "nossa"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "eles",
+      "elas",
+      "deles",
+      "delas"
+    ],
+    "ANY": [
+      "qualquer"
+    ],
+    "ONLY": [
+      "só"
+    ],
+    "ANOTHER": [
+      "outro"
+    ],
+    "SOMETHING": [
+      "algo"
+    ],
+    "WHO": [
+      "quem"
+    ],
+    "WHAT": [
+      "o que"
+    ],
+    "WHEN": [
+      "quando"
+    ],
+    "WHERE": [
+      "onde"
+    ],
+    "WHY": [
+      "por que"
+    ],
+    "HOW": [
+      "como"
+    ],
+    "WHICH": [
+      "qual"
+    ],
+    "TODAY": [
+      "hoje"
+    ],
+    "YESTERDAY": [
+      "ontem"
+    ],
+    "TOMORROW": [
+      "amanhã"
+    ],
+    "MORNING": [
+      "manhã"
+    ],
+    "DAY": [
+      "dia"
+    ],
+    "NIGHT": [
+      "noite"
+    ],
+    "WEEK": [
+      "semana"
+    ],
+    "MONTH": [
+      "mês"
+    ],
+    "YEAR": [
+      "ano"
+    ],
+    "EAT": {
+      "base": "comer",
+      "1_singular": "como",
+      "2_singular": "comes",
+      "3_singular": "come",
+      "1_plural": "comemos",
+      "2_plural": "comem",
+      "3_plural": "comem"
+    },
+    "DRINK": {
+      "base": "beber",
+      "1_singular": "bebo",
+      "2_singular": "bebes",
+      "3_singular": "bebe",
+      "1_plural": "bebemos",
+      "2_plural": "bebem",
+      "3_plural": "bebem"
+    },
+    "READ": {
+      "base": "ler",
+      "1_singular": "leio",
+      "2_singular": "lês",
+      "3_singular": "lê",
+      "1_plural": "lemos",
+      "2_plural": "leem",
+      "3_plural": "leem"
+    },
+    "SEE": {
+      "base": "ver",
+      "1_singular": "vejo",
+      "2_singular": "vês",
+      "3_singular": "vê",
+      "1_plural": "vemos",
+      "2_plural": "veem",
+      "3_plural": "veem"
+    },
+    "HAVE": {
+      "base": "ter",
+      "1_singular": "tenho",
+      "2_singular": "tens",
+      "3_singular": "tem",
+      "1_plural": "temos",
+      "2_plural": "têm",
+      "3_plural": "têm"
+    },
+    "DO": {
+      "base": "fazer",
+      "1_singular": "faço",
+      "2_singular": "fazes",
+      "3_singular": "faz",
+      "1_plural": "fazemos",
+      "2_plural": "fazem",
+      "3_plural": "fazem"
+    },
+    "GO": {
+      "base": "ir",
+      "1_singular": "vou",
+      "2_singular": "vais",
+      "3_singular": "vai",
+      "1_plural": "vamos",
+      "2_plural": "vão",
+      "3_plural": "vão"
+    },
+    "START": {
+      "base": "começar",
+      "1_singular": "começo",
+      "2_singular": "começas",
+      "3_singular": "começa",
+      "1_plural": "começamos",
+      "2_plural": "começam",
+      "3_plural": "começam"
+    },
+    "STOP": {
+      "base": "parar",
+      "1_singular": "paro",
+      "2_singular": "paras",
+      "3_singular": "para",
+      "1_plural": "paramos",
+      "2_plural": "param",
+      "3_plural": "param"
+    },
+    "SLEEP": {
+      "base": "dormir",
+      "1_singular": "durmo",
+      "2_singular": "dormes",
+      "3_singular": "dorme",
+      "1_plural": "dormimos",
+      "2_plural": "dormem",
+      "3_plural": "dormem"
+    },
+    "COME": {
+      "base": "vir",
+      "1_singular": "venho",
+      "2_singular": "vens",
+      "3_singular": "vem",
+      "1_plural": "vimos",
+      "2_plural": "vêm",
+      "3_plural": "vêm"
+    },
+    "USE": {
+      "base": "usar",
+      "1_singular": "uso",
+      "2_singular": "usas",
+      "3_singular": "usa",
+      "1_plural": "usamos",
+      "2_plural": "usam",
+      "3_plural": "usam"
+    },
+    "GET": {
+      "base": "pegar",
+      "1_singular": "pego",
+      "2_singular": "pegas",
+      "3_singular": "pega",
+      "1_plural": "pegamos",
+      "2_plural": "pegam",
+      "3_plural": "pegam"
+    },
+    "BE": {
+      "base": "ser",
+      "1_singular": "sou",
+      "2_singular": "é",
+      "3_singular": "é",
+      "1_plural": "somos",
+      "3_plural": "são"
+    }
+  }
+}

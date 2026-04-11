@@ -1,0 +1,538 @@
+{
+  "uiStrings": {
+    "openApp": "ÅPNE APP",
+    "languagesTitle": "SPRÅK",
+    "chooseLanguage": "Velg et språk å studere",
+    "quitLearning": "AVSLUTT",
+    "sessionTitle": "DAGENS ØKT",
+    "startSubtitle": "Språklæring",
+    "chooseTranslation": "Velg riktig oversettelse for:",
+    "originalSentence": "Original setning:",
+    "fillMissing": "Fyll inn det manglende ordet:",
+    "inThisSentence": "I denne setningen:",
+    "check": "Sjekk",
+    "continue": "Fortsett",
+    "correct": "Riktig.",
+    "incorrect": "Feil.",
+    "level": "Nivå",
+    "blueprint": "Nekh's språkplan",
+    "skool": "Skool-fellesskap",
+    "offer": "Forbedre din egen språkplan",
+    "sessionComplete": "Økt fullført",
+    "sessionFinished": "Økt {n} fullført."
+  },
+  "hubNames": {
+    "en": "Engelsk",
+    "pt": "Portugisisk",
+    "ja": "Japansk",
+    "no": "Norsk",
+    "ar": "Arabisk",
+    "ko": "Koreansk",
+    "uk": "Ukrainsk"
+  },
+  "forms": {
+    "BIG": [
+      "stor"
+    ],
+    "SMALL": [
+      "liten"
+    ],
+    "GOOD": [
+      "god",
+      "bra"
+    ],
+    "BAD": [
+      "dårlig"
+    ],
+    "NEW": [
+      "ny"
+    ],
+    "OLD": [
+      "gammel"
+    ],
+    "EASY": [
+      "lett"
+    ],
+    "DIFFICULT": [
+      "vanskelig"
+    ],
+    "MY": [
+      "min"
+    ],
+    "YOUR": [
+      "din"
+    ],
+    "HIS": [
+      "hans"
+    ],
+    "HER": [
+      "hennes"
+    ],
+    "OUR": [
+      "vår"
+    ],
+    "THEIR": [
+      "deres"
+    ],
+    "AND": [
+      "og"
+    ],
+    "BUT": [
+      "men"
+    ],
+    "ALSO": [
+      "også"
+    ],
+    "BECAUSE": [
+      "fordi"
+    ],
+    "IF": [
+      "hvis"
+    ],
+    "TOP": [
+      "topp"
+    ],
+    "BOTTOM": [
+      "bunn"
+    ],
+    "UNDER": [
+      "under"
+    ],
+    "NEXT_TO": [
+      "ved siden av"
+    ],
+    "FRONT": [
+      "foran"
+    ],
+    "BEHIND": [
+      "bak"
+    ],
+    "IN": [
+      "i"
+    ],
+    "ON": [
+      "på"
+    ],
+    "OFF": [
+      "av"
+    ],
+    "BETWEEN": [
+      "mellom"
+    ],
+    "BACK": [
+      "tilbake"
+    ],
+    "OUT": [
+      "ut"
+    ],
+    "NORTH": [
+      "nord"
+    ],
+    "SOUTH": [
+      "sør"
+    ],
+    "EAST": [
+      "øst"
+    ],
+    "WEST": [
+      "vest"
+    ],
+    "FOR": [
+      "for"
+    ],
+    "WITH": [
+      "med"
+    ],
+    "FROM": [
+      "fra"
+    ],
+    "TO": [
+      "til"
+    ],
+    "BY": [
+      "med",
+      "av"
+    ],
+    "WHILE": [
+      "mens"
+    ],
+    "AS": [
+      "som"
+    ],
+    "WATER": {
+      "form": "vann"
+    },
+    "FOOD": {
+      "form": "mat"
+    },
+    "HOUSE": {
+      "form": "hus",
+      "gender": "n"
+    },
+    "HOME": {
+      "form": "hjem",
+      "gender": "n"
+    },
+    "BOOK": {
+      "form": "bok",
+      "gender": "m"
+    },
+    "THING": {
+      "form": "ting",
+      "gender": "n"
+    },
+    "JOB": {
+      "form": "jobb",
+      "gender": "m"
+    },
+    "ROOM": {
+      "form": "rom",
+      "gender": "n"
+    },
+    "BOY": {
+      "form": "gutt",
+      "gender": "m"
+    },
+    "GIRL": {
+      "form": "jente",
+      "gender": "f"
+    },
+    "MAN": {
+      "form": "mann",
+      "gender": "m"
+    },
+    "WOMAN": {
+      "form": "kvinne",
+      "gender": "f"
+    },
+    "MOM": {
+      "form": "mamma",
+      "gender": "f"
+    },
+    "DAD": {
+      "form": "pappa",
+      "gender": "m"
+    },
+    "SON": {
+      "form": "sønn",
+      "gender": "m"
+    },
+    "DAUGHTER": {
+      "form": "datter",
+      "gender": "f"
+    },
+    "BROTHER": {
+      "form": "bror",
+      "gender": "m"
+    },
+    "SISTER": {
+      "form": "søster",
+      "gender": "f"
+    },
+    "HEAD": {
+      "form": "hode",
+      "gender": "n"
+    },
+    "ARM": {
+      "form": "arm",
+      "gender": "m"
+    },
+    "HAND": {
+      "form": "hånd",
+      "gender": "f"
+    },
+    "LEG": {
+      "form": "bein",
+      "gender": "n"
+    },
+    "FOOT": {
+      "form": "fot",
+      "gender": "m"
+    },
+    "FINGER": {
+      "form": "finger",
+      "gender": "m"
+    },
+    "EYE": {
+      "form": "øye",
+      "gender": "n"
+    },
+    "MOUTH": {
+      "form": "munn",
+      "gender": "m"
+    },
+    "FACE": {
+      "form": "ansikt",
+      "gender": "n"
+    },
+    "BREAKFAST": {
+      "form": "frokost",
+      "gender": "m"
+    },
+    "LUNCH": {
+      "form": "lunsj",
+      "gender": "m"
+    },
+    "DINNER": {
+      "form": "middag",
+      "gender": "m"
+    },
+    "CLOTHES": {
+      "form": "klær"
+    },
+    "SHIRT": {
+      "form": "skjorte",
+      "gender": "f"
+    },
+    "SHOES": {
+      "form": "sko"
+    },
+    "PHONE": {
+      "form": "telefon",
+      "gender": "m"
+    },
+    "PANTS": {
+      "form": "bukser"
+    },
+    "ONE": [
+      "en",
+      "ett"
+    ],
+    "TWO": [
+      "to"
+    ],
+    "THREE": [
+      "tre"
+    ],
+    "FOUR": [
+      "fire"
+    ],
+    "FIVE": [
+      "fem"
+    ],
+    "SIX": [
+      "seks"
+    ],
+    "SEVEN": [
+      "sju",
+      "syv"
+    ],
+    "EIGHT": [
+      "åtte"
+    ],
+    "NINE": [
+      "ni"
+    ],
+    "TEN": [
+      "ti"
+    ],
+    "ELEVEN": [
+      "elleve"
+    ],
+    "TWELVE": [
+      "tolv"
+    ],
+    "THIRTEEN": [
+      "tretten"
+    ],
+    "FOURTEEN": [
+      "fjorten"
+    ],
+    "FIFTEEN": [
+      "femten"
+    ],
+    "SIXTEEN": [
+      "seksten"
+    ],
+    "SEVENTEEN": [
+      "sytten"
+    ],
+    "EIGHTEEN": [
+      "atten"
+    ],
+    "NINETEEN": [
+      "nitten"
+    ],
+    "TWENTY": [
+      "tjue"
+    ],
+    "PLEASE": [
+      "vær så snill"
+    ],
+    "MAYBE": [
+      "kanskje"
+    ],
+    "JUST": [
+      "bare"
+    ],
+    "YES": [
+      "ja"
+    ],
+    "NO": [
+      "nei"
+    ],
+    "NOT": [
+      "ikke"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "jeg",
+      "meg",
+      "min",
+      "mitt",
+      "mine"
+    ],
+    "SECOND_PERSON": [
+      "du",
+      "deg",
+      "din",
+      "ditt",
+      "dine"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "dere",
+      "dere",
+      "deres"
+    ],
+    "HE": [
+      "han",
+      "ham",
+      "hans"
+    ],
+    "SHE": [
+      "hun",
+      "henne",
+      "hennes"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "vi",
+      "oss",
+      "vår",
+      "vårt",
+      "våre"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "de",
+      "dem",
+      "deres"
+    ],
+    "ANY": [
+      "noen",
+      "hvilken som helst"
+    ],
+    "ONLY": [
+      "bare"
+    ],
+    "ANOTHER": [
+      "en annen"
+    ],
+    "SOMETHING": [
+      "noe"
+    ],
+    "WHO": [
+      "hvem"
+    ],
+    "WHAT": [
+      "hva"
+    ],
+    "WHEN": [
+      "når"
+    ],
+    "WHERE": [
+      "hvor"
+    ],
+    "WHY": [
+      "hvorfor"
+    ],
+    "HOW": [
+      "hvordan"
+    ],
+    "WHICH": [
+      "hvilken",
+      "hvilket",
+      "hvilke"
+    ],
+    "TODAY": [
+      "i dag"
+    ],
+    "YESTERDAY": [
+      "i går"
+    ],
+    "TOMORROW": [
+      "i morgen"
+    ],
+    "MORNING": [
+      "morgen"
+    ],
+    "DAY": [
+      "dag"
+    ],
+    "NIGHT": [
+      "natt"
+    ],
+    "WEEK": [
+      "uke"
+    ],
+    "MONTH": [
+      "måned"
+    ],
+    "YEAR": [
+      "år"
+    ],
+    "DO": {
+      "base": "gjøre",
+      "present": "gjør"
+    },
+    "GO": {
+      "base": "gå",
+      "present": "går"
+    },
+    "EAT": {
+      "base": "spise",
+      "present": "spiser"
+    },
+    "DRINK": {
+      "base": "drikke",
+      "present": "drikker"
+    },
+    "READ": {
+      "base": "lese",
+      "present": "leser"
+    },
+    "SEE": {
+      "base": "se",
+      "present": "ser"
+    },
+    "START": {
+      "base": "starte",
+      "present": "starter"
+    },
+    "STOP": {
+      "base": "stoppe",
+      "present": "stopper"
+    },
+    "SLEEP": {
+      "base": "sove",
+      "present": "sover"
+    },
+    "HAVE": {
+      "base": "ha",
+      "present": "har"
+    },
+    "COME": {
+      "base": "komme",
+      "present": "kommer"
+    },
+    "USE": {
+      "base": "bruke",
+      "present": "bruker"
+    },
+    "GET": {
+      "base": "få",
+      "present": "får"
+    },
+    "BE": {
+      "base": "være",
+      "present": "er"
+    }
+  }
+}

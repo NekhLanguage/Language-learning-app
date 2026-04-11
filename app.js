@@ -1,5 +1,5 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.12";
-import { speak, setTTS, speakSentenceOnLoad } from "./audioengine.js";
+import { speak, setTTS, speakSentenceOnLoad, setVoiceMap } from "./audioengine.js";
 const CORE_BUNDLES = [
 
   { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
@@ -236,267 +236,33 @@ async function saveUser() {
     console.warn("Sync failed:", err);
   }
 }
-const SUPPORT_LANGUAGES = {
-  en: { short: "EN", label: "English" },
-  pt: { short: "PT", label: "Português" },
-  ja: { short: "JA", label: "日本語" },
-  no: { short: "NO", label: "Norsk" },
-  ar: { short: "AR", label: "العربية" },
-  ko: { short: "KO", label: "한국어" },
-  uk: { short: "UK", label: "Українська" }
-};
+// Built from languages.js — no manual edits needed when adding a language
+const SUPPORT_LANGUAGES = Object.fromEntries(
+  AVAILABLE_LANGUAGES.map(l => [l.code, { short: l.short, label: l.nativeLabel }])
+);
+
+// Wire TTS codes into audioengine from the same registry
+setVoiceMap(Object.fromEntries(AVAILABLE_LANGUAGES.map(l => [l.code, l.ttsCode])));
 const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
   offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call",
   buyAccess: "https://stan.store/Nekhslanguageblueprint/p/zero-to-hero-app-beta-copy"
 };
-const UI_STRINGS = {
+// ---------------------------------------------------------------
+// Language file cache — one entry per language code, populated
+// on demand.  UI strings, hub names, and vocab forms all live in
+// lang/<code>.json so that adding a new language is a single file.
+// ---------------------------------------------------------------
+const LANG_FILE_CACHE = {};
 
-  en: {
-  openApp: "OPEN APP",
-  languagesTitle: "LANGUAGES",
-  chooseLanguage: "Choose a language to study",
-  quitLearning: "QUIT LEARNING",
-  sessionTitle: "TODAY'S SESSION",
-  startSubtitle: "Language learning",
-
-  chooseTranslation: "Choose the correct translation for:",
-  originalSentence: "Original sentence:",
-  fillMissing: "Fill in the missing word:",
-  inThisSentence: "In this sentence:",
-  check: "Check",
-  continue: "Continue",
-  correct: "Correct.",
-  incorrect: "Incorrect.",
-  level: "Level",
-
-  blueprint: "Nekh's Language Blueprint",
-  skool: "Skool Community",
-  offer: "Upgrade your language system",
-
-  sessionComplete: "Session Complete",
-  sessionFinished: "Session {n} finished.",
-
-  // ✅ FIXED KEYS
-  enterEmail: "Enter your email",
-  buyAccess: "Not a user? Get access",
-  noAccess: "No access found for this email"
-},
-
-  pt: {
-    openApp: "ABRIR APP",
-    languagesTitle: "IDIOMAS",
-    chooseLanguage: "Escolha um idioma para estudar",
-    quitLearning: "SAIR",
-    sessionTitle: "SESSÃO DE HOJE",
-    startSubtitle: "Aprendizado de idiomas",
-
-    chooseTranslation: "Escolha a tradução correta para:",
-    originalSentence: "Frase original:",
-    fillMissing: "Preencha a palavra que falta:",
-    inThisSentence: "Nesta frase:",
-    check: "Verificar",
-    continue: "Continuar",
-    correct: "Correto.",
-    incorrect: "Incorreto.",
-    level: "Nível",
-    blueprint: "Plano de Idiomas do Nekh",
-skool: "Comunidade Skool",
-offer: "Melhore seu sistema de idiomas",
-sessionComplete: "Sessão concluída",
-sessionFinished: "Sessão {n} concluída."
-  },
-
-  ja: {
-    openApp: "アプリを開く",
-    languagesTitle: "言語",
-    chooseLanguage: "学習する言語を選んでください",
-    quitLearning: "終了",
-    sessionTitle: "今日のセッション",
-    startSubtitle: "言語学習",
-
-    chooseTranslation: "正しい翻訳を選んでください:",
-    originalSentence: "元の文:",
-    fillMissing: "空欄を埋めてください:",
-    inThisSentence: "この文では:",
-    check: "確認",
-    continue: "続ける",
-    correct: "正解。",
-    incorrect: "不正解。",
-    level: "レベル",
-    blueprint: "Nekhの言語プラン",
-skool: "Skoolコミュニティ",
-offer: "語学システムをアップグレードする",
-sessionComplete: "セッション完了",
-sessionFinished: "セッション {n} が完了しました。"
-  },
-
-  no: {
-    openApp: "ÅPNE APP",
-    languagesTitle: "SPRÅK",
-    chooseLanguage: "Velg et språk å studere",
-    quitLearning: "AVSLUTT",
-    sessionTitle: "DAGENS ØKT",
-    startSubtitle: "Språklæring",
-
-    chooseTranslation: "Velg riktig oversettelse for:",
-    originalSentence: "Original setning:",
-    fillMissing: "Fyll inn det manglende ordet:",
-    inThisSentence: "I denne setningen:",
-    check: "Sjekk",
-    continue: "Fortsett",
-    correct: "Riktig.",
-    incorrect: "Feil.",
-    level: "Nivå",
-    blueprint: "Nekh's språkplan",
-skool: "Skool-fellesskap",
-offer: "Forbedre din egen språkplan",
-sessionComplete: "Økt fullført",
-sessionFinished: "Økt {n} fullført."
-  },
-
-  ar: {
-    openApp: "افتح التطبيق",
-    languagesTitle: "اللغات",
-    chooseLanguage: "اختر لغة للدراسة",
-    quitLearning: "إنهاء",
-    sessionTitle: "جلسة اليوم",
-    startSubtitle: "تعلم اللغات",
-
-    chooseTranslation: "اختر الترجمة الصحيحة لـ:",
-    originalSentence: "الجملة الأصلية:",
-    fillMissing: "املأ الكلمة الناقصة:",
-    inThisSentence: "في هذه الجملة:",
-    check: "تحقق",
-    continue: "متابعة",
-    correct: "صحيح.",
-    incorrect: "خطأ.",
-    level: "المستوى",
-    blueprint: "مخطط اللغة لنخ",
-skool: "مجتمع سكول",
-offer: "قم بتطوير نظامك اللغوي",
-sessionComplete: "اكتملت الجلسة",
-sessionFinished: "تم إنهاء الجلسة {n}."
-  },
-  ko: {
-  openApp: "앱 열기",
-  languagesTitle: "언어",
-  chooseLanguage: "공부할 언어를 선택하세요",
-  quitLearning: "종료",
-  sessionTitle: "오늘의 세션",
-  startSubtitle: "언어 학습",
-
-  chooseTranslation: "올바른 번역을 선택하세요:",
-  originalSentence: "원문:",
-  fillMissing: "빈칸을 채우세요:",
-  inThisSentence: "이 문장에서:",
-  check: "확인",
-  continue: "계속",
-  correct: "정답입니다.",
-  incorrect: "틀렸습니다.",
-  level: "레벨",
-  blueprint: "Nekh의 언어 설계",
-skool: "Skool 커뮤니티",
-offer: "언어 학습 시스템을 업그레이드하세요",
-sessionComplete: "세션 완료",
-sessionFinished: "세션 {n}이 완료되었습니다."
-},
-uk: {
-  openApp: "ВІДКРИТИ ДОДАТОК",
-  languagesTitle: "МОВИ",
-  chooseLanguage: "Оберіть мову для вивчення",
-  quitLearning: "ВИЙТИ",
-  sessionTitle: "СЬОГОДНІШНЯ СЕСІЯ",
-  startSubtitle: "Вивчення мов",
-
-  chooseTranslation: "Оберіть правильний переклад:",
-  originalSentence: "Оригінальне речення:",
-  fillMissing: "Заповніть пропущене слово:",
-  inThisSentence: "У цьому реченні:",
-  check: "Перевірити",
-  continue: "Продовжити",
-  correct: "Правильно.",
-  incorrect: "Неправильно.",
-  level: "Рівень",
-
-  blueprint: "Мовна система Некха",
-  skool: "Спільнота Skool",
-  offer: "Покращіть свою мовну систему",
-
-  sessionComplete: "Сесію завершено",
-  sessionFinished: "Сесію {n} завершено.",
-
-  enterEmail: "Введіть вашу електронну пошту",
-  buyAccess: "Немає доступу? Отримати доступ",
-  noAccess: "Доступ для цієї пошти не знайдено"
-}
-
-};
-const HUB_LANGUAGE_NAMES = {
-  en: {
-    en: "English",
-    pt: "Portuguese",
-    ja: "Japanese",
-    no: "Norwegian",
-    ar: "Arabic",
-    ko: "Korean"
-  },
-
-  pt: {
-    en: "Inglês",
-    pt: "Português",
-    ja: "Japonês",
-    no: "Norueguês",
-    ar: "Árabe",
-    ko: "Coreano"
-  },
-
-  ja: {
-    en: "英語",
-    pt: "ポルトガル語",
-    ja: "日本語",
-    no: "ノルウェー語",
-    ar: "アラビア語",
-    ko: "韓国語"
-  },
-
-  no: {
-    en: "Engelsk",
-    pt: "Portugisisk",
-    ja: "Japansk",
-    no: "Norsk",
-    ar: "Arabisk",
-    ko: "Koreansk"
-  },
-
-  ar: {
-    en: "الإنجليزية",
-    pt: "البرتغالية",
-    ja: "اليابانية",
-    no: "النرويجية",
-    ar: "العربية",
-    ko: "الكورية"
-  },
-
-  ko: {
-    en: "영어",
-    pt: "포르투갈어",
-    ja: "일본어",
-    no: "노르웨이어",
-    ar: "아랍어",
-    ko: "한국어"
-  },
-  uk: {
-    en: "Англійська",
-    pt: "Португальська",
-    ja: "Японська",
-    no: "Норвезька",
-    ar: "Арабська",
-    ko: "Корейська",
-    uk: "Українська"
+async function getLangFileData(code) {
+  if (!LANG_FILE_CACHE[code]) {
+    const res = await fetch(`lang/${code}.json`, { cache: 'no-store' });
+    LANG_FILE_CACHE[code] = await res.json();
   }
-};
+  return LANG_FILE_CACHE[code];
+}
  const supportPill = document.getElementById("support-pill");
 const supportShort = document.getElementById("support-short");
 const supportLabel = document.getElementById("support-label");
@@ -511,6 +277,7 @@ if (email) {
 
 // ✅ THEN initialize UI
 languageState.support = USER.supportLanguage || "en";
+await getLangFileData(languageState.support);
 updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
 renderLanguageButtons();
@@ -565,12 +332,10 @@ if (!hasAccess()) {
 
   const supportLang = USER?.supportLanguage || "en";
 
-  // 🔒 Fully safe — no direct UI_STRINGS access
-  let strings;
+  // UI strings come from the lang file cache (loaded at startup)
+  let strings = LANG_FILE_CACHE[supportLang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings;
 
-  if (typeof UI_STRINGS !== "undefined") {
-    strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
-  } else {
+  if (!strings) {
     strings = {
       enterEmail: "Enter your email",
       continue: "Continue",
@@ -926,10 +691,11 @@ Object.entries(SUPPORT_LANGUAGES).forEach(([code, data]) => {
     <span>${data.label}</span>
   `;
 
-  option.onclick = () => {
+  option.onclick = async () => {
   languageState.support = code;
   USER.supportLanguage = code;
   saveUser();
+  await getLangFileData(code);
   updateSupportUI(code);
   updateUIStrings(code);
   renderLanguageButtons();
@@ -955,7 +721,7 @@ function updateSupportUI(code) {
   languageButtonsContainer.innerHTML = "";
 
   const support = languageState.support || "en";
-  const names = HUB_LANGUAGE_NAMES[support] || HUB_LANGUAGE_NAMES.en;
+  const names = LANG_FILE_CACHE[support]?.hubNames || LANG_FILE_CACHE["en"]?.hubNames || {};
 
   AVAILABLE_LANGUAGES.forEach(lang => {
 
@@ -985,6 +751,8 @@ btn.innerHTML = `
   async function loadAndMergeVocab() {
     window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
 
+    const targetLang = languageState.target;
+
     for (const file of VOCAB_FILES) {
       const res = await fetch(file, { cache: "no-store" });
       const data = await res.json();
@@ -993,13 +761,25 @@ btn.innerHTML = `
         window.GLOBAL_VOCAB.concepts[concept.concept_id] = concept;
       }
 
+      // Resource pack files (pokemon.json etc.) still carry their own
+      // language sections — merge those as before.
       for (const [langCode, langData] of Object.entries(data.languages || {})) {
         if (!window.GLOBAL_VOCAB.languages[langCode]) {
-          window.GLOBAL_VOCAB.languages[langCode] = { label: langData.label, forms: {} };
+          window.GLOBAL_VOCAB.languages[langCode] = { forms: {} };
         }
         Object.assign(window.GLOBAL_VOCAB.languages[langCode].forms, langData.forms || {});
       }
     }
+
+    // Load core vocabulary for the selected target language from its
+    // dedicated file.  getLangFileData() caches the result so a second
+    // call (e.g. when the same language is also the support language)
+    // is free.
+    const langData = await getLangFileData(targetLang);
+    if (!window.GLOBAL_VOCAB.languages[targetLang]) {
+      window.GLOBAL_VOCAB.languages[targetLang] = { forms: {} };
+    }
+    Object.assign(window.GLOBAL_VOCAB.languages[targetLang].forms, langData.forms || {});
   }
 
   let TEMPLATE_CACHE = null;
@@ -1028,7 +808,8 @@ async function loadTemplates(selectedPacks = []) {
   let run = null;
 function updateUIStrings(lang) {
 
-  const strings = UI_STRINGS[lang] || UI_STRINGS.en;
+  const data = LANG_FILE_CACHE[lang] || LANG_FILE_CACHE["en"] || {};
+  const strings = data.uiStrings || {};
 
   document.getElementById("open-app").textContent = strings.openApp;
   const blueprintLink = document.getElementById("link-blueprint");
@@ -1067,23 +848,17 @@ if (buyAccess) {
 
   const sessionTitle = document.querySelector("#learning-screen .title");
   sessionTitle.textContent = strings.sessionTitle;
-  if (lang === "ar") {
-  document.documentElement.dir = "rtl";
-} else {
-  document.documentElement.dir = "ltr";
-}
+  const langMeta = AVAILABLE_LANGUAGES.find(l => l.code === lang);
+  document.documentElement.dir = langMeta?.isRTL ? "rtl" : "ltr";
 const startSubtitle = document.getElementById("start-subtitle");
 if (startSubtitle) {
-  startSubtitle.textContent =
-    (lang === "ar")
-      ? `تعلم اللغات ${APP_VERSION}`
-      : strings.startSubtitle + " " + APP_VERSION;
+  startSubtitle.textContent = strings.startSubtitle + " " + APP_VERSION;
 }
 }
 function ui(key) {
   const lang = languageState.support || "en";
-  const strings = UI_STRINGS[lang] || UI_STRINGS.en;
-  return strings[key] || UI_STRINGS.en[key] || key;
+  const strings = LANG_FILE_CACHE[lang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings || {};
+  return strings[key] ?? key;
 }
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
@@ -3032,7 +2807,7 @@ function endSession(targetLang, supportLang) {
   USER.runs[languageState.target] = run;
   saveUser();
 
-  const strings = UI_STRINGS[supportLang] || UI_STRINGS.en;
+  const strings = LANG_FILE_CACHE[supportLang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings || {};
 
 content.innerHTML = `
   <h2>${strings.sessionComplete}</h2>
