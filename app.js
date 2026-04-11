@@ -1,4 +1,4 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.13";
+import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speak, speakAlways, setTTS, speakSentenceOnLoad, setVoiceMap } from "./audioengine.js";
 const CORE_BUNDLES = [
 
@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.13";
+  const APP_VERSION = "v0.9.99.14";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
