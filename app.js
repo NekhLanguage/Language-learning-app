@@ -1652,9 +1652,10 @@ if (tpl.structure?.type === "complex_clause") {
   const targetSentence = buildSentence(targetLang, tpl, targetConcept);
   const supportSentence = buildSentence(supportLang, tpl, targetConcept);
 
+  const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
-    <h2>${safe(formOf(targetLang, targetConcept))}</h2>
-    <p>${safe(formOf(supportLang, targetConcept))}</p>
+    <h2>${safe(headword(formOf(targetLang, targetConcept)))}</h2>
+    <p>${safe(headword(formOf(supportLang, targetConcept)))}</p>
     <hr>
     <p class="tts-target">${safe(targetSentence)}</p>
     <p>${safe(supportSentence)}</p>
