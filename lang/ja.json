@@ -465,5 +465,387 @@
       "base": "だ",
       "present": "です"
     }
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Hiragana",
+        "letters": [
+          {
+            "char": "あ",
+            "romanization": "a"
+          },
+          {
+            "char": "い",
+            "romanization": "i"
+          },
+          {
+            "char": "う",
+            "romanization": "u"
+          },
+          {
+            "char": "え",
+            "romanization": "e"
+          },
+          {
+            "char": "お",
+            "romanization": "o"
+          },
+          {
+            "char": "か",
+            "romanization": "ka"
+          },
+          {
+            "char": "き",
+            "romanization": "ki"
+          },
+          {
+            "char": "く",
+            "romanization": "ku"
+          },
+          {
+            "char": "け",
+            "romanization": "ke"
+          },
+          {
+            "char": "こ",
+            "romanization": "ko"
+          },
+          {
+            "char": "さ",
+            "romanization": "sa"
+          },
+          {
+            "char": "し",
+            "romanization": "shi"
+          },
+          {
+            "char": "す",
+            "romanization": "su"
+          },
+          {
+            "char": "せ",
+            "romanization": "se"
+          },
+          {
+            "char": "そ",
+            "romanization": "so"
+          },
+          {
+            "char": "た",
+            "romanization": "ta"
+          },
+          {
+            "char": "ち",
+            "romanization": "chi"
+          },
+          {
+            "char": "つ",
+            "romanization": "tsu"
+          },
+          {
+            "char": "て",
+            "romanization": "te"
+          },
+          {
+            "char": "と",
+            "romanization": "to"
+          },
+          {
+            "char": "な",
+            "romanization": "na"
+          },
+          {
+            "char": "に",
+            "romanization": "ni"
+          },
+          {
+            "char": "ぬ",
+            "romanization": "nu"
+          },
+          {
+            "char": "ね",
+            "romanization": "ne"
+          },
+          {
+            "char": "の",
+            "romanization": "no"
+          },
+          {
+            "char": "は",
+            "romanization": "ha"
+          },
+          {
+            "char": "ひ",
+            "romanization": "hi"
+          },
+          {
+            "char": "ふ",
+            "romanization": "fu"
+          },
+          {
+            "char": "へ",
+            "romanization": "he"
+          },
+          {
+            "char": "ほ",
+            "romanization": "ho"
+          },
+          {
+            "char": "ま",
+            "romanization": "ma"
+          },
+          {
+            "char": "み",
+            "romanization": "mi"
+          },
+          {
+            "char": "む",
+            "romanization": "mu"
+          },
+          {
+            "char": "め",
+            "romanization": "me"
+          },
+          {
+            "char": "も",
+            "romanization": "mo"
+          },
+          {
+            "char": "や",
+            "romanization": "ya"
+          },
+          {
+            "char": "ゆ",
+            "romanization": "yu"
+          },
+          {
+            "char": "よ",
+            "romanization": "yo"
+          },
+          {
+            "char": "ら",
+            "romanization": "ra"
+          },
+          {
+            "char": "り",
+            "romanization": "ri"
+          },
+          {
+            "char": "る",
+            "romanization": "ru"
+          },
+          {
+            "char": "れ",
+            "romanization": "re"
+          },
+          {
+            "char": "ろ",
+            "romanization": "ro"
+          },
+          {
+            "char": "わ",
+            "romanization": "wa"
+          },
+          {
+            "char": "を",
+            "romanization": "wo"
+          },
+          {
+            "char": "ん",
+            "romanization": "n"
+          }
+        ]
+      },
+      {
+        "name": "Katakana",
+        "letters": [
+          {
+            "char": "ア",
+            "romanization": "a"
+          },
+          {
+            "char": "イ",
+            "romanization": "i"
+          },
+          {
+            "char": "ウ",
+            "romanization": "u"
+          },
+          {
+            "char": "エ",
+            "romanization": "e"
+          },
+          {
+            "char": "オ",
+            "romanization": "o"
+          },
+          {
+            "char": "カ",
+            "romanization": "ka"
+          },
+          {
+            "char": "キ",
+            "romanization": "ki"
+          },
+          {
+            "char": "ク",
+            "romanization": "ku"
+          },
+          {
+            "char": "ケ",
+            "romanization": "ke"
+          },
+          {
+            "char": "コ",
+            "romanization": "ko"
+          },
+          {
+            "char": "サ",
+            "romanization": "sa"
+          },
+          {
+            "char": "シ",
+            "romanization": "shi"
+          },
+          {
+            "char": "ス",
+            "romanization": "su"
+          },
+          {
+            "char": "セ",
+            "romanization": "se"
+          },
+          {
+            "char": "ソ",
+            "romanization": "so"
+          },
+          {
+            "char": "タ",
+            "romanization": "ta"
+          },
+          {
+            "char": "チ",
+            "romanization": "chi"
+          },
+          {
+            "char": "ツ",
+            "romanization": "tsu"
+          },
+          {
+            "char": "テ",
+            "romanization": "te"
+          },
+          {
+            "char": "ト",
+            "romanization": "to"
+          },
+          {
+            "char": "ナ",
+            "romanization": "na"
+          },
+          {
+            "char": "ニ",
+            "romanization": "ni"
+          },
+          {
+            "char": "ヌ",
+            "romanization": "nu"
+          },
+          {
+            "char": "ネ",
+            "romanization": "ne"
+          },
+          {
+            "char": "ノ",
+            "romanization": "no"
+          },
+          {
+            "char": "ハ",
+            "romanization": "ha"
+          },
+          {
+            "char": "ヒ",
+            "romanization": "hi"
+          },
+          {
+            "char": "フ",
+            "romanization": "fu"
+          },
+          {
+            "char": "ヘ",
+            "romanization": "he"
+          },
+          {
+            "char": "ホ",
+            "romanization": "ho"
+          },
+          {
+            "char": "マ",
+            "romanization": "ma"
+          },
+          {
+            "char": "ミ",
+            "romanization": "mi"
+          },
+          {
+            "char": "ム",
+            "romanization": "mu"
+          },
+          {
+            "char": "メ",
+            "romanization": "me"
+          },
+          {
+            "char": "モ",
+            "romanization": "mo"
+          },
+          {
+            "char": "ヤ",
+            "romanization": "ya"
+          },
+          {
+            "char": "ユ",
+            "romanization": "yu"
+          },
+          {
+            "char": "ヨ",
+            "romanization": "yo"
+          },
+          {
+            "char": "ラ",
+            "romanization": "ra"
+          },
+          {
+            "char": "リ",
+            "romanization": "ri"
+          },
+          {
+            "char": "ル",
+            "romanization": "ru"
+          },
+          {
+            "char": "レ",
+            "romanization": "re"
+          },
+          {
+            "char": "ロ",
+            "romanization": "ro"
+          },
+          {
+            "char": "ワ",
+            "romanization": "wa"
+          },
+          {
+            "char": "ヲ",
+            "romanization": "wo"
+          },
+          {
+            "char": "ン",
+            "romanization": "n"
+          }
+        ]
+      }
+    ]
   }
 }

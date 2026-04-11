@@ -60,6 +60,7 @@
     <!-- LEARNING SCREEN -->
     <section id="learning-screen" class="screen" aria-label="Learning screen">
       <button id="quit-learning" class="quit-button" type="button">QUIT LEARNING</button>
+      <button id="alphabet-btn" class="quit-button alphabet-btn hidden" type="button" aria-label="Open alphabet guide">ABC</button>
 
       <div class="learning-wrap">
        <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -87,6 +88,15 @@
   <button id="start-run" class="primary">START</button>
 </section>
 
+
+  <!-- ALPHABET OVERLAY -->
+  <div id="alphabet-overlay" class="alphabet-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="alphabet-overlay-title">
+    <div class="alphabet-panel">
+      <button id="alphabet-close" class="alphabet-close" type="button" aria-label="Close alphabet guide">✕</button>
+      <h2 class="alphabet-overlay-title" id="alphabet-overlay-title"></h2>
+      <div id="alphabet-content" class="alphabet-content"></div>
+    </div>
+  </div>
 
   <!-- User + run persistence (non-module) -->
 <script src="user_state.js"></script>

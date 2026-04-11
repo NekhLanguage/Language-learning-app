@@ -444,5 +444,115 @@
     "GET": {
       "base": "얻다"
     }
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Consonants",
+        "letters": [
+          {
+            "char": "ㄱ",
+            "romanization": "g/k"
+          },
+          {
+            "char": "ㄴ",
+            "romanization": "n"
+          },
+          {
+            "char": "ㄷ",
+            "romanization": "d/t"
+          },
+          {
+            "char": "ㄹ",
+            "romanization": "r/l"
+          },
+          {
+            "char": "ㅁ",
+            "romanization": "m"
+          },
+          {
+            "char": "ㅂ",
+            "romanization": "b/p"
+          },
+          {
+            "char": "ㅅ",
+            "romanization": "s"
+          },
+          {
+            "char": "ㅇ",
+            "romanization": "-/ng"
+          },
+          {
+            "char": "ㅈ",
+            "romanization": "j"
+          },
+          {
+            "char": "ㅊ",
+            "romanization": "ch"
+          },
+          {
+            "char": "ㅋ",
+            "romanization": "k"
+          },
+          {
+            "char": "ㅌ",
+            "romanization": "t"
+          },
+          {
+            "char": "ㅍ",
+            "romanization": "p"
+          },
+          {
+            "char": "ㅎ",
+            "romanization": "h"
+          }
+        ]
+      },
+      {
+        "name": "Vowels",
+        "letters": [
+          {
+            "char": "ㅏ",
+            "romanization": "a"
+          },
+          {
+            "char": "ㅑ",
+            "romanization": "ya"
+          },
+          {
+            "char": "ㅓ",
+            "romanization": "eo"
+          },
+          {
+            "char": "ㅕ",
+            "romanization": "yeo"
+          },
+          {
+            "char": "ㅗ",
+            "romanization": "o"
+          },
+          {
+            "char": "ㅛ",
+            "romanization": "yo"
+          },
+          {
+            "char": "ㅜ",
+            "romanization": "u"
+          },
+          {
+            "char": "ㅠ",
+            "romanization": "yu"
+          },
+          {
+            "char": "ㅡ",
+            "romanization": "eu"
+          },
+          {
+            "char": "ㅣ",
+            "romanization": "i"
+          }
+        ]
+      }
+    ]
   }
 }

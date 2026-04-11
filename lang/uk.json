@@ -555,5 +555,146 @@
       "2_plural": "є",
       "3_plural": "є"
     }
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Cyrillic alphabet",
+        "letters": [
+          {
+            "char": "А",
+            "romanization": "a"
+          },
+          {
+            "char": "Б",
+            "romanization": "b"
+          },
+          {
+            "char": "В",
+            "romanization": "v"
+          },
+          {
+            "char": "Г",
+            "romanization": "h"
+          },
+          {
+            "char": "Ґ",
+            "romanization": "g"
+          },
+          {
+            "char": "Д",
+            "romanization": "d"
+          },
+          {
+            "char": "Е",
+            "romanization": "e"
+          },
+          {
+            "char": "Є",
+            "romanization": "ye"
+          },
+          {
+            "char": "Ж",
+            "romanization": "zh"
+          },
+          {
+            "char": "З",
+            "romanization": "z"
+          },
+          {
+            "char": "И",
+            "romanization": "y"
+          },
+          {
+            "char": "І",
+            "romanization": "i"
+          },
+          {
+            "char": "Ї",
+            "romanization": "yi"
+          },
+          {
+            "char": "Й",
+            "romanization": "y"
+          },
+          {
+            "char": "К",
+            "romanization": "k"
+          },
+          {
+            "char": "Л",
+            "romanization": "l"
+          },
+          {
+            "char": "М",
+            "romanization": "m"
+          },
+          {
+            "char": "Н",
+            "romanization": "n"
+          },
+          {
+            "char": "О",
+            "romanization": "o"
+          },
+          {
+            "char": "П",
+            "romanization": "p"
+          },
+          {
+            "char": "Р",
+            "romanization": "r"
+          },
+          {
+            "char": "С",
+            "romanization": "s"
+          },
+          {
+            "char": "Т",
+            "romanization": "t"
+          },
+          {
+            "char": "У",
+            "romanization": "u"
+          },
+          {
+            "char": "Ф",
+            "romanization": "f"
+          },
+          {
+            "char": "Х",
+            "romanization": "kh"
+          },
+          {
+            "char": "Ц",
+            "romanization": "ts"
+          },
+          {
+            "char": "Ч",
+            "romanization": "ch"
+          },
+          {
+            "char": "Ш",
+            "romanization": "sh"
+          },
+          {
+            "char": "Щ",
+            "romanization": "shch"
+          },
+          {
+            "char": "Ь",
+            "romanization": "'"
+          },
+          {
+            "char": "Ю",
+            "romanization": "yu"
+          },
+          {
+            "char": "Я",
+            "romanization": "ya"
+          }
+        ]
+      }
+    ]
   }
 }

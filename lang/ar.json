@@ -577,5 +577,126 @@
       "2_plural": "تكونون",
       "3_plural": "يكونون"
     }
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Arabic alphabet",
+        "letters": [
+          {
+            "char": "ا",
+            "romanization": "a"
+          },
+          {
+            "char": "ب",
+            "romanization": "b"
+          },
+          {
+            "char": "ت",
+            "romanization": "t"
+          },
+          {
+            "char": "ث",
+            "romanization": "th"
+          },
+          {
+            "char": "ج",
+            "romanization": "j"
+          },
+          {
+            "char": "ح",
+            "romanization": "h"
+          },
+          {
+            "char": "خ",
+            "romanization": "kh"
+          },
+          {
+            "char": "د",
+            "romanization": "d"
+          },
+          {
+            "char": "ذ",
+            "romanization": "dh"
+          },
+          {
+            "char": "ر",
+            "romanization": "r"
+          },
+          {
+            "char": "ز",
+            "romanization": "z"
+          },
+          {
+            "char": "س",
+            "romanization": "s"
+          },
+          {
+            "char": "ش",
+            "romanization": "sh"
+          },
+          {
+            "char": "ص",
+            "romanization": "s"
+          },
+          {
+            "char": "ض",
+            "romanization": "d"
+          },
+          {
+            "char": "ط",
+            "romanization": "t"
+          },
+          {
+            "char": "ظ",
+            "romanization": "dh"
+          },
+          {
+            "char": "ع",
+            "romanization": "ʕ"
+          },
+          {
+            "char": "غ",
+            "romanization": "gh"
+          },
+          {
+            "char": "ف",
+            "romanization": "f"
+          },
+          {
+            "char": "ق",
+            "romanization": "q"
+          },
+          {
+            "char": "ك",
+            "romanization": "k"
+          },
+          {
+            "char": "ل",
+            "romanization": "l"
+          },
+          {
+            "char": "م",
+            "romanization": "m"
+          },
+          {
+            "char": "ن",
+            "romanization": "n"
+          },
+          {
+            "char": "ه",
+            "romanization": "h"
+          },
+          {
+            "char": "و",
+            "romanization": "w"
+          },
+          {
+            "char": "ي",
+            "romanization": "y"
+          }
+        ]
+      }
+    ]
   }
 }

@@ -2758,6 +2758,92 @@ return;
 };
 }
 
+// -----------------------------------------------------------------
+// Alphabet overlay
+// -----------------------------------------------------------------
+const alphabetBtn     = document.getElementById("alphabet-btn");
+const alphabetOverlay = document.getElementById("alphabet-overlay");
+const alphabetClose   = document.getElementById("alphabet-close");
+
+alphabetBtn.addEventListener("click", () => {
+  renderAlphabetOverlay(languageState.target);
+  alphabetOverlay.classList.remove("hidden");
+});
+
+alphabetClose.addEventListener("click", () => {
+  alphabetOverlay.classList.add("hidden");
+});
+
+// Tap the backdrop to dismiss
+alphabetOverlay.addEventListener("click", e => {
+  if (e.target === alphabetOverlay) alphabetOverlay.classList.add("hidden");
+});
+
+// Escape key
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") alphabetOverlay.classList.add("hidden");
+});
+
+function updateAlphabetButton(langCode) {
+  const data = LANG_FILE_CACHE[langCode];
+  if (data?.alphabet?.sections?.length) {
+    // Use the first character as a visual hint on the button
+    const firstChar = data.alphabet.sections[0].letters[0]?.char || "ABC";
+    alphabetBtn.textContent = firstChar;
+    alphabetBtn.classList.remove("hidden");
+  } else {
+    alphabetBtn.classList.add("hidden");
+  }
+}
+
+function renderAlphabetOverlay(langCode) {
+  const data = LANG_FILE_CACHE[langCode];
+  if (!data?.alphabet) return;
+
+  const langMeta  = AVAILABLE_LANGUAGES.find(l => l.code === langCode);
+  const titleEl   = document.getElementById("alphabet-overlay-title");
+  const contentEl = document.getElementById("alphabet-content");
+
+  titleEl.textContent = langMeta ? langMeta.label + " — Script Guide" : "Script Guide";
+  contentEl.innerHTML = "";
+
+  for (const section of data.alphabet.sections) {
+    const nameEl = document.createElement("p");
+    nameEl.className = "alphabet-section-name";
+    nameEl.textContent = section.name;
+    contentEl.appendChild(nameEl);
+
+    const grid = document.createElement("div");
+    grid.className = "letter-grid";
+
+    for (const letter of section.letters) {
+      const card = document.createElement("div");
+      card.className = "letter-card";
+
+      const charEl = document.createElement("span");
+      charEl.className = "letter-char";
+      charEl.textContent = letter.char;
+      card.appendChild(charEl);
+
+      const romanEl = document.createElement("span");
+      romanEl.className = "letter-romanization";
+      romanEl.textContent = letter.romanization;
+      card.appendChild(romanEl);
+
+      if (letter.sound) {
+        const soundEl = document.createElement("span");
+        soundEl.className = "letter-sound";
+        soundEl.textContent = letter.sound;
+        card.appendChild(soundEl);
+      }
+
+      grid.appendChild(card);
+    }
+
+    contentEl.appendChild(grid);
+  }
+}
+
   async function enterLanguage(langCode) {
 
   languageState.target = langCode;
@@ -2792,7 +2878,7 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   await loadTemplates(run.selectedResourcePacks || []);
   languageScreen.classList.remove("active");
   learningScreen.classList.add("active");
-
+  updateAlphabetButton(languageState.target);
   renderNext(languageState.target, languageState.support);
 }
 
@@ -3187,7 +3273,7 @@ releaseNextBundle(run);
 
   document.getElementById("pack-screen").classList.remove("active");
   learningScreen.classList.add("active");
-
+  updateAlphabetButton(languageState.target);
   renderNext(languageState.target, languageState.support);
 };
 

@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(node migrate_languages.js)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(node add_alphabets.js)",
+      "Bash(rm add_alphabets.js)"
     ]
   }
 }

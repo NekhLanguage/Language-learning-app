@@ -534,5 +534,44 @@
       "base": "være",
       "present": "er"
     }
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Extra letters",
+        "letters": [
+          {
+            "char": "Æ",
+            "romanization": "æ",
+            "sound": "like 'a' in 'bad'"
+          },
+          {
+            "char": "æ",
+            "romanization": "æ",
+            "sound": "like 'a' in 'bad'"
+          },
+          {
+            "char": "Ø",
+            "romanization": "ø",
+            "sound": "like 'u' in 'burn'"
+          },
+          {
+            "char": "ø",
+            "romanization": "ø",
+            "sound": "like 'u' in 'burn'"
+          },
+          {
+            "char": "Å",
+            "romanization": "å",
+            "sound": "like 'o' in 'more'"
+          },
+          {
+            "char": "å",
+            "romanization": "å",
+            "sound": "like 'o' in 'more'"
+          }
+        ]
+      }
+    ]
   }
 }
