@@ -121,6 +121,17 @@ export async function speak(text, lang) {
   }
 }
 
+// Speak regardless of ttsEnabled — for explicit user taps (e.g. alphabet cards)
+export async function speakAlways(text, lang) {
+  if (!text) return;
+  try {
+    const cloudLang = voiceMap[lang] || lang;
+    await fetchCloudTTS(text, cloudLang);
+  } catch (err) {
+    speakBrowser(text, lang);
+  }
+}
+
 // --------------------
 // Sentence autoplay
 // --------------------

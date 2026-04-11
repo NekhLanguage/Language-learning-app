@@ -1,5 +1,5 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.12";
-import { speak, setTTS, speakSentenceOnLoad, setVoiceMap } from "./audioengine.js";
+import { speak, speakAlways, setTTS, speakSentenceOnLoad, setVoiceMap } from "./audioengine.js";
 const CORE_BUNDLES = [
 
   { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
@@ -258,7 +258,7 @@ const LANG_FILE_CACHE = {};
 
 async function getLangFileData(code) {
   if (!LANG_FILE_CACHE[code]) {
-    const res = await fetch(`lang/${code}.json`, { cache: 'no-store' });
+    const res = await fetch(`lang/${code}.json`);
     LANG_FILE_CACHE[code] = await res.json();
   }
   return LANG_FILE_CACHE[code];
@@ -753,14 +753,15 @@ btn.innerHTML = `
 
     const targetLang = languageState.target;
 
-    for (const file of VOCAB_FILES) {
-      const res = await fetch(file, { cache: "no-store" });
-      const data = await res.json();
+    // Fetch all vocab files in parallel
+    const vocabResults = await Promise.all(
+      VOCAB_FILES.map(file => fetch(file).then(r => r.json()))
+    );
 
+    for (const data of vocabResults) {
       for (const concept of data.concepts || []) {
         window.GLOBAL_VOCAB.concepts[concept.concept_id] = concept;
       }
-
       // Resource pack files (pokemon.json etc.) still carry their own
       // language sections — merge those as before.
       for (const [langCode, langData] of Object.entries(data.languages || {})) {
@@ -771,14 +772,14 @@ btn.innerHTML = `
       }
     }
 
-    // Load core vocabulary for the target language and — separately — for
-    // the support language so buildSentence() can produce the support-language
-    // sentence without falling back to raw concept IDs.
-    // getLangFileData() caches results, so if both are the same language or
-    // the support lang was already fetched at startup the cost is near-zero.
-    for (const code of [targetLang, languageState.support]) {
-      if (!code) continue;
-      const langData = await getLangFileData(code);
+    // Load target + support lang files in parallel
+    // getLangFileData() caches, so repeat calls are free
+    const langCodes = [...new Set([targetLang, languageState.support].filter(Boolean))];
+    const langResults = await Promise.all(langCodes.map(getLangFileData));
+
+    for (let i = 0; i < langCodes.length; i++) {
+      const code = langCodes[i];
+      const langData = langResults[i];
       if (!window.GLOBAL_VOCAB.languages[code]) {
         window.GLOBAL_VOCAB.languages[code] = { forms: {} };
       }
@@ -798,13 +799,9 @@ async function loadTemplates(selectedPacks = []) {
     }
   });
 
-  TEMPLATE_CACHE = [];
-
-  for (const file of files) {
-    const res = await fetch(file, { cache: "no-store" });
-    const data = await res.json();
-    TEMPLATE_CACHE.push(...(data.templates || []));
-  }
+  // Fetch all template files in parallel
+  const results = await Promise.all(files.map(file => fetch(file).then(r => r.json())));
+  TEMPLATE_CACHE = results.flatMap(data => data.templates || []);
 
   return TEMPLATE_CACHE;
 }
@@ -2784,6 +2781,7 @@ function renderAlphabetOverlay(langCode) {
   if (!data?.alphabet) return;
 
   const langMeta  = AVAILABLE_LANGUAGES.find(l => l.code === langCode);
+  const ttsCode   = langMeta?.ttsCode || langCode;
   const titleEl   = document.getElementById("alphabet-overlay-title");
   const contentEl = document.getElementById("alphabet-content");
 
@@ -2802,6 +2800,8 @@ function renderAlphabetOverlay(langCode) {
     for (const letter of section.letters) {
       const card = document.createElement("div");
       card.className = "letter-card";
+      card.style.cursor = "pointer";
+      card.title = "Tap to hear";
 
       const charEl = document.createElement("span");
       charEl.className = "letter-char";
@@ -2819,6 +2819,8 @@ function renderAlphabetOverlay(langCode) {
         soundEl.textContent = letter.sound;
         card.appendChild(soundEl);
       }
+
+      card.addEventListener("click", () => speakAlways(letter.char, ttsCode));
 
       grid.appendChild(card);
     }
