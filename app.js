@@ -1630,13 +1630,31 @@ if (tpl.structure?.type === "complex_clause") {
   }
 
   // apply modifiers
+  const bare = formOf(lang, cid);
+  const POST_ADJ = lang === "pt" || lang === "ar";
+
   if (numberWord) {
-    const base = surfaceForm(lang, cid);
-    return numberWord + " " + base;
+    // Numbers replace the article: "two books" not "two a book"
+    if (adjectiveWord) {
+      return POST_ADJ
+        ? numberWord + " " + bare + " " + adjectiveWord
+        : numberWord + " " + adjectiveWord + " " + bare;
+    }
+    return numberWord + " " + bare;
   }
 
   if (adjectiveWord) {
-    phrase = adjectiveWord + " " + phrase;
+    if (POST_ADJ) {
+      // Article + noun + adjective: "uma casa grande"
+      phrase = phrase + " " + adjectiveWord;
+    } else if (phrase !== bare) {
+      // Has article — insert adjective between: "a big house"
+      const article = phrase.substring(0, phrase.length - bare.length).trimEnd();
+      phrase = article + " " + adjectiveWord + " " + bare;
+    } else {
+      // No article: "big water"
+      phrase = adjectiveWord + " " + bare;
+    }
   }
 
   return phrase;
@@ -2975,12 +2993,13 @@ function chooseTemplateForConcept(cid) {
   // Modifier concepts (adjective/number)
   if (meta?.type === "adjective" || meta?.type === "number") {
 
-    eligible = TEMPLATE_CACHE.filter(tpl =>
-      tpl.concepts.some(c =>
-        window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
-      ) &&
-      templateEligible(tpl)
-    );
+    eligible = TEMPLATE_CACHE.filter(tpl => {
+      if (!templateEligible(tpl)) return false;
+      if (!tpl.concepts.some(c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun")) return false;
+      // Numbers don't make sense in copular sentences ("He is two a leader")
+      if (meta.type === "number" && tpl.concepts.includes("BE")) return false;
+      return true;
+    });
 
   } else {
 
