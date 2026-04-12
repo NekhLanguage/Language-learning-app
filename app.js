@@ -1,5 +1,5 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
-import { speak, speakAlways, setTTS, speakSentenceOnLoad, setVoiceMap } from "./audioengine.js";
+import { speakAlways, setVoiceMap } from "./audioengine.js";
 const CORE_BUNDLES = [
 
   { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
@@ -182,8 +182,7 @@ const logoutBtn = document.getElementById("logout-btn");
 const content = document.getElementById("content");
   const subtitle = document.getElementById("session-subtitle");
   const languageScreen = document.getElementById("language-screen");
-  const ttsToggle = document.getElementById("tts-toggle");
-  const languageButtonsContainer = document.getElementById("language-buttons");
+    const languageButtonsContainer = document.getElementById("language-buttons");
   const languageState = {
   target: null,
   support: "en" // default for now
@@ -666,17 +665,29 @@ function releaseNextBundle(run) {
 // Support Language UI (Abbreviation + Native Name)
 // --------------------
 
-let ttsEnabled = false;
+// TTS helper: inline speaker button for innerHTML templates
+function ttsHtml(text, lang) {
+  const e = String(text).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  return `<button class="tts-inline" data-tts="${e}" data-lang="${lang}" type="button">🔊</button>`;
+}
 
-if (ttsToggle) {
-  ttsToggle.onclick = () => {
+// TTS helper: create a DOM speaker button for dynamic elements
+function createTtsBtn(text, lang) {
+  const btn = document.createElement("button");
+  btn.className = "tts-inline";
+  btn.textContent = "🔊";
+  btn.type = "button";
+  btn.onclick = (e) => { e.stopPropagation(); speakAlways(text, lang); };
+  return btn;
+}
 
-    ttsEnabled = !ttsEnabled;
-
-    setTTS(ttsEnabled);
-
-    ttsToggle.textContent = ttsEnabled ? "🔊 TTS ON" : "🔊 TTS OFF";
-  };
+// Wire up all data-tts buttons created via ttsHtml()
+function wireTts() {
+  content.querySelectorAll('.tts-inline[data-tts]').forEach(btn => {
+    if (btn._wired) return;
+    btn._wired = true;
+    btn.onclick = (e) => { e.stopPropagation(); speakAlways(btn.dataset.tts, btn.dataset.lang); };
+  });
 }
 
 
@@ -1666,15 +1677,14 @@ if (tpl.structure?.type === "complex_clause") {
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
-    <h2>${safe(headword(formOf(targetLang, targetConcept)))}</h2>
+    <h2>${safe(headword(formOf(targetLang, targetConcept)))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
     <p>${safe(headword(formOf(supportLang, targetConcept)))}</p>
     <hr>
-    <p class="tts-target">${safe(targetSentence)}</p>
+    <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
     <button id="continue-btn">${ui("continue")}</button>
   `;
-
-  speakSentenceOnLoad(targetSentence, targetLang);
+  wireTts();
 
   document.getElementById("continue-btn").onclick = () => {
     decrementCooldowns();
@@ -1697,16 +1707,15 @@ if (tpl.structure?.type === "complex_clause") {
     const sentence = buildSentence(targetLang, tpl, targetConcept);
 
     content.innerHTML = `
-      <p class="tts-target">${safe(sentence)}</p>
+      <p>${safe(sentence)} ${ttsHtml(sentence, targetLang)}</p>
       <p><strong>${ui("chooseTranslation")}</strong></p>
-      <h2>${safe(formOf(targetLang, targetConcept))}</h2>
+      <h2>${safe(formOf(targetLang, targetConcept))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
       <div id="choices"></div>
       <div style="margin-top:20px;text-align:center;">
         <button id="check-btn" disabled>${ui("check")}</button>
       </div>
     `;
-
-    speakSentenceOnLoad(sentence, targetLang);
+    wireTts();
 
     const container = document.getElementById("choices");
     const checkBtn = document.getElementById("check-btn");
@@ -1771,15 +1780,14 @@ const options = shuffle([...releasedOptions]).slice(0, 4);
   const sentence = buildSentence(targetLang, tpl);
 
   content.innerHTML = `
-    <p class="tts-target">${safe(sentence)}</p>
+    <p>${safe(sentence)} ${ttsHtml(sentence, targetLang)}</p>
     <p><strong>${safe(promptText)}</strong></p>
     <div id="choices"></div>
     <div style="margin-top:20px;text-align:center;">
       <button id="check-btn" disabled>${ui("check")}</button>
     </div>
   `;
-
-  speakSentenceOnLoad(sentence, targetLang);
+  wireTts();
 
   const container = document.getElementById("choices");
   const checkBtn = document.getElementById("check-btn");
@@ -1940,9 +1948,12 @@ if (isModifierConcept(targetConcept)) {
   const container = document.getElementById("choices");
 
   options.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = formOf(targetLang, opt);
+    const text = formOf(targetLang, opt);
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
 
+    const btn = document.createElement("button");
+    btn.textContent = text;
     btn.onclick = () => {
       const correct = opt === targetConcept;
       btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
@@ -1950,8 +1961,10 @@ if (isModifierConcept(targetConcept)) {
       applyResult(targetConcept, correct);
       setTimeout(() => renderNext(targetLang, supportLang), 600);
     };
+    wrap.appendChild(btn);
+    wrap.appendChild(createTtsBtn(text, targetLang));
 
-    container.appendChild(btn);
+    container.appendChild(wrap);
   });
 
   return true; // 🔥 CRITICAL
@@ -2032,6 +2045,9 @@ const subjectCid = tpl.concepts.find(c =>
     ? text.charAt(0).toUpperCase() + text.slice(1)
     : text.charAt(0).toLowerCase() + text.slice(1);
 
+  const wrap = document.createElement("div");
+  wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
+
   const btn = document.createElement("button");
   btn.textContent = text;
 
@@ -2043,7 +2059,9 @@ const subjectCid = tpl.concepts.find(c =>
       setTimeout(() => renderNext(targetLang, supportLang), 600);
     };
 
-    container.appendChild(btn);
+    wrap.appendChild(btn);
+    wrap.appendChild(createTtsBtn(text, targetLang));
+    container.appendChild(wrap);
   });
 }
 
@@ -2182,9 +2200,12 @@ if (!finalOptions.includes(targetConcept)) {
     const container = document.getElementById("choices");
 
     finalOptions.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = resolveTargetSurface(opt);
+      const text = resolveTargetSurface(opt);
+      const wrap = document.createElement("div");
+      wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
 
+      const btn = document.createElement("button");
+      btn.textContent = text;
       btn.onclick = () => {
         const correct = opt === targetConcept;
         btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
@@ -2192,8 +2213,10 @@ if (!finalOptions.includes(targetConcept)) {
         applyResult(targetConcept, correct);
         setTimeout(() => renderNext(targetLang, supportLang), 600);
       };
+      wrap.appendChild(btn);
+      wrap.appendChild(createTtsBtn(text, targetLang));
 
-      container.appendChild(btn);
+      container.appendChild(wrap);
     });
   }
 // -------------------------
@@ -2382,7 +2405,11 @@ activeSelection = null;
   });
 
   rightItems.forEach(cid => {
-    rightColumn.appendChild(createButton(cid, "right"));
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "display:flex;align-items:center;gap:2px;";
+    wrap.appendChild(createTtsBtn(resolveTargetSurface(cid), targetLang));
+    wrap.appendChild(createButton(cid, "right"));
+    rightColumn.appendChild(wrap);
   });
 
   document.getElementById("check-matches").onclick = () => {
@@ -2527,12 +2554,13 @@ const correctWords = ordered.map(cid => {
 
   // Create word bank items
   function createBankWord(word) {
+  const wrap = document.createElement("div");
+  wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
+
   const btn = document.createElement("button");
   btn.textContent = word;
 
   btn.onclick = () => {
-    speak(word, targetLang);
-
     if (selectedWord && selectedWord !== btn) {
       selectedWord.classList.remove("selected");
     }
@@ -2541,7 +2569,9 @@ const correctWords = ordered.map(cid => {
     btn.classList.add("selected");
   };
 
-  bankContainer.appendChild(btn);
+  wrap.appendChild(btn);
+  wrap.appendChild(createTtsBtn(word, targetLang));
+  bankContainer.appendChild(wrap);
 }
 
   wordBank.forEach(createBankWord);
@@ -2565,7 +2595,7 @@ const correctWords = ordered.map(cid => {
     assignments.set(slotIndex, word);
     slot.textContent = word;
 
-    selectedWord.remove();
+    selectedWord.closest('div').remove();
     selectedWord = null;
   });
 
@@ -2724,8 +2754,9 @@ checkBtn.onclick = () => {
     feedbackDiv.innerHTML = `
       <div style="color:#4CAF50;">
         ${ui("correct")}.<br/>
-        Proper form: <strong>${targetSentence}</strong>
+        Proper form: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
+    wireTts();
   }
 
   if (resultType === "incorrect") {
@@ -2733,8 +2764,9 @@ checkBtn.onclick = () => {
     feedbackDiv.innerHTML = `
       <div style="color:#D32F2F;">
         ${ui("incorrect")}.<br/>
-        Correct answer: <strong>${targetSentence}</strong>
+        Correct answer: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
+    wireTts();
   }
 
   // 🔁 Replace Check with Continue
@@ -3089,17 +3121,15 @@ if (level === 2) {
   let selectedOption = null;
 
   content.innerHTML = `
-    <p class="tts-target">${safe(sentence)}</p>
+    <p>${safe(sentence)} ${ttsHtml(sentence, targetLang)}</p>
     <p><strong>${ui("chooseTranslation")}</strong></p>
-    <h2>${safe(surface)}</h2>
+    <h2>${safe(surface)} ${ttsHtml(surface, targetLang)}</h2>
     <div id="choices"></div>
     <div style="margin-top:20px;text-align:center;">
       <button id="check-btn" disabled>${ui("check")}</button>
     </div>
   `;
-
-  // ✅ TTS restored
-  speakSentenceOnLoad(sentence, targetLang);
+  wireTts();
 
   const container = document.getElementById("choices");
   const checkBtn = document.getElementById("check-btn");

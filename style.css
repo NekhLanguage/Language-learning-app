@@ -518,3 +518,25 @@ button.selected {
     font-size: 2.2rem;
   }
 }
+
+/* Inline TTS speaker button */
+.tts-inline {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.8);
+  padding: 0.2rem 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  border-radius: 6px;
+  min-width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.3rem;
+  line-height: 1;
+}
+.tts-inline:hover {
+  background: rgba(255,255,255,0.22);
+  color: white;
+  transform: none;
+  box-shadow: none;
+}
