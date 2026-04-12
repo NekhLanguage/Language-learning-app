@@ -534,6 +534,10 @@ function buildReleasePlan(selectedPacks = []) {
 }
 function renderPackSelection() {
 
+  document.getElementById("pack-title").textContent = ui("resourcePacks");
+  document.getElementById("pack-subtitle").textContent = ui("choosePacks");
+  document.getElementById("start-run").textContent = ui("start");
+
   const container = document.getElementById("pack-buttons");
   container.innerHTML = "";
 
@@ -3249,7 +3253,7 @@ return;
 document.getElementById("start-run").onclick = async () => {
 
   if (!run.selectedResourcePacks || run.selectedResourcePacks.length === 0) {
-    alert("Select at least 1 resource pack");
+    alert(ui("selectPack"));
     return;
   }
 
