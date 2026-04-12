@@ -19,7 +19,11 @@
     "skool": "مجتمع سكول",
     "offer": "قم بتطوير نظامك اللغوي",
     "sessionComplete": "اكتملت الجلسة",
-    "sessionFinished": "تم إنهاء الجلسة {n}."
+    "sessionFinished": "تم إنهاء الجلسة {n}.",
+    "resourcePacks": "حزم الموارد",
+    "choosePacks": "اختر حتى حزمتين",
+    "start": "ابدأ",
+    "selectPack": "اختر حزمة واحدة على الأقل"
   },
   "hubNames": {
     "en": "الإنجليزية",

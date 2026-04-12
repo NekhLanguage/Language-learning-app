@@ -22,7 +22,11 @@
     "sessionFinished": "{n}. oturum tamamlandı.",
     "enterEmail": "E-posta adresinizi girin",
     "buyAccess": "Hesabınız yok mu? Erişim satın alın",
-    "noAccess": "Bu e-posta için erişim bulunamadı"
+    "noAccess": "Bu e-posta için erişim bulunamadı",
+    "resourcePacks": "KAYNAK PAKETLERİ",
+    "choosePacks": "En fazla 2 paket seçin",
+    "start": "BAŞLA",
+    "selectPack": "En az 1 paket seçin"
   },
   "hubNames": {
     "en": "İngilizce",
@@ -37,136 +41,403 @@
     "tr": "Türkçe"
   },
   "forms": {
-    "BIG": ["büyük"],
-    "SMALL": ["küçük"],
-    "GOOD": ["iyi"],
-    "BAD": ["kötü"],
-    "NEW": ["yeni"],
-    "OLD": ["eski"],
-    "EASY": ["kolay"],
-    "DIFFICULT": ["zor"],
-    "MY": ["benim"],
-    "YOUR": ["senin"],
-    "HIS": ["onun"],
-    "HER": ["onun"],
-    "OUR": ["bizim"],
-    "THEIR": ["onların"],
-    "AND": ["ve"],
-    "BUT": ["ama"],
-    "ALSO": ["da", "de", "ayrıca"],
-    "BECAUSE": ["çünkü"],
-    "IF": ["eğer"],
-    "TOP": ["üst"],
-    "BOTTOM": ["alt"],
-    "UNDER": ["altında"],
-    "NEXT_TO": ["yanında"],
-    "FRONT": ["önünde"],
-    "BEHIND": ["arkasında"],
-    "IN": ["içinde"],
-    "ON": ["üzerinde"],
-    "OFF": ["kapalı"],
-    "BETWEEN": ["arasında"],
-    "BACK": ["geri"],
-    "OUT": ["dışarı"],
-    "NORTH": ["kuzey"],
-    "SOUTH": ["güney"],
-    "EAST": ["doğu"],
-    "WEST": ["batı"],
-    "FOR": ["için"],
-    "WITH": ["ile"],
-    "FROM": ["dan", "den"],
-    "TO": ["a", "e"],
-    "BY": ["tarafından"],
-    "WHILE": ["iken"],
-    "AS": ["gibi", "olarak"],
-    "WATER": { "form": "su" },
-    "FOOD": { "form": "yiyecek" },
-    "HOUSE": { "form": "ev" },
-    "HOME": { "form": "yuva" },
-    "BOOK": { "form": "kitap" },
-    "THING": { "form": "şey" },
-    "JOB": { "form": "iş" },
-    "ROOM": { "form": "oda" },
-    "BOY": { "form": "erkek çocuk" },
-    "GIRL": { "form": "kız" },
-    "MAN": { "form": "adam" },
-    "WOMAN": { "form": "kadın" },
-    "MOM": { "form": "anne" },
-    "DAD": { "form": "baba" },
-    "SON": { "form": "oğul" },
-    "DAUGHTER": { "form": "kız evlat" },
-    "BROTHER": { "form": "erkek kardeş" },
-    "SISTER": { "form": "kız kardeş" },
-    "HEAD": { "form": "kafa" },
-    "ARM": { "form": "kol" },
-    "HAND": { "form": "el" },
-    "LEG": { "form": "bacak" },
-    "FOOT": { "form": "ayak" },
-    "FINGER": { "form": "parmak" },
-    "EYE": { "form": "göz" },
-    "MOUTH": { "form": "ağız" },
-    "FACE": { "form": "yüz" },
-    "BREAKFAST": { "form": "kahvaltı" },
-    "LUNCH": { "form": "öğle yemeği" },
-    "DINNER": { "form": "akşam yemeği" },
-    "CLOTHES": { "form": "kıyafet" },
-    "SHIRT": { "form": "gömlek" },
-    "SHOES": { "form": "ayakkabı" },
-    "PHONE": { "form": "telefon" },
-    "PANTS": { "form": "pantolon" },
-    "ONE": ["bir"],
-    "TWO": ["iki"],
-    "THREE": ["üç"],
-    "FOUR": ["dört"],
-    "FIVE": ["beş"],
-    "SIX": ["altı"],
-    "SEVEN": ["yedi"],
-    "EIGHT": ["sekiz"],
-    "NINE": ["dokuz"],
-    "TEN": ["on"],
-    "ELEVEN": ["on bir"],
-    "TWELVE": ["on iki"],
-    "THIRTEEN": ["on üç"],
-    "FOURTEEN": ["on dört"],
-    "FIFTEEN": ["on beş"],
-    "SIXTEEN": ["on altı"],
-    "SEVENTEEN": ["on yedi"],
-    "EIGHTEEN": ["on sekiz"],
-    "NINETEEN": ["on dokuz"],
-    "TWENTY": ["yirmi"],
-    "PLEASE": ["lütfen"],
-    "MAYBE": ["belki"],
-    "JUST": ["sadece"],
-    "YES": ["evet"],
-    "NO": ["hayır"],
-    "NOT": ["değil"],
-    "FIRST_PERSON_SINGULAR": ["ben"],
-    "SECOND_PERSON": ["sen"],
-    "SECOND_PERSON_PLURAL": ["siz"],
-    "HE": ["o"],
-    "SHE": ["o"],
-    "FIRST_PERSON_PLURAL": ["biz"],
-    "THIRD_PERSON_PLURAL": ["onlar"],
-    "ANY": ["herhangi", "herhangi bir"],
-    "ONLY": ["sadece"],
-    "ANOTHER": ["başka", "bir başka"],
-    "SOMETHING": ["bir şey"],
-    "WHO": ["kim"],
-    "WHAT": ["ne"],
-    "WHEN": ["ne zaman"],
-    "WHERE": ["nerede"],
-    "WHY": ["neden"],
-    "HOW": ["nasıl"],
-    "WHICH": ["hangi"],
-    "TODAY": ["bugün"],
-    "YESTERDAY": ["dün"],
-    "TOMORROW": ["yarın"],
-    "MORNING": ["sabah"],
-    "DAY": ["gün"],
-    "NIGHT": ["gece"],
-    "WEEK": ["hafta"],
-    "MONTH": ["ay"],
-    "YEAR": ["yıl"],
+    "BIG": [
+      "büyük"
+    ],
+    "SMALL": [
+      "küçük"
+    ],
+    "GOOD": [
+      "iyi"
+    ],
+    "BAD": [
+      "kötü"
+    ],
+    "NEW": [
+      "yeni"
+    ],
+    "OLD": [
+      "eski"
+    ],
+    "EASY": [
+      "kolay"
+    ],
+    "DIFFICULT": [
+      "zor"
+    ],
+    "MY": [
+      "benim"
+    ],
+    "YOUR": [
+      "senin"
+    ],
+    "HIS": [
+      "onun"
+    ],
+    "HER": [
+      "onun"
+    ],
+    "OUR": [
+      "bizim"
+    ],
+    "THEIR": [
+      "onların"
+    ],
+    "AND": [
+      "ve"
+    ],
+    "BUT": [
+      "ama"
+    ],
+    "ALSO": [
+      "da",
+      "de",
+      "ayrıca"
+    ],
+    "BECAUSE": [
+      "çünkü"
+    ],
+    "IF": [
+      "eğer"
+    ],
+    "TOP": [
+      "üst"
+    ],
+    "BOTTOM": [
+      "alt"
+    ],
+    "UNDER": [
+      "altında"
+    ],
+    "NEXT_TO": [
+      "yanında"
+    ],
+    "FRONT": [
+      "önünde"
+    ],
+    "BEHIND": [
+      "arkasında"
+    ],
+    "IN": [
+      "içinde"
+    ],
+    "ON": [
+      "üzerinde"
+    ],
+    "OFF": [
+      "kapalı"
+    ],
+    "BETWEEN": [
+      "arasında"
+    ],
+    "BACK": [
+      "geri"
+    ],
+    "OUT": [
+      "dışarı"
+    ],
+    "NORTH": [
+      "kuzey"
+    ],
+    "SOUTH": [
+      "güney"
+    ],
+    "EAST": [
+      "doğu"
+    ],
+    "WEST": [
+      "batı"
+    ],
+    "FOR": [
+      "için"
+    ],
+    "WITH": [
+      "ile"
+    ],
+    "FROM": [
+      "dan",
+      "den"
+    ],
+    "TO": [
+      "a",
+      "e"
+    ],
+    "BY": [
+      "tarafından"
+    ],
+    "WHILE": [
+      "iken"
+    ],
+    "AS": [
+      "gibi",
+      "olarak"
+    ],
+    "WATER": {
+      "form": "su"
+    },
+    "FOOD": {
+      "form": "yiyecek"
+    },
+    "HOUSE": {
+      "form": "ev"
+    },
+    "HOME": {
+      "form": "yuva"
+    },
+    "BOOK": {
+      "form": "kitap"
+    },
+    "THING": {
+      "form": "şey"
+    },
+    "JOB": {
+      "form": "iş"
+    },
+    "ROOM": {
+      "form": "oda"
+    },
+    "BOY": {
+      "form": "erkek çocuk"
+    },
+    "GIRL": {
+      "form": "kız"
+    },
+    "MAN": {
+      "form": "adam"
+    },
+    "WOMAN": {
+      "form": "kadın"
+    },
+    "MOM": {
+      "form": "anne"
+    },
+    "DAD": {
+      "form": "baba"
+    },
+    "SON": {
+      "form": "oğul"
+    },
+    "DAUGHTER": {
+      "form": "kız evlat"
+    },
+    "BROTHER": {
+      "form": "erkek kardeş"
+    },
+    "SISTER": {
+      "form": "kız kardeş"
+    },
+    "HEAD": {
+      "form": "kafa"
+    },
+    "ARM": {
+      "form": "kol"
+    },
+    "HAND": {
+      "form": "el"
+    },
+    "LEG": {
+      "form": "bacak"
+    },
+    "FOOT": {
+      "form": "ayak"
+    },
+    "FINGER": {
+      "form": "parmak"
+    },
+    "EYE": {
+      "form": "göz"
+    },
+    "MOUTH": {
+      "form": "ağız"
+    },
+    "FACE": {
+      "form": "yüz"
+    },
+    "BREAKFAST": {
+      "form": "kahvaltı"
+    },
+    "LUNCH": {
+      "form": "öğle yemeği"
+    },
+    "DINNER": {
+      "form": "akşam yemeği"
+    },
+    "CLOTHES": {
+      "form": "kıyafet"
+    },
+    "SHIRT": {
+      "form": "gömlek"
+    },
+    "SHOES": {
+      "form": "ayakkabı"
+    },
+    "PHONE": {
+      "form": "telefon"
+    },
+    "PANTS": {
+      "form": "pantolon"
+    },
+    "ONE": [
+      "bir"
+    ],
+    "TWO": [
+      "iki"
+    ],
+    "THREE": [
+      "üç"
+    ],
+    "FOUR": [
+      "dört"
+    ],
+    "FIVE": [
+      "beş"
+    ],
+    "SIX": [
+      "altı"
+    ],
+    "SEVEN": [
+      "yedi"
+    ],
+    "EIGHT": [
+      "sekiz"
+    ],
+    "NINE": [
+      "dokuz"
+    ],
+    "TEN": [
+      "on"
+    ],
+    "ELEVEN": [
+      "on bir"
+    ],
+    "TWELVE": [
+      "on iki"
+    ],
+    "THIRTEEN": [
+      "on üç"
+    ],
+    "FOURTEEN": [
+      "on dört"
+    ],
+    "FIFTEEN": [
+      "on beş"
+    ],
+    "SIXTEEN": [
+      "on altı"
+    ],
+    "SEVENTEEN": [
+      "on yedi"
+    ],
+    "EIGHTEEN": [
+      "on sekiz"
+    ],
+    "NINETEEN": [
+      "on dokuz"
+    ],
+    "TWENTY": [
+      "yirmi"
+    ],
+    "PLEASE": [
+      "lütfen"
+    ],
+    "MAYBE": [
+      "belki"
+    ],
+    "JUST": [
+      "sadece"
+    ],
+    "YES": [
+      "evet"
+    ],
+    "NO": [
+      "hayır"
+    ],
+    "NOT": [
+      "değil"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "ben"
+    ],
+    "SECOND_PERSON": [
+      "sen"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "siz"
+    ],
+    "HE": [
+      "o"
+    ],
+    "SHE": [
+      "o"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "biz"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "onlar"
+    ],
+    "ANY": [
+      "herhangi",
+      "herhangi bir"
+    ],
+    "ONLY": [
+      "sadece"
+    ],
+    "ANOTHER": [
+      "başka",
+      "bir başka"
+    ],
+    "SOMETHING": [
+      "bir şey"
+    ],
+    "WHO": [
+      "kim"
+    ],
+    "WHAT": [
+      "ne"
+    ],
+    "WHEN": [
+      "ne zaman"
+    ],
+    "WHERE": [
+      "nerede"
+    ],
+    "WHY": [
+      "neden"
+    ],
+    "HOW": [
+      "nasıl"
+    ],
+    "WHICH": [
+      "hangi"
+    ],
+    "TODAY": [
+      "bugün"
+    ],
+    "YESTERDAY": [
+      "dün"
+    ],
+    "TOMORROW": [
+      "yarın"
+    ],
+    "MORNING": [
+      "sabah"
+    ],
+    "DAY": [
+      "gün"
+    ],
+    "NIGHT": [
+      "gece"
+    ],
+    "WEEK": [
+      "hafta"
+    ],
+    "MONTH": [
+      "ay"
+    ],
+    "YEAR": [
+      "yıl"
+    ],
     "DO": {
       "base": "yapmak",
       "1_singular": "yaparım",
@@ -299,18 +570,66 @@
       {
         "name": "Special letters",
         "letters": [
-          { "char": "Ç", "romanization": "ç", "sound": "like 'ch' in 'church'" },
-          { "char": "ç", "romanization": "ç", "sound": "like 'ch' in 'church'" },
-          { "char": "Ğ", "romanization": "ğ", "sound": "softens & lengthens the vowel before it" },
-          { "char": "ğ", "romanization": "ğ", "sound": "softens & lengthens the vowel before it" },
-          { "char": "İ", "romanization": "i", "sound": "dotted I – like 'ee' in 'see'" },
-          { "char": "ı", "romanization": "ı", "sound": "dotless I – like 'uh' in 'the'" },
-          { "char": "Ö", "romanization": "ö", "sound": "like 'u' in 'burn'" },
-          { "char": "ö", "romanization": "ö", "sound": "like 'u' in 'burn'" },
-          { "char": "Ş", "romanization": "ş", "sound": "like 'sh' in 'shoe'" },
-          { "char": "ş", "romanization": "ş", "sound": "like 'sh' in 'shoe'" },
-          { "char": "Ü", "romanization": "ü", "sound": "like 'ee' with rounded lips" },
-          { "char": "ü", "romanization": "ü", "sound": "like 'ee' with rounded lips" }
+          {
+            "char": "Ç",
+            "romanization": "ç",
+            "sound": "like 'ch' in 'church'"
+          },
+          {
+            "char": "ç",
+            "romanization": "ç",
+            "sound": "like 'ch' in 'church'"
+          },
+          {
+            "char": "Ğ",
+            "romanization": "ğ",
+            "sound": "softens & lengthens the vowel before it"
+          },
+          {
+            "char": "ğ",
+            "romanization": "ğ",
+            "sound": "softens & lengthens the vowel before it"
+          },
+          {
+            "char": "İ",
+            "romanization": "i",
+            "sound": "dotted I – like 'ee' in 'see'"
+          },
+          {
+            "char": "ı",
+            "romanization": "ı",
+            "sound": "dotless I – like 'uh' in 'the'"
+          },
+          {
+            "char": "Ö",
+            "romanization": "ö",
+            "sound": "like 'u' in 'burn'"
+          },
+          {
+            "char": "ö",
+            "romanization": "ö",
+            "sound": "like 'u' in 'burn'"
+          },
+          {
+            "char": "Ş",
+            "romanization": "ş",
+            "sound": "like 'sh' in 'shoe'"
+          },
+          {
+            "char": "ş",
+            "romanization": "ş",
+            "sound": "like 'sh' in 'shoe'"
+          },
+          {
+            "char": "Ü",
+            "romanization": "ü",
+            "sound": "like 'ee' with rounded lips"
+          },
+          {
+            "char": "ü",
+            "romanization": "ü",
+            "sound": "like 'ee' with rounded lips"
+          }
         ]
       }
     ]

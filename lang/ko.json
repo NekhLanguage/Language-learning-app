@@ -19,7 +19,11 @@
     "skool": "Skool 커뮤니티",
     "offer": "언어 학습 시스템을 업그레이드하세요",
     "sessionComplete": "세션 완료",
-    "sessionFinished": "세션 {n}이 완료되었습니다."
+    "sessionFinished": "세션 {n}이 완료되었습니다.",
+    "resourcePacks": "리소스 팩",
+    "choosePacks": "최대 2개 팩을 선택하세요",
+    "start": "시작",
+    "selectPack": "최소 1개 팩을 선택하세요"
   },
   "hubNames": {
     "en": "영어",

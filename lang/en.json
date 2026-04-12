@@ -22,7 +22,11 @@
     "sessionFinished": "Session {n} finished.",
     "enterEmail": "Enter your email",
     "buyAccess": "Not a user? Get access",
-    "noAccess": "No access found for this email"
+    "noAccess": "No access found for this email",
+    "resourcePacks": "RESOURCE PACKS",
+    "choosePacks": "Choose up to 2 packs",
+    "start": "START",
+    "selectPack": "Select at least 1 resource pack"
   },
   "hubNames": {
     "en": "English",

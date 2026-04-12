@@ -19,7 +19,11 @@
     "skool": "Comunidade Skool",
     "offer": "Melhore seu sistema de idiomas",
     "sessionComplete": "Sessão concluída",
-    "sessionFinished": "Sessão {n} concluída."
+    "sessionFinished": "Sessão {n} concluída.",
+    "resourcePacks": "PACOTES DE RECURSOS",
+    "choosePacks": "Escolha até 2 pacotes",
+    "start": "INICIAR",
+    "selectPack": "Selecione pelo menos 1 pacote"
   },
   "hubNames": {
     "en": "Inglês",

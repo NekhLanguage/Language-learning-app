@@ -19,7 +19,11 @@
     "skool": "Skool-fellesskap",
     "offer": "Forbedre din egen språkplan",
     "sessionComplete": "Økt fullført",
-    "sessionFinished": "Økt {n} fullført."
+    "sessionFinished": "Økt {n} fullført.",
+    "resourcePacks": "RESSURSPAKKER",
+    "choosePacks": "Velg opptil 2 pakker",
+    "start": "START",
+    "selectPack": "Velg minst 1 pakke"
   },
   "hubNames": {
     "en": "Engelsk",

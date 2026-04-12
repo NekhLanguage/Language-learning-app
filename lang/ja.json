@@ -19,7 +19,11 @@
     "skool": "Skoolコミュニティ",
     "offer": "語学システムをアップグレードする",
     "sessionComplete": "セッション完了",
-    "sessionFinished": "セッション {n} が完了しました。"
+    "sessionFinished": "セッション {n} が完了しました。",
+    "resourcePacks": "リソースパック",
+    "choosePacks": "最大2つのパックを選んでください",
+    "start": "スタート",
+    "selectPack": "少なくとも1つのパックを選んでください"
   },
   "hubNames": {
     "en": "英語",
