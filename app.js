@@ -1391,7 +1391,10 @@ function orderedConceptsForTemplate(tpl, lang) {
   pt: "SVO",
   no: "SVO",
   ko: "SOV",
-  uk: "SVO"
+  uk: "SVO",
+  de: "SVO",
+  el: "SVO",
+  tr: "SOV"
 };
 
 const orderType = WORD_ORDER[lang] || "SVO";
@@ -1702,8 +1705,14 @@ if (tpl.structure?.type === "complex_clause") {
       window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
     );
 
-    if (pronounIndex !== -1) wordsWithParticles.splice(pronounIndex + 1, 0, "は");
-    if (nounIndex !== -1) wordsWithParticles.splice(nounIndex + 1, 0, "を");
+    // Insert in reverse index order so earlier splices don't shift later indices
+    const insertions = [];
+    if (pronounIndex !== -1) insertions.push({ idx: pronounIndex + 1, particle: "は" });
+    if (nounIndex !== -1) insertions.push({ idx: nounIndex + 1, particle: "を" });
+    insertions.sort((a, b) => b.idx - a.idx);
+    for (const ins of insertions) {
+      wordsWithParticles.splice(ins.idx, 0, ins.particle);
+    }
 
     return wordsWithParticles.join("");
   }
@@ -2272,15 +2281,22 @@ function renderMatchingL5(targetLang, supportLang) {
 
   subtitle.textContent = "Level 5";
 
-  // Gather eligible concepts (caller guarantees >= 5 are available)
-  const eligible = run.released.filter(cid => {
+  // Gather eligible concepts, dedup by target-language form
+  const allEligible = run.released.filter(cid => {
     const st = ensureProgress(cid);
     return st.level === 5 && !st.completed && passesSpacingRule(cid);
   });
+  const seenForms = new Set();
+  const eligible = allEligible.filter(cid => {
+    const form = resolveTargetSurface(cid);
+    if (seenForms.has(form)) return false;
+    seenForms.add(form);
+    return true;
+  });
 
-  // Shuffle and pick exactly 5
+  // Pick exactly 5 (caller guarantees >= 5 unique-form concepts)
   const shuffled = shuffle([...eligible]);
-  const selected = shuffled.slice(0, Math.min(5, shuffled.length));
+  const selected = shuffled.slice(0, 5);
 
   // Build left (support) and right (target) columns
   const leftItems = shuffle([...selected]);
@@ -2985,7 +3001,7 @@ return;
   quantifier: 7
 };
 function chooseConcept(excluded = new Set()) {
-  const candidates = run.released.filter(cid => {
+  let candidates = run.released.filter(cid => {
     if (excluded.has(cid)) return false;
 
     const st = ensureProgress(cid);
@@ -3001,6 +3017,14 @@ function chooseConcept(excluded = new Set()) {
 
     return true;
   });
+
+  // Fallback: if intro gate blocked everything, retry without it
+  if (!candidates.length) {
+    candidates = run.released.filter(cid => {
+      if (excluded.has(cid)) return false;
+      return !ensureProgress(cid).completed;
+    });
+  }
 
   if (!candidates.length) return null;
 
@@ -3267,7 +3291,16 @@ if (level === 2) {
       return st.level === 5 && !st.completed && passesSpacingRule(cid);
     });
 
-    if (eligibleL5.length >= 5) {
+    // Dedup by target-language surface form so matching never shows duplicates
+    const seenForms = new Set();
+    const uniqueL5 = eligibleL5.filter(cid => {
+      const form = formOf(targetLang, cid);
+      if (seenForms.has(form)) return false;
+      seenForms.add(form);
+      return true;
+    });
+
+    if (uniqueL5.length >= 5) {
       renderMatchingL5(targetLang, supportLang);
       renderedSomething = true;
       run.exerciseCounter++;
