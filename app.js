@@ -257,8 +257,14 @@ const LANG_FILE_CACHE = {};
 
 async function getLangFileData(code) {
   if (!LANG_FILE_CACHE[code]) {
-    const res = await fetch(`lang/${code}.json`);
-    LANG_FILE_CACHE[code] = await res.json();
+    try {
+      const res = await fetch(`lang/${code}.json`);
+      if (!res.ok) throw new Error(`Failed to load lang/${code}.json (${res.status})`);
+      LANG_FILE_CACHE[code] = await res.json();
+    } catch (err) {
+      console.error(err);
+      LANG_FILE_CACHE[code] = { uiStrings: {}, hubNames: {}, forms: {} };
+    }
   }
   return LANG_FILE_CACHE[code];
 }
@@ -287,6 +293,7 @@ email = email?.toLowerCase().trim();
     body: JSON.stringify({ email })
   });
 
+  if (!res.ok) { console.error("loadUser failed:", res.status); return; }
   const data = await res.json();
   console.log("LOADED FROM SERVER", data.user);
 
@@ -419,6 +426,7 @@ if (buyAccess) {
       body: JSON.stringify({ email })
     });
 
+    if (!res.ok) { alert("Server error — please try again."); return; }
     const data = await res.json();
 
     if (data.allowed) {
@@ -774,7 +782,10 @@ function updateSupportUI(code) {
 
     // Fetch all vocab files in parallel
     const vocabResults = await Promise.all(
-      VOCAB_FILES.map(file => fetch(file).then(r => r.json()))
+      VOCAB_FILES.map(file => fetch(file).then(r => {
+        if (!r.ok) throw new Error(`Failed to load ${file} (${r.status})`);
+        return r.json();
+      }))
     );
 
     for (const data of vocabResults) {
@@ -819,7 +830,10 @@ async function loadTemplates(selectedPacks = []) {
   });
 
   // Fetch all template files in parallel
-  const results = await Promise.all(files.map(file => fetch(file).then(r => r.json())));
+  const results = await Promise.all(files.map(file => fetch(file).then(r => {
+    if (!r.ok) throw new Error(`Failed to load ${file} (${r.status})`);
+    return r.json();
+  })));
   TEMPLATE_CACHE = results.flatMap(data => data.templates || []);
 
   return TEMPLATE_CACHE;
@@ -2437,8 +2451,8 @@ activeSelection = null;
   selected.forEach(cid => {
     const matched = selectedPairs.get(cid);
 
-    const leftBtn = [...leftColumn.children].find(b => b.dataset.cid === cid);
-    const rightBtn = [...rightColumn.children].find(b => b.dataset.cid === matched);
+    const leftBtn = leftColumn.querySelector(`[data-cid="${cid}"]`);
+    const rightBtn = rightColumn.querySelector(`[data-cid="${matched}"]`);
 
     if (matched === cid) {
       leftBtn.classList.add("matched");
