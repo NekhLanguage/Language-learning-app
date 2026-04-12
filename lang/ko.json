@@ -455,59 +455,73 @@
         "letters": [
           {
             "char": "ㄱ",
-            "romanization": "g/k"
+            "romanization": "g/k",
+            "ttsText": "기역"
           },
           {
             "char": "ㄴ",
-            "romanization": "n"
+            "romanization": "n",
+            "ttsText": "니은"
           },
           {
             "char": "ㄷ",
-            "romanization": "d/t"
+            "romanization": "d/t",
+            "ttsText": "디귿"
           },
           {
             "char": "ㄹ",
-            "romanization": "r/l"
+            "romanization": "r/l",
+            "ttsText": "리을"
           },
           {
             "char": "ㅁ",
-            "romanization": "m"
+            "romanization": "m",
+            "ttsText": "미음"
           },
           {
             "char": "ㅂ",
-            "romanization": "b/p"
+            "romanization": "b/p",
+            "ttsText": "비읍"
           },
           {
             "char": "ㅅ",
-            "romanization": "s"
+            "romanization": "s",
+            "ttsText": "시옷"
           },
           {
             "char": "ㅇ",
-            "romanization": "-/ng"
+            "romanization": "-/ng",
+            "ttsText": "이응"
           },
           {
             "char": "ㅈ",
-            "romanization": "j"
+            "romanization": "j",
+            "ttsText": "지읒"
           },
           {
             "char": "ㅊ",
-            "romanization": "ch"
+            "romanization": "ch",
+            "ttsText": "치읓"
           },
           {
             "char": "ㅋ",
-            "romanization": "k"
+            "romanization": "k",
+            "ttsText": "키읔"
           },
           {
             "char": "ㅌ",
-            "romanization": "t"
+            "romanization": "t",
+            "ttsText": "티읕"
           },
           {
             "char": "ㅍ",
-            "romanization": "p"
+            "romanization": "p",
+            "ttsText": "피읖"
           },
           {
             "char": "ㅎ",
-            "romanization": "h"
+            "romanization": "h",
+            "ttsText": "히읗"
           }
         ]
       },
@@ -516,43 +530,53 @@
         "letters": [
           {
             "char": "ㅏ",
-            "romanization": "a"
+            "romanization": "a",
+            "ttsText": "아"
           },
           {
             "char": "ㅑ",
-            "romanization": "ya"
+            "romanization": "ya",
+            "ttsText": "야"
           },
           {
             "char": "ㅓ",
-            "romanization": "eo"
+            "romanization": "eo",
+            "ttsText": "어"
           },
           {
             "char": "ㅕ",
-            "romanization": "yeo"
+            "romanization": "yeo",
+            "ttsText": "여"
           },
           {
             "char": "ㅗ",
-            "romanization": "o"
+            "romanization": "o",
+            "ttsText": "오"
           },
           {
             "char": "ㅛ",
-            "romanization": "yo"
+            "romanization": "yo",
+            "ttsText": "요"
           },
           {
             "char": "ㅜ",
-            "romanization": "u"
+            "romanization": "u",
+            "ttsText": "우"
           },
           {
             "char": "ㅠ",
-            "romanization": "yu"
+            "romanization": "yu",
+            "ttsText": "유"
           },
           {
             "char": "ㅡ",
-            "romanization": "eu"
+            "romanization": "eu",
+            "ttsText": "으"
           },
           {
             "char": "ㅣ",
-            "romanization": "i"
+            "romanization": "i",
+            "ttsText": "이"
           }
         ]
       }

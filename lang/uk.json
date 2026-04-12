@@ -566,135 +566,168 @@
         "letters": [
           {
             "char": "А",
-            "romanization": "a"
+            "romanization": "a",
+            "ttsText": "А"
           },
           {
             "char": "Б",
-            "romanization": "b"
+            "romanization": "b",
+            "ttsText": "Бе"
           },
           {
             "char": "В",
-            "romanization": "v"
+            "romanization": "v",
+            "ttsText": "Ве"
           },
           {
             "char": "Г",
-            "romanization": "h"
+            "romanization": "h",
+            "ttsText": "Ге"
           },
           {
             "char": "Ґ",
-            "romanization": "g"
+            "romanization": "g",
+            "ttsText": "Ґе"
           },
           {
             "char": "Д",
-            "romanization": "d"
+            "romanization": "d",
+            "ttsText": "Де"
           },
           {
             "char": "Е",
-            "romanization": "e"
+            "romanization": "e",
+            "ttsText": "Е"
           },
           {
             "char": "Є",
-            "romanization": "ye"
+            "romanization": "ye",
+            "ttsText": "Є"
           },
           {
             "char": "Ж",
-            "romanization": "zh"
+            "romanization": "zh",
+            "ttsText": "Же"
           },
           {
             "char": "З",
-            "romanization": "z"
+            "romanization": "z",
+            "ttsText": "Зе"
           },
           {
             "char": "И",
-            "romanization": "y"
+            "romanization": "y",
+            "ttsText": "И"
           },
           {
             "char": "І",
-            "romanization": "i"
+            "romanization": "i",
+            "ttsText": "І"
           },
           {
             "char": "Ї",
-            "romanization": "yi"
+            "romanization": "yi",
+            "ttsText": "Ї"
           },
           {
             "char": "Й",
-            "romanization": "y"
+            "romanization": "y",
+            "ttsText": "Йот"
           },
           {
             "char": "К",
-            "romanization": "k"
+            "romanization": "k",
+            "ttsText": "Ка"
           },
           {
             "char": "Л",
-            "romanization": "l"
+            "romanization": "l",
+            "ttsText": "Ел"
           },
           {
             "char": "М",
-            "romanization": "m"
+            "romanization": "m",
+            "ttsText": "Ем"
           },
           {
             "char": "Н",
-            "romanization": "n"
+            "romanization": "n",
+            "ttsText": "Ен"
           },
           {
             "char": "О",
-            "romanization": "o"
+            "romanization": "o",
+            "ttsText": "О"
           },
           {
             "char": "П",
-            "romanization": "p"
+            "romanization": "p",
+            "ttsText": "Пе"
           },
           {
             "char": "Р",
-            "romanization": "r"
+            "romanization": "r",
+            "ttsText": "Ер"
           },
           {
             "char": "С",
-            "romanization": "s"
+            "romanization": "s",
+            "ttsText": "Ес"
           },
           {
             "char": "Т",
-            "romanization": "t"
+            "romanization": "t",
+            "ttsText": "Те"
           },
           {
             "char": "У",
-            "romanization": "u"
+            "romanization": "u",
+            "ttsText": "У"
           },
           {
             "char": "Ф",
-            "romanization": "f"
+            "romanization": "f",
+            "ttsText": "Еф"
           },
           {
             "char": "Х",
-            "romanization": "kh"
+            "romanization": "kh",
+            "ttsText": "Ха"
           },
           {
             "char": "Ц",
-            "romanization": "ts"
+            "romanization": "ts",
+            "ttsText": "Це"
           },
           {
             "char": "Ч",
-            "romanization": "ch"
+            "romanization": "ch",
+            "ttsText": "Че"
           },
           {
             "char": "Ш",
-            "romanization": "sh"
+            "romanization": "sh",
+            "ttsText": "Ша"
           },
           {
             "char": "Щ",
-            "romanization": "shch"
+            "romanization": "shch",
+            "ttsText": "Ща"
           },
           {
             "char": "Ь",
-            "romanization": "'"
+            "romanization": "'",
+            "ttsText": "мʼякий знак"
           },
           {
             "char": "Ю",
-            "romanization": "yu"
+            "romanization": "yu",
+            "ttsText": "Ю"
           },
           {
             "char": "Я",
-            "romanization": "ya"
+            "romanization": "ya",
+            "ttsText": "Я"
           }
         ]
       }

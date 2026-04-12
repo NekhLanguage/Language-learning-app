@@ -37,136 +37,444 @@
     "tr": "Τουρκικά"
   },
   "forms": {
-    "BIG": ["μεγάλος"],
-    "SMALL": ["μικρός"],
-    "GOOD": ["καλός"],
-    "BAD": ["κακός"],
-    "NEW": ["καινούριος", "νέος"],
-    "OLD": ["παλιός"],
-    "EASY": ["εύκολος"],
-    "DIFFICULT": ["δύσκολος"],
-    "MY": ["μου"],
-    "YOUR": ["σου"],
-    "HIS": ["του"],
-    "HER": ["της"],
-    "OUR": ["μας"],
-    "THEIR": ["τους"],
-    "AND": ["και"],
-    "BUT": ["αλλά"],
-    "ALSO": ["επίσης"],
-    "BECAUSE": ["γιατί", "επειδή"],
-    "IF": ["αν"],
-    "TOP": ["πάνω"],
-    "BOTTOM": ["κάτω"],
-    "UNDER": ["κάτω από"],
-    "NEXT_TO": ["δίπλα"],
-    "FRONT": ["μπροστά"],
-    "BEHIND": ["πίσω"],
-    "IN": ["μέσα", "σε"],
-    "ON": ["πάνω σε"],
-    "OFF": ["εκτός"],
-    "BETWEEN": ["ανάμεσα", "μεταξύ"],
-    "BACK": ["πίσω"],
-    "OUT": ["έξω"],
-    "NORTH": ["βορράς"],
-    "SOUTH": ["νότος"],
-    "EAST": ["ανατολή"],
-    "WEST": ["δύση"],
-    "FOR": ["για"],
-    "WITH": ["με"],
-    "FROM": ["από"],
-    "TO": ["σε", "προς"],
-    "BY": ["από", "με"],
-    "WHILE": ["ενώ"],
-    "AS": ["ως", "σαν"],
-    "WATER": { "form": "νερό" },
-    "FOOD": { "form": "φαγητό" },
-    "HOUSE": { "form": "σπίτι", "gender": "n" },
-    "HOME": { "form": "κατοικία", "gender": "f" },
-    "BOOK": { "form": "βιβλίο", "gender": "n" },
-    "THING": { "form": "πράγμα", "gender": "n" },
-    "JOB": { "form": "δουλειά", "gender": "f" },
-    "ROOM": { "form": "δωμάτιο", "gender": "n" },
-    "BOY": { "form": "αγόρι", "gender": "n" },
-    "GIRL": { "form": "κορίτσι", "gender": "n" },
-    "MAN": { "form": "άντρας", "gender": "m" },
-    "WOMAN": { "form": "γυναίκα", "gender": "f" },
-    "MOM": { "form": "μαμά", "gender": "f" },
-    "DAD": { "form": "μπαμπάς", "gender": "m" },
-    "SON": { "form": "γιος", "gender": "m" },
-    "DAUGHTER": { "form": "κόρη", "gender": "f" },
-    "BROTHER": { "form": "αδερφός", "gender": "m" },
-    "SISTER": { "form": "αδερφή", "gender": "f" },
-    "HEAD": { "form": "κεφάλι", "gender": "n" },
-    "ARM": { "form": "χέρι", "gender": "n" },
-    "HAND": { "form": "παλάμη", "gender": "f" },
-    "LEG": { "form": "πόδι", "gender": "n" },
-    "FOOT": { "form": "πέλμα", "gender": "n" },
-    "FINGER": { "form": "δάχτυλο", "gender": "n" },
-    "EYE": { "form": "μάτι", "gender": "n" },
-    "MOUTH": { "form": "στόμα", "gender": "n" },
-    "FACE": { "form": "πρόσωπο", "gender": "n" },
-    "BREAKFAST": { "form": "πρωινό", "gender": "n" },
-    "LUNCH": { "form": "μεσημεριανό", "gender": "n" },
-    "DINNER": { "form": "βραδινό", "gender": "n" },
-    "CLOTHES": { "form": "ρούχα" },
-    "SHIRT": { "form": "πουκάμισο", "gender": "n" },
-    "SHOES": { "form": "παπούτσια" },
-    "PHONE": { "form": "τηλέφωνο", "gender": "n" },
-    "PANTS": { "form": "παντελόνι", "gender": "n" },
-    "ONE": ["ένα", "μία", "ένας"],
-    "TWO": ["δύο"],
-    "THREE": ["τρία"],
-    "FOUR": ["τέσσερα"],
-    "FIVE": ["πέντε"],
-    "SIX": ["έξι"],
-    "SEVEN": ["εφτά", "επτά"],
-    "EIGHT": ["οχτώ", "οκτώ"],
-    "NINE": ["εννιά", "εννέα"],
-    "TEN": ["δέκα"],
-    "ELEVEN": ["έντεκα"],
-    "TWELVE": ["δώδεκα"],
-    "THIRTEEN": ["δεκατρία"],
-    "FOURTEEN": ["δεκατέσσερα"],
-    "FIFTEEN": ["δεκαπέντε"],
-    "SIXTEEN": ["δεκαέξι"],
-    "SEVENTEEN": ["δεκαεφτά"],
-    "EIGHTEEN": ["δεκαοχτώ"],
-    "NINETEEN": ["δεκαεννιά"],
-    "TWENTY": ["είκοσι"],
-    "PLEASE": ["παρακαλώ"],
-    "MAYBE": ["ίσως"],
-    "JUST": ["απλά"],
-    "YES": ["ναι"],
-    "NO": ["όχι"],
-    "NOT": ["δεν"],
-    "FIRST_PERSON_SINGULAR": ["εγώ"],
-    "SECOND_PERSON": ["εσύ"],
-    "SECOND_PERSON_PLURAL": ["εσείς"],
-    "HE": ["αυτός"],
-    "SHE": ["αυτή"],
-    "FIRST_PERSON_PLURAL": ["εμείς"],
-    "THIRD_PERSON_PLURAL": ["αυτοί"],
-    "ANY": ["οποιοσδήποτε", "κάποιος"],
-    "ONLY": ["μόνο"],
-    "ANOTHER": ["άλλος", "ακόμα ένας"],
-    "SOMETHING": ["κάτι"],
-    "WHO": ["ποιος", "ποια"],
-    "WHAT": ["τι"],
-    "WHEN": ["πότε"],
-    "WHERE": ["πού"],
-    "WHY": ["γιατί"],
-    "HOW": ["πώς"],
-    "WHICH": ["ποιος", "ποια", "ποιο"],
-    "TODAY": ["σήμερα"],
-    "YESTERDAY": ["χθες"],
-    "TOMORROW": ["αύριο"],
-    "MORNING": ["πρωί"],
-    "DAY": ["μέρα"],
-    "NIGHT": ["νύχτα"],
-    "WEEK": ["εβδομάδα"],
-    "MONTH": ["μήνας"],
-    "YEAR": ["χρόνος"],
+    "BIG": [
+      "μεγάλος"
+    ],
+    "SMALL": [
+      "μικρός"
+    ],
+    "GOOD": [
+      "καλός"
+    ],
+    "BAD": [
+      "κακός"
+    ],
+    "NEW": [
+      "καινούριος",
+      "νέος"
+    ],
+    "OLD": [
+      "παλιός"
+    ],
+    "EASY": [
+      "εύκολος"
+    ],
+    "DIFFICULT": [
+      "δύσκολος"
+    ],
+    "MY": [
+      "μου"
+    ],
+    "YOUR": [
+      "σου"
+    ],
+    "HIS": [
+      "του"
+    ],
+    "HER": [
+      "της"
+    ],
+    "OUR": [
+      "μας"
+    ],
+    "THEIR": [
+      "τους"
+    ],
+    "AND": [
+      "και"
+    ],
+    "BUT": [
+      "αλλά"
+    ],
+    "ALSO": [
+      "επίσης"
+    ],
+    "BECAUSE": [
+      "γιατί",
+      "επειδή"
+    ],
+    "IF": [
+      "αν"
+    ],
+    "TOP": [
+      "πάνω"
+    ],
+    "BOTTOM": [
+      "κάτω"
+    ],
+    "UNDER": [
+      "κάτω από"
+    ],
+    "NEXT_TO": [
+      "δίπλα"
+    ],
+    "FRONT": [
+      "μπροστά"
+    ],
+    "BEHIND": [
+      "πίσω"
+    ],
+    "IN": [
+      "μέσα",
+      "σε"
+    ],
+    "ON": [
+      "πάνω σε"
+    ],
+    "OFF": [
+      "εκτός"
+    ],
+    "BETWEEN": [
+      "ανάμεσα",
+      "μεταξύ"
+    ],
+    "BACK": [
+      "πίσω"
+    ],
+    "OUT": [
+      "έξω"
+    ],
+    "NORTH": [
+      "βορράς"
+    ],
+    "SOUTH": [
+      "νότος"
+    ],
+    "EAST": [
+      "ανατολή"
+    ],
+    "WEST": [
+      "δύση"
+    ],
+    "FOR": [
+      "για"
+    ],
+    "WITH": [
+      "με"
+    ],
+    "FROM": [
+      "από"
+    ],
+    "TO": [
+      "σε",
+      "προς"
+    ],
+    "BY": [
+      "από",
+      "με"
+    ],
+    "WHILE": [
+      "ενώ"
+    ],
+    "AS": [
+      "ως",
+      "σαν"
+    ],
+    "WATER": {
+      "form": "νερό"
+    },
+    "FOOD": {
+      "form": "φαγητό"
+    },
+    "HOUSE": {
+      "form": "σπίτι",
+      "gender": "n"
+    },
+    "HOME": {
+      "form": "κατοικία",
+      "gender": "f"
+    },
+    "BOOK": {
+      "form": "βιβλίο",
+      "gender": "n"
+    },
+    "THING": {
+      "form": "πράγμα",
+      "gender": "n"
+    },
+    "JOB": {
+      "form": "δουλειά",
+      "gender": "f"
+    },
+    "ROOM": {
+      "form": "δωμάτιο",
+      "gender": "n"
+    },
+    "BOY": {
+      "form": "αγόρι",
+      "gender": "n"
+    },
+    "GIRL": {
+      "form": "κορίτσι",
+      "gender": "n"
+    },
+    "MAN": {
+      "form": "άντρας",
+      "gender": "m"
+    },
+    "WOMAN": {
+      "form": "γυναίκα",
+      "gender": "f"
+    },
+    "MOM": {
+      "form": "μαμά",
+      "gender": "f"
+    },
+    "DAD": {
+      "form": "μπαμπάς",
+      "gender": "m"
+    },
+    "SON": {
+      "form": "γιος",
+      "gender": "m"
+    },
+    "DAUGHTER": {
+      "form": "κόρη",
+      "gender": "f"
+    },
+    "BROTHER": {
+      "form": "αδερφός",
+      "gender": "m"
+    },
+    "SISTER": {
+      "form": "αδερφή",
+      "gender": "f"
+    },
+    "HEAD": {
+      "form": "κεφάλι",
+      "gender": "n"
+    },
+    "ARM": {
+      "form": "χέρι",
+      "gender": "n"
+    },
+    "HAND": {
+      "form": "παλάμη",
+      "gender": "f"
+    },
+    "LEG": {
+      "form": "πόδι",
+      "gender": "n"
+    },
+    "FOOT": {
+      "form": "πέλμα",
+      "gender": "n"
+    },
+    "FINGER": {
+      "form": "δάχτυλο",
+      "gender": "n"
+    },
+    "EYE": {
+      "form": "μάτι",
+      "gender": "n"
+    },
+    "MOUTH": {
+      "form": "στόμα",
+      "gender": "n"
+    },
+    "FACE": {
+      "form": "πρόσωπο",
+      "gender": "n"
+    },
+    "BREAKFAST": {
+      "form": "πρωινό",
+      "gender": "n"
+    },
+    "LUNCH": {
+      "form": "μεσημεριανό",
+      "gender": "n"
+    },
+    "DINNER": {
+      "form": "βραδινό",
+      "gender": "n"
+    },
+    "CLOTHES": {
+      "form": "ρούχα"
+    },
+    "SHIRT": {
+      "form": "πουκάμισο",
+      "gender": "n"
+    },
+    "SHOES": {
+      "form": "παπούτσια"
+    },
+    "PHONE": {
+      "form": "τηλέφωνο",
+      "gender": "n"
+    },
+    "PANTS": {
+      "form": "παντελόνι",
+      "gender": "n"
+    },
+    "ONE": [
+      "ένα",
+      "μία",
+      "ένας"
+    ],
+    "TWO": [
+      "δύο"
+    ],
+    "THREE": [
+      "τρία"
+    ],
+    "FOUR": [
+      "τέσσερα"
+    ],
+    "FIVE": [
+      "πέντε"
+    ],
+    "SIX": [
+      "έξι"
+    ],
+    "SEVEN": [
+      "εφτά",
+      "επτά"
+    ],
+    "EIGHT": [
+      "οχτώ",
+      "οκτώ"
+    ],
+    "NINE": [
+      "εννιά",
+      "εννέα"
+    ],
+    "TEN": [
+      "δέκα"
+    ],
+    "ELEVEN": [
+      "έντεκα"
+    ],
+    "TWELVE": [
+      "δώδεκα"
+    ],
+    "THIRTEEN": [
+      "δεκατρία"
+    ],
+    "FOURTEEN": [
+      "δεκατέσσερα"
+    ],
+    "FIFTEEN": [
+      "δεκαπέντε"
+    ],
+    "SIXTEEN": [
+      "δεκαέξι"
+    ],
+    "SEVENTEEN": [
+      "δεκαεφτά"
+    ],
+    "EIGHTEEN": [
+      "δεκαοχτώ"
+    ],
+    "NINETEEN": [
+      "δεκαεννιά"
+    ],
+    "TWENTY": [
+      "είκοσι"
+    ],
+    "PLEASE": [
+      "παρακαλώ"
+    ],
+    "MAYBE": [
+      "ίσως"
+    ],
+    "JUST": [
+      "απλά"
+    ],
+    "YES": [
+      "ναι"
+    ],
+    "NO": [
+      "όχι"
+    ],
+    "NOT": [
+      "δεν"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "εγώ"
+    ],
+    "SECOND_PERSON": [
+      "εσύ"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "εσείς"
+    ],
+    "HE": [
+      "αυτός"
+    ],
+    "SHE": [
+      "αυτή"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "εμείς"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "αυτοί"
+    ],
+    "ANY": [
+      "οποιοσδήποτε",
+      "κάποιος"
+    ],
+    "ONLY": [
+      "μόνο"
+    ],
+    "ANOTHER": [
+      "άλλος",
+      "ακόμα ένας"
+    ],
+    "SOMETHING": [
+      "κάτι"
+    ],
+    "WHO": [
+      "ποιος",
+      "ποια"
+    ],
+    "WHAT": [
+      "τι"
+    ],
+    "WHEN": [
+      "πότε"
+    ],
+    "WHERE": [
+      "πού"
+    ],
+    "WHY": [
+      "γιατί"
+    ],
+    "HOW": [
+      "πώς"
+    ],
+    "WHICH": [
+      "ποιος",
+      "ποια",
+      "ποιο"
+    ],
+    "TODAY": [
+      "σήμερα"
+    ],
+    "YESTERDAY": [
+      "χθες"
+    ],
+    "TOMORROW": [
+      "αύριο"
+    ],
+    "MORNING": [
+      "πρωί"
+    ],
+    "DAY": [
+      "μέρα"
+    ],
+    "NIGHT": [
+      "νύχτα"
+    ],
+    "WEEK": [
+      "εβδομάδα"
+    ],
+    "MONTH": [
+      "μήνας"
+    ],
+    "YEAR": [
+      "χρόνος"
+    ],
     "DO": {
       "base": "κάνω",
       "1_singular": "κάνω",
@@ -299,30 +607,150 @@
       {
         "name": "Greek alphabet",
         "letters": [
-          { "char": "Α", "romanization": "α", "sound": "a" },
-          { "char": "Β", "romanization": "β", "sound": "v" },
-          { "char": "Γ", "romanization": "γ", "sound": "g / y" },
-          { "char": "Δ", "romanization": "δ", "sound": "dh" },
-          { "char": "Ε", "romanization": "ε", "sound": "e" },
-          { "char": "Ζ", "romanization": "ζ", "sound": "z" },
-          { "char": "Η", "romanization": "η", "sound": "i" },
-          { "char": "Θ", "romanization": "θ", "sound": "th" },
-          { "char": "Ι", "romanization": "ι", "sound": "i" },
-          { "char": "Κ", "romanization": "κ", "sound": "k" },
-          { "char": "Λ", "romanization": "λ", "sound": "l" },
-          { "char": "Μ", "romanization": "μ", "sound": "m" },
-          { "char": "Ν", "romanization": "ν", "sound": "n" },
-          { "char": "Ξ", "romanization": "ξ", "sound": "ks" },
-          { "char": "Ο", "romanization": "ο", "sound": "o" },
-          { "char": "Π", "romanization": "π", "sound": "p" },
-          { "char": "Ρ", "romanization": "ρ", "sound": "r" },
-          { "char": "Σ", "romanization": "σ/ς", "sound": "s" },
-          { "char": "Τ", "romanization": "τ", "sound": "t" },
-          { "char": "Υ", "romanization": "υ", "sound": "i" },
-          { "char": "Φ", "romanization": "φ", "sound": "f" },
-          { "char": "Χ", "romanization": "χ", "sound": "ch" },
-          { "char": "Ψ", "romanization": "ψ", "sound": "ps" },
-          { "char": "Ω", "romanization": "ω", "sound": "o" }
+          {
+            "char": "Α",
+            "romanization": "α",
+            "sound": "a",
+            "ttsText": "Άλφα"
+          },
+          {
+            "char": "Β",
+            "romanization": "β",
+            "sound": "v",
+            "ttsText": "Βήτα"
+          },
+          {
+            "char": "Γ",
+            "romanization": "γ",
+            "sound": "g / y",
+            "ttsText": "Γάμμα"
+          },
+          {
+            "char": "Δ",
+            "romanization": "δ",
+            "sound": "dh",
+            "ttsText": "Δέλτα"
+          },
+          {
+            "char": "Ε",
+            "romanization": "ε",
+            "sound": "e",
+            "ttsText": "Έψιλον"
+          },
+          {
+            "char": "Ζ",
+            "romanization": "ζ",
+            "sound": "z",
+            "ttsText": "Ζήτα"
+          },
+          {
+            "char": "Η",
+            "romanization": "η",
+            "sound": "i",
+            "ttsText": "Ήτα"
+          },
+          {
+            "char": "Θ",
+            "romanization": "θ",
+            "sound": "th",
+            "ttsText": "Θήτα"
+          },
+          {
+            "char": "Ι",
+            "romanization": "ι",
+            "sound": "i",
+            "ttsText": "Γιώτα"
+          },
+          {
+            "char": "Κ",
+            "romanization": "κ",
+            "sound": "k",
+            "ttsText": "Κάππα"
+          },
+          {
+            "char": "Λ",
+            "romanization": "λ",
+            "sound": "l",
+            "ttsText": "Λάμδα"
+          },
+          {
+            "char": "Μ",
+            "romanization": "μ",
+            "sound": "m",
+            "ttsText": "Μι"
+          },
+          {
+            "char": "Ν",
+            "romanization": "ν",
+            "sound": "n",
+            "ttsText": "Νι"
+          },
+          {
+            "char": "Ξ",
+            "romanization": "ξ",
+            "sound": "ks",
+            "ttsText": "Ξι"
+          },
+          {
+            "char": "Ο",
+            "romanization": "ο",
+            "sound": "o",
+            "ttsText": "Όμικρον"
+          },
+          {
+            "char": "Π",
+            "romanization": "π",
+            "sound": "p",
+            "ttsText": "Πι"
+          },
+          {
+            "char": "Ρ",
+            "romanization": "ρ",
+            "sound": "r",
+            "ttsText": "Ρο"
+          },
+          {
+            "char": "Σ",
+            "romanization": "σ/ς",
+            "sound": "s",
+            "ttsText": "Σίγμα"
+          },
+          {
+            "char": "Τ",
+            "romanization": "τ",
+            "sound": "t",
+            "ttsText": "Ταυ"
+          },
+          {
+            "char": "Υ",
+            "romanization": "υ",
+            "sound": "i",
+            "ttsText": "Ύψιλον"
+          },
+          {
+            "char": "Φ",
+            "romanization": "φ",
+            "sound": "f",
+            "ttsText": "Φι"
+          },
+          {
+            "char": "Χ",
+            "romanization": "χ",
+            "sound": "ch",
+            "ttsText": "Χι"
+          },
+          {
+            "char": "Ψ",
+            "romanization": "ψ",
+            "sound": "ps",
+            "ttsText": "Ψι"
+          },
+          {
+            "char": "Ω",
+            "romanization": "ω",
+            "sound": "o",
+            "ttsText": "Ωμέγα"
+          }
         ]
       }
     ]

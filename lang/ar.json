@@ -588,115 +588,143 @@
         "letters": [
           {
             "char": "ا",
-            "romanization": "a"
+            "romanization": "a",
+            "ttsText": "ألف"
           },
           {
             "char": "ب",
-            "romanization": "b"
+            "romanization": "b",
+            "ttsText": "باء"
           },
           {
             "char": "ت",
-            "romanization": "t"
+            "romanization": "t",
+            "ttsText": "تاء"
           },
           {
             "char": "ث",
-            "romanization": "th"
+            "romanization": "th",
+            "ttsText": "ثاء"
           },
           {
             "char": "ج",
-            "romanization": "j"
+            "romanization": "j",
+            "ttsText": "جيم"
           },
           {
             "char": "ح",
-            "romanization": "h"
+            "romanization": "h",
+            "ttsText": "حاء"
           },
           {
             "char": "خ",
-            "romanization": "kh"
+            "romanization": "kh",
+            "ttsText": "خاء"
           },
           {
             "char": "د",
-            "romanization": "d"
+            "romanization": "d",
+            "ttsText": "دال"
           },
           {
             "char": "ذ",
-            "romanization": "dh"
+            "romanization": "dh",
+            "ttsText": "ذال"
           },
           {
             "char": "ر",
-            "romanization": "r"
+            "romanization": "r",
+            "ttsText": "راء"
           },
           {
             "char": "ز",
-            "romanization": "z"
+            "romanization": "z",
+            "ttsText": "زاي"
           },
           {
             "char": "س",
-            "romanization": "s"
+            "romanization": "s",
+            "ttsText": "سين"
           },
           {
             "char": "ش",
-            "romanization": "sh"
+            "romanization": "sh",
+            "ttsText": "شين"
           },
           {
             "char": "ص",
-            "romanization": "s"
+            "romanization": "s",
+            "ttsText": "صاد"
           },
           {
             "char": "ض",
-            "romanization": "d"
+            "romanization": "d",
+            "ttsText": "ضاد"
           },
           {
             "char": "ط",
-            "romanization": "t"
+            "romanization": "t",
+            "ttsText": "طاء"
           },
           {
             "char": "ظ",
-            "romanization": "dh"
+            "romanization": "dh",
+            "ttsText": "ظاء"
           },
           {
             "char": "ع",
-            "romanization": "ʕ"
+            "romanization": "ʕ",
+            "ttsText": "عين"
           },
           {
             "char": "غ",
-            "romanization": "gh"
+            "romanization": "gh",
+            "ttsText": "غين"
           },
           {
             "char": "ف",
-            "romanization": "f"
+            "romanization": "f",
+            "ttsText": "فاء"
           },
           {
             "char": "ق",
-            "romanization": "q"
+            "romanization": "q",
+            "ttsText": "قاف"
           },
           {
             "char": "ك",
-            "romanization": "k"
+            "romanization": "k",
+            "ttsText": "كاف"
           },
           {
             "char": "ل",
-            "romanization": "l"
+            "romanization": "l",
+            "ttsText": "لام"
           },
           {
             "char": "م",
-            "romanization": "m"
+            "romanization": "m",
+            "ttsText": "ميم"
           },
           {
             "char": "ن",
-            "romanization": "n"
+            "romanization": "n",
+            "ttsText": "نون"
           },
           {
             "char": "ه",
-            "romanization": "h"
+            "romanization": "h",
+            "ttsText": "هاء"
           },
           {
             "char": "و",
-            "romanization": "w"
+            "romanization": "w",
+            "ttsText": "واو"
           },
           {
             "char": "ي",
-            "romanization": "y"
+            "romanization": "y",
+            "ttsText": "ياء"
           }
         ]
       }

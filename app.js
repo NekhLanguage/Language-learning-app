@@ -2758,11 +2758,6 @@ alphabetClose.addEventListener("click", () => {
   alphabetOverlay.classList.add("hidden");
 });
 
-// Tap the backdrop to dismiss
-alphabetOverlay.addEventListener("click", e => {
-  if (e.target === alphabetOverlay) alphabetOverlay.classList.add("hidden");
-});
-
 // Escape key
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") alphabetOverlay.classList.add("hidden");
@@ -2823,7 +2818,7 @@ function renderAlphabetOverlay(langCode) {
         card.appendChild(soundEl);
       }
 
-      card.addEventListener("click", () => speakAlways(letter.char, langCode));
+      card.addEventListener("click", () => speakAlways(letter.ttsText || letter.char, langCode));
 
       grid.appendChild(card);
     }
