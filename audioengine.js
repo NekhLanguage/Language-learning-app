@@ -61,6 +61,13 @@ async function fetchCloudTTS(text, lang) {
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);
 
+  // Evict oldest entry if cache is large to prevent memory leaks
+  if (TTS_CACHE.size >= 200) {
+    const oldest = TTS_CACHE.keys().next().value;
+    URL.revokeObjectURL(TTS_CACHE.get(oldest));
+    TTS_CACHE.delete(oldest);
+  }
+
   TTS_CACHE.set(key, url);
 
   const audio = new Audio(url);

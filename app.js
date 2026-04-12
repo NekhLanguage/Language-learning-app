@@ -1476,10 +1476,24 @@ function nounWithPossessive(lang, possessiveCid, nounCid) {
   return `${possessiveWord(lang, possessiveCid)} ${formOf(lang, nounCid)}`;
 }
 
+// Languages where adjective follows the noun (e.g. "casa grande")
+const POST_ADJECTIVE_LANGS = new Set(["pt", "ar"]);
+// All others (en, ja, ko, no, uk, de, el, tr) place adjective before noun
+
 function adjectiveNounPhrase(lang, adjectiveCid, nounCid) {
   const adjective = formOf(lang, adjectiveCid);
-  const noun = nounPhrase(lang, nounCid);
-  return `${adjective} ${noun}`;
+  const bare = formOf(lang, nounCid);
+  const withArticle = nounPhrase(lang, nounCid);
+
+  if (POST_ADJECTIVE_LANGS.has(lang)) {
+    return `${withArticle} ${adjective}`;
+  }
+  // Insert adjective between article and noun
+  if (withArticle !== bare) {
+    const article = withArticle.substring(0, withArticle.length - bare.length).trimEnd();
+    return `${article} ${adjective} ${bare}`;
+  }
+  return `${adjective} ${bare}`;
 }
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
@@ -1645,7 +1659,7 @@ if (tpl.structure?.type === "complex_clause") {
 
   // apply modifiers
   const bare = formOf(lang, cid);
-  const POST_ADJ = lang === "pt" || lang === "ar";
+  const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
 
   if (numberWord) {
     // Numbers replace the article: "two books" not "two a book"
@@ -2802,7 +2816,7 @@ checkBtn.onclick = () => {
   }
 
   // 🔁 Replace Check with Continue
-  checkBtn.textContent = "Continue";
+  checkBtn.textContent = ui("continue");
   checkBtn.onclick = () => {
     setTimeout(() => renderNext(targetLang, supportLang), 0);
 return;
