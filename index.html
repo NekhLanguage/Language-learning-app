@@ -95,8 +95,33 @@
     </div>
   </div>
 
+  <!-- FEEDBACK BUTTON (always visible) -->
+  <button id="feedback-btn" class="feedback-btn" type="button" aria-label="Report a bug or give feedback">!</button>
+
+  <!-- FEEDBACK MODAL -->
+  <div id="feedback-modal" class="feedback-modal hidden" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title">
+    <div class="feedback-panel">
+      <button id="feedback-close" class="alphabet-close" type="button" aria-label="Close feedback">✕</button>
+      <h2 class="feedback-modal-title" id="feedback-modal-title">Report a bug</h2>
+      <p class="feedback-modal-subtitle">Tell us what went wrong — we read every report.</p>
+      <textarea id="feedback-text" class="feedback-textarea" placeholder="Describe the issue..." rows="5"></textarea>
+      <div id="feedback-context" class="feedback-context"></div>
+      <button id="feedback-submit" class="primary feedback-submit-btn" type="button">Send report</button>
+      <p id="feedback-status" class="feedback-status hidden"></p>
+    </div>
+  </div>
+
+  <!-- Hidden Netlify form for form detection -->
+  <form name="bug-report" data-netlify="true" hidden>
+    <input name="message" />
+    <input name="language" />
+    <input name="level" />
+    <input name="email" />
+    <input name="version" />
+  </form>
+
   <!-- User + run persistence (non-module) -->
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=0.9.9.14"></script>
+<script type="module" src="app.js?v=1.0.0"></script>
 </body>
 </html>

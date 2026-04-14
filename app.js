@@ -2840,10 +2840,99 @@ alphabetClose.addEventListener("click", () => {
   alphabetOverlay.classList.add("hidden");
 });
 
-// Escape key
+// Escape key — closes alphabet overlay and feedback modal
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") alphabetOverlay.classList.add("hidden");
+  if (e.key === "Escape") {
+    alphabetOverlay.classList.add("hidden");
+    document.getElementById("feedback-modal").classList.add("hidden");
+  }
 });
+
+// ---------------------------------------------------------------
+// Feedback / bug report
+// ---------------------------------------------------------------
+(function initFeedback() {
+  const feedbackBtn    = document.getElementById("feedback-btn");
+  const feedbackModal  = document.getElementById("feedback-modal");
+  const feedbackClose  = document.getElementById("feedback-close");
+  const feedbackText   = document.getElementById("feedback-text");
+  const feedbackCtx    = document.getElementById("feedback-context");
+  const feedbackSubmit = document.getElementById("feedback-submit");
+  const feedbackStatus = document.getElementById("feedback-status");
+
+  function buildContext() {
+    const target  = languageState.target  || "—";
+    const support = languageState.support || "—";
+    const email   = localStorage.getItem("zth_email") || "not logged in";
+    return { target, support, email, version: APP_VERSION };
+  }
+
+  function showContext() {
+    const { target, support, email, version } = buildContext();
+    feedbackCtx.textContent =
+      `Language: ${target} · Support: ${support} · User: ${email} · v${version}`;
+  }
+
+  feedbackBtn.addEventListener("click", () => {
+    feedbackText.value = "";
+    feedbackStatus.textContent = "";
+    feedbackStatus.classList.add("hidden");
+    feedbackSubmit.disabled = false;
+    feedbackSubmit.textContent = "Send report";
+    showContext();
+    feedbackModal.classList.remove("hidden");
+    feedbackText.focus();
+  });
+
+  feedbackClose.addEventListener("click", () => {
+    feedbackModal.classList.add("hidden");
+  });
+
+  feedbackModal.addEventListener("click", e => {
+    if (e.target === feedbackModal) feedbackModal.classList.add("hidden");
+  });
+
+  feedbackSubmit.addEventListener("click", async () => {
+    const message = feedbackText.value.trim();
+    if (!message) { feedbackText.focus(); return; }
+
+    const { target, support, email, version } = buildContext();
+
+    feedbackSubmit.disabled = true;
+    feedbackSubmit.textContent = "Sending…";
+
+    try {
+      const body = new URLSearchParams({
+        "form-name": "bug-report",
+        message,
+        language: target,
+        level: support,
+        email,
+        version
+      });
+
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: body.toString()
+      });
+
+      if (res.ok) {
+        feedbackStatus.textContent = "✓ Report sent — thank you!";
+        feedbackStatus.classList.remove("hidden");
+        feedbackText.value = "";
+        setTimeout(() => feedbackModal.classList.add("hidden"), 2000);
+      } else {
+        throw new Error("Non-OK response");
+      }
+    } catch {
+      feedbackStatus.textContent = "Couldn't send — please try again.";
+      feedbackStatus.classList.remove("hidden");
+      feedbackSubmit.disabled = false;
+      feedbackSubmit.textContent = "Send report";
+    }
+  });
+})();
 
 function updateAlphabetButton(langCode) {
   const data = LANG_FILE_CACHE[langCode];
