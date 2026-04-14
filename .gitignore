@@ -9,3 +9,4 @@ package-lock.json
 
 # Environment variables (important later for API keys)
 .env
+.claude/worktrees/zealous-shirley/
