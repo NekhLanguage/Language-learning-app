@@ -746,13 +746,15 @@ function updateSupportUI(code) {
   const support = languageState.support || "en";
   const names = LANG_FILE_CACHE[support]?.hubNames || LANG_FILE_CACHE["en"]?.hubNames || {};
 
-  // Build list with progress and display name
-  const entries = AVAILABLE_LANGUAGES.map(lang => {
-    const runForLang = USER.runs[lang.code];
-    const progress = runForLang ? calculateWeightedProgress(runForLang) : 0;
-    const name = names[lang.code] || lang.label;
-    return { lang, progress, name };
-  });
+  // Build list with progress and display name, excluding the active support language
+  const entries = AVAILABLE_LANGUAGES
+    .filter(lang => lang.code !== support)
+    .map(lang => {
+      const runForLang = USER.runs[lang.code];
+      const progress = runForLang ? calculateWeightedProgress(runForLang) : 0;
+      const name = names[lang.code] || lang.label;
+      return { lang, progress, name };
+    });
 
   // Sort: started languages (progress > 0) by % descending then name;
   //       unstarted languages alphabetically after all started ones.
