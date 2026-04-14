@@ -361,7 +361,7 @@ button.selected {
 #progress-bar-container {
   width: 100%;
   height: 10px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.35);
   border-radius: 999px;
   margin: 10px 0 20px;
   overflow: hidden;
@@ -370,8 +370,8 @@ button.selected {
 #progress-bar-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #a855f7, #ec4899);
-  box-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+  background: linear-gradient(90deg, #c084fc, #fb7185);
+  box-shadow: 0 0 14px rgba(251, 113, 133, 0.6);
   border-radius: 999px;
   transition: width 0.3s ease;
 }
