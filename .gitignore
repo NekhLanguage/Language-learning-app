@@ -1,12 +1,6 @@
-# Netlify local state
-.netlify
-
-# Node dependencies
-node_modules
-
-# Lock files (not needed for your setup)
+node_modules/
+.netlify/
+.claude/
+*.log
+.DS_Store
 package-lock.json
-
-# Environment variables (important later for API keys)
-.env
-.claude/worktrees/zealous-shirley/
