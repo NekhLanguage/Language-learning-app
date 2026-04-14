@@ -1241,6 +1241,17 @@ return tpl;
 
   return cid;
 }
+// Returns "a" or "an" based on the first letter of the following word.
+// Covers the standard vowel-sound rule (a, e, i, o, u).
+// entry.article can still override for genuine exceptions (e.g. "an hour", "a unicorn").
+function englishIndefiniteArticle(nextWord) {
+  if (!nextWord) return "a";
+  const first = nextWord.trim()[0]?.toLowerCase();
+  return (first === "a" || first === "e" || first === "i" || first === "o" || first === "u")
+    ? "an"
+    : "a";
+}
+
 function nounPhrase(lang, cid) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
@@ -1255,7 +1266,7 @@ function nounPhrase(lang, cid) {
   if (!hasArticleInfo) return base;
 
   if (lang === "en") {
-    const article = entry.article || "a";
+    const article = entry.article || englishIndefiniteArticle(base);
     return article + " " + base;
   }
 
@@ -1495,7 +1506,12 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid) {
   }
   // Insert adjective between article and noun
   if (withArticle !== bare) {
-    const article = withArticle.substring(0, withArticle.length - bare.length).trimEnd();
+    let article = withArticle.substring(0, withArticle.length - bare.length).trimEnd();
+    // For English, the article must agree with the adjective (now the next word),
+    // not the noun — "an old spell" not "a old spell".
+    if (lang === "en" && /^an?$/i.test(article)) {
+      article = englishIndefiniteArticle(adjective);
+    }
     return `${article} ${adjective} ${bare}`;
   }
   return `${adjective} ${bare}`;
@@ -1682,7 +1698,11 @@ if (tpl.structure?.type === "complex_clause") {
       phrase = phrase + " " + adjectiveWord;
     } else if (phrase !== bare) {
       // Has article — insert adjective between: "a big house"
-      const article = phrase.substring(0, phrase.length - bare.length).trimEnd();
+      let article = phrase.substring(0, phrase.length - bare.length).trimEnd();
+      // For English, recompute article against the adjective (next word after article).
+      if (lang === "en" && /^an?$/i.test(article)) {
+        article = englishIndefiniteArticle(adjectiveWord);
+      }
       phrase = article + " " + adjectiveWord + " " + bare;
     } else {
       // No article: "big water"
