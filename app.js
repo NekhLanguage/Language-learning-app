@@ -167,7 +167,7 @@ const RESOURCE_PACKS = {
 }; 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v0.9.99.14";
+  const APP_VERSION = "v1.0.0";
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
@@ -768,7 +768,7 @@ function updateSupportUI(code) {
     const btn = document.createElement("button");
     btn.className = "primary";
     btn.innerHTML = `
-      <div>${name}</div>
+      <div>${name}${lang.beta ? ' <span class="beta-badge">BETA</span>' : ''}</div>
       <div style="font-size:12px;opacity:0.7;margin-top:4px;">${progress}%</div>
     `;
     btn.onclick = () => enterLanguage(lang.code);
@@ -886,7 +886,7 @@ if (buyAccess) {
   document.documentElement.dir = langMeta?.isRTL ? "rtl" : "ltr";
 const startSubtitle = document.getElementById("start-subtitle");
 if (startSubtitle) {
-  startSubtitle.textContent = strings.startSubtitle + " " + APP_VERSION;
+  startSubtitle.innerHTML = `${strings.startSubtitle}<span class="version-tag">${APP_VERSION}</span>`;
 }
 }
 function ui(key) {

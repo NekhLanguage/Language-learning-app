@@ -94,6 +94,7 @@ button, a.secondary{
   padding: 1.05rem 1.6rem;
   border-radius: 999px;
   font-weight: 800;
+  font-family: inherit;
   letter-spacing: 0.06em;
   background: #fff;
   color: var(--btnInk);
@@ -346,8 +347,35 @@ button.selected {
 
 /* Chevron */
 .chevron{
-  opacity:0.6;
-  font-size:0.9rem;
+  opacity:0.7;
+  font-size:1.4rem;
+  line-height:1;
+}
+
+/* Beta badge on language buttons */
+.beta-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: var(--btnInk);
+  background: linear-gradient(90deg, #c084fc, #fb7185);
+  border-radius: 999px;
+  padding: 0.15em 0.55em;
+  vertical-align: middle;
+  margin-left: 0.4em;
+  position: relative;
+  top: -0.1em;
+}
+
+/* Version tag below subtitle */
+.version-tag {
+  display: block;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+  opacity: 0.55;
+  margin-top: 0.35rem;
 }
 
 /* Utility */
