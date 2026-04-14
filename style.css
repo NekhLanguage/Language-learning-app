@@ -187,10 +187,12 @@ select option{
 .content{
   width: min(720px, 100%);
   text-align: left;
-  background: rgba(0,0,0,0.18);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 18px;
-  padding: 1rem 1.1rem;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 24px;
+  padding: 1.5rem 1.5rem;
 }
 
 .row{
@@ -368,7 +370,9 @@ button.selected {
 #progress-bar-fill {
   height: 100%;
   width: 0%;
-  background: white;
+  background: linear-gradient(90deg, #a855f7, #ec4899);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+  border-radius: 999px;
   transition: width 0.3s ease;
 }
 #logout-btn {
@@ -539,4 +543,122 @@ button.selected {
   color: white;
   transform: none;
   box-shadow: none;
+}
+
+/* =========================
+   Choice Grid — 2 columns, squircle buttons
+   ========================= */
+
+#choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+/* Choice buttons — squircle, dark glass */
+#choices button:not(.tts-inline) {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.10);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.9rem 1rem;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#choices button:not(.tts-inline):hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: none;
+  box-shadow: none;
+}
+
+#choices button.selected:not(.tts-inline) {
+  background: rgba(255, 255, 255, 0.22);
+  border: 2px solid white;
+  outline: none;
+}
+
+/* Chip wraps inside #choices (L3/L4 have TTS next to choice) */
+#choices .word-bank-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+
+#choices .word-bank-chip button:not(.tts-inline) {
+  flex: 1;
+  width: auto;
+}
+
+/* =========================
+   Sentence Builder — Slots & Word Bank
+   ========================= */
+
+.sentence-slot {
+  min-width: 60px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.sentence-slot:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.slot-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.word-bank-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.word-bank-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin: 4px;
+}
+
+/* =========================
+   Free Production Input (Level 7)
+   ========================= */
+
+.free-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.free-input:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.free-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
 }

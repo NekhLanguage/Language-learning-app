@@ -2005,7 +2005,7 @@ if (isModifierConcept(targetConcept)) {
   options.forEach(opt => {
     const text = formOf(targetLang, opt);
     const wrap = document.createElement("div");
-    wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
+    wrap.className = "word-bank-chip";
 
     const btn = document.createElement("button");
     btn.textContent = text;
@@ -2101,7 +2101,7 @@ const subjectCid = tpl.concepts.find(c =>
     : text.charAt(0).toLowerCase() + text.slice(1);
 
   const wrap = document.createElement("div");
-  wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
+  wrap.className = "word-bank-chip";
 
   const btn = document.createElement("button");
   btn.textContent = text;
@@ -2257,7 +2257,7 @@ if (!finalOptions.includes(targetConcept)) {
     finalOptions.forEach(opt => {
       const text = resolveTargetSurface(opt);
       const wrap = document.createElement("div");
-      wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
+      wrap.className = "word-bank-chip";
 
       const btn = document.createElement("button");
       btn.textContent = text;
@@ -2573,9 +2573,9 @@ const correctWords = ordered.map(cid => {
     ${disambiguation ? `<div style="font-size:12px;opacity:0.7;margin-top:4px;">${disambiguation}</div>` : ""}
   </div>
 
-    <div id="slot-container" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;"></div>
+    <div id="slot-container" class="slot-container"></div>
 
-    <div id="word-bank" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;"></div>
+    <div id="word-bank" class="word-bank-container"></div>
 
     <div style="text-align:center;">
       <button id="check-l6">${ui("check")}</button>
@@ -2590,14 +2590,6 @@ const correctWords = ordered.map(cid => {
     const slot = document.createElement("div");
     slot.className = "sentence-slot";
     slot.dataset.index = index;
-    slot.style.minWidth = "60px";
-    slot.style.padding = "8px 12px";
-    slot.style.borderRadius = "8px";
-    slot.style.backgroundColor = "#3e1f4f";
-    slot.style.border = "2px solid white";
-    slot.style.color = "white";
-    slot.style.textAlign = "center";
-    slot.style.cursor = "pointer";
 
     slot.onclick = () => {
       const i = Number(slot.dataset.index);
@@ -2617,7 +2609,7 @@ const correctWords = ordered.map(cid => {
   // Create word bank items
   function createBankWord(word) {
   const wrap = document.createElement("div");
-  wrap.style.cssText = "display:inline-flex;align-items:center;gap:2px;margin:4px;";
+  wrap.className = "word-bank-chip";
 
   const btn = document.createElement("button");
   btn.textContent = word;
@@ -2729,15 +2721,7 @@ const targetSentence = safe(buildSentence(targetLang, tpl));
   </div>
   
     <div style="margin-bottom:20px;">
-      <input id="l7-input" type="text" style="
-        width:100%;
-        padding:10px;
-        font-size:16px;
-        border-radius:8px;
-        border:2px solid white;
-        background:#3e1f4f;
-        color:white;
-      " />
+      <input id="l7-input" type="text" class="free-input" />
     </div>
 
     <div style="text-align:center;">
