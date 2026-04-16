@@ -163,8 +163,92 @@ const RESOURCE_PACKS = {
     { id: "cook_10", concepts: ["SOUR","FRESH","FROZEN","RAW","HEAT"] }
 
   ]
+},
+  anime: {
+  vocabFile: "anime.json",
+  templateFile: "sentence_templates_anime.json",
+  beta: true,
+  bundles: [
+
+    { id: "anime_01", concepts: ["HERO","VILLAIN","WARRIOR","RIVAL","DRAGON"] },
+
+    { id: "anime_02", concepts: ["NINJA","SAMURAI","SENSEI","MASTER","CLAN"] },
+
+    { id: "anime_03", concepts: ["SWORD","ARMOR","SHIELD","CRYSTAL","SCROLL"] },
+
+    { id: "anime_04", concepts: ["ATTACK","DEFEND","STRIKE","DODGE","PROTECT"] },
+
+    { id: "anime_05", concepts: ["SUMMON","TRANSFORM","CHANNEL","UNLEASH","AWAKEN"] },
+
+    { id: "anime_06", concepts: ["SPIRIT","DEMON","SHADOW","PORTAL","MECHA"] },
+
+    { id: "anime_07", concepts: ["KINGDOM","TEMPLE","ARENA","QUEST","DESTINY"] },
+
+    { id: "anime_08", concepts: ["BRAVE","FIERCE","MIGHTY","SINISTER","POWERFUL"] },
+
+    { id: "anime_09", concepts: ["ANCIENT","CURSED","SACRED","LEGENDARY","ETERNAL"] },
+
+    { id: "anime_10", concepts: ["BATTLE","TRAIN","CONQUER","TRANSCEND","POWER"] }
+
+  ]
+},
+  football: {
+  vocabFile: "football.json",
+  templateFile: "sentence_templates_football.json",
+  beta: true,
+  bundles: [
+
+    { id: "football_01", concepts: ["PITCH","GOAL","NET","STADIUM","WHISTLE"] },
+
+    { id: "football_02", concepts: ["STRIKER","GOALKEEPER","CAPTAIN","REFEREE","COACH"] },
+
+    { id: "football_03", concepts: ["KICK","PASS","SHOOT","DRIBBLE","SCORE"] },
+
+    { id: "football_04", concepts: ["HEADER","TACKLE","CROSS","VOLLEY","SPRINT"] },
+
+    { id: "football_05", concepts: ["FOUL","PENALTY","CORNER","OFFSIDE","HALFTIME"] },
+
+    { id: "football_06", concepts: ["SQUAD","FORMATION","LEAGUE","SUBSTITUTE","ASSIST"] },
+
+    { id: "football_07", concepts: ["MATCH","VICTORY","DEFEAT","DRAW","TROPHY"] },
+
+    { id: "football_08", concepts: ["SWIFT","SKILLED","AGGRESSIVE","DECISIVE","CLINICAL"] },
+
+    { id: "football_09", concepts: ["INTERCEPT","DEFEND","BLOCK","COUNTER","DOMINATE"] },
+
+    { id: "football_10", concepts: ["CHAMPION","CROWD","CELEBRATE","FINAL","UNBEATABLE"] }
+
+  ]
+},
+  music: {
+  vocabFile: "music.json",
+  templateFile: "sentence_templates_music.json",
+  beta: true,
+  bundles: [
+
+    { id: "music_01", concepts: ["GUITAR","DRUM","PIANO","VIOLIN","MICROPHONE"] },
+
+    { id: "music_02", concepts: ["MELODY","RHYTHM","BEAT","CHORD","HARMONY"] },
+
+    { id: "music_03", concepts: ["SING","STRUM","COMPOSE","PERFORM","RECORD"] },
+
+    { id: "music_04", concepts: ["CONCERT","STAGE","ENCORE","SPOTLIGHT","TOUR"] },
+
+    { id: "music_05", concepts: ["LYRIC","CHORUS","VERSE","SOLO","DUET"] },
+
+    { id: "music_06", concepts: ["ROCK","JAZZ","CLASSICAL","ACOUSTIC","ELECTRONIC"] },
+
+    { id: "music_07", concepts: ["STUDIO","TRACK","ALBUM","REMIX","SAMPLE"] },
+
+    { id: "music_08", concepts: ["REHEARSE","TUNE","IMPROVISE","AMPLIFY","DROP"] },
+
+    { id: "music_09", concepts: ["LOUD","SOULFUL","RHYTHMIC","LIVE","VIRAL"] },
+
+    { id: "music_10", concepts: ["BAND","ANTHEM","PLAYLIST","FESTIVAL","FANBASE"] }
+
+  ]
 }
-}; 
+};
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const APP_VERSION = "v1.0.0";
@@ -448,7 +532,8 @@ if (buyAccess) {
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
     "politeness_modality.json","pronouns.json","quantifiers.json",
-    "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json"
+    "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json",
+    "anime.json", "football.json", "music.json"
   ];
 
 function createRunState() {
@@ -552,7 +637,9 @@ function renderPackSelection() {
 
     const btn = document.createElement("button");
     btn.className = "primary";
-    btn.textContent = packId.replace("_", " ").toUpperCase();
+    const packLabel = packId.replace("_", " ").toUpperCase();
+    const betaBadge = RESOURCE_PACKS[packId].beta ? ' <span class="beta-badge">BETA</span>' : '';
+    btn.innerHTML = packLabel + betaBadge;
 
     btn.dataset.pack = packId;
 

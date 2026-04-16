@@ -1,0 +1,91 @@
+{
+  "templates": [
+
+    { "template_id": "I_SEE_GUITAR",        "concepts": ["FIRST_PERSON_SINGULAR","SEE","GUITAR"],        "render": { "en": "I see a guitar." } },
+    { "template_id": "YOU_SEE_DRUM",        "concepts": ["SECOND_PERSON","SEE","DRUM"],                  "render": { "en": "You see a drum." } },
+    { "template_id": "HE_SEES_PIANO",       "concepts": ["HE","SEE","PIANO"],                            "render": { "en": "He sees a piano." } },
+    { "template_id": "SHE_SEES_VIOLIN",     "concepts": ["SHE","SEE","VIOLIN"],                          "render": { "en": "She sees a violin." } },
+    { "template_id": "WE_SEE_MICROPHONE",   "concepts": ["FIRST_PERSON_PLURAL","SEE","MICROPHONE"],      "render": { "en": "We see a microphone." } },
+    { "template_id": "THEY_SEE_STAGE",      "concepts": ["THIRD_PERSON_PLURAL","SEE","STAGE"],           "render": { "en": "They see a stage." } },
+    { "template_id": "I_SEE_CONCERT",       "concepts": ["FIRST_PERSON_SINGULAR","SEE","CONCERT"],       "render": { "en": "I see a concert." } },
+    { "template_id": "YOU_SEE_ALBUM",       "concepts": ["SECOND_PERSON","SEE","ALBUM"],                 "render": { "en": "You see an album." } },
+    { "template_id": "HE_SEES_BAND",        "concepts": ["HE","SEE","BAND"],                             "render": { "en": "He sees a band." } },
+    { "template_id": "SHE_SEES_FESTIVAL",   "concepts": ["SHE","SEE","FESTIVAL"],                        "render": { "en": "She sees a festival." } },
+    { "template_id": "WE_SEE_SPOTLIGHT",    "concepts": ["FIRST_PERSON_PLURAL","SEE","SPOTLIGHT"],       "render": { "en": "We see a spotlight." } },
+
+    { "template_id": "I_HAVE_GUITAR",       "concepts": ["FIRST_PERSON_SINGULAR","HAVE","GUITAR"],       "render": { "en": "I have a guitar." } },
+    { "template_id": "YOU_HAVE_TRACK",      "concepts": ["SECOND_PERSON","HAVE","TRACK"],                "render": { "en": "You have a track." } },
+    { "template_id": "HE_HAS_ALBUM",        "concepts": ["HE","HAVE","ALBUM"],                           "render": { "en": "He has an album." } },
+    { "template_id": "SHE_HAS_MELODY",      "concepts": ["SHE","HAVE","MELODY"],                         "render": { "en": "She has a melody." } },
+    { "template_id": "WE_HAVE_BAND",        "concepts": ["FIRST_PERSON_PLURAL","HAVE","BAND"],           "render": { "en": "We have a band." } },
+    { "template_id": "THEY_HAVE_ANTHEM",    "concepts": ["THIRD_PERSON_PLURAL","HAVE","ANTHEM"],         "render": { "en": "They have an anthem." } },
+    { "template_id": "I_HAVE_PLAYLIST",     "concepts": ["FIRST_PERSON_SINGULAR","HAVE","PLAYLIST"],     "render": { "en": "I have a playlist." } },
+    { "template_id": "HE_HAS_SOLO",         "concepts": ["HE","HAVE","SOLO"],                            "render": { "en": "He has a solo." } },
+    { "template_id": "SHE_HAS_DUET",        "concepts": ["SHE","HAVE","DUET"],                           "render": { "en": "She has a duet." } },
+
+    { "template_id": "I_SING",              "concepts": ["FIRST_PERSON_SINGULAR","SING"],                "render": { "en": "I sing." } },
+    { "template_id": "YOU_SING",            "concepts": ["SECOND_PERSON","SING"],                        "render": { "en": "You sing." } },
+    { "template_id": "HE_SINGS",            "concepts": ["HE","SING"],                                   "render": { "en": "He sings." } },
+    { "template_id": "SHE_SINGS",           "concepts": ["SHE","SING"],                                  "render": { "en": "She sings." } },
+    { "template_id": "WE_SING",             "concepts": ["FIRST_PERSON_PLURAL","SING"],                  "render": { "en": "We sing." } },
+    { "template_id": "THEY_SING",           "concepts": ["THIRD_PERSON_PLURAL","SING"],                  "render": { "en": "They sing." } },
+
+    { "template_id": "I_STRUM",             "concepts": ["FIRST_PERSON_SINGULAR","STRUM"],               "render": { "en": "I strum." } },
+    { "template_id": "HE_STRUMS",           "concepts": ["HE","STRUM"],                                  "render": { "en": "He strums." } },
+    { "template_id": "SHE_STRUMS_GUITAR",   "concepts": ["SHE","STRUM","GUITAR"],                        "render": { "en": "She strums a guitar." } },
+
+    { "template_id": "I_COMPOSE",           "concepts": ["FIRST_PERSON_SINGULAR","COMPOSE"],             "render": { "en": "I compose." } },
+    { "template_id": "HE_COMPOSES",         "concepts": ["HE","COMPOSE"],                                "render": { "en": "He composes." } },
+    { "template_id": "SHE_COMPOSES_MELODY", "concepts": ["SHE","COMPOSE","MELODY"],                      "render": { "en": "She composes a melody." } },
+    { "template_id": "WE_COMPOSE",          "concepts": ["FIRST_PERSON_PLURAL","COMPOSE"],               "render": { "en": "We compose." } },
+
+    { "template_id": "I_PERFORM",           "concepts": ["FIRST_PERSON_SINGULAR","PERFORM"],             "render": { "en": "I perform." } },
+    { "template_id": "YOU_PERFORM",         "concepts": ["SECOND_PERSON","PERFORM"],                     "render": { "en": "You perform." } },
+    { "template_id": "HE_PERFORMS",         "concepts": ["HE","PERFORM"],                                "render": { "en": "He performs." } },
+    { "template_id": "SHE_PERFORMS",        "concepts": ["SHE","PERFORM"],                               "render": { "en": "She performs." } },
+    { "template_id": "WE_PERFORM",          "concepts": ["FIRST_PERSON_PLURAL","PERFORM"],               "render": { "en": "We perform." } },
+    { "template_id": "THEY_PERFORM",        "concepts": ["THIRD_PERSON_PLURAL","PERFORM"],               "render": { "en": "They perform." } },
+
+    { "template_id": "I_RECORD",            "concepts": ["FIRST_PERSON_SINGULAR","RECORD"],              "render": { "en": "I record." } },
+    { "template_id": "HE_RECORDS",          "concepts": ["HE","RECORD"],                                 "render": { "en": "He records." } },
+    { "template_id": "SHE_RECORDS_TRACK",   "concepts": ["SHE","RECORD","TRACK"],                        "render": { "en": "She records a track." } },
+    { "template_id": "WE_RECORD",           "concepts": ["FIRST_PERSON_PLURAL","RECORD"],                "render": { "en": "We record." } },
+
+    { "template_id": "I_REHEARSE",          "concepts": ["FIRST_PERSON_SINGULAR","REHEARSE"],            "render": { "en": "I rehearse." } },
+    { "template_id": "HE_REHEARSES",        "concepts": ["HE","REHEARSE"],                               "render": { "en": "He rehearses." } },
+    { "template_id": "WE_REHEARSE",         "concepts": ["FIRST_PERSON_PLURAL","REHEARSE"],              "render": { "en": "We rehearse." } },
+    { "template_id": "THEY_REHEARSE",       "concepts": ["THIRD_PERSON_PLURAL","REHEARSE"],              "render": { "en": "They rehearse." } },
+
+    { "template_id": "I_TUNE",              "concepts": ["FIRST_PERSON_SINGULAR","TUNE"],                "render": { "en": "I tune." } },
+    { "template_id": "HE_TUNES",            "concepts": ["HE","TUNE"],                                   "render": { "en": "He tunes." } },
+    { "template_id": "SHE_TUNES_GUITAR",    "concepts": ["SHE","TUNE","GUITAR"],                         "render": { "en": "She tunes a guitar." } },
+
+    { "template_id": "I_IMPROVISE",         "concepts": ["FIRST_PERSON_SINGULAR","IMPROVISE"],           "render": { "en": "I improvise." } },
+    { "template_id": "HE_IMPROVISES",       "concepts": ["HE","IMPROVISE"],                              "render": { "en": "He improvises." } },
+    { "template_id": "WE_IMPROVISE",        "concepts": ["FIRST_PERSON_PLURAL","IMPROVISE"],             "render": { "en": "We improvise." } },
+
+    { "template_id": "I_AMPLIFY",           "concepts": ["FIRST_PERSON_SINGULAR","AMPLIFY"],             "render": { "en": "I amplify." } },
+    { "template_id": "WE_AMPLIFY",          "concepts": ["FIRST_PERSON_PLURAL","AMPLIFY"],               "render": { "en": "We amplify." } },
+    { "template_id": "THEY_AMPLIFY",        "concepts": ["THIRD_PERSON_PLURAL","AMPLIFY"],               "render": { "en": "They amplify." } },
+
+    { "template_id": "I_DROP",              "concepts": ["FIRST_PERSON_SINGULAR","DROP"],                "render": { "en": "I drop." } },
+    { "template_id": "HE_DROPS",            "concepts": ["HE","DROP"],                                   "render": { "en": "He drops." } },
+    { "template_id": "THEY_DROP",           "concepts": ["THIRD_PERSON_PLURAL","DROP"],                  "render": { "en": "They drop." } },
+
+    { "template_id": "I_SING_CHORUS",       "concepts": ["FIRST_PERSON_SINGULAR","SING","CHORUS"],       "render": { "en": "I sing the chorus." } },
+    { "template_id": "HE_PERFORMS_SOLO",    "concepts": ["HE","PERFORM","SOLO"],                         "render": { "en": "He performs a solo." } },
+    { "template_id": "SHE_COMPOSES_ANTHEM", "concepts": ["SHE","COMPOSE","ANTHEM"],                      "render": { "en": "She composes an anthem." } },
+    { "template_id": "WE_RECORD_ALBUM",     "concepts": ["FIRST_PERSON_PLURAL","RECORD","ALBUM"],        "render": { "en": "We record an album." } },
+    { "template_id": "THEY_PERFORM_CONCERT","concepts": ["THIRD_PERSON_PLURAL","PERFORM","CONCERT"],     "render": { "en": "They perform a concert." } },
+
+    { "template_id": "GUITAR_IS_LOUD",      "concepts": ["GUITAR","BE","LOUD"],                          "render": { "en": "The guitar is loud." } },
+    { "template_id": "MELODY_IS_SOULFUL",   "concepts": ["MELODY","BE","SOULFUL"],                       "render": { "en": "The melody is soulful." } },
+    { "template_id": "BEAT_IS_RHYTHMIC",    "concepts": ["BEAT","BE","RHYTHMIC"],                        "render": { "en": "The beat is rhythmic." } },
+    { "template_id": "CONCERT_IS_LIVE",     "concepts": ["CONCERT","BE","LIVE"],                         "render": { "en": "The concert is live." } },
+    { "template_id": "ANTHEM_IS_VIRAL",     "concepts": ["ANTHEM","BE","VIRAL"],                         "render": { "en": "The anthem is viral." } },
+    { "template_id": "CHORUS_IS_LOUD",      "concepts": ["CHORUS","BE","LOUD"],                          "render": { "en": "The chorus is loud." } },
+    { "template_id": "TRACK_IS_RHYTHMIC",   "concepts": ["TRACK","BE","RHYTHMIC"],                       "render": { "en": "The track is rhythmic." } },
+    { "template_id": "BAND_IS_LIVE",        "concepts": ["BAND","BE","LIVE"],                            "render": { "en": "The band is live." } }
+
+  ]
+}
