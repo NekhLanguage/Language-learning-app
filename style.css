@@ -527,9 +527,10 @@ button.selected {
    ========================= */
 
 .alphabet-btn {
-  top: auto;
+  position: fixed;
   bottom: 1.5rem;
   left: 1.25rem;
+  z-index: 150;
   font-size: 1.4rem;
   letter-spacing: 0.14em;
   padding: 1.1rem 1.9rem;
