@@ -564,6 +564,68 @@
     "RAW": ["сирий"]
 
   }
+},
+"es": {
+  "label": "Español",
+  "forms": {
+
+    "COOK": { "base": "cocinar", "1_singular": "cocino", "2_singular": "cocinas", "3_singular": "cocina", "1_plural": "cocinamos", "2_plural": "cocináis", "3_plural": "cocinan" },
+    "CUT": { "base": "cortar", "1_singular": "corto", "2_singular": "cortas", "3_singular": "corta", "1_plural": "cortamos", "2_plural": "cortáis", "3_plural": "cortan" },
+    "BOIL": { "base": "hervir", "1_singular": "hiervo", "2_singular": "hierves", "3_singular": "hierve", "1_plural": "hervimos", "2_plural": "hervís", "3_plural": "hierven" },
+    "PEEL": { "base": "pelar", "1_singular": "pelo", "2_singular": "pelas", "3_singular": "pela", "1_plural": "pelamos", "2_plural": "peláis", "3_plural": "pelan" },
+    "FRY": { "base": "freír", "1_singular": "frío", "2_singular": "fríes", "3_singular": "fríe", "1_plural": "freímos", "2_plural": "freís", "3_plural": "fríen" },
+    "STIR": { "base": "remover", "1_singular": "remuevo", "2_singular": "remueves", "3_singular": "remueve", "1_plural": "removemos", "2_plural": "removéis", "3_plural": "remueven" },
+    "MIX": { "base": "mezclar", "1_singular": "mezclo", "2_singular": "mezclas", "3_singular": "mezcla", "1_plural": "mezclamos", "2_plural": "mezcláis", "3_plural": "mezclan" },
+    "WASH": { "base": "lavar", "1_singular": "lavo", "2_singular": "lavas", "3_singular": "lava", "1_plural": "lavamos", "2_plural": "laváis", "3_plural": "lavan" },
+    "HEAT": { "base": "calentar", "1_singular": "caliento", "2_singular": "calientas", "3_singular": "calienta", "1_plural": "calentamos", "2_plural": "calentáis", "3_plural": "calientan" },
+
+    "PAN": { "form": "sartén", "gender": "f" },
+    "KNIFE": { "form": "cuchillo", "gender": "m" },
+    "FORK": { "form": "tenedor", "gender": "m" },
+    "SPOON": { "form": "cuchara", "gender": "f" },
+    "SPATULA": { "form": "espátula", "gender": "f" },
+    "POT": { "form": "olla", "gender": "f" },
+    "GLASS": { "form": "vaso", "gender": "m" },
+
+    "LITRE": { "form": "litro" },
+    "DECILITRE": { "form": "decilitro" },
+    "MILLILITRE": { "form": "mililitro" },
+    "GRAM": { "form": "gramo" },
+    "KILOGRAM": { "form": "kilogramo" },
+
+    "MEAT": { "form": "carne", "gender": "f" },
+    "CHICKEN": { "form": "pollo", "gender": "m" },
+    "FISH": { "form": "pescado", "gender": "m" },
+    "VEGETABLE": { "form": "verdura", "gender": "f" },
+    "POTATO": { "form": "patata", "gender": "f" },
+    "SALAD": { "form": "ensalada", "gender": "f" },
+    "FRUIT": { "form": "fruta", "gender": "f" },
+    "BANANA": { "form": "plátano", "gender": "m" },
+    "SOUP": { "form": "sopa", "gender": "f" },
+    "DOUGH": { "form": "masa", "gender": "f" },
+    "SAUCE": { "form": "salsa", "gender": "f" },
+    "INGREDIENT": { "form": "ingrediente", "gender": "m" },
+
+    "KITCHEN": { "form": "cocina", "gender": "f" },
+    "OVEN": { "form": "horno", "gender": "m" },
+    "STOVE": { "form": "fogón", "gender": "m" },
+    "SINK": { "form": "fregadero", "gender": "m" },
+    "FREEZER": { "form": "congelador", "gender": "m" },
+
+    "SALT": { "form": "sal", "gender": "f" },
+    "PEPPER": { "form": "pimienta", "gender": "f" },
+    "BUTTER": { "form": "mantequilla", "gender": "f" },
+    "SPICE": { "form": "especia", "gender": "f" },
+    "RECIPE": { "form": "receta", "gender": "f" },
+
+    "SWEET": ["dulce"],
+    "SALTY": ["salado"],
+    "SOUR": ["ácido"],
+    "FRESH": ["fresco"],
+    "FROZEN": ["congelado"],
+    "RAW": ["crudo"]
+
+  }
 }
   }
 }

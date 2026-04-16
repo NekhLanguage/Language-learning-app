@@ -23,7 +23,10 @@
     "resourcePacks": "حزم الموارد",
     "choosePacks": "اختر حتى حزمتين",
     "start": "ابدأ",
-    "selectPack": "اختر حزمة واحدة على الأقل"
+    "selectPack": "اختر حزمة واحدة على الأقل",
+    "enterEmail": "أدخل بريدك الإلكتروني",
+    "buyAccess": "لست مستخدمًا؟ احصل على وصول",
+    "noAccess": "لم يتم العثور على وصول لهذا البريد الإلكتروني"
   },
   "hubNames": {
     "en": "الإنجليزية",
@@ -283,21 +286,24 @@
       "gender": "m"
     },
     "CLOTHES": {
-      "form": "ملابس"
+      "form": "ملابس",
+      "gender": "f"
     },
     "SHIRT": {
       "form": "قميص",
       "gender": "m"
     },
     "SHOES": {
-      "form": "حذاء"
+      "form": "حذاء",
+      "gender": "m"
     },
     "PHONE": {
       "form": "هاتف",
       "gender": "m"
     },
     "PANTS": {
-      "form": "بنطال"
+      "form": "بنطال",
+      "gender": "m"
     },
     "ONE": [
       "واحد"
@@ -397,6 +403,12 @@
     ],
     "THIRD_PERSON_PLURAL": [
       "هم"
+    ],
+    "THIS": [
+      "هذا"
+    ],
+    "THAT": [
+      "ذلك"
     ],
     "ANY": [
       "أي"

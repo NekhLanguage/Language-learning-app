@@ -5,7 +5,7 @@
     "chooseLanguage": "Choose a language to study",
     "quitLearning": "QUIT LEARNING",
     "sessionTitle": "TODAY'S SESSION",
-    "startSubtitle": "Language learning app",
+    "startSubtitle": "Language learning",
     "chooseTranslation": "Choose the correct translation for:",
     "originalSentence": "Original sentence:",
     "fillMissing": "Fill in the missing word:",
@@ -414,6 +414,12 @@
       "them",
       "their",
       "theirs"
+    ],
+    "THIS": [
+      "this"
+    ],
+    "THAT": [
+      "that"
     ],
     "ANY": [
       "any"

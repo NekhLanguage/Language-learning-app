@@ -470,6 +470,65 @@
     "BRAVE": ["хоробрий"]
 
   }
+},
+"es": {
+  "label": "Español",
+  "forms": {
+
+    "WAND": { "form": "varita", "gender": "f" },
+    "MAGIC": { "form": "magia", "gender": "f" },
+    "WIZARD": { "form": "mago", "gender": "m" },
+    "WITCH": { "form": "bruja", "gender": "f" },
+    "SPELL": { "form": "hechizo", "gender": "m" },
+    "POTION": { "form": "poción", "gender": "f" },
+    "SCHOOL": { "form": "escuela", "gender": "f" },
+    "CAULDRON": { "form": "caldero", "gender": "m" },
+    "BROOM": { "form": "escoba", "gender": "f" },
+    "OWL": { "form": "lechuza", "gender": "f" },
+
+    "CASTLE": { "form": "castillo", "gender": "m" },
+    "PROFESSOR": { "form": "profesor", "gender": "m" },
+    "STUDENT": { "form": "estudiante", "gender": "m" },
+    "ELF": { "form": "elfo", "gender": "m" },
+    "UNICORN": { "form": "unicornio", "gender": "m" },
+    "GIANT": { "form": "gigante", "gender": "m" },
+    "TROLL": { "form": "trol", "gender": "m" },
+    "GHOST": { "form": "fantasma", "gender": "m" },
+
+    "FOREST": { "form": "bosque", "gender": "m" },
+    "SPIDER": { "form": "araña", "gender": "f" },
+    "LIBRARY": { "form": "biblioteca", "gender": "f" },
+    "CLASS": { "form": "clase", "gender": "f" },
+    "LESSON": { "form": "lección", "gender": "f" },
+    "HOMEWORK": { "form": "deberes", "gender": "m" },
+    "EXAM": { "form": "examen", "gender": "m" },
+    "QUESTION": { "form": "pregunta", "gender": "f" },
+    "ANSWER": { "form": "respuesta", "gender": "f" },
+    "IDEA": { "form": "idea", "gender": "f" },
+    "CHANCE": { "form": "oportunidad", "gender": "f" },
+    "MYSTERY": { "form": "misterio", "gender": "m" },
+    "SECRET": { "form": "secreto", "gender": "m" },
+    "FRIEND": { "form": "amigo", "gender": "m" },
+    "ENEMY": { "form": "enemigo", "gender": "m" },
+    "CLOAK": { "form": "capa", "gender": "f" },
+    "DOOR": { "form": "puerta", "gender": "f" },
+
+    "CAST": { "base": "lanzar", "1_singular": "lanzo", "2_singular": "lanzas", "3_singular": "lanza", "1_plural": "lanzamos", "2_plural": "lanzáis", "3_plural": "lanzan" },
+    "PROTECT": { "base": "proteger", "1_singular": "protejo", "2_singular": "proteges", "3_singular": "protege", "1_plural": "protegemos", "2_plural": "protegéis", "3_plural": "protegen" },
+    "CHARM": { "base": "encantar", "1_singular": "encanto", "2_singular": "encantas", "3_singular": "encanta", "1_plural": "encantamos", "2_plural": "encantáis", "3_plural": "encantan" },
+    "CURSE": { "base": "maldecir", "1_singular": "maldigo", "2_singular": "maldices", "3_singular": "maldice", "1_plural": "maldecimos", "2_plural": "maldecís", "3_plural": "maldicen" },
+    "LEARN": { "base": "aprender", "1_singular": "aprendo", "2_singular": "aprendes", "3_singular": "aprende", "1_plural": "aprendemos", "2_plural": "aprendéis", "3_plural": "aprenden" },
+    "WRITE": { "base": "escribir", "1_singular": "escribo", "2_singular": "escribes", "3_singular": "escribe", "1_plural": "escribimos", "2_plural": "escribís", "3_plural": "escriben" },
+    "STUDY": { "base": "estudiar", "1_singular": "estudio", "2_singular": "estudias", "3_singular": "estudia", "1_plural": "estudiamos", "2_plural": "estudiáis", "3_plural": "estudian" },
+    "VANISH": { "base": "desaparecer", "1_singular": "desaparezco", "2_singular": "desapareces", "3_singular": "desaparece", "1_plural": "desaparecemos", "2_plural": "desaparecéis", "3_plural": "desaparecen" },
+    "TRANSFORM": { "base": "transformar", "1_singular": "transformo", "2_singular": "transformas", "3_singular": "transforma", "1_plural": "transformamos", "2_plural": "transformáis", "3_plural": "transforman" },
+    "FLY": { "base": "volar", "1_singular": "vuelo", "2_singular": "vuelas", "3_singular": "vuela", "1_plural": "volamos", "2_plural": "voláis", "3_plural": "vuelan" },
+    "SHOUT": { "base": "gritar", "1_singular": "grito", "2_singular": "gritas", "3_singular": "grita", "1_plural": "gritamos", "2_plural": "gritáis", "3_plural": "gritan" },
+
+    "MAGICAL": ["mágico"],
+    "BRAVE": ["valiente"]
+
+  }
 }
 
   }

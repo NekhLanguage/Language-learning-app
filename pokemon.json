@@ -911,6 +911,71 @@
     "SHINY": ["блискучий"]
 
   }
+},
+"es": {
+  "label": "Español",
+  "forms": {
+
+    "POKEMON": { "form": "pokémon" },
+    "TRAINER": { "form": "entrenador", "gender": "m" },
+    "GYM": { "form": "gimnasio", "gender": "m" },
+    "LEAGUE": { "form": "liga", "gender": "f" },
+    "GYM_LEADER": { "form": "líder de gimnasio", "gender": "m" },
+    "ELITE_FOUR": { "form": "alto mando" },
+    "POKEMON_CENTER": { "form": "centro pokémon", "gender": "m" },
+    "FOREST": { "form": "bosque", "gender": "m" },
+    "CAVE": { "form": "cueva", "gender": "f" },
+    "TOWN": { "form": "pueblo", "gender": "m" },
+
+    "BATTLE": { "form": "batalla", "gender": "f" },
+    "MOVE": { "form": "movimiento", "gender": "m" },
+    "DAMAGE": { "form": "daño", "gender": "m" },
+    "DEFENSE": { "form": "defensa", "gender": "f" },
+    "SPEED": { "form": "velocidad", "gender": "f" },
+    "STAT": { "form": "estadística", "gender": "f" },
+    "ABILITY": { "form": "habilidad", "gender": "f" },
+    "TYPE": { "form": "tipo", "gender": "m" },
+
+    "POTION": { "form": "poción", "gender": "f" },
+    "REVIVE": { "form": "revivir", "gender": "m" },
+    "TECHNICAL_MACHINE": { "form": "máquina técnica", "gender": "f" },
+    "BADGE": { "form": "medalla", "gender": "f" },
+    "ITEM": { "form": "objeto", "gender": "m" },
+
+    "LEVEL": { "form": "nivel", "gender": "m" },
+    "EXPERIENCE": { "form": "experiencia", "gender": "f" },
+    "HEALTH": { "form": "salud", "gender": "f" },
+
+    "BURN": { "base": "quemar", "1_singular": "quemo", "2_singular": "quemas", "3_singular": "quema", "1_plural": "quemamos", "2_plural": "quemáis", "3_plural": "queman" },
+    "POISON": { "base": "envenenar", "1_singular": "enveneno", "2_singular": "envulneras", "3_singular": "envenena", "1_plural": "envenenamos", "2_plural": "envenenáis", "3_plural": "envenenan" },
+    "SLEEP_STATUS": { "form": "sueño", "gender": "m" },
+    "PARALYZE": { "base": "paralizar", "1_singular": "paralizo", "2_singular": "paralizas", "3_singular": "paraliza", "1_plural": "paralizamos", "2_plural": "paralizáis", "3_plural": "paralizan" },
+
+    "SEEN": { "form": "vistos" },
+    "CAPTURED": { "form": "capturados" },
+
+    "ATTACK": { "base": "atacar", "1_singular": "ataco", "2_singular": "atacas", "3_singular": "ataca", "1_plural": "atacamos", "2_plural": "atacáis", "3_plural": "atacan" },
+    "RUN": { "base": "huir", "1_singular": "huyo", "2_singular": "huyes", "3_singular": "huye", "1_plural": "huimos", "2_plural": "huís", "3_plural": "huyen" },
+    "CATCH": { "base": "atrapar", "1_singular": "atrapo", "2_singular": "atrapas", "3_singular": "atrapa", "1_plural": "atrapamos", "2_plural": "atrapáis", "3_plural": "atrapan" },
+    "DEFEAT": { "base": "derrotar", "1_singular": "derroto", "2_singular": "derrotas", "3_singular": "derrota", "1_plural": "derrotamos", "2_plural": "derrotáis", "3_plural": "derrotan" },
+    "SWITCH": { "base": "cambiar", "1_singular": "cambio", "2_singular": "cambias", "3_singular": "cambia", "1_plural": "cambiamos", "2_plural": "cambiáis", "3_plural": "cambian" },
+    "USE": { "base": "usar", "1_singular": "uso", "2_singular": "usas", "3_singular": "usa", "1_plural": "usamos", "2_plural": "usáis", "3_plural": "usan" },
+    "FLY": { "base": "volar", "1_singular": "vuelo", "2_singular": "vuelas", "3_singular": "vuela", "1_plural": "volamos", "2_plural": "voláis", "3_plural": "vuelan" },
+    "PLAY": { "base": "jugar", "1_singular": "juego", "2_singular": "juegas", "3_singular": "juega", "1_plural": "jugamos", "2_plural": "jugáis", "3_plural": "juegan" },
+    "HEAL": { "base": "curar", "1_singular": "curo", "2_singular": "curas", "3_singular": "cura", "1_plural": "curamos", "2_plural": "curáis", "3_plural": "curan" },
+    "RESTORE": { "base": "restaurar", "1_singular": "restauro", "2_singular": "restauras", "3_singular": "restaura", "1_plural": "restauramos", "2_plural": "restauráis", "3_plural": "restauran" },
+    "GAIN_EXPERIENCE": { "base": "ganar experiencia", "1_singular": "gano experiencia", "2_singular": "ganas experiencia", "3_singular": "gana experiencia", "1_plural": "ganamos experiencia", "2_plural": "ganáis experiencia", "3_plural": "ganan experiencia" },
+    "EVOLVE": { "base": "evolucionar", "1_singular": "evoluciono", "2_singular": "evolucionas", "3_singular": "evoluciona", "1_plural": "evolucionamos", "2_plural": "evolucionáis", "3_plural": "evolucionan" },
+
+    "WILD": ["salvaje"],
+    "STRONG": ["fuerte"],
+    "EFFECTIVE": ["efectivo"],
+    "SUPER_EFFECTIVE": ["súper efectivo"],
+    "VERY_EFFECTIVE": ["muy efectivo"],
+    "LEGENDARY": ["legendario"],
+    "SHINY": ["variocolor"]
+
+  }
 }
   }
 }

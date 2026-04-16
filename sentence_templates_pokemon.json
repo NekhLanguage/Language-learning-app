@@ -307,6 +307,167 @@
   "template_id": "I_GAIN_EXPERIENCE",
   "concepts": ["FIRST_PERSON_SINGULAR", "GAIN", "EXPERIENCE"],
   "render": { "en": "I gain experience." }
+},
+
+{
+  "template_id": "YOU_HAVE_POKEMON",
+  "concepts": ["SECOND_PERSON", "HAVE", "POKEMON"],
+  "render": { "en": "You have a pokemon." }
+},
+{
+  "template_id": "YOU_CATCH_POKEMON",
+  "concepts": ["SECOND_PERSON", "CATCH", "POKEMON"],
+  "render": { "en": "You catch a pokemon." }
+},
+{
+  "template_id": "YOU_SEE_GYM_LEADER",
+  "concepts": ["SECOND_PERSON", "SEE", "GYM_LEADER"],
+  "render": { "en": "You see a gym leader." }
+},
+{
+  "template_id": "YOU_GET_BADGE",
+  "concepts": ["SECOND_PERSON", "GET", "BADGE"],
+  "render": { "en": "You get a badge." }
+},
+{
+  "template_id": "YOU_GO_TO_GYM",
+  "concepts": ["SECOND_PERSON", "GO", "GYM"],
+  "render": { "en": "You go to a gym." }
+},
+{
+  "template_id": "YOU_DEFEAT_TRAINER",
+  "concepts": ["SECOND_PERSON", "DEFEAT", "TRAINER"],
+  "render": { "en": "You defeat a trainer." }
+},
+{
+  "template_id": "YOU_USE_REVIVE",
+  "concepts": ["SECOND_PERSON", "USE", "REVIVE"],
+  "render": { "en": "You use a revive." }
+},
+{
+  "template_id": "YOU_SEE_ELITE_FOUR",
+  "concepts": ["SECOND_PERSON", "SEE", "ELITE_FOUR"],
+  "render": { "en": "You see the elite four." }
+},
+
+{
+  "template_id": "THEY_HAVE_POKEMON",
+  "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "POKEMON"],
+  "render": { "en": "They have a pokemon." }
+},
+{
+  "template_id": "THEY_SEE_POKEMON",
+  "concepts": ["THIRD_PERSON_PLURAL", "SEE", "POKEMON"],
+  "render": { "en": "They see a pokemon." }
+},
+{
+  "template_id": "THEY_CATCH_POKEMON",
+  "concepts": ["THIRD_PERSON_PLURAL", "CATCH", "POKEMON"],
+  "render": { "en": "They catch a pokemon." }
+},
+{
+  "template_id": "THEY_USE_MOVE",
+  "concepts": ["THIRD_PERSON_PLURAL", "USE", "MOVE"],
+  "render": { "en": "They use a move." }
+},
+{
+  "template_id": "THEY_GO_TO_LEAGUE",
+  "concepts": ["THIRD_PERSON_PLURAL", "GO", "LEAGUE"],
+  "render": { "en": "They go to the league." }
+},
+{
+  "template_id": "THEY_HAVE_BATTLE",
+  "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "BATTLE"],
+  "render": { "en": "They have a battle." }
+},
+
+{
+  "template_id": "WE_SEE_GYM",
+  "concepts": ["FIRST_PERSON_PLURAL", "SEE", "GYM"],
+  "render": { "en": "We see a gym." }
+},
+{
+  "template_id": "WE_CATCH_POKEMON",
+  "concepts": ["FIRST_PERSON_PLURAL", "CATCH", "POKEMON"],
+  "render": { "en": "We catch a pokemon." }
+},
+{
+  "template_id": "WE_HAVE_BATTLE",
+  "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "BATTLE"],
+  "render": { "en": "We have a battle." }
+},
+{
+  "template_id": "WE_GO_TO_GYM",
+  "concepts": ["FIRST_PERSON_PLURAL", "GO", "GYM"],
+  "render": { "en": "We go to a gym." }
+},
+{
+  "template_id": "WE_USE_POTION",
+  "concepts": ["FIRST_PERSON_PLURAL", "USE", "POTION"],
+  "render": { "en": "We use a potion." }
+},
+
+{
+  "template_id": "SHE_CATCH_POKEMON",
+  "concepts": ["SHE", "CATCH", "POKEMON"],
+  "render": { "en": "She catches a pokemon." }
+},
+{
+  "template_id": "SHE_DEFEAT_TRAINER",
+  "concepts": ["SHE", "DEFEAT", "TRAINER"],
+  "render": { "en": "She defeats a trainer." }
+},
+{
+  "template_id": "SHE_GO_TO_GYM",
+  "concepts": ["SHE", "GO", "GYM"],
+  "render": { "en": "She goes to a gym." }
+},
+{
+  "template_id": "SHE_GET_BADGE",
+  "concepts": ["SHE", "GET", "BADGE"],
+  "render": { "en": "She gets a badge." }
+},
+
+{
+  "template_id": "I_DEFEAT_TRAINER",
+  "concepts": ["FIRST_PERSON_SINGULAR", "DEFEAT", "TRAINER"],
+  "render": { "en": "I defeat a trainer." }
+},
+{
+  "template_id": "I_HEAL_POKEMON",
+  "concepts": ["FIRST_PERSON_SINGULAR", "HEAL", "POKEMON"],
+  "render": { "en": "I heal a pokemon." }
+},
+{
+  "template_id": "I_SEE_WILD_POKEMON",
+  "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "WILD", "POKEMON"],
+  "render": { "en": "I see a wild pokemon." }
+},
+{
+  "template_id": "I_SEE_LEGENDARY_POKEMON",
+  "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "LEGENDARY", "POKEMON"],
+  "render": { "en": "I see a legendary pokemon." }
+},
+
+{
+  "template_id": "HE_CATCH_POKEMON",
+  "concepts": ["HE", "CATCH", "POKEMON"],
+  "render": { "en": "He catches a pokemon." }
+},
+{
+  "template_id": "HE_USE_REVIVE",
+  "concepts": ["HE", "USE", "REVIVE"],
+  "render": { "en": "He uses a revive." }
+},
+{
+  "template_id": "HE_HEAL_POKEMON",
+  "concepts": ["HE", "HEAL", "POKEMON"],
+  "render": { "en": "He heals a pokemon." }
+},
+{
+  "template_id": "HE_GO_TO_LEAGUE",
+  "concepts": ["HE", "GO", "LEAGUE"],
+  "render": { "en": "He goes to the league." }
 }
 
   ]

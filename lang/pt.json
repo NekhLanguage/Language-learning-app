@@ -23,7 +23,10 @@
     "resourcePacks": "PACOTES DE RECURSOS",
     "choosePacks": "Escolha até 2 pacotes",
     "start": "INICIAR",
-    "selectPack": "Selecione pelo menos 1 pacote"
+    "selectPack": "Selecione pelo menos 1 pacote",
+    "enterEmail": "Digite seu e-mail",
+    "buyAccess": "Não é usuário? Obtenha acesso",
+    "noAccess": "Nenhum acesso encontrado para este e-mail"
   },
   "hubNames": {
     "en": "Inglês",
@@ -283,7 +286,8 @@
       "gender": "m"
     },
     "CLOTHES": {
-      "form": "roupas"
+      "form": "roupas",
+      "gender": "f"
     },
     "SHIRT": {
       "form": "camisa",
@@ -412,6 +416,12 @@
       "elas",
       "deles",
       "delas"
+    ],
+    "THIS": [
+      "este"
+    ],
+    "THAT": [
+      "esse"
     ],
     "ANY": [
       "qualquer"

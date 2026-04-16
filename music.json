@@ -1,0 +1,780 @@
+{
+  "concepts": [
+    { "concept_id": "GUITAR",       "type": "noun" },
+    { "concept_id": "DRUM",         "type": "noun" },
+    { "concept_id": "PIANO",        "type": "noun" },
+    { "concept_id": "VIOLIN",       "type": "noun" },
+    { "concept_id": "MICROPHONE",   "type": "noun" },
+
+    { "concept_id": "MELODY",       "type": "noun" },
+    { "concept_id": "RHYTHM",       "type": "noun" },
+    { "concept_id": "BEAT",         "type": "noun" },
+    { "concept_id": "CHORD",        "type": "noun" },
+    { "concept_id": "HARMONY",      "type": "noun" },
+
+    { "concept_id": "SING",         "type": "verb" },
+    { "concept_id": "STRUM",        "type": "verb" },
+    { "concept_id": "COMPOSE",      "type": "verb" },
+    { "concept_id": "PERFORM",      "type": "verb" },
+    { "concept_id": "RECORD",       "type": "verb" },
+
+    { "concept_id": "CONCERT",      "type": "noun" },
+    { "concept_id": "STAGE",        "type": "noun" },
+    { "concept_id": "ENCORE",       "type": "noun" },
+    { "concept_id": "SPOTLIGHT",    "type": "noun" },
+    { "concept_id": "TOUR",         "type": "noun" },
+
+    { "concept_id": "LYRIC",        "type": "noun" },
+    { "concept_id": "CHORUS",       "type": "noun" },
+    { "concept_id": "VERSE",        "type": "noun" },
+    { "concept_id": "SOLO",         "type": "noun" },
+    { "concept_id": "DUET",         "type": "noun" },
+
+    { "concept_id": "ROCK",         "type": "noun" },
+    { "concept_id": "JAZZ",         "type": "noun" },
+    { "concept_id": "CLASSICAL",    "type": "adjective" },
+    { "concept_id": "ACOUSTIC",     "type": "adjective" },
+    { "concept_id": "ELECTRONIC",   "type": "adjective" },
+
+    { "concept_id": "STUDIO",       "type": "noun" },
+    { "concept_id": "TRACK",        "type": "noun" },
+    { "concept_id": "ALBUM",        "type": "noun" },
+    { "concept_id": "REMIX",        "type": "noun" },
+    { "concept_id": "SAMPLE",       "type": "noun" },
+
+    { "concept_id": "REHEARSE",     "type": "verb" },
+    { "concept_id": "TUNE",         "type": "verb" },
+    { "concept_id": "IMPROVISE",    "type": "verb" },
+    { "concept_id": "AMPLIFY",      "type": "verb" },
+    { "concept_id": "DROP",         "type": "verb" },
+
+    { "concept_id": "LOUD",         "type": "adjective" },
+    { "concept_id": "SOULFUL",      "type": "adjective" },
+    { "concept_id": "RHYTHMIC",     "type": "adjective" },
+    { "concept_id": "LIVE",         "type": "adjective" },
+    { "concept_id": "VIRAL",        "type": "adjective" },
+
+    { "concept_id": "BAND",         "type": "noun" },
+    { "concept_id": "ANTHEM",       "type": "noun" },
+    { "concept_id": "PLAYLIST",     "type": "noun" },
+    { "concept_id": "FESTIVAL",     "type": "noun" },
+    { "concept_id": "FANBASE",      "type": "noun" }
+  ],
+
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "GUITAR":     { "form": "guitar", "article": "a" },
+        "DRUM":       { "form": "drum", "article": "a" },
+        "PIANO":      { "form": "piano", "article": "a" },
+        "VIOLIN":     { "form": "violin", "article": "a" },
+        "MICROPHONE": { "form": "microphone", "article": "a" },
+
+        "MELODY":     { "form": "melody", "article": "a" },
+        "RHYTHM":     { "form": "rhythm", "article": "a" },
+        "BEAT":       { "form": "beat", "article": "a" },
+        "CHORD":      { "form": "chord", "article": "a" },
+        "HARMONY":    { "form": "harmony" },
+
+        "SING":       { "base": "sing",      "3_singular": "sings" },
+        "STRUM":      { "base": "strum",     "3_singular": "strums" },
+        "COMPOSE":    { "base": "compose",   "3_singular": "composes" },
+        "PERFORM":    { "base": "perform",   "3_singular": "performs" },
+        "RECORD":     { "base": "record",    "3_singular": "records" },
+
+        "CONCERT":    { "form": "concert", "article": "a" },
+        "STAGE":      { "form": "stage", "article": "a" },
+        "ENCORE":     { "form": "encore", "article": "an" },
+        "SPOTLIGHT":  { "form": "spotlight", "article": "a" },
+        "TOUR":       { "form": "tour", "article": "a" },
+
+        "LYRIC":      { "form": "lyric", "article": "a" },
+        "CHORUS":     { "form": "chorus", "article": "a" },
+        "VERSE":      { "form": "verse", "article": "a" },
+        "SOLO":       { "form": "solo", "article": "a" },
+        "DUET":       { "form": "duet", "article": "a" },
+
+        "ROCK":       { "form": "rock" },
+        "JAZZ":       { "form": "jazz" },
+        "CLASSICAL":  ["classical"],
+        "ACOUSTIC":   ["acoustic"],
+        "ELECTRONIC": ["electronic"],
+
+        "STUDIO":     { "form": "studio", "article": "a" },
+        "TRACK":      { "form": "track", "article": "a" },
+        "ALBUM":      { "form": "album", "article": "an" },
+        "REMIX":      { "form": "remix", "article": "a" },
+        "SAMPLE":     { "form": "sample", "article": "a" },
+
+        "REHEARSE":   { "base": "rehearse",  "3_singular": "rehearses" },
+        "TUNE":       { "base": "tune",      "3_singular": "tunes" },
+        "IMPROVISE":  { "base": "improvise", "3_singular": "improvises" },
+        "AMPLIFY":    { "base": "amplify",   "3_singular": "amplifies" },
+        "DROP":       { "base": "drop",      "3_singular": "drops" },
+
+        "LOUD":       ["loud"],
+        "SOULFUL":    ["soulful"],
+        "RHYTHMIC":   ["rhythmic"],
+        "LIVE":       ["live"],
+        "VIRAL":      ["viral"],
+
+        "BAND":       { "form": "band", "article": "a" },
+        "ANTHEM":     { "form": "anthem", "article": "an" },
+        "PLAYLIST":   { "form": "playlist", "article": "a" },
+        "FESTIVAL":   { "form": "festival", "article": "a" },
+        "FANBASE":    { "form": "fanbase", "article": "a" }
+      }
+    },
+
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "GUITAR":     { "form": "guitarra", "gender": "f" },
+        "DRUM":       { "form": "bateria", "gender": "f" },
+        "PIANO":      { "form": "piano", "gender": "m" },
+        "VIOLIN":     { "form": "violino", "gender": "m" },
+        "MICROPHONE": { "form": "microfone", "gender": "m" },
+
+        "MELODY":     { "form": "melodia", "gender": "f" },
+        "RHYTHM":     { "form": "ritmo", "gender": "m" },
+        "BEAT":       { "form": "batida", "gender": "f" },
+        "CHORD":      { "form": "acorde", "gender": "m" },
+        "HARMONY":    { "form": "harmonia", "gender": "f" },
+
+        "SING":       { "base": "cantar",    "1_singular": "canto",     "2_singular": "cantas",    "3_singular": "canta",     "1_plural": "cantamos",  "2_plural": "cantam",    "3_plural": "cantam" },
+        "STRUM":      { "base": "dedilhar",  "1_singular": "dedilho",   "2_singular": "dedilhas",  "3_singular": "dedilha",   "1_plural": "dedilhamos","2_plural": "dedilham",  "3_plural": "dedilham" },
+        "COMPOSE":    { "base": "compor",    "1_singular": "componho",  "2_singular": "compões",   "3_singular": "compõe",    "1_plural": "compomos",  "2_plural": "compõem",   "3_plural": "compõem" },
+        "PERFORM":    { "base": "apresentar","1_singular": "apresento", "2_singular": "apresentas","3_singular": "apresenta", "1_plural": "apresentamos","2_plural": "apresentam","3_plural": "apresentam" },
+        "RECORD":     { "base": "gravar",    "1_singular": "gravo",     "2_singular": "gravas",    "3_singular": "grava",     "1_plural": "gravamos",  "2_plural": "gravam",    "3_plural": "gravam" },
+
+        "CONCERT":    { "form": "concerto", "gender": "m" },
+        "STAGE":      { "form": "palco", "gender": "m" },
+        "ENCORE":     { "form": "bis", "gender": "m" },
+        "SPOTLIGHT":  { "form": "holofote", "gender": "m" },
+        "TOUR":       { "form": "turnê", "gender": "f" },
+
+        "LYRIC":      { "form": "letra", "gender": "f" },
+        "CHORUS":     { "form": "refrão", "gender": "m" },
+        "VERSE":      { "form": "verso", "gender": "m" },
+        "SOLO":       { "form": "solo", "gender": "m" },
+        "DUET":       { "form": "dueto", "gender": "m" },
+
+        "ROCK":       { "form": "rock", "gender": "m" },
+        "JAZZ":       { "form": "jazz", "gender": "m" },
+        "CLASSICAL":  ["clássico"],
+        "ACOUSTIC":   ["acústico"],
+        "ELECTRONIC": ["eletrônico"],
+
+        "STUDIO":     { "form": "estúdio", "gender": "m" },
+        "TRACK":      { "form": "faixa", "gender": "f" },
+        "ALBUM":      { "form": "álbum", "gender": "m" },
+        "REMIX":      { "form": "remix", "gender": "m" },
+        "SAMPLE":     { "form": "sample", "gender": "m" },
+
+        "REHEARSE":   { "base": "ensaiar",   "1_singular": "ensaio",    "2_singular": "ensaias",   "3_singular": "ensaia",    "1_plural": "ensaiamos", "2_plural": "ensaiam",   "3_plural": "ensaiam" },
+        "TUNE":       { "base": "afinar",    "1_singular": "afino",     "2_singular": "afinas",    "3_singular": "afina",     "1_plural": "afinamos",  "2_plural": "afinam",    "3_plural": "afinam" },
+        "IMPROVISE":  { "base": "improvisar","1_singular": "improviso", "2_singular": "improvisas","3_singular": "improvisa", "1_plural": "improvisamos","2_plural": "improvisam","3_plural": "improvisam" },
+        "AMPLIFY":    { "base": "amplificar","1_singular": "amplifico", "2_singular": "amplifica", "3_singular": "amplifica", "1_plural": "amplificamos","2_plural": "amplificam","3_plural": "amplificam" },
+        "DROP":       { "base": "soltar",    "1_singular": "solto",     "2_singular": "soltas",    "3_singular": "solta",     "1_plural": "soltamos",  "2_plural": "soltam",    "3_plural": "soltam" },
+
+        "LOUD":       ["alto"],
+        "SOULFUL":    ["emotivo"],
+        "RHYTHMIC":   ["rítmico"],
+        "LIVE":       ["ao vivo"],
+        "VIRAL":      ["viral"],
+
+        "BAND":       { "form": "banda", "gender": "f" },
+        "ANTHEM":     { "form": "hino", "gender": "m" },
+        "PLAYLIST":   { "form": "playlist", "gender": "f" },
+        "FESTIVAL":   { "form": "festival", "gender": "m" },
+        "FANBASE":    { "form": "base de fãs", "gender": "f" }
+      }
+    },
+
+    "ar": {
+      "label": "Arabic",
+      "forms": {
+        "GUITAR":     { "form": "غيتار", "gender": "m" },
+        "DRUM":       { "form": "طبلة", "gender": "f" },
+        "PIANO":      { "form": "بيانو", "gender": "m" },
+        "VIOLIN":     { "form": "كمان", "gender": "m" },
+        "MICROPHONE": { "form": "ميكروفون", "gender": "m" },
+
+        "MELODY":     { "form": "لحن", "gender": "m" },
+        "RHYTHM":     { "form": "إيقاع", "gender": "m" },
+        "BEAT":       { "form": "نبضة", "gender": "f" },
+        "CHORD":      { "form": "وتر", "gender": "m" },
+        "HARMONY":    { "form": "انسجام", "gender": "m" },
+
+        "SING":       { "base": "يغني",    "1_singular": "أغني",    "2_singular": "تغني",    "3_singular": "يغني",    "1_plural": "نغني",    "2_plural": "تغنون",   "3_plural": "يغنون" },
+        "STRUM":      { "base": "يعزف",    "1_singular": "أعزف",    "2_singular": "تعزف",    "3_singular": "يعزف",    "1_plural": "نعزف",    "2_plural": "تعزفون",  "3_plural": "يعزفون" },
+        "COMPOSE":    { "base": "يؤلف",    "1_singular": "أؤلف",    "2_singular": "تؤلف",    "3_singular": "يؤلف",    "1_plural": "نؤلف",    "2_plural": "تؤلفون",  "3_plural": "يؤلفون" },
+        "PERFORM":    { "base": "يؤدي",    "1_singular": "أؤدي",    "2_singular": "تؤدي",    "3_singular": "يؤدي",    "1_plural": "نؤدي",    "2_plural": "تؤدون",   "3_plural": "يؤدون" },
+        "RECORD":     { "base": "يسجل",    "1_singular": "أسجل",    "2_singular": "تسجل",    "3_singular": "يسجل",    "1_plural": "نسجل",    "2_plural": "تسجلون",  "3_plural": "يسجلون" },
+
+        "CONCERT":    { "form": "حفلة موسيقية", "gender": "f" },
+        "STAGE":      { "form": "مسرح", "gender": "m" },
+        "ENCORE":     { "form": "تكرار", "gender": "m" },
+        "SPOTLIGHT":  { "form": "بقعة ضوء", "gender": "f" },
+        "TOUR":       { "form": "جولة", "gender": "f" },
+
+        "LYRIC":      { "form": "كلمات", "gender": "f" },
+        "CHORUS":     { "form": "لازمة", "gender": "f" },
+        "VERSE":      { "form": "مقطع", "gender": "m" },
+        "SOLO":       { "form": "منفرد", "gender": "m" },
+        "DUET":       { "form": "ثنائي", "gender": "m" },
+
+        "ROCK":       { "form": "روك", "gender": "m" },
+        "JAZZ":       { "form": "جاز", "gender": "m" },
+        "CLASSICAL":  ["كلاسيكي"],
+        "ACOUSTIC":   ["أكوستيكي"],
+        "ELECTRONIC": ["إلكتروني"],
+
+        "STUDIO":     { "form": "استوديو", "gender": "m" },
+        "TRACK":      { "form": "مقطوعة", "gender": "f" },
+        "ALBUM":      { "form": "ألبوم", "gender": "m" },
+        "REMIX":      { "form": "ريميكس", "gender": "m" },
+        "SAMPLE":     { "form": "عينة صوتية", "gender": "f" },
+
+        "REHEARSE":   { "base": "يتدرب",   "1_singular": "أتدرب",   "2_singular": "تتدرب",   "3_singular": "يتدرب",   "1_plural": "نتدرب",   "2_plural": "تتدربون", "3_plural": "يتدربون" },
+        "TUNE":       { "base": "يضبط",    "1_singular": "أضبط",    "2_singular": "تضبط",    "3_singular": "يضبط",    "1_plural": "نضبط",    "2_plural": "تضبطون",  "3_plural": "يضبطون" },
+        "IMPROVISE":  { "base": "يرتجل",   "1_singular": "أرتجل",   "2_singular": "ترتجل",   "3_singular": "يرتجل",   "1_plural": "نرتجل",   "2_plural": "ترتجلون", "3_plural": "يرتجلون" },
+        "AMPLIFY":    { "base": "يضخم",    "1_singular": "أضخم",    "2_singular": "تضخم",    "3_singular": "يضخم",    "1_plural": "نضخم",    "2_plural": "تضخمون",  "3_plural": "يضخمون" },
+        "DROP":       { "base": "يطلق",    "1_singular": "أطلق",    "2_singular": "تطلق",    "3_singular": "يطلق",    "1_plural": "نطلق",    "2_plural": "تطلقون",  "3_plural": "يطلقون" },
+
+        "LOUD":       ["صاخب"],
+        "SOULFUL":    ["مؤثر"],
+        "RHYTHMIC":   ["إيقاعي"],
+        "LIVE":       ["مباشر"],
+        "VIRAL":      ["فيروسي"],
+
+        "BAND":       { "form": "فرقة", "gender": "f" },
+        "ANTHEM":     { "form": "نشيد", "gender": "m" },
+        "PLAYLIST":   { "form": "قائمة تشغيل", "gender": "f" },
+        "FESTIVAL":   { "form": "مهرجان", "gender": "m" },
+        "FANBASE":    { "form": "قاعدة المعجبين", "gender": "f" }
+      }
+    },
+
+    "de": {
+      "label": "German",
+      "forms": {
+        "GUITAR":     { "form": "Gitarre", "gender": "f" },
+        "DRUM":       { "form": "Trommel", "gender": "f" },
+        "PIANO":      { "form": "Klavier", "gender": "n" },
+        "VIOLIN":     { "form": "Geige", "gender": "f" },
+        "MICROPHONE": { "form": "Mikrofon", "gender": "n" },
+
+        "MELODY":     { "form": "Melodie", "gender": "f" },
+        "RHYTHM":     { "form": "Rhythmus", "gender": "m" },
+        "BEAT":       { "form": "Beat", "gender": "m" },
+        "CHORD":      { "form": "Akkord", "gender": "m" },
+        "HARMONY":    { "form": "Harmonie", "gender": "f" },
+
+        "SING":       { "base": "singen",     "1_singular": "singe",     "2_singular": "singst",    "3_singular": "singt",     "1_plural": "singen",     "2_plural": "singt",      "3_plural": "singen" },
+        "STRUM":      { "base": "zupfen",     "1_singular": "zupfe",     "2_singular": "zupfst",    "3_singular": "zupft",     "1_plural": "zupfen",     "2_plural": "zupft",      "3_plural": "zupfen" },
+        "COMPOSE":    { "base": "komponieren","1_singular": "komponiere","2_singular": "komponierst","3_singular": "komponiert","1_plural": "komponieren","2_plural": "komponiert", "3_plural": "komponieren" },
+        "PERFORM":    { "base": "auftreten",  "1_singular": "trete auf", "2_singular": "trittst auf","3_singular": "tritt auf", "1_plural": "treten auf", "2_plural": "tretet auf", "3_plural": "treten auf" },
+        "RECORD":     { "base": "aufnehmen",  "1_singular": "nehme auf", "2_singular": "nimmst auf","3_singular": "nimmt auf", "1_plural": "nehmen auf", "2_plural": "nehmt auf",  "3_plural": "nehmen auf" },
+
+        "CONCERT":    { "form": "Konzert", "gender": "n" },
+        "STAGE":      { "form": "Bühne", "gender": "f" },
+        "ENCORE":     { "form": "Zugabe", "gender": "f" },
+        "SPOTLIGHT":  { "form": "Scheinwerfer", "gender": "m" },
+        "TOUR":       { "form": "Tournee", "gender": "f" },
+
+        "LYRIC":      { "form": "Liedtext", "gender": "m" },
+        "CHORUS":     { "form": "Refrain", "gender": "m" },
+        "VERSE":      { "form": "Strophe", "gender": "f" },
+        "SOLO":       { "form": "Solo", "gender": "n" },
+        "DUET":       { "form": "Duett", "gender": "n" },
+
+        "ROCK":       { "form": "Rock", "gender": "m" },
+        "JAZZ":       { "form": "Jazz", "gender": "m" },
+        "CLASSICAL":  ["klassisch"],
+        "ACOUSTIC":   ["akustisch"],
+        "ELECTRONIC": ["elektronisch"],
+
+        "STUDIO":     { "form": "Studio", "gender": "n" },
+        "TRACK":      { "form": "Track", "gender": "m" },
+        "ALBUM":      { "form": "Album", "gender": "n" },
+        "REMIX":      { "form": "Remix", "gender": "m" },
+        "SAMPLE":     { "form": "Sample", "gender": "n" },
+
+        "REHEARSE":   { "base": "proben",     "1_singular": "probe",     "2_singular": "probst",    "3_singular": "probt",     "1_plural": "proben",     "2_plural": "probt",      "3_plural": "proben" },
+        "TUNE":       { "base": "stimmen",    "1_singular": "stimme",    "2_singular": "stimmst",   "3_singular": "stimmt",    "1_plural": "stimmen",    "2_plural": "stimmt",     "3_plural": "stimmen" },
+        "IMPROVISE":  { "base": "improvisieren","1_singular": "improvisiere","2_singular": "improvisierst","3_singular": "improvisiert","1_plural": "improvisieren","2_plural": "improvisiert","3_plural": "improvisieren" },
+        "AMPLIFY":    { "base": "verstärken", "1_singular": "verstärke", "2_singular": "verstärkst","3_singular": "verstärkt", "1_plural": "verstärken", "2_plural": "verstärkt",  "3_plural": "verstärken" },
+        "DROP":       { "base": "droppen",    "1_singular": "droppe",    "2_singular": "droppst",   "3_singular": "droppt",    "1_plural": "droppen",    "2_plural": "droppt",     "3_plural": "droppen" },
+
+        "LOUD":       ["laut"],
+        "SOULFUL":    ["gefühlvoll"],
+        "RHYTHMIC":   ["rhythmisch"],
+        "LIVE":       ["live"],
+        "VIRAL":      ["viral"],
+
+        "BAND":       { "form": "Band", "gender": "f" },
+        "ANTHEM":     { "form": "Hymne", "gender": "f" },
+        "PLAYLIST":   { "form": "Playlist", "gender": "f" },
+        "FESTIVAL":   { "form": "Festival", "gender": "n" },
+        "FANBASE":    { "form": "Fangemeinde", "gender": "f" }
+      }
+    },
+
+    "el": {
+      "label": "Greek",
+      "forms": {
+        "GUITAR":     { "form": "κιθάρα" },
+        "DRUM":       { "form": "τύμπανο" },
+        "PIANO":      { "form": "πιάνο" },
+        "VIOLIN":     { "form": "βιολί" },
+        "MICROPHONE": { "form": "μικρόφωνο" },
+
+        "MELODY":     { "form": "μελωδία" },
+        "RHYTHM":     { "form": "ρυθμός" },
+        "BEAT":       { "form": "χτύπος" },
+        "CHORD":      { "form": "συγχορδία" },
+        "HARMONY":    { "form": "αρμονία" },
+
+        "SING":       { "base": "τραγουδώ",  "1_singular": "τραγουδώ",  "2_singular": "τραγουδάς", "3_singular": "τραγουδά",  "1_plural": "τραγουδάμε", "2_plural": "τραγουδάτε", "3_plural": "τραγουδούν" },
+        "STRUM":      { "base": "παίζω κιθάρα","1_singular": "παίζω κιθάρα","2_singular": "παίζεις κιθάρα","3_singular": "παίζει κιθάρα","1_plural": "παίζουμε κιθάρα","2_plural": "παίζετε κιθάρα","3_plural": "παίζουν κιθάρα" },
+        "COMPOSE":    { "base": "συνθέτω",   "1_singular": "συνθέτω",   "2_singular": "συνθέτεις", "3_singular": "συνθέτει",  "1_plural": "συνθέτουμε", "2_plural": "συνθέτετε",  "3_plural": "συνθέτουν" },
+        "PERFORM":    { "base": "εκτελώ",    "1_singular": "εκτελώ",    "2_singular": "εκτελείς",  "3_singular": "εκτελεί",   "1_plural": "εκτελούμε",  "2_plural": "εκτελείτε",  "3_plural": "εκτελούν" },
+        "RECORD":     { "base": "ηχογραφώ",  "1_singular": "ηχογραφώ",  "2_singular": "ηχογραφείς","3_singular": "ηχογραφεί", "1_plural": "ηχογραφούμε","2_plural": "ηχογραφείτε","3_plural": "ηχογραφούν" },
+
+        "CONCERT":    { "form": "συναυλία" },
+        "STAGE":      { "form": "σκηνή" },
+        "ENCORE":     { "form": "άγκορ" },
+        "SPOTLIGHT":  { "form": "προβολέας" },
+        "TOUR":       { "form": "περιοδεία" },
+
+        "LYRIC":      { "form": "στίχος" },
+        "CHORUS":     { "form": "ρεφρέν" },
+        "VERSE":      { "form": "στροφή" },
+        "SOLO":       { "form": "σόλο" },
+        "DUET":       { "form": "ντουέτο" },
+
+        "ROCK":       { "form": "ροκ" },
+        "JAZZ":       { "form": "τζαζ" },
+        "CLASSICAL":  ["κλασικός"],
+        "ACOUSTIC":   ["ακουστικός"],
+        "ELECTRONIC": ["ηλεκτρονικός"],
+
+        "STUDIO":     { "form": "στούντιο" },
+        "TRACK":      { "form": "κομμάτι" },
+        "ALBUM":      { "form": "άλμπουμ" },
+        "REMIX":      { "form": "ρίμιξ" },
+        "SAMPLE":     { "form": "δείγμα" },
+
+        "REHEARSE":   { "base": "κάνω πρόβα",  "1_singular": "κάνω πρόβα",  "2_singular": "κάνεις πρόβα", "3_singular": "κάνει πρόβα",  "1_plural": "κάνουμε πρόβα", "2_plural": "κάνετε πρόβα",  "3_plural": "κάνουν πρόβα" },
+        "TUNE":       { "base": "κουρδίζω",    "1_singular": "κουρδίζω",    "2_singular": "κουρδίζεις",   "3_singular": "κουρδίζει",    "1_plural": "κουρδίζουμε",   "2_plural": "κουρδίζετε",    "3_plural": "κουρδίζουν" },
+        "IMPROVISE":  { "base": "αυτοσχεδιάζω","1_singular": "αυτοσχεδιάζω","2_singular": "αυτοσχεδιάζεις","3_singular": "αυτοσχεδιάζει","1_plural": "αυτοσχεδιάζουμε","2_plural": "αυτοσχεδιάζετε","3_plural": "αυτοσχεδιάζουν" },
+        "AMPLIFY":    { "base": "ενισχύω",     "1_singular": "ενισχύω",     "2_singular": "ενισχύεις",    "3_singular": "ενισχύει",     "1_plural": "ενισχύουμε",    "2_plural": "ενισχύετε",     "3_plural": "ενισχύουν" },
+        "DROP":       { "base": "κυκλοφορώ",   "1_singular": "κυκλοφορώ",   "2_singular": "κυκλοφορείς",  "3_singular": "κυκλοφορεί",   "1_plural": "κυκλοφορούμε",  "2_plural": "κυκλοφορείτε",  "3_plural": "κυκλοφορούν" },
+
+        "LOUD":       ["δυνατός"],
+        "SOULFUL":    ["συναισθηματικός"],
+        "RHYTHMIC":   ["ρυθμικός"],
+        "LIVE":       ["ζωντανός"],
+        "VIRAL":      ["viral"],
+
+        "BAND":       { "form": "συγκρότημα" },
+        "ANTHEM":     { "form": "ύμνος" },
+        "PLAYLIST":   { "form": "λίστα αναπαραγωγής" },
+        "FESTIVAL":   { "form": "φεστιβάλ" },
+        "FANBASE":    { "form": "βάση θαυμαστών" }
+      }
+    },
+
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "GUITAR":     { "form": "ギター" },
+        "DRUM":       { "form": "ドラム" },
+        "PIANO":      { "form": "ピアノ" },
+        "VIOLIN":     { "form": "バイオリン" },
+        "MICROPHONE": { "form": "マイク" },
+
+        "MELODY":     { "form": "メロディー" },
+        "RHYTHM":     { "form": "リズム" },
+        "BEAT":       { "form": "ビート" },
+        "CHORD":      { "form": "コード" },
+        "HARMONY":    { "form": "ハーモニー" },
+
+        "SING":       { "base": "歌う" },
+        "STRUM":      { "base": "弾く" },
+        "COMPOSE":    { "base": "作曲する" },
+        "PERFORM":    { "base": "演奏する" },
+        "RECORD":     { "base": "録音する" },
+
+        "CONCERT":    { "form": "コンサート" },
+        "STAGE":      { "form": "ステージ" },
+        "ENCORE":     { "form": "アンコール" },
+        "SPOTLIGHT":  { "form": "スポットライト" },
+        "TOUR":       { "form": "ツアー" },
+
+        "LYRIC":      { "form": "歌詞" },
+        "CHORUS":     { "form": "サビ" },
+        "VERSE":      { "form": "バース" },
+        "SOLO":       { "form": "ソロ" },
+        "DUET":       { "form": "デュエット" },
+
+        "ROCK":       { "form": "ロック" },
+        "JAZZ":       { "form": "ジャズ" },
+        "CLASSICAL":  ["クラシックな"],
+        "ACOUSTIC":   ["アコースティックな"],
+        "ELECTRONIC": ["エレクトロニックな"],
+
+        "STUDIO":     { "form": "スタジオ" },
+        "TRACK":      { "form": "トラック" },
+        "ALBUM":      { "form": "アルバム" },
+        "REMIX":      { "form": "リミックス" },
+        "SAMPLE":     { "form": "サンプル" },
+
+        "REHEARSE":   { "base": "リハーサルする" },
+        "TUNE":       { "base": "チューニングする" },
+        "IMPROVISE":  { "base": "即興演奏する" },
+        "AMPLIFY":    { "base": "増幅する" },
+        "DROP":       { "base": "リリースする" },
+
+        "LOUD":       ["大きい"],
+        "SOULFUL":    ["魂のこもった"],
+        "RHYTHMIC":   ["リズミカルな"],
+        "LIVE":       ["ライブの"],
+        "VIRAL":      ["バイラルな"],
+
+        "BAND":       { "form": "バンド" },
+        "ANTHEM":     { "form": "アンセム" },
+        "PLAYLIST":   { "form": "プレイリスト" },
+        "FESTIVAL":   { "form": "フェスティバル" },
+        "FANBASE":    { "form": "ファン" }
+      }
+    },
+
+    "ko": {
+      "label": "Korean",
+      "forms": {
+        "GUITAR":     { "form": "기타" },
+        "DRUM":       { "form": "드럼" },
+        "PIANO":      { "form": "피아노" },
+        "VIOLIN":     { "form": "바이올린" },
+        "MICROPHONE": { "form": "마이크" },
+
+        "MELODY":     { "form": "멜로디" },
+        "RHYTHM":     { "form": "리듬" },
+        "BEAT":       { "form": "비트" },
+        "CHORD":      { "form": "코드" },
+        "HARMONY":    { "form": "화음" },
+
+        "SING":       { "base": "노래하다" },
+        "STRUM":      { "base": "연주하다" },
+        "COMPOSE":    { "base": "작곡하다" },
+        "PERFORM":    { "base": "공연하다" },
+        "RECORD":     { "base": "녹음하다" },
+
+        "CONCERT":    { "form": "콘서트" },
+        "STAGE":      { "form": "무대" },
+        "ENCORE":     { "form": "앙코르" },
+        "SPOTLIGHT":  { "form": "스포트라이트" },
+        "TOUR":       { "form": "투어" },
+
+        "LYRIC":      { "form": "가사" },
+        "CHORUS":     { "form": "후렴구" },
+        "VERSE":      { "form": "절" },
+        "SOLO":       { "form": "솔로" },
+        "DUET":       { "form": "듀엣" },
+
+        "ROCK":       { "form": "록" },
+        "JAZZ":       { "form": "재즈" },
+        "CLASSICAL":  ["클래식의"],
+        "ACOUSTIC":   ["어쿠스틱의"],
+        "ELECTRONIC": ["일렉트로닉의"],
+
+        "STUDIO":     { "form": "스튜디오" },
+        "TRACK":      { "form": "트랙" },
+        "ALBUM":      { "form": "앨범" },
+        "REMIX":      { "form": "리믹스" },
+        "SAMPLE":     { "form": "샘플" },
+
+        "REHEARSE":   { "base": "리허설하다" },
+        "TUNE":       { "base": "조율하다" },
+        "IMPROVISE":  { "base": "즉흥 연주하다" },
+        "AMPLIFY":    { "base": "증폭하다" },
+        "DROP":       { "base": "발매하다" },
+
+        "LOUD":       ["시끄러운"],
+        "SOULFUL":    ["감성적인"],
+        "RHYTHMIC":   ["리드미컬한"],
+        "LIVE":       ["라이브의"],
+        "VIRAL":      ["바이럴한"],
+
+        "BAND":       { "form": "밴드" },
+        "ANTHEM":     { "form": "애국가" },
+        "PLAYLIST":   { "form": "플레이리스트" },
+        "FESTIVAL":   { "form": "페스티벌" },
+        "FANBASE":    { "form": "팬덤" }
+      }
+    },
+
+    "no": {
+      "label": "Norwegian",
+      "forms": {
+        "GUITAR":     { "form": "gitar", "gender": "m" },
+        "DRUM":       { "form": "tromme", "gender": "f" },
+        "PIANO":      { "form": "piano", "gender": "n" },
+        "VIOLIN":     { "form": "fiolin", "gender": "m" },
+        "MICROPHONE": { "form": "mikrofon", "gender": "m" },
+
+        "MELODY":     { "form": "melodi", "gender": "m" },
+        "RHYTHM":     { "form": "rytme", "gender": "m" },
+        "BEAT":       { "form": "beat", "gender": "m" },
+        "CHORD":      { "form": "akkord", "gender": "m" },
+        "HARMONY":    { "form": "harmoni", "gender": "m" },
+
+        "SING":       { "base": "synge",     "1_singular": "synger",     "2_singular": "synger",     "3_singular": "synger",     "1_plural": "synger",     "2_plural": "synger",     "3_plural": "synger" },
+        "STRUM":      { "base": "spille",    "1_singular": "spiller",    "2_singular": "spiller",    "3_singular": "spiller",    "1_plural": "spiller",    "2_plural": "spiller",    "3_plural": "spiller" },
+        "COMPOSE":    { "base": "komponere", "1_singular": "komponerer", "2_singular": "komponerer", "3_singular": "komponerer", "1_plural": "komponerer", "2_plural": "komponerer", "3_plural": "komponerer" },
+        "PERFORM":    { "base": "opptre",    "1_singular": "opptrer",    "2_singular": "opptrer",    "3_singular": "opptrer",    "1_plural": "opptrer",    "2_plural": "opptrer",    "3_plural": "opptrer" },
+        "RECORD":     { "base": "spille inn","1_singular": "spiller inn","2_singular": "spiller inn","3_singular": "spiller inn","1_plural": "spiller inn","2_plural": "spiller inn","3_plural": "spiller inn" },
+
+        "CONCERT":    { "form": "konsert", "gender": "m" },
+        "STAGE":      { "form": "scene", "gender": "f" },
+        "ENCORE":     { "form": "ekstranummer", "gender": "n" },
+        "SPOTLIGHT":  { "form": "lyskaster", "gender": "m" },
+        "TOUR":       { "form": "turné", "gender": "m" },
+
+        "LYRIC":      { "form": "tekst", "gender": "m" },
+        "CHORUS":     { "form": "refreng", "gender": "n" },
+        "VERSE":      { "form": "vers", "gender": "n" },
+        "SOLO":       { "form": "solo", "gender": "n" },
+        "DUET":       { "form": "duett", "gender": "m" },
+
+        "ROCK":       { "form": "rock", "gender": "m" },
+        "JAZZ":       { "form": "jazz", "gender": "m" },
+        "CLASSICAL":  ["klassisk"],
+        "ACOUSTIC":   ["akustisk"],
+        "ELECTRONIC": ["elektronisk"],
+
+        "STUDIO":     { "form": "studio", "gender": "n" },
+        "TRACK":      { "form": "låt", "gender": "m" },
+        "ALBUM":      { "form": "album", "gender": "n" },
+        "REMIX":      { "form": "remix", "gender": "m" },
+        "SAMPLE":     { "form": "sample", "gender": "m" },
+
+        "REHEARSE":   { "base": "øve",       "1_singular": "øver",       "2_singular": "øver",       "3_singular": "øver",       "1_plural": "øver",       "2_plural": "øver",       "3_plural": "øver" },
+        "TUNE":       { "base": "stemme",    "1_singular": "stemmer",    "2_singular": "stemmer",    "3_singular": "stemmer",    "1_plural": "stemmer",    "2_plural": "stemmer",    "3_plural": "stemmer" },
+        "IMPROVISE":  { "base": "improvisere","1_singular": "improviserer","2_singular": "improviserer","3_singular": "improviserer","1_plural": "improviserer","2_plural": "improviserer","3_plural": "improviserer" },
+        "AMPLIFY":    { "base": "forsterke", "1_singular": "forsterker", "2_singular": "forsterker", "3_singular": "forsterker", "1_plural": "forsterker", "2_plural": "forsterker", "3_plural": "forsterker" },
+        "DROP":       { "base": "gi ut",     "1_singular": "gir ut",     "2_singular": "gir ut",     "3_singular": "gir ut",     "1_plural": "gir ut",     "2_plural": "gir ut",     "3_plural": "gir ut" },
+
+        "LOUD":       ["høy"],
+        "SOULFUL":    ["sjelfull"],
+        "RHYTHMIC":   ["rytmisk"],
+        "LIVE":       ["live"],
+        "VIRAL":      ["viral"],
+
+        "BAND":       { "form": "band", "gender": "n" },
+        "ANTHEM":     { "form": "hymne", "gender": "f" },
+        "PLAYLIST":   { "form": "spilleliste", "gender": "f" },
+        "FESTIVAL":   { "form": "festival", "gender": "m" },
+        "FANBASE":    { "form": "fanbase", "gender": "m" }
+      }
+    },
+
+    "tr": {
+      "label": "Turkish",
+      "forms": {
+        "GUITAR":     { "form": "gitar" },
+        "DRUM":       { "form": "davul" },
+        "PIANO":      { "form": "piyano" },
+        "VIOLIN":     { "form": "keman" },
+        "MICROPHONE": { "form": "mikrofon" },
+
+        "MELODY":     { "form": "melodi" },
+        "RHYTHM":     { "form": "ritim" },
+        "BEAT":       { "form": "vuruş" },
+        "CHORD":      { "form": "akor" },
+        "HARMONY":    { "form": "armoni" },
+
+        "SING":       { "base": "şarkı söylemek",  "1_singular": "şarkı söylüyorum",  "2_singular": "şarkı söylüyorsun",  "3_singular": "şarkı söylüyor",  "1_plural": "şarkı söylüyoruz",  "2_plural": "şarkı söylüyorsunuz","3_plural": "şarkı söylüyorlar" },
+        "STRUM":      { "base": "çalmak",           "1_singular": "çalıyorum",         "2_singular": "çalıyorsun",         "3_singular": "çalıyor",         "1_plural": "çalıyoruz",         "2_plural": "çalıyorsunuz",      "3_plural": "çalıyorlar" },
+        "COMPOSE":    { "base": "bestelemek",       "1_singular": "besteliyorum",      "2_singular": "besteliyorsun",      "3_singular": "besteliyor",      "1_plural": "besteliyoruz",      "2_plural": "besteliyorsunuz",   "3_plural": "besteliyorlar" },
+        "PERFORM":    { "base": "sahne almak",      "1_singular": "sahne alıyorum",    "2_singular": "sahne alıyorsun",    "3_singular": "sahne alıyor",    "1_plural": "sahne alıyoruz",    "2_plural": "sahne alıyorsunuz", "3_plural": "sahne alıyorlar" },
+        "RECORD":     { "base": "kaydetmek",        "1_singular": "kaydediyorum",      "2_singular": "kaydediyorsun",      "3_singular": "kaydediyor",      "1_plural": "kaydediyoruz",      "2_plural": "kaydediyorsunuz",   "3_plural": "kaydediyorlar" },
+
+        "CONCERT":    { "form": "konser" },
+        "STAGE":      { "form": "sahne" },
+        "ENCORE":     { "form": "ankor" },
+        "SPOTLIGHT":  { "form": "spot ışığı" },
+        "TOUR":       { "form": "turnê" },
+
+        "LYRIC":      { "form": "sözler" },
+        "CHORUS":     { "form": "nakarat" },
+        "VERSE":      { "form": "kıta" },
+        "SOLO":       { "form": "solo" },
+        "DUET":       { "form": "düet" },
+
+        "ROCK":       { "form": "rock" },
+        "JAZZ":       { "form": "caz" },
+        "CLASSICAL":  ["klasik"],
+        "ACOUSTIC":   ["akustik"],
+        "ELECTRONIC": ["elektronik"],
+
+        "STUDIO":     { "form": "stüdyo" },
+        "TRACK":      { "form": "parça" },
+        "ALBUM":      { "form": "albüm" },
+        "REMIX":      { "form": "remix" },
+        "SAMPLE":     { "form": "sample" },
+
+        "REHEARSE":   { "base": "prova yapmak",    "1_singular": "prova yapıyorum",   "2_singular": "prova yapıyorsun",   "3_singular": "prova yapıyor",   "1_plural": "prova yapıyoruz",   "2_plural": "prova yapıyorsunuz","3_plural": "prova yapıyorlar" },
+        "TUNE":       { "base": "akort etmek",     "1_singular": "akort ediyorum",    "2_singular": "akort ediyorsun",    "3_singular": "akort ediyor",    "1_plural": "akort ediyoruz",    "2_plural": "akort ediyorsunuz", "3_plural": "akort ediyorlar" },
+        "IMPROVISE":  { "base": "doğaçlama yapmak","1_singular": "doğaçlama yapıyorum","2_singular": "doğaçlama yapıyorsun","3_singular": "doğaçlama yapıyor","1_plural": "doğaçlama yapıyoruz","2_plural": "doğaçlama yapıyorsunuz","3_plural": "doğaçlama yapıyorlar" },
+        "AMPLIFY":    { "base": "yükseltmek",      "1_singular": "yükseltiyorum",     "2_singular": "yükseltiyorsun",     "3_singular": "yükselt",         "1_plural": "yükseltiyoruz",     "2_plural": "yükseltiyorsunuz",  "3_plural": "yükseltiyorlar" },
+        "DROP":       { "base": "çıkarmak",        "1_singular": "çıkarıyorum",       "2_singular": "çıkarıyorsun",       "3_singular": "çıkarıyor",       "1_plural": "çıkarıyoruz",       "2_plural": "çıkarıyorsunuz",    "3_plural": "çıkarıyorlar" },
+
+        "LOUD":       ["gürültülü"],
+        "SOULFUL":    ["duygusal"],
+        "RHYTHMIC":   ["ritmik"],
+        "LIVE":       ["canlı"],
+        "VIRAL":      ["viral"],
+
+        "BAND":       { "form": "grup" },
+        "ANTHEM":     { "form": "marş" },
+        "PLAYLIST":   { "form": "çalma listesi" },
+        "FESTIVAL":   { "form": "festival" },
+        "FANBASE":    { "form": "hayran kitlesi" }
+      }
+    },
+
+    "uk": {
+      "label": "Ukrainian",
+      "forms": {
+        "GUITAR":     { "form": "гітара" },
+        "DRUM":       { "form": "барабан" },
+        "PIANO":      { "form": "фортепіано" },
+        "VIOLIN":     { "form": "скрипка" },
+        "MICROPHONE": { "form": "мікрофон" },
+
+        "MELODY":     { "form": "мелодія" },
+        "RHYTHM":     { "form": "ритм" },
+        "BEAT":       { "form": "удар" },
+        "CHORD":      { "form": "акорд" },
+        "HARMONY":    { "form": "гармонія" },
+
+        "SING":       { "base": "співати" },
+        "STRUM":      { "base": "грати" },
+        "COMPOSE":    { "base": "компонувати" },
+        "PERFORM":    { "base": "виступати" },
+        "RECORD":     { "base": "записувати" },
+
+        "CONCERT":    { "form": "концерт" },
+        "STAGE":      { "form": "сцена" },
+        "ENCORE":     { "form": "анкор" },
+        "SPOTLIGHT":  { "form": "прожектор" },
+        "TOUR":       { "form": "тур" },
+
+        "LYRIC":      { "form": "текст пісні" },
+        "CHORUS":     { "form": "приспів" },
+        "VERSE":      { "form": "куплет" },
+        "SOLO":       { "form": "соло" },
+        "DUET":       { "form": "дует" },
+
+        "ROCK":       { "form": "рок" },
+        "JAZZ":       { "form": "джаз" },
+        "CLASSICAL":  ["класичний"],
+        "ACOUSTIC":   ["акустичний"],
+        "ELECTRONIC": ["електронний"],
+
+        "STUDIO":     { "form": "студія" },
+        "TRACK":      { "form": "трек" },
+        "ALBUM":      { "form": "альбом" },
+        "REMIX":      { "form": "ремікс" },
+        "SAMPLE":     { "form": "семпл" },
+
+        "REHEARSE":   { "base": "репетирувати" },
+        "TUNE":       { "base": "налаштовувати" },
+        "IMPROVISE":  { "base": "імпровізувати" },
+        "AMPLIFY":    { "base": "підсилювати" },
+        "DROP":       { "base": "випускати" },
+
+        "LOUD":       ["гучний"],
+        "SOULFUL":    ["душевний"],
+        "RHYTHMIC":   ["ритмічний"],
+        "LIVE":       ["живий"],
+        "VIRAL":      ["вірусний"],
+
+        "BAND":       { "form": "гурт" },
+        "ANTHEM":     { "form": "гімн" },
+        "PLAYLIST":   { "form": "плейлист" },
+        "FESTIVAL":   { "form": "фестиваль" },
+        "FANBASE":    { "form": "фан-база" }
+      }
+    },
+
+    "es": {
+      "label": "Spanish",
+      "forms": {
+        "GUITAR":     { "form": "guitarra", "gender": "f" },
+        "DRUM":       { "form": "batería", "gender": "f" },
+        "PIANO":      { "form": "piano", "gender": "m" },
+        "VIOLIN":     { "form": "violín", "gender": "m" },
+        "MICROPHONE": { "form": "micrófono", "gender": "m" },
+
+        "MELODY":     { "form": "melodía", "gender": "f" },
+        "RHYTHM":     { "form": "ritmo", "gender": "m" },
+        "BEAT":       { "form": "ritmo", "gender": "m" },
+        "CHORD":      { "form": "acorde", "gender": "m" },
+        "HARMONY":    { "form": "armonía", "gender": "f" },
+
+        "SING":       { "base": "cantar",     "1_singular": "canto",     "2_singular": "cantas",    "3_singular": "canta",     "1_plural": "cantamos",   "2_plural": "cantáis",    "3_plural": "cantan" },
+        "STRUM":      { "base": "rasguear",   "1_singular": "rasgueo",   "2_singular": "rasgueas",  "3_singular": "rasguea",   "1_plural": "rasgueamos", "2_plural": "rasguéais",  "3_plural": "rasgean" },
+        "COMPOSE":    { "base": "componer",   "1_singular": "compongo",  "2_singular": "compones",  "3_singular": "compone",   "1_plural": "componemos", "2_plural": "componéis",  "3_plural": "componen" },
+        "PERFORM":    { "base": "actuar",     "1_singular": "actúo",     "2_singular": "actúas",    "3_singular": "actúa",     "1_plural": "actuamos",   "2_plural": "actuáis",    "3_plural": "actúan" },
+        "RECORD":     { "base": "grabar",     "1_singular": "grabo",     "2_singular": "grabas",    "3_singular": "graba",     "1_plural": "grabamos",   "2_plural": "grabáis",    "3_plural": "graban" },
+
+        "CONCERT":    { "form": "concierto", "gender": "m" },
+        "STAGE":      { "form": "escenario", "gender": "m" },
+        "ENCORE":     { "form": "bis", "gender": "m" },
+        "SPOTLIGHT":  { "form": "foco", "gender": "m" },
+        "TOUR":       { "form": "gira", "gender": "f" },
+
+        "LYRIC":      { "form": "letra", "gender": "f" },
+        "CHORUS":     { "form": "estribillo", "gender": "m" },
+        "VERSE":      { "form": "estrofa", "gender": "f" },
+        "SOLO":       { "form": "solo", "gender": "m" },
+        "DUET":       { "form": "dúo", "gender": "m" },
+
+        "ROCK":       { "form": "rock", "gender": "m" },
+        "JAZZ":       { "form": "jazz", "gender": "m" },
+        "CLASSICAL":  ["clásico"],
+        "ACOUSTIC":   ["acústico"],
+        "ELECTRONIC": ["electrónico"],
+
+        "STUDIO":     { "form": "estudio", "gender": "m" },
+        "TRACK":      { "form": "pista", "gender": "f" },
+        "ALBUM":      { "form": "álbum", "gender": "m" },
+        "REMIX":      { "form": "remix", "gender": "m" },
+        "SAMPLE":     { "form": "muestra", "gender": "f" },
+
+        "REHEARSE":   { "base": "ensayar",    "1_singular": "ensayo",    "2_singular": "ensayas",   "3_singular": "ensaya",    "1_plural": "ensayamos",  "2_plural": "ensayáis",   "3_plural": "ensayan" },
+        "TUNE":       { "base": "afinar",     "1_singular": "afino",     "2_singular": "afinas",    "3_singular": "afina",     "1_plural": "afinamos",   "2_plural": "afináis",    "3_plural": "afinan" },
+        "IMPROVISE":  { "base": "improvisar", "1_singular": "improviso", "2_singular": "improvisas","3_singular": "improvisa", "1_plural": "improvisamos","2_plural": "improvisáis","3_plural": "improvisan" },
+        "AMPLIFY":    { "base": "amplificar", "1_singular": "amplifico", "2_singular": "amplifica", "3_singular": "amplifica", "1_plural": "amplificamos","2_plural": "amplificáis","3_plural": "amplifica" },
+        "DROP":       { "base": "lanzar",     "1_singular": "lanzo",     "2_singular": "lanzas",    "3_singular": "lanza",     "1_plural": "lanzamos",   "2_plural": "lanzáis",    "3_plural": "lanzan" },
+
+        "LOUD":       ["fuerte"],
+        "SOULFUL":    ["emotivo"],
+        "RHYTHMIC":   ["rítmico"],
+        "LIVE":       ["en directo"],
+        "VIRAL":      ["viral"],
+
+        "BAND":       { "form": "banda", "gender": "f" },
+        "ANTHEM":     { "form": "himno", "gender": "m" },
+        "PLAYLIST":   { "form": "lista de reproducción", "gender": "f" },
+        "FESTIVAL":   { "form": "festival", "gender": "m" },
+        "FANBASE":    { "form": "base de fans", "gender": "f" }
+      }
+    }
+  }
+}

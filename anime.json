@@ -1,0 +1,780 @@
+{
+  "concepts": [
+    { "concept_id": "HERO",      "type": "noun" },
+    { "concept_id": "VILLAIN",   "type": "noun" },
+    { "concept_id": "WARRIOR",   "type": "noun" },
+    { "concept_id": "RIVAL",     "type": "noun" },
+    { "concept_id": "BRAVE",     "type": "adjective" },
+
+    { "concept_id": "SWORD",     "type": "noun" },
+    { "concept_id": "ARMOR",     "type": "noun" },
+    { "concept_id": "SHIELD",    "type": "noun" },
+    { "concept_id": "ATTACK",    "type": "verb" },
+    { "concept_id": "DEFEND",    "type": "verb" },
+
+    { "concept_id": "DRAGON",    "type": "noun" },
+    { "concept_id": "DEMON",     "type": "noun" },
+    { "concept_id": "SPIRIT",    "type": "noun" },
+    { "concept_id": "SUMMON",    "type": "verb" },
+    { "concept_id": "SINISTER",  "type": "adjective" },
+
+    { "concept_id": "NINJA",     "type": "noun" },
+    { "concept_id": "SAMURAI",   "type": "noun" },
+    { "concept_id": "SENSEI",    "type": "noun" },
+    { "concept_id": "SHADOW",    "type": "noun" },
+    { "concept_id": "STRIKE",    "type": "verb" },
+
+    { "concept_id": "TRANSFORM", "type": "verb" },
+    { "concept_id": "POWER",     "type": "noun" },
+    { "concept_id": "CHANNEL",   "type": "verb" },
+    { "concept_id": "UNLEASH",   "type": "verb" },
+    { "concept_id": "POWERFUL",  "type": "adjective" },
+
+    { "concept_id": "QUEST",     "type": "noun" },
+    { "concept_id": "DESTINY",   "type": "noun" },
+    { "concept_id": "KINGDOM",   "type": "noun" },
+    { "concept_id": "TEMPLE",    "type": "noun" },
+    { "concept_id": "ANCIENT",   "type": "adjective" },
+
+    { "concept_id": "BATTLE",    "type": "noun" },
+    { "concept_id": "DODGE",     "type": "verb" },
+    { "concept_id": "PROTECT",   "type": "verb" },
+    { "concept_id": "FIERCE",    "type": "adjective" },
+    { "concept_id": "MIGHTY",    "type": "adjective" },
+
+    { "concept_id": "CRYSTAL",   "type": "noun" },
+    { "concept_id": "SCROLL",    "type": "noun" },
+    { "concept_id": "PORTAL",    "type": "noun" },
+    { "concept_id": "CURSED",    "type": "adjective" },
+    { "concept_id": "SACRED",    "type": "adjective" },
+
+    { "concept_id": "TRAIN",     "type": "verb" },
+    { "concept_id": "MASTER",    "type": "noun" },
+    { "concept_id": "CLAN",      "type": "noun" },
+    { "concept_id": "AWAKEN",    "type": "verb" },
+    { "concept_id": "LEGENDARY", "type": "adjective" },
+
+    { "concept_id": "MECHA",     "type": "noun" },
+    { "concept_id": "ARENA",     "type": "noun" },
+    { "concept_id": "CONQUER",   "type": "verb" },
+    { "concept_id": "TRANSCEND", "type": "verb" },
+    { "concept_id": "ETERNAL",   "type": "adjective" }
+  ],
+
+  "languages": {
+    "en": {
+      "label": "English",
+      "forms": {
+        "HERO":      { "form": "hero", "article": "a" },
+        "VILLAIN":   { "form": "villain", "article": "a" },
+        "WARRIOR":   { "form": "warrior", "article": "a" },
+        "RIVAL":     { "form": "rival", "article": "a" },
+        "BRAVE":     ["brave"],
+
+        "SWORD":     { "form": "sword", "article": "a" },
+        "ARMOR":     { "form": "armor" },
+        "SHIELD":    { "form": "shield", "article": "a" },
+        "ATTACK":    { "base": "attack",    "3_singular": "attacks" },
+        "DEFEND":    { "base": "defend",    "3_singular": "defends" },
+
+        "DRAGON":    { "form": "dragon", "article": "a" },
+        "DEMON":     { "form": "demon", "article": "a" },
+        "SPIRIT":    { "form": "spirit", "article": "a" },
+        "SUMMON":    { "base": "summon",    "3_singular": "summons" },
+        "SINISTER":  ["sinister"],
+
+        "NINJA":     { "form": "ninja", "article": "a" },
+        "SAMURAI":   { "form": "samurai", "article": "a" },
+        "SENSEI":    { "form": "sensei", "article": "a" },
+        "SHADOW":    { "form": "shadow", "article": "a" },
+        "STRIKE":    { "base": "strike",    "3_singular": "strikes" },
+
+        "TRANSFORM": { "base": "transform", "3_singular": "transforms" },
+        "POWER":     { "form": "power", "article": "a" },
+        "CHANNEL":   { "base": "channel",   "3_singular": "channels" },
+        "UNLEASH":   { "base": "unleash",   "3_singular": "unleashes" },
+        "POWERFUL":  ["powerful"],
+
+        "QUEST":     { "form": "quest", "article": "a" },
+        "DESTINY":   { "form": "destiny" },
+        "KINGDOM":   { "form": "kingdom", "article": "a" },
+        "TEMPLE":    { "form": "temple", "article": "a" },
+        "ANCIENT":   ["ancient"],
+
+        "BATTLE":    { "form": "battle", "article": "a" },
+        "DODGE":     { "base": "dodge",     "3_singular": "dodges" },
+        "PROTECT":   { "base": "protect",   "3_singular": "protects" },
+        "FIERCE":    ["fierce"],
+        "MIGHTY":    ["mighty"],
+
+        "CRYSTAL":   { "form": "crystal", "article": "a" },
+        "SCROLL":    { "form": "scroll", "article": "a" },
+        "PORTAL":    { "form": "portal", "article": "a" },
+        "CURSED":    ["cursed"],
+        "SACRED":    ["sacred"],
+
+        "TRAIN":     { "base": "train",     "3_singular": "trains" },
+        "MASTER":    { "form": "master", "article": "a" },
+        "CLAN":      { "form": "clan", "article": "a" },
+        "AWAKEN":    { "base": "awaken",    "3_singular": "awakens" },
+        "LEGENDARY": ["legendary"],
+
+        "MECHA":     { "form": "mecha", "article": "a" },
+        "ARENA":     { "form": "arena", "article": "an" },
+        "CONQUER":   { "base": "conquer",   "3_singular": "conquers" },
+        "TRANSCEND": { "base": "transcend", "3_singular": "transcends" },
+        "ETERNAL":   ["eternal"]
+      }
+    },
+
+    "pt": {
+      "label": "Portuguese",
+      "forms": {
+        "HERO":      { "form": "herói", "gender": "m" },
+        "VILLAIN":   { "form": "vilão", "gender": "m" },
+        "WARRIOR":   { "form": "guerreiro", "gender": "m" },
+        "RIVAL":     { "form": "rival", "gender": "m" },
+        "BRAVE":     ["corajoso"],
+
+        "SWORD":     { "form": "espada", "gender": "f" },
+        "ARMOR":     { "form": "armadura", "gender": "f" },
+        "SHIELD":    { "form": "escudo", "gender": "m" },
+        "ATTACK":    { "base": "atacar",      "1_singular": "ataco",       "2_singular": "atacas",      "3_singular": "ataca",       "1_plural": "atacamos",    "2_plural": "atacam",     "3_plural": "atacam" },
+        "DEFEND":    { "base": "defender",    "1_singular": "defendo",     "2_singular": "defendes",    "3_singular": "defende",     "1_plural": "defendemos",  "2_plural": "defendem",   "3_plural": "defendem" },
+
+        "DRAGON":    { "form": "dragão", "gender": "m" },
+        "DEMON":     { "form": "demônio", "gender": "m" },
+        "SPIRIT":    { "form": "espírito", "gender": "m" },
+        "SUMMON":    { "base": "invocar",     "1_singular": "invoco",      "2_singular": "invocas",     "3_singular": "invoca",      "1_plural": "invocamos",   "2_plural": "invocam",    "3_plural": "invocam" },
+        "SINISTER":  ["sinistro"],
+
+        "NINJA":     { "form": "ninja", "gender": "m" },
+        "SAMURAI":   { "form": "samurai", "gender": "m" },
+        "SENSEI":    { "form": "sensei", "gender": "m" },
+        "SHADOW":    { "form": "sombra", "gender": "f" },
+        "STRIKE":    { "base": "golpear",     "1_singular": "golpeio",     "2_singular": "golpeias",    "3_singular": "golpeia",     "1_plural": "golpeamos",   "2_plural": "golpeiam",   "3_plural": "golpeiam" },
+
+        "TRANSFORM": { "base": "transformar", "1_singular": "transformo",  "2_singular": "transformas", "3_singular": "transforma",  "1_plural": "transformamos","2_plural": "transformam","3_plural": "transformam" },
+        "POWER":     { "form": "poder", "gender": "m" },
+        "CHANNEL":   { "base": "canalizar",   "1_singular": "canalizo",    "2_singular": "canalizas",   "3_singular": "canaliza",    "1_plural": "canalizamos", "2_plural": "canalizam",  "3_plural": "canalizam" },
+        "UNLEASH":   { "base": "libertar",    "1_singular": "liberto",     "2_singular": "libertas",    "3_singular": "liberta",     "1_plural": "libertamos",  "2_plural": "libertam",   "3_plural": "libertam" },
+        "POWERFUL":  ["poderoso"],
+
+        "QUEST":     { "form": "missão", "gender": "f" },
+        "DESTINY":   { "form": "destino", "gender": "m" },
+        "KINGDOM":   { "form": "reino", "gender": "m" },
+        "TEMPLE":    { "form": "templo", "gender": "m" },
+        "ANCIENT":   ["antigo"],
+
+        "BATTLE":    { "form": "batalha", "gender": "f" },
+        "DODGE":     { "base": "esquivar",    "1_singular": "esquivo",     "2_singular": "esquivas",    "3_singular": "esquiva",     "1_plural": "esquivamos",  "2_plural": "esquivam",   "3_plural": "esquivam" },
+        "PROTECT":   { "base": "proteger",    "1_singular": "protejo",     "2_singular": "proteges",    "3_singular": "protege",     "1_plural": "protegemos",  "2_plural": "protegem",   "3_plural": "protegem" },
+        "FIERCE":    ["feroz"],
+        "MIGHTY":    ["imponente"],
+
+        "CRYSTAL":   { "form": "cristal", "gender": "m" },
+        "SCROLL":    { "form": "pergaminho", "gender": "m" },
+        "PORTAL":    { "form": "portal", "gender": "m" },
+        "CURSED":    ["amaldiçoado"],
+        "SACRED":    ["sagrado"],
+
+        "TRAIN":     { "base": "treinar",     "1_singular": "treino",      "2_singular": "treinas",     "3_singular": "treina",      "1_plural": "treinamos",   "2_plural": "treinam",    "3_plural": "treinam" },
+        "MASTER":    { "form": "mestre", "gender": "m" },
+        "CLAN":      { "form": "clã", "gender": "m" },
+        "AWAKEN":    { "base": "despertar",   "1_singular": "desperto",    "2_singular": "despertas",   "3_singular": "desperta",    "1_plural": "despertamos", "2_plural": "despertam",  "3_plural": "despertam" },
+        "LEGENDARY": ["lendário"],
+
+        "MECHA":     { "form": "mecha", "gender": "m" },
+        "ARENA":     { "form": "arena", "gender": "f" },
+        "CONQUER":   { "base": "conquistar",  "1_singular": "conquisto",   "2_singular": "conquistas",  "3_singular": "conquista",   "1_plural": "conquistamos","2_plural": "conquistam", "3_plural": "conquistam" },
+        "TRANSCEND": { "base": "transcender", "1_singular": "transcendo",  "2_singular": "transcendes", "3_singular": "transcende",  "1_plural": "transcendemos","2_plural": "transcendem","3_plural": "transcendem" },
+        "ETERNAL":   ["eterno"]
+      }
+    },
+
+    "ar": {
+      "label": "Arabic",
+      "forms": {
+        "HERO":      { "form": "بطل", "gender": "m" },
+        "VILLAIN":   { "form": "شرير", "gender": "m" },
+        "WARRIOR":   { "form": "محارب", "gender": "m" },
+        "RIVAL":     { "form": "منافس", "gender": "m" },
+        "BRAVE":     ["شجاع"],
+
+        "SWORD":     { "form": "سيف", "gender": "m" },
+        "ARMOR":     { "form": "درع", "gender": "m" },
+        "SHIELD":    { "form": "ترس", "gender": "m" },
+        "ATTACK":    { "base": "يهاجم",   "1_singular": "أهاجم",    "2_singular": "تهاجم",    "3_singular": "يهاجم",    "1_plural": "نهاجم",    "2_plural": "تهاجمون",  "3_plural": "يهاجمون" },
+        "DEFEND":    { "base": "يدافع",   "1_singular": "أدافع",    "2_singular": "تدافع",    "3_singular": "يدافع",    "1_plural": "ندافع",    "2_plural": "تدافعون",  "3_plural": "يدافعون" },
+
+        "DRAGON":    { "form": "تنين", "gender": "m" },
+        "DEMON":     { "form": "شيطان", "gender": "m" },
+        "SPIRIT":    { "form": "روح", "gender": "f" },
+        "SUMMON":    { "base": "يستدعي",  "1_singular": "أستدعي",   "2_singular": "تستدعي",   "3_singular": "يستدعي",   "1_plural": "نستدعي",   "2_plural": "تستدعون",  "3_plural": "يستدعون" },
+        "SINISTER":  ["مشؤوم"],
+
+        "NINJA":     { "form": "نينجا", "gender": "m" },
+        "SAMURAI":   { "form": "ساموراي", "gender": "m" },
+        "SENSEI":    { "form": "سنسي", "gender": "m" },
+        "SHADOW":    { "form": "ظل", "gender": "m" },
+        "STRIKE":    { "base": "يضرب",    "1_singular": "أضرب",     "2_singular": "تضرب",     "3_singular": "يضرب",     "1_plural": "نضرب",     "2_plural": "تضربون",   "3_plural": "يضربون" },
+
+        "TRANSFORM": { "base": "يتحول",   "1_singular": "أتحول",    "2_singular": "تتحول",    "3_singular": "يتحول",    "1_plural": "نتحول",    "2_plural": "تتحولون",  "3_plural": "يتحولون" },
+        "POWER":     { "form": "قوة", "gender": "f" },
+        "CHANNEL":   { "base": "يوجه",    "1_singular": "أوجه",     "2_singular": "توجه",     "3_singular": "يوجه",     "1_plural": "نوجه",     "2_plural": "توجهون",   "3_plural": "يوجهون" },
+        "UNLEASH":   { "base": "يطلق",    "1_singular": "أطلق",     "2_singular": "تطلق",     "3_singular": "يطلق",     "1_plural": "نطلق",     "2_plural": "تطلقون",   "3_plural": "يطلقون" },
+        "POWERFUL":  ["قوي"],
+
+        "QUEST":     { "form": "مهمة", "gender": "f" },
+        "DESTINY":   { "form": "مصير", "gender": "m" },
+        "KINGDOM":   { "form": "مملكة", "gender": "f" },
+        "TEMPLE":    { "form": "معبد", "gender": "m" },
+        "ANCIENT":   ["قديم"],
+
+        "BATTLE":    { "form": "معركة", "gender": "f" },
+        "DODGE":     { "base": "يتهرب",   "1_singular": "أتهرب",    "2_singular": "تتهرب",    "3_singular": "يتهرب",    "1_plural": "نتهرب",    "2_plural": "تتهربون",  "3_plural": "يتهربون" },
+        "PROTECT":   { "base": "يحمي",    "1_singular": "أحمي",     "2_singular": "تحمي",     "3_singular": "يحمي",     "1_plural": "نحمي",     "2_plural": "تحمون",    "3_plural": "يحمون" },
+        "FIERCE":    ["شرس"],
+        "MIGHTY":    ["عظيم"],
+
+        "CRYSTAL":   { "form": "بلورة", "gender": "f" },
+        "SCROLL":    { "form": "لفيفة", "gender": "f" },
+        "PORTAL":    { "form": "بوابة", "gender": "f" },
+        "CURSED":    ["ملعون"],
+        "SACRED":    ["مقدس"],
+
+        "TRAIN":     { "base": "يتدرب",   "1_singular": "أتدرب",    "2_singular": "تتدرب",    "3_singular": "يتدرب",    "1_plural": "نتدرب",    "2_plural": "تتدربون",  "3_plural": "يتدربون" },
+        "MASTER":    { "form": "أستاذ", "gender": "m" },
+        "CLAN":      { "form": "قبيلة", "gender": "f" },
+        "AWAKEN":    { "base": "يصحو",    "1_singular": "أصحو",     "2_singular": "تصحو",     "3_singular": "يصحو",     "1_plural": "نصحو",     "2_plural": "تصحون",    "3_plural": "يصحون" },
+        "LEGENDARY": ["أسطوري"],
+
+        "MECHA":     { "form": "روبوت ضخم", "gender": "m" },
+        "ARENA":     { "form": "ساحة", "gender": "f" },
+        "CONQUER":   { "base": "يفتح",    "1_singular": "أفتح",     "2_singular": "تفتح",     "3_singular": "يفتح",     "1_plural": "نفتح",     "2_plural": "تفتحون",   "3_plural": "يفتحون" },
+        "TRANSCEND": { "base": "يتجاوز",  "1_singular": "أتجاوز",   "2_singular": "تتجاوز",   "3_singular": "يتجاوز",   "1_plural": "نتجاوز",   "2_plural": "تتجاوزون", "3_plural": "يتجاوزون" },
+        "ETERNAL":   ["أبدي"]
+      }
+    },
+
+    "de": {
+      "label": "German",
+      "forms": {
+        "HERO":      { "form": "Held", "gender": "m" },
+        "VILLAIN":   { "form": "Bösewicht", "gender": "m" },
+        "WARRIOR":   { "form": "Krieger", "gender": "m" },
+        "RIVAL":     { "form": "Rivale", "gender": "m" },
+        "BRAVE":     ["mutig"],
+
+        "SWORD":     { "form": "Schwert", "gender": "n" },
+        "ARMOR":     { "form": "Rüstung", "gender": "f" },
+        "SHIELD":    { "form": "Schild", "gender": "m" },
+        "ATTACK":    { "base": "angreifen",     "1_singular": "greife an",    "2_singular": "greifst an",   "3_singular": "greift an",    "1_plural": "greifen an",   "2_plural": "greift an",    "3_plural": "greifen an" },
+        "DEFEND":    { "base": "verteidigen",   "1_singular": "verteidige",   "2_singular": "verteidigst",  "3_singular": "verteidigt",   "1_plural": "verteidigen",  "2_plural": "verteidigt",   "3_plural": "verteidigen" },
+
+        "DRAGON":    { "form": "Drache", "gender": "m" },
+        "DEMON":     { "form": "Dämon", "gender": "m" },
+        "SPIRIT":    { "form": "Geist", "gender": "m" },
+        "SUMMON":    { "base": "beschwören",    "1_singular": "beschwöre",    "2_singular": "beschwörst",   "3_singular": "beschwört",    "1_plural": "beschwören",   "2_plural": "beschwört",    "3_plural": "beschwören" },
+        "SINISTER":  ["finster"],
+
+        "NINJA":     { "form": "Ninja", "gender": "m" },
+        "SAMURAI":   { "form": "Samurai", "gender": "m" },
+        "SENSEI":    { "form": "Sensei", "gender": "m" },
+        "SHADOW":    { "form": "Schatten", "gender": "m" },
+        "STRIKE":    { "base": "schlagen",      "1_singular": "schlage",      "2_singular": "schlägst",     "3_singular": "schlägt",      "1_plural": "schlagen",     "2_plural": "schlagt",      "3_plural": "schlagen" },
+
+        "TRANSFORM": { "base": "verwandeln",    "1_singular": "verwandle",    "2_singular": "verwandelst",  "3_singular": "verwandelt",   "1_plural": "verwandeln",   "2_plural": "verwandelt",   "3_plural": "verwandeln" },
+        "POWER":     { "form": "Kraft", "gender": "f" },
+        "CHANNEL":   { "base": "kanalisieren",  "1_singular": "kanalisiere",  "2_singular": "kanalisierst", "3_singular": "kanalisiert",  "1_plural": "kanalisieren", "2_plural": "kanalisiert",  "3_plural": "kanalisieren" },
+        "UNLEASH":   { "base": "entfesseln",    "1_singular": "entfessele",   "2_singular": "entfesselst",  "3_singular": "entfesselt",   "1_plural": "entfesseln",   "2_plural": "entfesselt",   "3_plural": "entfesseln" },
+        "POWERFUL":  ["mächtig"],
+
+        "QUEST":     { "form": "Auftrag", "gender": "m" },
+        "DESTINY":   { "form": "Schicksal", "gender": "n" },
+        "KINGDOM":   { "form": "Königreich", "gender": "n" },
+        "TEMPLE":    { "form": "Tempel", "gender": "m" },
+        "ANCIENT":   ["uralt"],
+
+        "BATTLE":    { "form": "Kampf", "gender": "m" },
+        "DODGE":     { "base": "ausweichen",    "1_singular": "weiche aus",   "2_singular": "weichst aus",  "3_singular": "weicht aus",   "1_plural": "weichen aus",  "2_plural": "weicht aus",   "3_plural": "weichen aus" },
+        "PROTECT":   { "base": "schützen",      "1_singular": "schütze",      "2_singular": "schützt",      "3_singular": "schützt",      "1_plural": "schützen",     "2_plural": "schützt",      "3_plural": "schützen" },
+        "FIERCE":    ["wild"],
+        "MIGHTY":    ["gewaltig"],
+
+        "CRYSTAL":   { "form": "Kristall", "gender": "m" },
+        "SCROLL":    { "form": "Schriftrolle", "gender": "f" },
+        "PORTAL":    { "form": "Portal", "gender": "n" },
+        "CURSED":    ["verflucht"],
+        "SACRED":    ["heilig"],
+
+        "TRAIN":     { "base": "trainieren",    "1_singular": "trainiere",    "2_singular": "trainierst",   "3_singular": "trainiert",    "1_plural": "trainieren",   "2_plural": "trainiert",    "3_plural": "trainieren" },
+        "MASTER":    { "form": "Meister", "gender": "m" },
+        "CLAN":      { "form": "Clan", "gender": "m" },
+        "AWAKEN":    { "base": "erwachen",      "1_singular": "erwache",      "2_singular": "erwachst",     "3_singular": "erwacht",      "1_plural": "erwachen",     "2_plural": "erwacht",      "3_plural": "erwachen" },
+        "LEGENDARY": ["legendär"],
+
+        "MECHA":     { "form": "Mecha", "gender": "m" },
+        "ARENA":     { "form": "Arena", "gender": "f" },
+        "CONQUER":   { "base": "erobern",       "1_singular": "erobere",      "2_singular": "eroberst",     "3_singular": "erobert",      "1_plural": "erobern",      "2_plural": "erobert",      "3_plural": "erobern" },
+        "TRANSCEND": { "base": "transzendieren","1_singular": "transzendiere","2_singular": "transzendierst","3_singular": "transzendiert","1_plural": "transzendieren","2_plural": "transzendiert","3_plural": "transzendieren" },
+        "ETERNAL":   ["ewig"]
+      }
+    },
+
+    "el": {
+      "label": "Greek",
+      "forms": {
+        "HERO":      { "form": "ήρωας" },
+        "VILLAIN":   { "form": "κακός" },
+        "WARRIOR":   { "form": "πολεμιστής" },
+        "RIVAL":     { "form": "αντίπαλος" },
+        "BRAVE":     ["γενναίος"],
+
+        "SWORD":     { "form": "σπαθί" },
+        "ARMOR":     { "form": "πανοπλία" },
+        "SHIELD":    { "form": "ασπίδα" },
+        "ATTACK":    { "base": "επιτίθεμαι",    "1_singular": "επιτίθεμαι",    "2_singular": "επιτίθεσαι",   "3_singular": "επιτίθεται",    "1_plural": "επιτιθόμαστε",  "2_plural": "επιτίθεστε",   "3_plural": "επιτίθενται" },
+        "DEFEND":    { "base": "υπερασπίζομαι", "1_singular": "υπερασπίζομαι", "2_singular": "υπερασπίζεσαι","3_singular": "υπερασπίζεται", "1_plural": "υπερασπιζόμαστε","2_plural": "υπερασπίζεστε","3_plural": "υπερασπίζονται" },
+
+        "DRAGON":    { "form": "δράκος" },
+        "DEMON":     { "form": "δαίμονας" },
+        "SPIRIT":    { "form": "πνεύμα" },
+        "SUMMON":    { "base": "καλώ",          "1_singular": "καλώ",           "2_singular": "καλείς",        "3_singular": "καλεί",          "1_plural": "καλούμε",       "2_plural": "καλείτε",      "3_plural": "καλούν" },
+        "SINISTER":  ["ζοφερός"],
+
+        "NINJA":     { "form": "νίντζα" },
+        "SAMURAI":   { "form": "σαμουράι" },
+        "SENSEI":    { "form": "δάσκαλος" },
+        "SHADOW":    { "form": "σκιά" },
+        "STRIKE":    { "base": "χτυπώ",         "1_singular": "χτυπώ",          "2_singular": "χτυπάς",        "3_singular": "χτυπά",          "1_plural": "χτυπάμε",       "2_plural": "χτυπάτε",      "3_plural": "χτυπούν" },
+
+        "TRANSFORM": { "base": "μεταμορφώνομαι","1_singular": "μεταμορφώνομαι","2_singular": "μεταμορφώνεσαι","3_singular": "μεταμορφώνεται","1_plural": "μεταμορφωνόμαστε","2_plural": "μεταμορφώνεστε","3_plural": "μεταμορφώνονται" },
+        "POWER":     { "form": "δύναμη" },
+        "CHANNEL":   { "base": "κατευθύνω",     "1_singular": "κατευθύνω",      "2_singular": "κατευθύνεις",   "3_singular": "κατευθύνει",     "1_plural": "κατευθύνουμε",  "2_plural": "κατευθύνετε",  "3_plural": "κατευθύνουν" },
+        "UNLEASH":   { "base": "αποδεσμεύω",    "1_singular": "αποδεσμεύω",     "2_singular": "αποδεσμεύεις",  "3_singular": "αποδεσμεύει",    "1_plural": "αποδεσμεύουμε", "2_plural": "αποδεσμεύετε", "3_plural": "αποδεσμεύουν" },
+        "POWERFUL":  ["δυνατός"],
+
+        "QUEST":     { "form": "αποστολή" },
+        "DESTINY":   { "form": "μοίρα" },
+        "KINGDOM":   { "form": "βασίλειο" },
+        "TEMPLE":    { "form": "ναός" },
+        "ANCIENT":   ["αρχαίος"],
+
+        "BATTLE":    { "form": "μάχη" },
+        "DODGE":     { "base": "αποφεύγω",      "1_singular": "αποφεύγω",       "2_singular": "αποφεύγεις",    "3_singular": "αποφεύγει",      "1_plural": "αποφεύγουμε",   "2_plural": "αποφεύγετε",   "3_plural": "αποφεύγουν" },
+        "PROTECT":   { "base": "προστατεύω",    "1_singular": "προστατεύω",     "2_singular": "προστατεύεις",  "3_singular": "προστατεύει",    "1_plural": "προστατεύουμε", "2_plural": "προστατεύετε", "3_plural": "προστατεύουν" },
+        "FIERCE":    ["άγριος"],
+        "MIGHTY":    ["ισχυρός"],
+
+        "CRYSTAL":   { "form": "κρύσταλλος" },
+        "SCROLL":    { "form": "κύλινδρος" },
+        "PORTAL":    { "form": "πύλη" },
+        "CURSED":    ["καταραμένος"],
+        "SACRED":    ["ιερός"],
+
+        "TRAIN":     { "base": "εκπαιδεύομαι",  "1_singular": "εκπαιδεύομαι",  "2_singular": "εκπαιδεύεσαι", "3_singular": "εκπαιδεύεται",  "1_plural": "εκπαιδευόμαστε","2_plural": "εκπαιδεύεστε", "3_plural": "εκπαιδεύονται" },
+        "MASTER":    { "form": "δάσκαλος" },
+        "CLAN":      { "form": "κλαν" },
+        "AWAKEN":    { "base": "αφυπνίζομαι",   "1_singular": "αφυπνίζομαι",   "2_singular": "αφυπνίζεσαι",  "3_singular": "αφυπνίζεται",   "1_plural": "αφυπνιζόμαστε","2_plural": "αφυπνίζεστε",  "3_plural": "αφυπνίζονται" },
+        "LEGENDARY": ["θρυλικός"],
+
+        "MECHA":     { "form": "μεχα" },
+        "ARENA":     { "form": "αρένα" },
+        "CONQUER":   { "base": "κατακτώ",       "1_singular": "κατακτώ",        "2_singular": "κατακτάς",      "3_singular": "κατακτά",        "1_plural": "κατακτάμε",     "2_plural": "κατακτάτε",    "3_plural": "κατακτούν" },
+        "TRANSCEND": { "base": "υπερβαίνω",     "1_singular": "υπερβαίνω",      "2_singular": "υπερβαίνεις",   "3_singular": "υπερβαίνει",     "1_plural": "υπερβαίνουμε",  "2_plural": "υπερβαίνετε",  "3_plural": "υπερβαίνουν" },
+        "ETERNAL":   ["αιώνιος"]
+      }
+    },
+
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "HERO":      { "form": "ヒーロー" },
+        "VILLAIN":   { "form": "悪役" },
+        "WARRIOR":   { "form": "戦士" },
+        "RIVAL":     { "form": "ライバル" },
+        "BRAVE":     ["勇敢な"],
+
+        "SWORD":     { "form": "刀" },
+        "ARMOR":     { "form": "鎧" },
+        "SHIELD":    { "form": "盾" },
+        "ATTACK":    { "base": "攻撃する" },
+        "DEFEND":    { "base": "守る" },
+
+        "DRAGON":    { "form": "ドラゴン" },
+        "DEMON":     { "form": "悪魔" },
+        "SPIRIT":    { "form": "霊" },
+        "SUMMON":    { "base": "召喚する" },
+        "SINISTER":  ["不吉な"],
+
+        "NINJA":     { "form": "忍者" },
+        "SAMURAI":   { "form": "侍" },
+        "SENSEI":    { "form": "先生" },
+        "SHADOW":    { "form": "影" },
+        "STRIKE":    { "base": "打つ" },
+
+        "TRANSFORM": { "base": "変身する" },
+        "POWER":     { "form": "力" },
+        "CHANNEL":   { "base": "集中する" },
+        "UNLEASH":   { "base": "解き放つ" },
+        "POWERFUL":  ["強力な"],
+
+        "QUEST":     { "form": "クエスト" },
+        "DESTINY":   { "form": "運命" },
+        "KINGDOM":   { "form": "王国" },
+        "TEMPLE":    { "form": "神殿" },
+        "ANCIENT":   ["古代の"],
+
+        "BATTLE":    { "form": "バトル" },
+        "DODGE":     { "base": "かわす" },
+        "PROTECT":   { "base": "守る" },
+        "FIERCE":    ["激しい"],
+        "MIGHTY":    ["強大な"],
+
+        "CRYSTAL":   { "form": "クリスタル" },
+        "SCROLL":    { "form": "巻物" },
+        "PORTAL":    { "form": "ポータル" },
+        "CURSED":    ["呪われた"],
+        "SACRED":    ["神聖な"],
+
+        "TRAIN":     { "base": "修行する" },
+        "MASTER":    { "form": "師匠" },
+        "CLAN":      { "form": "一族" },
+        "AWAKEN":    { "base": "目覚める" },
+        "LEGENDARY": ["伝説の"],
+
+        "MECHA":     { "form": "メカ" },
+        "ARENA":     { "form": "アリーナ" },
+        "CONQUER":   { "base": "征服する" },
+        "TRANSCEND": { "base": "超越する" },
+        "ETERNAL":   ["永遠の"]
+      }
+    },
+
+    "ko": {
+      "label": "Korean",
+      "forms": {
+        "HERO":      { "form": "영웅" },
+        "VILLAIN":   { "form": "악당" },
+        "WARRIOR":   { "form": "전사" },
+        "RIVAL":     { "form": "라이벌" },
+        "BRAVE":     ["용감한"],
+
+        "SWORD":     { "form": "검" },
+        "ARMOR":     { "form": "갑옷" },
+        "SHIELD":    { "form": "방패" },
+        "ATTACK":    { "base": "공격하다" },
+        "DEFEND":    { "base": "방어하다" },
+
+        "DRAGON":    { "form": "드래곤" },
+        "DEMON":     { "form": "악마" },
+        "SPIRIT":    { "form": "영혼" },
+        "SUMMON":    { "base": "소환하다" },
+        "SINISTER":  ["불길한"],
+
+        "NINJA":     { "form": "닌자" },
+        "SAMURAI":   { "form": "사무라이" },
+        "SENSEI":    { "form": "선생님" },
+        "SHADOW":    { "form": "그림자" },
+        "STRIKE":    { "base": "치다" },
+
+        "TRANSFORM": { "base": "변신하다" },
+        "POWER":     { "form": "힘" },
+        "CHANNEL":   { "base": "집중하다" },
+        "UNLEASH":   { "base": "해방하다" },
+        "POWERFUL":  ["강력한"],
+
+        "QUEST":     { "form": "퀘스트" },
+        "DESTINY":   { "form": "운명" },
+        "KINGDOM":   { "form": "왕국" },
+        "TEMPLE":    { "form": "신전" },
+        "ANCIENT":   ["고대의"],
+
+        "BATTLE":    { "form": "배틀" },
+        "DODGE":     { "base": "피하다" },
+        "PROTECT":   { "base": "보호하다" },
+        "FIERCE":    ["맹렬한"],
+        "MIGHTY":    ["강대한"],
+
+        "CRYSTAL":   { "form": "수정" },
+        "SCROLL":    { "form": "두루마리" },
+        "PORTAL":    { "form": "포탈" },
+        "CURSED":    ["저주받은"],
+        "SACRED":    ["신성한"],
+
+        "TRAIN":     { "base": "훈련하다" },
+        "MASTER":    { "form": "고수" },
+        "CLAN":      { "form": "클랜" },
+        "AWAKEN":    { "base": "각성하다" },
+        "LEGENDARY": ["전설의"],
+
+        "MECHA":     { "form": "메카" },
+        "ARENA":     { "form": "아레나" },
+        "CONQUER":   { "base": "정복하다" },
+        "TRANSCEND": { "base": "초월하다" },
+        "ETERNAL":   ["영원한"]
+      }
+    },
+
+    "no": {
+      "label": "Norwegian",
+      "forms": {
+        "HERO":      { "form": "helt", "gender": "m" },
+        "VILLAIN":   { "form": "skurk", "gender": "m" },
+        "WARRIOR":   { "form": "kriger", "gender": "m" },
+        "RIVAL":     { "form": "rival", "gender": "m" },
+        "BRAVE":     ["modig"],
+
+        "SWORD":     { "form": "sverd", "gender": "n" },
+        "ARMOR":     { "form": "rustning", "gender": "f" },
+        "SHIELD":    { "form": "skjold", "gender": "n" },
+        "ATTACK":    { "base": "angripe",    "1_singular": "angriper",    "2_singular": "angriper",    "3_singular": "angriper",    "1_plural": "angriper",    "2_plural": "angriper",    "3_plural": "angriper" },
+        "DEFEND":    { "base": "forsvare",   "1_singular": "forsvarer",   "2_singular": "forsvarer",   "3_singular": "forsvarer",   "1_plural": "forsvarer",   "2_plural": "forsvarer",   "3_plural": "forsvarer" },
+
+        "DRAGON":    { "form": "drage", "gender": "m" },
+        "DEMON":     { "form": "demon", "gender": "m" },
+        "SPIRIT":    { "form": "ånd", "gender": "m" },
+        "SUMMON":    { "base": "tilkalle",   "1_singular": "tilkaller",   "2_singular": "tilkaller",   "3_singular": "tilkaller",   "1_plural": "tilkaller",   "2_plural": "tilkaller",   "3_plural": "tilkaller" },
+        "SINISTER":  ["uhyggelig"],
+
+        "NINJA":     { "form": "ninja", "gender": "m" },
+        "SAMURAI":   { "form": "samurai", "gender": "m" },
+        "SENSEI":    { "form": "sensei", "gender": "m" },
+        "SHADOW":    { "form": "skygge", "gender": "m" },
+        "STRIKE":    { "base": "slå",        "1_singular": "slår",        "2_singular": "slår",        "3_singular": "slår",        "1_plural": "slår",        "2_plural": "slår",        "3_plural": "slår" },
+
+        "TRANSFORM": { "base": "forvandle",  "1_singular": "forvandler",  "2_singular": "forvandler",  "3_singular": "forvandler",  "1_plural": "forvandler",  "2_plural": "forvandler",  "3_plural": "forvandler" },
+        "POWER":     { "form": "kraft", "gender": "f" },
+        "CHANNEL":   { "base": "kanalisere", "1_singular": "kanaliserer", "2_singular": "kanaliserer", "3_singular": "kanaliserer", "1_plural": "kanaliserer", "2_plural": "kanaliserer", "3_plural": "kanaliserer" },
+        "UNLEASH":   { "base": "slippe løs", "1_singular": "slipper løs", "2_singular": "slipper løs", "3_singular": "slipper løs", "1_plural": "slipper løs", "2_plural": "slipper løs", "3_plural": "slipper løs" },
+        "POWERFUL":  ["kraftig"],
+
+        "QUEST":     { "form": "oppdrag", "gender": "n" },
+        "DESTINY":   { "form": "skjebne", "gender": "f" },
+        "KINGDOM":   { "form": "kongerike", "gender": "n" },
+        "TEMPLE":    { "form": "tempel", "gender": "n" },
+        "ANCIENT":   ["gammel"],
+
+        "BATTLE":    { "form": "kamp", "gender": "m" },
+        "DODGE":     { "base": "unngå",      "1_singular": "unngår",      "2_singular": "unngår",      "3_singular": "unngår",      "1_plural": "unngår",      "2_plural": "unngår",      "3_plural": "unngår" },
+        "PROTECT":   { "base": "beskytte",   "1_singular": "beskytter",   "2_singular": "beskytter",   "3_singular": "beskytter",   "1_plural": "beskytter",   "2_plural": "beskytter",   "3_plural": "beskytter" },
+        "FIERCE":    ["vill"],
+        "MIGHTY":    ["mektig"],
+
+        "CRYSTAL":   { "form": "krystall", "gender": "m" },
+        "SCROLL":    { "form": "rulle", "gender": "m" },
+        "PORTAL":    { "form": "portal", "gender": "m" },
+        "CURSED":    ["forbannet"],
+        "SACRED":    ["hellig"],
+
+        "TRAIN":     { "base": "trene",      "1_singular": "trener",      "2_singular": "trener",      "3_singular": "trener",      "1_plural": "trener",      "2_plural": "trener",      "3_plural": "trener" },
+        "MASTER":    { "form": "mester", "gender": "m" },
+        "CLAN":      { "form": "klan", "gender": "m" },
+        "AWAKEN":    { "base": "våkne",      "1_singular": "våkner",      "2_singular": "våkner",      "3_singular": "våkner",      "1_plural": "våkner",      "2_plural": "våkner",      "3_plural": "våkner" },
+        "LEGENDARY": ["legendarisk"],
+
+        "MECHA":     { "form": "meka", "gender": "m" },
+        "ARENA":     { "form": "arena", "gender": "f" },
+        "CONQUER":   { "base": "erobre",     "1_singular": "erobrer",     "2_singular": "erobrer",     "3_singular": "erobrer",     "1_plural": "erobrer",     "2_plural": "erobrer",     "3_plural": "erobrer" },
+        "TRANSCEND": { "base": "overskride", "1_singular": "overskrider", "2_singular": "overskrider", "3_singular": "overskrider", "1_plural": "overskrider", "2_plural": "overskrider", "3_plural": "overskrider" },
+        "ETERNAL":   ["evig"]
+      }
+    },
+
+    "tr": {
+      "label": "Turkish",
+      "forms": {
+        "HERO":      { "form": "kahraman" },
+        "VILLAIN":   { "form": "kötü adam" },
+        "WARRIOR":   { "form": "savaşçı" },
+        "RIVAL":     { "form": "rakip" },
+        "BRAVE":     ["cesur"],
+
+        "SWORD":     { "form": "kılıç" },
+        "ARMOR":     { "form": "zırh" },
+        "SHIELD":    { "form": "kalkan" },
+        "ATTACK":    { "base": "saldırmak",       "1_singular": "saldırıyorum",      "2_singular": "saldırıyorsun",     "3_singular": "saldırıyor",        "1_plural": "saldırıyoruz",      "2_plural": "saldırıyorsunuz",   "3_plural": "saldırıyorlar" },
+        "DEFEND":    { "base": "savunmak",         "1_singular": "savunuyorum",       "2_singular": "savunuyorsun",      "3_singular": "savunuyor",         "1_plural": "savunuyoruz",       "2_plural": "savunuyorsunuz",    "3_plural": "savunuyorlar" },
+
+        "DRAGON":    { "form": "ejderha" },
+        "DEMON":     { "form": "iblis" },
+        "SPIRIT":    { "form": "ruh" },
+        "SUMMON":    { "base": "çağırmak",         "1_singular": "çağırıyorum",       "2_singular": "çağırıyorsun",      "3_singular": "çağırıyor",         "1_plural": "çağırıyoruz",       "2_plural": "çağırıyorsunuz",    "3_plural": "çağırıyorlar" },
+        "SINISTER":  ["uğursuz"],
+
+        "NINJA":     { "form": "ninja" },
+        "SAMURAI":   { "form": "samuray" },
+        "SENSEI":    { "form": "usta" },
+        "SHADOW":    { "form": "gölge" },
+        "STRIKE":    { "base": "vurmak",           "1_singular": "vuruyorum",         "2_singular": "vuruyorsun",        "3_singular": "vuruyor",           "1_plural": "vuruyoruz",         "2_plural": "vuruyorsunuz",      "3_plural": "vuruyorlar" },
+
+        "TRANSFORM": { "base": "dönüşmek",         "1_singular": "dönüşüyorum",       "2_singular": "dönüşüyorsun",      "3_singular": "dönüşüyor",         "1_plural": "dönüşüyoruz",       "2_plural": "dönüşüyorsunuz",    "3_plural": "dönüşüyorlar" },
+        "POWER":     { "form": "güç" },
+        "CHANNEL":   { "base": "yönlendirmek",     "1_singular": "yönlendiriyorum",   "2_singular": "yönlendiriyorsun",  "3_singular": "yönlendiriyor",     "1_plural": "yönlendiriyoruz",   "2_plural": "yönlendiriyorsunuz","3_plural": "yönlendiriyorlar" },
+        "UNLEASH":   { "base": "serbest bırakmak", "1_singular": "serbest bırakıyorum","2_singular": "serbest bırakıyorsun","3_singular": "serbest bırakıyor","1_plural": "serbest bırakıyoruz","2_plural": "serbest bırakıyorsunuz","3_plural": "serbest bırakıyorlar" },
+        "POWERFUL":  ["güçlü"],
+
+        "QUEST":     { "form": "görev" },
+        "DESTINY":   { "form": "kader" },
+        "KINGDOM":   { "form": "krallık" },
+        "TEMPLE":    { "form": "tapınak" },
+        "ANCIENT":   ["antik"],
+
+        "BATTLE":    { "form": "savaş" },
+        "DODGE":     { "base": "kaçınmak",         "1_singular": "kaçınıyorum",       "2_singular": "kaçınıyorsun",      "3_singular": "kaçınıyor",         "1_plural": "kaçınıyoruz",       "2_plural": "kaçınıyorsunuz",    "3_plural": "kaçınıyorlar" },
+        "PROTECT":   { "base": "korumak",          "1_singular": "koruyorum",         "2_singular": "koruyorsun",        "3_singular": "koruyor",           "1_plural": "koruyoruz",         "2_plural": "koruyorsunuz",      "3_plural": "koruyorlar" },
+        "FIERCE":    ["vahşi"],
+        "MIGHTY":    ["azametli"],
+
+        "CRYSTAL":   { "form": "kristal" },
+        "SCROLL":    { "form": "parşömen" },
+        "PORTAL":    { "form": "portal" },
+        "CURSED":    ["lanetli"],
+        "SACRED":    ["kutsal"],
+
+        "TRAIN":     { "base": "antrenman yapmak", "1_singular": "antrenman yapıyorum","2_singular": "antrenman yapıyorsun","3_singular": "antrenman yapıyor","1_plural": "antrenman yapıyoruz","2_plural": "antrenman yapıyorsunuz","3_plural": "antrenman yapıyorlar" },
+        "MASTER":    { "form": "usta" },
+        "CLAN":      { "form": "klan" },
+        "AWAKEN":    { "base": "uyanmak",          "1_singular": "uyanıyorum",        "2_singular": "uyanıyorsun",       "3_singular": "uyanıyor",          "1_plural": "uyanıyoruz",        "2_plural": "uyanıyorsunuz",     "3_plural": "uyanıyorlar" },
+        "LEGENDARY": ["efsanevi"],
+
+        "MECHA":     { "form": "meka" },
+        "ARENA":     { "form": "arena" },
+        "CONQUER":   { "base": "fethetmek",        "1_singular": "fethediyorum",      "2_singular": "fethediyorsun",     "3_singular": "fethediyor",        "1_plural": "fethediyoruz",      "2_plural": "fethediyorsunuz",   "3_plural": "fethediyorlar" },
+        "TRANSCEND": { "base": "aşmak",            "1_singular": "aşıyorum",          "2_singular": "aşıyorsun",         "3_singular": "aşıyor",            "1_plural": "aşıyoruz",          "2_plural": "aşıyorsunuz",       "3_plural": "aşıyorlar" },
+        "ETERNAL":   ["ebedi"]
+      }
+    },
+
+    "uk": {
+      "label": "Ukrainian",
+      "forms": {
+        "HERO":      { "form": "герой" },
+        "VILLAIN":   { "form": "лиходій" },
+        "WARRIOR":   { "form": "воїн" },
+        "RIVAL":     { "form": "суперник" },
+        "BRAVE":     ["хоробрий"],
+
+        "SWORD":     { "form": "меч" },
+        "ARMOR":     { "form": "броня" },
+        "SHIELD":    { "form": "щит" },
+        "ATTACK":    { "base": "атакувати" },
+        "DEFEND":    { "base": "захищати" },
+
+        "DRAGON":    { "form": "дракон" },
+        "DEMON":     { "form": "демон" },
+        "SPIRIT":    { "form": "дух" },
+        "SUMMON":    { "base": "закликати" },
+        "SINISTER":  ["зловісний"],
+
+        "NINJA":     { "form": "ніндзя" },
+        "SAMURAI":   { "form": "самурай" },
+        "SENSEI":    { "form": "сенсей" },
+        "SHADOW":    { "form": "тінь" },
+        "STRIKE":    { "base": "вдаряти" },
+
+        "TRANSFORM": { "base": "трансформуватися" },
+        "POWER":     { "form": "сила" },
+        "CHANNEL":   { "base": "спрямовувати" },
+        "UNLEASH":   { "base": "вивільняти" },
+        "POWERFUL":  ["могутній"],
+
+        "QUEST":     { "form": "квест" },
+        "DESTINY":   { "form": "доля" },
+        "KINGDOM":   { "form": "королівство" },
+        "TEMPLE":    { "form": "храм" },
+        "ANCIENT":   ["стародавній"],
+
+        "BATTLE":    { "form": "битва" },
+        "DODGE":     { "base": "ухилятися" },
+        "PROTECT":   { "base": "захищати" },
+        "FIERCE":    ["лютий"],
+        "MIGHTY":    ["грізний"],
+
+        "CRYSTAL":   { "form": "кристал" },
+        "SCROLL":    { "form": "сувій" },
+        "PORTAL":    { "form": "портал" },
+        "CURSED":    ["проклятий"],
+        "SACRED":    ["священний"],
+
+        "TRAIN":     { "base": "тренуватися" },
+        "MASTER":    { "form": "майстер" },
+        "CLAN":      { "form": "клан" },
+        "AWAKEN":    { "base": "прокидатися" },
+        "LEGENDARY": ["легендарний"],
+
+        "MECHA":     { "form": "меха" },
+        "ARENA":     { "form": "арена" },
+        "CONQUER":   { "base": "підкорювати" },
+        "TRANSCEND": { "base": "перевершувати" },
+        "ETERNAL":   ["вічний"]
+      }
+    },
+
+    "es": {
+      "label": "Spanish",
+      "forms": {
+        "HERO":      { "form": "héroe", "gender": "m" },
+        "VILLAIN":   { "form": "villano", "gender": "m" },
+        "WARRIOR":   { "form": "guerrero", "gender": "m" },
+        "RIVAL":     { "form": "rival", "gender": "m" },
+        "BRAVE":     ["valiente"],
+
+        "SWORD":     { "form": "espada", "gender": "f" },
+        "ARMOR":     { "form": "armadura", "gender": "f" },
+        "SHIELD":    { "form": "escudo", "gender": "m" },
+        "ATTACK":    { "base": "atacar",      "1_singular": "ataco",       "2_singular": "atacas",      "3_singular": "ataca",       "1_plural": "atacamos",    "2_plural": "atacáis",    "3_plural": "atacan" },
+        "DEFEND":    { "base": "defender",    "1_singular": "defiendo",    "2_singular": "defiendes",   "3_singular": "defiende",    "1_plural": "defendemos",  "2_plural": "defendéis",  "3_plural": "defienden" },
+
+        "DRAGON":    { "form": "dragón", "gender": "m" },
+        "DEMON":     { "form": "demonio", "gender": "m" },
+        "SPIRIT":    { "form": "espíritu", "gender": "m" },
+        "SUMMON":    { "base": "invocar",     "1_singular": "invoco",      "2_singular": "invocas",     "3_singular": "invoca",      "1_plural": "invocamos",   "2_plural": "invocáis",   "3_plural": "invocan" },
+        "SINISTER":  ["siniestro"],
+
+        "NINJA":     { "form": "ninja", "gender": "m" },
+        "SAMURAI":   { "form": "samurái", "gender": "m" },
+        "SENSEI":    { "form": "sensei", "gender": "m" },
+        "SHADOW":    { "form": "sombra", "gender": "f" },
+        "STRIKE":    { "base": "golpear",     "1_singular": "golpeo",      "2_singular": "golpeas",     "3_singular": "golpea",      "1_plural": "golpeamos",   "2_plural": "golpeáis",   "3_plural": "golpean" },
+
+        "TRANSFORM": { "base": "transformar", "1_singular": "transformo",  "2_singular": "transformas", "3_singular": "transforma",  "1_plural": "transformamos","2_plural": "transformáis","3_plural": "transforman" },
+        "POWER":     { "form": "poder", "gender": "m" },
+        "CHANNEL":   { "base": "canalizar",   "1_singular": "canalizo",    "2_singular": "canalizas",   "3_singular": "canaliza",    "1_plural": "canalizamos", "2_plural": "canalizáis", "3_plural": "canalizan" },
+        "UNLEASH":   { "base": "desatar",     "1_singular": "desato",      "2_singular": "desatas",     "3_singular": "desata",      "1_plural": "desatamos",   "2_plural": "desatáis",   "3_plural": "desatan" },
+        "POWERFUL":  ["poderoso"],
+
+        "QUEST":     { "form": "misión", "gender": "f" },
+        "DESTINY":   { "form": "destino", "gender": "m" },
+        "KINGDOM":   { "form": "reino", "gender": "m" },
+        "TEMPLE":    { "form": "templo", "gender": "m" },
+        "ANCIENT":   ["antiguo"],
+
+        "BATTLE":    { "form": "batalla", "gender": "f" },
+        "DODGE":     { "base": "esquivar",    "1_singular": "esquivo",     "2_singular": "esquivas",    "3_singular": "esquiva",     "1_plural": "esquivamos",  "2_plural": "esquiváis",  "3_plural": "esquivan" },
+        "PROTECT":   { "base": "proteger",    "1_singular": "protejo",     "2_singular": "proteges",    "3_singular": "protege",     "1_plural": "protegemos",  "2_plural": "protegéis",  "3_plural": "protegen" },
+        "FIERCE":    ["feroz"],
+        "MIGHTY":    ["formidable"],
+
+        "CRYSTAL":   { "form": "cristal", "gender": "m" },
+        "SCROLL":    { "form": "pergamino", "gender": "m" },
+        "PORTAL":    { "form": "portal", "gender": "m" },
+        "CURSED":    ["maldito"],
+        "SACRED":    ["sagrado"],
+
+        "TRAIN":     { "base": "entrenar",    "1_singular": "entreno",     "2_singular": "entrenas",    "3_singular": "entrena",     "1_plural": "entrenamos",  "2_plural": "entrenáis",  "3_plural": "entrenan" },
+        "MASTER":    { "form": "maestro", "gender": "m" },
+        "CLAN":      { "form": "clan", "gender": "m" },
+        "AWAKEN":    { "base": "despertar",   "1_singular": "despierto",   "2_singular": "despiertas",  "3_singular": "despierta",   "1_plural": "despertamos", "2_plural": "despertáis", "3_plural": "despiertan" },
+        "LEGENDARY": ["legendario"],
+
+        "MECHA":     { "form": "mecha", "gender": "m" },
+        "ARENA":     { "form": "arena", "gender": "f" },
+        "CONQUER":   { "base": "conquistar",  "1_singular": "conquisto",   "2_singular": "conquistas",  "3_singular": "conquista",   "1_plural": "conquistamos","2_plural": "conquistáis","3_plural": "conquistan" },
+        "TRANSCEND": { "base": "trascender",  "1_singular": "trasciendo",  "2_singular": "trasciendes", "3_singular": "trasciende",  "1_plural": "trascendemos","2_plural": "trascendéis","3_plural": "trascienden" },
+        "ETERNAL":   ["eterno"]
+      }
+    }
+  }
+}

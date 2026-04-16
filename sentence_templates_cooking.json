@@ -241,6 +241,157 @@
   "template_id": "FOOD_IS_SOUR",
   "concepts": ["FOOD","BE","SOUR"],
   "render": { "en": "The food is sour." }
+},
+
+{
+  "template_id": "THEY_HAVE_FOOD",
+  "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "FOOD"],
+  "render": { "en": "They have food." }
+},
+{
+  "template_id": "THEY_COOK_FOOD",
+  "concepts": ["THIRD_PERSON_PLURAL", "COOK", "FOOD"],
+  "render": { "en": "They cook food." }
+},
+{
+  "template_id": "THEY_SEE_KITCHEN",
+  "concepts": ["THIRD_PERSON_PLURAL", "SEE", "KITCHEN"],
+  "render": { "en": "They see a kitchen." }
+},
+{
+  "template_id": "THEY_EAT_FRUIT",
+  "concepts": ["THIRD_PERSON_PLURAL", "EAT", "FRUIT"],
+  "render": { "en": "They eat fruit." }
+},
+{
+  "template_id": "THEY_CUT_MEAT",
+  "concepts": ["THIRD_PERSON_PLURAL", "CUT", "MEAT"],
+  "render": { "en": "They cut meat." }
+},
+{
+  "template_id": "THEY_HAVE_RECIPE",
+  "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "RECIPE"],
+  "render": { "en": "They have a recipe." }
+},
+{
+  "template_id": "THEY_BOIL_SOUP",
+  "concepts": ["THIRD_PERSON_PLURAL", "BOIL", "SOUP"],
+  "render": { "en": "They boil soup." }
+},
+
+{
+  "template_id": "WE_COOK_FOOD",
+  "concepts": ["FIRST_PERSON_PLURAL", "COOK", "FOOD"],
+  "render": { "en": "We cook food." }
+},
+{
+  "template_id": "WE_EAT_SOUP",
+  "concepts": ["FIRST_PERSON_PLURAL", "EAT", "SOUP"],
+  "render": { "en": "We eat soup." }
+},
+{
+  "template_id": "WE_SEE_OVEN",
+  "concepts": ["FIRST_PERSON_PLURAL", "SEE", "OVEN"],
+  "render": { "en": "We see an oven." }
+},
+{
+  "template_id": "WE_HAVE_RECIPE",
+  "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "RECIPE"],
+  "render": { "en": "We have a recipe." }
+},
+{
+  "template_id": "WE_BOIL_SOUP",
+  "concepts": ["FIRST_PERSON_PLURAL", "BOIL", "SOUP"],
+  "render": { "en": "We boil soup." }
+},
+
+{
+  "template_id": "YOU_COOK_FOOD",
+  "concepts": ["SECOND_PERSON", "COOK", "FOOD"],
+  "render": { "en": "You cook food." }
+},
+{
+  "template_id": "YOU_CUT_VEGETABLE",
+  "concepts": ["SECOND_PERSON", "CUT", "VEGETABLE"],
+  "render": { "en": "You cut a vegetable." }
+},
+{
+  "template_id": "YOU_EAT_FRUIT",
+  "concepts": ["SECOND_PERSON", "EAT", "FRUIT"],
+  "render": { "en": "You eat fruit." }
+},
+{
+  "template_id": "YOU_SEE_STOVE",
+  "concepts": ["SECOND_PERSON", "SEE", "STOVE"],
+  "render": { "en": "You see a stove." }
+},
+{
+  "template_id": "YOU_HAVE_INGREDIENT",
+  "concepts": ["SECOND_PERSON", "HAVE", "INGREDIENT"],
+  "render": { "en": "You have an ingredient." }
+},
+
+{
+  "template_id": "I_FRY_FISH",
+  "concepts": ["FIRST_PERSON_SINGULAR", "FRY", "FISH"],
+  "render": { "en": "I fry a fish." }
+},
+{
+  "template_id": "I_CUT_VEGETABLE",
+  "concepts": ["FIRST_PERSON_SINGULAR", "CUT", "VEGETABLE"],
+  "render": { "en": "I cut a vegetable." }
+},
+{
+  "template_id": "I_BOIL_CHICKEN",
+  "concepts": ["FIRST_PERSON_SINGULAR", "BOIL", "CHICKEN"],
+  "render": { "en": "I boil chicken." }
+},
+{
+  "template_id": "I_MIX_SAUCE",
+  "concepts": ["FIRST_PERSON_SINGULAR", "MIX", "SAUCE"],
+  "render": { "en": "I mix sauce." }
+},
+
+{
+  "template_id": "HE_FRY_FISH",
+  "concepts": ["HE", "FRY", "FISH"],
+  "render": { "en": "He fries a fish." }
+},
+{
+  "template_id": "HE_BOIL_SOUP",
+  "concepts": ["HE", "BOIL", "SOUP"],
+  "render": { "en": "He boils soup." }
+},
+{
+  "template_id": "HE_COOK_CHICKEN",
+  "concepts": ["HE", "COOK", "CHICKEN"],
+  "render": { "en": "He cooks chicken." }
+},
+{
+  "template_id": "HE_WASH_VEGETABLE",
+  "concepts": ["HE", "WASH", "VEGETABLE"],
+  "render": { "en": "He washes a vegetable." }
+},
+
+{
+  "template_id": "SHE_COOK_FOOD",
+  "concepts": ["SHE", "COOK", "FOOD"],
+  "render": { "en": "She cooks food." }
+},
+{
+  "template_id": "SHE_FRY_POTATO",
+  "concepts": ["SHE", "FRY", "POTATO"],
+  "render": { "en": "She fries a potato." }
+},
+{
+  "template_id": "SHE_CUT_VEGETABLE",
+  "concepts": ["SHE", "CUT", "VEGETABLE"],
+  "render": { "en": "She cuts a vegetable." }
+},
+{
+  "template_id": "SHE_WASH_FRUIT",
+  "concepts": ["SHE", "WASH", "FRUIT"],
+  "render": { "en": "She washes fruit." }
 }
 
   ]

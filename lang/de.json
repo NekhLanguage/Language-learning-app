@@ -292,14 +292,16 @@
       "gender": "n"
     },
     "CLOTHES": {
-      "form": "Kleidung"
+      "form": "Kleidung",
+      "gender": "f"
     },
     "SHIRT": {
       "form": "Hemd",
       "gender": "n"
     },
     "SHOES": {
-      "form": "Schuhe"
+      "form": "Schuhe",
+      "gender": "m"
     },
     "PHONE": {
       "form": "Telefon",

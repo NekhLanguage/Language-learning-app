@@ -23,7 +23,10 @@
     "resourcePacks": "リソースパック",
     "choosePacks": "最大2つのパックを選んでください",
     "start": "スタート",
-    "selectPack": "少なくとも1つのパックを選んでください"
+    "selectPack": "少なくとも1つのパックを選んでください",
+    "enterEmail": "メールアドレスを入力してください",
+    "buyAccess": "ユーザーでない方はこちら",
+    "noAccess": "このメールアドレスのアクセス権が見つかりません"
   },
   "hubNames": {
     "en": "英語",
