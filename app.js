@@ -1339,6 +1339,32 @@ function englishIndefiniteArticle(nextWord) {
     : "a";
 }
 
+const PLURAL_EXCEPTIONS = {
+  child: "children",
+  mouse: "mice",
+  person: "people",
+  man: "men",
+  woman: "women",
+  tooth: "teeth",
+  foot: "feet",
+  goose: "geese",
+  ox: "oxen",
+};
+
+function pluralize(word) {
+  if (!word) return word;
+  const lower = word.toLowerCase();
+  if (PLURAL_EXCEPTIONS[lower]) {
+    // preserve original capitalisation
+    return word[0] === word[0].toUpperCase()
+      ? PLURAL_EXCEPTIONS[lower][0].toUpperCase() + PLURAL_EXCEPTIONS[lower].slice(1)
+      : PLURAL_EXCEPTIONS[lower];
+  }
+  if (/[^aeiou]y$/i.test(word)) return word.slice(0, -1) + "ies";
+  if (/(s|sh|ch|x|z)$/i.test(word)) return word + "es";
+  return word + "s";
+}
+
 function nounPhrase(lang, cid) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
@@ -1771,12 +1797,15 @@ if (tpl.structure?.type === "complex_clause") {
 
   if (numberWord) {
     // Numbers replace the article: "two books" not "two a book"
+    const nounForm = (lang === "en" && forcedConcept !== "ONE")
+      ? pluralize(bare)
+      : bare;
     if (adjectiveWord) {
       return POST_ADJ
-        ? numberWord + " " + bare + " " + adjectiveWord
-        : numberWord + " " + adjectiveWord + " " + bare;
+        ? numberWord + " " + nounForm + " " + adjectiveWord
+        : numberWord + " " + adjectiveWord + " " + nounForm;
     }
-    return numberWord + " " + bare;
+    return numberWord + " " + nounForm;
   }
 
   if (adjectiveWord) {
