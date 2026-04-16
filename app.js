@@ -1479,6 +1479,43 @@ function englishIndefiniteArticle(nextWord) {
     : "a";
 }
 
+const PLURAL_EXCEPTIONS = {
+  child: "children",
+  mouse: "mice",
+  person: "people",
+  man: "men",
+  woman: "women",
+  tooth: "teeth",
+  foot: "feet",
+  goose: "geese",
+  ox: "oxen",
+};
+
+function pluralize(word) {
+  if (!word) return word;
+  const lower = word.toLowerCase();
+  if (PLURAL_EXCEPTIONS[lower]) {
+    // preserve original capitalisation
+    return word[0] === word[0].toUpperCase()
+      ? PLURAL_EXCEPTIONS[lower][0].toUpperCase() + PLURAL_EXCEPTIONS[lower].slice(1)
+      : PLURAL_EXCEPTIONS[lower];
+  }
+  if (/[^aeiou]y$/i.test(word)) return word.slice(0, -1) + "ies";
+  if (/(s|sh|ch|x|z)$/i.test(word)) return word + "es";
+  return word + "s";
+}
+
+// Returns the plural form for non-English languages.
+// Reads entry.plural if present; falls back to the singular formOf().
+function pluralFormOf(lang, cid) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+  if (!entry) return formOf(lang, cid);
+  if (typeof entry === "object" && !Array.isArray(entry) && entry.plural) {
+    return entry.plural;
+  }
+  return formOf(lang, cid);
+}
+
 function nounPhrase(lang, cid) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
@@ -1881,10 +1918,12 @@ if (tpl.structure?.type === "complex_clause") {
   let phrase = nounPhrase(lang, cid);
 
   let adjectiveWord = null;
+  let adjectiveCid = null;
   let numberWord = null;
 
   // adjective
   if (forcedMeta?.type === "adjective") {
+    adjectiveCid = forcedConcept;
     adjectiveWord = formOf(lang, forcedConcept);
   } else {
     const adjectives = run.released.filter(c => {
@@ -1896,6 +1935,7 @@ if (tpl.structure?.type === "complex_clause") {
 
     if (adjectives.length && Math.random() < 0.6) {
       const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+      adjectiveCid = adj;
       adjectiveWord = formOf(lang, adj);
     }
   }
@@ -1911,12 +1951,24 @@ if (tpl.structure?.type === "complex_clause") {
 
   if (numberWord) {
     // Numbers replace the article: "two books" not "two a book"
-    if (adjectiveWord) {
-      return POST_ADJ
-        ? numberWord + " " + bare + " " + adjectiveWord
-        : numberWord + " " + adjectiveWord + " " + bare;
+    const isPlural = forcedConcept !== "ONE";
+    let nounForm;
+    if (!isPlural) {
+      nounForm = bare;
+    } else if (lang === "en") {
+      nounForm = pluralize(bare);
+    } else {
+      nounForm = pluralFormOf(lang, cid);
     }
-    return numberWord + " " + bare;
+    if (adjectiveWord) {
+      const adjForm = (isPlural && adjectiveCid && lang !== "en")
+        ? pluralFormOf(lang, adjectiveCid)
+        : adjectiveWord;
+      return POST_ADJ
+        ? numberWord + " " + nounForm + " " + adjForm
+        : numberWord + " " + adjForm + " " + nounForm;
+    }
+    return numberWord + " " + nounForm;
   }
 
   if (adjectiveWord) {

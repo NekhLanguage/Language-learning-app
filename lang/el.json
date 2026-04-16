@@ -41,31 +41,14 @@
     "tr": "Τουρκικά"
   },
   "forms": {
-    "BIG": [
-      "μεγάλος"
-    ],
-    "SMALL": [
-      "μικρός"
-    ],
-    "GOOD": [
-      "καλός"
-    ],
-    "BAD": [
-      "κακός"
-    ],
-    "NEW": [
-      "καινούριος",
-      "νέος"
-    ],
-    "OLD": [
-      "παλιός"
-    ],
-    "EASY": [
-      "εύκολος"
-    ],
-    "DIFFICULT": [
-      "δύσκολος"
-    ],
+    "BIG": { "form": "μεγάλος", "plural": "μεγάλοι" },
+    "SMALL": { "form": "μικρός", "plural": "μικροί" },
+    "GOOD": { "form": "καλός", "plural": "καλοί" },
+    "BAD": { "form": "κακός", "plural": "κακοί" },
+    "NEW": { "form": "καινούριος", "plural": "καινούριοι" },
+    "OLD": { "form": "παλιός", "plural": "παλιοί" },
+    "EASY": { "form": "εύκολος", "plural": "εύκολοι" },
+    "DIFFICULT": { "form": "δύσκολος", "plural": "δύσκολοι" },
     "MY": [
       "μου"
     ],
@@ -190,7 +173,8 @@
     },
     "BOOK": {
       "form": "βιβλίο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "βιβλία"
     },
     "THING": {
       "form": "πράγμα",
@@ -206,19 +190,23 @@
     },
     "BOY": {
       "form": "αγόρι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "αγόρια"
     },
     "GIRL": {
       "form": "κορίτσι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "κορίτσια"
     },
     "MAN": {
       "form": "άντρας",
-      "gender": "m"
+      "gender": "m",
+      "plural": "άντρες"
     },
     "WOMAN": {
       "form": "γυναίκα",
-      "gender": "f"
+      "gender": "f",
+      "plural": "γυναίκες"
     },
     "MOM": {
       "form": "μαμά",
@@ -250,7 +238,8 @@
     },
     "ARM": {
       "form": "χέρι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "χέρια"
     },
     "HAND": {
       "form": "παλάμη",
@@ -270,7 +259,8 @@
     },
     "EYE": {
       "form": "μάτι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "μάτια"
     },
     "MOUTH": {
       "form": "στόμα",
@@ -304,7 +294,8 @@
     },
     "PHONE": {
       "form": "τηλέφωνο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "τηλέφωνα"
     },
     "PANTS": {
       "form": "παντελόνι",

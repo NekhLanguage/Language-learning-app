@@ -41,32 +41,14 @@
     "tr": "Türkisch"
   },
   "forms": {
-    "BIG": [
-      "groß"
-    ],
-    "SMALL": [
-      "klein"
-    ],
-    "GOOD": [
-      "gut"
-    ],
-    "BAD": [
-      "schlecht"
-    ],
-    "NEW": [
-      "neu"
-    ],
-    "OLD": [
-      "alt"
-    ],
-    "EASY": [
-      "einfach",
-      "leicht"
-    ],
-    "DIFFICULT": [
-      "schwierig",
-      "schwer"
-    ],
+    "BIG": { "form": "groß", "plural": "große" },
+    "SMALL": { "form": "klein", "plural": "kleine" },
+    "GOOD": { "form": "gut", "plural": "gute" },
+    "BAD": { "form": "schlecht", "plural": "schlechte" },
+    "NEW": { "form": "neu", "plural": "neue" },
+    "OLD": { "form": "alt", "plural": "alte" },
+    "EASY": { "form": "einfach", "plural": "einfache" },
+    "DIFFICULT": { "form": "schwierig", "plural": "schwierige" },
     "MY": [
       "mein"
     ],
@@ -189,7 +171,8 @@
     },
     "BOOK": {
       "form": "Buch",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Bücher"
     },
     "THING": {
       "form": "Ding",
@@ -205,7 +188,8 @@
     },
     "BOY": {
       "form": "Junge",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Jungen"
     },
     "GIRL": {
       "form": "Mädchen",
@@ -213,11 +197,13 @@
     },
     "MAN": {
       "form": "Mann",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Männer"
     },
     "WOMAN": {
       "form": "Frau",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Frauen"
     },
     "MOM": {
       "form": "Mama",
@@ -229,19 +215,23 @@
     },
     "SON": {
       "form": "Sohn",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Söhne"
     },
     "DAUGHTER": {
       "form": "Tochter",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Töchter"
     },
     "BROTHER": {
       "form": "Bruder",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Brüder"
     },
     "SISTER": {
       "form": "Schwester",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Schwestern"
     },
     "HEAD": {
       "form": "Kopf",
@@ -249,11 +239,13 @@
     },
     "ARM": {
       "form": "Arm",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Arme"
     },
     "HAND": {
       "form": "Hand",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Hände"
     },
     "LEG": {
       "form": "Bein",
@@ -261,7 +253,8 @@
     },
     "FOOT": {
       "form": "Fuß",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Füße"
     },
     "FINGER": {
       "form": "Finger",
@@ -269,7 +262,8 @@
     },
     "EYE": {
       "form": "Auge",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Augen"
     },
     "MOUTH": {
       "form": "Mund",
@@ -297,7 +291,8 @@
     },
     "SHIRT": {
       "form": "Hemd",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Hemden"
     },
     "SHOES": {
       "form": "Schuhe",
@@ -305,7 +300,8 @@
     },
     "PHONE": {
       "form": "Telefon",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Telefone"
     },
     "PANTS": {
       "form": "Hose",

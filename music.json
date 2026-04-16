@@ -520,17 +520,17 @@
     "no": {
       "label": "Norwegian",
       "forms": {
-        "GUITAR":     { "form": "gitar", "gender": "m" },
-        "DRUM":       { "form": "tromme", "gender": "f" },
-        "PIANO":      { "form": "piano", "gender": "n" },
-        "VIOLIN":     { "form": "fiolin", "gender": "m" },
-        "MICROPHONE": { "form": "mikrofon", "gender": "m" },
+        "GUITAR":     { "form": "gitar", "gender": "m", "plural": "gitarer" },
+        "DRUM":       { "form": "tromme", "gender": "f", "plural": "trommer" },
+        "PIANO":      { "form": "piano", "gender": "n", "plural": "pianoer" },
+        "VIOLIN":     { "form": "fiolin", "gender": "m", "plural": "fioliner" },
+        "MICROPHONE": { "form": "mikrofon", "gender": "m", "plural": "mikrofoner" },
 
-        "MELODY":     { "form": "melodi", "gender": "m" },
-        "RHYTHM":     { "form": "rytme", "gender": "m" },
+        "MELODY":     { "form": "melodi", "gender": "m", "plural": "melodier" },
+        "RHYTHM":     { "form": "rytme", "gender": "m", "plural": "rytmer" },
         "BEAT":       { "form": "beat", "gender": "m" },
-        "CHORD":      { "form": "akkord", "gender": "m" },
-        "HARMONY":    { "form": "harmoni", "gender": "m" },
+        "CHORD":      { "form": "akkord", "gender": "m", "plural": "akkorder" },
+        "HARMONY":    { "form": "harmoni", "gender": "m", "plural": "harmonier" },
 
         "SING":       { "base": "synge",     "1_singular": "synger",     "2_singular": "synger",     "3_singular": "synger",     "1_plural": "synger",     "2_plural": "synger",     "3_plural": "synger" },
         "STRUM":      { "base": "spille",    "1_singular": "spiller",    "2_singular": "spiller",    "3_singular": "spiller",    "1_plural": "spiller",    "2_plural": "spiller",    "3_plural": "spiller" },
@@ -538,17 +538,17 @@
         "PERFORM":    { "base": "opptre",    "1_singular": "opptrer",    "2_singular": "opptrer",    "3_singular": "opptrer",    "1_plural": "opptrer",    "2_plural": "opptrer",    "3_plural": "opptrer" },
         "RECORD":     { "base": "spille inn","1_singular": "spiller inn","2_singular": "spiller inn","3_singular": "spiller inn","1_plural": "spiller inn","2_plural": "spiller inn","3_plural": "spiller inn" },
 
-        "CONCERT":    { "form": "konsert", "gender": "m" },
-        "STAGE":      { "form": "scene", "gender": "f" },
-        "ENCORE":     { "form": "ekstranummer", "gender": "n" },
-        "SPOTLIGHT":  { "form": "lyskaster", "gender": "m" },
-        "TOUR":       { "form": "turné", "gender": "m" },
+        "CONCERT":    { "form": "konsert", "gender": "m", "plural": "konserter" },
+        "STAGE":      { "form": "scene", "gender": "f", "plural": "scener" },
+        "ENCORE":     { "form": "ekstranummer", "gender": "n", "plural": "ekstranummere" },
+        "SPOTLIGHT":  { "form": "lyskaster", "gender": "m", "plural": "lyskastere" },
+        "TOUR":       { "form": "turné", "gender": "m", "plural": "turnéer" },
 
-        "LYRIC":      { "form": "tekst", "gender": "m" },
-        "CHORUS":     { "form": "refreng", "gender": "n" },
+        "LYRIC":      { "form": "tekst", "gender": "m", "plural": "tekster" },
+        "CHORUS":     { "form": "refreng", "gender": "n", "plural": "refrenger" },
         "VERSE":      { "form": "vers", "gender": "n" },
-        "SOLO":       { "form": "solo", "gender": "n" },
-        "DUET":       { "form": "duett", "gender": "m" },
+        "SOLO":       { "form": "solo", "gender": "n", "plural": "soloer" },
+        "DUET":       { "form": "duett", "gender": "m", "plural": "duetter" },
 
         "ROCK":       { "form": "rock", "gender": "m" },
         "JAZZ":       { "form": "jazz", "gender": "m" },
@@ -556,10 +556,10 @@
         "ACOUSTIC":   ["akustisk"],
         "ELECTRONIC": ["elektronisk"],
 
-        "STUDIO":     { "form": "studio", "gender": "n" },
-        "TRACK":      { "form": "låt", "gender": "m" },
+        "STUDIO":     { "form": "studio", "gender": "n", "plural": "studioer" },
+        "TRACK":      { "form": "låt", "gender": "m", "plural": "låter" },
         "ALBUM":      { "form": "album", "gender": "n" },
-        "REMIX":      { "form": "remix", "gender": "m" },
+        "REMIX":      { "form": "remix", "gender": "m", "plural": "remixer" },
         "SAMPLE":     { "form": "sample", "gender": "m" },
 
         "REHEARSE":   { "base": "øve",       "1_singular": "øver",       "2_singular": "øver",       "3_singular": "øver",       "1_plural": "øver",       "2_plural": "øver",       "3_plural": "øver" },
@@ -575,9 +575,9 @@
         "VIRAL":      ["viral"],
 
         "BAND":       { "form": "band", "gender": "n" },
-        "ANTHEM":     { "form": "hymne", "gender": "f" },
-        "PLAYLIST":   { "form": "spilleliste", "gender": "f" },
-        "FESTIVAL":   { "form": "festival", "gender": "m" },
+        "ANTHEM":     { "form": "hymne", "gender": "f", "plural": "hymner" },
+        "PLAYLIST":   { "form": "spilleliste", "gender": "f", "plural": "spillelister" },
+        "FESTIVAL":   { "form": "festival", "gender": "m", "plural": "festivaler" },
         "FANBASE":    { "form": "fanbase", "gender": "m" }
       }
     },
