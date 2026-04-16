@@ -23,7 +23,10 @@
     "resourcePacks": "RESSURSPAKKER",
     "choosePacks": "Velg opptil 2 pakker",
     "start": "START",
-    "selectPack": "Velg minst 1 pakke"
+    "selectPack": "Velg minst 1 pakke",
+    "enterEmail": "Skriv inn e-postadressen din",
+    "buyAccess": "Ikke bruker? Få tilgang",
+    "noAccess": "Ingen tilgang funnet for denne e-posten"
   },
   "hubNames": {
     "en": "Engelsk",
