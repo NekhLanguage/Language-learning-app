@@ -528,12 +528,25 @@ button.selected {
 
 .alphabet-btn {
   position: fixed;
+  top: auto;
   bottom: 1.5rem;
   left: 1.25rem;
   z-index: 150;
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
   font-size: 1.4rem;
+  font-weight: 800;
   letter-spacing: 0.14em;
   padding: 1.1rem 1.9rem;
+  transition: background 0.15s ease;
+}
+
+.alphabet-btn:hover {
+  background: rgba(255, 255, 255, 0.10);
+  transform: none;
+  box-shadow: none;
 }
 
 /* =========================
