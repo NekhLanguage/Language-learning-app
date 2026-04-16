@@ -525,17 +525,6 @@
       }
     },
     {
-      "template_id": "RAID_IS_TACTICAL",
-      "concepts": [
-        "RAID",
-        "BE",
-        "TACTICAL"
-      ],
-      "render": {
-        "en": "The raid is tactical."
-      }
-    },
-    {
       "template_id": "DUNGEON_IS_MYTHIC",
       "concepts": [
         "DUNGEON",
@@ -621,17 +610,6 @@
       ],
       "render": {
         "en": "He has an upgrade."
-      }
-    },
-    {
-      "template_id": "COMPANION_IS_ELITE",
-      "concepts": [
-        "COMPANION",
-        "BE",
-        "ELITE"
-      ],
-      "render": {
-        "en": "The companion is elite."
       }
     }
   ]

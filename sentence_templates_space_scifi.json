@@ -726,17 +726,6 @@
       }
     },
     {
-      "template_id": "INVASION_IS_HOSTILE",
-      "concepts": [
-        "INVASION",
-        "BE",
-        "HOSTILE"
-      ],
-      "render": {
-        "en": "The invasion is hostile."
-      }
-    },
-    {
       "template_id": "HABITAT_IS_SUSTAINABLE",
       "concepts": [
         "HABITAT",
@@ -745,28 +734,6 @@
       ],
       "render": {
         "en": "The habitat is sustainable."
-      }
-    },
-    {
-      "template_id": "DIMENSION_IS_UNKNOWN",
-      "concepts": [
-        "DIMENSION",
-        "BE",
-        "UNKNOWN"
-      ],
-      "render": {
-        "en": "The dimension is unknown."
-      }
-    },
-    {
-      "template_id": "CREATURE_IS_COSMIC",
-      "concepts": [
-        "CREATURE",
-        "BE",
-        "COSMIC"
-      ],
-      "render": {
-        "en": "The creature is cosmic."
       }
     }
   ]

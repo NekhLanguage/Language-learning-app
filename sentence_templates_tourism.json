@@ -518,17 +518,6 @@
       }
     },
     {
-      "template_id": "FOOD_IS_DELICIOUS",
-      "concepts": [
-        "RESTAURANT",
-        "BE",
-        "DELICIOUS"
-      ],
-      "render": {
-        "en": "The restaurant is delicious."
-      }
-    },
-    {
       "template_id": "HOTEL_IS_EXPENSIVE",
       "concepts": [
         "HOTEL",
@@ -658,17 +647,6 @@
       ],
       "render": {
         "en": "We have an adventure."
-      }
-    },
-    {
-      "template_id": "MARKET_IS_FOREIGN",
-      "concepts": [
-        "MARKET",
-        "BE",
-        "FOREIGN"
-      ],
-      "render": {
-        "en": "The market is foreign."
       }
     }
   ]

@@ -552,17 +552,6 @@
       }
     },
     {
-      "template_id": "DESIGN_IS_ICONIC",
-      "concepts": [
-        "AESTHETIC",
-        "BE",
-        "ICONIC"
-      ],
-      "render": {
-        "en": "The aesthetic is iconic."
-      }
-    },
-    {
       "template_id": "FABRIC_IS_TEXTURED",
       "concepts": [
         "FABRIC",

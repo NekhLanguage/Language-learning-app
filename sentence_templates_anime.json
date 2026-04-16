@@ -546,17 +546,6 @@
       }
     },
     {
-      "template_id": "DEMON_IS_SINISTER",
-      "concepts": [
-        "DEMON",
-        "BE",
-        "SINISTER"
-      ],
-      "render": {
-        "en": "The demon is sinister."
-      }
-    },
-    {
       "template_id": "SCROLL_IS_ANCIENT",
       "concepts": [
         "SCROLL",
@@ -565,17 +554,6 @@
       ],
       "render": {
         "en": "The scroll is ancient."
-      }
-    },
-    {
-      "template_id": "TEMPLE_IS_SACRED",
-      "concepts": [
-        "TEMPLE",
-        "BE",
-        "SACRED"
-      ],
-      "render": {
-        "en": "The temple is sacred."
       }
     },
     {

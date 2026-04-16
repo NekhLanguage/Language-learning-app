@@ -595,17 +595,6 @@
       }
     },
     {
-      "template_id": "THEY_HAVE_ASSIST",
-      "concepts": [
-        "THIRD_PERSON_PLURAL",
-        "HAVE",
-        "ASSIST"
-      ],
-      "render": {
-        "en": "They have an assist."
-      }
-    },
-    {
       "template_id": "HE_HAS_ASSIST",
       "concepts": [
         "HE",

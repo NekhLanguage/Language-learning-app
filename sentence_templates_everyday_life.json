@@ -579,17 +579,6 @@
       }
     },
     {
-      "template_id": "FORECAST_IS_CLOUDY",
-      "concepts": [
-        "FORECAST",
-        "BE",
-        "CLOUDY"
-      ],
-      "render": {
-        "en": "The forecast is cloudy."
-      }
-    },
-    {
       "template_id": "MEDICINE_IS_CHEAP",
       "concepts": [
         "MEDICINE",

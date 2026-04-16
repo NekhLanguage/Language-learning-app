@@ -155,17 +155,6 @@
       }
     },
     {
-      "template_id": "SHE_HAS_MELODY",
-      "concepts": [
-        "SHE",
-        "HAVE",
-        "MELODY"
-      ],
-      "render": {
-        "en": "She has a melody."
-      }
-    },
-    {
       "template_id": "WE_HAVE_BAND",
       "concepts": [
         "FIRST_PERSON_PLURAL",
@@ -681,17 +670,6 @@
       }
     },
     {
-      "template_id": "BEAT_IS_RHYTHMIC",
-      "concepts": [
-        "BEAT",
-        "BE",
-        "RHYTHMIC"
-      ],
-      "render": {
-        "en": "The beat is rhythmic."
-      }
-    },
-    {
       "template_id": "CONCERT_IS_LIVE",
       "concepts": [
         "CONCERT",
@@ -700,17 +678,6 @@
       ],
       "render": {
         "en": "The concert is live."
-      }
-    },
-    {
-      "template_id": "ANTHEM_IS_VIRAL",
-      "concepts": [
-        "ANTHEM",
-        "BE",
-        "VIRAL"
-      ],
-      "render": {
-        "en": "The anthem is viral."
       }
     },
     {
