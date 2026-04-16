@@ -1,0 +1,103 @@
+{
+  "templates": [
+
+    { "template_id": "I_SEE_ALARM",          "concepts": ["FIRST_PERSON_SINGULAR","SEE","ALARM"],          "render": { "en": "I see an alarm." } },
+    { "template_id": "YOU_SEE_UMBRELLA",      "concepts": ["SECOND_PERSON","SEE","UMBRELLA"],               "render": { "en": "You see an umbrella." } },
+    { "template_id": "HE_SEES_COUCH",         "concepts": ["HE","SEE","COUCH"],                             "render": { "en": "He sees a couch." } },
+    { "template_id": "SHE_SEES_CANDLE",       "concepts": ["SHE","SEE","CANDLE"],                           "render": { "en": "She sees a candle." } },
+    { "template_id": "WE_SEE_APARTMENT",      "concepts": ["FIRST_PERSON_PLURAL","SEE","APARTMENT"],        "render": { "en": "We see an apartment." } },
+    { "template_id": "THEY_SEE_OFFICE",       "concepts": ["THIRD_PERSON_PLURAL","SEE","OFFICE"],           "render": { "en": "They see an office." } },
+
+    { "template_id": "I_HAVE_WALLET",         "concepts": ["FIRST_PERSON_SINGULAR","HAVE","WALLET"],        "render": { "en": "I have a wallet." } },
+    { "template_id": "YOU_HAVE_UMBRELLA",     "concepts": ["SECOND_PERSON","HAVE","UMBRELLA"],              "render": { "en": "You have an umbrella." } },
+    { "template_id": "HE_HAS_APPOINTMENT",    "concepts": ["HE","HAVE","APPOINTMENT"],                      "render": { "en": "He has an appointment." } },
+    { "template_id": "SHE_HAS_HEADACHE",      "concepts": ["SHE","HAVE","HEADACHE"],                        "render": { "en": "She has a headache." } },
+    { "template_id": "WE_HAVE_BUDGET",        "concepts": ["FIRST_PERSON_PLURAL","HAVE","BUDGET"],          "render": { "en": "We have a budget." } },
+    { "template_id": "THEY_HAVE_INVITATION",  "concepts": ["THIRD_PERSON_PLURAL","HAVE","INVITATION"],      "render": { "en": "They have an invitation." } },
+
+    { "template_id": "HE_IS_NEIGHBOR",        "concepts": ["HE","BE","NEIGHBOR"],                           "render": { "en": "He is a neighbor." } },
+    { "template_id": "SHE_IS_NEIGHBOR",       "concepts": ["SHE","BE","NEIGHBOR"],                          "render": { "en": "She is a neighbor." } },
+    { "template_id": "I_AM_BUSY",             "concepts": ["FIRST_PERSON_SINGULAR","BE","BUSY"],            "render": { "en": "I am busy." } },
+    { "template_id": "HE_IS_TIRED",           "concepts": ["HE","BE","TIRED"],                              "render": { "en": "He is tired." } },
+    { "template_id": "SHE_IS_FRIENDLY",       "concepts": ["SHE","BE","FRIENDLY"],                          "render": { "en": "She is friendly." } },
+
+    { "template_id": "I_COMMUTE",             "concepts": ["FIRST_PERSON_SINGULAR","COMMUTE"],              "render": { "en": "I commute." } },
+    { "template_id": "YOU_COMMUTE",           "concepts": ["SECOND_PERSON","COMMUTE"],                      "render": { "en": "You commute." } },
+    { "template_id": "HE_COMMUTES",           "concepts": ["HE","COMMUTE"],                                 "render": { "en": "He commutes." } },
+    { "template_id": "SHE_COMMUTES",          "concepts": ["SHE","COMMUTE"],                                "render": { "en": "She commutes." } },
+    { "template_id": "WE_COMMUTE",            "concepts": ["FIRST_PERSON_PLURAL","COMMUTE"],                "render": { "en": "We commute." } },
+
+    { "template_id": "I_OVERSLEEP",           "concepts": ["FIRST_PERSON_SINGULAR","OVERSLEEP"],            "render": { "en": "I oversleep." } },
+    { "template_id": "HE_OVERSLEEPS",         "concepts": ["HE","OVERSLEEP"],                               "render": { "en": "He oversleeps." } },
+    { "template_id": "SHE_OVERSLEEPS",        "concepts": ["SHE","OVERSLEEP"],                              "render": { "en": "She oversleeps." } },
+
+    { "template_id": "I_DELIVER_GROCERIES",   "concepts": ["FIRST_PERSON_SINGULAR","DELIVER","GROCERY"],    "render": { "en": "I deliver groceries." } },
+    { "template_id": "HE_DELIVERS_MEDICINE",  "concepts": ["HE","DELIVER","MEDICINE"],                      "render": { "en": "He delivers medicine." } },
+    { "template_id": "THEY_DELIVER",          "concepts": ["THIRD_PERSON_PLURAL","DELIVER"],                "render": { "en": "They deliver." } },
+
+    { "template_id": "I_ORGANIZE_MEETING",    "concepts": ["FIRST_PERSON_SINGULAR","ORGANIZE","MEETING"],   "render": { "en": "I organize a meeting." } },
+    { "template_id": "SHE_ORGANIZES",         "concepts": ["SHE","ORGANIZE"],                               "render": { "en": "She organizes." } },
+    { "template_id": "WE_ORGANIZE",           "concepts": ["FIRST_PERSON_PLURAL","ORGANIZE"],               "render": { "en": "We organize." } },
+
+    { "template_id": "I_SCHEDULE_APPOINTMENT","concepts": ["FIRST_PERSON_SINGULAR","SCHEDULE","APPOINTMENT"],"render": { "en": "I schedule an appointment." } },
+    { "template_id": "HE_SCHEDULES_MEETING",  "concepts": ["HE","SCHEDULE","MEETING"],                      "render": { "en": "He schedules a meeting." } },
+    { "template_id": "YOU_SCHEDULE",          "concepts": ["SECOND_PERSON","SCHEDULE"],                     "render": { "en": "You schedule." } },
+
+    { "template_id": "IT_DRIZZLES",           "concepts": ["HE","DRIZZLE"],                                 "render": { "en": "It drizzles." } },
+
+    { "template_id": "I_APOLOGIZE",           "concepts": ["FIRST_PERSON_SINGULAR","APOLOGIZE"],            "render": { "en": "I apologize." } },
+    { "template_id": "HE_APOLOGIZES",         "concepts": ["HE","APOLOGIZE"],                               "render": { "en": "He apologizes." } },
+    { "template_id": "SHE_APOLOGIZES",        "concepts": ["SHE","APOLOGIZE"],                              "render": { "en": "She apologizes." } },
+
+    { "template_id": "I_AFFORD_MEDICINE",     "concepts": ["FIRST_PERSON_SINGULAR","AFFORD","MEDICINE"],    "render": { "en": "I can afford medicine." } },
+    { "template_id": "WE_AFFORD_APARTMENT",   "concepts": ["FIRST_PERSON_PLURAL","AFFORD","APARTMENT"],     "render": { "en": "We can afford an apartment." } },
+
+    { "template_id": "I_EXERCISE",            "concepts": ["FIRST_PERSON_SINGULAR","EXERCISE"],             "render": { "en": "I exercise." } },
+    { "template_id": "YOU_EXERCISE",          "concepts": ["SECOND_PERSON","EXERCISE"],                     "render": { "en": "You exercise." } },
+    { "template_id": "SHE_EXERCISES",         "concepts": ["SHE","EXERCISE"],                               "render": { "en": "She exercises." } },
+    { "template_id": "THEY_EXERCISE",         "concepts": ["THIRD_PERSON_PLURAL","EXERCISE"],               "render": { "en": "They exercise." } },
+
+    { "template_id": "I_REPAIR_FURNITURE",    "concepts": ["FIRST_PERSON_SINGULAR","REPAIR","FURNITURE"],   "render": { "en": "I repair the furniture." } },
+    { "template_id": "HE_REPAIRS",            "concepts": ["HE","REPAIR"],                                  "render": { "en": "He repairs." } },
+
+    { "template_id": "I_RELAX",               "concepts": ["FIRST_PERSON_SINGULAR","RELAX"],                "render": { "en": "I relax." } },
+    { "template_id": "YOU_RELAX",             "concepts": ["SECOND_PERSON","RELAX"],                        "render": { "en": "You relax." } },
+    { "template_id": "WE_RELAX",              "concepts": ["FIRST_PERSON_PLURAL","RELAX"],                  "render": { "en": "We relax." } },
+    { "template_id": "THEY_RELAX",            "concepts": ["THIRD_PERSON_PLURAL","RELAX"],                  "render": { "en": "They relax." } },
+
+    { "template_id": "I_UNWIND",              "concepts": ["FIRST_PERSON_SINGULAR","UNWIND"],               "render": { "en": "I unwind." } },
+    { "template_id": "SHE_UNWINDS",           "concepts": ["SHE","UNWIND"],                                 "render": { "en": "She unwinds." } },
+
+    { "template_id": "APARTMENT_IS_COMFORTABLE","concepts": ["APARTMENT","BE","COMFORTABLE"],               "render": { "en": "The apartment is comfortable." } },
+    { "template_id": "PHARMACY_IS_CONVENIENT", "concepts": ["PHARMACY","BE","CONVENIENT"],                  "render": { "en": "The pharmacy is convenient." } },
+    { "template_id": "NEIGHBOR_IS_FRIENDLY",  "concepts": ["NEIGHBOR","BE","FRIENDLY"],                     "render": { "en": "The neighbor is friendly." } },
+    { "template_id": "FORECAST_IS_CLOUDY",    "concepts": ["FORECAST","BE","CLOUDY"],                       "render": { "en": "The forecast is cloudy." } },
+    { "template_id": "MEDICINE_IS_CHEAP",     "concepts": ["MEDICINE","BE","CHEAP"],                        "render": { "en": "The medicine is cheap." } },
+    { "template_id": "COUCH_IS_COZY",         "concepts": ["COUCH","BE","COZY"],                            "render": { "en": "The couch is cozy." } },
+    { "template_id": "LIVING_ROOM_IS_MESSY",  "concepts": ["LIVING_ROOM","BE","MESSY"],                     "render": { "en": "The living room is messy." } },
+
+    { "template_id": "I_SEE_LIVING_ROOM",     "concepts": ["FIRST_PERSON_SINGULAR","SEE","LIVING_ROOM"],    "render": { "en": "I see a living room." } },
+    { "template_id": "YOU_SEE_PHARMACY",      "concepts": ["SECOND_PERSON","SEE","PHARMACY"],               "render": { "en": "You see a pharmacy." } },
+    { "template_id": "HE_SEES_GROCERY",       "concepts": ["HE","SEE","GROCERY"],                           "render": { "en": "He sees a grocery." } },
+    { "template_id": "SHE_SEES_SHOWER",       "concepts": ["SHE","SEE","SHOWER"],                           "render": { "en": "She sees a shower." } },
+
+    { "template_id": "I_HAVE_BILL",           "concepts": ["FIRST_PERSON_SINGULAR","HAVE","BILL"],          "render": { "en": "I have a bill." } },
+    { "template_id": "SHE_HAS_MEETING",       "concepts": ["SHE","HAVE","MEETING"],                         "render": { "en": "She has a meeting." } },
+    { "template_id": "WE_HAVE_DEADLINE",      "concepts": ["FIRST_PERSON_PLURAL","HAVE","DEADLINE"],        "render": { "en": "We have a deadline." } },
+
+    { "template_id": "LAUNDRY_IS_MESSY",      "concepts": ["LAUNDRY","BE","MESSY"],                         "render": { "en": "The laundry is messy." } },
+    { "template_id": "OFFICE_IS_BUSY",        "concepts": ["OFFICE","BE","BUSY"],                           "render": { "en": "The office is busy." } },
+    { "template_id": "BILL_IS_CHEAP",         "concepts": ["BILL","BE","CHEAP"],                            "render": { "en": "The bill is cheap." } },
+    { "template_id": "CONVERSATION_IS_FRIENDLY","concepts":["CONVERSATION","BE","FRIENDLY"],                "render": { "en": "The conversation is friendly." } },
+
+    { "template_id": "I_SEE_FURNITURE",       "concepts": ["FIRST_PERSON_SINGULAR","SEE","FURNITURE"],      "render": { "en": "I see furniture." } },
+    { "template_id": "THEY_SEE_STORM",        "concepts": ["THIRD_PERSON_PLURAL","SEE","STORM"],            "render": { "en": "They see a storm." } },
+
+    { "template_id": "I_HAVE_MEDICINE",       "concepts": ["FIRST_PERSON_SINGULAR","HAVE","MEDICINE"],      "render": { "en": "I have medicine." } },
+    { "template_id": "HE_HAS_CONVERSATION",   "concepts": ["HE","HAVE","CONVERSATION"],                     "render": { "en": "He has a conversation." } },
+
+    { "template_id": "WE_ORGANIZE_LAUNDRY",   "concepts": ["FIRST_PERSON_PLURAL","ORGANIZE","LAUNDRY"],     "render": { "en": "We organize the laundry." } },
+    { "template_id": "SHE_REPAIRS_COUCH",     "concepts": ["SHE","REPAIR","COUCH"],                         "render": { "en": "She repairs the couch." } }
+
+  ]
+}

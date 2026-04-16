@@ -1,0 +1,86 @@
+{
+  "templates": [
+
+    { "template_id": "I_SEE_JACKET",          "concepts": ["FIRST_PERSON_SINGULAR","SEE","JACKET"],         "render": { "en": "I see a jacket." } },
+    { "template_id": "YOU_SEE_DRESS",         "concepts": ["SECOND_PERSON","SEE","DRESS"],                  "render": { "en": "You see a dress." } },
+    { "template_id": "HE_SEES_RUNWAY",        "concepts": ["HE","SEE","RUNWAY"],                            "render": { "en": "He sees a runway." } },
+    { "template_id": "SHE_SEES_BOUTIQUE",     "concepts": ["SHE","SEE","BOUTIQUE"],                         "render": { "en": "She sees a boutique." } },
+    { "template_id": "WE_SEE_COLLECTION",     "concepts": ["FIRST_PERSON_PLURAL","SEE","COLLECTION"],       "render": { "en": "We see a collection." } },
+    { "template_id": "THEY_SEE_MODEL",        "concepts": ["THIRD_PERSON_PLURAL","SEE","MODEL"],            "render": { "en": "They see a model." } },
+
+    { "template_id": "I_HAVE_JACKET",         "concepts": ["FIRST_PERSON_SINGULAR","HAVE","JACKET"],        "render": { "en": "I have a jacket." } },
+    { "template_id": "YOU_HAVE_OUTFIT",       "concepts": ["SECOND_PERSON","HAVE","OUTFIT"],                "render": { "en": "You have an outfit." } },
+    { "template_id": "HE_HAS_WARDROBE",       "concepts": ["HE","HAVE","WARDROBE"],                         "render": { "en": "He has a wardrobe." } },
+    { "template_id": "SHE_HAS_NECKLACE",      "concepts": ["SHE","HAVE","NECKLACE"],                        "render": { "en": "She has a necklace." } },
+    { "template_id": "WE_HAVE_BRAND",         "concepts": ["FIRST_PERSON_PLURAL","HAVE","BRAND"],           "render": { "en": "We have a brand." } },
+    { "template_id": "THEY_HAVE_LOOKBOOK",    "concepts": ["THIRD_PERSON_PLURAL","HAVE","LOOKBOOK"],        "render": { "en": "They have a lookbook." } },
+
+    { "template_id": "HE_IS_DESIGNER",        "concepts": ["HE","BE","DESIGNER"],                           "render": { "en": "He is a designer." } },
+    { "template_id": "SHE_IS_MODEL",          "concepts": ["SHE","BE","MODEL"],                             "render": { "en": "She is a model." } },
+    { "template_id": "HE_IS_TAILOR",          "concepts": ["HE","BE","TAILOR"],                             "render": { "en": "He is a tailor." } },
+    { "template_id": "SHE_IS_INFLUENCER",     "concepts": ["SHE","BE","INFLUENCER"],                        "render": { "en": "She is an influencer." } },
+    { "template_id": "I_AM_DESIGNER",         "concepts": ["FIRST_PERSON_SINGULAR","BE","DESIGNER"],        "render": { "en": "I am a designer." } },
+
+    { "template_id": "I_DESIGN",              "concepts": ["FIRST_PERSON_SINGULAR","DESIGN"],               "render": { "en": "I design." } },
+    { "template_id": "YOU_DESIGN",            "concepts": ["SECOND_PERSON","DESIGN"],                       "render": { "en": "You design." } },
+    { "template_id": "HE_DESIGNS",            "concepts": ["HE","DESIGN"],                                  "render": { "en": "He designs." } },
+    { "template_id": "SHE_DESIGNS",           "concepts": ["SHE","DESIGN"],                                 "render": { "en": "She designs." } },
+    { "template_id": "WE_DESIGN",             "concepts": ["FIRST_PERSON_PLURAL","DESIGN"],                 "render": { "en": "We design." } },
+
+    { "template_id": "I_EMBROIDER",           "concepts": ["FIRST_PERSON_SINGULAR","EMBROIDER"],            "render": { "en": "I embroider." } },
+    { "template_id": "SHE_EMBROIDERS",        "concepts": ["SHE","EMBROIDER"],                              "render": { "en": "She embroiders." } },
+    { "template_id": "THEY_EMBROIDER",        "concepts": ["THIRD_PERSON_PLURAL","EMBROIDER"],              "render": { "en": "They embroider." } },
+
+    { "template_id": "I_STRUT",               "concepts": ["FIRST_PERSON_SINGULAR","STRUT"],                "render": { "en": "I strut." } },
+    { "template_id": "HE_STRUTS",             "concepts": ["HE","STRUT"],                                   "render": { "en": "He struts." } },
+    { "template_id": "SHE_STRUTS",            "concepts": ["SHE","STRUT"],                                  "render": { "en": "She struts." } },
+
+    { "template_id": "I_BROWSE_LOOKBOOK",     "concepts": ["FIRST_PERSON_SINGULAR","BROWSE","LOOKBOOK"],    "render": { "en": "I browse a lookbook." } },
+    { "template_id": "YOU_BROWSE",            "concepts": ["SECOND_PERSON","BROWSE"],                       "render": { "en": "You browse." } },
+    { "template_id": "WE_BROWSE",             "concepts": ["FIRST_PERSON_PLURAL","BROWSE"],                 "render": { "en": "We browse." } },
+
+    { "template_id": "SHE_ADORNS",            "concepts": ["SHE","ADORN"],                                  "render": { "en": "She adorns." } },
+    { "template_id": "I_ADORN",               "concepts": ["FIRST_PERSON_SINGULAR","ADORN"],                "render": { "en": "I adorn." } },
+
+    { "template_id": "I_CONTOUR",             "concepts": ["FIRST_PERSON_SINGULAR","CONTOUR"],              "render": { "en": "I contour." } },
+    { "template_id": "SHE_CONTOURS",          "concepts": ["SHE","CONTOUR"],                                "render": { "en": "She contours." } },
+
+    { "template_id": "I_COORDINATE_OUTFIT",   "concepts": ["FIRST_PERSON_SINGULAR","COORDINATE","OUTFIT"],  "render": { "en": "I coordinate an outfit." } },
+    { "template_id": "HE_COORDINATES",        "concepts": ["HE","COORDINATE"],                              "render": { "en": "He coordinates." } },
+    { "template_id": "WE_COORDINATE",         "concepts": ["FIRST_PERSON_PLURAL","COORDINATE"],             "render": { "en": "We coordinate." } },
+
+    { "template_id": "SHE_UNVEILS_COLLECTION","concepts": ["SHE","UNVEIL","COLLECTION"],                    "render": { "en": "She unveils a collection." } },
+    { "template_id": "THEY_UNVEIL",           "concepts": ["THIRD_PERSON_PLURAL","UNVEIL"],                 "render": { "en": "They unveil." } },
+
+    { "template_id": "I_SHOWCASE_OUTFIT",     "concepts": ["FIRST_PERSON_SINGULAR","SHOWCASE","OUTFIT"],    "render": { "en": "I showcase an outfit." } },
+    { "template_id": "HE_SHOWCASES_BRAND",    "concepts": ["HE","SHOWCASE","BRAND"],                        "render": { "en": "He showcases a brand." } },
+
+    { "template_id": "I_DRAPE_FABRIC",        "concepts": ["FIRST_PERSON_SINGULAR","DRAPE","FABRIC"],       "render": { "en": "I drape the fabric." } },
+    { "template_id": "SHE_DRAPES",            "concepts": ["SHE","DRAPE"],                                  "render": { "en": "She drapes." } },
+
+    { "template_id": "DRESS_IS_ELEGANT",      "concepts": ["DRESS","BE","ELEGANT"],                         "render": { "en": "The dress is elegant." } },
+    { "template_id": "JACKET_IS_VINTAGE",     "concepts": ["JACKET","BE","VINTAGE"],                        "render": { "en": "The jacket is vintage." } },
+    { "template_id": "OUTFIT_IS_GLAMOROUS",   "concepts": ["OUTFIT","BE","GLAMOROUS"],                      "render": { "en": "The outfit is glamorous." } },
+    { "template_id": "BRAND_IS_AFFORDABLE",   "concepts": ["BRAND","BE","AFFORDABLE"],                      "render": { "en": "The brand is affordable." } },
+    { "template_id": "NECKLACE_IS_DAZZLING",  "concepts": ["NECKLACE","BE","DAZZLING"],                     "render": { "en": "The necklace is dazzling." } },
+    { "template_id": "MAKEUP_IS_FLAWLESS",    "concepts": ["MAKEUP","BE","FLAWLESS"],                       "render": { "en": "The makeup is flawless." } },
+    { "template_id": "HAIRSTYLE_IS_CHIC",     "concepts": ["HAIRSTYLE","BE","CHIC"],                        "render": { "en": "The hairstyle is chic." } },
+    { "template_id": "COLLECTION_IS_EXCLUSIVE","concepts":["COLLECTION","BE","EXCLUSIVE"],                  "render": { "en": "The collection is exclusive." } },
+    { "template_id": "DESIGN_IS_ICONIC",      "concepts": ["AESTHETIC","BE","ICONIC"],                      "render": { "en": "The aesthetic is iconic." } },
+    { "template_id": "FABRIC_IS_TEXTURED",    "concepts": ["FABRIC","BE","TEXTURED"],                       "render": { "en": "The fabric is textured." } },
+
+    { "template_id": "I_SEE_SNEAKERS",        "concepts": ["FIRST_PERSON_SINGULAR","SEE","SNEAKERS"],       "render": { "en": "I see sneakers." } },
+    { "template_id": "YOU_SEE_LIPSTICK",      "concepts": ["SECOND_PERSON","SEE","LIPSTICK"],               "render": { "en": "You see a lipstick." } },
+    { "template_id": "HE_SEES_SUNGLASSES",    "concepts": ["HE","SEE","SUNGLASSES"],                        "render": { "en": "He sees sunglasses." } },
+    { "template_id": "SHE_SEES_BRACELET",     "concepts": ["SHE","SEE","BRACELET"],                         "render": { "en": "She sees a bracelet." } },
+
+    { "template_id": "I_HAVE_BRACELET",       "concepts": ["FIRST_PERSON_SINGULAR","HAVE","BRACELET"],      "render": { "en": "I have a bracelet." } },
+    { "template_id": "SHE_HAS_HAIRSTYLE",     "concepts": ["SHE","HAVE","HAIRSTYLE"],                       "render": { "en": "She has a hairstyle." } },
+    { "template_id": "HE_HAS_EDITORIAL",      "concepts": ["HE","HAVE","EDITORIAL"],                        "render": { "en": "He has an editorial." } },
+    { "template_id": "WE_HAVE_TREND",         "concepts": ["FIRST_PERSON_PLURAL","HAVE","TREND"],           "render": { "en": "We have a trend." } },
+
+    { "template_id": "COUTURE_IS_EXCLUSIVE",  "concepts": ["COUTURE","BE","EXCLUSIVE"],                     "render": { "en": "The couture is exclusive." } },
+    { "template_id": "TREND_IS_ICONIC",       "concepts": ["TREND","BE","ICONIC"],                          "render": { "en": "The trend is iconic." } }
+
+  ]
+}

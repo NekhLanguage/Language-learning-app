@@ -1,0 +1,88 @@
+{
+  "templates": [
+
+    { "template_id": "I_SEE_AIRPORT",         "concepts": ["FIRST_PERSON_SINGULAR","SEE","AIRPORT"],        "render": { "en": "I see an airport." } },
+    { "template_id": "YOU_SEE_HOTEL",         "concepts": ["SECOND_PERSON","SEE","HOTEL"],                  "render": { "en": "You see a hotel." } },
+    { "template_id": "HE_SEES_MUSEUM",        "concepts": ["HE","SEE","MUSEUM"],                            "render": { "en": "He sees a museum." } },
+    { "template_id": "SHE_SEES_CATHEDRAL",    "concepts": ["SHE","SEE","CATHEDRAL"],                        "render": { "en": "She sees a cathedral." } },
+    { "template_id": "WE_SEE_BEACH",          "concepts": ["FIRST_PERSON_PLURAL","SEE","BEACH"],            "render": { "en": "We see a beach." } },
+    { "template_id": "THEY_SEE_MARKET",       "concepts": ["THIRD_PERSON_PLURAL","SEE","MARKET"],           "render": { "en": "They see a market." } },
+
+    { "template_id": "I_HAVE_PASSPORT",       "concepts": ["FIRST_PERSON_SINGULAR","HAVE","PASSPORT"],      "render": { "en": "I have a passport." } },
+    { "template_id": "YOU_HAVE_TICKET",       "concepts": ["SECOND_PERSON","HAVE","TICKET"],                "render": { "en": "You have a ticket." } },
+    { "template_id": "HE_HAS_RESERVATION",    "concepts": ["HE","HAVE","RESERVATION"],                      "render": { "en": "He has a reservation." } },
+    { "template_id": "SHE_HAS_ITINERARY",     "concepts": ["SHE","HAVE","ITINERARY"],                       "render": { "en": "She has an itinerary." } },
+    { "template_id": "WE_HAVE_LUGGAGE",       "concepts": ["FIRST_PERSON_PLURAL","HAVE","LUGGAGE"],         "render": { "en": "We have luggage." } },
+    { "template_id": "THEY_HAVE_GUIDE",       "concepts": ["THIRD_PERSON_PLURAL","HAVE","GUIDE"],           "render": { "en": "They have a guide." } },
+
+    { "template_id": "HE_IS_WAITER",          "concepts": ["HE","BE","WAITER"],                             "render": { "en": "He is a waiter." } },
+    { "template_id": "SHE_IS_GUIDE",          "concepts": ["SHE","BE","GUIDE"],                             "render": { "en": "She is a guide." } },
+    { "template_id": "I_AM_TOURIST",          "concepts": ["FIRST_PERSON_SINGULAR","BE","GUIDE"],           "render": { "en": "I am a tourist." } },
+
+    { "template_id": "I_BOARD_FLIGHT",        "concepts": ["FIRST_PERSON_SINGULAR","BOARD","FLIGHT"],       "render": { "en": "I board a flight." } },
+    { "template_id": "YOU_BOARD",             "concepts": ["SECOND_PERSON","BOARD"],                        "render": { "en": "You board." } },
+    { "template_id": "HE_BOARDS",             "concepts": ["HE","BOARD"],                                   "render": { "en": "He boards." } },
+    { "template_id": "THEY_BOARD",            "concepts": ["THIRD_PERSON_PLURAL","BOARD"],                  "render": { "en": "They board." } },
+
+    { "template_id": "I_RESERVE_HOTEL",       "concepts": ["FIRST_PERSON_SINGULAR","RESERVE","HOTEL"],      "render": { "en": "I reserve a hotel." } },
+    { "template_id": "SHE_RESERVES",          "concepts": ["SHE","RESERVE"],                                "render": { "en": "She reserves." } },
+    { "template_id": "WE_RESERVE",            "concepts": ["FIRST_PERSON_PLURAL","RESERVE"],                "render": { "en": "We reserve." } },
+
+    { "template_id": "I_NAVIGATE_ROUTE",      "concepts": ["FIRST_PERSON_SINGULAR","NAVIGATE","ROUTE"],     "render": { "en": "I navigate a route." } },
+    { "template_id": "HE_NAVIGATES",          "concepts": ["HE","NAVIGATE"],                                "render": { "en": "He navigates." } },
+    { "template_id": "THEY_NAVIGATE",         "concepts": ["THIRD_PERSON_PLURAL","NAVIGATE"],               "render": { "en": "They navigate." } },
+
+    { "template_id": "I_PHOTOGRAPH_MONUMENT", "concepts": ["FIRST_PERSON_SINGULAR","PHOTOGRAPH","MONUMENT"],"render": { "en": "I photograph a monument." } },
+    { "template_id": "SHE_PHOTOGRAPHS",       "concepts": ["SHE","PHOTOGRAPH"],                             "render": { "en": "She photographs." } },
+    { "template_id": "WE_PHOTOGRAPH",         "concepts": ["FIRST_PERSON_PLURAL","PHOTOGRAPH"],             "render": { "en": "We photograph." } },
+
+    { "template_id": "I_ORDER_MENU",          "concepts": ["FIRST_PERSON_SINGULAR","ORDER","MENU"],         "render": { "en": "I order from a menu." } },
+    { "template_id": "HE_ORDERS",             "concepts": ["HE","ORDER"],                                   "render": { "en": "He orders." } },
+    { "template_id": "THEY_ORDER",            "concepts": ["THIRD_PERSON_PLURAL","ORDER"],                  "render": { "en": "They order." } },
+
+    { "template_id": "I_PURCHASE_SOUVENIR",   "concepts": ["FIRST_PERSON_SINGULAR","PURCHASE","SOUVENIR"],  "render": { "en": "I purchase a souvenir." } },
+    { "template_id": "SHE_PURCHASES",         "concepts": ["SHE","PURCHASE"],                               "render": { "en": "She purchases." } },
+    { "template_id": "WE_PURCHASE",           "concepts": ["FIRST_PERSON_PLURAL","PURCHASE"],               "render": { "en": "We purchase." } },
+
+    { "template_id": "I_TRANSLATE",           "concepts": ["FIRST_PERSON_SINGULAR","TRANSLATE"],            "render": { "en": "I translate." } },
+    { "template_id": "HE_TRANSLATES",         "concepts": ["HE","TRANSLATE"],                               "render": { "en": "He translates." } },
+    { "template_id": "SHE_TRANSLATES",        "concepts": ["SHE","TRANSLATE"],                              "render": { "en": "She translates." } },
+
+    { "template_id": "I_GREET_WAITER",        "concepts": ["FIRST_PERSON_SINGULAR","GREET","WAITER"],       "render": { "en": "I greet the waiter." } },
+    { "template_id": "WE_GREET",              "concepts": ["FIRST_PERSON_PLURAL","GREET"],                  "render": { "en": "We greet." } },
+
+    { "template_id": "I_EXPLORE_HARBOR",      "concepts": ["FIRST_PERSON_SINGULAR","EXPLORE","HARBOR"],     "render": { "en": "I explore the harbor." } },
+    { "template_id": "YOU_EXPLORE",           "concepts": ["SECOND_PERSON","EXPLORE"],                      "render": { "en": "You explore." } },
+    { "template_id": "THEY_EXPLORE",          "concepts": ["THIRD_PERSON_PLURAL","EXPLORE"],                "render": { "en": "They explore." } },
+
+    { "template_id": "I_EXCHANGE_CURRENCY",   "concepts": ["FIRST_PERSON_SINGULAR","EXCHANGE","CURRENCY"],  "render": { "en": "I exchange currency." } },
+    { "template_id": "HE_EXCHANGES",          "concepts": ["HE","EXCHANGE"],                                "render": { "en": "He exchanges." } },
+
+    { "template_id": "I_RECOMMEND_RESTAURANT","concepts": ["FIRST_PERSON_SINGULAR","RECOMMEND","RESTAURANT"],"render": { "en": "I recommend a restaurant." } },
+    { "template_id": "SHE_RECOMMENDS",        "concepts": ["SHE","RECOMMEND"],                              "render": { "en": "She recommends." } },
+
+    { "template_id": "I_INSURE_LUGGAGE",      "concepts": ["FIRST_PERSON_SINGULAR","INSURE","LUGGAGE"],     "render": { "en": "I insure my luggage." } },
+    { "template_id": "I_PRONOUNCE",           "concepts": ["FIRST_PERSON_SINGULAR","PRONOUNCE"],            "render": { "en": "I pronounce." } },
+
+    { "template_id": "BEACH_IS_SCENIC",       "concepts": ["BEACH","BE","SCENIC"],                          "render": { "en": "The beach is scenic." } },
+    { "template_id": "FOOD_IS_DELICIOUS",     "concepts": ["RESTAURANT","BE","DELICIOUS"],                  "render": { "en": "The restaurant is delicious." } },
+    { "template_id": "HOTEL_IS_EXPENSIVE",    "concepts": ["HOTEL","BE","EXPENSIVE"],                       "render": { "en": "The hotel is expensive." } },
+    { "template_id": "MONUMENT_IS_HISTORIC",  "concepts": ["MONUMENT","BE","HISTORIC"],                     "render": { "en": "The monument is historic." } },
+    { "template_id": "ADVENTURE_IS_UNFORGETTABLE","concepts":["ADVENTURE","BE","UNFORGETTABLE"],             "render": { "en": "The adventure is unforgettable." } },
+    { "template_id": "CURRENCY_IS_FOREIGN",   "concepts": ["CURRENCY","BE","FOREIGN"],                      "render": { "en": "The currency is foreign." } },
+
+    { "template_id": "I_SEE_LANDMARK",        "concepts": ["FIRST_PERSON_SINGULAR","SEE","LANDMARK"],       "render": { "en": "I see a landmark." } },
+    { "template_id": "YOU_SEE_HARBOR",        "concepts": ["SECOND_PERSON","SEE","HARBOR"],                 "render": { "en": "You see a harbor." } },
+    { "template_id": "HE_SEES_EMBASSY",       "concepts": ["HE","SEE","EMBASSY"],                           "render": { "en": "He sees an embassy." } },
+    { "template_id": "SHE_SEES_STATION",      "concepts": ["SHE","SEE","STATION"],                          "render": { "en": "She sees a station." } },
+    { "template_id": "WE_SEE_TAXI",           "concepts": ["FIRST_PERSON_PLURAL","SEE","TAXI"],             "render": { "en": "We see a taxi." } },
+
+    { "template_id": "I_HAVE_PHRASEBOOK",     "concepts": ["FIRST_PERSON_SINGULAR","HAVE","PHRASEBOOK"],    "render": { "en": "I have a phrasebook." } },
+    { "template_id": "HE_HAS_BARGAIN",        "concepts": ["HE","HAVE","BARGAIN"],                          "render": { "en": "He has a bargain." } },
+    { "template_id": "WE_HAVE_ADVENTURE",     "concepts": ["FIRST_PERSON_PLURAL","HAVE","ADVENTURE"],       "render": { "en": "We have an adventure." } },
+
+    { "template_id": "LOBBY_IS_SCENIC",       "concepts": ["LOBBY","BE","SCENIC"],                          "render": { "en": "The lobby is scenic." } },
+    { "template_id": "MARKET_IS_FOREIGN",     "concepts": ["MARKET","BE","FOREIGN"],                        "render": { "en": "The market is foreign." } }
+
+  ]
+}
