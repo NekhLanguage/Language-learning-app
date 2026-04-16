@@ -1,0 +1,600 @@
+{
+  "uiStrings": {
+    "openApp": "ABRIR APP",
+    "languagesTitle": "IDIOMAS",
+    "chooseLanguage": "Elige un idioma para aprender",
+    "quitLearning": "SALIR",
+    "sessionTitle": "SESIÓN DE HOY",
+    "startSubtitle": "Aprendizaje de idiomas",
+    "chooseTranslation": "Elige la traducción correcta para:",
+    "originalSentence": "Frase original:",
+    "fillMissing": "Rellena la palabra que falta:",
+    "inThisSentence": "En esta frase:",
+    "check": "Comprobar",
+    "continue": "Continuar",
+    "correct": "Correcto.",
+    "incorrect": "Incorrecto.",
+    "level": "Nivel",
+    "blueprint": "Plan de Idiomas de Nekh",
+    "skool": "Comunidad Skool",
+    "offer": "Mejora tu plan de idiomas",
+    "sessionComplete": "Sesión completada",
+    "sessionFinished": "Sesión {n} completada.",
+    "enterEmail": "Introduce tu correo electrónico",
+    "buyAccess": "¿Sin cuenta? Comprar acceso",
+    "noAccess": "No se encontró acceso para este correo",
+    "resourcePacks": "PAQUETES DE RECURSOS",
+    "choosePacks": "Elige hasta 2 paquetes",
+    "start": "EMPEZAR",
+    "selectPack": "Selecciona al menos 1 paquete"
+  },
+  "hubNames": {
+    "en": "Inglés",
+    "pt": "Portugués",
+    "ja": "Japonés",
+    "no": "Noruego",
+    "ar": "Árabe",
+    "ko": "Coreano",
+    "uk": "Ucraniano",
+    "de": "Alemán",
+    "el": "Griego",
+    "tr": "Turco",
+    "es": "Español"
+  },
+  "forms": {
+    "BIG": [
+      "grande"
+    ],
+    "SMALL": [
+      "pequeño"
+    ],
+    "GOOD": [
+      "bueno"
+    ],
+    "BAD": [
+      "malo"
+    ],
+    "NEW": [
+      "nuevo"
+    ],
+    "OLD": [
+      "viejo"
+    ],
+    "EASY": [
+      "fácil"
+    ],
+    "DIFFICULT": [
+      "difícil"
+    ],
+    "MY": [
+      "mi"
+    ],
+    "YOUR": [
+      "tu"
+    ],
+    "HIS": [
+      "su"
+    ],
+    "HER": [
+      "su"
+    ],
+    "OUR": [
+      "nuestro"
+    ],
+    "THEIR": [
+      "su",
+      "sus"
+    ],
+    "AND": [
+      "y"
+    ],
+    "BUT": [
+      "pero"
+    ],
+    "ALSO": [
+      "también"
+    ],
+    "BECAUSE": [
+      "porque"
+    ],
+    "IF": [
+      "si"
+    ],
+    "TOP": [
+      "arriba"
+    ],
+    "BOTTOM": [
+      "abajo"
+    ],
+    "UNDER": [
+      "debajo"
+    ],
+    "NEXT_TO": [
+      "al lado"
+    ],
+    "FRONT": [
+      "delante"
+    ],
+    "BEHIND": [
+      "detrás"
+    ],
+    "IN": [
+      "en"
+    ],
+    "ON": [
+      "sobre"
+    ],
+    "OFF": [
+      "fuera"
+    ],
+    "BETWEEN": [
+      "entre"
+    ],
+    "BACK": [
+      "atrás"
+    ],
+    "OUT": [
+      "fuera"
+    ],
+    "NORTH": [
+      "norte"
+    ],
+    "SOUTH": [
+      "sur"
+    ],
+    "EAST": [
+      "este"
+    ],
+    "WEST": [
+      "oeste"
+    ],
+    "FOR": [
+      "para"
+    ],
+    "WITH": [
+      "con"
+    ],
+    "FROM": [
+      "de"
+    ],
+    "TO": [
+      "a"
+    ],
+    "BY": [
+      "por"
+    ],
+    "WHILE": [
+      "mientras"
+    ],
+    "AS": [
+      "como"
+    ],
+    "WATER": {
+      "form": "agua",
+      "gender": "f"
+    },
+    "FOOD": {
+      "form": "comida",
+      "gender": "f"
+    },
+    "HOUSE": {
+      "form": "casa",
+      "gender": "f"
+    },
+    "HOME": {
+      "form": "hogar",
+      "gender": "m"
+    },
+    "BOOK": {
+      "form": "libro",
+      "gender": "m"
+    },
+    "THING": {
+      "form": "cosa",
+      "gender": "f"
+    },
+    "JOB": {
+      "form": "trabajo",
+      "gender": "m"
+    },
+    "ROOM": {
+      "form": "habitación",
+      "gender": "f"
+    },
+    "BOY": {
+      "form": "chico",
+      "gender": "m"
+    },
+    "GIRL": {
+      "form": "chica",
+      "gender": "f"
+    },
+    "MAN": {
+      "form": "hombre",
+      "gender": "m"
+    },
+    "WOMAN": {
+      "form": "mujer",
+      "gender": "f"
+    },
+    "MOM": {
+      "form": "mamá",
+      "gender": "f"
+    },
+    "DAD": {
+      "form": "papá",
+      "gender": "m"
+    },
+    "SON": {
+      "form": "hijo",
+      "gender": "m"
+    },
+    "DAUGHTER": {
+      "form": "hija",
+      "gender": "f"
+    },
+    "BROTHER": {
+      "form": "hermano",
+      "gender": "m"
+    },
+    "SISTER": {
+      "form": "hermana",
+      "gender": "f"
+    },
+    "HEAD": {
+      "form": "cabeza",
+      "gender": "f"
+    },
+    "ARM": {
+      "form": "brazo",
+      "gender": "m"
+    },
+    "HAND": {
+      "form": "mano",
+      "gender": "f"
+    },
+    "LEG": {
+      "form": "pierna",
+      "gender": "f"
+    },
+    "FOOT": {
+      "form": "pie",
+      "gender": "m"
+    },
+    "FINGER": {
+      "form": "dedo",
+      "gender": "m"
+    },
+    "EYE": {
+      "form": "ojo",
+      "gender": "m"
+    },
+    "MOUTH": {
+      "form": "boca",
+      "gender": "f"
+    },
+    "FACE": {
+      "form": "cara",
+      "gender": "f"
+    },
+    "BREAKFAST": {
+      "form": "desayuno",
+      "gender": "m"
+    },
+    "LUNCH": {
+      "form": "almuerzo",
+      "gender": "m"
+    },
+    "DINNER": {
+      "form": "cena",
+      "gender": "f"
+    },
+    "CLOTHES": {
+      "form": "ropa"
+    },
+    "SHIRT": {
+      "form": "camisa",
+      "gender": "f"
+    },
+    "SHOES": {
+      "form": "zapatos",
+      "gender": "m"
+    },
+    "PHONE": {
+      "form": "teléfono",
+      "gender": "m"
+    },
+    "PANTS": {
+      "form": "pantalón",
+      "gender": "m"
+    },
+    "ONE": [
+      "uno"
+    ],
+    "TWO": [
+      "dos"
+    ],
+    "THREE": [
+      "tres"
+    ],
+    "FOUR": [
+      "cuatro"
+    ],
+    "FIVE": [
+      "cinco"
+    ],
+    "SIX": [
+      "seis"
+    ],
+    "SEVEN": [
+      "siete"
+    ],
+    "EIGHT": [
+      "ocho"
+    ],
+    "NINE": [
+      "nueve"
+    ],
+    "TEN": [
+      "diez"
+    ],
+    "ELEVEN": [
+      "once"
+    ],
+    "TWELVE": [
+      "doce"
+    ],
+    "THIRTEEN": [
+      "trece"
+    ],
+    "FOURTEEN": [
+      "catorce"
+    ],
+    "FIFTEEN": [
+      "quince"
+    ],
+    "SIXTEEN": [
+      "dieciséis"
+    ],
+    "SEVENTEEN": [
+      "diecisiete"
+    ],
+    "EIGHTEEN": [
+      "dieciocho"
+    ],
+    "NINETEEN": [
+      "diecinueve"
+    ],
+    "TWENTY": [
+      "veinte"
+    ],
+    "PLEASE": [
+      "por favor"
+    ],
+    "MAYBE": [
+      "quizás",
+      "tal vez"
+    ],
+    "JUST": [
+      "solo"
+    ],
+    "YES": [
+      "sí"
+    ],
+    "NO": [
+      "no"
+    ],
+    "NOT": [
+      "no"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "yo"
+    ],
+    "SECOND_PERSON": [
+      "tú"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "vosotros"
+    ],
+    "HE": [
+      "él"
+    ],
+    "SHE": [
+      "ella"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "nosotros"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "ellos",
+      "ellas"
+    ],
+    "ANY": [
+      "cualquier"
+    ],
+    "ONLY": [
+      "solo"
+    ],
+    "ANOTHER": [
+      "otro"
+    ],
+    "SOMETHING": [
+      "algo"
+    ],
+    "WHO": [
+      "quién"
+    ],
+    "WHAT": [
+      "qué"
+    ],
+    "WHEN": [
+      "cuándo"
+    ],
+    "WHERE": [
+      "dónde"
+    ],
+    "WHY": [
+      "por qué"
+    ],
+    "HOW": [
+      "cómo"
+    ],
+    "WHICH": [
+      "cuál",
+      "cuáles"
+    ],
+    "TODAY": [
+      "hoy"
+    ],
+    "YESTERDAY": [
+      "ayer"
+    ],
+    "TOMORROW": [
+      "mañana"
+    ],
+    "MORNING": [
+      "mañana"
+    ],
+    "DAY": [
+      "día"
+    ],
+    "NIGHT": [
+      "noche"
+    ],
+    "WEEK": [
+      "semana"
+    ],
+    "MONTH": [
+      "mes"
+    ],
+    "YEAR": [
+      "año"
+    ],
+    "DO": {
+      "base": "hacer",
+      "1_singular": "hago",
+      "2_singular": "haces",
+      "3_singular": "hace",
+      "1_plural": "hacemos",
+      "2_plural": "hacéis",
+      "3_plural": "hacen"
+    },
+    "GO": {
+      "base": "ir",
+      "1_singular": "voy",
+      "2_singular": "vas",
+      "3_singular": "va",
+      "1_plural": "vamos",
+      "2_plural": "vais",
+      "3_plural": "van"
+    },
+    "EAT": {
+      "base": "comer",
+      "1_singular": "como",
+      "2_singular": "comes",
+      "3_singular": "come",
+      "1_plural": "comemos",
+      "2_plural": "coméis",
+      "3_plural": "comen"
+    },
+    "DRINK": {
+      "base": "beber",
+      "1_singular": "bebo",
+      "2_singular": "bebes",
+      "3_singular": "bebe",
+      "1_plural": "bebemos",
+      "2_plural": "bebéis",
+      "3_plural": "beben"
+    },
+    "READ": {
+      "base": "leer",
+      "1_singular": "leo",
+      "2_singular": "lees",
+      "3_singular": "lee",
+      "1_plural": "leemos",
+      "2_plural": "leéis",
+      "3_plural": "leen"
+    },
+    "SEE": {
+      "base": "ver",
+      "1_singular": "veo",
+      "2_singular": "ves",
+      "3_singular": "ve",
+      "1_plural": "vemos",
+      "2_plural": "veis",
+      "3_plural": "ven"
+    },
+    "START": {
+      "base": "empezar",
+      "1_singular": "empiezo",
+      "2_singular": "empiezas",
+      "3_singular": "empieza",
+      "1_plural": "empezamos",
+      "2_plural": "empezáis",
+      "3_plural": "empiezan"
+    },
+    "STOP": {
+      "base": "parar",
+      "1_singular": "paro",
+      "2_singular": "paras",
+      "3_singular": "para",
+      "1_plural": "paramos",
+      "2_plural": "paráis",
+      "3_plural": "paran"
+    },
+    "SLEEP": {
+      "base": "dormir",
+      "1_singular": "duermo",
+      "2_singular": "duermes",
+      "3_singular": "duerme",
+      "1_plural": "dormimos",
+      "2_plural": "dormís",
+      "3_plural": "duermen"
+    },
+    "HAVE": {
+      "base": "tener",
+      "1_singular": "tengo",
+      "2_singular": "tienes",
+      "3_singular": "tiene",
+      "1_plural": "tenemos",
+      "2_plural": "tenéis",
+      "3_plural": "tienen"
+    },
+    "COME": {
+      "base": "venir",
+      "1_singular": "vengo",
+      "2_singular": "vienes",
+      "3_singular": "viene",
+      "1_plural": "venimos",
+      "2_plural": "venís",
+      "3_plural": "vienen"
+    },
+    "USE": {
+      "base": "usar",
+      "1_singular": "uso",
+      "2_singular": "usas",
+      "3_singular": "usa",
+      "1_plural": "usamos",
+      "2_plural": "usáis",
+      "3_plural": "usan"
+    },
+    "GET": {
+      "base": "obtener",
+      "1_singular": "obtengo",
+      "2_singular": "obtienes",
+      "3_singular": "obtiene",
+      "1_plural": "obtenemos",
+      "2_plural": "obtenéis",
+      "3_plural": "obtienen"
+    },
+    "BE": {
+      "base": "ser",
+      "1_singular": "soy",
+      "2_singular": "eres",
+      "3_singular": "es",
+      "1_plural": "somos",
+      "2_plural": "sois",
+      "3_plural": "son"
+    }
+  }
+}
