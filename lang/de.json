@@ -189,7 +189,8 @@
     },
     "BOOK": {
       "form": "Buch",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Bücher"
     },
     "THING": {
       "form": "Ding",
@@ -205,7 +206,8 @@
     },
     "BOY": {
       "form": "Junge",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Jungen"
     },
     "GIRL": {
       "form": "Mädchen",
@@ -213,11 +215,13 @@
     },
     "MAN": {
       "form": "Mann",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Männer"
     },
     "WOMAN": {
       "form": "Frau",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Frauen"
     },
     "MOM": {
       "form": "Mama",
@@ -229,19 +233,23 @@
     },
     "SON": {
       "form": "Sohn",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Söhne"
     },
     "DAUGHTER": {
       "form": "Tochter",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Töchter"
     },
     "BROTHER": {
       "form": "Bruder",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Brüder"
     },
     "SISTER": {
       "form": "Schwester",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Schwestern"
     },
     "HEAD": {
       "form": "Kopf",
@@ -249,11 +257,13 @@
     },
     "ARM": {
       "form": "Arm",
-      "gender": "m"
+      "gender": "m",
+      "plural": "Arme"
     },
     "HAND": {
       "form": "Hand",
-      "gender": "f"
+      "gender": "f",
+      "plural": "Hände"
     },
     "LEG": {
       "form": "Bein",
@@ -269,7 +279,8 @@
     },
     "EYE": {
       "form": "Auge",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Augen"
     },
     "MOUTH": {
       "form": "Mund",
@@ -297,7 +308,8 @@
     },
     "SHIRT": {
       "form": "Hemd",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Hemden"
     },
     "SHOES": {
       "form": "Schuhe",
@@ -305,7 +317,8 @@
     },
     "PHONE": {
       "form": "Telefon",
-      "gender": "n"
+      "gender": "n",
+      "plural": "Telefone"
     },
     "PANTS": {
       "form": "Hose",

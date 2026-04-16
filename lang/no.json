@@ -41,31 +41,14 @@
     "tr": "Tyrkisk"
   },
   "forms": {
-    "BIG": [
-      "stor"
-    ],
-    "SMALL": [
-      "liten"
-    ],
-    "GOOD": [
-      "god",
-      "bra"
-    ],
-    "BAD": [
-      "dårlig"
-    ],
-    "NEW": [
-      "ny"
-    ],
-    "OLD": [
-      "gammel"
-    ],
-    "EASY": [
-      "lett"
-    ],
-    "DIFFICULT": [
-      "vanskelig"
-    ],
+    "BIG": { "form": "stor", "plural": "store" },
+    "SMALL": { "form": "liten", "plural": "lille" },
+    "GOOD": { "form": "god", "plural": "gode" },
+    "BAD": { "form": "dårlig", "plural": "dårlige" },
+    "NEW": { "form": "ny", "plural": "nye" },
+    "OLD": { "form": "gammel", "plural": "gamle" },
+    "EASY": { "form": "lett", "plural": "lette" },
+    "DIFFICULT": { "form": "vanskelig", "plural": "vanskelige" },
     "MY": [
       "min"
     ],
@@ -185,7 +168,8 @@
     },
     "BOOK": {
       "form": "bok",
-      "gender": "m"
+      "gender": "m",
+      "plural": "bøker"
     },
     "THING": {
       "form": "ting",
@@ -193,7 +177,8 @@
     },
     "JOB": {
       "form": "jobb",
-      "gender": "m"
+      "gender": "m",
+      "plural": "jobber"
     },
     "ROOM": {
       "form": "rom",
@@ -201,55 +186,68 @@
     },
     "BOY": {
       "form": "gutt",
-      "gender": "m"
+      "gender": "m",
+      "plural": "gutter"
     },
     "GIRL": {
       "form": "jente",
-      "gender": "f"
+      "gender": "f",
+      "plural": "jenter"
     },
     "MAN": {
       "form": "mann",
-      "gender": "m"
+      "gender": "m",
+      "plural": "menn"
     },
     "WOMAN": {
       "form": "kvinne",
-      "gender": "f"
+      "gender": "f",
+      "plural": "kvinner"
     },
     "MOM": {
       "form": "mamma",
-      "gender": "f"
+      "gender": "f",
+      "plural": "mammaer"
     },
     "DAD": {
       "form": "pappa",
-      "gender": "m"
+      "gender": "m",
+      "plural": "pappaer"
     },
     "SON": {
       "form": "sønn",
-      "gender": "m"
+      "gender": "m",
+      "plural": "sønner"
     },
     "DAUGHTER": {
       "form": "datter",
-      "gender": "f"
+      "gender": "f",
+      "plural": "døtre"
     },
     "BROTHER": {
       "form": "bror",
-      "gender": "m"
+      "gender": "m",
+      "plural": "brødre"
     },
     "SISTER": {
       "form": "søster",
-      "gender": "f"
+      "gender": "f",
+      "plural": "søstre"
     },
     "HEAD": {
       "form": "hode",
-      "gender": "n"
+      "gender": "n",
+      "plural": "hoder"
     },
     "ARM": {
       "form": "arm",
-      "gender": "m"
+      "gender": "m",
+      "plural": "armer"
     },
     "HAND": {
       "form": "hånd",
-      "gender": "f"
+      "gender": "f",
+      "plural": "hender"
     },
     "LEG": {
       "form": "bein",
@@ -257,49 +255,59 @@
     },
     "FOOT": {
       "form": "fot",
-      "gender": "m"
+      "gender": "m",
+      "plural": "føtter"
     },
     "FINGER": {
       "form": "finger",
-      "gender": "m"
+      "gender": "m",
+      "plural": "fingre"
     },
     "EYE": {
       "form": "øye",
-      "gender": "n"
+      "gender": "n",
+      "plural": "øyne"
     },
     "MOUTH": {
       "form": "munn",
-      "gender": "m"
+      "gender": "m",
+      "plural": "munner"
     },
     "FACE": {
       "form": "ansikt",
-      "gender": "n"
+      "gender": "n",
+      "plural": "ansikter"
     },
     "BREAKFAST": {
       "form": "frokost",
-      "gender": "m"
+      "gender": "m",
+      "plural": "frokoster"
     },
     "LUNCH": {
       "form": "lunsj",
-      "gender": "m"
+      "gender": "m",
+      "plural": "lunsjer"
     },
     "DINNER": {
       "form": "middag",
-      "gender": "m"
+      "gender": "m",
+      "plural": "middager"
     },
     "CLOTHES": {
       "form": "klær"
     },
     "SHIRT": {
       "form": "skjorte",
-      "gender": "f"
+      "gender": "f",
+      "plural": "skjorter"
     },
     "SHOES": {
       "form": "sko"
     },
     "PHONE": {
       "form": "telefon",
-      "gender": "m"
+      "gender": "m",
+      "plural": "telefoner"
     },
     "PANTS": {
       "form": "bukser"

@@ -42,30 +42,14 @@
     "es": "Español"
   },
   "forms": {
-    "BIG": [
-      "grande"
-    ],
-    "SMALL": [
-      "pequeño"
-    ],
-    "GOOD": [
-      "bueno"
-    ],
-    "BAD": [
-      "malo"
-    ],
-    "NEW": [
-      "nuevo"
-    ],
-    "OLD": [
-      "viejo"
-    ],
-    "EASY": [
-      "fácil"
-    ],
-    "DIFFICULT": [
-      "difícil"
-    ],
+    "BIG": { "form": "grande", "plural": "grandes" },
+    "SMALL": { "form": "pequeño", "plural": "pequeños" },
+    "GOOD": { "form": "bueno", "plural": "buenos" },
+    "BAD": { "form": "malo", "plural": "malos" },
+    "NEW": { "form": "nuevo", "plural": "nuevos" },
+    "OLD": { "form": "viejo", "plural": "viejos" },
+    "EASY": { "form": "fácil", "plural": "fáciles" },
+    "DIFFICULT": { "form": "difícil", "plural": "difíciles" },
     "MY": [
       "mi"
     ],
@@ -179,122 +163,151 @@
     },
     "HOUSE": {
       "form": "casa",
-      "gender": "f"
+      "gender": "f",
+      "plural": "casas"
     },
     "HOME": {
       "form": "hogar",
-      "gender": "m"
+      "gender": "m",
+      "plural": "hogares"
     },
     "BOOK": {
       "form": "libro",
-      "gender": "m"
+      "gender": "m",
+      "plural": "libros"
     },
     "THING": {
       "form": "cosa",
-      "gender": "f"
+      "gender": "f",
+      "plural": "cosas"
     },
     "JOB": {
       "form": "trabajo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "trabajos"
     },
     "ROOM": {
       "form": "habitación",
-      "gender": "f"
+      "gender": "f",
+      "plural": "habitaciones"
     },
     "BOY": {
       "form": "chico",
-      "gender": "m"
+      "gender": "m",
+      "plural": "chicos"
     },
     "GIRL": {
       "form": "chica",
-      "gender": "f"
+      "gender": "f",
+      "plural": "chicas"
     },
     "MAN": {
       "form": "hombre",
-      "gender": "m"
+      "gender": "m",
+      "plural": "hombres"
     },
     "WOMAN": {
       "form": "mujer",
-      "gender": "f"
+      "gender": "f",
+      "plural": "mujeres"
     },
     "MOM": {
       "form": "mamá",
-      "gender": "f"
+      "gender": "f",
+      "plural": "mamás"
     },
     "DAD": {
       "form": "papá",
-      "gender": "m"
+      "gender": "m",
+      "plural": "papás"
     },
     "SON": {
       "form": "hijo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "hijos"
     },
     "DAUGHTER": {
       "form": "hija",
-      "gender": "f"
+      "gender": "f",
+      "plural": "hijas"
     },
     "BROTHER": {
       "form": "hermano",
-      "gender": "m"
+      "gender": "m",
+      "plural": "hermanos"
     },
     "SISTER": {
       "form": "hermana",
-      "gender": "f"
+      "gender": "f",
+      "plural": "hermanas"
     },
     "HEAD": {
       "form": "cabeza",
-      "gender": "f"
+      "gender": "f",
+      "plural": "cabezas"
     },
     "ARM": {
       "form": "brazo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "brazos"
     },
     "HAND": {
       "form": "mano",
-      "gender": "f"
+      "gender": "f",
+      "plural": "manos"
     },
     "LEG": {
       "form": "pierna",
-      "gender": "f"
+      "gender": "f",
+      "plural": "piernas"
     },
     "FOOT": {
       "form": "pie",
-      "gender": "m"
+      "gender": "m",
+      "plural": "pies"
     },
     "FINGER": {
       "form": "dedo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "dedos"
     },
     "EYE": {
       "form": "ojo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "ojos"
     },
     "MOUTH": {
       "form": "boca",
-      "gender": "f"
+      "gender": "f",
+      "plural": "bocas"
     },
     "FACE": {
       "form": "cara",
-      "gender": "f"
+      "gender": "f",
+      "plural": "caras"
     },
     "BREAKFAST": {
       "form": "desayuno",
-      "gender": "m"
+      "gender": "m",
+      "plural": "desayunos"
     },
     "LUNCH": {
       "form": "almuerzo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "almuerzos"
     },
     "DINNER": {
       "form": "cena",
-      "gender": "f"
+      "gender": "f",
+      "plural": "cenas"
     },
     "CLOTHES": {
       "form": "ropa"
     },
     "SHIRT": {
       "form": "camisa",
-      "gender": "f"
+      "gender": "f",
+      "plural": "camisas"
     },
     "SHOES": {
       "form": "zapatos",
@@ -302,11 +315,13 @@
     },
     "PHONE": {
       "form": "teléfono",
-      "gender": "m"
+      "gender": "m",
+      "plural": "teléfonos"
     },
     "PANTS": {
       "form": "pantalón",
-      "gender": "m"
+      "gender": "m",
+      "plural": "pantalones"
     },
     "ONE": [
       "uno"

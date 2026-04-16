@@ -175,7 +175,8 @@
     },
     "HOUSE": {
       "form": "بيت",
-      "gender": "m"
+      "gender": "m",
+      "plural": "بيوت"
     },
     "HOME": {
       "form": "منزل",
@@ -183,7 +184,8 @@
     },
     "BOOK": {
       "form": "كتاب",
-      "gender": "m"
+      "gender": "m",
+      "plural": "كتب"
     },
     "THING": {
       "form": "شيء",
@@ -191,27 +193,33 @@
     },
     "JOB": {
       "form": "وظيفة",
-      "gender": "f"
+      "gender": "f",
+      "plural": "وظائف"
     },
     "ROOM": {
       "form": "غرفة",
-      "gender": "f"
+      "gender": "f",
+      "plural": "غرف"
     },
     "BOY": {
       "form": "ولد",
-      "gender": "m"
+      "gender": "m",
+      "plural": "أولاد"
     },
     "GIRL": {
       "form": "بنت",
-      "gender": "f"
+      "gender": "f",
+      "plural": "بنات"
     },
     "MAN": {
       "form": "رجل",
-      "gender": "m"
+      "gender": "m",
+      "plural": "رجال"
     },
     "WOMAN": {
       "form": "امرأة",
-      "gender": "f"
+      "gender": "f",
+      "plural": "نساء"
     },
     "MOM": {
       "form": "أم",
@@ -223,23 +231,28 @@
     },
     "SON": {
       "form": "ابن",
-      "gender": "m"
+      "gender": "m",
+      "plural": "أبناء"
     },
     "DAUGHTER": {
       "form": "ابنة",
-      "gender": "f"
+      "gender": "f",
+      "plural": "بنات"
     },
     "BROTHER": {
       "form": "أخ",
-      "gender": "m"
+      "gender": "m",
+      "plural": "إخوة"
     },
     "SISTER": {
       "form": "أخت",
-      "gender": "f"
+      "gender": "f",
+      "plural": "أخوات"
     },
     "HEAD": {
       "form": "رأس",
-      "gender": "m"
+      "gender": "m",
+      "plural": "رؤوس"
     },
     "ARM": {
       "form": "ذراع",
@@ -247,15 +260,18 @@
     },
     "HAND": {
       "form": "يد",
-      "gender": "f"
+      "gender": "f",
+      "plural": "أيدي"
     },
     "LEG": {
       "form": "ساق",
-      "gender": "f"
+      "gender": "f",
+      "plural": "سيقان"
     },
     "FOOT": {
       "form": "قدم",
-      "gender": "f"
+      "gender": "f",
+      "plural": "أقدام"
     },
     "FINGER": {
       "form": "إصبع",
@@ -263,7 +279,8 @@
     },
     "EYE": {
       "form": "عين",
-      "gender": "f"
+      "gender": "f",
+      "plural": "عيون"
     },
     "MOUTH": {
       "form": "فم",
@@ -291,7 +308,8 @@
     },
     "SHIRT": {
       "form": "قميص",
-      "gender": "m"
+      "gender": "m",
+      "plural": "قمصان"
     },
     "SHOES": {
       "form": "حذاء",
@@ -299,7 +317,8 @@
     },
     "PHONE": {
       "form": "هاتف",
-      "gender": "m"
+      "gender": "m",
+      "plural": "هواتف"
     },
     "PANTS": {
       "form": "بنطال",
