@@ -525,17 +525,6 @@
       }
     },
     {
-      "template_id": "DUNGEON_IS_MYTHIC",
-      "concepts": [
-        "DUNGEON",
-        "BE",
-        "MYTHIC"
-      ],
-      "render": {
-        "en": "The dungeon is mythic."
-      }
-    },
-    {
       "template_id": "BOSS_IS_OVERPOWERED",
       "concepts": [
         "BOSS",

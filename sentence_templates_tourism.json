@@ -628,17 +628,6 @@
       }
     },
     {
-      "template_id": "HE_HAS_BARGAIN",
-      "concepts": [
-        "HE",
-        "HAVE",
-        "BARGAIN"
-      ],
-      "render": {
-        "en": "He has a bargain."
-      }
-    },
-    {
       "template_id": "WE_HAVE_ADVENTURE",
       "concepts": [
         "FIRST_PERSON_PLURAL",

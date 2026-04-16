@@ -595,17 +595,6 @@
       }
     },
     {
-      "template_id": "HE_HAS_ASSIST",
-      "concepts": [
-        "HE",
-        "HAVE",
-        "ASSIST"
-      ],
-      "render": {
-        "en": "He has an assist."
-      }
-    },
-    {
       "template_id": "SHE_HAS_MATCH",
       "concepts": [
         "SHE",
@@ -614,17 +603,6 @@
       ],
       "render": {
         "en": "She has a match."
-      }
-    },
-    {
-      "template_id": "I_SEE_FINAL",
-      "concepts": [
-        "FIRST_PERSON_SINGULAR",
-        "SEE",
-        "FINAL"
-      ],
-      "render": {
-        "en": "I see a final."
       }
     },
     {

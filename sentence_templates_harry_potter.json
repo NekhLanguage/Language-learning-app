@@ -428,17 +428,6 @@
       }
     },
     {
-      "template_id": "WIZARD_IS_BRAVE",
-      "concepts": [
-        "WIZARD",
-        "BE",
-        "BRAVE"
-      ],
-      "render": {
-        "en": "The wizard is brave."
-      }
-    },
-    {
       "template_id": "HE_SHOUT",
       "concepts": [
         "HE",

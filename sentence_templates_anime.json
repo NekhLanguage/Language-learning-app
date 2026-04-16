@@ -546,17 +546,6 @@
       }
     },
     {
-      "template_id": "SCROLL_IS_ANCIENT",
-      "concepts": [
-        "SCROLL",
-        "BE",
-        "ANCIENT"
-      ],
-      "render": {
-        "en": "The scroll is ancient."
-      }
-    },
-    {
       "template_id": "PORTAL_IS_CURSED",
       "concepts": [
         "PORTAL",

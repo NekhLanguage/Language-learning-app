@@ -616,17 +616,6 @@
       }
     },
     {
-      "template_id": "NEBULA_IS_COSMIC",
-      "concepts": [
-        "NEBULA",
-        "BE",
-        "COSMIC"
-      ],
-      "render": {
-        "en": "The nebula is cosmic."
-      }
-    },
-    {
       "template_id": "I_SEE_ASTRONAUT",
       "concepts": [
         "FIRST_PERSON_SINGULAR",
