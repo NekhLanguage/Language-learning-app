@@ -181,6 +181,7 @@
     },
     "HOUSE": {
       "form": "Haus",
+      "plural": "Häuser",
       "gender": "n"
     },
     "HOME": {
@@ -189,106 +190,132 @@
     },
     "BOOK": {
       "form": "Buch",
+      "plural": "Bücher",
       "gender": "n"
     },
     "THING": {
       "form": "Ding",
+      "plural": "Dinge",
       "gender": "n"
     },
     "JOB": {
       "form": "Job",
+      "plural": "Jobs",
       "gender": "m"
     },
     "ROOM": {
       "form": "Zimmer",
+      "plural": "Zimmer",
       "gender": "n"
     },
     "BOY": {
       "form": "Junge",
+      "plural": "Jungen",
       "gender": "m"
     },
     "GIRL": {
       "form": "Mädchen",
+      "plural": "Mädchen",
       "gender": "n"
     },
     "MAN": {
       "form": "Mann",
+      "plural": "Männer",
       "gender": "m"
     },
     "WOMAN": {
       "form": "Frau",
+      "plural": "Frauen",
       "gender": "f"
     },
     "MOM": {
       "form": "Mama",
+      "plural": "Mamas",
       "gender": "f"
     },
     "DAD": {
       "form": "Papa",
+      "plural": "Papas",
       "gender": "m"
     },
     "SON": {
       "form": "Sohn",
+      "plural": "Söhne",
       "gender": "m"
     },
     "DAUGHTER": {
       "form": "Tochter",
+      "plural": "Töchter",
       "gender": "f"
     },
     "BROTHER": {
       "form": "Bruder",
+      "plural": "Brüder",
       "gender": "m"
     },
     "SISTER": {
       "form": "Schwester",
+      "plural": "Schwestern",
       "gender": "f"
     },
     "HEAD": {
       "form": "Kopf",
+      "plural": "Köpfe",
       "gender": "m"
     },
     "ARM": {
       "form": "Arm",
+      "plural": "Arme",
       "gender": "m"
     },
     "HAND": {
       "form": "Hand",
+      "plural": "Hände",
       "gender": "f"
     },
     "LEG": {
       "form": "Bein",
+      "plural": "Beine",
       "gender": "n"
     },
     "FOOT": {
       "form": "Fuß",
+      "plural": "Füße",
       "gender": "m"
     },
     "FINGER": {
       "form": "Finger",
+      "plural": "Finger",
       "gender": "m"
     },
     "EYE": {
       "form": "Auge",
+      "plural": "Augen",
       "gender": "n"
     },
     "MOUTH": {
       "form": "Mund",
+      "plural": "Münder",
       "gender": "m"
     },
     "FACE": {
       "form": "Gesicht",
+      "plural": "Gesichter",
       "gender": "n"
     },
     "BREAKFAST": {
       "form": "Frühstück",
+      "plural": "Frühstücke",
       "gender": "n"
     },
     "LUNCH": {
       "form": "Mittagessen",
+      "plural": "Mittagessen",
       "gender": "n"
     },
     "DINNER": {
       "form": "Abendessen",
+      "plural": "Abendessen",
       "gender": "n"
     },
     "CLOTHES": {
@@ -297,18 +324,22 @@
     },
     "SHIRT": {
       "form": "Hemd",
+      "plural": "Hemden",
       "gender": "n"
     },
     "SHOES": {
       "form": "Schuhe",
+      "plural": "Schuhe",
       "gender": "m"
     },
     "PHONE": {
       "form": "Telefon",
+      "plural": "Telefone",
       "gender": "n"
     },
     "PANTS": {
       "form": "Hose",
+      "plural": "Hosen",
       "gender": "f"
     },
     "ONE": [

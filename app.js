@@ -1328,6 +1328,50 @@ return tpl;
 
   return cid;
 }
+// Returns the English plural of a singular noun form.
+// Checks an IRREGULAR map first, then a INVARIANT set (already-plural words),
+// then applies standard suffix rules.
+function englishAutoPlural(form) {
+  const lower = form.toLowerCase();
+  const IRREGULAR = {
+    "man": "men", "woman": "women", "child": "children",
+    "foot": "feet", "tooth": "teeth", "mouse": "mice",
+    "goose": "geese", "ox": "oxen", "person": "people",
+    "leaf": "leaves", "loaf": "loaves"
+  };
+  if (IRREGULAR[lower]) return IRREGULAR[lower];
+  // Words that are already their own plural form
+  const INVARIANT = new Set(["clothes", "pants", "shoes", "trousers", "jeans", "shorts"]);
+  if (INVARIANT.has(lower)) return form;
+  // Suffix rules (order matters)
+  if (/(?:s|x|z|ch|sh)$/i.test(form)) return form + "es"; // box→boxes, match→matches
+  if (/[^aeiou]y$/i.test(form)) return form.slice(0, -1) + "ies"; // city→cities
+  if (/fe$/i.test(form)) return form.slice(0, -2) + "ves";         // knife→knives
+  if (/[^aeiou]f$/i.test(form)) return form.slice(0, -1) + "ves"; // elf→elves, shelf→shelves
+  return form + "s";
+}
+
+// Returns the plural noun form for a given language and concept.
+// Checks entry.plural first (explicit data), then applies language-specific rules.
+// Falls back to the bare singular for languages without auto-rules (de, ar, no, el, tr, uk).
+function pluralForm(lang, cid) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
+  const bare = entry.form || formOf(lang, cid);
+  if (entry.plural) return entry.plural;
+  if (lang === "en") return englishAutoPlural(bare);
+  if (lang === "pt" || lang === "es") {
+    // Standard Iberian plural rules (covers most regular nouns)
+    if (/ão$/i.test(bare)) return bare.slice(0, -2) + "ões";
+    if (/m$/i.test(bare)) return bare.slice(0, -1) + "ns";
+    if (/[lr]$/i.test(bare)) return bare + "es";
+    return bare + "s"; // vowel endings: casa→casas, livro→livros
+  }
+  // ja, ko: no grammatical plural — same form
+  if (lang === "ja" || lang === "ko") return bare;
+  // de, ar, no, el, tr, uk: rely on entry.plural; fall back to bare
+  return bare;
+}
+
 // Returns "a" or "an" based on the first letter of the following word.
 // Covers the standard vowel-sound rule (a, e, i, o, u).
 // entry.article can still override for genuine exceptions (e.g. "an hour", "a unicorn").
@@ -1771,12 +1815,16 @@ if (tpl.structure?.type === "complex_clause") {
 
   if (numberWord) {
     // Numbers replace the article: "two books" not "two a book"
+    // Use plural form for all numbers except ONE
+    const countBare = (forcedConcept && forcedConcept !== "ONE")
+      ? pluralForm(lang, cid)
+      : bare;
     if (adjectiveWord) {
       return POST_ADJ
-        ? numberWord + " " + bare + " " + adjectiveWord
-        : numberWord + " " + adjectiveWord + " " + bare;
+        ? numberWord + " " + countBare + " " + adjectiveWord
+        : numberWord + " " + adjectiveWord + " " + countBare;
     }
-    return numberWord + " " + bare;
+    return numberWord + " " + countBare;
   }
 
   if (adjectiveWord) {
