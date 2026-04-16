@@ -1,92 +1,747 @@
 {
   "templates": [
-
-    { "template_id": "I_SEE_HERO",        "concepts": ["FIRST_PERSON_SINGULAR","SEE","HERO"],        "render": { "en": "I see a hero." } },
-    { "template_id": "YOU_SEE_VILLAIN",   "concepts": ["SECOND_PERSON","SEE","VILLAIN"],             "render": { "en": "You see a villain." } },
-    { "template_id": "HE_SEES_WARRIOR",   "concepts": ["HE","SEE","WARRIOR"],                        "render": { "en": "He sees a warrior." } },
-    { "template_id": "SHE_SEES_RIVAL",    "concepts": ["SHE","SEE","RIVAL"],                         "render": { "en": "She sees a rival." } },
-    { "template_id": "THEY_SEE_DRAGON",   "concepts": ["THIRD_PERSON_PLURAL","SEE","DRAGON"],        "render": { "en": "They see a dragon." } },
-
-    { "template_id": "I_HAVE_SWORD",      "concepts": ["FIRST_PERSON_SINGULAR","HAVE","SWORD"],      "render": { "en": "I have a sword." } },
-    { "template_id": "YOU_HAVE_SHIELD",   "concepts": ["SECOND_PERSON","HAVE","SHIELD"],             "render": { "en": "You have a shield." } },
-    { "template_id": "HE_HAS_ARMOR",      "concepts": ["HE","HAVE","ARMOR"],                         "render": { "en": "He has armor." } },
-    { "template_id": "SHE_HAS_POWER",     "concepts": ["SHE","HAVE","POWER"],                        "render": { "en": "She has a power." } },
-    { "template_id": "WE_HAVE_CRYSTAL",   "concepts": ["FIRST_PERSON_PLURAL","HAVE","CRYSTAL"],      "render": { "en": "We have a crystal." } },
-
-    { "template_id": "HE_IS_HERO",        "concepts": ["HE","BE","HERO"],                            "render": { "en": "He is a hero." } },
-    { "template_id": "SHE_IS_WARRIOR",    "concepts": ["SHE","BE","WARRIOR"],                        "render": { "en": "She is a warrior." } },
-    { "template_id": "HE_IS_MASTER",      "concepts": ["HE","BE","MASTER"],                          "render": { "en": "He is a master." } },
-    { "template_id": "SHE_IS_RIVAL",      "concepts": ["SHE","BE","RIVAL"],                          "render": { "en": "She is a rival." } },
-    { "template_id": "I_AM_WARRIOR",      "concepts": ["FIRST_PERSON_SINGULAR","BE","WARRIOR"],      "render": { "en": "I am a warrior." } },
-
-    { "template_id": "I_ATTACK",          "concepts": ["FIRST_PERSON_SINGULAR","ATTACK"],            "render": { "en": "I attack." } },
-    { "template_id": "YOU_ATTACK",        "concepts": ["SECOND_PERSON","ATTACK"],                    "render": { "en": "You attack." } },
-    { "template_id": "HE_ATTACKS",        "concepts": ["HE","ATTACK"],                               "render": { "en": "He attacks." } },
-    { "template_id": "SHE_DEFENDS",       "concepts": ["SHE","DEFEND"],                              "render": { "en": "She defends." } },
-    { "template_id": "WE_ATTACK",         "concepts": ["FIRST_PERSON_PLURAL","ATTACK"],              "render": { "en": "We attack." } },
-    { "template_id": "THEY_DEFEND",       "concepts": ["THIRD_PERSON_PLURAL","DEFEND"],              "render": { "en": "They defend." } },
-
-    { "template_id": "I_STRIKE",          "concepts": ["FIRST_PERSON_SINGULAR","STRIKE"],            "render": { "en": "I strike." } },
-    { "template_id": "HE_STRIKES",        "concepts": ["HE","STRIKE"],                               "render": { "en": "He strikes." } },
-    { "template_id": "SHE_DODGES",        "concepts": ["SHE","DODGE"],                               "render": { "en": "She dodges." } },
-    { "template_id": "THEY_PROTECT",      "concepts": ["THIRD_PERSON_PLURAL","PROTECT"],             "render": { "en": "They protect." } },
-    { "template_id": "I_DODGE",           "concepts": ["FIRST_PERSON_SINGULAR","DODGE"],             "render": { "en": "I dodge." } },
-
-    { "template_id": "I_SUMMON_DRAGON",   "concepts": ["FIRST_PERSON_SINGULAR","SUMMON","DRAGON"],   "render": { "en": "I summon a dragon." } },
-    { "template_id": "HE_SUMMONS_SPIRIT", "concepts": ["HE","SUMMON","SPIRIT"],                      "render": { "en": "He summons a spirit." } },
-    { "template_id": "SHE_SUMMONS_DEMON", "concepts": ["SHE","SUMMON","DEMON"],                      "render": { "en": "She summons a demon." } },
-    { "template_id": "YOU_SUMMON_WARRIOR","concepts": ["SECOND_PERSON","SUMMON","WARRIOR"],          "render": { "en": "You summon a warrior." } },
-
-    { "template_id": "I_TRANSFORM",       "concepts": ["FIRST_PERSON_SINGULAR","TRANSFORM"],         "render": { "en": "I transform." } },
-    { "template_id": "HE_TRANSFORMS",     "concepts": ["HE","TRANSFORM"],                            "render": { "en": "He transforms." } },
-    { "template_id": "SHE_TRANSFORMS",    "concepts": ["SHE","TRANSFORM"],                           "render": { "en": "She transforms." } },
-    { "template_id": "WE_TRANSFORM",      "concepts": ["FIRST_PERSON_PLURAL","TRANSFORM"],           "render": { "en": "We transform." } },
-
-    { "template_id": "I_CHANNEL_POWER",   "concepts": ["FIRST_PERSON_SINGULAR","CHANNEL","POWER"],   "render": { "en": "I channel my power." } },
-    { "template_id": "HE_UNLEASHES",      "concepts": ["HE","UNLEASH","POWER"],                      "render": { "en": "He unleashes his power." } },
-    { "template_id": "SHE_CHANNELS",      "concepts": ["SHE","CHANNEL","POWER"],                     "render": { "en": "She channels her power." } },
-    { "template_id": "THEY_UNLEASH",      "concepts": ["THIRD_PERSON_PLURAL","UNLEASH","POWER"],     "render": { "en": "They unleash their power." } },
-
-    { "template_id": "I_TRAIN",           "concepts": ["FIRST_PERSON_SINGULAR","TRAIN"],             "render": { "en": "I train." } },
-    { "template_id": "WE_TRAIN",          "concepts": ["FIRST_PERSON_PLURAL","TRAIN"],               "render": { "en": "We train." } },
-    { "template_id": "HE_TRAINS",         "concepts": ["HE","TRAIN"],                                "render": { "en": "He trains." } },
-    { "template_id": "SHE_TRAINS",        "concepts": ["SHE","TRAIN"],                               "render": { "en": "She trains." } },
-
-    { "template_id": "I_AWAKEN",          "concepts": ["FIRST_PERSON_SINGULAR","AWAKEN"],            "render": { "en": "I awaken." } },
-    { "template_id": "HE_AWAKENS",        "concepts": ["HE","AWAKEN"],                               "render": { "en": "He awakens." } },
-    { "template_id": "SHE_AWAKENS",       "concepts": ["SHE","AWAKEN"],                              "render": { "en": "She awakens." } },
-
-    { "template_id": "I_CONQUER",         "concepts": ["FIRST_PERSON_SINGULAR","CONQUER"],           "render": { "en": "I conquer." } },
-    { "template_id": "HE_CONQUERS",       "concepts": ["HE","CONQUER"],                              "render": { "en": "He conquers." } },
-    { "template_id": "WE_CONQUER",        "concepts": ["FIRST_PERSON_PLURAL","CONQUER"],             "render": { "en": "We conquer." } },
-    { "template_id": "THEY_TRANSCEND",    "concepts": ["THIRD_PERSON_PLURAL","TRANSCEND"],           "render": { "en": "They transcend." } },
-    { "template_id": "I_TRANSCEND",       "concepts": ["FIRST_PERSON_SINGULAR","TRANSCEND"],         "render": { "en": "I transcend." } },
-
-    { "template_id": "HERO_IS_BRAVE",     "concepts": ["HERO","BE","BRAVE"],                         "render": { "en": "The hero is brave." } },
-    { "template_id": "WARRIOR_IS_FIERCE", "concepts": ["WARRIOR","BE","FIERCE"],                     "render": { "en": "The warrior is fierce." } },
-    { "template_id": "DRAGON_IS_MIGHTY",  "concepts": ["DRAGON","BE","MIGHTY"],                      "render": { "en": "The dragon is mighty." } },
-    { "template_id": "DEMON_IS_SINISTER", "concepts": ["DEMON","BE","SINISTER"],                     "render": { "en": "The demon is sinister." } },
-    { "template_id": "SCROLL_IS_ANCIENT", "concepts": ["SCROLL","BE","ANCIENT"],                     "render": { "en": "The scroll is ancient." } },
-    { "template_id": "TEMPLE_IS_SACRED",  "concepts": ["TEMPLE","BE","SACRED"],                      "render": { "en": "The temple is sacred." } },
-    { "template_id": "PORTAL_IS_CURSED",  "concepts": ["PORTAL","BE","CURSED"],                      "render": { "en": "The portal is cursed." } },
-    { "template_id": "MASTER_IS_LEGENDARY","concepts":["MASTER","BE","LEGENDARY"],                   "render": { "en": "The master is legendary." } },
-    { "template_id": "POWER_IS_POWERFUL", "concepts": ["POWER","BE","POWERFUL"],                     "render": { "en": "The power is powerful." } },
-
-    { "template_id": "I_SEE_KINGDOM",     "concepts": ["FIRST_PERSON_SINGULAR","SEE","KINGDOM"],     "render": { "en": "I see a kingdom." } },
-    { "template_id": "YOU_SEE_TEMPLE",    "concepts": ["SECOND_PERSON","SEE","TEMPLE"],              "render": { "en": "You see a temple." } },
-    { "template_id": "HE_SEES_ARENA",     "concepts": ["HE","SEE","ARENA"],                          "render": { "en": "He sees an arena." } },
-    { "template_id": "SHE_SEES_PORTAL",   "concepts": ["SHE","SEE","PORTAL"],                        "render": { "en": "She sees a portal." } },
-    { "template_id": "WE_SEE_MECHA",      "concepts": ["FIRST_PERSON_PLURAL","SEE","MECHA"],         "render": { "en": "We see a mecha." } },
-
-    { "template_id": "I_HAVE_SCROLL",     "concepts": ["FIRST_PERSON_SINGULAR","HAVE","SCROLL"],     "render": { "en": "I have a scroll." } },
-    { "template_id": "HE_HAS_DESTINY",    "concepts": ["HE","HAVE","DESTINY"],                       "render": { "en": "He has a destiny." } },
-    { "template_id": "SHE_HAS_QUEST",     "concepts": ["SHE","HAVE","QUEST"],                        "render": { "en": "She has a quest." } },
-    { "template_id": "CLAN_HAS_MASTER",   "concepts": ["CLAN","HAVE","MASTER"],                      "render": { "en": "The clan has a master." } },
-
-    { "template_id": "HE_IS_NINJA",       "concepts": ["HE","BE","NINJA"],                           "render": { "en": "He is a ninja." } },
-    { "template_id": "SHE_IS_NINJA",      "concepts": ["SHE","BE","NINJA"],                          "render": { "en": "She is a ninja." } },
-    { "template_id": "HE_IS_SAMURAI",     "concepts": ["HE","BE","SAMURAI"],                         "render": { "en": "He is a samurai." } },
-    { "template_id": "SHE_IS_SENSEI",     "concepts": ["SHE","BE","SENSEI"],                         "render": { "en": "She is a sensei." } }
-
+    {
+      "template_id": "I_SEE_HERO",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "HERO"
+      ],
+      "render": {
+        "en": "I see a hero."
+      }
+    },
+    {
+      "template_id": "YOU_SEE_VILLAIN",
+      "concepts": [
+        "SECOND_PERSON",
+        "SEE",
+        "VILLAIN"
+      ],
+      "render": {
+        "en": "You see a villain."
+      }
+    },
+    {
+      "template_id": "HE_SEES_WARRIOR",
+      "concepts": [
+        "HE",
+        "SEE",
+        "WARRIOR"
+      ],
+      "render": {
+        "en": "He sees a warrior."
+      }
+    },
+    {
+      "template_id": "SHE_SEES_RIVAL",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "RIVAL"
+      ],
+      "render": {
+        "en": "She sees a rival."
+      }
+    },
+    {
+      "template_id": "THEY_SEE_DRAGON",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "SEE",
+        "DRAGON"
+      ],
+      "render": {
+        "en": "They see a dragon."
+      }
+    },
+    {
+      "template_id": "I_HAVE_SWORD",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SWORD"
+      ],
+      "render": {
+        "en": "I have a sword."
+      }
+    },
+    {
+      "template_id": "YOU_HAVE_SHIELD",
+      "concepts": [
+        "SECOND_PERSON",
+        "HAVE",
+        "SHIELD"
+      ],
+      "render": {
+        "en": "You have a shield."
+      }
+    },
+    {
+      "template_id": "HE_HAS_ARMOR",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "ARMOR"
+      ],
+      "render": {
+        "en": "He has armor."
+      }
+    },
+    {
+      "template_id": "WE_HAVE_CRYSTAL",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "HAVE",
+        "CRYSTAL"
+      ],
+      "render": {
+        "en": "We have a crystal."
+      }
+    },
+    {
+      "template_id": "HE_IS_HERO",
+      "concepts": [
+        "HE",
+        "BE",
+        "HERO"
+      ],
+      "render": {
+        "en": "He is a hero."
+      }
+    },
+    {
+      "template_id": "SHE_IS_WARRIOR",
+      "concepts": [
+        "SHE",
+        "BE",
+        "WARRIOR"
+      ],
+      "render": {
+        "en": "She is a warrior."
+      }
+    },
+    {
+      "template_id": "HE_IS_MASTER",
+      "concepts": [
+        "HE",
+        "BE",
+        "MASTER"
+      ],
+      "render": {
+        "en": "He is a master."
+      }
+    },
+    {
+      "template_id": "SHE_IS_RIVAL",
+      "concepts": [
+        "SHE",
+        "BE",
+        "RIVAL"
+      ],
+      "render": {
+        "en": "She is a rival."
+      }
+    },
+    {
+      "template_id": "I_AM_WARRIOR",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "BE",
+        "WARRIOR"
+      ],
+      "render": {
+        "en": "I am a warrior."
+      }
+    },
+    {
+      "template_id": "I_ATTACK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "ATTACK"
+      ],
+      "render": {
+        "en": "I attack."
+      }
+    },
+    {
+      "template_id": "YOU_ATTACK",
+      "concepts": [
+        "SECOND_PERSON",
+        "ATTACK"
+      ],
+      "render": {
+        "en": "You attack."
+      }
+    },
+    {
+      "template_id": "HE_ATTACKS",
+      "concepts": [
+        "HE",
+        "ATTACK"
+      ],
+      "render": {
+        "en": "He attacks."
+      }
+    },
+    {
+      "template_id": "SHE_DEFENDS",
+      "concepts": [
+        "SHE",
+        "DEFEND"
+      ],
+      "render": {
+        "en": "She defends."
+      }
+    },
+    {
+      "template_id": "WE_ATTACK",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "ATTACK"
+      ],
+      "render": {
+        "en": "We attack."
+      }
+    },
+    {
+      "template_id": "THEY_DEFEND",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "DEFEND"
+      ],
+      "render": {
+        "en": "They defend."
+      }
+    },
+    {
+      "template_id": "I_STRIKE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "STRIKE"
+      ],
+      "render": {
+        "en": "I strike."
+      }
+    },
+    {
+      "template_id": "HE_STRIKES",
+      "concepts": [
+        "HE",
+        "STRIKE"
+      ],
+      "render": {
+        "en": "He strikes."
+      }
+    },
+    {
+      "template_id": "SHE_DODGES",
+      "concepts": [
+        "SHE",
+        "DODGE"
+      ],
+      "render": {
+        "en": "She dodges."
+      }
+    },
+    {
+      "template_id": "THEY_PROTECT",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "PROTECT"
+      ],
+      "render": {
+        "en": "They protect."
+      }
+    },
+    {
+      "template_id": "I_DODGE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "DODGE"
+      ],
+      "render": {
+        "en": "I dodge."
+      }
+    },
+    {
+      "template_id": "I_SUMMON_DRAGON",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SUMMON",
+        "DRAGON"
+      ],
+      "render": {
+        "en": "I summon a dragon."
+      }
+    },
+    {
+      "template_id": "HE_SUMMONS_SPIRIT",
+      "concepts": [
+        "HE",
+        "SUMMON",
+        "SPIRIT"
+      ],
+      "render": {
+        "en": "He summons a spirit."
+      }
+    },
+    {
+      "template_id": "SHE_SUMMONS_DEMON",
+      "concepts": [
+        "SHE",
+        "SUMMON",
+        "DEMON"
+      ],
+      "render": {
+        "en": "She summons a demon."
+      }
+    },
+    {
+      "template_id": "YOU_SUMMON_WARRIOR",
+      "concepts": [
+        "SECOND_PERSON",
+        "SUMMON",
+        "WARRIOR"
+      ],
+      "render": {
+        "en": "You summon a warrior."
+      }
+    },
+    {
+      "template_id": "I_TRANSFORM",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "TRANSFORM"
+      ],
+      "render": {
+        "en": "I transform."
+      }
+    },
+    {
+      "template_id": "HE_TRANSFORMS",
+      "concepts": [
+        "HE",
+        "TRANSFORM"
+      ],
+      "render": {
+        "en": "He transforms."
+      }
+    },
+    {
+      "template_id": "SHE_TRANSFORMS",
+      "concepts": [
+        "SHE",
+        "TRANSFORM"
+      ],
+      "render": {
+        "en": "She transforms."
+      }
+    },
+    {
+      "template_id": "WE_TRANSFORM",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "TRANSFORM"
+      ],
+      "render": {
+        "en": "We transform."
+      }
+    },
+    {
+      "template_id": "I_CHANNEL_POWER",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "CHANNEL",
+        "POWER"
+      ],
+      "render": {
+        "en": "I channel my power."
+      }
+    },
+    {
+      "template_id": "HE_UNLEASHES",
+      "concepts": [
+        "HE",
+        "UNLEASH",
+        "POWER"
+      ],
+      "render": {
+        "en": "He unleashes his power."
+      }
+    },
+    {
+      "template_id": "SHE_CHANNELS",
+      "concepts": [
+        "SHE",
+        "CHANNEL",
+        "POWER"
+      ],
+      "render": {
+        "en": "She channels her power."
+      }
+    },
+    {
+      "template_id": "THEY_UNLEASH",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "UNLEASH",
+        "POWER"
+      ],
+      "render": {
+        "en": "They unleash their power."
+      }
+    },
+    {
+      "template_id": "I_TRAIN",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "TRAIN"
+      ],
+      "render": {
+        "en": "I train."
+      }
+    },
+    {
+      "template_id": "WE_TRAIN",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "TRAIN"
+      ],
+      "render": {
+        "en": "We train."
+      }
+    },
+    {
+      "template_id": "HE_TRAINS",
+      "concepts": [
+        "HE",
+        "TRAIN"
+      ],
+      "render": {
+        "en": "He trains."
+      }
+    },
+    {
+      "template_id": "SHE_TRAINS",
+      "concepts": [
+        "SHE",
+        "TRAIN"
+      ],
+      "render": {
+        "en": "She trains."
+      }
+    },
+    {
+      "template_id": "I_AWAKEN",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "AWAKEN"
+      ],
+      "render": {
+        "en": "I awaken."
+      }
+    },
+    {
+      "template_id": "HE_AWAKENS",
+      "concepts": [
+        "HE",
+        "AWAKEN"
+      ],
+      "render": {
+        "en": "He awakens."
+      }
+    },
+    {
+      "template_id": "SHE_AWAKENS",
+      "concepts": [
+        "SHE",
+        "AWAKEN"
+      ],
+      "render": {
+        "en": "She awakens."
+      }
+    },
+    {
+      "template_id": "I_CONQUER",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "CONQUER"
+      ],
+      "render": {
+        "en": "I conquer."
+      }
+    },
+    {
+      "template_id": "HE_CONQUERS",
+      "concepts": [
+        "HE",
+        "CONQUER"
+      ],
+      "render": {
+        "en": "He conquers."
+      }
+    },
+    {
+      "template_id": "WE_CONQUER",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "CONQUER"
+      ],
+      "render": {
+        "en": "We conquer."
+      }
+    },
+    {
+      "template_id": "THEY_TRANSCEND",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "TRANSCEND"
+      ],
+      "render": {
+        "en": "They transcend."
+      }
+    },
+    {
+      "template_id": "I_TRANSCEND",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "TRANSCEND"
+      ],
+      "render": {
+        "en": "I transcend."
+      }
+    },
+    {
+      "template_id": "HERO_IS_BRAVE",
+      "concepts": [
+        "HERO",
+        "BE",
+        "BRAVE"
+      ],
+      "render": {
+        "en": "The hero is brave."
+      }
+    },
+    {
+      "template_id": "WARRIOR_IS_FIERCE",
+      "concepts": [
+        "WARRIOR",
+        "BE",
+        "FIERCE"
+      ],
+      "render": {
+        "en": "The warrior is fierce."
+      }
+    },
+    {
+      "template_id": "DRAGON_IS_MIGHTY",
+      "concepts": [
+        "DRAGON",
+        "BE",
+        "MIGHTY"
+      ],
+      "render": {
+        "en": "The dragon is mighty."
+      }
+    },
+    {
+      "template_id": "DEMON_IS_SINISTER",
+      "concepts": [
+        "DEMON",
+        "BE",
+        "SINISTER"
+      ],
+      "render": {
+        "en": "The demon is sinister."
+      }
+    },
+    {
+      "template_id": "SCROLL_IS_ANCIENT",
+      "concepts": [
+        "SCROLL",
+        "BE",
+        "ANCIENT"
+      ],
+      "render": {
+        "en": "The scroll is ancient."
+      }
+    },
+    {
+      "template_id": "TEMPLE_IS_SACRED",
+      "concepts": [
+        "TEMPLE",
+        "BE",
+        "SACRED"
+      ],
+      "render": {
+        "en": "The temple is sacred."
+      }
+    },
+    {
+      "template_id": "PORTAL_IS_CURSED",
+      "concepts": [
+        "PORTAL",
+        "BE",
+        "CURSED"
+      ],
+      "render": {
+        "en": "The portal is cursed."
+      }
+    },
+    {
+      "template_id": "MASTER_IS_LEGENDARY",
+      "concepts": [
+        "MASTER",
+        "BE",
+        "LEGENDARY"
+      ],
+      "render": {
+        "en": "The master is legendary."
+      }
+    },
+    {
+      "template_id": "I_SEE_KINGDOM",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "KINGDOM"
+      ],
+      "render": {
+        "en": "I see a kingdom."
+      }
+    },
+    {
+      "template_id": "YOU_SEE_TEMPLE",
+      "concepts": [
+        "SECOND_PERSON",
+        "SEE",
+        "TEMPLE"
+      ],
+      "render": {
+        "en": "You see a temple."
+      }
+    },
+    {
+      "template_id": "HE_SEES_ARENA",
+      "concepts": [
+        "HE",
+        "SEE",
+        "ARENA"
+      ],
+      "render": {
+        "en": "He sees an arena."
+      }
+    },
+    {
+      "template_id": "SHE_SEES_PORTAL",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "PORTAL"
+      ],
+      "render": {
+        "en": "She sees a portal."
+      }
+    },
+    {
+      "template_id": "WE_SEE_MECHA",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "SEE",
+        "MECHA"
+      ],
+      "render": {
+        "en": "We see a mecha."
+      }
+    },
+    {
+      "template_id": "I_HAVE_SCROLL",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SCROLL"
+      ],
+      "render": {
+        "en": "I have a scroll."
+      }
+    },
+    {
+      "template_id": "HE_HAS_DESTINY",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "DESTINY"
+      ],
+      "render": {
+        "en": "He has a destiny."
+      }
+    },
+    {
+      "template_id": "SHE_HAS_QUEST",
+      "concepts": [
+        "SHE",
+        "HAVE",
+        "QUEST"
+      ],
+      "render": {
+        "en": "She has a quest."
+      }
+    },
+    {
+      "template_id": "CLAN_HAS_MASTER",
+      "concepts": [
+        "CLAN",
+        "HAVE",
+        "MASTER"
+      ],
+      "render": {
+        "en": "The clan has a master."
+      }
+    },
+    {
+      "template_id": "HE_IS_NINJA",
+      "concepts": [
+        "HE",
+        "BE",
+        "NINJA"
+      ],
+      "render": {
+        "en": "He is a ninja."
+      }
+    },
+    {
+      "template_id": "SHE_IS_NINJA",
+      "concepts": [
+        "SHE",
+        "BE",
+        "NINJA"
+      ],
+      "render": {
+        "en": "She is a ninja."
+      }
+    },
+    {
+      "template_id": "HE_IS_SAMURAI",
+      "concepts": [
+        "HE",
+        "BE",
+        "SAMURAI"
+      ],
+      "render": {
+        "en": "He is a samurai."
+      }
+    },
+    {
+      "template_id": "SHE_IS_SENSEI",
+      "concepts": [
+        "SHE",
+        "BE",
+        "SENSEI"
+      ],
+      "render": {
+        "en": "She is a sensei."
+      }
+    }
   ]
 }
