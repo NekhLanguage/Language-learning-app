@@ -629,28 +629,6 @@
       }
     },
     {
-      "template_id": "SHE_HAS_HAIRSTYLE",
-      "concepts": [
-        "SHE",
-        "HAVE",
-        "HAIRSTYLE"
-      ],
-      "render": {
-        "en": "She has a hairstyle."
-      }
-    },
-    {
-      "template_id": "WE_HAVE_TREND",
-      "concepts": [
-        "FIRST_PERSON_PLURAL",
-        "HAVE",
-        "TREND"
-      ],
-      "render": {
-        "en": "We have a trend."
-      }
-    },
-    {
       "template_id": "TREND_IS_ICONIC",
       "concepts": [
         "TREND",

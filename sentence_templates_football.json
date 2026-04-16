@@ -1,83 +1,675 @@
 {
   "templates": [
-
-    { "template_id": "I_SEE_PITCH",         "concepts": ["FIRST_PERSON_SINGULAR","SEE","PITCH"],        "render": { "en": "I see a pitch." } },
-    { "template_id": "YOU_SEE_STADIUM",     "concepts": ["SECOND_PERSON","SEE","STADIUM"],              "render": { "en": "You see a stadium." } },
-    { "template_id": "HE_SEES_GOAL",        "concepts": ["HE","SEE","GOAL"],                            "render": { "en": "He sees a goal." } },
-    { "template_id": "SHE_SEES_TROPHY",     "concepts": ["SHE","SEE","TROPHY"],                         "render": { "en": "She sees a trophy." } },
-    { "template_id": "WE_SEE_CROWD",        "concepts": ["FIRST_PERSON_PLURAL","SEE","CROWD"],          "render": { "en": "We see a crowd." } },
-
-    { "template_id": "I_SEE_STRIKER",       "concepts": ["FIRST_PERSON_SINGULAR","SEE","STRIKER"],      "render": { "en": "I see a striker." } },
-    { "template_id": "YOU_SEE_GOALKEEPER",  "concepts": ["SECOND_PERSON","SEE","GOALKEEPER"],           "render": { "en": "You see a goalkeeper." } },
-    { "template_id": "HE_SEES_REFEREE",     "concepts": ["HE","SEE","REFEREE"],                         "render": { "en": "He sees a referee." } },
-    { "template_id": "SHE_SEES_COACH",      "concepts": ["SHE","SEE","COACH"],                          "render": { "en": "She sees a coach." } },
-    { "template_id": "THEY_SEE_CAPTAIN",    "concepts": ["THIRD_PERSON_PLURAL","SEE","CAPTAIN"],        "render": { "en": "They see a captain." } },
-
-    { "template_id": "I_KICK",              "concepts": ["FIRST_PERSON_SINGULAR","KICK"],               "render": { "en": "I kick." } },
-    { "template_id": "YOU_KICK",            "concepts": ["SECOND_PERSON","KICK"],                       "render": { "en": "You kick." } },
-    { "template_id": "HE_KICKS",            "concepts": ["HE","KICK"],                                  "render": { "en": "He kicks." } },
-    { "template_id": "SHE_PASSES",          "concepts": ["SHE","PASS"],                                 "render": { "en": "She passes." } },
-    { "template_id": "WE_KICK",             "concepts": ["FIRST_PERSON_PLURAL","KICK"],                 "render": { "en": "We kick." } },
-    { "template_id": "THEY_PASS",           "concepts": ["THIRD_PERSON_PLURAL","PASS"],                 "render": { "en": "They pass." } },
-
-    { "template_id": "I_SHOOT",             "concepts": ["FIRST_PERSON_SINGULAR","SHOOT"],              "render": { "en": "I shoot." } },
-    { "template_id": "HE_SHOOTS",           "concepts": ["HE","SHOOT"],                                 "render": { "en": "He shoots." } },
-    { "template_id": "SHE_DRIBBLES",        "concepts": ["SHE","DRIBBLE"],                              "render": { "en": "She dribbles." } },
-    { "template_id": "WE_SHOOT",            "concepts": ["FIRST_PERSON_PLURAL","SHOOT"],                "render": { "en": "We shoot." } },
-
-    { "template_id": "I_SCORE",             "concepts": ["FIRST_PERSON_SINGULAR","SCORE"],              "render": { "en": "I score." } },
-    { "template_id": "HE_SCORES",           "concepts": ["HE","SCORE"],                                 "render": { "en": "He scores." } },
-    { "template_id": "SHE_SCORES",          "concepts": ["SHE","SCORE"],                                "render": { "en": "She scores." } },
-    { "template_id": "WE_SCORE",            "concepts": ["FIRST_PERSON_PLURAL","SCORE"],                "render": { "en": "We score." } },
-    { "template_id": "THEY_SCORE",          "concepts": ["THIRD_PERSON_PLURAL","SCORE"],                "render": { "en": "They score." } },
-
-    { "template_id": "I_TACKLE",            "concepts": ["FIRST_PERSON_SINGULAR","TACKLE"],             "render": { "en": "I tackle." } },
-    { "template_id": "HE_TACKLES",          "concepts": ["HE","TACKLE"],                                "render": { "en": "He tackles." } },
-    { "template_id": "SHE_SPRINTS",         "concepts": ["SHE","SPRINT"],                               "render": { "en": "She sprints." } },
-    { "template_id": "WE_DEFEND",           "concepts": ["FIRST_PERSON_PLURAL","DEFEND"],               "render": { "en": "We defend." } },
-    { "template_id": "THEY_DEFEND",         "concepts": ["THIRD_PERSON_PLURAL","DEFEND"],               "render": { "en": "They defend." } },
-
-    { "template_id": "I_CROSS",             "concepts": ["FIRST_PERSON_SINGULAR","CROSS"],              "render": { "en": "I cross." } },
-    { "template_id": "HE_CROSSES",          "concepts": ["HE","CROSS"],                                 "render": { "en": "He crosses." } },
-    { "template_id": "SHE_INTERCEPTS",      "concepts": ["SHE","INTERCEPT"],                            "render": { "en": "She intercepts." } },
-    { "template_id": "THEY_BLOCK",          "concepts": ["THIRD_PERSON_PLURAL","BLOCK"],                "render": { "en": "They block." } },
-    { "template_id": "I_BLOCK",             "concepts": ["FIRST_PERSON_SINGULAR","BLOCK"],              "render": { "en": "I block." } },
-
-    { "template_id": "WE_COUNTER",          "concepts": ["FIRST_PERSON_PLURAL","COUNTER"],              "render": { "en": "We counter." } },
-    { "template_id": "HE_DOMINATES",        "concepts": ["HE","DOMINATE"],                              "render": { "en": "He dominates." } },
-    { "template_id": "SHE_DOMINATES",       "concepts": ["SHE","DOMINATE"],                             "render": { "en": "She dominates." } },
-    { "template_id": "THEY_DOMINATE",       "concepts": ["THIRD_PERSON_PLURAL","DOMINATE"],             "render": { "en": "They dominate." } },
-
-    { "template_id": "WE_CELEBRATE",        "concepts": ["FIRST_PERSON_PLURAL","CELEBRATE"],            "render": { "en": "We celebrate." } },
-    { "template_id": "HE_CELEBRATES",       "concepts": ["HE","CELEBRATE"],                             "render": { "en": "He celebrates." } },
-    { "template_id": "SHE_CELEBRATES",      "concepts": ["SHE","CELEBRATE"],                            "render": { "en": "She celebrates." } },
-    { "template_id": "THEY_CELEBRATE",      "concepts": ["THIRD_PERSON_PLURAL","CELEBRATE"],            "render": { "en": "They celebrate." } },
-
-    { "template_id": "HE_IS_STRIKER",       "concepts": ["HE","BE","STRIKER"],                          "render": { "en": "He is a striker." } },
-    { "template_id": "SHE_IS_GOALKEEPER",   "concepts": ["SHE","BE","GOALKEEPER"],                      "render": { "en": "She is a goalkeeper." } },
-    { "template_id": "HE_IS_CAPTAIN",       "concepts": ["HE","BE","CAPTAIN"],                          "render": { "en": "He is a captain." } },
-    { "template_id": "SHE_IS_REFEREE",      "concepts": ["SHE","BE","REFEREE"],                         "render": { "en": "She is a referee." } },
-    { "template_id": "HE_IS_COACH",         "concepts": ["HE","BE","COACH"],                            "render": { "en": "He is a coach." } },
-    { "template_id": "HE_IS_CHAMPION",      "concepts": ["HE","BE","CHAMPION"],                         "render": { "en": "He is a champion." } },
-    { "template_id": "THEY_ARE_CHAMPION",   "concepts": ["THIRD_PERSON_PLURAL","BE","CHAMPION"],        "render": { "en": "They are champions." } },
-
-    { "template_id": "STRIKER_IS_SWIFT",    "concepts": ["STRIKER","BE","SWIFT"],                       "render": { "en": "The striker is swift." } },
-    { "template_id": "CAPTAIN_IS_SKILLED",  "concepts": ["CAPTAIN","BE","SKILLED"],                     "render": { "en": "The captain is skilled." } },
-    { "template_id": "PLAYER_IS_AGGRESSIVE","concepts": ["STRIKER","BE","AGGRESSIVE"],                  "render": { "en": "The striker is aggressive." } },
-    { "template_id": "COACH_IS_DECISIVE",   "concepts": ["COACH","BE","DECISIVE"],                      "render": { "en": "The coach is decisive." } },
-    { "template_id": "STRIKER_IS_CLINICAL", "concepts": ["STRIKER","BE","CLINICAL"],                    "render": { "en": "The striker is clinical." } },
-    { "template_id": "TEAM_IS_UNBEATABLE",  "concepts": ["SQUAD","BE","UNBEATABLE"],                    "render": { "en": "The squad is unbeatable." } },
-
-    { "template_id": "I_HAVE_TROPHY",       "concepts": ["FIRST_PERSON_SINGULAR","HAVE","TROPHY"],      "render": { "en": "I have a trophy." } },
-    { "template_id": "WE_HAVE_VICTORY",     "concepts": ["FIRST_PERSON_PLURAL","HAVE","VICTORY"],       "render": { "en": "We have a victory." } },
-    { "template_id": "THEY_HAVE_ASSIST",    "concepts": ["THIRD_PERSON_PLURAL","HAVE","ASSIST"],        "render": { "en": "They have an assist." } },
-    { "template_id": "HE_HAS_ASSIST",       "concepts": ["HE","HAVE","ASSIST"],                         "render": { "en": "He has an assist." } },
-    { "template_id": "SHE_HAS_MATCH",       "concepts": ["SHE","HAVE","MATCH"],                         "render": { "en": "She has a match." } },
-
-    { "template_id": "I_SEE_FINAL",         "concepts": ["FIRST_PERSON_SINGULAR","SEE","FINAL"],        "render": { "en": "I see a final." } },
-    { "template_id": "WE_SEE_FORMATION",    "concepts": ["FIRST_PERSON_PLURAL","SEE","FORMATION"],      "render": { "en": "We see a formation." } },
-    { "template_id": "HE_SEES_FOUL",        "concepts": ["HE","SEE","FOUL"],                            "render": { "en": "He sees a foul." } },
-    { "template_id": "SHE_SEES_PENALTY",    "concepts": ["SHE","SEE","PENALTY"],                        "render": { "en": "She sees a penalty." } }
-
+    {
+      "template_id": "I_SEE_PITCH",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "PITCH"
+      ],
+      "render": {
+        "en": "I see a pitch."
+      }
+    },
+    {
+      "template_id": "YOU_SEE_STADIUM",
+      "concepts": [
+        "SECOND_PERSON",
+        "SEE",
+        "STADIUM"
+      ],
+      "render": {
+        "en": "You see a stadium."
+      }
+    },
+    {
+      "template_id": "HE_SEES_GOAL",
+      "concepts": [
+        "HE",
+        "SEE",
+        "GOAL"
+      ],
+      "render": {
+        "en": "He sees a goal."
+      }
+    },
+    {
+      "template_id": "SHE_SEES_TROPHY",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "TROPHY"
+      ],
+      "render": {
+        "en": "She sees a trophy."
+      }
+    },
+    {
+      "template_id": "WE_SEE_CROWD",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "SEE",
+        "CROWD"
+      ],
+      "render": {
+        "en": "We see a crowd."
+      }
+    },
+    {
+      "template_id": "I_SEE_STRIKER",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "STRIKER"
+      ],
+      "render": {
+        "en": "I see a striker."
+      }
+    },
+    {
+      "template_id": "YOU_SEE_GOALKEEPER",
+      "concepts": [
+        "SECOND_PERSON",
+        "SEE",
+        "GOALKEEPER"
+      ],
+      "render": {
+        "en": "You see a goalkeeper."
+      }
+    },
+    {
+      "template_id": "HE_SEES_REFEREE",
+      "concepts": [
+        "HE",
+        "SEE",
+        "REFEREE"
+      ],
+      "render": {
+        "en": "He sees a referee."
+      }
+    },
+    {
+      "template_id": "SHE_SEES_COACH",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "COACH"
+      ],
+      "render": {
+        "en": "She sees a coach."
+      }
+    },
+    {
+      "template_id": "THEY_SEE_CAPTAIN",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "SEE",
+        "CAPTAIN"
+      ],
+      "render": {
+        "en": "They see a captain."
+      }
+    },
+    {
+      "template_id": "I_KICK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "KICK"
+      ],
+      "render": {
+        "en": "I kick."
+      }
+    },
+    {
+      "template_id": "YOU_KICK",
+      "concepts": [
+        "SECOND_PERSON",
+        "KICK"
+      ],
+      "render": {
+        "en": "You kick."
+      }
+    },
+    {
+      "template_id": "HE_KICKS",
+      "concepts": [
+        "HE",
+        "KICK"
+      ],
+      "render": {
+        "en": "He kicks."
+      }
+    },
+    {
+      "template_id": "SHE_PASSES",
+      "concepts": [
+        "SHE",
+        "PASS"
+      ],
+      "render": {
+        "en": "She passes."
+      }
+    },
+    {
+      "template_id": "WE_KICK",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "KICK"
+      ],
+      "render": {
+        "en": "We kick."
+      }
+    },
+    {
+      "template_id": "THEY_PASS",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "PASS"
+      ],
+      "render": {
+        "en": "They pass."
+      }
+    },
+    {
+      "template_id": "I_SHOOT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SHOOT"
+      ],
+      "render": {
+        "en": "I shoot."
+      }
+    },
+    {
+      "template_id": "HE_SHOOTS",
+      "concepts": [
+        "HE",
+        "SHOOT"
+      ],
+      "render": {
+        "en": "He shoots."
+      }
+    },
+    {
+      "template_id": "SHE_DRIBBLES",
+      "concepts": [
+        "SHE",
+        "DRIBBLE"
+      ],
+      "render": {
+        "en": "She dribbles."
+      }
+    },
+    {
+      "template_id": "WE_SHOOT",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "SHOOT"
+      ],
+      "render": {
+        "en": "We shoot."
+      }
+    },
+    {
+      "template_id": "I_SCORE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SCORE"
+      ],
+      "render": {
+        "en": "I score."
+      }
+    },
+    {
+      "template_id": "HE_SCORES",
+      "concepts": [
+        "HE",
+        "SCORE"
+      ],
+      "render": {
+        "en": "He scores."
+      }
+    },
+    {
+      "template_id": "SHE_SCORES",
+      "concepts": [
+        "SHE",
+        "SCORE"
+      ],
+      "render": {
+        "en": "She scores."
+      }
+    },
+    {
+      "template_id": "WE_SCORE",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "SCORE"
+      ],
+      "render": {
+        "en": "We score."
+      }
+    },
+    {
+      "template_id": "THEY_SCORE",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "SCORE"
+      ],
+      "render": {
+        "en": "They score."
+      }
+    },
+    {
+      "template_id": "I_TACKLE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "TACKLE"
+      ],
+      "render": {
+        "en": "I tackle."
+      }
+    },
+    {
+      "template_id": "HE_TACKLES",
+      "concepts": [
+        "HE",
+        "TACKLE"
+      ],
+      "render": {
+        "en": "He tackles."
+      }
+    },
+    {
+      "template_id": "SHE_SPRINTS",
+      "concepts": [
+        "SHE",
+        "SPRINT"
+      ],
+      "render": {
+        "en": "She sprints."
+      }
+    },
+    {
+      "template_id": "WE_DEFEND",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "DEFEND"
+      ],
+      "render": {
+        "en": "We defend."
+      }
+    },
+    {
+      "template_id": "THEY_DEFEND",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "DEFEND"
+      ],
+      "render": {
+        "en": "They defend."
+      }
+    },
+    {
+      "template_id": "I_CROSS",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "CROSS"
+      ],
+      "render": {
+        "en": "I cross."
+      }
+    },
+    {
+      "template_id": "HE_CROSSES",
+      "concepts": [
+        "HE",
+        "CROSS"
+      ],
+      "render": {
+        "en": "He crosses."
+      }
+    },
+    {
+      "template_id": "SHE_INTERCEPTS",
+      "concepts": [
+        "SHE",
+        "INTERCEPT"
+      ],
+      "render": {
+        "en": "She intercepts."
+      }
+    },
+    {
+      "template_id": "THEY_BLOCK",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "BLOCK"
+      ],
+      "render": {
+        "en": "They block."
+      }
+    },
+    {
+      "template_id": "I_BLOCK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "BLOCK"
+      ],
+      "render": {
+        "en": "I block."
+      }
+    },
+    {
+      "template_id": "WE_COUNTER",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "COUNTER"
+      ],
+      "render": {
+        "en": "We counter."
+      }
+    },
+    {
+      "template_id": "HE_DOMINATES",
+      "concepts": [
+        "HE",
+        "DOMINATE"
+      ],
+      "render": {
+        "en": "He dominates."
+      }
+    },
+    {
+      "template_id": "SHE_DOMINATES",
+      "concepts": [
+        "SHE",
+        "DOMINATE"
+      ],
+      "render": {
+        "en": "She dominates."
+      }
+    },
+    {
+      "template_id": "THEY_DOMINATE",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "DOMINATE"
+      ],
+      "render": {
+        "en": "They dominate."
+      }
+    },
+    {
+      "template_id": "WE_CELEBRATE",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "CELEBRATE"
+      ],
+      "render": {
+        "en": "We celebrate."
+      }
+    },
+    {
+      "template_id": "HE_CELEBRATES",
+      "concepts": [
+        "HE",
+        "CELEBRATE"
+      ],
+      "render": {
+        "en": "He celebrates."
+      }
+    },
+    {
+      "template_id": "SHE_CELEBRATES",
+      "concepts": [
+        "SHE",
+        "CELEBRATE"
+      ],
+      "render": {
+        "en": "She celebrates."
+      }
+    },
+    {
+      "template_id": "THEY_CELEBRATE",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "CELEBRATE"
+      ],
+      "render": {
+        "en": "They celebrate."
+      }
+    },
+    {
+      "template_id": "HE_IS_STRIKER",
+      "concepts": [
+        "HE",
+        "BE",
+        "STRIKER"
+      ],
+      "render": {
+        "en": "He is a striker."
+      }
+    },
+    {
+      "template_id": "SHE_IS_GOALKEEPER",
+      "concepts": [
+        "SHE",
+        "BE",
+        "GOALKEEPER"
+      ],
+      "render": {
+        "en": "She is a goalkeeper."
+      }
+    },
+    {
+      "template_id": "HE_IS_CAPTAIN",
+      "concepts": [
+        "HE",
+        "BE",
+        "CAPTAIN"
+      ],
+      "render": {
+        "en": "He is a captain."
+      }
+    },
+    {
+      "template_id": "SHE_IS_REFEREE",
+      "concepts": [
+        "SHE",
+        "BE",
+        "REFEREE"
+      ],
+      "render": {
+        "en": "She is a referee."
+      }
+    },
+    {
+      "template_id": "HE_IS_COACH",
+      "concepts": [
+        "HE",
+        "BE",
+        "COACH"
+      ],
+      "render": {
+        "en": "He is a coach."
+      }
+    },
+    {
+      "template_id": "HE_IS_CHAMPION",
+      "concepts": [
+        "HE",
+        "BE",
+        "CHAMPION"
+      ],
+      "render": {
+        "en": "He is a champion."
+      }
+    },
+    {
+      "template_id": "THEY_ARE_CHAMPION",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "BE",
+        "CHAMPION"
+      ],
+      "render": {
+        "en": "They are champions."
+      }
+    },
+    {
+      "template_id": "STRIKER_IS_SWIFT",
+      "concepts": [
+        "STRIKER",
+        "BE",
+        "SWIFT"
+      ],
+      "render": {
+        "en": "The striker is swift."
+      }
+    },
+    {
+      "template_id": "CAPTAIN_IS_SKILLED",
+      "concepts": [
+        "CAPTAIN",
+        "BE",
+        "SKILLED"
+      ],
+      "render": {
+        "en": "The captain is skilled."
+      }
+    },
+    {
+      "template_id": "PLAYER_IS_AGGRESSIVE",
+      "concepts": [
+        "STRIKER",
+        "BE",
+        "AGGRESSIVE"
+      ],
+      "render": {
+        "en": "The striker is aggressive."
+      }
+    },
+    {
+      "template_id": "COACH_IS_DECISIVE",
+      "concepts": [
+        "COACH",
+        "BE",
+        "DECISIVE"
+      ],
+      "render": {
+        "en": "The coach is decisive."
+      }
+    },
+    {
+      "template_id": "STRIKER_IS_CLINICAL",
+      "concepts": [
+        "STRIKER",
+        "BE",
+        "CLINICAL"
+      ],
+      "render": {
+        "en": "The striker is clinical."
+      }
+    },
+    {
+      "template_id": "TEAM_IS_UNBEATABLE",
+      "concepts": [
+        "SQUAD",
+        "BE",
+        "UNBEATABLE"
+      ],
+      "render": {
+        "en": "The squad is unbeatable."
+      }
+    },
+    {
+      "template_id": "I_HAVE_TROPHY",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "TROPHY"
+      ],
+      "render": {
+        "en": "I have a trophy."
+      }
+    },
+    {
+      "template_id": "THEY_HAVE_ASSIST",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "HAVE",
+        "ASSIST"
+      ],
+      "render": {
+        "en": "They have an assist."
+      }
+    },
+    {
+      "template_id": "HE_HAS_ASSIST",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "ASSIST"
+      ],
+      "render": {
+        "en": "He has an assist."
+      }
+    },
+    {
+      "template_id": "SHE_HAS_MATCH",
+      "concepts": [
+        "SHE",
+        "HAVE",
+        "MATCH"
+      ],
+      "render": {
+        "en": "She has a match."
+      }
+    },
+    {
+      "template_id": "I_SEE_FINAL",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "FINAL"
+      ],
+      "render": {
+        "en": "I see a final."
+      }
+    },
+    {
+      "template_id": "WE_SEE_FORMATION",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "SEE",
+        "FORMATION"
+      ],
+      "render": {
+        "en": "We see a formation."
+      }
+    },
+    {
+      "template_id": "HE_SEES_FOUL",
+      "concepts": [
+        "HE",
+        "SEE",
+        "FOUL"
+      ],
+      "render": {
+        "en": "He sees a foul."
+      }
+    },
+    {
+      "template_id": "SHE_SEES_PENALTY",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "PENALTY"
+      ],
+      "render": {
+        "en": "She sees a penalty."
+      }
+    }
   ]
 }

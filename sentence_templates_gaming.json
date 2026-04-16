@@ -624,17 +624,6 @@
       }
     },
     {
-      "template_id": "WE_HAVE_PARTY",
-      "concepts": [
-        "FIRST_PERSON_PLURAL",
-        "HAVE",
-        "PARTY"
-      ],
-      "render": {
-        "en": "We have a party."
-      }
-    },
-    {
       "template_id": "COMPANION_IS_ELITE",
       "concepts": [
         "COMPANION",
@@ -643,17 +632,6 @@
       ],
       "render": {
         "en": "The companion is elite."
-      }
-    },
-    {
-      "template_id": "RANK_IS_COMPETITIVE",
-      "concepts": [
-        "RANK",
-        "BE",
-        "COMPETITIVE"
-      ],
-      "render": {
-        "en": "The rank is competitive."
       }
     }
   ]

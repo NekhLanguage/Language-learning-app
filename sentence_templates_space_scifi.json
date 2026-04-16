@@ -1,97 +1,773 @@
 {
   "templates": [
-
-    { "template_id": "I_SEE_PLANET",          "concepts": ["FIRST_PERSON_SINGULAR","SEE","PLANET"],        "render": { "en": "I see a planet." } },
-    { "template_id": "YOU_SEE_STAR",          "concepts": ["SECOND_PERSON","SEE","STAR"],                  "render": { "en": "You see a star." } },
-    { "template_id": "HE_SEES_GALAXY",        "concepts": ["HE","SEE","GALAXY"],                           "render": { "en": "He sees a galaxy." } },
-    { "template_id": "SHE_SEES_NEBULA",       "concepts": ["SHE","SEE","NEBULA"],                          "render": { "en": "She sees a nebula." } },
-    { "template_id": "WE_SEE_ASTEROID",       "concepts": ["FIRST_PERSON_PLURAL","SEE","ASTEROID"],        "render": { "en": "We see an asteroid." } },
-    { "template_id": "THEY_SEE_SPACECRAFT",   "concepts": ["THIRD_PERSON_PLURAL","SEE","SPACECRAFT"],      "render": { "en": "They see a spacecraft." } },
-
-    { "template_id": "I_HAVE_ROCKET",         "concepts": ["FIRST_PERSON_SINGULAR","HAVE","ROCKET"],       "render": { "en": "I have a rocket." } },
-    { "template_id": "YOU_HAVE_TELESCOPE",    "concepts": ["SECOND_PERSON","HAVE","TELESCOPE"],            "render": { "en": "You have a telescope." } },
-    { "template_id": "HE_HAS_BLASTER",        "concepts": ["HE","HAVE","BLASTER"],                         "render": { "en": "He has a blaster." } },
-    { "template_id": "SHE_HAS_HOLOGRAM",      "concepts": ["SHE","HAVE","HOLOGRAM"],                       "render": { "en": "She has a hologram." } },
-    { "template_id": "WE_HAVE_SIGNAL",        "concepts": ["FIRST_PERSON_PLURAL","HAVE","SIGNAL"],         "render": { "en": "We have a signal." } },
-    { "template_id": "THEY_HAVE_FLEET",       "concepts": ["THIRD_PERSON_PLURAL","HAVE","FLEET"],          "render": { "en": "They have a fleet." } },
-
-    { "template_id": "HE_IS_ASTRONAUT",       "concepts": ["HE","BE","ASTRONAUT"],                         "render": { "en": "He is an astronaut." } },
-    { "template_id": "SHE_IS_ASTRONAUT",      "concepts": ["SHE","BE","ASTRONAUT"],                        "render": { "en": "She is an astronaut." } },
-    { "template_id": "I_AM_ASTRONAUT",        "concepts": ["FIRST_PERSON_SINGULAR","BE","ASTRONAUT"],      "render": { "en": "I am an astronaut." } },
-    { "template_id": "HE_IS_ANDROID",         "concepts": ["HE","BE","ANDROID"],                           "render": { "en": "He is an android." } },
-    { "template_id": "SHE_IS_ALIEN",          "concepts": ["SHE","BE","ALIEN"],                            "render": { "en": "She is an alien." } },
-
-    { "template_id": "I_LAUNCH_ROCKET",       "concepts": ["FIRST_PERSON_SINGULAR","LAUNCH","ROCKET"],     "render": { "en": "I launch a rocket." } },
-    { "template_id": "YOU_LAUNCH",            "concepts": ["SECOND_PERSON","LAUNCH"],                      "render": { "en": "You launch." } },
-    { "template_id": "HE_LAUNCHES",           "concepts": ["HE","LAUNCH"],                                 "render": { "en": "He launches." } },
-    { "template_id": "SHE_LAUNCHES",          "concepts": ["SHE","LAUNCH"],                                "render": { "en": "She launches." } },
-    { "template_id": "WE_LAUNCH",             "concepts": ["FIRST_PERSON_PLURAL","LAUNCH"],                "render": { "en": "We launch." } },
-    { "template_id": "THEY_LAUNCH",           "concepts": ["THIRD_PERSON_PLURAL","LAUNCH"],                "render": { "en": "They launch." } },
-
-    { "template_id": "I_DISCOVER_PLANET",     "concepts": ["FIRST_PERSON_SINGULAR","DISCOVER","PLANET"],   "render": { "en": "I discover a planet." } },
-    { "template_id": "HE_DISCOVERS_STAR",     "concepts": ["HE","DISCOVER","STAR"],                        "render": { "en": "He discovers a star." } },
-    { "template_id": "SHE_DISCOVERS",         "concepts": ["SHE","DISCOVER"],                              "render": { "en": "She discovers." } },
-    { "template_id": "WE_DISCOVER",           "concepts": ["FIRST_PERSON_PLURAL","DISCOVER"],              "render": { "en": "We discover." } },
-
-    { "template_id": "I_ENCOUNTER_ALIEN",     "concepts": ["FIRST_PERSON_SINGULAR","ENCOUNTER","ALIEN"],   "render": { "en": "I encounter an alien." } },
-    { "template_id": "HE_ENCOUNTERS_CREATURE","concepts": ["HE","ENCOUNTER","CREATURE"],                   "render": { "en": "He encounters a creature." } },
-    { "template_id": "THEY_ENCOUNTER",        "concepts": ["THIRD_PERSON_PLURAL","ENCOUNTER"],             "render": { "en": "They encounter." } },
-
-    { "template_id": "I_ACTIVATE_ANDROID",    "concepts": ["FIRST_PERSON_SINGULAR","ACTIVATE","ANDROID"],  "render": { "en": "I activate the android." } },
-    { "template_id": "SHE_ACTIVATES",         "concepts": ["SHE","ACTIVATE"],                              "render": { "en": "She activates." } },
-    { "template_id": "WE_ACTIVATE",           "concepts": ["FIRST_PERSON_PLURAL","ACTIVATE"],              "render": { "en": "We activate." } },
-
-    { "template_id": "I_NAVIGATE_SPACECRAFT", "concepts": ["FIRST_PERSON_SINGULAR","NAVIGATE","SPACECRAFT"],"render": { "en": "I navigate the spacecraft." } },
-    { "template_id": "HE_NAVIGATES",          "concepts": ["HE","NAVIGATE"],                               "render": { "en": "He navigates." } },
-    { "template_id": "THEY_NAVIGATE",         "concepts": ["THIRD_PERSON_PLURAL","NAVIGATE"],              "render": { "en": "They navigate." } },
-
-    { "template_id": "I_TERRAFORM_PLANET",    "concepts": ["FIRST_PERSON_SINGULAR","TERRAFORM","PLANET"],  "render": { "en": "I terraform a planet." } },
-    { "template_id": "WE_TERRAFORM",          "concepts": ["FIRST_PERSON_PLURAL","TERRAFORM"],             "render": { "en": "We terraform." } },
-
-    { "template_id": "I_COLONIZE_PLANET",     "concepts": ["FIRST_PERSON_SINGULAR","COLONIZE","PLANET"],   "render": { "en": "I colonize a planet." } },
-    { "template_id": "THEY_COLONIZE",         "concepts": ["THIRD_PERSON_PLURAL","COLONIZE"],              "render": { "en": "They colonize." } },
-
-    { "template_id": "I_ORBIT_PLANET",        "concepts": ["FIRST_PERSON_SINGULAR","ORBIT","PLANET"],      "render": { "en": "I orbit a planet." } },
-    { "template_id": "HE_ORBITS",             "concepts": ["HE","ORBIT"],                                  "render": { "en": "He orbits." } },
-    { "template_id": "WE_ORBIT",              "concepts": ["FIRST_PERSON_PLURAL","ORBIT"],                 "render": { "en": "We orbit." } },
-
-    { "template_id": "I_TRANSMIT_SIGNAL",     "concepts": ["FIRST_PERSON_SINGULAR","TRANSMIT","SIGNAL"],   "render": { "en": "I transmit a signal." } },
-    { "template_id": "SHE_TRANSMITS",         "concepts": ["SHE","TRANSMIT"],                              "render": { "en": "She transmits." } },
-
-    { "template_id": "I_WARP",                "concepts": ["FIRST_PERSON_SINGULAR","WARP"],                "render": { "en": "I warp." } },
-    { "template_id": "HE_WARPS",              "concepts": ["HE","WARP"],                                   "render": { "en": "He warps." } },
-    { "template_id": "WE_WARP",               "concepts": ["FIRST_PERSON_PLURAL","WARP"],                  "render": { "en": "We warp." } },
-
-    { "template_id": "I_EVOLVE",              "concepts": ["FIRST_PERSON_SINGULAR","EVOLVE"],              "render": { "en": "I evolve." } },
-    { "template_id": "SHE_EVOLVES",           "concepts": ["SHE","EVOLVE"],                                "render": { "en": "She evolves." } },
-    { "template_id": "THEY_EVOLVE",           "concepts": ["THIRD_PERSON_PLURAL","EVOLVE"],                "render": { "en": "They evolve." } },
-
-    { "template_id": "PLANET_IS_DISTANT",     "concepts": ["PLANET","BE","DISTANT"],                       "render": { "en": "The planet is distant." } },
-    { "template_id": "ALIEN_IS_HOSTILE",      "concepts": ["ALIEN","BE","HOSTILE"],                        "render": { "en": "The alien is hostile." } },
-    { "template_id": "SIGNAL_IS_UNKNOWN",     "concepts": ["SIGNAL","BE","UNKNOWN"],                       "render": { "en": "The signal is unknown." } },
-    { "template_id": "ANDROID_IS_ADVANCED",   "concepts": ["ANDROID","BE","ADVANCED"],                     "render": { "en": "The android is advanced." } },
-    { "template_id": "GALAXY_IS_INFINITE",    "concepts": ["GALAXY","BE","INFINITE"],                      "render": { "en": "The galaxy is infinite." } },
-    { "template_id": "COLONY_IS_SUSTAINABLE", "concepts": ["COLONY","BE","SUSTAINABLE"],                   "render": { "en": "The colony is sustainable." } },
-    { "template_id": "SPACECRAFT_IS_ADVANCED","concepts": ["SPACECRAFT","BE","ADVANCED"],                  "render": { "en": "The spacecraft is advanced." } },
-    { "template_id": "FRONTIER_IS_FUTURISTIC","concepts": ["FRONTIER","BE","FUTURISTIC"],                  "render": { "en": "The frontier is futuristic." } },
-    { "template_id": "HULL_IS_ARTIFICIAL",    "concepts": ["HULL","BE","ARTIFICIAL"],                      "render": { "en": "The hull is artificial." } },
-    { "template_id": "NEBULA_IS_COSMIC",      "concepts": ["NEBULA","BE","COSMIC"],                        "render": { "en": "The nebula is cosmic." } },
-
-    { "template_id": "I_SEE_ASTRONAUT",       "concepts": ["FIRST_PERSON_SINGULAR","SEE","ASTRONAUT"],     "render": { "en": "I see an astronaut." } },
-    { "template_id": "YOU_SEE_SATELLITE",     "concepts": ["SECOND_PERSON","SEE","SATELLITE"],             "render": { "en": "You see a satellite." } },
-    { "template_id": "HE_SEES_COLONY",        "concepts": ["HE","SEE","COLONY"],                           "render": { "en": "He sees a colony." } },
-    { "template_id": "SHE_SEES_WORMHOLE",     "concepts": ["SHE","SEE","WORMHOLE"],                        "render": { "en": "She sees a wormhole." } },
-    { "template_id": "WE_SEE_FLEET",          "concepts": ["FIRST_PERSON_PLURAL","SEE","FLEET"],           "render": { "en": "We see a fleet." } },
-
-    { "template_id": "I_HAVE_PROBE",          "concepts": ["FIRST_PERSON_SINGULAR","HAVE","PROBE"],        "render": { "en": "I have a probe." } },
-    { "template_id": "HE_HAS_LASER",          "concepts": ["HE","HAVE","LASER"],                           "render": { "en": "He has a laser." } },
-    { "template_id": "WE_HAVE_COLONY",        "concepts": ["FIRST_PERSON_PLURAL","HAVE","COLONY"],         "render": { "en": "We have a colony." } },
-    { "template_id": "THEY_HAVE_HABITAT",     "concepts": ["THIRD_PERSON_PLURAL","HAVE","HABITAT"],        "render": { "en": "They have a habitat." } },
-
-    { "template_id": "INVASION_IS_HOSTILE",   "concepts": ["INVASION","BE","HOSTILE"],                     "render": { "en": "The invasion is hostile." } },
-    { "template_id": "HABITAT_IS_SUSTAINABLE","concepts": ["HABITAT","BE","SUSTAINABLE"],                  "render": { "en": "The habitat is sustainable." } },
-    { "template_id": "DIMENSION_IS_UNKNOWN",  "concepts": ["DIMENSION","BE","UNKNOWN"],                    "render": { "en": "The dimension is unknown." } },
-    { "template_id": "CREATURE_IS_COSMIC",    "concepts": ["CREATURE","BE","COSMIC"],                      "render": { "en": "The creature is cosmic." } }
-
+    {
+      "template_id": "I_SEE_PLANET",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "PLANET"
+      ],
+      "render": {
+        "en": "I see a planet."
+      }
+    },
+    {
+      "template_id": "YOU_SEE_STAR",
+      "concepts": [
+        "SECOND_PERSON",
+        "SEE",
+        "STAR"
+      ],
+      "render": {
+        "en": "You see a star."
+      }
+    },
+    {
+      "template_id": "HE_SEES_GALAXY",
+      "concepts": [
+        "HE",
+        "SEE",
+        "GALAXY"
+      ],
+      "render": {
+        "en": "He sees a galaxy."
+      }
+    },
+    {
+      "template_id": "SHE_SEES_NEBULA",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "NEBULA"
+      ],
+      "render": {
+        "en": "She sees a nebula."
+      }
+    },
+    {
+      "template_id": "WE_SEE_ASTEROID",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "SEE",
+        "ASTEROID"
+      ],
+      "render": {
+        "en": "We see an asteroid."
+      }
+    },
+    {
+      "template_id": "THEY_SEE_SPACECRAFT",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "SEE",
+        "SPACECRAFT"
+      ],
+      "render": {
+        "en": "They see a spacecraft."
+      }
+    },
+    {
+      "template_id": "I_HAVE_ROCKET",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "ROCKET"
+      ],
+      "render": {
+        "en": "I have a rocket."
+      }
+    },
+    {
+      "template_id": "YOU_HAVE_TELESCOPE",
+      "concepts": [
+        "SECOND_PERSON",
+        "HAVE",
+        "TELESCOPE"
+      ],
+      "render": {
+        "en": "You have a telescope."
+      }
+    },
+    {
+      "template_id": "HE_HAS_BLASTER",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "BLASTER"
+      ],
+      "render": {
+        "en": "He has a blaster."
+      }
+    },
+    {
+      "template_id": "SHE_HAS_HOLOGRAM",
+      "concepts": [
+        "SHE",
+        "HAVE",
+        "HOLOGRAM"
+      ],
+      "render": {
+        "en": "She has a hologram."
+      }
+    },
+    {
+      "template_id": "WE_HAVE_SIGNAL",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "HAVE",
+        "SIGNAL"
+      ],
+      "render": {
+        "en": "We have a signal."
+      }
+    },
+    {
+      "template_id": "THEY_HAVE_FLEET",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "HAVE",
+        "FLEET"
+      ],
+      "render": {
+        "en": "They have a fleet."
+      }
+    },
+    {
+      "template_id": "HE_IS_ASTRONAUT",
+      "concepts": [
+        "HE",
+        "BE",
+        "ASTRONAUT"
+      ],
+      "render": {
+        "en": "He is an astronaut."
+      }
+    },
+    {
+      "template_id": "SHE_IS_ASTRONAUT",
+      "concepts": [
+        "SHE",
+        "BE",
+        "ASTRONAUT"
+      ],
+      "render": {
+        "en": "She is an astronaut."
+      }
+    },
+    {
+      "template_id": "I_AM_ASTRONAUT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "BE",
+        "ASTRONAUT"
+      ],
+      "render": {
+        "en": "I am an astronaut."
+      }
+    },
+    {
+      "template_id": "HE_IS_ANDROID",
+      "concepts": [
+        "HE",
+        "BE",
+        "ANDROID"
+      ],
+      "render": {
+        "en": "He is an android."
+      }
+    },
+    {
+      "template_id": "SHE_IS_ALIEN",
+      "concepts": [
+        "SHE",
+        "BE",
+        "ALIEN"
+      ],
+      "render": {
+        "en": "She is an alien."
+      }
+    },
+    {
+      "template_id": "I_LAUNCH_ROCKET",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "LAUNCH",
+        "ROCKET"
+      ],
+      "render": {
+        "en": "I launch a rocket."
+      }
+    },
+    {
+      "template_id": "YOU_LAUNCH",
+      "concepts": [
+        "SECOND_PERSON",
+        "LAUNCH"
+      ],
+      "render": {
+        "en": "You launch."
+      }
+    },
+    {
+      "template_id": "HE_LAUNCHES",
+      "concepts": [
+        "HE",
+        "LAUNCH"
+      ],
+      "render": {
+        "en": "He launches."
+      }
+    },
+    {
+      "template_id": "SHE_LAUNCHES",
+      "concepts": [
+        "SHE",
+        "LAUNCH"
+      ],
+      "render": {
+        "en": "She launches."
+      }
+    },
+    {
+      "template_id": "WE_LAUNCH",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "LAUNCH"
+      ],
+      "render": {
+        "en": "We launch."
+      }
+    },
+    {
+      "template_id": "THEY_LAUNCH",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "LAUNCH"
+      ],
+      "render": {
+        "en": "They launch."
+      }
+    },
+    {
+      "template_id": "I_DISCOVER_PLANET",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "DISCOVER",
+        "PLANET"
+      ],
+      "render": {
+        "en": "I discover a planet."
+      }
+    },
+    {
+      "template_id": "HE_DISCOVERS_STAR",
+      "concepts": [
+        "HE",
+        "DISCOVER",
+        "STAR"
+      ],
+      "render": {
+        "en": "He discovers a star."
+      }
+    },
+    {
+      "template_id": "SHE_DISCOVERS",
+      "concepts": [
+        "SHE",
+        "DISCOVER"
+      ],
+      "render": {
+        "en": "She discovers."
+      }
+    },
+    {
+      "template_id": "WE_DISCOVER",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "DISCOVER"
+      ],
+      "render": {
+        "en": "We discover."
+      }
+    },
+    {
+      "template_id": "I_ENCOUNTER_ALIEN",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "ENCOUNTER",
+        "ALIEN"
+      ],
+      "render": {
+        "en": "I encounter an alien."
+      }
+    },
+    {
+      "template_id": "HE_ENCOUNTERS_CREATURE",
+      "concepts": [
+        "HE",
+        "ENCOUNTER",
+        "CREATURE"
+      ],
+      "render": {
+        "en": "He encounters a creature."
+      }
+    },
+    {
+      "template_id": "THEY_ENCOUNTER",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "ENCOUNTER"
+      ],
+      "render": {
+        "en": "They encounter."
+      }
+    },
+    {
+      "template_id": "I_ACTIVATE_ANDROID",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "ACTIVATE",
+        "ANDROID"
+      ],
+      "render": {
+        "en": "I activate the android."
+      }
+    },
+    {
+      "template_id": "SHE_ACTIVATES",
+      "concepts": [
+        "SHE",
+        "ACTIVATE"
+      ],
+      "render": {
+        "en": "She activates."
+      }
+    },
+    {
+      "template_id": "WE_ACTIVATE",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "ACTIVATE"
+      ],
+      "render": {
+        "en": "We activate."
+      }
+    },
+    {
+      "template_id": "I_NAVIGATE_SPACECRAFT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "NAVIGATE",
+        "SPACECRAFT"
+      ],
+      "render": {
+        "en": "I navigate the spacecraft."
+      }
+    },
+    {
+      "template_id": "HE_NAVIGATES",
+      "concepts": [
+        "HE",
+        "NAVIGATE"
+      ],
+      "render": {
+        "en": "He navigates."
+      }
+    },
+    {
+      "template_id": "THEY_NAVIGATE",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "NAVIGATE"
+      ],
+      "render": {
+        "en": "They navigate."
+      }
+    },
+    {
+      "template_id": "I_TERRAFORM_PLANET",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "TERRAFORM",
+        "PLANET"
+      ],
+      "render": {
+        "en": "I terraform a planet."
+      }
+    },
+    {
+      "template_id": "WE_TERRAFORM",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "TERRAFORM"
+      ],
+      "render": {
+        "en": "We terraform."
+      }
+    },
+    {
+      "template_id": "I_COLONIZE_PLANET",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "COLONIZE",
+        "PLANET"
+      ],
+      "render": {
+        "en": "I colonize a planet."
+      }
+    },
+    {
+      "template_id": "THEY_COLONIZE",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "COLONIZE"
+      ],
+      "render": {
+        "en": "They colonize."
+      }
+    },
+    {
+      "template_id": "I_ORBIT_PLANET",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "ORBIT",
+        "PLANET"
+      ],
+      "render": {
+        "en": "I orbit a planet."
+      }
+    },
+    {
+      "template_id": "HE_ORBITS",
+      "concepts": [
+        "HE",
+        "ORBIT"
+      ],
+      "render": {
+        "en": "He orbits."
+      }
+    },
+    {
+      "template_id": "WE_ORBIT",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "ORBIT"
+      ],
+      "render": {
+        "en": "We orbit."
+      }
+    },
+    {
+      "template_id": "I_TRANSMIT_SIGNAL",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "TRANSMIT",
+        "SIGNAL"
+      ],
+      "render": {
+        "en": "I transmit a signal."
+      }
+    },
+    {
+      "template_id": "SHE_TRANSMITS",
+      "concepts": [
+        "SHE",
+        "TRANSMIT"
+      ],
+      "render": {
+        "en": "She transmits."
+      }
+    },
+    {
+      "template_id": "I_WARP",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "WARP"
+      ],
+      "render": {
+        "en": "I warp."
+      }
+    },
+    {
+      "template_id": "HE_WARPS",
+      "concepts": [
+        "HE",
+        "WARP"
+      ],
+      "render": {
+        "en": "He warps."
+      }
+    },
+    {
+      "template_id": "WE_WARP",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "WARP"
+      ],
+      "render": {
+        "en": "We warp."
+      }
+    },
+    {
+      "template_id": "I_EVOLVE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EVOLVE"
+      ],
+      "render": {
+        "en": "I evolve."
+      }
+    },
+    {
+      "template_id": "SHE_EVOLVES",
+      "concepts": [
+        "SHE",
+        "EVOLVE"
+      ],
+      "render": {
+        "en": "She evolves."
+      }
+    },
+    {
+      "template_id": "THEY_EVOLVE",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "EVOLVE"
+      ],
+      "render": {
+        "en": "They evolve."
+      }
+    },
+    {
+      "template_id": "PLANET_IS_DISTANT",
+      "concepts": [
+        "PLANET",
+        "BE",
+        "DISTANT"
+      ],
+      "render": {
+        "en": "The planet is distant."
+      }
+    },
+    {
+      "template_id": "ALIEN_IS_HOSTILE",
+      "concepts": [
+        "ALIEN",
+        "BE",
+        "HOSTILE"
+      ],
+      "render": {
+        "en": "The alien is hostile."
+      }
+    },
+    {
+      "template_id": "SIGNAL_IS_UNKNOWN",
+      "concepts": [
+        "SIGNAL",
+        "BE",
+        "UNKNOWN"
+      ],
+      "render": {
+        "en": "The signal is unknown."
+      }
+    },
+    {
+      "template_id": "ANDROID_IS_ADVANCED",
+      "concepts": [
+        "ANDROID",
+        "BE",
+        "ADVANCED"
+      ],
+      "render": {
+        "en": "The android is advanced."
+      }
+    },
+    {
+      "template_id": "GALAXY_IS_INFINITE",
+      "concepts": [
+        "GALAXY",
+        "BE",
+        "INFINITE"
+      ],
+      "render": {
+        "en": "The galaxy is infinite."
+      }
+    },
+    {
+      "template_id": "COLONY_IS_SUSTAINABLE",
+      "concepts": [
+        "COLONY",
+        "BE",
+        "SUSTAINABLE"
+      ],
+      "render": {
+        "en": "The colony is sustainable."
+      }
+    },
+    {
+      "template_id": "SPACECRAFT_IS_ADVANCED",
+      "concepts": [
+        "SPACECRAFT",
+        "BE",
+        "ADVANCED"
+      ],
+      "render": {
+        "en": "The spacecraft is advanced."
+      }
+    },
+    {
+      "template_id": "NEBULA_IS_COSMIC",
+      "concepts": [
+        "NEBULA",
+        "BE",
+        "COSMIC"
+      ],
+      "render": {
+        "en": "The nebula is cosmic."
+      }
+    },
+    {
+      "template_id": "I_SEE_ASTRONAUT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "ASTRONAUT"
+      ],
+      "render": {
+        "en": "I see an astronaut."
+      }
+    },
+    {
+      "template_id": "YOU_SEE_SATELLITE",
+      "concepts": [
+        "SECOND_PERSON",
+        "SEE",
+        "SATELLITE"
+      ],
+      "render": {
+        "en": "You see a satellite."
+      }
+    },
+    {
+      "template_id": "HE_SEES_COLONY",
+      "concepts": [
+        "HE",
+        "SEE",
+        "COLONY"
+      ],
+      "render": {
+        "en": "He sees a colony."
+      }
+    },
+    {
+      "template_id": "SHE_SEES_WORMHOLE",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "WORMHOLE"
+      ],
+      "render": {
+        "en": "She sees a wormhole."
+      }
+    },
+    {
+      "template_id": "WE_SEE_FLEET",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "SEE",
+        "FLEET"
+      ],
+      "render": {
+        "en": "We see a fleet."
+      }
+    },
+    {
+      "template_id": "I_HAVE_PROBE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "PROBE"
+      ],
+      "render": {
+        "en": "I have a probe."
+      }
+    },
+    {
+      "template_id": "HE_HAS_LASER",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "LASER"
+      ],
+      "render": {
+        "en": "He has a laser."
+      }
+    },
+    {
+      "template_id": "WE_HAVE_COLONY",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "HAVE",
+        "COLONY"
+      ],
+      "render": {
+        "en": "We have a colony."
+      }
+    },
+    {
+      "template_id": "THEY_HAVE_HABITAT",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "HAVE",
+        "HABITAT"
+      ],
+      "render": {
+        "en": "They have a habitat."
+      }
+    },
+    {
+      "template_id": "INVASION_IS_HOSTILE",
+      "concepts": [
+        "INVASION",
+        "BE",
+        "HOSTILE"
+      ],
+      "render": {
+        "en": "The invasion is hostile."
+      }
+    },
+    {
+      "template_id": "HABITAT_IS_SUSTAINABLE",
+      "concepts": [
+        "HABITAT",
+        "BE",
+        "SUSTAINABLE"
+      ],
+      "render": {
+        "en": "The habitat is sustainable."
+      }
+    },
+    {
+      "template_id": "DIMENSION_IS_UNKNOWN",
+      "concepts": [
+        "DIMENSION",
+        "BE",
+        "UNKNOWN"
+      ],
+      "render": {
+        "en": "The dimension is unknown."
+      }
+    },
+    {
+      "template_id": "CREATURE_IS_COSMIC",
+      "concepts": [
+        "CREATURE",
+        "BE",
+        "COSMIC"
+      ],
+      "render": {
+        "en": "The creature is cosmic."
+      }
+    }
   ]
 }
