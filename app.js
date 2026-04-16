@@ -1468,6 +1468,35 @@ return tpl;
 
   return cid;
 }
+// Returns true if a number concept ID represents a quantity greater than 1
+// (i.e. the noun following it should be plural in English and other languages).
+function isPlural(numberCid) {
+  return numberCid !== "ONE";
+}
+
+// Returns the plural form of a noun for the given language.
+// Uses entry.plural if defined; falls back to English rules for "en";
+// returns the singular base for languages with no simple pluralisation rule.
+function pluralOf(lang, cid) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
+  const base = entry.form || formOf(lang, cid);
+  if (entry.plural) return entry.plural;
+  if (lang === "en") return pluralizeEnglishNoun(base);
+  // Japanese, Korean: no grammatical plural — singular is correct
+  // German, Portuguese, Norwegian, Ukrainian, Greek, Turkish, Arabic:
+  // no generic rule; plural forms should be added as entry.plural in vocab data.
+  return base;
+}
+
+// Standard English noun pluralisation rules.
+function pluralizeEnglishNoun(word) {
+  if (!word) return word;
+  // "league" → "leagues", "gym" → "gyms", etc.
+  if (/(s|x|z|ch|sh)$/i.test(word)) return word + "es";
+  if (/[^aeiou]y$/i.test(word)) return word.slice(0, -1) + "ies";
+  return word + "s";
+}
+
 // Returns "a" or "an" based on the first letter of the following word.
 // Covers the standard vowel-sound rule (a, e, i, o, u).
 // entry.article can still override for genuine exceptions (e.g. "an hour", "a unicorn").
@@ -1795,7 +1824,29 @@ function buildComplexClauseSentence(lang, linkerCid, clauseA, clauseB, subordina
 
   return capitalizeFirst(`${clauseA} ${linker} ${clauseB}.`);
 }
-function buildSentence(lang, tpl, forcedConcept = null) {
+
+// Pre-select a random adjective concept (if any are eligible) so that both
+// the target-language and support-language sentences receive the same one.
+// Returns a concept ID string, or null if none should be added.
+function pickRandomAdj(forcedConcept) {
+  const forcedMeta = forcedConcept ? window.GLOBAL_VOCAB.concepts[forcedConcept] : null;
+  // If the concept being learned IS an adjective, buildSentence handles it itself.
+  if (forcedMeta?.type === "adjective") return null;
+
+  const adjectives = run.released.filter(c => {
+    const m = window.GLOBAL_VOCAB.concepts[c];
+    if (m?.type !== "adjective") return false;
+    const st = ensureProgress(c);
+    return !st.completed && st.level >= 4;
+  });
+
+  if (adjectives.length && Math.random() < 0.6) {
+    return adjectives[Math.floor(Math.random() * adjectives.length)];
+  }
+  return null;
+}
+
+function buildSentence(lang, tpl, forcedConcept = null, forcedAdj = null) {
 if (tpl.structure?.type === "copular_demonstrative") {
   const s = tpl.slots;
   return buildCopularDemonstrative(
@@ -1883,30 +1934,24 @@ if (tpl.structure?.type === "complex_clause") {
   let adjectiveWord = null;
   let numberWord = null;
 
-  // adjective
+  // adjective — forcedAdj is pre-selected by the caller so both target and
+  // support sentences always share the same optional adjective (Bug 3 fix).
   if (forcedMeta?.type === "adjective") {
     adjectiveWord = formOf(lang, forcedConcept);
-  } else {
-    const adjectives = run.released.filter(c => {
-      const m = window.GLOBAL_VOCAB.concepts[c];
-      if (m?.type !== "adjective") return false;
-      const st = ensureProgress(c);
-      return !st.completed && st.level >= 4;
-    });
-
-    if (adjectives.length && Math.random() < 0.6) {
-      const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-      adjectiveWord = formOf(lang, adj);
-    }
+  } else if (forcedAdj) {
+    adjectiveWord = formOf(lang, forcedAdj);
   }
+  // (random selection has moved to pickRandomAdj(), called at render sites)
 
   // number
   if (forcedMeta?.type === "number") {
     numberWord = formOf(lang, forcedConcept);
   }
 
-  // apply modifiers
-  const bare = formOf(lang, cid);
+  // apply modifiers — pluralise noun when preceded by a plural number (Bug 1 fix)
+  const bare = (numberWord && isPlural(forcedConcept))
+    ? pluralOf(lang, cid)
+    : formOf(lang, cid);
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
 
   if (numberWord) {
@@ -1976,8 +2021,9 @@ if (tpl.structure?.type === "complex_clause") {
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
-  const targetSentence = buildSentence(targetLang, tpl, targetConcept);
-  const supportSentence = buildSentence(supportLang, tpl, targetConcept);
+  const adjCid = pickRandomAdj(targetConcept);
+  const targetSentence = buildSentence(targetLang, tpl, targetConcept, adjCid);
+  const supportSentence = buildSentence(supportLang, tpl, targetConcept, adjCid);
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
@@ -2275,10 +2321,11 @@ if (isModifierConcept(targetConcept)) {
 }
 
   // --- Existing core path ---
-  const supportSentence = safe(buildSentence(supportLang, tpl));
+  const adjCidL3 = pickRandomAdj(null);
+  const supportSentence = safe(buildSentence(supportLang, tpl, null, adjCidL3));
 
 // ✅ Build actual sentence
-const sentenceTarget = buildSentence(targetLang, tpl);
+const sentenceTarget = buildSentence(targetLang, tpl, null, adjCidL3);
 
 // ✅ Get correct surface form (CRITICAL)
 const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
