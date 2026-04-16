@@ -41,30 +41,38 @@
     "tr": "Turco"
   },
   "forms": {
-    "BIG": [
-      "grande"
-    ],
-    "SMALL": [
-      "pequeno"
-    ],
-    "GOOD": [
-      "bom"
-    ],
-    "BAD": [
-      "ruim"
-    ],
-    "NEW": [
-      "novo"
-    ],
-    "OLD": [
-      "velho"
-    ],
-    "EASY": [
-      "fácil"
-    ],
-    "DIFFICULT": [
-      "difícil"
-    ],
+    "BIG": {
+      "form": "grande",
+      "plural": "grandes"
+    },
+    "SMALL": {
+      "form": "pequeno",
+      "plural": "pequenos"
+    },
+    "GOOD": {
+      "form": "bom",
+      "plural": "bons"
+    },
+    "BAD": {
+      "form": "ruim",
+      "plural": "ruins"
+    },
+    "NEW": {
+      "form": "novo",
+      "plural": "novos"
+    },
+    "OLD": {
+      "form": "velho",
+      "plural": "velhos"
+    },
+    "EASY": {
+      "form": "fácil",
+      "plural": "fáceis"
+    },
+    "DIFFICULT": {
+      "form": "difícil",
+      "plural": "difíceis"
+    },
     "MY": [
       "meu"
     ],
@@ -175,103 +183,128 @@
     },
     "HOUSE": {
       "form": "casa",
-      "gender": "f"
+      "gender": "f",
+      "plural": "casas"
     },
     "HOME": {
       "form": "lar",
-      "gender": "m"
+      "gender": "m",
+      "plural": "lares"
     },
     "BOOK": {
       "form": "livro",
-      "gender": "m"
+      "gender": "m",
+      "plural": "livros"
     },
     "THING": {
       "form": "coisa",
-      "gender": "f"
+      "gender": "f",
+      "plural": "coisas"
     },
     "JOB": {
       "form": "trabalho",
-      "gender": "m"
+      "gender": "m",
+      "plural": "trabalhos"
     },
     "ROOM": {
       "form": "quarto",
-      "gender": "m"
+      "gender": "m",
+      "plural": "quartos"
     },
     "BOY": {
       "form": "menino",
-      "gender": "m"
+      "gender": "m",
+      "plural": "meninos"
     },
     "GIRL": {
       "form": "menina",
-      "gender": "f"
+      "gender": "f",
+      "plural": "meninas"
     },
     "MAN": {
       "form": "homem",
-      "gender": "m"
+      "gender": "m",
+      "plural": "homens"
     },
     "WOMAN": {
       "form": "mulher",
-      "gender": "f"
+      "gender": "f",
+      "plural": "mulheres"
     },
     "MOM": {
       "form": "mãe",
-      "gender": "f"
+      "gender": "f",
+      "plural": "mães"
     },
     "DAD": {
       "form": "pai",
-      "gender": "m"
+      "gender": "m",
+      "plural": "pais"
     },
     "SON": {
       "form": "filho",
-      "gender": "m"
+      "gender": "m",
+      "plural": "filhos"
     },
     "DAUGHTER": {
       "form": "filha",
-      "gender": "f"
+      "gender": "f",
+      "plural": "filhas"
     },
     "BROTHER": {
       "form": "irmão",
-      "gender": "m"
+      "gender": "m",
+      "plural": "irmãos"
     },
     "SISTER": {
       "form": "irmã",
-      "gender": "f"
+      "gender": "f",
+      "plural": "irmãs"
     },
     "HEAD": {
       "form": "cabeça",
-      "gender": "f"
+      "gender": "f",
+      "plural": "cabeças"
     },
     "ARM": {
       "form": "braço",
-      "gender": "m"
+      "gender": "m",
+      "plural": "braços"
     },
     "HAND": {
       "form": "mão",
-      "gender": "f"
+      "gender": "f",
+      "plural": "mãos"
     },
     "LEG": {
       "form": "perna",
-      "gender": "f"
+      "gender": "f",
+      "plural": "pernas"
     },
     "FOOT": {
       "form": "pé",
-      "gender": "m"
+      "gender": "m",
+      "plural": "pés"
     },
     "FINGER": {
       "form": "dedo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "dedos"
     },
     "EYE": {
       "form": "olho",
-      "gender": "m"
+      "gender": "m",
+      "plural": "olhos"
     },
     "MOUTH": {
       "form": "boca",
-      "gender": "f"
+      "gender": "f",
+      "plural": "bocas"
     },
     "FACE": {
       "form": "rosto",
-      "gender": "m"
+      "gender": "m",
+      "plural": "rostos"
     },
     "BREAKFAST": {
       "form": "café da manhã",
@@ -291,7 +324,8 @@
     },
     "SHIRT": {
       "form": "camisa",
-      "gender": "f"
+      "gender": "f",
+      "plural": "camisas"
     },
     "SHOES": {
       "form": "sapatos",
@@ -299,7 +333,8 @@
     },
     "PHONE": {
       "form": "telefone",
-      "gender": "m"
+      "gender": "m",
+      "plural": "telefones"
     },
     "PANTS": {
       "form": "calças",

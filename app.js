@@ -1365,6 +1365,17 @@ function pluralize(word) {
   return word + "s";
 }
 
+// Returns the plural form for non-English languages.
+// Reads entry.plural if present; falls back to the singular formOf().
+function pluralFormOf(lang, cid) {
+  const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+  if (!entry) return formOf(lang, cid);
+  if (typeof entry === "object" && !Array.isArray(entry) && entry.plural) {
+    return entry.plural;
+  }
+  return formOf(lang, cid);
+}
+
 function nounPhrase(lang, cid) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
@@ -1767,10 +1778,12 @@ if (tpl.structure?.type === "complex_clause") {
   let phrase = nounPhrase(lang, cid);
 
   let adjectiveWord = null;
+  let adjectiveCid = null;
   let numberWord = null;
 
   // adjective
   if (forcedMeta?.type === "adjective") {
+    adjectiveCid = forcedConcept;
     adjectiveWord = formOf(lang, forcedConcept);
   } else {
     const adjectives = run.released.filter(c => {
@@ -1782,6 +1795,7 @@ if (tpl.structure?.type === "complex_clause") {
 
     if (adjectives.length && Math.random() < 0.6) {
       const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+      adjectiveCid = adj;
       adjectiveWord = formOf(lang, adj);
     }
   }
@@ -1797,13 +1811,22 @@ if (tpl.structure?.type === "complex_clause") {
 
   if (numberWord) {
     // Numbers replace the article: "two books" not "two a book"
-    const nounForm = (lang === "en" && forcedConcept !== "ONE")
-      ? pluralize(bare)
-      : bare;
+    const isPlural = forcedConcept !== "ONE";
+    let nounForm;
+    if (!isPlural) {
+      nounForm = bare;
+    } else if (lang === "en") {
+      nounForm = pluralize(bare);
+    } else {
+      nounForm = pluralFormOf(lang, cid);
+    }
     if (adjectiveWord) {
+      const adjForm = (isPlural && adjectiveCid && lang !== "en")
+        ? pluralFormOf(lang, adjectiveCid)
+        : adjectiveWord;
       return POST_ADJ
-        ? numberWord + " " + nounForm + " " + adjectiveWord
-        : numberWord + " " + adjectiveWord + " " + nounForm;
+        ? numberWord + " " + nounForm + " " + adjForm
+        : numberWord + " " + adjForm + " " + nounForm;
     }
     return numberWord + " " + nounForm;
   }

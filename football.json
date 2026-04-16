@@ -520,17 +520,17 @@
     "no": {
       "label": "Norwegian",
       "forms": {
-        "PITCH":      { "form": "bane", "gender": "m" },
+        "PITCH":      { "form": "bane", "gender": "m", "plural": "baner" },
         "GOAL":       { "form": "mål", "gender": "n" },
         "NET":        { "form": "nett", "gender": "n" },
-        "STADIUM":    { "form": "stadion", "gender": "n" },
-        "WHISTLE":    { "form": "fløyte", "gender": "f" },
+        "STADIUM":    { "form": "stadion", "gender": "n", "plural": "stadioner" },
+        "WHISTLE":    { "form": "fløyte", "gender": "f", "plural": "fløyter" },
 
-        "STRIKER":    { "form": "spiss", "gender": "m" },
-        "GOALKEEPER": { "form": "keeper", "gender": "m" },
-        "CAPTAIN":    { "form": "kaptein", "gender": "m" },
-        "REFEREE":    { "form": "dommer", "gender": "m" },
-        "COACH":      { "form": "trener", "gender": "m" },
+        "STRIKER":    { "form": "spiss", "gender": "m", "plural": "spisser" },
+        "GOALKEEPER": { "form": "keeper", "gender": "m", "plural": "keepere" },
+        "CAPTAIN":    { "form": "kaptein", "gender": "m", "plural": "kapteiner" },
+        "REFEREE":    { "form": "dommer", "gender": "m", "plural": "dommere" },
+        "COACH":      { "form": "trener", "gender": "m", "plural": "trenere" },
 
         "KICK":       { "base": "sparke",       "1_singular": "sparker",       "2_singular": "sparker",       "3_singular": "sparker",       "1_plural": "sparker",       "2_plural": "sparker",       "3_plural": "sparker" },
         "PASS":       { "base": "passe",        "1_singular": "passer",        "2_singular": "passer",        "3_singular": "passer",        "1_plural": "passer",        "2_plural": "passer",        "3_plural": "passer" },
@@ -548,19 +548,19 @@
         "PENALTY":    { "form": "straffespark", "gender": "n" },
         "CORNER":     { "form": "hjørnespark", "gender": "n" },
         "OFFSIDE":    ["offside"],
-        "HALFTIME":   { "form": "pause", "gender": "m" },
+        "HALFTIME":   { "form": "pause", "gender": "m", "plural": "pauser" },
 
         "SQUAD":      { "form": "stall", "gender": "m" },
-        "FORMATION":  { "form": "formasjon", "gender": "m" },
-        "LEAGUE":     { "form": "liga", "gender": "f" },
-        "SUBSTITUTE": { "form": "innbytter", "gender": "m" },
+        "FORMATION":  { "form": "formasjon", "gender": "m", "plural": "formasjoner" },
+        "LEAGUE":     { "form": "liga", "gender": "f", "plural": "ligaer" },
+        "SUBSTITUTE": { "form": "innbytter", "gender": "m", "plural": "innbyttere" },
         "ASSIST":     { "form": "assist", "gender": "m" },
 
-        "MATCH":      { "form": "kamp", "gender": "m" },
-        "VICTORY":    { "form": "seier", "gender": "m" },
+        "MATCH":      { "form": "kamp", "gender": "m", "plural": "kamper" },
+        "VICTORY":    { "form": "seier", "gender": "m", "plural": "seire" },
         "DEFEAT":     { "form": "tap", "gender": "n" },
         "DRAW":       { "form": "uavgjort", "gender": "n" },
-        "TROPHY":     { "form": "pokal", "gender": "m" },
+        "TROPHY":     { "form": "pokal", "gender": "m", "plural": "pokaler" },
 
         "SWIFT":      ["rask"],
         "SKILLED":    ["dyktig"],
@@ -574,10 +574,10 @@
         "COUNTER":    { "base": "kontre",       "1_singular": "kontrer",       "2_singular": "kontrer",       "3_singular": "kontrer",       "1_plural": "kontrer",       "2_plural": "kontrer",       "3_plural": "kontrer" },
         "DOMINATE":   { "base": "dominere",     "1_singular": "dominerer",     "2_singular": "dominerer",     "3_singular": "dominerer",     "1_plural": "dominerer",     "2_plural": "dominerer",     "3_plural": "dominerer" },
 
-        "CHAMPION":   { "form": "mester", "gender": "m" },
+        "CHAMPION":   { "form": "mester", "gender": "m", "plural": "mestere" },
         "CROWD":      { "form": "publikum", "gender": "n" },
         "CELEBRATE":  { "base": "feire",        "1_singular": "feirer",        "2_singular": "feirer",        "3_singular": "feirer",        "1_plural": "feirer",        "2_plural": "feirer",        "3_plural": "feirer" },
-        "FINAL":      { "form": "finale", "gender": "f" },
+        "FINAL":      { "form": "finale", "gender": "f", "plural": "finaler" },
         "UNBEATABLE": ["uslåelig"]
       }
     },
