@@ -247,6 +247,146 @@ const RESOURCE_PACKS = {
     { id: "music_10", concepts: ["BAND","ANTHEM","PLAYLIST","FESTIVAL","FANBASE"] }
 
   ]
+},
+  everyday_life: {
+  vocabFile: "everyday_life.json",
+  templateFile: "sentence_templates_everyday_life.json",
+  beta: true,
+  bundles: [
+
+    { id: "el_01", concepts: ["ALARM","SHOWER","TOOTHBRUSH","APARTMENT","LIVING_ROOM"] },
+
+    { id: "el_02", concepts: ["FURNITURE","NEIGHBOR","GROCERY","PHARMACY","OFFICE"] },
+
+    { id: "el_03", concepts: ["MEETING","DEADLINE","STORM","UMBRELLA","FORECAST"] },
+
+    { id: "el_04", concepts: ["INVITATION","CONVERSATION","COMPLIMENT","WALLET","BILL"] },
+
+    { id: "el_05", concepts: ["BUDGET","HEADACHE","MEDICINE","APPOINTMENT","LAUNDRY"] },
+
+    { id: "el_06", concepts: ["DISHES","GARBAGE","CANDLE","COUCH","COMMUTE"] },
+
+    { id: "el_07", concepts: ["OVERSLEEP","DELIVER","ORGANIZE","SCHEDULE","DRIZZLE"] },
+
+    { id: "el_08", concepts: ["APOLOGIZE","AFFORD","EXERCISE","REPAIR","RELAX"] },
+
+    { id: "el_09", concepts: ["UNWIND","COMFORTABLE","CONVENIENT","BUSY","CLOUDY"] },
+
+    { id: "el_10", concepts: ["FRIENDLY","CHEAP","TIRED","MESSY","COZY"] }
+
+  ]
+},
+  fashion_style: {
+  vocabFile: "fashion_style.json",
+  templateFile: "sentence_templates_fashion_style.json",
+  beta: true,
+  bundles: [
+
+    { id: "fs_01", concepts: ["JACKET","DRESS","SNEAKERS","FABRIC","LEATHER"] },
+
+    { id: "fs_02", concepts: ["SILK","PATTERN","STITCH","TAILOR","RUNWAY"] },
+
+    { id: "fs_03", concepts: ["MODEL","COLLECTION","BOUTIQUE","WARDROBE","TREND"] },
+
+    { id: "fs_04", concepts: ["NECKLACE","BRACELET","SUNGLASSES","MAKEUP","LIPSTICK"] },
+
+    { id: "fs_05", concepts: ["HAIRSTYLE","OUTFIT","LOOKBOOK","AESTHETIC","DESIGNER"] },
+
+    { id: "fs_06", concepts: ["BRAND","CAMPAIGN","INFLUENCER","EDITORIAL","COUTURE"] },
+
+    { id: "fs_07", concepts: ["EMBROIDER","DRAPE","DESIGN","STRUT","BROWSE"] },
+
+    { id: "fs_08", concepts: ["ADORN","CONTOUR","COORDINATE","UNVEIL","SHOWCASE"] },
+
+    { id: "fs_09", concepts: ["ELEGANT","TEXTURED","VINTAGE","GLAMOROUS","AFFORDABLE"] },
+
+    { id: "fs_10", concepts: ["DAZZLING","FLAWLESS","CHIC","EXCLUSIVE","ICONIC"] }
+
+  ]
+},
+  gaming: {
+  vocabFile: "gaming.json",
+  templateFile: "sentence_templates_gaming.json",
+  beta: true,
+  bundles: [
+
+    { id: "gm_01", concepts: ["CONSOLE","CONTROLLER","SCREEN","TIER","PIXEL"] },
+
+    { id: "gm_02", concepts: ["AVATAR","BOSS","NPC","COMPANION","COMBO"] },
+
+    { id: "gm_03", concepts: ["HARM","VITALITY","MISSION","ACHIEVEMENT","UPGRADE"] },
+
+    { id: "gm_04", concepts: ["DUNGEON","SPAWN","MAP","PARTY","RAID"] },
+
+    { id: "gm_05", concepts: ["GUILD","INVENTORY","VIAL","GEM","LOADOUT"] },
+
+    { id: "gm_06", concepts: ["COOLDOWN","STRATEGY","LEADERBOARD","RANK","SPEEDRUN"] },
+
+    { id: "gm_07", concepts: ["RESPAWN","LOOT","CRAFT","EQUIP","GRIND"] },
+
+    { id: "gm_08", concepts: ["SLAY","UNLOCK","ROAM","STREAM","COLLECT"] },
+
+    { id: "gm_09", concepts: ["AMBUSH","CLUTCH","ELITE","CRITICAL","RARE"] },
+
+    { id: "gm_10", concepts: ["HIDDEN","COMPETITIVE","MYTHIC","TACTICAL","OVERPOWERED"] }
+
+  ]
+},
+  tourism: {
+  vocabFile: "tourism.json",
+  templateFile: "sentence_templates_tourism.json",
+  beta: true,
+  bundles: [
+
+    { id: "tour_01", concepts: ["AIRPORT","PASSPORT","FLIGHT","LUGGAGE","HOTEL"] },
+
+    { id: "tour_02", concepts: ["RESERVATION","LOBBY","CHECKOUT","TAXI","STATION"] },
+
+    { id: "tour_03", concepts: ["TICKET","ROUTE","LANDMARK","MUSEUM","MONUMENT"] },
+
+    { id: "tour_04", concepts: ["RESTAURANT","MENU","WAITER","MARKET","SOUVENIR"] },
+
+    { id: "tour_05", concepts: ["BARGAIN","PHRASEBOOK","BEACH","CATHEDRAL","HARBOR"] },
+
+    { id: "tour_06", concepts: ["CURRENCY","CUSTOMS","EMBASSY","ADVENTURE","ITINERARY"] },
+
+    { id: "tour_07", concepts: ["GUIDE","BOARD","RESERVE","NAVIGATE","PHOTOGRAPH"] },
+
+    { id: "tour_08", concepts: ["ORDER","PURCHASE","TRANSLATE","GREET","PRONOUNCE"] },
+
+    { id: "tour_09", concepts: ["EXPLORE","EXCHANGE","INSURE","RECOMMEND","SCENIC"] },
+
+    { id: "tour_10", concepts: ["DELICIOUS","EXPENSIVE","FOREIGN","HISTORIC","UNFORGETTABLE"] }
+
+  ]
+},
+  space_scifi: {
+  vocabFile: "space_scifi.json",
+  templateFile: "sentence_templates_space_scifi.json",
+  beta: true,
+  bundles: [
+
+    { id: "space_01", concepts: ["PLANET","STAR","GALAXY","ASTEROID","COSMIC"] },
+
+    { id: "space_02", concepts: ["ROCKET","SPACECRAFT","ASTRONAUT","LAUNCH","ORBITAL"] },
+
+    { id: "space_03", concepts: ["TELESCOPE","SATELLITE","PROBE","DISCOVER","DISTANT"] },
+
+    { id: "space_04", concepts: ["ALIEN","CREATURE","SIGNAL","ENCOUNTER","UNKNOWN"] },
+
+    { id: "space_05", concepts: ["LASER","HOLOGRAM","ANDROID","ACTIVATE","ADVANCED"] },
+
+    { id: "space_06", concepts: ["COCKPIT","AIRLOCK","HULL","NAVIGATE","ARTIFICIAL"] },
+
+    { id: "space_07", concepts: ["NEBULA","WORMHOLE","SUPERNOVA","ORBIT","INFINITE"] },
+
+    { id: "space_08", concepts: ["COLONY","HABITAT","TERRAFORM","COLONIZE","SUSTAINABLE"] },
+
+    { id: "space_09", concepts: ["INVASION","FLEET","BLASTER","TRANSMIT","HOSTILE"] },
+
+    { id: "space_10", concepts: ["DIMENSION","FRONTIER","WARP","EVOLVE","FUTURISTIC"] }
+
+  ]
 }
 };
 let USER = null;

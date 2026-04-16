@@ -1,0 +1,87 @@
+{
+  "templates": [
+
+    { "template_id": "I_SEE_CONSOLE",         "concepts": ["FIRST_PERSON_SINGULAR","SEE","CONSOLE"],        "render": { "en": "I see a console." } },
+    { "template_id": "YOU_SEE_CONTROLLER",    "concepts": ["SECOND_PERSON","SEE","CONTROLLER"],             "render": { "en": "You see a controller." } },
+    { "template_id": "HE_SEES_DUNGEON",       "concepts": ["HE","SEE","DUNGEON"],                           "render": { "en": "He sees a dungeon." } },
+    { "template_id": "SHE_SEES_MAP",          "concepts": ["SHE","SEE","MAP"],                              "render": { "en": "She sees a map." } },
+    { "template_id": "WE_SEE_BOSS",           "concepts": ["FIRST_PERSON_PLURAL","SEE","BOSS"],             "render": { "en": "We see a boss." } },
+    { "template_id": "THEY_SEE_GUILD",        "concepts": ["THIRD_PERSON_PLURAL","SEE","GUILD"],            "render": { "en": "They see a guild." } },
+
+    { "template_id": "I_HAVE_CONTROLLER",     "concepts": ["FIRST_PERSON_SINGULAR","HAVE","CONTROLLER"],    "render": { "en": "I have a controller." } },
+    { "template_id": "YOU_HAVE_AVATAR",       "concepts": ["SECOND_PERSON","HAVE","AVATAR"],                "render": { "en": "You have an avatar." } },
+    { "template_id": "HE_HAS_INVENTORY",      "concepts": ["HE","HAVE","INVENTORY"],                        "render": { "en": "He has an inventory." } },
+    { "template_id": "SHE_HAS_LOADOUT",       "concepts": ["SHE","HAVE","LOADOUT"],                         "render": { "en": "She has a loadout." } },
+    { "template_id": "WE_HAVE_STRATEGY",      "concepts": ["FIRST_PERSON_PLURAL","HAVE","STRATEGY"],        "render": { "en": "We have a strategy." } },
+    { "template_id": "THEY_HAVE_GUILD",       "concepts": ["THIRD_PERSON_PLURAL","HAVE","GUILD"],           "render": { "en": "They have a guild." } },
+
+    { "template_id": "I_AM_ELITE",            "concepts": ["FIRST_PERSON_SINGULAR","BE","ELITE"],           "render": { "en": "I am elite." } },
+    { "template_id": "HE_IS_COMPETITIVE",     "concepts": ["HE","BE","COMPETITIVE"],                        "render": { "en": "He is competitive." } },
+    { "template_id": "BOSS_IS_CRITICAL",      "concepts": ["BOSS","BE","CRITICAL"],                         "render": { "en": "The boss is critical." } },
+    { "template_id": "ITEM_IS_RARE",          "concepts": ["GEM","BE","RARE"],                              "render": { "en": "The gem is rare." } },
+    { "template_id": "NPC_IS_HIDDEN",         "concepts": ["NPC","BE","HIDDEN"],                            "render": { "en": "The NPC is hidden." } },
+
+    { "template_id": "I_RESPAWN",             "concepts": ["FIRST_PERSON_SINGULAR","RESPAWN"],              "render": { "en": "I respawn." } },
+    { "template_id": "YOU_RESPAWN",           "concepts": ["SECOND_PERSON","RESPAWN"],                      "render": { "en": "You respawn." } },
+    { "template_id": "HE_RESPAWNS",           "concepts": ["HE","RESPAWN"],                                 "render": { "en": "He respawns." } },
+    { "template_id": "THEY_RESPAWN",          "concepts": ["THIRD_PERSON_PLURAL","RESPAWN"],                "render": { "en": "They respawn." } },
+
+    { "template_id": "I_LOOT",                "concepts": ["FIRST_PERSON_SINGULAR","LOOT"],                 "render": { "en": "I loot." } },
+    { "template_id": "HE_LOOTS_DUNGEON",      "concepts": ["HE","LOOT","DUNGEON"],                          "render": { "en": "He loots the dungeon." } },
+    { "template_id": "WE_LOOT",               "concepts": ["FIRST_PERSON_PLURAL","LOOT"],                   "render": { "en": "We loot." } },
+
+    { "template_id": "I_CRAFT",               "concepts": ["FIRST_PERSON_SINGULAR","CRAFT"],                "render": { "en": "I craft." } },
+    { "template_id": "SHE_CRAFTS",            "concepts": ["SHE","CRAFT"],                                  "render": { "en": "She crafts." } },
+    { "template_id": "THEY_CRAFT",            "concepts": ["THIRD_PERSON_PLURAL","CRAFT"],                  "render": { "en": "They craft." } },
+
+    { "template_id": "I_EQUIP_LOADOUT",       "concepts": ["FIRST_PERSON_SINGULAR","EQUIP","LOADOUT"],      "render": { "en": "I equip a loadout." } },
+    { "template_id": "HE_EQUIPS",             "concepts": ["HE","EQUIP"],                                   "render": { "en": "He equips." } },
+    { "template_id": "WE_EQUIP",              "concepts": ["FIRST_PERSON_PLURAL","EQUIP"],                  "render": { "en": "We equip." } },
+
+    { "template_id": "I_GRIND",               "concepts": ["FIRST_PERSON_SINGULAR","GRIND"],                "render": { "en": "I grind." } },
+    { "template_id": "HE_GRINDS",             "concepts": ["HE","GRIND"],                                   "render": { "en": "He grinds." } },
+    { "template_id": "WE_GRIND",              "concepts": ["FIRST_PERSON_PLURAL","GRIND"],                  "render": { "en": "We grind." } },
+
+    { "template_id": "I_SLAY_BOSS",           "concepts": ["FIRST_PERSON_SINGULAR","SLAY","BOSS"],          "render": { "en": "I slay the boss." } },
+    { "template_id": "SHE_SLAYS",             "concepts": ["SHE","SLAY"],                                   "render": { "en": "She slays." } },
+    { "template_id": "THEY_SLAY",             "concepts": ["THIRD_PERSON_PLURAL","SLAY"],                   "render": { "en": "They slay." } },
+
+    { "template_id": "I_UNLOCK_ACHIEVEMENT",  "concepts": ["FIRST_PERSON_SINGULAR","UNLOCK","ACHIEVEMENT"], "render": { "en": "I unlock an achievement." } },
+    { "template_id": "HE_UNLOCKS",            "concepts": ["HE","UNLOCK"],                                  "render": { "en": "He unlocks." } },
+    { "template_id": "WE_UNLOCK",             "concepts": ["FIRST_PERSON_PLURAL","UNLOCK"],                 "render": { "en": "We unlock." } },
+
+    { "template_id": "I_ROAM_MAP",            "concepts": ["FIRST_PERSON_SINGULAR","ROAM","MAP"],           "render": { "en": "I roam the map." } },
+    { "template_id": "THEY_ROAM",             "concepts": ["THIRD_PERSON_PLURAL","ROAM"],                   "render": { "en": "They roam." } },
+
+    { "template_id": "I_STREAM",              "concepts": ["FIRST_PERSON_SINGULAR","STREAM"],               "render": { "en": "I stream." } },
+    { "template_id": "HE_STREAMS",            "concepts": ["HE","STREAM"],                                  "render": { "en": "He streams." } },
+    { "template_id": "SHE_STREAMS",           "concepts": ["SHE","STREAM"],                                 "render": { "en": "She streams." } },
+
+    { "template_id": "I_COLLECT_GEM",         "concepts": ["FIRST_PERSON_SINGULAR","COLLECT","GEM"],        "render": { "en": "I collect a gem." } },
+    { "template_id": "WE_COLLECT",            "concepts": ["FIRST_PERSON_PLURAL","COLLECT"],                "render": { "en": "We collect." } },
+
+    { "template_id": "I_AMBUSH_NPC",          "concepts": ["FIRST_PERSON_SINGULAR","AMBUSH","NPC"],         "render": { "en": "I ambush the NPC." } },
+    { "template_id": "THEY_AMBUSH",           "concepts": ["THIRD_PERSON_PLURAL","AMBUSH"],                 "render": { "en": "They ambush." } },
+
+    { "template_id": "I_CLUTCH",              "concepts": ["FIRST_PERSON_SINGULAR","CLUTCH"],               "render": { "en": "I clutch." } },
+    { "template_id": "SHE_CLUTCHES",          "concepts": ["SHE","CLUTCH"],                                 "render": { "en": "She clutches." } },
+
+    { "template_id": "MISSION_IS_CRITICAL",   "concepts": ["MISSION","BE","CRITICAL"],                      "render": { "en": "The mission is critical." } },
+    { "template_id": "RAID_IS_TACTICAL",      "concepts": ["RAID","BE","TACTICAL"],                         "render": { "en": "The raid is tactical." } },
+    { "template_id": "DUNGEON_IS_MYTHIC",     "concepts": ["DUNGEON","BE","MYTHIC"],                        "render": { "en": "The dungeon is mythic." } },
+    { "template_id": "BOSS_IS_OVERPOWERED",   "concepts": ["BOSS","BE","OVERPOWERED"],                      "render": { "en": "The boss is overpowered." } },
+
+    { "template_id": "I_SEE_RAID",            "concepts": ["FIRST_PERSON_SINGULAR","SEE","RAID"],           "render": { "en": "I see a raid." } },
+    { "template_id": "YOU_SEE_LEADERBOARD",   "concepts": ["SECOND_PERSON","SEE","LEADERBOARD"],            "render": { "en": "You see a leaderboard." } },
+    { "template_id": "HE_SEES_SPEEDRUN",      "concepts": ["HE","SEE","SPEEDRUN"],                          "render": { "en": "He sees a speedrun." } },
+    { "template_id": "SHE_SEES_NPC",          "concepts": ["SHE","SEE","NPC"],                              "render": { "en": "She sees an NPC." } },
+
+    { "template_id": "I_HAVE_ACHIEVEMENT",    "concepts": ["FIRST_PERSON_SINGULAR","HAVE","ACHIEVEMENT"],   "render": { "en": "I have an achievement." } },
+    { "template_id": "HE_HAS_UPGRADE",        "concepts": ["HE","HAVE","UPGRADE"],                          "render": { "en": "He has an upgrade." } },
+    { "template_id": "WE_HAVE_PARTY",         "concepts": ["FIRST_PERSON_PLURAL","HAVE","PARTY"],           "render": { "en": "We have a party." } },
+
+    { "template_id": "COMPANION_IS_ELITE",    "concepts": ["COMPANION","BE","ELITE"],                       "render": { "en": "The companion is elite." } },
+    { "template_id": "RANK_IS_COMPETITIVE",   "concepts": ["RANK","BE","COMPETITIVE"],                      "render": { "en": "The rank is competitive." } }
+
+  ]
+}
