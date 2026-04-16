@@ -1905,7 +1905,7 @@ if (tpl.structure?.type === "complex_clause") {
     window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
   );
 
-  const words = ordered.map(cid => {
+  const words = ordered.map((cid, idx) => {
     const meta = window.GLOBAL_VOCAB.concepts[cid];
     if (!meta) return cid;
 
@@ -1915,7 +1915,10 @@ if (tpl.structure?.type === "complex_clause") {
 
     if (meta.type === "noun") {
 
-  let phrase = nounPhrase(lang, cid);
+  // If the template itself has a possessive directly before this noun, suppress the article.
+  const precededByPossessive = idx > 0 &&
+    window.GLOBAL_VOCAB.concepts[ordered[idx - 1]]?.semantic_role === "possessive";
+  let phrase = precededByPossessive ? formOf(lang, cid) : nounPhrase(lang, cid);
 
   let adjectiveWord = null;
   let adjectiveCid = null;
@@ -1929,6 +1932,7 @@ if (tpl.structure?.type === "complex_clause") {
     const adjectives = run.released.filter(c => {
       const m = window.GLOBAL_VOCAB.concepts[c];
       if (m?.type !== "adjective") return false;
+      if (m?.semantic_role === "possessive") return false; // possessives must not be randomly injected as modifiers
       const st = ensureProgress(c);
       return !st.completed && st.level >= 4;
     });
@@ -1972,7 +1976,12 @@ if (tpl.structure?.type === "complex_clause") {
   }
 
   if (adjectiveWord) {
-    if (POST_ADJ) {
+    const adjectiveIsPossessive =
+      window.GLOBAL_VOCAB.concepts[adjectiveCid]?.semantic_role === "possessive";
+    if (adjectiveIsPossessive) {
+      // Possessives replace the article entirely: "her wizard" not "a her wizard"
+      phrase = adjectiveWord + " " + bare;
+    } else if (POST_ADJ) {
       // Article + noun + adjective: "uma casa grande"
       phrase = phrase + " " + adjectiveWord;
     } else if (phrase !== bare) {
