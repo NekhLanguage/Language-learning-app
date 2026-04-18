@@ -115,6 +115,10 @@ button:hover, a.secondary:hover{
   box-shadow: 0 6px 16px rgba(0,0,0,0.25);
 }
 
+button:active{
+  transform: translateY(1px);
+}
+
 button.primary.small{
   padding: 0.8rem 1.2rem;
   border-radius: 999px;
