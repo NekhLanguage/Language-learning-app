@@ -8,7 +8,7 @@
     "startSubtitle": "Apprentissage des langues",
     "chooseTranslation": "Choisis la traduction correcte pour :",
     "originalSentence": "Phrase originale :",
-    "fillMissing": "Remplis le mot manquant :",
+    "fillMissing": "Complète le mot manquant :",
     "inThisSentence": "Dans cette phrase :",
     "check": "Vérifier",
     "continue": "Continuer",
@@ -76,19 +76,28 @@
       "plural": "difficiles"
     },
     "MY": [
-      "mon"
+      "mon",
+      "ma",
+      "mes"
     ],
     "YOUR": [
-      "ton"
+      "ton",
+      "ta",
+      "tes"
     ],
     "HIS": [
-      "son"
+      "son",
+      "sa",
+      "ses"
     ],
     "HER": [
-      "son"
+      "son",
+      "sa",
+      "ses"
     ],
     "OUR": [
-      "notre"
+      "notre",
+      "nos"
     ],
     "THEIR": [
       "leur",
@@ -134,13 +143,13 @@
       "sur"
     ],
     "OFF": [
-      "éteint"
+      "hors"
     ],
     "BETWEEN": [
       "entre"
     ],
     "BACK": [
-      "retour"
+      "derrière"
     ],
     "OUT": [
       "dehors"
@@ -173,7 +182,7 @@
       "par"
     ],
     "WHILE": [
-      "pendant"
+      "pendant que"
     ],
     "AS": [
       "comme"
@@ -405,8 +414,8 @@
       "vingt"
     ],
     "PLEASE": [
-      "s'il vous plaît",
-      "s'il te plaît"
+      "s'il te plaît",
+      "s'il vous plaît"
     ],
     "MAYBE": [
       "peut-être"
@@ -421,6 +430,7 @@
       "non"
     ],
     "NOT": [
+      "ne",
       "pas"
     ],
     "FIRST_PERSON_SINGULAR": [
@@ -452,7 +462,7 @@
       "seulement"
     ],
     "ANOTHER": [
-      "un autre"
+      "autre"
     ],
     "SOMETHING": [
       "quelque chose"
@@ -461,7 +471,8 @@
       "qui"
     ],
     "WHAT": [
-      "quoi"
+      "quoi",
+      "que"
     ],
     "WHEN": [
       "quand"
