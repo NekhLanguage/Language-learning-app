@@ -859,3 +859,30 @@ button.selected {
   font-size: 1rem;
   line-height: 1.5;
 }
+
+/* =========================
+   Content typography
+   ========================= */
+
+.content h2 {
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.content p {
+  opacity: 0.75;
+  line-height: 1.6;
+}
+
+.content strong {
+  color: #c084fc;
+}
+
+.content small {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  font-variant: small-caps;
+}
