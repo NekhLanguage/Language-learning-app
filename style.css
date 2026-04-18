@@ -830,3 +830,32 @@ button.selected {
 .free-input::placeholder {
   color: rgba(255, 255, 255, 0.35);
 }
+
+/* =========================
+   Session Complete
+   ========================= */
+
+.session-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  padding: 0.5rem 0;
+}
+
+.session-complete h2 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, #c084fc, #fb7185);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.session-complete p {
+  opacity: 0.8;
+  font-size: 1rem;
+  line-height: 1.5;
+}

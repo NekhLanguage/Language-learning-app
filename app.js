@@ -3364,9 +3364,11 @@ function endSession(targetLang, supportLang) {
   const strings = LANG_FILE_CACHE[supportLang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings || {};
 
 content.innerHTML = `
-  <h2>${strings.sessionComplete}</h2>
-  <p>${strings.sessionFinished.replace("{n}", run.sessionNumber - 1)}</p>
-  <button id="start-next-session">${strings.continue}</button>
+  <div class="session-complete">
+    <h2>${strings.sessionComplete}</h2>
+    <p>${strings.sessionFinished.replace("{n}", run.sessionNumber - 1)}</p>
+    <button id="start-next-session" class="primary">${strings.continue}</button>
+  </div>
 `;
 
   document.getElementById("start-next-session").onclick = () => {
