@@ -24,7 +24,17 @@
   <span class="chevron">▾</span>
 </div>
 
-  <div id="support-dropdown" class="support-dropdown hidden"></div>
+  <div id="support-dropdown" class="support-dropdown hidden">
+    <input
+      id="support-search"
+      class="support-search"
+      type="search"
+      autocomplete="off"
+      placeholder="Search"
+      aria-label="Search support languages"
+    />
+    <div id="support-options" class="support-options"></div>
+  </div>
 </div>
 
       <div class="button-grid" role="navigation" aria-label="Main actions">
@@ -42,6 +52,15 @@
     <section id="language-screen" class="screen" aria-label="Language hub">
   <h2 class="title small">LANGUAGES</h2>
   <p class="subtitle">Choose a language to study</p>
+
+  <input
+    id="language-search"
+    class="language-search"
+    type="search"
+    autocomplete="off"
+    placeholder="Search languages"
+    aria-label="Search languages"
+  />
 
   <div class="button-grid" id="language-buttons">
     <!-- Buttons will be rendered dynamically -->

@@ -509,6 +509,7 @@ languageState.support = USER.supportLanguage || "en";
 await getLangFileData(languageState.support);
 updateSupportUI(languageState.support);
 updateUIStrings(languageState.support);
+let languageSearchQuery = "";
 renderLanguageButtons();
 async function loadUserFromServer(email) {
 email = email?.toLowerCase().trim();
@@ -928,36 +929,72 @@ function wireTts() {
 
 
 
-// Build dropdown
-supportDropdown.innerHTML = "";
+// Build dropdown — sorted alphabetically, filterable via the search input
+const supportOptionsContainer = document.getElementById("support-options");
+const supportSearchInput = document.getElementById("support-search");
+let supportSearchQuery = "";
 
-Object.entries(SUPPORT_LANGUAGES).forEach(([code, data]) => {
+function renderSupportOptions() {
+  supportOptionsContainer.innerHTML = "";
 
-  const option = document.createElement("div");
-  option.className = "support-option";
+  const query = supportSearchQuery.trim().toLowerCase();
+  const entries = Object.entries(SUPPORT_LANGUAGES)
+    .map(([code, data]) => ({ code, data }))
+    .filter(({ data }) => {
+      if (!query) return true;
+      return (
+        data.label.toLowerCase().includes(query) ||
+        data.short.toLowerCase().includes(query)
+      );
+    })
+    .sort((a, b) => a.data.label.localeCompare(b.data.label));
 
-  option.innerHTML = `
-    <span class="support-short">${data.short}</span>
-    <span>${data.label}</span>
-  `;
+  if (entries.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "support-option support-option-empty";
+    empty.textContent = "No matches";
+    supportOptionsContainer.appendChild(empty);
+    return;
+  }
 
-  option.onclick = async () => {
-  languageState.support = code;
-  USER.supportLanguage = code;
-  saveUser();
-  await getLangFileData(code);
-  updateSupportUI(code);
-  updateUIStrings(code);
-  renderLanguageButtons();
-  supportDropdown.classList.add("hidden");
-};
+  entries.forEach(({ code, data }) => {
+    const option = document.createElement("div");
+    option.className = "support-option";
+    option.innerHTML = `
+      <span class="support-short">${data.short}</span>
+      <span>${data.label}</span>
+    `;
+    option.onclick = async () => {
+      languageState.support = code;
+      USER.supportLanguage = code;
+      saveUser();
+      await getLangFileData(code);
+      updateSupportUI(code);
+      updateUIStrings(code);
+      renderLanguageButtons();
+      supportDropdown.classList.add("hidden");
+    };
+    supportOptionsContainer.appendChild(option);
+  });
+}
 
-  supportDropdown.appendChild(option);
+renderSupportOptions();
+
+supportSearchInput.addEventListener("input", (e) => {
+  supportSearchQuery = e.target.value;
+  renderSupportOptions();
 });
 
 // Toggle dropdown
 supportPill.addEventListener("click", () => {
+  const wasHidden = supportDropdown.classList.contains("hidden");
   supportDropdown.classList.toggle("hidden");
+  if (wasHidden) {
+    supportSearchInput.value = "";
+    supportSearchQuery = "";
+    renderSupportOptions();
+    supportSearchInput.focus();
+  }
 });
 
 function updateSupportUI(code) {
@@ -966,6 +1003,13 @@ function updateSupportUI(code) {
   supportLabel.textContent = data.label;
 }
   window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
+  const languageSearchInput = document.getElementById("language-search");
+  if (languageSearchInput) {
+    languageSearchInput.addEventListener("input", (e) => {
+      languageSearchQuery = e.target.value;
+      renderLanguageButtons();
+    });
+  }
   function renderLanguageButtons() {
 
   languageButtonsContainer.innerHTML = "";
@@ -974,6 +1018,7 @@ function updateSupportUI(code) {
   const names = LANG_FILE_CACHE[support]?.hubNames || LANG_FILE_CACHE["en"]?.hubNames || {};
 
   // Build list with progress and display name, excluding the active support language
+  const query = languageSearchQuery.trim().toLowerCase();
   const entries = AVAILABLE_LANGUAGES
     .filter(lang => lang.code !== support)
     .map(lang => {
@@ -981,17 +1026,28 @@ function updateSupportUI(code) {
       const progress = runForLang ? calculateWeightedProgress(runForLang) : 0;
       const name = names[lang.code] || lang.label;
       return { lang, progress, name };
+    })
+    .filter(({ lang, name }) => {
+      if (!query) return true;
+      return (
+        name.toLowerCase().includes(query) ||
+        lang.label.toLowerCase().includes(query) ||
+        lang.nativeLabel.toLowerCase().includes(query) ||
+        lang.short.toLowerCase().includes(query) ||
+        lang.code.toLowerCase().includes(query)
+      );
     });
 
-  // Sort: started languages (progress > 0) by % descending then name;
-  //       unstarted languages alphabetically after all started ones.
-  entries.sort((a, b) => {
-    const aStarted = a.progress > 0;
-    const bStarted = b.progress > 0;
-    if (aStarted !== bStarted) return aStarted ? -1 : 1;
-    if (aStarted && a.progress !== b.progress) return b.progress - a.progress;
-    return a.name.localeCompare(b.name);
-  });
+  // Sort: alphabetical by display name.
+  entries.sort((a, b) => a.name.localeCompare(b.name));
+
+  if (entries.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "language-empty";
+    empty.textContent = "No languages match your search.";
+    languageButtonsContainer.appendChild(empty);
+    return;
+  }
 
   entries.forEach(({ lang, progress, name }) => {
     const btn = document.createElement("button");
