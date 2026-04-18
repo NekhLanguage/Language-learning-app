@@ -733,6 +733,7 @@ button.selected {
   width: 100%;
   text-align: center;
   font-size: 1rem;
+  transition: background-color 0.2s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 #choices button:not(.tts-inline):hover {
