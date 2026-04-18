@@ -1038,8 +1038,13 @@ function updateSupportUI(code) {
       );
     });
 
-  // Sort: alphabetical by display name.
-  entries.sort((a, b) => a.name.localeCompare(b.name));
+  // Sort: started languages first, then alphabetical within each group.
+  entries.sort((a, b) => {
+    const aStarted = a.progress > 0 ? 0 : 1;
+    const bStarted = b.progress > 0 ? 0 : 1;
+    if (aStarted !== bStarted) return aStarted - bStarted;
+    return a.name.localeCompare(b.name);
+  });
 
   if (entries.length === 0) {
     const empty = document.createElement("div");
