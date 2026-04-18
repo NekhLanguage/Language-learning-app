@@ -38,7 +38,9 @@
     "uk": "Ukrainisch",
     "de": "Deutsch",
     "el": "Griechisch",
-    "tr": "Türkisch"
+    "tr": "Türkisch",
+    "es": "Spanisch",
+    "fr": "Französisch"
   },
   "forms": {
     "BIG": { "form": "groß", "plural": "große" },
