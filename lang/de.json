@@ -40,7 +40,8 @@
     "el": "Griechisch",
     "tr": "Türkisch",
     "es": "Spanisch",
-    "fr": "Französisch"
+    "fr": "Französisch",
+    "zh": "Chinesisch"
   },
   "forms": {
     "BIG": { "form": "groß", "plural": "große" },
