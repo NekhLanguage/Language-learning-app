@@ -924,6 +924,23 @@ button.selected {
   line-height: 1.5;
 }
 
+.coaching-cta {
+  font-size: 0.82rem;
+  opacity: 0.55;
+  margin-top: 0.25rem;
+}
+
+.coaching-link {
+  color: #c084fc;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+  transition: opacity 0.15s;
+}
+
+.coaching-link:hover {
+  opacity: 0.8;
+}
+
 /* =========================
    Content typography
    ========================= */
