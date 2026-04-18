@@ -55,7 +55,15 @@ body::before{
   position: relative;
 }
 
-.screen.active{ display: flex; }
+@keyframes screenFadeIn{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+.screen.active{
+  display: flex;
+  animation: screenFadeIn 0.25s ease-out;
+}
 
 /* Typography */
 .title{
