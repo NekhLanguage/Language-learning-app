@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup #3 — Choice Button Feedback Transition</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg1: #7a2c7d;
+    --bg2: #4a144c;
+    --grid: rgba(255,255,255,0.05);
+    --purple-grad: linear-gradient(90deg, #c084fc, #fb7185);
+  }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+    min-height: 100vh;
+    color: #fff;
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .page-title { text-align: center; font-size: 1rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.55; margin-bottom: 0.4rem; }
+  .page-heading { text-align: center; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .page-desc { text-align: center; opacity: 0.65; font-size: 0.95rem; margin-bottom: 2.5rem; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+  .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 960px; margin: 0 auto; }
+  .panel { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 24px; padding: 1.75rem 1.5rem; }
+  .panel-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 900; margin-bottom: 0.6rem; }
+  .panel-label.before { color: #fb7185; opacity: 0.8; }
+  .panel-label.after  { color: #c084fc; opacity: 0.8; }
+  .panel-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 1.25rem; }
+  .tag { display: inline-block; background: var(--purple-grad); color: #3a0d3d; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 999px; padding: 0.2em 0.7em; margin-bottom: 1rem; }
+  .annotation { font-size: 0.8rem; opacity: 0.55; font-style: italic; margin-top: 0.35rem; line-height: 1.4; }
+  .code-block { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 0.9rem 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.78rem; line-height: 1.6; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); white-space: pre; overflow-x: auto; }
+  .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1rem 0; }
+
+  /* Glass card like .content */
+  .card {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .prompt {
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin-bottom: 0.25rem;
+  }
+  .prompt-sub {
+    font-size: 0.78rem;
+    opacity: 0.55;
+    font-family: monospace;
+    margin-bottom: 1rem;
+  }
+
+  /* Choice grid */
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+  }
+
+  .choice-btn {
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 0.85rem 0.9rem;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.10);
+    color: white;
+    font-weight: 700;
+    font-family: inherit;
+    font-size: 0.95rem;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  /* BEFORE: no transition on background-color, snap to green */
+  .choice-btn.correct-snap {
+    background-color: #4caf50 !important;
+    color: white !important;
+    /* no transition on background-color */
+  }
+  .choice-btn.incorrect-snap {
+    background-color: #e57373 !important;
+    color: white !important;
+  }
+
+  /* AFTER: smooth transition */
+  .choice-btn.smooth {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .choice-btn.smooth.correct-anim {
+    animation: correctPulse 0.25s ease forwards;
+  }
+  .choice-btn.smooth.incorrect-anim {
+    animation: incorrectPulse 0.25s ease forwards;
+  }
+
+  @keyframes correctPulse {
+    0%   { background-color: rgba(255,255,255,0.10); }
+    100% { background-color: #4caf50; color: white; }
+  }
+  @keyframes incorrectPulse {
+    0%   { background-color: rgba(255,255,255,0.10); }
+    100% { background-color: #e57373; color: white; }
+  }
+
+  .snap-label {
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fb7185;
+    margin-bottom: 0.4rem;
+    opacity: 0.85;
+  }
+  .smooth-label {
+    font-size: 0.62rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #c084fc;
+    margin-bottom: 0.4rem;
+    opacity: 0.85;
+  }
+
+  .timeline-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.6rem 0;
+    font-size: 0.68rem;
+    opacity: 0.6;
+  }
+  .tl-bar { flex: 1; height: 5px; border-radius: 999px; background: rgba(255,255,255,0.12); position: relative; overflow: hidden; }
+  .tl-instant { position: absolute; left: 0; top: 0; height: 100%; width: 100%; background: #fb7185; }
+  .tl-smooth  { position: absolute; left: 0; top: 0; height: 100%; background: linear-gradient(90deg, #c084fc, #4caf50); animation: tlGrow 1.8s ease infinite; }
+  @keyframes tlGrow { 0%{width:0} 60%{width:100%} 100%{width:100%} }
+</style>
+</head>
+<body>
+
+<p class="page-title">Design Improvement #3</p>
+<h1 class="page-heading">Choice Button Feedback Transition</h1>
+<p class="page-desc">When JS adds <code>.correct</code> / <code>.incorrect</code>, the color snaps instantly. <code>background-color</code> is missing from the button's transition list — a 1-line fix.</p>
+
+<div class="columns">
+
+  <!-- BEFORE -->
+  <div class="panel">
+    <div class="panel-label before">Before</div>
+    <div class="panel-title">Color snaps — jarring flash on answer</div>
+
+    <div class="card">
+      <div class="prompt">bok</div>
+      <div class="prompt-sub">Norwegian · Choose the translation</div>
+      <div class="choices">
+        <button class="choice-btn correct-snap">book</button>
+        <button class="choice-btn">table</button>
+        <button class="choice-btn incorrect-snap">pen</button>
+        <button class="choice-btn">chair</button>
+      </div>
+    </div>
+
+    <div class="snap-label">Color change: instant snap</div>
+    <div class="timeline-row">
+      <span>tap</span>
+      <div class="tl-bar"><div class="tl-instant"></div></div>
+      <span>frame 1</span>
+    </div>
+    <div class="annotation">Green/red appears in a single frame — feels like a rendering glitch, not a rewarding signal.</div>
+
+    <div class="code-block">/* Current transition on choice buttons */
+#choices button:not(.tts-inline) {
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease;
+  /* background-color NOT included */
+}</div>
+  </div>
+
+  <!-- AFTER -->
+  <div class="panel">
+    <div class="panel-label after">After</div>
+    <div class="panel-title">Smooth colour fade — rewarding confirmation</div>
+
+    <span class="tag">CSS-only · 1-line fix</span>
+
+    <div class="card">
+      <div class="prompt">bok</div>
+      <div class="prompt-sub">Norwegian · Choose the translation</div>
+      <div class="choices">
+        <button class="choice-btn smooth correct-anim">book</button>
+        <button class="choice-btn smooth">table</button>
+        <button class="choice-btn smooth incorrect-anim">pen</button>
+        <button class="choice-btn smooth">chair</button>
+      </div>
+    </div>
+
+    <div class="smooth-label">Color change: 200ms ease transition</div>
+    <div class="timeline-row">
+      <span>tap</span>
+      <div class="tl-bar"><div class="tl-smooth"></div></div>
+      <span>200ms</span>
+    </div>
+    <div class="annotation">Smooth fade from glass → green/red feels deliberate and rewarding on every answered question.</div>
+
+    <div class="code-block">/* Add background-color to transition */
+#choices button:not(.tts-inline) {
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.15s ease,
+              transform 0.15s ease;
+}</div>
+  </div>
+
+</div>
+
+</body>
+</html>

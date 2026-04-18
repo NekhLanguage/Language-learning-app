@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup #1 — Button Active State</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg1: #7a2c7d;
+    --bg2: #4a144c;
+    --grid: rgba(255,255,255,0.05);
+    --purple-grad: linear-gradient(90deg, #c084fc, #fb7185);
+  }
+
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+    min-height: 100vh;
+    color: #fff;
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 0.4rem;
+  }
+
+  .page-heading {
+    text-align: center;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-desc {
+    text-align: center;
+    opacity: 0.65;
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .panel {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 24px;
+    padding: 1.75rem 1.5rem;
+    position: relative;
+  }
+
+  .panel-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 900;
+    opacity: 0.5;
+    margin-bottom: 0.6rem;
+  }
+
+  .panel-label.before { color: #fb7185; opacity: 0.8; }
+  .panel-label.after  { color: #c084fc; opacity: 0.8; }
+
+  .panel-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ---- Buttons shown in demo ---- */
+  .demo-btn {
+    border: none;
+    cursor: pointer;
+    padding: 1.05rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-family: inherit;
+    letter-spacing: 0.06em;
+    background: #fff;
+    color: #5a1f5f;
+    width: 100%;
+    margin-bottom: 0.9rem;
+    font-size: 1rem;
+  }
+
+  .demo-btn.before-hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  }
+
+  .demo-btn.after-active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  .demo-choice {
+    border: 1px solid rgba(255,255,255,0.18);
+    cursor: pointer;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    background: rgba(255,255,255,0.10);
+    color: white;
+    width: 100%;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .demo-choice.after-active {
+    background: rgba(255,255,255,0.28);
+  }
+
+  .demo-quit {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.65);
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: 0.75rem;
+  }
+
+  .demo-quit.after-active {
+    background: rgba(255,255,255,0.14);
+  }
+
+  .annotation {
+    font-size: 0.8rem;
+    opacity: 0.55;
+    font-style: italic;
+    margin-top: 0.35rem;
+    line-height: 1.4;
+  }
+
+  .code-block {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin: 1rem 0;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--purple-grad);
+    color: #3a0d3d;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 0.2em 0.7em;
+    margin-bottom: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Design Improvement #1</p>
+<h1 class="page-heading">Button Press / Active State</h1>
+<p class="page-desc">Currently no visual feedback on tap. On mobile, <code>:hover</code> never fires — taps feel unregistered until the screen changes.</p>
+
+<div class="columns">
+
+  <!-- BEFORE -->
+  <div class="panel">
+    <div class="panel-label before">Before</div>
+    <div class="panel-title">No active state — buttons feel unresponsive</div>
+
+    <p style="font-size:0.8rem;opacity:0.5;margin-bottom:1rem;">All buttons shown at rest (tap = nothing visible)</p>
+
+    <button class="demo-btn">Start Learning</button>
+    <div class="annotation">Primary button — tap registered? Hard to tell.</div>
+
+    <div class="divider"></div>
+
+    <button class="demo-choice">book</button>
+    <div class="annotation">Choice button — no feedback on tap.</div>
+
+    <div class="divider"></div>
+
+    <button class="demo-quit">← QUIT</button>
+    <div class="annotation">Quit — no tap feedback.</div>
+
+    <div class="code-block">/* No :active rules exist */
+button {
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease;
+}
+button:hover {
+  transform: translateY(-2px); /* desktop only */
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}</div>
+  </div>
+
+  <!-- AFTER -->
+  <div class="panel">
+    <div class="panel-label after">After</div>
+    <div class="panel-title">Active state — instant tap confirmation</div>
+
+    <span class="tag">CSS-only fix</span>
+
+    <p style="font-size:0.8rem;opacity:0.5;margin-bottom:1rem;">Buttons shown in pressed/active state</p>
+
+    <button class="demo-btn after-active">Start Learning</button>
+    <div class="annotation">Primary button — translateY(1px) + inset shadow = pressed feel.</div>
+
+    <div class="divider"></div>
+
+    <button class="demo-choice after-active">book</button>
+    <div class="annotation">Choice button — background brightens on tap.</div>
+
+    <div class="divider"></div>
+
+    <button class="demo-quit after-active">← QUIT</button>
+    <div class="annotation">Quit — subtle background flash on tap.</div>
+
+    <div class="code-block">button:active, a.secondary:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.15);
+}
+.quit-button:active {
+  background: rgba(255,255,255,0.14);
+  transform: none;
+}
+#choices button:not(.tts-inline):active {
+  background: rgba(255,255,255,0.28);
+}</div>
+  </div>
+
+</div>
+
+</body>
+</html>

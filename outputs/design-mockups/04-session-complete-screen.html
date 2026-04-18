@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup #4 — Session Complete Screen</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg1: #7a2c7d;
+    --bg2: #4a144c;
+    --grid: rgba(255,255,255,0.05);
+    --purple-grad: linear-gradient(90deg, #c084fc, #fb7185);
+  }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+    min-height: 100vh;
+    color: #fff;
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none;
+  }
+  .page-title { text-align: center; font-size: 1rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.55; margin-bottom: 0.4rem; }
+  .page-heading { text-align: center; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .page-desc { text-align: center; opacity: 0.65; font-size: 0.95rem; margin-bottom: 2.5rem; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+  .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 960px; margin: 0 auto; }
+  .panel { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 24px; padding: 1.75rem 1.5rem; }
+  .panel-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 900; margin-bottom: 0.6rem; }
+  .panel-label.before { color: #fb7185; opacity: 0.8; }
+  .panel-label.after  { color: #c084fc; opacity: 0.8; }
+  .panel-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 1.25rem; }
+  .tag { display: inline-block; background: var(--purple-grad); color: #3a0d3d; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 999px; padding: 0.2em 0.7em; margin-bottom: 1rem; }
+  .annotation { font-size: 0.8rem; opacity: 0.55; font-style: italic; margin-top: 0.75rem; line-height: 1.4; }
+  .code-block { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 0.9rem 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.78rem; line-height: 1.6; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); white-space: pre; overflow-x: auto; }
+
+  /* The glass card — .content */
+  .content-card {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* BEFORE: bare, left-aligned, no class */
+  .before-content h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-align: left;
+  }
+  .before-content p {
+    font-size: 1rem;
+    text-align: left;
+    margin-bottom: 1rem;
+    opacity: 0.85;
+  }
+  .before-content button {
+    border: none;
+    cursor: pointer;
+    padding: 0.9rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-family: inherit;
+    background: #fff;
+    color: #5a1f5f;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* AFTER: .session-complete centered, gradient heading, primary btn */
+  .session-complete {
+    text-align: center;
+    padding: 0.75rem 0.5rem 0.25rem;
+  }
+  .session-complete h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    font-weight: 900;
+    background: linear-gradient(90deg, #c084fc, #fb7185);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.04em;
+  }
+  .session-complete p {
+    opacity: 0.75;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  .session-complete button.primary {
+    border: none;
+    cursor: pointer;
+    padding: 1.05rem 2rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-family: inherit;
+    background: #fff;
+    color: #5a1f5f;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .session-complete button.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  }
+
+  /* Progress bar */
+  .progress-container {
+    height: 10px;
+    background: rgba(0,0,0,0.35);
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c084fc, #fb7185);
+    box-shadow: 0 0 14px rgba(251,113,133,0.6);
+    border-radius: 999px;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Design Improvement #4</p>
+<h1 class="page-heading">Session Complete Screen</h1>
+<p class="page-desc"><code>endSession()</code> injects bare <code>&lt;h2&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;button&gt;</code> into <code>.content</code> which has <code>text-align: left</code>. The most important moment in the app currently looks like mid-exercise content.</p>
+
+<div class="columns">
+
+  <!-- BEFORE -->
+  <div class="panel">
+    <div class="panel-label before">Before</div>
+    <div class="panel-title">Left-aligned, unstyled — no sense of completion</div>
+
+    <div class="progress-container"><div class="progress-fill"></div></div>
+
+    <div class="content-card">
+      <div class="before-content">
+        <h2>Session Complete!</h2>
+        <p>You completed session 1. Ready for session 2?</p>
+        <button>Continue</button>
+      </div>
+    </div>
+
+    <div class="annotation">Finishing a session looks identical to a mid-exercise card. The heading sits left-aligned, the button has no class. There's zero visual celebration for completing the session.</div>
+
+    <div class="code-block">// app.js endSession()
+content.innerHTML = `
+  &lt;h2&gt;${"{"}strings.sessionComplete{"}"}&lt;/h2&gt;
+  &lt;p&gt;${"{"}strings.sessionFinished{"}"}&lt;/p&gt;
+  &lt;button id="start-next-session"&gt;
+    ${"{"}strings.continue{"}"}
+  &lt;/button&gt;
+`;</div>
+  </div>
+
+  <!-- AFTER -->
+  <div class="panel">
+    <div class="panel-label after">After</div>
+    <div class="panel-title">Centered, gradient heading, primary CTA</div>
+
+    <span class="tag">3-line app.js + CSS class</span>
+
+    <div class="progress-container"><div class="progress-fill"></div></div>
+
+    <div class="content-card">
+      <div class="session-complete">
+        <h2>Session Complete!</h2>
+        <p>You completed session 1. Ready for session 2?</p>
+        <button class="primary">Continue</button>
+      </div>
+    </div>
+
+    <div class="annotation">Gradient heading matches the progress bar. Centered layout signals "this is a milestone moment." Button is styled as a primary CTA instead of anonymous base style.</div>
+
+    <div class="code-block">// app.js — wrap in .session-complete div
+content.innerHTML = `
+  &lt;div class="session-complete"&gt;
+    &lt;h2&gt;...&lt;/h2&gt;
+    &lt;p&gt;...&lt;/p&gt;
+    &lt;button id="..." class="primary"&gt;...&lt;/button&gt;
+  &lt;/div&gt;
+`;
+
+/* style.css */
+.session-complete { text-align: center; }
+.session-complete h2 {
+  background: linear-gradient(90deg, #c084fc, #fb7185);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}</div>
+  </div>
+
+</div>
+
+</body>
+</html>

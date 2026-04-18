@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup #5 — Content Card Typography Hierarchy</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg1: #7a2c7d;
+    --bg2: #4a144c;
+    --grid: rgba(255,255,255,0.05);
+    --purple-grad: linear-gradient(90deg, #c084fc, #fb7185);
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+    min-height: 100vh;
+    color: #fff;
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px; pointer-events: none;
+  }
+  .page-title { text-align: center; font-size: 1rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.55; margin-bottom: 0.4rem; }
+  .page-heading { text-align: center; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+  .page-desc { text-align: center; opacity: 0.65; font-size: 0.95rem; margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+  .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 960px; margin: 0 auto; }
+  .panel { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 24px; padding: 1.75rem 1.5rem; }
+  .panel-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 900; margin-bottom: 0.6rem; }
+  .panel-label.before { color: #fb7185; opacity: 0.8; }
+  .panel-label.after  { color: #c084fc; opacity: 0.8; }
+  .panel-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 1.25rem; }
+  .tag { display: inline-block; background: var(--purple-grad); color: #3a0d3d; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 999px; padding: 0.2em 0.7em; margin-bottom: 1rem; }
+  .annotation { font-size: 0.8rem; opacity: 0.55; font-style: italic; margin-top: 0.75rem; line-height: 1.4; }
+  .code-block { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 0.9rem 1rem; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.6; margin-top: 1rem; border: 1px solid rgba(255,255,255,0.1); white-space: pre; overflow-x: auto; }
+  .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1rem 0; }
+  .ex-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; font-weight: 700; margin-bottom: 0.5rem; }
+
+  /* Glass card */
+  .content-card {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 1.25rem 1.25rem 1rem;
+    margin-bottom: 0.85rem;
+  }
+
+  /* ======= BEFORE: browser defaults inside .content ======= */
+  .content-before h2 {
+    /* browser default: ~1.5em, font-weight:700 — no overrides */
+    margin-bottom: 0.25rem;
+    text-align: left;
+  }
+  .content-before p {
+    /* browser default: line-height ~1.2, no margin */
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+  .content-before strong {
+    /* looks like bold paragraph text — same size, no distinction */
+    font-weight: 700;
+  }
+
+  /* Choice grid – before */
+  .choices-before {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-top: 0.75rem;
+  }
+  .choice-b {
+    border: 1px solid rgba(255,255,255,0.18); padding: 0.8rem; border-radius: 16px;
+    background: rgba(255,255,255,0.10); color: white; font-weight: 700;
+    font-size: 0.95rem; text-align: center;
+  }
+
+  /* ======= AFTER: explicit rules for .content h2/p/strong ======= */
+  .content-after h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+    text-align: left;
+  }
+  .content-after p {
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+  .content-after strong {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    opacity: 0.65;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  /* Choice grid – after */
+  .choices-after {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-top: 0.75rem;
+  }
+  .choice-a {
+    border: 1px solid rgba(255,255,255,0.18); padding: 0.8rem; border-radius: 16px;
+    background: rgba(255,255,255,0.10); color: white; font-weight: 700;
+    font-size: 0.95rem; text-align: center;
+  }
+
+  /* Hierarchy diagram */
+  .hierarchy {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .h-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+  }
+  .h-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Design Improvement #5</p>
+<h1 class="page-heading">Content Card Typography Hierarchy</h1>
+<p class="page-desc"><code>.content h2</code>, <code>.content p</code>, and <code>.content strong</code> have zero CSS overrides — browser defaults apply. The glass card content has no visual hierarchy between the target word, translation, and instruction text.</p>
+
+<div class="columns">
+
+  <!-- BEFORE -->
+  <div class="panel">
+    <div class="panel-label before">Before</div>
+    <div class="panel-title">Browser defaults — no hierarchy</div>
+
+    <div class="ex-label">Recognition exercise (L3)</div>
+    <div class="content-card">
+      <div class="content-before">
+        <strong>Choose the translation</strong>
+        <h2>bok</h2>
+        <p>Norwegian</p>
+      </div>
+      <div class="choices-before">
+        <div class="choice-b">book</div>
+        <div class="choice-b">table</div>
+        <div class="choice-b">pen</div>
+        <div class="choice-b">chair</div>
+      </div>
+    </div>
+
+    <div class="ex-label">L1 introduction card</div>
+    <div class="content-card">
+      <div class="content-before">
+        <h2>bok</h2>
+        <p>book</p>
+        <p><strong>New word</strong></p>
+      </div>
+    </div>
+
+    <div class="hierarchy">
+      <div class="h-row"><div class="h-dot" style="background:#fb7185"></div><span><code>strong</code> — same visual weight as <code>p</code>; looks like bold body text</span></div>
+      <div class="h-row"><div class="h-dot" style="background:#fb7185"></div><span><code>h2</code> — browser ~1.5em, 700 weight; not clearly the focal word</span></div>
+      <div class="h-row"><div class="h-dot" style="background:#fb7185"></div><span><code>p</code> — no line-height override; tight and cramped</span></div>
+    </div>
+
+    <div class="code-block">/* No .content h2 / p / strong rules exist */
+.content {
+  text-align: left;
+  /* only layout — no typography */
+}</div>
+  </div>
+
+  <!-- AFTER -->
+  <div class="panel">
+    <div class="panel-label after">After</div>
+    <div class="panel-title">Clear 3-level hierarchy</div>
+
+    <span class="tag">CSS-only fix</span>
+
+    <div class="ex-label">Recognition exercise (L3)</div>
+    <div class="content-card">
+      <div class="content-after">
+        <strong>Choose the translation</strong>
+        <h2>bok</h2>
+        <p>Norwegian</p>
+      </div>
+      <div class="choices-after">
+        <div class="choice-a">book</div>
+        <div class="choice-a">table</div>
+        <div class="choice-a">pen</div>
+        <div class="choice-a">chair</div>
+      </div>
+    </div>
+
+    <div class="ex-label">L1 introduction card</div>
+    <div class="content-card">
+      <div class="content-after">
+        <h2>bok</h2>
+        <p>book</p>
+        <p><strong>New word</strong></p>
+      </div>
+    </div>
+
+    <div class="hierarchy">
+      <div class="h-row"><div class="h-dot" style="background:#c084fc"></div><span><code>h2</code> — clamp(1.5–2rem), 900 weight → clear focal word</span></div>
+      <div class="h-row"><div class="h-dot" style="background:#c084fc"></div><span><code>p</code> — line-height 1.5, proper spacing</span></div>
+      <div class="h-row"><div class="h-dot" style="background:#c084fc"></div><span><code>strong</code> — 0.8rem, uppercase, 65% opacity → reads as UI label</span></div>
+    </div>
+
+    <div class="code-block">.content h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+.content p {
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+.content strong {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  opacity: 0.65;
+  text-transform: uppercase;
+  font-weight: 700;
+}</div>
+  </div>
+
+</div>
+
+</body>
+</html>

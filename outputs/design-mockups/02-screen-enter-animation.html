@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup #2 — Screen Enter Animation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg1: #7a2c7d;
+    --bg2: #4a144c;
+    --grid: rgba(255,255,255,0.05);
+    --purple-grad: linear-gradient(90deg, #c084fc, #fb7185);
+  }
+
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+    min-height: 100vh;
+    color: #fff;
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 0.4rem;
+  }
+
+  .page-heading {
+    text-align: center;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-desc {
+    text-align: center;
+    opacity: 0.65;
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .panel {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 24px;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .panel-label { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 900; margin-bottom: 0.6rem; }
+  .panel-label.before { color: #fb7185; opacity: 0.8; }
+  .panel-label.after  { color: #c084fc; opacity: 0.8; }
+  .panel-title { font-size: 1.15rem; font-weight: 900; margin-bottom: 1.25rem; letter-spacing: 0.03em; }
+
+  .tag {
+    display: inline-block;
+    background: var(--purple-grad);
+    color: #3a0d3d;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 0.2em 0.7em;
+    margin-bottom: 1rem;
+  }
+
+  /* Screen simulation */
+  .screen-sim {
+    background: radial-gradient(circle at top, #7a2c7d88, #4a144c88);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .screen-sim .sim-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .screen-sim .sim-sub {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    font-family: monospace;
+  }
+
+  .screen-sim .sim-btn {
+    margin-top: 1rem;
+    background: white;
+    color: #5a1f5f;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1.8rem;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  /* Instant swap — no animation */
+  .before-screen-a {
+    display: none;
+  }
+  .before-screen-b {
+    /* snaps in */
+  }
+
+  /* Animated version */
+  @keyframes screenFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .after-screen {
+    animation: screenFadeIn 0.9s ease both;
+  }
+
+  /* Arrow between screens */
+  .transition-arrow {
+    text-align: center;
+    font-size: 1.5rem;
+    opacity: 0.4;
+    margin: 0.5rem 0;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .annotation {
+    font-size: 0.8rem;
+    opacity: 0.55;
+    font-style: italic;
+    margin-top: 0.35rem;
+    line-height: 1.4;
+  }
+
+  .code-block {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .hard-cut-label {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fb7185;
+    opacity: 0.9;
+  }
+
+  .soft-enter-label {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #c084fc;
+    opacity: 0.9;
+  }
+
+  .timeline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.75rem 0 0.35rem;
+    font-size: 0.7rem;
+    opacity: 0.55;
+  }
+
+  .timeline-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .timeline-fill-instant {
+    height: 4px;
+    border-radius: 999px;
+    background: #fb7185;
+    width: 100%;
+  }
+
+  .timeline-fill-smooth {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #c084fc, #fb7185);
+    width: 100%;
+    animation: grow 2s ease infinite;
+  }
+
+  @keyframes grow {
+    0%   { width: 0%; }
+    60%  { width: 100%; }
+    100% { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Design Improvement #2</p>
+<h1 class="page-heading">Screen Enter Animation</h1>
+<p class="page-desc">Screens currently hard-cut — <code>.screen.active</code> just toggles <code>display: none/flex</code>. A 250ms fade+lift entrance makes every navigation feel deliberate.</p>
+
+<div class="columns">
+
+  <!-- BEFORE -->
+  <div class="panel">
+    <div class="panel-label before">Before</div>
+    <div class="panel-title">Hard cut — screen appears instantly</div>
+
+    <p style="font-size:0.8rem;opacity:0.5;margin-bottom:1rem;">Simulating: tap "Norwegian" → learning screen appears</p>
+
+    <div class="screen-sim">
+      <span class="hard-cut-label">HARD CUT</span>
+      <div class="sim-title">ZERO TO HERO</div>
+      <div class="sim-sub">v0.9 · choose your language</div>
+      <button class="sim-btn">Norwegian</button>
+    </div>
+
+    <div class="transition-arrow">↓ tap → instant swap ↓</div>
+
+    <div class="screen-sim" style="border-color: rgba(251,113,133,0.35);">
+      <span class="hard-cut-label">APPEARED INSTANTLY</span>
+      <div class="sim-title" style="font-size:1.2rem;">SESSION 1</div>
+      <div class="sim-sub">Pack 1 · Core Words</div>
+    </div>
+
+    <div class="timeline">
+      <span>0ms</span>
+      <div class="timeline-bar"><div class="timeline-fill-instant"></div></div>
+      <span>frame 1</span>
+    </div>
+    <div class="annotation">New screen pops in with zero transition — undermines the polished glass aesthetic.</div>
+
+    <div class="code-block">.screen { display: none; }
+.screen.active { display: flex; }
+/* No animation — instant snap */</div>
+  </div>
+
+  <!-- AFTER -->
+  <div class="panel">
+    <div class="panel-label after">After</div>
+    <div class="panel-title">Fade + lift — 250ms entrance</div>
+
+    <span class="tag">CSS-only fix</span>
+
+    <p style="font-size:0.8rem;opacity:0.5;margin-bottom:1rem;">Simulating: same transition with animation active</p>
+
+    <div class="screen-sim">
+      <div class="sim-title">ZERO TO HERO</div>
+      <div class="sim-sub">v0.9 · choose your language</div>
+      <button class="sim-btn">Norwegian</button>
+    </div>
+
+    <div class="transition-arrow">↓ tap → smooth entrance ↓</div>
+
+    <div class="screen-sim after-screen" style="border-color: rgba(192,132,252,0.35);">
+      <span class="soft-enter-label">FADES IN + LIFTS UP</span>
+      <div class="sim-title" style="font-size:1.2rem;">SESSION 1</div>
+      <div class="sim-sub">Pack 1 · Core Words</div>
+    </div>
+
+    <div class="timeline">
+      <span>0ms</span>
+      <div class="timeline-bar"><div class="timeline-fill-smooth"></div></div>
+      <span>250ms</span>
+    </div>
+    <div class="annotation">CSS animation fires automatically when JS adds <code>.active</code>. No JS changes needed.</div>
+
+    <div class="code-block">@keyframes screenFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.screen.active {
+  display: flex;
+  animation: screenFadeIn 0.25s ease;
+}</div>
+  </div>
+
+</div>
+
+</body>
+</html>
