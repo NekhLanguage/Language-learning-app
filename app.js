@@ -929,7 +929,7 @@ function wireTts() {
 
 
 
-// Build dropdown — sorted alphabetically, filterable via the search input
+// Build dropdown — sorted by language code (abbreviation), filterable via the search input
 const supportOptionsContainer = document.getElementById("support-options");
 const supportSearchInput = document.getElementById("support-search");
 let supportSearchQuery = "";
@@ -947,7 +947,7 @@ function renderSupportOptions() {
         data.short.toLowerCase().includes(query)
       );
     })
-    .sort((a, b) => a.data.label.localeCompare(b.data.label));
+    .sort((a, b) => a.code.localeCompare(b.code));
 
   if (entries.length === 0) {
     const empty = document.createElement("div");
@@ -1038,13 +1038,8 @@ function updateSupportUI(code) {
       );
     });
 
-  // Sort: started languages first, then alphabetical within each group.
-  entries.sort((a, b) => {
-    const aStarted = a.progress > 0 ? 0 : 1;
-    const bStarted = b.progress > 0 ? 0 : 1;
-    if (aStarted !== bStarted) return aStarted - bStarted;
-    return a.name.localeCompare(b.name);
-  });
+  // Sort: highest progress first, then alphabetical by name.
+  entries.sort((a, b) => b.progress - a.progress || a.name.localeCompare(b.name));
 
   if (entries.length === 0) {
     const empty = document.createElement("div");
