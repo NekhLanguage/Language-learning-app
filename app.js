@@ -3424,7 +3424,10 @@ content.innerHTML = `
     <h2>${strings.sessionComplete}</h2>
     <p>${strings.sessionFinished.replace("{n}", run.sessionNumber - 1)}</p>
     <button id="start-next-session" class="primary">${strings.continue}</button>
-    <p class="coaching-cta">Want to go faster? <a href="https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" target="_blank" rel="noopener" class="coaching-link">Book a coaching session with Nekh</a></p>
+    ${run.sessionNumber - 1 >= 3
+      ? `<p class="coaching-cta">Want to go faster? <a href="https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" target="_blank" rel="noopener" class="coaching-link">Book a coaching session with Nekh</a></p>`
+      : `<p class="coaching-cta">Keep going — session ${run.sessionNumber} awaits!</p>`
+    }
   </div>
 `;
 
