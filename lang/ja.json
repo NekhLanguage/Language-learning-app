@@ -26,7 +26,16 @@
     "selectPack": "少なくとも1つのパックを選んでください",
     "enterEmail": "メールアドレスを入力してください",
     "buyAccess": "ユーザーでない方はこちら",
-    "noAccess": "このメールアドレスのアクセス権が見つかりません"
+    "noAccess": "このメールアドレスのアクセス権が見つかりません",
+    "feedbackOpen": "バグを報告またはフィードバックを送る",
+    "feedbackClose": "フィードバックを閉じる",
+    "feedbackTitle": "バグを報告",
+    "feedbackSubtitle": "何が起きたか教えてください — すべての報告を読みます。",
+    "feedbackPlaceholder": "問題を説明してください...",
+    "feedbackSubmit": "報告を送信",
+    "feedbackSending": "送信中…",
+    "feedbackSent": "✓ 報告を送信しました — ありがとうございます！",
+    "feedbackFailed": "送信できませんでした — もう一度お試しください。"
   },
   "hubNames": {
     "en": "英語",

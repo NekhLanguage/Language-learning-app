@@ -26,7 +26,16 @@
     "resourcePacks": "RESOURCE PACKS",
     "choosePacks": "Choose up to 2 packs",
     "start": "START",
-    "selectPack": "Select at least 1 resource pack"
+    "selectPack": "Select at least 1 resource pack",
+    "feedbackOpen": "Report a bug or give feedback",
+    "feedbackClose": "Close feedback",
+    "feedbackTitle": "Report a bug",
+    "feedbackSubtitle": "Tell us what went wrong — we read every report.",
+    "feedbackPlaceholder": "Describe the issue...",
+    "feedbackSubmit": "Send report",
+    "feedbackSending": "Sending…",
+    "feedbackSent": "✓ Report sent — thank you!",
+    "feedbackFailed": "Couldn't send — please try again."
   },
   "hubNames": {
     "en": "English",

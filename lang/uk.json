@@ -26,7 +26,16 @@
     "resourcePacks": "НАБОРИ РЕСУРСІВ",
     "choosePacks": "Виберіть до 2 наборів",
     "start": "СТАРТ",
-    "selectPack": "Виберіть принаймні 1 набір"
+    "selectPack": "Виберіть принаймні 1 набір",
+    "feedbackOpen": "Повідомити про помилку або залишити відгук",
+    "feedbackClose": "Закрити відгук",
+    "feedbackTitle": "Повідомити про помилку",
+    "feedbackSubtitle": "Розкажіть, що пішло не так — ми читаємо кожне повідомлення.",
+    "feedbackPlaceholder": "Опишіть проблему...",
+    "feedbackSubmit": "Надіслати звіт",
+    "feedbackSending": "Надсилання…",
+    "feedbackSent": "✓ Звіт надіслано — дякуємо!",
+    "feedbackFailed": "Не вдалося надіслати — спробуйте ще раз."
   },
   "hubNames": {
     "en": "Англійська",

@@ -26,7 +26,16 @@
     "resourcePacks": "KAYNAK PAKETLERİ",
     "choosePacks": "En fazla 2 paket seçin",
     "start": "BAŞLA",
-    "selectPack": "En az 1 paket seçin"
+    "selectPack": "En az 1 paket seçin",
+    "feedbackOpen": "Hata bildir veya geri bildirim gönder",
+    "feedbackClose": "Geri bildirimi kapat",
+    "feedbackTitle": "Hata bildir",
+    "feedbackSubtitle": "Neyin yanlış gittiğini söyleyin — her raporu okuyoruz.",
+    "feedbackPlaceholder": "Sorunu açıklayın...",
+    "feedbackSubmit": "Raporu gönder",
+    "feedbackSending": "Gönderiliyor…",
+    "feedbackSent": "✓ Rapor gönderildi — teşekkürler!",
+    "feedbackFailed": "Gönderilemedi — lütfen tekrar deneyin."
   },
   "hubNames": {
     "en": "İngilizce",

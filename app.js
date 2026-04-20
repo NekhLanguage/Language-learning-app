@@ -1117,6 +1117,32 @@ const startSubtitle = document.getElementById("start-subtitle");
 if (startSubtitle) {
   startSubtitle.innerHTML = `${strings.startSubtitle}<span class="version-tag">${APP_VERSION}</span>`;
 }
+
+  const feedbackBtnEl       = document.getElementById("feedback-btn");
+  const feedbackCloseEl     = document.getElementById("feedback-close");
+  const feedbackTitleEl     = document.getElementById("feedback-modal-title");
+  const feedbackSubtitleEl  = document.getElementById("feedback-modal-subtitle");
+  const feedbackTextEl      = document.getElementById("feedback-text");
+  const feedbackSubmitEl    = document.getElementById("feedback-submit");
+
+  if (feedbackBtnEl && strings.feedbackOpen) {
+    feedbackBtnEl.setAttribute("aria-label", strings.feedbackOpen);
+  }
+  if (feedbackCloseEl && strings.feedbackClose) {
+    feedbackCloseEl.setAttribute("aria-label", strings.feedbackClose);
+  }
+  if (feedbackTitleEl && strings.feedbackTitle) {
+    feedbackTitleEl.textContent = strings.feedbackTitle;
+  }
+  if (feedbackSubtitleEl && strings.feedbackSubtitle) {
+    feedbackSubtitleEl.textContent = strings.feedbackSubtitle;
+  }
+  if (feedbackTextEl && strings.feedbackPlaceholder) {
+    feedbackTextEl.setAttribute("placeholder", strings.feedbackPlaceholder);
+  }
+  if (feedbackSubmitEl && strings.feedbackSubmit) {
+    feedbackSubmitEl.textContent = strings.feedbackSubmit;
+  }
 }
 function ui(key) {
   const lang = languageState.support || "en";
@@ -3188,7 +3214,7 @@ document.addEventListener("keydown", e => {
     feedbackStatus.textContent = "";
     feedbackStatus.classList.add("hidden");
     feedbackSubmit.disabled = false;
-    feedbackSubmit.textContent = "Send report";
+    feedbackSubmit.textContent = ui("feedbackSubmit");
     showContext();
     feedbackModal.classList.remove("hidden");
     feedbackText.focus();
@@ -3209,7 +3235,7 @@ document.addEventListener("keydown", e => {
     const { target, support, email, version } = buildContext();
 
     feedbackSubmit.disabled = true;
-    feedbackSubmit.textContent = "Sending…";
+    feedbackSubmit.textContent = ui("feedbackSending");
 
     try {
       const body = new URLSearchParams({
@@ -3228,7 +3254,7 @@ document.addEventListener("keydown", e => {
       });
 
       if (res.ok) {
-        feedbackStatus.textContent = "✓ Report sent — thank you!";
+        feedbackStatus.textContent = ui("feedbackSent");
         feedbackStatus.classList.remove("hidden");
         feedbackText.value = "";
         setTimeout(() => feedbackModal.classList.add("hidden"), 2000);
@@ -3236,10 +3262,10 @@ document.addEventListener("keydown", e => {
         throw new Error("Non-OK response");
       }
     } catch {
-      feedbackStatus.textContent = "Couldn't send — please try again.";
+      feedbackStatus.textContent = ui("feedbackFailed");
       feedbackStatus.classList.remove("hidden");
       feedbackSubmit.disabled = false;
-      feedbackSubmit.textContent = "Send report";
+      feedbackSubmit.textContent = ui("feedbackSubmit");
     }
   });
 })();

@@ -26,7 +26,16 @@
     "selectPack": "Velg minst 1 pakke",
     "enterEmail": "Skriv inn e-postadressen din",
     "buyAccess": "Ikke bruker? Få tilgang",
-    "noAccess": "Ingen tilgang funnet for denne e-posten"
+    "noAccess": "Ingen tilgang funnet for denne e-posten",
+    "feedbackOpen": "Rapporter en feil eller gi tilbakemelding",
+    "feedbackClose": "Lukk tilbakemelding",
+    "feedbackTitle": "Rapporter en feil",
+    "feedbackSubtitle": "Fortell oss hva som gikk galt — vi leser alle rapporter.",
+    "feedbackPlaceholder": "Beskriv problemet...",
+    "feedbackSubmit": "Send rapport",
+    "feedbackSending": "Sender…",
+    "feedbackSent": "✓ Rapport sendt — takk!",
+    "feedbackFailed": "Kunne ikke sende — prøv igjen."
   },
   "hubNames": {
     "en": "Engelsk",
