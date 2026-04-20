@@ -26,7 +26,16 @@
     "resourcePacks": "ΠΑΚΕΤΑ ΠΟΡΩΝ",
     "choosePacks": "Επιλέξτε έως 2 πακέτα",
     "start": "ΕΚΚΙΝΗΣΗ",
-    "selectPack": "Επιλέξτε τουλάχιστον 1 πακέτο"
+    "selectPack": "Επιλέξτε τουλάχιστον 1 πακέτο",
+    "feedbackOpen": "Αναφορά σφάλματος ή σχόλια",
+    "feedbackClose": "Κλείσιμο σχολίων",
+    "feedbackTitle": "Αναφορά σφάλματος",
+    "feedbackSubtitle": "Πείτε μας τι πήγε στραβά — διαβάζουμε κάθε αναφορά.",
+    "feedbackPlaceholder": "Περιγράψτε το πρόβλημα...",
+    "feedbackSubmit": "Αποστολή αναφοράς",
+    "feedbackSending": "Αποστολή…",
+    "feedbackSent": "✓ Η αναφορά στάλθηκε — ευχαριστούμε!",
+    "feedbackFailed": "Δεν ήταν δυνατή η αποστολή — δοκιμάστε ξανά."
   },
   "hubNames": {
     "en": "Αγγλικά",

@@ -26,7 +26,16 @@
     "resourcePacks": "PAQUETES DE RECURSOS",
     "choosePacks": "Elige hasta 2 paquetes",
     "start": "EMPEZAR",
-    "selectPack": "Selecciona al menos 1 paquete"
+    "selectPack": "Selecciona al menos 1 paquete",
+    "feedbackOpen": "Reportar un error o dar comentarios",
+    "feedbackClose": "Cerrar comentarios",
+    "feedbackTitle": "Reportar un error",
+    "feedbackSubtitle": "Cuéntanos qué salió mal — leemos cada informe.",
+    "feedbackPlaceholder": "Describe el problema...",
+    "feedbackSubmit": "Enviar informe",
+    "feedbackSending": "Enviando…",
+    "feedbackSent": "✓ Informe enviado — ¡gracias!",
+    "feedbackFailed": "No se pudo enviar — inténtalo de nuevo."
   },
   "hubNames": {
     "en": "Inglés",

@@ -26,7 +26,16 @@
     "selectPack": "Selecione pelo menos 1 pacote",
     "enterEmail": "Digite seu e-mail",
     "buyAccess": "Não é usuário? Obtenha acesso",
-    "noAccess": "Nenhum acesso encontrado para este e-mail"
+    "noAccess": "Nenhum acesso encontrado para este e-mail",
+    "feedbackOpen": "Reportar um bug ou dar feedback",
+    "feedbackClose": "Fechar feedback",
+    "feedbackTitle": "Reportar um bug",
+    "feedbackSubtitle": "Conte-nos o que deu errado — lemos todos os relatos.",
+    "feedbackPlaceholder": "Descreva o problema...",
+    "feedbackSubmit": "Enviar relato",
+    "feedbackSending": "Enviando…",
+    "feedbackSent": "✓ Relato enviado — obrigado!",
+    "feedbackFailed": "Não foi possível enviar — tente novamente."
   },
   "hubNames": {
     "en": "Inglês",

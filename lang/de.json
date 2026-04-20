@@ -26,7 +26,16 @@
     "resourcePacks": "RESSOURCENPAKETE",
     "choosePacks": "Wähle bis zu 2 Pakete",
     "start": "STARTEN",
-    "selectPack": "Wähle mindestens 1 Paket"
+    "selectPack": "Wähle mindestens 1 Paket",
+    "feedbackOpen": "Fehler melden oder Feedback geben",
+    "feedbackClose": "Feedback schließen",
+    "feedbackTitle": "Fehler melden",
+    "feedbackSubtitle": "Sag uns, was schiefgelaufen ist — wir lesen jeden Bericht.",
+    "feedbackPlaceholder": "Beschreibe das Problem...",
+    "feedbackSubmit": "Bericht senden",
+    "feedbackSending": "Wird gesendet…",
+    "feedbackSent": "✓ Bericht gesendet — danke!",
+    "feedbackFailed": "Konnte nicht gesendet werden — bitte erneut versuchen."
   },
   "hubNames": {
     "en": "Englisch",
