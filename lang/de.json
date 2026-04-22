@@ -55,7 +55,13 @@
     "reasonDetailPlaceholderCareer": "e.g., a client in Madrid",
     "reasonDetailPlaceholderHeritage": "e.g., my family is from Norway",
     "reasonDetailPlaceholderCulture": "e.g., Studio Ghibli",
-    "reasonDetailHint": "Optional — totally fine to skip."
+    "reasonDetailHint": "Optional — totally fine to skip.",
+    "roadmapTitle": "YOUR JOURNEY",
+    "roadmapCounter": "{done} of {total} stops complete",
+    "roadmapSessionFinished": "Session {n} complete. One more stop behind you.",
+    "roadmapBegin": "BEGIN YOUR JOURNEY",
+    "roadmapBack": "← BACK",
+    "journeyBtn": "JOURNEY"
   },
   "hubNames": {
     "en": "Englisch",
