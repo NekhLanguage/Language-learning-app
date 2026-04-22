@@ -967,3 +967,73 @@ button.selected {
   opacity: 0.55;
   font-variant: small-caps;
 }
+
+/* =========================
+   Reason Screen (onboarding)
+   ========================= */
+
+#reason-screen .subtitle {
+  max-width: 34rem;
+  line-height: 1.5;
+}
+
+.reason-grid {
+  grid-template-columns: repeat(2, minmax(200px, 280px));
+  margin-bottom: 1.75rem;
+}
+
+.reason-grid button.selected {
+  background: #f3e0f5;
+  outline: 3px solid #ffffff;
+}
+
+.reason-detail {
+  width: min(420px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.reason-detail-label {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  opacity: 0.9;
+  text-align: left;
+}
+
+.reason-detail-input {
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--btnInk);
+  outline: none;
+}
+
+.reason-detail-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45);
+}
+
+.reason-detail-hint {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  opacity: 0.6;
+  text-align: left;
+}
+
+.reason-continue:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .reason-grid {
+    grid-template-columns: 1fr;
+  }
+}

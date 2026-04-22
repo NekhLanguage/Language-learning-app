@@ -765,6 +765,98 @@ function buildReleasePlan(selectedPacks = []) {
 
   return plan;
 }
+const REASON_OPTIONS = [
+  { type: "travel",   hasDetail: true  },
+  { type: "person",   hasDetail: true  },
+  { type: "career",   hasDetail: true  },
+  { type: "heritage", hasDetail: true  },
+  { type: "culture",  hasDetail: true  },
+  { type: "fun",      hasDetail: false }
+];
+
+function reasonLabelKey(type) {
+  return "reasonOption" + type.charAt(0).toUpperCase() + type.slice(1);
+}
+function reasonPromptKey(type) {
+  return "reasonDetail" + type.charAt(0).toUpperCase() + type.slice(1);
+}
+function reasonPlaceholderKey(type) {
+  return "reasonDetailPlaceholder" + type.charAt(0).toUpperCase() + type.slice(1);
+}
+
+function localizedTargetLabel(code) {
+  const supportLang = languageState.support || "en";
+  const hub = LANG_FILE_CACHE[supportLang]?.hubNames || LANG_FILE_CACHE["en"]?.hubNames || {};
+  if (hub[code]) return hub[code];
+  const meta = AVAILABLE_LANGUAGES.find(l => l.code === code);
+  return meta?.label || code;
+}
+
+function showReasonScreen() {
+  const screen = document.getElementById("reason-screen");
+  const titleEl = document.getElementById("reason-title");
+  const subtitleEl = document.getElementById("reason-subtitle");
+  const container = document.getElementById("reason-buttons");
+  const detailWrap = document.getElementById("reason-detail-wrap");
+  const detailLabel = document.getElementById("reason-detail-label");
+  const detailInput = document.getElementById("reason-detail-input");
+  const detailHint = document.getElementById("reason-detail-hint");
+  const continueBtn = document.getElementById("reason-continue");
+
+  const langLabel = localizedTargetLabel(languageState.target).toUpperCase();
+  titleEl.textContent = (ui("reasonTitle") || "WHY {lang}?").replace("{lang}", langLabel);
+  subtitleEl.textContent = ui("reasonSubtitle");
+  continueBtn.textContent = ui("reasonContinue");
+  detailHint.textContent = ui("reasonDetailHint");
+
+  let selectedType = null;
+
+  container.innerHTML = "";
+  REASON_OPTIONS.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "primary";
+    btn.type = "button";
+    btn.dataset.reason = opt.type;
+    btn.textContent = ui(reasonLabelKey(opt.type));
+    btn.onclick = () => {
+      selectedType = opt.type;
+      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+
+      if (opt.hasDetail) {
+        detailLabel.textContent = ui(reasonPromptKey(opt.type));
+        detailInput.placeholder = ui(reasonPlaceholderKey(opt.type));
+        detailWrap.classList.remove("hidden");
+      } else {
+        detailInput.value = "";
+        detailWrap.classList.add("hidden");
+      }
+
+      continueBtn.disabled = false;
+    };
+    container.appendChild(btn);
+  });
+
+  detailWrap.classList.add("hidden");
+  detailInput.value = "";
+  continueBtn.disabled = true;
+
+  continueBtn.onclick = () => {
+    if (!selectedType) return;
+    const detail = (detailInput.value || "").trim().slice(0, 80);
+    run.reason = {
+      type: selectedType,
+      detail,
+      savedAt: Date.now()
+    };
+    screen.classList.remove("active");
+    document.getElementById("pack-screen").classList.add("active");
+    renderPackSelection();
+  };
+
+  screen.classList.add("active");
+}
+
 function renderPackSelection() {
 
   document.getElementById("pack-title").textContent = ui("resourcePacks");
@@ -1202,8 +1294,11 @@ if (startSubtitle) {
 }
 function ui(key) {
   const lang = languageState.support || "en";
-  const strings = LANG_FILE_CACHE[lang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings || {};
-  return strings[key] ?? key;
+  const primary = LANG_FILE_CACHE[lang]?.uiStrings;
+  if (primary && primary[key] !== undefined) return primary[key];
+  const fallback = LANG_FILE_CACHE["en"]?.uiStrings;
+  if (fallback && fallback[key] !== undefined) return fallback[key];
+  return key;
 }
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
@@ -3401,11 +3496,8 @@ function renderAlphabetOverlay(langCode) {
   if (!USER.runs[langCode]) {
     run = createRunState();
     await loadTemplates([]);
-    // 👇 NEW STEP
     languageScreen.classList.remove("active");
-    document.getElementById("pack-screen").classList.add("active");
-
-    renderPackSelection();
+    showReasonScreen();
 
     return;
   }
