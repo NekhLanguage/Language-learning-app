@@ -696,6 +696,8 @@ function createRunState() {
     sessionAttempts: {},
     sessionComplete: false,
 
+    milestonesShown: [],
+
     contentVersion: CONTENT_VERSION
   };
 }
@@ -857,6 +859,49 @@ function showReasonScreen() {
   screen.classList.add("active");
 }
 
+const DEFAULT_MILESTONES = [50, 100, 150, 200, 250];
+
+function milestoneTargetsFor(run) {
+  const packs = run?.selectedResourcePacks || [];
+  const targets = [...DEFAULT_MILESTONES];
+  if (packs.length >= 2) targets.push(300);
+  return targets;
+}
+
+function countKnownWords(run) {
+  if (!run?.progress) return 0;
+  let n = 0;
+  for (const cid of Object.keys(run.progress)) {
+    if (run.progress[cid]?.completed) n++;
+  }
+  return n;
+}
+
+function pendingMilestones(run) {
+  const shown = new Set(run.milestonesShown || []);
+  const current = countKnownWords(run);
+  return milestoneTargetsFor(run)
+    .filter(t => current >= t && !shown.has(t))
+    .sort((a, b) => a - b);
+}
+
+function markMilestonesShown(run, crossed) {
+  const set = new Set(run.milestonesShown || []);
+  for (const n of crossed) set.add(n);
+  run.milestonesShown = [...set].sort((a, b) => a - b);
+}
+
+function milestoneReasonLine(n, reason) {
+  if (!reason || !reason.type) return ui("milestoneGeneric");
+  const detail = (reason.detail || "").trim();
+  if (reason.type === "fun") return ui("milestoneReasonFun");
+  if (!detail) return ui("milestoneGeneric");
+  const key = "milestoneReason" + reason.type.charAt(0).toUpperCase() + reason.type.slice(1);
+  const tmpl = ui(key);
+  if (!tmpl || tmpl === key) return ui("milestoneGeneric");
+  return tmpl.replace("{detail}", detail).replace("{n}", String(n));
+}
+
 const TRACK_LABEL_OVERRIDES = {
   core: "CORE",
   pokemon: "POKÉMON"
@@ -895,7 +940,7 @@ function getRoadmapStops(run) {
   });
 }
 
-// opts: { onContinue, backTo?, sessionNumber?, showCoaching? }
+// opts: { onContinue, backTo?, sessionNumber?, showCoaching?, milestone? }
 function showRoadmap(opts) {
   const screen = document.getElementById("roadmap-screen");
   const titleEl = document.getElementById("roadmap-title");
@@ -905,6 +950,7 @@ function showRoadmap(opts) {
   const coachingEl = document.getElementById("roadmap-coaching");
   const continueBtn = document.getElementById("roadmap-continue");
   const backBtn = document.getElementById("roadmap-back");
+  const milestoneEl = document.getElementById("roadmap-milestone");
 
   const supportLang = languageState.support || "en";
   const stops = getRoadmapStops(run);
@@ -914,6 +960,25 @@ function showRoadmap(opts) {
   titleEl.textContent = ui("roadmapTitle");
   counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
     .replace("{done}", doneCount).replace("{total}", total);
+
+  if (opts && opts.milestone) {
+    const n = opts.milestone;
+    const headline = (ui("milestoneHeadline") || "{n} WORDS").replace("{n}", String(n));
+    const line = milestoneReasonLine(n, run.reason);
+    milestoneEl.innerHTML = "";
+    const h = document.createElement("div");
+    h.className = "roadmap-milestone-headline";
+    h.textContent = headline;
+    const p = document.createElement("div");
+    p.className = "roadmap-milestone-line";
+    p.textContent = line;
+    milestoneEl.appendChild(h);
+    milestoneEl.appendChild(p);
+    milestoneEl.classList.remove("hidden");
+  } else if (milestoneEl) {
+    milestoneEl.innerHTML = "";
+    milestoneEl.classList.add("hidden");
+  }
 
   if (opts && opts.sessionNumber) {
     messageEl.textContent = (ui("roadmapSessionFinished") || "Session {n} complete.")
@@ -3673,6 +3738,10 @@ function endSession(targetLang, supportLang) {
   run.sessionAttempts = {};
   run.sessionLevelUps = {};
 
+  const crossed = pendingMilestones(run);
+  const milestone = crossed.length ? crossed[crossed.length - 1] : null;
+  if (crossed.length) markMilestonesShown(run, crossed);
+
   USER.runs[languageState.target] = run;
   saveUser();
 
@@ -3680,6 +3749,7 @@ function endSession(targetLang, supportLang) {
   showRoadmap({
     sessionNumber: finishedSession,
     showCoaching: finishedSession >= 3,
+    milestone,
     onContinue: () => {
       setTimeout(() => {
         document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));

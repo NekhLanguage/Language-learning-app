@@ -61,7 +61,15 @@
     "roadmapSessionFinished": "Session {n} complete. One more stop behind you.",
     "roadmapBegin": "BEGIN YOUR JOURNEY",
     "roadmapBack": "← BACK",
-    "journeyBtn": "JOURNEY"
+    "journeyBtn": "JOURNEY",
+    "milestoneHeadline": "{n} WORDS",
+    "milestoneGeneric": "Every one of them — yours.",
+    "milestoneReasonTravel": "{detail} feels closer with every word.",
+    "milestoneReasonPerson": "{detail} is closer with every word.",
+    "milestoneReasonCareer": "Another step toward {detail}.",
+    "milestoneReasonHeritage": "{detail} lives in these words.",
+    "milestoneReasonCulture": "{detail}, in its own voice.",
+    "milestoneReasonFun": "And you're just getting started."
   },
   "hubNames": {
     "en": "İngilizce",

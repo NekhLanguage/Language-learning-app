@@ -1099,6 +1099,37 @@ button.selected {
   line-height: 1.5;
 }
 
+.roadmap-milestone {
+  text-align: center;
+  padding: 1.25rem 1.25rem 1.35rem;
+  margin-bottom: 1.25rem;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.22), rgba(255, 209, 102, 0.08));
+  border: 2px solid rgba(255, 209, 102, 0.6);
+  animation: milestoneReveal 0.45s ease-out both;
+}
+
+.roadmap-milestone-headline {
+  font-family: var(--font-ui);
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: #ffd166;
+}
+
+.roadmap-milestone-line {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin-top: 0.45rem;
+  opacity: 0.95;
+}
+
+@keyframes milestoneReveal {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .roadmap-path {
   list-style: none;
   margin: 0.5rem 0 1rem;
