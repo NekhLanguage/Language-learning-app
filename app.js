@@ -1684,11 +1684,13 @@ function pluralize(word) {
 
 // Returns the plural form for non-English languages.
 // Reads entry.plural if present; falls back to the singular formOf().
+// Respects entry.invariantPlural for words that don't change (e.g. Pokémon).
 function pluralFormOf(lang, cid) {
   const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
   if (!entry) return formOf(lang, cid);
-  if (typeof entry === "object" && !Array.isArray(entry) && entry.plural) {
-    return entry.plural;
+  if (typeof entry === "object" && !Array.isArray(entry)) {
+    if (entry.invariantPlural) return formOf(lang, cid);
+    if (entry.plural) return entry.plural;
   }
   return formOf(lang, cid);
 }
@@ -2137,7 +2139,8 @@ if (tpl.structure?.type === "complex_clause") {
     if (!isPlural) {
       nounForm = bare;
     } else if (lang === "en") {
-      nounForm = pluralize(bare);
+      const enEntry = window.GLOBAL_VOCAB.languages?.en?.forms?.[cid] || {};
+      nounForm = enEntry.invariantPlural ? bare : pluralize(bare);
     } else {
       nounForm = pluralFormOf(lang, cid);
     }

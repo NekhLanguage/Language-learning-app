@@ -58,13 +58,13 @@
       "label": "English",
       "forms": {
 
-        "POKEMON": { "form": "pokemon" },
+        "POKEMON": { "form": "Pokémon", "article": "a", "invariantPlural": true },
         "TRAINER": { "form": "trainer", "article": "a" },
         "GYM": { "form": "gym", "article": "a" },
         "LEAGUE": { "form": "league", "article": "a" },
         "GYM_LEADER": { "form": "gym leader", "article": "a" },
         "ELITE_FOUR": { "form": "elite four" },
-        "POKEMON_CENTER": { "form": "pokemon center", "article": "a" },
+        "POKEMON_CENTER": { "form": "Pokémon Center", "article": "a" },
         "FOREST": { "form": "forest", "article": "a" },
         "CAVE": { "form": "cave", "article": "a" },
         "TOWN": { "form": "town", "article": "a" },
@@ -124,7 +124,7 @@
       "label": "Portuguese",
       "forms": {
 
-        "POKEMON": { "form": "pokémon" },
+        "POKEMON": { "form": "pokémon", "gender": "m", "invariantPlural": true },
         "TRAINER": { "form": "treinador", "gender": "m" },
         "GYM": { "form": "ginásio", "gender": "m" },
         "LEAGUE": { "form": "liga", "gender": "f" },
@@ -323,13 +323,13 @@
   "label": "Norwegian",
   "forms": {
 
-    "POKEMON": { "form": "pokemon" },
+    "POKEMON": { "form": "pokémon", "gender": "m", "invariantPlural": true },
     "TRAINER": { "form": "trener", "gender": "m", "plural": "trenere" },
     "GYM": { "form": "gym", "gender": "n" },
     "LEAGUE": { "form": "liga", "gender": "f", "plural": "ligaer" },
     "GYM_LEADER": { "form": "gymleder", "gender": "m", "plural": "gymledere" },
     "ELITE_FOUR": { "form": "elite fire" },
-    "POKEMON_CENTER": { "form": "pokemonsenter", "gender": "n" },
+    "POKEMON_CENTER": { "form": "pokémonsenter", "gender": "n" },
     "FOREST": { "form": "skog", "gender": "m", "plural": "skoger" },
     "CAVE": { "form": "hule", "gender": "f", "plural": "huler" },
     "TOWN": { "form": "by", "gender": "m", "plural": "byer" },
@@ -522,7 +522,7 @@
   "label": "Japanese",
   "forms": {
 
-    "POKEMON": { "form": "ポケモン" },
+    "POKEMON": { "form": "ポケモン", "invariantPlural": true },
     "TRAINER": { "form": "トレーナー" },
     "GYM": { "form": "ジム" },
     "LEAGUE": { "form": "リーグ" },
@@ -587,7 +587,7 @@
   "label": "Arabic",
   "forms": {
 
-    "POKEMON": { "form": "بوكيمون" },
+    "POKEMON": { "form": "بوكيمون", "invariantPlural": true },
     "TRAINER": { "form": "مدرب" },
     "GYM": { "form": "صالة تدريب" },
     "LEAGUE": { "form": "الدوري" },
@@ -786,7 +786,7 @@
   "label": "Korean",
   "forms": {
 
-    "POKEMON": { "form": "포켓몬" },
+    "POKEMON": { "form": "포켓몬", "invariantPlural": true },
     "TRAINER": { "form": "트레이너" },
     "GYM": { "form": "체육관" },
     "LEAGUE": { "form": "리그" },
@@ -851,7 +851,7 @@
   "label": "Українська",
   "forms": {
 
-    "POKEMON": { "form": "покемон" },
+    "POKEMON": { "form": "покемон", "invariantPlural": true },
     "TRAINER": { "form": "тренер" },
     "GYM": { "form": "зал" },
     "LEAGUE": { "form": "ліга" },
@@ -916,7 +916,7 @@
   "label": "Español",
   "forms": {
 
-    "POKEMON": { "form": "pokémon" },
+    "POKEMON": { "form": "pokémon", "gender": "m", "invariantPlural": true },
     "TRAINER": { "form": "entrenador", "gender": "m" },
     "GYM": { "form": "gimnasio", "gender": "m" },
     "LEAGUE": { "form": "liga", "gender": "f" },
