@@ -439,6 +439,24 @@ function reconcileRecognitionCompletion(user) {
   }
 }
 
+// Fluency-aware spaced repetition: time an exercise from the moment it
+// renders to the moment the learner answers, and use that response time to
+// modulate the cooldown. Correctness criteria are unchanged — speed only
+// affects *when* the concept resurfaces, never whether it counts as correct.
+// Fast correct → long cooldown (concept feels owned).
+// Slow correct → short cooldown (bring it back soon; needs reinforcement).
+let currentExerciseStartedAt = 0;
+function markExerciseStart() { currentExerciseStartedAt = Date.now(); }
+function exerciseElapsedMs() {
+  return currentExerciseStartedAt ? Date.now() - currentExerciseStartedAt : 0;
+}
+function cooldownForElapsed(ms) {
+  if (ms <= 0) return 4;          // no timing signal — treat as normal
+  if (ms < 4000) return 8;         // fast: push review further out
+  if (ms > 15000) return 2;        // slow: bring it back soon
+  return 4;                         // normal
+}
+
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const APP_VERSION = "v1.0.0";
@@ -1789,7 +1807,9 @@ function migrateRunState() {
     state.cooldown = 2;
   } else {
     state.streak++;
-    state.cooldown = 4;
+    // Speed-aware cooldown: fast recall pushes the next review out,
+    // slow recall pulls it in for reinforcement.
+    state.cooldown = cooldownForElapsed(exerciseElapsedMs());
 
     let leveledUp = false;
 
@@ -2403,6 +2423,7 @@ if (tpl.structure?.type === "complex_clause") {
   let adjectiveWord = null;
   let adjectiveCid = null;
   let numberWord = null;
+  let numberCid = null;
 
   // adjective
   if (forcedMeta?.type === "adjective") {
@@ -2417,7 +2438,7 @@ if (tpl.structure?.type === "complex_clause") {
       return !st.completed && st.level >= 4;
     });
 
-    if (adjectives.length && Math.random() < 0.6) {
+    if (adjectives.length && Math.random() < 0.75) {
       const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
       adjectiveCid = adj;
       adjectiveWord = formOf(lang, adj);
@@ -2426,7 +2447,24 @@ if (tpl.structure?.type === "complex_clause") {
 
   // number
   if (forcedMeta?.type === "number") {
+    numberCid = forcedConcept;
     numberWord = formOf(lang, forcedConcept);
+  } else {
+    // Random number injection for variety. Skips ONE (redundant with the
+    // indefinite article) and restricts to numbers the learner has actually
+    // started working on (L4+, not yet completed).
+    const numbers = run.released.filter(c => {
+      if (c === "ONE") return false;
+      const m = window.GLOBAL_VOCAB.concepts[c];
+      if (m?.type !== "number") return false;
+      const st = ensureProgress(c);
+      return !st.completed && st.level >= 4;
+    });
+    if (numbers.length && Math.random() < 0.15) {
+      const n = numbers[Math.floor(Math.random() * numbers.length)];
+      numberCid = n;
+      numberWord = formOf(lang, n);
+    }
   }
 
   // apply modifiers
@@ -2435,7 +2473,7 @@ if (tpl.structure?.type === "complex_clause") {
 
   if (numberWord) {
     // Numbers replace the article: "two books" not "two a book"
-    const isPlural = forcedConcept !== "ONE";
+    const isPlural = numberCid !== "ONE";
     let nounForm;
     if (!isPlural) {
       nounForm = bare;
@@ -3939,6 +3977,7 @@ function chooseTemplateForConcept(cid) {
   return eligible[Math.floor(Math.random() * eligible.length)];
 }
 function renderNext(targetLang, supportLang) {
+  markExerciseStart();
   // --- Progress bar update ---
 const progress = calculateWeightedProgress(run);
 const bar = document.getElementById("progress-bar-fill");
