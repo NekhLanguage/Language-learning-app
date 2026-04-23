@@ -540,6 +540,83 @@ const EXTERNAL_LINKS = {
   offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call",
   buyAccess: "https://stan.store/Nekhslanguageblueprint/p/zero-to-hero-app-beta-copy"
 };
+
+// Launch-spike observability. Keep this tiny and self-contained: one global
+// error listener, one unhandled-rejection listener, one delegated click
+// listener that fires when any stan.store link is clicked. Everything posts
+// to /.netlify/functions/beacon. See netlify/functions/beacon.js.
+(function initBeacon() {
+  const ENDPOINT = "/.netlify/functions/beacon";
+  function send(type, payload) {
+    try {
+      const body = JSON.stringify({ type, payload });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "application/json" }));
+        return;
+      }
+      fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true })
+        .catch(() => {});
+    } catch (_) { /* never let the beacon throw */ }
+  }
+  window.__zthBeacon = send;
+
+  window.addEventListener("error", (e) => {
+    send("error", {
+      message: (e && e.message) || "error",
+      source: (e && e.filename) || "",
+      line: (e && e.lineno) || 0,
+      col: (e && e.colno) || 0,
+      stack: e && e.error && e.error.stack ? String(e.error.stack).slice(0, 1000) : "",
+      path: location.pathname + location.search
+    });
+  });
+
+  window.addEventListener("unhandledrejection", (e) => {
+    const reason = e && e.reason;
+    const message =
+      reason && reason.message ? reason.message :
+      typeof reason === "string" ? reason :
+      "unhandledrejection";
+    send("error", {
+      message: String(message).slice(0, 500),
+      source: "unhandledrejection",
+      line: 0,
+      col: 0,
+      stack: reason && reason.stack ? String(reason.stack).slice(0, 1000) : "",
+      path: location.pathname + location.search
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    const a = e.target && e.target.closest ? e.target.closest("a[href^='https://stan.store/']") : null;
+    if (!a) return;
+    const href = a.getAttribute("href") || "";
+    // Surface hint: which DOM id the link sits in, if any.
+    const surface = a.id || (a.closest("[id]") && a.closest("[id]").id) || "unknown";
+    let sessionCount = 0;
+    let targetLang = "";
+    try {
+      const u = JSON.parse(localStorage.getItem("zth_user") || "{}");
+      targetLang = (u && u.lastActiveLanguage) || "";
+      const run = targetLang && u.runs && u.runs[targetLang];
+      // sessionNumber is 1-indexed and points at the *current* session, so the
+      // count already completed is one less (bounded at 0).
+      if (run && typeof run.sessionNumber === "number") {
+        sessionCount = Math.max(0, run.sessionNumber - 1);
+      }
+    } catch (_) {}
+    let supportLang = "";
+    try { supportLang = (typeof languageState !== "undefined" && languageState.support) || ""; } catch (_) {}
+    send("cta_click", {
+      href,
+      surface,
+      sessionCount,
+      supportLang,
+      targetLang
+    });
+  }, true);
+})();
+
 // ---------------------------------------------------------------
 // Language file cache — one entry per language code, populated
 // on demand.  UI strings, hub names, and vocab forms all live in
