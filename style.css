@@ -228,6 +228,17 @@ select option{
   justify-content: center;
 }
 
+/* Short fade + lift on every new exercise. Keeps transitions smooth
+   without adding perceivable delay (~180ms, faster than the fast-answer
+   threshold so it doesn't skew the speed signal). */
+.content.exercise-enter {
+  animation: exerciseEnter 0.18s ease-out;
+}
+@keyframes exerciseEnter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .row{
   padding: 0.75rem 0.25rem;
   border-bottom: 1px solid rgba(255,255,255,0.10);

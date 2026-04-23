@@ -3940,6 +3940,55 @@ function chooseConcept(excluded = new Set()) {
 
   return candidates[0];
 }
+// Rotate the subject pronoun in a template to a different one the learner
+// has already unlocked. Widens effective variety without writing new
+// templates: "I see a pokemon" becomes "You see a pokemon" / "He sees a
+// pokemon" / "We see a pokemon" depending on what pronouns are released.
+// Skipped when the target concept *is* the subject (can't swap the very
+// thing we're teaching), when the template uses a bespoke structure
+// (copular/complex — their renderers read named slots), or when there's
+// nothing to swap to.
+function maybeVarySubject(tpl, targetConcept) {
+  if (!tpl || !Array.isArray(tpl.concepts)) return tpl;
+  if (tpl.structure) return tpl; // bespoke structures use named slots
+  const subjectIdx = tpl.concepts.findIndex(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+  );
+  if (subjectIdx < 0) return tpl;
+  const currentSubject = tpl.concepts[subjectIdx];
+  if (currentSubject === targetConcept) return tpl;
+
+  const alternatives = run.released.filter(c => {
+    if (c === currentSubject) return false;
+    const m = window.GLOBAL_VOCAB.concepts[c];
+    if (m?.type !== "pronoun") return false;
+    const st = ensureProgress(c);
+    return !st.completed && st.level >= 4;
+  });
+  if (!alternatives.length) return tpl;
+  if (Math.random() >= 0.45) return tpl;
+
+  const newSubject = alternatives[Math.floor(Math.random() * alternatives.length)];
+  const newConcepts = [...tpl.concepts];
+  newConcepts[subjectIdx] = newSubject;
+
+  const modified = { ...tpl, concepts: newConcepts, render: { ...(tpl.render || {}) } };
+
+  // Regenerate the support-language gloss so it matches the swapped subject.
+  // buildSentence is the same engine used for target rendering (and is
+  // already used for support lang in other exercise types), so it produces
+  // consistently-built glosses without any new grammar rules.
+  const supportLang = languageState.support || "en";
+  try {
+    const regenerated = buildSentence(supportLang, modified);
+    if (regenerated) modified.render[supportLang] = regenerated;
+  } catch (e) {
+    // On any failure, fall back to the original template unchanged.
+    return tpl;
+  }
+  return modified;
+}
+
 function chooseTemplateForConcept(cid) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
@@ -3974,10 +4023,18 @@ function chooseTemplateForConcept(cid) {
 
   if (!eligible.length) return null;
 
-  return eligible[Math.floor(Math.random() * eligible.length)];
+  const picked = eligible[Math.floor(Math.random() * eligible.length)];
+  return maybeVarySubject(picked, cid);
 }
 function renderNext(targetLang, supportLang) {
   markExerciseStart();
+  // Retrigger the fade-in animation on every new exercise. Removing
+  // and force-reflowing the class ensures the keyframes replay.
+  if (content) {
+    content.classList.remove("exercise-enter");
+    void content.offsetWidth;
+    content.classList.add("exercise-enter");
+  }
   // --- Progress bar update ---
 const progress = calculateWeightedProgress(run);
 const bar = document.getElementById("progress-bar-fill");
