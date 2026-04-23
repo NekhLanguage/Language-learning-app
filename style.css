@@ -46,6 +46,7 @@ body::before{
 
 .screen{
   min-height: 100vh;
+  min-height: 100dvh;
   display: none;
   flex-direction: column;
   align-items: center;
@@ -156,11 +157,24 @@ button.primary.small{
 /* Learning layout */
 .learning-wrap{
   width: min(900px, 100%);
-  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 0.5rem;
 }
+
+#learning-screen {
+  justify-content: flex-start;
+  padding: 4.5rem 1.25rem 5rem;
+  overflow: hidden;
+  max-height: 100vh;
+  max-height: 100dvh;
+}
+
+#learning-screen .title.small { margin-bottom: 0.15rem; }
+#learning-screen .subtitle { margin-bottom: 0.4rem; }
 
 .controls{
   display: flex;
@@ -205,7 +219,24 @@ select option{
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 24px;
-  padding: 1.5rem 1.5rem;
+  padding: 1.25rem 1.25rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Short fade + lift on every new exercise. Keeps transitions smooth
+   without adding perceivable delay (~180ms, faster than the fast-answer
+   threshold so it doesn't skew the speed signal). */
+.content.exercise-enter {
+  animation: exerciseEnter 0.18s ease-out;
+}
+@keyframes exerciseEnter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .row{
@@ -1193,12 +1224,23 @@ button.selected {
   background: rgba(255, 255, 255, 0.7);
 }
 
-.roadmap-stop.active .roadmap-stop-dot {
+/* The one stop the learner is actively working on — pulses. */
+.roadmap-stop.current .roadmap-stop-dot {
   background: #ffd166;
   border-color: #ffd166;
   color: var(--btnInk);
   box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.25);
   animation: roadmapPulse 2.2s ease-in-out infinite;
+}
+
+/* Older released bundles with unfinished concepts — visible but quiet. */
+.roadmap-stop.in-progress .roadmap-stop-dot {
+  background: transparent;
+  border-color: #ffd166;
+  color: #ffd166;
+}
+.roadmap-stop.in-progress::before {
+  background: rgba(255, 209, 102, 0.35);
 }
 
 .roadmap-stop.locked {
@@ -1238,8 +1280,11 @@ button.selected {
 }
 
 .roadmap-stop.done .roadmap-stop-meta,
-.roadmap-stop.active .roadmap-stop-meta {
+.roadmap-stop.current .roadmap-stop-meta {
   opacity: 1;
+}
+.roadmap-stop.in-progress .roadmap-stop-meta {
+  opacity: 0.9;
 }
 
 .roadmap-coaching {
@@ -1274,4 +1319,131 @@ button.selected {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+
+/* =========================
+   Fit-to-viewport compression
+   - exercises, alphabet, feedback
+   Goal: no scrolling in any direction on a normal phone viewport.
+   ========================= */
+
+/* Exercise content shrinks with viewport height */
+@media (max-height: 820px) {
+  #choices { gap: 0.55rem; margin: 0.7rem 0; }
+  #choices button:not(.tts-inline) {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.95rem;
+  }
+  #learning-screen .content { padding: 1rem 1.1rem; }
+}
+@media (max-height: 680px) {
+  #learning-screen {
+    padding: 3.75rem 1rem 4.25rem;
+  }
+  #choices button:not(.tts-inline) {
+    padding: 0.55rem 0.7rem;
+    font-size: 0.88rem;
+  }
+  #learning-screen .title.small { font-size: 1.35rem; letter-spacing: 0.08em; }
+  #learning-screen .subtitle { font-size: 0.85rem; margin-bottom: 0.25rem; }
+}
+
+/* Guard against TTS buttons causing horizontal overflow in choices.
+   Long words (e.g. Ukrainian) must wrap rather than push past the chip. */
+#choices .word-bank-chip {
+  min-width: 0;
+}
+#choices .word-bank-chip button:not(.tts-inline) {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
+}
+
+/* Alphabet overlay: fit everything inside the viewport, no scroll */
+.alphabet-overlay {
+  overflow: hidden;
+  padding: 1.75rem 1rem 1.25rem;
+  max-height: 100vh;
+  max-height: 100dvh;
+}
+
+.alphabet-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: min(680px, 100%);
+}
+
+.alphabet-overlay-title { margin-bottom: 0.85rem; }
+
+.alphabet-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.alphabet-section-name {
+  margin: 0.6rem 0 0.3rem;
+}
+.alphabet-section-name:first-child { margin-top: 0; }
+
+.letter-grid {
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  gap: 0.5rem;
+}
+
+.letter-card {
+  padding: 0.5rem 0.4rem;
+  min-height: 0;
+  border-radius: 14px;
+}
+
+.letter-char {
+  font-size: clamp(1.1rem, 4.5vw, 1.8rem);
+  margin-bottom: 0.1rem;
+}
+.letter-romanization {
+  font-size: clamp(0.6rem, 2.2vw, 0.85rem);
+}
+.letter-sound {
+  font-size: clamp(0.55rem, 1.9vw, 0.7rem);
+  margin-top: 0.1rem;
+}
+
+@media (max-width: 520px) {
+  .letter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+    gap: 0.35rem;
+  }
+  .alphabet-overlay { padding: 1.5rem 0.75rem 1rem; }
+}
+
+/* Feedback modal: never exceeds viewport; textarea bounded */
+.feedback-modal {
+  padding: 1rem;
+}
+.feedback-panel {
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: hidden;
+  padding: 1.5rem 1.5rem 1.25rem;
+  gap: 0.65rem;
+}
+.feedback-textarea {
+  resize: none;
+  max-height: 32dvh;
+}
+@media (max-height: 680px) {
+  .feedback-panel {
+    padding: 1.1rem 1.15rem 0.9rem;
+    gap: 0.45rem;
+  }
+  .feedback-modal-title { font-size: 1.1rem; }
+  .feedback-modal-subtitle { font-size: 0.78rem; }
+  .feedback-textarea { max-height: 22dvh; }
 }

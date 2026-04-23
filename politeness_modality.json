@@ -71,6 +71,17 @@
         "sentence_use": false,
         "writing": false
       }
+    },
+    {
+      "concept_id": "THANKS",
+      "type": "politeness",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
     }
   ]
 }

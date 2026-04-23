@@ -389,6 +389,74 @@ const RESOURCE_PACKS = {
   ]
 }
 };
+
+// Concepts the learner needs to *recognise* far more than they need to *produce*.
+// These plateau at Level 4 (isolated recall) instead of Level 7 (free production).
+// Decided purely by concept ID — no vocab file is modified.
+const RECOGNITION_CONCEPTS = new Set([
+  // Numbers 11-20 — learners almost always see these as digits in running text;
+  // the word form is high-recognition, low-production.
+  "ELEVEN","TWELVE","THIRTEEN","FOURTEEN","FIFTEEN",
+  "SIXTEEN","SEVENTEEN","EIGHTEEN","NINETEEN","TWENTY",
+  // Seasons — appear in descriptive text, rarely spoken in isolation.
+  "SPRING","SUMMER","AUTUMN","WINTER",
+  // Time units — "wait 5 minutes" read; "wait a bit" said.
+  "HOUR","MINUTE","SECOND",
+  // Temporal relations — input-heavy (reading/listening); spoken work usually
+  // carries tense, not these exact words.
+  "BEFORE","AFTER","LATER","NEXT","NOW",
+  // Cardinal directions — maps, stories, weather; rarely produced.
+  "NORTH","SOUTH","EAST","WEST",
+  // Standalone possessive pronouns — MY/YOUR/HIS/HER/OUR/THEIR already cover
+  // production via attribution ("my book"); the standalone forms are uncommon.
+  "MINE","YOURS","HERS","OURS","THEIRS","ITS",
+  // Secondary quantifiers — ALL stays productive; these are input-only for most.
+  "ANY","ONLY","ANOTHER","SOMETHING",
+  // Lower-frequency connectors — AND/BUT/BECAUSE/IF stay productive;
+  // WHILE/AS/ALSO learners parse far more often than they speak.
+  "WHILE","AS","ALSO",
+  // Modals and other function words — recognition is sufficient for comprehension,
+  // production can lean on simpler alternatives the learner has at production level.
+  "MAY","AROUND"
+]);
+
+// One-shot reconciliation: if an existing learner already has a recognition
+// concept at Level 4 or higher, flip it to completed now so their roadmap and
+// milestone counts reflect the new bar immediately (rather than waiting until
+// the next exercise touches the concept).
+function reconcileRecognitionCompletion(user) {
+  if (!user || !user.runs) return;
+  for (const run of Object.values(user.runs)) {
+    const progress = run && run.progress;
+    if (!progress) continue;
+    for (const cid of Object.keys(progress)) {
+      const p = progress[cid];
+      if (!p || p.completed) continue;
+      if (RECOGNITION_CONCEPTS.has(cid) && (p.level || 0) >= 4) {
+        p.completed = true;
+      }
+    }
+  }
+}
+
+// Fluency-aware spaced repetition: time an exercise from the moment it
+// renders to the moment the learner answers, and use that response time to
+// modulate the cooldown. Correctness criteria are unchanged — speed only
+// affects *when* the concept resurfaces, never whether it counts as correct.
+// Fast correct → long cooldown (concept feels owned).
+// Slow correct → short cooldown (bring it back soon; needs reinforcement).
+let currentExerciseStartedAt = 0;
+function markExerciseStart() { currentExerciseStartedAt = Date.now(); }
+function exerciseElapsedMs() {
+  return currentExerciseStartedAt ? Date.now() - currentExerciseStartedAt : 0;
+}
+function cooldownForElapsed(ms) {
+  if (ms <= 0) return 4;          // no timing signal — treat as normal
+  if (ms < 4000) return 8;         // fast: push review further out
+  if (ms > 15000) return 2;        // slow: bring it back soon
+  return 4;                         // normal
+}
+
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const APP_VERSION = "v1.0.0";
@@ -502,6 +570,7 @@ const email = localStorage.getItem("zth_email")?.toLowerCase();
 // Netlify function round-trip. The server sync runs in the background below and
 // reconciles any drift when it resolves.
 loadUser();
+reconcileRecognitionCompletion(USER);
 languageState.support = USER.supportLanguage || "en";
 
 // Kick off both network fetches without awaiting. The <link rel="preload"> in
@@ -527,6 +596,7 @@ langP.then(() => {
 // the support language or pushed new progress; both need a re-render of the hub.
 if (serverSyncP) {
   Promise.all([langP, serverSyncP]).then(async () => {
+    reconcileRecognitionCompletion(USER);
     const newSupport = USER.supportLanguage || "en";
     if (newSupport !== languageState.support) {
       languageState.support = newSupport;
@@ -951,7 +1021,13 @@ function getRoadmapStops(run) {
   const plan = (run.releasePlan && run.releasePlan.length)
     ? run.releasePlan
     : buildReleasePlan(run.selectedResourcePacks || []);
-  const releasedSet = new Set(run.releasedBundleIds || []);
+  const releasedIds = run.releasedBundleIds || [];
+  const releasedSet = new Set(releasedIds);
+  // The "current" stop is the most recently released bundle that isn't yet
+  // fully complete. Older released bundles with unfinished concepts become
+  // "in-progress" so the learner can see there's still work there without
+  // everything pulsing at once.
+  const latestReleased = releasedIds[releasedIds.length - 1];
   return plan.map((bundleId, index) => {
     const bundle = BUNDLE_INDEX[bundleId];
     const concepts = bundle?.concepts || [];
@@ -961,7 +1037,8 @@ function getRoadmapStops(run) {
     let state;
     if (!released) state = "locked";
     else if (done) state = "done";
-    else state = "active";
+    else if (bundleId === latestReleased) state = "current";
+    else state = "in-progress";
     return { bundleId, index, state, concepts };
   });
 }
@@ -981,11 +1058,21 @@ function showRoadmap(opts) {
   const supportLang = languageState.support || "en";
   const stops = getRoadmapStops(run);
   const doneCount = stops.filter(s => s.state === "done").length;
+  const inProgressCount = stops.filter(s => s.state === "current" || s.state === "in-progress").length;
+  const aheadCount = stops.filter(s => s.state === "locked").length;
   const total = stops.length;
 
   titleEl.textContent = ui("roadmapTitle");
-  counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
-    .replace("{done}", doneCount).replace("{total}", total);
+  if (inProgressCount > 0) {
+    counterEl.textContent = (ui("roadmapCounterFull") ||
+      "{done} complete · {inprogress} in progress · {ahead} ahead")
+      .replace("{done}", doneCount)
+      .replace("{inprogress}", inProgressCount)
+      .replace("{ahead}", aheadCount);
+  } else {
+    counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
+      .replace("{done}", doneCount).replace("{total}", total);
+  }
 
   if (opts && opts.milestone) {
     const n = opts.milestone;
@@ -1071,9 +1158,10 @@ function showRoadmap(opts) {
 
   // Scroll the active stop into view after render.
   requestAnimationFrame(() => {
-    const activeEl = pathEl.querySelector(".roadmap-stop.active") ||
+    const focusEl = pathEl.querySelector(".roadmap-stop.current") ||
+      pathEl.querySelector(".roadmap-stop.in-progress") ||
       pathEl.querySelector(".roadmap-stop.done:last-of-type");
-    if (activeEl) activeEl.scrollIntoView({ block: "center", behavior: "instant" });
+    if (focusEl) focusEl.scrollIntoView({ block: "center", behavior: "instant" });
   });
 }
 
@@ -1719,14 +1807,18 @@ function migrateRunState() {
     state.cooldown = 2;
   } else {
     state.streak++;
-    state.cooldown = 4;
+    // Speed-aware cooldown: fast recall pushes the next review out,
+    // slow recall pulls it in for reinforcement.
+    state.cooldown = cooldownForElapsed(exerciseElapsedMs());
 
     let leveledUp = false;
 
     const needed = state.level === 1 ? 1 : 2;
 
 if (state.streak >= needed) {
-      const levelCap = isModifierConcept(cid) ? 5 : MAX_LEVEL;
+      const levelCap = RECOGNITION_CONCEPTS.has(cid)
+        ? 4
+        : isModifierConcept(cid) ? 5 : MAX_LEVEL;
       const levelUps = run.sessionLevelUps[cid] || 0;
 
 if (levelUps >= 3) {
@@ -2331,6 +2423,7 @@ if (tpl.structure?.type === "complex_clause") {
   let adjectiveWord = null;
   let adjectiveCid = null;
   let numberWord = null;
+  let numberCid = null;
 
   // adjective
   if (forcedMeta?.type === "adjective") {
@@ -2345,7 +2438,7 @@ if (tpl.structure?.type === "complex_clause") {
       return !st.completed && st.level >= 4;
     });
 
-    if (adjectives.length && Math.random() < 0.6) {
+    if (adjectives.length && Math.random() < 0.75) {
       const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
       adjectiveCid = adj;
       adjectiveWord = formOf(lang, adj);
@@ -2354,7 +2447,24 @@ if (tpl.structure?.type === "complex_clause") {
 
   // number
   if (forcedMeta?.type === "number") {
+    numberCid = forcedConcept;
     numberWord = formOf(lang, forcedConcept);
+  } else {
+    // Random number injection for variety. Skips ONE (redundant with the
+    // indefinite article) and restricts to numbers the learner has actually
+    // started working on (L4+, not yet completed).
+    const numbers = run.released.filter(c => {
+      if (c === "ONE") return false;
+      const m = window.GLOBAL_VOCAB.concepts[c];
+      if (m?.type !== "number") return false;
+      const st = ensureProgress(c);
+      return !st.completed && st.level >= 4;
+    });
+    if (numbers.length && Math.random() < 0.15) {
+      const n = numbers[Math.floor(Math.random() * numbers.length)];
+      numberCid = n;
+      numberWord = formOf(lang, n);
+    }
   }
 
   // apply modifiers
@@ -2363,7 +2473,7 @@ if (tpl.structure?.type === "complex_clause") {
 
   if (numberWord) {
     // Numbers replace the article: "two books" not "two a book"
-    const isPlural = forcedConcept !== "ONE";
+    const isPlural = numberCid !== "ONE";
     let nounForm;
     if (!isPlural) {
       nounForm = bare;
@@ -3830,6 +3940,55 @@ function chooseConcept(excluded = new Set()) {
 
   return candidates[0];
 }
+// Rotate the subject pronoun in a template to a different one the learner
+// has already unlocked. Widens effective variety without writing new
+// templates: "I see a pokemon" becomes "You see a pokemon" / "He sees a
+// pokemon" / "We see a pokemon" depending on what pronouns are released.
+// Skipped when the target concept *is* the subject (can't swap the very
+// thing we're teaching), when the template uses a bespoke structure
+// (copular/complex — their renderers read named slots), or when there's
+// nothing to swap to.
+function maybeVarySubject(tpl, targetConcept) {
+  if (!tpl || !Array.isArray(tpl.concepts)) return tpl;
+  if (tpl.structure) return tpl; // bespoke structures use named slots
+  const subjectIdx = tpl.concepts.findIndex(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+  );
+  if (subjectIdx < 0) return tpl;
+  const currentSubject = tpl.concepts[subjectIdx];
+  if (currentSubject === targetConcept) return tpl;
+
+  const alternatives = run.released.filter(c => {
+    if (c === currentSubject) return false;
+    const m = window.GLOBAL_VOCAB.concepts[c];
+    if (m?.type !== "pronoun") return false;
+    const st = ensureProgress(c);
+    return !st.completed && st.level >= 4;
+  });
+  if (!alternatives.length) return tpl;
+  if (Math.random() >= 0.45) return tpl;
+
+  const newSubject = alternatives[Math.floor(Math.random() * alternatives.length)];
+  const newConcepts = [...tpl.concepts];
+  newConcepts[subjectIdx] = newSubject;
+
+  const modified = { ...tpl, concepts: newConcepts, render: { ...(tpl.render || {}) } };
+
+  // Regenerate the support-language gloss so it matches the swapped subject.
+  // buildSentence is the same engine used for target rendering (and is
+  // already used for support lang in other exercise types), so it produces
+  // consistently-built glosses without any new grammar rules.
+  const supportLang = languageState.support || "en";
+  try {
+    const regenerated = buildSentence(supportLang, modified);
+    if (regenerated) modified.render[supportLang] = regenerated;
+  } catch (e) {
+    // On any failure, fall back to the original template unchanged.
+    return tpl;
+  }
+  return modified;
+}
+
 function chooseTemplateForConcept(cid) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
@@ -3864,9 +4023,18 @@ function chooseTemplateForConcept(cid) {
 
   if (!eligible.length) return null;
 
-  return eligible[Math.floor(Math.random() * eligible.length)];
+  const picked = eligible[Math.floor(Math.random() * eligible.length)];
+  return maybeVarySubject(picked, cid);
 }
 function renderNext(targetLang, supportLang) {
+  markExerciseStart();
+  // Retrigger the fade-in animation on every new exercise. Removing
+  // and force-reflowing the class ensures the keyframes replay.
+  if (content) {
+    content.classList.remove("exercise-enter");
+    void content.offsetWidth;
+    content.classList.add("exercise-enter");
+  }
   // --- Progress bar update ---
 const progress = calculateWeightedProgress(run);
 const bar = document.getElementById("progress-bar-fill");
