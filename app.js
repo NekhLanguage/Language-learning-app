@@ -389,6 +389,56 @@ const RESOURCE_PACKS = {
   ]
 }
 };
+
+// Concepts the learner needs to *recognise* far more than they need to *produce*.
+// These plateau at Level 4 (isolated recall) instead of Level 7 (free production).
+// Decided purely by concept ID — no vocab file is modified.
+const RECOGNITION_CONCEPTS = new Set([
+  // Numbers 11-20 — learners almost always see these as digits in running text;
+  // the word form is high-recognition, low-production.
+  "ELEVEN","TWELVE","THIRTEEN","FOURTEEN","FIFTEEN",
+  "SIXTEEN","SEVENTEEN","EIGHTEEN","NINETEEN","TWENTY",
+  // Seasons — appear in descriptive text, rarely spoken in isolation.
+  "SPRING","SUMMER","AUTUMN","WINTER",
+  // Time units — "wait 5 minutes" read; "wait a bit" said.
+  "HOUR","MINUTE","SECOND",
+  // Temporal relations — input-heavy (reading/listening); spoken work usually
+  // carries tense, not these exact words.
+  "BEFORE","AFTER","LATER","NEXT","NOW",
+  // Cardinal directions — maps, stories, weather; rarely produced.
+  "NORTH","SOUTH","EAST","WEST",
+  // Standalone possessive pronouns — MY/YOUR/HIS/HER/OUR/THEIR already cover
+  // production via attribution ("my book"); the standalone forms are uncommon.
+  "MINE","YOURS","HERS","OURS","THEIRS","ITS",
+  // Secondary quantifiers — ALL stays productive; these are input-only for most.
+  "ANY","ONLY","ANOTHER","SOMETHING",
+  // Lower-frequency connectors — AND/BUT/BECAUSE/IF stay productive;
+  // WHILE/AS/ALSO learners parse far more often than they speak.
+  "WHILE","AS","ALSO",
+  // Modals and other function words — recognition is sufficient for comprehension,
+  // production can lean on simpler alternatives the learner has at production level.
+  "MAY","AROUND"
+]);
+
+// One-shot reconciliation: if an existing learner already has a recognition
+// concept at Level 4 or higher, flip it to completed now so their roadmap and
+// milestone counts reflect the new bar immediately (rather than waiting until
+// the next exercise touches the concept).
+function reconcileRecognitionCompletion(user) {
+  if (!user || !user.runs) return;
+  for (const run of Object.values(user.runs)) {
+    const progress = run && run.progress;
+    if (!progress) continue;
+    for (const cid of Object.keys(progress)) {
+      const p = progress[cid];
+      if (!p || p.completed) continue;
+      if (RECOGNITION_CONCEPTS.has(cid) && (p.level || 0) >= 4) {
+        p.completed = true;
+      }
+    }
+  }
+}
+
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const APP_VERSION = "v1.0.0";
@@ -502,6 +552,7 @@ const email = localStorage.getItem("zth_email")?.toLowerCase();
 // Netlify function round-trip. The server sync runs in the background below and
 // reconciles any drift when it resolves.
 loadUser();
+reconcileRecognitionCompletion(USER);
 languageState.support = USER.supportLanguage || "en";
 
 // Kick off both network fetches without awaiting. The <link rel="preload"> in
@@ -527,6 +578,7 @@ langP.then(() => {
 // the support language or pushed new progress; both need a re-render of the hub.
 if (serverSyncP) {
   Promise.all([langP, serverSyncP]).then(async () => {
+    reconcileRecognitionCompletion(USER);
     const newSupport = USER.supportLanguage || "en";
     if (newSupport !== languageState.support) {
       languageState.support = newSupport;
@@ -1744,7 +1796,9 @@ function migrateRunState() {
     const needed = state.level === 1 ? 1 : 2;
 
 if (state.streak >= needed) {
-      const levelCap = isModifierConcept(cid) ? 5 : MAX_LEVEL;
+      const levelCap = RECOGNITION_CONCEPTS.has(cid)
+        ? 4
+        : isModifierConcept(cid) ? 5 : MAX_LEVEL;
       const levelUps = run.sessionLevelUps[cid] || 0;
 
 if (levelUps >= 3) {
