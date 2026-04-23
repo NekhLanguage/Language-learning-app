@@ -4,7 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zero to Hero – Language Learning</title>
+  <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
+  <link rel="modulepreload" href="app.js?v=1.0.0" />
+  <link rel="modulepreload" href="languages.js?v=0.9.99.14" />
+  <link rel="modulepreload" href="audioengine.js" />
   <link rel="stylesheet" href="style.css" />
+  <script>
+    // If the returning user's support language isn't English, prefetch their
+    // lang file too so the static en.json preload isn't wasted on them.
+    (function () {
+      try {
+        var u = JSON.parse(localStorage.getItem("zth_user") || "{}");
+        var s = u && u.supportLanguage;
+        if (s && s !== "en" && /^[a-z]{2}$/.test(s)) {
+          var l = document.createElement("link");
+          l.rel = "preload"; l.as = "fetch"; l.type = "application/json";
+          l.href = "lang/" + s + ".json";
+          document.head.appendChild(l);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div id="app">

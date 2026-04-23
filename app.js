@@ -498,19 +498,45 @@ const supportLabel = document.getElementById("support-label");
 const supportDropdown = document.getElementById("support-dropdown");
 const email = localStorage.getItem("zth_email")?.toLowerCase();
 
-if (email) {
-  await loadUserFromServer(email);
-} else {
-  loadUser(); // fallback ONLY if no account
-}
-
-// ✅ THEN initialize UI
+// Hydrate USER synchronously from localStorage so first paint doesn't wait on a
+// Netlify function round-trip. The server sync runs in the background below and
+// reconciles any drift when it resolves.
+loadUser();
 languageState.support = USER.supportLanguage || "en";
-await getLangFileData(languageState.support);
+
+// Kick off both network fetches without awaiting. The <link rel="preload"> in
+// index.html primes the lang file during HTML parse, so it's typically already
+// in cache by the time this line runs.
+const langP = getLangFileData(languageState.support);
+const serverSyncP = email
+  ? loadUserFromServer(email).catch(err => { console.warn("Server sync failed:", err); })
+  : null;
+
+// Paint the support selector immediately from local state. The rest of the start
+// screen comes from the HTML defaults until the lang file lands.
 updateSupportUI(languageState.support);
-updateUIStrings(languageState.support);
 let languageSearchQuery = "";
-renderLanguageButtons();
+
+// First render once the lang file resolves — applies localized strings + hub names.
+langP.then(() => {
+  updateUIStrings(languageState.support);
+  renderLanguageButtons();
+});
+
+// Once the server has caught up, reconcile: a different device may have changed
+// the support language or pushed new progress; both need a re-render of the hub.
+if (serverSyncP) {
+  Promise.all([langP, serverSyncP]).then(async () => {
+    const newSupport = USER.supportLanguage || "en";
+    if (newSupport !== languageState.support) {
+      languageState.support = newSupport;
+      await getLangFileData(newSupport);
+      updateSupportUI(languageState.support);
+      updateUIStrings(languageState.support);
+    }
+    renderLanguageButtons();
+  });
+}
 async function loadUserFromServer(email) {
 email = email?.toLowerCase().trim();
   const res = await fetch("/.netlify/functions/loadUser", {
