@@ -967,3 +967,311 @@ button.selected {
   opacity: 0.55;
   font-variant: small-caps;
 }
+
+/* =========================
+   Reason Screen (onboarding)
+   ========================= */
+
+#reason-screen .subtitle {
+  max-width: 34rem;
+  line-height: 1.5;
+}
+
+.reason-grid {
+  grid-template-columns: repeat(2, minmax(200px, 280px));
+  margin-bottom: 1.75rem;
+}
+
+.reason-grid button.selected {
+  background: #f3e0f5;
+  outline: 3px solid #ffffff;
+}
+
+.reason-detail {
+  width: min(420px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.reason-detail-label {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  opacity: 0.9;
+  text-align: left;
+}
+
+.reason-detail-input {
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  border: none;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--btnInk);
+  outline: none;
+}
+
+.reason-detail-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45);
+}
+
+.reason-detail-hint {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  opacity: 0.6;
+  text-align: left;
+}
+
+.reason-continue:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .reason-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   Journey button (learning screen)
+   ========================= */
+
+.journey-btn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  left: auto;
+  z-index: 150;
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 0.75rem 1.25rem;
+  transition: background 0.15s ease;
+}
+
+.journey-btn:hover {
+  background: rgba(255, 255, 255, 0.10);
+  transform: none;
+  box-shadow: none;
+}
+
+/* =========================
+   Roadmap screen (journey)
+   ========================= */
+
+#roadmap-screen {
+  justify-content: flex-start;
+  padding-top: 5rem;
+  padding-bottom: 6.5rem;
+}
+
+.roadmap-wrap {
+  width: min(560px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.roadmap-wrap .title,
+.roadmap-wrap .subtitle {
+  text-align: center;
+}
+
+.roadmap-message {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.roadmap-milestone {
+  text-align: center;
+  padding: 1.25rem 1.25rem 1.35rem;
+  margin-bottom: 1.25rem;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.22), rgba(255, 209, 102, 0.08));
+  border: 2px solid rgba(255, 209, 102, 0.6);
+  animation: milestoneReveal 0.45s ease-out both;
+}
+
+.roadmap-milestone-headline {
+  font-family: var(--font-ui);
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: #ffd166;
+}
+
+.roadmap-milestone-line {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin-top: 0.45rem;
+  opacity: 0.95;
+}
+
+@keyframes milestoneReveal {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.roadmap-path {
+  list-style: none;
+  margin: 0.5rem 0 1rem;
+  padding: 0 0 0 2.25rem;
+  position: relative;
+}
+
+.roadmap-stop {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 0.55rem 0;
+}
+
+.roadmap-stop-dot {
+  position: absolute;
+  left: -2.25rem;
+  top: 0.55rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--btnInk);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.roadmap-stop::before {
+  content: "";
+  position: absolute;
+  left: calc(-2.25rem + 0.825rem - 1px);
+  top: -0.5rem;
+  bottom: -0.5rem;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+.roadmap-stop:first-child::before {
+  top: 50%;
+}
+
+.roadmap-stop:last-child::before {
+  bottom: 50%;
+}
+
+.roadmap-stop.done .roadmap-stop-dot {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--btnInk);
+}
+
+.roadmap-stop.done::before {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.roadmap-stop.active .roadmap-stop-dot {
+  background: #ffd166;
+  border-color: #ffd166;
+  color: var(--btnInk);
+  box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.25);
+  animation: roadmapPulse 2.2s ease-in-out infinite;
+}
+
+.roadmap-stop.locked {
+  opacity: 0.55;
+}
+
+.roadmap-stop.locked .roadmap-stop-dot {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@keyframes roadmapPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.25); }
+  50%      { box-shadow: 0 0 0 8px rgba(255, 209, 102, 0.05); }
+}
+
+.roadmap-stop-body {
+  flex: 1 1 auto;
+  text-align: left;
+  padding: 0.05rem 0 0.2rem;
+}
+
+.roadmap-stop-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+}
+
+.roadmap-stop-preview {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-top: 0.15rem;
+  line-height: 1.35;
+}
+
+.roadmap-stop.done .roadmap-stop-meta,
+.roadmap-stop.active .roadmap-stop-meta {
+  opacity: 1;
+}
+
+.roadmap-coaching {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  opacity: 0.85;
+  text-align: center;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.roadmap-coaching a {
+  color: #ffd166;
+  text-decoration: underline;
+}
+
+.roadmap-continue {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  z-index: 5;
+}
+
+.roadmap-continue:hover {
+  transform: translateX(-50%) translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  #roadmap-screen {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

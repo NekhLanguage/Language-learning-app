@@ -8,7 +8,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I see a pokemon."
+        "en": "I see a Pokémon."
       }
     },
     {
@@ -63,7 +63,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I have a pokemon."
+        "en": "I have a Pokémon."
       }
     },
     {
@@ -74,7 +74,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "He has a pokemon."
+        "en": "He has a Pokémon."
       }
     },
     {
@@ -85,7 +85,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "We have a pokemon."
+        "en": "We have a Pokémon."
       }
     },
     {
@@ -173,7 +173,7 @@
         "MOVE"
       ],
       "render": {
-        "en": "Pokemon have a move."
+        "en": "Pokémon have a move."
       }
     },
     {
@@ -240,7 +240,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "He has a strong pokemon."
+        "en": "He has a strong Pokémon."
       }
     },
     {
@@ -263,7 +263,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I see a shiny pokemon."
+        "en": "I see a shiny Pokémon."
       }
     },
     {
@@ -284,7 +284,7 @@
         "GAIN_EXPERIENCE"
       ],
       "render": {
-        "en": "Pokemon gain experience."
+        "en": "Pokémon gain experience."
       }
     },
     {
@@ -294,7 +294,7 @@
         "EVOLVE"
       ],
       "render": {
-        "en": "Pokemon evolve."
+        "en": "Pokémon evolve."
       }
     },
     {
@@ -305,7 +305,7 @@
         "POKEMON_CENTER"
       ],
       "render": {
-        "en": "I go to the pokemon center."
+        "en": "I go to the Pokémon Center."
       }
     },
     {
@@ -316,7 +316,7 @@
         "ABILITY"
       ],
       "render": {
-        "en": "Pokemon have an ability."
+        "en": "Pokémon have an ability."
       }
     },
     {
@@ -360,7 +360,7 @@
         "MOVE"
       ],
       "render": {
-        "en": "Pokemon use a move."
+        "en": "Pokémon use a move."
       }
     },
     {
@@ -392,7 +392,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I catch a pokemon."
+        "en": "I catch a Pokémon."
       }
     },
     {
@@ -413,7 +413,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I switch pokemon."
+        "en": "I switch Pokémon."
       }
     },
     {
@@ -424,7 +424,7 @@
         "BURN"
       ],
       "render": {
-        "en": "The pokemon is burned."
+        "en": "The Pokémon is burned."
       }
     },
     {
@@ -435,7 +435,7 @@
         "POISON"
       ],
       "render": {
-        "en": "The pokemon is poisoned."
+        "en": "The Pokémon is poisoned."
       }
     },
     {
@@ -446,7 +446,7 @@
         "SLEEP_STATUS"
       ],
       "render": {
-        "en": "The pokemon is asleep."
+        "en": "The Pokémon is asleep."
       }
     },
     {
@@ -457,7 +457,7 @@
         "PARALYZE"
       ],
       "render": {
-        "en": "The pokemon is paralyzed."
+        "en": "The Pokémon is paralyzed."
       }
     },
     {
@@ -490,7 +490,7 @@
         "LEGENDARY"
       ],
       "render": {
-        "en": "The pokemon is legendary."
+        "en": "The Pokémon is legendary."
       }
     },
     {
@@ -545,7 +545,7 @@
         "TYPE"
       ],
       "render": {
-        "en": "Pokemon have a type."
+        "en": "Pokémon have a type."
       }
     },
     {
@@ -556,7 +556,7 @@
         "TYPES"
       ],
       "render": {
-        "en": "Pokemon have types."
+        "en": "Pokémon have types."
       }
     },
     {
@@ -612,7 +612,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "You have a pokemon."
+        "en": "You have a Pokémon."
       }
     },
     {
@@ -623,7 +623,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "You catch a pokemon."
+        "en": "You catch a Pokémon."
       }
     },
     {
@@ -700,7 +700,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "They have a pokemon."
+        "en": "They have a Pokémon."
       }
     },
     {
@@ -711,7 +711,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "They see a pokemon."
+        "en": "They see a Pokémon."
       }
     },
     {
@@ -722,7 +722,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "They catch a pokemon."
+        "en": "They catch a Pokémon."
       }
     },
     {
@@ -766,7 +766,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "We catch a pokemon."
+        "en": "We catch a Pokémon."
       }
     },
     {
@@ -810,7 +810,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "She catches a pokemon."
+        "en": "She catches a Pokémon."
       }
     },
     {
@@ -865,7 +865,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I heal a pokemon."
+        "en": "I heal a Pokémon."
       }
     },
     {
@@ -877,7 +877,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I see a wild pokemon."
+        "en": "I see a wild Pokémon."
       }
     },
     {
@@ -889,7 +889,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "I see a legendary pokemon."
+        "en": "I see a legendary Pokémon."
       }
     },
     {
@@ -900,7 +900,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "He catches a pokemon."
+        "en": "He catches a Pokémon."
       }
     },
     {
@@ -922,7 +922,7 @@
         "POKEMON"
       ],
       "render": {
-        "en": "He heals a pokemon."
+        "en": "He heals a Pokémon."
       }
     },
     {

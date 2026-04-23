@@ -80,6 +80,7 @@
     <section id="learning-screen" class="screen" aria-label="Learning screen">
       <button id="quit-learning" class="quit-button" type="button">QUIT LEARNING</button>
       <button id="alphabet-btn" class="quit-button alphabet-btn hidden" type="button" aria-label="Open alphabet guide">ABC</button>
+      <button id="journey-btn" class="quit-button journey-btn" type="button" aria-label="Open journey roadmap">JOURNEY</button>
 
       <div class="learning-wrap">
        <h2 class="title small">TODAY'S SESSION</h2>
@@ -95,6 +96,36 @@
     </section>
 
   </div>
+  <!-- REASON SCREEN (first-time per language) -->
+  <section id="reason-screen" class="screen" aria-label="Why you're learning this language">
+    <h2 class="title small" id="reason-title">WHY THIS LANGUAGE?</h2>
+    <p class="subtitle" id="reason-subtitle">There are no wrong answers — this just helps us celebrate the moments that matter to you.</p>
+
+    <div id="reason-buttons" class="button-grid reason-grid"></div>
+
+    <div id="reason-detail-wrap" class="reason-detail hidden">
+      <label id="reason-detail-label" class="reason-detail-label" for="reason-detail-input"></label>
+      <input id="reason-detail-input" class="reason-detail-input" type="text" maxlength="80" autocomplete="off" />
+      <p id="reason-detail-hint" class="reason-detail-hint"></p>
+    </div>
+
+    <button id="reason-continue" class="primary reason-continue" type="button" disabled>CONTINUE</button>
+  </section>
+
+  <!-- ROADMAP SCREEN (journey view) -->
+  <section id="roadmap-screen" class="screen" aria-label="Your learning journey">
+    <button id="roadmap-back" class="quit-button" type="button">← BACK</button>
+    <div class="roadmap-wrap">
+      <div id="roadmap-milestone" class="roadmap-milestone hidden" role="status" aria-live="polite"></div>
+      <h2 class="title small" id="roadmap-title">YOUR JOURNEY</h2>
+      <p class="subtitle" id="roadmap-counter"></p>
+      <p id="roadmap-message" class="roadmap-message hidden"></p>
+      <ul id="roadmap-path" class="roadmap-path"></ul>
+      <p id="roadmap-coaching" class="roadmap-coaching hidden"></p>
+    </div>
+    <button id="roadmap-continue" class="primary roadmap-continue" type="button">CONTINUE</button>
+  </section>
+
   <section id="pack-screen" class="screen">
   <h2 class="title small" id="pack-title">RESOURCE PACKS</h2>
   <p class="subtitle" id="pack-subtitle">Choose up to 2 packs</p>

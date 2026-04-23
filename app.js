@@ -696,6 +696,8 @@ function createRunState() {
     sessionAttempts: {},
     sessionComplete: false,
 
+    milestonesShown: [],
+
     contentVersion: CONTENT_VERSION
   };
 }
@@ -765,6 +767,290 @@ function buildReleasePlan(selectedPacks = []) {
 
   return plan;
 }
+const REASON_OPTIONS = [
+  { type: "travel",   hasDetail: true  },
+  { type: "person",   hasDetail: true  },
+  { type: "career",   hasDetail: true  },
+  { type: "heritage", hasDetail: true  },
+  { type: "culture",  hasDetail: true  },
+  { type: "fun",      hasDetail: false }
+];
+
+function reasonLabelKey(type) {
+  return "reasonOption" + type.charAt(0).toUpperCase() + type.slice(1);
+}
+function reasonPromptKey(type) {
+  return "reasonDetail" + type.charAt(0).toUpperCase() + type.slice(1);
+}
+function reasonPlaceholderKey(type) {
+  return "reasonDetailPlaceholder" + type.charAt(0).toUpperCase() + type.slice(1);
+}
+
+function localizedTargetLabel(code) {
+  const supportLang = languageState.support || "en";
+  const hub = LANG_FILE_CACHE[supportLang]?.hubNames || LANG_FILE_CACHE["en"]?.hubNames || {};
+  if (hub[code]) return hub[code];
+  const meta = AVAILABLE_LANGUAGES.find(l => l.code === code);
+  return meta?.label || code;
+}
+
+function showReasonScreen() {
+  const screen = document.getElementById("reason-screen");
+  const titleEl = document.getElementById("reason-title");
+  const subtitleEl = document.getElementById("reason-subtitle");
+  const container = document.getElementById("reason-buttons");
+  const detailWrap = document.getElementById("reason-detail-wrap");
+  const detailLabel = document.getElementById("reason-detail-label");
+  const detailInput = document.getElementById("reason-detail-input");
+  const detailHint = document.getElementById("reason-detail-hint");
+  const continueBtn = document.getElementById("reason-continue");
+
+  const langLabel = localizedTargetLabel(languageState.target).toUpperCase();
+  titleEl.textContent = (ui("reasonTitle") || "WHY {lang}?").replace("{lang}", langLabel);
+  subtitleEl.textContent = ui("reasonSubtitle");
+  continueBtn.textContent = ui("reasonContinue");
+  detailHint.textContent = ui("reasonDetailHint");
+
+  let selectedType = null;
+
+  container.innerHTML = "";
+  REASON_OPTIONS.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "primary";
+    btn.type = "button";
+    btn.dataset.reason = opt.type;
+    btn.textContent = ui(reasonLabelKey(opt.type));
+    btn.onclick = () => {
+      selectedType = opt.type;
+      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+
+      if (opt.hasDetail) {
+        detailLabel.textContent = ui(reasonPromptKey(opt.type));
+        detailInput.placeholder = ui(reasonPlaceholderKey(opt.type));
+        detailWrap.classList.remove("hidden");
+      } else {
+        detailInput.value = "";
+        detailWrap.classList.add("hidden");
+      }
+
+      continueBtn.disabled = false;
+    };
+    container.appendChild(btn);
+  });
+
+  detailWrap.classList.add("hidden");
+  detailInput.value = "";
+  continueBtn.disabled = true;
+
+  continueBtn.onclick = () => {
+    if (!selectedType) return;
+    const detail = (detailInput.value || "").trim().slice(0, 80);
+    run.reason = {
+      type: selectedType,
+      detail,
+      savedAt: Date.now()
+    };
+    screen.classList.remove("active");
+    document.getElementById("pack-screen").classList.add("active");
+    renderPackSelection();
+  };
+
+  screen.classList.add("active");
+}
+
+const DEFAULT_MILESTONES = [50, 100, 150, 200, 250];
+
+function milestoneTargetsFor(run) {
+  const packs = run?.selectedResourcePacks || [];
+  const targets = [...DEFAULT_MILESTONES];
+  if (packs.length >= 2) targets.push(300);
+  return targets;
+}
+
+function countKnownWords(run) {
+  if (!run?.progress) return 0;
+  let n = 0;
+  for (const cid of Object.keys(run.progress)) {
+    if (run.progress[cid]?.completed) n++;
+  }
+  return n;
+}
+
+function pendingMilestones(run) {
+  const shown = new Set(run.milestonesShown || []);
+  const current = countKnownWords(run);
+  return milestoneTargetsFor(run)
+    .filter(t => current >= t && !shown.has(t))
+    .sort((a, b) => a - b);
+}
+
+function markMilestonesShown(run, crossed) {
+  const set = new Set(run.milestonesShown || []);
+  for (const n of crossed) set.add(n);
+  run.milestonesShown = [...set].sort((a, b) => a - b);
+}
+
+function milestoneReasonLine(n, reason) {
+  if (!reason || !reason.type) return ui("milestoneGeneric");
+  const detail = (reason.detail || "").trim();
+  if (reason.type === "fun") return ui("milestoneReasonFun");
+  if (!detail) return ui("milestoneGeneric");
+  const key = "milestoneReason" + reason.type.charAt(0).toUpperCase() + reason.type.slice(1);
+  const tmpl = ui(key);
+  if (!tmpl || tmpl === key) return ui("milestoneGeneric");
+  return tmpl.replace("{detail}", detail).replace("{n}", String(n));
+}
+
+const TRACK_LABEL_OVERRIDES = {
+  core: "CORE",
+  pokemon: "POKÉMON"
+};
+
+function prettyTrackName(bundleId) {
+  const m = bundleId.match(/^(.+)_(\d+)$/);
+  if (!m) return { track: bundleId.toUpperCase(), num: "" };
+  const [, trackKey, num] = m;
+  const track = TRACK_LABEL_OVERRIDES[trackKey] ||
+    trackKey.replace(/_/g, " ").toUpperCase();
+  return { track, num };
+}
+
+function conceptPreviewText(concepts, supportLang) {
+  if (!concepts || !concepts.length) return "";
+  return concepts.slice(0, 5).map(cid => formOf(supportLang, cid)).join(" · ");
+}
+
+function getRoadmapStops(run) {
+  const plan = (run.releasePlan && run.releasePlan.length)
+    ? run.releasePlan
+    : buildReleasePlan(run.selectedResourcePacks || []);
+  const releasedSet = new Set(run.releasedBundleIds || []);
+  return plan.map((bundleId, index) => {
+    const bundle = BUNDLE_INDEX[bundleId];
+    const concepts = bundle?.concepts || [];
+    const released = releasedSet.has(bundleId);
+    const done = released && concepts.length > 0 &&
+      concepts.every(cid => run.progress?.[cid]?.completed);
+    let state;
+    if (!released) state = "locked";
+    else if (done) state = "done";
+    else state = "active";
+    return { bundleId, index, state, concepts };
+  });
+}
+
+// opts: { onContinue, backTo?, sessionNumber?, showCoaching?, milestone? }
+function showRoadmap(opts) {
+  const screen = document.getElementById("roadmap-screen");
+  const titleEl = document.getElementById("roadmap-title");
+  const counterEl = document.getElementById("roadmap-counter");
+  const messageEl = document.getElementById("roadmap-message");
+  const pathEl = document.getElementById("roadmap-path");
+  const coachingEl = document.getElementById("roadmap-coaching");
+  const continueBtn = document.getElementById("roadmap-continue");
+  const backBtn = document.getElementById("roadmap-back");
+  const milestoneEl = document.getElementById("roadmap-milestone");
+
+  const supportLang = languageState.support || "en";
+  const stops = getRoadmapStops(run);
+  const doneCount = stops.filter(s => s.state === "done").length;
+  const total = stops.length;
+
+  titleEl.textContent = ui("roadmapTitle");
+  counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
+    .replace("{done}", doneCount).replace("{total}", total);
+
+  if (opts && opts.milestone) {
+    const n = opts.milestone;
+    const headline = (ui("milestoneHeadline") || "{n} WORDS").replace("{n}", String(n));
+    const line = milestoneReasonLine(n, run.reason);
+    milestoneEl.innerHTML = "";
+    const h = document.createElement("div");
+    h.className = "roadmap-milestone-headline";
+    h.textContent = headline;
+    const p = document.createElement("div");
+    p.className = "roadmap-milestone-line";
+    p.textContent = line;
+    milestoneEl.appendChild(h);
+    milestoneEl.appendChild(p);
+    milestoneEl.classList.remove("hidden");
+  } else if (milestoneEl) {
+    milestoneEl.innerHTML = "";
+    milestoneEl.classList.add("hidden");
+  }
+
+  if (opts && opts.sessionNumber) {
+    messageEl.textContent = (ui("roadmapSessionFinished") || "Session {n} complete.")
+      .replace("{n}", opts.sessionNumber);
+    messageEl.classList.remove("hidden");
+  } else {
+    messageEl.textContent = "";
+    messageEl.classList.add("hidden");
+  }
+
+  pathEl.innerHTML = "";
+  stops.forEach(stop => {
+    const li = document.createElement("li");
+    li.className = "roadmap-stop " + stop.state;
+    li.dataset.bundleId = stop.bundleId;
+
+    const dot = document.createElement("span");
+    dot.className = "roadmap-stop-dot";
+    dot.textContent = stop.state === "done" ? "✓" : String(stop.index + 1);
+    li.appendChild(dot);
+
+    const body = document.createElement("div");
+    body.className = "roadmap-stop-body";
+
+    const meta = document.createElement("div");
+    meta.className = "roadmap-stop-meta";
+    const { track, num } = prettyTrackName(stop.bundleId);
+    meta.textContent = num ? `${track} · ${num}` : track;
+    body.appendChild(meta);
+
+    if (stop.state !== "locked") {
+      const preview = document.createElement("div");
+      preview.className = "roadmap-stop-preview";
+      preview.textContent = conceptPreviewText(stop.concepts, supportLang);
+      body.appendChild(preview);
+    }
+
+    li.appendChild(body);
+    pathEl.appendChild(li);
+  });
+
+  if (opts && opts.showCoaching) {
+    coachingEl.innerHTML = `Want to go faster? <a href="${EXTERNAL_LINKS.offer}" target="_blank" rel="noopener">Book a coaching session with Nekh</a>`;
+    coachingEl.classList.remove("hidden");
+  } else {
+    coachingEl.classList.add("hidden");
+  }
+
+  continueBtn.textContent = ui(opts?.continueKey || "continue");
+  continueBtn.onclick = () => {
+    if (opts && typeof opts.onContinue === "function") opts.onContinue();
+  };
+
+  if (opts && opts.backTo) {
+    backBtn.classList.remove("hidden");
+    backBtn.onclick = opts.backTo;
+  } else {
+    backBtn.classList.add("hidden");
+  }
+
+  // Hide every other screen so only roadmap is active.
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  screen.classList.add("active");
+
+  // Scroll the active stop into view after render.
+  requestAnimationFrame(() => {
+    const activeEl = pathEl.querySelector(".roadmap-stop.active") ||
+      pathEl.querySelector(".roadmap-stop.done:last-of-type");
+    if (activeEl) activeEl.scrollIntoView({ block: "center", behavior: "instant" });
+  });
+}
+
 function renderPackSelection() {
 
   document.getElementById("pack-title").textContent = ui("resourcePacks");
@@ -1158,6 +1444,15 @@ if (offerLink) {
 
   document.getElementById("hub-quit").textContent = strings.quitLearning;
   document.getElementById("quit-learning").textContent = strings.quitLearning;
+
+  const journeyBtnEl = document.getElementById("journey-btn");
+  if (journeyBtnEl && strings.journeyBtn) {
+    journeyBtnEl.textContent = strings.journeyBtn;
+  }
+  const roadmapBackEl = document.getElementById("roadmap-back");
+  if (roadmapBackEl && strings.roadmapBack) {
+    roadmapBackEl.textContent = strings.roadmapBack;
+  }
   const buyAccess = document.getElementById("link-buy-access");
 
 if (buyAccess) {
@@ -1202,8 +1497,11 @@ if (startSubtitle) {
 }
 function ui(key) {
   const lang = languageState.support || "en";
-  const strings = LANG_FILE_CACHE[lang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings || {};
-  return strings[key] ?? key;
+  const primary = LANG_FILE_CACHE[lang]?.uiStrings;
+  if (primary && primary[key] !== undefined) return primary[key];
+  const fallback = LANG_FILE_CACHE["en"]?.uiStrings;
+  if (fallback && fallback[key] !== undefined) return fallback[key];
+  return key;
 }
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
@@ -1589,11 +1887,13 @@ function pluralize(word) {
 
 // Returns the plural form for non-English languages.
 // Reads entry.plural if present; falls back to the singular formOf().
+// Respects entry.invariantPlural for words that don't change (e.g. Pokémon).
 function pluralFormOf(lang, cid) {
   const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
   if (!entry) return formOf(lang, cid);
-  if (typeof entry === "object" && !Array.isArray(entry) && entry.plural) {
-    return entry.plural;
+  if (typeof entry === "object" && !Array.isArray(entry)) {
+    if (entry.invariantPlural) return formOf(lang, cid);
+    if (entry.plural) return entry.plural;
   }
   return formOf(lang, cid);
 }
@@ -2042,7 +2342,8 @@ if (tpl.structure?.type === "complex_clause") {
     if (!isPlural) {
       nounForm = bare;
     } else if (lang === "en") {
-      nounForm = pluralize(bare);
+      const enEntry = window.GLOBAL_VOCAB.languages?.en?.forms?.[cid] || {};
+      nounForm = enEntry.invariantPlural ? bare : pluralize(bare);
     } else {
       nounForm = pluralFormOf(lang, cid);
     }
@@ -3401,11 +3702,8 @@ function renderAlphabetOverlay(langCode) {
   if (!USER.runs[langCode]) {
     run = createRunState();
     await loadTemplates([]);
-    // 👇 NEW STEP
     languageScreen.classList.remove("active");
-    document.getElementById("pack-screen").classList.add("active");
-
-    renderPackSelection();
+    showReasonScreen();
 
     return;
   }
@@ -3440,27 +3738,26 @@ function endSession(targetLang, supportLang) {
   run.sessionAttempts = {};
   run.sessionLevelUps = {};
 
+  const crossed = pendingMilestones(run);
+  const milestone = crossed.length ? crossed[crossed.length - 1] : null;
+  if (crossed.length) markMilestonesShown(run, crossed);
+
   USER.runs[languageState.target] = run;
   saveUser();
 
-  const strings = LANG_FILE_CACHE[supportLang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings || {};
-
-content.innerHTML = `
-  <div class="session-complete">
-    <h2>${strings.sessionComplete}</h2>
-    <p>${strings.sessionFinished.replace("{n}", run.sessionNumber - 1)}</p>
-    <button id="start-next-session" class="primary">${strings.continue}</button>
-    ${run.sessionNumber - 1 >= 3
-      ? `<p class="coaching-cta">Want to go faster? <a href="https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call" target="_blank" rel="noopener" class="coaching-link">Book a coaching session with Nekh</a></p>`
-      : `<p class="coaching-cta">Keep going — session ${run.sessionNumber} awaits!</p>`
+  const finishedSession = run.sessionNumber - 1;
+  showRoadmap({
+    sessionNumber: finishedSession,
+    showCoaching: finishedSession >= 3,
+    milestone,
+    onContinue: () => {
+      setTimeout(() => {
+        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+        learningScreen.classList.add("active");
+        renderNext(targetLang, supportLang);
+      }, 0);
     }
-  </div>
-`;
-
-  document.getElementById("start-next-session").onclick = () => {
-    setTimeout(() => renderNext(targetLang, supportLang), 0);
-return;
-  };
+  });
 }
   const TYPE_PRIORITY = {
   pronoun: 1,
@@ -3850,17 +4147,38 @@ releaseNextBundle(run);
   USER.runs[languageState.target] = run;
   saveUser();
 
-  document.getElementById("pack-screen").classList.remove("active");
-  learningScreen.classList.add("active");
-  updateAlphabetButton(languageState.target);
-  renderNext(languageState.target, languageState.support);
+  showRoadmap({
+    continueKey: "roadmapBegin",
+    onContinue: () => {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      learningScreen.classList.add("active");
+      updateAlphabetButton(languageState.target);
+      renderNext(languageState.target, languageState.support);
+    }
+  });
 };
+
+const journeyBtn = document.getElementById("journey-btn");
+if (journeyBtn) {
+  journeyBtn.addEventListener("click", () => {
+    if (!run || !languageState.target) return;
+    showRoadmap({
+      backTo: () => {
+        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+        learningScreen.classList.add("active");
+      },
+      onContinue: () => {
+        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+        learningScreen.classList.add("active");
+      }
+    });
+  });
+}
 
     
 
  function returnToHome() {
-  learningScreen.classList.remove("active");
-  languageScreen.classList.remove("active");
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   startScreen.classList.add("active");
 }
 
