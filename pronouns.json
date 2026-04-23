@@ -99,6 +99,114 @@
         "sentence_use": true,
         "writing": false
       }
+    },
+    {
+      "concept_id": "THIS",
+      "type": "pronoun",
+      "semantic_role": "demonstrative",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "THAT",
+      "type": "pronoun",
+      "semantic_role": "demonstrative",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "IT",
+      "type": "pronoun",
+      "semantic_role": "third_person_neuter",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "ITS",
+      "type": "pronoun",
+      "semantic_role": "possessive_pronoun",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "MINE",
+      "type": "pronoun",
+      "semantic_role": "possessive_pronoun",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "YOURS",
+      "type": "pronoun",
+      "semantic_role": "possessive_pronoun",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "HERS",
+      "type": "pronoun",
+      "semantic_role": "possessive_pronoun",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "OURS",
+      "type": "pronoun",
+      "semantic_role": "possessive_pronoun",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
+      "concept_id": "THEIRS",
+      "type": "pronoun",
+      "semantic_role": "possessive_pronoun",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
     }
   ]
 }

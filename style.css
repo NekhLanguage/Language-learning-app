@@ -1213,12 +1213,23 @@ button.selected {
   background: rgba(255, 255, 255, 0.7);
 }
 
-.roadmap-stop.active .roadmap-stop-dot {
+/* The one stop the learner is actively working on — pulses. */
+.roadmap-stop.current .roadmap-stop-dot {
   background: #ffd166;
   border-color: #ffd166;
   color: var(--btnInk);
   box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.25);
   animation: roadmapPulse 2.2s ease-in-out infinite;
+}
+
+/* Older released bundles with unfinished concepts — visible but quiet. */
+.roadmap-stop.in-progress .roadmap-stop-dot {
+  background: transparent;
+  border-color: #ffd166;
+  color: #ffd166;
+}
+.roadmap-stop.in-progress::before {
+  background: rgba(255, 209, 102, 0.35);
 }
 
 .roadmap-stop.locked {
@@ -1258,8 +1269,11 @@ button.selected {
 }
 
 .roadmap-stop.done .roadmap-stop-meta,
-.roadmap-stop.active .roadmap-stop-meta {
+.roadmap-stop.current .roadmap-stop-meta {
   opacity: 1;
+}
+.roadmap-stop.in-progress .roadmap-stop-meta {
+  opacity: 0.9;
 }
 
 .roadmap-coaching {

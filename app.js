@@ -951,7 +951,13 @@ function getRoadmapStops(run) {
   const plan = (run.releasePlan && run.releasePlan.length)
     ? run.releasePlan
     : buildReleasePlan(run.selectedResourcePacks || []);
-  const releasedSet = new Set(run.releasedBundleIds || []);
+  const releasedIds = run.releasedBundleIds || [];
+  const releasedSet = new Set(releasedIds);
+  // The "current" stop is the most recently released bundle that isn't yet
+  // fully complete. Older released bundles with unfinished concepts become
+  // "in-progress" so the learner can see there's still work there without
+  // everything pulsing at once.
+  const latestReleased = releasedIds[releasedIds.length - 1];
   return plan.map((bundleId, index) => {
     const bundle = BUNDLE_INDEX[bundleId];
     const concepts = bundle?.concepts || [];
@@ -961,7 +967,8 @@ function getRoadmapStops(run) {
     let state;
     if (!released) state = "locked";
     else if (done) state = "done";
-    else state = "active";
+    else if (bundleId === latestReleased) state = "current";
+    else state = "in-progress";
     return { bundleId, index, state, concepts };
   });
 }
@@ -981,11 +988,21 @@ function showRoadmap(opts) {
   const supportLang = languageState.support || "en";
   const stops = getRoadmapStops(run);
   const doneCount = stops.filter(s => s.state === "done").length;
+  const inProgressCount = stops.filter(s => s.state === "current" || s.state === "in-progress").length;
+  const aheadCount = stops.filter(s => s.state === "locked").length;
   const total = stops.length;
 
   titleEl.textContent = ui("roadmapTitle");
-  counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
-    .replace("{done}", doneCount).replace("{total}", total);
+  if (inProgressCount > 0) {
+    counterEl.textContent = (ui("roadmapCounterFull") ||
+      "{done} complete · {inprogress} in progress · {ahead} ahead")
+      .replace("{done}", doneCount)
+      .replace("{inprogress}", inProgressCount)
+      .replace("{ahead}", aheadCount);
+  } else {
+    counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
+      .replace("{done}", doneCount).replace("{total}", total);
+  }
 
   if (opts && opts.milestone) {
     const n = opts.milestone;
@@ -1071,9 +1088,10 @@ function showRoadmap(opts) {
 
   // Scroll the active stop into view after render.
   requestAnimationFrame(() => {
-    const activeEl = pathEl.querySelector(".roadmap-stop.active") ||
+    const focusEl = pathEl.querySelector(".roadmap-stop.current") ||
+      pathEl.querySelector(".roadmap-stop.in-progress") ||
       pathEl.querySelector(".roadmap-stop.done:last-of-type");
-    if (activeEl) activeEl.scrollIntoView({ block: "center", behavior: "instant" });
+    if (focusEl) focusEl.scrollIntoView({ block: "center", behavior: "instant" });
   });
 }
 
