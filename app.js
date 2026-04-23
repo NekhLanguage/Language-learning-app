@@ -1473,9 +1473,17 @@ function updateSupportUI(code) {
       }))
     );
 
-    for (const data of vocabResults) {
+    for (let i = 0; i < vocabResults.length; i++) {
+      const data = vocabResults[i];
+      const source = VOCAB_FILES[i];
       for (const concept of data.concepts || []) {
-        window.GLOBAL_VOCAB.concepts[concept.concept_id] = concept;
+        // Tag each concept with the file it came from. We use this to keep
+        // random modifier injection grounded — pack-specific adjectives
+        // (SHINY, WILD, LEGENDARY from pokemon.json) only get injected onto
+        // nouns from the same pack, while core adjectives remain broadly
+        // compatible. Without this, we get "I read a shiny book" type
+        // mismatches.
+        window.GLOBAL_VOCAB.concepts[concept.concept_id] = { ...concept, source };
       }
       // Resource pack files (pokemon.json etc.) still carry their own
       // language sections — merge those as before.
@@ -2226,6 +2234,35 @@ if (orderType === "SOV") {
   return t === "adjective" || t === "number";
 }
 
+// Source files that ship "broad" vocabulary — concepts from these files
+// combine naturally with any noun. Pack-specific adjectives (e.g. SHINY
+// from pokemon.json, or specialty terms from cooking/anime/etc.) are
+// tied to their own pack context via the source match check below.
+const BROAD_SOURCE_FILES = new Set([
+  "adjectives.json","connectors.json","directions_positions.json",
+  "glue_words.json","nouns.json","numbers.json",
+  "politeness_modality.json","pronouns.json","quantifiers.json",
+  "question_words.json","time_words.json","verbs.json"
+]);
+
+// Decides whether a modifier (adjective/number/etc.) should pair with a
+// given noun. Two rules:
+//   1. Mass/uncountable nouns reject modifiers entirely — avoids "big water"
+//      / "two food" / "a shiny food" awkwardness.
+//   2. Pack-specific modifiers only pair with nouns from the same pack
+//      source; broad modifiers pair with anything.
+function isModifierCompatible(lang, modifierCid, nounCid) {
+  const nounMeta  = window.GLOBAL_VOCAB.concepts[nounCid];
+  const nounEntry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[nounCid] || {};
+  const canTakeModifier = nounMeta?.countable || nounEntry.article || nounEntry.gender;
+  if (!canTakeModifier) return false;
+
+  const modMeta = window.GLOBAL_VOCAB.concepts[modifierCid];
+  if (!modMeta) return true;
+  if (BROAD_SOURCE_FILES.has(modMeta.source)) return true;
+  return modMeta.source === nounMeta?.source;
+}
+
 function buildSameTypeOptions(targetConcept, desiredTotal = 4) {
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
   if (!meta) return null;
@@ -2435,7 +2472,10 @@ if (tpl.structure?.type === "complex_clause") {
       if (m?.type !== "adjective") return false;
       if (m?.semantic_role === "possessive") return false; // possessives must not be randomly injected as modifiers
       const st = ensureProgress(c);
-      return !st.completed && st.level >= 4;
+      if (st.completed || st.level < 4) return false;
+      // Only pair adjectives with nouns they make sense with — no
+      // "shiny food" / "wild book" / "big water" style mismatches.
+      return isModifierCompatible(lang, c, cid);
     });
 
     if (adjectives.length && Math.random() < 0.75) {
@@ -2452,13 +2492,15 @@ if (tpl.structure?.type === "complex_clause") {
   } else {
     // Random number injection for variety. Skips ONE (redundant with the
     // indefinite article) and restricts to numbers the learner has actually
-    // started working on (L4+, not yet completed).
+    // started working on (L4+, not yet completed). Also skipped for mass
+    // nouns ("two water" / "three food" don't work) via compatibility check.
     const numbers = run.released.filter(c => {
       if (c === "ONE") return false;
       const m = window.GLOBAL_VOCAB.concepts[c];
       if (m?.type !== "number") return false;
       const st = ensureProgress(c);
-      return !st.completed && st.level >= 4;
+      if (st.completed || st.level < 4) return false;
+      return isModifierCompatible(lang, c, cid);
     });
     if (numbers.length && Math.random() < 0.15) {
       const n = numbers[Math.floor(Math.random() * numbers.length)];
