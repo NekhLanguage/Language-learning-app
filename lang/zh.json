@@ -53,6 +53,8 @@
     "roadmapSessionFinished": "第{n}课完成。又一站留在身后。",
     "roadmapBegin": "开始你的旅程",
     "roadmapBack": "← 返回",
+    "roadmapBehindLabel": "后方{n}",
+    "roadmapAheadLabel": "前方{n}",
     "journeyBtn": "旅程",
     "milestoneHeadline": "{n} 个单词",
     "milestoneGeneric": "每一个——都是你的。",

@@ -1163,7 +1163,7 @@ button.selected {
 
 .roadmap-path {
   list-style: none;
-  margin: 0.5rem 0 1rem;
+  margin: 0.5rem 0 0.75rem;
   padding: 0 0 0 2.25rem;
   position: relative;
 }
@@ -1173,7 +1173,17 @@ button.selected {
   display: flex;
   align-items: flex-start;
   gap: 0.9rem;
-  padding: 0.55rem 0;
+  padding: 0.45rem 0;
+}
+
+/* Current stop gets a small size bump so the eye lands on it first. */
+.roadmap-stop.current .roadmap-stop-meta {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.roadmap-stop.current .roadmap-stop-preview {
+  font-size: 0.92rem;
+  opacity: 0.85;
 }
 
 .roadmap-stop-dot {
@@ -1287,17 +1297,36 @@ button.selected {
   opacity: 0.9;
 }
 
+/* Tiny chips indicating how much of the journey lies above/below the
+   windowed view. Not interactive, just context. */
+.roadmap-hidden-indicator {
+  list-style: none;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  padding: 0.25rem 0;
+  margin: 0;
+}
+
+/* Coaching CTA is promoted to a proper card above the continue button
+   so it's always visible — not scrolled off as the journey list grows. */
 .roadmap-coaching {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  opacity: 0.85;
+  font-size: 0.9rem;
   text-align: center;
-  margin-top: 0.75rem;
-  line-height: 1.5;
+  margin-top: 1.1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  background: rgba(255, 209, 102, 0.12);
+  border: 1px solid rgba(255, 209, 102, 0.4);
+  line-height: 1.45;
 }
 
 .roadmap-coaching a {
   color: #ffd166;
+  font-weight: 700;
   text-decoration: underline;
 }
 

@@ -62,6 +62,8 @@
     "roadmapSessionFinished": "セッション{n}完了。また一歩前進。",
     "roadmapBegin": "旅を始める",
     "roadmapBack": "← 戻る",
+    "roadmapBehindLabel": "後ろに{n}",
+    "roadmapAheadLabel": "先に{n}",
     "journeyBtn": "旅",
     "milestoneHeadline": "{n}語",
     "milestoneGeneric": "どの言葉もあなたのもの。",
