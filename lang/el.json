@@ -62,6 +62,8 @@
     "roadmapSessionFinished": "Η συνεδρία {n} ολοκληρώθηκε. Μία στάση ακόμη πίσω σου.",
     "roadmapBegin": "ΞΕΚΙΝΑ ΤΟ ΤΑΞΙΔΙ ΣΟΥ",
     "roadmapBack": "← ΠΙΣΩ",
+    "roadmapBehindLabel": "{n} πίσω",
+    "roadmapAheadLabel": "{n} μπροστά",
     "journeyBtn": "ΤΑΞΙΔΙ",
     "milestoneHeadline": "{n} ΛΕΞΕΙΣ",
     "milestoneGeneric": "Κάθε μία από αυτές — δική σου.",

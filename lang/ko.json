@@ -62,6 +62,8 @@
     "roadmapSessionFinished": "세션 {n} 완료. 또 한 걸음 전진.",
     "roadmapBegin": "여정 시작하기",
     "roadmapBack": "← 뒤로",
+    "roadmapBehindLabel": "뒤에 {n}개",
+    "roadmapAheadLabel": "앞에 {n}개",
     "journeyBtn": "여정",
     "milestoneHeadline": "{n}개 단어",
     "milestoneGeneric": "모두 당신의 것.",

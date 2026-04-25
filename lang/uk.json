@@ -62,6 +62,8 @@
     "roadmapSessionFinished": "Сесія {n} завершена. Ще одна зупинка позаду.",
     "roadmapBegin": "ПОЧАТИ ПОДОРОЖ",
     "roadmapBack": "← НАЗАД",
+    "roadmapBehindLabel": "{n} позаду",
+    "roadmapAheadLabel": "{n} попереду",
     "journeyBtn": "ПОДОРОЖ",
     "milestoneHeadline": "{n} СЛІВ",
     "milestoneGeneric": "Кожне з них — ваше.",

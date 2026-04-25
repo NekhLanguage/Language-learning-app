@@ -1058,21 +1058,11 @@ function showRoadmap(opts) {
   const supportLang = languageState.support || "en";
   const stops = getRoadmapStops(run);
   const doneCount = stops.filter(s => s.state === "done").length;
-  const inProgressCount = stops.filter(s => s.state === "current" || s.state === "in-progress").length;
-  const aheadCount = stops.filter(s => s.state === "locked").length;
   const total = stops.length;
 
   titleEl.textContent = ui("roadmapTitle");
-  if (inProgressCount > 0) {
-    counterEl.textContent = (ui("roadmapCounterFull") ||
-      "{done} complete · {inprogress} in progress · {ahead} ahead")
-      .replace("{done}", doneCount)
-      .replace("{inprogress}", inProgressCount)
-      .replace("{ahead}", aheadCount);
-  } else {
-    counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
-      .replace("{done}", doneCount).replace("{total}", total);
-  }
+  counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
+    .replace("{done}", doneCount).replace("{total}", total);
 
   if (opts && opts.milestone) {
     const n = opts.milestone;
@@ -1102,8 +1092,30 @@ function showRoadmap(opts) {
     messageEl.classList.add("hidden");
   }
 
+  // Windowed path: show 1 completed stop before the focus, the focus
+  // stop itself, and 2 upcoming — rather than the full 40-60 list.
+  // Hidden stops are represented by tiny "↑ N behind / ↓ N ahead" chips.
+  let focusIdx = stops.findIndex(s => s.state === "current");
+  if (focusIdx < 0) focusIdx = stops.findIndex(s => s.state === "in-progress");
+  if (focusIdx < 0) focusIdx = Math.max(0, doneCount); // first unreleased
+  const WINDOW_BEFORE = 1;
+  const WINDOW_AFTER = 2;
+  const start = Math.max(0, focusIdx - WINDOW_BEFORE);
+  const end = Math.min(stops.length, focusIdx + WINDOW_AFTER + 1);
+  const hiddenBefore = start;
+  const hiddenAfter = stops.length - end;
+  const windowed = stops.slice(start, end);
+
   pathEl.innerHTML = "";
-  stops.forEach(stop => {
+
+  if (hiddenBefore > 0) {
+    const li = document.createElement("li");
+    li.className = "roadmap-hidden-indicator behind";
+    li.textContent = "↑ " + (ui("roadmapBehindLabel") || "{n} behind").replace("{n}", hiddenBefore);
+    pathEl.appendChild(li);
+  }
+
+  windowed.forEach(stop => {
     const li = document.createElement("li");
     li.className = "roadmap-stop " + stop.state;
     li.dataset.bundleId = stop.bundleId;
@@ -1133,6 +1145,13 @@ function showRoadmap(opts) {
     pathEl.appendChild(li);
   });
 
+  if (hiddenAfter > 0) {
+    const li = document.createElement("li");
+    li.className = "roadmap-hidden-indicator ahead";
+    li.textContent = "↓ " + (ui("roadmapAheadLabel") || "{n} ahead").replace("{n}", hiddenAfter);
+    pathEl.appendChild(li);
+  }
+
   if (opts && opts.showCoaching) {
     coachingEl.innerHTML = `Want to go faster? <a href="${EXTERNAL_LINKS.offer}" target="_blank" rel="noopener">Book a coaching session with Nekh</a>`;
     coachingEl.classList.remove("hidden");
@@ -1155,14 +1174,6 @@ function showRoadmap(opts) {
   // Hide every other screen so only roadmap is active.
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   screen.classList.add("active");
-
-  // Scroll the active stop into view after render.
-  requestAnimationFrame(() => {
-    const focusEl = pathEl.querySelector(".roadmap-stop.current") ||
-      pathEl.querySelector(".roadmap-stop.in-progress") ||
-      pathEl.querySelector(".roadmap-stop.done:last-of-type");
-    if (focusEl) focusEl.scrollIntoView({ block: "center", behavior: "instant" });
-  });
 }
 
 function renderPackSelection() {

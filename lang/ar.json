@@ -62,6 +62,8 @@
     "roadmapSessionFinished": "الجلسة {n} مكتملة. محطة أخرى خلفك.",
     "roadmapBegin": "ابدأ رحلتك",
     "roadmapBack": "← رجوع",
+    "roadmapBehindLabel": "{n} خلفك",
+    "roadmapAheadLabel": "{n} أمامك",
     "journeyBtn": "الرحلة",
     "milestoneHeadline": "{n} كلمة",
     "milestoneGeneric": "كل واحدة منها — لك.",

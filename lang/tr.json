@@ -62,6 +62,8 @@
     "roadmapSessionFinished": "Session {n} complete. One more stop behind you.",
     "roadmapBegin": "BEGIN YOUR JOURNEY",
     "roadmapBack": "← BACK",
+    "roadmapBehindLabel": "{n} arkada",
+    "roadmapAheadLabel": "{n} ileride",
     "journeyBtn": "JOURNEY",
     "milestoneHeadline": "{n} WORDS",
     "milestoneGeneric": "Every one of them — yours.",

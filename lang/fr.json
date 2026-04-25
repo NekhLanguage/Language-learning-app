@@ -53,6 +53,8 @@
     "roadmapSessionFinished": "Session {n} terminée. Encore une étape derrière toi.",
     "roadmapBegin": "COMMENCE TON VOYAGE",
     "roadmapBack": "← RETOUR",
+    "roadmapBehindLabel": "{n} derrière",
+    "roadmapAheadLabel": "{n} devant",
     "journeyBtn": "VOYAGE",
     "milestoneHeadline": "{n} MOTS",
     "milestoneGeneric": "Chacun d'eux — à toi.",
