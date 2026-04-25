@@ -2049,6 +2049,8 @@ function nounPhrase(lang, cid) {
   if (!hasArticleInfo) return base;
 
   if (lang === "en") {
+    // Plural-only nouns (pants, shoes, clothes) don't take a singular indefinite article.
+    if (entry.pluralOnly) return base;
     const article = entry.article || englishIndefiniteArticle(base);
     return article + " " + base;
   }
