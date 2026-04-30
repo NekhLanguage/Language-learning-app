@@ -1,0 +1,97 @@
+// Launch-spike observability beacon.
+// Accepts { type, payload } posts from the app, logs one structured JSON line
+// to the Netlify function log, and optionally forwards a one-line summary to
+// a Slack webhook if BEACON_SLACK_WEBHOOK is set in the Netlify environment.
+//
+// Types currently emitted by the client:
+//   - "error"     : window error / unhandledrejection
+//   - "cta_click" : click on a stan.store link
+//
+// View events: `netlify functions:log beacon --live` (or Netlify UI → Logs).
+
+exports.handler = async (event) => {
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, headers: cors(), body: "" };
+  }
+
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers: cors(), body: "" };
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(event.body || "{}");
+  } catch (_) {
+    return { statusCode: 400, headers: cors(), body: "" };
+  }
+
+  const type = typeof parsed.type === "string" ? parsed.type.slice(0, 32) : "unknown";
+  const payload = parsed.payload && typeof parsed.payload === "object" ? parsed.payload : {};
+  const ua = (event.headers["user-agent"] || "").slice(0, 256);
+  const ip =
+    event.headers["x-nf-client-connection-ip"] ||
+    (event.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
+    "";
+  const at = new Date().toISOString();
+
+  const record = { at, type, payload, ua, ip };
+  console.log("BEACON " + JSON.stringify(record));
+
+  const webhook = process.env.BEACON_SLACK_WEBHOOK;
+  if (webhook && typeof fetch === "function") {
+    try {
+      await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: slackText(type, payload, ua) })
+      });
+    } catch (err) {
+      console.error("BEACON slack forward failed:", err && err.message);
+    }
+  }
+
+  return { statusCode: 204, headers: cors(), body: "" };
+};
+
+function cors() {
+  return {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+  };
+}
+
+function slackText(type, payload, ua) {
+  const short = (s, n) => (typeof s === "string" ? s.slice(0, n) : "");
+  if (type === "error") {
+    return (
+      "error · " +
+      short(payload.message, 160) +
+      " · " +
+      short(payload.source, 80) +
+      ":" +
+      (payload.line ?? "?") +
+      ":" +
+      (payload.col ?? "?") +
+      " · path=" +
+      short(payload.path, 80) +
+      " · ua=" +
+      short(ua, 80)
+    );
+  }
+  if (type === "cta_click") {
+    return (
+      "cta_click · " +
+      short(payload.href, 160) +
+      " · surface=" +
+      short(payload.surface, 40) +
+      " · sessions=" +
+      (payload.sessionCount ?? "?") +
+      " · lang=" +
+      short(payload.supportLang, 8) +
+      "/" +
+      short(payload.targetLang, 8)
+    );
+  }
+  return type + " · " + short(JSON.stringify(payload), 300);
+}
