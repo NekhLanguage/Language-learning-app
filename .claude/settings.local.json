@@ -4,7 +4,11 @@
       "Bash(node migrate_languages.js)",
       "Bash(node -e ':*)",
       "Bash(node add_alphabets.js)",
-      "Bash(rm add_alphabets.js)"
+      "Bash(rm add_alphabets.js)",
+      "mcp__7077211a-7818-4b50-a125-cae6e72a930d__read_file_content",
+      "mcp__2b9f2c08-d284-4b61-803d-d8a700ebe7d9__start-editing-transaction",
+      "mcp__2b9f2c08-d284-4b61-803d-d8a700ebe7d9__cancel-editing-transaction",
+      "mcp__2b9f2c08-d284-4b61-803d-d8a700ebe7d9__perform-editing-operations"
     ]
   }
 }
