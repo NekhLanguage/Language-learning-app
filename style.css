@@ -807,6 +807,19 @@ button.selected {
   box-shadow: none;
 }
 
+/* TTS highlighting — applied to per-word and per-letter spans while audio plays. */
+.tts-phrase .tts-word,
+.letter-char .tts-letter {
+  transition: background-color 120ms ease, color 120ms ease;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+.tts-word.tts-active,
+.tts-letter.tts-active {
+  background: #ffd24a;
+  color: #1a1a1a;
+}
+
 /* =========================
    Choice Grid — 2 columns, squircle buttons
    ========================= */

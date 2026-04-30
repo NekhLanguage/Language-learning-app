@@ -1,5 +1,5 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
-import { speakAlways, setVoiceMap } from "./audioengine.js";
+import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
 const CORE_BUNDLES = [
 
   { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
@@ -656,6 +656,23 @@ const langP = getLangFileData(languageState.support);
 const serverSyncP = email
   ? loadUserFromServer(email).catch(err => { console.warn("Server sync failed:", err); })
   : null;
+
+if (email) {
+  try {
+    const targetLang = USER && USER.lastActiveLanguage || "";
+    const run0 = targetLang && USER && USER.runs && USER.runs[targetLang];
+    const sessionNumber = run0 && typeof run0.sessionNumber === "number" ? run0.sessionNumber : 0;
+    if (window.__zthBeacon) {
+      window.__zthBeacon("session_start", {
+        email,
+        targetLang,
+        supportLang: languageState.support || "",
+        sessionNumber,
+        version: APP_VERSION
+      });
+    }
+  } catch (_) { /* never let the beacon throw */ }
+}
 
 // Paint the support selector immediately from local state. The rest of the start
 // screen comes from the HTML defaults until the lang file lands.
@@ -1394,22 +1411,77 @@ function ttsHtml(text, lang) {
   return `<button class="tts-inline" data-tts="${e}" data-lang="${lang}" type="button">🔊</button>`;
 }
 
+// Walks back from the speaker button to find the visible text node it belongs
+// to (e.g. "<p>O gato pula. <button>🔊</button></p>"), and replaces that text
+// with a <span class="tts-phrase"> containing per-word <span class="tts-word">.
+// Returns the phrase span (or null if no adjacent text was found).
+function wrapAdjacentTextForHighlight(btn) {
+  let node = btn.previousSibling;
+  // Skip whitespace-only text nodes between the text and the button
+  while (node && node.nodeType === Node.TEXT_NODE && !node.textContent.trim()) {
+    node = node.previousSibling;
+  }
+  if (!node || node.nodeType !== Node.TEXT_NODE) return null;
+  const raw = node.textContent.replace(/\s+$/, "");
+  if (!raw) return null;
+
+  const phraseSpan = document.createElement("span");
+  phraseSpan.className = "tts-phrase";
+
+  const parts = raw.split(/(\s+)/);
+  for (const part of parts) {
+    if (!part) continue;
+    if (/^\s+$/.test(part)) {
+      phraseSpan.appendChild(document.createTextNode(part));
+    } else {
+      const w = document.createElement("span");
+      w.className = "tts-word";
+      w.textContent = part;
+      phraseSpan.appendChild(w);
+    }
+  }
+
+  // Preserve any trailing whitespace between the phrase and the button.
+  const trailing = node.textContent.match(/\s+$/);
+  node.parentNode.insertBefore(phraseSpan, node);
+  node.parentNode.removeChild(node);
+  if (trailing) {
+    phraseSpan.parentNode.insertBefore(document.createTextNode(trailing[0]), btn);
+  }
+  return phraseSpan;
+}
+
 // TTS helper: create a DOM speaker button for dynamic elements
 function createTtsBtn(text, lang) {
   const btn = document.createElement("button");
   btn.className = "tts-inline";
   btn.textContent = "🔊";
   btn.type = "button";
-  btn.onclick = (e) => { e.stopPropagation(); speakAlways(text, lang); };
+  btn.onclick = (e) => {
+    e.stopPropagation();
+    if (!btn._phrase) btn._phrase = wrapAdjacentTextForHighlight(btn);
+    if (btn._phrase) speakWithHighlight(text, lang, btn._phrase);
+    else speakAlways(text, lang);
+  };
+  // Prefetch on render so the audio is warm by the time the user clicks.
+  prefetchTTS(text, lang);
   return btn;
 }
 
-// Wire up all data-tts buttons created via ttsHtml()
+// Wire up all data-tts buttons created via ttsHtml() and prefetch their audio.
 function wireTts() {
   content.querySelectorAll('.tts-inline[data-tts]').forEach(btn => {
     if (btn._wired) return;
     btn._wired = true;
-    btn.onclick = (e) => { e.stopPropagation(); speakAlways(btn.dataset.tts, btn.dataset.lang); };
+    btn._phrase = wrapAdjacentTextForHighlight(btn);
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const text = btn.dataset.tts;
+      const lang = btn.dataset.lang;
+      if (btn._phrase) speakWithHighlight(text, lang, btn._phrase);
+      else speakAlways(text, lang);
+    };
+    prefetchTTS(btn.dataset.tts, btn.dataset.lang);
   });
 }
 
@@ -3947,7 +4019,9 @@ function renderAlphabetOverlay(langCode) {
         card.appendChild(soundEl);
       }
 
-      card.addEventListener("click", () => speakAlways(letter.ttsText || letter.char, langCode));
+      const ttsText = letter.ttsText || letter.char;
+      card.addEventListener("click", () => speakLetters(ttsText, langCode, charEl));
+      prefetchTTS(ttsText, langCode);
 
       grid.appendChild(card);
     }
@@ -4011,6 +4085,20 @@ function endSession(targetLang, supportLang) {
   saveUser();
 
   const finishedSession = run.sessionNumber - 1;
+
+  try {
+    if (window.__zthBeacon) {
+      window.__zthBeacon("session_complete", {
+        email: localStorage.getItem("zth_email") || "",
+        targetLang,
+        supportLang,
+        sessionNumber: finishedSession,
+        milestone: milestone || null,
+        version: APP_VERSION
+      });
+    }
+  } catch (_) { /* never let the beacon throw */ }
+
   showRoadmap({
     sessionNumber: finishedSession,
     showCoaching: finishedSession >= 3,
