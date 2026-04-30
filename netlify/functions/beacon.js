@@ -1,13 +1,20 @@
 // Launch-spike observability beacon.
 // Accepts { type, payload } posts from the app, logs one structured JSON line
-// to the Netlify function log, and optionally forwards a one-line summary to
-// a Slack webhook if BEACON_SLACK_WEBHOOK is set in the Netlify environment.
+// to the Netlify function log, persists to the Supabase `events` table, and
+// optionally forwards a one-line summary to a Slack webhook if
+// BEACON_SLACK_WEBHOOK is set in the Netlify environment.
 //
 // Types currently emitted by the client:
-//   - "error"     : window error / unhandledrejection
-//   - "cta_click" : click on a stan.store link
+//   - "error"            : window error / unhandledrejection
+//   - "cta_click"        : click on a stan.store link
+//   - "session_start"    : app loaded with an email present
+//   - "session_complete" : a learning session finished
 //
-// View events: `netlify functions:log beacon --live` (or Netlify UI → Logs).
+// View events: `netlify functions:log beacon --live` (or Netlify UI → Logs),
+// or query the Supabase `events` table directly.
+
+const SUPABASE_URL = "https://miprvzsfunbmjippzrxf.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHJ2enNmdW5ibWppcHB6cnhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODA1NjMsImV4cCI6MjA4OTY1NjU2M30.78ONiXxrznbsAw-bEX_haMmrbRoV5t6vkfxzzwIw0lc";
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -33,9 +40,31 @@ exports.handler = async (event) => {
     (event.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
     "";
   const at = new Date().toISOString();
+  const email = typeof payload.email === "string" ? payload.email.toLowerCase().trim() : null;
 
   const record = { at, type, payload, ua, ip };
   console.log("BEACON " + JSON.stringify(record));
+
+  // Persist to Supabase. Prefer service role key (set SUPABASE_SERVICE_KEY in
+  // Netlify env) so RLS doesn't need an anon-insert policy; fall back to anon.
+  const writeKey = process.env.SUPABASE_SERVICE_KEY || SUPABASE_KEY;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/events`, {
+      method: "POST",
+      headers: {
+        "apikey": writeKey,
+        "Authorization": `Bearer ${writeKey}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({ at, type, email: email || null, payload, ua, ip })
+    });
+    if (!res.ok) {
+      console.error("BEACON supabase insert failed:", res.status, (await res.text()).slice(0, 200));
+    }
+  } catch (err) {
+    console.error("BEACON supabase insert error:", err && err.message);
+  }
 
   const webhook = process.env.BEACON_SLACK_WEBHOOK;
   if (webhook && typeof fetch === "function") {
