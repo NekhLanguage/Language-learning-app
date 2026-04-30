@@ -93,5 +93,30 @@ function slackText(type, payload, ua) {
       short(payload.targetLang, 8)
     );
   }
+  if (type === "session_complete") {
+    return (
+      "session_complete · " +
+      short(payload.email, 120) +
+      " · #" +
+      (payload.sessionNumber ?? "?") +
+      " · lang=" +
+      short(payload.supportLang, 8) +
+      "/" +
+      short(payload.targetLang, 8) +
+      (payload.milestone ? " · milestone=" + short(String(payload.milestone), 40) : "")
+    );
+  }
+  if (type === "session_start") {
+    return (
+      "session_start · " +
+      short(payload.email, 120) +
+      " · #" +
+      (payload.sessionNumber ?? "?") +
+      " · lang=" +
+      short(payload.supportLang, 8) +
+      "/" +
+      short(payload.targetLang, 8)
+    );
+  }
   return type + " · " + short(JSON.stringify(payload), 300);
 }

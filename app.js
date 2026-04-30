@@ -657,6 +657,23 @@ const serverSyncP = email
   ? loadUserFromServer(email).catch(err => { console.warn("Server sync failed:", err); })
   : null;
 
+if (email) {
+  try {
+    const targetLang = USER && USER.lastActiveLanguage || "";
+    const run0 = targetLang && USER && USER.runs && USER.runs[targetLang];
+    const sessionNumber = run0 && typeof run0.sessionNumber === "number" ? run0.sessionNumber : 0;
+    if (window.__zthBeacon) {
+      window.__zthBeacon("session_start", {
+        email,
+        targetLang,
+        supportLang: languageState.support || "",
+        sessionNumber,
+        version: APP_VERSION
+      });
+    }
+  } catch (_) { /* never let the beacon throw */ }
+}
+
 // Paint the support selector immediately from local state. The rest of the start
 // screen comes from the HTML defaults until the lang file lands.
 updateSupportUI(languageState.support);
@@ -4011,6 +4028,20 @@ function endSession(targetLang, supportLang) {
   saveUser();
 
   const finishedSession = run.sessionNumber - 1;
+
+  try {
+    if (window.__zthBeacon) {
+      window.__zthBeacon("session_complete", {
+        email: localStorage.getItem("zth_email") || "",
+        targetLang,
+        supportLang,
+        sessionNumber: finishedSession,
+        milestone: milestone || null,
+        version: APP_VERSION
+      });
+    }
+  } catch (_) { /* never let the beacon throw */ }
+
   showRoadmap({
     sessionNumber: finishedSession,
     showCoaching: finishedSession >= 3,
