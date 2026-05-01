@@ -4206,6 +4206,16 @@ function maybeVarySubject(tpl, targetConcept) {
   return modified;
 }
 
+const POSSESSIVE_SUBJECT_CLASH = {
+  "MY":    ["FIRST_PERSON_SINGULAR"],
+  "YOUR":  ["SECOND_PERSON", "SECOND_PERSON_PLURAL"],
+  "HIS":   ["HE"],
+  "HER":   ["SHE"],
+  "OUR":   ["FIRST_PERSON_PLURAL"],
+  "THEIR": ["THIRD_PERSON_PLURAL"]
+};
+const POSSESSIVE_IDS = new Set(Object.keys(POSSESSIVE_SUBJECT_CLASH));
+
 function chooseTemplateForConcept(cid) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
@@ -4215,25 +4225,42 @@ function chooseTemplateForConcept(cid) {
   // Modifier concepts (adjective/number)
   if (meta?.type === "adjective" || meta?.type === "number") {
 
+    const isPossessive = meta.semantic_role === "possessive";
+    const clashes = isPossessive ? (POSSESSIVE_SUBJECT_CLASH[cid] || []) : [];
+
     eligible = TEMPLATE_CACHE.filter(tpl => {
       if (!templateEligible(tpl)) return false;
       if (!tpl.concepts.some(c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun")) return false;
       // Numbers don't make sense in copular sentences ("He is two a leader")
       if (meta.type === "number" && tpl.concepts.includes("BE")) return false;
+      // Possessives: reject templates that would produce reflexive/stacked nonsense.
+      // Copular + matching subject → "He is his gym leader" (reflexive vacuum).
+      // Any template with another possessive → "He is my his dad" (stacked).
+      // Non-copular clashes like "I have my potion" are fine and allowed.
+      if (isPossessive) {
+        if (tpl.concepts.includes("BE") && clashes.some(s => tpl.concepts.includes(s))) return false;
+        if (tpl.concepts.some(c => c !== cid && POSSESSIVE_IDS.has(c))) return false;
+      }
       return true;
     });
 
   } else {
 
-    // 🔥 PRIMARY MATCH
+    // Primary: template contains cid and all concepts are released & not completed
     eligible = TEMPLATE_CACHE.filter(tpl =>
       tpl.concepts.includes(cid) &&
       templateEligible(tpl)
     );
 
-    // 🔥 FALLBACK — THIS IS THE KEY FIX
+    // Fallback: keep the cid requirement, but allow completed companion concepts.
+    // A Level 1 intro must USE the word being introduced — never show a support
+    // sentence that doesn't contain the target (e.g. introducing "She" with "I eat food").
     if (!eligible.length) {
-      eligible = TEMPLATE_CACHE.filter(templateEligible);
+      eligible = TEMPLATE_CACHE.filter(tpl => {
+        if (!tpl.concepts.includes(cid)) return false;
+        if (ensureTemplateProgress(tpl).completed) return false;
+        return tpl.concepts.every(c => run.released.includes(c));
+      });
     }
 
   }
