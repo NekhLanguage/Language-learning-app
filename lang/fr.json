@@ -48,7 +48,7 @@
     "reasonDetailPlaceholderCulture": "ex. Studio Ghibli",
     "reasonDetailHint": "Optionnel — tu peux passer.",
     "roadmapTitle": "TON VOYAGE",
-    "roadmapCounter": "{done} sur {total} étapes complétées",
+    "roadmapCounter": "{done} sur {total} étapes débloquées",
     "roadmapCounterFull": "{done} complété · {inprogress} en cours · {ahead} à venir",
     "roadmapSessionFinished": "Session {n} terminée. Encore une étape derrière toi.",
     "roadmapBegin": "COMMENCE TON VOYAGE",

@@ -57,7 +57,7 @@
     "reasonDetailPlaceholderCulture": "예: 스튜디오 지브리",
     "reasonDetailHint": "선택 사항 — 건너뛰어도 괜찮습니다.",
     "roadmapTitle": "나의 여정",
-    "roadmapCounter": "총 {total}개 중 {done}개 완료",
+    "roadmapCounter": "총 {total}개 중 {done}개 잠금 해제됨",
     "roadmapCounterFull": "{done}개 완료 · {inprogress}개 진행 중 · {ahead}개 남음",
     "roadmapSessionFinished": "세션 {n} 완료. 또 한 걸음 전진.",
     "roadmapBegin": "여정 시작하기",

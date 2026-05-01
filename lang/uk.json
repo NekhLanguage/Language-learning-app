@@ -57,7 +57,7 @@
     "reasonDetailPlaceholderCulture": "наприклад, студія Ґіблі",
     "reasonDetailHint": "Необов'язково — можна пропустити.",
     "roadmapTitle": "ВАША ПОДОРОЖ",
-    "roadmapCounter": "{done} з {total} зупинок завершено",
+    "roadmapCounter": "{done} з {total} зупинок розблоковано",
     "roadmapCounterFull": "{done} завершено · {inprogress} у процесі · {ahead} попереду",
     "roadmapSessionFinished": "Сесія {n} завершена. Ще одна зупинка позаду.",
     "roadmapBegin": "ПОЧАТИ ПОДОРОЖ",

@@ -57,7 +57,7 @@
     "reasonDetailPlaceholderCulture": "例：スタジオジブリ",
     "reasonDetailHint": "任意 — スキップしても大丈夫です。",
     "roadmapTitle": "あなたの旅",
-    "roadmapCounter": "全{total}ステップ中{done}完了",
+    "roadmapCounter": "全{total}ステップ中{done}解放済み",
     "roadmapCounterFull": "完了 {done} · 進行中 {inprogress} · 残り {ahead}",
     "roadmapSessionFinished": "セッション{n}完了。また一歩前進。",
     "roadmapBegin": "旅を始める",
