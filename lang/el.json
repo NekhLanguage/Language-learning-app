@@ -57,7 +57,7 @@
     "reasonDetailPlaceholderCulture": "π.χ. Studio Ghibli",
     "reasonDetailHint": "Προαιρετικό — μπορείς να το παραλείψεις.",
     "roadmapTitle": "ΤΟ ΤΑΞΙΔΙ ΣΟΥ",
-    "roadmapCounter": "{done} από {total} στάσεις ολοκληρωμένες",
+    "roadmapCounter": "{done} από {total} στάσεις ξεκλειδωμένες",
     "roadmapCounterFull": "{done} ολοκληρωμένες · {inprogress} σε εξέλιξη · {ahead} μπροστά",
     "roadmapSessionFinished": "Η συνεδρία {n} ολοκληρώθηκε. Μία στάση ακόμη πίσω σου.",
     "roadmapBegin": "ΞΕΚΙΝΑ ΤΟ ΤΑΞΙΔΙ ΣΟΥ",

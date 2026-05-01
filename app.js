@@ -883,6 +883,7 @@ function createRunState() {
     sessionNumber: 1,
     sessionLevelUps: {},
     sessionAttempts: {},
+    sessionExerciseCount: 0,
     sessionComplete: false,
 
     milestonesShown: [],
@@ -1151,11 +1152,12 @@ function showRoadmap(opts) {
   const supportLang = languageState.support || "en";
   const stops = getRoadmapStops(run);
   const doneCount = stops.filter(s => s.state === "done").length;
+  const unlockedCount = stops.filter(s => s.state !== "locked").length;
   const total = stops.length;
 
   titleEl.textContent = ui("roadmapTitle");
-  counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops complete")
-    .replace("{done}", doneCount).replace("{total}", total);
+  counterEl.textContent = (ui("roadmapCounter") || "{done} of {total} stops unlocked")
+    .replace("{done}", unlockedCount).replace("{total}", total);
 
   if (opts && opts.milestone) {
     const n = opts.milestone;
@@ -1968,6 +1970,7 @@ function migrateRunState() {
   if (run.sessionComplete === undefined) run.sessionComplete = false;
 
   run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
+  run.sessionExerciseCount = (run.sessionExerciseCount || 0) + 1;
 
   if (!correct) {
     state.streak = 0;
@@ -4076,6 +4079,7 @@ function endSession(targetLang, supportLang) {
   run.sessionComplete = false;
   run.sessionAttempts = {};
   run.sessionLevelUps = {};
+  run.sessionExerciseCount = 0;
 
   const crossed = pendingMilestones(run);
   const milestone = crossed.length ? crossed[crossed.length - 1] : null;
@@ -4262,6 +4266,13 @@ if (bar) {
 
 
   if (run.sessionComplete) {
+    return endSession(targetLang, supportLang);
+  }
+
+  // Cap session length so it stays predictable (~25 answered exercises).
+  // Counter is incremented in applyResult() and reset in endSession().
+  if ((run.sessionExerciseCount || 0) >= 25) {
+    run.sessionComplete = true;
     return endSession(targetLang, supportLang);
   }
 

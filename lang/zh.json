@@ -48,7 +48,7 @@
     "reasonDetailPlaceholderCulture": "例如：吉卜力工作室",
     "reasonDetailHint": "可选——跳过也没问题。",
     "roadmapTitle": "你的旅程",
-    "roadmapCounter": "共{total}站，已完成{done}站",
+    "roadmapCounter": "共{total}站，已解锁{done}站",
     "roadmapCounterFull": "{done} 已完成 · {inprogress} 进行中 · {ahead} 待开始",
     "roadmapSessionFinished": "第{n}课完成。又一站留在身后。",
     "roadmapBegin": "开始你的旅程",

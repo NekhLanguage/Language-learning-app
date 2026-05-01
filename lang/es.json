@@ -57,7 +57,7 @@
     "reasonDetailPlaceholderCulture": "e.g., Studio Ghibli",
     "reasonDetailHint": "Optional — totally fine to skip.",
     "roadmapTitle": "YOUR JOURNEY",
-    "roadmapCounter": "{done} of {total} stops complete",
+    "roadmapCounter": "{done} of {total} stops unlocked",
     "roadmapCounterFull": "{done} complete · {inprogress} in progress · {ahead} ahead",
     "roadmapSessionFinished": "Session {n} complete. One more stop behind you.",
     "roadmapBegin": "BEGIN YOUR JOURNEY",

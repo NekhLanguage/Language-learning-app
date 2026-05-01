@@ -57,7 +57,7 @@
     "reasonDetailPlaceholderCulture": "مثل: استوديو جيبلي",
     "reasonDetailHint": "اختياري — لا بأس بالتخطي.",
     "roadmapTitle": "رحلتك",
-    "roadmapCounter": "{done} من {total} محطة مكتملة",
+    "roadmapCounter": "{done} من {total} محطة مفتوحة",
     "roadmapCounterFull": "{done} مكتملة · {inprogress} قيد التقدم · {ahead} متبقية",
     "roadmapSessionFinished": "الجلسة {n} مكتملة. محطة أخرى خلفك.",
     "roadmapBegin": "ابدأ رحلتك",
