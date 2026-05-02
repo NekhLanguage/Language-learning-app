@@ -463,6 +463,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const MAX_LEVEL = 7;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
+  // Caps the upper bound on session length so later sessions (with many
+  // released concepts) don't grow indefinitely. The natural fatigue rule
+  // still ends short early sessions sooner.
+  const SESSION_EXERCISE_BUDGET = 25;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -2186,12 +2190,28 @@ function pluralFormOf(lang, cid) {
   return formOf(lang, cid);
 }
 
-function nounPhrase(lang, cid) {
+// Returns true when the concept's pronoun metadata declares plural number
+// (FIRST_PERSON_PLURAL, SECOND_PERSON_PLURAL, THIRD_PERSON_PLURAL).
+function isPluralPronoun(cid) {
+  return window.GLOBAL_VOCAB.concepts?.[cid]?.number === "plural";
+}
+
+// `opts.plural`: when true, render plural form and drop the indefinite
+// article. Used when the predicate noun follows a plural subject pronoun
+// ("they are wizards" not "they are a wizard").
+function nounPhrase(lang, cid, opts = {}) {
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
   const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
 
   const base = entry.form || formOf(lang, cid);
+
+  if (opts.plural) {
+    if (lang === "en") {
+      return entry.invariantPlural ? base : pluralize(base);
+    }
+    return pluralFormOf(lang, cid);
+  }
 
   // Apply article logic when the concept is marked countable OR when the
   // form itself carries article/gender data (covers resource-pack nouns that
@@ -2413,6 +2433,48 @@ const BROAD_SOURCE_FILES = new Set([
 //      / "two food" / "a shiny food" awkwardness.
 //   2. Pack-specific modifiers only pair with nouns from the same pack
 //      source; broad modifiers pair with anything.
+// Per-adjective whitelist of noun semantic_role values we'll allow as
+// modifier targets. Built from the existing role tags in adjectives.json
+// and nouns.json. Anything not listed for a given adjective role falls
+// through to the source-file rule below — so unknown roles preserve the
+// original (broader) behaviour rather than blocking everything.
+const ADJECTIVE_ROLE_COMPAT = {
+  // Visible properties — apply to physical entities, exclude substances.
+  property_color: new Set([
+    "object","generic_object","place","clothing","clothing_item","vehicle",
+    "animal","creature","fictional_creature","fictional_object","food_item",
+    "drink_item","sport_item","tool","body_part","building","plant",
+    "container","accessory"
+  ]),
+  property_size: new Set([
+    "object","generic_object","place","clothing","clothing_item","vehicle",
+    "animal","creature","fictional_creature","fictional_object","food_item",
+    "drink_item","sport_item","tool","body_part","building","plant",
+    "container","accessory","person","family","role"
+  ]),
+  // Speed only describes things that can move.
+  property_speed: new Set([
+    "vehicle","animal","creature","fictional_creature","sport_action",
+    "game_action","process"
+  ]),
+  // Weight applies to physical objects and substances; not people, places, time.
+  property_weight: new Set([
+    "object","generic_object","food_item","drink_item","clothing",
+    "clothing_item","vehicle","tool","sport_item","container","accessory",
+    "substance"
+  ]),
+  property_brightness: new Set([
+    "place","building","time_period","light_source","clothing","clothing_item",
+    "object","generic_object","fictional_object","color"
+  ]),
+  property_difficulty: new Set([
+    "task","skill","subject","exercise","game_action","sport_action","spell"
+  ]),
+  property_direction: new Set(["direction_concept"]),
+  // Quality + time properties stay broad (good/bad/old/new pair widely);
+  // omitting them from the table preserves the source-file fallback below.
+};
+
 function isModifierCompatible(lang, modifierCid, nounCid) {
   const nounMeta  = window.GLOBAL_VOCAB.concepts[nounCid];
   const nounEntry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[nounCid] || {};
@@ -2421,6 +2483,16 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
 
   const modMeta = window.GLOBAL_VOCAB.concepts[modifierCid];
   if (!modMeta) return true;
+
+  // Tighter semantic compatibility: if the adjective's semantic_role has
+  // an explicit allowlist, the noun's semantic_role must be in it.
+  // Adjectives without an entry (e.g. property_quality, property_time)
+  // fall through to the broader source-file rule below.
+  const allowedNounRoles = ADJECTIVE_ROLE_COMPAT[modMeta.semantic_role];
+  if (allowedNounRoles && !allowedNounRoles.has(nounMeta?.semantic_role)) {
+    return false;
+  }
+
   if (BROAD_SOURCE_FILES.has(modMeta.source)) return true;
   return modMeta.source === nounMeta?.source;
 }
@@ -2459,10 +2531,14 @@ function nounWithPossessive(lang, possessiveCid, nounCid) {
 const POST_ADJECTIVE_LANGS = new Set(["pt", "ar"]);
 // All others (en, ja, ko, no, uk, de, el, tr) place adjective before noun
 
-function adjectiveNounPhrase(lang, adjectiveCid, nounCid) {
-  const adjective = formOf(lang, adjectiveCid);
-  const bare = formOf(lang, nounCid);
-  const withArticle = nounPhrase(lang, nounCid);
+function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
+  const adjective = (opts.plural && lang !== "en")
+    ? pluralFormOf(lang, adjectiveCid)
+    : formOf(lang, adjectiveCid);
+  const bare = opts.plural
+    ? (lang === "en" ? pluralize(formOf(lang, nounCid)) : pluralFormOf(lang, nounCid))
+    : formOf(lang, nounCid);
+  const withArticle = nounPhrase(lang, nounCid, opts);
 
   if (POST_ADJECTIVE_LANGS.has(lang)) {
     return `${withArticle} ${adjective}`;
@@ -2482,7 +2558,8 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid) {
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
   const be = getVerbForm(beCid, subjectCid, lang);
-  const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid);
+  const plural = isPluralPronoun(subjectCid);
+  const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid, { plural });
   return joinSentence([subject, be, complement]);
 }
 
@@ -2500,7 +2577,7 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = formOf(lang, subjectCid);
   const be = getVerbForm(beCid, subjectCid, lang);
-  const noun = nounPhrase(lang, nounCid);
+  const noun = nounPhrase(lang, nounCid, { plural: isPluralPronoun(subjectCid) });
   return `${subject} ${be} ${noun}`;
 }
 
@@ -2531,7 +2608,11 @@ function buildComplexClauseSentence(lang, linkerCid, clauseA, clauseB, subordina
 
   return capitalizeFirst(`${clauseA} ${linker} ${clauseB}.`);
 }
-function buildSentence(lang, tpl, forcedConcept = null) {
+// `sharedChoices` (optional) is a per-noun cache of randomly-injected
+// modifiers, keyed by noun cid. When two languages render the same template
+// (target + support pair), passing the same object to both calls keeps the
+// chosen adjective / number in sync so the sentences match in content.
+function buildSentence(lang, tpl, forcedConcept = null, sharedChoices = null) {
 if (tpl.structure?.type === "copular_demonstrative") {
   const s = tpl.slots;
   return buildCopularDemonstrative(
@@ -2604,6 +2685,17 @@ if (tpl.structure?.type === "complex_clause") {
     window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
   );
 
+  // For copular templates (subject + BE + predicate-noun), the predicate
+  // noun must agree with the subject in number. We treat any template that
+  // uses the BE verb as copular and pluralise its predicate noun(s) when
+  // the subject pronoun is plural. Non-copular SVO ("they have a book")
+  // intentionally keeps the singular object.
+  const subjectIsPluralPronoun = isPluralPronoun(subjectCid);
+  const isCopularTemplate = ordered.some(c =>
+    c === "BE" || window.GLOBAL_VOCAB.concepts[c]?.semantic_role === "copula"
+  );
+  const pluralAgreement = subjectIsPluralPronoun && isCopularTemplate;
+
   const words = ordered.map((cid, idx) => {
     const meta = window.GLOBAL_VOCAB.concepts[cid];
     if (!meta) return cid;
@@ -2617,7 +2709,19 @@ if (tpl.structure?.type === "complex_clause") {
   // If the template itself has a possessive directly before this noun, suppress the article.
   const precededByPossessive = idx > 0 &&
     window.GLOBAL_VOCAB.concepts[ordered[idx - 1]]?.semantic_role === "possessive";
-  let phrase = precededByPossessive ? formOf(lang, cid) : nounPhrase(lang, cid);
+  // Copular agreement: this noun is the predicate after a plural subject.
+  // Possessed nouns (their/our + noun) follow the possessive's own number,
+  // not the subject's, so skip them.
+  const useCopularPlural = pluralAgreement && !precededByPossessive;
+  let phrase = precededByPossessive
+    ? formOf(lang, cid)
+    : nounPhrase(lang, cid, { plural: useCopularPlural });
+  // When the noun was rendered as plural via copular agreement, the bare
+  // form used by the modifier branches below also needs to be plural so
+  // adjective insertion produces "small leaders" not "small leader".
+  let bareNoun = useCopularPlural
+    ? (lang === "en" ? pluralize(formOf(lang, cid)) : pluralFormOf(lang, cid))
+    : null;
 
   let adjectiveWord = null;
   let adjectiveCid = null;
@@ -2625,9 +2729,15 @@ if (tpl.structure?.type === "complex_clause") {
   let numberCid = null;
 
   // adjective
+  const cachedAdj = sharedChoices && Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)
+    ? sharedChoices["adj_" + cid]
+    : undefined;
   if (forcedMeta?.type === "adjective") {
     adjectiveCid = forcedConcept;
     adjectiveWord = formOf(lang, forcedConcept);
+  } else if (cachedAdj !== undefined) {
+    adjectiveCid = cachedAdj;
+    adjectiveWord = cachedAdj ? formOf(lang, cachedAdj) : null;
   } else {
     const adjectives = run.released.filter(c => {
       const m = window.GLOBAL_VOCAB.concepts[c];
@@ -2645,12 +2755,19 @@ if (tpl.structure?.type === "complex_clause") {
       adjectiveCid = adj;
       adjectiveWord = formOf(lang, adj);
     }
+    if (sharedChoices) sharedChoices["adj_" + cid] = adjectiveCid;
   }
 
   // number
+  const cachedNum = sharedChoices && Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)
+    ? sharedChoices["num_" + cid]
+    : undefined;
   if (forcedMeta?.type === "number") {
     numberCid = forcedConcept;
     numberWord = formOf(lang, forcedConcept);
+  } else if (cachedNum !== undefined) {
+    numberCid = cachedNum;
+    numberWord = cachedNum ? formOf(lang, cachedNum) : null;
   } else {
     // Random number injection for variety. Skips ONE (redundant with the
     // indefinite article) and restricts to numbers the learner has actually
@@ -2669,10 +2786,13 @@ if (tpl.structure?.type === "complex_clause") {
       numberCid = n;
       numberWord = formOf(lang, n);
     }
+    if (sharedChoices) sharedChoices["num_" + cid] = numberCid;
   }
 
   // apply modifiers
-  const bare = formOf(lang, cid);
+  // When copular plural agreement applies, the bare form used by the
+  // adjective branches must also be plural ("they are small leaders").
+  const bare = bareNoun || formOf(lang, cid);
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
 
   if (numberWord) {
@@ -2701,23 +2821,27 @@ if (tpl.structure?.type === "complex_clause") {
   if (adjectiveWord) {
     const adjectiveIsPossessive =
       window.GLOBAL_VOCAB.concepts[adjectiveCid]?.semantic_role === "possessive";
+    // Non-English languages typically inflect the adjective for number too.
+    const adjForm = (useCopularPlural && lang !== "en" && !adjectiveIsPossessive)
+      ? pluralFormOf(lang, adjectiveCid)
+      : adjectiveWord;
     if (adjectiveIsPossessive) {
       // Possessives replace the article entirely: "her wizard" not "a her wizard"
-      phrase = adjectiveWord + " " + bare;
+      phrase = adjForm + " " + bare;
     } else if (POST_ADJ) {
       // Article + noun + adjective: "uma casa grande"
-      phrase = phrase + " " + adjectiveWord;
+      phrase = phrase + " " + adjForm;
     } else if (phrase !== bare) {
       // Has article — insert adjective between: "a big house"
       let article = phrase.substring(0, phrase.length - bare.length).trimEnd();
       // For English, recompute article against the adjective (next word after article).
       if (lang === "en" && /^an?$/i.test(article)) {
-        article = englishIndefiniteArticle(adjectiveWord);
+        article = englishIndefiniteArticle(adjForm);
       }
-      phrase = article + " " + adjectiveWord + " " + bare;
+      phrase = article + " " + adjForm + " " + bare;
     } else {
       // No article: "big water"
-      phrase = adjectiveWord + " " + bare;
+      phrase = adjForm + " " + bare;
     }
   }
 
@@ -2760,8 +2884,9 @@ if (tpl.structure?.type === "complex_clause") {
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
-  const targetSentence = buildSentence(targetLang, tpl, targetConcept);
-  const supportSentence = buildSentence(supportLang, tpl, targetConcept);
+  const sharedChoices = {};
+  const targetSentence = buildSentence(targetLang, tpl, targetConcept, sharedChoices);
+  const supportSentence = buildSentence(supportLang, tpl, targetConcept, sharedChoices);
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
@@ -3012,8 +3137,9 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
   // --- Modifier path ---
 if (isModifierConcept(targetConcept)) {
 
-  const sentenceTarget = buildSentence(targetLang, tpl, targetConcept);
-  const sentenceSupport = buildSentence(supportLang, tpl, targetConcept);
+  const sharedChoicesL3 = {};
+  const sentenceTarget = buildSentence(targetLang, tpl, targetConcept, sharedChoicesL3);
+  const sentenceSupport = buildSentence(supportLang, tpl, targetConcept, sharedChoicesL3);
 
   const targetSurface = formOf(targetLang, targetConcept);
   const blanked = blankSentence(sentenceTarget, targetSurface);
@@ -3059,10 +3185,11 @@ if (isModifierConcept(targetConcept)) {
 }
 
   // --- Existing core path ---
-  const supportSentence = safe(buildSentence(supportLang, tpl));
+  const sharedChoicesCore = {};
+  const supportSentence = safe(buildSentence(supportLang, tpl, null, sharedChoicesCore));
 
 // ✅ Build actual sentence
-const sentenceTarget = buildSentence(targetLang, tpl);
+const sentenceTarget = buildSentence(targetLang, tpl, null, sharedChoicesCore);
 
 // ✅ Get correct surface form (CRITICAL)
 const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
@@ -4296,9 +4423,9 @@ if (bar) {
     return endSession(targetLang, supportLang);
   }
 
-  // Cap session length so it stays predictable (~25 answered exercises).
-  // Counter is incremented in applyResult() and reset in endSession().
-  if ((run.sessionExerciseCount || 0) >= 25) {
+  // Cap session length so it stays predictable. Counter is incremented in
+  // applyResult() and reset in endSession().
+  if ((run.sessionExerciseCount || 0) >= SESSION_EXERCISE_BUDGET) {
     run.sessionComplete = true;
     return endSession(targetLang, supportLang);
   }
