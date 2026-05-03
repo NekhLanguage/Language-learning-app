@@ -596,8 +596,21 @@ const EXTERNAL_LINKS = {
     if (!a) return;
     const href = a.getAttribute("href") || "";
     const surface = a.id || (a.closest("[id]") && a.closest("[id]").id) || "unknown";
+    // Map the Stan Store href to a coarse offer label so the analytics layer
+    // can split coaching/discovery-call clicks from buy-access clicks without
+    // re-parsing the URL each time.
+    let offer = "other";
+    if (href.indexOf("fluency-planning-call") !== -1) offer = "coaching";
+    else if (href.indexOf("zero-to-hero-app-beta") !== -1) offer = "buy_access";
     let sessionCount = 0;
+    let sessionNumber = null;
+    let sessionExerciseCount = null;
+    let concept = null;
+    let conceptLevel = null;
+    let releasedCount = null;
+    let completedCount = null;
     let targetLang = "";
+    let email = null;
     try {
       const u = JSON.parse(localStorage.getItem("zth_user") || "{}");
       targetLang = (u && u.lastActiveLanguage) || "";
@@ -605,15 +618,46 @@ const EXTERNAL_LINKS = {
       // sessionNumber is 1-indexed and points at the *current* session, so the
       // count already completed is one less (bounded at 0).
       if (run && typeof run.sessionNumber === "number") {
+        sessionNumber = run.sessionNumber;
         sessionCount = Math.max(0, run.sessionNumber - 1);
       }
+      if (run) {
+        if (typeof run.sessionExerciseCount === "number") {
+          sessionExerciseCount = run.sessionExerciseCount;
+        }
+        if (typeof run.lastTargetConcept === "string" && run.lastTargetConcept) {
+          concept = run.lastTargetConcept.slice(0, 80);
+          const st = run.progress && run.progress[run.lastTargetConcept];
+          if (st && typeof st.level === "number") conceptLevel = st.level;
+        }
+        if (Array.isArray(run.released)) {
+          releasedCount = run.released.length;
+          if (run.progress) {
+            completedCount = run.released.filter(cid => {
+              const st = run.progress[cid];
+              return !!(st && st.completed);
+            }).length;
+          }
+        }
+      }
+    } catch (_) {}
+    try {
+      email = (localStorage.getItem("zth_email") || "").toLowerCase().trim() || null;
     } catch (_) {}
     let supportLang = "";
     try { supportLang = (typeof languageState !== "undefined" && languageState.support) || ""; } catch (_) {}
     send("cta_click", {
       href,
+      offer,
       surface,
+      email,
       sessionCount,
+      sessionNumber,
+      sessionExerciseCount,
+      concept,
+      conceptLevel,
+      releasedCount,
+      completedCount,
       supportLang,
       targetLang
     });

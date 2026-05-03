@@ -111,15 +111,29 @@ function slackText(type, payload, ua) {
   if (type === "cta_click") {
     return (
       "cta_click · " +
-      short(payload.href, 160) +
+      short(payload.offer || "other", 16) +
+      " · " +
+      short(payload.email, 120) +
       " · surface=" +
       short(payload.surface, 40) +
-      " · sessions=" +
-      (payload.sessionCount ?? "?") +
-      " · lang=" +
+      " · concept=" +
+      short(payload.concept, 80) +
+      "@L" +
+      (payload.conceptLevel ?? "?") +
+      " · session#" +
+      (payload.sessionNumber ?? "?") +
+      ":" +
+      (payload.sessionExerciseCount ?? "?") +
+      " · released=" +
+      (payload.releasedCount ?? "?") +
+      " (done=" +
+      (payload.completedCount ?? "?") +
+      ") · lang=" +
       short(payload.supportLang, 8) +
       "/" +
-      short(payload.targetLang, 8)
+      short(payload.targetLang, 8) +
+      " · " +
+      short(payload.href, 160)
     );
   }
   if (type === "session_complete") {
