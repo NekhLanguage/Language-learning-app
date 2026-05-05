@@ -106,6 +106,7 @@
       "concept_id": "BOY",
       "type": "noun",
       "semantic_role": "person",
+      "gender": "m",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -119,6 +120,7 @@
       "concept_id": "GIRL",
       "type": "noun",
       "semantic_role": "person",
+      "gender": "f",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -132,6 +134,7 @@
       "concept_id": "MAN",
       "type": "noun",
       "semantic_role": "person",
+      "gender": "m",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -145,6 +148,7 @@
       "concept_id": "WOMAN",
       "type": "noun",
       "semantic_role": "person",
+      "gender": "f",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -158,6 +162,7 @@
       "concept_id": "MOM",
       "type": "noun",
       "semantic_role": "family",
+      "gender": "f",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -171,6 +176,7 @@
       "concept_id": "DAD",
       "type": "noun",
       "semantic_role": "family",
+      "gender": "m",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -184,6 +190,7 @@
       "concept_id": "SON",
       "type": "noun",
       "semantic_role": "family",
+      "gender": "m",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -197,6 +204,7 @@
       "concept_id": "DAUGHTER",
       "type": "noun",
       "semantic_role": "family",
+      "gender": "f",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -210,6 +218,7 @@
       "concept_id": "BROTHER",
       "type": "noun",
       "semantic_role": "family",
+      "gender": "m",
       "countable": true,
       "core": true,
       "interaction_profile": {
@@ -223,6 +232,7 @@
       "concept_id": "SISTER",
       "type": "noun",
       "semantic_role": "family",
+      "gender": "f",
       "countable": true,
       "core": true,
       "interaction_profile": {
