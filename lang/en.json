@@ -332,21 +332,24 @@
       "form": "dinner"
     },
     "CLOTHES": {
-      "form": "clothes"
+      "form": "clothes",
+      "pluralOnly": true
     },
     "SHIRT": {
       "form": "shirt",
       "article": "a"
     },
     "SHOES": {
-      "form": "shoes"
+      "form": "shoes",
+      "pluralOnly": true
     },
     "PHONE": {
       "form": "phone",
       "article": "a"
     },
     "PANTS": {
-      "form": "pants"
+      "form": "pants",
+      "pluralOnly": true
     },
     "ONE": [
       "one"

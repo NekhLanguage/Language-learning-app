@@ -2065,7 +2065,18 @@ if (state.level < levelCap) {
   // "He is a witch" / "She is a wizard" — see copularGenderClash().
   if (templateGenderClash(tpl)) return false;
 
-  return (tpl.concepts || []).every(cid => {
+  // Block templates that use BE without a pronoun subject. Without one,
+  // getVerbForm falls through to the bare infinitive ("be") and the
+  // sentence renders as "Be a house white." / "Бути ____ білий."
+  const concepts = tpl.concepts || [];
+  if (concepts.includes("BE")) {
+    const hasPronoun = concepts.some(c =>
+      window.GLOBAL_VOCAB.concepts?.[c]?.type === "pronoun"
+    );
+    if (!hasPronoun) return false;
+  }
+
+  return (concepts).every(cid => {
 
     const st = ensureProgress(cid);
 
@@ -2216,7 +2227,7 @@ function pluralFormOf(lang, cid) {
   const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
   if (!entry) return formOf(lang, cid);
   if (typeof entry === "object" && !Array.isArray(entry)) {
-    if (entry.invariantPlural) return formOf(lang, cid);
+    if (entry.invariantPlural || entry.pluralOnly) return formOf(lang, cid);
     if (entry.plural) return entry.plural;
   }
   return formOf(lang, cid);
@@ -2237,6 +2248,11 @@ function nounPhrase(lang, cid, opts = {}) {
   const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid] || {};
 
   const base = entry.form || formOf(lang, cid);
+
+  // pluralOnly nouns (e.g. clothes/shoes/pants) have no singular form and
+  // never take an indefinite article. The bare form is already plural, so
+  // both opts.plural and the article path return it unchanged.
+  if (entry.pluralOnly) return base;
 
   if (opts.plural) {
     if (lang === "en") {
@@ -2846,7 +2862,7 @@ if (tpl.structure?.type === "complex_clause") {
       nounForm = bare;
     } else if (lang === "en") {
       const enEntry = window.GLOBAL_VOCAB.languages?.en?.forms?.[cid] || {};
-      nounForm = enEntry.invariantPlural ? bare : pluralize(bare);
+      nounForm = (enEntry.invariantPlural || enEntry.pluralOnly) ? bare : pluralize(bare);
     } else {
       nounForm = pluralFormOf(lang, cid);
     }
