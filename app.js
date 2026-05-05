@@ -2028,8 +2028,8 @@ if (state.level < levelCap) {
   }
 
   const hasTemplate = TEMPLATE_CACHE.some(tpl =>
-  tpl.concepts.includes(cid) &&
-  tpl.concepts.every(c => run.released.includes(c))
+  tpl.concepts.includes(c) &&
+  tpl.concepts.every(other => run.released.includes(other))
 );
 
   return hasTemplate;
@@ -4339,13 +4339,31 @@ function chooseConcept(excluded = new Set()) {
 
   if (!candidates.length) return null;
 
-  candidates.sort((a, b) => {
-    const levelDiff = levelOf(a) - levelOf(b);
-    if (levelDiff !== 0) return levelDiff;
-    return Math.random() - 0.5;
-  });
-
-  return candidates[0];
+  // Weighted random by level. Lower-level concepts still get the lion's
+  // share of picks (they need most reinforcement), but every present level
+  // has a non-trivial chance of being chosen — otherwise a steady stream
+  // of fresh L1 bundles starves L4+ concepts and the learner never sees
+  // L5/L6/L7 at all.
+  //
+  // We bucket candidates by level, weight each present level (L1=7 down to
+  // L7=1), then pick a level by weighted-random and a candidate within it.
+  const byLevel = new Map();
+  for (const c of candidates) {
+    const l = levelOf(c);
+    if (!byLevel.has(l)) byLevel.set(l, []);
+    byLevel.get(l).push(c);
+  }
+  const levels = Array.from(byLevel.keys()).sort((a, b) => a - b);
+  const weights = levels.map(l => Math.max(1, 8 - l));
+  const total = weights.reduce((acc, w) => acc + w, 0);
+  let r = Math.random() * total;
+  let chosenLevel = levels[0];
+  for (let i = 0; i < levels.length; i++) {
+    r -= weights[i];
+    if (r <= 0) { chosenLevel = levels[i]; break; }
+  }
+  const bucket = byLevel.get(chosenLevel);
+  return bucket[Math.floor(Math.random() * bucket.length)];
 }
 // Rotate the subject pronoun in a template to a different one the learner
 // has already unlocked. Widens effective variety without writing new
