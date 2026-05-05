@@ -2061,6 +2061,10 @@ if (state.level < levelCap) {
   // If template is completed, do not schedule again
   if (tState.completed) return false;
 
+  // Block templates that would produce a copular gender clash, e.g.
+  // "He is a witch" / "She is a wizard" — see copularGenderClash().
+  if (templateGenderClash(tpl)) return false;
+
   return (tpl.concepts || []).every(cid => {
 
     const st = ensureProgress(cid);
@@ -2175,6 +2179,34 @@ function pluralize(word) {
   if (/[^aeiou]y$/i.test(word)) return word.slice(0, -1) + "ies";
   if (/(s|sh|ch|x|z)$/i.test(word)) return word + "es";
   return word + "s";
+}
+
+// Returns true when subject and predicate noun would clash in semantic
+// gender — e.g. "He is a witch" (HE: m, WITCH: f). Only meaningful in
+// copular templates ("X is Y"); in transitive templates ("X has Y") the
+// noun's gender is independent of the subject.
+function copularGenderClash(subjectCid, nounCid) {
+  const subjGender = window.GLOBAL_VOCAB.concepts?.[subjectCid]?.gender;
+  const nounGender = window.GLOBAL_VOCAB.concepts?.[nounCid]?.gender;
+  if (!subjGender || !nounGender) return false;
+  return subjGender !== nounGender;
+}
+
+// Walks a template's concepts, returns true when the template is copular
+// (uses BE) and the subject pronoun's gender clashes with any predicate
+// noun's gender. Used to filter out templates like "HE + BE + WITCH"
+// before the renderer wastes effort building a broken sentence.
+function templateGenderClash(tpl) {
+  const concepts = tpl?.concepts || [];
+  if (!concepts.includes("BE")) return false;
+  const subjectCid = concepts.find(c =>
+    window.GLOBAL_VOCAB.concepts?.[c]?.type === "pronoun"
+  );
+  if (!subjectCid) return false;
+  return concepts.some(c => {
+    const m = window.GLOBAL_VOCAB.concepts?.[c];
+    return m?.type === "noun" && copularGenderClash(subjectCid, c);
+  });
 }
 
 // Returns the plural form for non-English languages.
@@ -2773,7 +2805,18 @@ if (tpl.structure?.type === "complex_clause") {
     // indefinite article) and restricts to numbers the learner has actually
     // started working on (L4+, not yet completed). Also skipped for mass
     // nouns ("two water" / "three food" don't work) via compatibility check.
-    const numbers = run.released.filter(c => {
+    //
+    // Two extra guards prevent broken sentences:
+    //   1. Never pluralise the noun being filled in for an L3 blank — the
+    //      blank-matching step looks up the singular surface, so a plural
+    //      injection ("жінки" vs "жінка") would silently drop the blank.
+    //   2. In a copular template with a singular subject, "She is two new
+    //      women" is never valid; suppress plural injection there.
+    const isTargetNoun = forcedConcept === cid;
+    const subjectIsSingularPronoun = subjectCid && !subjectIsPluralPronoun;
+    const skipPluralInjection = isTargetNoun ||
+      (isCopularTemplate && subjectIsSingularPronoun);
+    const numbers = skipPluralInjection ? [] : run.released.filter(c => {
       if (c === "ONE") return false;
       const m = window.GLOBAL_VOCAB.concepts[c];
       if (m?.type !== "number") return false;
