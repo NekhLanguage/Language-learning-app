@@ -92,54 +92,88 @@
   "forms": {
     "BIG": {
       "form": "grande",
-      "plural": "grandes"
+      "f": "grande",
+      "plural": "grandes",
+      "fp": "grandes"
     },
     "SMALL": {
       "form": "pequeno",
-      "plural": "pequenos"
+      "f": "pequena",
+      "plural": "pequenos",
+      "fp": "pequenas"
     },
     "GOOD": {
       "form": "bom",
-      "plural": "bons"
+      "f": "boa",
+      "plural": "bons",
+      "fp": "boas"
     },
     "BAD": {
       "form": "ruim",
-      "plural": "ruins"
+      "f": "ruim",
+      "plural": "ruins",
+      "fp": "ruins"
     },
     "NEW": {
       "form": "novo",
-      "plural": "novos"
+      "f": "nova",
+      "plural": "novos",
+      "fp": "novas"
     },
     "OLD": {
       "form": "velho",
-      "plural": "velhos"
+      "f": "velha",
+      "plural": "velhos",
+      "fp": "velhas"
     },
     "EASY": {
       "form": "fácil",
-      "plural": "fáceis"
+      "f": "fácil",
+      "plural": "fáceis",
+      "fp": "fáceis"
     },
     "DIFFICULT": {
       "form": "difícil",
-      "plural": "difíceis"
+      "f": "difícil",
+      "plural": "difíceis",
+      "fp": "difíceis"
     },
-    "MY": [
-      "meu"
-    ],
-    "YOUR": [
-      "seu"
-    ],
-    "HIS": [
-      "dele"
-    ],
-    "HER": [
-      "dela"
-    ],
-    "OUR": [
-      "nosso"
-    ],
-    "THEIR": [
-      "deles"
-    ],
+    "MY": {
+      "form": "meu",
+      "f": "minha",
+      "plural": "meus",
+      "fp": "minhas"
+    },
+    "YOUR": {
+      "form": "seu",
+      "f": "sua",
+      "plural": "seus",
+      "fp": "suas"
+    },
+    "HIS": {
+      "form": "dele",
+      "f": "dele",
+      "plural": "deles",
+      "fp": "delas"
+    },
+    "HER": {
+      "form": "dela",
+      "f": "dela",
+      "plural": "deles",
+      "fp": "delas"
+    },
+    "OUR": {
+      "form": "nosso",
+      "f": "nossa",
+      "plural": "nossos",
+      "fp": "nossas"
+    },
+    "THEIR": {
+      "form": "deles",
+      "f": "delas",
+      "plural": "deles",
+      "fp": "delas"
+    },
     "AND": [
       "e"
     ],

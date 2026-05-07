@@ -90,32 +90,50 @@
     "zh": "Китайська"
   },
   "forms": {
-    "BIG": { "form": "великий", "plural": "великі" },
-    "SMALL": { "form": "малий", "plural": "малі" },
-    "GOOD": { "form": "добрий", "plural": "добрі" },
-    "BAD": { "form": "поганий", "plural": "погані" },
-    "NEW": { "form": "новий", "plural": "нові" },
-    "OLD": { "form": "старий", "plural": "старі" },
-    "EASY": { "form": "легкий", "plural": "легкі" },
-    "DIFFICULT": { "form": "важкий", "plural": "важкі" },
-    "MY": [
-      "мій"
-    ],
-    "YOUR": [
-      "твій"
-    ],
-    "HIS": [
-      "його"
-    ],
-    "HER": [
-      "її"
-    ],
-    "OUR": [
-      "наш"
-    ],
-    "THEIR": [
-      "їхній"
-    ],
+    "BIG": { "form": "великий", "f": "велика", "n": "велике", "plural": "великі" },
+    "SMALL": { "form": "малий", "f": "мала", "n": "мале", "plural": "малі" },
+    "GOOD": { "form": "добрий", "f": "добра", "n": "добре", "plural": "добрі" },
+    "BAD": { "form": "поганий", "f": "погана", "n": "погане", "plural": "погані" },
+    "NEW": { "form": "новий", "f": "нова", "n": "нове", "plural": "нові" },
+    "OLD": { "form": "старий", "f": "стара", "n": "старе", "plural": "старі" },
+    "EASY": { "form": "легкий", "f": "легка", "n": "легке", "plural": "легкі" },
+    "DIFFICULT": { "form": "важкий", "f": "важка", "n": "важке", "plural": "важкі" },
+    "MY": {
+      "form": "мій",
+      "f": "моя",
+      "n": "моє",
+      "plural": "мої"
+    },
+    "YOUR": {
+      "form": "твій",
+      "f": "твоя",
+      "n": "твоє",
+      "plural": "твої"
+    },
+    "HIS": {
+      "form": "його",
+      "f": "його",
+      "n": "його",
+      "plural": "його"
+    },
+    "HER": {
+      "form": "її",
+      "f": "її",
+      "n": "її",
+      "plural": "її"
+    },
+    "OUR": {
+      "form": "наш",
+      "f": "наша",
+      "n": "наше",
+      "plural": "наші"
+    },
+    "THEIR": {
+      "form": "їхній",
+      "f": "їхня",
+      "n": "їхнє",
+      "plural": "їхні"
+    },
     "AND": [
       "і"
     ],
@@ -227,70 +245,89 @@
     },
     "BOY": {
       "form": "хлопець",
+      "gender": "m",
       "plural": "хлопці"
     },
     "GIRL": {
       "form": "дівчина",
+      "gender": "f",
       "plural": "дівчата"
     },
     "MAN": {
       "form": "чоловік",
+      "gender": "m",
       "plural": "чоловіки"
     },
     "WOMAN": {
       "form": "жінка",
+      "gender": "f",
       "plural": "жінки"
     },
     "MOM": {
-      "form": "мама"
+      "form": "мама",
+      "gender": "f"
     },
     "DAD": {
-      "form": "тато"
+      "form": "тато",
+      "gender": "m"
     },
     "SON": {
       "form": "син",
+      "gender": "m",
       "plural": "сини"
     },
     "DAUGHTER": {
       "form": "дочка",
+      "gender": "f",
       "plural": "дочки"
     },
     "BROTHER": {
       "form": "брат",
+      "gender": "m",
       "plural": "брати"
     },
     "SISTER": {
       "form": "сестра",
+      "gender": "f",
       "plural": "сестри"
     },
     "HEAD": {
-      "form": "голова"
+      "form": "голова",
+      "gender": "f"
     },
     "ARM": {
       "form": "рука",
+      "gender": "f",
       "plural": "руки"
     },
     "HAND": {
-      "form": "кисть"
+      "form": "кисть",
+      "gender": "f"
     },
     "LEG": {
-      "form": "нога"
+      "form": "нога",
+      "gender": "f"
     },
     "FOOT": {
-      "form": "ступня"
+      "form": "ступня",
+      "gender": "f"
     },
     "FINGER": {
-      "form": "палець"
+      "form": "палець",
+      "gender": "m"
     },
     "EYE": {
       "form": "око",
+      "gender": "n",
       "plural": "очі"
     },
     "MOUTH": {
-      "form": "рот"
+      "form": "рот",
+      "gender": "m"
     },
     "FACE": {
-      "form": "обличчя"
+      "form": "обличчя",
+      "gender": "n"
     },
     "BREAKFAST": {
       "form": "сніданок"

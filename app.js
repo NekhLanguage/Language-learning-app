@@ -2277,6 +2277,27 @@ function pluralFormOf(lang, cid) {
   return formOf(lang, cid);
 }
 
+// Returns the form of a modifier (adjective / possessive) that agrees in
+// gender with the noun it qualifies. Falls back to the masculine/base form
+// when the language doesn't store gendered variants for that modifier, or
+// when the noun has no recorded gender — keeping non-PT/UK languages working
+// unchanged.
+function genderedFormOf(lang, modifierCid, nounCid, plural = false) {
+  const mod = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[modifierCid];
+  if (!mod || typeof mod !== "object" || Array.isArray(mod)) {
+    return plural ? pluralFormOf(lang, modifierCid) : formOf(lang, modifierCid);
+  }
+  const noun = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[nounCid];
+  const g = noun?.gender;
+  if (plural) {
+    if (g === "f" && mod.fp) return mod.fp;
+    return pluralFormOf(lang, modifierCid);
+  }
+  if (g === "f" && mod.f) return mod.f;
+  if (g === "n" && mod.n) return mod.n;
+  return formOf(lang, modifierCid);
+}
+
 // Returns true when the concept's pronoun metadata declares plural number
 // (FIRST_PERSON_PLURAL, SECOND_PERSON_PLURAL, THIRD_PERSON_PLURAL).
 function isPluralPronoun(cid) {
@@ -2616,7 +2637,7 @@ function possessiveWord(lang, cid) {
 }
 
 function nounWithPossessive(lang, possessiveCid, nounCid) {
-  return `${possessiveWord(lang, possessiveCid)} ${formOf(lang, nounCid)}`;
+  return `${genderedFormOf(lang, possessiveCid, nounCid)} ${formOf(lang, nounCid)}`;
 }
 
 // Languages where adjective follows the noun (e.g. "casa grande")
@@ -2625,8 +2646,8 @@ const POST_ADJECTIVE_LANGS = new Set(["pt", "ar"]);
 
 function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
   const adjective = (opts.plural && lang !== "en")
-    ? pluralFormOf(lang, adjectiveCid)
-    : formOf(lang, adjectiveCid);
+    ? genderedFormOf(lang, adjectiveCid, nounCid, true)
+    : genderedFormOf(lang, adjectiveCid, nounCid, false);
   const bare = opts.plural
     ? (lang === "en" ? pluralize(formOf(lang, nounCid)) : pluralFormOf(lang, nounCid))
     : formOf(lang, nounCid);
@@ -2826,10 +2847,10 @@ if (tpl.structure?.type === "complex_clause") {
     : undefined;
   if (forcedMeta?.type === "adjective") {
     adjectiveCid = forcedConcept;
-    adjectiveWord = formOf(lang, forcedConcept);
+    adjectiveWord = genderedFormOf(lang, forcedConcept, cid);
   } else if (cachedAdj !== undefined) {
     adjectiveCid = cachedAdj;
-    adjectiveWord = cachedAdj ? formOf(lang, cachedAdj) : null;
+    adjectiveWord = cachedAdj ? genderedFormOf(lang, cachedAdj, cid) : null;
   } else {
     const adjectives = run.released.filter(c => {
       const m = window.GLOBAL_VOCAB.concepts[c];
@@ -2845,7 +2866,7 @@ if (tpl.structure?.type === "complex_clause") {
     if (adjectives.length && Math.random() < 0.75) {
       const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
       adjectiveCid = adj;
-      adjectiveWord = formOf(lang, adj);
+      adjectiveWord = genderedFormOf(lang, adj, cid);
     }
     if (sharedChoices) sharedChoices["adj_" + cid] = adjectiveCid;
   }
@@ -2912,7 +2933,7 @@ if (tpl.structure?.type === "complex_clause") {
     }
     if (adjectiveWord) {
       const adjForm = (isPlural && adjectiveCid && lang !== "en")
-        ? pluralFormOf(lang, adjectiveCid)
+        ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjectiveWord;
       return POST_ADJ
         ? numberWord + " " + nounForm + " " + adjForm
@@ -2926,7 +2947,7 @@ if (tpl.structure?.type === "complex_clause") {
       window.GLOBAL_VOCAB.concepts[adjectiveCid]?.semantic_role === "possessive";
     // Non-English languages typically inflect the adjective for number too.
     const adjForm = (useCopularPlural && lang !== "en" && !adjectiveIsPossessive)
-      ? pluralFormOf(lang, adjectiveCid)
+      ? genderedFormOf(lang, adjectiveCid, cid, true)
       : adjectiveWord;
     if (adjectiveIsPossessive) {
       // Possessives replace the article entirely: "her wizard" not "a her wizard"
@@ -3800,7 +3821,18 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
 
-const supportSentence = safe(buildSentence(supportLang, tpl));
+// Suppress random adjective/number injection so the support sentence and
+// the word-tile bank stay in sync. Without this, buildSentence may inject
+// an adjective into the gloss ("Você é uma menina pequena") that has no
+// matching tile in the word bank.
+const sharedChoices = {};
+for (const c of tpl.concepts) {
+  if (window.GLOBAL_VOCAB.concepts[c]?.type === "noun") {
+    sharedChoices["adj_" + c] = null;
+    sharedChoices["num_" + c] = null;
+  }
+}
+const supportSentence = safe(buildSentence(supportLang, tpl, null, sharedChoices));
 
 const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
@@ -3954,7 +3986,18 @@ tState.streak = 0;
 tState.lastResult = false;
 tState.lastShownAt = run.exerciseCounter;
 
-  setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 1000);
+  // Reveal the correct sentence so the learner sees what they should have
+  // built. Strip the trailing period from the localised "correct" label
+  // (e.g. "Correto." → "Correto") so it reads cleanly before the colon.
+  const correctSentence = capitalizeFirst(correctWords.join(" ")) + ".";
+  const label = String(ui("correct") || "Correct").replace(/[.\s]+$/, "");
+  const banner = document.createElement("div");
+  banner.style.cssText = "margin-top:16px;color:#fff;font-weight:bold;text-align:center;";
+  banner.innerHTML = `${safe(label)}: <span>${safe(correctSentence)}</span> ${ttsHtml(correctSentence, targetLang)}`;
+  content.appendChild(banner);
+  wireTts();
+
+  setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 2800);
 }
   };
 }
@@ -4426,6 +4469,16 @@ function maybeVarySubject(tpl, targetConcept) {
   if (subjectIdx < 0) return tpl;
   const currentSubject = tpl.concepts[subjectIdx];
   if (currentSubject === targetConcept) return tpl;
+
+  // Body parts only make sense in copular templates with demonstrative subjects:
+  // "This is your head" works as a pointing gloss, but swapping the subject
+  // yields nonsense like "I am your head" or "She is my arm". Especially
+  // broken in Portuguese, where `ser` forces strict identity.
+  const isCopular = tpl.concepts.includes("BE");
+  const hasBodyPart = tpl.concepts.some(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.semantic_role === "body_part"
+  );
+  if (isCopular && hasBodyPart) return tpl;
 
   const alternatives = run.released.filter(c => {
     if (c === currentSubject) return false;
