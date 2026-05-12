@@ -4217,7 +4217,7 @@ document.addEventListener("keydown", e => {
   function showContext() {
     const { target, support, email, version } = buildContext();
     feedbackCtx.textContent =
-      `Language: ${target} · Support: ${support} · User: ${email} · v${version}`;
+      `Language: ${target} · Support: ${support} · User: ${email} · ${version}`;
   }
 
   feedbackBtn.addEventListener("click", () => {
@@ -4249,19 +4249,18 @@ document.addEventListener("keydown", e => {
     feedbackSubmit.textContent = ui("feedbackSending");
 
     try {
-      const body = new URLSearchParams({
-        "form-name": "bug-report",
-        message,
-        language: target,
-        support,
-        email,
-        version: String(version || "")
-      });
-
-      const res = await fetch("/", {
+      const res = await fetch("/.netlify/functions/submitBug", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: body.toString()
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message,
+          language: target,
+          support,
+          email,
+          version,
+          userAgent: navigator.userAgent,
+          url: location.href
+        })
       });
 
       if (res.ok) {
@@ -4270,7 +4269,8 @@ document.addEventListener("keydown", e => {
         feedbackText.value = "";
         setTimeout(() => feedbackModal.classList.add("hidden"), 2000);
       } else {
-        throw new Error(`Bug report POST failed: ${res.status} ${res.statusText}`);
+        const detail = await res.text().catch(() => "");
+        throw new Error(`Bug report POST failed: ${res.status} ${res.statusText} ${detail}`);
       }
     } catch (err) {
       console.error("Bug report submission failed:", err);

@@ -181,19 +181,6 @@
     </div>
   </div>
 
-  <!-- Hidden Netlify form for form detection. The form-name hidden input
-       is required by Netlify Forms for AJAX/fetch submissions to route the
-       POST correctly; without it, Netlify returns a 404 on the submission
-       and the user sees "could not send report". -->
-  <form name="bug-report" data-netlify="true" hidden>
-    <input type="hidden" name="form-name" value="bug-report" />
-    <input name="message" />
-    <input name="language" />
-    <input name="support" />
-    <input name="email" />
-    <input name="version" />
-  </form>
-
   <!-- User + run persistence (non-module) -->
 <script src="user_state.js"></script>
 <script type="module" src="app.js?v=1.0.0"></script>
