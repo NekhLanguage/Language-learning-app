@@ -659,7 +659,7 @@
     "pt": {
       "FIRST_PERSON_PLURAL": "nós",
       "STOP": "paramos",
-      "EAT": "comer"
+      "EAT": "de comer"
     },
     "ar": {
       "FIRST_PERSON_PLURAL": "نحن",
@@ -705,7 +705,7 @@
     "pt": {
       "THIRD_PERSON_PLURAL": "eles",
       "START": "começam",
-      "SLEEP": "dormir"
+      "SLEEP": "a dormir"
     },
     "ar": {
       "THIRD_PERSON_PLURAL": "هم",
