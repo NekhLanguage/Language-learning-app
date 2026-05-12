@@ -2524,6 +2524,20 @@ if (orderType === "SOV") {
 
     return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
   }
+
+  // Append a "Correto: <word>" / "Correct: <word>" banner under the current
+  // exercise. Used by L3, L4, and L6 wrong-answer paths so the learner can
+  // see what they should have chosen before the next exercise loads.
+  function revealCorrectAnswerBanner(text, targetLang) {
+    if (!text) return;
+    const label = String(ui("correct") || "Correct").replace(/[.\s]+$/, "");
+    const banner = document.createElement("div");
+    banner.className = "correct-answer-reveal";
+    banner.style.cssText = "margin-top:16px;color:#fff;font-weight:bold;text-align:center;";
+    banner.innerHTML = `${safe(label)}: <span>${safe(text)}</span> ${ttsHtml(text, targetLang)}`;
+    content.appendChild(banner);
+    wireTts();
+  }
   function isModifierConcept(cid) {
   const t = window.GLOBAL_VOCAB.concepts[cid]?.type;
   return t === "adjective" || t === "number";
@@ -2814,6 +2828,25 @@ if (tpl.structure?.type === "complex_clause") {
     if (!meta) return cid;
 
     if (meta.type === "verb") {
+      // Control-verb chains (start/stop/want/like + verb) need the second
+      // verb in its non-finite form: English "they start SLEEPING",
+      // Portuguese "eles começam A DORMIR", Ukrainian "вони починають
+      // СПАТИ". When a verb is preceded by another verb in the template's
+      // ordering, prefer the per-language surface override (which can carry
+      // the right gerund/infinitive plus any linking preposition); fall
+      // back to the base/infinitive form so languages without an explicit
+      // override still avoid the bug of conjugating the complement.
+      const prevIsVerb = idx > 0 &&
+        window.GLOBAL_VOCAB.concepts[ordered[idx - 1]]?.type === "verb";
+      if (prevIsVerb) {
+        const surfaceOverride = tpl.surface?.[lang]?.[cid];
+        if (surfaceOverride) return surfaceOverride;
+        const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+        if (entry && typeof entry === "object" && typeof entry.base === "string") {
+          return entry.base;
+        }
+        return formOf(lang, cid);
+      }
       return getVerbForm(cid, subjectCid, lang);
     }
 
@@ -3297,7 +3330,12 @@ if (isModifierConcept(targetConcept)) {
       btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
       decrementCooldowns();
       applyResult(targetConcept, correct);
-      setTimeout(() => renderNext(targetLang, supportLang), 600);
+      if (!correct) {
+        revealCorrectAnswerBanner(formOf(targetLang, targetConcept), targetLang);
+        setTimeout(() => renderNext(targetLang, supportLang), 2800);
+      } else {
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      }
     };
     wrap.appendChild(btn);
     wrap.appendChild(createTtsBtn(text, targetLang));
@@ -3395,7 +3433,12 @@ const subjectCid = tpl.concepts.find(c =>
       btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
       decrementCooldowns();
       applyResult(targetConcept, correct);
-      setTimeout(() => renderNext(targetLang, supportLang), 600);
+      if (!correct) {
+        revealCorrectAnswerBanner(surface, targetLang);
+        setTimeout(() => renderNext(targetLang, supportLang), 2800);
+      } else {
+        setTimeout(() => renderNext(targetLang, supportLang), 600);
+      }
     };
 
     wrap.appendChild(btn);
@@ -3550,7 +3593,12 @@ if (!finalOptions.includes(targetConcept)) {
         btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
         decrementCooldowns();
         applyResult(targetConcept, correct);
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
+        if (!correct) {
+          revealCorrectAnswerBanner(resolveTargetSurface(targetConcept), targetLang);
+          setTimeout(() => renderNext(targetLang, supportLang), 2800);
+        } else {
+          setTimeout(() => renderNext(targetLang, supportLang), 600);
+        }
       };
       wrap.appendChild(btn);
       wrap.appendChild(createTtsBtn(text, targetLang));
@@ -3986,16 +4034,9 @@ tState.streak = 0;
 tState.lastResult = false;
 tState.lastShownAt = run.exerciseCounter;
 
-  // Reveal the correct sentence so the learner sees what they should have
-  // built. Strip the trailing period from the localised "correct" label
-  // (e.g. "Correto." → "Correto") so it reads cleanly before the colon.
+  // Reveal the correct sentence so the learner sees what they should have built.
   const correctSentence = capitalizeFirst(correctWords.join(" ")) + ".";
-  const label = String(ui("correct") || "Correct").replace(/[.\s]+$/, "");
-  const banner = document.createElement("div");
-  banner.style.cssText = "margin-top:16px;color:#fff;font-weight:bold;text-align:center;";
-  banner.innerHTML = `${safe(label)}: <span>${safe(correctSentence)}</span> ${ttsHtml(correctSentence, targetLang)}`;
-  content.appendChild(banner);
-  wireTts();
+  revealCorrectAnswerBanner(correctSentence, targetLang);
 
   setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 2800);
 }
@@ -4212,9 +4253,9 @@ document.addEventListener("keydown", e => {
         "form-name": "bug-report",
         message,
         language: target,
-        level: support,
+        support,
         email,
-        version
+        version: String(version || "")
       });
 
       const res = await fetch("/", {
@@ -4229,9 +4270,10 @@ document.addEventListener("keydown", e => {
         feedbackText.value = "";
         setTimeout(() => feedbackModal.classList.add("hidden"), 2000);
       } else {
-        throw new Error("Non-OK response");
+        throw new Error(`Bug report POST failed: ${res.status} ${res.statusText}`);
       }
-    } catch {
+    } catch (err) {
+      console.error("Bug report submission failed:", err);
       feedbackStatus.textContent = ui("feedbackFailed");
       feedbackStatus.classList.remove("hidden");
       feedbackSubmit.disabled = false;
