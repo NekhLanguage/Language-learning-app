@@ -560,6 +560,13 @@ button.selected {
   line-height: 1.6;
 }
 
+.run-complete-stats {
+  font-family: var(--font-mono);
+  opacity: 0.6;
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+}
+
 .feedback-submit-btn {
   align-self: center;
   min-width: 160px;

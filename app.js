@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Caps the upper bound on session length so later sessions (with many
   // released concepts) don't grow indefinitely. The natural fatigue rule
   // still ends short early sessions sooner.
-  const SESSION_EXERCISE_BUDGET = 25;
+  const SESSION_EXERCISE_BUDGET = 30;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -4385,6 +4385,22 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
 
 
  
+// True only when there's nothing left to teach: no future bundles AND every
+// released concept is already at its level cap (`completed`). A session
+// that simply stalls (e.g. L5 quorum can't be met) does NOT satisfy this —
+// the user should keep playing in that case.
+function runIsExhausted(run) {
+  if (!run) return false;
+  const planExhausted = !run.releasePlan ||
+    run.releasePlanIndex >= run.releasePlan.length;
+  if (!planExhausted) return false;
+  if (!Array.isArray(run.released) || run.released.length === 0) return false;
+  return run.released.every(cid => {
+    const p = run.progress?.[cid];
+    return p?.completed === true;
+  });
+}
+
 function endSession(targetLang, supportLang) {
 
   run.sessionNumber++;
@@ -4617,6 +4633,40 @@ function chooseTemplateForConcept(cid) {
   const picked = eligible[Math.floor(Math.random() * eligible.length)];
   return maybeVarySubject(picked, cid);
 }
+// Celebratory screen shown when the user has completed every released
+// concept and there are no more bundles to release. Replaces the silent
+// roadmap-then-empty-session loop that would otherwise occur.
+function renderRunComplete(targetLang, supportLang) {
+  const screen = document.getElementById("run-complete-screen");
+  if (!screen) return;
+
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  screen.classList.add("active");
+
+  const titleEl = screen.querySelector(".title");
+  const bodyEl  = document.getElementById("run-complete-body");
+  const statsEl = document.getElementById("run-complete-stats");
+  const backBtn = document.getElementById("run-complete-back");
+
+  if (titleEl) titleEl.textContent = ui("runCompleteTitle");
+  if (bodyEl)  bodyEl.textContent  = ui("runCompleteBody");
+  if (statsEl) {
+    const conceptsLearned = (run.released || []).length;
+    const sessionsPlayed = Math.max(0, (run.sessionNumber || 1) - 1);
+    statsEl.textContent = String(ui("runCompleteStats") || "")
+      .replace("{concepts}", conceptsLearned)
+      .replace("{sessions}", sessionsPlayed);
+  }
+  if (backBtn) {
+    backBtn.textContent = ui("runCompleteBack");
+    backBtn.onclick = () => {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      const hub = document.getElementById("language-screen");
+      if (hub) hub.classList.add("active");
+    };
+  }
+}
+
 function renderNext(targetLang, supportLang) {
   markExerciseStart();
   // Retrigger the fade-in animation on every new exercise. Removing
@@ -4634,6 +4684,9 @@ if (bar) {
 }
   if (!run) return;
 
+  if (runIsExhausted(run)) {
+    return renderRunComplete(targetLang, supportLang);
+  }
 
   if (run.sessionComplete) {
     return endSession(targetLang, supportLang);
