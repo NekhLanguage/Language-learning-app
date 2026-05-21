@@ -347,6 +347,16 @@ button.wrong {
   transition: all 0.2s ease;
 }
 
+.sentence-slot.correct {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.sentence-slot.incorrect {
+  background-color: #e57373;
+  color: #fff;
+}
+
 button.selected {
   outline: 2px solid white;
 }
