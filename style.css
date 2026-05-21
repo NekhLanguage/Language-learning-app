@@ -102,8 +102,12 @@ button, a.secondary{
   cursor: pointer;
   padding: 1.05rem 1.6rem;
   border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-style: normal;
+  font-variant: normal;
   font-weight: 800;
-  font-family: inherit;
+  line-height: 1.2;
   letter-spacing: 0.06em;
   background: #fff;
   color: var(--btnInk);
@@ -343,6 +347,16 @@ button.wrong {
   transition: all 0.2s ease;
 }
 
+.sentence-slot.correct {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.sentence-slot.incorrect {
+  background-color: #e57373;
+  color: #fff;
+}
+
 button.selected {
   outline: 2px solid white;
 }
@@ -554,6 +568,13 @@ button.selected {
   opacity: 0.45;
   letter-spacing: 0.06em;
   line-height: 1.6;
+}
+
+.run-complete-stats {
+  font-family: var(--font-mono);
+  opacity: 0.6;
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
 }
 
 .feedback-submit-btn {

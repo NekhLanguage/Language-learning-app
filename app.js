@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Caps the upper bound on session length so later sessions (with many
   // released concepts) don't grow indefinitely. The natural fatigue rule
   // still ends short early sessions sooner.
-  const SESSION_EXERCISE_BUDGET = 25;
+  const SESSION_EXERCISE_BUDGET = 30;
 
   const startScreen = document.getElementById("start-screen");
   const learningScreen = document.getElementById("learning-screen");
@@ -3314,9 +3314,14 @@ if (isModifierConcept(targetConcept)) {
     <p><strong>${ui("fillMissing")}</strong></p>
     <p>${safe(blanked)}</p>
     <div id="choices"></div>
+    <div style="margin-top:20px;text-align:center;">
+      <button id="check-btn" disabled>${ui("check")}</button>
+    </div>
   `;
 
   const container = document.getElementById("choices");
+  const checkBtn = document.getElementById("check-btn");
+  let selectedOption = null;
 
   options.forEach(opt => {
     const text = formOf(targetLang, opt);
@@ -3326,22 +3331,35 @@ if (isModifierConcept(targetConcept)) {
     const btn = document.createElement("button");
     btn.textContent = text;
     btn.onclick = () => {
-      const correct = opt === targetConcept;
-      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-      decrementCooldowns();
-      applyResult(targetConcept, correct);
-      if (!correct) {
-        revealCorrectAnswerBanner(formOf(targetLang, targetConcept), targetLang);
-        setTimeout(() => renderNext(targetLang, supportLang), 2800);
-      } else {
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      }
+      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+      selectedOption = opt;
+      btn.classList.add("selected");
+      checkBtn.disabled = false;
     };
     wrap.appendChild(btn);
     wrap.appendChild(createTtsBtn(text, targetLang));
 
     container.appendChild(wrap);
   });
+
+  checkBtn.onclick = () => {
+    if (selectedOption == null) return;
+
+    const correct = selectedOption === targetConcept;
+
+    container.querySelectorAll("button").forEach(btn => {
+      const value = options.find(o => formOf(targetLang, o) === btn.textContent);
+      if (value === targetConcept) btn.classList.add("correct");
+      if (value === selectedOption && !correct) btn.classList.add("incorrect");
+    });
+
+    decrementCooldowns();
+    applyResult(targetConcept, correct);
+
+    checkBtn.disabled = false;
+    checkBtn.textContent = ui("continue");
+    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+  };
 
   return true; // 🔥 CRITICAL
 }
@@ -3395,56 +3413,75 @@ if (!options || options.length < 4) {
     <p><strong>${ui("fillMissing")}</strong></p>
     <p>${blanked}</p>
     <div id="choices"></div>
+    <div style="margin-top:20px;text-align:center;">
+      <button id="check-btn" disabled>${ui("check")}</button>
+    </div>
   `;
 
   const container = document.getElementById("choices");
+  const checkBtn = document.getElementById("check-btn");
+  let selectedOption = null;
   const isSentenceStart = blanked.trim().startsWith("_____");
-const subjectCid = tpl.concepts.find(c =>
-  window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-);
+  const subjectCid = tpl.concepts.find(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+  );
+  const optionButtons = []; // [{ opt, btn }]
+
   finalOptions.forEach(opt => {
 
-  const meta = window.GLOBAL_VOCAB.concepts[opt];
-  let text;
+    const meta = window.GLOBAL_VOCAB.concepts[opt];
+    let text;
 
-  if (meta?.type === "verb") {
-    // ✅ Conjugate ALL verbs consistently
-    text = getVerbForm(opt, subjectCid, targetLang);
-  }
-  else if (meta?.type === "noun") {
-    text = nounPhrase(targetLang, opt);
-  }
-  else {
-    text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
-  }
+    if (meta?.type === "verb") {
+      text = getVerbForm(opt, subjectCid, targetLang);
+    }
+    else if (meta?.type === "noun") {
+      text = nounPhrase(targetLang, opt);
+    }
+    else {
+      text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
+    }
 
-  text = isSentenceStart
-    ? text.charAt(0).toUpperCase() + text.slice(1)
-    : text.charAt(0).toLowerCase() + text.slice(1);
+    text = isSentenceStart
+      ? text.charAt(0).toUpperCase() + text.slice(1)
+      : text.charAt(0).toLowerCase() + text.slice(1);
 
-  const wrap = document.createElement("div");
-  wrap.className = "word-bank-chip";
+    const wrap = document.createElement("div");
+    wrap.className = "word-bank-chip";
 
-  const btn = document.createElement("button");
-  btn.textContent = text;
+    const btn = document.createElement("button");
+    btn.textContent = text;
 
     btn.onclick = () => {
-      const correct = opt === targetConcept;
-      btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-      decrementCooldowns();
-      applyResult(targetConcept, correct);
-      if (!correct) {
-        revealCorrectAnswerBanner(surface, targetLang);
-        setTimeout(() => renderNext(targetLang, supportLang), 2800);
-      } else {
-        setTimeout(() => renderNext(targetLang, supportLang), 600);
-      }
+      container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+      selectedOption = opt;
+      btn.classList.add("selected");
+      checkBtn.disabled = false;
     };
 
     wrap.appendChild(btn);
     wrap.appendChild(createTtsBtn(text, targetLang));
     container.appendChild(wrap);
+    optionButtons.push({ opt, btn });
   });
+
+  checkBtn.onclick = () => {
+    if (selectedOption == null) return;
+
+    const correct = selectedOption === targetConcept;
+
+    optionButtons.forEach(({ opt, btn }) => {
+      if (opt === targetConcept) btn.classList.add("correct");
+      if (opt === selectedOption && !correct) btn.classList.add("incorrect");
+    });
+
+    decrementCooldowns();
+    applyResult(targetConcept, correct);
+
+    checkBtn.disabled = false;
+    checkBtn.textContent = ui("continue");
+    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+  };
 }
 
   // -------------------------
@@ -3577,9 +3614,15 @@ if (!finalOptions.includes(targetConcept)) {
       <p>${ui("chooseTranslation")}</p>
       <h2>${promptSupport}</h2>
       <div id="choices"></div>
+      <div style="margin-top:20px;text-align:center;">
+        <button id="check-btn" disabled>${ui("check")}</button>
+      </div>
     `;
 
     const container = document.getElementById("choices");
+    const checkBtn = document.getElementById("check-btn");
+    let selectedOption = null;
+    const optionButtons = []; // [{ opt, btn }]
 
     finalOptions.forEach(opt => {
       const text = resolveTargetSurface(opt);
@@ -3589,22 +3632,35 @@ if (!finalOptions.includes(targetConcept)) {
       const btn = document.createElement("button");
       btn.textContent = text;
       btn.onclick = () => {
-        const correct = opt === targetConcept;
-        btn.style.backgroundColor = correct ? "#4CAF50" : "#D32F2F";
-        decrementCooldowns();
-        applyResult(targetConcept, correct);
-        if (!correct) {
-          revealCorrectAnswerBanner(resolveTargetSurface(targetConcept), targetLang);
-          setTimeout(() => renderNext(targetLang, supportLang), 2800);
-        } else {
-          setTimeout(() => renderNext(targetLang, supportLang), 600);
-        }
+        container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+        selectedOption = opt;
+        btn.classList.add("selected");
+        checkBtn.disabled = false;
       };
       wrap.appendChild(btn);
       wrap.appendChild(createTtsBtn(text, targetLang));
 
       container.appendChild(wrap);
+      optionButtons.push({ opt, btn });
     });
+
+    checkBtn.onclick = () => {
+      if (selectedOption == null) return;
+
+      const correct = selectedOption === targetConcept;
+
+      optionButtons.forEach(({ opt, btn }) => {
+        if (opt === targetConcept) btn.classList.add("correct");
+        if (opt === selectedOption && !correct) btn.classList.add("incorrect");
+      });
+
+      decrementCooldowns();
+      applyResult(targetConcept, correct);
+
+      checkBtn.disabled = false;
+      checkBtn.textContent = ui("continue");
+      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    };
   }
 // -------------------------
 // Level 5 – Matching (Wire Style)
@@ -3831,25 +3887,19 @@ activeSelection = null;
   });
 
   if (allCorrect) {
-  setTimeout(() => {
-    renderNext(targetLang, supportLang);
-  }, 800);
-} else {
-  setTimeout(() => {
-    // Remove all existing lines (if any)
-    connectionLines.forEach(line => {
-      if (line && line.parentNode === wireLayer) {
-        wireLayer.removeChild(line);
-      }
-    });
-    connectionLines.clear();
-
-    // Clear pairing memory
-    selectedPairs.clear();
-
-    renderMatchingL5(targetLang, supportLang);
-  }, 1000);
-}
+    setTimeout(() => {
+      renderNext(targetLang, supportLang);
+    }, 800);
+  } else {
+    // Match the L2 pattern: leave the visual feedback in place and let
+    // the learner advance on their own — no auto-rerender.
+    const checkMatchesBtn = document.getElementById("check-matches");
+    if (checkMatchesBtn) {
+      checkMatchesBtn.disabled = false;
+      checkMatchesBtn.textContent = ui("continue");
+      checkMatchesBtn.onclick = () => renderNext(targetLang, supportLang);
+    }
+  }
   };
 }
 
@@ -3996,50 +4046,52 @@ const correctWords = ordered.map(cid => {
     selectedWord = null;
   });
 
-  document.getElementById("check-l6").onclick = () => {
+  const checkL6Btn = document.getElementById("check-l6");
+  checkL6Btn.onclick = () => {
 
-  const builtWords = correctWords.map((_, i) => assignments.get(i) || "");
+    const builtWords = correctWords.map((_, i) => assignments.get(i) || "");
 
-const isCorrect = builtWords.every((w, i) => 
-  w.toLowerCase() === correctWords[i].toLowerCase()
-);
+    const isCorrect = builtWords.every((w, i) =>
+      w.toLowerCase() === correctWords[i].toLowerCase()
+    );
 
-if (isCorrect) {
+    if (isCorrect) {
 
-  // Visual confirmation (green slots)
-  document.querySelectorAll(".sentence-slot").forEach(slot => {
-    slot.style.backgroundColor = "#4CAF50";
-  });
+      document.querySelectorAll(".sentence-slot").forEach(slot => {
+        slot.classList.add("correct");
+      });
 
-  const tState = ensureTemplateProgress(tpl);
+      const tState = ensureTemplateProgress(tpl);
 
-tState.streak++;
-tState.lastResult = true;
-tState.lastShownAt = run.exerciseCounter;
+      tState.streak++;
+      tState.lastResult = true;
+      tState.lastShownAt = run.exerciseCounter;
 
-if (tState.streak >= 2) {
-  tState.completed = true;
-}
+      if (tState.streak >= 2) {
+        tState.completed = true;
+      }
 
-  setTimeout(() => renderNext(targetLang, supportLang), 800);
-} else {
-  // Visual feedback (red slots)
-  document.querySelectorAll(".sentence-slot").forEach(slot => {
-    slot.style.backgroundColor = "#D32F2F";
-  });
+      setTimeout(() => renderNext(targetLang, supportLang), 800);
+    } else {
+      document.querySelectorAll(".sentence-slot").forEach(slot => {
+        slot.classList.add("incorrect");
+      });
 
- const tState = ensureTemplateProgress(tpl);
+      const tState = ensureTemplateProgress(tpl);
 
-tState.streak = 0;
-tState.lastResult = false;
-tState.lastShownAt = run.exerciseCounter;
+      tState.streak = 0;
+      tState.lastResult = false;
+      tState.lastShownAt = run.exerciseCounter;
 
-  // Reveal the correct sentence so the learner sees what they should have built.
-  const correctSentence = capitalizeFirst(correctWords.join(" ")) + ".";
-  revealCorrectAnswerBanner(correctSentence, targetLang);
+      // The correct sentence isn't visible anywhere on screen (the tiles
+      // are mixed up in the slots), so keep the banner reveal here.
+      const correctSentence = capitalizeFirst(correctWords.join(" ")) + ".";
+      revealCorrectAnswerBanner(correctSentence, targetLang);
 
-  setTimeout(() => renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept), 2800);
-}
+      checkL6Btn.disabled = false;
+      checkL6Btn.textContent = ui("continue");
+      checkL6Btn.onclick = () => renderNext(targetLang, supportLang);
+    }
   };
 }
 // -------------------------
@@ -4385,6 +4437,22 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
 
 
  
+// True only when there's nothing left to teach: no future bundles AND every
+// released concept is already at its level cap (`completed`). A session
+// that simply stalls (e.g. L5 quorum can't be met) does NOT satisfy this —
+// the user should keep playing in that case.
+function runIsExhausted(run) {
+  if (!run) return false;
+  const planExhausted = !run.releasePlan ||
+    run.releasePlanIndex >= run.releasePlan.length;
+  if (!planExhausted) return false;
+  if (!Array.isArray(run.released) || run.released.length === 0) return false;
+  return run.released.every(cid => {
+    const p = run.progress?.[cid];
+    return p?.completed === true;
+  });
+}
+
 function endSession(targetLang, supportLang) {
 
   run.sessionNumber++;
@@ -4617,6 +4685,40 @@ function chooseTemplateForConcept(cid) {
   const picked = eligible[Math.floor(Math.random() * eligible.length)];
   return maybeVarySubject(picked, cid);
 }
+// Celebratory screen shown when the user has completed every released
+// concept and there are no more bundles to release. Replaces the silent
+// roadmap-then-empty-session loop that would otherwise occur.
+function renderRunComplete(targetLang, supportLang) {
+  const screen = document.getElementById("run-complete-screen");
+  if (!screen) return;
+
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  screen.classList.add("active");
+
+  const titleEl = screen.querySelector(".title");
+  const bodyEl  = document.getElementById("run-complete-body");
+  const statsEl = document.getElementById("run-complete-stats");
+  const backBtn = document.getElementById("run-complete-back");
+
+  if (titleEl) titleEl.textContent = ui("runCompleteTitle");
+  if (bodyEl)  bodyEl.textContent  = ui("runCompleteBody");
+  if (statsEl) {
+    const conceptsLearned = (run.released || []).length;
+    const sessionsPlayed = Math.max(0, (run.sessionNumber || 1) - 1);
+    statsEl.textContent = String(ui("runCompleteStats") || "")
+      .replace("{concepts}", conceptsLearned)
+      .replace("{sessions}", sessionsPlayed);
+  }
+  if (backBtn) {
+    backBtn.textContent = ui("runCompleteBack");
+    backBtn.onclick = () => {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      const hub = document.getElementById("language-screen");
+      if (hub) hub.classList.add("active");
+    };
+  }
+}
+
 function renderNext(targetLang, supportLang) {
   markExerciseStart();
   // Retrigger the fade-in animation on every new exercise. Removing
@@ -4634,6 +4736,9 @@ if (bar) {
 }
   if (!run) return;
 
+  if (runIsExhausted(run)) {
+    return renderRunComplete(targetLang, supportLang);
+  }
 
   if (run.sessionComplete) {
     return endSession(targetLang, supportLang);
