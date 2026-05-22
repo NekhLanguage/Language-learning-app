@@ -906,12 +906,18 @@ if (buyAccess) {
   return;
 }
 
-  const VOCAB_FILES = [
+  const CORE_VOCAB_FILES = [
     "adjectives.json","connectors.json","directions_positions.json",
     "glue_words.json","nouns.json","numbers.json",
     "politeness_modality.json","pronouns.json","quantifiers.json",
-    "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json",
-    "anime.json", "football.json", "music.json"
+    "question_words.json","time_words.json","verbs.json"
+  ];
+  // Single source of truth: every pack registered in RESOURCE_PACKS contributes
+  // its vocabFile here automatically. Registering a pack and forgetting to load
+  // it is no longer possible.
+  const VOCAB_FILES = [
+    ...CORE_VOCAB_FILES,
+    ...Object.values(RESOURCE_PACKS).map(p => p.vocabFile).filter(Boolean)
   ];
 
 function createRunState() {
