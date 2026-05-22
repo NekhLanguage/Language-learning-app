@@ -417,28 +417,6 @@
       }
     },
     {
-      "template_id": "POKEMON_IS_BURN",
-      "concepts": [
-        "POKEMON",
-        "BE",
-        "BURN"
-      ],
-      "render": {
-        "en": "The Pokémon is burned."
-      }
-    },
-    {
-      "template_id": "POKEMON_IS_POISON",
-      "concepts": [
-        "POKEMON",
-        "BE",
-        "POISON"
-      ],
-      "render": {
-        "en": "The Pokémon is poisoned."
-      }
-    },
-    {
       "template_id": "POKEMON_IS_SLEEP",
       "concepts": [
         "POKEMON",
@@ -447,17 +425,6 @@
       ],
       "render": {
         "en": "The Pokémon is asleep."
-      }
-    },
-    {
-      "template_id": "POKEMON_IS_PARALYZE",
-      "concepts": [
-        "POKEMON",
-        "BE",
-        "PARALYZE"
-      ],
-      "render": {
-        "en": "The Pokémon is paralyzed."
       }
     },
     {
