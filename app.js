@@ -911,7 +911,8 @@ if (buyAccess) {
     "glue_words.json","nouns.json","numbers.json",
     "politeness_modality.json","pronouns.json","quantifiers.json",
     "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json",
-    "anime.json", "football.json", "music.json"
+    "anime.json", "football.json", "music.json",
+    "everyday_life.json", "fashion_style.json", "gaming.json", "tourism.json", "space_scifi.json"
   ];
 
 function createRunState() {

@@ -111,28 +111,6 @@
       }
     },
     {
-      "template_id": "HE_IS_COOK",
-      "concepts": [
-        "HE",
-        "BE",
-        "COOK"
-      ],
-      "render": {
-        "en": "He is a cook."
-      }
-    },
-    {
-      "template_id": "SHE_IS_COOK",
-      "concepts": [
-        "SHE",
-        "BE",
-        "COOK"
-      ],
-      "render": {
-        "en": "She is a cook."
-      }
-    },
-    {
       "template_id": "I_SEE_KITCHEN",
       "concepts": [
         "FIRST_PERSON_SINGULAR",
