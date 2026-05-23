@@ -30,16 +30,16 @@ const VOCAB_FILES = [
 const POOL_TYPES       = ['noun', 'verb', 'adjective'];
 const MIN_POOL_SIZE    = 4;
 
-// Template files to validate
-const TEMPLATE_FILES = [
-  'sentence_templates.json',
-  'sentence_templates_cooking.json',
-  'sentence_templates_harry_potter.json',
-  'sentence_templates_pokemon.json',
-  'sentence_templates_anime.json',
-  'sentence_templates_football.json',
-  'sentence_templates_music.json',
-];
+// Template files are auto-discovered from the repo root by filename convention:
+// every `sentence_templates*.json` is included. This mirrors how loadAllLangData
+// reads lang/*.json off disk and removes the register-but-forget failure mode
+// for resource packs — adding a pack template file picks it up automatically.
+function discoverTemplateFiles() {
+  return fs.readdirSync(ROOT)
+    .filter(f => /^sentence_templates.*\.json$/.test(f))
+    .sort();
+}
+const TEMPLATE_FILES = discoverTemplateFiles();
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
