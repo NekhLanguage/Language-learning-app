@@ -2659,6 +2659,23 @@ function nounWithPossessive(lang, possessiveCid, nounCid) {
 const POST_ADJECTIVE_LANGS = new Set(["pt", "ar"]);
 // All others (en, ja, ko, no, uk, de, el, tr) place adjective before noun
 
+// Numbers that take the kun-yomi generic counter つ in Japanese (ひとつ,
+// ふたつ, …, ここのつ). For 10+, the bare number is linked with の or paired
+// with the broader 個 counter; see jaQuantifierPrefix.
+const JA_KUN_COUNTER_NUMBERS = new Set([
+  "ONE", "TWO", "THREE", "FOUR", "FIVE",
+  "SIX", "SEVEN", "EIGHT", "NINE",
+]);
+
+// Japanese quantifier rendering: numbers attach to nouns through a counter
+// plus the linking particle の. ONE-NINE use the universal つ counter (二つ
+// の食べ物 = "two foods"); TEN-FIFTEEN use 個 (十個の食べ物). Renders the
+// "<number><counter>の" prefix to splice in front of the noun phrase.
+function jaQuantifierPrefix(numberCid, numberWord) {
+  const counter = JA_KUN_COUNTER_NUMBERS.has(numberCid) ? "つ" : "個";
+  return numberWord + counter + "の";
+}
+
 function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
   const adjective = (opts.plural && lang !== "en")
     ? genderedFormOf(lang, adjectiveCid, nounCid, true)
@@ -2965,6 +2982,16 @@ if (tpl.structure?.type === "complex_clause") {
     } else {
       nounForm = pluralFormOf(lang, cid);
     }
+    // Japanese requires a counter when a number quantifies a noun. Render as
+    // "<number><counter>の<noun>" so "二 食べ物" becomes "二つの食べ物"
+    // ("two foods"). Adjectives sit between の and the noun, matching the
+    // natural JA order ("二つの新しい食べ物").
+    if (lang === "ja") {
+      const prefix = jaQuantifierPrefix(numberCid, numberWord);
+      return adjectiveWord
+        ? prefix + adjectiveWord + nounForm
+        : prefix + nounForm;
+    }
     if (adjectiveWord) {
       const adjForm = (isPlural && adjectiveCid && lang !== "en")
         ? genderedFormOf(lang, adjectiveCid, cid, true)
@@ -3016,14 +3043,19 @@ if (tpl.structure?.type === "complex_clause") {
       window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
     );
 
-    const nounIndex = ordered.findIndex(c =>
-      window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
-    );
-
     // Insert in reverse index order so earlier splices don't shift later indices
     const insertions = [];
     if (pronounIndex !== -1) insertions.push({ idx: pronounIndex + 1, particle: "は" });
-    if (nounIndex !== -1) insertions.push({ idx: nounIndex + 1, particle: "を" });
+    // Copular templates ("X is Y") never take を — the predicate noun sits
+    // directly before the copula です/だ. Inserting を produces ungrammatical
+    // strings like "彼らは隣人をです". Non-copular SVO templates ("X eats Y")
+    // still get を after the direct-object noun.
+    if (!isCopularTemplate) {
+      const nounIndex = ordered.findIndex(c =>
+        window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+      );
+      if (nounIndex !== -1) insertions.push({ idx: nounIndex + 1, particle: "を" });
+    }
     insertions.sort((a, b) => b.idx - a.idx);
     for (const ins of insertions) {
       wordsWithParticles.splice(ins.idx, 0, ins.particle);
