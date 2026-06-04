@@ -130,17 +130,17 @@
     "pt": {
       "label": "Portuguese",
       "forms": {
-        "PITCH":      { "form": "campo", "gender": "m" },
+        "PITCH": { "form": "campo", "gender": "m", "plural": "campos" },
         "GOAL":       { "form": "gol", "gender": "m" },
         "NET":        { "form": "rede", "gender": "f" },
-        "STADIUM":    { "form": "estádio", "gender": "m" },
-        "WHISTLE":    { "form": "apito", "gender": "m" },
+        "STADIUM": { "form": "estádio", "gender": "m", "plural": "estádios" },
+        "WHISTLE": { "form": "apito", "gender": "m", "plural": "apitos" },
 
-        "STRIKER":    { "form": "atacante", "gender": "m" },
-        "GOALKEEPER": { "form": "goleiro", "gender": "m" },
-        "CAPTAIN":    { "form": "capitão", "gender": "m" },
-        "REFEREE":    { "form": "árbitro", "gender": "m" },
-        "COACH":      { "form": "treinador", "gender": "m" },
+        "STRIKER": { "form": "atacante", "gender": "m", "plural": "atacantes" },
+        "GOALKEEPER": { "form": "goleiro", "gender": "m", "plural": "goleiros" },
+        "CAPTAIN": { "form": "capitão", "gender": "m", "plural": "capitães" },
+        "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros" },
+        "COACH": { "form": "treinador", "gender": "m", "plural": "treinadores" },
 
         "KICK":       { "base": "chutar",     "1_singular": "chuto",      "2_singular": "chutas",     "3_singular": "chuta",      "1_plural": "chutamos",    "2_plural": "chutam",     "3_plural": "chutam" },
         "PASS":       { "base": "passar",     "1_singular": "passo",      "2_singular": "passas",     "3_singular": "passa",      "1_plural": "passamos",    "2_plural": "passam",     "3_plural": "passam" },
@@ -158,19 +158,19 @@
         "PENALTY":    { "form": "pênalti", "gender": "m" },
         "CORNER":     { "form": "escanteio", "gender": "m" },
         "OFFSIDE":    ["impedido"],
-        "HALFTIME":   { "form": "intervalo", "gender": "m" },
+        "HALFTIME": { "form": "intervalo", "gender": "m", "plural": "intervalos" },
 
         "SQUAD":      { "form": "elenco", "gender": "m" },
-        "FORMATION":  { "form": "formação", "gender": "f" },
-        "LEAGUE":     { "form": "liga", "gender": "f" },
-        "SUBSTITUTE": { "form": "substituto", "gender": "m" },
+        "FORMATION": { "form": "formação", "gender": "f", "plural": "formações" },
+        "LEAGUE": { "form": "liga", "gender": "f", "plural": "ligas" },
+        "SUBSTITUTE": { "form": "substituto", "gender": "m", "plural": "substitutos" },
         "ASSIST":     { "form": "assistência", "gender": "f" },
 
-        "MATCH":      { "form": "partida", "gender": "f" },
-        "VICTORY":    { "form": "vitória", "gender": "f" },
+        "MATCH": { "form": "partida", "gender": "f", "plural": "partidas" },
+        "VICTORY": { "form": "vitória", "gender": "f", "plural": "vitórias" },
         "DEFEAT":     { "form": "derrota", "gender": "f" },
         "DRAW":       { "form": "empate", "gender": "m" },
-        "TROPHY":     { "form": "troféu", "gender": "m" },
+        "TROPHY": { "form": "troféu", "gender": "m", "plural": "troféus" },
 
         "SWIFT":      ["veloz"],
         "SKILLED":    ["habilidoso"],
@@ -184,10 +184,10 @@
         "COUNTER":    { "base": "contra-atacar","1_singular": "contra-ataco","2_singular": "contra-atacas","3_singular": "contra-ataca", "1_plural": "contra-atacamos","2_plural": "contra-atacam","3_plural": "contra-atacam" },
         "DOMINATE":   { "base": "dominar",     "1_singular": "domino",       "2_singular": "dominas",      "3_singular": "domina",       "1_plural": "dominamos",      "2_plural": "dominam",      "3_plural": "dominam" },
 
-        "CHAMPION":   { "form": "campeão", "gender": "m" },
+        "CHAMPION": { "form": "campeão", "gender": "m", "plural": "campeões" },
         "CROWD":      { "form": "torcida", "gender": "f" },
         "CELEBRATE":  { "base": "celebrar",    "1_singular": "celebro",      "2_singular": "celebras",     "3_singular": "celebra",      "1_plural": "celebramos",     "2_plural": "celebram",     "3_plural": "celebram" },
-        "FINAL":      { "form": "final", "gender": "f" },
+        "FINAL": { "form": "final", "gender": "f", "plural": "finais" },
         "UNBEATABLE": ["invencível"]
       }
     },
@@ -260,17 +260,17 @@
     "de": {
       "label": "German",
       "forms": {
-        "PITCH":      { "form": "Spielfeld", "gender": "n" },
+        "PITCH": { "form": "Spielfeld", "gender": "n", "plural": "Spielfelder" },
         "GOAL":       { "form": "Tor", "gender": "n" },
         "NET":        { "form": "Netz", "gender": "n" },
-        "STADIUM":    { "form": "Stadion", "gender": "n" },
-        "WHISTLE":    { "form": "Pfeife", "gender": "f" },
+        "STADIUM": { "form": "Stadion", "gender": "n", "plural": "Stadien" },
+        "WHISTLE": { "form": "Pfeife", "gender": "f", "plural": "Pfeifen" },
 
-        "STRIKER":    { "form": "Stürmer", "gender": "m" },
-        "GOALKEEPER": { "form": "Torwart", "gender": "m" },
-        "CAPTAIN":    { "form": "Kapitän", "gender": "m" },
-        "REFEREE":    { "form": "Schiedsrichter", "gender": "m" },
-        "COACH":      { "form": "Trainer", "gender": "m" },
+        "STRIKER": { "form": "Stürmer", "gender": "m", "plural": "Stürmer" },
+        "GOALKEEPER": { "form": "Torwart", "gender": "m", "plural": "Torwarte" },
+        "CAPTAIN": { "form": "Kapitän", "gender": "m", "plural": "Kapitäne" },
+        "REFEREE": { "form": "Schiedsrichter", "gender": "m", "plural": "Schiedsrichter" },
+        "COACH": { "form": "Trainer", "gender": "m", "plural": "Trainer" },
 
         "KICK":       { "base": "treten",       "1_singular": "trete",        "2_singular": "trittst",      "3_singular": "tritt",        "1_plural": "treten",       "2_plural": "tretet",       "3_plural": "treten" },
         "PASS":       { "base": "passen",       "1_singular": "passe",        "2_singular": "passt",        "3_singular": "passt",        "1_plural": "passen",       "2_plural": "passt",        "3_plural": "passen" },
@@ -288,19 +288,19 @@
         "PENALTY":    { "form": "Elfmeter", "gender": "m" },
         "CORNER":     { "form": "Eckstoß", "gender": "m" },
         "OFFSIDE":    ["abseits"],
-        "HALFTIME":   { "form": "Halbzeit", "gender": "f" },
+        "HALFTIME": { "form": "Halbzeit", "gender": "f", "plural": "Halbzeiten" },
 
         "SQUAD":      { "form": "Kader", "gender": "m" },
-        "FORMATION":  { "form": "Formation", "gender": "f" },
-        "LEAGUE":     { "form": "Liga", "gender": "f" },
-        "SUBSTITUTE": { "form": "Ersatzspieler", "gender": "m" },
+        "FORMATION": { "form": "Formation", "gender": "f", "plural": "Formationen" },
+        "LEAGUE": { "form": "Liga", "gender": "f", "plural": "Ligen" },
+        "SUBSTITUTE": { "form": "Ersatzspieler", "gender": "m", "plural": "Ersatzspieler" },
         "ASSIST":     { "form": "Vorlage", "gender": "f" },
 
-        "MATCH":      { "form": "Spiel", "gender": "n" },
-        "VICTORY":    { "form": "Sieg", "gender": "m" },
+        "MATCH": { "form": "Spiel", "gender": "n", "plural": "Spiele" },
+        "VICTORY": { "form": "Sieg", "gender": "m", "plural": "Siege" },
         "DEFEAT":     { "form": "Niederlage", "gender": "f" },
         "DRAW":       { "form": "Unentschieden", "gender": "n" },
-        "TROPHY":     { "form": "Pokal", "gender": "m" },
+        "TROPHY": { "form": "Pokal", "gender": "m", "plural": "Pokale" },
 
         "SWIFT":      ["flink"],
         "SKILLED":    ["geschickt"],
@@ -314,10 +314,10 @@
         "COUNTER":    { "base": "kontern",      "1_singular": "kontere",      "2_singular": "konterst",     "3_singular": "kontert",      "1_plural": "kontern",      "2_plural": "kontert",      "3_plural": "kontern" },
         "DOMINATE":   { "base": "dominieren",   "1_singular": "dominiere",    "2_singular": "dominierst",   "3_singular": "dominiert",    "1_plural": "dominieren",   "2_plural": "dominiert",    "3_plural": "dominieren" },
 
-        "CHAMPION":   { "form": "Meister", "gender": "m" },
+        "CHAMPION": { "form": "Meister", "gender": "m", "plural": "Meister" },
         "CROWD":      { "form": "Menge", "gender": "f" },
         "CELEBRATE":  { "base": "feiern",       "1_singular": "feiere",       "2_singular": "feierst",      "3_singular": "feiert",       "1_plural": "feiern",       "2_plural": "feiert",       "3_plural": "feiern" },
-        "FINAL":      { "form": "Finale", "gender": "n" },
+        "FINAL": { "form": "Finale", "gender": "n", "plural": "Finale" },
         "UNBEATABLE": ["unschlagbar"]
       }
     },
@@ -325,17 +325,17 @@
     "el": {
       "label": "Greek",
       "forms": {
-        "PITCH":      { "form": "γήπεδο" },
+        "PITCH": { "form": "γήπεδο", "plural": "γήπεδα" },
         "GOAL":       { "form": "γκολ" },
         "NET":        { "form": "δίχτυ" },
-        "STADIUM":    { "form": "στάδιο" },
-        "WHISTLE":    { "form": "σφυρίχτρα" },
+        "STADIUM": { "form": "στάδιο", "plural": "στάδια" },
+        "WHISTLE": { "form": "σφυρίχτρα", "plural": "σφυρίχτρες" },
 
-        "STRIKER":    { "form": "επιθετικός" },
-        "GOALKEEPER": { "form": "τερματοφύλακας" },
-        "CAPTAIN":    { "form": "αρχηγός" },
-        "REFEREE":    { "form": "διαιτητής" },
-        "COACH":      { "form": "προπονητής" },
+        "STRIKER": { "form": "επιθετικός", "plural": "επιθετικοί" },
+        "GOALKEEPER": { "form": "τερματοφύλακας", "plural": "τερματοφύλακες" },
+        "CAPTAIN": { "form": "αρχηγός", "plural": "αρχηγοί" },
+        "REFEREE": { "form": "διαιτητής", "plural": "διαιτητές" },
+        "COACH": { "form": "προπονητής", "plural": "προπονητές" },
 
         "KICK":       { "base": "κλωτσώ",     "1_singular": "κλωτσώ",     "2_singular": "κλωτσάς",    "3_singular": "κλωτσά",     "1_plural": "κλωτσάμε",    "2_plural": "κλωτσάτε",    "3_plural": "κλωτσούν" },
         "PASS":       { "base": "πασάρω",     "1_singular": "πασάρω",     "2_singular": "πασάρεις",   "3_singular": "πασάρει",    "1_plural": "πασάρουμε",   "2_plural": "πασάρετε",    "3_plural": "πασάρουν" },
@@ -353,19 +353,19 @@
         "PENALTY":    { "form": "πέναλτι" },
         "CORNER":     { "form": "κόρνερ" },
         "OFFSIDE":    ["οφσάιντ"],
-        "HALFTIME":   { "form": "ημίχρονο" },
+        "HALFTIME": { "form": "ημίχρονο", "plural": "ημίχρονα" },
 
         "SQUAD":      { "form": "ομάδα" },
-        "FORMATION":  { "form": "σχηματισμός" },
-        "LEAGUE":     { "form": "πρωτάθλημα" },
-        "SUBSTITUTE": { "form": "αντικαταστάτης" },
+        "FORMATION": { "form": "σχηματισμός", "plural": "σχηματισμοί" },
+        "LEAGUE": { "form": "πρωτάθλημα", "plural": "πρωταθλήματα" },
+        "SUBSTITUTE": { "form": "αντικαταστάτης", "plural": "αντικαταστάτες" },
         "ASSIST":     { "form": "ασίστ" },
 
-        "MATCH":      { "form": "αγώνας" },
-        "VICTORY":    { "form": "νίκη" },
+        "MATCH": { "form": "αγώνας", "plural": "αγώνες" },
+        "VICTORY": { "form": "νίκη", "plural": "νίκες" },
         "DEFEAT":     { "form": "ήττα" },
         "DRAW":       { "form": "ισοπαλία" },
-        "TROPHY":     { "form": "τρόπαιο" },
+        "TROPHY": { "form": "τρόπαιο", "plural": "τρόπαια" },
 
         "SWIFT":      ["γρήγορος"],
         "SKILLED":    ["ικανός"],
@@ -379,10 +379,10 @@
         "COUNTER":    { "base": "αντεπιτίθεμαι","1_singular": "αντεπιτίθεμαι","2_singular": "αντεπιτίθεσαι","3_singular": "αντεπιτίθεται","1_plural": "αντεπιτιθόμαστε","2_plural": "αντεπιτίθεστε","3_plural": "αντεπιτίθενται" },
         "DOMINATE":   { "base": "κυριαρχώ",     "1_singular": "κυριαρχώ",     "2_singular": "κυριαρχείς",    "3_singular": "κυριαρχεί",     "1_plural": "κυριαρχούμε",   "2_plural": "κυριαρχείτε",   "3_plural": "κυριαρχούν" },
 
-        "CHAMPION":   { "form": "πρωταθλητής" },
+        "CHAMPION": { "form": "πρωταθλητής", "plural": "πρωταθλητές" },
         "CROWD":      { "form": "πλήθος" },
         "CELEBRATE":  { "base": "γιορτάζω",     "1_singular": "γιορτάζω",     "2_singular": "γιορτάζεις",    "3_singular": "γιορτάζει",     "1_plural": "γιορτάζουμε",   "2_plural": "γιορτάζετε",    "3_plural": "γιορτάζουν" },
-        "FINAL":      { "form": "τελικός" },
+        "FINAL": { "form": "τελικός", "plural": "τελικοί" },
         "UNBEATABLE": ["ανίκητος"]
       }
     },
@@ -650,17 +650,17 @@
     "uk": {
       "label": "Ukrainian",
       "forms": {
-        "PITCH":      { "form": "поле" },
+        "PITCH": { "form": "поле", "plural": "поля" },
         "GOAL":       { "form": "гол" },
         "NET":        { "form": "сітка" },
-        "STADIUM":    { "form": "стадіон" },
-        "WHISTLE":    { "form": "свисток" },
+        "STADIUM": { "form": "стадіон", "plural": "стадіони" },
+        "WHISTLE": { "form": "свисток", "plural": "свистки" },
 
-        "STRIKER":    { "form": "нападник" },
-        "GOALKEEPER": { "form": "воротар" },
-        "CAPTAIN":    { "form": "капітан" },
-        "REFEREE":    { "form": "суддя" },
-        "COACH":      { "form": "тренер" },
+        "STRIKER": { "form": "нападник", "plural": "нападники" },
+        "GOALKEEPER": { "form": "воротар", "plural": "воротарі" },
+        "CAPTAIN": { "form": "капітан", "plural": "капітани" },
+        "REFEREE": { "form": "суддя", "plural": "судді" },
+        "COACH": { "form": "тренер", "plural": "тренери" },
 
         "KICK":       { "base": "бити" },
         "PASS":       { "base": "пасувати" },
@@ -678,19 +678,19 @@
         "PENALTY":    { "form": "пенальті" },
         "CORNER":     { "form": "кутовий" },
         "OFFSIDE":    ["офсайд"],
-        "HALFTIME":   { "form": "перерва" },
+        "HALFTIME": { "form": "перерва", "plural": "перерви" },
 
         "SQUAD":      { "form": "команда" },
-        "FORMATION":  { "form": "формація" },
-        "LEAGUE":     { "form": "ліга" },
-        "SUBSTITUTE": { "form": "запасний гравець" },
+        "FORMATION": { "form": "формація", "plural": "формації" },
+        "LEAGUE": { "form": "ліга", "plural": "ліги" },
+        "SUBSTITUTE": { "form": "запасний гравець", "plural": "запасні гравці" },
         "ASSIST":     { "form": "асист" },
 
-        "MATCH":      { "form": "матч" },
-        "VICTORY":    { "form": "перемога" },
+        "MATCH": { "form": "матч", "plural": "матчі" },
+        "VICTORY": { "form": "перемога", "plural": "перемоги" },
         "DEFEAT":     { "form": "поразка" },
         "DRAW":       { "form": "нічия" },
-        "TROPHY":     { "form": "трофей" },
+        "TROPHY": { "form": "трофей", "plural": "трофеї" },
 
         "SWIFT":      ["швидкий"],
         "SKILLED":    ["вмілий"],
@@ -704,10 +704,10 @@
         "COUNTER":    { "base": "контратакувати" },
         "DOMINATE":   { "base": "домінувати" },
 
-        "CHAMPION":   { "form": "чемпіон" },
+        "CHAMPION": { "form": "чемпіон", "plural": "чемпіони" },
         "CROWD":      { "form": "натовп" },
         "CELEBRATE":  { "base": "святкувати" },
-        "FINAL":      { "form": "фінал" },
+        "FINAL": { "form": "фінал", "plural": "фінали" },
         "UNBEATABLE": ["непереможний"]
       }
     },
@@ -715,17 +715,17 @@
     "es": {
       "label": "Spanish",
       "forms": {
-        "PITCH":      { "form": "campo", "gender": "m" },
+        "PITCH": { "form": "campo", "gender": "m", "plural": "campos" },
         "GOAL":       { "form": "gol", "gender": "m" },
         "NET":        { "form": "red", "gender": "f" },
-        "STADIUM":    { "form": "estadio", "gender": "m" },
-        "WHISTLE":    { "form": "silbato", "gender": "m" },
+        "STADIUM": { "form": "estadio", "gender": "m", "plural": "estadios" },
+        "WHISTLE": { "form": "silbato", "gender": "m", "plural": "silbatos" },
 
-        "STRIKER":    { "form": "delantero", "gender": "m" },
-        "GOALKEEPER": { "form": "portero", "gender": "m" },
-        "CAPTAIN":    { "form": "capitán", "gender": "m" },
-        "REFEREE":    { "form": "árbitro", "gender": "m" },
-        "COACH":      { "form": "entrenador", "gender": "m" },
+        "STRIKER": { "form": "delantero", "gender": "m", "plural": "delanteros" },
+        "GOALKEEPER": { "form": "portero", "gender": "m", "plural": "porteros" },
+        "CAPTAIN": { "form": "capitán", "gender": "m", "plural": "capitanes" },
+        "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros" },
+        "COACH": { "form": "entrenador", "gender": "m", "plural": "entrenadores" },
 
         "KICK":       { "base": "patear",       "1_singular": "pateo",       "2_singular": "pateas",      "3_singular": "patea",       "1_plural": "pateamos",    "2_plural": "pateáis",    "3_plural": "patean" },
         "PASS":       { "base": "pasar",        "1_singular": "paso",        "2_singular": "pasas",       "3_singular": "pasa",        "1_plural": "pasamos",     "2_plural": "pasáis",     "3_plural": "pasan" },
@@ -743,19 +743,19 @@
         "PENALTY":    { "form": "penalti", "gender": "m" },
         "CORNER":     { "form": "córner", "gender": "m" },
         "OFFSIDE":    ["fuera de juego"],
-        "HALFTIME":   { "form": "descanso", "gender": "m" },
+        "HALFTIME": { "form": "descanso", "gender": "m", "plural": "descansos" },
 
         "SQUAD":      { "form": "plantilla", "gender": "f" },
-        "FORMATION":  { "form": "formación", "gender": "f" },
-        "LEAGUE":     { "form": "liga", "gender": "f" },
-        "SUBSTITUTE": { "form": "suplente", "gender": "m" },
+        "FORMATION": { "form": "formación", "gender": "f", "plural": "formaciones" },
+        "LEAGUE": { "form": "liga", "gender": "f", "plural": "ligas" },
+        "SUBSTITUTE": { "form": "suplente", "gender": "m", "plural": "suplentes" },
         "ASSIST":     { "form": "asistencia", "gender": "f" },
 
-        "MATCH":      { "form": "partido", "gender": "m" },
-        "VICTORY":    { "form": "victoria", "gender": "f" },
+        "MATCH": { "form": "partido", "gender": "m", "plural": "partidos" },
+        "VICTORY": { "form": "victoria", "gender": "f", "plural": "victorias" },
         "DEFEAT":     { "form": "derrota", "gender": "f" },
         "DRAW":       { "form": "empate", "gender": "m" },
-        "TROPHY":     { "form": "trofeo", "gender": "m" },
+        "TROPHY": { "form": "trofeo", "gender": "m", "plural": "trofeos" },
 
         "SWIFT":      ["veloz"],
         "SKILLED":    ["habilidoso"],
@@ -769,10 +769,10 @@
         "COUNTER":    { "base": "contratatacar","1_singular": "contraataco", "2_singular": "contraatacas", "3_singular": "contraataca", "1_plural": "contraatacamos","2_plural": "contraatacáis","3_plural": "contraatacan" },
         "DOMINATE":   { "base": "dominar",      "1_singular": "domino",      "2_singular": "dominas",      "3_singular": "domina",      "1_plural": "dominamos",   "2_plural": "domináis",   "3_plural": "dominan" },
 
-        "CHAMPION":   { "form": "campeón", "gender": "m" },
+        "CHAMPION": { "form": "campeón", "gender": "m", "plural": "campeones" },
         "CROWD":      { "form": "multitud", "gender": "f" },
         "CELEBRATE":  { "base": "celebrar",     "1_singular": "celebro",     "2_singular": "celebras",     "3_singular": "celebra",     "1_plural": "celebramos",  "2_plural": "celebráis",  "3_plural": "celebran" },
-        "FINAL":      { "form": "final", "gender": "f" },
+        "FINAL": { "form": "final", "gender": "f", "plural": "finales" },
         "UNBEATABLE": ["invencible"]
       }
     }
