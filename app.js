@@ -2382,12 +2382,21 @@ function surfaceForm(lang, cid) {
   const subject = window.GLOBAL_VOCAB.concepts[subjectCid];
   if (!subject) return verbData.base || verbCid;
 
-  // Build dynamic key (e.g. "1_singular", "2_plural", etc.)
-  let key = "base";
-
-  if (subject.person && subject.number) {
-    key = `${subject.person}_${subject.number}`;
+  // Effective grammatical person/number. Pronouns with explicit agreement use
+  // it directly. Demonstratives (THIS/THAT), the neuter IT, and noun subjects
+  // carry no person/number — they behave as 3rd person, so default them rather
+  // than falling back to the infinitive ("This be" → "This is", "Це бути" →
+  // "Це є"). Plural demonstratives, if any, map to 3rd plural.
+  let person = subject.person;
+  let number = subject.number;
+  if (!person || !number) {
+    person = 3;
+    number = isPluralPronoun(subjectCid) ? "plural" : "singular";
   }
+
+  // Build dynamic key (e.g. "1_singular", "2_plural", etc.)
+  let key = `${person}_${number}`;
+
 // Portuguese: "você/vocês" conjugate like 3rd person
 if (lang === "pt") {
   if (subjectCid === "SECOND_PERSON") key = "3_singular";
@@ -2412,7 +2421,7 @@ if (lang === "pt") {
 
   if (onlyBaseAndThird) {
   // English-style verbs (base + 3_singular)
-  if (subject.person === 3 && subject.number === "singular") {
+  if (person === 3 && number === "singular") {
     return verbData["3_singular"];
   }
   return verbData.base;
@@ -2449,10 +2458,24 @@ function resolvePrompt(q, supportLang) {
 
   return "";
 }
+// Relational templates are authored in correct linear order:
+// subject-noun + copula + preposition + object ("the book is on this").
+// The generic subject/verb/object heuristic below misreads the trailing
+// demonstrative as the subject and strands the preposition at the end
+// ("...phone off"), so preserve the authored order for these instead.
+const RELATIONAL_STRUCTURES = new Set([
+  "spatial_relation", "spatial_relation_complex"
+]);
+
 function orderedConceptsForTemplate(tpl, lang) {
   // 1) Use explicit order if present
   const explicit = tpl.order?.[lang] || tpl.order?.default;
   if (Array.isArray(explicit) && explicit.length) return explicit;
+
+  // 1b) Relational templates: keep the authored concept order (see above).
+  if (RELATIONAL_STRUCTURES.has(tpl.structure?.type) && Array.isArray(tpl.concepts)) {
+    return tpl.concepts.slice();
+  }
 
   // 2) Fallback: derive order based on basic word order
   //    This keeps things working even before you finish adding tpl.order everywhere.
@@ -2595,13 +2618,34 @@ const ADJECTIVE_ROLE_COMPAT = {
     "place","building","time_period","light_source","clothing","clothing_item",
     "object","generic_object","fictional_object","color"
   ]),
+  // Direction adjectives (right/left) only sensibly modify body parts
+  // ("right hand", "left foot") among the available noun inventory.
+  property_direction: new Set(["body_part"]),
+  // Difficulty applies to tasks/skills/subjects and also to readable/usable
+  // objects ("easy book"); excludes people, places, substances, meals.
   property_difficulty: new Set([
-    "task","skill","subject","exercise","game_action","sport_action","spell"
+    "task","skill","subject","exercise","game_action","sport_action","spell",
+    "object","generic_object"
   ]),
-  property_direction: new Set(["direction_concept"]),
   // Quality + time properties stay broad (good/bad/old/new pair widely);
   // omitting them from the table preserves the source-file fallback below.
 };
+
+// Language-independent semantic check: does this adjective make sense
+// modifying this noun? Used when choosing a template for a drilled adjective
+// (which gets forced onto the template's noun) so we don't produce "right
+// revive" / "orange move". Mirrors the role allowlist in isModifierCompatible
+// but skips the per-language article/gender gate, which is applied at render
+// time. Broad adjectives (quality/time + pack adjectives without a role entry)
+// pair widely and are left unconstrained.
+function adjectiveSuitsNoun(adjCid, nounCid) {
+  const adjMeta  = window.GLOBAL_VOCAB.concepts[adjCid];
+  const nounMeta = window.GLOBAL_VOCAB.concepts[nounCid];
+  if (!adjMeta || !nounMeta) return true;
+  const allowed = ADJECTIVE_ROLE_COMPAT[adjMeta.semantic_role];
+  if (allowed) return allowed.has(nounMeta.semantic_role);
+  return true;
+}
 
 function isModifierCompatible(lang, modifierCid, nounCid) {
   const nounMeta  = window.GLOBAL_VOCAB.concepts[nounCid];
@@ -2625,7 +2669,7 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
   return modMeta.source === nounMeta?.source;
 }
 
-function buildSameTypeOptions(targetConcept, desiredTotal = 4) {
+function buildSameTypeOptions(targetConcept, desiredTotal = 4, targetLang = null) {
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
   if (!meta) return null;
 
@@ -2637,6 +2681,25 @@ function buildSameTypeOptions(targetConcept, desiredTotal = 4) {
   });
 
   if (pool.length < desiredTotal - 1) return null;
+
+  // Dedup by the DISPLAYED (target-language) surface form. Distinct concepts
+  // can share a word in the target language (polysemy) — e.g. uk EASY and
+  // LIGHT both render "легкий", es HIS/HER/THEIR all render "su" — which would
+  // otherwise produce duplicate buttons. Seed the "seen" set with the correct
+  // answer so it is always kept, then take distinct-surface distractors.
+  if (targetLang) {
+    const seen = new Set([formOf(targetLang, targetConcept)]);
+    const distractors = [];
+    for (const cid of shuffle(pool)) {
+      const form = formOf(targetLang, cid);
+      if (seen.has(form)) continue;
+      seen.add(form);
+      distractors.push(cid);
+      if (distractors.length === desiredTotal - 1) break;
+    }
+    if (distractors.length < desiredTotal - 1) return null;
+    return shuffle([targetConcept, ...distractors]);
+  }
 
   return shuffle([targetConcept, ...shuffle(pool).slice(0, desiredTotal - 1)]);
 }
@@ -2657,6 +2720,25 @@ function nounWithPossessive(lang, possessiveCid, nounCid) {
 
 // Languages where adjective follows the noun (e.g. "casa grande")
 const POST_ADJECTIVE_LANGS = new Set(["pt", "ar"]);
+
+// Languages that omit the present-tense copula. Ukrainian (and Russian-style
+// Slavic) drop "to be" in the present ("Це телефон", not "Це є телефон"), and
+// Arabic nominal sentences carry no copula ("هذا هاتف"). Other supported
+// languages (en/es/pt/de/fr/el/no/tr) keep an overt copula. Present tense only
+// — these templates are all present tense.
+const ZERO_PRESENT_COPULA = new Set(["uk", "ar"]);
+
+function isCopulaConcept(cid) {
+  return cid === "BE" ||
+    window.GLOBAL_VOCAB.concepts?.[cid]?.semantic_role === "copula";
+}
+
+// Copula surface for a given language. Returns "" for languages that drop the
+// present copula, so callers can omit the token; otherwise conjugates normally.
+function copulaForm(lang, beCid, subjectCid) {
+  if (ZERO_PRESENT_COPULA.has(lang) && isCopulaConcept(beCid)) return "";
+  return getVerbForm(beCid, subjectCid, lang);
+}
 // All others (en, ja, ko, no, uk, de, el, tr) place adjective before noun
 
 // Numbers that take the kun-yomi generic counter つ in Japanese (ひとつ,
@@ -2702,7 +2784,7 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
 }
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
-  const be = getVerbForm(beCid, subjectCid, lang);
+  const be = copulaForm(lang, beCid, subjectCid);
   const plural = isPluralPronoun(subjectCid);
   const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid, { plural });
   return joinSentence([subject, be, complement]);
@@ -2710,20 +2792,18 @@ function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCi
 
 function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
-  const be = getVerbForm(beCid, subjectCid, lang);
+  const be = copulaForm(lang, beCid, subjectCid);
   const complement = nounWithPossessive(lang, possessiveCid, nounCid);
 
-  if (lang === "en") {
-    return capitalizeFirst(`${be} ${subject} ${complement}?`);
-  }
-
-  return capitalizeFirst(`${be} ${subject} ${complement}?`);
+  // Copula-dropping languages form the yes/no question without "to be"
+  // ("Це твій телефон?"); others front the copula ("Is this your phone?").
+  return capitalizeFirst([be, subject, complement].filter(Boolean).join(" ") + "?");
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = formOf(lang, subjectCid);
-  const be = getVerbForm(beCid, subjectCid, lang);
+  const be = copulaForm(lang, beCid, subjectCid);
   const noun = nounPhrase(lang, nounCid, { plural: isPluralPronoun(subjectCid) });
-  return `${subject} ${be} ${noun}`;
+  return [subject, be, noun].filter(Boolean).join(" ");
 }
 
 function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
@@ -2864,6 +2944,11 @@ if (tpl.structure?.type === "complex_clause") {
           return entry.base;
         }
         return formOf(lang, cid);
+      }
+      // Copula in a present-tense statement: dropped entirely in
+      // copula-less languages (uk/ar), conjugated everywhere else.
+      if (isCopulaConcept(cid)) {
+        return copulaForm(lang, cid, subjectCid);
       }
       return getVerbForm(cid, subjectCid, lang);
     }
@@ -3064,7 +3149,7 @@ if (tpl.structure?.type === "complex_clause") {
     return wordsWithParticles.join("");
   }
 
-  let sentence = words.join(" ");
+  let sentence = words.filter(w => w !== "" && w != null).join(" ");
   sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
   return sentence + ".";
 }
@@ -3334,7 +3419,7 @@ if (isModifierConcept(targetConcept)) {
   const targetSurface = formOf(targetLang, targetConcept);
   const blanked = blankSentence(sentenceTarget, targetSurface);
 
-  const options = buildSameTypeOptions(targetConcept, 4);
+  const options = buildSameTypeOptions(targetConcept, 4, targetLang);
 
   if (!options) {
     return null;
@@ -4691,6 +4776,20 @@ function chooseTemplateForConcept(cid) {
       }
       return true;
     });
+
+    // The drilled adjective is forced onto the template's noun, so steer toward
+    // a template whose noun the adjective actually makes sense with — avoids
+    // "right revive" / "orange move". Fall back to the full eligible set when no
+    // compatible template exists (e.g. fast/slow have no movable noun to pair
+    // with) so the concept stays drillable rather than being skipped.
+    if (meta.type === "adjective") {
+      const compatible = eligible.filter(tpl =>
+        tpl.concepts.some(c =>
+          window.GLOBAL_VOCAB.concepts[c]?.type === "noun" && adjectiveSuitsNoun(cid, c)
+        )
+      );
+      if (compatible.length) eligible = compatible;
+    }
 
   } else {
 
