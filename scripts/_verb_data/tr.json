@@ -1,0 +1,515 @@
+{
+  "COMMUTE": {
+    "base": "işe gidip gelmek",
+    "1_singular": "işe gidip geliyorum",
+    "2_singular": "işe gidip geliyorsun",
+    "3_singular": "işe gidip geliyor",
+    "1_plural": "işe gidip geliyoruz",
+    "2_plural": "işe gidip geliyorsunuz",
+    "3_plural": "işe gidip geliyorlar"
+  },
+  "OVERSLEEP": {
+    "base": "uyumak",
+    "1_singular": "uyuyorum",
+    "2_singular": "uyuyorsun",
+    "3_singular": "uyuyor",
+    "1_plural": "uyuyoruz",
+    "2_plural": "uyuyorsunuz",
+    "3_plural": "uyuyorlar"
+  },
+  "DELIVER": {
+    "base": "teslim etmek",
+    "1_singular": "teslim ediyorum",
+    "2_singular": "teslim ediyorsun",
+    "3_singular": "teslim ediyor",
+    "1_plural": "teslim ediyoruz",
+    "2_plural": "teslim ediyorsunuz",
+    "3_plural": "teslim ediyorlar"
+  },
+  "ORGANIZE": {
+    "base": "düzenlemek",
+    "1_singular": "düzenliyorum",
+    "2_singular": "düzenliyorsun",
+    "3_singular": "düzenliyor",
+    "1_plural": "düzenliyoruz",
+    "2_plural": "düzenliyorsunuz",
+    "3_plural": "düzenliyorlar"
+  },
+  "SCHEDULE": {
+    "base": "planlamak",
+    "1_singular": "planlıyorum",
+    "2_singular": "planlıyorsun",
+    "3_singular": "planlıyor",
+    "1_plural": "planlıyoruz",
+    "2_plural": "planlıyorsunuz",
+    "3_plural": "planlıyorlar"
+  },
+  "DRIZZLE": {
+    "base": "çiselelemek",
+    "1_singular": "çiseliyorum",
+    "2_singular": "çiseliyorsun",
+    "3_singular": "çiseliyor",
+    "1_plural": "çiseliyoruz",
+    "2_plural": "çiseliyorsunuz",
+    "3_plural": "çiseliyorlar"
+  },
+  "APOLOGIZE": {
+    "base": "özür dilemek",
+    "1_singular": "özür diliyorum",
+    "2_singular": "özür diliyorsun",
+    "3_singular": "özür diliyor",
+    "1_plural": "özür diliyoruz",
+    "2_plural": "özür diliyorsunuz",
+    "3_plural": "özür diliyorlar"
+  },
+  "AFFORD": {
+    "base": "karşılamak",
+    "1_singular": "karşılıyorum",
+    "2_singular": "karşılıyorsun",
+    "3_singular": "karşılıyor",
+    "1_plural": "karşılıyoruz",
+    "2_plural": "karşılıyorsunuz",
+    "3_plural": "karşılıyorlar"
+  },
+  "EXERCISE": {
+    "base": "egzersiz yapmak",
+    "1_singular": "egzersiz yapıyorum",
+    "2_singular": "egzersiz yapıyorsun",
+    "3_singular": "egzersiz yapıyor",
+    "1_plural": "egzersiz yapıyoruz",
+    "2_plural": "egzersiz yapıyorsunuz",
+    "3_plural": "egzersiz yapıyorlar"
+  },
+  "REPAIR": {
+    "base": "tamir etmek",
+    "1_singular": "tamir ediyorum",
+    "2_singular": "tamir ediyorsun",
+    "3_singular": "tamir ediyor",
+    "1_plural": "tamir ediyoruz",
+    "2_plural": "tamir ediyorsunuz",
+    "3_plural": "tamir ediyorlar"
+  },
+  "RELAX": {
+    "base": "rahatlamak",
+    "1_singular": "rahatlıyorum",
+    "2_singular": "rahatlıyorsun",
+    "3_singular": "rahatlıyor",
+    "1_plural": "rahatlıyoruz",
+    "2_plural": "rahatlıyorsunuz",
+    "3_plural": "rahatlıyorlar"
+  },
+  "UNWIND": {
+    "base": "gevşemek",
+    "1_singular": "gevşiyorum",
+    "2_singular": "gevşiyorsun",
+    "3_singular": "gevşiyor",
+    "1_plural": "gevşiyoruz",
+    "2_plural": "gevşiyorsunuz",
+    "3_plural": "gevşiyorlar"
+  },
+  "EMBROIDER": {
+    "base": "nakış işlemek",
+    "1_singular": "nakış işliyorum",
+    "2_singular": "nakış işliyorsun",
+    "3_singular": "nakış işliyor",
+    "1_plural": "nakış işliyoruz",
+    "2_plural": "nakış işliyorsunuz",
+    "3_plural": "nakış işliyorlar"
+  },
+  "DRAPE": {
+    "base": "dökmek",
+    "1_singular": "döküyorum",
+    "2_singular": "döküyorsun",
+    "3_singular": "döküyor",
+    "1_plural": "döküyoruz",
+    "2_plural": "döküyorsunuz",
+    "3_plural": "döküyorlar"
+  },
+  "DESIGN": {
+    "base": "tasarlamak",
+    "1_singular": "tasarlıyorum",
+    "2_singular": "tasarlıyorsun",
+    "3_singular": "tasarlıyor",
+    "1_plural": "tasarlıyoruz",
+    "2_plural": "tasarlıyorsunuz",
+    "3_plural": "tasarlıyorlar"
+  },
+  "STRUT": {
+    "base": "çalım satmak",
+    "1_singular": "çalım satıyorum",
+    "2_singular": "çalım satıyorsun",
+    "3_singular": "çalım satıyor",
+    "1_plural": "çalım satıyoruz",
+    "2_plural": "çalım satıyorsunuz",
+    "3_plural": "çalım satıyorlar"
+  },
+  "BROWSE": {
+    "base": "göz atmak",
+    "1_singular": "göz atıyorum",
+    "2_singular": "göz atıyorsun",
+    "3_singular": "göz atıyor",
+    "1_plural": "göz atıyoruz",
+    "2_plural": "göz atıyorsunuz",
+    "3_plural": "göz atıyorlar"
+  },
+  "ADORN": {
+    "base": "süslemek",
+    "1_singular": "süslüyorum",
+    "2_singular": "süslüyorsun",
+    "3_singular": "süslüyor",
+    "1_plural": "süslüyoruz",
+    "2_plural": "süslüyorsunuz",
+    "3_plural": "süslüyorlar"
+  },
+  "CONTOUR": {
+    "base": "kontur çizmek",
+    "1_singular": "kontur çiziyorum",
+    "2_singular": "kontur çiziyorsun",
+    "3_singular": "kontur çiziyor",
+    "1_plural": "kontur çiziyoruz",
+    "2_plural": "kontur çiziyorsunuz",
+    "3_plural": "kontur çiziyorlar"
+  },
+  "COORDINATE": {
+    "base": "kombin yapmak",
+    "1_singular": "kombin yapıyorum",
+    "2_singular": "kombin yapıyorsun",
+    "3_singular": "kombin yapıyor",
+    "1_plural": "kombin yapıyoruz",
+    "2_plural": "kombin yapıyorsunuz",
+    "3_plural": "kombin yapıyorlar"
+  },
+  "UNVEIL": {
+    "base": "tanıtmak",
+    "1_singular": "tanıtıyorum",
+    "2_singular": "tanıtıyorsun",
+    "3_singular": "tanıtıyor",
+    "1_plural": "tanıtıyoruz",
+    "2_plural": "tanıtıyorsunuz",
+    "3_plural": "tanıtıyorlar"
+  },
+  "SHOWCASE": {
+    "base": "sergilemek",
+    "1_singular": "sergiliyorum",
+    "2_singular": "sergiliyorsun",
+    "3_singular": "sergiliyor",
+    "1_plural": "sergiliyoruz",
+    "2_plural": "sergiliyorsunuz",
+    "3_plural": "sergiliyorlar"
+  },
+  "RESPAWN": {
+    "base": "yeniden doğmak",
+    "1_singular": "yeniden doğuyorum",
+    "2_singular": "yeniden doğuyorsun",
+    "3_singular": "yeniden doğuyor",
+    "1_plural": "yeniden doğuyoruz",
+    "2_plural": "yeniden doğuyorsunuz",
+    "3_plural": "yeniden doğuyorlar"
+  },
+  "LOOT": {
+    "base": "yağmalamak",
+    "1_singular": "yağmalıyorum",
+    "2_singular": "yağmalıyorsun",
+    "3_singular": "yağmalıyor",
+    "1_plural": "yağmalıyoruz",
+    "2_plural": "yağmalıyorsunuz",
+    "3_plural": "yağmalıyorlar"
+  },
+  "CRAFT": {
+    "base": "üretmek",
+    "1_singular": "üretiyorum",
+    "2_singular": "üretiyorsun",
+    "3_singular": "üretiyor",
+    "1_plural": "üretiyoruz",
+    "2_plural": "üretiyorsunuz",
+    "3_plural": "üretiyorlar"
+  },
+  "EQUIP": {
+    "base": "donatmak",
+    "1_singular": "donatıyorum",
+    "2_singular": "donatıyorsun",
+    "3_singular": "donatıyor",
+    "1_plural": "donatıyoruz",
+    "2_plural": "donatıyorsunuz",
+    "3_plural": "donatıyorlar"
+  },
+  "GRIND": {
+    "base": "kasılmak",
+    "1_singular": "kasılıyorum",
+    "2_singular": "kasılıyorsun",
+    "3_singular": "kasılıyor",
+    "1_plural": "kasılıyoruz",
+    "2_plural": "kasılıyorsunuz",
+    "3_plural": "kasılıyorlar"
+  },
+  "SLAY": {
+    "base": "öldürmek",
+    "1_singular": "öldürüyorum",
+    "2_singular": "öldürüyorsun",
+    "3_singular": "öldürüyor",
+    "1_plural": "öldürüyoruz",
+    "2_plural": "öldürüyorsunuz",
+    "3_plural": "öldürüyorlar"
+  },
+  "UNLOCK": {
+    "base": "açmak",
+    "1_singular": "açıyorum",
+    "2_singular": "açıyorsun",
+    "3_singular": "açıyor",
+    "1_plural": "açıyoruz",
+    "2_plural": "açıyorsunuz",
+    "3_plural": "açıyorlar"
+  },
+  "ROAM": {
+    "base": "dolaşmak",
+    "1_singular": "dolaşıyorum",
+    "2_singular": "dolaşıyorsun",
+    "3_singular": "dolaşıyor",
+    "1_plural": "dolaşıyoruz",
+    "2_plural": "dolaşıyorsunuz",
+    "3_plural": "dolaşıyorlar"
+  },
+  "STREAM": {
+    "base": "yayın yapmak",
+    "1_singular": "yayın yapıyorum",
+    "2_singular": "yayın yapıyorsun",
+    "3_singular": "yayın yapıyor",
+    "1_plural": "yayın yapıyoruz",
+    "2_plural": "yayın yapıyorsunuz",
+    "3_plural": "yayın yapıyorlar"
+  },
+  "COLLECT": {
+    "base": "toplamak",
+    "1_singular": "topluyorum",
+    "2_singular": "topluyorsun",
+    "3_singular": "topluyor",
+    "1_plural": "topluyoruz",
+    "2_plural": "topluyorsunuz",
+    "3_plural": "topluyorlar"
+  },
+  "AMBUSH": {
+    "base": "pusuya düşürmek",
+    "1_singular": "pusuya düşürüyorum",
+    "2_singular": "pusuya düşürüyorsun",
+    "3_singular": "pusuya düşürüyor",
+    "1_plural": "pusuya düşürüyoruz",
+    "2_plural": "pusuya düşürüyorsunuz",
+    "3_plural": "pusuya düşürüyorlar"
+  },
+  "CLUTCH": {
+    "base": "son anda kazanmak",
+    "1_singular": "son anda kazanıyorum",
+    "2_singular": "son anda kazanıyorsun",
+    "3_singular": "son anda kazanıyor",
+    "1_plural": "son anda kazanıyoruz",
+    "2_plural": "son anda kazanıyorsunuz",
+    "3_plural": "son anda kazanıyorlar"
+  },
+  "LAUNCH": {
+    "base": "fırlatmak",
+    "1_singular": "fırlatıyorum",
+    "2_singular": "fırlatıyorsun",
+    "3_singular": "fırlatıyor",
+    "1_plural": "fırlatıyoruz",
+    "2_plural": "fırlatıyorsunuz",
+    "3_plural": "fırlatıyorlar"
+  },
+  "DISCOVER": {
+    "base": "keşfetmek",
+    "1_singular": "keşfediyorum",
+    "2_singular": "keşfediyorsun",
+    "3_singular": "keşfediyor",
+    "1_plural": "keşfediyoruz",
+    "2_plural": "keşfediyorsunuz",
+    "3_plural": "keşfediyorlar"
+  },
+  "ENCOUNTER": {
+    "base": "karşılaşmak",
+    "1_singular": "karşılaşıyorum",
+    "2_singular": "karşılaşıyorsun",
+    "3_singular": "karşılaşıyor",
+    "1_plural": "karşılaşıyoruz",
+    "2_plural": "karşılaşıyorsunuz",
+    "3_plural": "karşılaşıyorlar"
+  },
+  "ACTIVATE": {
+    "base": "etkinleştirmek",
+    "1_singular": "etkinleştiriyorum",
+    "2_singular": "etkinleştiriyorsun",
+    "3_singular": "etkinleştiriyor",
+    "1_plural": "etkinleştiriyoruz",
+    "2_plural": "etkinleştiriyorsunuz",
+    "3_plural": "etkinleştiriyorlar"
+  },
+  "NAVIGATE": {
+    "base": "seyrüsefer etmek",
+    "1_singular": "seyrüsefer ediyorum",
+    "2_singular": "seyrüsefer ediyorsun",
+    "3_singular": "seyrüsefer ediyor",
+    "1_plural": "seyrüsefer ediyoruz",
+    "2_plural": "seyrüsefer ediyorsunuz",
+    "3_plural": "seyrüsefer ediyorlar"
+  },
+  "TERRAFORM": {
+    "base": "terraforming yapmak",
+    "1_singular": "terraforming yapıyorum",
+    "2_singular": "terraforming yapıyorsun",
+    "3_singular": "terraforming yapıyor",
+    "1_plural": "terraforming yapıyoruz",
+    "2_plural": "terraforming yapıyorsunuz",
+    "3_plural": "terraforming yapıyorlar"
+  },
+  "COLONIZE": {
+    "base": "sömürgeleştirmek",
+    "1_singular": "sömürgeleştiriyorum",
+    "2_singular": "sömürgeleştiriyorsun",
+    "3_singular": "sömürgeleştiriyor",
+    "1_plural": "sömürgeleştiriyoruz",
+    "2_plural": "sömürgeleştiriyorsunuz",
+    "3_plural": "sömürgeleştiriyorlar"
+  },
+  "ORBIT": {
+    "base": "yörüngede dönmek",
+    "1_singular": "yörüngede dönüyorum",
+    "2_singular": "yörüngede dönüyorsun",
+    "3_singular": "yörüngede dönüyor",
+    "1_plural": "yörüngede dönüyoruz",
+    "2_plural": "yörüngede dönüyorsunuz",
+    "3_plural": "yörüngede dönüyorlar"
+  },
+  "TRANSMIT": {
+    "base": "iletmek",
+    "1_singular": "iletiyorum",
+    "2_singular": "iletiyorsun",
+    "3_singular": "iletiyor",
+    "1_plural": "iletiyoruz",
+    "2_plural": "iletiyorsunuz",
+    "3_plural": "iletiyorlar"
+  },
+  "WARP": {
+    "base": "warp yapmak",
+    "1_singular": "warp yapıyorum",
+    "2_singular": "warp yapıyorsun",
+    "3_singular": "warp yapıyor",
+    "1_plural": "warp yapıyoruz",
+    "2_plural": "warp yapıyorsunuz",
+    "3_plural": "warp yapıyorlar"
+  },
+  "EVOLVE": {
+    "base": "evrimleşmek",
+    "1_singular": "evrimleşiyorum",
+    "2_singular": "evrimleşiyorsun",
+    "3_singular": "evrimleşiyor",
+    "1_plural": "evrimleşiyoruz",
+    "2_plural": "evrimleşiyorsunuz",
+    "3_plural": "evrimleşiyorlar"
+  },
+  "BOARD": {
+    "base": "binmek",
+    "1_singular": "biniyorum",
+    "2_singular": "biniyorsun",
+    "3_singular": "biniyor",
+    "1_plural": "biniyoruz",
+    "2_plural": "biniyorsunuz",
+    "3_plural": "biniyorlar"
+  },
+  "RESERVE": {
+    "base": "rezerve etmek",
+    "1_singular": "rezerve ediyorum",
+    "2_singular": "rezerve ediyorsun",
+    "3_singular": "rezerve ediyor",
+    "1_plural": "rezerve ediyoruz",
+    "2_plural": "rezerve ediyorsunuz",
+    "3_plural": "rezerve ediyorlar"
+  },
+  "PHOTOGRAPH": {
+    "base": "fotoğraflamak",
+    "1_singular": "fotoğraflıyorum",
+    "2_singular": "fotoğraflıyorsun",
+    "3_singular": "fotoğraflıyor",
+    "1_plural": "fotoğraflıyoruz",
+    "2_plural": "fotoğraflıyorsunuz",
+    "3_plural": "fotoğraflıyorlar"
+  },
+  "ORDER": {
+    "base": "sipariş etmek",
+    "1_singular": "sipariş ediyorum",
+    "2_singular": "sipariş ediyorsun",
+    "3_singular": "sipariş ediyor",
+    "1_plural": "sipariş ediyoruz",
+    "2_plural": "sipariş ediyorsunuz",
+    "3_plural": "sipariş ediyorlar"
+  },
+  "PURCHASE": {
+    "base": "satın almak",
+    "1_singular": "satın alıyorum",
+    "2_singular": "satın alıyorsun",
+    "3_singular": "satın alıyor",
+    "1_plural": "satın alıyoruz",
+    "2_plural": "satın alıyorsunuz",
+    "3_plural": "satın alıyorlar"
+  },
+  "TRANSLATE": {
+    "base": "çevirmek",
+    "1_singular": "çeviriyorum",
+    "2_singular": "çeviriyorsun",
+    "3_singular": "çeviriyor",
+    "1_plural": "çeviriyoruz",
+    "2_plural": "çeviriyorsunuz",
+    "3_plural": "çeviriyorlar"
+  },
+  "GREET": {
+    "base": "selamlamak",
+    "1_singular": "selamlıyorum",
+    "2_singular": "selamlıyorsun",
+    "3_singular": "selamlıyor",
+    "1_plural": "selamlıyoruz",
+    "2_plural": "selamlıyorsunuz",
+    "3_plural": "selamlıyorlar"
+  },
+  "PRONOUNCE": {
+    "base": "telaffuz etmek",
+    "1_singular": "telaffuz ediyorum",
+    "2_singular": "telaffuz ediyorsun",
+    "3_singular": "telaffuz ediyor",
+    "1_plural": "telaffuz ediyoruz",
+    "2_plural": "telaffuz ediyorsunuz",
+    "3_plural": "telaffuz ediyorlar"
+  },
+  "EXPLORE": {
+    "base": "keşfetmek",
+    "1_singular": "keşfediyorum",
+    "2_singular": "keşfediyorsun",
+    "3_singular": "keşfediyor",
+    "1_plural": "keşfediyoruz",
+    "2_plural": "keşfediyorsunuz",
+    "3_plural": "keşfediyorlar"
+  },
+  "EXCHANGE": {
+    "base": "değiştirmek",
+    "1_singular": "değiştiriyorum",
+    "2_singular": "değiştiriyorsun",
+    "3_singular": "değiştiriyor",
+    "1_plural": "değiştiriyoruz",
+    "2_plural": "değiştiriyorsunuz",
+    "3_plural": "değiştiriyorlar"
+  },
+  "INSURE": {
+    "base": "sigortalamak",
+    "1_singular": "sigortalıyorum",
+    "2_singular": "sigortalıyorsun",
+    "3_singular": "sigortalıyor",
+    "1_plural": "sigortalıyoruz",
+    "2_plural": "sigortalıyorsunuz",
+    "3_plural": "sigortalıyorlar"
+  },
+  "RECOMMEND": {
+    "base": "tavsiye etmek",
+    "1_singular": "tavsiye ediyorum",
+    "2_singular": "tavsiye ediyorsun",
+    "3_singular": "tavsiye ediyor",
+    "1_plural": "tavsiye ediyoruz",
+    "2_plural": "tavsiye ediyorsunuz",
+    "3_plural": "tavsiye ediyorlar"
+  }
+}

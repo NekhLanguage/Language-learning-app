@@ -1,0 +1,465 @@
+{
+  "COOK": {
+    "base": "يطبخ",
+    "english": "cook",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "CUT": {
+    "base": "يقطع",
+    "english": "cut",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "BOIL": {
+    "base": "يغلي",
+    "english": "boil",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "PEEL": {
+    "base": "يقشر",
+    "english": "peel",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "FRY": {
+    "base": "يقلي",
+    "english": "fry",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "STIR": {
+    "base": "يحرك",
+    "english": "stir",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "MIX": {
+    "base": "يخلط",
+    "english": "mix",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "WASH": {
+    "base": "يغسل",
+    "english": "wash",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "HEAT": {
+    "base": "يسخن",
+    "english": "heat",
+    "packs": [
+      "cooking"
+    ]
+  },
+  "COMMUTE": {
+    "base": "يتنقل",
+    "english": "commute",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "OVERSLEEP": {
+    "base": "يتأخر في النوم",
+    "english": "oversleep",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "DELIVER": {
+    "base": "يوصل",
+    "english": "deliver",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "ORGANIZE": {
+    "base": "ينظم",
+    "english": "organize",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "SCHEDULE": {
+    "base": "يجدول",
+    "english": "schedule",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "DRIZZLE": {
+    "base": "يرذذ",
+    "english": "drizzle",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "APOLOGIZE": {
+    "base": "يعتذر",
+    "english": "apologize",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "AFFORD": {
+    "base": "يستطيع الدفع",
+    "english": "afford",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "EXERCISE": {
+    "base": "يتمرن",
+    "english": "exercise",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "REPAIR": {
+    "base": "يصلح",
+    "english": "repair",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "RELAX": {
+    "base": "يسترخي",
+    "english": "relax",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "UNWIND": {
+    "base": "يرتاح",
+    "english": "unwind",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "EMBROIDER": {
+    "base": "يطرز",
+    "english": "embroider",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "DRAPE": {
+    "base": "يسدل",
+    "english": "drape",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "DESIGN": {
+    "base": "يصمم",
+    "english": "design",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "STRUT": {
+    "base": "يتبختر",
+    "english": "strut",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "BROWSE": {
+    "base": "يتصفح",
+    "english": "browse",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "ADORN": {
+    "base": "يزين",
+    "english": "adorn",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "CONTOUR": {
+    "base": "يرسم ملامح الوجه",
+    "english": "contour",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "COORDINATE": {
+    "base": "يمزج الملابس",
+    "english": "coordinate",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "UNVEIL": {
+    "base": "يكشف النقاب",
+    "english": "unveil",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "SHOWCASE": {
+    "base": "يعرض",
+    "english": "showcase",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "RESPAWN": {
+    "base": "يعاد إحياؤه",
+    "english": "respawn",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "LOOT": {
+    "base": "ينهب",
+    "english": "loot",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "CRAFT": {
+    "base": "يصنع",
+    "english": "craft",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "EQUIP": {
+    "base": "يجهز",
+    "english": "equip",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "GRIND": {
+    "base": "يطحن في اللعبة",
+    "english": "grind",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "SLAY": {
+    "base": "يقتل",
+    "english": "slay",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "UNLOCK": {
+    "base": "يفتح",
+    "english": "unlock",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "ROAM": {
+    "base": "يتجول",
+    "english": "roam",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "STREAM": {
+    "base": "يبث",
+    "english": "stream",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "COLLECT": {
+    "base": "يجمع",
+    "english": "collect",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "AMBUSH": {
+    "base": "يكمن",
+    "english": "ambush",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "CLUTCH": {
+    "base": "يفوز في اللحظة الأخيرة",
+    "english": "clutch",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "LAUNCH": {
+    "base": "يطلق",
+    "english": "launch",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "DISCOVER": {
+    "base": "يكتشف",
+    "english": "discover",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ENCOUNTER": {
+    "base": "يواجه",
+    "english": "encounter",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ACTIVATE": {
+    "base": "يُفعّل",
+    "english": "activate",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "NAVIGATE": {
+    "base": "يتنقل",
+    "english": "navigate",
+    "packs": [
+      "space_scifi",
+      "tourism"
+    ]
+  },
+  "TERRAFORM": {
+    "base": "يحول البيئة",
+    "english": "terraform",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "COLONIZE": {
+    "base": "يستوطن",
+    "english": "colonize",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ORBIT": {
+    "base": "يدور في مدار",
+    "english": "orbit",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "TRANSMIT": {
+    "base": "يرسل",
+    "english": "transmit",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "WARP": {
+    "base": "يشوه",
+    "english": "warp",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "EVOLVE": {
+    "base": "يتطور",
+    "english": "evolve",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "BOARD": {
+    "base": "يصعد",
+    "english": "board",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "RESERVE": {
+    "base": "يحجز",
+    "english": "reserve",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PHOTOGRAPH": {
+    "base": "يصور",
+    "english": "photograph",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "ORDER": {
+    "base": "يطلب",
+    "english": "order",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PURCHASE": {
+    "base": "يشتري",
+    "english": "purchase",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "TRANSLATE": {
+    "base": "يترجم",
+    "english": "translate",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "GREET": {
+    "base": "يحيي",
+    "english": "greet",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PRONOUNCE": {
+    "base": "ينطق",
+    "english": "pronounce",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "EXPLORE": {
+    "base": "يستكشف",
+    "english": "explore",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "EXCHANGE": {
+    "base": "يصرف",
+    "english": "exchange",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "INSURE": {
+    "base": "يؤمن",
+    "english": "insure",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "RECOMMEND": {
+    "base": "يوصي",
+    "english": "recommend",
+    "packs": [
+      "tourism"
+    ]
+  }
+}

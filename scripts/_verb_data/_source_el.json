@@ -1,0 +1,402 @@
+{
+  "COMMUTE": {
+    "base": "μετακινούμαι",
+    "english": "commute",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "OVERSLEEP": {
+    "base": "κοιμάμαι παραπάνω",
+    "english": "oversleep",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "DELIVER": {
+    "base": "παραδίδω",
+    "english": "deliver",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "ORGANIZE": {
+    "base": "οργανώνω",
+    "english": "organize",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "SCHEDULE": {
+    "base": "προγραμματίζω",
+    "english": "schedule",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "DRIZZLE": {
+    "base": "ψιχαλίζει",
+    "english": "drizzle",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "APOLOGIZE": {
+    "base": "ζητώ συγγνώμη",
+    "english": "apologize",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "AFFORD": {
+    "base": "αντέχω οικονομικά",
+    "english": "afford",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "EXERCISE": {
+    "base": "γυμνάζομαι",
+    "english": "exercise",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "REPAIR": {
+    "base": "επισκευάζω",
+    "english": "repair",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "RELAX": {
+    "base": "χαλαρώνω",
+    "english": "relax",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "UNWIND": {
+    "base": "ξεφεύγω από το άγχος",
+    "english": "unwind",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "EMBROIDER": {
+    "base": "κεντώ",
+    "english": "embroider",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "DRAPE": {
+    "base": "δραπέρω",
+    "english": "drape",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "DESIGN": {
+    "base": "σχεδιάζω",
+    "english": "design",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "STRUT": {
+    "base": "καμαρώνω",
+    "english": "strut",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "BROWSE": {
+    "base": "ξεφυλλίζω",
+    "english": "browse",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "ADORN": {
+    "base": "στολίζω",
+    "english": "adorn",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "CONTOUR": {
+    "base": "περιγράφω",
+    "english": "contour",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "COORDINATE": {
+    "base": "συνδυάζω",
+    "english": "coordinate",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "UNVEIL": {
+    "base": "αποκαλύπτω",
+    "english": "unveil",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "SHOWCASE": {
+    "base": "παρουσιάζω",
+    "english": "showcase",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "RESPAWN": {
+    "base": "αναγεννιέμαι",
+    "english": "respawn",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "LOOT": {
+    "base": "λεηλατώ",
+    "english": "loot",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "CRAFT": {
+    "base": "κατασκευάζω",
+    "english": "craft",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "EQUIP": {
+    "base": "εξοπλίζω",
+    "english": "equip",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "GRIND": {
+    "base": "γρεντάρω",
+    "english": "grind",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "SLAY": {
+    "base": "σκοτώνω",
+    "english": "slay",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "UNLOCK": {
+    "base": "ξεκλειδώνω",
+    "english": "unlock",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "ROAM": {
+    "base": "περιφέρομαι",
+    "english": "roam",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "STREAM": {
+    "base": "κάνω streaming",
+    "english": "stream",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "COLLECT": {
+    "base": "συλλέγω",
+    "english": "collect",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "AMBUSH": {
+    "base": "στήνω ενέδρα",
+    "english": "ambush",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "CLUTCH": {
+    "base": "κερδίζω την τελευταία στιγμή",
+    "english": "clutch",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "LAUNCH": {
+    "base": "εκτοξεύω",
+    "english": "launch",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "DISCOVER": {
+    "base": "ανακαλύπτω",
+    "english": "discover",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ENCOUNTER": {
+    "base": "συναντώ",
+    "english": "encounter",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ACTIVATE": {
+    "base": "ενεργοποιώ",
+    "english": "activate",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "NAVIGATE": {
+    "base": "πλοηγούμαι",
+    "english": "navigate",
+    "packs": [
+      "space_scifi",
+      "tourism"
+    ]
+  },
+  "TERRAFORM": {
+    "base": "μετατρέπω το περιβάλλον",
+    "english": "terraform",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "COLONIZE": {
+    "base": "αποικίζω",
+    "english": "colonize",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ORBIT": {
+    "base": "τροχιοδρομώ",
+    "english": "orbit",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "TRANSMIT": {
+    "base": "μεταδίδω",
+    "english": "transmit",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "WARP": {
+    "base": "διαστρεβλώνω",
+    "english": "warp",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "EVOLVE": {
+    "base": "εξελίσσομαι",
+    "english": "evolve",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "BOARD": {
+    "base": "επιβιβάζομαι",
+    "english": "board",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "RESERVE": {
+    "base": "κρατώ",
+    "english": "reserve",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PHOTOGRAPH": {
+    "base": "φωτογραφίζω",
+    "english": "photograph",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "ORDER": {
+    "base": "παραγγέλνω",
+    "english": "order",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PURCHASE": {
+    "base": "αγοράζω",
+    "english": "purchase",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "TRANSLATE": {
+    "base": "μεταφράζω",
+    "english": "translate",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "GREET": {
+    "base": "χαιρετώ",
+    "english": "greet",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PRONOUNCE": {
+    "base": "προφέρω",
+    "english": "pronounce",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "EXPLORE": {
+    "base": "εξερευνώ",
+    "english": "explore",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "EXCHANGE": {
+    "base": "ανταλλάσσω",
+    "english": "exchange",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "INSURE": {
+    "base": "ασφαλίζω",
+    "english": "insure",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "RECOMMEND": {
+    "base": "προτείνω",
+    "english": "recommend",
+    "packs": [
+      "tourism"
+    ]
+  }
+}
