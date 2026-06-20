@@ -594,7 +594,7 @@
         "SWORD":     { "form": "kılıç" },
         "ARMOR":     { "form": "zırh" },
         "SHIELD":    { "form": "kalkan" },
-        "ATTACK":    { "base": "saldırmak",       "1_singular": "saldırıyorum",      "2_singular": "saldırıyorsun",     "3_singular": "saldırıyor",        "1_plural": "saldırıyoruz",      "2_plural": "saldırıyorsunuz",   "3_plural": "saldırıyorlar" },
+        "ATTACK":    { "base": "saldırmak", "1_singular": "saldırıyorum", "2_singular": "saldırıyorsun", "3_singular": "saldırıyor", "1_plural": "saldırıyoruz", "2_plural": "saldırıyorsunuz", "3_plural": "saldırıyorlar" },
         "DEFEND":    { "base": "savunmak",         "1_singular": "savunuyorum",       "2_singular": "savunuyorsun",      "3_singular": "savunuyor",         "1_plural": "savunuyoruz",       "2_plural": "savunuyorsunuz",    "3_plural": "savunuyorlar" },
 
         "DRAGON":    { "form": "ejderha" },
@@ -623,7 +623,7 @@
 
         "BATTLE":    { "form": "savaş" },
         "DODGE":     { "base": "kaçınmak",         "1_singular": "kaçınıyorum",       "2_singular": "kaçınıyorsun",      "3_singular": "kaçınıyor",         "1_plural": "kaçınıyoruz",       "2_plural": "kaçınıyorsunuz",    "3_plural": "kaçınıyorlar" },
-        "PROTECT":   { "base": "korumak",          "1_singular": "koruyorum",         "2_singular": "koruyorsun",        "3_singular": "koruyor",           "1_plural": "koruyoruz",         "2_plural": "koruyorsunuz",      "3_plural": "koruyorlar" },
+        "PROTECT":   { "base": "korumak", "1_singular": "koruyorum", "2_singular": "koruyorsun", "3_singular": "koruyor", "1_plural": "koruyoruz", "2_plural": "koruyorsunuz", "3_plural": "koruyorlar" },
         "FIERCE":    ["vahşi"],
         "MIGHTY":    ["azametli"],
 
