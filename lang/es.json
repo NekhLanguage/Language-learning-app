@@ -699,6 +699,7 @@
     "LEFT": ["izquierdo"],
     "CORRECT": ["correcto"],
     "WRONG": ["incorrecto"],
+    "COLD": {"form":"frío","plural":"fríos"},
     "NICE": ["agradable"],
     "THIS": ["este"],
     "THAT": ["ese"],

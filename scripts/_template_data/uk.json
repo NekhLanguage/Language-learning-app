@@ -1,0 +1,426 @@
+{
+  "I_EAT_FOOD": {
+    "render": "Я їм їжу.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "EAT": "їм", "FOOD": "їжу" },
+    "questions": { "pronoun": "Хто їсть їжу?", "verb": "Що я роблю?", "object": "Що я їм?" }
+  },
+  "HE_READ_BOOK": {
+    "render": "Він читає книгу.",
+    "surface": { "HE": "він", "READ": "читає", "BOOK": "книгу" },
+    "questions": { "pronoun": "Хто читає книгу?", "verb": "Що він робить?", "object": "Що він читає?" }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "Вона бачить телефон.",
+    "surface": { "SHE": "вона", "SEE": "бачить", "PHONE": "телефон" },
+    "questions": { "pronoun": "Хто бачить телефон?", "verb": "Що вона робить?", "object": "Що вона бачить?" }
+  },
+  "WE_HAVE_JOB": {
+    "render": "Ми маємо роботу.",
+    "surface": { "FIRST_PERSON_PLURAL": "ми", "HAVE": "маємо", "JOB": "роботу" },
+    "questions": { "pronoun": "Хто має роботу?", "verb": "Що ми робимо?", "object": "Що ми маємо?" }
+  },
+  "I_DRINK_WATER": {
+    "render": "Я п'ю воду.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "DRINK": "п'ю", "WATER": "воду" },
+    "questions": { "pronoun": "Хто п'є воду?", "verb": "Що я роблю?", "object": "Що я п'ю?" }
+  },
+  "YOU_READ_BOOK": {
+    "render": "Ти читаєш книгу.",
+    "surface": { "SECOND_PERSON": "ти", "READ": "читаєш", "BOOK": "книгу" },
+    "questions": { "pronoun": "Хто читає книгу?", "verb": "Що ти робиш?", "object": "Що ти читаєш?" }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "Ви п'єте воду.",
+    "surface": { "SECOND_PERSON_PLURAL": "ви", "DRINK": "п'єте", "WATER": "воду" },
+    "questions": { "pronoun": "Хто п'є воду?", "verb": "Що ви робите?", "object": "Що ви п'єте?" }
+  },
+  "THEY_SLEEP": {
+    "render": "Вони сплять.",
+    "surface": { "THIRD_PERSON_PLURAL": "вони", "SLEEP": "сплять" },
+    "questions": { "pronoun": "Хто спить?", "verb": "Що вони роблять?" }
+  },
+  "I_AM_MAN": {
+    "render": "Я чоловік.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "BE": "є", "MAN": "чоловік" },
+    "questions": { "verb": "Хто я є?", "object": "Хто я?" }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "Вона жінка.",
+    "surface": { "SHE": "вона", "BE": "є", "WOMAN": "жінка" },
+    "questions": { "pronoun": "Хто жінка?", "verb": "Хто вона є?", "object": "Хто вона?" }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "Ти дівчина.",
+    "surface": { "SECOND_PERSON": "ти", "BE": "є", "GIRL": "дівчина" },
+    "questions": { "pronoun": "Хто дівчина?", "verb": "Хто ти є?", "object": "Хто ти?" }
+  },
+  "HE_IS_BOY": {
+    "render": "Він хлопець.",
+    "surface": { "HE": "він", "BE": "є", "BOY": "хлопець" },
+    "questions": { "pronoun": "Хто хлопець?", "verb": "Хто він є?", "object": "Хто він?" }
+  },
+  "WE_STOP_EATING": {
+    "render": "Ми перестаємо їсти.",
+    "surface": { "FIRST_PERSON_PLURAL": "ми", "STOP": "перестаємо", "EAT": "їсти" },
+    "questions": { "pronoun": "Хто перестає їсти?", "verb": "Що ми робимо?" }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "Вони починають спати.",
+    "surface": { "THIRD_PERSON_PLURAL": "вони", "START": "починають", "SLEEP": "спати" },
+    "questions": { "pronoun": "Хто починає спати?", "verb": "Що вони роблять?" }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "Він бачить сорочку.",
+    "surface": { "HE": "він", "SEE": "бачить", "SHIRT": "сорочку" },
+    "questions": { "pronoun": "Хто бачить сорочку?", "verb": "Що він робить?", "object": "Що він бачить?" }
+  },
+  "I_GO_HOME": {
+    "render": "Я йду додому.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "GO": "йду", "HOME": "додому" },
+    "questions": { "pronoun": "Хто йде додому?", "verb": "Що я роблю?", "object": "Куди я йду?" }
+  },
+  "I_USE_PHONE": {
+    "render": "Я використовую телефон.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "USE": "використовую", "PHONE": "телефон" },
+    "questions": { "pronoun": "Хто використовує телефон?", "verb": "Що я роблю?", "object": "Що я використовую?" }
+  },
+  "I_GET_BOOK": {
+    "render": "Я отримую книгу.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "GET": "отримую", "BOOK": "книгу" },
+    "questions": { "pronoun": "Хто отримує книгу?", "verb": "Що я роблю?", "object": "Що я отримую?" }
+  },
+  "I_SEE_HOUSE": {
+    "render": "Я бачу будинок.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "SEE": "бачу", "HOUSE": "будинок" },
+    "questions": { "pronoun": "Хто бачить будинок?", "verb": "Що я роблю?", "object": "Що я бачу?" }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "Вона бачить кімнату.",
+    "surface": { "SHE": "вона", "SEE": "бачить", "ROOM": "кімнату" },
+    "questions": { "pronoun": "Хто бачить кімнату?", "verb": "Що вона робить?", "object": "Що вона бачить?" }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "Я маю сорочку.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "HAVE": "маю", "SHIRT": "сорочку" },
+    "questions": { "pronoun": "Хто має сорочку?", "verb": "Що я роблю?", "object": "Що я маю?" }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "Вона має взуття.",
+    "surface": { "SHE": "вона", "HAVE": "має", "SHOES": "взуття" },
+    "questions": { "pronoun": "Хто має взуття?", "verb": "Що вона робить?", "object": "Що вона має?" }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "Вони мають штани.",
+    "surface": { "THIRD_PERSON_PLURAL": "вони", "HAVE": "мають", "PANTS": "штани" }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "Ми маємо одяг.",
+    "surface": { "FIRST_PERSON_PLURAL": "ми", "HAVE": "маємо", "CLOTHES": "одяг" }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "Я їм сніданок.",
+    "surface": { "FIRST_PERSON_SINGULAR": "я", "EAT": "їм", "BREAKFAST": "сніданок" }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "Ми їмо обід.",
+    "surface": { "FIRST_PERSON_PLURAL": "ми", "EAT": "їмо", "LUNCH": "обід" }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "Вони їдять вечерю.",
+    "surface": { "THIRD_PERSON_PLURAL": "вони", "EAT": "їдять", "DINNER": "вечерю" }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "Це моя рука.",
+    "surface": { "THIS": "це", "BE": "є", "MY": "моя", "HAND": "рука" }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "Це твоя голова.",
+    "surface": { "THIS": "це", "BE": "є", "YOUR": "твоя", "HEAD": "голова" }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "То моя рука.",
+    "surface": { "THAT": "то", "BE": "є", "MY": "моя", "ARM": "рука" }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "То твоя нога.",
+    "surface": { "THAT": "то", "BE": "є", "YOUR": "твоя", "LEG": "нога" }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "Вона моя мама.",
+    "surface": { "SHE": "вона", "BE": "є", "MY": "моя", "MOM": "мама" }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "Він мій тато.",
+    "surface": { "HE": "він", "BE": "є", "MY": "мій", "DAD": "тато" }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "Це моя рука, а це твоя голова."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "Вона моя мама, а він мій тато."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "Я їм і п'ю."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "Він їсть сніданок, але не обід."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "Вона йде до своєї кімнати."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "Це гарна книга."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "Це твій телефон?"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "Він вечеряє зі своєю мамою, тому що він удома."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "Якщо він удома, він їсть зі своєю донькою."
+  },
+  "BOOK_IS_RED": {
+    "render": "Книга червона."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "Телефон синій."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "Сорочка зелена."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "Будинок білий."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "Штани чорні."
+  },
+  "I_EAT_TODAY": {
+    "render": "Я їм сьогодні."
+  },
+  "HE_READS_TODAY": {
+    "render": "Він читає сьогодні."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "Ми йдемо завтра."
+  },
+  "I_READ_NOW": {
+    "render": "Я читаю зараз."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "Він працював учора."
+  },
+  "WHO_EATS": {
+    "render": "Хто їсть?"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "Чому ти йдеш?"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "Коли ми їмо?"
+  },
+  "I_EAT_BEFORE": {
+    "render": "Я їм перед тим."
+  },
+  "WE_GO_AFTER": {
+    "render": "Ми йдемо після."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "Де книга?"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "Як ти читаєш?"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "Що я маю?"
+  },
+  "WHICH_BOOK": {
+    "render": "Яка книга?"
+  },
+  "WE_EAT_ALL": {
+    "render": "Ми їмо все."
+  },
+  "BOOK_ON_THIS": {
+    "render": "Книга на цьому."
+  },
+  "PHONE_IN_THAT": {
+    "render": "Телефон у тому."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "Взуття під цим."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "Книга поруч із телефоном."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "Телефон перед книгою."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "Книга за телефоном."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "Телефон не на цьому."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "Книга між цим і тим."
+  },
+  "SHOES_IN_THIS": {
+    "render": "Взуття в цьому."
+  },
+  "PHONE_ON_THAT": {
+    "render": "Телефон на тому."
+  },
+  "WE_GO_BACK": {
+    "render": "Ми повертаємося."
+  },
+  "I_GO_OUT": {
+    "render": "Я виходжу."
+  },
+  "WE_GO_NORTH": {
+    "render": "Ми йдемо на північ."
+  },
+  "WE_GO_SOUTH": {
+    "render": "Ми йдемо на південь."
+  },
+  "WE_GO_EAST": {
+    "render": "Ми йдемо на схід."
+  },
+  "WE_GO_WEST": {
+    "render": "Ми йдемо на захід."
+  },
+  "BOOK_IS_LONG": {
+    "render": "Книга довга."
+  },
+  "DAY_IS_SHORT": {
+    "render": "День короткий."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "Книга важка."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "Телефон легкий."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "Ніч темна."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "Хлопець молодий."
+  },
+  "BOOK_IS_EASY": {
+    "render": "Книга легка."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "Книга важка для розуміння."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "Це праворуч."
+  },
+  "THIS_IS_LEFT": {
+    "render": "Це ліворуч."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "Це правильно."
+  },
+  "THIS_IS_WRONG": {
+    "render": "Це неправильно."
+  },
+  "THIS_IS_NICE": {
+    "render": "Це гарно."
+  },
+  "YEAR_IS_LONG": {
+    "render": "Рік довгий."
+  },
+  "MONTH_IS_LONG": {
+    "render": "Місяць довгий."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "Тиждень короткий."
+  },
+  "DAY_IS_LONG": {
+    "render": "День довгий."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "Година коротка."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "Хвилина коротка."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "Секунда коротка."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "Ранок добрий."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "Ніч погана."
+  },
+  "WINTER_IS_COLD": {
+    "render": "Зима холодна."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "Літо добре."
+  },
+  "SPRING_IS_NEW": {
+    "render": "Весна нова."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "Осінь стара."
+  },
+  "THIS_IS_THING": {
+    "render": "Це річ."
+  },
+  "PLEASE_READ": {
+    "render": "Будь ласка, читай."
+  },
+  "MAYBE_I_GO": {
+    "render": "Можливо, я піду."
+  },
+  "THANKS": {
+    "render": "Дякую."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "Я йду по їжу."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "Я маю щось."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "Я маю іншу книгу."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "Я читаю лише книгу."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "Я йду з дому."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "Я йду до будинку."
+  },
+  "I_GO_AROUND": {
+    "render": "Я ходжу навколо."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "Я роблю це рукою."
+  },
+  "YES_I_DO": {
+    "render": "Так, я роблю."
+  },
+  "NO_I_DO_NOT": {
+    "render": "Ні, я не роблю."
+  },
+  "THIS_IS_MINE": {
+    "render": "Це моє."
+  },
+  "THIS_IS_YOURS": {
+    "render": "Це твоє."
+  },
+  "THIS_IS_HERS": {
+    "render": "Це її."
+  },
+  "THIS_IS_OURS": {
+    "render": "Це наше."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "Це їхнє."
+  }
+}

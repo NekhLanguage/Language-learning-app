@@ -1,0 +1,426 @@
+{
+  "I_EAT_FOOD": {
+    "render": "私は食べ物を食べます。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "EAT": "食べます", "FOOD": "食べ物" },
+    "questions": { "pronoun": "誰が食べ物を食べますか。", "verb": "私は何をしますか。", "object": "私は何を食べますか。" }
+  },
+  "HE_READ_BOOK": {
+    "render": "彼は本を読みます。",
+    "surface": { "HE": "彼", "READ": "読みます", "BOOK": "本" },
+    "questions": { "pronoun": "誰が本を読みますか。", "verb": "彼は何をしますか。", "object": "彼は何を読みますか。" }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "彼女は電話を見ます。",
+    "surface": { "SHE": "彼女", "SEE": "見ます", "PHONE": "電話" },
+    "questions": { "pronoun": "誰が電話を見ますか。", "verb": "彼女は何をしますか。", "object": "彼女は何を見ますか。" }
+  },
+  "WE_HAVE_JOB": {
+    "render": "私たちは仕事を持っています。",
+    "surface": { "FIRST_PERSON_PLURAL": "私たち", "HAVE": "持っています", "JOB": "仕事" },
+    "questions": { "pronoun": "誰が仕事を持っていますか。", "verb": "私たちは何をしますか。", "object": "私たちは何を持っていますか。" }
+  },
+  "I_DRINK_WATER": {
+    "render": "私は水を飲みます。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "DRINK": "飲みます", "WATER": "水" },
+    "questions": { "pronoun": "誰が水を飲みますか。", "verb": "私は何をしますか。", "object": "私は何を飲みますか。" }
+  },
+  "YOU_READ_BOOK": {
+    "render": "あなたは本を読みます。",
+    "surface": { "SECOND_PERSON": "あなた", "READ": "読みます", "BOOK": "本" },
+    "questions": { "pronoun": "誰が本を読みますか。", "verb": "あなたは何をしますか。", "object": "あなたは何を読みますか。" }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "あなたたちは水を飲みます。",
+    "surface": { "SECOND_PERSON_PLURAL": "あなたたち", "DRINK": "飲みます", "WATER": "水" },
+    "questions": { "pronoun": "誰が水を飲みますか。", "verb": "あなたたちは何をしますか。", "object": "あなたたちは何を飲みますか。" }
+  },
+  "THEY_SLEEP": {
+    "render": "彼らは寝ます。",
+    "surface": { "THIRD_PERSON_PLURAL": "彼ら", "SLEEP": "寝ます" },
+    "questions": { "pronoun": "誰が寝ますか。", "verb": "彼らは何をしますか。" }
+  },
+  "I_AM_MAN": {
+    "render": "私は男です。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "BE": "です", "MAN": "男" },
+    "questions": { "verb": "私は何ですか。", "object": "私は何ですか。" }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "彼女は女です。",
+    "surface": { "SHE": "彼女", "BE": "です", "WOMAN": "女" },
+    "questions": { "pronoun": "誰が女ですか。", "verb": "彼女は何ですか。", "object": "彼女は何ですか。" }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "あなたは女の子です。",
+    "surface": { "SECOND_PERSON": "あなた", "BE": "です", "GIRL": "女の子" },
+    "questions": { "pronoun": "誰が女の子ですか。", "verb": "あなたは何ですか。", "object": "あなたは何ですか。" }
+  },
+  "HE_IS_BOY": {
+    "render": "彼は男の子です。",
+    "surface": { "HE": "彼", "BE": "です", "BOY": "男の子" },
+    "questions": { "pronoun": "誰が男の子ですか。", "verb": "彼は何ですか。", "object": "彼は何ですか。" }
+  },
+  "WE_STOP_EATING": {
+    "render": "私たちは食べるのをやめます。",
+    "surface": { "FIRST_PERSON_PLURAL": "私たち", "STOP": "やめます", "EAT": "食べるのを" },
+    "questions": { "pronoun": "誰が食べるのをやめますか。", "verb": "私たちは何をしますか。" }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "彼らは寝始めます。",
+    "surface": { "THIRD_PERSON_PLURAL": "彼ら", "START": "始めます", "SLEEP": "寝" },
+    "questions": { "pronoun": "誰が寝始めますか。", "verb": "彼らは何をしますか。" }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "彼はシャツを見ます。",
+    "surface": { "HE": "彼", "SEE": "見ます", "SHIRT": "シャツ" },
+    "questions": { "pronoun": "誰がシャツを見ますか。", "verb": "彼は何をしますか。", "object": "彼は何を見ますか。" }
+  },
+  "I_GO_HOME": {
+    "render": "私は家に帰ります。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "GO": "帰ります", "HOME": "家" },
+    "questions": { "pronoun": "誰が家に帰りますか。", "verb": "私は何をしますか。", "object": "私はどこに行きますか。" }
+  },
+  "I_USE_PHONE": {
+    "render": "私は電話を使います。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "USE": "使います", "PHONE": "電話" },
+    "questions": { "pronoun": "誰が電話を使いますか。", "verb": "私は何をしますか。", "object": "私は何を使いますか。" }
+  },
+  "I_GET_BOOK": {
+    "render": "私は本を手に入れます。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "GET": "手に入れます", "BOOK": "本" },
+    "questions": { "pronoun": "誰が本を手に入れますか。", "verb": "私は何をしますか。", "object": "私は何を手に入れますか。" }
+  },
+  "I_SEE_HOUSE": {
+    "render": "私は家を見ます。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "SEE": "見ます", "HOUSE": "家" },
+    "questions": { "pronoun": "誰が家を見ますか。", "verb": "私は何をしますか。", "object": "私は何を見ますか。" }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "彼女は部屋を見ます。",
+    "surface": { "SHE": "彼女", "SEE": "見ます", "ROOM": "部屋" },
+    "questions": { "pronoun": "誰が部屋を見ますか。", "verb": "彼女は何をしますか。", "object": "彼女は何を見ますか。" }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "私はシャツを持っています。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "HAVE": "持っています", "SHIRT": "シャツ" },
+    "questions": { "pronoun": "誰がシャツを持っていますか。", "verb": "私は何をしますか。", "object": "私は何を持っていますか。" }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "彼女は靴を持っています。",
+    "surface": { "SHE": "彼女", "HAVE": "持っています", "SHOES": "靴" },
+    "questions": { "pronoun": "誰が靴を持っていますか。", "verb": "彼女は何をしますか。", "object": "彼女は何を持っていますか。" }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "彼らはズボンを持っています。",
+    "surface": { "THIRD_PERSON_PLURAL": "彼ら", "HAVE": "持っています", "PANTS": "ズボン" }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "私たちは服を持っています。",
+    "surface": { "FIRST_PERSON_PLURAL": "私たち", "HAVE": "持っています", "CLOTHES": "服" }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "私は朝食を食べます。",
+    "surface": { "FIRST_PERSON_SINGULAR": "私", "EAT": "食べます", "BREAKFAST": "朝食" }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "私たちは昼食を食べます。",
+    "surface": { "FIRST_PERSON_PLURAL": "私たち", "EAT": "食べます", "LUNCH": "昼食" }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "彼らは夕食を食べます。",
+    "surface": { "THIRD_PERSON_PLURAL": "彼ら", "EAT": "食べます", "DINNER": "夕食" }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "これは私の手です。",
+    "surface": { "THIS": "これ", "BE": "です", "MY": "私の", "HAND": "手" }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "これはあなたの頭です。",
+    "surface": { "THIS": "これ", "BE": "です", "YOUR": "あなたの", "HEAD": "頭" }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "それは私の腕です。",
+    "surface": { "THAT": "それ", "BE": "です", "MY": "私の", "ARM": "腕" }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "それはあなたの脚です。",
+    "surface": { "THAT": "それ", "BE": "です", "YOUR": "あなたの", "LEG": "脚" }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "彼女は私の母です。",
+    "surface": { "SHE": "彼女", "BE": "です", "MY": "私の", "MOM": "母" }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "彼は私の父です。",
+    "surface": { "HE": "彼", "BE": "です", "MY": "私の", "DAD": "父" }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "これは私の手で、これはあなたの頭です。"
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "彼女は私の母で、彼は私の父です。"
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "私は食べて飲みます。"
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "彼は朝食を食べますが、昼食は食べません。"
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "彼女は自分の部屋に行きます。"
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "これは良い本です。"
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "それはあなたの電話ですか。"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "彼は家にいるので、母と一緒に夕食を食べます。"
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "彼が家にいれば、娘と一緒に食べます。"
+  },
+  "BOOK_IS_RED": {
+    "render": "本は赤いです。"
+  },
+  "PHONE_IS_BLUE": {
+    "render": "電話は青いです。"
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "シャツは緑です。"
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "家は白いです。"
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "ズボンは黒いです。"
+  },
+  "I_EAT_TODAY": {
+    "render": "私は今日食べます。"
+  },
+  "HE_READS_TODAY": {
+    "render": "彼は今日読みます。"
+  },
+  "WE_GO_TOMORROW": {
+    "render": "私たちは明日行きます。"
+  },
+  "I_READ_NOW": {
+    "render": "私は今読みます。"
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "彼は昨日働きました。"
+  },
+  "WHO_EATS": {
+    "render": "誰が食べますか。"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "あなたはなぜ行きますか。"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "私たちはいつ食べますか。"
+  },
+  "I_EAT_BEFORE": {
+    "render": "私は前に食べます。"
+  },
+  "WE_GO_AFTER": {
+    "render": "私たちは後で行きます。"
+  },
+  "WHERE_IS_BOOK": {
+    "render": "本はどこにありますか。"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "あなたはどうやって読みますか。"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "私は何を持っていますか。"
+  },
+  "WHICH_BOOK": {
+    "render": "どの本ですか。"
+  },
+  "WE_EAT_ALL": {
+    "render": "私たちは全部食べます。"
+  },
+  "BOOK_ON_THIS": {
+    "render": "本はこれの上にあります。"
+  },
+  "PHONE_IN_THAT": {
+    "render": "電話はそれの中にあります。"
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "靴はこれの下にあります。"
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "本は電話の隣にあります。"
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "電話は本の前にあります。"
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "本は電話の後ろにあります。"
+  },
+  "PHONE_OFF_THIS": {
+    "render": "電話はこれから離れています。"
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "本はこれとそれの間にあります。"
+  },
+  "SHOES_IN_THIS": {
+    "render": "靴はこれの中にあります。"
+  },
+  "PHONE_ON_THAT": {
+    "render": "電話はそれの上にあります。"
+  },
+  "WE_GO_BACK": {
+    "render": "私たちは戻ります。"
+  },
+  "I_GO_OUT": {
+    "render": "私は出かけます。"
+  },
+  "WE_GO_NORTH": {
+    "render": "私たちは北へ行きます。"
+  },
+  "WE_GO_SOUTH": {
+    "render": "私たちは南へ行きます。"
+  },
+  "WE_GO_EAST": {
+    "render": "私たちは東へ行きます。"
+  },
+  "WE_GO_WEST": {
+    "render": "私たちは西へ行きます。"
+  },
+  "BOOK_IS_LONG": {
+    "render": "本は長いです。"
+  },
+  "DAY_IS_SHORT": {
+    "render": "日は短いです。"
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "本は重いです。"
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "電話は軽いです。"
+  },
+  "NIGHT_IS_DARK": {
+    "render": "夜は暗いです。"
+  },
+  "BOY_IS_YOUNG": {
+    "render": "男の子は若いです。"
+  },
+  "BOOK_IS_EASY": {
+    "render": "本は簡単です。"
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "本は難しいです。"
+  },
+  "THIS_IS_RIGHT": {
+    "render": "これは右です。"
+  },
+  "THIS_IS_LEFT": {
+    "render": "これは左です。"
+  },
+  "THIS_IS_CORRECT": {
+    "render": "これは正しいです。"
+  },
+  "THIS_IS_WRONG": {
+    "render": "これは間違っています。"
+  },
+  "THIS_IS_NICE": {
+    "render": "これは素敵です。"
+  },
+  "YEAR_IS_LONG": {
+    "render": "年は長いです。"
+  },
+  "MONTH_IS_LONG": {
+    "render": "月は長いです。"
+  },
+  "WEEK_IS_SHORT": {
+    "render": "週は短いです。"
+  },
+  "DAY_IS_LONG": {
+    "render": "日は長いです。"
+  },
+  "HOUR_IS_SHORT": {
+    "render": "時間は短いです。"
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "分は短いです。"
+  },
+  "SECOND_IS_SHORT": {
+    "render": "秒は短いです。"
+  },
+  "MORNING_IS_GOOD": {
+    "render": "朝は良いです。"
+  },
+  "NIGHT_IS_BAD": {
+    "render": "夜は悪いです。"
+  },
+  "WINTER_IS_COLD": {
+    "render": "冬は寒いです。"
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "夏は良いです。"
+  },
+  "SPRING_IS_NEW": {
+    "render": "春は新しいです。"
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "秋は古いです。"
+  },
+  "THIS_IS_THING": {
+    "render": "これは物です。"
+  },
+  "PLEASE_READ": {
+    "render": "読んでください。"
+  },
+  "MAYBE_I_GO": {
+    "render": "たぶん私は行きます。"
+  },
+  "THANKS": {
+    "render": "ありがとう。"
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "私は食べ物を取りに行きます。"
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "私は何かを持っています。"
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "私はもう一冊の本を持っています。"
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "私は本だけを読みます。"
+  },
+  "I_GO_FROM_HOME": {
+    "render": "私は家から行きます。"
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "私は家に行きます。"
+  },
+  "I_GO_AROUND": {
+    "render": "私はあちこち回ります。"
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "私はこれを手でやります。"
+  },
+  "YES_I_DO": {
+    "render": "はい、します。"
+  },
+  "NO_I_DO_NOT": {
+    "render": "いいえ、しません。"
+  },
+  "THIS_IS_MINE": {
+    "render": "これは私のものです。"
+  },
+  "THIS_IS_YOURS": {
+    "render": "これはあなたのものです。"
+  },
+  "THIS_IS_HERS": {
+    "render": "これは彼女のものです。"
+  },
+  "THIS_IS_OURS": {
+    "render": "これは私たちのものです。"
+  },
+  "THIS_IS_THEIRS": {
+    "render": "これは彼らのものです。"
+  }
+}

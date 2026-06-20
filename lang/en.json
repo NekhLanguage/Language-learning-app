@@ -618,6 +618,7 @@
     "LEFT": ["left"],
     "CORRECT": ["correct"],
     "WRONG": ["wrong"],
+    "COLD": ["cold"],
     "NICE": ["nice"],
     "IT": ["it"],
     "ITS": ["its"],

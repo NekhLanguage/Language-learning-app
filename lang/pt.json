@@ -750,6 +750,7 @@
     "LEFT": { "form": "esquerdo", "f": "esquerda", "plural": "esquerdos", "fp": "esquerdas" },
     "CORRECT": { "form": "correto", "f": "correta", "plural": "corretos", "fp": "corretas" },
     "WRONG": { "form": "errado", "f": "errada", "plural": "errados", "fp": "erradas" },
+    "COLD": {"form":"frio","f":"fria","plural":"frios","fp":"frias"},
     "NICE": { "form": "legal", "f": "legal", "plural": "legais", "fp": "legais" },
     "IT": ["ele"],
     "ITS": ["seu"],

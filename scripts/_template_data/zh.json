@@ -1,0 +1,426 @@
+{
+  "I_EAT_FOOD": {
+    "render": "我吃食物。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "EAT": "吃", "FOOD": "食物" },
+    "questions": { "pronoun": "谁吃食物？", "verb": "我做什么？", "object": "我吃什么？" }
+  },
+  "HE_READ_BOOK": {
+    "render": "他读一本书。",
+    "surface": { "HE": "他", "READ": "读", "BOOK": "书" },
+    "questions": { "pronoun": "谁读书？", "verb": "他做什么？", "object": "他读什么？" }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "她看见一部手机。",
+    "surface": { "SHE": "她", "SEE": "看见", "PHONE": "手机" },
+    "questions": { "pronoun": "谁看见手机？", "verb": "她做什么？", "object": "她看见什么？" }
+  },
+  "WE_HAVE_JOB": {
+    "render": "我们有一份工作。",
+    "surface": { "FIRST_PERSON_PLURAL": "我们", "HAVE": "有", "JOB": "工作" },
+    "questions": { "pronoun": "谁有工作？", "verb": "我们做什么？", "object": "我们有什么？" }
+  },
+  "I_DRINK_WATER": {
+    "render": "我喝水。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "DRINK": "喝", "WATER": "水" },
+    "questions": { "pronoun": "谁喝水？", "verb": "我做什么？", "object": "我喝什么？" }
+  },
+  "YOU_READ_BOOK": {
+    "render": "你读一本书。",
+    "surface": { "SECOND_PERSON": "你", "READ": "读", "BOOK": "书" },
+    "questions": { "pronoun": "谁读书？", "verb": "你做什么？", "object": "你读什么？" }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "你们喝水。",
+    "surface": { "SECOND_PERSON_PLURAL": "你们", "DRINK": "喝", "WATER": "水" },
+    "questions": { "pronoun": "谁喝水？", "verb": "你们做什么？", "object": "你们喝什么？" }
+  },
+  "THEY_SLEEP": {
+    "render": "他们睡觉。",
+    "surface": { "THIRD_PERSON_PLURAL": "他们", "SLEEP": "睡觉" },
+    "questions": { "pronoun": "谁睡觉？", "verb": "他们做什么？" }
+  },
+  "I_AM_MAN": {
+    "render": "我是一个男人。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "BE": "是", "MAN": "男人" },
+    "questions": { "verb": "我是什么？", "object": "我是什么？" }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "她是一个女人。",
+    "surface": { "SHE": "她", "BE": "是", "WOMAN": "女人" },
+    "questions": { "pronoun": "谁是女人？", "verb": "她是什么？", "object": "她是什么？" }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "你是一个女孩。",
+    "surface": { "SECOND_PERSON": "你", "BE": "是", "GIRL": "女孩" },
+    "questions": { "pronoun": "谁是女孩？", "verb": "你是什么？", "object": "你是什么？" }
+  },
+  "HE_IS_BOY": {
+    "render": "他是一个男孩。",
+    "surface": { "HE": "他", "BE": "是", "BOY": "男孩" },
+    "questions": { "pronoun": "谁是男孩？", "verb": "他是什么？", "object": "他是什么？" }
+  },
+  "WE_STOP_EATING": {
+    "render": "我们停止吃饭。",
+    "surface": { "FIRST_PERSON_PLURAL": "我们", "STOP": "停止", "EAT": "吃饭" },
+    "questions": { "pronoun": "谁停止吃饭？", "verb": "我们做什么？" }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "他们开始睡觉。",
+    "surface": { "THIRD_PERSON_PLURAL": "他们", "START": "开始", "SLEEP": "睡觉" },
+    "questions": { "pronoun": "谁开始睡觉？", "verb": "他们做什么？" }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "他看见一件衬衫。",
+    "surface": { "HE": "他", "SEE": "看见", "SHIRT": "衬衫" },
+    "questions": { "pronoun": "谁看见衬衫？", "verb": "他做什么？", "object": "他看见什么？" }
+  },
+  "I_GO_HOME": {
+    "render": "我回家。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "GO": "回", "HOME": "家" },
+    "questions": { "pronoun": "谁回家？", "verb": "我做什么？", "object": "我去哪里？" }
+  },
+  "I_USE_PHONE": {
+    "render": "我用一部手机。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "USE": "用", "PHONE": "手机" },
+    "questions": { "pronoun": "谁用手机？", "verb": "我做什么？", "object": "我用什么？" }
+  },
+  "I_GET_BOOK": {
+    "render": "我拿到一本书。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "GET": "拿到", "BOOK": "书" },
+    "questions": { "pronoun": "谁拿到书？", "verb": "我做什么？", "object": "我拿到什么？" }
+  },
+  "I_SEE_HOUSE": {
+    "render": "我看见一座房子。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "SEE": "看见", "HOUSE": "房子" },
+    "questions": { "pronoun": "谁看见房子？", "verb": "我做什么？", "object": "我看见什么？" }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "她看见一个房间。",
+    "surface": { "SHE": "她", "SEE": "看见", "ROOM": "房间" },
+    "questions": { "pronoun": "谁看见房间？", "verb": "她做什么？", "object": "她看见什么？" }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "我有一件衬衫。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "HAVE": "有", "SHIRT": "衬衫" },
+    "questions": { "pronoun": "谁有衬衫？", "verb": "我做什么？", "object": "我有什么？" }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "她有鞋子。",
+    "surface": { "SHE": "她", "HAVE": "有", "SHOES": "鞋子" },
+    "questions": { "pronoun": "谁有鞋子？", "verb": "她做什么？", "object": "她有什么？" }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "他们有裤子。",
+    "surface": { "THIRD_PERSON_PLURAL": "他们", "HAVE": "有", "PANTS": "裤子" }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "我们有衣服。",
+    "surface": { "FIRST_PERSON_PLURAL": "我们", "HAVE": "有", "CLOTHES": "衣服" }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "我吃早餐。",
+    "surface": { "FIRST_PERSON_SINGULAR": "我", "EAT": "吃", "BREAKFAST": "早餐" }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "我们吃午餐。",
+    "surface": { "FIRST_PERSON_PLURAL": "我们", "EAT": "吃", "LUNCH": "午餐" }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "他们吃晚餐。",
+    "surface": { "THIRD_PERSON_PLURAL": "他们", "EAT": "吃", "DINNER": "晚餐" }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "这是我的手。",
+    "surface": { "THIS": "这", "BE": "是", "MY": "我的", "HAND": "手" }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "这是你的头。",
+    "surface": { "THIS": "这", "BE": "是", "YOUR": "你的", "HEAD": "头" }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "那是我的手臂。",
+    "surface": { "THAT": "那", "BE": "是", "MY": "我的", "ARM": "手臂" }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "那是你的腿。",
+    "surface": { "THAT": "那", "BE": "是", "YOUR": "你的", "LEG": "腿" }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "她是我的妈妈。",
+    "surface": { "SHE": "她", "BE": "是", "MY": "我的", "MOM": "妈妈" }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "他是我的爸爸。",
+    "surface": { "HE": "他", "BE": "是", "MY": "我的", "DAD": "爸爸" }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "这是我的手，这是你的头。"
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "她是我的妈妈，他是我的爸爸。"
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "我吃也喝。"
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "他吃早餐，但不吃午餐。"
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "她去她的房间。"
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "这是一本好书。"
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "那是你的手机吗？"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "他和他的妈妈一起吃晚餐，因为他在家。"
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "如果他在家，他就和他的女儿一起吃。"
+  },
+  "BOOK_IS_RED": {
+    "render": "这本书是红色的。"
+  },
+  "PHONE_IS_BLUE": {
+    "render": "这部手机是蓝色的。"
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "这件衬衫是绿色的。"
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "这座房子是白色的。"
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "这条裤子是黑色的。"
+  },
+  "I_EAT_TODAY": {
+    "render": "我今天吃。"
+  },
+  "HE_READS_TODAY": {
+    "render": "他今天读书。"
+  },
+  "WE_GO_TOMORROW": {
+    "render": "我们明天去。"
+  },
+  "I_READ_NOW": {
+    "render": "我现在读书。"
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "他昨天工作了。"
+  },
+  "WHO_EATS": {
+    "render": "谁吃？"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "你为什么去？"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "我们什么时候吃？"
+  },
+  "I_EAT_BEFORE": {
+    "render": "我之前吃。"
+  },
+  "WE_GO_AFTER": {
+    "render": "我们之后去。"
+  },
+  "WHERE_IS_BOOK": {
+    "render": "书在哪里？"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "你怎么读？"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "我有什么？"
+  },
+  "WHICH_BOOK": {
+    "render": "哪本书？"
+  },
+  "WE_EAT_ALL": {
+    "render": "我们全部吃。"
+  },
+  "BOOK_ON_THIS": {
+    "render": "书在这上面。"
+  },
+  "PHONE_IN_THAT": {
+    "render": "手机在那里面。"
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "鞋子在这下面。"
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "书在手机旁边。"
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "手机在书前面。"
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "书在手机后面。"
+  },
+  "PHONE_OFF_THIS": {
+    "render": "手机离开了这个。"
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "书在这个和那个之间。"
+  },
+  "SHOES_IN_THIS": {
+    "render": "鞋子在这里面。"
+  },
+  "PHONE_ON_THAT": {
+    "render": "手机在那上面。"
+  },
+  "WE_GO_BACK": {
+    "render": "我们回去。"
+  },
+  "I_GO_OUT": {
+    "render": "我出去。"
+  },
+  "WE_GO_NORTH": {
+    "render": "我们往北走。"
+  },
+  "WE_GO_SOUTH": {
+    "render": "我们往南走。"
+  },
+  "WE_GO_EAST": {
+    "render": "我们往东走。"
+  },
+  "WE_GO_WEST": {
+    "render": "我们往西走。"
+  },
+  "BOOK_IS_LONG": {
+    "render": "这本书很长。"
+  },
+  "DAY_IS_SHORT": {
+    "render": "白天很短。"
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "这本书很重。"
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "这部手机很轻。"
+  },
+  "NIGHT_IS_DARK": {
+    "render": "夜晚很黑。"
+  },
+  "BOY_IS_YOUNG": {
+    "render": "这个男孩很年轻。"
+  },
+  "BOOK_IS_EASY": {
+    "render": "这本书很容易。"
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "这本书很难。"
+  },
+  "THIS_IS_RIGHT": {
+    "render": "这是右边。"
+  },
+  "THIS_IS_LEFT": {
+    "render": "这是左边。"
+  },
+  "THIS_IS_CORRECT": {
+    "render": "这是对的。"
+  },
+  "THIS_IS_WRONG": {
+    "render": "这是错的。"
+  },
+  "THIS_IS_NICE": {
+    "render": "这很好。"
+  },
+  "YEAR_IS_LONG": {
+    "render": "这一年很长。"
+  },
+  "MONTH_IS_LONG": {
+    "render": "这个月很长。"
+  },
+  "WEEK_IS_SHORT": {
+    "render": "这一周很短。"
+  },
+  "DAY_IS_LONG": {
+    "render": "白天很长。"
+  },
+  "HOUR_IS_SHORT": {
+    "render": "一个小时很短。"
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "一分钟很短。"
+  },
+  "SECOND_IS_SHORT": {
+    "render": "一秒钟很短。"
+  },
+  "MORNING_IS_GOOD": {
+    "render": "早晨很好。"
+  },
+  "NIGHT_IS_BAD": {
+    "render": "夜晚很糟。"
+  },
+  "WINTER_IS_COLD": {
+    "render": "冬天很冷。"
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "夏天很好。"
+  },
+  "SPRING_IS_NEW": {
+    "render": "春天是新的。"
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "秋天是旧的。"
+  },
+  "THIS_IS_THING": {
+    "render": "这是一个东西。"
+  },
+  "PLEASE_READ": {
+    "render": "请读。"
+  },
+  "MAYBE_I_GO": {
+    "render": "也许我去。"
+  },
+  "THANKS": {
+    "render": "谢谢。"
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "我去拿食物。"
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "我有一些东西。"
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "我有另一本书。"
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "我只读这本书。"
+  },
+  "I_GO_FROM_HOME": {
+    "render": "我从家里出发。"
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "我去那座房子。"
+  },
+  "I_GO_AROUND": {
+    "render": "我四处走走。"
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "我用手做这个。"
+  },
+  "YES_I_DO": {
+    "render": "是的，我做。"
+  },
+  "NO_I_DO_NOT": {
+    "render": "不，我不做。"
+  },
+  "THIS_IS_MINE": {
+    "render": "这是我的。"
+  },
+  "THIS_IS_YOURS": {
+    "render": "这是你的。"
+  },
+  "THIS_IS_HERS": {
+    "render": "这是她的。"
+  },
+  "THIS_IS_OURS": {
+    "render": "这是我们的。"
+  },
+  "THIS_IS_THEIRS": {
+    "render": "这是他们的。"
+  }
+}

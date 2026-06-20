@@ -633,6 +633,7 @@
     "LEFT": ["sol"],
     "CORRECT": ["doğru"],
     "WRONG": ["yanlış"],
+    "COLD": ["soğuk"],
     "NICE": ["güzel"],
     "THIS": ["bu"],
     "THAT": ["şu"],

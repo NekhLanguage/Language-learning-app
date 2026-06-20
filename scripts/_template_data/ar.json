@@ -1,0 +1,426 @@
+{
+  "I_EAT_FOOD": {
+    "render": "أنا آكل طعام.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "EAT": "آكل", "FOOD": "طعام" },
+    "questions": { "pronoun": "من يأكل الطعام؟", "verb": "ماذا أفعل؟", "object": "ماذا آكل؟" }
+  },
+  "HE_READ_BOOK": {
+    "render": "هو يقرأ كتاب.",
+    "surface": { "HE": "هو", "READ": "يقرأ", "BOOK": "كتاب" },
+    "questions": { "pronoun": "من يقرأ كتاباً؟", "verb": "ماذا يفعل؟", "object": "ماذا يقرأ؟" }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "هي ترى هاتف.",
+    "surface": { "SHE": "هي", "SEE": "ترى", "PHONE": "هاتف" },
+    "questions": { "pronoun": "من ترى هاتفاً؟", "verb": "ماذا تفعل؟", "object": "ماذا ترى؟" }
+  },
+  "WE_HAVE_JOB": {
+    "render": "نحن لدينا عمل.",
+    "surface": { "FIRST_PERSON_PLURAL": "نحن", "HAVE": "لدينا", "JOB": "عمل" },
+    "questions": { "pronoun": "من لديه عمل؟", "verb": "ماذا نفعل؟", "object": "ماذا لدينا؟" }
+  },
+  "I_DRINK_WATER": {
+    "render": "أنا أشرب ماء.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "DRINK": "أشرب", "WATER": "ماء" },
+    "questions": { "pronoun": "من يشرب الماء؟", "verb": "ماذا أفعل؟", "object": "ماذا أشرب؟" }
+  },
+  "YOU_READ_BOOK": {
+    "render": "أنت تقرأ كتاب.",
+    "surface": { "SECOND_PERSON": "أنت", "READ": "تقرأ", "BOOK": "كتاب" },
+    "questions": { "pronoun": "من يقرأ كتاباً؟", "verb": "ماذا تفعل؟", "object": "ماذا تقرأ؟" }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "أنتم تشربون ماء.",
+    "surface": { "SECOND_PERSON_PLURAL": "أنتم", "DRINK": "تشربون", "WATER": "ماء" },
+    "questions": { "pronoun": "من يشرب الماء؟", "verb": "ماذا تفعلون؟", "object": "ماذا تشربون؟" }
+  },
+  "THEY_SLEEP": {
+    "render": "هم ينامون.",
+    "surface": { "THIRD_PERSON_PLURAL": "هم", "SLEEP": "ينامون" },
+    "questions": { "pronoun": "من ينام؟", "verb": "ماذا يفعلون؟" }
+  },
+  "I_AM_MAN": {
+    "render": "أنا رجل.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "MAN": "رجل" },
+    "questions": { "verb": "ماذا أكون؟", "object": "ماذا أكون؟" }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "هي امرأة.",
+    "surface": { "SHE": "هي", "WOMAN": "امرأة" },
+    "questions": { "pronoun": "من تكون امرأة؟", "verb": "ماذا تكون؟", "object": "ماذا تكون؟" }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "أنت بنت.",
+    "surface": { "SECOND_PERSON": "أنت", "GIRL": "بنت" },
+    "questions": { "pronoun": "من تكون بنتاً؟", "verb": "ماذا تكون؟", "object": "ماذا تكون؟" }
+  },
+  "HE_IS_BOY": {
+    "render": "هو ولد.",
+    "surface": { "HE": "هو", "BOY": "ولد" },
+    "questions": { "pronoun": "من يكون ولداً؟", "verb": "ماذا يكون؟", "object": "ماذا يكون؟" }
+  },
+  "WE_STOP_EATING": {
+    "render": "نحن نتوقف عن الأكل.",
+    "surface": { "FIRST_PERSON_PLURAL": "نحن", "STOP": "نتوقف", "EAT": "عن الأكل" },
+    "questions": { "pronoun": "من يتوقف عن الأكل؟", "verb": "ماذا نفعل؟" }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "هم يبدأون النوم.",
+    "surface": { "THIRD_PERSON_PLURAL": "هم", "START": "يبدأون", "SLEEP": "النوم" },
+    "questions": { "pronoun": "من يبدأ النوم؟", "verb": "ماذا يفعلون؟" }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "هو يرى قميص.",
+    "surface": { "HE": "هو", "SEE": "يرى", "SHIRT": "قميص" },
+    "questions": { "pronoun": "من يرى قميصاً؟", "verb": "ماذا يفعل؟", "object": "ماذا يرى؟" }
+  },
+  "I_GO_HOME": {
+    "render": "أنا أذهب إلى المنزل.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "GO": "أذهب", "HOME": "المنزل" },
+    "questions": { "pronoun": "من يذهب إلى المنزل؟", "verb": "ماذا أفعل؟", "object": "إلى أين أذهب؟" }
+  },
+  "I_USE_PHONE": {
+    "render": "أنا أستخدم هاتف.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "USE": "أستخدم", "PHONE": "هاتف" },
+    "questions": { "pronoun": "من يستخدم هاتفاً؟", "verb": "ماذا أفعل؟", "object": "ماذا أستخدم؟" }
+  },
+  "I_GET_BOOK": {
+    "render": "أنا أحصل على كتاب.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "GET": "أحصل", "BOOK": "كتاب" },
+    "questions": { "pronoun": "من يحصل على كتاب؟", "verb": "ماذا أفعل؟", "object": "ماذا أحصل عليه؟" }
+  },
+  "I_SEE_HOUSE": {
+    "render": "أنا أرى بيت.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "SEE": "أرى", "HOUSE": "بيت" },
+    "questions": { "pronoun": "من يرى بيتاً؟", "verb": "ماذا أفعل؟", "object": "ماذا أرى؟" }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "هي ترى غرفة.",
+    "surface": { "SHE": "هي", "SEE": "ترى", "ROOM": "غرفة" },
+    "questions": { "pronoun": "من ترى غرفة؟", "verb": "ماذا تفعل؟", "object": "ماذا ترى؟" }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "أنا لدي قميص.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "HAVE": "لدي", "SHIRT": "قميص" },
+    "questions": { "pronoun": "من لديه قميص؟", "verb": "ماذا أفعل؟", "object": "ماذا لدي؟" }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "هي لديها أحذية.",
+    "surface": { "SHE": "هي", "HAVE": "لديها", "SHOES": "أحذية" },
+    "questions": { "pronoun": "من لديها أحذية؟", "verb": "ماذا تفعل؟", "object": "ماذا لديها؟" }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "هم لديهم بنطال.",
+    "surface": { "THIRD_PERSON_PLURAL": "هم", "HAVE": "لديهم", "PANTS": "بنطال" }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "نحن لدينا ملابس.",
+    "surface": { "FIRST_PERSON_PLURAL": "نحن", "HAVE": "لدينا", "CLOTHES": "ملابس" }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "أنا آكل الفطور.",
+    "surface": { "FIRST_PERSON_SINGULAR": "أنا", "EAT": "آكل", "BREAKFAST": "الفطور" }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "نحن نأكل الغداء.",
+    "surface": { "FIRST_PERSON_PLURAL": "نحن", "EAT": "نأكل", "LUNCH": "الغداء" }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "هم يأكلون العشاء.",
+    "surface": { "THIRD_PERSON_PLURAL": "هم", "EAT": "يأكلون", "DINNER": "العشاء" }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "هذه يدي.",
+    "surface": { "THIS": "هذه", "MY": "ـي", "HAND": "يد" }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "هذه رأسك.",
+    "surface": { "THIS": "هذه", "YOUR": "ـك", "HEAD": "رأس" }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "ذلك ذراعي.",
+    "surface": { "THAT": "ذلك", "MY": "ـي", "ARM": "ذراع" }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "ذلك ساقك.",
+    "surface": { "THAT": "ذلك", "YOUR": "ـك", "LEG": "ساق" }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "هي أمي.",
+    "surface": { "SHE": "هي", "MY": "ـي", "MOM": "أم" }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "هو أبي.",
+    "surface": { "HE": "هو", "MY": "ـي", "DAD": "أب" }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "هذه يدي وهذه رأسك."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "هي أمي وهو أبي."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "أنا آكل وأشرب."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "هو يأكل الفطور لكن ليس الغداء."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "هي تذهب إلى غرفتها."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "هذا كتاب جيد."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "هل ذلك هاتفك؟"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "هو يأكل العشاء مع أمه لأنه في المنزل."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "إذا كان في المنزل، فإنه يأكل مع ابنته."
+  },
+  "BOOK_IS_RED": {
+    "render": "الكتاب أحمر."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "الهاتف أزرق."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "القميص أخضر."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "البيت أبيض."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "البنطال أسود."
+  },
+  "I_EAT_TODAY": {
+    "render": "أنا آكل اليوم."
+  },
+  "HE_READS_TODAY": {
+    "render": "هو يقرأ اليوم."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "نحن نذهب غداً."
+  },
+  "I_READ_NOW": {
+    "render": "أنا أقرأ الآن."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "هو يعمل أمس."
+  },
+  "WHO_EATS": {
+    "render": "من يأكل؟"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "لماذا تذهب؟"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "متى نأكل؟"
+  },
+  "I_EAT_BEFORE": {
+    "render": "أنا آكل قبل."
+  },
+  "WE_GO_AFTER": {
+    "render": "نحن نذهب بعد."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "أين الكتاب؟"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "كيف تقرأ؟"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "ماذا لدي؟"
+  },
+  "WHICH_BOOK": {
+    "render": "أي كتاب؟"
+  },
+  "WE_EAT_ALL": {
+    "render": "نحن نأكل كل شيء."
+  },
+  "BOOK_ON_THIS": {
+    "render": "الكتاب على هذا."
+  },
+  "PHONE_IN_THAT": {
+    "render": "الهاتف في ذلك."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "الأحذية تحت هذا."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "الكتاب بجانب الهاتف."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "الهاتف أمام الكتاب."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "الكتاب خلف الهاتف."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "الهاتف بعيد عن هذا."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "الكتاب بين هذا وذلك."
+  },
+  "SHOES_IN_THIS": {
+    "render": "الأحذية في هذا."
+  },
+  "PHONE_ON_THAT": {
+    "render": "الهاتف على ذلك."
+  },
+  "WE_GO_BACK": {
+    "render": "نحن نعود."
+  },
+  "I_GO_OUT": {
+    "render": "أنا أخرج."
+  },
+  "WE_GO_NORTH": {
+    "render": "نحن نذهب شمالاً."
+  },
+  "WE_GO_SOUTH": {
+    "render": "نحن نذهب جنوباً."
+  },
+  "WE_GO_EAST": {
+    "render": "نحن نذهب شرقاً."
+  },
+  "WE_GO_WEST": {
+    "render": "نحن نذهب غرباً."
+  },
+  "BOOK_IS_LONG": {
+    "render": "الكتاب طويل."
+  },
+  "DAY_IS_SHORT": {
+    "render": "اليوم قصير."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "الكتاب ثقيل."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "الهاتف خفيف."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "الليل مظلم."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "الولد صغير."
+  },
+  "BOOK_IS_EASY": {
+    "render": "الكتاب سهل."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "الكتاب صعب."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "هذا يمين."
+  },
+  "THIS_IS_LEFT": {
+    "render": "هذا يسار."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "هذا صحيح."
+  },
+  "THIS_IS_WRONG": {
+    "render": "هذا خطأ."
+  },
+  "THIS_IS_NICE": {
+    "render": "هذا لطيف."
+  },
+  "YEAR_IS_LONG": {
+    "render": "السنة طويلة."
+  },
+  "MONTH_IS_LONG": {
+    "render": "الشهر طويل."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "الأسبوع قصير."
+  },
+  "DAY_IS_LONG": {
+    "render": "اليوم طويل."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "الساعة قصيرة."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "الدقيقة قصيرة."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "الثانية قصيرة."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "الصباح جيد."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "الليل سيئ."
+  },
+  "WINTER_IS_COLD": {
+    "render": "الشتاء بارد."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "الصيف جيد."
+  },
+  "SPRING_IS_NEW": {
+    "render": "الربيع جديد."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "الخريف قديم."
+  },
+  "THIS_IS_THING": {
+    "render": "هذا شيء."
+  },
+  "PLEASE_READ": {
+    "render": "من فضلك اقرأ."
+  },
+  "MAYBE_I_GO": {
+    "render": "ربما أذهب."
+  },
+  "THANKS": {
+    "render": "شكراً."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "أنا أذهب من أجل الطعام."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "أنا لدي شيء."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "أنا لدي كتاب آخر."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "أنا أقرأ الكتاب فقط."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "أنا أذهب من المنزل."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "أنا أذهب إلى البيت."
+  },
+  "I_GO_AROUND": {
+    "render": "أنا أتجول."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "أنا أفعل هذا باليد."
+  },
+  "YES_I_DO": {
+    "render": "نعم، أفعل."
+  },
+  "NO_I_DO_NOT": {
+    "render": "لا، لا أفعل."
+  },
+  "THIS_IS_MINE": {
+    "render": "هذا لي."
+  },
+  "THIS_IS_YOURS": {
+    "render": "هذا لك."
+  },
+  "THIS_IS_HERS": {
+    "render": "هذا لها."
+  },
+  "THIS_IS_OURS": {
+    "render": "هذا لنا."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "هذا لهم."
+  }
+}

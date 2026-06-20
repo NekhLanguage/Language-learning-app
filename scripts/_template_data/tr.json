@@ -1,0 +1,647 @@
+{
+  "I_EAT_FOOD": {
+    "render": "Ben yemek yerim.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "EAT": "yerim",
+      "FOOD": "yemek"
+    },
+    "questions": {
+      "pronoun": "Kim yemek yer?",
+      "verb": "Ben ne yaparım?",
+      "object": "Ben ne yerim?"
+    }
+  },
+  "HE_READ_BOOK": {
+    "render": "O bir kitap okur.",
+    "surface": {
+      "HE": "O",
+      "READ": "okur",
+      "BOOK": "kitap"
+    },
+    "questions": {
+      "pronoun": "Kim bir kitap okur?",
+      "verb": "O ne yapar?",
+      "object": "O ne okur?"
+    }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "O bir telefon görür.",
+    "surface": {
+      "SHE": "O",
+      "SEE": "görür",
+      "PHONE": "telefon"
+    },
+    "questions": {
+      "pronoun": "Kim bir telefon görür?",
+      "verb": "O ne yapar?",
+      "object": "O ne görür?"
+    }
+  },
+  "WE_HAVE_JOB": {
+    "render": "Bizim bir işimiz var.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Biz",
+      "HAVE": "var",
+      "JOB": "işimiz"
+    },
+    "questions": {
+      "pronoun": "Kimin bir işi var?",
+      "verb": "Biz ne yaparız?",
+      "object": "Bizim neyimiz var?"
+    }
+  },
+  "I_DRINK_WATER": {
+    "render": "Ben su içerim.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "DRINK": "içerim",
+      "WATER": "su"
+    },
+    "questions": {
+      "pronoun": "Kim su içer?",
+      "verb": "Ben ne yaparım?",
+      "object": "Ben ne içerim?"
+    }
+  },
+  "YOU_READ_BOOK": {
+    "render": "Sen bir kitap okursun.",
+    "surface": {
+      "SECOND_PERSON": "Sen",
+      "READ": "okursun",
+      "BOOK": "kitap"
+    },
+    "questions": {
+      "pronoun": "Kim bir kitap okur?",
+      "verb": "Sen ne yaparsın?",
+      "object": "Sen ne okursun?"
+    }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "Siz su içersiniz.",
+    "surface": {
+      "SECOND_PERSON_PLURAL": "Siz",
+      "DRINK": "içersiniz",
+      "WATER": "su"
+    },
+    "questions": {
+      "pronoun": "Kim su içer?",
+      "verb": "Siz ne yaparsınız?",
+      "object": "Siz ne içersiniz?"
+    }
+  },
+  "THEY_SLEEP": {
+    "render": "Onlar uyurlar.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Onlar",
+      "SLEEP": "uyurlar"
+    },
+    "questions": {
+      "pronoun": "Kim uyur?",
+      "verb": "Onlar ne yaparlar?"
+    }
+  },
+  "I_AM_MAN": {
+    "render": "Ben bir adamım.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "BE": "-ım",
+      "MAN": "adam"
+    },
+    "questions": {
+      "verb": "Ben neyim?",
+      "object": "Ben neyim?"
+    }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "O bir kadındır.",
+    "surface": {
+      "SHE": "O",
+      "BE": "-dır",
+      "WOMAN": "kadın"
+    },
+    "questions": {
+      "pronoun": "Kim bir kadındır?",
+      "verb": "O nedir?",
+      "object": "O nedir?"
+    }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "Sen bir kızsın.",
+    "surface": {
+      "SECOND_PERSON": "Sen",
+      "BE": "-sın",
+      "GIRL": "kız"
+    },
+    "questions": {
+      "pronoun": "Kim bir kızdır?",
+      "verb": "Sen nesin?",
+      "object": "Sen nesin?"
+    }
+  },
+  "HE_IS_BOY": {
+    "render": "O bir oğlandır.",
+    "surface": {
+      "HE": "O",
+      "BE": "-dır",
+      "BOY": "oğlan"
+    },
+    "questions": {
+      "pronoun": "Kim bir oğlandır?",
+      "verb": "O nedir?",
+      "object": "O nedir?"
+    }
+  },
+  "WE_STOP_EATING": {
+    "render": "Biz yemeyi bırakırız.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Biz",
+      "STOP": "bırakırız",
+      "EAT": "yemeyi"
+    },
+    "questions": {
+      "pronoun": "Kim yemeyi bırakır?",
+      "verb": "Biz ne yaparız?"
+    }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "Onlar uyumaya başlarlar.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Onlar",
+      "START": "başlarlar",
+      "SLEEP": "uyumaya"
+    },
+    "questions": {
+      "pronoun": "Kim uyumaya başlar?",
+      "verb": "Onlar ne yaparlar?"
+    }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "O bir gömlek görür.",
+    "surface": {
+      "HE": "O",
+      "SEE": "görür",
+      "SHIRT": "gömlek"
+    },
+    "questions": {
+      "pronoun": "Kim bir gömlek görür?",
+      "verb": "O ne yapar?",
+      "object": "O ne görür?"
+    }
+  },
+  "I_GO_HOME": {
+    "render": "Ben eve giderim.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "GO": "giderim",
+      "HOME": "eve"
+    },
+    "questions": {
+      "pronoun": "Kim eve gider?",
+      "verb": "Ben ne yaparım?",
+      "object": "Ben nereye giderim?"
+    }
+  },
+  "I_USE_PHONE": {
+    "render": "Ben bir telefon kullanırım.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "USE": "kullanırım",
+      "PHONE": "telefon"
+    },
+    "questions": {
+      "pronoun": "Kim bir telefon kullanır?",
+      "verb": "Ben ne yaparım?",
+      "object": "Ben ne kullanırım?"
+    }
+  },
+  "I_GET_BOOK": {
+    "render": "Ben bir kitap alırım.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "GET": "alırım",
+      "BOOK": "kitap"
+    },
+    "questions": {
+      "pronoun": "Kim bir kitap alır?",
+      "verb": "Ben ne yaparım?",
+      "object": "Ben ne alırım?"
+    }
+  },
+  "I_SEE_HOUSE": {
+    "render": "Ben bir ev görürüm.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "SEE": "görürüm",
+      "HOUSE": "ev"
+    },
+    "questions": {
+      "pronoun": "Kim bir ev görür?",
+      "verb": "Ben ne yaparım?",
+      "object": "Ben ne görürüm?"
+    }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "O bir oda görür.",
+    "surface": {
+      "SHE": "O",
+      "SEE": "görür",
+      "ROOM": "oda"
+    },
+    "questions": {
+      "pronoun": "Kim bir oda görür?",
+      "verb": "O ne yapar?",
+      "object": "O ne görür?"
+    }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "Benim bir gömleğim var.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "HAVE": "var",
+      "SHIRT": "gömleğim"
+    },
+    "questions": {
+      "pronoun": "Kimin bir gömleği var?",
+      "verb": "Ben ne yaparım?",
+      "object": "Benim neyim var?"
+    }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "Onun ayakkabıları var.",
+    "surface": {
+      "SHE": "O",
+      "HAVE": "var",
+      "SHOES": "ayakkabıları"
+    },
+    "questions": {
+      "pronoun": "Kimin ayakkabıları var?",
+      "verb": "O ne yapar?",
+      "object": "Onun neyi var?"
+    }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "Onların pantolonları var.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Onlar",
+      "HAVE": "var",
+      "PANTS": "pantolonları"
+    }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "Bizim kıyafetlerimiz var.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Biz",
+      "HAVE": "var",
+      "CLOTHES": "kıyafetlerimiz"
+    }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "Ben kahvaltı yaparım.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Ben",
+      "EAT": "yaparım",
+      "BREAKFAST": "kahvaltı"
+    }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "Biz öğle yemeği yeriz.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Biz",
+      "EAT": "yeriz",
+      "LUNCH": "öğle yemeği"
+    }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "Onlar akşam yemeği yerler.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Onlar",
+      "EAT": "yerler",
+      "DINNER": "akşam yemeği"
+    }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "Bu benim elimdir.",
+    "surface": {
+      "THIS": "Bu",
+      "BE": "-dir",
+      "MY": "benim",
+      "HAND": "elim"
+    }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "Bu senin başındır.",
+    "surface": {
+      "THIS": "Bu",
+      "BE": "-dır",
+      "YOUR": "senin",
+      "HEAD": "başın"
+    }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "Şu benim kolumdur.",
+    "surface": {
+      "THAT": "Şu",
+      "BE": "-dur",
+      "MY": "benim",
+      "ARM": "kolum"
+    }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "Şu senin bacağındır.",
+    "surface": {
+      "THAT": "Şu",
+      "BE": "-dır",
+      "YOUR": "senin",
+      "LEG": "bacağın"
+    }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "O benim annemdir.",
+    "surface": {
+      "SHE": "O",
+      "BE": "-dir",
+      "MY": "benim",
+      "MOM": "annem"
+    }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "O benim babamdır.",
+    "surface": {
+      "HE": "O",
+      "BE": "-dır",
+      "MY": "benim",
+      "DAD": "babam"
+    }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "Bu benim elim ve bu senin başın."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "O benim annem ve o benim babam."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "Ben yer ve içerim."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "O kahvaltı yapar ama öğle yemeği yemez."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "O kendi odasına gider."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "Bu iyi bir kitap."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "Şu senin telefonun mu?"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "O, evde olduğu için annesiyle akşam yemeği yer."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "Eğer evdeyse, kızıyla yer."
+  },
+  "BOOK_IS_RED": {
+    "render": "Kitap kırmızıdır."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "Telefon mavidir."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "Gömlek yeşildir."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "Ev beyazdır."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "Pantolon siyahtır."
+  },
+  "I_EAT_TODAY": {
+    "render": "Ben bugün yerim."
+  },
+  "HE_READS_TODAY": {
+    "render": "O bugün okur."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "Biz yarın gideriz."
+  },
+  "I_READ_NOW": {
+    "render": "Ben şimdi okurum."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "O dün çalıştı."
+  },
+  "WHO_EATS": {
+    "render": "Kim yer?"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "Neden gidersin?"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "Ne zaman yeriz?"
+  },
+  "I_EAT_BEFORE": {
+    "render": "Ben önce yerim."
+  },
+  "WE_GO_AFTER": {
+    "render": "Biz sonra gideriz."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "Kitap nerede?"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "Nasıl okursun?"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "Benim neyim var?"
+  },
+  "WHICH_BOOK": {
+    "render": "Hangi kitap?"
+  },
+  "WE_EAT_ALL": {
+    "render": "Biz hepsini yeriz."
+  },
+  "BOOK_ON_THIS": {
+    "render": "Kitap bunun üstünde."
+  },
+  "PHONE_IN_THAT": {
+    "render": "Telefon şunun içinde."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "Ayakkabılar bunun altında."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "Kitap telefonun yanında."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "Telefon kitabın önünde."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "Kitap telefonun arkasında."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "Telefon bundan uzakta."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "Kitap bununla şunun arasında."
+  },
+  "SHOES_IN_THIS": {
+    "render": "Ayakkabılar bunun içinde."
+  },
+  "PHONE_ON_THAT": {
+    "render": "Telefon şunun üstünde."
+  },
+  "WE_GO_BACK": {
+    "render": "Biz geri gideriz."
+  },
+  "I_GO_OUT": {
+    "render": "Ben dışarı çıkarım."
+  },
+  "WE_GO_NORTH": {
+    "render": "Biz kuzeye gideriz."
+  },
+  "WE_GO_SOUTH": {
+    "render": "Biz güneye gideriz."
+  },
+  "WE_GO_EAST": {
+    "render": "Biz doğuya gideriz."
+  },
+  "WE_GO_WEST": {
+    "render": "Biz batıya gideriz."
+  },
+  "BOOK_IS_LONG": {
+    "render": "Kitap uzundur."
+  },
+  "DAY_IS_SHORT": {
+    "render": "Gün kısadır."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "Kitap ağırdır."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "Telefon hafiftir."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "Gece karanlıktır."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "Oğlan gençtir."
+  },
+  "BOOK_IS_EASY": {
+    "render": "Kitap kolaydır."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "Kitap zordur."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "Bu sağdır."
+  },
+  "THIS_IS_LEFT": {
+    "render": "Bu soldur."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "Bu doğrudur."
+  },
+  "THIS_IS_WRONG": {
+    "render": "Bu yanlıştır."
+  },
+  "THIS_IS_NICE": {
+    "render": "Bu güzeldir."
+  },
+  "YEAR_IS_LONG": {
+    "render": "Yıl uzundur."
+  },
+  "MONTH_IS_LONG": {
+    "render": "Ay uzundur."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "Hafta kısadır."
+  },
+  "DAY_IS_LONG": {
+    "render": "Gün uzundur."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "Saat kısadır."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "Dakika kısadır."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "Saniye kısadır."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "Sabah iyidir."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "Gece kötüdür."
+  },
+  "WINTER_IS_COLD": {
+    "render": "Kış soğuktur."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "Yaz iyidir."
+  },
+  "SPRING_IS_NEW": {
+    "render": "İlkbahar yenidir."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "Sonbahar eskidir."
+  },
+  "THIS_IS_THING": {
+    "render": "Bu bir şeydir."
+  },
+  "PLEASE_READ": {
+    "render": "Lütfen oku."
+  },
+  "MAYBE_I_GO": {
+    "render": "Belki giderim."
+  },
+  "THANKS": {
+    "render": "Teşekkürler."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "Ben yemek için giderim."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "Benim bir şeyim var."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "Benim başka bir kitabım var."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "Ben sadece kitabı okurum."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "Ben evden giderim."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "Ben eve giderim."
+  },
+  "I_GO_AROUND": {
+    "render": "Ben etrafta dolaşırım."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "Ben bunu elle yaparım."
+  },
+  "YES_I_DO": {
+    "render": "Evet, yaparım."
+  },
+  "NO_I_DO_NOT": {
+    "render": "Hayır, yapmam."
+  },
+  "THIS_IS_MINE": {
+    "render": "Bu benimdir."
+  },
+  "THIS_IS_YOURS": {
+    "render": "Bu senindir."
+  },
+  "THIS_IS_HERS": {
+    "render": "Bu onundur."
+  },
+  "THIS_IS_OURS": {
+    "render": "Bu bizimdir."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "Bu onlarındır."
+  }
+}
