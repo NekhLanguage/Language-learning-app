@@ -3100,6 +3100,11 @@ if (tpl.structure?.type === "complex_clause") {
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
 
   if (numberWord) {
+    // Same surface capture for a forced number modifier (see adjective note).
+    if (sharedChoices && numberCid === forcedConcept) {
+      const k = "blankSurface_" + lang;
+      if (!(k in sharedChoices)) sharedChoices[k] = numberWord;
+    }
     // Numbers replace the article: "two books" not "two a book"
     const isPlural = numberCid !== "ONE";
     let nounForm;
@@ -3139,6 +3144,14 @@ if (tpl.structure?.type === "complex_clause") {
     const adjForm = (useCopularPlural && lang !== "en" && !adjectiveIsPossessive)
       ? genderedFormOf(lang, adjectiveCid, cid, true)
       : adjectiveWord;
+    // Record the exact surface rendered for a forced modifier so the L3
+    // "fill in the missing word" blank can match the inflected form actually
+    // shown (e.g. uk «темна»), not the base form returned by formOf. Keyed by
+    // language so target/support builds don't clobber each other; first wins.
+    if (sharedChoices && adjectiveCid === forcedConcept) {
+      const k = "blankSurface_" + lang;
+      if (!(k in sharedChoices)) sharedChoices[k] = adjForm;
+    }
     if (adjectiveIsPossessive) {
       // Possessives replace the article entirely: "her wizard" not "a her wizard"
       phrase = adjForm + " " + bare;
@@ -3460,7 +3473,11 @@ if (isModifierConcept(targetConcept)) {
   const sentenceTarget = buildSentence(targetLang, tpl, targetConcept, sharedChoicesL3);
   const sentenceSupport = buildSentence(supportLang, tpl, targetConcept, sharedChoicesL3);
 
-  const targetSurface = formOf(targetLang, targetConcept);
+  // Blank the surface actually rendered (inflected for gender/number agreement),
+  // captured during the buildSentence(targetLang, …) call above; fall back to the
+  // base form if nothing was captured.
+  const targetSurface = sharedChoicesL3["blankSurface_" + targetLang] ||
+    formOf(targetLang, targetConcept);
   const blanked = blankSentence(sentenceTarget, targetSurface);
 
   const options = buildSameTypeOptions(targetConcept, 4, targetLang);
