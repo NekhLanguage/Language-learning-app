@@ -2327,6 +2327,12 @@ function nounPhrase(lang, cid, opts = {}) {
     return pluralFormOf(lang, cid);
   }
 
+  // Mass / uncountable nouns never take an indefinite article ("learns magic",
+  // "isst Fleisch"), even though they still carry gender for adjective
+  // agreement. An explicit countable:false overrides the gender-based trigger
+  // below.
+  if (meta && meta.countable === false) return base;
+
   // Apply article logic when the concept is marked countable OR when the
   // form itself carries article/gender data (covers resource-pack nouns that
   // define articles without a countable flag on the concept).
@@ -2360,6 +2366,16 @@ function nounPhrase(lang, cid, opts = {}) {
     if (entry.gender === "m") return "ένας " + base;
     if (entry.gender === "f") return "μία " + base;
     return "ένα " + base; // neuter
+  }
+
+  if (lang === "es") {
+    if (!entry.gender) return base;
+    return (entry.gender === "f" ? "una " : "un ") + base;
+  }
+
+  if (lang === "fr") {
+    if (!entry.gender) return base;
+    return (entry.gender === "f" ? "une " : "un ") + base;
   }
 
   return base;
@@ -2811,7 +2827,11 @@ function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
 function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
   const verb = getVerbForm(verbCid, subjectCid, lang);
-  const object = formOf(lang, objectCid);
+  // Use nounPhrase (not bare formOf) so a direct object gets its indefinite
+  // article where the language uses one ("casts a spell", "isst ein Brot");
+  // mass/uncountable nouns ("learns magic") and article-less languages are
+  // returned unchanged.
+  const object = nounPhrase(lang, objectCid);
   // The "with his X" companion is optional: plain SVO templates omit these slots.
   // Only build it when a companion noun is present, so undefined slots don't leak
   // into the sentence as the literal word "undefined".

@@ -4,7 +4,7 @@
     { "concept_id": "AIRPORT", "type": "noun" },
     { "concept_id": "PASSPORT", "type": "noun" },
     { "concept_id": "FLIGHT", "type": "noun" },
-    { "concept_id": "LUGGAGE", "type": "noun" },
+    { "concept_id": "LUGGAGE", "type": "noun", "countable": false },
     { "concept_id": "HOTEL", "type": "noun" },
     { "concept_id": "RESERVATION", "type": "noun" },
     { "concept_id": "LOBBY", "type": "noun" },

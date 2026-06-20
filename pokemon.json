@@ -25,7 +25,7 @@
     { "concept_id": "ITEM", "type": "noun" },
     { "concept_id": "LEVEL", "type": "noun" },
     { "concept_id": "EXPERIENCE", "type": "noun" },
-    { "concept_id": "HEALTH", "type": "noun" },
+    { "concept_id": "HEALTH", "type": "noun", "countable": false },
     { "concept_id": "BURN", "type": "verb" },
     { "concept_id": "POISON", "type": "verb" },
     { "concept_id": "SLEEP_STATUS", "type": "noun" },

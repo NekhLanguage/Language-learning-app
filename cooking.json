@@ -25,7 +25,7 @@
     { "concept_id": "GRAM", "type": "measure" },
     { "concept_id": "KILOGRAM", "type": "measure" },
 
-    { "concept_id": "MEAT", "type": "noun" },
+    { "concept_id": "MEAT", "type": "noun", "countable": false },
     { "concept_id": "CHICKEN", "type": "noun" },
     { "concept_id": "FISH", "type": "noun" },
     { "concept_id": "VEGETABLE", "type": "noun" },
@@ -34,7 +34,7 @@
     { "concept_id": "FRUIT", "type": "noun" },
     { "concept_id": "BANANA", "type": "noun" },
     { "concept_id": "SOUP", "type": "noun" },
-    { "concept_id": "DOUGH", "type": "noun" },
+    { "concept_id": "DOUGH", "type": "noun", "countable": false },
     { "concept_id": "SAUCE", "type": "noun" },
     { "concept_id": "INGREDIENT", "type": "noun" },
 
@@ -44,9 +44,9 @@
     { "concept_id": "SINK", "type": "noun" },
     { "concept_id": "FREEZER", "type": "noun" },
 
-    { "concept_id": "SALT", "type": "noun" },
+    { "concept_id": "SALT", "type": "noun", "countable": false },
     { "concept_id": "PEPPER", "type": "noun" },
-    { "concept_id": "BUTTER", "type": "noun" },
+    { "concept_id": "BUTTER", "type": "noun", "countable": false },
     { "concept_id": "SPICE", "type": "noun" },
     { "concept_id": "RECIPE", "type": "noun" },
 
