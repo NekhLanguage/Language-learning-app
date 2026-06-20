@@ -1,0 +1,426 @@
+{
+  "I_EAT_FOOD": {
+    "render": "저는 음식을 먹어요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "EAT": "먹어요", "FOOD": "음식" },
+    "questions": { "pronoun": "누가 음식을 먹어요?", "verb": "저는 무엇을 해요?", "object": "저는 무엇을 먹어요?" }
+  },
+  "HE_READ_BOOK": {
+    "render": "그는 책을 읽어요.",
+    "surface": { "HE": "그", "READ": "읽어요", "BOOK": "책" },
+    "questions": { "pronoun": "누가 책을 읽어요?", "verb": "그는 무엇을 해요?", "object": "그는 무엇을 읽어요?" }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "그녀는 전화를 봐요.",
+    "surface": { "SHE": "그녀", "SEE": "봐요", "PHONE": "전화" },
+    "questions": { "pronoun": "누가 전화를 봐요?", "verb": "그녀는 무엇을 해요?", "object": "그녀는 무엇을 봐요?" }
+  },
+  "WE_HAVE_JOB": {
+    "render": "우리는 일이 있어요.",
+    "surface": { "FIRST_PERSON_PLURAL": "우리", "HAVE": "있어요", "JOB": "일" },
+    "questions": { "pronoun": "누가 일이 있어요?", "verb": "우리는 무엇을 해요?", "object": "우리는 무엇을 가지고 있어요?" }
+  },
+  "I_DRINK_WATER": {
+    "render": "저는 물을 마셔요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "DRINK": "마셔요", "WATER": "물" },
+    "questions": { "pronoun": "누가 물을 마셔요?", "verb": "저는 무엇을 해요?", "object": "저는 무엇을 마셔요?" }
+  },
+  "YOU_READ_BOOK": {
+    "render": "당신은 책을 읽어요.",
+    "surface": { "SECOND_PERSON": "당신", "READ": "읽어요", "BOOK": "책" },
+    "questions": { "pronoun": "누가 책을 읽어요?", "verb": "당신은 무엇을 해요?", "object": "당신은 무엇을 읽어요?" }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "여러분은 물을 마셔요.",
+    "surface": { "SECOND_PERSON_PLURAL": "여러분", "DRINK": "마셔요", "WATER": "물" },
+    "questions": { "pronoun": "누가 물을 마셔요?", "verb": "여러분은 무엇을 해요?", "object": "여러분은 무엇을 마셔요?" }
+  },
+  "THEY_SLEEP": {
+    "render": "그들은 자요.",
+    "surface": { "THIRD_PERSON_PLURAL": "그들", "SLEEP": "자요" },
+    "questions": { "pronoun": "누가 자요?", "verb": "그들은 무엇을 해요?" }
+  },
+  "I_AM_MAN": {
+    "render": "저는 남자예요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "BE": "예요", "MAN": "남자" },
+    "questions": { "verb": "저는 무엇이에요?", "object": "저는 무엇이에요?" }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "그녀는 여자예요.",
+    "surface": { "SHE": "그녀", "BE": "예요", "WOMAN": "여자" },
+    "questions": { "pronoun": "누가 여자예요?", "verb": "그녀는 무엇이에요?", "object": "그녀는 무엇이에요?" }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "당신은 소녀예요.",
+    "surface": { "SECOND_PERSON": "당신", "BE": "예요", "GIRL": "소녀" },
+    "questions": { "pronoun": "누가 소녀예요?", "verb": "당신은 무엇이에요?", "object": "당신은 무엇이에요?" }
+  },
+  "HE_IS_BOY": {
+    "render": "그는 소년이에요.",
+    "surface": { "HE": "그", "BE": "이에요", "BOY": "소년" },
+    "questions": { "pronoun": "누가 소년이에요?", "verb": "그는 무엇이에요?", "object": "그는 무엇이에요?" }
+  },
+  "WE_STOP_EATING": {
+    "render": "우리는 먹는 것을 멈춰요.",
+    "surface": { "FIRST_PERSON_PLURAL": "우리", "STOP": "멈춰요", "EAT": "먹는 것을" },
+    "questions": { "pronoun": "누가 먹는 것을 멈춰요?", "verb": "우리는 무엇을 해요?" }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "그들은 자기 시작해요.",
+    "surface": { "THIRD_PERSON_PLURAL": "그들", "START": "시작해요", "SLEEP": "자기" },
+    "questions": { "pronoun": "누가 자기 시작해요?", "verb": "그들은 무엇을 해요?" }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "그는 셔츠를 봐요.",
+    "surface": { "HE": "그", "SEE": "봐요", "SHIRT": "셔츠" },
+    "questions": { "pronoun": "누가 셔츠를 봐요?", "verb": "그는 무엇을 해요?", "object": "그는 무엇을 봐요?" }
+  },
+  "I_GO_HOME": {
+    "render": "저는 집에 가요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "GO": "가요", "HOME": "집" },
+    "questions": { "pronoun": "누가 집에 가요?", "verb": "저는 무엇을 해요?", "object": "저는 어디에 가요?" }
+  },
+  "I_USE_PHONE": {
+    "render": "저는 전화를 사용해요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "USE": "사용해요", "PHONE": "전화" },
+    "questions": { "pronoun": "누가 전화를 사용해요?", "verb": "저는 무엇을 해요?", "object": "저는 무엇을 사용해요?" }
+  },
+  "I_GET_BOOK": {
+    "render": "저는 책을 받아요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "GET": "받아요", "BOOK": "책" },
+    "questions": { "pronoun": "누가 책을 받아요?", "verb": "저는 무엇을 해요?", "object": "저는 무엇을 받아요?" }
+  },
+  "I_SEE_HOUSE": {
+    "render": "저는 집을 봐요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "SEE": "봐요", "HOUSE": "집" },
+    "questions": { "pronoun": "누가 집을 봐요?", "verb": "저는 무엇을 해요?", "object": "저는 무엇을 봐요?" }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "그녀는 방을 봐요.",
+    "surface": { "SHE": "그녀", "SEE": "봐요", "ROOM": "방" },
+    "questions": { "pronoun": "누가 방을 봐요?", "verb": "그녀는 무엇을 해요?", "object": "그녀는 무엇을 봐요?" }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "저는 셔츠가 있어요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "HAVE": "있어요", "SHIRT": "셔츠" },
+    "questions": { "pronoun": "누가 셔츠가 있어요?", "verb": "저는 무엇을 해요?", "object": "저는 무엇을 가지고 있어요?" }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "그녀는 신발이 있어요.",
+    "surface": { "SHE": "그녀", "HAVE": "있어요", "SHOES": "신발" },
+    "questions": { "pronoun": "누가 신발이 있어요?", "verb": "그녀는 무엇을 해요?", "object": "그녀는 무엇을 가지고 있어요?" }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "그들은 바지가 있어요.",
+    "surface": { "THIRD_PERSON_PLURAL": "그들", "HAVE": "있어요", "PANTS": "바지" }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "우리는 옷이 있어요.",
+    "surface": { "FIRST_PERSON_PLURAL": "우리", "HAVE": "있어요", "CLOTHES": "옷" }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "저는 아침을 먹어요.",
+    "surface": { "FIRST_PERSON_SINGULAR": "저", "EAT": "먹어요", "BREAKFAST": "아침" }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "우리는 점심을 먹어요.",
+    "surface": { "FIRST_PERSON_PLURAL": "우리", "EAT": "먹어요", "LUNCH": "점심" }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "그들은 저녁을 먹어요.",
+    "surface": { "THIRD_PERSON_PLURAL": "그들", "EAT": "먹어요", "DINNER": "저녁" }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "이것은 제 손이에요.",
+    "surface": { "THIS": "이것", "BE": "이에요", "MY": "제", "HAND": "손" }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "이것은 당신의 머리예요.",
+    "surface": { "THIS": "이것", "BE": "예요", "YOUR": "당신의", "HEAD": "머리" }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "그것은 제 팔이에요.",
+    "surface": { "THAT": "그것", "BE": "이에요", "MY": "제", "ARM": "팔" }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "그것은 당신의 다리예요.",
+    "surface": { "THAT": "그것", "BE": "예요", "YOUR": "당신의", "LEG": "다리" }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "그녀는 제 엄마예요.",
+    "surface": { "SHE": "그녀", "BE": "예요", "MY": "제", "MOM": "엄마" }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "그는 제 아빠예요.",
+    "surface": { "HE": "그", "BE": "예요", "MY": "제", "DAD": "아빠" }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "이것은 제 손이고 이것은 당신의 머리예요."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "그녀는 제 엄마이고 그는 제 아빠예요."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "저는 먹고 마셔요."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "그는 아침을 먹지만 점심은 먹지 않아요."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "그녀는 자기 방에 가요."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "이것은 좋은 책이에요."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "그것은 당신의 전화예요?"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "그는 집에 있기 때문에 엄마와 함께 저녁을 먹어요."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "그가 집에 있으면 딸과 함께 먹어요."
+  },
+  "BOOK_IS_RED": {
+    "render": "책은 빨개요."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "전화는 파래요."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "셔츠는 초록색이에요."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "집은 하얘요."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "바지는 까매요."
+  },
+  "I_EAT_TODAY": {
+    "render": "저는 오늘 먹어요."
+  },
+  "HE_READS_TODAY": {
+    "render": "그는 오늘 읽어요."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "우리는 내일 가요."
+  },
+  "I_READ_NOW": {
+    "render": "저는 지금 읽어요."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "그는 어제 일했어요."
+  },
+  "WHO_EATS": {
+    "render": "누가 먹어요?"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "당신은 왜 가요?"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "우리는 언제 먹어요?"
+  },
+  "I_EAT_BEFORE": {
+    "render": "저는 전에 먹어요."
+  },
+  "WE_GO_AFTER": {
+    "render": "우리는 나중에 가요."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "책은 어디에 있어요?"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "당신은 어떻게 읽어요?"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "저는 무엇을 가지고 있어요?"
+  },
+  "WHICH_BOOK": {
+    "render": "어느 책이에요?"
+  },
+  "WE_EAT_ALL": {
+    "render": "우리는 다 먹어요."
+  },
+  "BOOK_ON_THIS": {
+    "render": "책은 이것 위에 있어요."
+  },
+  "PHONE_IN_THAT": {
+    "render": "전화는 그것 안에 있어요."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "신발은 이것 아래에 있어요."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "책은 전화 옆에 있어요."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "전화는 책 앞에 있어요."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "책은 전화 뒤에 있어요."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "전화는 이것에서 떨어져 있어요."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "책은 이것과 그것 사이에 있어요."
+  },
+  "SHOES_IN_THIS": {
+    "render": "신발은 이것 안에 있어요."
+  },
+  "PHONE_ON_THAT": {
+    "render": "전화는 그것 위에 있어요."
+  },
+  "WE_GO_BACK": {
+    "render": "우리는 돌아가요."
+  },
+  "I_GO_OUT": {
+    "render": "저는 나가요."
+  },
+  "WE_GO_NORTH": {
+    "render": "우리는 북쪽으로 가요."
+  },
+  "WE_GO_SOUTH": {
+    "render": "우리는 남쪽으로 가요."
+  },
+  "WE_GO_EAST": {
+    "render": "우리는 동쪽으로 가요."
+  },
+  "WE_GO_WEST": {
+    "render": "우리는 서쪽으로 가요."
+  },
+  "BOOK_IS_LONG": {
+    "render": "책은 길어요."
+  },
+  "DAY_IS_SHORT": {
+    "render": "낮은 짧아요."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "책은 무거워요."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "전화는 가벼워요."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "밤은 어두워요."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "소년은 어려요."
+  },
+  "BOOK_IS_EASY": {
+    "render": "책은 쉬워요."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "책은 어려워요."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "이것은 오른쪽이에요."
+  },
+  "THIS_IS_LEFT": {
+    "render": "이것은 왼쪽이에요."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "이것은 맞아요."
+  },
+  "THIS_IS_WRONG": {
+    "render": "이것은 틀려요."
+  },
+  "THIS_IS_NICE": {
+    "render": "이것은 좋아요."
+  },
+  "YEAR_IS_LONG": {
+    "render": "해는 길어요."
+  },
+  "MONTH_IS_LONG": {
+    "render": "달은 길어요."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "주는 짧아요."
+  },
+  "DAY_IS_LONG": {
+    "render": "낮은 길어요."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "시간은 짧아요."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "분은 짧아요."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "초는 짧아요."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "아침은 좋아요."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "밤은 나빠요."
+  },
+  "WINTER_IS_COLD": {
+    "render": "겨울은 추워요."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "여름은 좋아요."
+  },
+  "SPRING_IS_NEW": {
+    "render": "봄은 새로워요."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "가을은 오래됐어요."
+  },
+  "THIS_IS_THING": {
+    "render": "이것은 물건이에요."
+  },
+  "PLEASE_READ": {
+    "render": "읽어 주세요."
+  },
+  "MAYBE_I_GO": {
+    "render": "아마 저는 가요."
+  },
+  "THANKS": {
+    "render": "고마워요."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "저는 음식을 가지러 가요."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "저는 무언가가 있어요."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "저는 다른 책이 있어요."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "저는 책만 읽어요."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "저는 집에서 가요."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "저는 집에 가요."
+  },
+  "I_GO_AROUND": {
+    "render": "저는 돌아다녀요."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "저는 이것을 손으로 해요."
+  },
+  "YES_I_DO": {
+    "render": "네, 해요."
+  },
+  "NO_I_DO_NOT": {
+    "render": "아니요, 안 해요."
+  },
+  "THIS_IS_MINE": {
+    "render": "이것은 제 거예요."
+  },
+  "THIS_IS_YOURS": {
+    "render": "이것은 당신의 거예요."
+  },
+  "THIS_IS_HERS": {
+    "render": "이것은 그녀의 거예요."
+  },
+  "THIS_IS_OURS": {
+    "render": "이것은 우리의 거예요."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "이것은 그들의 거예요."
+  }
+}

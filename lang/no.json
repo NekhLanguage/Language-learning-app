@@ -645,6 +645,7 @@
     "LEFT": ["venstre"],
     "CORRECT": ["riktig"],
     "WRONG": ["feil"],
+    "COLD": {"form":"kald","plural":"kalde"},
     "NICE": ["hyggelig"],
     "THIS": ["dette"],
     "THAT": ["det"],

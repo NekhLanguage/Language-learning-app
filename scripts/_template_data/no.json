@@ -1,0 +1,647 @@
+{
+  "I_EAT_FOOD": {
+    "render": "Jeg spiser mat.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "EAT": "spiser",
+      "FOOD": "mat"
+    },
+    "questions": {
+      "pronoun": "Hvem spiser mat?",
+      "verb": "Hva gjør jeg?",
+      "object": "Hva spiser jeg?"
+    }
+  },
+  "HE_READ_BOOK": {
+    "render": "Han leser en bok.",
+    "surface": {
+      "HE": "Han",
+      "READ": "leser",
+      "BOOK": "bok"
+    },
+    "questions": {
+      "pronoun": "Hvem leser en bok?",
+      "verb": "Hva gjør han?",
+      "object": "Hva leser han?"
+    }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "Hun ser en telefon.",
+    "surface": {
+      "SHE": "Hun",
+      "SEE": "ser",
+      "PHONE": "telefon"
+    },
+    "questions": {
+      "pronoun": "Hvem ser en telefon?",
+      "verb": "Hva gjør hun?",
+      "object": "Hva ser hun?"
+    }
+  },
+  "WE_HAVE_JOB": {
+    "render": "Vi har en jobb.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Vi",
+      "HAVE": "har",
+      "JOB": "jobb"
+    },
+    "questions": {
+      "pronoun": "Hvem har en jobb?",
+      "verb": "Hva gjør vi?",
+      "object": "Hva har vi?"
+    }
+  },
+  "I_DRINK_WATER": {
+    "render": "Jeg drikker vann.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "DRINK": "drikker",
+      "WATER": "vann"
+    },
+    "questions": {
+      "pronoun": "Hvem drikker vann?",
+      "verb": "Hva gjør jeg?",
+      "object": "Hva drikker jeg?"
+    }
+  },
+  "YOU_READ_BOOK": {
+    "render": "Du leser en bok.",
+    "surface": {
+      "SECOND_PERSON": "Du",
+      "READ": "leser",
+      "BOOK": "bok"
+    },
+    "questions": {
+      "pronoun": "Hvem leser en bok?",
+      "verb": "Hva gjør du?",
+      "object": "Hva leser du?"
+    }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "Dere drikker vann.",
+    "surface": {
+      "SECOND_PERSON_PLURAL": "Dere",
+      "DRINK": "drikker",
+      "WATER": "vann"
+    },
+    "questions": {
+      "pronoun": "Hvem drikker vann?",
+      "verb": "Hva gjør dere?",
+      "object": "Hva drikker dere?"
+    }
+  },
+  "THEY_SLEEP": {
+    "render": "De sover.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "De",
+      "SLEEP": "sover"
+    },
+    "questions": {
+      "pronoun": "Hvem sover?",
+      "verb": "Hva gjør de?"
+    }
+  },
+  "I_AM_MAN": {
+    "render": "Jeg er en mann.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "BE": "er",
+      "MAN": "mann"
+    },
+    "questions": {
+      "verb": "Hva er jeg?",
+      "object": "Hva er jeg?"
+    }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "Hun er en kvinne.",
+    "surface": {
+      "SHE": "Hun",
+      "BE": "er",
+      "WOMAN": "kvinne"
+    },
+    "questions": {
+      "pronoun": "Hvem er en kvinne?",
+      "verb": "Hva er hun?",
+      "object": "Hva er hun?"
+    }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "Du er en jente.",
+    "surface": {
+      "SECOND_PERSON": "Du",
+      "BE": "er",
+      "GIRL": "jente"
+    },
+    "questions": {
+      "pronoun": "Hvem er en jente?",
+      "verb": "Hva er du?",
+      "object": "Hva er du?"
+    }
+  },
+  "HE_IS_BOY": {
+    "render": "Han er en gutt.",
+    "surface": {
+      "HE": "Han",
+      "BE": "er",
+      "BOY": "gutt"
+    },
+    "questions": {
+      "pronoun": "Hvem er en gutt?",
+      "verb": "Hva er han?",
+      "object": "Hva er han?"
+    }
+  },
+  "WE_STOP_EATING": {
+    "render": "Vi slutter å spise.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Vi",
+      "STOP": "slutter",
+      "EAT": "å spise"
+    },
+    "questions": {
+      "pronoun": "Hvem slutter å spise?",
+      "verb": "Hva gjør vi?"
+    }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "De begynner å sove.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "De",
+      "START": "begynner",
+      "SLEEP": "å sove"
+    },
+    "questions": {
+      "pronoun": "Hvem begynner å sove?",
+      "verb": "Hva gjør de?"
+    }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "Han ser en skjorte.",
+    "surface": {
+      "HE": "Han",
+      "SEE": "ser",
+      "SHIRT": "skjorte"
+    },
+    "questions": {
+      "pronoun": "Hvem ser en skjorte?",
+      "verb": "Hva gjør han?",
+      "object": "Hva ser han?"
+    }
+  },
+  "I_GO_HOME": {
+    "render": "Jeg går hjem.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "GO": "går",
+      "HOME": "hjem"
+    },
+    "questions": {
+      "pronoun": "Hvem går hjem?",
+      "verb": "Hva gjør jeg?",
+      "object": "Hvor går jeg?"
+    }
+  },
+  "I_USE_PHONE": {
+    "render": "Jeg bruker en telefon.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "USE": "bruker",
+      "PHONE": "telefon"
+    },
+    "questions": {
+      "pronoun": "Hvem bruker en telefon?",
+      "verb": "Hva gjør jeg?",
+      "object": "Hva bruker jeg?"
+    }
+  },
+  "I_GET_BOOK": {
+    "render": "Jeg får en bok.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "GET": "får",
+      "BOOK": "bok"
+    },
+    "questions": {
+      "pronoun": "Hvem får en bok?",
+      "verb": "Hva gjør jeg?",
+      "object": "Hva får jeg?"
+    }
+  },
+  "I_SEE_HOUSE": {
+    "render": "Jeg ser et hus.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "SEE": "ser",
+      "HOUSE": "hus"
+    },
+    "questions": {
+      "pronoun": "Hvem ser et hus?",
+      "verb": "Hva gjør jeg?",
+      "object": "Hva ser jeg?"
+    }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "Hun ser et rom.",
+    "surface": {
+      "SHE": "Hun",
+      "SEE": "ser",
+      "ROOM": "rom"
+    },
+    "questions": {
+      "pronoun": "Hvem ser et rom?",
+      "verb": "Hva gjør hun?",
+      "object": "Hva ser hun?"
+    }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "Jeg har en skjorte.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "HAVE": "har",
+      "SHIRT": "skjorte"
+    },
+    "questions": {
+      "pronoun": "Hvem har en skjorte?",
+      "verb": "Hva gjør jeg?",
+      "object": "Hva har jeg?"
+    }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "Hun har sko.",
+    "surface": {
+      "SHE": "Hun",
+      "HAVE": "har",
+      "SHOES": "sko"
+    },
+    "questions": {
+      "pronoun": "Hvem har sko?",
+      "verb": "Hva gjør hun?",
+      "object": "Hva har hun?"
+    }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "De har en bukse.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "De",
+      "HAVE": "har",
+      "PANTS": "bukse"
+    }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "Vi har klær.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Vi",
+      "HAVE": "har",
+      "CLOTHES": "klær"
+    }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "Jeg spiser frokost.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Jeg",
+      "EAT": "spiser",
+      "BREAKFAST": "frokost"
+    }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "Vi spiser lunsj.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Vi",
+      "EAT": "spiser",
+      "LUNCH": "lunsj"
+    }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "De spiser middag.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "De",
+      "EAT": "spiser",
+      "DINNER": "middag"
+    }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "Dette er hånden min.",
+    "surface": {
+      "THIS": "Dette",
+      "BE": "er",
+      "MY": "min",
+      "HAND": "hånden"
+    }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "Dette er hodet ditt.",
+    "surface": {
+      "THIS": "Dette",
+      "BE": "er",
+      "YOUR": "ditt",
+      "HEAD": "hodet"
+    }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "Det er armen min.",
+    "surface": {
+      "THAT": "Det",
+      "BE": "er",
+      "MY": "min",
+      "ARM": "armen"
+    }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "Det er beinet ditt.",
+    "surface": {
+      "THAT": "Det",
+      "BE": "er",
+      "YOUR": "ditt",
+      "LEG": "beinet"
+    }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "Hun er moren min.",
+    "surface": {
+      "SHE": "Hun",
+      "BE": "er",
+      "MY": "min",
+      "MOM": "moren"
+    }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "Han er faren min.",
+    "surface": {
+      "HE": "Han",
+      "BE": "er",
+      "MY": "min",
+      "DAD": "faren"
+    }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "Dette er hånden min, og dette er hodet ditt."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "Hun er moren min, og han er faren min."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "Jeg spiser og drikker."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "Han spiser frokost, men ikke lunsj."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "Hun går til rommet sitt."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "Dette er en god bok."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "Er det telefonen din?"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "Han spiser middag med moren sin fordi han er hjemme."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "Hvis han er hjemme, spiser han med datteren sin."
+  },
+  "BOOK_IS_RED": {
+    "render": "Boken er rød."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "Telefonen er blå."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "Skjorten er grønn."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "Huset er hvitt."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "Buksen er svart."
+  },
+  "I_EAT_TODAY": {
+    "render": "Jeg spiser i dag."
+  },
+  "HE_READS_TODAY": {
+    "render": "Han leser i dag."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "Vi går i morgen."
+  },
+  "I_READ_NOW": {
+    "render": "Jeg leser nå."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "Han jobber i går."
+  },
+  "WHO_EATS": {
+    "render": "Hvem spiser?"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "Hvorfor går du?"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "Når spiser vi?"
+  },
+  "I_EAT_BEFORE": {
+    "render": "Jeg spiser før."
+  },
+  "WE_GO_AFTER": {
+    "render": "Vi går etterpå."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "Hvor er boken?"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "Hvordan leser du?"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "Hva har jeg?"
+  },
+  "WHICH_BOOK": {
+    "render": "Hvilken bok?"
+  },
+  "WE_EAT_ALL": {
+    "render": "Vi spiser alt."
+  },
+  "BOOK_ON_THIS": {
+    "render": "Boken er på dette."
+  },
+  "PHONE_IN_THAT": {
+    "render": "Telefonen er i det."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "Skoene er under dette."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "Boken er ved siden av telefonen."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "Telefonen er foran boken."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "Boken er bak telefonen."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "Telefonen er av dette."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "Boken er mellom dette og det."
+  },
+  "SHOES_IN_THIS": {
+    "render": "Skoene er i dette."
+  },
+  "PHONE_ON_THAT": {
+    "render": "Telefonen er på det."
+  },
+  "WE_GO_BACK": {
+    "render": "Vi går tilbake."
+  },
+  "I_GO_OUT": {
+    "render": "Jeg går ut."
+  },
+  "WE_GO_NORTH": {
+    "render": "Vi går nordover."
+  },
+  "WE_GO_SOUTH": {
+    "render": "Vi går sørover."
+  },
+  "WE_GO_EAST": {
+    "render": "Vi går østover."
+  },
+  "WE_GO_WEST": {
+    "render": "Vi går vestover."
+  },
+  "BOOK_IS_LONG": {
+    "render": "Boken er lang."
+  },
+  "DAY_IS_SHORT": {
+    "render": "Dagen er kort."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "Boken er tung."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "Telefonen er lett."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "Natten er mørk."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "Gutten er ung."
+  },
+  "BOOK_IS_EASY": {
+    "render": "Boken er enkel."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "Boken er vanskelig."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "Dette er høyre."
+  },
+  "THIS_IS_LEFT": {
+    "render": "Dette er venstre."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "Dette er riktig."
+  },
+  "THIS_IS_WRONG": {
+    "render": "Dette er feil."
+  },
+  "THIS_IS_NICE": {
+    "render": "Dette er fint."
+  },
+  "YEAR_IS_LONG": {
+    "render": "Året er langt."
+  },
+  "MONTH_IS_LONG": {
+    "render": "Måneden er lang."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "Uken er kort."
+  },
+  "DAY_IS_LONG": {
+    "render": "Dagen er lang."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "Timen er kort."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "Minuttet er kort."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "Sekundet er kort."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "Morgenen er god."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "Natten er dårlig."
+  },
+  "WINTER_IS_COLD": {
+    "render": "Vinteren er kald."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "Sommeren er god."
+  },
+  "SPRING_IS_NEW": {
+    "render": "Våren er ny."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "Høsten er gammel."
+  },
+  "THIS_IS_THING": {
+    "render": "Dette er en ting."
+  },
+  "PLEASE_READ": {
+    "render": "Vær så snill, les."
+  },
+  "MAYBE_I_GO": {
+    "render": "Kanskje jeg går."
+  },
+  "THANKS": {
+    "render": "Takk."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "Jeg går for å hente mat."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "Jeg har noe."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "Jeg har en annen bok."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "Jeg leser bare boken."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "Jeg går hjemmefra."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "Jeg går til huset."
+  },
+  "I_GO_AROUND": {
+    "render": "Jeg går rundt."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "Jeg gjør dette for hånd."
+  },
+  "YES_I_DO": {
+    "render": "Ja, det gjør jeg."
+  },
+  "NO_I_DO_NOT": {
+    "render": "Nei, det gjør jeg ikke."
+  },
+  "THIS_IS_MINE": {
+    "render": "Dette er mitt."
+  },
+  "THIS_IS_YOURS": {
+    "render": "Dette er ditt."
+  },
+  "THIS_IS_HERS": {
+    "render": "Dette er hennes."
+  },
+  "THIS_IS_OURS": {
+    "render": "Dette er vårt."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "Dette er deres."
+  }
+}

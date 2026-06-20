@@ -712,6 +712,7 @@
     "LEFT": ["gauche"],
     "CORRECT": ["correct"],
     "WRONG": ["faux"],
+    "COLD": {"form":"froid","plural":"froids"},
     "NICE": ["gentil"],
     "THIS": ["ce"],
     "THAT": ["cela"],

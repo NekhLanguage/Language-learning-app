@@ -39,6 +39,14 @@ function loadConceptIds() {
 
 function nonEmptyStr(v) { return typeof v === 'string' && v.trim().length > 0; }
 
+// Copula-less languages drop the "to be" verb in the present tense (see
+// buildSentence in app.js), so BE legitimately has no surface form for them.
+const COPULA_DROP_LANGS = new Set(['ar', 'uk']);
+const COPULA_CONCEPTS = new Set(['BE']);
+function surfaceConceptRequired(concept, lang) {
+  return !(COPULA_CONCEPTS.has(concept) && COPULA_DROP_LANGS.has(lang));
+}
+
 function validateCoreFile(file, langCodes, conceptIds) {
   const data = JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'));
   const templates = data.templates || [];
@@ -62,7 +70,10 @@ function validateCoreFile(file, langCodes, conceptIds) {
       for (const lang of langCodes) {
         const map = t.surface[lang];
         if (!map || typeof map !== 'object') { errors.push(`${id}: surface missing ${lang}`); continue; }
-        for (const c of refCids) if (!nonEmptyStr(map[c])) errors.push(`${id}: surface.${lang} missing ${c}`);
+        for (const c of refCids) {
+          if (!surfaceConceptRequired(c, lang)) continue;
+          if (!nonEmptyStr(map[c])) errors.push(`${id}: surface.${lang} missing ${c}`);
+        }
       }
     }
     // questions coverage (only if it exists at all)

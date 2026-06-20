@@ -1,0 +1,647 @@
+{
+  "I_EAT_FOOD": {
+    "render": "Εγώ τρώω φαγητό.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "EAT": "τρώω",
+      "FOOD": "φαγητό"
+    },
+    "questions": {
+      "pronoun": "Ποιος τρώει φαγητό;",
+      "verb": "Τι κάνω;",
+      "object": "Τι τρώω;"
+    }
+  },
+  "HE_READ_BOOK": {
+    "render": "Αυτός διαβάζει ένα βιβλίο.",
+    "surface": {
+      "HE": "Αυτός",
+      "READ": "διαβάζει",
+      "BOOK": "βιβλίο"
+    },
+    "questions": {
+      "pronoun": "Ποιος διαβάζει ένα βιβλίο;",
+      "verb": "Τι κάνει αυτός;",
+      "object": "Τι διαβάζει αυτός;"
+    }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "Αυτή βλέπει ένα τηλέφωνο.",
+    "surface": {
+      "SHE": "Αυτή",
+      "SEE": "βλέπει",
+      "PHONE": "τηλέφωνο"
+    },
+    "questions": {
+      "pronoun": "Ποιος βλέπει ένα τηλέφωνο;",
+      "verb": "Τι κάνει αυτή;",
+      "object": "Τι βλέπει αυτή;"
+    }
+  },
+  "WE_HAVE_JOB": {
+    "render": "Εμείς έχουμε μια δουλειά.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Εμείς",
+      "HAVE": "έχουμε",
+      "JOB": "δουλειά"
+    },
+    "questions": {
+      "pronoun": "Ποιος έχει μια δουλειά;",
+      "verb": "Τι κάνουμε;",
+      "object": "Τι έχουμε;"
+    }
+  },
+  "I_DRINK_WATER": {
+    "render": "Εγώ πίνω νερό.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "DRINK": "πίνω",
+      "WATER": "νερό"
+    },
+    "questions": {
+      "pronoun": "Ποιος πίνει νερό;",
+      "verb": "Τι κάνω;",
+      "object": "Τι πίνω;"
+    }
+  },
+  "YOU_READ_BOOK": {
+    "render": "Εσύ διαβάζεις ένα βιβλίο.",
+    "surface": {
+      "SECOND_PERSON": "Εσύ",
+      "READ": "διαβάζεις",
+      "BOOK": "βιβλίο"
+    },
+    "questions": {
+      "pronoun": "Ποιος διαβάζει ένα βιβλίο;",
+      "verb": "Τι κάνεις;",
+      "object": "Τι διαβάζεις;"
+    }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "Εσείς πίνετε νερό.",
+    "surface": {
+      "SECOND_PERSON_PLURAL": "Εσείς",
+      "DRINK": "πίνετε",
+      "WATER": "νερό"
+    },
+    "questions": {
+      "pronoun": "Ποιος πίνει νερό;",
+      "verb": "Τι κάνετε;",
+      "object": "Τι πίνετε;"
+    }
+  },
+  "THEY_SLEEP": {
+    "render": "Αυτοί κοιμούνται.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Αυτοί",
+      "SLEEP": "κοιμούνται"
+    },
+    "questions": {
+      "pronoun": "Ποιος κοιμάται;",
+      "verb": "Τι κάνουν αυτοί;"
+    }
+  },
+  "I_AM_MAN": {
+    "render": "Εγώ είμαι ένας άντρας.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "BE": "είμαι",
+      "MAN": "άντρας"
+    },
+    "questions": {
+      "verb": "Τι είμαι;",
+      "object": "Τι είμαι;"
+    }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "Αυτή είναι μια γυναίκα.",
+    "surface": {
+      "SHE": "Αυτή",
+      "BE": "είναι",
+      "WOMAN": "γυναίκα"
+    },
+    "questions": {
+      "pronoun": "Ποια είναι μια γυναίκα;",
+      "verb": "Τι είναι αυτή;",
+      "object": "Τι είναι αυτή;"
+    }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "Εσύ είσαι ένα κορίτσι.",
+    "surface": {
+      "SECOND_PERSON": "Εσύ",
+      "BE": "είσαι",
+      "GIRL": "κορίτσι"
+    },
+    "questions": {
+      "pronoun": "Ποιος είναι ένα κορίτσι;",
+      "verb": "Τι είσαι;",
+      "object": "Τι είσαι;"
+    }
+  },
+  "HE_IS_BOY": {
+    "render": "Αυτός είναι ένα αγόρι.",
+    "surface": {
+      "HE": "Αυτός",
+      "BE": "είναι",
+      "BOY": "αγόρι"
+    },
+    "questions": {
+      "pronoun": "Ποιος είναι ένα αγόρι;",
+      "verb": "Τι είναι αυτός;",
+      "object": "Τι είναι αυτός;"
+    }
+  },
+  "WE_STOP_EATING": {
+    "render": "Εμείς σταματάμε να τρώμε.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Εμείς",
+      "STOP": "σταματάμε",
+      "EAT": "να τρώμε"
+    },
+    "questions": {
+      "pronoun": "Ποιος σταματάει να τρώει;",
+      "verb": "Τι κάνουμε;"
+    }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "Αυτοί αρχίζουν να κοιμούνται.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Αυτοί",
+      "START": "αρχίζουν",
+      "SLEEP": "να κοιμούνται"
+    },
+    "questions": {
+      "pronoun": "Ποιος αρχίζει να κοιμάται;",
+      "verb": "Τι κάνουν αυτοί;"
+    }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "Αυτός βλέπει ένα πουκάμισο.",
+    "surface": {
+      "HE": "Αυτός",
+      "SEE": "βλέπει",
+      "SHIRT": "πουκάμισο"
+    },
+    "questions": {
+      "pronoun": "Ποιος βλέπει ένα πουκάμισο;",
+      "verb": "Τι κάνει αυτός;",
+      "object": "Τι βλέπει αυτός;"
+    }
+  },
+  "I_GO_HOME": {
+    "render": "Εγώ πηγαίνω σπίτι.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "GO": "πηγαίνω",
+      "HOME": "σπίτι"
+    },
+    "questions": {
+      "pronoun": "Ποιος πηγαίνει σπίτι;",
+      "verb": "Τι κάνω;",
+      "object": "Πού πηγαίνω;"
+    }
+  },
+  "I_USE_PHONE": {
+    "render": "Εγώ χρησιμοποιώ ένα τηλέφωνο.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "USE": "χρησιμοποιώ",
+      "PHONE": "τηλέφωνο"
+    },
+    "questions": {
+      "pronoun": "Ποιος χρησιμοποιεί ένα τηλέφωνο;",
+      "verb": "Τι κάνω;",
+      "object": "Τι χρησιμοποιώ;"
+    }
+  },
+  "I_GET_BOOK": {
+    "render": "Εγώ παίρνω ένα βιβλίο.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "GET": "παίρνω",
+      "BOOK": "βιβλίο"
+    },
+    "questions": {
+      "pronoun": "Ποιος παίρνει ένα βιβλίο;",
+      "verb": "Τι κάνω;",
+      "object": "Τι παίρνω;"
+    }
+  },
+  "I_SEE_HOUSE": {
+    "render": "Εγώ βλέπω ένα σπίτι.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "SEE": "βλέπω",
+      "HOUSE": "σπίτι"
+    },
+    "questions": {
+      "pronoun": "Ποιος βλέπει ένα σπίτι;",
+      "verb": "Τι κάνω;",
+      "object": "Τι βλέπω;"
+    }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "Αυτή βλέπει ένα δωμάτιο.",
+    "surface": {
+      "SHE": "Αυτή",
+      "SEE": "βλέπει",
+      "ROOM": "δωμάτιο"
+    },
+    "questions": {
+      "pronoun": "Ποιος βλέπει ένα δωμάτιο;",
+      "verb": "Τι κάνει αυτή;",
+      "object": "Τι βλέπει αυτή;"
+    }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "Εγώ έχω ένα πουκάμισο.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "HAVE": "έχω",
+      "SHIRT": "πουκάμισο"
+    },
+    "questions": {
+      "pronoun": "Ποιος έχει ένα πουκάμισο;",
+      "verb": "Τι κάνω;",
+      "object": "Τι έχω;"
+    }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "Αυτή έχει παπούτσια.",
+    "surface": {
+      "SHE": "Αυτή",
+      "HAVE": "έχει",
+      "SHOES": "παπούτσια"
+    },
+    "questions": {
+      "pronoun": "Ποιος έχει παπούτσια;",
+      "verb": "Τι κάνει αυτή;",
+      "object": "Τι έχει αυτή;"
+    }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "Αυτοί έχουν παντελόνι.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Αυτοί",
+      "HAVE": "έχουν",
+      "PANTS": "παντελόνι"
+    }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "Εμείς έχουμε ρούχα.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Εμείς",
+      "HAVE": "έχουμε",
+      "CLOTHES": "ρούχα"
+    }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "Εγώ τρώω πρωινό.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "Εγώ",
+      "EAT": "τρώω",
+      "BREAKFAST": "πρωινό"
+    }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "Εμείς τρώμε μεσημεριανό.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "Εμείς",
+      "EAT": "τρώμε",
+      "LUNCH": "μεσημεριανό"
+    }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "Αυτοί τρώνε βραδινό.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "Αυτοί",
+      "EAT": "τρώνε",
+      "DINNER": "βραδινό"
+    }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "Αυτό είναι το χέρι μου.",
+    "surface": {
+      "THIS": "Αυτό",
+      "BE": "είναι",
+      "MY": "μου",
+      "HAND": "χέρι"
+    }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "Αυτό είναι το κεφάλι σου.",
+    "surface": {
+      "THIS": "Αυτό",
+      "BE": "είναι",
+      "YOUR": "σου",
+      "HEAD": "κεφάλι"
+    }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "Εκείνο είναι το μπράτσο μου.",
+    "surface": {
+      "THAT": "Εκείνο",
+      "BE": "είναι",
+      "MY": "μου",
+      "ARM": "μπράτσο"
+    }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "Εκείνο είναι το πόδι σου.",
+    "surface": {
+      "THAT": "Εκείνο",
+      "BE": "είναι",
+      "YOUR": "σου",
+      "LEG": "πόδι"
+    }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "Αυτή είναι η μαμά μου.",
+    "surface": {
+      "SHE": "Αυτή",
+      "BE": "είναι",
+      "MY": "μου",
+      "MOM": "μαμά"
+    }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "Αυτός είναι ο μπαμπάς μου.",
+    "surface": {
+      "HE": "Αυτός",
+      "BE": "είναι",
+      "MY": "μου",
+      "DAD": "μπαμπάς"
+    }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "Αυτό είναι το χέρι μου και αυτό είναι το κεφάλι σου."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "Αυτή είναι η μαμά μου και αυτός είναι ο μπαμπάς μου."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "Εγώ τρώω και πίνω."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "Αυτός τρώει πρωινό αλλά όχι μεσημεριανό."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "Αυτή πηγαίνει στο δωμάτιό της."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "Αυτό είναι ένα καλό βιβλίο."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "Είναι εκείνο το τηλέφωνό σου;"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "Αυτός τρώει βραδινό με τη μαμά του επειδή είναι σπίτι."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "Αν είναι σπίτι, τρώει με την κόρη του."
+  },
+  "BOOK_IS_RED": {
+    "render": "Το βιβλίο είναι κόκκινο."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "Το τηλέφωνο είναι μπλε."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "Το πουκάμισο είναι πράσινο."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "Το σπίτι είναι λευκό."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "Το παντελόνι είναι μαύρο."
+  },
+  "I_EAT_TODAY": {
+    "render": "Εγώ τρώω σήμερα."
+  },
+  "HE_READS_TODAY": {
+    "render": "Αυτός διαβάζει σήμερα."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "Εμείς πηγαίνουμε αύριο."
+  },
+  "I_READ_NOW": {
+    "render": "Εγώ διαβάζω τώρα."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "Αυτός δούλεψε χθες."
+  },
+  "WHO_EATS": {
+    "render": "Ποιος τρώει;"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "Γιατί πηγαίνεις;"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "Πότε τρώμε;"
+  },
+  "I_EAT_BEFORE": {
+    "render": "Εγώ τρώω πριν."
+  },
+  "WE_GO_AFTER": {
+    "render": "Εμείς πηγαίνουμε μετά."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "Πού είναι το βιβλίο;"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "Πώς διαβάζεις;"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "Τι έχω;"
+  },
+  "WHICH_BOOK": {
+    "render": "Ποιο βιβλίο;"
+  },
+  "WE_EAT_ALL": {
+    "render": "Εμείς τα τρώμε όλα."
+  },
+  "BOOK_ON_THIS": {
+    "render": "Το βιβλίο είναι πάνω σε αυτό."
+  },
+  "PHONE_IN_THAT": {
+    "render": "Το τηλέφωνο είναι μέσα σε εκείνο."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "Τα παπούτσια είναι κάτω από αυτό."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "Το βιβλίο είναι δίπλα στο τηλέφωνο."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "Το τηλέφωνο είναι μπροστά από το βιβλίο."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "Το βιβλίο είναι πίσω από το τηλέφωνο."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "Το τηλέφωνο είναι μακριά από αυτό."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "Το βιβλίο είναι ανάμεσα σε αυτό και εκείνο."
+  },
+  "SHOES_IN_THIS": {
+    "render": "Τα παπούτσια είναι μέσα σε αυτό."
+  },
+  "PHONE_ON_THAT": {
+    "render": "Το τηλέφωνο είναι πάνω σε εκείνο."
+  },
+  "WE_GO_BACK": {
+    "render": "Εμείς πηγαίνουμε πίσω."
+  },
+  "I_GO_OUT": {
+    "render": "Εγώ βγαίνω έξω."
+  },
+  "WE_GO_NORTH": {
+    "render": "Εμείς πηγαίνουμε βόρεια."
+  },
+  "WE_GO_SOUTH": {
+    "render": "Εμείς πηγαίνουμε νότια."
+  },
+  "WE_GO_EAST": {
+    "render": "Εμείς πηγαίνουμε ανατολικά."
+  },
+  "WE_GO_WEST": {
+    "render": "Εμείς πηγαίνουμε δυτικά."
+  },
+  "BOOK_IS_LONG": {
+    "render": "Το βιβλίο είναι μακρύ."
+  },
+  "DAY_IS_SHORT": {
+    "render": "Η μέρα είναι σύντομη."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "Το βιβλίο είναι βαρύ."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "Το τηλέφωνο είναι ελαφρύ."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "Η νύχτα είναι σκοτεινή."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "Το αγόρι είναι νεαρό."
+  },
+  "BOOK_IS_EASY": {
+    "render": "Το βιβλίο είναι εύκολο."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "Το βιβλίο είναι δύσκολο."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "Αυτό είναι δεξιά."
+  },
+  "THIS_IS_LEFT": {
+    "render": "Αυτό είναι αριστερά."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "Αυτό είναι σωστό."
+  },
+  "THIS_IS_WRONG": {
+    "render": "Αυτό είναι λάθος."
+  },
+  "THIS_IS_NICE": {
+    "render": "Αυτό είναι ωραίο."
+  },
+  "YEAR_IS_LONG": {
+    "render": "Ο χρόνος είναι μεγάλος."
+  },
+  "MONTH_IS_LONG": {
+    "render": "Ο μήνας είναι μεγάλος."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "Η εβδομάδα είναι σύντομη."
+  },
+  "DAY_IS_LONG": {
+    "render": "Η μέρα είναι μεγάλη."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "Η ώρα είναι σύντομη."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "Το λεπτό είναι σύντομο."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "Το δευτερόλεπτο είναι σύντομο."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "Το πρωί είναι καλό."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "Η νύχτα είναι κακή."
+  },
+  "WINTER_IS_COLD": {
+    "render": "Ο χειμώνας είναι κρύος."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "Το καλοκαίρι είναι καλό."
+  },
+  "SPRING_IS_NEW": {
+    "render": "Η άνοιξη είναι καινούργια."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "Το φθινόπωρο είναι παλιό."
+  },
+  "THIS_IS_THING": {
+    "render": "Αυτό είναι ένα πράγμα."
+  },
+  "PLEASE_READ": {
+    "render": "Σε παρακαλώ διάβασε."
+  },
+  "MAYBE_I_GO": {
+    "render": "Ίσως πάω."
+  },
+  "THANKS": {
+    "render": "Ευχαριστώ."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "Εγώ πηγαίνω για φαγητό."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "Εγώ έχω κάτι."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "Εγώ έχω ένα άλλο βιβλίο."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "Εγώ διαβάζω μόνο το βιβλίο."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "Εγώ φεύγω από το σπίτι."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "Εγώ πηγαίνω στο σπίτι."
+  },
+  "I_GO_AROUND": {
+    "render": "Εγώ πηγαίνω τριγύρω."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "Εγώ το κάνω αυτό με το χέρι."
+  },
+  "YES_I_DO": {
+    "render": "Ναι, το κάνω."
+  },
+  "NO_I_DO_NOT": {
+    "render": "Όχι, δεν το κάνω."
+  },
+  "THIS_IS_MINE": {
+    "render": "Αυτό είναι δικό μου."
+  },
+  "THIS_IS_YOURS": {
+    "render": "Αυτό είναι δικό σου."
+  },
+  "THIS_IS_HERS": {
+    "render": "Αυτό είναι δικό της."
+  },
+  "THIS_IS_OURS": {
+    "render": "Αυτό είναι δικό μας."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "Αυτό είναι δικό τους."
+  }
+}

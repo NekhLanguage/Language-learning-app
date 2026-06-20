@@ -419,6 +419,18 @@
         "sentence_use": true,
         "writing": true
       }
+    },
+    {
+      "concept_id": "COLD",
+      "type": "adjective",
+      "semantic_role": "property_temperature",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
     }
   ]
 }

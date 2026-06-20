@@ -666,6 +666,7 @@
     "LEFT": ["links"],
     "CORRECT": ["richtig"],
     "WRONG": ["falsch"],
+    "COLD": {"form":"kalt","plural":"kalte"},
     "NICE": ["nett"],
     "THIS": ["dies"],
     "THAT": ["das"],

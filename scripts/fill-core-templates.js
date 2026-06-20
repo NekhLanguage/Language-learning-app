@@ -21,7 +21,14 @@ const TPL_FILE   = path.join(ROOT, 'sentence_templates.json');
 const DATA_DIR   = path.join(__dirname, '_template_data');
 const CHECK_ONLY = process.argv.includes('--check');
 
-const NEW_LANGS = ['de', 'el', 'es', 'fr', 'ja', 'ko', 'no', 'tr', 'uk', 'zh'];
+// The 10 languages absent from the original file, plus pt/ar which the original
+// only partially covered (render present on ~35/123 templates). The merge only
+// fills ABSENT keys, so existing pt/ar values are preserved.
+const NEW_LANGS = ['de', 'el', 'es', 'fr', 'ja', 'ko', 'no', 'tr', 'uk', 'zh', 'pt', 'ar'];
+
+// Copula-less languages drop "to be"; BE has no surface form for them.
+const COPULA_DROP_LANGS = new Set(['ar', 'uk']);
+const COPULA_CONCEPTS = new Set(['BE']);
 
 // ── Custom serializer matching this file's conventions ───────────────────────
 // 2-space indent; arrays whose elements are all strings/numbers render inline;
@@ -92,7 +99,8 @@ function main() {
         console.error(`  ✗ ${lang}: missing render for ${t.template_id}`); problems++; continue;
       }
       if (t.surface && Object.keys(t.surface).length) {
-        const needCids = Object.keys(t.surface.en || {});
+        const needCids = Object.keys(t.surface.en || {})
+          .filter(c => !(COPULA_CONCEPTS.has(c) && COPULA_DROP_LANGS.has(lang)));
         const got = d.surface || {};
         const miss = needCids.filter(c => !got[c] || !String(got[c]).trim());
         if (miss.length) { console.error(`  ✗ ${lang}: ${t.template_id} surface missing ${miss.join(',')}`); problems++; }

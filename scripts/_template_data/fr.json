@@ -1,0 +1,426 @@
+{
+  "I_EAT_FOOD": {
+    "render": "Je mange de la nourriture.",
+    "surface": { "FIRST_PERSON_SINGULAR": "Je", "EAT": "mange", "FOOD": "nourriture" },
+    "questions": { "pronoun": "Qui mange de la nourriture ?", "verb": "Qu'est-ce que je fais ?", "object": "Qu'est-ce que je mange ?" }
+  },
+  "HE_READ_BOOK": {
+    "render": "Il lit un livre.",
+    "surface": { "HE": "Il", "READ": "lit", "BOOK": "livre" },
+    "questions": { "pronoun": "Qui lit un livre ?", "verb": "Que fait-il ?", "object": "Que lit-il ?" }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "Elle voit un téléphone.",
+    "surface": { "SHE": "Elle", "SEE": "voit", "PHONE": "téléphone" },
+    "questions": { "pronoun": "Qui voit un téléphone ?", "verb": "Que fait-elle ?", "object": "Que voit-elle ?" }
+  },
+  "WE_HAVE_JOB": {
+    "render": "Nous avons un travail.",
+    "surface": { "FIRST_PERSON_PLURAL": "Nous", "HAVE": "avons", "JOB": "travail" },
+    "questions": { "pronoun": "Qui a un travail ?", "verb": "Que faisons-nous ?", "object": "Qu'avons-nous ?" }
+  },
+  "I_DRINK_WATER": {
+    "render": "Je bois de l'eau.",
+    "surface": { "FIRST_PERSON_SINGULAR": "Je", "DRINK": "bois", "WATER": "eau" },
+    "questions": { "pronoun": "Qui boit de l'eau ?", "verb": "Qu'est-ce que je fais ?", "object": "Qu'est-ce que je bois ?" }
+  },
+  "YOU_READ_BOOK": {
+    "render": "Tu lis un livre.",
+    "surface": { "SECOND_PERSON": "Tu", "READ": "lis", "BOOK": "livre" },
+    "questions": { "pronoun": "Qui lit un livre ?", "verb": "Que fais-tu ?", "object": "Que lis-tu ?" }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "Vous buvez de l'eau.",
+    "surface": { "SECOND_PERSON_PLURAL": "Vous", "DRINK": "buvez", "WATER": "eau" },
+    "questions": { "pronoun": "Qui boit de l'eau ?", "verb": "Que faites-vous ?", "object": "Que buvez-vous ?" }
+  },
+  "THEY_SLEEP": {
+    "render": "Ils dorment.",
+    "surface": { "THIRD_PERSON_PLURAL": "Ils", "SLEEP": "dorment" },
+    "questions": { "pronoun": "Qui dort ?", "verb": "Que font-ils ?" }
+  },
+  "I_AM_MAN": {
+    "render": "Je suis un homme.",
+    "surface": { "FIRST_PERSON_SINGULAR": "Je", "BE": "suis", "MAN": "homme" },
+    "questions": { "verb": "Qu'est-ce que je suis ?", "object": "Qu'est-ce que je suis ?" }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "Elle est une femme.",
+    "surface": { "SHE": "Elle", "BE": "est", "WOMAN": "femme" },
+    "questions": { "pronoun": "Qui est une femme ?", "verb": "Qu'est-elle ?", "object": "Qu'est-elle ?" }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "Tu es une fille.",
+    "surface": { "SECOND_PERSON": "Tu", "BE": "es", "GIRL": "fille" },
+    "questions": { "pronoun": "Qui est une fille ?", "verb": "Qu'es-tu ?", "object": "Qu'es-tu ?" }
+  },
+  "HE_IS_BOY": {
+    "render": "Il est un garçon.",
+    "surface": { "HE": "Il", "BE": "est", "BOY": "garçon" },
+    "questions": { "pronoun": "Qui est un garçon ?", "verb": "Qu'est-il ?", "object": "Qu'est-il ?" }
+  },
+  "WE_STOP_EATING": {
+    "render": "Nous arrêtons de manger.",
+    "surface": { "FIRST_PERSON_PLURAL": "Nous", "STOP": "arrêtons", "EAT": "de manger" },
+    "questions": { "pronoun": "Qui arrête de manger ?", "verb": "Que faisons-nous ?" }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "Ils commencent à dormir.",
+    "surface": { "THIRD_PERSON_PLURAL": "Ils", "START": "commencent", "SLEEP": "à dormir" },
+    "questions": { "pronoun": "Qui commence à dormir ?", "verb": "Que font-ils ?" }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "Il voit une chemise.",
+    "surface": { "HE": "Il", "SEE": "voit", "SHIRT": "chemise" },
+    "questions": { "pronoun": "Qui voit une chemise ?", "verb": "Que fait-il ?", "object": "Que voit-il ?" }
+  },
+  "I_GO_HOME": {
+    "render": "Je rentre à la maison.",
+    "surface": { "FIRST_PERSON_SINGULAR": "Je", "GO": "rentre", "HOME": "maison" },
+    "questions": { "pronoun": "Qui rentre à la maison ?", "verb": "Qu'est-ce que je fais ?", "object": "Où vais-je ?" }
+  },
+  "I_USE_PHONE": {
+    "render": "J'utilise un téléphone.",
+    "surface": { "FIRST_PERSON_SINGULAR": "J'", "USE": "utilise", "PHONE": "téléphone" },
+    "questions": { "pronoun": "Qui utilise un téléphone ?", "verb": "Qu'est-ce que je fais ?", "object": "Qu'est-ce que j'utilise ?" }
+  },
+  "I_GET_BOOK": {
+    "render": "Je prends un livre.",
+    "surface": { "FIRST_PERSON_SINGULAR": "Je", "GET": "prends", "BOOK": "livre" },
+    "questions": { "pronoun": "Qui prend un livre ?", "verb": "Qu'est-ce que je fais ?", "object": "Qu'est-ce que je prends ?" }
+  },
+  "I_SEE_HOUSE": {
+    "render": "Je vois une maison.",
+    "surface": { "FIRST_PERSON_SINGULAR": "Je", "SEE": "vois", "HOUSE": "maison" },
+    "questions": { "pronoun": "Qui voit une maison ?", "verb": "Qu'est-ce que je fais ?", "object": "Qu'est-ce que je vois ?" }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "Elle voit une chambre.",
+    "surface": { "SHE": "Elle", "SEE": "voit", "ROOM": "chambre" },
+    "questions": { "pronoun": "Qui voit une chambre ?", "verb": "Que fait-elle ?", "object": "Que voit-elle ?" }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "J'ai une chemise.",
+    "surface": { "FIRST_PERSON_SINGULAR": "J'", "HAVE": "ai", "SHIRT": "chemise" },
+    "questions": { "pronoun": "Qui a une chemise ?", "verb": "Qu'est-ce que je fais ?", "object": "Qu'est-ce que j'ai ?" }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "Elle a des chaussures.",
+    "surface": { "SHE": "Elle", "HAVE": "a", "SHOES": "chaussures" },
+    "questions": { "pronoun": "Qui a des chaussures ?", "verb": "Que fait-elle ?", "object": "Qu'a-t-elle ?" }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "Ils ont un pantalon.",
+    "surface": { "THIRD_PERSON_PLURAL": "Ils", "HAVE": "ont", "PANTS": "pantalon" }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "Nous avons des vêtements.",
+    "surface": { "FIRST_PERSON_PLURAL": "Nous", "HAVE": "avons", "CLOTHES": "vêtements" }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "Je mange le petit-déjeuner.",
+    "surface": { "FIRST_PERSON_SINGULAR": "Je", "EAT": "mange", "BREAKFAST": "petit-déjeuner" }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "Nous mangeons le déjeuner.",
+    "surface": { "FIRST_PERSON_PLURAL": "Nous", "EAT": "mangeons", "LUNCH": "déjeuner" }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "Ils mangent le dîner.",
+    "surface": { "THIRD_PERSON_PLURAL": "Ils", "EAT": "mangent", "DINNER": "dîner" }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "Ceci est ma main.",
+    "surface": { "THIS": "Ceci", "BE": "est", "MY": "ma", "HAND": "main" }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "Ceci est ta tête.",
+    "surface": { "THIS": "Ceci", "BE": "est", "YOUR": "ta", "HEAD": "tête" }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "Cela est mon bras.",
+    "surface": { "THAT": "Cela", "BE": "est", "MY": "mon", "ARM": "bras" }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "Cela est ta jambe.",
+    "surface": { "THAT": "Cela", "BE": "est", "YOUR": "ta", "LEG": "jambe" }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "Elle est ma mère.",
+    "surface": { "SHE": "Elle", "BE": "est", "MY": "ma", "MOM": "mère" }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "Il est mon père.",
+    "surface": { "HE": "Il", "BE": "est", "MY": "mon", "DAD": "père" }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "Ceci est ma main et ceci est ta tête."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "Elle est ma mère et il est mon père."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "Je mange et je bois."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "Il mange le petit-déjeuner mais pas le déjeuner."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "Elle va dans sa chambre."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "Ceci est un bon livre."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "Est-ce que c'est ton téléphone ?"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "Il dîne avec sa mère parce qu'il est à la maison."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "S'il est à la maison, il mange avec sa fille."
+  },
+  "BOOK_IS_RED": {
+    "render": "Le livre est rouge."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "Le téléphone est bleu."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "La chemise est verte."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "La maison est blanche."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "Le pantalon est noir."
+  },
+  "I_EAT_TODAY": {
+    "render": "Je mange aujourd'hui."
+  },
+  "HE_READS_TODAY": {
+    "render": "Il lit aujourd'hui."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "Nous allons demain."
+  },
+  "I_READ_NOW": {
+    "render": "Je lis maintenant."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "Il a travaillé hier."
+  },
+  "WHO_EATS": {
+    "render": "Qui mange ?"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "Pourquoi vas-tu ?"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "Quand mangeons-nous ?"
+  },
+  "I_EAT_BEFORE": {
+    "render": "Je mange avant."
+  },
+  "WE_GO_AFTER": {
+    "render": "Nous allons après."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "Où est le livre ?"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "Comment lis-tu ?"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "Qu'est-ce que j'ai ?"
+  },
+  "WHICH_BOOK": {
+    "render": "Quel livre ?"
+  },
+  "WE_EAT_ALL": {
+    "render": "Nous mangeons tout."
+  },
+  "BOOK_ON_THIS": {
+    "render": "Le livre est sur ceci."
+  },
+  "PHONE_IN_THAT": {
+    "render": "Le téléphone est dans cela."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "Les chaussures sont sous ceci."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "Le livre est à côté du téléphone."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "Le téléphone est devant le livre."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "Le livre est derrière le téléphone."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "Le téléphone est éloigné de ceci."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "Le livre est entre ceci et cela."
+  },
+  "SHOES_IN_THIS": {
+    "render": "Les chaussures sont dans ceci."
+  },
+  "PHONE_ON_THAT": {
+    "render": "Le téléphone est sur cela."
+  },
+  "WE_GO_BACK": {
+    "render": "Nous revenons."
+  },
+  "I_GO_OUT": {
+    "render": "Je sors."
+  },
+  "WE_GO_NORTH": {
+    "render": "Nous allons au nord."
+  },
+  "WE_GO_SOUTH": {
+    "render": "Nous allons au sud."
+  },
+  "WE_GO_EAST": {
+    "render": "Nous allons à l'est."
+  },
+  "WE_GO_WEST": {
+    "render": "Nous allons à l'ouest."
+  },
+  "BOOK_IS_LONG": {
+    "render": "Le livre est long."
+  },
+  "DAY_IS_SHORT": {
+    "render": "Le jour est court."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "Le livre est lourd."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "Le téléphone est léger."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "La nuit est sombre."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "Le garçon est jeune."
+  },
+  "BOOK_IS_EASY": {
+    "render": "Le livre est facile."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "Le livre est difficile."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "Ceci est à droite."
+  },
+  "THIS_IS_LEFT": {
+    "render": "Ceci est à gauche."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "Ceci est correct."
+  },
+  "THIS_IS_WRONG": {
+    "render": "Ceci est faux."
+  },
+  "THIS_IS_NICE": {
+    "render": "Ceci est agréable."
+  },
+  "YEAR_IS_LONG": {
+    "render": "L'année est longue."
+  },
+  "MONTH_IS_LONG": {
+    "render": "Le mois est long."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "La semaine est courte."
+  },
+  "DAY_IS_LONG": {
+    "render": "Le jour est long."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "L'heure est courte."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "La minute est courte."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "La seconde est courte."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "Le matin est bon."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "La nuit est mauvaise."
+  },
+  "WINTER_IS_COLD": {
+    "render": "L'hiver est froid."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "L'été est bon."
+  },
+  "SPRING_IS_NEW": {
+    "render": "Le printemps est nouveau."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "L'automne est vieux."
+  },
+  "THIS_IS_THING": {
+    "render": "Ceci est une chose."
+  },
+  "PLEASE_READ": {
+    "render": "Lis, s'il te plaît."
+  },
+  "MAYBE_I_GO": {
+    "render": "Peut-être que je vais."
+  },
+  "THANKS": {
+    "render": "Merci."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "Je vais chercher de la nourriture."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "J'ai quelque chose."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "J'ai un autre livre."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "Je lis seulement le livre."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "Je pars de la maison."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "Je vais à la maison."
+  },
+  "I_GO_AROUND": {
+    "render": "Je vais autour."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "Je fais ceci à la main."
+  },
+  "YES_I_DO": {
+    "render": "Oui, je le fais."
+  },
+  "NO_I_DO_NOT": {
+    "render": "Non, je ne le fais pas."
+  },
+  "THIS_IS_MINE": {
+    "render": "Ceci est le mien."
+  },
+  "THIS_IS_YOURS": {
+    "render": "Ceci est le tien."
+  },
+  "THIS_IS_HERS": {
+    "render": "Ceci est le sien."
+  },
+  "THIS_IS_OURS": {
+    "render": "Ceci est le nôtre."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "Ceci est le leur."
+  }
+}
