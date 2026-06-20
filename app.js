@@ -2722,11 +2722,13 @@ function nounWithPossessive(lang, possessiveCid, nounCid) {
 const POST_ADJECTIVE_LANGS = new Set(["pt", "ar"]);
 
 // Languages that omit the present-tense copula. Ukrainian (and Russian-style
-// Slavic) drop "to be" in the present ("Це телефон", not "Це є телефон"), and
-// Arabic nominal sentences carry no copula ("هذا هاتف"). Other supported
-// languages (en/es/pt/de/fr/el/no/tr) keep an overt copula. Present tense only
-// — these templates are all present tense.
-const ZERO_PRESENT_COPULA = new Set(["uk", "ar"]);
+// Slavic) drop "to be" in the present ("Це телефон", not "Це є телефон"),
+// Arabic nominal sentences carry no copula ("هذا هاتف"), and Turkish present-
+// tense nominal sentences use a zero/suffix copula ("O bir öğrenci", not
+// "O olur öğrenci" — olmak means "to become"). Other supported languages
+// (en/es/pt/de/fr/el/no) keep an overt copula. Present tense only — these
+// templates are all present tense.
+const ZERO_PRESENT_COPULA = new Set(["uk", "ar", "tr"]);
 
 function isCopulaConcept(cid) {
   return cid === "BE" ||

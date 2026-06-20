@@ -52,6 +52,7 @@
     { "concept_id": "SHOUT", "type": "verb" },
 
     { "concept_id": "MAGICAL", "type": "adjective" },
+    { "concept_id": "STRONG", "type": "adjective" },
     { "concept_id": "BRAVE", "type": "adjective" }
 
   ],
@@ -113,6 +114,7 @@
         "SHOUT": { "base": "shout", "3_singular": "shouts" },
 
         "MAGICAL": ["magical"],
+        "STRONG": ["strong"],
         "BRAVE": ["brave"]
 
       }
@@ -172,6 +174,7 @@
     "SHOUT": { "base": "gritar", "1_singular": "grito", "2_singular": "gritas", "3_singular": "grita", "1_plural": "gritamos", "2_plural": "gritam", "3_plural": "gritam" },
 
     "MAGICAL": ["mágico"],
+    "STRONG": ["forte"],
     "BRAVE": ["corajoso"]
 
   }
@@ -231,6 +234,7 @@
     "SHOUT": { "base": "叫ぶ", "present": "叫ぶ" },
 
     "MAGICAL": ["魔法の"],
+    "STRONG": ["つよい"],
     "BRAVE": ["勇敢な"]
 
   }
@@ -290,6 +294,7 @@
     "SHOUT": { "base": "rope", "present": "roper" },
 
     "MAGICAL": { "form": "magisk", "plural": "magiske" },
+    "STRONG": ["sterk"],
     "BRAVE": { "form": "modig", "plural": "modige" }
 
   }
@@ -349,6 +354,7 @@
     "SHOUT": { "base": "يصرخ", "1_singular": "أصرخ", "2_singular": "تصرخ", "3_singular": "يصرخ", "1_plural": "نصرخ", "2_plural": "تصرخون", "3_plural": "يصرخون" },
 
     "MAGICAL": ["سحري"],
+    "STRONG": ["قوي"],
     "BRAVE": ["شجاع"]
 
   }
@@ -408,6 +414,7 @@
     "SHOUT": { "base": "외치다" },
 
     "MAGICAL": ["마법의"],
+    "STRONG": ["강한"],
     "BRAVE": ["용감한"]
 
   }
@@ -467,6 +474,7 @@
     "SHOUT": { "base": "кричати", "1_singular": "кричу", "2_singular": "кричиш", "3_singular": "кричить", "1_plural": "кричимо", "2_plural": "кричите", "3_plural": "кричать" },
 
     "MAGICAL": ["магічний"],
+    "STRONG": ["сильний"],
     "BRAVE": ["хоробрий"]
 
   }
@@ -526,6 +534,7 @@
     "SHOUT": { "base": "gritar", "1_singular": "grito", "2_singular": "gritas", "3_singular": "grita", "1_plural": "gritamos", "2_plural": "gritáis", "3_plural": "gritan" },
 
     "MAGICAL": ["mágico"],
+    "STRONG": ["fuerte"],
     "BRAVE": ["valiente"]
 
   }
@@ -580,6 +589,7 @@
         "FLY": {"base":"fliegen","1_singular":"fliege","2_singular":"fliegst","3_singular":"fliegt","1_plural":"fliegen","2_plural":"fliegt","3_plural":"fliegen"},
         "SHOUT": {"base":"schreien","1_singular":"schreie","2_singular":"schreist","3_singular":"schreit","1_plural":"schreien","2_plural":"schreit","3_plural":"schreien"},
         "MAGICAL": ["magisch"],
+        "STRONG": ["stark"],
         "BRAVE": ["mutig"]
       }
     },
@@ -633,6 +643,7 @@
         "FLY": {"base":"πετώ","1_singular":"πετώ","2_singular":"πετάς","3_singular":"πετά","1_plural":"πετάμε","2_plural":"πετάτε","3_plural":"πετούν"},
         "SHOUT": {"base":"φωνάζω","1_singular":"φωνάζω","2_singular":"φωνάζεις","3_singular":"φωνάζει","1_plural":"φωνάζουμε","2_plural":"φωνάζετε","3_plural":"φωνάζουν"},
         "MAGICAL": ["μαγικός"],
+        "STRONG": ["δυνατός"],
         "BRAVE": ["γενναίος"]
       }
     },
@@ -686,6 +697,7 @@
         "FLY": {"base":"voler","1_singular":"vole","2_singular":"voles","3_singular":"vole","1_plural":"volons","2_plural":"volez","3_plural":"volent"},
         "SHOUT": {"base":"crier","1_singular":"crie","2_singular":"cries","3_singular":"crie","1_plural":"crions","2_plural":"criez","3_plural":"crient"},
         "MAGICAL": ["magique"],
+        "STRONG": ["fort"],
         "BRAVE": ["courageux"]
       }
     },
@@ -739,6 +751,7 @@
         "FLY": { "base": "uçmak", "1_singular": "uçuyorum", "2_singular": "uçuyorsun", "3_singular": "uçuyor", "1_plural": "uçuyoruz", "2_plural": "uçuyorsunuz", "3_plural": "uçuyorlar" },
         "SHOUT": { "base": "bağırmak", "1_singular": "bağırıyorum", "2_singular": "bağırıyorsun", "3_singular": "bağırıyor", "1_plural": "bağırıyoruz", "2_plural": "bağırıyorsunuz", "3_plural": "bağırıyorlar" },
         "MAGICAL": ["büyülü"],
+        "STRONG": ["güçlü"],
         "BRAVE": ["cesur"]
       }
     },
@@ -792,6 +805,7 @@
         "FLY": {"base":"飞"},
         "SHOUT": {"base":"喊"},
         "MAGICAL": ["魔法的"],
+        "STRONG": ["强"],
         "BRAVE": ["勇敢的"]
       }
     }
