@@ -1,0 +1,2301 @@
+{
+  "count": 123,
+  "templates": [
+    {
+      "template_id": "I_EAT_FOOD",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "FOOD"
+      ],
+      "render_en": "I eat food.",
+      "render_pt": "Eu como comida.",
+      "render_ar": "أنا آكل طعام.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "EAT": "eat",
+        "FOOD": "food"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "Eu",
+        "EAT": "como",
+        "FOOD": "comida"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who eats food?",
+          "prompt_pt": "Quem come comida?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt_en": "What do I do?",
+          "prompt_pt": "O que eu faço?",
+          "choices": [
+            "EAT",
+            "READ",
+            "SLEEP",
+            "SEE"
+          ],
+          "answer": "EAT"
+        },
+        "object": {
+          "prompt_en": "What do I eat?",
+          "prompt_pt": "O que eu como?",
+          "choices": [
+            "FOOD",
+            "BOOK",
+            "PHONE",
+            "JOB"
+          ],
+          "answer": "FOOD"
+        }
+      }
+    },
+    {
+      "template_id": "HE_READ_BOOK",
+      "concepts": [
+        "HE",
+        "READ",
+        "BOOK"
+      ],
+      "render_en": "He reads a book.",
+      "render_pt": "Ele lê um livro.",
+      "render_ar": "هو يقرأ كتاب.",
+      "surface_en": {
+        "HE": "he",
+        "READ": "reads",
+        "BOOK": "book"
+      },
+      "surface_pt": {
+        "HE": "ele",
+        "READ": "lê",
+        "BOOK": "livro"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who reads a book?",
+          "prompt_pt": "Quem lê um livro?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "HE"
+        },
+        "verb": {
+          "prompt_en": "What does he do?",
+          "prompt_pt": "O que ele faz?",
+          "choices": [
+            "READ",
+            "EAT",
+            "SEE",
+            "SLEEP"
+          ],
+          "answer": "READ"
+        },
+        "object": {
+          "prompt_en": "What does he read?",
+          "prompt_pt": "O que ele lê?",
+          "choices": [
+            "BOOK",
+            "FOOD",
+            "PHONE",
+            "JOB"
+          ],
+          "answer": "BOOK"
+        }
+      }
+    },
+    {
+      "template_id": "SHE_SEES_PHONE",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "PHONE"
+      ],
+      "render_en": "She sees a phone.",
+      "render_pt": "Ela vê um telefone.",
+      "render_ar": "هي ترى هاتف.",
+      "surface_en": {
+        "SHE": "she",
+        "SEE": "sees",
+        "PHONE": "phone"
+      },
+      "surface_pt": {
+        "SHE": "ela",
+        "SEE": "vê",
+        "PHONE": "telefone"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who sees a phone?",
+          "prompt_pt": "Quem vê um telefone?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "SHE"
+        },
+        "verb": {
+          "prompt_en": "What does she do?",
+          "prompt_pt": "O que ela faz?",
+          "choices": [
+            "SEE",
+            "EAT",
+            "READ",
+            "SLEEP"
+          ],
+          "answer": "SEE"
+        },
+        "object": {
+          "prompt_en": "What does she see?",
+          "prompt_pt": "O que ela vê?",
+          "choices": [
+            "PHONE",
+            "BOOK",
+            "FOOD",
+            "JOB"
+          ],
+          "answer": "PHONE"
+        }
+      }
+    },
+    {
+      "template_id": "WE_HAVE_JOB",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "HAVE",
+        "JOB"
+      ],
+      "render_en": "We have a job.",
+      "render_pt": "Nós temos um trabalho.",
+      "render_ar": "نحن لدينا عمل.",
+      "surface_en": {
+        "FIRST_PERSON_PLURAL": "we",
+        "HAVE": "have",
+        "JOB": "job"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_PLURAL": "nós",
+        "HAVE": "temos",
+        "JOB": "trabalho"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who has a job?",
+          "prompt_pt": "Quem tem um trabalho?",
+          "choices": [
+            "FIRST_PERSON_PLURAL",
+            "FIRST_PERSON_SINGULAR",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt_en": "What do we do?",
+          "prompt_pt": "O que nós fazemos?",
+          "choices": [
+            "HAVE",
+            "READ",
+            "SEE",
+            "EAT"
+          ],
+          "answer": "HAVE"
+        },
+        "object": {
+          "prompt_en": "What do we have?",
+          "prompt_pt": "O que nós temos?",
+          "choices": [
+            "JOB",
+            "BOOK",
+            "FOOD",
+            "PHONE"
+          ],
+          "answer": "JOB"
+        }
+      }
+    },
+    {
+      "template_id": "I_DRINK_WATER",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "DRINK",
+        "WATER"
+      ],
+      "render_en": "I drink water.",
+      "render_pt": "Eu bebo água.",
+      "render_ar": "أنا أشرب ماء.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "DRINK": "drink",
+        "WATER": "water"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "Eu",
+        "DRINK": "bebo",
+        "WATER": "água"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who drinks water?",
+          "prompt_pt": "Quem bebe água?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt_en": "What do I do?",
+          "prompt_pt": "O que eu faço?",
+          "choices": [
+            "DRINK",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "DRINK"
+        },
+        "object": {
+          "prompt_en": "What do I drink?",
+          "prompt_pt": "O que eu bebo?",
+          "choices": [
+            "WATER",
+            "FOOD",
+            "BOOK",
+            "PHONE"
+          ],
+          "answer": "WATER"
+        }
+      }
+    },
+    {
+      "template_id": "YOU_READ_BOOK",
+      "concepts": [
+        "SECOND_PERSON",
+        "READ",
+        "BOOK"
+      ],
+      "render_en": "You read a book.",
+      "render_pt": "Você lê um livro.",
+      "render_ar": "أنت تقرأ كتاب.",
+      "surface_en": {
+        "SECOND_PERSON": "you",
+        "READ": "read",
+        "BOOK": "book"
+      },
+      "surface_pt": {
+        "SECOND_PERSON": "você",
+        "READ": "lê",
+        "BOOK": "livro"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who reads a book?",
+          "prompt_pt": "Quem lê um livro?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "SECOND_PERSON"
+        },
+        "verb": {
+          "prompt_en": "What do you do?",
+          "prompt_pt": "O que você faz?",
+          "choices": [
+            "READ",
+            "EAT",
+            "DRINK",
+            "SEE"
+          ],
+          "answer": "READ"
+        },
+        "object": {
+          "prompt_en": "What do you read?",
+          "prompt_pt": "O que você lê?",
+          "choices": [
+            "BOOK",
+            "FOOD",
+            "PHONE",
+            "JOB"
+          ],
+          "answer": "BOOK"
+        }
+      }
+    },
+    {
+      "template_id": "YOU_PLURAL_DRINK_WATER",
+      "concepts": [
+        "SECOND_PERSON_PLURAL",
+        "DRINK",
+        "WATER"
+      ],
+      "render_en": "You drink water.",
+      "render_pt": "Vocês bebem água.",
+      "render_ar": "أنتم تشربون ماء.",
+      "surface_en": {
+        "SECOND_PERSON_PLURAL": "you",
+        "DRINK": "drink",
+        "WATER": "water"
+      },
+      "surface_pt": {
+        "SECOND_PERSON_PLURAL": "vocês",
+        "DRINK": "bebem",
+        "WATER": "água"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who drinks water?",
+          "prompt_pt": "Quem bebe água?",
+          "choices": [
+            "SECOND_PERSON_PLURAL",
+            "FIRST_PERSON_PLURAL",
+            "HE",
+            "SHE"
+          ],
+          "answer": "SECOND_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt_en": "What do you do?",
+          "prompt_pt": "O que vocês fazem?",
+          "choices": [
+            "DRINK",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "DRINK"
+        },
+        "object": {
+          "prompt_en": "What do you drink?",
+          "prompt_pt": "O que vocês bebem?",
+          "choices": [
+            "WATER",
+            "FOOD",
+            "BOOK",
+            "PHONE"
+          ],
+          "answer": "WATER"
+        }
+      }
+    },
+    {
+      "template_id": "THEY_SLEEP",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "SLEEP"
+      ],
+      "render_en": "They sleep.",
+      "render_pt": "Eles dormem.",
+      "render_ar": "هم ينامون.",
+      "surface_en": {
+        "THIRD_PERSON_PLURAL": "they",
+        "SLEEP": "sleep"
+      },
+      "surface_pt": {
+        "THIRD_PERSON_PLURAL": "eles",
+        "SLEEP": "dormem"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who sleeps?",
+          "prompt_pt": "Quem dorme?",
+          "choices": [
+            "THIRD_PERSON_PLURAL",
+            "FIRST_PERSON_PLURAL",
+            "HE",
+            "SHE"
+          ],
+          "answer": "THIRD_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt_en": "What do they do?",
+          "prompt_pt": "O que eles fazem?",
+          "choices": [
+            "SLEEP",
+            "READ",
+            "EAT",
+            "DRINK"
+          ],
+          "answer": "SLEEP"
+        }
+      }
+    },
+    {
+      "template_id": "I_AM_MAN",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "BE",
+        "MAN"
+      ],
+      "render_en": "I am a man.",
+      "render_pt": "Eu sou um homem.",
+      "render_ar": "أنا رجل.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "BE": "am",
+        "MAN": "man"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "Eu",
+        "BE": "sou",
+        "MAN": "homem"
+      },
+      "questions": {
+        "verb": {
+          "prompt_en": "What am I?",
+          "prompt_pt": "O que eu sou?",
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "BE"
+        },
+        "object": {
+          "prompt_en": "What am I?",
+          "prompt_pt": "Eu sou o quê?",
+          "choices": [
+            "MAN",
+            "WOMAN",
+            "BOY",
+            "GIRL"
+          ],
+          "answer": "MAN"
+        }
+      }
+    },
+    {
+      "template_id": "SHE_IS_WOMAN",
+      "concepts": [
+        "SHE",
+        "BE",
+        "WOMAN"
+      ],
+      "render_en": "She is a woman.",
+      "render_pt": "Ela é uma mulher.",
+      "render_ar": "هي امرأة.",
+      "surface_en": {
+        "SHE": "she",
+        "BE": "is",
+        "WOMAN": "woman"
+      },
+      "surface_pt": {
+        "SHE": "ela",
+        "BE": "é",
+        "WOMAN": "mulher"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who is a woman?",
+          "prompt_pt": "Quem é uma mulher?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "SHE"
+        },
+        "verb": {
+          "prompt_en": "What is she?",
+          "prompt_pt": "O que ela é?",
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "BE"
+        },
+        "object": {
+          "prompt_en": "What is she?",
+          "prompt_pt": "Ela é o quê?",
+          "choices": [
+            "WOMAN",
+            "MAN",
+            "BOY",
+            "GIRL"
+          ],
+          "answer": "WOMAN"
+        }
+      }
+    },
+    {
+      "template_id": "YOU_ARE_GIRL",
+      "concepts": [
+        "SECOND_PERSON",
+        "BE",
+        "GIRL"
+      ],
+      "render_en": "You are a girl.",
+      "render_pt": "Você é uma menina.",
+      "render_ar": "أنت بنت.",
+      "surface_en": {
+        "SECOND_PERSON": "you",
+        "BE": "are",
+        "GIRL": "girl"
+      },
+      "surface_pt": {
+        "SECOND_PERSON": "você",
+        "BE": "é",
+        "GIRL": "menina"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who is a girl?",
+          "prompt_pt": "Quem é uma menina?",
+          "choices": [
+            "SECOND_PERSON",
+            "FIRST_PERSON_SINGULAR",
+            "HE",
+            "SHE"
+          ],
+          "answer": "SECOND_PERSON"
+        },
+        "verb": {
+          "prompt_en": "What are you?",
+          "prompt_pt": "O que você é?",
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "BE"
+        },
+        "object": {
+          "prompt_en": "What are you?",
+          "prompt_pt": "Você é o quê?",
+          "choices": [
+            "GIRL",
+            "BOY",
+            "MAN",
+            "WOMAN"
+          ],
+          "answer": "GIRL"
+        }
+      }
+    },
+    {
+      "template_id": "HE_IS_BOY",
+      "concepts": [
+        "HE",
+        "BE",
+        "BOY"
+      ],
+      "render_en": "He is a boy.",
+      "render_pt": "Ele é um menino.",
+      "render_ar": "هو ولد.",
+      "surface_en": {
+        "HE": "he",
+        "BE": "is",
+        "BOY": "boy"
+      },
+      "surface_pt": {
+        "HE": "ele",
+        "BE": "é",
+        "BOY": "menino"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who is a boy?",
+          "prompt_pt": "Quem é um menino?",
+          "choices": [
+            "HE",
+            "SHE",
+            "SECOND_PERSON",
+            "FIRST_PERSON_SINGULAR"
+          ],
+          "answer": "HE"
+        },
+        "verb": {
+          "prompt_en": "What is he?",
+          "prompt_pt": "O que ele é?",
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "BE"
+        },
+        "object": {
+          "prompt_en": "What is he?",
+          "prompt_pt": "Ele é o quê?",
+          "choices": [
+            "BOY",
+            "GIRL",
+            "MAN",
+            "WOMAN"
+          ],
+          "answer": "BOY"
+        }
+      }
+    },
+    {
+      "template_id": "WE_STOP_EATING",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "STOP",
+        "EAT"
+      ],
+      "render_en": "We stop eating.",
+      "render_pt": "Nós paramos de comer.",
+      "render_ar": "نحن نتوقف عن الأكل.",
+      "surface_en": {
+        "FIRST_PERSON_PLURAL": "we",
+        "STOP": "stop",
+        "EAT": "eating"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_PLURAL": "nós",
+        "STOP": "paramos",
+        "EAT": "de comer"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who stops eating?",
+          "prompt_pt": "Quem para de comer?",
+          "choices": [
+            "FIRST_PERSON_PLURAL",
+            "FIRST_PERSON_SINGULAR",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt_en": "What do we do?",
+          "prompt_pt": "O que nós fazemos?",
+          "choices": [
+            "STOP",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "STOP"
+        }
+      }
+    },
+    {
+      "template_id": "THEY_START_SLEEPING",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "START",
+        "SLEEP"
+      ],
+      "render_en": "They start sleeping.",
+      "render_pt": "Eles começam a dormir.",
+      "render_ar": "هم يبدأون النوم.",
+      "surface_en": {
+        "THIRD_PERSON_PLURAL": "they",
+        "START": "start",
+        "SLEEP": "sleeping"
+      },
+      "surface_pt": {
+        "THIRD_PERSON_PLURAL": "eles",
+        "START": "começam",
+        "SLEEP": "a dormir"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who starts sleeping?",
+          "prompt_pt": "Quem começa a dormir?",
+          "choices": [
+            "THIRD_PERSON_PLURAL",
+            "FIRST_PERSON_PLURAL",
+            "HE",
+            "SHE"
+          ],
+          "answer": "THIRD_PERSON_PLURAL"
+        },
+        "verb": {
+          "prompt_en": "What do they do?",
+          "prompt_pt": "O que eles fazem?",
+          "choices": [
+            "START",
+            "SLEEP",
+            "READ",
+            "EAT"
+          ],
+          "answer": "START"
+        }
+      }
+    },
+    {
+      "template_id": "HE_SEES_SHIRT",
+      "concepts": [
+        "HE",
+        "SEE",
+        "SHIRT"
+      ],
+      "render_en": "He sees a shirt.",
+      "render_pt": "Ele vê uma camisa.",
+      "render_ar": "هو يرى قميص.",
+      "surface_en": {
+        "HE": "he",
+        "SEE": "sees",
+        "SHIRT": "shirt"
+      },
+      "surface_pt": {
+        "HE": "ele",
+        "SEE": "vê",
+        "SHIRT": "camisa"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who sees a shirt?",
+          "prompt_pt": "Quem vê uma camisa?",
+          "choices": [
+            "HE",
+            "SHE",
+            "SECOND_PERSON",
+            "FIRST_PERSON_SINGULAR"
+          ],
+          "answer": "HE"
+        },
+        "verb": {
+          "prompt_en": "What does he do?",
+          "prompt_pt": "O que ele faz?",
+          "choices": [
+            "SEE",
+            "READ",
+            "EAT",
+            "SLEEP"
+          ],
+          "answer": "SEE"
+        },
+        "object": {
+          "prompt_en": "What does he see?",
+          "prompt_pt": "O que ele vê?",
+          "choices": [
+            "SHIRT",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
+          "answer": "SHIRT"
+        }
+      }
+    },
+    {
+      "template_id": "I_GO_HOME",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "HOME"
+      ],
+      "render_en": "I go home.",
+      "render_pt": "Eu vou para casa.",
+      "render_ar": "أنا أذهب إلى المنزل.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "GO": "go",
+        "HOME": "home"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "eu",
+        "GO": "vou",
+        "HOME": "casa"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who goes home?",
+          "prompt_pt": "Quem vai para casa?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt_en": "What do I do?",
+          "prompt_pt": "O que eu faço?",
+          "choices": [
+            "GO",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
+          "answer": "GO"
+        },
+        "object": {
+          "prompt_en": "Where do I go?",
+          "prompt_pt": "Para onde eu vou?",
+          "choices": [
+            "HOME",
+            "ROOM",
+            "JOB",
+            "HOUSE"
+          ],
+          "answer": "HOME"
+        }
+      }
+    },
+    {
+      "template_id": "I_USE_PHONE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "USE",
+        "PHONE"
+      ],
+      "render_en": "I use a phone.",
+      "render_pt": "Eu uso um telefone.",
+      "render_ar": "أنا أستخدم هاتف.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "USE": "use",
+        "PHONE": "phone"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "eu",
+        "USE": "uso",
+        "PHONE": "telefone"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who uses a phone?",
+          "prompt_pt": "Quem usa um telefone?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt_en": "What do I do?",
+          "prompt_pt": "O que eu faço?",
+          "choices": [
+            "USE",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
+          "answer": "USE"
+        },
+        "object": {
+          "prompt_en": "What do I use?",
+          "prompt_pt": "O que eu uso?",
+          "choices": [
+            "PHONE",
+            "BOOK",
+            "FOOD",
+            "JOB"
+          ],
+          "answer": "PHONE"
+        }
+      }
+    },
+    {
+      "template_id": "I_GET_BOOK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GET",
+        "BOOK"
+      ],
+      "render_en": "I get a book.",
+      "render_pt": "Eu pego um livro.",
+      "render_ar": "أنا أحصل على كتاب.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "GET": "get",
+        "BOOK": "book"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "eu",
+        "GET": "pego",
+        "BOOK": "livro"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who gets a book?",
+          "prompt_pt": "Quem pega um livro?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt_en": "What do I do?",
+          "prompt_pt": "O que eu faço?",
+          "choices": [
+            "GET",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
+          "answer": "GET"
+        },
+        "object": {
+          "prompt_en": "What do I get?",
+          "prompt_pt": "O que eu pego?",
+          "choices": [
+            "BOOK",
+            "PHONE",
+            "FOOD",
+            "JOB"
+          ],
+          "answer": "BOOK"
+        }
+      }
+    },
+    {
+      "template_id": "I_SEE_HOUSE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "HOUSE"
+      ],
+      "render_en": "I see a house.",
+      "render_pt": "Eu vejo uma casa.",
+      "render_ar": "أنا أرى بيت.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "SEE": "see",
+        "HOUSE": "house"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "Eu",
+        "SEE": "vejo",
+        "HOUSE": "casa"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who sees a house?",
+          "prompt_pt": "Quem vê uma casa?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt_en": "What do I do?",
+          "prompt_pt": "O que eu faço?",
+          "choices": [
+            "SEE",
+            "READ",
+            "EAT",
+            "SLEEP"
+          ],
+          "answer": "SEE"
+        },
+        "object": {
+          "prompt_en": "What do I see?",
+          "prompt_pt": "O que eu vejo?",
+          "choices": [
+            "HOUSE",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
+          "answer": "HOUSE"
+        }
+      }
+    },
+    {
+      "template_id": "SHE_SEES_ROOM",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "ROOM"
+      ],
+      "render_en": "She sees a room.",
+      "render_pt": "Ela vê um quarto.",
+      "render_ar": "هي ترى غرفة.",
+      "surface_en": {
+        "SHE": "she",
+        "SEE": "sees",
+        "ROOM": "room"
+      },
+      "surface_pt": {
+        "SHE": "ela",
+        "SEE": "vê",
+        "ROOM": "quarto"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who sees a room?",
+          "prompt_pt": "Quem vê um quarto?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "SHE"
+        },
+        "verb": {
+          "prompt_en": "What does she do?",
+          "prompt_pt": "O que ela faz?",
+          "choices": [
+            "SEE",
+            "READ",
+            "EAT",
+            "SLEEP"
+          ],
+          "answer": "SEE"
+        },
+        "object": {
+          "prompt_en": "What does she see?",
+          "prompt_pt": "O que ela vê?",
+          "choices": [
+            "ROOM",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
+          "answer": "ROOM"
+        }
+      }
+    },
+    {
+      "template_id": "I_HAVE_SHIRT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SHIRT"
+      ],
+      "render_en": "I have a shirt.",
+      "render_pt": "Eu tenho uma camisa.",
+      "render_ar": "أنا لدي قميص.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "HAVE": "have",
+        "SHIRT": "shirt"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "Eu",
+        "HAVE": "tenho",
+        "SHIRT": "camisa"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who has a shirt?",
+          "prompt_pt": "Quem tem uma camisa?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "FIRST_PERSON_SINGULAR"
+        },
+        "verb": {
+          "prompt_en": "What do I do?",
+          "prompt_pt": "O que eu faço?",
+          "choices": [
+            "HAVE",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
+          "answer": "HAVE"
+        },
+        "object": {
+          "prompt_en": "What do I have?",
+          "prompt_pt": "O que eu tenho?",
+          "choices": [
+            "SHIRT",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
+          "answer": "SHIRT"
+        }
+      }
+    },
+    {
+      "template_id": "SHE_HAS_SHOES",
+      "concepts": [
+        "SHE",
+        "HAVE",
+        "SHOES"
+      ],
+      "render_en": "She has shoes.",
+      "render_pt": "Ela tem sapatos.",
+      "render_ar": "هي لديها أحذية.",
+      "surface_en": {
+        "SHE": "she",
+        "HAVE": "has",
+        "SHOES": "shoes"
+      },
+      "surface_pt": {
+        "SHE": "ela",
+        "HAVE": "tem",
+        "SHOES": "sapatos"
+      },
+      "questions": {
+        "pronoun": {
+          "prompt_en": "Who has shoes?",
+          "prompt_pt": "Quem tem sapatos?",
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
+          "answer": "SHE"
+        },
+        "verb": {
+          "prompt_en": "What does she do?",
+          "prompt_pt": "O que ela faz?",
+          "choices": [
+            "HAVE",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
+          "answer": "HAVE"
+        },
+        "object": {
+          "prompt_en": "What does she have?",
+          "prompt_pt": "O que ela tem?",
+          "choices": [
+            "SHOES",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
+          "answer": "SHOES"
+        }
+      }
+    },
+    {
+      "template_id": "THEY_HAVE_PANTS",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "HAVE",
+        "PANTS"
+      ],
+      "render_en": "They have pants.",
+      "render_pt": "Eles têm calças.",
+      "render_ar": "هم لديهم بنطال.",
+      "surface_en": {
+        "THIRD_PERSON_PLURAL": "they",
+        "HAVE": "have",
+        "PANTS": "pants"
+      },
+      "surface_pt": {
+        "THIRD_PERSON_PLURAL": "eles",
+        "HAVE": "têm",
+        "PANTS": "calças"
+      }
+    },
+    {
+      "template_id": "WE_HAVE_CLOTHES",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "HAVE",
+        "CLOTHES"
+      ],
+      "render_en": "We have clothes.",
+      "render_pt": "Nós temos roupas.",
+      "render_ar": "نحن لدينا ملابس.",
+      "surface_en": {
+        "FIRST_PERSON_PLURAL": "we",
+        "HAVE": "have",
+        "CLOTHES": "clothes"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_PLURAL": "nós",
+        "HAVE": "temos",
+        "CLOTHES": "roupas"
+      }
+    },
+    {
+      "template_id": "I_EAT_BREAKFAST",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "BREAKFAST"
+      ],
+      "render_en": "I eat breakfast.",
+      "render_pt": "Eu como café da manhã.",
+      "render_ar": "أنا آكل الفطور.",
+      "surface_en": {
+        "FIRST_PERSON_SINGULAR": "I",
+        "EAT": "eat",
+        "BREAKFAST": "breakfast"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_SINGULAR": "Eu",
+        "EAT": "como",
+        "BREAKFAST": "café da manhã"
+      }
+    },
+    {
+      "template_id": "WE_EAT_LUNCH",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "EAT",
+        "LUNCH"
+      ],
+      "render_en": "We eat lunch.",
+      "render_pt": "Nós comemos almoço.",
+      "render_ar": "نحن نأكل الغداء.",
+      "surface_en": {
+        "FIRST_PERSON_PLURAL": "we",
+        "EAT": "eat",
+        "LUNCH": "lunch"
+      },
+      "surface_pt": {
+        "FIRST_PERSON_PLURAL": "nós",
+        "EAT": "comemos",
+        "LUNCH": "almoço"
+      }
+    },
+    {
+      "template_id": "THEY_EAT_DINNER",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "EAT",
+        "DINNER"
+      ],
+      "render_en": "They eat dinner.",
+      "render_pt": "Eles comem jantar.",
+      "render_ar": "هم يأكلون العشاء.",
+      "surface_en": {
+        "THIRD_PERSON_PLURAL": "they",
+        "EAT": "eat",
+        "DINNER": "dinner"
+      },
+      "surface_pt": {
+        "THIRD_PERSON_PLURAL": "eles",
+        "EAT": "comem",
+        "DINNER": "jantar"
+      }
+    },
+    {
+      "template_id": "THIS_IS_MY_HAND",
+      "concepts": [
+        "THIS",
+        "BE",
+        "MY",
+        "HAND"
+      ],
+      "render_en": "This is my hand.",
+      "render_pt": "Esta é minha mão.",
+      "render_ar": "هذه يدي.",
+      "surface_en": {
+        "THIS": "this",
+        "BE": "is",
+        "MY": "my",
+        "HAND": "hand"
+      },
+      "surface_pt": {
+        "THIS": "esta",
+        "BE": "é",
+        "MY": "minha",
+        "HAND": "mão"
+      }
+    },
+    {
+      "template_id": "THIS_IS_YOUR_HEAD",
+      "concepts": [
+        "THIS",
+        "BE",
+        "YOUR",
+        "HEAD"
+      ],
+      "render_en": "This is your head.",
+      "render_pt": "Esta é sua cabeça.",
+      "render_ar": "هذه رأسك.",
+      "surface_en": {
+        "THIS": "this",
+        "BE": "is",
+        "YOUR": "your",
+        "HEAD": "head"
+      },
+      "surface_pt": {
+        "THIS": "esta",
+        "BE": "é",
+        "YOUR": "sua",
+        "HEAD": "cabeça"
+      }
+    },
+    {
+      "template_id": "THAT_IS_MY_ARM",
+      "concepts": [
+        "THAT",
+        "BE",
+        "MY",
+        "ARM"
+      ],
+      "render_en": "That is my arm.",
+      "render_pt": "Esse é meu braço.",
+      "render_ar": "ذلك ذراعي.",
+      "surface_en": {
+        "THAT": "that",
+        "BE": "is",
+        "MY": "my",
+        "ARM": "arm"
+      },
+      "surface_pt": {
+        "THAT": "esse",
+        "BE": "é",
+        "MY": "meu",
+        "ARM": "braço"
+      }
+    },
+    {
+      "template_id": "THAT_IS_YOUR_LEG",
+      "concepts": [
+        "THAT",
+        "BE",
+        "YOUR",
+        "LEG"
+      ],
+      "render_en": "That is your leg.",
+      "render_pt": "Essa é sua perna.",
+      "render_ar": "ذلك ساقك.",
+      "surface_en": {
+        "THAT": "that",
+        "BE": "is",
+        "YOUR": "your",
+        "LEG": "leg"
+      },
+      "surface_pt": {
+        "THAT": "essa",
+        "BE": "é",
+        "YOUR": "sua",
+        "LEG": "perna"
+      }
+    },
+    {
+      "template_id": "SHE_IS_MY_MOM",
+      "concepts": [
+        "SHE",
+        "BE",
+        "MY",
+        "MOM"
+      ],
+      "render_en": "She is my mom.",
+      "render_pt": "Ela é minha mãe.",
+      "render_ar": "هي أمي.",
+      "surface_en": {
+        "SHE": "she",
+        "BE": "is",
+        "MY": "my",
+        "MOM": "mom"
+      },
+      "surface_pt": {
+        "SHE": "ela",
+        "BE": "é",
+        "MY": "minha",
+        "MOM": "mãe"
+      }
+    },
+    {
+      "template_id": "HE_IS_MY_DAD",
+      "concepts": [
+        "HE",
+        "BE",
+        "MY",
+        "DAD"
+      ],
+      "render_en": "He is my dad.",
+      "render_pt": "Ele é meu pai.",
+      "render_ar": "هو أبي.",
+      "surface_en": {
+        "HE": "he",
+        "BE": "is",
+        "MY": "my",
+        "DAD": "dad"
+      },
+      "surface_pt": {
+        "HE": "ele",
+        "BE": "é",
+        "MY": "meu",
+        "DAD": "pai"
+      }
+    },
+    {
+      "template_id": "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD",
+      "concepts": [
+        "THIS",
+        "BE",
+        "MY",
+        "HAND",
+        "AND",
+        "THIS",
+        "BE",
+        "YOUR",
+        "HEAD"
+      ],
+      "render_en": "This is my hand and this is your head.",
+      "render_pt": "Esta é minha mão e esta é sua cabeça.",
+      "render_ar": "هذه يدي وهذه رأسك."
+    },
+    {
+      "template_id": "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD",
+      "concepts": [
+        "SHE",
+        "BE",
+        "MY",
+        "MOM",
+        "AND",
+        "HE",
+        "BE",
+        "MY",
+        "DAD"
+      ],
+      "render_en": "She is my mom and he is my dad.",
+      "render_pt": "Ela é minha mãe e ele é meu pai.",
+      "render_ar": "هي أمي وهو أبي."
+    },
+    {
+      "template_id": "I_EAT_AND_DRINK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "AND",
+        "DRINK"
+      ],
+      "render_en": "I eat and drink."
+    },
+    {
+      "template_id": "HE_EAT_BREAKFAST_BUT_NOT_LUNCH",
+      "concepts": [
+        "HE",
+        "EAT",
+        "BREAKFAST",
+        "BUT",
+        "NOT",
+        "LUNCH"
+      ],
+      "render_en": "He eats breakfast but not lunch."
+    },
+    {
+      "template_id": "SHE_GO_TO_HER_ROOM",
+      "concepts": [
+        "SHE",
+        "GO",
+        "TO",
+        "HER",
+        "ROOM"
+      ],
+      "render_en": "She goes to her room."
+    },
+    {
+      "template_id": "THIS_IS_A_GOOD_BOOK",
+      "concepts": [
+        "THIS",
+        "BE",
+        "GOOD",
+        "BOOK"
+      ],
+      "render_en": "This is a good book."
+    },
+    {
+      "template_id": "IS_THAT_YOUR_PHONE",
+      "concepts": [
+        "THAT",
+        "BE",
+        "YOUR",
+        "PHONE"
+      ],
+      "render_en": "Is that your phone?"
+    },
+    {
+      "template_id": "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME",
+      "concepts": [
+        "HE",
+        "EAT",
+        "DINNER",
+        "WITH",
+        "HIS",
+        "MOM",
+        "BECAUSE",
+        "HE",
+        "BE",
+        "HOME"
+      ],
+      "render_en": "He eats dinner with his mom because he is home."
+    },
+    {
+      "template_id": "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER",
+      "concepts": [
+        "IF",
+        "HE",
+        "BE",
+        "HOME",
+        "HE",
+        "EAT",
+        "WITH",
+        "HIS",
+        "DAUGHTER"
+      ],
+      "render_en": "If he is home, he eats with his daughter."
+    },
+    {
+      "template_id": "BOOK_IS_RED",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "RED"
+      ],
+      "render_en": "The book is red."
+    },
+    {
+      "template_id": "PHONE_IS_BLUE",
+      "concepts": [
+        "PHONE",
+        "BE",
+        "BLUE"
+      ],
+      "render_en": "The phone is blue."
+    },
+    {
+      "template_id": "SHIRT_IS_GREEN",
+      "concepts": [
+        "SHIRT",
+        "BE",
+        "GREEN"
+      ],
+      "render_en": "The shirt is green."
+    },
+    {
+      "template_id": "HOUSE_IS_WHITE",
+      "concepts": [
+        "HOUSE",
+        "BE",
+        "WHITE"
+      ],
+      "render_en": "The house is white."
+    },
+    {
+      "template_id": "PANTS_ARE_BLACK",
+      "concepts": [
+        "PANTS",
+        "BE",
+        "BLACK"
+      ],
+      "render_en": "The pants are black."
+    },
+    {
+      "template_id": "I_EAT_TODAY",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "TODAY"
+      ],
+      "render_en": "I eat today."
+    },
+    {
+      "template_id": "HE_READS_TODAY",
+      "concepts": [
+        "HE",
+        "READ",
+        "TODAY"
+      ],
+      "render_en": "He reads today."
+    },
+    {
+      "template_id": "WE_GO_TOMORROW",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "TOMORROW"
+      ],
+      "render_en": "We go tomorrow."
+    },
+    {
+      "template_id": "I_READ_NOW",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "READ",
+        "NOW"
+      ],
+      "render_en": "I read now."
+    },
+    {
+      "template_id": "HE_WORKS_YESTERDAY",
+      "concepts": [
+        "HE",
+        "DO",
+        "YESTERDAY"
+      ],
+      "render_en": "He does work yesterday."
+    },
+    {
+      "template_id": "WHO_EATS",
+      "concepts": [
+        "WHO",
+        "EAT"
+      ],
+      "render_en": "Who eats?"
+    },
+    {
+      "template_id": "WHY_DO_YOU_GO",
+      "concepts": [
+        "WHY",
+        "SECOND_PERSON",
+        "GO"
+      ],
+      "render_en": "Why do you go?"
+    },
+    {
+      "template_id": "WHEN_DO_WE_EAT",
+      "concepts": [
+        "WHEN",
+        "FIRST_PERSON_PLURAL",
+        "EAT"
+      ],
+      "render_en": "When do we eat?"
+    },
+    {
+      "template_id": "I_EAT_BEFORE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "BEFORE"
+      ],
+      "render_en": "I eat before."
+    },
+    {
+      "template_id": "WE_GO_AFTER",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "AFTER"
+      ],
+      "render_en": "We go after."
+    },
+    {
+      "template_id": "WHERE_IS_BOOK",
+      "concepts": [
+        "WHERE",
+        "BE",
+        "BOOK"
+      ],
+      "render_en": "Where is the book?"
+    },
+    {
+      "template_id": "HOW_DO_YOU_READ",
+      "concepts": [
+        "HOW",
+        "SECOND_PERSON",
+        "READ"
+      ],
+      "render_en": "How do you read?"
+    },
+    {
+      "template_id": "WHAT_DO_I_HAVE",
+      "concepts": [
+        "WHAT",
+        "FIRST_PERSON_SINGULAR",
+        "HAVE"
+      ],
+      "render_en": "What do I have?"
+    },
+    {
+      "template_id": "WHICH_BOOK",
+      "concepts": [
+        "WHICH",
+        "BOOK"
+      ],
+      "render_en": "Which book?"
+    },
+    {
+      "template_id": "WE_EAT_ALL",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "EAT",
+        "ALL"
+      ],
+      "render_en": "We eat all."
+    },
+    {
+      "template_id": "BOOK_ON_THIS",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "ON",
+        "THIS"
+      ],
+      "render_en": "The book is on this."
+    },
+    {
+      "template_id": "PHONE_IN_THAT",
+      "concepts": [
+        "PHONE",
+        "BE",
+        "IN",
+        "THAT"
+      ],
+      "render_en": "The phone is in that."
+    },
+    {
+      "template_id": "SHOES_UNDER_THIS",
+      "concepts": [
+        "SHOES",
+        "BE",
+        "UNDER",
+        "THIS"
+      ],
+      "render_en": "The shoes are under this."
+    },
+    {
+      "template_id": "BOOK_NEXT_TO_PHONE",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "NEXT_TO",
+        "PHONE"
+      ],
+      "render_en": "The book is next to the phone."
+    },
+    {
+      "template_id": "PHONE_IN_FRONT_OF_BOOK",
+      "concepts": [
+        "PHONE",
+        "BE",
+        "FRONT",
+        "BOOK"
+      ],
+      "render_en": "The phone is in front of the book."
+    },
+    {
+      "template_id": "BOOK_BEHIND_PHONE",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "BEHIND",
+        "PHONE"
+      ],
+      "render_en": "The book is behind the phone."
+    },
+    {
+      "template_id": "PHONE_OFF_THIS",
+      "concepts": [
+        "PHONE",
+        "BE",
+        "OFF",
+        "THIS"
+      ],
+      "render_en": "The phone is off this."
+    },
+    {
+      "template_id": "BOOK_BETWEEN_THIS_AND_THAT",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "BETWEEN",
+        "THIS",
+        "AND",
+        "THAT"
+      ],
+      "render_en": "The book is between this and that."
+    },
+    {
+      "template_id": "SHOES_IN_THIS",
+      "concepts": [
+        "SHOES",
+        "BE",
+        "IN",
+        "THIS"
+      ],
+      "render_en": "The shoes are in this."
+    },
+    {
+      "template_id": "PHONE_ON_THAT",
+      "concepts": [
+        "PHONE",
+        "BE",
+        "ON",
+        "THAT"
+      ],
+      "render_en": "The phone is on that."
+    },
+    {
+      "template_id": "WE_GO_BACK",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "BACK"
+      ],
+      "render_en": "We go back."
+    },
+    {
+      "template_id": "I_GO_OUT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "OUT"
+      ],
+      "render_en": "I go out."
+    },
+    {
+      "template_id": "WE_GO_NORTH",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "NORTH"
+      ],
+      "render_en": "We go north."
+    },
+    {
+      "template_id": "WE_GO_SOUTH",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "SOUTH"
+      ],
+      "render_en": "We go south."
+    },
+    {
+      "template_id": "WE_GO_EAST",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "EAST"
+      ],
+      "render_en": "We go east."
+    },
+    {
+      "template_id": "WE_GO_WEST",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "WEST"
+      ],
+      "render_en": "We go west."
+    },
+    {
+      "template_id": "BOOK_IS_LONG",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "LONG"
+      ],
+      "render_en": "The book is long."
+    },
+    {
+      "template_id": "DAY_IS_SHORT",
+      "concepts": [
+        "DAY",
+        "BE",
+        "SHORT"
+      ],
+      "render_en": "The day is short."
+    },
+    {
+      "template_id": "BOOK_IS_HEAVY",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "HEAVY"
+      ],
+      "render_en": "The book is heavy."
+    },
+    {
+      "template_id": "PHONE_IS_LIGHT",
+      "concepts": [
+        "PHONE",
+        "BE",
+        "LIGHT"
+      ],
+      "render_en": "The phone is light."
+    },
+    {
+      "template_id": "NIGHT_IS_DARK",
+      "concepts": [
+        "NIGHT",
+        "BE",
+        "DARK"
+      ],
+      "render_en": "The night is dark."
+    },
+    {
+      "template_id": "BOY_IS_YOUNG",
+      "concepts": [
+        "BOY",
+        "BE",
+        "YOUNG"
+      ],
+      "render_en": "The boy is young."
+    },
+    {
+      "template_id": "BOOK_IS_EASY",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "EASY"
+      ],
+      "render_en": "The book is easy."
+    },
+    {
+      "template_id": "BOOK_IS_DIFFICULT",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "DIFFICULT"
+      ],
+      "render_en": "The book is difficult."
+    },
+    {
+      "template_id": "THIS_IS_RIGHT",
+      "concepts": [
+        "THIS",
+        "BE",
+        "RIGHT"
+      ],
+      "render_en": "This is right."
+    },
+    {
+      "template_id": "THIS_IS_LEFT",
+      "concepts": [
+        "THIS",
+        "BE",
+        "LEFT"
+      ],
+      "render_en": "This is left."
+    },
+    {
+      "template_id": "THIS_IS_CORRECT",
+      "concepts": [
+        "THIS",
+        "BE",
+        "CORRECT"
+      ],
+      "render_en": "This is correct."
+    },
+    {
+      "template_id": "THIS_IS_WRONG",
+      "concepts": [
+        "THIS",
+        "BE",
+        "WRONG"
+      ],
+      "render_en": "This is wrong."
+    },
+    {
+      "template_id": "THIS_IS_NICE",
+      "concepts": [
+        "THIS",
+        "BE",
+        "NICE"
+      ],
+      "render_en": "This is nice."
+    },
+    {
+      "template_id": "YEAR_IS_LONG",
+      "concepts": [
+        "YEAR",
+        "BE",
+        "LONG"
+      ],
+      "render_en": "The year is long."
+    },
+    {
+      "template_id": "MONTH_IS_LONG",
+      "concepts": [
+        "MONTH",
+        "BE",
+        "LONG"
+      ],
+      "render_en": "The month is long."
+    },
+    {
+      "template_id": "WEEK_IS_SHORT",
+      "concepts": [
+        "WEEK",
+        "BE",
+        "SHORT"
+      ],
+      "render_en": "The week is short."
+    },
+    {
+      "template_id": "DAY_IS_LONG",
+      "concepts": [
+        "DAY",
+        "BE",
+        "LONG"
+      ],
+      "render_en": "The day is long."
+    },
+    {
+      "template_id": "HOUR_IS_SHORT",
+      "concepts": [
+        "HOUR",
+        "BE",
+        "SHORT"
+      ],
+      "render_en": "The hour is short."
+    },
+    {
+      "template_id": "MINUTE_IS_SHORT",
+      "concepts": [
+        "MINUTE",
+        "BE",
+        "SHORT"
+      ],
+      "render_en": "The minute is short."
+    },
+    {
+      "template_id": "SECOND_IS_SHORT",
+      "concepts": [
+        "SECOND",
+        "BE",
+        "SHORT"
+      ],
+      "render_en": "The second is short."
+    },
+    {
+      "template_id": "MORNING_IS_GOOD",
+      "concepts": [
+        "MORNING",
+        "BE",
+        "GOOD"
+      ],
+      "render_en": "The morning is good."
+    },
+    {
+      "template_id": "NIGHT_IS_BAD",
+      "concepts": [
+        "NIGHT",
+        "BE",
+        "BAD"
+      ],
+      "render_en": "The night is bad."
+    },
+    {
+      "template_id": "WINTER_IS_COLD",
+      "concepts": [
+        "WINTER",
+        "BE",
+        "COLD"
+      ],
+      "render_en": "Winter is cold."
+    },
+    {
+      "template_id": "SUMMER_IS_GOOD",
+      "concepts": [
+        "SUMMER",
+        "BE",
+        "GOOD"
+      ],
+      "render_en": "Summer is good."
+    },
+    {
+      "template_id": "SPRING_IS_NEW",
+      "concepts": [
+        "SPRING",
+        "BE",
+        "NEW"
+      ],
+      "render_en": "Spring is new."
+    },
+    {
+      "template_id": "AUTUMN_IS_OLD",
+      "concepts": [
+        "AUTUMN",
+        "BE",
+        "OLD"
+      ],
+      "render_en": "Autumn is old."
+    },
+    {
+      "template_id": "THIS_IS_THING",
+      "concepts": [
+        "THIS",
+        "BE",
+        "THING"
+      ],
+      "render_en": "This is a thing."
+    },
+    {
+      "template_id": "PLEASE_READ",
+      "concepts": [
+        "PLEASE",
+        "READ"
+      ],
+      "render_en": "Please read."
+    },
+    {
+      "template_id": "MAYBE_I_GO",
+      "concepts": [
+        "MAYBE",
+        "FIRST_PERSON_SINGULAR",
+        "GO"
+      ],
+      "render_en": "Maybe I go."
+    },
+    {
+      "template_id": "THANKS",
+      "concepts": [
+        "THANKS"
+      ],
+      "render_en": "Thanks."
+    },
+    {
+      "template_id": "I_GO_FOR_FOOD",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "FOR",
+        "FOOD"
+      ],
+      "render_en": "I go for food."
+    },
+    {
+      "template_id": "I_HAVE_SOMETHING",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SOMETHING"
+      ],
+      "render_en": "I have something."
+    },
+    {
+      "template_id": "I_HAVE_ANOTHER_BOOK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "ANOTHER",
+        "BOOK"
+      ],
+      "render_en": "I have another book."
+    },
+    {
+      "template_id": "I_READ_ONLY_BOOK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "READ",
+        "ONLY",
+        "BOOK"
+      ],
+      "render_en": "I read only the book."
+    },
+    {
+      "template_id": "I_GO_FROM_HOME",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "FROM",
+        "HOME"
+      ],
+      "render_en": "I go from home."
+    },
+    {
+      "template_id": "I_GO_TO_HOUSE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "TO",
+        "HOUSE"
+      ],
+      "render_en": "I go to the house."
+    },
+    {
+      "template_id": "I_GO_AROUND",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "AROUND"
+      ],
+      "render_en": "I go around."
+    },
+    {
+      "template_id": "I_DO_THIS_BY_HAND",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "DO",
+        "THIS",
+        "BY",
+        "HAND"
+      ],
+      "render_en": "I do this by hand."
+    },
+    {
+      "template_id": "YES_I_DO",
+      "concepts": [
+        "YES",
+        "FIRST_PERSON_SINGULAR",
+        "DO"
+      ],
+      "render_en": "Yes, I do."
+    },
+    {
+      "template_id": "NO_I_DO_NOT",
+      "concepts": [
+        "NO",
+        "FIRST_PERSON_SINGULAR",
+        "DO",
+        "NOT"
+      ],
+      "render_en": "No, I do not."
+    },
+    {
+      "template_id": "THIS_IS_MINE",
+      "concepts": [
+        "THIS",
+        "BE",
+        "MINE"
+      ],
+      "render_en": "This is mine."
+    },
+    {
+      "template_id": "THIS_IS_YOURS",
+      "concepts": [
+        "THIS",
+        "BE",
+        "YOURS"
+      ],
+      "render_en": "This is yours."
+    },
+    {
+      "template_id": "THIS_IS_HERS",
+      "concepts": [
+        "THIS",
+        "BE",
+        "HERS"
+      ],
+      "render_en": "This is hers."
+    },
+    {
+      "template_id": "THIS_IS_OURS",
+      "concepts": [
+        "THIS",
+        "BE",
+        "OURS"
+      ],
+      "render_en": "This is ours."
+    },
+    {
+      "template_id": "THIS_IS_THEIRS",
+      "concepts": [
+        "THIS",
+        "BE",
+        "THEIRS"
+      ],
+      "render_en": "This is theirs."
+    }
+  ]
+}
