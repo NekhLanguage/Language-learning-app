@@ -2,8 +2,10 @@
 // validate-packs.js
 // Checks every resource-pack file (those with both a `concepts` array and a
 // `languages` map) provides a valid, non-empty translation for every concept
-// in EVERY supported language from languages.js. Verbs must have a base form;
-// countable nouns in gender-required languages must carry a gender field.
+// in EVERY supported language from languages.js. Verbs must have a base form
+// (plus a full present-tense paradigm in person-marking languages, and a
+// 3_singular in English); countable nouns in gender-required languages must
+// carry a gender field.
 // Run: node validation/validate-packs.js
 
 'use strict';
@@ -16,6 +18,15 @@ const ROOT = path.join(__dirname, '..');
 // Languages where countable nouns should carry a gender field.
 // Mirrors validate-structure.js, plus French which is also gendered.
 const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es']);
+
+// Languages whose present-tense verbs inflect by person/number. The grammar
+// engine (getVerbForm in app.js) reads a `${person}_${number}` key for these;
+// without it the sentence falls back to the infinitive (e.g. uk «чаклувати»
+// instead of «чаклує»). Require the full present paradigm for these.
+// en needs only base + 3_singular; no uses a uniform `present`/base; and
+// ja/ko/zh do not inflect verbs by person, so base alone is correct.
+const VERB_PERSON_LANGS = new Set(['es', 'fr', 'de', 'pt', 'uk', 'ar', 'el', 'tr']);
+const PERSON_PARADIGM_KEYS = ['1_singular', '2_singular', '3_singular', '1_plural', '2_plural', '3_plural'];
 
 // ─── Canonical language list (sourced from languages.js) ─────────────────────
 
@@ -93,10 +104,22 @@ function validatePack(data, langCodes) {
         errors.push(`EMPTY VALUE: ${cid}`);
         continue;
       }
-      // Verb must have a base form
+      // Verb must have a base form, plus a complete present paradigm in
+      // person-marking languages (and 3_singular in English).
       if (concept.type === 'verb') {
         if (typeof entry !== 'object' || Array.isArray(entry) || !entry.base) {
           errors.push(`VERB MISSING base FORM: ${cid}`);
+        } else if (VERB_PERSON_LANGS.has(lang)) {
+          const missing = PERSON_PARADIGM_KEYS.filter(
+            k => !entry[k] || !String(entry[k]).trim()
+          );
+          if (missing.length) {
+            errors.push(`VERB INCOMPLETE CONJUGATION [${missing.join(', ')}]: ${cid}`);
+          }
+        } else if (lang === 'en') {
+          if (!entry['3_singular'] || !String(entry['3_singular']).trim()) {
+            errors.push(`VERB MISSING 3_singular: ${cid}`);
+          }
         }
       }
       // Countable nouns in gender-required langs should carry gender

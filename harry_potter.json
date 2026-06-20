@@ -52,6 +52,7 @@
     { "concept_id": "SHOUT", "type": "verb" },
 
     { "concept_id": "MAGICAL", "type": "adjective" },
+    { "concept_id": "STRONG", "type": "adjective" },
     { "concept_id": "BRAVE", "type": "adjective" }
 
   ],
@@ -113,6 +114,7 @@
         "SHOUT": { "base": "shout", "3_singular": "shouts" },
 
         "MAGICAL": ["magical"],
+        "STRONG": ["strong"],
         "BRAVE": ["brave"]
 
       }
@@ -172,6 +174,7 @@
     "SHOUT": { "base": "gritar", "1_singular": "grito", "2_singular": "gritas", "3_singular": "grita", "1_plural": "gritamos", "2_plural": "gritam", "3_plural": "gritam" },
 
     "MAGICAL": ["mágico"],
+    "STRONG": ["forte"],
     "BRAVE": ["corajoso"]
 
   }
@@ -231,6 +234,7 @@
     "SHOUT": { "base": "叫ぶ", "present": "叫ぶ" },
 
     "MAGICAL": ["魔法の"],
+    "STRONG": ["つよい"],
     "BRAVE": ["勇敢な"]
 
   }
@@ -290,6 +294,7 @@
     "SHOUT": { "base": "rope", "present": "roper" },
 
     "MAGICAL": { "form": "magisk", "plural": "magiske" },
+    "STRONG": ["sterk"],
     "BRAVE": { "form": "modig", "plural": "modige" }
 
   }
@@ -336,19 +341,20 @@
     "CLOAK": { "form": "عباءة" },
     "DOOR": { "form": "باب" },
 
-    "CAST": { "base": "يلقي", "3_singular": "يلقي" },
-    "PROTECT": { "base": "يحمي", "3_singular": "يحمي" },
-    "CHARM": { "base": "يسحر", "3_singular": "يسحر" },
-    "CURSE": { "base": "يلعن", "3_singular": "يلعن" },
-    "LEARN": { "base": "يتعلم", "3_singular": "يتعلم" },
-    "WRITE": { "base": "يكتب", "3_singular": "يكتب" },
-    "STUDY": { "base": "يدرس", "3_singular": "يدرس" },
-    "VANISH": { "base": "يختفي", "3_singular": "يختفي" },
-    "TRANSFORM": { "base": "يحول", "3_singular": "يحول" },
-    "FLY": { "base": "يطير", "3_singular": "يطير" },
-    "SHOUT": { "base": "يصرخ", "3_singular": "يصرخ" },
+    "CAST": { "base": "يلقي", "1_singular": "ألقي", "2_singular": "تلقي", "3_singular": "يلقي", "1_plural": "نلقي", "2_plural": "تلقون", "3_plural": "يلقون" },
+    "PROTECT": { "base": "يحمي", "1_singular": "أحمي", "2_singular": "تحمي", "3_singular": "يحمي", "1_plural": "نحمي", "2_plural": "تحمون", "3_plural": "يحمون" },
+    "CHARM": { "base": "يسحر", "1_singular": "أسحر", "2_singular": "تسحر", "3_singular": "يسحر", "1_plural": "نسحر", "2_plural": "تسحرون", "3_plural": "يسحرون" },
+    "CURSE": { "base": "يلعن", "1_singular": "ألعن", "2_singular": "تلعن", "3_singular": "يلعن", "1_plural": "نلعن", "2_plural": "تلعنون", "3_plural": "يلعنون" },
+    "LEARN": { "base": "يتعلم", "1_singular": "أتعلم", "2_singular": "تتعلم", "3_singular": "يتعلم", "1_plural": "نتعلم", "2_plural": "تتعلمون", "3_plural": "يتعلمون" },
+    "WRITE": { "base": "يكتب", "1_singular": "أكتب", "2_singular": "تكتب", "3_singular": "يكتب", "1_plural": "نكتب", "2_plural": "تكتبون", "3_plural": "يكتبون" },
+    "STUDY": { "base": "يدرس", "1_singular": "أدرس", "2_singular": "تدرس", "3_singular": "يدرس", "1_plural": "ندرس", "2_plural": "تدرسون", "3_plural": "يدرسون" },
+    "VANISH": { "base": "يختفي", "1_singular": "أختفي", "2_singular": "تختفي", "3_singular": "يختفي", "1_plural": "نختفي", "2_plural": "تختفون", "3_plural": "يختفون" },
+    "TRANSFORM": { "base": "يحول", "1_singular": "أحول", "2_singular": "تحول", "3_singular": "يحول", "1_plural": "نحول", "2_plural": "تحولون", "3_plural": "يحولون" },
+    "FLY": { "base": "يطير", "1_singular": "أطير", "2_singular": "تطير", "3_singular": "يطير", "1_plural": "نطير", "2_plural": "تطيرون", "3_plural": "يطيرون" },
+    "SHOUT": { "base": "يصرخ", "1_singular": "أصرخ", "2_singular": "تصرخ", "3_singular": "يصرخ", "1_plural": "نصرخ", "2_plural": "تصرخون", "3_plural": "يصرخون" },
 
     "MAGICAL": ["سحري"],
+    "STRONG": ["قوي"],
     "BRAVE": ["شجاع"]
 
   }
@@ -408,6 +414,7 @@
     "SHOUT": { "base": "외치다" },
 
     "MAGICAL": ["마법의"],
+    "STRONG": ["강한"],
     "BRAVE": ["용감한"]
 
   }
@@ -454,19 +461,20 @@
     "CLOAK": { "form": "мантія", "plural": "мантії" },
     "DOOR": { "form": "двері", "plural": "двері" },
 
-    "CAST": { "base": "чаклувати" },
-    "PROTECT": { "base": "захищати" },
-    "CHARM": { "base": "зачаровувати" },
-    "CURSE": { "base": "проклинати" },
-    "LEARN": { "base": "вчитися" },
-    "WRITE": { "base": "писати" },
-    "STUDY": { "base": "вчитися" },
-    "VANISH": { "base": "зникати" },
-    "TRANSFORM": { "base": "перетворювати" },
-    "FLY": { "base": "літати" },
-    "SHOUT": { "base": "кричати" },
+    "CAST": { "base": "чаклувати", "1_singular": "чаклую", "2_singular": "чаклуєш", "3_singular": "чаклує", "1_plural": "чаклуємо", "2_plural": "чаклуєте", "3_plural": "чаклують" },
+    "PROTECT": { "base": "захищати", "1_singular": "захищаю", "2_singular": "захищаєш", "3_singular": "захищає", "1_plural": "захищаємо", "2_plural": "захищаєте", "3_plural": "захищають" },
+    "CHARM": { "base": "зачаровувати", "1_singular": "зачаровую", "2_singular": "зачаровуєш", "3_singular": "зачаровує", "1_plural": "зачаровуємо", "2_plural": "зачаровуєте", "3_plural": "зачаровують" },
+    "CURSE": { "base": "проклинати", "1_singular": "проклинаю", "2_singular": "проклинаєш", "3_singular": "проклинає", "1_plural": "проклинаємо", "2_plural": "проклинаєте", "3_plural": "проклинають" },
+    "LEARN": { "base": "вчитися", "1_singular": "вчуся", "2_singular": "вчишся", "3_singular": "вчиться", "1_plural": "вчимося", "2_plural": "вчитеся", "3_plural": "вчаться" },
+    "WRITE": { "base": "писати", "1_singular": "пишу", "2_singular": "пишеш", "3_singular": "пише", "1_plural": "пишемо", "2_plural": "пишете", "3_plural": "пишуть" },
+    "STUDY": { "base": "вчитися", "1_singular": "вчуся", "2_singular": "вчишся", "3_singular": "вчиться", "1_plural": "вчимося", "2_plural": "вчитеся", "3_plural": "вчаться" },
+    "VANISH": { "base": "зникати", "1_singular": "зникаю", "2_singular": "зникаєш", "3_singular": "зникає", "1_plural": "зникаємо", "2_plural": "зникаєте", "3_plural": "зникають" },
+    "TRANSFORM": { "base": "перетворювати", "1_singular": "перетворюю", "2_singular": "перетворюєш", "3_singular": "перетворює", "1_plural": "перетворюємо", "2_plural": "перетворюєте", "3_plural": "перетворюють" },
+    "FLY": { "base": "літати", "1_singular": "літаю", "2_singular": "літаєш", "3_singular": "літає", "1_plural": "літаємо", "2_plural": "літаєте", "3_plural": "літають" },
+    "SHOUT": { "base": "кричати", "1_singular": "кричу", "2_singular": "кричиш", "3_singular": "кричить", "1_plural": "кричимо", "2_plural": "кричите", "3_plural": "кричать" },
 
     "MAGICAL": ["магічний"],
+    "STRONG": ["сильний"],
     "BRAVE": ["хоробрий"]
 
   }
@@ -526,6 +534,7 @@
     "SHOUT": { "base": "gritar", "1_singular": "grito", "2_singular": "gritas", "3_singular": "grita", "1_plural": "gritamos", "2_plural": "gritáis", "3_plural": "gritan" },
 
     "MAGICAL": ["mágico"],
+    "STRONG": ["fuerte"],
     "BRAVE": ["valiente"]
 
   }
@@ -580,6 +589,7 @@
         "FLY": {"base":"fliegen","1_singular":"fliege","2_singular":"fliegst","3_singular":"fliegt","1_plural":"fliegen","2_plural":"fliegt","3_plural":"fliegen"},
         "SHOUT": {"base":"schreien","1_singular":"schreie","2_singular":"schreist","3_singular":"schreit","1_plural":"schreien","2_plural":"schreit","3_plural":"schreien"},
         "MAGICAL": ["magisch"],
+        "STRONG": ["stark"],
         "BRAVE": ["mutig"]
       }
     },
@@ -633,6 +643,7 @@
         "FLY": {"base":"πετώ","1_singular":"πετώ","2_singular":"πετάς","3_singular":"πετά","1_plural":"πετάμε","2_plural":"πετάτε","3_plural":"πετούν"},
         "SHOUT": {"base":"φωνάζω","1_singular":"φωνάζω","2_singular":"φωνάζεις","3_singular":"φωνάζει","1_plural":"φωνάζουμε","2_plural":"φωνάζετε","3_plural":"φωνάζουν"},
         "MAGICAL": ["μαγικός"],
+        "STRONG": ["δυνατός"],
         "BRAVE": ["γενναίος"]
       }
     },
@@ -686,6 +697,7 @@
         "FLY": {"base":"voler","1_singular":"vole","2_singular":"voles","3_singular":"vole","1_plural":"volons","2_plural":"volez","3_plural":"volent"},
         "SHOUT": {"base":"crier","1_singular":"crie","2_singular":"cries","3_singular":"crie","1_plural":"crions","2_plural":"criez","3_plural":"crient"},
         "MAGICAL": ["magique"],
+        "STRONG": ["fort"],
         "BRAVE": ["courageux"]
       }
     },
@@ -727,18 +739,19 @@
         "ENEMY": {"form":"düşman","plural":"düşmanlar"},
         "CLOAK": {"form":"pelerin","plural":"pelerinler"},
         "DOOR": {"form":"kapı","plural":"kapılar"},
-        "CAST": {"base":"yapmak","1_singular":"yaparım","2_singular":"yaparsın","3_singular":"yapar","1_plural":"yaparız","2_plural":"yaparsınız","3_plural":"yaparlar"},
-        "PROTECT": {"base":"korumak","1_singular":"korurum","2_singular":"korursun","3_singular":"korur","1_plural":"koruruz","2_plural":"korursunuz","3_plural":"korurlar"},
-        "CHARM": {"base":"büyülemek","1_singular":"büyülerim","2_singular":"büyülersin","3_singular":"büyüler","1_plural":"büyüleriz","2_plural":"büyülersiniz","3_plural":"büyülerler"},
-        "CURSE": {"base":"lanetlemek","1_singular":"lanetlerim","2_singular":"lanetlersin","3_singular":"lanetler","1_plural":"lanetleriz","2_plural":"lanetlersiniz","3_plural":"lanetlerler"},
-        "LEARN": {"base":"öğrenmek","1_singular":"öğrenirim","2_singular":"öğrenirsin","3_singular":"öğrenir","1_plural":"öğreniriz","2_plural":"öğrenirsiniz","3_plural":"öğrenirler"},
-        "WRITE": {"base":"yazmak","1_singular":"yazarım","2_singular":"yazarsın","3_singular":"yazar","1_plural":"yazarız","2_plural":"yazarsınız","3_plural":"yazarlar"},
-        "STUDY": {"base":"çalışmak","1_singular":"çalışırım","2_singular":"çalışırsın","3_singular":"çalışır","1_plural":"çalışırız","2_plural":"çalışırsınız","3_plural":"çalışırlar"},
-        "VANISH": {"base":"kaybolmak","1_singular":"kaybolurum","2_singular":"kaybolursun","3_singular":"kaybolur","1_plural":"kayboluruz","2_plural":"kaybolursunuz","3_plural":"kaybolurlar"},
-        "TRANSFORM": {"base":"dönüştürmek","1_singular":"dönüştürürüm","2_singular":"dönüştürürsün","3_singular":"dönüştürür","1_plural":"dönüştürürüz","2_plural":"dönüştürürsünüz","3_plural":"dönüştürürler"},
-        "FLY": {"base":"uçmak","1_singular":"uçarım","2_singular":"uçarsın","3_singular":"uçar","1_plural":"uçarız","2_plural":"uçarsınız","3_plural":"uçarlar"},
-        "SHOUT": {"base":"bağırmak","1_singular":"bağırırım","2_singular":"bağırırsın","3_singular":"bağırır","1_plural":"bağırırız","2_plural":"bağırırsınız","3_plural":"bağırırlar"},
+        "CAST": { "base": "yapmak", "1_singular": "yapıyorum", "2_singular": "yapıyorsun", "3_singular": "yapıyor", "1_plural": "yapıyoruz", "2_plural": "yapıyorsunuz", "3_plural": "yapıyorlar" },
+        "PROTECT": { "base": "korumak", "1_singular": "koruyorum", "2_singular": "koruyorsun", "3_singular": "koruyor", "1_plural": "koruyoruz", "2_plural": "koruyorsunuz", "3_plural": "koruyorlar" },
+        "CHARM": { "base": "büyülemek", "1_singular": "büyülüyorum", "2_singular": "büyülüyorsun", "3_singular": "büyülüyor", "1_plural": "büyülüyoruz", "2_plural": "büyülüyorsunuz", "3_plural": "büyülüyorlar" },
+        "CURSE": { "base": "lanetlemek", "1_singular": "lanetliyorum", "2_singular": "lanetliyorsun", "3_singular": "lanetliyor", "1_plural": "lanetliyoruz", "2_plural": "lanetliyorsunuz", "3_plural": "lanetliyorlar" },
+        "LEARN": { "base": "öğrenmek", "1_singular": "öğreniyorum", "2_singular": "öğreniyorsun", "3_singular": "öğreniyor", "1_plural": "öğreniyoruz", "2_plural": "öğreniyorsunuz", "3_plural": "öğreniyorlar" },
+        "WRITE": { "base": "yazmak", "1_singular": "yazıyorum", "2_singular": "yazıyorsun", "3_singular": "yazıyor", "1_plural": "yazıyoruz", "2_plural": "yazıyorsunuz", "3_plural": "yazıyorlar" },
+        "STUDY": { "base": "çalışmak", "1_singular": "çalışıyorum", "2_singular": "çalışıyorsun", "3_singular": "çalışıyor", "1_plural": "çalışıyoruz", "2_plural": "çalışıyorsunuz", "3_plural": "çalışıyorlar" },
+        "VANISH": { "base": "kaybolmak", "1_singular": "kayboluyorum", "2_singular": "kayboluyorsun", "3_singular": "kayboluyor", "1_plural": "kayboluyoruz", "2_plural": "kayboluyorsunuz", "3_plural": "kayboluyorlar" },
+        "TRANSFORM": { "base": "dönüştürmek", "1_singular": "dönüştürüyorum", "2_singular": "dönüştürüyorsun", "3_singular": "dönüştürüyor", "1_plural": "dönüştürüyoruz", "2_plural": "dönüştürüyorsunuz", "3_plural": "dönüştürüyorlar" },
+        "FLY": { "base": "uçmak", "1_singular": "uçuyorum", "2_singular": "uçuyorsun", "3_singular": "uçuyor", "1_plural": "uçuyoruz", "2_plural": "uçuyorsunuz", "3_plural": "uçuyorlar" },
+        "SHOUT": { "base": "bağırmak", "1_singular": "bağırıyorum", "2_singular": "bağırıyorsun", "3_singular": "bağırıyor", "1_plural": "bağırıyoruz", "2_plural": "bağırıyorsunuz", "3_plural": "bağırıyorlar" },
         "MAGICAL": ["büyülü"],
+        "STRONG": ["güçlü"],
         "BRAVE": ["cesur"]
       }
     },
@@ -792,6 +805,7 @@
         "FLY": {"base":"飞"},
         "SHOUT": {"base":"喊"},
         "MAGICAL": ["魔法的"],
+        "STRONG": ["强"],
         "BRAVE": ["勇敢的"]
       }
     }

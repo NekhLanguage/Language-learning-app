@@ -1,0 +1,596 @@
+{
+  "COOK": {
+    "base": "يطبخ",
+    "1_singular": "أطبخ",
+    "2_singular": "تطبخ",
+    "3_singular": "يطبخ",
+    "1_plural": "نطبخ",
+    "2_plural": "تطبخون",
+    "3_plural": "يطبخون"
+  },
+  "CUT": {
+    "base": "يقطع",
+    "1_singular": "أقطع",
+    "2_singular": "تقطع",
+    "3_singular": "يقطع",
+    "1_plural": "نقطع",
+    "2_plural": "تقطعون",
+    "3_plural": "يقطعون"
+  },
+  "BOIL": {
+    "base": "يغلي",
+    "1_singular": "أغلي",
+    "2_singular": "تغلي",
+    "3_singular": "يغلي",
+    "1_plural": "نغلي",
+    "2_plural": "تغلون",
+    "3_plural": "يغلون"
+  },
+  "PEEL": {
+    "base": "يقشر",
+    "1_singular": "أقشر",
+    "2_singular": "تقشر",
+    "3_singular": "يقشر",
+    "1_plural": "نقشر",
+    "2_plural": "تقشرون",
+    "3_plural": "يقشرون"
+  },
+  "FRY": {
+    "base": "يقلي",
+    "1_singular": "أقلي",
+    "2_singular": "تقلي",
+    "3_singular": "يقلي",
+    "1_plural": "نقلي",
+    "2_plural": "تقلون",
+    "3_plural": "يقلون"
+  },
+  "STIR": {
+    "base": "يحرك",
+    "1_singular": "أحرك",
+    "2_singular": "تحرك",
+    "3_singular": "يحرك",
+    "1_plural": "نحرك",
+    "2_plural": "تحركون",
+    "3_plural": "يحركون"
+  },
+  "MIX": {
+    "base": "يخلط",
+    "1_singular": "أخلط",
+    "2_singular": "تخلط",
+    "3_singular": "يخلط",
+    "1_plural": "نخلط",
+    "2_plural": "تخلطون",
+    "3_plural": "يخلطون"
+  },
+  "WASH": {
+    "base": "يغسل",
+    "1_singular": "أغسل",
+    "2_singular": "تغسل",
+    "3_singular": "يغسل",
+    "1_plural": "نغسل",
+    "2_plural": "تغسلون",
+    "3_plural": "يغسلون"
+  },
+  "HEAT": {
+    "base": "يسخن",
+    "1_singular": "أسخن",
+    "2_singular": "تسخن",
+    "3_singular": "يسخن",
+    "1_plural": "نسخن",
+    "2_plural": "تسخنون",
+    "3_plural": "يسخنون"
+  },
+  "COMMUTE": {
+    "base": "يتنقل",
+    "1_singular": "أتنقل",
+    "2_singular": "تتنقل",
+    "3_singular": "يتنقل",
+    "1_plural": "نتنقل",
+    "2_plural": "تتنقلون",
+    "3_plural": "يتنقلون"
+  },
+  "OVERSLEEP": {
+    "base": "يتأخر في النوم",
+    "1_singular": "أتأخر في النوم",
+    "2_singular": "تتأخر في النوم",
+    "3_singular": "يتأخر في النوم",
+    "1_plural": "نتأخر في النوم",
+    "2_plural": "تتأخرون في النوم",
+    "3_plural": "يتأخرون في النوم"
+  },
+  "DELIVER": {
+    "base": "يوصل",
+    "1_singular": "أوصل",
+    "2_singular": "توصل",
+    "3_singular": "يوصل",
+    "1_plural": "نوصل",
+    "2_plural": "توصلون",
+    "3_plural": "يوصلون"
+  },
+  "ORGANIZE": {
+    "base": "ينظم",
+    "1_singular": "أنظم",
+    "2_singular": "تنظم",
+    "3_singular": "ينظم",
+    "1_plural": "ننظم",
+    "2_plural": "تنظمون",
+    "3_plural": "ينظمون"
+  },
+  "SCHEDULE": {
+    "base": "يجدول",
+    "1_singular": "أجدول",
+    "2_singular": "تجدول",
+    "3_singular": "يجدول",
+    "1_plural": "نجدول",
+    "2_plural": "تجدولون",
+    "3_plural": "يجدولون"
+  },
+  "DRIZZLE": {
+    "base": "يرذذ",
+    "1_singular": "أرذذ",
+    "2_singular": "ترذذ",
+    "3_singular": "يرذذ",
+    "1_plural": "نرذذ",
+    "2_plural": "ترذذون",
+    "3_plural": "يرذذون"
+  },
+  "APOLOGIZE": {
+    "base": "يعتذر",
+    "1_singular": "أعتذر",
+    "2_singular": "تعتذر",
+    "3_singular": "يعتذر",
+    "1_plural": "نعتذر",
+    "2_plural": "تعتذرون",
+    "3_plural": "يعتذرون"
+  },
+  "AFFORD": {
+    "base": "يستطيع الدفع",
+    "1_singular": "أستطيع الدفع",
+    "2_singular": "تستطيع الدفع",
+    "3_singular": "يستطيع الدفع",
+    "1_plural": "نستطيع الدفع",
+    "2_plural": "تستطيعون الدفع",
+    "3_plural": "يستطيعون الدفع"
+  },
+  "EXERCISE": {
+    "base": "يتمرن",
+    "1_singular": "أتمرن",
+    "2_singular": "تتمرن",
+    "3_singular": "يتمرن",
+    "1_plural": "نتمرن",
+    "2_plural": "تتمرنون",
+    "3_plural": "يتمرنون"
+  },
+  "REPAIR": {
+    "base": "يصلح",
+    "1_singular": "أصلح",
+    "2_singular": "تصلح",
+    "3_singular": "يصلح",
+    "1_plural": "نصلح",
+    "2_plural": "تصلحون",
+    "3_plural": "يصلحون"
+  },
+  "RELAX": {
+    "base": "يسترخي",
+    "1_singular": "أسترخي",
+    "2_singular": "تسترخي",
+    "3_singular": "يسترخي",
+    "1_plural": "نسترخي",
+    "2_plural": "تسترخون",
+    "3_plural": "يسترخون"
+  },
+  "UNWIND": {
+    "base": "يرتاح",
+    "1_singular": "أرتاح",
+    "2_singular": "ترتاح",
+    "3_singular": "يرتاح",
+    "1_plural": "نرتاح",
+    "2_plural": "ترتاحون",
+    "3_plural": "يرتاحون"
+  },
+  "EMBROIDER": {
+    "base": "يطرز",
+    "1_singular": "أطرز",
+    "2_singular": "تطرز",
+    "3_singular": "يطرز",
+    "1_plural": "نطرز",
+    "2_plural": "تطرزون",
+    "3_plural": "يطرزون"
+  },
+  "DRAPE": {
+    "base": "يسدل",
+    "1_singular": "أسدل",
+    "2_singular": "تسدل",
+    "3_singular": "يسدل",
+    "1_plural": "نسدل",
+    "2_plural": "تسدلون",
+    "3_plural": "يسدلون"
+  },
+  "DESIGN": {
+    "base": "يصمم",
+    "1_singular": "أصمم",
+    "2_singular": "تصمم",
+    "3_singular": "يصمم",
+    "1_plural": "نصمم",
+    "2_plural": "تصممون",
+    "3_plural": "يصممون"
+  },
+  "STRUT": {
+    "base": "يتبختر",
+    "1_singular": "أتبختر",
+    "2_singular": "تتبختر",
+    "3_singular": "يتبختر",
+    "1_plural": "نتبختر",
+    "2_plural": "تتبخترون",
+    "3_plural": "يتبخترون"
+  },
+  "BROWSE": {
+    "base": "يتصفح",
+    "1_singular": "أتصفح",
+    "2_singular": "تتصفح",
+    "3_singular": "يتصفح",
+    "1_plural": "نتصفح",
+    "2_plural": "تتصفحون",
+    "3_plural": "يتصفحون"
+  },
+  "ADORN": {
+    "base": "يزين",
+    "1_singular": "أزين",
+    "2_singular": "تزين",
+    "3_singular": "يزين",
+    "1_plural": "نزين",
+    "2_plural": "تزينون",
+    "3_plural": "يزينون"
+  },
+  "CONTOUR": {
+    "base": "يرسم ملامح الوجه",
+    "1_singular": "أرسم ملامح الوجه",
+    "2_singular": "ترسم ملامح الوجه",
+    "3_singular": "يرسم ملامح الوجه",
+    "1_plural": "نرسم ملامح الوجه",
+    "2_plural": "ترسمون ملامح الوجه",
+    "3_plural": "يرسمون ملامح الوجه"
+  },
+  "COORDINATE": {
+    "base": "يمزج الملابس",
+    "1_singular": "أمزج الملابس",
+    "2_singular": "تمزج الملابس",
+    "3_singular": "يمزج الملابس",
+    "1_plural": "نمزج الملابس",
+    "2_plural": "تمزجون الملابس",
+    "3_plural": "يمزجون الملابس"
+  },
+  "UNVEIL": {
+    "base": "يكشف النقاب",
+    "1_singular": "أكشف النقاب",
+    "2_singular": "تكشف النقاب",
+    "3_singular": "يكشف النقاب",
+    "1_plural": "نكشف النقاب",
+    "2_plural": "تكشفون النقاب",
+    "3_plural": "يكشفون النقاب"
+  },
+  "SHOWCASE": {
+    "base": "يعرض",
+    "1_singular": "أعرض",
+    "2_singular": "تعرض",
+    "3_singular": "يعرض",
+    "1_plural": "نعرض",
+    "2_plural": "تعرضون",
+    "3_plural": "يعرضون"
+  },
+  "RESPAWN": {
+    "base": "يعاد إحياؤه",
+    "1_singular": "أعاد إحيائي",
+    "2_singular": "تعاد إحياؤك",
+    "3_singular": "يعاد إحياؤه",
+    "1_plural": "نعاد إحياؤنا",
+    "2_plural": "تعادون إحياؤكم",
+    "3_plural": "يعادون إحياؤهم"
+  },
+  "LOOT": {
+    "base": "ينهب",
+    "1_singular": "أنهب",
+    "2_singular": "تنهب",
+    "3_singular": "ينهب",
+    "1_plural": "ننهب",
+    "2_plural": "تنهبون",
+    "3_plural": "ينهبون"
+  },
+  "CRAFT": {
+    "base": "يصنع",
+    "1_singular": "أصنع",
+    "2_singular": "تصنع",
+    "3_singular": "يصنع",
+    "1_plural": "نصنع",
+    "2_plural": "تصنعون",
+    "3_plural": "يصنعون"
+  },
+  "EQUIP": {
+    "base": "يجهز",
+    "1_singular": "أجهز",
+    "2_singular": "تجهز",
+    "3_singular": "يجهز",
+    "1_plural": "نجهز",
+    "2_plural": "تجهزون",
+    "3_plural": "يجهزون"
+  },
+  "GRIND": {
+    "base": "يطحن في اللعبة",
+    "1_singular": "أطحن في اللعبة",
+    "2_singular": "تطحن في اللعبة",
+    "3_singular": "يطحن في اللعبة",
+    "1_plural": "نطحن في اللعبة",
+    "2_plural": "تطحنون في اللعبة",
+    "3_plural": "يطحنون في اللعبة"
+  },
+  "SLAY": {
+    "base": "يقتل",
+    "1_singular": "أقتل",
+    "2_singular": "تقتل",
+    "3_singular": "يقتل",
+    "1_plural": "نقتل",
+    "2_plural": "تقتلون",
+    "3_plural": "يقتلون"
+  },
+  "UNLOCK": {
+    "base": "يفتح",
+    "1_singular": "أفتح",
+    "2_singular": "تفتح",
+    "3_singular": "يفتح",
+    "1_plural": "نفتح",
+    "2_plural": "تفتحون",
+    "3_plural": "يفتحون"
+  },
+  "ROAM": {
+    "base": "يتجول",
+    "1_singular": "أتجول",
+    "2_singular": "تتجول",
+    "3_singular": "يتجول",
+    "1_plural": "نتجول",
+    "2_plural": "تتجولون",
+    "3_plural": "يتجولون"
+  },
+  "STREAM": {
+    "base": "يبث",
+    "1_singular": "أبث",
+    "2_singular": "تبث",
+    "3_singular": "يبث",
+    "1_plural": "نبث",
+    "2_plural": "تبثون",
+    "3_plural": "يبثون"
+  },
+  "COLLECT": {
+    "base": "يجمع",
+    "1_singular": "أجمع",
+    "2_singular": "تجمع",
+    "3_singular": "يجمع",
+    "1_plural": "نجمع",
+    "2_plural": "تجمعون",
+    "3_plural": "يجمعون"
+  },
+  "AMBUSH": {
+    "base": "يكمن",
+    "1_singular": "أكمن",
+    "2_singular": "تكمن",
+    "3_singular": "يكمن",
+    "1_plural": "نكمن",
+    "2_plural": "تكمنون",
+    "3_plural": "يكمنون"
+  },
+  "CLUTCH": {
+    "base": "يفوز في اللحظة الأخيرة",
+    "1_singular": "أفوز في اللحظة الأخيرة",
+    "2_singular": "تفوز في اللحظة الأخيرة",
+    "3_singular": "يفوز في اللحظة الأخيرة",
+    "1_plural": "نفوز في اللحظة الأخيرة",
+    "2_plural": "تفوزون في اللحظة الأخيرة",
+    "3_plural": "يفوزون في اللحظة الأخيرة"
+  },
+  "LAUNCH": {
+    "base": "يطلق",
+    "1_singular": "أطلق",
+    "2_singular": "تطلق",
+    "3_singular": "يطلق",
+    "1_plural": "نطلق",
+    "2_plural": "تطلقون",
+    "3_plural": "يطلقون"
+  },
+  "DISCOVER": {
+    "base": "يكتشف",
+    "1_singular": "أكتشف",
+    "2_singular": "تكتشف",
+    "3_singular": "يكتشف",
+    "1_plural": "نكتشف",
+    "2_plural": "تكتشفون",
+    "3_plural": "يكتشفون"
+  },
+  "ENCOUNTER": {
+    "base": "يواجه",
+    "1_singular": "أواجه",
+    "2_singular": "تواجه",
+    "3_singular": "يواجه",
+    "1_plural": "نواجه",
+    "2_plural": "تواجهون",
+    "3_plural": "يواجهون"
+  },
+  "ACTIVATE": {
+    "base": "يُفعّل",
+    "1_singular": "أُفعّل",
+    "2_singular": "تُفعّل",
+    "3_singular": "يُفعّل",
+    "1_plural": "نُفعّل",
+    "2_plural": "تُفعّلون",
+    "3_plural": "يُفعّلون"
+  },
+  "NAVIGATE": {
+    "base": "يتنقل",
+    "1_singular": "أتنقل",
+    "2_singular": "تتنقل",
+    "3_singular": "يتنقل",
+    "1_plural": "نتنقل",
+    "2_plural": "تتنقلون",
+    "3_plural": "يتنقلون"
+  },
+  "TERRAFORM": {
+    "base": "يحول البيئة",
+    "1_singular": "أحول البيئة",
+    "2_singular": "تحول البيئة",
+    "3_singular": "يحول البيئة",
+    "1_plural": "نحول البيئة",
+    "2_plural": "تحولون البيئة",
+    "3_plural": "يحولون البيئة"
+  },
+  "COLONIZE": {
+    "base": "يستوطن",
+    "1_singular": "أستوطن",
+    "2_singular": "تستوطن",
+    "3_singular": "يستوطن",
+    "1_plural": "نستوطن",
+    "2_plural": "تستوطنون",
+    "3_plural": "يستوطنون"
+  },
+  "ORBIT": {
+    "base": "يدور في مدار",
+    "1_singular": "أدور في مدار",
+    "2_singular": "تدور في مدار",
+    "3_singular": "يدور في مدار",
+    "1_plural": "ندور في مدار",
+    "2_plural": "تدورون في مدار",
+    "3_plural": "يدورون في مدار"
+  },
+  "TRANSMIT": {
+    "base": "يرسل",
+    "1_singular": "أرسل",
+    "2_singular": "ترسل",
+    "3_singular": "يرسل",
+    "1_plural": "نرسل",
+    "2_plural": "ترسلون",
+    "3_plural": "يرسلون"
+  },
+  "WARP": {
+    "base": "يشوه",
+    "1_singular": "أشوه",
+    "2_singular": "تشوه",
+    "3_singular": "يشوه",
+    "1_plural": "نشوه",
+    "2_plural": "تشوهون",
+    "3_plural": "يشوهون"
+  },
+  "EVOLVE": {
+    "base": "يتطور",
+    "1_singular": "أتطور",
+    "2_singular": "تتطور",
+    "3_singular": "يتطور",
+    "1_plural": "نتطور",
+    "2_plural": "تتطورون",
+    "3_plural": "يتطورون"
+  },
+  "BOARD": {
+    "base": "يصعد",
+    "1_singular": "أصعد",
+    "2_singular": "تصعد",
+    "3_singular": "يصعد",
+    "1_plural": "نصعد",
+    "2_plural": "تصعدون",
+    "3_plural": "يصعدون"
+  },
+  "RESERVE": {
+    "base": "يحجز",
+    "1_singular": "أحجز",
+    "2_singular": "تحجز",
+    "3_singular": "يحجز",
+    "1_plural": "نحجز",
+    "2_plural": "تحجزون",
+    "3_plural": "يحجزون"
+  },
+  "PHOTOGRAPH": {
+    "base": "يصور",
+    "1_singular": "أصور",
+    "2_singular": "تصور",
+    "3_singular": "يصور",
+    "1_plural": "نصور",
+    "2_plural": "تصورون",
+    "3_plural": "يصورون"
+  },
+  "ORDER": {
+    "base": "يطلب",
+    "1_singular": "أطلب",
+    "2_singular": "تطلب",
+    "3_singular": "يطلب",
+    "1_plural": "نطلب",
+    "2_plural": "تطلبون",
+    "3_plural": "يطلبون"
+  },
+  "PURCHASE": {
+    "base": "يشتري",
+    "1_singular": "أشتري",
+    "2_singular": "تشتري",
+    "3_singular": "يشتري",
+    "1_plural": "نشتري",
+    "2_plural": "تشترون",
+    "3_plural": "يشترون"
+  },
+  "TRANSLATE": {
+    "base": "يترجم",
+    "1_singular": "أترجم",
+    "2_singular": "تترجم",
+    "3_singular": "يترجم",
+    "1_plural": "نترجم",
+    "2_plural": "تترجمون",
+    "3_plural": "يترجمون"
+  },
+  "GREET": {
+    "base": "يحيي",
+    "1_singular": "أحيي",
+    "2_singular": "تحيي",
+    "3_singular": "يحيي",
+    "1_plural": "نحيي",
+    "2_plural": "تحيون",
+    "3_plural": "يحيون"
+  },
+  "PRONOUNCE": {
+    "base": "ينطق",
+    "1_singular": "أنطق",
+    "2_singular": "تنطق",
+    "3_singular": "ينطق",
+    "1_plural": "ننطق",
+    "2_plural": "تنطقون",
+    "3_plural": "ينطقون"
+  },
+  "EXPLORE": {
+    "base": "يستكشف",
+    "1_singular": "أستكشف",
+    "2_singular": "تستكشف",
+    "3_singular": "يستكشف",
+    "1_plural": "نستكشف",
+    "2_plural": "تستكشفون",
+    "3_plural": "يستكشفون"
+  },
+  "EXCHANGE": {
+    "base": "يصرف",
+    "1_singular": "أصرف",
+    "2_singular": "تصرف",
+    "3_singular": "يصرف",
+    "1_plural": "نصرف",
+    "2_plural": "تصرفون",
+    "3_plural": "يصرفون"
+  },
+  "INSURE": {
+    "base": "يؤمن",
+    "1_singular": "أؤمن",
+    "2_singular": "تؤمن",
+    "3_singular": "يؤمن",
+    "1_plural": "نؤمن",
+    "2_plural": "تؤمنون",
+    "3_plural": "يؤمنون"
+  },
+  "RECOMMEND": {
+    "base": "يوصي",
+    "1_singular": "أوصي",
+    "2_singular": "توصي",
+    "3_singular": "يوصي",
+    "1_plural": "نوصي",
+    "2_plural": "توصون",
+    "3_plural": "يوصون"
+  }
+}

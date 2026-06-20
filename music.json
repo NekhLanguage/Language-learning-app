@@ -630,7 +630,7 @@
         "REHEARSE":   { "base": "prova yapmak",    "1_singular": "prova yapıyorum",   "2_singular": "prova yapıyorsun",   "3_singular": "prova yapıyor",   "1_plural": "prova yapıyoruz",   "2_plural": "prova yapıyorsunuz","3_plural": "prova yapıyorlar" },
         "TUNE":       { "base": "akort etmek",     "1_singular": "akort ediyorum",    "2_singular": "akort ediyorsun",    "3_singular": "akort ediyor",    "1_plural": "akort ediyoruz",    "2_plural": "akort ediyorsunuz", "3_plural": "akort ediyorlar" },
         "IMPROVISE":  { "base": "doğaçlama yapmak","1_singular": "doğaçlama yapıyorum","2_singular": "doğaçlama yapıyorsun","3_singular": "doğaçlama yapıyor","1_plural": "doğaçlama yapıyoruz","2_plural": "doğaçlama yapıyorsunuz","3_plural": "doğaçlama yapıyorlar" },
-        "AMPLIFY":    { "base": "yükseltmek",      "1_singular": "yükseltiyorum",     "2_singular": "yükseltiyorsun",     "3_singular": "yükselt",         "1_plural": "yükseltiyoruz",     "2_plural": "yükseltiyorsunuz",  "3_plural": "yükseltiyorlar" },
+        "AMPLIFY":    { "base": "yükseltmek", "1_singular": "yükseltiyorum", "2_singular": "yükseltiyorsun", "3_singular": "yükseltiyor", "1_plural": "yükseltiyoruz", "2_plural": "yükseltiyorsunuz", "3_plural": "yükseltiyorlar" },
         "DROP":       { "base": "çıkarmak",        "1_singular": "çıkarıyorum",       "2_singular": "çıkarıyorsun",       "3_singular": "çıkarıyor",       "1_plural": "çıkarıyoruz",       "2_plural": "çıkarıyorsunuz",    "3_plural": "çıkarıyorlar" },
 
         "LOUD":       ["gürültülü"],
@@ -662,11 +662,11 @@
         "CHORD": { "form": "акорд", "plural": "акорди" },
         "HARMONY": { "form": "гармонія", "plural": "гармонії" },
 
-        "SING":       { "base": "співати" },
-        "STRUM":      { "base": "грати" },
-        "COMPOSE":    { "base": "компонувати" },
-        "PERFORM":    { "base": "виступати" },
-        "RECORD":     { "base": "записувати" },
+        "SING":       { "base": "співати", "1_singular": "співаю", "2_singular": "співаєш", "3_singular": "співає", "1_plural": "співаємо", "2_plural": "співаєте", "3_plural": "співають" },
+        "STRUM":      { "base": "грати", "1_singular": "граю", "2_singular": "граєш", "3_singular": "грає", "1_plural": "граємо", "2_plural": "граєте", "3_plural": "грають" },
+        "COMPOSE":    { "base": "компонувати", "1_singular": "компоную", "2_singular": "компонуєш", "3_singular": "компонує", "1_plural": "компонуємо", "2_plural": "компонуєте", "3_plural": "компонують" },
+        "PERFORM":    { "base": "виступати", "1_singular": "виступаю", "2_singular": "виступаєш", "3_singular": "виступає", "1_plural": "виступаємо", "2_plural": "виступаєте", "3_plural": "виступають" },
+        "RECORD":     { "base": "записувати", "1_singular": "записую", "2_singular": "записуєш", "3_singular": "записує", "1_plural": "записуємо", "2_plural": "записуєте", "3_plural": "записують" },
 
         "CONCERT": { "form": "концерт", "plural": "концерти" },
         "STAGE": { "form": "сцена", "plural": "сцени" },
@@ -692,11 +692,11 @@
         "REMIX": { "form": "ремікс", "plural": "ремікси" },
         "SAMPLE":     { "form": "семпл" },
 
-        "REHEARSE":   { "base": "репетирувати" },
-        "TUNE":       { "base": "налаштовувати" },
-        "IMPROVISE":  { "base": "імпровізувати" },
-        "AMPLIFY":    { "base": "підсилювати" },
-        "DROP":       { "base": "випускати" },
+        "REHEARSE":   { "base": "репетирувати", "1_singular": "репетирую", "2_singular": "репетируєш", "3_singular": "репетирує", "1_plural": "репетируємо", "2_plural": "репетируєте", "3_plural": "репетирують" },
+        "TUNE":       { "base": "налаштовувати", "1_singular": "налаштовую", "2_singular": "налаштовуєш", "3_singular": "налаштовує", "1_plural": "налаштовуємо", "2_plural": "налаштовуєте", "3_plural": "налаштовують" },
+        "IMPROVISE":  { "base": "імпровізувати", "1_singular": "імпровізую", "2_singular": "імпровізуєш", "3_singular": "імпровізує", "1_plural": "імпровізуємо", "2_plural": "імпровізуєте", "3_plural": "імпровізують" },
+        "AMPLIFY":    { "base": "підсилювати", "1_singular": "підсилюю", "2_singular": "підсилюєш", "3_singular": "підсилює", "1_plural": "підсилюємо", "2_plural": "підсилюєте", "3_plural": "підсилюють" },
+        "DROP":       { "base": "випускати", "1_singular": "випускаю", "2_singular": "випускаєш", "3_singular": "випускає", "1_plural": "випускаємо", "2_plural": "випускаєте", "3_plural": "випускають" },
 
         "LOUD":       ["гучний"],
         "SOULFUL":    ["душевний"],

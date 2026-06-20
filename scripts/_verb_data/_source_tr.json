@@ -1,0 +1,402 @@
+{
+  "COMMUTE": {
+    "base": "işe gidip gelmek",
+    "english": "commute",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "OVERSLEEP": {
+    "base": "uyumak",
+    "english": "oversleep",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "DELIVER": {
+    "base": "teslim etmek",
+    "english": "deliver",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "ORGANIZE": {
+    "base": "düzenlemek",
+    "english": "organize",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "SCHEDULE": {
+    "base": "planlamak",
+    "english": "schedule",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "DRIZZLE": {
+    "base": "çiselelemek",
+    "english": "drizzle",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "APOLOGIZE": {
+    "base": "özür dilemek",
+    "english": "apologize",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "AFFORD": {
+    "base": "karşılamak",
+    "english": "afford",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "EXERCISE": {
+    "base": "egzersiz yapmak",
+    "english": "exercise",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "REPAIR": {
+    "base": "tamir etmek",
+    "english": "repair",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "RELAX": {
+    "base": "rahatlamak",
+    "english": "relax",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "UNWIND": {
+    "base": "gevşemek",
+    "english": "unwind",
+    "packs": [
+      "everyday_life"
+    ]
+  },
+  "EMBROIDER": {
+    "base": "nakış işlemek",
+    "english": "embroider",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "DRAPE": {
+    "base": "dökmek",
+    "english": "drape",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "DESIGN": {
+    "base": "tasarlamak",
+    "english": "design",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "STRUT": {
+    "base": "çalım satmak",
+    "english": "strut",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "BROWSE": {
+    "base": "göz atmak",
+    "english": "browse",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "ADORN": {
+    "base": "süslemek",
+    "english": "adorn",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "CONTOUR": {
+    "base": "kontur çizmek",
+    "english": "contour",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "COORDINATE": {
+    "base": "kombin yapmak",
+    "english": "coordinate",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "UNVEIL": {
+    "base": "tanıtmak",
+    "english": "unveil",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "SHOWCASE": {
+    "base": "sergilemek",
+    "english": "showcase",
+    "packs": [
+      "fashion_style"
+    ]
+  },
+  "RESPAWN": {
+    "base": "yeniden doğmak",
+    "english": "respawn",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "LOOT": {
+    "base": "yağmalamak",
+    "english": "loot",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "CRAFT": {
+    "base": "üretmek",
+    "english": "craft",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "EQUIP": {
+    "base": "donatmak",
+    "english": "equip",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "GRIND": {
+    "base": "kasılmak",
+    "english": "grind",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "SLAY": {
+    "base": "öldürmek",
+    "english": "slay",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "UNLOCK": {
+    "base": "açmak",
+    "english": "unlock",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "ROAM": {
+    "base": "dolaşmak",
+    "english": "roam",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "STREAM": {
+    "base": "yayın yapmak",
+    "english": "stream",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "COLLECT": {
+    "base": "toplamak",
+    "english": "collect",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "AMBUSH": {
+    "base": "pusuya düşürmek",
+    "english": "ambush",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "CLUTCH": {
+    "base": "son anda kazanmak",
+    "english": "clutch",
+    "packs": [
+      "gaming"
+    ]
+  },
+  "LAUNCH": {
+    "base": "fırlatmak",
+    "english": "launch",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "DISCOVER": {
+    "base": "keşfetmek",
+    "english": "discover",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ENCOUNTER": {
+    "base": "karşılaşmak",
+    "english": "encounter",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ACTIVATE": {
+    "base": "etkinleştirmek",
+    "english": "activate",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "NAVIGATE": {
+    "base": "seyrüsefer etmek",
+    "english": "navigate",
+    "packs": [
+      "space_scifi",
+      "tourism"
+    ]
+  },
+  "TERRAFORM": {
+    "base": "terraforming yapmak",
+    "english": "terraform",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "COLONIZE": {
+    "base": "sömürgeleştirmek",
+    "english": "colonize",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "ORBIT": {
+    "base": "yörüngede dönmek",
+    "english": "orbit",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "TRANSMIT": {
+    "base": "iletmek",
+    "english": "transmit",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "WARP": {
+    "base": "warp yapmak",
+    "english": "warp",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "EVOLVE": {
+    "base": "evrimleşmek",
+    "english": "evolve",
+    "packs": [
+      "space_scifi"
+    ]
+  },
+  "BOARD": {
+    "base": "binmek",
+    "english": "board",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "RESERVE": {
+    "base": "rezerve etmek",
+    "english": "reserve",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PHOTOGRAPH": {
+    "base": "fotoğraflamak",
+    "english": "photograph",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "ORDER": {
+    "base": "sipariş etmek",
+    "english": "order",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PURCHASE": {
+    "base": "satın almak",
+    "english": "purchase",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "TRANSLATE": {
+    "base": "çevirmek",
+    "english": "translate",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "GREET": {
+    "base": "selamlamak",
+    "english": "greet",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "PRONOUNCE": {
+    "base": "telaffuz etmek",
+    "english": "pronounce",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "EXPLORE": {
+    "base": "keşfetmek",
+    "english": "explore",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "EXCHANGE": {
+    "base": "değiştirmek",
+    "english": "exchange",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "INSURE": {
+    "base": "sigortalamak",
+    "english": "insure",
+    "packs": [
+      "tourism"
+    ]
+  },
+  "RECOMMEND": {
+    "base": "tavsiye etmek",
+    "english": "recommend",
+    "packs": [
+      "tourism"
+    ]
+  }
+}

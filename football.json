@@ -662,17 +662,17 @@
         "REFEREE": { "form": "суддя", "plural": "судді" },
         "COACH": { "form": "тренер", "plural": "тренери" },
 
-        "KICK":       { "base": "бити" },
-        "PASS":       { "base": "пасувати" },
-        "SHOOT":      { "base": "бити по воротах" },
-        "DRIBBLE":    { "base": "дриблювати" },
-        "SCORE":      { "base": "забивати гол" },
+        "KICK":       { "base": "бити", "1_singular": "б'ю", "2_singular": "б'єш", "3_singular": "б'є", "1_plural": "б'ємо", "2_plural": "б'єте", "3_plural": "б'ють" },
+        "PASS":       { "base": "пасувати", "1_singular": "пасую", "2_singular": "пасуєш", "3_singular": "пасує", "1_plural": "пасуємо", "2_plural": "пасуєте", "3_plural": "пасують" },
+        "SHOOT":      { "base": "бити по воротах", "1_singular": "б'ю по воротах", "2_singular": "б'єш по воротах", "3_singular": "б'є по воротах", "1_plural": "б'ємо по воротах", "2_plural": "б'єте по воротах", "3_plural": "б'ють по воротах" },
+        "DRIBBLE":    { "base": "дриблювати", "1_singular": "дриблюю", "2_singular": "дриблюєш", "3_singular": "дриблює", "1_plural": "дриблюємо", "2_plural": "дриблюєте", "3_plural": "дриблюють" },
+        "SCORE":      { "base": "забивати гол", "1_singular": "забиваю гол", "2_singular": "забиваєш гол", "3_singular": "забиває гол", "1_plural": "забиваємо гол", "2_plural": "забиваєте гол", "3_plural": "забивають гол" },
 
         "HEADER":     { "form": "удар головою" },
-        "TACKLE":     { "base": "відбирати м'яч" },
-        "CROSS":      { "base": "навішувати" },
+        "TACKLE":     { "base": "відбирати м'яч", "1_singular": "відбираю м'яч", "2_singular": "відбираєш м'яч", "3_singular": "відбирає м'яч", "1_plural": "відбираємо м'яч", "2_plural": "відбираєте м'яч", "3_plural": "відбирають м'яч" },
+        "CROSS":      { "base": "навішувати", "1_singular": "навішую", "2_singular": "навішуєш", "3_singular": "навішує", "1_plural": "навішуємо", "2_plural": "навішуєте", "3_plural": "навішують" },
         "VOLLEY":     { "form": "вол" },
-        "SPRINT":     { "base": "спринтувати" },
+        "SPRINT":     { "base": "спринтувати", "1_singular": "спринтую", "2_singular": "спринтуєш", "3_singular": "спринтує", "1_plural": "спринтуємо", "2_plural": "спринтуєте", "3_plural": "спринтують" },
 
         "FOUL":       { "form": "фол" },
         "PENALTY":    { "form": "пенальті" },
@@ -698,15 +698,15 @@
         "DECISIVE":   ["рішучий"],
         "CLINICAL":   ["точний"],
 
-        "INTERCEPT":  { "base": "перехоплювати" },
-        "DEFEND":     { "base": "захищати" },
-        "BLOCK":      { "base": "блокувати" },
-        "COUNTER":    { "base": "контратакувати" },
-        "DOMINATE":   { "base": "домінувати" },
+        "INTERCEPT":  { "base": "перехоплювати", "1_singular": "перехоплюю", "2_singular": "перехоплюєш", "3_singular": "перехоплює", "1_plural": "перехоплюємо", "2_plural": "перехоплюєте", "3_plural": "перехоплюють" },
+        "DEFEND":     { "base": "захищати", "1_singular": "захищаю", "2_singular": "захищаєш", "3_singular": "захищає", "1_plural": "захищаємо", "2_plural": "захищаєте", "3_plural": "захищають" },
+        "BLOCK":      { "base": "блокувати", "1_singular": "блокую", "2_singular": "блокуєш", "3_singular": "блокує", "1_plural": "блокуємо", "2_plural": "блокуєте", "3_plural": "блокують" },
+        "COUNTER":    { "base": "контратакувати", "1_singular": "контратакую", "2_singular": "контратакуєш", "3_singular": "контратакує", "1_plural": "контратакуємо", "2_plural": "контратакуєте", "3_plural": "контратакують" },
+        "DOMINATE":   { "base": "домінувати", "1_singular": "доміную", "2_singular": "домінуєш", "3_singular": "домінує", "1_plural": "домінуємо", "2_plural": "домінуєте", "3_plural": "домінують" },
 
         "CHAMPION": { "form": "чемпіон", "plural": "чемпіони" },
         "CROWD":      { "form": "натовп" },
-        "CELEBRATE":  { "base": "святкувати" },
+        "CELEBRATE":  { "base": "святкувати", "1_singular": "святкую", "2_singular": "святкуєш", "3_singular": "святкує", "1_plural": "святкуємо", "2_plural": "святкуєте", "3_plural": "святкують" },
         "FINAL": { "form": "фінал", "plural": "фінали" },
         "UNBEATABLE": ["непереможний"]
       }
