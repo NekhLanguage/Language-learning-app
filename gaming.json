@@ -11,7 +11,7 @@
     { "concept_id": "COMPANION", "type": "noun" },
     { "concept_id": "COMBO", "type": "noun" },
     { "concept_id": "HARM", "type": "noun" },
-    { "concept_id": "VITALITY", "type": "noun" },
+    { "concept_id": "VITALITY", "type": "noun", "countable": false },
     { "concept_id": "MISSION", "type": "noun" },
     { "concept_id": "ACHIEVEMENT", "type": "noun" },
     { "concept_id": "UPGRADE", "type": "noun" },

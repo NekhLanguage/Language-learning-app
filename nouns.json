@@ -10,7 +10,8 @@
         "match": true,
         "sentence_use": true,
         "writing": true
-      }
+      },
+      "countable": false
     },
     {
       "concept_id": "FOOD",
@@ -22,7 +23,8 @@
         "match": true,
         "sentence_use": true,
         "writing": true
-      }
+      },
+      "countable": false
     },
     {
       "concept_id": "HOUSE",

@@ -31,7 +31,7 @@
     { "concept_id": "DUET",         "type": "noun" },
 
     { "concept_id": "ROCK",         "type": "noun" },
-    { "concept_id": "JAZZ",         "type": "noun" },
+    { "concept_id": "JAZZ",         "type": "noun", "countable": false },
     { "concept_id": "CLASSICAL",    "type": "adjective" },
     { "concept_id": "ACOUSTIC",     "type": "adjective" },
     { "concept_id": "ELECTRONIC",   "type": "adjective" },

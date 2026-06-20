@@ -2327,6 +2327,12 @@ function nounPhrase(lang, cid, opts = {}) {
     return pluralFormOf(lang, cid);
   }
 
+  // Mass / uncountable nouns never take an indefinite article ("learns magic",
+  // "isst Fleisch"), even though they still carry gender for adjective
+  // agreement. An explicit countable:false overrides the gender-based trigger
+  // below.
+  if (meta && meta.countable === false) return base;
+
   // Apply article logic when the concept is marked countable OR when the
   // form itself carries article/gender data (covers resource-pack nouns that
   // define articles without a countable flag on the concept).
@@ -2360,6 +2366,16 @@ function nounPhrase(lang, cid, opts = {}) {
     if (entry.gender === "m") return "ένας " + base;
     if (entry.gender === "f") return "μία " + base;
     return "ένα " + base; // neuter
+  }
+
+  if (lang === "es") {
+    if (!entry.gender) return base;
+    return (entry.gender === "f" ? "una " : "un ") + base;
+  }
+
+  if (lang === "fr") {
+    if (!entry.gender) return base;
+    return (entry.gender === "f" ? "une " : "un ") + base;
   }
 
   return base;
@@ -2735,6 +2751,21 @@ function isCopulaConcept(cid) {
     window.GLOBAL_VOCAB.concepts?.[cid]?.semantic_role === "copula";
 }
 
+function isAdjectiveConcept(cid) {
+  return window.GLOBAL_VOCAB.concepts?.[cid]?.type === "adjective";
+}
+
+// Chinese predicate adjectives take the degree adverb 很 instead of the copula
+// 是 ("他很强", not "他是强"). 是 is still correct before a predicate noun
+// ("他是学生"). Returns the surface to use in place of the copula for zh when
+// the complement is a bare adjective, or null to fall through to copulaForm.
+function zhCopulaOverride(lang, beCid, complementCid) {
+  if (lang === "zh" && isCopulaConcept(beCid) && isAdjectiveConcept(complementCid)) {
+    return "很";
+  }
+  return null;
+}
+
 // Copula surface for a given language. Returns "" for languages that drop the
 // present copula, so callers can omit the token; otherwise conjugates normally.
 function copulaForm(lang, beCid, subjectCid) {
@@ -2803,7 +2834,7 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = formOf(lang, subjectCid);
-  const be = copulaForm(lang, beCid, subjectCid);
+  const be = zhCopulaOverride(lang, beCid, nounCid) || copulaForm(lang, beCid, subjectCid);
   const noun = nounPhrase(lang, nounCid, { plural: isPluralPronoun(subjectCid) });
   return [subject, be, noun].filter(Boolean).join(" ");
 }
@@ -2811,7 +2842,11 @@ function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
 function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
   const verb = getVerbForm(verbCid, subjectCid, lang);
-  const object = formOf(lang, objectCid);
+  // Use nounPhrase (not bare formOf) so a direct object gets its indefinite
+  // article where the language uses one ("casts a spell", "isst ein Brot");
+  // mass/uncountable nouns ("learns magic") and article-less languages are
+  // returned unchanged.
+  const object = nounPhrase(lang, objectCid);
   // The "with his X" companion is optional: plain SVO templates omit these slots.
   // Only build it when a companion noun is present, so undefined slots don't leak
   // into the sentence as the literal word "undefined".
@@ -2953,9 +2988,11 @@ if (tpl.structure?.type === "complex_clause") {
         return formOf(lang, cid);
       }
       // Copula in a present-tense statement: dropped entirely in
-      // copula-less languages (uk/ar), conjugated everywhere else.
+      // copula-less languages (uk/ar), replaced by 很 before a Chinese
+      // predicate adjective, conjugated everywhere else.
       if (isCopulaConcept(cid)) {
-        return copulaForm(lang, cid, subjectCid);
+        return zhCopulaOverride(lang, cid, ordered[idx + 1]) ||
+          copulaForm(lang, cid, subjectCid);
       }
       return getVerbForm(cid, subjectCid, lang);
     }
