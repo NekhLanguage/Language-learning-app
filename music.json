@@ -6,11 +6,11 @@
     { "concept_id": "VIOLIN",       "type": "noun" },
     { "concept_id": "MICROPHONE",   "type": "noun" },
 
-    { "concept_id": "MELODY",       "type": "noun" },
-    { "concept_id": "RHYTHM",       "type": "noun" },
+    { "concept_id": "MELODY",       "type": "noun", "semantic_role": "abstract" },
+    { "concept_id": "RHYTHM",       "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "BEAT",         "type": "noun" },
     { "concept_id": "CHORD",        "type": "noun" },
-    { "concept_id": "HARMONY",      "type": "noun" },
+    { "concept_id": "HARMONY",      "type": "noun", "semantic_role": "abstract" },
 
     { "concept_id": "SING",         "type": "verb" },
     { "concept_id": "STRUM",        "type": "verb" },

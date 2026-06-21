@@ -29,7 +29,7 @@
     { "concept_id": "CURRENCY", "type": "noun" },
     { "concept_id": "CUSTOMS", "type": "noun" },
     { "concept_id": "EMBASSY", "type": "noun" },
-    { "concept_id": "ADVENTURE", "type": "noun" },
+    { "concept_id": "ADVENTURE", "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "ITINERARY", "type": "noun" },
     { "concept_id": "GUIDE", "type": "noun" },
 

@@ -48,7 +48,7 @@
     { "concept_id": "PEPPER", "type": "noun" },
     { "concept_id": "BUTTER", "type": "noun", "countable": false },
     { "concept_id": "SPICE", "type": "noun" },
-    { "concept_id": "RECIPE", "type": "noun" },
+    { "concept_id": "RECIPE", "type": "noun", "semantic_role": "abstract" },
 
     { "concept_id": "SWEET", "type": "adjective" },
     { "concept_id": "SALTY", "type": "adjective" },

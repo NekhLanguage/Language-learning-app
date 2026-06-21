@@ -37,8 +37,8 @@
     { "concept_id": "ASSIST",      "type": "noun" },
 
     { "concept_id": "MATCH",       "type": "noun" },
-    { "concept_id": "VICTORY",     "type": "noun" },
-    { "concept_id": "DEFEAT",      "type": "noun" },
+    { "concept_id": "VICTORY",     "type": "noun", "semantic_role": "abstract" },
+    { "concept_id": "DEFEAT",      "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "DRAW",        "type": "noun" },
     { "concept_id": "TROPHY",      "type": "noun" },
 

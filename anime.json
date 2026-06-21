@@ -25,13 +25,13 @@
     { "concept_id": "STRIKE",    "type": "verb" },
 
     { "concept_id": "TRANSFORM", "type": "verb" },
-    { "concept_id": "POWER",     "type": "noun" },
+    { "concept_id": "POWER",     "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "CHANNEL",   "type": "verb" },
     { "concept_id": "UNLEASH",   "type": "verb" },
     { "concept_id": "POWERFUL",  "type": "adjective" },
 
     { "concept_id": "QUEST",     "type": "noun" },
-    { "concept_id": "DESTINY",   "type": "noun" },
+    { "concept_id": "DESTINY",   "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "KINGDOM",   "type": "noun" },
     { "concept_id": "TEMPLE",    "type": "noun" },
     { "concept_id": "ANCIENT",   "type": "adjective" },

@@ -2643,9 +2643,38 @@ const ADJECTIVE_ROLE_COMPAT = {
     "task","skill","subject","exercise","game_action","sport_action","spell",
     "object","generic_object"
   ]),
-  // Quality + time properties stay broad (good/bad/old/new pair widely);
-  // omitting them from the table preserves the source-file fallback below.
+  // Broad quality/time properties (good/bad/nice, new/old) pair widely, so they
+  // are deliberately omitted here to preserve the source-file fallback below.
+  // The narrow members that used to share those roles are split out into their
+  // own roles so we can constrain them without affecting the broad ones:
+  //   YOUNG          -> property_youth        (animate age; never "young answer")
+  //   CORRECT, WRONG -> property_correctness  (evaluable things; never "wrong magic")
+  // These two have no allowlist (pack nouns rarely carry a semantic_role, so an
+  // allowlist would wrongly block them all); they are constrained by the
+  // exclusion table below instead.
 };
+
+// Per-adjective-role *exclusion* list. Unlike ADJECTIVE_ROLE_COMPAT (an
+// allowlist), this only filters nouns we have explicitly tagged with a
+// semantic_role — untagged concrete nouns keep pairing freely. This lets us
+// suppress nonsense like "young answer" (youth -> abstract) and "wrong magic"
+// (correctness -> substance) without enumerating every concrete noun role.
+const ADJECTIVE_ROLE_BLOCK = {
+  property_youth:       new Set(["abstract", "substance"]),
+  property_correctness: new Set(["substance"]),
+};
+
+// Shared role-compatibility verdict used by both adjectiveSuitsNoun (forced
+// drilled adjectives) and isModifierCompatible (random modifier injection):
+// an allowlist hit must include the noun role; otherwise an exclusion hit
+// rejects it; otherwise allow (broad).
+function adjectiveRoleAllowsNoun(adjRole, nounRole) {
+  const allowed = ADJECTIVE_ROLE_COMPAT[adjRole];
+  if (allowed) return allowed.has(nounRole);
+  const blocked = ADJECTIVE_ROLE_BLOCK[adjRole];
+  if (blocked && blocked.has(nounRole)) return false;
+  return true;
+}
 
 // Language-independent semantic check: does this adjective make sense
 // modifying this noun? Used when choosing a template for a drilled adjective
@@ -2658,9 +2687,7 @@ function adjectiveSuitsNoun(adjCid, nounCid) {
   const adjMeta  = window.GLOBAL_VOCAB.concepts[adjCid];
   const nounMeta = window.GLOBAL_VOCAB.concepts[nounCid];
   if (!adjMeta || !nounMeta) return true;
-  const allowed = ADJECTIVE_ROLE_COMPAT[adjMeta.semantic_role];
-  if (allowed) return allowed.has(nounMeta.semantic_role);
-  return true;
+  return adjectiveRoleAllowsNoun(adjMeta.semantic_role, nounMeta.semantic_role);
 }
 
 function isModifierCompatible(lang, modifierCid, nounCid) {
@@ -2672,12 +2699,10 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
   const modMeta = window.GLOBAL_VOCAB.concepts[modifierCid];
   if (!modMeta) return true;
 
-  // Tighter semantic compatibility: if the adjective's semantic_role has
-  // an explicit allowlist, the noun's semantic_role must be in it.
-  // Adjectives without an entry (e.g. property_quality, property_time)
-  // fall through to the broader source-file rule below.
-  const allowedNounRoles = ADJECTIVE_ROLE_COMPAT[modMeta.semantic_role];
-  if (allowedNounRoles && !allowedNounRoles.has(nounMeta?.semantic_role)) {
+  // Tighter semantic compatibility: an adjective role with an allowlist must
+  // match the noun role; a role with an exclusion list rejects tagged nouns;
+  // otherwise (broad quality/time adjectives) fall through to the source rule.
+  if (!adjectiveRoleAllowsNoun(modMeta.semantic_role, nounMeta?.semantic_role)) {
     return false;
   }
 
