@@ -4,8 +4,9 @@
 // `languages` map) provides a valid, non-empty translation for every concept
 // in EVERY supported language from languages.js. Verbs must have a base form
 // (plus a full present-tense paradigm in person-marking languages, and a
-// 3_singular in English); countable nouns in gender-required languages must
-// carry a gender field.
+// 3_singular in English); every noun in fully-gendered languages (uk) must
+// carry a gender field (error), and countable nouns in the other
+// gender-required languages should carry one (warning).
 // Run: node validation/validate-packs.js
 
 'use strict';
@@ -18,6 +19,13 @@ const ROOT = path.join(__dirname, '..');
 // Languages where countable nouns should carry a gender field.
 // Mirrors validate-structure.js, plus French which is also gendered.
 const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es']);
+
+// Languages where EVERY noun (countable or not) must carry a gender field,
+// because adjectives agree with the noun's gender (genderedFormOf in app.js
+// reads noun.gender and otherwise falls back to the masculine base form, e.g.
+// uk «новий відповідь» instead of «нова відповідь»). Enforced as an error.
+// Only uk is backfilled so far; el/ar are a deferred follow-up.
+const FULL_GENDER_LANGS = new Set(['uk']);
 
 // Languages whose present-tense verbs inflect by person/number. The grammar
 // engine (getVerbForm in app.js) reads a `${person}_${number}` key for these;
@@ -122,8 +130,18 @@ function validatePack(data, langCodes) {
           }
         }
       }
-      // Countable nouns in gender-required langs should carry gender
+      // In fully-gendered langs every noun must carry gender (adjective
+      // agreement depends on it) — this is an error.
       if (
+        concept.type === 'noun' &&
+        FULL_GENDER_LANGS.has(lang) &&
+        (typeof entry !== 'object' || Array.isArray(entry) || !entry.gender)
+      ) {
+        errors.push(`NOUN MISSING gender: ${cid}`);
+      }
+      // Countable nouns in the remaining gender-required langs should carry
+      // gender — warning only (these languages are not fully backfilled yet).
+      else if (
         concept.type === 'noun' &&
         concept.countable &&
         GENDER_REQUIRED_LANGS.has(lang) &&
