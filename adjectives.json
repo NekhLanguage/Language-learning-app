@@ -351,7 +351,7 @@
     {
       "concept_id": "YOUNG",
       "type": "adjective",
-      "semantic_role": "property_time",
+      "semantic_role": "property_youth",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -387,7 +387,7 @@
     {
       "concept_id": "CORRECT",
       "type": "adjective",
-      "semantic_role": "property_quality",
+      "semantic_role": "property_correctness",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -399,7 +399,7 @@
     {
       "concept_id": "WRONG",
       "type": "adjective",
-      "semantic_role": "property_quality",
+      "semantic_role": "property_correctness",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
