@@ -2726,6 +2726,54 @@ function capitalizeFirst(str) {
 function joinSentence(words, punctuation = ".") {
   return capitalizeFirst(words.filter(Boolean).join(" ")) + punctuation;
 }
+
+// French obligatory elision/contraction, applied as a final pass to an assembled
+// French sentence. Elision depends on the *following* word's initial sound, which
+// is only known once the sentence is linearized, so it runs on the finished
+// string rather than per word. Only a fixed closed set of words elide (never
+// ma/ta/sa, which become mon/ton/son instead). Known minor edge: aspirated-h
+// nouns (rare, e.g. «le héros») are over-elided; the mute-h words it fixes
+// («l'homme», «l'heure», «l'hôtel») are far more common.
+function frenchElision(s) {
+  if (!s) return s;
+  const matchCase = (orig, repl) =>
+    orig[0] === orig[0].toUpperCase() && orig[0] !== orig[0].toLowerCase()
+      ? repl[0].toUpperCase() + repl.slice(1)
+      : repl;
+
+  // Preposition + definite-article contractions (before elision).
+  // Note: \b does not anchor before «à» (not a \w char), so match a leading
+  // start/space boundary explicitly for the à-contractions.
+  s = s
+    .replace(/\bde les\b/gi, m => matchCase(m, "des"))
+    .replace(/\bde le\b/gi,  m => matchCase(m, "du"))
+    .replace(/(^|\s)(à) les\b/gi, (m, pre, a) => pre + matchCase(a, "aux"))
+    .replace(/(^|\s)(à) le\b/gi,  (m, pre, a) => pre + matchCase(a, "au"));
+
+  // Elision before a vowel or h.
+  const ELIDE = { je: "j'", me: "m'", te: "t'", se: "s'", ne: "n'",
+                  de: "d'", ce: "c'", le: "l'", la: "l'", que: "qu'" };
+  // Lowercase vowels + h only: rendered French words are lowercase mid-sentence,
+  // so a case-sensitive lookahead avoids eliding before a leaked UPPERCASE concept
+  // id (e.g. «ce AND» must not become «c'AND») while still covering every real case.
+  const VOWEL_H = "aàâäeéèêëiîïoôöuùûüh";
+  const W = "je|me|te|se|ne|de|ce|le|la|que";
+  const Wcap = W.split("|").map(w => w[0].toUpperCase() + w.slice(1)).join("|");
+  s = s.replace(
+    new RegExp("\\b(" + W + "|" + Wcap + ")(\\s+)(?=[" + VOWEL_H + "])", "g"),
+    (m, w) => matchCase(w, ELIDE[w.toLowerCase()])
+  );
+
+  // «si» elides only before il / ils (never «si elle»).
+  s = s.replace(/\b(si|Si)\s+(ils?\b)/g, (m, w, after) => matchCase(w, "s'") + after);
+
+  return s;
+}
+
+// Single hook for per-language final passes on an assembled sentence.
+function finalizeSentence(lang, sentence) {
+  return lang === "fr" ? frenchElision(sentence) : sentence;
+}
 function possessiveWord(lang, cid) {
   return surfaceForm(lang, cid);
 }
@@ -2880,6 +2928,13 @@ function buildComplexClauseSentence(lang, linkerCid, clauseA, clauseB, subordina
 // (target + support pair), passing the same object to both calls keeps the
 // chosen adjective / number in sync so the sentences match in content.
 function buildSentence(lang, tpl, forcedConcept = null, sharedChoices = null) {
+  return finalizeSentence(
+    lang,
+    buildSentenceRaw(lang, tpl, forcedConcept, sharedChoices)
+  );
+}
+
+function buildSentenceRaw(lang, tpl, forcedConcept = null, sharedChoices = null) {
 if (tpl.structure?.type === "copular_demonstrative") {
   const s = tpl.slots;
   return buildCopularDemonstrative(
