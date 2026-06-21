@@ -216,10 +216,10 @@
     "AS": [
       "كـ"
     ],
-    "WATER": {
+    "WATER": { "gender": "m",
       "form": "ماء"
     },
-    "FOOD": {
+    "FOOD": { "gender": "m",
       "form": "طعام"
     },
     "HOUSE": {

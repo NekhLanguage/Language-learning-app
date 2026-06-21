@@ -206,10 +206,10 @@
       "ως",
       "σαν"
     ],
-    "WATER": {
+    "WATER": { "gender": "n",
       "form": "νερό"
     },
-    "FOOD": {
+    "FOOD": { "gender": "n",
       "form": "φαγητό"
     },
     "HOUSE": {
@@ -331,14 +331,14 @@
       "form": "βραδινό",
       "gender": "n"
     },
-    "CLOTHES": {
+    "CLOTHES": { "gender": "n",
       "form": "ρούχα"
     },
     "SHIRT": {
       "form": "πουκάμισο",
       "gender": "n"
     },
-    "SHOES": {
+    "SHOES": { "gender": "n",
       "form": "παπούτσια"
     },
     "PHONE": {

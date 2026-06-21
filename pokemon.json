@@ -587,35 +587,35 @@
   "label": "Arabic",
   "forms": {
 
-    "POKEMON": { "form": "بوكيمون", "invariantPlural": true },
-    "TRAINER": { "form": "مدرب" },
-    "GYM": { "form": "صالة تدريب" },
-    "LEAGUE": { "form": "الدوري" },
-    "GYM_LEADER": { "form": "قائد الصالة" },
-    "ELITE_FOUR": { "form": "النخبة الأربعة" },
-    "POKEMON_CENTER": { "form": "مركز بوكيمون" },
-    "FOREST": { "form": "غابة" },
-    "CAVE": { "form": "كهف" },
-    "TOWN": { "form": "مدينة" },
+    "POKEMON": { "gender": "m", "form": "بوكيمون", "invariantPlural": true },
+    "TRAINER": { "gender": "m", "form": "مدرب" },
+    "GYM": { "gender": "f", "form": "صالة تدريب" },
+    "LEAGUE": { "gender": "m", "form": "الدوري" },
+    "GYM_LEADER": { "gender": "m", "form": "قائد الصالة" },
+    "ELITE_FOUR": { "gender": "f", "form": "النخبة الأربعة" },
+    "POKEMON_CENTER": { "gender": "m", "form": "مركز بوكيمون" },
+    "FOREST": { "gender": "f", "form": "غابة" },
+    "CAVE": { "gender": "m", "form": "كهف" },
+    "TOWN": { "gender": "f", "form": "مدينة" },
 
-    "BATTLE": { "form": "معركة" },
-    "MOVE": { "form": "هجوم" },
-    "DAMAGE": { "form": "ضرر" },
-    "DEFENSE": { "form": "دفاع" },
-    "SPEED": { "form": "سرعة" },
-    "STAT": { "form": "إحصائية" },
-    "ABILITY": { "form": "قدرة" },
-    "TYPE": { "form": "نوع" },
+    "BATTLE": { "gender": "f", "form": "معركة" },
+    "MOVE": { "gender": "m", "form": "هجوم" },
+    "DAMAGE": { "gender": "m", "form": "ضرر" },
+    "DEFENSE": { "gender": "m", "form": "دفاع" },
+    "SPEED": { "gender": "f", "form": "سرعة" },
+    "STAT": { "gender": "f", "form": "إحصائية" },
+    "ABILITY": { "gender": "f", "form": "قدرة" },
+    "TYPE": { "gender": "m", "form": "نوع" },
 
-    "POTION": { "form": "جرعة" },
-    "REVIVE": { "form": "إحياء" },
-    "TECHNICAL_MACHINE": { "form": "آلة تقنية" },
-    "BADGE": { "form": "شارة" },
-    "ITEM": { "form": "عنصر" },
+    "POTION": { "gender": "f", "form": "جرعة" },
+    "REVIVE": { "gender": "m", "form": "إحياء" },
+    "TECHNICAL_MACHINE": { "gender": "f", "form": "آلة تقنية" },
+    "BADGE": { "gender": "f", "form": "شارة" },
+    "ITEM": { "gender": "m", "form": "عنصر" },
 
-    "LEVEL": { "form": "مستوى" },
-    "EXPERIENCE": { "form": "خبرة" },
-    "HEALTH": { "form": "صحة" },
+    "LEVEL": { "gender": "m", "form": "مستوى" },
+    "EXPERIENCE": { "gender": "f", "form": "خبرة" },
+    "HEALTH": { "gender": "f", "form": "صحة" },
 
     "BURN": {
       "base": "يحرق",
@@ -637,7 +637,7 @@
       "3_plural": "يسممون"
     },
 
-    "SLEEP_STATUS": { "form": "نوم" },
+    "SLEEP_STATUS": { "gender": "m", "form": "نوم" },
 
     "PARALYZE": {
       "base": "يشل",
@@ -649,8 +649,8 @@
       "3_plural": "يشلون"
     },
 
-    "SEEN": { "form": "مرئي" },
-    "CAPTURED": { "form": "ممسوك" },
+    "SEEN": { "gender": "m", "form": "مرئي" },
+    "CAPTURED": { "gender": "m", "form": "ممسوك" },
 
     "ATTACK": {
       "base": "يهاجم",

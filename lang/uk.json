@@ -370,7 +370,7 @@
       "gender": "m",
       "plural": "телефони"
     },
-    "PANTS": {
+    "PANTS": { "gender": "m",
       "form": "штани"
     },
     "ONE": [
