@@ -2730,7 +2730,36 @@ function possessiveWord(lang, cid) {
   return surfaceForm(lang, cid);
 }
 
+// Vowel or mute-h initials that trigger French liaison/elision behaviour.
+const FR_VOWEL_H = "aàâäeéèêëiîïoôöuùûüh";
+
+// French possessive determiners agree with the *possessed noun*, not the
+// possessor: «sa fille» (f) / «son père» (m). A feminine noun beginning with a
+// vowel or mute-h takes the masculine form instead, to avoid hiatus: «son amie»,
+// «mon eau», «ton heure» — never «sa amie» (ma/ta/sa switch to mon/ton/son rather
+// than eliding). Possessives are stored as ordered arrays: [masc, fem, plural]
+// for mon/ton/son, and [singular, plural] for the gender-invariant notre/leur, so
+// only the 3-element determiners inflect for gender. Known minor edge (as in the
+// elision pass): a feminine *aspirated*-h noun (rare, e.g. «hache») is mis-agreed
+// to «son hache»; the mute-h words this helps («son amie», «son heure») dominate.
+function frenchPossessivePhrase(possessiveCid, nounCid) {
+  const forms = window.GLOBAL_VOCAB.languages?.fr?.forms;
+  const arr = forms?.[possessiveCid];
+  const nounForm = formOf("fr", nounCid);
+  if (!Array.isArray(arr)) {
+    // Unexpected shape — defer to the generic gender-agreement path.
+    return `${genderedFormOf("fr", possessiveCid, nounCid)} ${nounForm}`;
+  }
+  let poss = arr[0]; // masculine, or the gender-invariant singular (notre/leur)
+  if (arr.length >= 3 && forms?.[nounCid]?.gender === "f") {
+    const vowelH = FR_VOWEL_H.includes((nounForm[0] || "").toLowerCase());
+    poss = vowelH ? arr[0] : arr[1];
+  }
+  return `${poss} ${nounForm}`;
+}
+
 function nounWithPossessive(lang, possessiveCid, nounCid) {
+  if (lang === "fr") return frenchPossessivePhrase(possessiveCid, nounCid);
   return `${genderedFormOf(lang, possessiveCid, nounCid)} ${formOf(lang, nounCid)}`;
 }
 
