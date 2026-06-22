@@ -35,9 +35,9 @@ import {
   configureEngine, buildSentence, ADJECTIVE_ROLE_COMPAT, adjectiveSuitsNoun,
 } from '../sentence_engine.js';
 
-const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
-const BASELINE_FILE = path.join(__dirnameSafe(), 'sentence-baseline.json');
-function __dirnameSafe() { return path.dirname(fileURLToPath(import.meta.url)); }
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(HERE, '..');
+const BASELINE_FILE = path.join(HERE, 'sentence-baseline.json');
 
 const UPDATE = process.argv.includes('--update-baseline');
 

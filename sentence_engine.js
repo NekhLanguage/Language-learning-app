@@ -1128,8 +1128,7 @@ if (tpl.structure?.type === "complex_clause") {
     // under/off/…). Other languages take a standalone demonstrative naturally
     // (e.g. uk «у тому», de «in jenem»), so this is English-only and keyed off
     // the preceding concept being a position word.
-    if (lang === "en" &&
-        (cid === "THIS" || cid === "THAT" || cid === "THESE" || cid === "THOSE")) {
+    if (lang === "en" && (cid === "THIS" || cid === "THAT")) {
       const prevCid = ordered[idx - 1];
       if (vocab().concepts[prevCid]?.type === "position") {
         return formOf(lang, cid) + " one";
