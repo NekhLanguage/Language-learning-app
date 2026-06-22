@@ -302,6 +302,7 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "GO",
+        "TO",
         "POKEMON_CENTER"
       ],
       "render": {
@@ -498,6 +499,7 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "GO",
+        "TO",
         "GYM"
       ],
       "render": {
@@ -531,6 +533,7 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "GO",
+        "TO",
         "LEAGUE"
       ],
       "render": {
@@ -564,6 +567,7 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "GO",
+        "TO",
         "CENTER"
       ],
       "render": {
@@ -653,6 +657,7 @@
       "concepts": [
         "SECOND_PERSON",
         "GO",
+        "TO",
         "GYM"
       ],
       "render": {
@@ -741,6 +746,7 @@
       "concepts": [
         "THIRD_PERSON_PLURAL",
         "GO",
+        "TO",
         "LEAGUE"
       ],
       "render": {
@@ -785,6 +791,7 @@
       "concepts": [
         "FIRST_PERSON_PLURAL",
         "GO",
+        "TO",
         "GYM"
       ],
       "render": {
@@ -829,6 +836,7 @@
       "concepts": [
         "SHE",
         "GO",
+        "TO",
         "GYM"
       ],
       "render": {
@@ -930,6 +938,7 @@
       "concepts": [
         "HE",
         "GO",
+        "TO",
         "LEAGUE"
       ],
       "render": {
