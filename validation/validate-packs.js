@@ -24,8 +24,8 @@ const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es']);
 // because adjectives agree with the noun's gender (genderedFormOf in app.js
 // reads noun.gender and otherwise falls back to the masculine base form, e.g.
 // uk «новий відповідь» instead of «нова відповідь»). Enforced as an error.
-// Only uk is backfilled so far; el/ar are a deferred follow-up.
-const FULL_GENDER_LANGS = new Set(['uk']);
+// uk, el and ar are fully backfilled.
+const FULL_GENDER_LANGS = new Set(['uk', 'el', 'ar']);
 
 // Languages whose present-tense verbs inflect by person/number. The grammar
 // engine (getVerbForm in app.js) reads a `${person}_${number}` key for these;
