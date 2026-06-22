@@ -1,6 +1,9 @@
-// sentence_engine.js
+// sentence_engine.mjs
 // Sentence-generation core extracted from app.js so it can be shared by the
-// browser app AND offline validators/tests (validation/validate-sentences.js).
+// browser app AND offline validators/tests (validation/validate-sentences.mjs).
+// Kept as an explicit ES module (.mjs) so Node treats it as ESM on every
+// version (Node < 22 would otherwise parse a bare .js as CommonJS and fail the
+// named imports), while the browser loads it via app.js's `import`.
 // The browser configures live accessors; the validator injects a full vocab
 // snapshot + a seeded RNG for deterministic, reproducible runs.
 

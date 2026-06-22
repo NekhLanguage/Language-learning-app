@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // validate-sentences.mjs
-// Runs the REAL sentence generator (sentence_engine.js) over every template ×
+// Runs the REAL sentence generator (sentence_engine.mjs) over every template ×
 // every language and flags broken support-language sentences BEFORE a learner
 // can encounter them. This is the automated net for the class of bugs reported
 // from the uk/en exercises ("we go a nice gym", "a red phone is in that",
@@ -33,7 +33,7 @@ import { fileURLToPath } from 'url';
 import { loadVocab, loadTemplates, loadLanguageCodes } from './load-vocab.mjs';
 import {
   configureEngine, buildSentence, ADJECTIVE_ROLE_COMPAT, adjectiveSuitsNoun,
-} from '../sentence_engine.js';
+} from '../sentence_engine.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..');

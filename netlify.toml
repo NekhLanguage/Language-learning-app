@@ -8,3 +8,10 @@
 
 [build.environment]
   NODE_VERSION = "18"
+
+# Ensure ES module files are served with a JavaScript MIME type so the browser
+# accepts them when app.js imports ./sentence_engine.mjs.
+[[headers]]
+  for = "/*.mjs"
+  [headers.values]
+    Content-Type = "text/javascript"

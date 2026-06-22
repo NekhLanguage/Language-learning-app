@@ -54,7 +54,7 @@ import {
   buildComplexClauseSentence,
   buildSentence,
   buildSentenceRaw
-} from "./sentence_engine.js";
+} from "./sentence_engine.mjs";
 configureEngine({
   vocab: () => window.GLOBAL_VOCAB,
   getReleased: () => run.released,
