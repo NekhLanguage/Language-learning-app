@@ -1,0 +1,24 @@
+name: validate
+
+# Runs the data + generated-sentence validators on every push and PR so broken
+# support-language sentences (missing prepositions, dangling demonstratives,
+# incompatible adjective/noun pairings, untranslated concepts, …) are caught in
+# CI before they ever reach a learner — in any language pair, not just uk/en.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Run validators
+        run: npm run validate
