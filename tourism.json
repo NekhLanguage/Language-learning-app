@@ -329,11 +329,11 @@
         "INSURE": { "base": "يؤمن", "1_singular": "أؤمن", "2_singular": "تؤمن", "3_singular": "يؤمن", "1_plural": "نؤمن", "2_plural": "تؤمنون", "3_plural": "يؤمنون" },
         "RECOMMEND": { "base": "يوصي", "1_singular": "أوصي", "2_singular": "توصي", "3_singular": "يوصي", "1_plural": "نوصي", "2_plural": "توصون", "3_plural": "يوصون" },
 
-        "SCENIC": ["خلاب"],
-        "DELICIOUS": ["لذيذ"],
-        "EXPENSIVE": ["غالي"],
-        "FOREIGN": ["أجنبي"],
-        "HISTORIC": ["تاريخي"],
+        "SCENIC": { "form": "خلاب", "f": "خلابة" },
+        "DELICIOUS": { "form": "لذيذ", "f": "لذيذة" },
+        "EXPENSIVE": { "form": "غالي", "f": "غالية" },
+        "FOREIGN": { "form": "أجنبي", "f": "أجنبية" },
+        "HISTORIC": { "form": "تاريخي", "f": "تاريخية" },
         "UNFORGETTABLE": ["لا يُنسى"]
 
       }
@@ -551,12 +551,12 @@
         "INSURE": { "base": "ασφαλίζω", "1_singular": "ασφαλίζω", "2_singular": "ασφαλίζεις", "3_singular": "ασφαλίζει", "1_plural": "ασφαλίζουμε", "2_plural": "ασφαλίζετε", "3_plural": "ασφαλίζουν" },
         "RECOMMEND": { "base": "προτείνω", "1_singular": "προτείνω", "2_singular": "προτείνεις", "3_singular": "προτείνει", "1_plural": "προτείνουμε", "2_plural": "προτείνετε", "3_plural": "προτείνουν" },
 
-        "SCENIC": ["γραφικός"],
-        "DELICIOUS": ["νόστιμος"],
-        "EXPENSIVE": ["ακριβός"],
-        "FOREIGN": ["ξένος"],
-        "HISTORIC": ["ιστορικός"],
-        "UNFORGETTABLE": ["αξέχαστος"]
+        "SCENIC": { "form": "γραφικός", "f": "γραφική", "n": "γραφικό" },
+        "DELICIOUS": { "form": "νόστιμος", "f": "νόστιμη", "n": "νόστιμο" },
+        "EXPENSIVE": { "form": "ακριβός", "f": "ακριβή", "n": "ακριβό" },
+        "FOREIGN": { "form": "ξένος", "f": "ξένη", "n": "ξένο" },
+        "HISTORIC": { "form": "ιστορικός", "f": "ιστορική", "n": "ιστορικό" },
+        "UNFORGETTABLE": { "form": "αξέχαστος", "f": "αξέχαστη", "n": "αξέχαστο" }
 
       }
     },
