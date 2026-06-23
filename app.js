@@ -55,12 +55,6 @@ import {
   buildSentence,
   buildSentenceRaw
 } from "./sentence_engine.mjs";
-configureEngine({
-  vocab: () => window.GLOBAL_VOCAB,
-  getReleased: () => run.released,
-  ensureProgress,
-  rng: () => Math.random(),
-});
 const CORE_BUNDLES = [
 
   { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
@@ -1909,6 +1903,16 @@ function ui(key) {
   }
   return run.progress[cid];
 }
+// Wire the sentence engine to live app state. This must run inside the
+// DOMContentLoaded closure because `run` and `ensureProgress` are scoped here,
+// not at module top level. The accessors stay lazy so the engine always reads
+// current state.
+configureEngine({
+  vocab: () => window.GLOBAL_VOCAB,
+  getReleased: () => run.released,
+  ensureProgress: (cid) => ensureProgress(cid),
+  rng: () => Math.random(),
+});
 function ensureTemplateProgress(tpl) {
   const id = tpl.template_id;
 
