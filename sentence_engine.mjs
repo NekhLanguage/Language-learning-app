@@ -352,7 +352,20 @@ function orderedConceptsForTemplate(tpl, lang) {
 
   const pronoun = concepts.find(c => vocab().concepts[c]?.type === "pronoun");
   const verb = concepts.find(c => vocab().concepts[c]?.type === "verb");
+  // Copular templates ("X is Y") often have no pronoun — the subject is a noun
+  // ("autumn is old", "the book is red"). Without this the leading noun is
+  // misread as the object and stranded after the copula ("Be autumn old"),
+  // and the copula has no subject to conjugate against. Treat the first noun
+  // as the subject in that case.
+  const isCopular = concepts.some(c =>
+    c === "BE" || vocab().concepts[c]?.semantic_role === "copula"
+  );
+  const nounSubject = (!pronoun && isCopular)
+    ? concepts.find(c => vocab().concepts[c]?.type === "noun")
+    : null;
+  const subject = pronoun || nounSubject;
   const object = concepts.find(c => {
+    if (c === subject) return false;
     const t = vocab().concepts[c]?.type;
     return t && t !== "pronoun" && t !== "verb";
   });
@@ -375,11 +388,11 @@ const orderType = WORD_ORDER[lang] || "SVO";
 let ordered;
 
 if (orderType === "SOV") {
-  ordered = [pronoun, object, verb];
+  ordered = [subject, object, verb];
 } else if (orderType === "VSO") {
-  ordered = [verb, pronoun, object];
+  ordered = [verb, subject, object];
 } else {
-  ordered = [pronoun, verb, object];
+  ordered = [subject, verb, object];
 }
 
   // Add any remaining concepts (so we don't silently drop extras later)
@@ -897,9 +910,18 @@ if (tpl.structure?.type === "complex_clause") {
     ? vocab().concepts[forcedConcept]
     : null;
 
-  const subjectCid = ordered.find(c =>
-    vocab().concepts[c]?.type === "pronoun"
+  const isCopularTemplate = ordered.some(c =>
+    c === "BE" || vocab().concepts[c]?.semantic_role === "copula"
   );
+
+  // The subject is normally a pronoun. Copular templates ("autumn is old",
+  // "the book is red") often have a noun subject instead — without it the
+  // copula has no subject and English renders the bare infinitive ("Be
+  // autumn old") rather than conjugating to "is".
+  const subjectCid = ordered.find(c => vocab().concepts[c]?.type === "pronoun") ||
+    (isCopularTemplate
+      ? ordered.find(c => vocab().concepts[c]?.type === "noun")
+      : undefined);
 
   // For copular templates (subject + BE + predicate-noun), the predicate
   // noun must agree with the subject in number. We treat any template that
@@ -907,9 +929,6 @@ if (tpl.structure?.type === "complex_clause") {
   // the subject pronoun is plural. Non-copular SVO ("they have a book")
   // intentionally keeps the singular object.
   const subjectIsPluralPronoun = isPluralPronoun(subjectCid);
-  const isCopularTemplate = ordered.some(c =>
-    c === "BE" || vocab().concepts[c]?.semantic_role === "copula"
-  );
   const pluralAgreement = subjectIsPluralPronoun && isCopularTemplate;
 
   const words = ordered.map((cid, idx) => {
@@ -1136,6 +1155,15 @@ if (tpl.structure?.type === "complex_clause") {
       if (vocab().concepts[prevCid]?.type === "position") {
         return formOf(lang, cid) + " one";
       }
+    }
+
+    // Predicate adjective in a copular sentence ("autumn is OLD") must agree
+    // with the subject noun in gender — "осінь стара", not "осінь старий".
+    // surfaceForm would return the bare (masculine) form. Restricted to noun
+    // subjects, since a pronoun carries no usable grammatical gender.
+    if (meta.type === "adjective" && meta.semantic_role !== "possessive" &&
+        isCopularTemplate && vocab().concepts[subjectCid]?.type === "noun") {
+      return genderedFormOf(lang, cid, subjectCid);
     }
 
     return surfaceForm(lang, cid);

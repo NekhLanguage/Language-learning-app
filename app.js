@@ -2521,6 +2521,17 @@ if (isModifierConcept(targetConcept)) {
     return null;
   }
 
+  // Render each adjective option agreeing in gender with the head noun it
+  // modifies ("помаранчева книга", not the bare masculine "помаранчевий"),
+  // so the tiles match the inflected blank. Falls back to the base form when
+  // there's no noun to agree with.
+  const headNounCid = (tpl.concepts || []).find(
+    c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+  );
+  const optionText = opt => headNounCid
+    ? genderedFormOf(targetLang, opt, headNounCid)
+    : formOf(targetLang, opt);
+
   content.innerHTML = `
     <p><strong>${ui("originalSentence")}</strong></p>
     <p>${safe(sentenceSupport)}</p>
@@ -2538,7 +2549,7 @@ if (isModifierConcept(targetConcept)) {
   let selectedOption = null;
 
   options.forEach(opt => {
-    const text = formOf(targetLang, opt);
+    const text = optionText(opt);
     const wrap = document.createElement("div");
     wrap.className = "word-bank-chip";
 
@@ -2562,7 +2573,7 @@ if (isModifierConcept(targetConcept)) {
     const correct = selectedOption === targetConcept;
 
     container.querySelectorAll("button").forEach(btn => {
-      const value = options.find(o => formOf(targetLang, o) === btn.textContent);
+      const value = options.find(o => optionText(o) === btn.textContent);
       if (value === targetConcept) btn.classList.add("correct");
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
@@ -3285,6 +3296,10 @@ const correctWords = ordered.map(cid => {
         tState.completed = true;
       }
 
+      // Advance the concept itself — without this the concept dead-ends at
+      // level 6 and never reaches level 7.
+      applyResult(targetConcept, true);
+
       setTimeout(() => renderNext(targetLang, supportLang), 800);
     } else {
       document.querySelectorAll(".sentence-slot").forEach(slot => {
@@ -3296,6 +3311,8 @@ const correctWords = ordered.map(cid => {
       tState.streak = 0;
       tState.lastResult = false;
       tState.lastShownAt = run.exerciseCounter;
+
+      applyResult(targetConcept, false);
 
       // The correct sentence isn't visible anywhere on screen (the tiles
       // are mixed up in the slots), so keep the banner reveal here.
@@ -3311,7 +3328,7 @@ const correctWords = ordered.map(cid => {
 // -------------------------
 // Level 7 – Free Sentence Production
 // -------------------------
-function renderFreeProductionL7(targetLang, supportLang, tpl) {
+function renderFreeProductionL7(targetLang, supportLang, tpl, targetConcept) {
 
   subtitle.textContent = "Level 7";
 
@@ -3395,9 +3412,15 @@ checkBtn.onclick = () => {
       tState.completed = true;
     }
 
+    // Advance/complete the concept — without this a level-7 concept can never
+    // reach `completed`.
+    applyResult(targetConcept, true);
+
   } else {
     tState.reinforcementStage = 0;
     tState.lastShownAt = run.exerciseCounter;
+
+    applyResult(targetConcept, false);
   }
 
   // 🎨 Visual Feedback
@@ -4245,7 +4268,7 @@ if (level === 2) {
       continue;
     }
 
-    renderFreeProductionL7(targetLang, supportLang, tpl);
+    renderFreeProductionL7(targetLang, supportLang, tpl, targetConcept);
     renderedSomething = true;
     run.exerciseCounter++;
     return;
