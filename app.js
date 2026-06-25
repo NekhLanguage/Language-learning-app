@@ -2521,6 +2521,17 @@ if (isModifierConcept(targetConcept)) {
     return null;
   }
 
+  // Render each adjective option agreeing in gender with the head noun it
+  // modifies ("помаранчева книга", not the bare masculine "помаранчевий"),
+  // so the tiles match the inflected blank. Falls back to the base form when
+  // there's no noun to agree with.
+  const headNounCid = (tpl.concepts || []).find(
+    c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+  );
+  const optionText = opt => headNounCid
+    ? genderedFormOf(targetLang, opt, headNounCid)
+    : formOf(targetLang, opt);
+
   content.innerHTML = `
     <p><strong>${ui("originalSentence")}</strong></p>
     <p>${safe(sentenceSupport)}</p>
@@ -2538,7 +2549,7 @@ if (isModifierConcept(targetConcept)) {
   let selectedOption = null;
 
   options.forEach(opt => {
-    const text = formOf(targetLang, opt);
+    const text = optionText(opt);
     const wrap = document.createElement("div");
     wrap.className = "word-bank-chip";
 
@@ -2562,7 +2573,7 @@ if (isModifierConcept(targetConcept)) {
     const correct = selectedOption === targetConcept;
 
     container.querySelectorAll("button").forEach(btn => {
-      const value = options.find(o => formOf(targetLang, o) === btn.textContent);
+      const value = options.find(o => optionText(o) === btn.textContent);
       if (value === targetConcept) btn.classList.add("correct");
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
