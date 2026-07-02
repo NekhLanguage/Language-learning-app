@@ -3,6 +3,7 @@ import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
 import { isFeatureAvailable } from "./capabilities.mjs";
+import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import {
   configureEngine,
   formOf,
@@ -533,6 +534,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   fetch("word_notes.json")
     .then(r => (r.ok ? r.json() : null))
     .then(d => { WORD_NOTES = d?.notes || null; })
+    .catch(() => {});
+
+  // Personalized coaching lines (milestones + session-complete variety).
+  // Falls back to the legacy uiStrings templates when absent.
+  let COACHING_LINES = null;
+  fetch("coaching_lines.json")
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => { COACHING_LINES = d || null; })
     .catch(() => {});
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
@@ -1228,6 +1237,17 @@ function markMilestonesShown(run, crossed) {
 }
 
 function milestoneReasonLine(n, reason) {
+  // Rich matrix first (reason × journey stage × support language), then the
+  // legacy single-line templates below as fallback.
+  const matrixLine = coachingMilestoneLine(COACHING_LINES, {
+    type: reason?.type,
+    detail: reason?.detail,
+    n,
+    supportLang: languageState.support || "en",
+    langName: localizedTargetLabel(languageState.target),
+  });
+  if (matrixLine) return matrixLine;
+
   if (!reason || !reason.type) return ui("milestoneGeneric");
   const detail = (reason.detail || "").trim();
   if (reason.type === "fun") return ui("milestoneReasonFun");
@@ -1325,8 +1345,10 @@ function showRoadmap(opts) {
   }
 
   if (opts && opts.sessionNumber) {
-    messageEl.textContent = (ui("roadmapSessionFinished") || "Session {n} complete.")
-      .replace("{n}", opts.sessionNumber);
+    messageEl.textContent =
+      sessionCompleteLine(COACHING_LINES, opts.sessionNumber, supportLang) ||
+      (ui("roadmapSessionFinished") || "Session {n} complete.")
+        .replace("{n}", opts.sessionNumber);
     messageEl.classList.remove("hidden");
   } else {
     messageEl.textContent = "";

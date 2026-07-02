@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "comment": "Personalized coaching lines: milestone celebrations keyed reason -> stage -> support language, plus rotating session-complete lines per support language. Placeholders: {detail} = learner's own words for their reason, {n} = word count or session number, {lang} = localized target-language name. Authored with AI assistance.",
+  "milestones": {},
+  "sessionComplete": {}
+}
