@@ -6,66 +6,594 @@
       "en": {
         "title": "The verb changes with the subject",
         "body": "In {lang}, the verb takes a different form depending on who does the action — like 'I eat' vs. 'he eats', but for every person."
+      },
+      "pt": {
+        "title": "O verbo muda com o sujeito",
+        "body": "Em {lang}, o verbo assume uma forma diferente dependendo de quem faz a ação — como 'I eat' (eu como) e 'he eats' (ele come) em inglês, mas para todas as pessoas."
+      },
+      "fr": {
+        "title": "Le verbe change avec le sujet",
+        "body": "En {lang}, le verbe prend une forme différente selon qui fait l'action — comme 'I eat' (je mange) et 'he eats' (il mange) en anglais, mais pour toutes les personnes."
+      },
+      "de": {
+        "title": "Das Verb ändert sich mit dem Subjekt",
+        "body": "In {lang} nimmt das Verb je nachdem, wer die Handlung ausführt, eine andere Form an — wie 'I eat' (ich esse) und 'he eats' (er isst) im Englischen, aber für jede Person."
+      },
+      "el": {
+        "title": "Το ρήμα αλλάζει ανάλογα με το υποκείμενο",
+        "body": "Στα {lang}, το ρήμα παίρνει διαφορετική μορφή ανάλογα με το ποιος κάνει την ενέργεια — όπως 'I eat' (εγώ τρώω) και 'he eats' (αυτός τρώει) στα αγγλικά, αλλά για κάθε πρόσωπο."
+      },
+      "es": {
+        "title": "El verbo cambia según el sujeto",
+        "body": "En {lang}, el verbo toma una forma distinta según quién hace la acción — como 'I eat' (yo como) y 'he eats' (él come) en inglés, pero para cada persona."
+      },
+      "ja": {
+        "title": "動詞は主語に合わせて変わる",
+        "body": "{lang}では、誰が行動するかによって動詞の形が変わります。英語の 'I eat'（私は食べる）と 'he eats'（彼は食べる）のような変化が、すべての人称で起こります。"
+      },
+      "ko": {
+        "title": "동사는 주어에 따라 달라져요",
+        "body": "{lang}에서는 누가 행동하는지에 따라 동사의 형태가 달라져요. 영어의 'I eat'(나는 먹는다)와 'he eats'(그는 먹는다)처럼, 모든 인칭에서 바뀌어요."
+      },
+      "no": {
+        "title": "Verbet endrer seg med subjektet",
+        "body": "I {lang} får verbet ulik form avhengig av hvem som gjør handlingen — som 'I eat' (jeg spiser) og 'he eats' (han spiser) på engelsk, men for alle personer."
+      },
+      "tr": {
+        "title": "Fiil özneye göre değişir",
+        "body": "{lang} dilinde fiil, eylemi kimin yaptığına göre farklı bir biçim alır — İngilizcedeki 'I eat' (ben yerim) ve 'he eats' (o yer) gibi, ama her şahıs için."
+      },
+      "uk": {
+        "title": "Дієслово змінюється разом із підметом",
+        "body": "У мові {lang} дієслово набуває різної форми залежно від того, хто виконує дію — як 'I eat' (я їм) і 'he eats' (він їсть) в англійській, але для кожної особи."
+      },
+      "zh": {
+        "title": "动词随主语变化",
+        "body": "在{lang}中，动词的形式会随做动作的人而变化——就像英语的 'I eat'（我吃）和 'he eats'（他吃），但每个人称都会变化。"
+      },
+      "ar": {
+        "title": "الفعل يتغيّر مع الفاعل",
+        "body": "في {lang}، يتّخذ الفعل صيغة مختلفة حسب من يقوم بالفعل — مثل 'I eat' (أنا آكل) و'he eats' (هو يأكل) في الإنجليزية، ولكن مع كل الضمائر."
       }
     },
     "zero_copula": {
       "en": {
         "title": "No 'to be' in the present",
         "body": "{lang} leaves out the word for 'to be' in present-tense sentences: 'He is a student' becomes literally 'He student'."
+      },
+      "pt": {
+        "title": "Sem 'ser' no presente",
+        "body": "Em {lang}, o verbo 'ser' é omitido nas frases no presente: 'Ele é estudante' vira literalmente 'Ele estudante'."
+      },
+      "fr": {
+        "title": "Pas de 'être' au présent",
+        "body": "En {lang}, le mot pour 'être' est omis dans les phrases au présent : 'Il est étudiant' devient littéralement 'Lui étudiant'."
+      },
+      "de": {
+        "title": "Kein 'sein' im Präsens",
+        "body": "In {lang} fällt das Wort für 'sein' in Sätzen im Präsens weg: 'Er ist Student' wird wörtlich zu 'Er Student'."
+      },
+      "el": {
+        "title": "Χωρίς το 'είμαι' στον ενεστώτα",
+        "body": "Στα {lang} παραλείπεται η λέξη για το 'είμαι' στις προτάσεις ενεστώτα: το 'Αυτός είναι φοιτητής' γίνεται κυριολεκτικά 'Αυτός φοιτητής'."
+      },
+      "es": {
+        "title": "Sin 'ser' en el presente",
+        "body": "En {lang} se omite la palabra para 'ser' en las frases en presente: 'Él es estudiante' se convierte literalmente en 'Él estudiante'."
+      },
+      "ja": {
+        "title": "現在形に「〜です」がない",
+        "body": "{lang}では、現在形の文で「〜である」にあたる言葉を使いません。「彼は学生です」は文字どおり「彼、学生」のようになります。"
+      },
+      "ko": {
+        "title": "현재형에는 '~이다'가 없어요",
+        "body": "{lang}에서는 현재형 문장에서 '~이다'에 해당하는 말을 생략해요. '그는 학생이다'가 말 그대로 '그 학생'이 돼요."
+      },
+      "no": {
+        "title": "Ingen 'å være' i presens",
+        "body": "I {lang} sløyfes ordet for 'å være' i presens: 'Han er student' blir bokstavelig talt 'Han student'."
+      },
+      "tr": {
+        "title": "Şimdiki zamanda 'olmak' yok",
+        "body": "{lang} dilinde şimdiki zaman cümlelerinde 'olmak' anlamındaki sözcük kullanılmaz: 'O bir öğrencidir' kelimesi kelimesine 'O öğrenci' olur — tıpkı Türkçedeki gibi."
+      },
+      "uk": {
+        "title": "Без 'бути' в теперішньому часі",
+        "body": "У мові {lang} слово 'бути' в реченнях теперішнього часу опускається: 'Він є студентом' стає буквально 'Він студент' — так само, як в українській."
+      },
+      "zh": {
+        "title": "现在时没有'是'",
+        "body": "{lang}在现在时的句子中省略'是'这个词：'他是学生'字面上会变成'他 学生'。"
+      },
+      "ar": {
+        "title": "لا 'يكون' في الزمن الحاضر",
+        "body": "في {lang} تُحذف كلمة 'يكون' من جمل الزمن الحاضر — تمامًا كما في العربية، حيث نقول 'هو طالب' من دون فعل."
       }
     },
     "zh_predicate_adjective": {
       "en": {
         "title": "很 instead of 'is'",
         "body": "Mandarin links adjectives to the subject with 很 (hěn), not 是 (shì): 他很强 is literally 'he very strong' — never 他是强."
+      },
+      "pt": {
+        "title": "很 em vez de 'é'",
+        "body": "O mandarim liga adjetivos ao sujeito com 很 (hěn), não com 是 (shì): 他很强 é literalmente 'ele muito forte' — nunca 他是强."
+      },
+      "fr": {
+        "title": "很 au lieu de 'est'",
+        "body": "Le mandarin relie les adjectifs au sujet avec 很 (hěn), pas avec 是 (shì) : 他很强 signifie littéralement 'lui très fort' — jamais 他是强."
+      },
+      "de": {
+        "title": "很 statt 'ist'",
+        "body": "Mandarin verbindet Adjektive mit dem Subjekt durch 很 (hěn), nicht durch 是 (shì): 他很强 heißt wörtlich 'er sehr stark' — niemals 他是强."
+      },
+      "el": {
+        "title": "很 αντί για 'είναι'",
+        "body": "Τα μανδαρινικά συνδέουν τα επίθετα με το υποκείμενο με το 很 (hěn), όχι με το 是 (shì): το 他很强 σημαίνει κυριολεκτικά 'αυτός πολύ δυνατός' — ποτέ 他是强."
+      },
+      "es": {
+        "title": "很 en lugar de 'es'",
+        "body": "El mandarín une los adjetivos al sujeto con 很 (hěn), no con 是 (shì): 他很强 es literalmente 'él muy fuerte' — nunca 他是强."
+      },
+      "ja": {
+        "title": "「是」ではなく「很」を使う",
+        "body": "中国語では、形容詞を主語につなぐときに 是 (shì) ではなく 很 (hěn) を使います。他很强 は文字どおり「彼 とても 強い」で、他是强 とは決して言いません。"
+      },
+      "ko": {
+        "title": "'~이다' 대신 很",
+        "body": "중국어에서는 형용사를 주어에 연결할 때 是 (shì)가 아니라 很 (hěn)을 써요. 他很强은 말 그대로 '그 아주 강하다'이고, 他是强이라고는 절대 하지 않아요."
+      },
+      "no": {
+        "title": "很 i stedet for 'er'",
+        "body": "Mandarin knytter adjektiver til subjektet med 很 (hěn), ikke 是 (shì): 他很强 er bokstavelig talt 'han veldig sterk' — aldri 他是强."
+      },
+      "tr": {
+        "title": "'-dır' yerine 很",
+        "body": "Mandarin dilinde sıfatlar özneye 是 (shì) ile değil 很 (hěn) ile bağlanır: 他很强 kelimesi kelimesine 'o çok güçlü' demektir — asla 他是强 denmez."
+      },
+      "uk": {
+        "title": "很 замість 'є'",
+        "body": "У мандаринській прикметники приєднуються до підмета за допомогою 很 (hěn), а не 是 (shì): 他很强 — буквально 'він дуже сильний', і ніколи 他是强."
+      },
+      "zh": {
+        "title": "用'很'，不用'是'",
+        "body": "普通话里，形容词和主语之间用 很 (hěn) 连接，而不是用 是 (shì)：说 他很强，绝不能说 他是强。"
+      },
+      "ar": {
+        "title": "很 بدل 'يكون'",
+        "body": "تربط لغة الماندرين الصفات بالفاعل بـ 很 (hěn) لا بـ 是 (shì): فعبارة 他很强 تعني حرفيًا 'هو جدًّا قوي' — ولا يُقال أبدًا 他是强."
       }
     },
     "post_nominal_adjective": {
       "en": {
         "title": "The adjective follows the noun",
         "body": "In {lang}, describing words usually come after the thing they describe — 'house big' instead of 'big house'."
+      },
+      "pt": {
+        "title": "O adjetivo vem depois do substantivo",
+        "body": "Em {lang}, as palavras que descrevem costumam vir depois daquilo que descrevem — como em português: 'casa grande', e não 'grande casa'."
+      },
+      "fr": {
+        "title": "L'adjectif suit le nom",
+        "body": "En {lang}, les mots qui décrivent viennent généralement après ce qu'ils décrivent — comme en français : 'maison rouge' et non 'rouge maison'."
+      },
+      "de": {
+        "title": "Das Adjektiv folgt dem Substantiv",
+        "body": "In {lang} stehen beschreibende Wörter meist hinter dem, was sie beschreiben — also 'Haus groß' statt 'großes Haus'."
+      },
+      "el": {
+        "title": "Το επίθετο ακολουθεί το ουσιαστικό",
+        "body": "Στα {lang}, οι λέξεις που περιγράφουν έρχονται συνήθως μετά από αυτό που περιγράφουν — 'σπίτι μεγάλο' αντί για 'μεγάλο σπίτι'."
+      },
+      "es": {
+        "title": "El adjetivo va después del sustantivo",
+        "body": "En {lang}, las palabras que describen suelen ir después de lo que describen — como en español: 'casa grande', y no 'grande casa'."
+      },
+      "ja": {
+        "title": "形容詞は名詞の後ろに来る",
+        "body": "{lang}では、説明する言葉はふつう説明されるものの後ろに来ます。「大きい家」ではなく「家 大きい」の順になります。"
+      },
+      "ko": {
+        "title": "형용사가 명사 뒤에 와요",
+        "body": "{lang}에서는 꾸며 주는 말이 보통 꾸밈을 받는 말 뒤에 와요. '큰 집'이 아니라 '집 큰' 순서가 돼요."
+      },
+      "no": {
+        "title": "Adjektivet kommer etter substantivet",
+        "body": "I {lang} kommer beskrivende ord vanligvis etter det de beskriver — 'hus stort' i stedet for 'stort hus'."
+      },
+      "tr": {
+        "title": "Sıfat isimden sonra gelir",
+        "body": "{lang} dilinde niteleyen sözcükler genellikle niteledikleri şeyden sonra gelir — 'büyük ev' yerine 'ev büyük' denir."
+      },
+      "uk": {
+        "title": "Прикметник стоїть після іменника",
+        "body": "У мові {lang} означення зазвичай стоять після того, що описують — 'дім великий' замість 'великий дім'."
+      },
+      "zh": {
+        "title": "形容词放在名词后面",
+        "body": "在{lang}中，修饰的词通常放在被修饰的事物后面——语序是'房子 大'，而不是'大房子'。"
+      },
+      "ar": {
+        "title": "الصفة تأتي بعد الاسم",
+        "body": "في {lang}، تأتي الكلمات الواصفة عادةً بعد الشيء الذي تصفه — تمامًا كما في العربية: 'بيت كبير' لا 'كبير بيت'."
       }
     },
     "french_elision": {
       "en": {
         "title": "Small words squeeze together",
         "body": "In French, little words like je, le, la drop their vowel before a vowel sound: je aime → j'aime, la eau → l'eau."
+      },
+      "pt": {
+        "title": "Palavrinhas se juntam",
+        "body": "Em francês, palavras curtas como je, le, la perdem a vogal antes de um som de vogal: je aime → j'aime, la eau → l'eau."
+      },
+      "fr": {
+        "title": "Les petits mots s'attachent",
+        "body": "En français, les petits mots comme je, le, la perdent leur voyelle devant un son de voyelle : je aime → j'aime, la eau → l'eau."
+      },
+      "de": {
+        "title": "Kleine Wörter verschmelzen",
+        "body": "Im Französischen verlieren kleine Wörter wie je, le, la ihren Vokal vor einem Vokallaut: je aime → j'aime, la eau → l'eau."
+      },
+      "el": {
+        "title": "Οι μικρές λέξεις ενώνονται",
+        "body": "Στα γαλλικά, μικρές λέξεις όπως τα je, le, la χάνουν το φωνήεν τους πριν από ήχο φωνήεντος: je aime → j'aime, la eau → l'eau."
+      },
+      "es": {
+        "title": "Las palabras cortas se unen",
+        "body": "En francés, palabras cortas como je, le, la pierden su vocal ante un sonido vocálico: je aime → j'aime, la eau → l'eau."
+      },
+      "ja": {
+        "title": "小さな単語がくっつく",
+        "body": "フランス語では、je、le、la のような小さな単語は、母音の音の前で自分の母音を落とします：je aime → j'aime、la eau → l'eau。"
+      },
+      "ko": {
+        "title": "짧은 단어들이 붙어요",
+        "body": "프랑스어에서는 je, le, la 같은 짧은 단어가 모음 소리 앞에서 자기 모음을 잃어요: je aime → j'aime, la eau → l'eau."
+      },
+      "no": {
+        "title": "Småord smelter sammen",
+        "body": "På fransk mister småord som je, le, la vokalen sin foran en vokallyd: je aime → j'aime, la eau → l'eau."
+      },
+      "tr": {
+        "title": "Küçük sözcükler birleşir",
+        "body": "Fransızcada je, le, la gibi küçük sözcükler, ünlü bir sesten önce kendi ünlüsünü düşürür: je aime → j'aime, la eau → l'eau."
+      },
+      "uk": {
+        "title": "Короткі слова зливаються",
+        "body": "У французькій короткі слова, як-от je, le, la, втрачають свою голосну перед голосним звуком: je aime → j'aime, la eau → l'eau."
+      },
+      "zh": {
+        "title": "小词会缩在一起",
+        "body": "在法语中，je、le、la 这类小词在元音前会去掉自己的元音：je aime → j'aime，la eau → l'eau。"
+      },
+      "ar": {
+        "title": "الكلمات الصغيرة تندمج",
+        "body": "في الفرنسية، تفقد الكلمات الصغيرة مثل je وle وla حرف العلّة فيها قبل صوت علّة: je aime → j'aime، وla eau → l'eau."
       }
     },
     "french_possessive_agreement": {
       "en": {
         "title": "'My/his/her' matches the thing owned",
         "body": "In French, words like mon/ma ('my') match the gender of what is owned, not the owner: sa fille 'his daughter', son père 'her father'."
+      },
+      "pt": {
+        "title": "'Meu/minha' concorda com a coisa possuída",
+        "body": "Em francês, palavras como mon/ma ('meu/minha') concordam com o gênero do que é possuído, não com o do dono: sa fille 'a filha dele', son père 'o pai dela'."
+      },
+      "fr": {
+        "title": "'Mon/ma' s'accorde avec la chose possédée",
+        "body": "En français, les mots comme mon/ma s'accordent avec le genre de ce qui est possédé, pas avec celui du possesseur : sa fille peut être 'la fille de lui', son père 'le père d'elle'."
+      },
+      "de": {
+        "title": "'Mein/sein/ihr' richtet sich nach dem Besitz",
+        "body": "Im Französischen richten sich Wörter wie mon/ma ('mein/meine') nach dem Geschlecht des Besitzes, nicht des Besitzers: sa fille 'seine Tochter', son père 'ihr Vater'."
+      },
+      "el": {
+        "title": "Το 'μου/του/της' ταιριάζει με αυτό που ανήκει",
+        "body": "Στα γαλλικά, λέξεις όπως mon/ma ('μου') συμφωνούν με το γένος αυτού που ανήκει σε κάποιον, όχι με τον ιδιοκτήτη: sa fille 'η κόρη του', son père 'ο πατέρας της'."
+      },
+      "es": {
+        "title": "'Mi/su' concuerda con lo poseído",
+        "body": "En francés, palabras como mon/ma ('mi') concuerdan con el género de lo que se posee, no con el del dueño: sa fille 'la hija de él', son père 'el padre de ella'."
+      },
+      "ja": {
+        "title": "「私の／彼の／彼女の」は持ち物に合わせる",
+        "body": "フランス語では、mon/ma（「私の」）のような単語は、持ち主ではなく持ち物の性に合わせて形が変わります。sa fille は「彼の娘」、son père は「彼女の父」にもなります。"
+      },
+      "ko": {
+        "title": "'나의/그의/그녀의'는 소유물에 맞춰요",
+        "body": "프랑스어에서는 mon/ma('나의') 같은 단어가 소유자가 아니라 소유되는 것의 성에 맞춰 바뀌어요. sa fille는 '그의 딸', son père는 '그녀의 아버지'가 될 수 있어요."
+      },
+      "no": {
+        "title": "'Min/hans/hennes' retter seg etter tingen som eies",
+        "body": "På fransk retter ord som mon/ma ('min') seg etter kjønnet til det som eies, ikke etter eieren: sa fille 'hans datter', son père 'hennes far'."
+      },
+      "tr": {
+        "title": "'Benim/onun' sahip olunan şeye uyar",
+        "body": "Fransızcada mon/ma ('benim') gibi sözcükler, sahibin değil sahip olunan şeyin cinsiyetine uyar: sa fille '(erkeğin) kızı', son père '(kadının) babası'."
+      },
+      "uk": {
+        "title": "'Мій/його/її' узгоджується з тим, чим володіють",
+        "body": "У французькій слова на кшталт mon/ma ('мій/моя') узгоджуються з родом того, чим володіють, а не з власником: sa fille 'його донька', son père 'її батько'."
+      },
+      "zh": {
+        "title": "'我的/他的/她的'跟随所属物",
+        "body": "在法语中，mon/ma（'我的'）这类词要与被拥有的东西的性别一致，而不是与拥有者一致：sa fille 是'他的女儿'，son père 是'她的父亲'。"
+      },
+      "ar": {
+        "title": "'لي/له/لها' تتبع الشيء المملوك",
+        "body": "في الفرنسية، كلمات مثل mon/ma ('لي') تتبع جنس الشيء المملوك لا جنس المالك: sa fille 'ابنته هو'، وson père 'أبوها هي'."
       }
     },
     "gender_agreement": {
       "en": {
         "title": "Words agree in gender",
         "body": "In {lang}, every noun has a grammatical gender, and words that describe it change form to match — a feminine noun takes the feminine form."
+      },
+      "pt": {
+        "title": "As palavras concordam em gênero",
+        "body": "Em {lang}, todo substantivo tem um gênero gramatical, e as palavras que o descrevem mudam de forma para combinar — um substantivo feminino pede a forma feminina."
+      },
+      "fr": {
+        "title": "Les mots s'accordent en genre",
+        "body": "En {lang}, chaque nom a un genre grammatical, et les mots qui le décrivent changent de forme pour s'accorder — un nom féminin prend la forme féminine."
+      },
+      "de": {
+        "title": "Wörter richten sich nach dem Geschlecht",
+        "body": "In {lang} hat jedes Substantiv ein grammatisches Geschlecht, und Wörter, die es beschreiben, passen ihre Form daran an — ein weibliches Substantiv verlangt die weibliche Form."
+      },
+      "el": {
+        "title": "Οι λέξεις συμφωνούν στο γένος",
+        "body": "Στα {lang}, κάθε ουσιαστικό έχει γραμματικό γένος, και οι λέξεις που το περιγράφουν αλλάζουν μορφή για να ταιριάξουν — ένα θηλυκό ουσιαστικό παίρνει τη θηλυκή μορφή."
+      },
+      "es": {
+        "title": "Las palabras concuerdan en género",
+        "body": "En {lang}, cada sustantivo tiene un género gramatical, y las palabras que lo describen cambian de forma para concordar — un sustantivo femenino lleva la forma femenina."
+      },
+      "ja": {
+        "title": "単語の性を合わせる",
+        "body": "{lang}では、すべての名詞に文法上の性があり、それを説明する単語も形を合わせて変わります。女性名詞には女性形を使います。"
+      },
+      "ko": {
+        "title": "단어들이 성에 맞춰 일치해요",
+        "body": "{lang}에서는 모든 명사에 문법적인 성이 있고, 명사를 꾸미는 단어들도 그 성에 맞춰 형태가 바뀌어요. 여성 명사에는 여성형을 써요."
+      },
+      "no": {
+        "title": "Ordene samsvarer i kjønn",
+        "body": "I {lang} har hvert substantiv et grammatisk kjønn, og ordene som beskriver det, endrer form for å passe — et hunkjønnsord tar hunkjønnsform."
+      },
+      "tr": {
+        "title": "Sözcükler cinsiyette uyum sağlar",
+        "body": "{lang} dilinde her ismin bir dilbilgisel cinsiyeti vardır ve onu niteleyen sözcükler buna uyacak biçimde değişir — dişil bir isim dişil biçimi alır."
+      },
+      "uk": {
+        "title": "Слова узгоджуються в роді",
+        "body": "У мові {lang} кожен іменник має граматичний рід, і слова, що його описують, змінюють форму відповідно — іменник жіночого роду вимагає жіночої форми."
+      },
+      "zh": {
+        "title": "词要在性上保持一致",
+        "body": "在{lang}中，每个名词都有语法上的性，修饰它的词也要相应地变化——阴性名词要搭配阴性形式。"
+      },
+      "ar": {
+        "title": "الكلمات تتطابق في الجنس",
+        "body": "في {lang}، لكل اسم جنس نحوي، والكلمات التي تصفه تغيّر شكلها لتطابقه — فالاسم المؤنث يأخذ الصيغة المؤنثة."
       }
     },
     "sov_word_order": {
       "en": {
         "title": "The verb goes last",
         "body": "{lang} puts the verb at the end of the sentence: 'I food eat' instead of 'I eat food'."
+      },
+      "pt": {
+        "title": "O verbo vai para o final",
+        "body": "Em {lang}, o verbo fica no fim da frase: 'Eu comida como' em vez de 'Eu como comida'."
+      },
+      "fr": {
+        "title": "Le verbe se place à la fin",
+        "body": "En {lang}, le verbe vient à la fin de la phrase : 'Je nourriture mange' au lieu de 'Je mange de la nourriture'."
+      },
+      "de": {
+        "title": "Das Verb steht am Ende",
+        "body": "In {lang} steht das Verb am Ende des Satzes: 'Ich Essen esse' statt 'Ich esse Essen'."
+      },
+      "el": {
+        "title": "Το ρήμα πάει στο τέλος",
+        "body": "Στα {lang}, το ρήμα μπαίνει στο τέλος της πρότασης: 'Εγώ φαγητό τρώω' αντί για 'Εγώ τρώω φαγητό'."
+      },
+      "es": {
+        "title": "El verbo va al final",
+        "body": "En {lang}, el verbo va al final de la oración: 'Yo comida como' en vez de 'Yo como comida'."
+      },
+      "ja": {
+        "title": "動詞は最後に来る",
+        "body": "{lang}では、動詞が文の最後に来ます。日本語と同じで、「私はご飯を食べる」のように動詞で文が終わる語順です。"
+      },
+      "ko": {
+        "title": "동사가 맨 뒤에 와요",
+        "body": "{lang}에서는 동사가 문장 맨 끝에 와요. 한국어와 같아서 '나는 밥을 먹는다'처럼 문장이 동사로 끝나요."
+      },
+      "no": {
+        "title": "Verbet kommer sist",
+        "body": "I {lang} står verbet sist i setningen: 'Jeg mat spiser' i stedet for 'Jeg spiser mat'."
+      },
+      "tr": {
+        "title": "Fiil en sona gelir",
+        "body": "{lang} dilinde fiil cümlenin sonunda yer alır — tıpkı Türkçedeki gibi: 'Ben yemek yerim'."
+      },
+      "uk": {
+        "title": "Дієслово стоїть у кінці",
+        "body": "У мові {lang} дієслово ставиться в кінці речення: 'Я їжу їм' замість 'Я їм їжу'."
+      },
+      "zh": {
+        "title": "动词放在最后",
+        "body": "{lang}把动词放在句子末尾：'我 饭 吃'，而不是'我吃饭'。"
+      },
+      "ar": {
+        "title": "الفعل يأتي في النهاية",
+        "body": "في {lang} يأتي الفعل في نهاية الجملة: 'أنا الطعامَ آكل' بدلًا من 'أنا آكل الطعام'."
       }
     },
     "vso_word_order": {
       "en": {
         "title": "The verb comes first",
         "body": "{lang} often starts a sentence with the verb: 'Eat I food' instead of 'I eat food'."
+      },
+      "pt": {
+        "title": "O verbo vem primeiro",
+        "body": "Em {lang}, a frase muitas vezes começa com o verbo: 'Como eu comida' em vez de 'Eu como comida'."
+      },
+      "fr": {
+        "title": "Le verbe vient en premier",
+        "body": "En {lang}, la phrase commence souvent par le verbe : 'Mange je nourriture' au lieu de 'Je mange de la nourriture'."
+      },
+      "de": {
+        "title": "Das Verb kommt zuerst",
+        "body": "In {lang} beginnt der Satz oft mit dem Verb: 'Esse ich Essen' statt 'Ich esse Essen'."
+      },
+      "el": {
+        "title": "Το ρήμα έρχεται πρώτο",
+        "body": "Στα {lang}, η πρόταση συχνά ξεκινά με το ρήμα: 'Τρώω εγώ φαγητό' αντί για 'Εγώ τρώω φαγητό'."
+      },
+      "es": {
+        "title": "El verbo va primero",
+        "body": "En {lang}, la oración a menudo empieza con el verbo: 'Como yo comida' en vez de 'Yo como comida'."
+      },
+      "ja": {
+        "title": "動詞が最初に来る",
+        "body": "{lang}では、文が動詞から始まることがよくあります。「食べる 私は ご飯を」のような語順で、「私はご飯を食べる」とは逆の並びです。"
+      },
+      "ko": {
+        "title": "동사가 맨 앞에 와요",
+        "body": "{lang}에서는 문장이 동사로 시작하는 경우가 많아요. '먹는다 나는 밥을'처럼, '나는 밥을 먹는다'와는 순서가 달라요."
+      },
+      "no": {
+        "title": "Verbet kommer først",
+        "body": "I {lang} begynner setningen ofte med verbet: 'Spiser jeg mat' i stedet for 'Jeg spiser mat'."
+      },
+      "tr": {
+        "title": "Fiil en başa gelir",
+        "body": "{lang} dilinde cümle çoğu zaman fiille başlar: 'Ben yemek yerim' yerine 'Yerim ben yemek' denir."
+      },
+      "uk": {
+        "title": "Дієслово йде першим",
+        "body": "У мові {lang} речення часто починається з дієслова: 'Їм я їжу' замість 'Я їм їжу'."
+      },
+      "zh": {
+        "title": "动词放在最前面",
+        "body": "{lang}的句子常常以动词开头：'吃 我 饭'，而不是'我吃饭'。"
+      },
+      "ar": {
+        "title": "الفعل يأتي أولًا",
+        "body": "في {lang} تبدأ الجملة غالبًا بالفعل — تمامًا كما في العربية الفصحى: 'يأكل الولدُ الطعامَ' بدلًا من 'الولدُ يأكل الطعامَ'."
       }
     },
     "indefinite_article": {
       "en": {
         "title": "Choosing the word for 'a'",
         "body": "The little word for 'a' changes with the noun — in English by sound (a book, an apple), in {lang} by the noun's gender or form."
+      },
+      "pt": {
+        "title": "Escolher a palavra para 'um'",
+        "body": "A palavrinha para 'um' muda conforme o substantivo — em inglês pelo som (a book, an apple), em {lang} pelo gênero ou pela forma do substantivo."
+      },
+      "fr": {
+        "title": "Choisir le mot pour 'un'",
+        "body": "Le petit mot pour 'un' change selon le nom — en anglais selon le son (a book, an apple), en {lang} selon le genre ou la forme du nom."
+      },
+      "de": {
+        "title": "Das Wort für 'ein' wählen",
+        "body": "Das kleine Wort für 'ein' ändert sich mit dem Substantiv — im Englischen nach dem Klang (a book, an apple), in {lang} nach Geschlecht oder Form des Substantivs."
+      },
+      "el": {
+        "title": "Η επιλογή της λέξης για το 'ένα'",
+        "body": "Η μικρή λέξη για το 'ένα' αλλάζει ανάλογα με το ουσιαστικό — στα αγγλικά ανάλογα με τον ήχο (a book, an apple), στα {lang} ανάλογα με το γένος ή τη μορφή του ουσιαστικού."
+      },
+      "es": {
+        "title": "Elegir la palabra para 'un'",
+        "body": "La palabrita para 'un' cambia según el sustantivo — en inglés por el sonido (a book, an apple), en {lang} por el género o la forma del sustantivo."
+      },
+      "ja": {
+        "title": "「一つの」にあたる言葉の選び方",
+        "body": "英語の 'a' にあたる小さな言葉は、名詞によって変わります。英語では音で決まり（a book, an apple）、{lang}では名詞の性や形で決まります。"
+      },
+      "ko": {
+        "title": "'하나의'에 해당하는 말 고르기",
+        "body": "영어의 'a'에 해당하는 작은 단어는 명사에 따라 달라져요. 영어에서는 소리에 따라(a book, an apple), {lang}에서는 명사의 성이나 형태에 따라 바뀌어요."
+      },
+      "no": {
+        "title": "Å velge ordet for 'en'",
+        "body": "Det lille ordet for 'en' endrer seg med substantivet — på engelsk etter lyden (a book, an apple), i {lang} etter substantivets kjønn eller form."
+      },
+      "tr": {
+        "title": "'Bir' için doğru sözcüğü seçmek",
+        "body": "'Bir' anlamındaki küçük sözcük isme göre değişir — İngilizcede sese göre (a book, an apple), {lang} dilinde ise ismin cinsiyetine veya biçimine göre."
+      },
+      "uk": {
+        "title": "Як обрати слово для 'один'",
+        "body": "Маленьке слово зі значенням 'один/якийсь' змінюється залежно від іменника — в англійській за звуком (a book, an apple), у мові {lang} за родом чи формою іменника."
+      },
+      "zh": {
+        "title": "如何选'一个'这个词",
+        "body": "表示'一个'的小词会随名词变化——英语按发音（a book, an apple），{lang}则按名词的性或形式。"
+      },
+      "ar": {
+        "title": "اختيار الكلمة الدالة على 'واحد'",
+        "body": "الكلمة الصغيرة التي تعني 'واحدًا' (مثل 'a' الإنجليزية) تتغيّر مع الاسم — في الإنجليزية حسب الصوت (a book, an apple)، وفي {lang} حسب جنس الاسم أو شكله."
       }
     },
     "ja_counter": {
       "en": {
         "title": "Counting with counter words",
         "body": "In Japanese, numbers attach to nouns through a counter plus の: 二つの食べ物 is literally 'two-items of food'."
+      },
+      "pt": {
+        "title": "Contando com palavras contadoras",
+        "body": "Em japonês, os números se ligam aos substantivos por meio de um contador mais の: 二つの食べ物 é literalmente 'duas-unidades de comida'."
+      },
+      "fr": {
+        "title": "Compter avec des mots compteurs",
+        "body": "En japonais, les nombres se rattachent aux noms via un compteur suivi de の : 二つの食べ物 signifie littéralement 'deux-unités de nourriture'."
+      },
+      "de": {
+        "title": "Zählen mit Zählwörtern",
+        "body": "Im Japanischen verbinden sich Zahlen mit Substantiven über ein Zählwort plus の: 二つの食べ物 heißt wörtlich 'zwei-Stück an Essen'."
+      },
+      "el": {
+        "title": "Μέτρημα με μετρητικές λέξεις",
+        "body": "Στα ιαπωνικά, οι αριθμοί συνδέονται με τα ουσιαστικά μέσω μιας μετρητικής λέξης και του の: το 二つの食べ物 σημαίνει κυριολεκτικά 'δύο-τεμάχια φαγητού'."
+      },
+      "es": {
+        "title": "Contar con palabras contadoras",
+        "body": "En japonés, los números se unen a los sustantivos mediante un contador más の: 二つの食べ物 es literalmente 'dos-unidades de comida'."
+      },
+      "ja": {
+        "title": "助数詞で数える",
+        "body": "日本語では、数は助数詞と「の」を使って名詞につながります。二つの食べ物 のように、「数＋の＋名詞」の形になります。"
+      },
+      "ko": {
+        "title": "세는 말로 수 세기",
+        "body": "일본어에서는 숫자가 세는 말과 の를 통해 명사에 붙어요. 二つの食べ物는 말 그대로 '두 개의 음식'이에요."
+      },
+      "no": {
+        "title": "Telling med telleord",
+        "body": "På japansk knyttes tall til substantiv gjennom et telleord pluss の: 二つの食べ物 er bokstavelig talt 'to-stykker av mat'."
+      },
+      "tr": {
+        "title": "Sayaç sözcüklerle saymak",
+        "body": "Japoncada sayılar, bir sayaç sözcük ve の aracılığıyla isimlere bağlanır: 二つの食べ物 kelimesi kelimesine 'iki-adet yiyecek' demektir."
+      },
+      "uk": {
+        "title": "Лічба зі словами-лічильниками",
+        "body": "У японській числа приєднуються до іменників через лічильник і の: 二つの食べ物 — буквально 'дві-штуки їжі'."
+      },
+      "zh": {
+        "title": "用量词来数数",
+        "body": "在日语中，数字要通过量词加 の 与名词连接：二つの食べ物 字面意思是'两个 的 食物'——和中文的量词很像。"
+      },
+      "ar": {
+        "title": "العدّ بكلمات العدّ",
+        "body": "في اليابانية، ترتبط الأرقام بالأسماء عبر كلمة عدّ متبوعة بـ の: فعبارة 二つの食べ物 تعني حرفيًا 'قطعتان من الطعام'."
       }
     }
   }
