@@ -24,6 +24,8 @@ jobs:
           node-version: "18"
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Lint
+        run: npm run lint
       - name: Run validators
         run: npm run validate
 

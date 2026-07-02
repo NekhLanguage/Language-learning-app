@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node tests/dev-server.mjs",
     "test:e2e": "playwright test",
+    "lint": "eslint .",
     "validate": "node validation/validate-structure.js && node validation/validate-templates.js && node validation/validate-exercises.js && node validation/validate-packs.js && node validation/validate-sentences.mjs",
     "validate:sentences": "node validation/validate-sentences.mjs",
     "validate:sentences:update": "node validation/validate-sentences.mjs --update-baseline"
@@ -13,6 +14,9 @@
     "@google-cloud/text-to-speech": "^5.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.61.1"
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.61.1",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0"
   }
 }

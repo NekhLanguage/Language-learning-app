@@ -118,10 +118,9 @@ function main() {
     const closeIdx = matchBrace(raw, openIdx);
 
     // Find the last non-whitespace char before closeIdx (end of last block).
-    let insertAt = closeIdx;
     let j = closeIdx - 1;
     while (j > openIdx && /\s/.test(raw[j])) j--;
-    insertAt = j + 1; // right after last block's closing brace
+    const insertAt = j + 1; // right after last block's closing brace
 
     const blockText = newBlocks
       .map(b => serializeBlock(b.lang, b.label, b.forms, conceptIds))

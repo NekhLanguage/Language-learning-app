@@ -3403,7 +3403,7 @@ checkBtn.onclick = () => {
 
   const tState = ensureTemplateProgress(tpl);
 
-  let resultType = null;
+  let resultType;
 
   if (strictUser === strictCorrect) {
     resultType = "perfect";
@@ -4032,7 +4032,6 @@ if (bar) {
   }
 
   const excluded = new Set();
-  let renderedSomething = false;
 
 for (let attempts = 0; attempts < 25; attempts++) {
 
@@ -4092,7 +4091,6 @@ for (let attempts = 0; attempts < 25; attempts++) {
     }
 
     renderExposure(targetLang, supportLang, tpl, targetConcept);
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4183,7 +4181,6 @@ if (level === 2) {
     checkBtn.onclick = () => renderNext(targetLang, supportLang);
   };
 
-  renderedSomething = true;
   run.exerciseCounter++;
   return;
 }
@@ -4204,7 +4201,6 @@ if (level === 2) {
       continue;
     }
 
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4225,7 +4221,6 @@ if (level === 2) {
       continue;
     }
 
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4248,7 +4243,6 @@ if (level === 2) {
 
     if (uniqueL5.length >= 5) {
       renderMatchingL5(targetLang, supportLang);
-      renderedSomething = true;
       run.exerciseCounter++;
       return;
     }
@@ -4268,7 +4262,6 @@ if (level === 2) {
     }
 
     renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4283,7 +4276,6 @@ if (level === 2) {
     }
 
     renderFreeProductionL7(targetLang, supportLang, tpl, targetConcept);
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4291,14 +4283,10 @@ if (level === 2) {
   excluded.add(targetConcept);
 }
 
-if (!renderedSomething) {
-  run.sessionComplete = true;
-  return endSession(targetLang, supportLang);
-}
-
-// Otherwise try again safely
-setTimeout(() => renderNext(targetLang, supportLang), 0);
-return;
+// Every successful render returns from inside the loop above, so reaching
+// this point means nothing could be shown — end the session.
+run.sessionComplete = true;
+return endSession(targetLang, supportLang);
 }
 
 

@@ -101,7 +101,7 @@ function main() {
       // Validate JSON before writing back.
       let parsed;
       try { parsed = JSON.parse(text); }
-      catch (e) { throw new Error(`${packFile}: produced invalid JSON — ${e.message}`); }
+      catch (e) { throw new Error(`${packFile}: produced invalid JSON — ${e.message}`, { cause: e }); }
       if (!CHECK) fs.writeFileSync(full, text);
       console.log(`${CHECK ? '[check] ' : ''}${packFile}: updated`);
       void parsed;

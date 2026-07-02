@@ -79,7 +79,7 @@ function sendJson(res, status, obj) {
 
 async function handleFunction(name, req, res, url) {
   const raw = req.method === "GET" ? "" : await readBody(req);
-  let body = {};
+  let body;
   try {
     body = raw ? JSON.parse(raw) : {};
   } catch {
