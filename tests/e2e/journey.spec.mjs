@@ -59,6 +59,17 @@ test("new learner reaches the first exercise", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("the fitness pack is selectable and playable", async ({ page }) => {
+  await startNewRun(page, { packId: "fitness" });
+
+  // First exposure renders from the merged core+fitness vocabulary.
+  await expect(page.locator("#content h2")).toBeVisible();
+  await expect(page.locator("#continue-btn")).toBeVisible();
+
+  const packs = await page.evaluate(() => window.__app.run.selectedResourcePacks);
+  expect(packs).toEqual(["fitness"]);
+});
+
 test("returning learner skips setup and goes straight to exercises", async ({ page }) => {
   await startNewRun(page); // fresh unique account, setup completed
 

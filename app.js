@@ -448,6 +448,34 @@ const RESOURCE_PACKS = {
     { id: "space_10", concepts: ["DIMENSION","FRONTIER","WARP","EVOLVE","FUTURISTIC"] }
 
   ]
+},
+  fitness: {
+  vocabFile: "fitness.json",
+  templateFile: "sentence_templates_fitness.json",
+  beta: true,
+  bundles: [
+
+    { id: "fit_01", concepts: ["WORKOUT","MUSCLE","DUMBBELL","TREADMILL","WEIGHT"] },
+
+    { id: "fit_02", concepts: ["REPETITION","SWEAT","ENERGY","PROTEIN","HABIT"] },
+
+    { id: "fit_03", concepts: ["PROGRESS","TARGET","HEART","KNEE","SHOULDER"] },
+
+    { id: "fit_04", concepts: ["CALORIE","RUNNER","RACE","MARATHON","WARMUP"] },
+
+    { id: "fit_05", concepts: ["LOCKER_ROOM","TOWEL","BOTTLE","BICYCLE","POOL"] },
+
+    { id: "fit_06", concepts: ["STRENGTH","INJURY","REST","LIFT","STRETCH"] },
+
+    { id: "fit_07", concepts: ["BREATHE","PEDAL","PUSH","PULL","MEASURE"] },
+
+    { id: "fit_08", concepts: ["IMPROVE","RECOVER","WEIGH","FINISH","REPEAT"] },
+
+    { id: "fit_09", concepts: ["HEALTHY","ACTIVE","SORE","FLEXIBLE","INTENSE"] },
+
+    { id: "fit_10", concepts: ["WEAK","MOTIVATED","EXHAUSTED","DAILY","MUSCULAR"] }
+
+  ]
 }
 };
 
@@ -1019,7 +1047,8 @@ if (buyAccess) {
     "politeness_modality.json","pronouns.json","quantifiers.json",
     "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json",
     "anime.json", "football.json", "music.json",
-    "everyday_life.json", "fashion_style.json", "gaming.json", "tourism.json", "space_scifi.json"
+    "everyday_life.json", "fashion_style.json", "gaming.json", "tourism.json", "space_scifi.json",
+    "fitness.json"
   ];
 
 function createRunState() {

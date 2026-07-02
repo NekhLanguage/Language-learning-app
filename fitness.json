@@ -1,0 +1,3292 @@
+{
+ "concepts": [
+  {
+   "concept_id": "WORKOUT",
+   "type": "noun"
+  },
+  {
+   "concept_id": "MUSCLE",
+   "type": "noun"
+  },
+  {
+   "concept_id": "DUMBBELL",
+   "type": "noun"
+  },
+  {
+   "concept_id": "TREADMILL",
+   "type": "noun"
+  },
+  {
+   "concept_id": "WEIGHT",
+   "type": "noun"
+  },
+  {
+   "concept_id": "REPETITION",
+   "type": "noun"
+  },
+  {
+   "concept_id": "SWEAT",
+   "type": "noun",
+   "countable": false
+  },
+  {
+   "concept_id": "ENERGY",
+   "type": "noun",
+   "countable": false,
+   "semantic_role": "abstract"
+  },
+  {
+   "concept_id": "PROTEIN",
+   "type": "noun",
+   "countable": false
+  },
+  {
+   "concept_id": "HABIT",
+   "type": "noun",
+   "semantic_role": "abstract"
+  },
+  {
+   "concept_id": "PROGRESS",
+   "type": "noun",
+   "countable": false,
+   "semantic_role": "abstract"
+  },
+  {
+   "concept_id": "TARGET",
+   "type": "noun",
+   "semantic_role": "abstract"
+  },
+  {
+   "concept_id": "HEART",
+   "type": "noun"
+  },
+  {
+   "concept_id": "KNEE",
+   "type": "noun"
+  },
+  {
+   "concept_id": "SHOULDER",
+   "type": "noun"
+  },
+  {
+   "concept_id": "CALORIE",
+   "type": "noun"
+  },
+  {
+   "concept_id": "RUNNER",
+   "type": "noun"
+  },
+  {
+   "concept_id": "RACE",
+   "type": "noun"
+  },
+  {
+   "concept_id": "MARATHON",
+   "type": "noun"
+  },
+  {
+   "concept_id": "WARMUP",
+   "type": "noun"
+  },
+  {
+   "concept_id": "LOCKER_ROOM",
+   "type": "noun"
+  },
+  {
+   "concept_id": "TOWEL",
+   "type": "noun"
+  },
+  {
+   "concept_id": "BOTTLE",
+   "type": "noun"
+  },
+  {
+   "concept_id": "BICYCLE",
+   "type": "noun"
+  },
+  {
+   "concept_id": "POOL",
+   "type": "noun"
+  },
+  {
+   "concept_id": "STRENGTH",
+   "type": "noun",
+   "countable": false,
+   "semantic_role": "abstract"
+  },
+  {
+   "concept_id": "INJURY",
+   "type": "noun"
+  },
+  {
+   "concept_id": "REST",
+   "type": "noun",
+   "countable": false,
+   "semantic_role": "abstract"
+  },
+  {
+   "concept_id": "LIFT",
+   "type": "verb"
+  },
+  {
+   "concept_id": "STRETCH",
+   "type": "verb"
+  },
+  {
+   "concept_id": "BREATHE",
+   "type": "verb"
+  },
+  {
+   "concept_id": "PEDAL",
+   "type": "verb"
+  },
+  {
+   "concept_id": "PUSH",
+   "type": "verb"
+  },
+  {
+   "concept_id": "PULL",
+   "type": "verb"
+  },
+  {
+   "concept_id": "MEASURE",
+   "type": "verb"
+  },
+  {
+   "concept_id": "IMPROVE",
+   "type": "verb"
+  },
+  {
+   "concept_id": "RECOVER",
+   "type": "verb"
+  },
+  {
+   "concept_id": "WEIGH",
+   "type": "verb"
+  },
+  {
+   "concept_id": "FINISH",
+   "type": "verb"
+  },
+  {
+   "concept_id": "REPEAT",
+   "type": "verb"
+  },
+  {
+   "concept_id": "HEALTHY",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "ACTIVE",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "SORE",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "FLEXIBLE",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "INTENSE",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "WEAK",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "MOTIVATED",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "EXHAUSTED",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "DAILY",
+   "type": "adjective"
+  },
+  {
+   "concept_id": "MUSCULAR",
+   "type": "adjective"
+  }
+ ],
+ "languages": {
+  "en": {
+   "label": "English",
+   "forms": {
+    "WORKOUT": {
+     "form": "workout",
+     "article": "a"
+    },
+    "MUSCLE": {
+     "form": "muscle",
+     "article": "a"
+    },
+    "DUMBBELL": {
+     "form": "dumbbell",
+     "article": "a"
+    },
+    "TREADMILL": {
+     "form": "treadmill",
+     "article": "a"
+    },
+    "WEIGHT": {
+     "form": "weight",
+     "article": "a"
+    },
+    "REPETITION": {
+     "form": "repetition",
+     "article": "a"
+    },
+    "SWEAT": {
+     "form": "sweat"
+    },
+    "ENERGY": {
+     "form": "energy"
+    },
+    "PROTEIN": {
+     "form": "protein"
+    },
+    "HABIT": {
+     "form": "habit",
+     "article": "a"
+    },
+    "PROGRESS": {
+     "form": "progress"
+    },
+    "TARGET": {
+     "form": "target",
+     "article": "a"
+    },
+    "HEART": {
+     "form": "heart",
+     "article": "a"
+    },
+    "KNEE": {
+     "form": "knee",
+     "article": "a"
+    },
+    "SHOULDER": {
+     "form": "shoulder",
+     "article": "a"
+    },
+    "CALORIE": {
+     "form": "calorie",
+     "article": "a"
+    },
+    "RUNNER": {
+     "form": "runner",
+     "article": "a"
+    },
+    "RACE": {
+     "form": "race",
+     "article": "a"
+    },
+    "MARATHON": {
+     "form": "marathon",
+     "article": "a"
+    },
+    "WARMUP": {
+     "form": "warm-up",
+     "article": "a"
+    },
+    "LOCKER_ROOM": {
+     "form": "locker room",
+     "article": "a"
+    },
+    "TOWEL": {
+     "form": "towel",
+     "article": "a"
+    },
+    "BOTTLE": {
+     "form": "bottle",
+     "article": "a"
+    },
+    "BICYCLE": {
+     "form": "bicycle",
+     "article": "a"
+    },
+    "POOL": {
+     "form": "pool",
+     "article": "a"
+    },
+    "STRENGTH": {
+     "form": "strength"
+    },
+    "INJURY": {
+     "form": "injury",
+     "article": "an"
+    },
+    "REST": {
+     "form": "rest"
+    },
+    "LIFT": {
+     "base": "lift",
+     "3_singular": "lifts"
+    },
+    "STRETCH": {
+     "base": "stretch",
+     "3_singular": "stretches"
+    },
+    "BREATHE": {
+     "base": "breathe",
+     "3_singular": "breathes"
+    },
+    "PEDAL": {
+     "base": "pedal",
+     "3_singular": "pedals"
+    },
+    "PUSH": {
+     "base": "push",
+     "3_singular": "pushes"
+    },
+    "PULL": {
+     "base": "pull",
+     "3_singular": "pulls"
+    },
+    "MEASURE": {
+     "base": "measure",
+     "3_singular": "measures"
+    },
+    "IMPROVE": {
+     "base": "improve",
+     "3_singular": "improves"
+    },
+    "RECOVER": {
+     "base": "recover",
+     "3_singular": "recovers"
+    },
+    "WEIGH": {
+     "base": "weigh",
+     "3_singular": "weighs"
+    },
+    "FINISH": {
+     "base": "finish",
+     "3_singular": "finishes"
+    },
+    "REPEAT": {
+     "base": "repeat",
+     "3_singular": "repeats"
+    },
+    "HEALTHY": [
+     "healthy"
+    ],
+    "ACTIVE": [
+     "active"
+    ],
+    "SORE": [
+     "sore"
+    ],
+    "FLEXIBLE": [
+     "flexible"
+    ],
+    "INTENSE": [
+     "intense"
+    ],
+    "WEAK": [
+     "weak"
+    ],
+    "MOTIVATED": [
+     "motivated"
+    ],
+    "EXHAUSTED": [
+     "exhausted"
+    ],
+    "DAILY": [
+     "daily"
+    ],
+    "MUSCULAR": [
+     "muscular"
+    ]
+   }
+  },
+  "pt": {
+   "label": "Português",
+   "forms": {
+    "WORKOUT": {
+     "form": "treino",
+     "gender": "m",
+     "plural": "treinos"
+    },
+    "MUSCLE": {
+     "form": "músculo",
+     "gender": "m",
+     "plural": "músculos"
+    },
+    "DUMBBELL": {
+     "form": "halter",
+     "gender": "m",
+     "plural": "halteres"
+    },
+    "TREADMILL": {
+     "form": "esteira",
+     "gender": "f",
+     "plural": "esteiras"
+    },
+    "WEIGHT": {
+     "form": "peso",
+     "gender": "m",
+     "plural": "pesos"
+    },
+    "REPETITION": {
+     "form": "repetição",
+     "gender": "f",
+     "plural": "repetições"
+    },
+    "SWEAT": {
+     "form": "suor",
+     "gender": "m"
+    },
+    "ENERGY": {
+     "form": "energia",
+     "gender": "f"
+    },
+    "PROTEIN": {
+     "form": "proteína",
+     "gender": "f"
+    },
+    "HABIT": {
+     "form": "hábito",
+     "gender": "m",
+     "plural": "hábitos"
+    },
+    "PROGRESS": {
+     "form": "progresso",
+     "gender": "m"
+    },
+    "TARGET": {
+     "form": "meta",
+     "gender": "f",
+     "plural": "metas"
+    },
+    "HEART": {
+     "form": "coração",
+     "gender": "m",
+     "plural": "corações"
+    },
+    "KNEE": {
+     "form": "joelho",
+     "gender": "m",
+     "plural": "joelhos"
+    },
+    "SHOULDER": {
+     "form": "ombro",
+     "gender": "m",
+     "plural": "ombros"
+    },
+    "CALORIE": {
+     "form": "caloria",
+     "gender": "f",
+     "plural": "calorias"
+    },
+    "RUNNER": {
+     "form": "corredor",
+     "gender": "m",
+     "plural": "corredores"
+    },
+    "RACE": {
+     "form": "corrida",
+     "gender": "f",
+     "plural": "corridas"
+    },
+    "MARATHON": {
+     "form": "maratona",
+     "gender": "f",
+     "plural": "maratonas"
+    },
+    "WARMUP": {
+     "form": "aquecimento",
+     "gender": "m",
+     "plural": "aquecimentos"
+    },
+    "LOCKER_ROOM": {
+     "form": "vestiário",
+     "gender": "m",
+     "plural": "vestiários"
+    },
+    "TOWEL": {
+     "form": "toalha",
+     "gender": "f",
+     "plural": "toalhas"
+    },
+    "BOTTLE": {
+     "form": "garrafa",
+     "gender": "f",
+     "plural": "garrafas"
+    },
+    "BICYCLE": {
+     "form": "bicicleta",
+     "gender": "f",
+     "plural": "bicicletas"
+    },
+    "POOL": {
+     "form": "piscina",
+     "gender": "f",
+     "plural": "piscinas"
+    },
+    "STRENGTH": {
+     "form": "força",
+     "gender": "f"
+    },
+    "INJURY": {
+     "form": "lesão",
+     "gender": "f",
+     "plural": "lesões"
+    },
+    "REST": {
+     "form": "descanso",
+     "gender": "m"
+    },
+    "LIFT": {
+     "base": "levantar",
+     "1_singular": "levanto",
+     "2_singular": "levantas",
+     "3_singular": "levanta",
+     "1_plural": "levantamos",
+     "2_plural": "levantam",
+     "3_plural": "levantam"
+    },
+    "STRETCH": {
+     "base": "alongar",
+     "1_singular": "alongo",
+     "2_singular": "alongas",
+     "3_singular": "alonga",
+     "1_plural": "alongamos",
+     "2_plural": "alongam",
+     "3_plural": "alongam"
+    },
+    "BREATHE": {
+     "base": "respirar",
+     "1_singular": "respiro",
+     "2_singular": "respiras",
+     "3_singular": "respira",
+     "1_plural": "respiramos",
+     "2_plural": "respiram",
+     "3_plural": "respiram"
+    },
+    "PEDAL": {
+     "base": "pedalar",
+     "1_singular": "pedalo",
+     "2_singular": "pedalas",
+     "3_singular": "pedala",
+     "1_plural": "pedalamos",
+     "2_plural": "pedalam",
+     "3_plural": "pedalam"
+    },
+    "PUSH": {
+     "base": "empurrar",
+     "1_singular": "empurro",
+     "2_singular": "empurras",
+     "3_singular": "empurra",
+     "1_plural": "empurramos",
+     "2_plural": "empurram",
+     "3_plural": "empurram"
+    },
+    "PULL": {
+     "base": "puxar",
+     "1_singular": "puxo",
+     "2_singular": "puxas",
+     "3_singular": "puxa",
+     "1_plural": "puxamos",
+     "2_plural": "puxam",
+     "3_plural": "puxam"
+    },
+    "MEASURE": {
+     "base": "medir",
+     "1_singular": "meço",
+     "2_singular": "medes",
+     "3_singular": "mede",
+     "1_plural": "medimos",
+     "2_plural": "medem",
+     "3_plural": "medem"
+    },
+    "IMPROVE": {
+     "base": "melhorar",
+     "1_singular": "melhoro",
+     "2_singular": "melhoras",
+     "3_singular": "melhora",
+     "1_plural": "melhoramos",
+     "2_plural": "melhoram",
+     "3_plural": "melhoram"
+    },
+    "RECOVER": {
+     "base": "recuperar",
+     "1_singular": "recupero",
+     "2_singular": "recuperas",
+     "3_singular": "recupera",
+     "1_plural": "recuperamos",
+     "2_plural": "recuperam",
+     "3_plural": "recuperam"
+    },
+    "WEIGH": {
+     "base": "pesar",
+     "1_singular": "peso",
+     "2_singular": "pesas",
+     "3_singular": "pesa",
+     "1_plural": "pesamos",
+     "2_plural": "pesam",
+     "3_plural": "pesam"
+    },
+    "FINISH": {
+     "base": "terminar",
+     "1_singular": "termino",
+     "2_singular": "terminas",
+     "3_singular": "termina",
+     "1_plural": "terminamos",
+     "2_plural": "terminam",
+     "3_plural": "terminam"
+    },
+    "REPEAT": {
+     "base": "repetir",
+     "1_singular": "repito",
+     "2_singular": "repetes",
+     "3_singular": "repete",
+     "1_plural": "repetimos",
+     "2_plural": "repetem",
+     "3_plural": "repetem"
+    },
+    "HEALTHY": [
+     "saudável"
+    ],
+    "ACTIVE": [
+     "ativo"
+    ],
+    "SORE": [
+     "dolorido"
+    ],
+    "FLEXIBLE": [
+     "flexível"
+    ],
+    "INTENSE": [
+     "intenso"
+    ],
+    "WEAK": [
+     "fraco"
+    ],
+    "MOTIVATED": [
+     "motivado"
+    ],
+    "EXHAUSTED": [
+     "exausto"
+    ],
+    "DAILY": [
+     "diário"
+    ],
+    "MUSCULAR": [
+     "musculoso"
+    ]
+   }
+  },
+  "ar": {
+   "label": "العربية",
+   "forms": {
+    "WORKOUT": {
+     "form": "تمرين",
+     "gender": "m"
+    },
+    "MUSCLE": {
+     "form": "عضلة",
+     "gender": "f"
+    },
+    "DUMBBELL": {
+     "form": "دمبل",
+     "gender": "m"
+    },
+    "TREADMILL": {
+     "form": "جهاز المشي",
+     "gender": "m"
+    },
+    "WEIGHT": {
+     "form": "وزن",
+     "gender": "m"
+    },
+    "REPETITION": {
+     "form": "تكرار",
+     "gender": "m"
+    },
+    "SWEAT": {
+     "form": "عرق",
+     "gender": "m"
+    },
+    "ENERGY": {
+     "form": "طاقة",
+     "gender": "f"
+    },
+    "PROTEIN": {
+     "form": "بروتين",
+     "gender": "m"
+    },
+    "HABIT": {
+     "form": "عادة",
+     "gender": "f"
+    },
+    "PROGRESS": {
+     "form": "تقدم",
+     "gender": "m"
+    },
+    "TARGET": {
+     "form": "هدف",
+     "gender": "m"
+    },
+    "HEART": {
+     "form": "قلب",
+     "gender": "m"
+    },
+    "KNEE": {
+     "form": "ركبة",
+     "gender": "f"
+    },
+    "SHOULDER": {
+     "form": "كتف",
+     "gender": "m"
+    },
+    "CALORIE": {
+     "form": "سعرة حرارية",
+     "gender": "f"
+    },
+    "RUNNER": {
+     "form": "عداء",
+     "gender": "m"
+    },
+    "RACE": {
+     "form": "سباق",
+     "gender": "m"
+    },
+    "MARATHON": {
+     "form": "ماراثون",
+     "gender": "m"
+    },
+    "WARMUP": {
+     "form": "إحماء",
+     "gender": "m"
+    },
+    "LOCKER_ROOM": {
+     "form": "غرفة تبديل الملابس",
+     "gender": "f"
+    },
+    "TOWEL": {
+     "form": "منشفة",
+     "gender": "f"
+    },
+    "BOTTLE": {
+     "form": "زجاجة",
+     "gender": "f"
+    },
+    "BICYCLE": {
+     "form": "دراجة",
+     "gender": "f"
+    },
+    "POOL": {
+     "form": "مسبح",
+     "gender": "m"
+    },
+    "STRENGTH": {
+     "form": "قوة",
+     "gender": "f"
+    },
+    "INJURY": {
+     "form": "إصابة",
+     "gender": "f"
+    },
+    "REST": {
+     "form": "راحة",
+     "gender": "f"
+    },
+    "LIFT": {
+     "base": "يرفع",
+     "1_singular": "أرفع",
+     "2_singular": "ترفع",
+     "3_singular": "يرفع",
+     "1_plural": "نرفع",
+     "2_plural": "ترفعون",
+     "3_plural": "يرفعون"
+    },
+    "STRETCH": {
+     "base": "يتمدد",
+     "1_singular": "أتمدد",
+     "2_singular": "تتمدد",
+     "3_singular": "يتمدد",
+     "1_plural": "نتمدد",
+     "2_plural": "تتمددون",
+     "3_plural": "يتمددون"
+    },
+    "BREATHE": {
+     "base": "يتنفس",
+     "1_singular": "أتنفس",
+     "2_singular": "تتنفس",
+     "3_singular": "يتنفس",
+     "1_plural": "نتنفس",
+     "2_plural": "تتنفسون",
+     "3_plural": "يتنفسون"
+    },
+    "PEDAL": {
+     "base": "يدوس",
+     "1_singular": "أدوس",
+     "2_singular": "تدوس",
+     "3_singular": "يدوس",
+     "1_plural": "ندوس",
+     "2_plural": "تدوسون",
+     "3_plural": "يدوسون"
+    },
+    "PUSH": {
+     "base": "يدفع",
+     "1_singular": "أدفع",
+     "2_singular": "تدفع",
+     "3_singular": "يدفع",
+     "1_plural": "ندفع",
+     "2_plural": "تدفعون",
+     "3_plural": "يدفعون"
+    },
+    "PULL": {
+     "base": "يسحب",
+     "1_singular": "أسحب",
+     "2_singular": "تسحب",
+     "3_singular": "يسحب",
+     "1_plural": "نسحب",
+     "2_plural": "تسحبون",
+     "3_plural": "يسحبون"
+    },
+    "MEASURE": {
+     "base": "يقيس",
+     "1_singular": "أقيس",
+     "2_singular": "تقيس",
+     "3_singular": "يقيس",
+     "1_plural": "نقيس",
+     "2_plural": "تقيسون",
+     "3_plural": "يقيسون"
+    },
+    "IMPROVE": {
+     "base": "يتحسن",
+     "1_singular": "أتحسن",
+     "2_singular": "تتحسن",
+     "3_singular": "يتحسن",
+     "1_plural": "نتحسن",
+     "2_plural": "تتحسنون",
+     "3_plural": "يتحسنون"
+    },
+    "RECOVER": {
+     "base": "يتعافى",
+     "1_singular": "أتعافى",
+     "2_singular": "تتعافى",
+     "3_singular": "يتعافى",
+     "1_plural": "نتعافى",
+     "2_plural": "تتعافون",
+     "3_plural": "يتعافون"
+    },
+    "WEIGH": {
+     "base": "يزن",
+     "1_singular": "أزن",
+     "2_singular": "تزن",
+     "3_singular": "يزن",
+     "1_plural": "نزن",
+     "2_plural": "تزنون",
+     "3_plural": "يزنون"
+    },
+    "FINISH": {
+     "base": "ينهي",
+     "1_singular": "أنهي",
+     "2_singular": "تنهي",
+     "3_singular": "ينهي",
+     "1_plural": "ننهي",
+     "2_plural": "تنهون",
+     "3_plural": "ينهون"
+    },
+    "REPEAT": {
+     "base": "يكرر",
+     "1_singular": "أكرر",
+     "2_singular": "تكرر",
+     "3_singular": "يكرر",
+     "1_plural": "نكرر",
+     "2_plural": "تكررون",
+     "3_plural": "يكررون"
+    },
+    "HEALTHY": {
+     "form": "صحي",
+     "f": "صحية"
+    },
+    "ACTIVE": {
+     "form": "نشيط",
+     "f": "نشيطة"
+    },
+    "SORE": {
+     "form": "مؤلم",
+     "f": "مؤلمة"
+    },
+    "FLEXIBLE": {
+     "form": "مرن",
+     "f": "مرنة"
+    },
+    "INTENSE": {
+     "form": "مكثف",
+     "f": "مكثفة"
+    },
+    "WEAK": {
+     "form": "ضعيف",
+     "f": "ضعيفة"
+    },
+    "MOTIVATED": {
+     "form": "متحمس",
+     "f": "متحمسة"
+    },
+    "EXHAUSTED": {
+     "form": "مرهق",
+     "f": "مرهقة"
+    },
+    "DAILY": {
+     "form": "يومي",
+     "f": "يومية"
+    },
+    "MUSCULAR": {
+     "form": "عضلي",
+     "f": "عضلية"
+    }
+   }
+  },
+  "de": {
+   "label": "Deutsch",
+   "forms": {
+    "WORKOUT": {
+     "form": "Training",
+     "gender": "n",
+     "plural": "Trainings"
+    },
+    "MUSCLE": {
+     "form": "Muskel",
+     "gender": "m",
+     "plural": "Muskeln"
+    },
+    "DUMBBELL": {
+     "form": "Hantel",
+     "gender": "f",
+     "plural": "Hanteln"
+    },
+    "TREADMILL": {
+     "form": "Laufband",
+     "gender": "n",
+     "plural": "Laufbänder"
+    },
+    "WEIGHT": {
+     "form": "Gewicht",
+     "gender": "n",
+     "plural": "Gewichte"
+    },
+    "REPETITION": {
+     "form": "Wiederholung",
+     "gender": "f",
+     "plural": "Wiederholungen"
+    },
+    "SWEAT": {
+     "form": "Schweiß",
+     "gender": "m"
+    },
+    "ENERGY": {
+     "form": "Energie",
+     "gender": "f"
+    },
+    "PROTEIN": {
+     "form": "Protein",
+     "gender": "n"
+    },
+    "HABIT": {
+     "form": "Gewohnheit",
+     "gender": "f",
+     "plural": "Gewohnheiten"
+    },
+    "PROGRESS": {
+     "form": "Fortschritt",
+     "gender": "m",
+     "plural": "Fortschritte"
+    },
+    "TARGET": {
+     "form": "Ziel",
+     "gender": "n",
+     "plural": "Ziele"
+    },
+    "HEART": {
+     "form": "Herz",
+     "gender": "n",
+     "plural": "Herzen"
+    },
+    "KNEE": {
+     "form": "Knie",
+     "gender": "n",
+     "plural": "Knie"
+    },
+    "SHOULDER": {
+     "form": "Schulter",
+     "gender": "f",
+     "plural": "Schultern"
+    },
+    "CALORIE": {
+     "form": "Kalorie",
+     "gender": "f",
+     "plural": "Kalorien"
+    },
+    "RUNNER": {
+     "form": "Läufer",
+     "gender": "m",
+     "plural": "Läufer"
+    },
+    "RACE": {
+     "form": "Rennen",
+     "gender": "n",
+     "plural": "Rennen"
+    },
+    "MARATHON": {
+     "form": "Marathon",
+     "gender": "m",
+     "plural": "Marathons"
+    },
+    "WARMUP": {
+     "form": "Warm-up",
+     "gender": "n",
+     "plural": "Warm-ups"
+    },
+    "LOCKER_ROOM": {
+     "form": "Umkleidekabine",
+     "gender": "f",
+     "plural": "Umkleidekabinen"
+    },
+    "TOWEL": {
+     "form": "Handtuch",
+     "gender": "n",
+     "plural": "Handtücher"
+    },
+    "BOTTLE": {
+     "form": "Flasche",
+     "gender": "f",
+     "plural": "Flaschen"
+    },
+    "BICYCLE": {
+     "form": "Fahrrad",
+     "gender": "n",
+     "plural": "Fahrräder"
+    },
+    "POOL": {
+     "form": "Schwimmbad",
+     "gender": "n",
+     "plural": "Schwimmbäder"
+    },
+    "STRENGTH": {
+     "form": "Kraft",
+     "gender": "f"
+    },
+    "INJURY": {
+     "form": "Verletzung",
+     "gender": "f",
+     "plural": "Verletzungen"
+    },
+    "REST": {
+     "form": "Ruhe",
+     "gender": "f"
+    },
+    "LIFT": {
+     "base": "heben",
+     "1_singular": "hebe",
+     "2_singular": "hebst",
+     "3_singular": "hebt",
+     "1_plural": "heben",
+     "2_plural": "hebt",
+     "3_plural": "heben"
+    },
+    "STRETCH": {
+     "base": "dehnen",
+     "1_singular": "dehne",
+     "2_singular": "dehnst",
+     "3_singular": "dehnt",
+     "1_plural": "dehnen",
+     "2_plural": "dehnt",
+     "3_plural": "dehnen"
+    },
+    "BREATHE": {
+     "base": "atmen",
+     "1_singular": "atme",
+     "2_singular": "atmest",
+     "3_singular": "atmet",
+     "1_plural": "atmen",
+     "2_plural": "atmet",
+     "3_plural": "atmen"
+    },
+    "PEDAL": {
+     "base": "radeln",
+     "1_singular": "radle",
+     "2_singular": "radelst",
+     "3_singular": "radelt",
+     "1_plural": "radeln",
+     "2_plural": "radelt",
+     "3_plural": "radeln"
+    },
+    "PUSH": {
+     "base": "drücken",
+     "1_singular": "drücke",
+     "2_singular": "drückst",
+     "3_singular": "drückt",
+     "1_plural": "drücken",
+     "2_plural": "drückt",
+     "3_plural": "drücken"
+    },
+    "PULL": {
+     "base": "ziehen",
+     "1_singular": "ziehe",
+     "2_singular": "ziehst",
+     "3_singular": "zieht",
+     "1_plural": "ziehen",
+     "2_plural": "zieht",
+     "3_plural": "ziehen"
+    },
+    "MEASURE": {
+     "base": "messen",
+     "1_singular": "messe",
+     "2_singular": "misst",
+     "3_singular": "misst",
+     "1_plural": "messen",
+     "2_plural": "messt",
+     "3_plural": "messen"
+    },
+    "IMPROVE": {
+     "base": "verbessern",
+     "1_singular": "verbessere",
+     "2_singular": "verbesserst",
+     "3_singular": "verbessert",
+     "1_plural": "verbessern",
+     "2_plural": "verbessert",
+     "3_plural": "verbessern"
+    },
+    "RECOVER": {
+     "base": "sich erholen",
+     "1_singular": "erhole mich",
+     "2_singular": "erholst dich",
+     "3_singular": "erholt sich",
+     "1_plural": "erholen uns",
+     "2_plural": "erholt euch",
+     "3_plural": "erholen sich"
+    },
+    "WEIGH": {
+     "base": "wiegen",
+     "1_singular": "wiege",
+     "2_singular": "wiegst",
+     "3_singular": "wiegt",
+     "1_plural": "wiegen",
+     "2_plural": "wiegt",
+     "3_plural": "wiegen"
+    },
+    "FINISH": {
+     "base": "beenden",
+     "1_singular": "beende",
+     "2_singular": "beendest",
+     "3_singular": "beendet",
+     "1_plural": "beenden",
+     "2_plural": "beendet",
+     "3_plural": "beenden"
+    },
+    "REPEAT": {
+     "base": "wiederholen",
+     "1_singular": "wiederhole",
+     "2_singular": "wiederholst",
+     "3_singular": "wiederholt",
+     "1_plural": "wiederholen",
+     "2_plural": "wiederholt",
+     "3_plural": "wiederholen"
+    },
+    "HEALTHY": [
+     "gesund"
+    ],
+    "ACTIVE": [
+     "aktiv"
+    ],
+    "SORE": [
+     "wund"
+    ],
+    "FLEXIBLE": [
+     "beweglich"
+    ],
+    "INTENSE": [
+     "intensiv"
+    ],
+    "WEAK": [
+     "schwach"
+    ],
+    "MOTIVATED": [
+     "motiviert"
+    ],
+    "EXHAUSTED": [
+     "erschöpft"
+    ],
+    "DAILY": [
+     "täglich"
+    ],
+    "MUSCULAR": [
+     "muskulös"
+    ]
+   }
+  },
+  "el": {
+   "label": "Ελληνικά",
+   "forms": {
+    "WORKOUT": {
+     "form": "προπόνηση",
+     "gender": "f",
+     "plural": "προπονήσεις"
+    },
+    "MUSCLE": {
+     "form": "μυς",
+     "gender": "m",
+     "plural": "μύες"
+    },
+    "DUMBBELL": {
+     "form": "αλτήρας",
+     "gender": "m",
+     "plural": "αλτήρες"
+    },
+    "TREADMILL": {
+     "form": "διάδρομος",
+     "gender": "m",
+     "plural": "διάδρομοι"
+    },
+    "WEIGHT": {
+     "form": "βάρος",
+     "gender": "n",
+     "plural": "βάρη"
+    },
+    "REPETITION": {
+     "form": "επανάληψη",
+     "gender": "f",
+     "plural": "επαναλήψεις"
+    },
+    "SWEAT": {
+     "form": "ιδρώτας",
+     "gender": "m"
+    },
+    "ENERGY": {
+     "form": "ενέργεια",
+     "gender": "f"
+    },
+    "PROTEIN": {
+     "form": "πρωτεΐνη",
+     "gender": "f"
+    },
+    "HABIT": {
+     "form": "συνήθεια",
+     "gender": "f",
+     "plural": "συνήθειες"
+    },
+    "PROGRESS": {
+     "form": "πρόοδος",
+     "gender": "f"
+    },
+    "TARGET": {
+     "form": "στόχος",
+     "gender": "m",
+     "plural": "στόχοι"
+    },
+    "HEART": {
+     "form": "καρδιά",
+     "gender": "f",
+     "plural": "καρδιές"
+    },
+    "KNEE": {
+     "form": "γόνατο",
+     "gender": "n",
+     "plural": "γόνατα"
+    },
+    "SHOULDER": {
+     "form": "ώμος",
+     "gender": "m",
+     "plural": "ώμοι"
+    },
+    "CALORIE": {
+     "form": "θερμίδα",
+     "gender": "f",
+     "plural": "θερμίδες"
+    },
+    "RUNNER": {
+     "form": "δρομέας",
+     "gender": "m",
+     "plural": "δρομείς"
+    },
+    "RACE": {
+     "form": "αγώνας",
+     "gender": "m",
+     "plural": "αγώνες"
+    },
+    "MARATHON": {
+     "form": "μαραθώνιος",
+     "gender": "m",
+     "plural": "μαραθώνιοι"
+    },
+    "WARMUP": {
+     "form": "προθέρμανση",
+     "gender": "f",
+     "plural": "προθερμάνσεις"
+    },
+    "LOCKER_ROOM": {
+     "form": "αποδυτήριο",
+     "gender": "n",
+     "plural": "αποδυτήρια"
+    },
+    "TOWEL": {
+     "form": "πετσέτα",
+     "gender": "f",
+     "plural": "πετσέτες"
+    },
+    "BOTTLE": {
+     "form": "μπουκάλι",
+     "gender": "n",
+     "plural": "μπουκάλια"
+    },
+    "BICYCLE": {
+     "form": "ποδήλατο",
+     "gender": "n",
+     "plural": "ποδήλατα"
+    },
+    "POOL": {
+     "form": "πισίνα",
+     "gender": "f",
+     "plural": "πισίνες"
+    },
+    "STRENGTH": {
+     "form": "δύναμη",
+     "gender": "f"
+    },
+    "INJURY": {
+     "form": "τραυματισμός",
+     "gender": "m",
+     "plural": "τραυματισμοί"
+    },
+    "REST": {
+     "form": "ξεκούραση",
+     "gender": "f"
+    },
+    "LIFT": {
+     "base": "σηκώνω",
+     "1_singular": "σηκώνω",
+     "2_singular": "σηκώνεις",
+     "3_singular": "σηκώνει",
+     "1_plural": "σηκώνουμε",
+     "2_plural": "σηκώνετε",
+     "3_plural": "σηκώνουν"
+    },
+    "STRETCH": {
+     "base": "τεντώνω",
+     "1_singular": "τεντώνω",
+     "2_singular": "τεντώνεις",
+     "3_singular": "τεντώνει",
+     "1_plural": "τεντώνουμε",
+     "2_plural": "τεντώνετε",
+     "3_plural": "τεντώνουν"
+    },
+    "BREATHE": {
+     "base": "αναπνέω",
+     "1_singular": "αναπνέω",
+     "2_singular": "αναπνέεις",
+     "3_singular": "αναπνέει",
+     "1_plural": "αναπνέουμε",
+     "2_plural": "αναπνέετε",
+     "3_plural": "αναπνέουν"
+    },
+    "PEDAL": {
+     "base": "ποδηλατώ",
+     "1_singular": "ποδηλατώ",
+     "2_singular": "ποδηλατείς",
+     "3_singular": "ποδηλατεί",
+     "1_plural": "ποδηλατούμε",
+     "2_plural": "ποδηλατείτε",
+     "3_plural": "ποδηλατούν"
+    },
+    "PUSH": {
+     "base": "σπρώχνω",
+     "1_singular": "σπρώχνω",
+     "2_singular": "σπρώχνεις",
+     "3_singular": "σπρώχνει",
+     "1_plural": "σπρώχνουμε",
+     "2_plural": "σπρώχνετε",
+     "3_plural": "σπρώχνουν"
+    },
+    "PULL": {
+     "base": "τραβάω",
+     "1_singular": "τραβάω",
+     "2_singular": "τραβάς",
+     "3_singular": "τραβάει",
+     "1_plural": "τραβάμε",
+     "2_plural": "τραβάτε",
+     "3_plural": "τραβάνε"
+    },
+    "MEASURE": {
+     "base": "μετράω",
+     "1_singular": "μετράω",
+     "2_singular": "μετράς",
+     "3_singular": "μετράει",
+     "1_plural": "μετράμε",
+     "2_plural": "μετράτε",
+     "3_plural": "μετράνε"
+    },
+    "IMPROVE": {
+     "base": "βελτιώνω",
+     "1_singular": "βελτιώνω",
+     "2_singular": "βελτιώνεις",
+     "3_singular": "βελτιώνει",
+     "1_plural": "βελτιώνουμε",
+     "2_plural": "βελτιώνετε",
+     "3_plural": "βελτιώνουν"
+    },
+    "RECOVER": {
+     "base": "αναρρώνω",
+     "1_singular": "αναρρώνω",
+     "2_singular": "αναρρώνεις",
+     "3_singular": "αναρρώνει",
+     "1_plural": "αναρρώνουμε",
+     "2_plural": "αναρρώνετε",
+     "3_plural": "αναρρώνουν"
+    },
+    "WEIGH": {
+     "base": "ζυγίζω",
+     "1_singular": "ζυγίζω",
+     "2_singular": "ζυγίζεις",
+     "3_singular": "ζυγίζει",
+     "1_plural": "ζυγίζουμε",
+     "2_plural": "ζυγίζετε",
+     "3_plural": "ζυγίζουν"
+    },
+    "FINISH": {
+     "base": "τελειώνω",
+     "1_singular": "τελειώνω",
+     "2_singular": "τελειώνεις",
+     "3_singular": "τελειώνει",
+     "1_plural": "τελειώνουμε",
+     "2_plural": "τελειώνετε",
+     "3_plural": "τελειώνουν"
+    },
+    "REPEAT": {
+     "base": "επαναλαμβάνω",
+     "1_singular": "επαναλαμβάνω",
+     "2_singular": "επαναλαμβάνεις",
+     "3_singular": "επαναλαμβάνει",
+     "1_plural": "επαναλαμβάνουμε",
+     "2_plural": "επαναλαμβάνετε",
+     "3_plural": "επαναλαμβάνουν"
+    },
+    "HEALTHY": {
+     "form": "υγιής",
+     "f": "υγιής",
+     "n": "υγιές"
+    },
+    "ACTIVE": {
+     "form": "δραστήριος",
+     "f": "δραστήρια",
+     "n": "δραστήριο"
+    },
+    "SORE": {
+     "form": "πιασμένος",
+     "f": "πιασμένη",
+     "n": "πιασμένο"
+    },
+    "FLEXIBLE": {
+     "form": "ευλύγιστος",
+     "f": "ευλύγιστη",
+     "n": "ευλύγιστο"
+    },
+    "INTENSE": {
+     "form": "έντονος",
+     "f": "έντονη",
+     "n": "έντονο"
+    },
+    "WEAK": {
+     "form": "αδύναμος",
+     "f": "αδύναμη",
+     "n": "αδύναμο"
+    },
+    "MOTIVATED": {
+     "form": "αποφασισμένος",
+     "f": "αποφασισμένη",
+     "n": "αποφασισμένο"
+    },
+    "EXHAUSTED": {
+     "form": "εξαντλημένος",
+     "f": "εξαντλημένη",
+     "n": "εξαντλημένο"
+    },
+    "DAILY": {
+     "form": "καθημερινός",
+     "f": "καθημερινή",
+     "n": "καθημερινό"
+    },
+    "MUSCULAR": {
+     "form": "μυώδης",
+     "f": "μυώδης",
+     "n": "μυώδες"
+    }
+   }
+  },
+  "ja": {
+   "label": "日本語",
+   "forms": {
+    "WORKOUT": {
+     "form": "トレーニング"
+    },
+    "MUSCLE": {
+     "form": "筋肉"
+    },
+    "DUMBBELL": {
+     "form": "ダンベル"
+    },
+    "TREADMILL": {
+     "form": "ランニングマシン"
+    },
+    "WEIGHT": {
+     "form": "ウェイト"
+    },
+    "REPETITION": {
+     "form": "反復"
+    },
+    "SWEAT": {
+     "form": "汗"
+    },
+    "ENERGY": {
+     "form": "エネルギー"
+    },
+    "PROTEIN": {
+     "form": "タンパク質"
+    },
+    "HABIT": {
+     "form": "習慣"
+    },
+    "PROGRESS": {
+     "form": "進歩"
+    },
+    "TARGET": {
+     "form": "目標"
+    },
+    "HEART": {
+     "form": "心臓"
+    },
+    "KNEE": {
+     "form": "膝"
+    },
+    "SHOULDER": {
+     "form": "肩"
+    },
+    "CALORIE": {
+     "form": "カロリー"
+    },
+    "RUNNER": {
+     "form": "ランナー"
+    },
+    "RACE": {
+     "form": "レース"
+    },
+    "MARATHON": {
+     "form": "マラソン"
+    },
+    "WARMUP": {
+     "form": "ウォーミングアップ"
+    },
+    "LOCKER_ROOM": {
+     "form": "更衣室"
+    },
+    "TOWEL": {
+     "form": "タオル"
+    },
+    "BOTTLE": {
+     "form": "ボトル"
+    },
+    "BICYCLE": {
+     "form": "自転車"
+    },
+    "POOL": {
+     "form": "プール"
+    },
+    "STRENGTH": {
+     "form": "筋力"
+    },
+    "INJURY": {
+     "form": "けが"
+    },
+    "REST": {
+     "form": "休息"
+    },
+    "LIFT": {
+     "base": "持ち上げる"
+    },
+    "STRETCH": {
+     "base": "ストレッチする"
+    },
+    "BREATHE": {
+     "base": "呼吸する"
+    },
+    "PEDAL": {
+     "base": "ペダルを漕ぐ"
+    },
+    "PUSH": {
+     "base": "押す"
+    },
+    "PULL": {
+     "base": "引く"
+    },
+    "MEASURE": {
+     "base": "測る"
+    },
+    "IMPROVE": {
+     "base": "上達する"
+    },
+    "RECOVER": {
+     "base": "回復する"
+    },
+    "WEIGH": {
+     "base": "量る"
+    },
+    "FINISH": {
+     "base": "終える"
+    },
+    "REPEAT": {
+     "base": "繰り返す"
+    },
+    "HEALTHY": [
+     "健康な"
+    ],
+    "ACTIVE": [
+     "活発な"
+    ],
+    "SORE": [
+     "痛い"
+    ],
+    "FLEXIBLE": [
+     "柔軟な"
+    ],
+    "INTENSE": [
+     "激しい"
+    ],
+    "WEAK": [
+     "弱い"
+    ],
+    "MOTIVATED": [
+     "意欲的な"
+    ],
+    "EXHAUSTED": [
+     "疲れ果てた"
+    ],
+    "DAILY": [
+     "毎日の"
+    ],
+    "MUSCULAR": [
+     "筋肉質な"
+    ]
+   }
+  },
+  "ko": {
+   "label": "한국어",
+   "forms": {
+    "WORKOUT": {
+     "form": "운동"
+    },
+    "MUSCLE": {
+     "form": "근육"
+    },
+    "DUMBBELL": {
+     "form": "덤벨"
+    },
+    "TREADMILL": {
+     "form": "러닝머신"
+    },
+    "WEIGHT": {
+     "form": "웨이트"
+    },
+    "REPETITION": {
+     "form": "반복"
+    },
+    "SWEAT": {
+     "form": "땀"
+    },
+    "ENERGY": {
+     "form": "에너지"
+    },
+    "PROTEIN": {
+     "form": "단백질"
+    },
+    "HABIT": {
+     "form": "습관"
+    },
+    "PROGRESS": {
+     "form": "발전"
+    },
+    "TARGET": {
+     "form": "목표"
+    },
+    "HEART": {
+     "form": "심장"
+    },
+    "KNEE": {
+     "form": "무릎"
+    },
+    "SHOULDER": {
+     "form": "어깨"
+    },
+    "CALORIE": {
+     "form": "칼로리"
+    },
+    "RUNNER": {
+     "form": "러너"
+    },
+    "RACE": {
+     "form": "경주"
+    },
+    "MARATHON": {
+     "form": "마라톤"
+    },
+    "WARMUP": {
+     "form": "준비 운동"
+    },
+    "LOCKER_ROOM": {
+     "form": "탈의실"
+    },
+    "TOWEL": {
+     "form": "수건"
+    },
+    "BOTTLE": {
+     "form": "병"
+    },
+    "BICYCLE": {
+     "form": "자전거"
+    },
+    "POOL": {
+     "form": "수영장"
+    },
+    "STRENGTH": {
+     "form": "근력"
+    },
+    "INJURY": {
+     "form": "부상"
+    },
+    "REST": {
+     "form": "휴식"
+    },
+    "LIFT": {
+     "base": "들어올리다"
+    },
+    "STRETCH": {
+     "base": "스트레칭하다"
+    },
+    "BREATHE": {
+     "base": "숨을 쉬다"
+    },
+    "PEDAL": {
+     "base": "페달을 밟다"
+    },
+    "PUSH": {
+     "base": "밀다"
+    },
+    "PULL": {
+     "base": "당기다"
+    },
+    "MEASURE": {
+     "base": "측정하다"
+    },
+    "IMPROVE": {
+     "base": "향상되다"
+    },
+    "RECOVER": {
+     "base": "회복하다"
+    },
+    "WEIGH": {
+     "base": "무게를 재다"
+    },
+    "FINISH": {
+     "base": "끝내다"
+    },
+    "REPEAT": {
+     "base": "반복하다"
+    },
+    "HEALTHY": [
+     "건강한"
+    ],
+    "ACTIVE": [
+     "활동적인"
+    ],
+    "SORE": [
+     "뻐근한"
+    ],
+    "FLEXIBLE": [
+     "유연한"
+    ],
+    "INTENSE": [
+     "격렬한"
+    ],
+    "WEAK": [
+     "약한"
+    ],
+    "MOTIVATED": [
+     "의욕적인"
+    ],
+    "EXHAUSTED": [
+     "지친"
+    ],
+    "DAILY": [
+     "매일의"
+    ],
+    "MUSCULAR": [
+     "근육질인"
+    ]
+   }
+  },
+  "no": {
+   "label": "Norsk",
+   "forms": {
+    "WORKOUT": {
+     "form": "treningsøkt",
+     "gender": "m",
+     "plural": "treningsøkter"
+    },
+    "MUSCLE": {
+     "form": "muskel",
+     "gender": "m",
+     "plural": "muskler"
+    },
+    "DUMBBELL": {
+     "form": "manual",
+     "gender": "m",
+     "plural": "manualer"
+    },
+    "TREADMILL": {
+     "form": "tredemølle",
+     "gender": "m",
+     "plural": "tredemøller"
+    },
+    "WEIGHT": {
+     "form": "vekt",
+     "gender": "m",
+     "plural": "vekter"
+    },
+    "REPETITION": {
+     "form": "repetisjon",
+     "gender": "m",
+     "plural": "repetisjoner"
+    },
+    "SWEAT": {
+     "form": "svette",
+     "gender": "m"
+    },
+    "ENERGY": {
+     "form": "energi",
+     "gender": "m"
+    },
+    "PROTEIN": {
+     "form": "protein",
+     "gender": "n"
+    },
+    "HABIT": {
+     "form": "vane",
+     "gender": "m",
+     "plural": "vaner"
+    },
+    "PROGRESS": {
+     "form": "fremgang",
+     "gender": "m"
+    },
+    "TARGET": {
+     "form": "mål",
+     "gender": "n",
+     "plural": "mål"
+    },
+    "HEART": {
+     "form": "hjerte",
+     "gender": "n",
+     "plural": "hjerter"
+    },
+    "KNEE": {
+     "form": "kne",
+     "gender": "n",
+     "plural": "knær"
+    },
+    "SHOULDER": {
+     "form": "skulder",
+     "gender": "m",
+     "plural": "skuldre"
+    },
+    "CALORIE": {
+     "form": "kalori",
+     "gender": "m",
+     "plural": "kalorier"
+    },
+    "RUNNER": {
+     "form": "løper",
+     "gender": "m",
+     "plural": "løpere"
+    },
+    "RACE": {
+     "form": "løp",
+     "gender": "n",
+     "plural": "løp"
+    },
+    "MARATHON": {
+     "form": "maratonløp",
+     "gender": "n",
+     "plural": "maratonløp"
+    },
+    "WARMUP": {
+     "form": "oppvarming",
+     "gender": "m",
+     "plural": "oppvarminger"
+    },
+    "LOCKER_ROOM": {
+     "form": "garderobe",
+     "gender": "m",
+     "plural": "garderober"
+    },
+    "TOWEL": {
+     "form": "håndkle",
+     "gender": "n",
+     "plural": "håndklær"
+    },
+    "BOTTLE": {
+     "form": "flaske",
+     "gender": "m",
+     "plural": "flasker"
+    },
+    "BICYCLE": {
+     "form": "sykkel",
+     "gender": "m",
+     "plural": "sykler"
+    },
+    "POOL": {
+     "form": "basseng",
+     "gender": "n",
+     "plural": "basseng"
+    },
+    "STRENGTH": {
+     "form": "styrke",
+     "gender": "m"
+    },
+    "INJURY": {
+     "form": "skade",
+     "gender": "m",
+     "plural": "skader"
+    },
+    "REST": {
+     "form": "hvile",
+     "gender": "m"
+    },
+    "LIFT": {
+     "base": "løfte",
+     "present": "løfter"
+    },
+    "STRETCH": {
+     "base": "tøye",
+     "present": "tøyer"
+    },
+    "BREATHE": {
+     "base": "puste",
+     "present": "puster"
+    },
+    "PEDAL": {
+     "base": "sykle",
+     "present": "sykler"
+    },
+    "PUSH": {
+     "base": "dytte",
+     "present": "dytter"
+    },
+    "PULL": {
+     "base": "trekke",
+     "present": "trekker"
+    },
+    "MEASURE": {
+     "base": "måle",
+     "present": "måler"
+    },
+    "IMPROVE": {
+     "base": "forbedre",
+     "present": "forbedrer"
+    },
+    "RECOVER": {
+     "base": "restituere",
+     "present": "restituerer"
+    },
+    "WEIGH": {
+     "base": "veie",
+     "present": "veier"
+    },
+    "FINISH": {
+     "base": "fullføre",
+     "present": "fullfører"
+    },
+    "REPEAT": {
+     "base": "gjenta",
+     "present": "gjentar"
+    },
+    "HEALTHY": [
+     "sunn"
+    ],
+    "ACTIVE": [
+     "aktiv"
+    ],
+    "SORE": [
+     "støl"
+    ],
+    "FLEXIBLE": [
+     "smidig"
+    ],
+    "INTENSE": [
+     "intens"
+    ],
+    "WEAK": [
+     "svak"
+    ],
+    "MOTIVATED": [
+     "motivert"
+    ],
+    "EXHAUSTED": [
+     "utslitt"
+    ],
+    "DAILY": [
+     "daglig"
+    ],
+    "MUSCULAR": [
+     "muskuløs"
+    ]
+   }
+  },
+  "tr": {
+   "label": "Türkçe",
+   "forms": {
+    "WORKOUT": {
+     "form": "antrenman",
+     "plural": "antrenmanlar"
+    },
+    "MUSCLE": {
+     "form": "kas",
+     "plural": "kaslar"
+    },
+    "DUMBBELL": {
+     "form": "dambıl",
+     "plural": "dambıllar"
+    },
+    "TREADMILL": {
+     "form": "koşu bandı",
+     "plural": "koşu bantları"
+    },
+    "WEIGHT": {
+     "form": "ağırlık",
+     "plural": "ağırlıklar"
+    },
+    "REPETITION": {
+     "form": "tekrar",
+     "plural": "tekrarlar"
+    },
+    "SWEAT": {
+     "form": "ter",
+     "plural": "terler"
+    },
+    "ENERGY": {
+     "form": "enerji",
+     "plural": "enerjiler"
+    },
+    "PROTEIN": {
+     "form": "protein",
+     "plural": "proteinler"
+    },
+    "HABIT": {
+     "form": "alışkanlık",
+     "plural": "alışkanlıklar"
+    },
+    "PROGRESS": {
+     "form": "ilerleme",
+     "plural": "ilerlemeler"
+    },
+    "TARGET": {
+     "form": "hedef",
+     "plural": "hedefler"
+    },
+    "HEART": {
+     "form": "kalp",
+     "plural": "kalpler"
+    },
+    "KNEE": {
+     "form": "diz",
+     "plural": "dizler"
+    },
+    "SHOULDER": {
+     "form": "omuz",
+     "plural": "omuzlar"
+    },
+    "CALORIE": {
+     "form": "kalori",
+     "plural": "kaloriler"
+    },
+    "RUNNER": {
+     "form": "koşucu",
+     "plural": "koşucular"
+    },
+    "RACE": {
+     "form": "yarış",
+     "plural": "yarışlar"
+    },
+    "MARATHON": {
+     "form": "maraton",
+     "plural": "maratonlar"
+    },
+    "WARMUP": {
+     "form": "ısınma",
+     "plural": "ısınmalar"
+    },
+    "LOCKER_ROOM": {
+     "form": "soyunma odası",
+     "plural": "soyunma odaları"
+    },
+    "TOWEL": {
+     "form": "havlu",
+     "plural": "havlular"
+    },
+    "BOTTLE": {
+     "form": "şişe",
+     "plural": "şişeler"
+    },
+    "BICYCLE": {
+     "form": "bisiklet",
+     "plural": "bisikletler"
+    },
+    "POOL": {
+     "form": "havuz",
+     "plural": "havuzlar"
+    },
+    "STRENGTH": {
+     "form": "güç",
+     "plural": "güçler"
+    },
+    "INJURY": {
+     "form": "sakatlık",
+     "plural": "sakatlıklar"
+    },
+    "REST": {
+     "form": "dinlenme",
+     "plural": "dinlenmeler"
+    },
+    "LIFT": {
+     "base": "kaldırmak",
+     "1_singular": "kaldırıyorum",
+     "2_singular": "kaldırıyorsun",
+     "3_singular": "kaldırıyor",
+     "1_plural": "kaldırıyoruz",
+     "2_plural": "kaldırıyorsunuz",
+     "3_plural": "kaldırıyorlar"
+    },
+    "STRETCH": {
+     "base": "esnemek",
+     "1_singular": "esniyorum",
+     "2_singular": "esniyorsun",
+     "3_singular": "esniyor",
+     "1_plural": "esniyoruz",
+     "2_plural": "esniyorsunuz",
+     "3_plural": "esniyorlar"
+    },
+    "BREATHE": {
+     "base": "nefes almak",
+     "1_singular": "nefes alıyorum",
+     "2_singular": "nefes alıyorsun",
+     "3_singular": "nefes alıyor",
+     "1_plural": "nefes alıyoruz",
+     "2_plural": "nefes alıyorsunuz",
+     "3_plural": "nefes alıyorlar"
+    },
+    "PEDAL": {
+     "base": "pedal çevirmek",
+     "1_singular": "pedal çeviriyorum",
+     "2_singular": "pedal çeviriyorsun",
+     "3_singular": "pedal çeviriyor",
+     "1_plural": "pedal çeviriyoruz",
+     "2_plural": "pedal çeviriyorsunuz",
+     "3_plural": "pedal çeviriyorlar"
+    },
+    "PUSH": {
+     "base": "itmek",
+     "1_singular": "itiyorum",
+     "2_singular": "itiyorsun",
+     "3_singular": "itiyor",
+     "1_plural": "itiyoruz",
+     "2_plural": "itiyorsunuz",
+     "3_plural": "itiyorlar"
+    },
+    "PULL": {
+     "base": "çekmek",
+     "1_singular": "çekiyorum",
+     "2_singular": "çekiyorsun",
+     "3_singular": "çekiyor",
+     "1_plural": "çekiyoruz",
+     "2_plural": "çekiyorsunuz",
+     "3_plural": "çekiyorlar"
+    },
+    "MEASURE": {
+     "base": "ölçmek",
+     "1_singular": "ölçüyorum",
+     "2_singular": "ölçüyorsun",
+     "3_singular": "ölçüyor",
+     "1_plural": "ölçüyoruz",
+     "2_plural": "ölçüyorsunuz",
+     "3_plural": "ölçüyorlar"
+    },
+    "IMPROVE": {
+     "base": "gelişmek",
+     "1_singular": "gelişiyorum",
+     "2_singular": "gelişiyorsun",
+     "3_singular": "gelişiyor",
+     "1_plural": "gelişiyoruz",
+     "2_plural": "gelişiyorsunuz",
+     "3_plural": "gelişiyorlar"
+    },
+    "RECOVER": {
+     "base": "toparlanmak",
+     "1_singular": "toparlanıyorum",
+     "2_singular": "toparlanıyorsun",
+     "3_singular": "toparlanıyor",
+     "1_plural": "toparlanıyoruz",
+     "2_plural": "toparlanıyorsunuz",
+     "3_plural": "toparlanıyorlar"
+    },
+    "WEIGH": {
+     "base": "tartmak",
+     "1_singular": "tartıyorum",
+     "2_singular": "tartıyorsun",
+     "3_singular": "tartıyor",
+     "1_plural": "tartıyoruz",
+     "2_plural": "tartıyorsunuz",
+     "3_plural": "tartıyorlar"
+    },
+    "FINISH": {
+     "base": "bitirmek",
+     "1_singular": "bitiriyorum",
+     "2_singular": "bitiriyorsun",
+     "3_singular": "bitiriyor",
+     "1_plural": "bitiriyoruz",
+     "2_plural": "bitiriyorsunuz",
+     "3_plural": "bitiriyorlar"
+    },
+    "REPEAT": {
+     "base": "tekrarlamak",
+     "1_singular": "tekrarlıyorum",
+     "2_singular": "tekrarlıyorsun",
+     "3_singular": "tekrarlıyor",
+     "1_plural": "tekrarlıyoruz",
+     "2_plural": "tekrarlıyorsunuz",
+     "3_plural": "tekrarlıyorlar"
+    },
+    "HEALTHY": [
+     "sağlıklı"
+    ],
+    "ACTIVE": [
+     "aktif"
+    ],
+    "SORE": [
+     "ağrılı"
+    ],
+    "FLEXIBLE": [
+     "esnek"
+    ],
+    "INTENSE": [
+     "yoğun"
+    ],
+    "WEAK": [
+     "güçsüz"
+    ],
+    "MOTIVATED": [
+     "motive"
+    ],
+    "EXHAUSTED": [
+     "bitkin"
+    ],
+    "DAILY": [
+     "günlük"
+    ],
+    "MUSCULAR": [
+     "kaslı"
+    ]
+   }
+  },
+  "uk": {
+   "label": "Українська",
+   "forms": {
+    "WORKOUT": {
+     "form": "тренування",
+     "gender": "n",
+     "plural": "тренування"
+    },
+    "MUSCLE": {
+     "form": "м'яз",
+     "gender": "m",
+     "plural": "м'язи"
+    },
+    "DUMBBELL": {
+     "form": "гантель",
+     "gender": "f",
+     "plural": "гантелі"
+    },
+    "TREADMILL": {
+     "form": "бігова доріжка",
+     "gender": "f",
+     "plural": "бігові доріжки"
+    },
+    "WEIGHT": {
+     "form": "вага",
+     "gender": "f",
+     "plural": "ваги"
+    },
+    "REPETITION": {
+     "form": "повторення",
+     "gender": "n",
+     "plural": "повторення"
+    },
+    "SWEAT": {
+     "form": "піт",
+     "gender": "m"
+    },
+    "ENERGY": {
+     "form": "енергія",
+     "gender": "f"
+    },
+    "PROTEIN": {
+     "form": "білок",
+     "gender": "m"
+    },
+    "HABIT": {
+     "form": "звичка",
+     "gender": "f",
+     "plural": "звички"
+    },
+    "PROGRESS": {
+     "form": "прогрес",
+     "gender": "m"
+    },
+    "TARGET": {
+     "form": "ціль",
+     "gender": "f",
+     "plural": "цілі"
+    },
+    "HEART": {
+     "form": "серце",
+     "gender": "n",
+     "plural": "серця"
+    },
+    "KNEE": {
+     "form": "коліно",
+     "gender": "n",
+     "plural": "коліна"
+    },
+    "SHOULDER": {
+     "form": "плече",
+     "gender": "n",
+     "plural": "плечі"
+    },
+    "CALORIE": {
+     "form": "калорія",
+     "gender": "f",
+     "plural": "калорії"
+    },
+    "RUNNER": {
+     "form": "бігун",
+     "gender": "m",
+     "plural": "бігуни"
+    },
+    "RACE": {
+     "form": "забіг",
+     "gender": "m",
+     "plural": "забіги"
+    },
+    "MARATHON": {
+     "form": "марафон",
+     "gender": "m",
+     "plural": "марафони"
+    },
+    "WARMUP": {
+     "form": "розминка",
+     "gender": "f",
+     "plural": "розминки"
+    },
+    "LOCKER_ROOM": {
+     "form": "роздягальня",
+     "gender": "f",
+     "plural": "роздягальні"
+    },
+    "TOWEL": {
+     "form": "рушник",
+     "gender": "m",
+     "plural": "рушники"
+    },
+    "BOTTLE": {
+     "form": "пляшка",
+     "gender": "f",
+     "plural": "пляшки"
+    },
+    "BICYCLE": {
+     "form": "велосипед",
+     "gender": "m",
+     "plural": "велосипеди"
+    },
+    "POOL": {
+     "form": "басейн",
+     "gender": "m",
+     "plural": "басейни"
+    },
+    "STRENGTH": {
+     "form": "сила",
+     "gender": "f"
+    },
+    "INJURY": {
+     "form": "травма",
+     "gender": "f",
+     "plural": "травми"
+    },
+    "REST": {
+     "form": "відпочинок",
+     "gender": "m"
+    },
+    "LIFT": {
+     "base": "піднімати",
+     "1_singular": "піднімаю",
+     "2_singular": "піднімаєш",
+     "3_singular": "піднімає",
+     "1_plural": "піднімаємо",
+     "2_plural": "піднімаєте",
+     "3_plural": "піднімають"
+    },
+    "STRETCH": {
+     "base": "розтягувати",
+     "1_singular": "розтягую",
+     "2_singular": "розтягуєш",
+     "3_singular": "розтягує",
+     "1_plural": "розтягуємо",
+     "2_plural": "розтягуєте",
+     "3_plural": "розтягують"
+    },
+    "BREATHE": {
+     "base": "дихати",
+     "1_singular": "дихаю",
+     "2_singular": "дихаєш",
+     "3_singular": "дихає",
+     "1_plural": "дихаємо",
+     "2_plural": "дихаєте",
+     "3_plural": "дихають"
+    },
+    "PEDAL": {
+     "base": "педалювати",
+     "1_singular": "педалюю",
+     "2_singular": "педалюєш",
+     "3_singular": "педалює",
+     "1_plural": "педалюємо",
+     "2_plural": "педалюєте",
+     "3_plural": "педалюють"
+    },
+    "PUSH": {
+     "base": "штовхати",
+     "1_singular": "штовхаю",
+     "2_singular": "штовхаєш",
+     "3_singular": "штовхає",
+     "1_plural": "штовхаємо",
+     "2_plural": "штовхаєте",
+     "3_plural": "штовхають"
+    },
+    "PULL": {
+     "base": "тягнути",
+     "1_singular": "тягну",
+     "2_singular": "тягнеш",
+     "3_singular": "тягне",
+     "1_plural": "тягнемо",
+     "2_plural": "тягнете",
+     "3_plural": "тягнуть"
+    },
+    "MEASURE": {
+     "base": "вимірювати",
+     "1_singular": "вимірюю",
+     "2_singular": "вимірюєш",
+     "3_singular": "вимірює",
+     "1_plural": "вимірюємо",
+     "2_plural": "вимірюєте",
+     "3_plural": "вимірюють"
+    },
+    "IMPROVE": {
+     "base": "покращувати",
+     "1_singular": "покращую",
+     "2_singular": "покращуєш",
+     "3_singular": "покращує",
+     "1_plural": "покращуємо",
+     "2_plural": "покращуєте",
+     "3_plural": "покращують"
+    },
+    "RECOVER": {
+     "base": "відновлюватися",
+     "1_singular": "відновлююся",
+     "2_singular": "відновлюєшся",
+     "3_singular": "відновлюється",
+     "1_plural": "відновлюємося",
+     "2_plural": "відновлюєтеся",
+     "3_plural": "відновлюються"
+    },
+    "WEIGH": {
+     "base": "важити",
+     "1_singular": "важу",
+     "2_singular": "важиш",
+     "3_singular": "важить",
+     "1_plural": "важимо",
+     "2_plural": "важите",
+     "3_plural": "важать"
+    },
+    "FINISH": {
+     "base": "закінчувати",
+     "1_singular": "закінчую",
+     "2_singular": "закінчуєш",
+     "3_singular": "закінчує",
+     "1_plural": "закінчуємо",
+     "2_plural": "закінчуєте",
+     "3_plural": "закінчують"
+    },
+    "REPEAT": {
+     "base": "повторювати",
+     "1_singular": "повторюю",
+     "2_singular": "повторюєш",
+     "3_singular": "повторює",
+     "1_plural": "повторюємо",
+     "2_plural": "повторюєте",
+     "3_plural": "повторюють"
+    },
+    "HEALTHY": [
+     "здоровий"
+    ],
+    "ACTIVE": [
+     "активний"
+    ],
+    "SORE": [
+     "натруджений"
+    ],
+    "FLEXIBLE": [
+     "гнучкий"
+    ],
+    "INTENSE": [
+     "інтенсивний"
+    ],
+    "WEAK": [
+     "слабкий"
+    ],
+    "MOTIVATED": [
+     "вмотивований"
+    ],
+    "EXHAUSTED": [
+     "виснажений"
+    ],
+    "DAILY": [
+     "щоденний"
+    ],
+    "MUSCULAR": [
+     "м'язистий"
+    ]
+   }
+  },
+  "es": {
+   "label": "Español",
+   "forms": {
+    "WORKOUT": {
+     "form": "entrenamiento",
+     "gender": "m",
+     "plural": "entrenamientos"
+    },
+    "MUSCLE": {
+     "form": "músculo",
+     "gender": "m",
+     "plural": "músculos"
+    },
+    "DUMBBELL": {
+     "form": "mancuerna",
+     "gender": "f",
+     "plural": "mancuernas"
+    },
+    "TREADMILL": {
+     "form": "cinta de correr",
+     "gender": "f",
+     "plural": "cintas de correr"
+    },
+    "WEIGHT": {
+     "form": "peso",
+     "gender": "m",
+     "plural": "pesos"
+    },
+    "REPETITION": {
+     "form": "repetición",
+     "gender": "f",
+     "plural": "repeticiones"
+    },
+    "SWEAT": {
+     "form": "sudor",
+     "gender": "m"
+    },
+    "ENERGY": {
+     "form": "energía",
+     "gender": "f"
+    },
+    "PROTEIN": {
+     "form": "proteína",
+     "gender": "f"
+    },
+    "HABIT": {
+     "form": "hábito",
+     "gender": "m",
+     "plural": "hábitos"
+    },
+    "PROGRESS": {
+     "form": "progreso",
+     "gender": "m"
+    },
+    "TARGET": {
+     "form": "meta",
+     "gender": "f",
+     "plural": "metas"
+    },
+    "HEART": {
+     "form": "corazón",
+     "gender": "m",
+     "plural": "corazones"
+    },
+    "KNEE": {
+     "form": "rodilla",
+     "gender": "f",
+     "plural": "rodillas"
+    },
+    "SHOULDER": {
+     "form": "hombro",
+     "gender": "m",
+     "plural": "hombros"
+    },
+    "CALORIE": {
+     "form": "caloría",
+     "gender": "f",
+     "plural": "calorías"
+    },
+    "RUNNER": {
+     "form": "corredor",
+     "gender": "m",
+     "plural": "corredores"
+    },
+    "RACE": {
+     "form": "carrera",
+     "gender": "f",
+     "plural": "carreras"
+    },
+    "MARATHON": {
+     "form": "maratón",
+     "gender": "m",
+     "plural": "maratones"
+    },
+    "WARMUP": {
+     "form": "calentamiento",
+     "gender": "m",
+     "plural": "calentamientos"
+    },
+    "LOCKER_ROOM": {
+     "form": "vestuario",
+     "gender": "m",
+     "plural": "vestuarios"
+    },
+    "TOWEL": {
+     "form": "toalla",
+     "gender": "f",
+     "plural": "toallas"
+    },
+    "BOTTLE": {
+     "form": "botella",
+     "gender": "f",
+     "plural": "botellas"
+    },
+    "BICYCLE": {
+     "form": "bicicleta",
+     "gender": "f",
+     "plural": "bicicletas"
+    },
+    "POOL": {
+     "form": "piscina",
+     "gender": "f",
+     "plural": "piscinas"
+    },
+    "STRENGTH": {
+     "form": "fuerza",
+     "gender": "f"
+    },
+    "INJURY": {
+     "form": "lesión",
+     "gender": "f",
+     "plural": "lesiones"
+    },
+    "REST": {
+     "form": "descanso",
+     "gender": "m"
+    },
+    "LIFT": {
+     "base": "levantar",
+     "1_singular": "levanto",
+     "2_singular": "levantas",
+     "3_singular": "levanta",
+     "1_plural": "levantamos",
+     "2_plural": "levantáis",
+     "3_plural": "levantan"
+    },
+    "STRETCH": {
+     "base": "estirar",
+     "1_singular": "estiro",
+     "2_singular": "estiras",
+     "3_singular": "estira",
+     "1_plural": "estiramos",
+     "2_plural": "estiráis",
+     "3_plural": "estiran"
+    },
+    "BREATHE": {
+     "base": "respirar",
+     "1_singular": "respiro",
+     "2_singular": "respiras",
+     "3_singular": "respira",
+     "1_plural": "respiramos",
+     "2_plural": "respiráis",
+     "3_plural": "respiran"
+    },
+    "PEDAL": {
+     "base": "pedalear",
+     "1_singular": "pedaleo",
+     "2_singular": "pedaleas",
+     "3_singular": "pedalea",
+     "1_plural": "pedaleamos",
+     "2_plural": "pedaleáis",
+     "3_plural": "pedalean"
+    },
+    "PUSH": {
+     "base": "empujar",
+     "1_singular": "empujo",
+     "2_singular": "empujas",
+     "3_singular": "empuja",
+     "1_plural": "empujamos",
+     "2_plural": "empujáis",
+     "3_plural": "empujan"
+    },
+    "PULL": {
+     "base": "tirar",
+     "1_singular": "tiro",
+     "2_singular": "tiras",
+     "3_singular": "tira",
+     "1_plural": "tiramos",
+     "2_plural": "tiráis",
+     "3_plural": "tiran"
+    },
+    "MEASURE": {
+     "base": "medir",
+     "1_singular": "mido",
+     "2_singular": "mides",
+     "3_singular": "mide",
+     "1_plural": "medimos",
+     "2_plural": "medís",
+     "3_plural": "miden"
+    },
+    "IMPROVE": {
+     "base": "mejorar",
+     "1_singular": "mejoro",
+     "2_singular": "mejoras",
+     "3_singular": "mejora",
+     "1_plural": "mejoramos",
+     "2_plural": "mejoráis",
+     "3_plural": "mejoran"
+    },
+    "RECOVER": {
+     "base": "recuperar",
+     "1_singular": "recupero",
+     "2_singular": "recuperas",
+     "3_singular": "recupera",
+     "1_plural": "recuperamos",
+     "2_plural": "recuperáis",
+     "3_plural": "recuperan"
+    },
+    "WEIGH": {
+     "base": "pesar",
+     "1_singular": "peso",
+     "2_singular": "pesas",
+     "3_singular": "pesa",
+     "1_plural": "pesamos",
+     "2_plural": "pesáis",
+     "3_plural": "pesan"
+    },
+    "FINISH": {
+     "base": "terminar",
+     "1_singular": "termino",
+     "2_singular": "terminas",
+     "3_singular": "termina",
+     "1_plural": "terminamos",
+     "2_plural": "termináis",
+     "3_plural": "terminan"
+    },
+    "REPEAT": {
+     "base": "repetir",
+     "1_singular": "repito",
+     "2_singular": "repites",
+     "3_singular": "repite",
+     "1_plural": "repetimos",
+     "2_plural": "repetís",
+     "3_plural": "repiten"
+    },
+    "HEALTHY": [
+     "sano"
+    ],
+    "ACTIVE": [
+     "activo"
+    ],
+    "SORE": [
+     "dolorido"
+    ],
+    "FLEXIBLE": [
+     "flexible"
+    ],
+    "INTENSE": [
+     "intenso"
+    ],
+    "WEAK": [
+     "débil"
+    ],
+    "MOTIVATED": [
+     "motivado"
+    ],
+    "EXHAUSTED": [
+     "agotado"
+    ],
+    "DAILY": [
+     "diario"
+    ],
+    "MUSCULAR": [
+     "musculoso"
+    ]
+   }
+  },
+  "fr": {
+   "label": "Français",
+   "forms": {
+    "WORKOUT": {
+     "form": "entraînement",
+     "gender": "m",
+     "plural": "entraînements"
+    },
+    "MUSCLE": {
+     "form": "muscle",
+     "gender": "m",
+     "plural": "muscles"
+    },
+    "DUMBBELL": {
+     "form": "haltère",
+     "gender": "m",
+     "plural": "haltères"
+    },
+    "TREADMILL": {
+     "form": "tapis de course",
+     "gender": "m",
+     "plural": "tapis de course"
+    },
+    "WEIGHT": {
+     "form": "poids",
+     "gender": "m",
+     "plural": "poids"
+    },
+    "REPETITION": {
+     "form": "répétition",
+     "gender": "f",
+     "plural": "répétitions"
+    },
+    "SWEAT": {
+     "form": "sueur",
+     "gender": "f"
+    },
+    "ENERGY": {
+     "form": "énergie",
+     "gender": "f"
+    },
+    "PROTEIN": {
+     "form": "protéine",
+     "gender": "f"
+    },
+    "HABIT": {
+     "form": "habitude",
+     "gender": "f",
+     "plural": "habitudes"
+    },
+    "PROGRESS": {
+     "form": "progrès",
+     "gender": "m"
+    },
+    "TARGET": {
+     "form": "objectif",
+     "gender": "m",
+     "plural": "objectifs"
+    },
+    "HEART": {
+     "form": "cœur",
+     "gender": "m",
+     "plural": "cœurs"
+    },
+    "KNEE": {
+     "form": "genou",
+     "gender": "m",
+     "plural": "genoux"
+    },
+    "SHOULDER": {
+     "form": "épaule",
+     "gender": "f",
+     "plural": "épaules"
+    },
+    "CALORIE": {
+     "form": "calorie",
+     "gender": "f",
+     "plural": "calories"
+    },
+    "RUNNER": {
+     "form": "coureur",
+     "gender": "m",
+     "plural": "coureurs"
+    },
+    "RACE": {
+     "form": "course",
+     "gender": "f",
+     "plural": "courses"
+    },
+    "MARATHON": {
+     "form": "marathon",
+     "gender": "m",
+     "plural": "marathons"
+    },
+    "WARMUP": {
+     "form": "échauffement",
+     "gender": "m",
+     "plural": "échauffements"
+    },
+    "LOCKER_ROOM": {
+     "form": "vestiaire",
+     "gender": "m",
+     "plural": "vestiaires"
+    },
+    "TOWEL": {
+     "form": "serviette",
+     "gender": "f",
+     "plural": "serviettes"
+    },
+    "BOTTLE": {
+     "form": "bouteille",
+     "gender": "f",
+     "plural": "bouteilles"
+    },
+    "BICYCLE": {
+     "form": "vélo",
+     "gender": "m",
+     "plural": "vélos"
+    },
+    "POOL": {
+     "form": "piscine",
+     "gender": "f",
+     "plural": "piscines"
+    },
+    "STRENGTH": {
+     "form": "force",
+     "gender": "f"
+    },
+    "INJURY": {
+     "form": "blessure",
+     "gender": "f",
+     "plural": "blessures"
+    },
+    "REST": {
+     "form": "repos",
+     "gender": "m"
+    },
+    "LIFT": {
+     "base": "soulever",
+     "1_singular": "soulève",
+     "2_singular": "soulèves",
+     "3_singular": "soulève",
+     "1_plural": "soulevons",
+     "2_plural": "soulevez",
+     "3_plural": "soulèvent"
+    },
+    "STRETCH": {
+     "base": "étirer",
+     "1_singular": "étire",
+     "2_singular": "étires",
+     "3_singular": "étire",
+     "1_plural": "étirons",
+     "2_plural": "étirez",
+     "3_plural": "étirent"
+    },
+    "BREATHE": {
+     "base": "respirer",
+     "1_singular": "respire",
+     "2_singular": "respires",
+     "3_singular": "respire",
+     "1_plural": "respirons",
+     "2_plural": "respirez",
+     "3_plural": "respirent"
+    },
+    "PEDAL": {
+     "base": "pédaler",
+     "1_singular": "pédale",
+     "2_singular": "pédales",
+     "3_singular": "pédale",
+     "1_plural": "pédalons",
+     "2_plural": "pédalez",
+     "3_plural": "pédalent"
+    },
+    "PUSH": {
+     "base": "pousser",
+     "1_singular": "pousse",
+     "2_singular": "pousses",
+     "3_singular": "pousse",
+     "1_plural": "poussons",
+     "2_plural": "poussez",
+     "3_plural": "poussent"
+    },
+    "PULL": {
+     "base": "tirer",
+     "1_singular": "tire",
+     "2_singular": "tires",
+     "3_singular": "tire",
+     "1_plural": "tirons",
+     "2_plural": "tirez",
+     "3_plural": "tirent"
+    },
+    "MEASURE": {
+     "base": "mesurer",
+     "1_singular": "mesure",
+     "2_singular": "mesures",
+     "3_singular": "mesure",
+     "1_plural": "mesurons",
+     "2_plural": "mesurez",
+     "3_plural": "mesurent"
+    },
+    "IMPROVE": {
+     "base": "améliorer",
+     "1_singular": "améliore",
+     "2_singular": "améliores",
+     "3_singular": "améliore",
+     "1_plural": "améliorons",
+     "2_plural": "améliorez",
+     "3_plural": "améliorent"
+    },
+    "RECOVER": {
+     "base": "récupérer",
+     "1_singular": "récupère",
+     "2_singular": "récupères",
+     "3_singular": "récupère",
+     "1_plural": "récupérons",
+     "2_plural": "récupérez",
+     "3_plural": "récupèrent"
+    },
+    "WEIGH": {
+     "base": "peser",
+     "1_singular": "pèse",
+     "2_singular": "pèses",
+     "3_singular": "pèse",
+     "1_plural": "pesons",
+     "2_plural": "pesez",
+     "3_plural": "pèsent"
+    },
+    "FINISH": {
+     "base": "finir",
+     "1_singular": "finis",
+     "2_singular": "finis",
+     "3_singular": "finit",
+     "1_plural": "finissons",
+     "2_plural": "finissez",
+     "3_plural": "finissent"
+    },
+    "REPEAT": {
+     "base": "répéter",
+     "1_singular": "répète",
+     "2_singular": "répètes",
+     "3_singular": "répète",
+     "1_plural": "répétons",
+     "2_plural": "répétez",
+     "3_plural": "répètent"
+    },
+    "HEALTHY": [
+     "sain"
+    ],
+    "ACTIVE": [
+     "actif"
+    ],
+    "SORE": [
+     "courbaturé"
+    ],
+    "FLEXIBLE": [
+     "souple"
+    ],
+    "INTENSE": [
+     "intense"
+    ],
+    "WEAK": [
+     "faible"
+    ],
+    "MOTIVATED": [
+     "motivé"
+    ],
+    "EXHAUSTED": [
+     "épuisé"
+    ],
+    "DAILY": [
+     "quotidien"
+    ],
+    "MUSCULAR": [
+     "musclé"
+    ]
+   }
+  },
+  "zh": {
+   "label": "中文",
+   "forms": {
+    "WORKOUT": {
+     "form": "锻炼"
+    },
+    "MUSCLE": {
+     "form": "肌肉"
+    },
+    "DUMBBELL": {
+     "form": "哑铃"
+    },
+    "TREADMILL": {
+     "form": "跑步机"
+    },
+    "WEIGHT": {
+     "form": "重量"
+    },
+    "REPETITION": {
+     "form": "次数"
+    },
+    "SWEAT": {
+     "form": "汗水"
+    },
+    "ENERGY": {
+     "form": "能量"
+    },
+    "PROTEIN": {
+     "form": "蛋白质"
+    },
+    "HABIT": {
+     "form": "习惯"
+    },
+    "PROGRESS": {
+     "form": "进步"
+    },
+    "TARGET": {
+     "form": "目标"
+    },
+    "HEART": {
+     "form": "心脏"
+    },
+    "KNEE": {
+     "form": "膝盖"
+    },
+    "SHOULDER": {
+     "form": "肩膀"
+    },
+    "CALORIE": {
+     "form": "卡路里"
+    },
+    "RUNNER": {
+     "form": "跑步者"
+    },
+    "RACE": {
+     "form": "比赛"
+    },
+    "MARATHON": {
+     "form": "马拉松"
+    },
+    "WARMUP": {
+     "form": "热身"
+    },
+    "LOCKER_ROOM": {
+     "form": "更衣室"
+    },
+    "TOWEL": {
+     "form": "毛巾"
+    },
+    "BOTTLE": {
+     "form": "瓶子"
+    },
+    "BICYCLE": {
+     "form": "自行车"
+    },
+    "POOL": {
+     "form": "游泳池"
+    },
+    "STRENGTH": {
+     "form": "力量"
+    },
+    "INJURY": {
+     "form": "伤病"
+    },
+    "REST": {
+     "form": "休息"
+    },
+    "LIFT": {
+     "base": "举"
+    },
+    "STRETCH": {
+     "base": "拉伸"
+    },
+    "BREATHE": {
+     "base": "呼吸"
+    },
+    "PEDAL": {
+     "base": "蹬"
+    },
+    "PUSH": {
+     "base": "推"
+    },
+    "PULL": {
+     "base": "拉"
+    },
+    "MEASURE": {
+     "base": "测量"
+    },
+    "IMPROVE": {
+     "base": "提高"
+    },
+    "RECOVER": {
+     "base": "恢复"
+    },
+    "WEIGH": {
+     "base": "称"
+    },
+    "FINISH": {
+     "base": "完成"
+    },
+    "REPEAT": {
+     "base": "重复"
+    },
+    "HEALTHY": [
+     "健康"
+    ],
+    "ACTIVE": [
+     "活跃"
+    ],
+    "SORE": [
+     "酸痛"
+    ],
+    "FLEXIBLE": [
+     "灵活"
+    ],
+    "INTENSE": [
+     "剧烈"
+    ],
+    "WEAK": [
+     "虚弱"
+    ],
+    "MOTIVATED": [
+     "有动力"
+    ],
+    "EXHAUSTED": [
+     "筋疲力尽"
+    ],
+    "DAILY": [
+     "日常"
+    ],
+    "MUSCULAR": [
+     "肌肉发达"
+    ]
+   }
+  }
+ }
+}
