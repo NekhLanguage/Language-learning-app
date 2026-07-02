@@ -516,6 +516,9 @@ let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const APP_VERSION = "v1.0.0";
   const MAX_LEVEL = 7;
+  // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
+  // exposed via window.__app so tests can exercise the correct-answer path.
+  let LAST_EXERCISE = null;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
   // Caps the upper bound on session length so later sessions (with many
@@ -2558,6 +2561,7 @@ if (isModifierConcept(targetConcept)) {
 
     const btn = document.createElement("button");
     btn.textContent = text;
+    btn.dataset.cid = opt;
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
       selectedOption = opt;
@@ -2679,6 +2683,7 @@ if (!options || options.length < 4) {
 
     const btn = document.createElement("button");
     btn.textContent = text;
+    btn.dataset.cid = opt;
 
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
@@ -2859,6 +2864,7 @@ if (!finalOptions.includes(targetConcept)) {
 
       const btn = document.createElement("button");
       btn.textContent = text;
+      btn.dataset.cid = opt;
       btn.onclick = () => {
         container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
         selectedOption = opt;
@@ -3183,6 +3189,8 @@ const correctWords = ordered.map(cid => {
   return String(surfaceForm(targetLang, cid)).toLowerCase();
 });
 
+  LAST_EXERCISE = { type: "sentence_builder", correctWords };
+
   const wordBank = shuffle([...correctWords]);
 
   const assignments = new Map(); // slotIndex → word
@@ -3346,6 +3354,8 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
 }
 
 const targetSentence = safe(buildSentence(targetLang, tpl));
+
+  LAST_EXERCISE = { type: "free_production", answer: targetSentence };
 
   content.innerHTML = `
   <div style="margin-bottom:20px;">
@@ -4143,6 +4153,7 @@ if (level === 2) {
   q.options.forEach(opt => {
     const btn = document.createElement("button");
     btn.textContent = surfaceForm(supportLang, opt);
+    btn.dataset.cid = opt;
 
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
@@ -4401,5 +4412,13 @@ if (logoutBtn) {
   };
 }
 window.canConceptBeTested = canConceptBeTested;
-window.__app = { get run(){ return run; } };
+// Debug/e2e hooks. `run` was already exposed; the rest lets tests seed
+// progress deterministically and re-enter the exercise loop without
+// simulating dozens of answers.
+window.__app = {
+  get run(){ return run; },
+  get bundleIndex(){ return BUNDLE_INDEX; },
+  get lastExercise(){ return LAST_EXERCISE; },
+  rerender(){ renderNext(languageState.target, languageState.support); },
+};
 });
