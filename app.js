@@ -5,6 +5,7 @@ import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage
 import { isFeatureAvailable } from "./capabilities.mjs";
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import { chooseSupportSentence } from "./display.mjs";
+import { promptApiAvailable, gradeSemantically } from "./grading.mjs";
 import {
   configureEngine,
   formOf,
@@ -3491,7 +3492,7 @@ const targetSentence = safe(buildSentence(targetLang, tpl));
 const feedbackDiv = document.getElementById("l7-feedback");
 const inputField = document.getElementById("l7-input");
 
-checkBtn.onclick = () => {
+checkBtn.onclick = async () => {
 
   const userInput = inputField.value;
 
@@ -3504,6 +3505,7 @@ checkBtn.onclick = () => {
   const tState = ensureTemplateProgress(tpl);
 
   let resultType;
+  let semanticNote = "";
 
   if (strictUser === strictCorrect) {
     resultType = "perfect";
@@ -3513,10 +3515,35 @@ checkBtn.onclick = () => {
   }
   else {
     resultType = "incorrect";
+
+    // Progressive enhancement: when the strict check fails, an on-device
+    // model (Chrome built-in AI) may still accept a semantically-correct
+    // variation. Gated per language (capabilities) and per browser
+    // (promptApiAvailable); any failure keeps the strict verdict.
+    if (
+      userInput.trim() &&
+      isFeatureAvailable("semantic_grading", { target: targetLang, support: supportLang }) &&
+      promptApiAvailable()
+    ) {
+      checkBtn.disabled = true;
+      const verdict = await gradeSemantically({
+        userInput,
+        targetSentence,
+        supportSentence: tpl.render?.[supportLang] || "",
+        langLabel: localizedTargetLabel(targetLang),
+      });
+      checkBtn.disabled = false;
+      if (verdict?.acceptable) {
+        resultType = "semantic";
+        semanticNote = verdict.feedback || "";
+      }
+    }
   }
 
+  LAST_EXERCISE = { ...(LAST_EXERCISE || {}), lastResultType: resultType };
+
   // 🔒 Update progression state
-  if (resultType === "perfect" || resultType === "accent") {
+  if (resultType === "perfect" || resultType === "accent" || resultType === "semantic") {
 
     tState.reinforcementStage++;
     tState.lastShownAt = run.exerciseCounter;
@@ -3550,6 +3577,16 @@ checkBtn.onclick = () => {
       <div style="color:#4CAF50;">
         ${ui("correct")}.<br/>
         Proper form: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+      </div>`;
+    wireTts();
+  }
+
+  if (resultType === "semantic") {
+    inputField.style.borderColor = "#4CAF50";
+    feedbackDiv.innerHTML = `
+      <div style="color:#4CAF50;">
+        ${ui("correct")}.${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>
+        Expected: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
   }
