@@ -16,9 +16,12 @@ export const test = base.extend({
         if (msg.type() === "error") errors.push(`console: ${msg.text()}`);
       });
       page.on("pageerror", (err) => errors.push(`pageerror: ${err.message}`));
-      page.on("requestfailed", (req) =>
-        errors.push(`requestfailed: ${req.method()} ${req.url()} — ${req.failure()?.errorText}`)
-      );
+      page.on("requestfailed", (req) => {
+        const reason = req.failure()?.errorText || "";
+        // Navigation (reload/login) cancels in-flight fetches — not an error.
+        if (reason === "net::ERR_ABORTED") return;
+        errors.push(`requestfailed: ${req.method()} ${req.url()} — ${reason}`);
+      });
       page.on("response", (res) => {
         if (res.status() >= 400) errors.push(`http ${res.status()}: ${res.url()}`);
       });
@@ -60,6 +63,7 @@ export async function startNewRun(page, { language = "Portuguese", packId = "eve
   await page.click("#roadmap-continue");
   await expect(page.locator("#learning-screen.active")).toBeVisible();
   await expect(page.locator("#content h2")).toBeVisible();
+  return email;
 }
 
 // Seeds the live run so every released concept sits at `level`, releasing the
