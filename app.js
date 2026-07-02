@@ -783,7 +783,10 @@ updateSupportUI(languageState.support);
 let languageSearchQuery = "";
 
 // First render once the lang file resolves — applies localized strings + hub names.
+// Skip when the access gate has replaced the start-screen DOM (logged-out visit):
+// the elements these renderers write to no longer exist.
 langP.then(() => {
+  if (!document.getElementById("open-app")) return;
   updateUIStrings(languageState.support);
   renderLanguageButtons();
 });

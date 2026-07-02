@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev": "node tests/dev-server.mjs",
     "validate": "node validation/validate-structure.js && node validation/validate-templates.js && node validation/validate-exercises.js && node validation/validate-packs.js && node validation/validate-sentences.mjs",
     "validate:sentences": "node validation/validate-sentences.mjs",
     "validate:sentences:update": "node validation/validate-sentences.mjs --update-baseline"
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^5.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1"
   }
 }
