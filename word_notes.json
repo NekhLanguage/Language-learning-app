@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "comment": "Optional per-word memory hooks, keyed concept -> target language -> support language. Missing entries are fine — the UI only shows a note when one exists. Authored with AI assistance.",
+  "notes": {}
+}

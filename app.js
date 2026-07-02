@@ -526,6 +526,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     .then(r => (r.ok ? r.json() : null))
     .then(d => { GRAMMAR_NOTES = d?.notes || null; })
     .catch(() => {});
+
+  // Optional per-word mnemonic hooks (word_notes.json), keyed
+  // concept → target language → support language. Same graceful loading.
+  let WORD_NOTES = null;
+  fetch("word_notes.json")
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => { WORD_NOTES = d?.notes || null; })
+    .catch(() => {});
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
   // Caps the upper bound on session length so later sessions (with many
@@ -2225,6 +2233,12 @@ return tpl;
     content.appendChild(banner);
     wireTts();
   }
+  function wordNoteFor(cid, targetLang, supportLang) {
+    if (!WORD_NOTES) return null;
+    if (!isFeatureAvailable("mnemonics", { target: targetLang, support: supportLang })) return null;
+    return WORD_NOTES[cid]?.[targetLang]?.[supportLang] || null;
+  }
+
   // Resolves a fired grammar rule to its localized explanation, with the
   // {lang} placeholder replaced by the target language's display name.
   function grammarNoteFor(rule, targetLang, supportLang) {
@@ -2274,12 +2288,14 @@ return tpl;
     buildSentenceWithRules(targetLang, tpl, targetConcept, sharedChoices);
   const supportSentence = buildSentence(supportLang, tpl, targetConcept, sharedChoices);
 
-  LAST_EXERCISE = { type: "exposure", rules: grammarRules };
+  const wordNote = wordNoteFor(targetConcept, targetLang, supportLang);
+  LAST_EXERCISE = { type: "exposure", rules: grammarRules, note: wordNote };
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
     <h2>${safe(headword(formOf(targetLang, targetConcept)))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
     <p>${safe(headword(formOf(supportLang, targetConcept)))}</p>
+    ${wordNote ? `<p class="word-note">🧠 ${safe(wordNote)}</p>` : ""}
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
