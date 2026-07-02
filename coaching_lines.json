@@ -1,6 +1,415 @@
 {
   "version": 1,
   "comment": "Personalized coaching lines: milestone celebrations keyed reason -> stage -> support language, plus rotating session-complete lines per support language. Placeholders: {detail} = learner's own words for their reason, {n} = word count or session number, {lang} = localized target-language name. Authored with AI assistance.",
-  "milestones": {},
-  "sessionComplete": {}
+  "milestones": {
+    "travel": {
+      "early": {
+        "en": "{detail} just got a little closer.",
+        "pt": "{detail} acabou de ficar um pouco mais perto.",
+        "fr": "{detail} vient de se rapprocher un peu.",
+        "de": "{detail} ist gerade ein Stück näher gerückt.",
+        "el": "{detail} — λίγο πιο κοντά με κάθε νέα λέξη.",
+        "es": "{detail} acaba de quedar un poco más cerca.",
+        "ja": "{detail}が、また少し近づきました。",
+        "ko": "{detail}, 한 단어씩 조금 더 가까워지고 있어요.",
+        "no": "{detail} rykket akkurat litt nærmere.",
+        "tr": "{detail} her yeni kelimeyle biraz daha yaklaşıyor.",
+        "uk": "{detail} — ще на кілька слів ближче.",
+        "zh": "{detail}又近了一点。",
+        "ar": "{detail} — أقرب قليلًا مع كل كلمة جديدة."
+      },
+      "mid": {
+        "en": "You're speaking in sentences now — {detail} is starting to feel real.",
+        "pt": "Você já fala em frases — {detail} está ficando cada vez mais real.",
+        "fr": "Vous parlez en phrases maintenant — {detail} prend forme.",
+        "de": "Du sprichst in Sätzen — {detail} wird immer realer.",
+        "el": "Μιλάς πια με προτάσεις — {detail} παίρνει μορφή.",
+        "es": "Ya hablas con frases — {detail} se vuelve cada vez más real.",
+        "ja": "もう文で話せています — {detail}が少しずつ現実になっていきます。",
+        "ko": "이제 문장으로 말해요 — {detail}, 점점 현실이 되어 가요.",
+        "no": "Du snakker i setninger nå — {detail} begynner å bli virkelig.",
+        "tr": "Artık cümleler kuruyorsun — {detail} gitgide gerçek oluyor.",
+        "uk": "Ти вже говориш реченнями — {detail} набуває обрисів.",
+        "zh": "已经能说完整的句子了——{detail}正一点点变成现实。",
+        "ar": "جمل كاملة الآن — {detail} أقرب إلى الواقع من أي وقت مضى."
+      },
+      "late": {
+        "en": "You won't just visit {detail} — you'll understand it.",
+        "pt": "Você não vai apenas visitar {detail} — vai entender cada palavra.",
+        "fr": "Vous ne ferez pas que visiter {detail} — vous comprendrez chaque mot.",
+        "de": "{detail} ist bald mehr als ein Traum — du wirst dort jedes Wort verstehen.",
+        "el": "{detail} — όταν φτάσεις, θα φτάσεις μιλώντας.",
+        "es": "No solo vas a visitar {detail}: vas a entender cada palabra.",
+        "ja": "{detail}に着いたとき、あなたは話せる人として降り立ちます。",
+        "ko": "{detail}, 도착하는 날엔 말할 수 있는 사람으로 내리게 될 거예요.",
+        "no": "Du skal ikke bare besøke {detail} — du kommer til å forstå hvert ord.",
+        "tr": "{detail} — vardığında, konuşarak varacaksın.",
+        "uk": "{detail} — коли приїдеш, приїдеш уже зі словами.",
+        "zh": "等你抵达{detail}，开口就能交流。",
+        "ar": "حين تصل إلى {detail}، ستصل وأنت تتكلم."
+      }
+    },
+    "person": {
+      "early": {
+        "en": "Each new word is one more you'll share with {detail}.",
+        "pt": "Cada palavra nova é mais uma para dividir com {detail}.",
+        "fr": "Chaque nouveau mot est un mot de plus à partager avec {detail}.",
+        "de": "{detail} rückt näher — mit jedem einzelnen Wort.",
+        "el": "{detail} — κάθε νέα λέξη σε φέρνει πιο κοντά.",
+        "es": "Cada palabra nueva es una más para compartir con {detail}.",
+        "ja": "新しい一語は、いつか{detail}と分かち合う一語です。",
+        "ko": "{detail}, 새 단어 하나하나가 함께 나눌 말이 되어 가요.",
+        "no": "Hvert nye ord er ett til du kan dele med {detail}.",
+        "tr": "{detail} — her yeni kelime, bir gün paylaşacağınız bir kelime.",
+        "uk": "{detail} — кожне нове слово це ще один крок назустріч.",
+        "zh": "每学一个新词，都是将来和{detail}分享的一个词。",
+        "ar": "كل كلمة جديدة هي كلمة ستتشاركها مع {detail}."
+      },
+      "mid": {
+        "en": "Real sentences now — the kind {detail} will actually hear.",
+        "pt": "Agora são frases de verdade — do tipo que {detail} vai ouvir.",
+        "fr": "De vraies phrases désormais — celles que {detail} entendra.",
+        "de": "Echte Sätze jetzt — genau die, die {detail} bald hören wird.",
+        "el": "Αληθινές προτάσεις πια — αυτές που σύντομα θα ακούσει {detail}.",
+        "es": "Frases de verdad — de las que {detail} va a escuchar pronto.",
+        "ja": "もう本当の文になっています — {detail}に届く言葉です。",
+        "ko": "이제 진짜 문장이에요 — {detail}, 곧 들려줄 수 있는 말들이죠.",
+        "no": "Ekte setninger nå — akkurat de {detail} kommer til å høre.",
+        "tr": "Artık gerçek cümleler — {detail} yakında bunları duyacak.",
+        "uk": "Справжні речення — саме ті, що незабаром почує {detail}.",
+        "zh": "现在是真正的句子了——{detail}很快就能听到。",
+        "ar": "جمل حقيقية الآن — كلام سيصل يومًا إلى {detail}."
+      },
+      "late": {
+        "en": "Whole conversations with {detail} aren't far off now.",
+        "pt": "Conversas inteiras com {detail} estão cada vez mais perto.",
+        "fr": "De vraies conversations avec {detail}, ce n'est plus très loin.",
+        "de": "{detail} wird bald ganze Gespräche mit dir führen können.",
+        "el": "{detail} — ολόκληρες συζητήσεις δεν είναι πια μακριά.",
+        "es": "Las conversaciones enteras con {detail} ya no quedan lejos.",
+        "ja": "{detail}との丸ごとの会話まで、あと少しです。",
+        "ko": "{detail}, 온전한 대화를 나눌 날이 머지않았어요.",
+        "no": "Hele samtaler med {detail} er ikke langt unna.",
+        "tr": "{detail} — upuzun sohbetler artık çok da uzak değil.",
+        "uk": "{detail} — цілі розмови вже не за горами.",
+        "zh": "和{detail}完整地聊上一场，已经不远了。",
+        "ar": "محادثات كاملة مع {detail} لم تعد بعيدة."
+      }
+    },
+    "career": {
+      "early": {
+        "en": "Quiet, steady steps toward {detail}.",
+        "pt": "Passos firmes e constantes rumo a {detail}.",
+        "fr": "Des pas discrets et réguliers vers {detail}.",
+        "de": "Stille, stetige Schritte — {detail} kommt näher.",
+        "el": "Σταθερά, ήσυχα βήματα — {detail} πλησιάζει.",
+        "es": "Pasos firmes y constantes hacia {detail}.",
+        "ja": "{detail}へ、静かに着実に近づいています。",
+        "ko": "{detail}, 조용히 그리고 꾸준히 가까워지고 있어요.",
+        "no": "Rolige, jevne steg mot {detail}.",
+        "tr": "{detail} sessiz ama kararlı adımlarla yaklaşıyor.",
+        "uk": "{detail} — тихі, впевнені кроки саме туди.",
+        "zh": "朝着{detail}，安静而踏实地前进。",
+        "ar": "خطوات هادئة وثابتة نحو {detail}."
+      },
+      "mid": {
+        "en": "This is how {detail} gets built — word by word.",
+        "pt": "É assim que {detail} se constrói — palavra por palavra.",
+        "fr": "C'est ainsi que {detail} se construit — mot après mot.",
+        "de": "So entsteht {detail} — Wort für Wort.",
+        "el": "Έτσι χτίζεται {detail} — λέξη τη λέξη.",
+        "es": "Así se construye {detail}: palabra a palabra.",
+        "ja": "{detail}は、こうして一語ずつ形になっていきます。",
+        "ko": "{detail}, 이렇게 한 단어씩 만들어지는 거예요.",
+        "no": "Slik bygges {detail} — ord for ord.",
+        "tr": "{detail} böyle kurulur — kelime kelime.",
+        "uk": "Так і будується {detail} — слово за словом.",
+        "zh": "{detail}就是这样一词一词搭起来的。",
+        "ar": "هكذا تُبنى الأشياء الكبيرة — كلمة بعد كلمة نحو {detail}."
+      },
+      "late": {
+        "en": "{detail} is looking less like a dream and more like a plan.",
+        "pt": "{detail} está deixando de ser sonho e virando plano.",
+        "fr": "{detail} ressemble de moins en moins à un rêve et de plus en plus à un plan.",
+        "de": "{detail} sieht immer weniger nach Traum aus — und immer mehr nach Plan.",
+        "el": "{detail} μοιάζει όλο και λιγότερο με όνειρο και όλο και πιο πολύ με σχέδιο.",
+        "es": "{detail} se parece cada vez menos a un sueño y más a un plan.",
+        "ja": "{detail}が、夢ではなく計画に見えてきました。",
+        "ko": "{detail}, 이제 꿈보다는 계획에 가까워 보여요.",
+        "no": "{detail} ligner stadig mindre på en drøm og stadig mer på en plan.",
+        "tr": "{detail} artık hayalden çok bir plana benziyor.",
+        "uk": "{detail} — дедалі менше мрія, дедалі більше план.",
+        "zh": "{detail}看起来越来越不像梦想，越来越像计划。",
+        "ar": "{detail} — أقرب إلى خطة من حلم، يومًا بعد يوم."
+      }
+    },
+    "heritage": {
+      "early": {
+        "en": "{detail} is in every word you learn.",
+        "pt": "{detail} está em cada palavra que você aprende.",
+        "fr": "{detail} est dans chaque mot que vous apprenez.",
+        "de": "{detail} — das steckt in jedem Wort, das du lernst.",
+        "el": "{detail} — υπάρχει μέσα σε κάθε λέξη που μαθαίνεις.",
+        "es": "{detail} está en cada palabra que aprendes.",
+        "ja": "学ぶ一語一語に、{detail}が息づいています。",
+        "ko": "{detail}, 배우는 단어 하나하나에 깃들어 있어요.",
+        "no": "{detail} finnes i hvert ord du lærer.",
+        "tr": "{detail} öğrendiğin her kelimenin içinde.",
+        "uk": "{detail} — у кожному слові, яке ти вчиш.",
+        "zh": "你学的每一个词里，都有{detail}。",
+        "ar": "في كل كلمة تتعلمها شيء من {detail}."
+      },
+      "mid": {
+        "en": "These words were always part of {detail} — now they're part of you.",
+        "pt": "Essas palavras sempre fizeram parte de {detail} — agora fazem parte de você.",
+        "fr": "Ces mots ont toujours fait partie de {detail} — maintenant ils sont à vous.",
+        "de": "{detail} — diese Worte waren immer ein Teil davon, und jetzt gehören sie dir.",
+        "el": "{detail} — ήταν πάντα μέσα σε αυτές τις λέξεις, και τώρα είναι δικές σου.",
+        "es": "Estas palabras siempre fueron parte de {detail} — ahora son parte de ti.",
+        "ja": "この言葉はずっと{detail}の一部でした — いま、あなたのものになっていきます。",
+        "ko": "{detail}, 이 말들은 늘 그 일부였고 — 이제 당신의 것이 되어 가요.",
+        "no": "Disse ordene har alltid vært en del av {detail} — nå blir de dine.",
+        "tr": "{detail} — bu kelimeler hep onun bir parçasıydı, şimdi senin de.",
+        "uk": "Ці слова завжди були поруч — {detail} живе в них.",
+        "zh": "这些词一直是{detail}的一部分——现在也成了你的。",
+        "ar": "هذه الكلمات كانت دائمًا جزءًا من {detail} — والآن تصبح جزءًا منك."
+      },
+      "late": {
+        "en": "You're carrying {detail} forward, one word at a time.",
+        "pt": "Você está levando {detail} adiante, palavra por palavra.",
+        "fr": "Vous faites vivre {detail}, un mot à la fois.",
+        "de": "{detail} — das trägst du weiter, Wort für Wort.",
+        "el": "{detail} συνεχίζεται μέσα από σένα, λέξη τη λέξη.",
+        "es": "Estás llevando {detail} adelante, palabra a palabra.",
+        "ja": "あなたは{detail}を、一語ずつ次へつないでいます。",
+        "ko": "{detail}, 한 단어씩 다음으로 이어 가고 있어요.",
+        "no": "Du bærer {detail} videre, ord for ord.",
+        "tr": "{detail} — kelime kelime ileriye taşıyorsun.",
+        "uk": "{detail} — ти несеш це далі, слово за словом.",
+        "zh": "你正把{detail}一词一词地传下去。",
+        "ar": "أنت تحمل {detail} إلى الأمام، كلمة بعد كلمة."
+      }
+    },
+    "culture": {
+      "early": {
+        "en": "{detail} has a voice of its own — you're learning to hear it.",
+        "pt": "{detail} tem voz própria — e você está aprendendo a ouvi-la.",
+        "fr": "{detail} a une voix — vous apprenez à l'entendre.",
+        "de": "{detail} hat eine eigene Stimme — du lernst gerade, sie zu hören.",
+        "el": "{detail} — μια φωνή που μαθαίνεις να ακούς.",
+        "es": "{detail} tiene voz propia — y estás aprendiendo a escucharla.",
+        "ja": "{detail}には声があります — あなたはそれを聞き取り始めています。",
+        "ko": "{detail}, 그 목소리를 알아듣기 시작했어요.",
+        "no": "{detail} har sin egen stemme — du lærer å høre den.",
+        "tr": "{detail} — kendi sesi var ve sen onu duymayı öğreniyorsun.",
+        "uk": "{detail} — голос, який ти вчишся чути.",
+        "zh": "{detail}有自己的声音——你正在学着听懂它。",
+        "ar": "{detail} — صوت خاص، وأنت تتعلم الإصغاء إليه."
+      },
+      "mid": {
+        "en": "You're starting to know {detail} from the inside.",
+        "pt": "Você está começando a conhecer {detail} de dentro.",
+        "fr": "Vous commencez à découvrir {detail} de l'intérieur.",
+        "de": "{detail} zeigt sich dir langsam von innen.",
+        "el": "{detail} ανοίγεται σιγά σιγά μπροστά σου.",
+        "es": "Empiezas a conocer {detail} desde dentro.",
+        "ja": "{detail}を、内側から知り始めています。",
+        "ko": "{detail}, 이제 안쪽에서부터 알아 가고 있어요.",
+        "no": "Du begynner å bli kjent med {detail} innenfra.",
+        "tr": "{detail} — artık içeriden tanımaya başlıyorsun.",
+        "uk": "{detail} — ти починаєш пізнавати це зсередини.",
+        "zh": "你开始从内部认识{detail}了。",
+        "ar": "بدأت تتعرف على {detail} من الداخل."
+      },
+      "late": {
+        "en": "Soon you'll take in {detail} with nothing lost in translation.",
+        "pt": "Logo você vai viver {detail} sem precisar de tradução.",
+        "fr": "Bientôt, vous vivrez {detail} sans traduction.",
+        "de": "{detail} braucht bald keine Übersetzung mehr — nicht für dich.",
+        "el": "Σύντομα {detail} δεν θα χρειάζεται μετάφραση — όχι για σένα.",
+        "es": "Pronto vivirás {detail} sin traducción.",
+        "ja": "まもなく{detail}を、翻訳なしで味わえます。",
+        "ko": "{detail}, 머지않아 번역 없이 만나게 될 거예요.",
+        "no": "Snart opplever du {detail} uten oversettelse.",
+        "tr": "{detail} — yakında araya çeviri girmeden, doğrudan seninle.",
+        "uk": "Незабаром {detail} звучатиме для тебе без перекладу.",
+        "zh": "很快，你就能不靠翻译去体会{detail}。",
+        "ar": "قريبًا ستعيش {detail} دون ترجمة."
+      }
+    },
+    "fun": {
+      "early": {
+        "en": "{n} words, just because you wanted to.",
+        "pt": "{n} palavras, só porque você quis.",
+        "fr": "{n} mots, juste parce que vous en aviez envie.",
+        "de": "{n} Wörter, einfach weil du Lust darauf hattest.",
+        "el": "{n} λέξεις, απλώς επειδή το ήθελες.",
+        "es": "{n} palabras, solo porque quisiste.",
+        "ja": "{n}語 — ただ、やりたかったから。",
+        "ko": "{n}개의 단어, 그저 하고 싶어서요.",
+        "no": "{n} ord, bare fordi du hadde lyst.",
+        "tr": "{n} kelime, sırf istediğin için.",
+        "uk": "{n} слів — просто тому, що захотілося.",
+        "zh": "{n}个词，只因为你想学。",
+        "ar": "{n} كلمة، فقط لأنك أردت ذلك."
+      },
+      "mid": {
+        "en": "{lang} is turning into a genuinely good habit.",
+        "pt": "O {lang} está virando um hábito dos bons.",
+        "fr": "Le {lang} devient une très bonne habitude.",
+        "de": "{lang} wird gerade zu einer richtig guten Gewohnheit.",
+        "el": "Τα {lang} γίνονται μια πολύ καλή συνήθεια.",
+        "es": "El {lang} se está volviendo un buen hábito.",
+        "ja": "{lang}が、心地よい習慣になってきました。",
+        "ko": "{lang}가 꽤 좋은 습관이 되어 가요.",
+        "no": "{lang} er i ferd med å bli en riktig god vane.",
+        "tr": "{lang} gerçekten iyi bir alışkanlığa dönüşüyor.",
+        "uk": "{lang} стає направду доброю звичкою.",
+        "zh": "{lang}正在变成一个很好的习惯。",
+        "ar": "{lang} تتحول إلى عادة جميلة حقًا."
+      },
+      "late": {
+        "en": "{n} words deep, purely for the joy of it!",
+        "pt": "{n} palavras, por pura diversão!",
+        "fr": "{n} mots, pour le simple plaisir !",
+        "de": "{n} Wörter, aus reiner Freude!",
+        "el": "{n} λέξεις, καθαρά για την πλάκα!",
+        "es": "¡{n} palabras, por puro gusto!",
+        "ja": "{n}語も、純粋な楽しさだけで!",
+        "ko": "{n}개의 단어, 순전히 재미로 여기까지!",
+        "no": "{n} ord, bare for gleden!",
+        "tr": "{n} kelime, sırf keyfinden!",
+        "uk": "{n} слів — і все це з чистого задоволення!",
+        "zh": "{n}个词，纯粹为了开心！",
+        "ar": "{n} كلمة، من أجل المتعة وحدها!"
+      }
+    },
+    "generic": {
+      "early": {
+        "en": "{n} words down — and no one can take them from you.",
+        "pt": "{n} palavras — e ninguém tira isso de você.",
+        "fr": "{n} mots appris — et personne ne peut vous les prendre.",
+        "de": "{n} Wörter gelernt — und die nimmt dir niemand mehr.",
+        "el": "{n} λέξεις — και δεν σου τις παίρνει κανείς.",
+        "es": "{n} palabras — y nadie te las quita.",
+        "ja": "{n}語 — もう誰にも取り上げられません。",
+        "ko": "{n}개의 단어 — 이제 누구도 가져갈 수 없어요.",
+        "no": "{n} ord — og ingen kan ta dem fra deg.",
+        "tr": "{n} kelime — ve kimse onları senden alamaz.",
+        "uk": "{n} слів — і їх уже ніхто не забере.",
+        "zh": "{n}个词——谁也拿不走。",
+        "ar": "{n} كلمة — ولا أحد يستطيع أن يأخذها منك."
+      },
+      "mid": {
+        "en": "It's coming together — {lang} is starting to make sense.",
+        "pt": "As coisas estão se encaixando — o {lang} começa a fazer sentido.",
+        "fr": "Ça se met en place — le {lang} commence à avoir du sens.",
+        "de": "Es fügt sich zusammen — {lang} ergibt langsam Sinn.",
+        "el": "Όλα αρχίζουν να δένουν — τα {lang} αποκτούν νόημα.",
+        "es": "Las piezas van encajando — el {lang} empieza a tener sentido.",
+        "ja": "つながってきました — {lang}が意味を持ち始めています。",
+        "ko": "조각이 맞춰지고 있어요 — {lang}가 이해되기 시작했어요.",
+        "no": "Ting faller på plass — {lang} begynner å gi mening.",
+        "tr": "Parçalar yerine oturuyor — {lang} anlam kazanmaya başladı.",
+        "uk": "Все складається — {lang} починає набувати сенсу.",
+        "zh": "一切开始串起来了——{lang}越来越有感觉。",
+        "ar": "الأمور تترابط — {lang} بدأت تتضح."
+      },
+      "late": {
+        "en": "{n} words — every one of them yours.",
+        "pt": "{n} palavras — cada uma delas sua.",
+        "fr": "{n} mots — chacun d'eux est à vous.",
+        "de": "{n} Wörter — jedes einzelne gehört dir.",
+        "el": "{n} λέξεις — καθεμιά δική σου.",
+        "es": "{n} palabras — cada una tuya.",
+        "ja": "{n}語 — そのすべてが、あなたのものです。",
+        "ko": "{n}개의 단어 — 전부 당신의 것이에요.",
+        "no": "{n} ord — hvert eneste ett er ditt.",
+        "tr": "{n} kelime — her biri senin.",
+        "uk": "{n} слів — і кожне з них твоє.",
+        "zh": "{n}个词——每一个都是你的。",
+        "ar": "{n} كلمة — كل واحدة منها لك."
+      }
+    }
+  },
+  "sessionComplete": {
+    "en": [
+      "Another session done — it all adds up.",
+      "Showing up is the whole secret.",
+      "Good work; now let it settle.",
+      "Tomorrow's words will come easier because of today."
+    ],
+    "pt": [
+      "Mais uma sessão concluída — tudo isso soma.",
+      "Aparecer todo dia é o segredo inteiro.",
+      "Bom trabalho; agora deixe assentar.",
+      "As palavras de amanhã virão mais fáceis por causa de hoje."
+    ],
+    "fr": [
+      "Encore une session de faite — tout compte.",
+      "La régularité, c'est tout le secret.",
+      "Beau travail ; laissez reposer maintenant.",
+      "Les mots de demain viendront plus facilement grâce à aujourd'hui."
+    ],
+    "de": [
+      "Wieder eine Einheit geschafft — alles zählt.",
+      "Dranbleiben ist das ganze Geheimnis.",
+      "Gute Arbeit; jetzt darf es sich setzen.",
+      "Die Wörter von morgen fallen dir leichter — wegen heute."
+    ],
+    "el": [
+      "Άλλη μία συνεδρία ολοκληρώθηκε — όλα μετράνε.",
+      "Το να εμφανίζεσαι κάθε μέρα είναι όλο το μυστικό.",
+      "Καλή δουλειά· τώρα άφησέ το να κατασταλάξει.",
+      "Οι αυριανές λέξεις θα έρθουν πιο εύκολα χάρη στο σήμερα."
+    ],
+    "es": [
+      "Otra sesión completada — todo suma.",
+      "Presentarse cada día es todo el secreto.",
+      "Buen trabajo; ahora deja que repose.",
+      "Las palabras de mañana llegarán más fáciles gracias a hoy."
+    ],
+    "ja": [
+      "今日のセッションも完了 — 積み重ねが力になります。",
+      "続けて現れること、それがすべての秘訣です。",
+      "おつかれさまでした — 休むのも学習のうちです。",
+      "今日のぶん、明日の言葉はもっと楽になります。"
+    ],
+    "ko": [
+      "오늘도 한 세션 완료 — 다 쌓이고 있어요.",
+      "꾸준히 나타나는 것, 그게 비결의 전부예요.",
+      "수고했어요 — 이제 쉬는 것도 공부예요.",
+      "오늘 덕분에 내일의 단어가 더 쉬워질 거예요."
+    ],
+    "no": [
+      "Nok en økt i boks — alt teller.",
+      "Å møte opp er hele hemmeligheten.",
+      "Godt jobbet; la det synke inn nå.",
+      "Morgendagens ord blir lettere på grunn av i dag."
+    ],
+    "tr": [
+      "Bir oturum daha bitti — hepsi birikiyor.",
+      "Her gün gelmek, işin bütün sırrı.",
+      "İyi iş; şimdi biraz demlenmeye bırak.",
+      "Bugün sayesinde yarının kelimeleri daha kolay gelecek."
+    ],
+    "uk": [
+      "Ще одне заняття позаду — усе це накопичується.",
+      "Приходити щодня — у цьому весь секрет.",
+      "Гарна робота; тепер дай цьому вкластися в голові.",
+      "Завтрашні слова даватимуться легше — завдяки сьогодні."
+    ],
+    "zh": [
+      "又完成一次练习——点滴都在积累。",
+      "坚持出现，就是全部的秘诀。",
+      "辛苦了——接下来休息也是学习的一部分。",
+      "因为今天，明天的词会更容易。"
+    ],
+    "ar": [
+      "جلسة أخرى اكتملت — كل شيء يتراكم.",
+      "المواظبة هي السر كله.",
+      "أحسنت — والآن دع ما تعلمته يستقر.",
+      "كلمات الغد ستأتي أسهل بفضل اليوم."
+    ]
+  }
 }
