@@ -1,0 +1,354 @@
+{
+  "templates": [
+    {
+      "template_id": "I_LIFT_DUMBBELL",
+      "concepts": ["FIRST_PERSON_SINGULAR", "LIFT", "DUMBBELL"],
+      "render": { "en": "I lift a dumbbell." }
+    },
+    {
+      "template_id": "SHE_LIFTS_WEIGHT",
+      "concepts": ["SHE", "LIFT", "WEIGHT"],
+      "render": { "en": "She lifts a weight." }
+    },
+    {
+      "template_id": "YOU_LIFT_BOTTLE",
+      "concepts": ["SECOND_PERSON", "LIFT", "BOTTLE"],
+      "render": { "en": "You lift a bottle." }
+    },
+    {
+      "template_id": "I_STRETCH_MUSCLE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "STRETCH", "MUSCLE"],
+      "render": { "en": "I stretch a muscle." }
+    },
+    {
+      "template_id": "YOU_STRETCH_KNEE",
+      "concepts": ["SECOND_PERSON", "STRETCH", "KNEE"],
+      "render": { "en": "You stretch a knee." }
+    },
+    {
+      "template_id": "HE_PEDALS_BICYCLE",
+      "concepts": ["HE", "PEDAL", "BICYCLE"],
+      "render": { "en": "He pedals a bicycle." }
+    },
+    {
+      "template_id": "YOU_PUSH_WEIGHT",
+      "concepts": ["SECOND_PERSON", "PUSH", "WEIGHT"],
+      "render": { "en": "You push a weight." }
+    },
+    {
+      "template_id": "THEY_PUSH_BICYCLE",
+      "concepts": ["THIRD_PERSON_PLURAL", "PUSH", "BICYCLE"],
+      "render": { "en": "They push a bicycle." }
+    },
+    {
+      "template_id": "SHE_PULLS_TOWEL",
+      "concepts": ["SHE", "PULL", "TOWEL"],
+      "render": { "en": "She pulls a towel." }
+    },
+    {
+      "template_id": "YOU_PULL_TOWEL",
+      "concepts": ["SECOND_PERSON", "PULL", "TOWEL"],
+      "render": { "en": "You pull a towel." }
+    },
+    {
+      "template_id": "SHE_MEASURES_PROGRESS",
+      "concepts": ["SHE", "MEASURE", "PROGRESS"],
+      "render": { "en": "She measures progress." }
+    },
+    {
+      "template_id": "HE_MEASURES_CALORIE",
+      "concepts": ["HE", "MEASURE", "CALORIE"],
+      "render": { "en": "He measures a calorie." }
+    },
+    {
+      "template_id": "THEY_MEASURE_STRENGTH",
+      "concepts": ["THIRD_PERSON_PLURAL", "MEASURE", "STRENGTH"],
+      "render": { "en": "They measure strength." }
+    },
+    {
+      "template_id": "WE_IMPROVE_STRENGTH",
+      "concepts": ["FIRST_PERSON_PLURAL", "IMPROVE", "STRENGTH"],
+      "render": { "en": "We improve strength." }
+    },
+    {
+      "template_id": "HE_WEIGHS_DUMBBELL",
+      "concepts": ["HE", "WEIGH", "DUMBBELL"],
+      "render": { "en": "He weighs a dumbbell." }
+    },
+    {
+      "template_id": "SHE_WEIGHS_PROTEIN",
+      "concepts": ["SHE", "WEIGH", "PROTEIN"],
+      "render": { "en": "She weighs protein." }
+    },
+    {
+      "template_id": "I_FINISH_RACE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "FINISH", "RACE"],
+      "render": { "en": "I finish a race." }
+    },
+    {
+      "template_id": "SHE_FINISHES_MARATHON",
+      "concepts": ["SHE", "FINISH", "MARATHON"],
+      "render": { "en": "She finishes a marathon." }
+    },
+    {
+      "template_id": "YOU_FINISH_WORKOUT",
+      "concepts": ["SECOND_PERSON", "FINISH", "WORKOUT"],
+      "render": { "en": "You finish a workout." }
+    },
+    {
+      "template_id": "HE_FINISHES_REPETITION",
+      "concepts": ["HE", "FINISH", "REPETITION"],
+      "render": { "en": "He finishes a repetition." }
+    },
+    {
+      "template_id": "THEY_REPEAT_WORKOUT",
+      "concepts": ["THIRD_PERSON_PLURAL", "REPEAT", "WORKOUT"],
+      "render": { "en": "They repeat a workout." }
+    },
+    {
+      "template_id": "WE_REPEAT_WARMUP",
+      "concepts": ["FIRST_PERSON_PLURAL", "REPEAT", "WARMUP"],
+      "render": { "en": "We repeat a warm-up." }
+    },
+    {
+      "template_id": "I_REPEAT_REPETITION",
+      "concepts": ["FIRST_PERSON_SINGULAR", "REPEAT", "REPETITION"],
+      "render": { "en": "I repeat a repetition." }
+    },
+    {
+      "template_id": "I_BREATHE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "BREATHE"],
+      "render": { "en": "I breathe." }
+    },
+    {
+      "template_id": "HE_BREATHES",
+      "concepts": ["HE", "BREATHE"],
+      "render": { "en": "He breathes." }
+    },
+    {
+      "template_id": "WE_PEDAL",
+      "concepts": ["FIRST_PERSON_PLURAL", "PEDAL"],
+      "render": { "en": "We pedal." }
+    },
+    {
+      "template_id": "I_IMPROVE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "IMPROVE"],
+      "render": { "en": "I improve." }
+    },
+    {
+      "template_id": "SHE_RECOVERS",
+      "concepts": ["SHE", "RECOVER"],
+      "render": { "en": "She recovers." }
+    },
+    {
+      "template_id": "THEY_RECOVER",
+      "concepts": ["THIRD_PERSON_PLURAL", "RECOVER"],
+      "render": { "en": "They recover." }
+    },
+    {
+      "template_id": "MUSCLE_IS_SORE",
+      "concepts": ["MUSCLE", "BE", "SORE"],
+      "render": { "en": "A muscle is sore." }
+    },
+    {
+      "template_id": "SHOULDER_IS_SORE",
+      "concepts": ["SHOULDER", "BE", "SORE"],
+      "render": { "en": "A shoulder is sore." }
+    },
+    {
+      "template_id": "SHOULDER_IS_FLEXIBLE",
+      "concepts": ["SHOULDER", "BE", "FLEXIBLE"],
+      "render": { "en": "A shoulder is flexible." }
+    },
+    {
+      "template_id": "KNEE_IS_WEAK",
+      "concepts": ["KNEE", "BE", "WEAK"],
+      "render": { "en": "A knee is weak." }
+    },
+    {
+      "template_id": "HEART_IS_WEAK",
+      "concepts": ["HEART", "BE", "WEAK"],
+      "render": { "en": "A heart is weak." }
+    },
+    {
+      "template_id": "HABIT_IS_HEALTHY",
+      "concepts": ["HABIT", "BE", "HEALTHY"],
+      "render": { "en": "A habit is healthy." }
+    },
+    {
+      "template_id": "PROTEIN_IS_HEALTHY",
+      "concepts": ["PROTEIN", "BE", "HEALTHY"],
+      "render": { "en": "Protein is healthy." }
+    },
+    {
+      "template_id": "REST_IS_HEALTHY",
+      "concepts": ["REST", "BE", "HEALTHY"],
+      "render": { "en": "Rest is healthy." }
+    },
+    {
+      "template_id": "HABIT_IS_DAILY",
+      "concepts": ["HABIT", "BE", "DAILY"],
+      "render": { "en": "A habit is daily." }
+    },
+    {
+      "template_id": "WARMUP_IS_DAILY",
+      "concepts": ["WARMUP", "BE", "DAILY"],
+      "render": { "en": "A warm-up is daily." }
+    },
+    {
+      "template_id": "RACE_IS_INTENSE",
+      "concepts": ["RACE", "BE", "INTENSE"],
+      "render": { "en": "A race is intense." }
+    },
+    {
+      "template_id": "MARATHON_IS_INTENSE",
+      "concepts": ["MARATHON", "BE", "INTENSE"],
+      "render": { "en": "A marathon is intense." }
+    },
+    {
+      "template_id": "RUNNER_IS_ACTIVE",
+      "concepts": ["RUNNER", "BE", "ACTIVE"],
+      "render": { "en": "A runner is active." }
+    },
+    {
+      "template_id": "SHE_IS_FLEXIBLE",
+      "concepts": ["SHE", "BE", "FLEXIBLE"],
+      "render": { "en": "She is flexible." }
+    },
+    {
+      "template_id": "I_AM_ACTIVE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "BE", "ACTIVE"],
+      "render": { "en": "I am active." }
+    },
+    {
+      "template_id": "WE_ARE_MOTIVATED",
+      "concepts": ["FIRST_PERSON_PLURAL", "BE", "MOTIVATED"],
+      "render": { "en": "We are motivated." }
+    },
+    {
+      "template_id": "SHE_IS_MOTIVATED",
+      "concepts": ["SHE", "BE", "MOTIVATED"],
+      "render": { "en": "She is motivated." }
+    },
+    {
+      "template_id": "THEY_ARE_EXHAUSTED",
+      "concepts": ["THIRD_PERSON_PLURAL", "BE", "EXHAUSTED"],
+      "render": { "en": "They are exhausted." }
+    },
+    {
+      "template_id": "I_AM_EXHAUSTED",
+      "concepts": ["FIRST_PERSON_SINGULAR", "BE", "EXHAUSTED"],
+      "render": { "en": "I am exhausted." }
+    },
+    {
+      "template_id": "HE_IS_MUSCULAR",
+      "concepts": ["HE", "BE", "MUSCULAR"],
+      "render": { "en": "He is muscular." }
+    },
+    {
+      "template_id": "YOU_ARE_MUSCULAR",
+      "concepts": ["SECOND_PERSON", "BE", "MUSCULAR"],
+      "render": { "en": "You are muscular." }
+    },
+    {
+      "template_id": "SHE_IS_RUNNER",
+      "concepts": ["SHE", "BE", "RUNNER"],
+      "render": { "en": "She is a runner." }
+    },
+    {
+      "template_id": "I_HAVE_ENERGY",
+      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "ENERGY"],
+      "render": { "en": "I have energy." }
+    },
+    {
+      "template_id": "THEY_HAVE_ENERGY",
+      "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "ENERGY"],
+      "render": { "en": "They have energy." }
+    },
+    {
+      "template_id": "WE_HAVE_TREADMILL",
+      "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "TREADMILL"],
+      "render": { "en": "We have a treadmill." }
+    },
+    {
+      "template_id": "THEY_SEE_TREADMILL",
+      "concepts": ["THIRD_PERSON_PLURAL", "SEE", "TREADMILL"],
+      "render": { "en": "They see a treadmill." }
+    },
+    {
+      "template_id": "I_SEE_SWEAT",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "SWEAT"],
+      "render": { "en": "I see sweat." }
+    },
+    {
+      "template_id": "WE_SEE_SWEAT",
+      "concepts": ["FIRST_PERSON_PLURAL", "SEE", "SWEAT"],
+      "render": { "en": "We see sweat." }
+    },
+    {
+      "template_id": "I_SEE_PROGRESS",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "PROGRESS"],
+      "render": { "en": "I see progress." }
+    },
+    {
+      "template_id": "HE_HAS_TARGET",
+      "concepts": ["HE", "HAVE", "TARGET"],
+      "render": { "en": "He has a target." }
+    },
+    {
+      "template_id": "YOU_SEE_TARGET",
+      "concepts": ["SECOND_PERSON", "SEE", "TARGET"],
+      "render": { "en": "You see a target." }
+    },
+    {
+      "template_id": "YOU_HAVE_HEART",
+      "concepts": ["SECOND_PERSON", "HAVE", "HEART"],
+      "render": { "en": "You have a heart." }
+    },
+    {
+      "template_id": "HE_SEES_LOCKER_ROOM",
+      "concepts": ["HE", "SEE", "LOCKER_ROOM"],
+      "render": { "en": "He sees a locker room." }
+    },
+    {
+      "template_id": "WE_HAVE_LOCKER_ROOM",
+      "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "LOCKER_ROOM"],
+      "render": { "en": "We have a locker room." }
+    },
+    {
+      "template_id": "YOU_HAVE_BOTTLE",
+      "concepts": ["SECOND_PERSON", "HAVE", "BOTTLE"],
+      "render": { "en": "You have a bottle." }
+    },
+    {
+      "template_id": "THEY_SEE_POOL",
+      "concepts": ["THIRD_PERSON_PLURAL", "SEE", "POOL"],
+      "render": { "en": "They see a pool." }
+    },
+    {
+      "template_id": "YOU_HAVE_POOL",
+      "concepts": ["SECOND_PERSON", "HAVE", "POOL"],
+      "render": { "en": "You have a pool." }
+    },
+    {
+      "template_id": "SHE_HAS_INJURY",
+      "concepts": ["SHE", "HAVE", "INJURY"],
+      "render": { "en": "She has an injury." }
+    },
+    {
+      "template_id": "I_SEE_INJURY",
+      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "INJURY"],
+      "render": { "en": "I see an injury." }
+    },
+    {
+      "template_id": "THEY_HAVE_REST",
+      "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "REST"],
+      "render": { "en": "They have rest." }
+    },
+    {
+      "template_id": "YOU_SEE_CALORIE",
+      "concepts": ["SECOND_PERSON", "SEE", "CALORIE"],
+      "render": { "en": "You see a calorie." }
+    }
+  ]
+}

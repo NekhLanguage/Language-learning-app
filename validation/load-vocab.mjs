@@ -17,7 +17,7 @@ export const VOCAB_FILES = [
   'question_words.json', 'time_words.json', 'verbs.json',
   'pokemon.json', 'harry_potter.json', 'cooking.json', 'anime.json',
   'football.json', 'music.json', 'everyday_life.json', 'fashion_style.json',
-  'gaming.json', 'tourism.json', 'space_scifi.json',
+  'gaming.json', 'tourism.json', 'space_scifi.json', 'fitness.json',
 ];
 
 // 13 supported languages, derived from languages.js (same source the other

@@ -23,6 +23,52 @@ function vocab()       { return _vocab(); }
 function getReleased() { return _getReleased(); }
 function rng()         { return _rng(); }
 
+// --- Grammar-rule tracing ------------------------------------------------
+// While a buildSentenceWithRules() call is in flight, rule sites record the
+// stable rule id of each grammar phenomenon they apply. This keys the
+// learner-facing "why?" explanations. noteRule() is a no-op outside a traced
+// build, so direct helper calls (option tiles, prompts) cost nothing.
+export const GRAMMAR_RULE_IDS = [
+  "verb_agreement",          // verb conjugates for the subject's person/number
+  "zero_copula",             // uk/ar/tr drop present-tense "to be"
+  "zh_predicate_adjective",  // zh uses 很, not 是, before predicate adjectives
+  "post_nominal_adjective",  // pt/ar place the adjective after the noun
+  "french_elision",          // je aime → j'aime, le eau → l'eau
+  "french_possessive_agreement", // sa/son agrees with the possessed noun
+  "gender_agreement",        // modifier takes the noun's gender form
+  "sov_word_order",          // ja/ko/tr put the verb at the end
+  "vso_word_order",          // ar leads with the verb
+  "indefinite_article",      // a/an, um/uma, ein/eine, … chosen by gender/sound
+  "ja_counter",              // ja numbers attach through a counter + の
+];
+
+let firedRules = null;
+let tracedModifier = false;
+function noteRule(id) {
+  if (firedRules) firedRules.add(id);
+}
+// Marks the traced build as carrying an adjective/number modifier — the
+// sentence then differs from the plain template, so authored render strings
+// no longer describe it.
+function noteModifier() {
+  if (firedRules) tracedModifier = true;
+}
+
+// Like buildSentence, but also reports which grammar rules fired while
+// building and whether a modifier made the sentence diverge from the plain
+// template — { sentence, rules, hadModifier }.
+function buildSentenceWithRules(lang, tpl, forcedConcept = null, sharedChoices = null) {
+  firedRules = new Set();
+  tracedModifier = false;
+  try {
+    const sentence = buildSentence(lang, tpl, forcedConcept, sharedChoices);
+    return { sentence, rules: [...firedRules], hadModifier: tracedModifier };
+  } finally {
+    firedRules = null;
+    tracedModifier = false;
+  }
+}
+
  function formOf(lang, cid) {
   const entry = vocab().languages?.[lang]?.forms?.[cid];
 
@@ -144,11 +190,11 @@ function genderedFormOf(lang, modifierCid, nounCid, plural = false) {
   const noun = vocab().languages?.[lang]?.forms?.[nounCid];
   const g = noun?.gender;
   if (plural) {
-    if (g === "f" && mod.fp) return mod.fp;
+    if (g === "f" && mod.fp) { noteRule("gender_agreement"); return mod.fp; }
     return pluralFormOf(lang, modifierCid);
   }
-  if (g === "f" && mod.f) return mod.f;
-  if (g === "n" && mod.n) return mod.n;
+  if (g === "f" && mod.f) { noteRule("gender_agreement"); return mod.f; }
+  if (g === "n" && mod.n) { noteRule("gender_agreement"); return mod.n; }
   return formOf(lang, modifierCid);
 }
 
@@ -194,15 +240,18 @@ function nounPhrase(lang, cid, opts = {}) {
 
   if (lang === "en") {
     const article = entry.article || englishIndefiniteArticle(base);
+    noteRule("indefinite_article");
     return article + " " + base;
   }
 
   if (lang === "pt") {
     const article = entry.gender === "f" ? "uma" : "um";
+    noteRule("indefinite_article");
     return article + " " + base;
   }
 
   if (lang === "no") {
+    noteRule("indefinite_article");
     if (entry.gender === "n") return "et " + base;
     if (entry.gender === "f") return "ei " + base;
     return "en " + base;
@@ -210,12 +259,14 @@ function nounPhrase(lang, cid, opts = {}) {
 
   if (lang === "de") {
     if (!entry.gender) return base; // mass nouns / uncountable — no article
+    noteRule("indefinite_article");
     if (entry.gender === "f") return "eine " + base;
     return "ein " + base; // m and n both use "ein"
   }
 
   if (lang === "el") {
     if (!entry.gender) return base; // mass nouns / uncountable — no article
+    noteRule("indefinite_article");
     if (entry.gender === "m") return "ένας " + base;
     if (entry.gender === "f") return "μία " + base;
     return "ένα " + base; // neuter
@@ -223,11 +274,13 @@ function nounPhrase(lang, cid, opts = {}) {
 
   if (lang === "es") {
     if (!entry.gender) return base;
+    noteRule("indefinite_article");
     return (entry.gender === "f" ? "una " : "un ") + base;
   }
 
   if (lang === "fr") {
     if (!entry.gender) return base;
+    noteRule("indefinite_article");
     return (entry.gender === "f" ? "une " : "un ") + base;
   }
 
@@ -273,6 +326,7 @@ if (lang === "pt") {
 }
   // 1️⃣ Exact match (preferred)
   if (verbData[key]) {
+    if (verbData.base && verbData[key] !== verbData.base) noteRule("verb_agreement");
     return verbData[key];
   }
 
@@ -291,6 +345,7 @@ if (lang === "pt") {
   if (onlyBaseAndThird) {
   // English-style verbs (base + 3_singular)
   if (person === 3 && number === "singular") {
+    noteRule("verb_agreement");
     return verbData["3_singular"];
   }
   return verbData.base;
@@ -388,8 +443,10 @@ const orderType = WORD_ORDER[lang] || "SVO";
 let ordered;
 
 if (orderType === "SOV") {
+  if (verb && object) noteRule("sov_word_order");
   ordered = [subject, object, verb];
 } else if (orderType === "VSO") {
+  if (verb && subject) noteRule("vso_word_order");
   ordered = [verb, subject, object];
 } else {
   ordered = [subject, verb, object];
@@ -650,7 +707,10 @@ function frenchElision(s) {
 
 // Single hook for per-language final passes on an assembled sentence.
 function finalizeSentence(lang, sentence) {
-  return lang === "fr" ? frenchElision(sentence) : sentence;
+  if (lang !== "fr") return sentence;
+  const elided = frenchElision(sentence);
+  if (elided !== sentence) noteRule("french_elision");
+  return elided;
 }
 function possessiveWord(lang, cid) {
   return surfaceForm(lang, cid);
@@ -676,6 +736,7 @@ function frenchPossessivePhrase(possessiveCid, nounCid) {
     // Unexpected shape — defer to the generic gender-agreement path.
     return `${genderedFormOf("fr", possessiveCid, nounCid)} ${nounForm}`;
   }
+  if (arr.length >= 3) noteRule("french_possessive_agreement");
   let poss = arr[0]; // masculine, or the gender-invariant singular (notre/leur)
   if (arr.length >= 3 && forms?.[nounCid]?.gender === "f") {
     const vowelH = FR_VOWEL_H.includes((nounForm[0] || "").toLowerCase());
@@ -716,6 +777,7 @@ function isAdjectiveConcept(cid) {
 // the complement is a bare adjective, or null to fall through to copulaForm.
 function zhCopulaOverride(lang, beCid, complementCid) {
   if (lang === "zh" && isCopulaConcept(beCid) && isAdjectiveConcept(complementCid)) {
+    noteRule("zh_predicate_adjective");
     return "很";
   }
   return null;
@@ -724,7 +786,10 @@ function zhCopulaOverride(lang, beCid, complementCid) {
 // Copula surface for a given language. Returns "" for languages that drop the
 // present copula, so callers can omit the token; otherwise conjugates normally.
 function copulaForm(lang, beCid, subjectCid) {
-  if (ZERO_PRESENT_COPULA.has(lang) && isCopulaConcept(beCid)) return "";
+  if (ZERO_PRESENT_COPULA.has(lang) && isCopulaConcept(beCid)) {
+    noteRule("zero_copula");
+    return "";
+  }
   return getVerbForm(beCid, subjectCid, lang);
 }
 // All others (en, ja, ko, no, uk, de, el, tr) place adjective before noun
@@ -742,6 +807,7 @@ const JA_KUN_COUNTER_NUMBERS = new Set([
 // の食べ物 = "two foods"); TEN-FIFTEEN use 個 (十個の食べ物). Renders the
 // "<number><counter>の" prefix to splice in front of the noun phrase.
 function jaQuantifierPrefix(numberCid, numberWord) {
+  noteRule("ja_counter");
   const counter = JA_KUN_COUNTER_NUMBERS.has(numberCid) ? "つ" : "個";
   return numberWord + counter + "の";
 }
@@ -756,6 +822,7 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
   const withArticle = nounPhrase(lang, nounCid, opts);
 
   if (POST_ADJECTIVE_LANGS.has(lang)) {
+    noteRule("post_nominal_adjective");
     return `${withArticle} ${adjective}`;
   }
   // Insert adjective between article and noun
@@ -1064,6 +1131,7 @@ if (tpl.structure?.type === "complex_clause") {
   // apply modifiers
   // When copular plural agreement applies, the bare form used by the
   // adjective branches must also be plural ("they are small leaders").
+  if (adjectiveWord || numberWord) noteModifier();
   const bare = bareNoun || formOf(lang, cid);
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
 
@@ -1257,5 +1325,6 @@ export {
   buildSubjectVerbWithPossessiveClause,
   buildComplexClauseSentence,
   buildSentence,
-  buildSentenceRaw
+  buildSentenceRaw,
+  buildSentenceWithRules
 };

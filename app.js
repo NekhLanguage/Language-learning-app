@@ -2,6 +2,11 @@ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
+import { isFeatureAvailable } from "./capabilities.mjs";
+import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
+import { chooseSupportSentence } from "./display.mjs";
+import { promptApiAvailable, gradeSemantically } from "./grading.mjs";
+import { speechRecognitionAvailable, recognizeOnce, compareSpoken } from "./speech.mjs";
 import {
   configureEngine,
   formOf,
@@ -55,6 +60,7 @@ import {
   buildSubjectVerbWithPossessiveClause,
   buildComplexClauseSentence,
   buildSentence,
+  buildSentenceWithRules,
   buildSentenceRaw
 } from "./sentence_engine.mjs";
 const CORE_BUNDLES = [
@@ -444,6 +450,34 @@ const RESOURCE_PACKS = {
     { id: "space_10", concepts: ["DIMENSION","FRONTIER","WARP","EVOLVE","FUTURISTIC"] }
 
   ]
+},
+  fitness: {
+  vocabFile: "fitness.json",
+  templateFile: "sentence_templates_fitness.json",
+  beta: true,
+  bundles: [
+
+    { id: "fit_01", concepts: ["WORKOUT","MUSCLE","DUMBBELL","TREADMILL","WEIGHT"] },
+
+    { id: "fit_02", concepts: ["REPETITION","SWEAT","ENERGY","PROTEIN","HABIT"] },
+
+    { id: "fit_03", concepts: ["PROGRESS","TARGET","HEART","KNEE","SHOULDER"] },
+
+    { id: "fit_04", concepts: ["CALORIE","RUNNER","RACE","MARATHON","WARMUP"] },
+
+    { id: "fit_05", concepts: ["LOCKER_ROOM","TOWEL","BOTTLE","BICYCLE","POOL"] },
+
+    { id: "fit_06", concepts: ["STRENGTH","INJURY","REST","LIFT","STRETCH"] },
+
+    { id: "fit_07", concepts: ["BREATHE","PEDAL","PUSH","PULL","MEASURE"] },
+
+    { id: "fit_08", concepts: ["IMPROVE","RECOVER","WEIGH","FINISH","REPEAT"] },
+
+    { id: "fit_09", concepts: ["HEALTHY","ACTIVE","SORE","FLEXIBLE","INTENSE"] },
+
+    { id: "fit_10", concepts: ["WEAK","MOTIVATED","EXHAUSTED","DAILY","MUSCULAR"] }
+
+  ]
 }
 };
 
@@ -515,6 +549,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
   let LAST_EXERCISE = null;
+
+  // Learner-facing grammar explanations (grammar_notes.json), keyed
+  // rule id → support language. Loaded in the background; exposure cards
+  // simply skip the "why?" chips until it arrives (or if it never does).
+  let GRAMMAR_NOTES = null;
+  fetch("grammar_notes.json")
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => { GRAMMAR_NOTES = d?.notes || null; })
+    .catch(() => {});
+
+  // Optional per-word mnemonic hooks (word_notes.json), keyed
+  // concept → target language → support language. Same graceful loading.
+  let WORD_NOTES = null;
+  fetch("word_notes.json")
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => { WORD_NOTES = d?.notes || null; })
+    .catch(() => {});
+
+  // Personalized coaching lines (milestones + session-complete variety).
+  // Falls back to the legacy uiStrings templates when absent.
+  let COACHING_LINES = null;
+  fetch("coaching_lines.json")
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => { COACHING_LINES = d || null; })
+    .catch(() => {});
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
   // Caps the upper bound on session length so later sessions (with many
@@ -990,7 +1049,8 @@ if (buyAccess) {
     "politeness_modality.json","pronouns.json","quantifiers.json",
     "question_words.json","time_words.json","verbs.json", "pokemon.json", "harry_potter.json", "cooking.json",
     "anime.json", "football.json", "music.json",
-    "everyday_life.json", "fashion_style.json", "gaming.json", "tourism.json", "space_scifi.json"
+    "everyday_life.json", "fashion_style.json", "gaming.json", "tourism.json", "space_scifi.json",
+    "fitness.json"
   ];
 
 function createRunState() {
@@ -1209,6 +1269,17 @@ function markMilestonesShown(run, crossed) {
 }
 
 function milestoneReasonLine(n, reason) {
+  // Rich matrix first (reason × journey stage × support language), then the
+  // legacy single-line templates below as fallback.
+  const matrixLine = coachingMilestoneLine(COACHING_LINES, {
+    type: reason?.type,
+    detail: reason?.detail,
+    n,
+    supportLang: languageState.support || "en",
+    langName: localizedTargetLabel(languageState.target),
+  });
+  if (matrixLine) return matrixLine;
+
   if (!reason || !reason.type) return ui("milestoneGeneric");
   const detail = (reason.detail || "").trim();
   if (reason.type === "fun") return ui("milestoneReasonFun");
@@ -1306,8 +1377,10 @@ function showRoadmap(opts) {
   }
 
   if (opts && opts.sessionNumber) {
-    messageEl.textContent = (ui("roadmapSessionFinished") || "Session {n} complete.")
-      .replace("{n}", opts.sessionNumber);
+    messageEl.textContent =
+      sessionCompleteLine(COACHING_LINES, opts.sessionNumber, supportLang) ||
+      (ui("roadmapSessionFinished") || "Session {n} complete.")
+        .replace("{n}", opts.sessionNumber);
     messageEl.classList.remove("hidden");
   } else {
     messageEl.textContent = "";
@@ -2214,23 +2287,111 @@ return tpl;
     content.appendChild(banner);
     wireTts();
   }
+  function wordNoteFor(cid, targetLang, supportLang) {
+    if (!WORD_NOTES) return null;
+    if (!isFeatureAvailable("mnemonics", { target: targetLang, support: supportLang })) return null;
+    return WORD_NOTES[cid]?.[targetLang]?.[supportLang] || null;
+  }
+
+  // Resolves a fired grammar rule to its localized explanation, with the
+  // {lang} placeholder replaced by the target language's display name.
+  function grammarNoteFor(rule, targetLang, supportLang) {
+    if (!GRAMMAR_NOTES) return null;
+    if (!isFeatureAvailable("grammar_notes", { target: targetLang, support: supportLang })) return null;
+    const note = GRAMMAR_NOTES[rule]?.[supportLang] || GRAMMAR_NOTES[rule]?.en;
+    if (!note) return null;
+    const langName = localizedTargetLabel(targetLang);
+    return {
+      title: String(note.title).replaceAll("{lang}", langName),
+      body: String(note.body).replaceAll("{lang}", langName),
+    };
+  }
+
+  function grammarChipsHtml(rules, targetLang, supportLang) {
+    const items = (rules || [])
+      .map(rule => ({ rule, note: grammarNoteFor(rule, targetLang, supportLang) }))
+      .filter(x => x.note)
+      .slice(0, 2); // at most two chips — a hint, not a lesson page
+    if (!items.length) return "";
+    const chips = items.map(({ rule, note }) =>
+      `<button type="button" class="grammar-chip" data-rule="${rule}">💡 ${safe(note.title)}</button>`
+    ).join("");
+    const panels = items.map(({ rule, note }) =>
+      `<div class="grammar-note-panel hidden" data-rule-panel="${rule}"><strong>${safe(note.title)}</strong><p>${safe(note.body)}</p></div>`
+    ).join("");
+    return `<div class="grammar-chips">${chips}</div>${panels}`;
+  }
+
+  function wireGrammarChips(root) {
+    root.querySelectorAll(".grammar-chip").forEach(chip => {
+      chip.onclick = () => {
+        const panel = root.querySelector(`[data-rule-panel="${chip.dataset.rule}"]`);
+        if (!panel) return;
+        const wasHidden = panel.classList.contains("hidden");
+        root.querySelectorAll(".grammar-note-panel").forEach(p => p.classList.add("hidden"));
+        if (wasHidden) panel.classList.remove("hidden");
+      };
+    });
+  }
+
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
   const sharedChoices = {};
-  const targetSentence = buildSentence(targetLang, tpl, targetConcept, sharedChoices);
-  const supportSentence = buildSentence(supportLang, tpl, targetConcept, sharedChoices);
+  const { sentence: targetSentence, rules: grammarRules, hadModifier } =
+    buildSentenceWithRules(targetLang, tpl, targetConcept, sharedChoices);
+  // Prefer the human-authored translation when it still describes this
+  // sentence (no injected modifier); engine generation is the fallback.
+  const { sentence: supportSentence, source: supportSource } = chooseSupportSentence(tpl, supportLang, {
+    generated: buildSentence(supportLang, tpl, targetConcept, sharedChoices),
+    hadModifier,
+  });
+
+  const wordNote = wordNoteFor(targetConcept, targetLang, supportLang);
+  LAST_EXERCISE = { type: "exposure", rules: grammarRules, note: wordNote, supportSource, sentence: targetSentence };
+
+  // Speaking practice: gated per language (capabilities) and per browser.
+  const canSpeak =
+    isFeatureAvailable("speech_practice", { target: targetLang, support: supportLang }) &&
+    speechRecognitionAvailable();
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
     <h2>${safe(headword(formOf(targetLang, targetConcept)))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
     <p>${safe(headword(formOf(supportLang, targetConcept)))}</p>
+    ${wordNote ? `<p class="word-note">🧠 ${safe(wordNote)}</p>` : ""}
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
+    ${canSpeak ? `<button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="Say the sentence">🎤 ${ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt")}</button><div id="spoken-diff" class="spoken-diff"></div>` : ""}
+    ${grammarChipsHtml(grammarRules, targetLang, supportLang)}
     <button id="continue-btn">${ui("continue")}</button>
   `;
   wireTts();
+  wireGrammarChips(content);
+
+  const speakBtn = document.getElementById("speak-check-btn");
+  if (speakBtn) {
+    speakBtn.onclick = async () => {
+      const diffEl = document.getElementById("spoken-diff");
+      speakBtn.disabled = true;
+      speakBtn.textContent = "🎤 …";
+      const ttsCode = AVAILABLE_LANGUAGES.find(l => l.code === targetLang)?.ttsCode || targetLang;
+      const transcript = await recognizeOnce({ lang: ttsCode });
+      speakBtn.disabled = false;
+      speakBtn.textContent = "🎤 " + (ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt"));
+
+      if (transcript == null) {
+        diffEl.textContent = "…";
+        return;
+      }
+      const words = compareSpoken(targetSentence, transcript);
+      LAST_EXERCISE = { ...(LAST_EXERCISE || {}), spoken: { transcript, words } };
+      diffEl.innerHTML = words
+        .map(w => `<span class="${w.heard ? "spoken-ok" : "spoken-miss"}">${safe(w.word)}</span>`)
+        .join(" ");
+    };
+  }
 
   document.getElementById("continue-btn").onclick = () => {
     decrementCooldowns();
@@ -2557,11 +2718,16 @@ if (isModifierConcept(targetConcept)) {
 }
 
   // --- Existing core path ---
+  // Build the TARGET sentence first so its (traced) build decides any random
+  // modifier injection; the support build then reuses the cached choice, and
+  // the authored translation is preferred whenever nothing was injected.
   const sharedChoicesCore = {};
-  const supportSentence = safe(buildSentence(supportLang, tpl, null, sharedChoicesCore));
-
-// ✅ Build actual sentence
-const sentenceTarget = buildSentence(targetLang, tpl, null, sharedChoicesCore);
+  const { sentence: sentenceTarget, hadModifier: l3HadModifier } =
+    buildSentenceWithRules(targetLang, tpl, null, sharedChoicesCore);
+  const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
+    generated: safe(buildSentence(supportLang, tpl, null, sharedChoicesCore)),
+    hadModifier: l3HadModifier,
+  });
 
 // ✅ Get correct surface form (CRITICAL)
 const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
@@ -3124,7 +3290,12 @@ for (const c of tpl.concepts) {
     sharedChoices["num_" + c] = null;
   }
 }
-const supportSentence = safe(buildSentence(supportLang, tpl, null, sharedChoices));
+// Injection is suppressed above, so the sentence is always the plain
+// template — the authored translation is always faithful when present.
+const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
+  generated: safe(buildSentence(supportLang, tpl, null, sharedChoices)),
+  hadModifier: false,
+});
 
 const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
@@ -3351,7 +3522,7 @@ const targetSentence = safe(buildSentence(targetLang, tpl));
 const feedbackDiv = document.getElementById("l7-feedback");
 const inputField = document.getElementById("l7-input");
 
-checkBtn.onclick = () => {
+checkBtn.onclick = async () => {
 
   const userInput = inputField.value;
 
@@ -3364,6 +3535,7 @@ checkBtn.onclick = () => {
   const tState = ensureTemplateProgress(tpl);
 
   let resultType;
+  let semanticNote = "";
 
   if (strictUser === strictCorrect) {
     resultType = "perfect";
@@ -3373,10 +3545,35 @@ checkBtn.onclick = () => {
   }
   else {
     resultType = "incorrect";
+
+    // Progressive enhancement: when the strict check fails, an on-device
+    // model (Chrome built-in AI) may still accept a semantically-correct
+    // variation. Gated per language (capabilities) and per browser
+    // (promptApiAvailable); any failure keeps the strict verdict.
+    if (
+      userInput.trim() &&
+      isFeatureAvailable("semantic_grading", { target: targetLang, support: supportLang }) &&
+      promptApiAvailable()
+    ) {
+      checkBtn.disabled = true;
+      const verdict = await gradeSemantically({
+        userInput,
+        targetSentence,
+        supportSentence: tpl.render?.[supportLang] || "",
+        langLabel: localizedTargetLabel(targetLang),
+      });
+      checkBtn.disabled = false;
+      if (verdict?.acceptable) {
+        resultType = "semantic";
+        semanticNote = verdict.feedback || "";
+      }
+    }
   }
 
+  LAST_EXERCISE = { ...(LAST_EXERCISE || {}), lastResultType: resultType };
+
   // 🔒 Update progression state
-  if (resultType === "perfect" || resultType === "accent") {
+  if (resultType === "perfect" || resultType === "accent" || resultType === "semantic") {
 
     tState.reinforcementStage++;
     tState.lastShownAt = run.exerciseCounter;
@@ -3410,6 +3607,16 @@ checkBtn.onclick = () => {
       <div style="color:#4CAF50;">
         ${ui("correct")}.<br/>
         Proper form: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+      </div>`;
+    wireTts();
+  }
+
+  if (resultType === "semantic") {
+    inputField.style.borderColor = "#4CAF50";
+    feedbackDiv.innerHTML = `
+      <div style="color:#4CAF50;">
+        ${ui("correct")}.${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>
+        Expected: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
   }
