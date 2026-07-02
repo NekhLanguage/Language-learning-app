@@ -29,7 +29,13 @@ export default [
   },
   {
     // Front-end (browser) files.
-    files: ["app.js", "audioengine.js", "languages.js", "user_state.js", "sentence_engine.mjs"],
+    // Front-end entry points and the shared root modules they import.
+    files: [
+      "app.js", "audioengine.js", "languages.js", "user_state.js",
+      "sentence_engine.mjs", "progression.mjs", "storage.mjs",
+      "capabilities.mjs", "coaching.mjs", "display.mjs", "grading.mjs",
+      "speech.mjs",
+    ],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: "module",
