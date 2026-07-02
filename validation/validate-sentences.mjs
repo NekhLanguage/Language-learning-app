@@ -95,7 +95,7 @@ for (const t of templates) {
 
   // 3. LEAK / EMPTY across every language (covers all support pairs, not just en)
   for (const lc of langCodes) {
-    let s = '';
+    let s;
     try { s = buildSentence(lc, t); } catch (e) { add(file, id, 'LEAK', `${lc} threw: ${e.message}`); continue; }
     if (!s || !s.replace(/[.?!]/g, '').trim()) { add(file, id, 'EMPTY', lc, s); continue; }
     // A genuine leak is an ALL-CAPS concept id surfacing because the language

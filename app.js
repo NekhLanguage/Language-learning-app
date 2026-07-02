@@ -1,5 +1,7 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
+import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
+import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
 import {
   configureEngine,
   formOf,
@@ -505,17 +507,14 @@ function markExerciseStart() { currentExerciseStartedAt = Date.now(); }
 function exerciseElapsedMs() {
   return currentExerciseStartedAt ? Date.now() - currentExerciseStartedAt : 0;
 }
-function cooldownForElapsed(ms) {
-  if (ms <= 0) return 4;          // no timing signal — treat as normal
-  if (ms < 4000) return 8;         // fast: push review further out
-  if (ms > 15000) return 2;        // slow: bring it back soon
-  return 4;                         // normal
-}
 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const APP_VERSION = "v1.0.0";
   const MAX_LEVEL = 7;
+  // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
+  // exposed via window.__app so tests can exercise the correct-answer path.
+  let LAST_EXERCISE = null;
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
   // Caps the upper bound on session length so later sessions (with many
@@ -541,6 +540,7 @@ const content = document.getElementById("content");
   function createEmptyUser() {
   return {
     id: crypto.randomUUID(),
+    schemaVersion: CURRENT_SCHEMA_VERSION,
     supportLanguage: "en",
     lastActiveLanguage: null,
     runs: {} // languageCode -> run object
@@ -552,9 +552,29 @@ function loadUser() {
   if (!raw) {
     USER = createEmptyUser();
     saveUser();
-  } else {
-    USER = JSON.parse(raw);
+    return;
   }
+
+  // A corrupt blob must never brick the app: fall back to the boot-time
+  // backup, and only then to a fresh user (the server copy, if any, is
+  // pulled separately at boot).
+  const { user, source } = recoverUser(raw, localStorage.getItem("zth_user_backup"));
+  if (!user) {
+    console.warn("Stored user state unreadable and no usable backup — starting fresh");
+    USER = createEmptyUser();
+    saveUser();
+    return;
+  }
+
+  USER = user;
+  if (source === "backup") {
+    console.warn("Primary user state was corrupt — restored from backup");
+    localStorage.setItem("zth_user", JSON.stringify(USER));
+  }
+
+  // Boot-time snapshot: the last known good state, used to recover if a
+  // later write corrupts the primary blob.
+  localStorage.setItem("zth_user_backup", JSON.stringify(USER));
 }
 
 async function saveUser() {
@@ -783,7 +803,10 @@ updateSupportUI(languageState.support);
 let languageSearchQuery = "";
 
 // First render once the lang file resolves — applies localized strings + hub names.
+// Skip when the access gate has replaced the start-screen DOM (logged-out visit):
+// the elements these renderers write to no longer exist.
 langP.then(() => {
+  if (!document.getElementById("open-app")) return;
   updateUIStrings(languageState.support);
   renderLanguageButtons();
 });
@@ -815,7 +838,7 @@ email = email?.toLowerCase().trim();
   console.log("LOADED FROM SERVER", data.user);
 
   if (data.user) {
-    USER = data.user;
+    USER = migrateUserState(data.user);
 
     // 🔥 version migration only
     Object.keys(USER.runs || {}).forEach(lang => {
@@ -1892,14 +1915,7 @@ function ui(key) {
 }
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
-    run.progress[cid] = {
-      level: 1,
-      streak: 0,
-      cooldown: 0,
-      completed: false,
-      lastShownAt: -Infinity,
-      lastResult: null
-    };
+    run.progress[cid] = createProgress();
   }
   return run.progress[cid];
 }
@@ -1929,35 +1945,7 @@ function ensureTemplateProgress(tpl) {
   return run.templateProgress[id];
 }
 function passesSpacingRule(cid) {
-
-  const state = ensureProgress(cid);
-  const level = state.level;
-  const currentIndex = run.exerciseCounter;
-
-  if (state.lastShownAt === -Infinity) return true;
-
-  const distance = currentIndex - state.lastShownAt;
-
-  // LEVEL 1 → always treated as correct
-  if (level === 1) {
-  return true;
-}
-
-  // LEVEL 7 special rule
-  if (level === 7) {
-    if (state.lastResult === false) {
-      return distance >= 2;
-    } else {
-      return distance >= 20;
-    }
-  }
-
-  // Normal levels (2–6)
-  if (state.lastResult === false) {
-    return distance >= 2;
-  } else {
-    return distance >= 4;
-  }
+  return passesSpacing(ensureProgress(cid), run.exerciseCounter);
 }
 function canConceptBeTested(cid) {
 
@@ -2075,10 +2063,6 @@ function migrateRunState() {
   function applyResult(cid, correct) {
   const state = ensureProgress(cid);
 
-  // Spacing tracking
-  state.lastShownAt = run.exerciseCounter;
-  state.lastResult = correct;
-
   if (!run.sessionAttempts) run.sessionAttempts = {};
   if (!run.sessionLevelUps) run.sessionLevelUps = {};
   if (run.sessionComplete === undefined) run.sessionComplete = false;
@@ -2086,43 +2070,25 @@ function migrateRunState() {
   run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
   run.sessionExerciseCount = (run.sessionExerciseCount || 0) + 1;
 
-  if (!correct) {
-    state.streak = 0;
-    state.cooldown = 2;
-  } else {
-    state.streak++;
-    // Speed-aware cooldown: fast recall pushes the next review out,
-    // slow recall pulls it in for reinforcement.
-    state.cooldown = cooldownForElapsed(exerciseElapsedMs());
+  // The streak/level/cooldown state machine lives in progression.mjs.
+  const outcome = applyAnswer(state, {
+    correct,
+    exerciseIndex: run.exerciseCounter,
+    elapsedMs: exerciseElapsedMs(),
+    levelCap: levelCapFor({
+      isRecognition: RECOGNITION_CONCEPTS.has(cid),
+      isModifier: isModifierConcept(cid),
+    }),
+    sessionLevelUps: run.sessionLevelUps[cid] || 0,
+  });
 
-    let leveledUp = false;
-
-    const needed = state.level === 1 ? 1 : 2;
-
-if (state.streak >= needed) {
-      const levelCap = RECOGNITION_CONCEPTS.has(cid)
-        ? 4
-        : isModifierConcept(cid) ? 5 : MAX_LEVEL;
-      const levelUps = run.sessionLevelUps[cid] || 0;
-
-if (levelUps >= 3) {
-  state.streak = 0;
-  return;
-}
-
-if (state.level < levelCap) {
-  state.level++;
-  leveledUp = true;
-} else {
-  state.completed = true;
-}
-      state.streak = 0;
-    }
-
-    if (leveledUp) {
-      run.sessionLevelUps[cid] = (run.sessionLevelUps[cid] || 0) + 1;
-    }
+  if (outcome.leveledUp) {
+    run.sessionLevelUps[cid] = (run.sessionLevelUps[cid] || 0) + 1;
   }
+
+  // Preserves the original early-exit: a concept that already leveled up 3
+  // times this session skips the fatigue evaluation and save below.
+  if (outcome.exhaustedLevelUps) return;
 
   // 🔥 RULE B with NEW thresholds
   const activeConcepts = run.released.filter(c => {
@@ -2555,6 +2521,7 @@ if (isModifierConcept(targetConcept)) {
 
     const btn = document.createElement("button");
     btn.textContent = text;
+    btn.dataset.cid = opt;
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
       selectedOption = opt;
@@ -2676,6 +2643,7 @@ if (!options || options.length < 4) {
 
     const btn = document.createElement("button");
     btn.textContent = text;
+    btn.dataset.cid = opt;
 
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
@@ -2856,6 +2824,7 @@ if (!finalOptions.includes(targetConcept)) {
 
       const btn = document.createElement("button");
       btn.textContent = text;
+      btn.dataset.cid = opt;
       btn.onclick = () => {
         container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
         selectedOption = opt;
@@ -3180,6 +3149,8 @@ const correctWords = ordered.map(cid => {
   return String(surfaceForm(targetLang, cid)).toLowerCase();
 });
 
+  LAST_EXERCISE = { type: "sentence_builder", correctWords };
+
   const wordBank = shuffle([...correctWords]);
 
   const assignments = new Map(); // slotIndex → word
@@ -3344,6 +3315,8 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
 
 const targetSentence = safe(buildSentence(targetLang, tpl));
 
+  LAST_EXERCISE = { type: "free_production", answer: targetSentence };
+
   content.innerHTML = `
   <div style="margin-bottom:20px;">
     <strong>${supportSentence}</strong>
@@ -3390,7 +3363,7 @@ checkBtn.onclick = () => {
 
   const tState = ensureTemplateProgress(tpl);
 
-  let resultType = null;
+  let resultType;
 
   if (strictUser === strictCorrect) {
     resultType = "perfect";
@@ -4019,7 +3992,6 @@ if (bar) {
   }
 
   const excluded = new Set();
-  let renderedSomething = false;
 
 for (let attempts = 0; attempts < 25; attempts++) {
 
@@ -4079,7 +4051,6 @@ for (let attempts = 0; attempts < 25; attempts++) {
     }
 
     renderExposure(targetLang, supportLang, tpl, targetConcept);
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4140,6 +4111,7 @@ if (level === 2) {
   q.options.forEach(opt => {
     const btn = document.createElement("button");
     btn.textContent = surfaceForm(supportLang, opt);
+    btn.dataset.cid = opt;
 
     btn.onclick = () => {
       container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
@@ -4169,7 +4141,6 @@ if (level === 2) {
     checkBtn.onclick = () => renderNext(targetLang, supportLang);
   };
 
-  renderedSomething = true;
   run.exerciseCounter++;
   return;
 }
@@ -4190,7 +4161,6 @@ if (level === 2) {
       continue;
     }
 
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4211,7 +4181,6 @@ if (level === 2) {
       continue;
     }
 
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4234,7 +4203,6 @@ if (level === 2) {
 
     if (uniqueL5.length >= 5) {
       renderMatchingL5(targetLang, supportLang);
-      renderedSomething = true;
       run.exerciseCounter++;
       return;
     }
@@ -4254,7 +4222,6 @@ if (level === 2) {
     }
 
     renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4269,7 +4236,6 @@ if (level === 2) {
     }
 
     renderFreeProductionL7(targetLang, supportLang, tpl, targetConcept);
-    renderedSomething = true;
     run.exerciseCounter++;
     return;
   }
@@ -4277,14 +4243,10 @@ if (level === 2) {
   excluded.add(targetConcept);
 }
 
-if (!renderedSomething) {
-  run.sessionComplete = true;
-  return endSession(targetLang, supportLang);
-}
-
-// Otherwise try again safely
-setTimeout(() => renderNext(targetLang, supportLang), 0);
-return;
+// Every successful render returns from inside the loop above, so reaching
+// this point means nothing could be shown — end the session.
+run.sessionComplete = true;
+return endSession(targetLang, supportLang);
 }
 
 
@@ -4398,5 +4360,13 @@ if (logoutBtn) {
   };
 }
 window.canConceptBeTested = canConceptBeTested;
-window.__app = { get run(){ return run; } };
+// Debug/e2e hooks. `run` was already exposed; the rest lets tests seed
+// progress deterministically and re-enter the exercise loop without
+// simulating dozens of answers.
+window.__app = {
+  get run(){ return run; },
+  get bundleIndex(){ return BUNDLE_INDEX; },
+  get lastExercise(){ return LAST_EXERCISE; },
+  rerender(){ renderNext(languageState.target, languageState.support); },
+};
 });

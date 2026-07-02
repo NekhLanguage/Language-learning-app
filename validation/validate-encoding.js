@@ -48,7 +48,7 @@ const HTML_ENTITY_RE = /&(?:[a-zA-Z]{2,8}|#\d{1,6}|#x[\da-fA-F]{1,6});/;
 
 // Pure ASCII check — a value made entirely of basic ASCII is suspect in a
 // non-Latin language file (indicates an untranslated fallback)
-const PURE_ASCII_RE  = /^[\x00-\x7F\s.,!?;:'"()\-]+$/;
+const PURE_ASCII_RE  = /^[\x00-\x7F\s.,!?;:'"()-]+$/;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
