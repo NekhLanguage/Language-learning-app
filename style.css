@@ -1561,3 +1561,36 @@ button.selected {
   opacity: 0.85;
   line-height: 1.4;
 }
+
+/* ── Speaking practice (exposure cards) ────────────────────────────────── */
+.speak-check-btn {
+  margin: 8px auto 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.speak-check-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.spoken-diff {
+  margin: 8px auto 0;
+  max-width: 420px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.spoken-diff .spoken-ok {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.spoken-diff .spoken-miss {
+  color: #d32f2f;
+  text-decoration: underline dotted;
+}

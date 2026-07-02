@@ -6,6 +6,7 @@ import { isFeatureAvailable } from "./capabilities.mjs";
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import { chooseSupportSentence } from "./display.mjs";
 import { promptApiAvailable, gradeSemantically } from "./grading.mjs";
+import { speechRecognitionAvailable, recognizeOnce, compareSpoken } from "./speech.mjs";
 import {
   configureEngine,
   formOf,
@@ -2347,7 +2348,12 @@ return tpl;
   });
 
   const wordNote = wordNoteFor(targetConcept, targetLang, supportLang);
-  LAST_EXERCISE = { type: "exposure", rules: grammarRules, note: wordNote, supportSource };
+  LAST_EXERCISE = { type: "exposure", rules: grammarRules, note: wordNote, supportSource, sentence: targetSentence };
+
+  // Speaking practice: gated per language (capabilities) and per browser.
+  const canSpeak =
+    isFeatureAvailable("speech_practice", { target: targetLang, support: supportLang }) &&
+    speechRecognitionAvailable();
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
@@ -2357,11 +2363,35 @@ return tpl;
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
+    ${canSpeak ? `<button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="Say the sentence">🎤 ${ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt")}</button><div id="spoken-diff" class="spoken-diff"></div>` : ""}
     ${grammarChipsHtml(grammarRules, targetLang, supportLang)}
     <button id="continue-btn">${ui("continue")}</button>
   `;
   wireTts();
   wireGrammarChips(content);
+
+  const speakBtn = document.getElementById("speak-check-btn");
+  if (speakBtn) {
+    speakBtn.onclick = async () => {
+      const diffEl = document.getElementById("spoken-diff");
+      speakBtn.disabled = true;
+      speakBtn.textContent = "🎤 …";
+      const ttsCode = AVAILABLE_LANGUAGES.find(l => l.code === targetLang)?.ttsCode || targetLang;
+      const transcript = await recognizeOnce({ lang: ttsCode });
+      speakBtn.disabled = false;
+      speakBtn.textContent = "🎤 " + (ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt"));
+
+      if (transcript == null) {
+        diffEl.textContent = "…";
+        return;
+      }
+      const words = compareSpoken(targetSentence, transcript);
+      LAST_EXERCISE = { ...(LAST_EXERCISE || {}), spoken: { transcript, words } };
+      diffEl.innerHTML = words
+        .map(w => `<span class="${w.heard ? "spoken-ok" : "spoken-miss"}">${safe(w.word)}</span>`)
+        .join(" ");
+    };
+  }
 
   document.getElementById("continue-btn").onclick = () => {
     decrementCooldowns();
