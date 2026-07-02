@@ -553,6 +553,11 @@ const ADJECTIVE_ROLE_COMPAT = {
     "task","skill","subject","exercise","game_action","sport_action","spell",
     "object","generic_object"
   ]),
+  // Character traits (brave/strong-willed etc.) describe beings, not places
+  // or things — never "a brave school".
+  property_character: new Set([
+    "person","family","role","animal","creature","fictional_creature"
+  ]),
   // Broad quality/time properties (good/bad/nice, new/old) pair widely, so they
   // are deliberately omitted here to preserve the source-file fallback below.
   // The narrow members that used to share those roles are split out into their

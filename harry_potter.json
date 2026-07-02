@@ -3,26 +3,26 @@
 
     { "concept_id": "WAND", "type": "noun" },
     { "concept_id": "MAGIC", "type": "noun", "countable": false, "semantic_role": "substance" },
-    { "concept_id": "WIZARD", "type": "noun", "gender": "m" },
-    { "concept_id": "WITCH", "type": "noun", "gender": "f" },
+    { "concept_id": "WIZARD", "type": "noun", "gender": "m", "semantic_role": "person" },
+    { "concept_id": "WITCH", "type": "noun", "gender": "f", "semantic_role": "person" },
     { "concept_id": "SPELL", "type": "noun" },
     { "concept_id": "POTION", "type": "noun" },
     { "concept_id": "SCHOOL", "type": "noun" },
     { "concept_id": "CAULDRON", "type": "noun" },
     { "concept_id": "BROOM", "type": "noun" },
-    { "concept_id": "OWL", "type": "noun" },
+    { "concept_id": "OWL", "type": "noun", "semantic_role": "animal" },
 
     { "concept_id": "CASTLE", "type": "noun" },
-    { "concept_id": "PROFESSOR", "type": "noun" },
-    { "concept_id": "STUDENT", "type": "noun" },
-    { "concept_id": "ELF", "type": "noun" },
-    { "concept_id": "UNICORN", "type": "noun" },
-    { "concept_id": "GIANT", "type": "noun" },
-    { "concept_id": "TROLL", "type": "noun" },
-    { "concept_id": "GHOST", "type": "noun" },
+    { "concept_id": "PROFESSOR", "type": "noun", "semantic_role": "person" },
+    { "concept_id": "STUDENT", "type": "noun", "semantic_role": "person" },
+    { "concept_id": "ELF", "type": "noun", "semantic_role": "creature" },
+    { "concept_id": "UNICORN", "type": "noun", "semantic_role": "creature" },
+    { "concept_id": "GIANT", "type": "noun", "semantic_role": "creature" },
+    { "concept_id": "TROLL", "type": "noun", "semantic_role": "creature" },
+    { "concept_id": "GHOST", "type": "noun", "semantic_role": "creature" },
 
     { "concept_id": "FOREST", "type": "noun" },
-    { "concept_id": "SPIDER", "type": "noun" },
+    { "concept_id": "SPIDER", "type": "noun", "semantic_role": "animal" },
     { "concept_id": "LIBRARY", "type": "noun" },
     { "concept_id": "CLASS", "type": "noun" },
     { "concept_id": "LESSON", "type": "noun" },
@@ -34,8 +34,8 @@
     { "concept_id": "CHANCE", "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "MYSTERY", "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "SECRET", "type": "noun", "semantic_role": "abstract" },
-    { "concept_id": "FRIEND", "type": "noun" },
-    { "concept_id": "ENEMY", "type": "noun" },
+    { "concept_id": "FRIEND", "type": "noun", "semantic_role": "person" },
+    { "concept_id": "ENEMY", "type": "noun", "semantic_role": "person" },
     { "concept_id": "CLOAK", "type": "noun" },
     { "concept_id": "DOOR", "type": "noun" },
 
@@ -52,8 +52,8 @@
     { "concept_id": "SHOUT", "type": "verb" },
 
     { "concept_id": "MAGICAL", "type": "adjective" },
-    { "concept_id": "STRONG", "type": "adjective" },
-    { "concept_id": "BRAVE", "type": "adjective" }
+    { "concept_id": "STRONG", "type": "adjective", "semantic_role": "property_character" },
+    { "concept_id": "BRAVE", "type": "adjective", "semantic_role": "property_character" }
 
   ],
 
