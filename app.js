@@ -544,7 +544,7 @@ function exerciseElapsedMs() {
 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v1.0.0";
+  const APP_VERSION = "v1.1.0";
   const MAX_LEVEL = 7;
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
