@@ -1,5 +1,6 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
+import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
 import {
   configureEngine,
   formOf,
@@ -504,12 +505,6 @@ let currentExerciseStartedAt = 0;
 function markExerciseStart() { currentExerciseStartedAt = Date.now(); }
 function exerciseElapsedMs() {
   return currentExerciseStartedAt ? Date.now() - currentExerciseStartedAt : 0;
-}
-function cooldownForElapsed(ms) {
-  if (ms <= 0) return 4;          // no timing signal — treat as normal
-  if (ms < 4000) return 8;         // fast: push review further out
-  if (ms > 15000) return 2;        // slow: bring it back soon
-  return 4;                         // normal
 }
 
 let USER = null;
@@ -1898,14 +1893,7 @@ function ui(key) {
 }
   function ensureProgress(cid) {
   if (!run.progress[cid]) {
-    run.progress[cid] = {
-      level: 1,
-      streak: 0,
-      cooldown: 0,
-      completed: false,
-      lastShownAt: -Infinity,
-      lastResult: null
-    };
+    run.progress[cid] = createProgress();
   }
   return run.progress[cid];
 }
@@ -1935,35 +1923,7 @@ function ensureTemplateProgress(tpl) {
   return run.templateProgress[id];
 }
 function passesSpacingRule(cid) {
-
-  const state = ensureProgress(cid);
-  const level = state.level;
-  const currentIndex = run.exerciseCounter;
-
-  if (state.lastShownAt === -Infinity) return true;
-
-  const distance = currentIndex - state.lastShownAt;
-
-  // LEVEL 1 → always treated as correct
-  if (level === 1) {
-  return true;
-}
-
-  // LEVEL 7 special rule
-  if (level === 7) {
-    if (state.lastResult === false) {
-      return distance >= 2;
-    } else {
-      return distance >= 20;
-    }
-  }
-
-  // Normal levels (2–6)
-  if (state.lastResult === false) {
-    return distance >= 2;
-  } else {
-    return distance >= 4;
-  }
+  return passesSpacing(ensureProgress(cid), run.exerciseCounter);
 }
 function canConceptBeTested(cid) {
 
@@ -2081,10 +2041,6 @@ function migrateRunState() {
   function applyResult(cid, correct) {
   const state = ensureProgress(cid);
 
-  // Spacing tracking
-  state.lastShownAt = run.exerciseCounter;
-  state.lastResult = correct;
-
   if (!run.sessionAttempts) run.sessionAttempts = {};
   if (!run.sessionLevelUps) run.sessionLevelUps = {};
   if (run.sessionComplete === undefined) run.sessionComplete = false;
@@ -2092,43 +2048,25 @@ function migrateRunState() {
   run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
   run.sessionExerciseCount = (run.sessionExerciseCount || 0) + 1;
 
-  if (!correct) {
-    state.streak = 0;
-    state.cooldown = 2;
-  } else {
-    state.streak++;
-    // Speed-aware cooldown: fast recall pushes the next review out,
-    // slow recall pulls it in for reinforcement.
-    state.cooldown = cooldownForElapsed(exerciseElapsedMs());
+  // The streak/level/cooldown state machine lives in progression.mjs.
+  const outcome = applyAnswer(state, {
+    correct,
+    exerciseIndex: run.exerciseCounter,
+    elapsedMs: exerciseElapsedMs(),
+    levelCap: levelCapFor({
+      isRecognition: RECOGNITION_CONCEPTS.has(cid),
+      isModifier: isModifierConcept(cid),
+    }),
+    sessionLevelUps: run.sessionLevelUps[cid] || 0,
+  });
 
-    let leveledUp = false;
-
-    const needed = state.level === 1 ? 1 : 2;
-
-if (state.streak >= needed) {
-      const levelCap = RECOGNITION_CONCEPTS.has(cid)
-        ? 4
-        : isModifierConcept(cid) ? 5 : MAX_LEVEL;
-      const levelUps = run.sessionLevelUps[cid] || 0;
-
-if (levelUps >= 3) {
-  state.streak = 0;
-  return;
-}
-
-if (state.level < levelCap) {
-  state.level++;
-  leveledUp = true;
-} else {
-  state.completed = true;
-}
-      state.streak = 0;
-    }
-
-    if (leveledUp) {
-      run.sessionLevelUps[cid] = (run.sessionLevelUps[cid] || 0) + 1;
-    }
+  if (outcome.leveledUp) {
+    run.sessionLevelUps[cid] = (run.sessionLevelUps[cid] || 0) + 1;
   }
+
+  // Preserves the original early-exit: a concept that already leveled up 3
+  // times this session skips the fatigue evaluation and save below.
+  if (outcome.exhaustedLevelUps) return;
 
   // 🔥 RULE B with NEW thresholds
   const activeConcepts = run.released.filter(c => {
