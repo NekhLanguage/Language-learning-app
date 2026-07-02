@@ -6,6 +6,7 @@
     "dev": "node tests/dev-server.mjs",
     "test:e2e": "playwright test",
     "lint": "eslint .",
+    "test:unit": "node --test tests/unit/*.test.mjs",
     "validate": "node validation/validate-structure.js && node validation/validate-templates.js && node validation/validate-exercises.js && node validation/validate-packs.js && node validation/validate-sentences.mjs",
     "validate:sentences": "node validation/validate-sentences.mjs",
     "validate:sentences:update": "node validation/validate-sentences.mjs --update-baseline"

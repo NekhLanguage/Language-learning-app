@@ -27,6 +27,7 @@ the app runs fully offline — no Supabase, no Google TTS credentials needed.
 ```
 npm run validate   # content validators: structure, templates, exercises,
                    # pack completeness, generated-sentence regression baseline
+npm run test:unit  # node:test unit tests (sentence engine rules, progression)
 npm run test:e2e   # Playwright end-to-end tests against the offline harness
 npm run lint       # ESLint — bug-class rules (no-undef etc.) are errors;
                    # legacy unused-var findings are warnings and don't block

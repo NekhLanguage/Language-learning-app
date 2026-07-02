@@ -26,6 +26,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Lint
         run: npm run lint
+      - name: Unit tests
+        run: npm run test:unit
       - name: Run validators
         run: npm run validate
 
