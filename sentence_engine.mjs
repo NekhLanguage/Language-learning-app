@@ -43,19 +43,29 @@ export const GRAMMAR_RULE_IDS = [
 ];
 
 let firedRules = null;
+let tracedModifier = false;
 function noteRule(id) {
   if (firedRules) firedRules.add(id);
 }
+// Marks the traced build as carrying an adjective/number modifier — the
+// sentence then differs from the plain template, so authored render strings
+// no longer describe it.
+function noteModifier() {
+  if (firedRules) tracedModifier = true;
+}
 
 // Like buildSentence, but also reports which grammar rules fired while
-// building — [{ sentence, rules }] with rules in GRAMMAR_RULE_IDS.
+// building and whether a modifier made the sentence diverge from the plain
+// template — { sentence, rules, hadModifier }.
 function buildSentenceWithRules(lang, tpl, forcedConcept = null, sharedChoices = null) {
   firedRules = new Set();
+  tracedModifier = false;
   try {
     const sentence = buildSentence(lang, tpl, forcedConcept, sharedChoices);
-    return { sentence, rules: [...firedRules] };
+    return { sentence, rules: [...firedRules], hadModifier: tracedModifier };
   } finally {
     firedRules = null;
+    tracedModifier = false;
   }
 }
 
@@ -1121,6 +1131,7 @@ if (tpl.structure?.type === "complex_clause") {
   // apply modifiers
   // When copular plural agreement applies, the bare form used by the
   // adjective branches must also be plural ("they are small leaders").
+  if (adjectiveWord || numberWord) noteModifier();
   const bare = bareNoun || formOf(lang, cid);
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
 

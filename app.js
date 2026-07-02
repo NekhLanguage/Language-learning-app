@@ -4,6 +4,7 @@ import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progr
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
 import { isFeatureAvailable } from "./capabilities.mjs";
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
+import { chooseSupportSentence } from "./display.mjs";
 import {
   configureEngine,
   formOf,
@@ -2306,12 +2307,17 @@ return tpl;
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
   const sharedChoices = {};
-  const { sentence: targetSentence, rules: grammarRules } =
+  const { sentence: targetSentence, rules: grammarRules, hadModifier } =
     buildSentenceWithRules(targetLang, tpl, targetConcept, sharedChoices);
-  const supportSentence = buildSentence(supportLang, tpl, targetConcept, sharedChoices);
+  // Prefer the human-authored translation when it still describes this
+  // sentence (no injected modifier); engine generation is the fallback.
+  const { sentence: supportSentence, source: supportSource } = chooseSupportSentence(tpl, supportLang, {
+    generated: buildSentence(supportLang, tpl, targetConcept, sharedChoices),
+    hadModifier,
+  });
 
   const wordNote = wordNoteFor(targetConcept, targetLang, supportLang);
-  LAST_EXERCISE = { type: "exposure", rules: grammarRules, note: wordNote };
+  LAST_EXERCISE = { type: "exposure", rules: grammarRules, note: wordNote, supportSource };
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
@@ -2652,11 +2658,16 @@ if (isModifierConcept(targetConcept)) {
 }
 
   // --- Existing core path ---
+  // Build the TARGET sentence first so its (traced) build decides any random
+  // modifier injection; the support build then reuses the cached choice, and
+  // the authored translation is preferred whenever nothing was injected.
   const sharedChoicesCore = {};
-  const supportSentence = safe(buildSentence(supportLang, tpl, null, sharedChoicesCore));
-
-// ✅ Build actual sentence
-const sentenceTarget = buildSentence(targetLang, tpl, null, sharedChoicesCore);
+  const { sentence: sentenceTarget, hadModifier: l3HadModifier } =
+    buildSentenceWithRules(targetLang, tpl, null, sharedChoicesCore);
+  const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
+    generated: safe(buildSentence(supportLang, tpl, null, sharedChoicesCore)),
+    hadModifier: l3HadModifier,
+  });
 
 // ✅ Get correct surface form (CRITICAL)
 const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
@@ -3219,7 +3230,12 @@ for (const c of tpl.concepts) {
     sharedChoices["num_" + c] = null;
   }
 }
-const supportSentence = safe(buildSentence(supportLang, tpl, null, sharedChoices));
+// Injection is suppressed above, so the sentence is always the plain
+// template — the authored translation is always faithful when present.
+const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
+  generated: safe(buildSentence(supportLang, tpl, null, sharedChoices)),
+  hadModifier: false,
+});
 
 const ordered = orderedConceptsForTemplate(tpl, targetLang);
 

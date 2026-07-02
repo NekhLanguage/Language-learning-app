@@ -37,3 +37,18 @@ test("exposure card offers a grammar chip that opens an explanation", async ({ p
   await page.click("#continue-btn");
   await expect(page.locator("#content h2")).toBeVisible();
 });
+
+test("exposure support sentences use the authored translation", async ({ page }) => {
+  await startNewRun(page);
+
+  // Fresh runs have no L4+ modifiers to inject, so every exposure sentence
+  // is plain — the support line must come from the authored render, not the
+  // word-for-word engine generation.
+  for (let i = 0; i < 3; i++) {
+    const source = await page.evaluate(() => window.__app.lastExercise?.supportSource);
+    expect(source).toBe("authored");
+    await page.click("#continue-btn");
+    const stillExposing = await page.locator("#continue-btn").isVisible().catch(() => false);
+    if (!stillExposing) break;
+  }
+});
