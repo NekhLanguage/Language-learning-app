@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "comment": "Learner-facing explanations for grammar rules the sentence engine applies (see GRAMMAR_RULE_IDS in sentence_engine.mjs). Keyed rule -> support language. {lang} is replaced at render time with the localized name of the language being learned. Authored with AI assistance; human-review before un-flagging a support language in capabilities if quality concerns arise.",
+  "notes": {
+    "verb_agreement": {
+      "en": {
+        "title": "The verb changes with the subject",
+        "body": "In {lang}, the verb takes a different form depending on who does the action — like 'I eat' vs. 'he eats', but for every person."
+      }
+    },
+    "zero_copula": {
+      "en": {
+        "title": "No 'to be' in the present",
+        "body": "{lang} leaves out the word for 'to be' in present-tense sentences: 'He is a student' becomes literally 'He student'."
+      }
+    },
+    "zh_predicate_adjective": {
+      "en": {
+        "title": "很 instead of 'is'",
+        "body": "Mandarin links adjectives to the subject with 很 (hěn), not 是 (shì): 他很强 is literally 'he very strong' — never 他是强."
+      }
+    },
+    "post_nominal_adjective": {
+      "en": {
+        "title": "The adjective follows the noun",
+        "body": "In {lang}, describing words usually come after the thing they describe — 'house big' instead of 'big house'."
+      }
+    },
+    "french_elision": {
+      "en": {
+        "title": "Small words squeeze together",
+        "body": "In French, little words like je, le, la drop their vowel before a vowel sound: je aime → j'aime, la eau → l'eau."
+      }
+    },
+    "french_possessive_agreement": {
+      "en": {
+        "title": "'My/his/her' matches the thing owned",
+        "body": "In French, words like mon/ma ('my') match the gender of what is owned, not the owner: sa fille 'his daughter', son père 'her father'."
+      }
+    },
+    "gender_agreement": {
+      "en": {
+        "title": "Words agree in gender",
+        "body": "In {lang}, every noun has a grammatical gender, and words that describe it change form to match — a feminine noun takes the feminine form."
+      }
+    },
+    "sov_word_order": {
+      "en": {
+        "title": "The verb goes last",
+        "body": "{lang} puts the verb at the end of the sentence: 'I food eat' instead of 'I eat food'."
+      }
+    },
+    "vso_word_order": {
+      "en": {
+        "title": "The verb comes first",
+        "body": "{lang} often starts a sentence with the verb: 'Eat I food' instead of 'I eat food'."
+      }
+    },
+    "indefinite_article": {
+      "en": {
+        "title": "Choosing the word for 'a'",
+        "body": "The little word for 'a' changes with the noun — in English by sound (a book, an apple), in {lang} by the noun's gender or form."
+      }
+    },
+    "ja_counter": {
+      "en": {
+        "title": "Counting with counter words",
+        "body": "In Japanese, numbers attach to nouns through a counter plus の: 二つの食べ物 is literally 'two-items of food'."
+      }
+    }
+  }
+}
