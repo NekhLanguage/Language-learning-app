@@ -1,6 +1,7 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
+import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
 import {
   configureEngine,
   formOf,
@@ -539,6 +540,7 @@ const content = document.getElementById("content");
   function createEmptyUser() {
   return {
     id: crypto.randomUUID(),
+    schemaVersion: CURRENT_SCHEMA_VERSION,
     supportLanguage: "en",
     lastActiveLanguage: null,
     runs: {} // languageCode -> run object
@@ -550,9 +552,29 @@ function loadUser() {
   if (!raw) {
     USER = createEmptyUser();
     saveUser();
-  } else {
-    USER = JSON.parse(raw);
+    return;
   }
+
+  // A corrupt blob must never brick the app: fall back to the boot-time
+  // backup, and only then to a fresh user (the server copy, if any, is
+  // pulled separately at boot).
+  const { user, source } = recoverUser(raw, localStorage.getItem("zth_user_backup"));
+  if (!user) {
+    console.warn("Stored user state unreadable and no usable backup — starting fresh");
+    USER = createEmptyUser();
+    saveUser();
+    return;
+  }
+
+  USER = user;
+  if (source === "backup") {
+    console.warn("Primary user state was corrupt — restored from backup");
+    localStorage.setItem("zth_user", JSON.stringify(USER));
+  }
+
+  // Boot-time snapshot: the last known good state, used to recover if a
+  // later write corrupts the primary blob.
+  localStorage.setItem("zth_user_backup", JSON.stringify(USER));
 }
 
 async function saveUser() {
@@ -816,7 +838,7 @@ email = email?.toLowerCase().trim();
   console.log("LOADED FROM SERVER", data.user);
 
   if (data.user) {
-    USER = data.user;
+    USER = migrateUserState(data.user);
 
     // 🔥 version migration only
     Object.keys(USER.runs || {}).forEach(lang => {

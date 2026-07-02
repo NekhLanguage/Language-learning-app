@@ -49,6 +49,40 @@ test("run state is synced to the backend on save", async ({ page }) => {
   expect(synced.id).toBe(localId);
 });
 
+test("a corrupted user blob is restored from the boot-time backup", async ({ page }) => {
+  await startNewRun(page);
+
+  // A reload writes the boot-time backup of the (healthy) state.
+  await page.reload();
+  await expect(page.locator("#start-screen.active")).toBeVisible();
+  const healthyId = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")).id);
+
+  // Corrupt the primary blob, as a bad deploy or interrupted write might.
+  await page.evaluate(() => localStorage.setItem("zth_user", "{corrupt###"));
+  await page.reload();
+
+  // The app must boot normally and recover the same account.
+  await expect(page.locator("#start-screen.active")).toBeVisible();
+  const recoveredId = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")).id);
+  expect(recoveredId).toBe(healthyId);
+});
+
+test("corrupted state with no backup still boots instead of crashing", async ({ page, pageErrors }) => {
+  await startNewRun(page);
+
+  await page.evaluate(() => {
+    localStorage.setItem("zth_user", "{corrupt###");
+    localStorage.removeItem("zth_user_backup");
+  });
+  await page.reload();
+
+  // No white screen: the app starts over with a fresh user (the server copy
+  // is re-synced at boot since the email is still stored).
+  await expect(page.locator("#start-screen.active")).toBeVisible();
+  await expect(page.locator("#open-app")).toBeVisible();
+  expect(pageErrors).toEqual([]);
+});
+
 test("a fresh device restores the account from the server", async ({ page }) => {
   const email = await startNewRun(page);
   const released = await page.evaluate(() => window.__app.run.released);
