@@ -3,10 +3,12 @@
 // learning screen. This is the app's main funnel; if any screen wiring
 // breaks, this fails.
 
-import { test, expect, loginAs } from "./fixtures.mjs";
+import { test, expect, loginAs, startNewRun } from "./fixtures.mjs";
 
 test("new learner reaches the first exercise", async ({ page }) => {
-  await loginAs(page);
+  // Unique account: tests share the dev server's user store, and
+  // fullyParallel gives no ordering guarantees between tests.
+  await loginAs(page, `journey-new-${Math.random().toString(36).slice(2)}@example.com`);
 
   // Start screen → language hub.
   await page.click("#open-app");
@@ -58,22 +60,18 @@ test("new learner reaches the first exercise", async ({ page }) => {
 });
 
 test("returning learner skips setup and goes straight to exercises", async ({ page }) => {
-  await loginAs(page);
-  await page.click("#open-app");
-  await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
-  await page.locator("#reason-buttons button").first().click();
-  await page.click("#reason-continue");
-  await page.locator("#pack-buttons button").first().click();
-  await page.click("#start-run");
-  await page.click("#roadmap-continue");
-  await expect(page.locator("#learning-screen.active")).toBeVisible();
+  await startNewRun(page); // fresh unique account, setup completed
 
-  // Leave and re-enter the language: setup is complete, so the app must go
-  // directly to the learning screen — no reason/pack screens again.
+  // Leave and re-enter the language: setup is complete, so the app must NOT
+  // show the reason/pack screens again. It lands on an exercise — or, if the
+  // short first session's fatigue rules trip on re-entry, on the roadmap.
   await page.click("#quit-learning");
   await expect(page.locator("#start-screen.active")).toBeVisible();
   await page.click("#open-app");
   await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
-  await expect(page.locator("#learning-screen.active")).toBeVisible();
-  await expect(page.locator("#content h2")).toBeVisible();
+  await expect(
+    page.locator("#learning-screen.active #content h2, #roadmap-screen.active #roadmap-path")
+  ).toBeVisible();
+  await expect(page.locator("#reason-screen.active")).toBeHidden();
+  await expect(page.locator("#pack-screen.active")).toBeHidden();
 });

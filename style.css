@@ -1511,3 +1511,44 @@ button.selected {
   .feedback-modal-subtitle { font-size: 0.78rem; }
   .feedback-textarea { max-height: 22dvh; }
 }
+/* ── Grammar "why?" chips (exposure cards) ─────────────────────────────── */
+.grammar-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 12px 0 4px;
+}
+
+.grammar-chip {
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  cursor: pointer;
+}
+
+.grammar-chip:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.grammar-note-panel {
+  margin: 10px auto 4px;
+  max-width: 420px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.grammar-note-panel.hidden {
+  display: none;
+}
+
+.grammar-note-panel p {
+  margin: 6px 0 0;
+}

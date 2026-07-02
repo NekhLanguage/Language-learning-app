@@ -2,6 +2,7 @@ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
+import { isFeatureAvailable } from "./capabilities.mjs";
 import {
   configureEngine,
   formOf,
@@ -55,6 +56,7 @@ import {
   buildSubjectVerbWithPossessiveClause,
   buildComplexClauseSentence,
   buildSentence,
+  buildSentenceWithRules,
   buildSentenceRaw
 } from "./sentence_engine.mjs";
 const CORE_BUNDLES = [
@@ -515,6 +517,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
   let LAST_EXERCISE = null;
+
+  // Learner-facing grammar explanations (grammar_notes.json), keyed
+  // rule id → support language. Loaded in the background; exposure cards
+  // simply skip the "why?" chips until it arrives (or if it never does).
+  let GRAMMAR_NOTES = null;
+  fetch("grammar_notes.json")
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => { GRAMMAR_NOTES = d?.notes || null; })
+    .catch(() => {});
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
   // Caps the upper bound on session length so later sessions (with many
@@ -2214,12 +2225,56 @@ return tpl;
     content.appendChild(banner);
     wireTts();
   }
+  // Resolves a fired grammar rule to its localized explanation, with the
+  // {lang} placeholder replaced by the target language's display name.
+  function grammarNoteFor(rule, targetLang, supportLang) {
+    if (!GRAMMAR_NOTES) return null;
+    if (!isFeatureAvailable("grammar_notes", { target: targetLang, support: supportLang })) return null;
+    const note = GRAMMAR_NOTES[rule]?.[supportLang] || GRAMMAR_NOTES[rule]?.en;
+    if (!note) return null;
+    const langName = localizedTargetLabel(targetLang);
+    return {
+      title: String(note.title).replaceAll("{lang}", langName),
+      body: String(note.body).replaceAll("{lang}", langName),
+    };
+  }
+
+  function grammarChipsHtml(rules, targetLang, supportLang) {
+    const items = (rules || [])
+      .map(rule => ({ rule, note: grammarNoteFor(rule, targetLang, supportLang) }))
+      .filter(x => x.note)
+      .slice(0, 2); // at most two chips — a hint, not a lesson page
+    if (!items.length) return "";
+    const chips = items.map(({ rule, note }) =>
+      `<button type="button" class="grammar-chip" data-rule="${rule}">💡 ${safe(note.title)}</button>`
+    ).join("");
+    const panels = items.map(({ rule, note }) =>
+      `<div class="grammar-note-panel hidden" data-rule-panel="${rule}"><strong>${safe(note.title)}</strong><p>${safe(note.body)}</p></div>`
+    ).join("");
+    return `<div class="grammar-chips">${chips}</div>${panels}`;
+  }
+
+  function wireGrammarChips(root) {
+    root.querySelectorAll(".grammar-chip").forEach(chip => {
+      chip.onclick = () => {
+        const panel = root.querySelector(`[data-rule-panel="${chip.dataset.rule}"]`);
+        if (!panel) return;
+        const wasHidden = panel.classList.contains("hidden");
+        root.querySelectorAll(".grammar-note-panel").forEach(p => p.classList.add("hidden"));
+        if (wasHidden) panel.classList.remove("hidden");
+      };
+    });
+  }
+
   function renderExposure(targetLang, supportLang, tpl, targetConcept) {
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
   const sharedChoices = {};
-  const targetSentence = buildSentence(targetLang, tpl, targetConcept, sharedChoices);
+  const { sentence: targetSentence, rules: grammarRules } =
+    buildSentenceWithRules(targetLang, tpl, targetConcept, sharedChoices);
   const supportSentence = buildSentence(supportLang, tpl, targetConcept, sharedChoices);
+
+  LAST_EXERCISE = { type: "exposure", rules: grammarRules };
 
   const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   content.innerHTML = `
@@ -2228,9 +2283,11 @@ return tpl;
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
+    ${grammarChipsHtml(grammarRules, targetLang, supportLang)}
     <button id="continue-btn">${ui("continue")}</button>
   `;
   wireTts();
+  wireGrammarChips(content);
 
   document.getElementById("continue-btn").onclick = () => {
     decrementCooldowns();
