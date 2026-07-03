@@ -2191,13 +2191,13 @@ function migrateRunState() {
 
 
   function templateEligible(tpl) {
-
-  const id = tpl.template_id;
-
-  const tState = ensureTemplateProgress(tpl);
-
-  // If template is completed, do not schedule again
-  if (tState.completed) return false;
+  // NOTE deliberately NOT blocked here:
+  //  - template completion (L6/L7 reinforcement done): the sentence must
+  //    remain usable as material for OTHER concepts' drills;
+  //  - completed ingredient concepts: mastering "I"/"eat" must not kill
+  //    every sentence containing them — the TARGET's completion is already
+  //    enforced in canConceptBeTested. Both blocks used to freeze runs at
+  //    ~23% completed: each mastered word poisoned its templates.
 
   // Block templates that would produce a copular gender clash, e.g.
   // "He is a witch" / "She is a wizard" — see copularGenderClash().
@@ -2216,9 +2216,7 @@ function migrateRunState() {
 
   return (concepts).every(cid => {
 
-    const st = ensureProgress(cid);
-
-    return run.released.includes(cid) && !st.completed;
+    return run.released.includes(cid);
 
   });
 
