@@ -16,6 +16,8 @@ import {
   pluralize,
   nounPhrase,
   surfaceForm,
+  adjectiveSuitsNoun,
+  blankSentence,
   ZERO_PRESENT_COPULA,
   PLURAL_EXCEPTIONS,
 } from "../../sentence_engine.mjs";
@@ -98,6 +100,25 @@ test("surface forms resolve from vocab data", () => {
   assert.equal(surfaceForm("en", "HE"), "he");
   assert.equal(nounPhrase("en", "FOOD"), "food");
   assert.equal(nounPhrase("fr", "WATER"), "eau");
+});
+
+test("character-trait adjectives only pair with beings", () => {
+  // User-reported: "You see a brave school" / "Ти бачиш хоробрий школа".
+  // BRAVE/STRONG carry property_character and must reject inanimate nouns.
+  assert.equal(adjectiveSuitsNoun("BRAVE", "SCHOOL"), false);
+  assert.equal(adjectiveSuitsNoun("BRAVE", "POTION"), false);
+  assert.equal(adjectiveSuitsNoun("STRONG", "SCHOOL"), false);
+  assert.equal(adjectiveSuitsNoun("BRAVE", "FRIEND"), true);
+  assert.equal(adjectiveSuitsNoun("BRAVE", "WIZARD"), true);
+  assert.equal(adjectiveSuitsNoun("STRONG", "TROLL"), true);
+});
+
+test("blankSentence leaves the string unchanged when the surface is absent", () => {
+  // The app treats an unchanged (blankless) result as "do not show this
+  // exercise" — the L3 no-blank guard depends on this behavior.
+  assert.equal(blankSentence("Ворог сильний тому що вона захищає друг.", "хоробрий"),
+    "Ворог сильний тому що вона захищає друг.");
+  assert.ok(blankSentence("Ти бачиш школу.", "школу").includes("_____"));
 });
 
 test("every core template renders a non-empty English sentence", () => {

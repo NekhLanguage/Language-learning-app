@@ -544,7 +544,7 @@ function exerciseElapsedMs() {
 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v1.0.0";
+  const APP_VERSION = "v1.1.0";
   const MAX_LEVEL = 7;
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
@@ -2642,6 +2642,11 @@ if (isModifierConcept(targetConcept)) {
     formOf(targetLang, targetConcept);
   const blanked = blankSentence(sentenceTarget, targetSurface);
 
+  // A fill-in-the-blank without a blank is never a valid exercise. This can
+  // happen when the drilled modifier never made it into the sentence (e.g.
+  // a slot-based structured template ignoring the forced concept).
+  if (!blanked.includes("_____")) return null;
+
   const options = buildSameTypeOptions(targetConcept, 4, targetLang);
 
   if (!options) {
@@ -2736,6 +2741,10 @@ if (!surface) return null;
 
 // ✅ Blank based on REAL word, not position
 const blanked = blankSentence(sentenceTarget, surface);
+
+// Never show a fill-in-the-blank whose blank could not be placed (surface
+// form not found in the generated sentence — e.g. inflection mismatch).
+if (!blanked.includes("_____")) return null;
 
  const options = buildRecognitionOptions(tpl, targetConcept, 4);
  // 🔥 Remove duplicate meanings (same fix as Level 2)
@@ -4062,6 +4071,10 @@ function chooseTemplateForConcept(cid) {
 
     eligible = TEMPLATE_CACHE.filter(tpl => {
       if (!templateEligible(tpl)) return false;
+      // Structured (slot-based) templates ignore the forced modifier — the
+      // drilled adjective would never appear in the sentence, leaving the
+      // fill-in-the-blank with nothing to blank.
+      if (tpl.structure?.type) return false;
       if (!tpl.concepts.some(c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun")) return false;
       // Numbers don't make sense in copular sentences ("He is two a leader")
       if (meta.type === "number" && tpl.concepts.includes("BE")) return false;

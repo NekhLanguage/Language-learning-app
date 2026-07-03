@@ -45,7 +45,7 @@
     { "concept_id": "GAIN_EXPERIENCE", "type": "verb" },
     { "concept_id": "EVOLVE", "type": "verb" },
     { "concept_id": "WILD", "type": "adjective" },
-    { "concept_id": "STRONG", "type": "adjective" },
+    { "concept_id": "STRONG", "type": "adjective", "semantic_role": "property_character" },
     { "concept_id": "EFFECTIVE", "type": "adjective" },
     { "concept_id": "SUPER_EFFECTIVE", "type": "adjective" },
     { "concept_id": "VERY_EFFECTIVE", "type": "adjective" },

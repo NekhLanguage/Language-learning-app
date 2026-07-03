@@ -44,7 +44,7 @@ export default [
   },
   {
     // Node scripts: serverless functions, validators, tooling, tests.
-    files: ["netlify/**/*.js", "validation/**/*.{js,mjs}", "scripts/**/*.js", "tests/**/*.mjs", "playwright.config.mjs", "eslint.config.mjs", "generatelanguageskeleton.js"],
+    files: ["netlify/**/*.js", "validation/**/*.{js,mjs}", "scripts/**/*.{js,mjs}", "tests/**/*.mjs", "playwright.config.mjs", "eslint.config.mjs", "generatelanguageskeleton.js"],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: "module",
@@ -57,9 +57,10 @@ export default [
     languageOptions: { sourceType: "commonjs" },
   },
   {
-    // E2e specs run code inside page.evaluate(), which executes in the
-    // browser — window/document are legitimate there.
-    files: ["tests/e2e/**/*.mjs"],
+    // E2e specs and the progression diagnostic run code inside
+    // page.evaluate(), which executes in the browser — window/document are
+    // legitimate there.
+    files: ["tests/e2e/**/*.mjs", "scripts/diagnose-progression.mjs"],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
   {

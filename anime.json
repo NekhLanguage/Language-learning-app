@@ -4,7 +4,7 @@
     { "concept_id": "VILLAIN",   "type": "noun" },
     { "concept_id": "WARRIOR",   "type": "noun" },
     { "concept_id": "RIVAL",     "type": "noun" },
-    { "concept_id": "BRAVE",     "type": "adjective" },
+    { "concept_id": "BRAVE",     "type": "adjective", "semantic_role": "property_character" },
 
     { "concept_id": "SWORD",     "type": "noun" },
     { "concept_id": "ARMOR",     "type": "noun" },
