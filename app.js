@@ -1874,7 +1874,10 @@ function updateSupportUI(code) {
   let TEMPLATE_CACHE = null;
 
 async function loadTemplates(selectedPacks = []) {
-  const files = ["sentence_templates.json"];
+  // core_extra: render-only sentences for core concepts that appear in no
+  // other template (body parts, family, COME) — without one they can never
+  // be introduced or tested.
+  const files = ["sentence_templates.json", "sentence_templates_core_extra.json"];
 
   (selectedPacks || []).forEach(packId => {
     const pack = RESOURCE_PACKS[packId];
