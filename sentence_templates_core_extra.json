@@ -1,0 +1,200 @@
+{
+  "templates": [
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_SEE_FACE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "FACE"
+      ],
+      "render": {
+        "en": "I see a face."
+      }
+    },
+    {
+      "template_id": "CX_SHE_SEE_FACE",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "FACE"
+      ],
+      "render": {
+        "en": "She sees a face."
+      }
+    },
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_SEE_EYE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "EYE"
+      ],
+      "render": {
+        "en": "I see an eye."
+      }
+    },
+    {
+      "template_id": "CX_SHE_SEE_EYE",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "EYE"
+      ],
+      "render": {
+        "en": "She sees an eye."
+      }
+    },
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_SEE_FOOT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "FOOT"
+      ],
+      "render": {
+        "en": "I see a foot."
+      }
+    },
+    {
+      "template_id": "CX_SHE_SEE_FOOT",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "FOOT"
+      ],
+      "render": {
+        "en": "She sees a foot."
+      }
+    },
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_SEE_FINGER",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "FINGER"
+      ],
+      "render": {
+        "en": "I see a finger."
+      }
+    },
+    {
+      "template_id": "CX_SHE_SEE_FINGER",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "FINGER"
+      ],
+      "render": {
+        "en": "She sees a finger."
+      }
+    },
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_SEE_MOUTH",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "MOUTH"
+      ],
+      "render": {
+        "en": "I see a mouth."
+      }
+    },
+    {
+      "template_id": "CX_SHE_SEE_MOUTH",
+      "concepts": [
+        "SHE",
+        "SEE",
+        "MOUTH"
+      ],
+      "render": {
+        "en": "She sees a mouth."
+      }
+    },
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_HAVE_BROTHER",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "BROTHER"
+      ],
+      "render": {
+        "en": "I have a brother."
+      }
+    },
+    {
+      "template_id": "CX_HE_HAVE_BROTHER",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "BROTHER"
+      ],
+      "render": {
+        "en": "He has a brother."
+      }
+    },
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_HAVE_SISTER",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SISTER"
+      ],
+      "render": {
+        "en": "I have a sister."
+      }
+    },
+    {
+      "template_id": "CX_HE_HAVE_SISTER",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "SISTER"
+      ],
+      "render": {
+        "en": "He has a sister."
+      }
+    },
+    {
+      "template_id": "CX_FIRST_PERSON_SINGULAR_HAVE_SON",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SON"
+      ],
+      "render": {
+        "en": "I have a son."
+      }
+    },
+    {
+      "template_id": "CX_HE_HAVE_SON",
+      "concepts": [
+        "HE",
+        "HAVE",
+        "SON"
+      ],
+      "render": {
+        "en": "He has a son."
+      }
+    },
+    {
+      "template_id": "CX_THIRD_PERSON_PLURAL_COME",
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "COME"
+      ],
+      "render": {
+        "en": "They come."
+      }
+    },
+    {
+      "template_id": "CX_HE_COME",
+      "concepts": [
+        "HE",
+        "COME"
+      ],
+      "render": {
+        "en": "He comes."
+      }
+    }
+  ]
+}
