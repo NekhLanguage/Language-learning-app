@@ -72,9 +72,24 @@ try {
     );
   };
 
+  // Long runs crash the headless tab from accumulated DOM churn; a periodic
+  // reload sheds it. Progress lives in localStorage, so re-entering the
+  // language resumes exactly where the run left off.
+  const reenter = async () => {
+    await page.reload();
+    await page.waitForSelector("#start-screen.active");
+    await page.click("#open-app");
+    await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
+  };
+
   let consecutiveErrors = 0;
   while (stats.exercises < MAX_EXERCISES && stats.sessions < MAX_SESSIONS) {
    try {
+    if (stats.exercises > 0 && stats.exercises % 300 === 0 && !stats._reloadedAt?.has(stats.exercises)) {
+      (stats._reloadedAt ??= new Set()).add(stats.exercises);
+      await reenter();
+      continue;
+    }
     if (await page.locator("#run-complete-screen.active").isVisible()) {
       stats.runExhausted = true;
       stats.stoppedBecause = "run exhausted (all content completed)";
