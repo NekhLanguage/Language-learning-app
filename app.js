@@ -2018,7 +2018,14 @@ function ensureTemplateProgress(tpl) {
   return run.templateProgress[id];
 }
 function passesSpacingRule(cid) {
-  return passesSpacing(ensureProgress(cid), run.exerciseCounter);
+  // Scale level 7's post-success gap to the active pool: with only a few
+  // incomplete words left, a fixed 20-exercise wait starves every session.
+  const incomplete = run.released.reduce(
+    (n, c) => n + (run.progress[c]?.completed ? 0 : 1),
+    0
+  );
+  const l7CorrectGap = Math.min(20, Math.max(4, incomplete * 2));
+  return passesSpacing(ensureProgress(cid), run.exerciseCounter, { l7CorrectGap });
 }
 function canConceptBeTested(cid) {
 
@@ -2048,39 +2055,18 @@ if (level === 2) {
     return true;
   }
 
-  // ❌ must have at least one valid template
+  // ❌ must have at least one eligible template that can actually render an
+  // exercise for this concept. Answer options are synthesized at runtime from
+  // the released same-type pool (exactly how every level's renderer builds
+  // them) — hand-authored template `questions` are NOT required. The old
+  // questions requirement existed in only 22 templates and permanently
+  // blocked ~95% of concepts from ever being tested past level 2.
   return TEMPLATE_CACHE.some(tpl => {
-
-  if (!tpl.concepts.includes(cid)) return false;
-  if (!templateEligible(tpl)) return false;
-
-  const meta = window.GLOBAL_VOCAB.concepts[cid];
-
-  const role =
-    meta?.type === "pronoun" ? "pronoun" :
-    meta?.type === "verb" ? "verb" :
-    "object";
-
-  const q = tpl.questions?.[role];
-  if (!q) return false;
-
-  const releasedOptions = q.choices.filter(opt =>
-  run.released.includes(opt)
-);
-
-if (releasedOptions.length < 4) return false;
-
-// 🔥 NEW: ensure it can actually render
-if (meta?.type === "adjective" || meta?.type === "number") {
-  return true;
-}
-
-const options = buildRecognitionOptions(tpl, cid, 4);
-
-if (!options || options.length < 4) return false;
-
-return true;
-});
+    if (!tpl.concepts.includes(cid)) return false;
+    if (!templateEligible(tpl)) return false;
+    const options = buildRecognitionOptions(tpl, cid, 4);
+    return !!options && options.length >= 4;
+  });
 }
 function canConceptBeIntroduced(cid) {
 
@@ -3051,7 +3037,8 @@ function renderMatchingL5(targetLang, supportLang) {
     return true;
   });
 
-  // Pick exactly 5 (caller guarantees >= 5 unique-form concepts)
+  // Pick exactly 5 — never more. With fewer than 5 eligible (allowed only
+  // in the run's final rounds, when nothing below L5 remains), use them all.
   const shuffled = shuffle([...eligible]);
   const selected = shuffled.slice(0, 5);
 
@@ -3976,8 +3963,15 @@ function chooseConcept(excluded = new Set()) {
     if (!byLevel.has(l)) byLevel.set(l, []);
     byLevel.get(l).push(c);
   }
+  // Review mode: once the release plan is fully unlocked there is nothing
+  // new to introduce, so stop favoring low levels — every present level gets
+  // an equal shot, and within a level the least-recently-tested words go
+  // first. Words drain upward steadily instead of L6/L7 being starved by a
+  // large low-level backlog.
+  const planExhausted = run.releasePlanIndex >= (run.releasePlan || []).length;
+
   const levels = Array.from(byLevel.keys()).sort((a, b) => a - b);
-  const weights = levels.map(l => Math.max(1, 8 - l));
+  const weights = levels.map(l => (planExhausted ? 1 : Math.max(1, 8 - l)));
   const total = weights.reduce((acc, w) => acc + w, 0);
   let r = Math.random() * total;
   let chosenLevel = levels[0];
@@ -3986,6 +3980,21 @@ function chooseConcept(excluded = new Set()) {
     if (r <= 0) { chosenLevel = levels[i]; break; }
   }
   const bucket = byLevel.get(chosenLevel);
+
+  if (planExhausted) {
+    // Stalest-first with a little variety: random among the 3 words that
+    // have waited longest.
+    const byStaleness = [...bucket].sort((a, b) => {
+      const at = (c) => {
+        const shown = ensureProgress(c).lastShownAt;
+        return shown === -Infinity ? -1 : shown;
+      };
+      return at(a) - at(b);
+    });
+    const pool = byStaleness.slice(0, 3);
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
   return bucket[Math.floor(Math.random() * bucket.length)];
 }
 // Rotate the subject pronoun in a template to a different one the learner
@@ -4421,7 +4430,17 @@ if (level === 2) {
       return true;
     });
 
-    if (uniqueL5.length >= 5) {
+    // Matching always runs with exactly 5 words when 5+ are eligible (the
+    // renderer selects 5 from the pool). A smaller 3-4 pair round is allowed
+    // ONLY as the very last step — when no incomplete concept below level 5
+    // remains anywhere in the run, so a full quorum can never form again.
+    const onlyL5PlusRemain = run.released.every(c => {
+      const st = ensureProgress(c);
+      return st.completed || st.level >= 5;
+    });
+    const quorum = onlyL5PlusRemain ? 3 : 5;
+
+    if (uniqueL5.length >= quorum) {
       renderMatchingL5(targetLang, supportLang);
       run.exerciseCounter++;
       return;

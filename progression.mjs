@@ -27,8 +27,10 @@ export function createProgress() {
 }
 
 // Spacing rule: how many exercises must pass before a concept may reappear.
-// `currentIndex` is the run's exercise counter.
-export function passesSpacing(state, currentIndex) {
+// `currentIndex` is the run's exercise counter. `opts.l7CorrectGap` lets the
+// caller shrink level 7's long post-success gap in the end-game, where a
+// small active pool would otherwise starve every session (default 20).
+export function passesSpacing(state, currentIndex, opts = {}) {
   if (state.lastShownAt === -Infinity) return true;
 
   const distance = currentIndex - state.lastShownAt;
@@ -38,7 +40,7 @@ export function passesSpacing(state, currentIndex) {
 
   // Level 7: long gap after a success, quick retry after a miss
   if (state.level === 7) {
-    return state.lastResult === false ? distance >= 2 : distance >= 20;
+    return state.lastResult === false ? distance >= 2 : distance >= (opts.l7CorrectGap ?? 20);
   }
 
   // Levels 2–6

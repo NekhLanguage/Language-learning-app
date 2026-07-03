@@ -46,6 +46,15 @@ test("level 7: distance 20 after success, 2 after a miss", () => {
   assert.equal(passesSpacing({ ...base, lastResult: false }, 12), true);
 });
 
+test("level 7: the post-success gap can be shrunk for the end-game", () => {
+  const base = { ...createProgress(), level: 7, lastShownAt: 10, lastResult: true };
+  assert.equal(passesSpacing(base, 15, { l7CorrectGap: 4 }), true);
+  assert.equal(passesSpacing(base, 13, { l7CorrectGap: 4 }), false);
+  // The option does not touch the after-a-miss rule or other levels.
+  assert.equal(passesSpacing({ ...base, lastResult: false }, 12, { l7CorrectGap: 4 }), true);
+  assert.equal(passesSpacing({ ...createProgress(), level: 3, lastShownAt: 10, lastResult: true }, 13, { l7CorrectGap: 4 }), false);
+});
+
 test("level caps: recognition 4, modifiers 5, everything else MAX_LEVEL", () => {
   assert.equal(levelCapFor({ isRecognition: true, isModifier: false }), 4);
   assert.equal(levelCapFor({ isRecognition: false, isModifier: true }), 5);
