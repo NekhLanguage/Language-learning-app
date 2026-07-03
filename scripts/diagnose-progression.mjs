@@ -128,6 +128,7 @@ try {
         await page.locator(`#right-column button[data-cid="${cid}"]`).click();
       }
       await page.click("#check-matches");
+      await page.click("#check-matches"); // relabeled Continue
     } else if (kind === "L6") {
       const { correctWords } = await page.evaluate(() => window.__app.lastExercise);
       const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -140,6 +141,7 @@ try {
         await page.locator(`#slot-container [data-index="${i}"]`).click();
       }
       await page.click("#check-l6");
+      await page.click("#check-l6"); // relabeled Continue
     } else if (kind === "L7") {
       const { answer } = await page.evaluate(() => window.__app.lastExercise);
       await page.fill("#l7-input", answer);

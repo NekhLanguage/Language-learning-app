@@ -3243,19 +3243,14 @@ activeSelection = null;
     }
   });
 
-  if (allCorrect) {
-    setTimeout(() => {
-      renderNext(targetLang, supportLang);
-    }, 800);
-  } else {
-    // Match the L2 pattern: leave the visual feedback in place and let
-    // the learner advance on their own — no auto-rerender.
-    const checkMatchesBtn = document.getElementById("check-matches");
-    if (checkMatchesBtn) {
-      checkMatchesBtn.disabled = false;
-      checkMatchesBtn.textContent = ui("continue");
-      checkMatchesBtn.onclick = () => renderNext(targetLang, supportLang);
-    }
+  // Match the L2 pattern for BOTH outcomes: leave the visual feedback in
+  // place and let the learner advance with the same button — no timed
+  // auto-advance that yanks the result away.
+  const checkMatchesBtn = document.getElementById("check-matches");
+  if (checkMatchesBtn) {
+    checkMatchesBtn.disabled = false;
+    checkMatchesBtn.textContent = ui("continue");
+    checkMatchesBtn.onclick = () => renderNext(targetLang, supportLang);
   }
   };
 }
@@ -3439,7 +3434,11 @@ const correctWords = ordered.map(cid => {
       // level 6 and never reaches level 7.
       applyResult(targetConcept, true);
 
-      setTimeout(() => renderNext(targetLang, supportLang), 800);
+      // Match the L2 pattern: keep the green slots on screen and advance
+      // via the same button, not a timed auto-advance.
+      checkL6Btn.disabled = false;
+      checkL6Btn.textContent = ui("continue");
+      checkL6Btn.onclick = () => renderNext(targetLang, supportLang);
     } else {
       document.querySelectorAll(".sentence-slot").forEach(slot => {
         slot.classList.add("incorrect");

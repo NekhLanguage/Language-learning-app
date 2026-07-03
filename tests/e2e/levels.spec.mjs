@@ -117,8 +117,9 @@ test("L5 matching: pairing every word with itself passes", async ({ page }) => {
   await expect(page.locator("#left-column button.matched")).toHaveCount(5);
   await expect(page.locator("#right-column button.matched")).toHaveCount(5);
 
-  // All correct → auto-advance to the next exercise (which may be another
-  // matching round, so watch the counter rather than the DOM).
+  // L2 pattern: feedback stays on screen; the same button advances.
+  await expect(page.locator("#check-matches")).toHaveText(/continue/i);
+  await page.click("#check-matches");
   await expect
     .poll(() => page.evaluate(() => window.__app.run.exerciseCounter), { timeout: 5_000 })
     .toBeGreaterThan(counter);
@@ -146,8 +147,9 @@ test("L6 sentence builder: placing words in order passes", async ({ page }) => {
   await page.click("#check-l6");
 
   await expect(page.locator("#slot-container .sentence-slot.correct")).toHaveCount(correctWords.length);
-  // All correct → auto-advance (possibly to another builder with the same
-  // element ids, so watch the counter rather than the DOM).
+  // L2 pattern: feedback stays on screen; the same button advances.
+  await expect(page.locator("#check-l6")).toHaveText(/continue/i);
+  await page.click("#check-l6");
   await expect
     .poll(() => page.evaluate(() => window.__app.run.exerciseCounter), { timeout: 5_000 })
     .toBeGreaterThan(counter);
