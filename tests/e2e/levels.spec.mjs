@@ -9,6 +9,14 @@ function exact(text) {
   return new RegExp(`^${text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`);
 }
 
+// After Check, the same button becomes Continue but ignores clicks for a
+// short arming window (the mobile double-tap guard in becomeContinueButton),
+// so tests must wait it out before clicking Continue.
+async function clickContinue(page, selector) {
+  await page.waitForTimeout(450);
+  await page.click(selector);
+}
+
 test("L1 exposure card shows word, sentences, and advances", async ({ page }) => {
   await startNewRun(page);
   await seedAllConceptsAt(page, 1);
@@ -45,8 +53,39 @@ test("L2 multiple choice: correct answer marks green and advances", async ({ pag
   expect(progress.lastResult).toBe(true);
 
   // Check button becomes the advance button.
-  await page.click("#check-btn");
-  await expect(page.locator("#content h2, #content p").first()).toBeVisible();
+  const counter = await page.evaluate(() => window.__app.run.exerciseCounter);
+  await clickContinue(page, "#check-btn");
+  await expect
+    .poll(() => page.evaluate(() => window.__app.run.exerciseCounter), { timeout: 5_000 })
+    .toBeGreaterThan(counter);
+});
+
+test("L2: a second tap right after Check must not skip the feedback", async ({ page }) => {
+  await startNewRun(page);
+  await seedAllConceptsAt(page, 2);
+
+  const cid = await lastTargetConcept(page);
+  const counter = await page.evaluate(() => window.__app.run.exerciseCounter);
+  await page.locator(`#choices button[data-cid="${cid}"]`).click();
+
+  // A mobile double-tap / ghost click delivers a second click right after
+  // Check has become Continue. Dispatch both synchronously so no wall-clock
+  // time can pass between them.
+  await page.evaluate(() => {
+    const btn = document.querySelector("#check-btn");
+    btn.click();
+    btn.click();
+  });
+
+  // The feedback must still be on screen and the run must not have advanced.
+  await expect(page.locator(`#choices button[data-cid="${cid}"]`)).toHaveClass(/correct/);
+  expect(await page.evaluate(() => window.__app.run.exerciseCounter)).toBe(counter);
+
+  // After the arming window the same button advances normally.
+  await clickContinue(page, "#check-btn");
+  await expect
+    .poll(() => page.evaluate(() => window.__app.run.exerciseCounter), { timeout: 5_000 })
+    .toBeGreaterThan(counter);
 });
 
 test("L2 multiple choice: wrong answer marks red and does not level up", async ({ page }) => {
@@ -119,7 +158,7 @@ test("L5 matching: pairing every word with itself passes", async ({ page }) => {
 
   // L2 pattern: feedback stays on screen; the same button advances.
   await expect(page.locator("#check-matches")).toHaveText(/continue/i);
-  await page.click("#check-matches");
+  await clickContinue(page, "#check-matches");
   await expect
     .poll(() => page.evaluate(() => window.__app.run.exerciseCounter), { timeout: 5_000 })
     .toBeGreaterThan(counter);
@@ -149,7 +188,7 @@ test("L6 sentence builder: placing words in order passes", async ({ page }) => {
   await expect(page.locator("#slot-container .sentence-slot.correct")).toHaveCount(correctWords.length);
   // L2 pattern: feedback stays on screen; the same button advances.
   await expect(page.locator("#check-l6")).toHaveText(/continue/i);
-  await page.click("#check-l6");
+  await clickContinue(page, "#check-l6");
   await expect
     .poll(() => page.evaluate(() => window.__app.run.exerciseCounter), { timeout: 5_000 })
     .toBeGreaterThan(counter);
@@ -188,7 +227,7 @@ test("L7 answers never contain injected modifiers the prompt didn't show", async
     await page.fill("#l7-input", ex.answer);
     await page.click("#check-l7");
     await expect(page.locator("#l7-feedback")).toContainText("Correct");
-    await page.click("#check-l7");
+    await clickContinue(page, "#check-l7");
   }
 });
 
