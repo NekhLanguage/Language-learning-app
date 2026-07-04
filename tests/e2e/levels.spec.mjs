@@ -175,6 +175,23 @@ test("L7 free production: typing the exact sentence is accepted", async ({ page 
   expect(progress.lastResult).toBe(true);
 });
 
+test("L7 answers never contain injected modifiers the prompt didn't show", async ({ page }) => {
+  await startNewRun(page);
+  // Adjectives active at L5 = an eligible injection pool (the condition
+  // that produced "Я їм важка їжа" for the plain prompt "I eat food.").
+  await seedAllConceptsAt(page, 7, { restrictTypes: ["pronoun", "verb", "noun"], adjectivesAt: 5 });
+
+  for (let i = 0; i < 4; i++) {
+    await expect(page.locator("#l7-input")).toBeVisible();
+    const ex = await page.evaluate(() => window.__app.lastExercise);
+    expect(ex.hadModifier, `round ${i}: expected answer must be the plain sentence`).toBe(false);
+    await page.fill("#l7-input", ex.answer);
+    await page.click("#check-l7");
+    await expect(page.locator("#l7-feedback")).toContainText("Correct");
+    await page.click("#check-l7");
+  }
+});
+
 test("L7 free production: a wrong answer reveals the correct sentence", async ({ page }) => {
   await startNewRun(page);
   await seedAllConceptsAt(page, 7, { restrictTypes: ["pronoun", "verb", "noun"] });

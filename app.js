@@ -3480,9 +3480,21 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
 
-const targetSentence = safe(buildSentence(targetLang, tpl));
+// Suppress random modifier injection: the prompt shows the authored plain
+// support sentence, so the expected answer must be the plain sentence too —
+// never "Я їм важка їжа" when the prompt said "I eat food."
+const sharedChoicesL7 = {};
+for (const c of tpl.concepts) {
+  if (window.GLOBAL_VOCAB.concepts[c]?.type === "noun") {
+    sharedChoicesL7["adj_" + c] = null;
+    sharedChoicesL7["num_" + c] = null;
+  }
+}
+const { sentence: rawTarget, hadModifier: l7HadModifier } =
+  buildSentenceWithRules(targetLang, tpl, null, sharedChoicesL7);
+const targetSentence = safe(rawTarget);
 
-  LAST_EXERCISE = { type: "free_production", answer: targetSentence };
+  LAST_EXERCISE = { type: "free_production", answer: targetSentence, hadModifier: l7HadModifier };
 
   content.innerHTML = `
   <div style="margin-bottom:20px;">
