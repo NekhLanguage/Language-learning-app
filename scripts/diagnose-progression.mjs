@@ -71,10 +71,43 @@ try {
       prev
     );
   };
+  // After Check the button becomes Continue but ignores clicks during a short
+  // arming window (mobile double-tap guard), so keep clicking until the run
+  // actually advances instead of firing one blind second click.
+  const clickContinue = async (sel, prev) => {
+    const advanced = () =>
+      page
+        .evaluate(
+          (p) =>
+            window.__app.run.exerciseCounter !== p ||
+            !!document.querySelector("#roadmap-screen.active, #run-complete-screen.active"),
+          prev
+        )
+        .catch(() => false);
+    for (let i = 0; i < 12 && !(await advanced()); i++) {
+      await page.click(sel, { timeout: 1500 }).catch(() => {});
+      await new Promise((r) => setTimeout(r, 130));
+    }
+  };
+
+  // Long runs crash the headless tab from accumulated DOM churn; a periodic
+  // reload sheds it. Progress lives in localStorage, so re-entering the
+  // language resumes exactly where the run left off.
+  const reenter = async () => {
+    await page.reload();
+    await page.waitForSelector("#start-screen.active");
+    await page.click("#open-app");
+    await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
+  };
 
   let consecutiveErrors = 0;
   while (stats.exercises < MAX_EXERCISES && stats.sessions < MAX_SESSIONS) {
    try {
+    if (stats.exercises > 0 && stats.exercises % 300 === 0 && !stats._reloadedAt?.has(stats.exercises)) {
+      (stats._reloadedAt ??= new Set()).add(stats.exercises);
+      await reenter();
+      continue;
+    }
     if (await page.locator("#run-complete-screen.active").isVisible()) {
       stats.runExhausted = true;
       stats.stoppedBecause = "run exhausted (all content completed)";
@@ -118,7 +151,7 @@ try {
       const cid = await page.evaluate(() => window.__app.run.lastTargetConcept);
       await page.locator(`#choices button[data-cid="${cid}"]`).click();
       await page.click("#check-btn");
-      await page.click("#check-btn"); // relabeled Continue
+      await clickContinue("#check-btn", prev);
     } else if (kind === "L5") {
       const cids = await page
         .locator("#left-column button[data-cid]")
@@ -128,6 +161,7 @@ try {
         await page.locator(`#right-column button[data-cid="${cid}"]`).click();
       }
       await page.click("#check-matches");
+      await clickContinue("#check-matches", prev);
     } else if (kind === "L6") {
       const { correctWords } = await page.evaluate(() => window.__app.lastExercise);
       const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -140,11 +174,12 @@ try {
         await page.locator(`#slot-container [data-index="${i}"]`).click();
       }
       await page.click("#check-l6");
+      await clickContinue("#check-l6", prev);
     } else if (kind === "L7") {
       const { answer } = await page.evaluate(() => window.__app.lastExercise);
       await page.fill("#l7-input", answer);
       await page.click("#check-l7");
-      await page.click("#check-l7"); // relabeled Continue
+      await clickContinue("#check-l7", prev);
     }
 
     await waitAdvance(prev);

@@ -70,8 +70,8 @@ export async function startNewRun(page, { language = "Portuguese", packId = "eve
 // first `bundles` entries of the release plan for realistic distractor pools,
 // then re-renders. For L6/L7 pass restrictTypes to keep modifier/recognition
 // concepts (whose level caps are lower) out of the exercise pool.
-export async function seedAllConceptsAt(page, level, { bundles = 4, restrictTypes = null } = {}) {
-  await page.evaluate(({ level, bundles, restrictTypes }) => {
+export async function seedAllConceptsAt(page, level, { bundles = 4, restrictTypes = null, adjectivesAt = null } = {}) {
+  await page.evaluate(({ level, bundles, restrictTypes, adjectivesAt }) => {
     const app = window.__app;
     const run = app.run;
     const index = app.bundleIndex;
@@ -85,11 +85,15 @@ export async function seedAllConceptsAt(page, level, { bundles = 4, restrictType
     for (const cid of run.released) {
       const type = window.GLOBAL_VOCAB.concepts[cid]?.type;
       const eligible = !restrictTypes || restrictTypes.includes(type);
+      // adjectivesAt: keep adjectives active at the given level (instead of
+      // completed) so random modifier injection has an eligible pool —
+      // used to regression-test injection suppression.
+      const adjActive = adjectivesAt != null && type === "adjective";
       run.progress[cid] = {
-        level: eligible ? level : 1,
+        level: adjActive ? adjectivesAt : eligible ? level : 1,
         streak: 0,
         cooldown: 0,
-        completed: !eligible,
+        completed: adjActive ? false : !eligible,
         lastShownAt: -999999,
         lastResult: null,
       };
@@ -104,7 +108,7 @@ export async function seedAllConceptsAt(page, level, { bundles = 4, restrictType
     run.sessionComplete = false;
 
     app.rerender();
-  }, { level, bundles, restrictTypes });
+  }, { level, bundles, restrictTypes, adjectivesAt });
 }
 
 // The concept the current exercise is asking about.

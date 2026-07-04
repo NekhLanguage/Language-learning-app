@@ -2274,6 +2274,22 @@ return tpl;
     content.appendChild(banner);
     wireTts();
   }
+
+  // Swaps a Check button into the Continue button for the current exercise
+  // (the L2 pattern: feedback stays on screen, the same button advances).
+  // Clicks are ignored for a short arming window so a mobile double-tap /
+  // ghost click can't both check the answer and instantly advance past the
+  // feedback the learner never got to read.
+  function becomeContinueButton(btn, targetLang, supportLang) {
+    if (!btn) return;
+    btn.disabled = false;
+    btn.textContent = ui("continue");
+    const armedAt = Date.now();
+    btn.onclick = () => {
+      if (Date.now() - armedAt < 350) return;
+      renderNext(targetLang, supportLang);
+    };
+  }
   function wordNoteFor(cid, targetLang, supportLang) {
     if (!WORD_NOTES) return null;
     if (!isFeatureAvailable("mnemonics", { target: targetLang, support: supportLang })) return null;
@@ -2445,8 +2461,7 @@ btn.textContent = meta?.type === "noun"
       decrementCooldowns();
       applyResult(targetConcept, correct);
 
-      checkBtn.textContent = ui("continue");
-      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+      becomeContinueButton(checkBtn, targetLang, supportLang);
     };
 
     return;
@@ -2514,8 +2529,7 @@ const options = shuffle([...releasedOptions]).slice(0, 4);
     decrementCooldowns();
     applyResult(targetConcept, correct);
 
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    becomeContinueButton(checkBtn, targetLang, supportLang);
   };
   return true;
 }
@@ -2701,9 +2715,7 @@ if (isModifierConcept(targetConcept)) {
     decrementCooldowns();
     applyResult(targetConcept, correct);
 
-    checkBtn.disabled = false;
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    becomeContinueButton(checkBtn, targetLang, supportLang);
   };
 
   return true; // 🔥 CRITICAL
@@ -2833,9 +2845,7 @@ if (!options || options.length < 4) {
     decrementCooldowns();
     applyResult(targetConcept, correct);
 
-    checkBtn.disabled = false;
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    becomeContinueButton(checkBtn, targetLang, supportLang);
   };
 }
 
@@ -3013,9 +3023,7 @@ if (!finalOptions.includes(targetConcept)) {
       decrementCooldowns();
       applyResult(targetConcept, correct);
 
-      checkBtn.disabled = false;
-      checkBtn.textContent = ui("continue");
-      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+      becomeContinueButton(checkBtn, targetLang, supportLang);
     };
   }
 // -------------------------
@@ -3243,20 +3251,11 @@ activeSelection = null;
     }
   });
 
-  if (allCorrect) {
-    setTimeout(() => {
-      renderNext(targetLang, supportLang);
-    }, 800);
-  } else {
-    // Match the L2 pattern: leave the visual feedback in place and let
-    // the learner advance on their own — no auto-rerender.
-    const checkMatchesBtn = document.getElementById("check-matches");
-    if (checkMatchesBtn) {
-      checkMatchesBtn.disabled = false;
-      checkMatchesBtn.textContent = ui("continue");
-      checkMatchesBtn.onclick = () => renderNext(targetLang, supportLang);
-    }
-  }
+  // Match the L2 pattern for BOTH outcomes: leave the visual feedback in
+  // place and let the learner advance with the same button — no timed
+  // auto-advance that yanks the result away.
+  const checkMatchesBtn = document.getElementById("check-matches");
+  becomeContinueButton(checkMatchesBtn, targetLang, supportLang);
   };
 }
 
@@ -3439,7 +3438,9 @@ const correctWords = ordered.map(cid => {
       // level 6 and never reaches level 7.
       applyResult(targetConcept, true);
 
-      setTimeout(() => renderNext(targetLang, supportLang), 800);
+      // Match the L2 pattern: keep the green slots on screen and advance
+      // via the same button, not a timed auto-advance.
+      becomeContinueButton(checkL6Btn, targetLang, supportLang);
     } else {
       document.querySelectorAll(".sentence-slot").forEach(slot => {
         slot.classList.add("incorrect");
@@ -3458,9 +3459,7 @@ const correctWords = ordered.map(cid => {
       const correctSentence = capitalizeFirst(correctWords.join(" ")) + ".";
       revealCorrectAnswerBanner(correctSentence, targetLang);
 
-      checkL6Btn.disabled = false;
-      checkL6Btn.textContent = ui("continue");
-      checkL6Btn.onclick = () => renderNext(targetLang, supportLang);
+      becomeContinueButton(checkL6Btn, targetLang, supportLang);
     }
   };
 }
@@ -3481,9 +3480,21 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
 
-const targetSentence = safe(buildSentence(targetLang, tpl));
+// Suppress random modifier injection: the prompt shows the authored plain
+// support sentence, so the expected answer must be the plain sentence too —
+// never "Я їм важка їжа" when the prompt said "I eat food."
+const sharedChoicesL7 = {};
+for (const c of tpl.concepts) {
+  if (window.GLOBAL_VOCAB.concepts[c]?.type === "noun") {
+    sharedChoicesL7["adj_" + c] = null;
+    sharedChoicesL7["num_" + c] = null;
+  }
+}
+const { sentence: rawTarget, hadModifier: l7HadModifier } =
+  buildSentenceWithRules(targetLang, tpl, null, sharedChoicesL7);
+const targetSentence = safe(rawTarget);
 
-  LAST_EXERCISE = { type: "free_production", answer: targetSentence };
+  LAST_EXERCISE = { type: "free_production", answer: targetSentence, hadModifier: l7HadModifier };
 
   content.innerHTML = `
   <div style="margin-bottom:20px;">
@@ -3629,11 +3640,7 @@ checkBtn.onclick = async () => {
   }
 
   // 🔁 Replace Check with Continue
-  checkBtn.textContent = ui("continue");
-  checkBtn.onclick = () => {
-    setTimeout(() => renderNext(targetLang, supportLang), 0);
-return;
-  };
+  becomeContinueButton(checkBtn, targetLang, supportLang);
 };
 }
 
@@ -4367,8 +4374,7 @@ if (level === 2) {
     decrementCooldowns();
     applyResult(targetConcept, correct);
 
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    becomeContinueButton(checkBtn, targetLang, supportLang);
   };
 
   run.exerciseCounter++;
