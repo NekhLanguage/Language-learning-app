@@ -851,11 +851,11 @@
   "label": "Українська",
   "forms": {
 
-    "POKEMON": { "gender": "m", "form": "покемон", "invariantPlural": true },
-    "TRAINER": { "gender": "m", "form": "тренер", "plural": "тренери" },
+    "POKEMON": { "gender": "m", "form": "покемон", "accusative": "покемона", "invariantPlural": true },
+    "TRAINER": { "gender": "m", "form": "тренер", "accusative": "тренера", "plural": "тренери" },
     "GYM": { "gender": "m", "form": "зал" },
     "LEAGUE": { "gender": "f", "form": "ліга", "plural": "ліги" },
-    "GYM_LEADER": { "gender": "m", "form": "лідер залу", "plural": "лідери залів" },
+    "GYM_LEADER": { "gender": "m", "form": "лідер залу", "accusative": "лідера залу", "plural": "лідери залів" },
     "ELITE_FOUR": { "gender": "f", "form": "еліта чотири" },
     "POKEMON_CENTER": { "gender": "m", "form": "центр покемонів" },
     "FOREST": { "gender": "m", "form": "ліс", "plural": "ліси" },

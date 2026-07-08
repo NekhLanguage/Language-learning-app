@@ -28,6 +28,7 @@ import {
   orderedConceptsForTemplate,
   blankSentence,
   safeSurfaceForConcept,
+  isDirectObjectPosition,
   isModifierConcept,
   BROAD_SOURCE_FILES,
   ADJECTIVE_ROLE_COMPAT,
@@ -3300,7 +3301,7 @@ const subjectCid = ordered.find(c =>
   window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
 );
 
-const correctWords = ordered.map(cid => {
+const correctWords = ordered.map((cid, idx) => {
   const meta = window.GLOBAL_VOCAB.concepts[cid];
 
   if (!meta) return String(cid).toLowerCase();
@@ -3310,7 +3311,11 @@ const correctWords = ordered.map(cid => {
   }
 
   if (meta.type === "noun") {
-    return String(nounPhrase(targetLang, cid)).toLowerCase();
+    // Object-position nouns carry their object case in declining languages
+    // (uk «воду»), matching the support translation the learner assembles.
+    return String(nounPhrase(targetLang, cid, {
+      directObject: isDirectObjectPosition(ordered, idx),
+    })).toLowerCase();
   }
 
   // ✅ ADD THIS FALLBACK (CRITICAL)

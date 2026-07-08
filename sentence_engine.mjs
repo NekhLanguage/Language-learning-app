@@ -40,6 +40,7 @@ export const GRAMMAR_RULE_IDS = [
   "vso_word_order",          // ar leads with the verb
   "indefinite_article",      // a/an, um/uma, ein/eine, … chosen by gender/sound
   "ja_counter",              // ja numbers attach through a counter + の
+  "accusative_object",       // uk direct objects take the accusative ending
 ];
 
 let firedRules = null;
@@ -204,15 +205,61 @@ function isPluralPronoun(cid) {
   return vocab().concepts?.[cid]?.number === "plural";
 }
 
+// --- Ukrainian direct-object case ------------------------------------------
+// Ukrainian has no articles; the work an article does in en/pt/de is done by
+// the noun's case ending instead, so a direct object must be rendered in the
+// accusative: «я п'ю воду», not the dictionary form «вода». Feminine -а/-я
+// shifts to -у/-ю; the shift applies to every а/я-final word of a multi-word
+// form so embedded adjectives agree too («бігова доріжка» → «бігову доріжку»)
+// while genitive tails are untouched («таблиця лідерів» → «таблицю лідерів»).
+function ukFeminineAccusative(form) {
+  return String(form).split(" ").map(w =>
+    w.endsWith("а") ? w.slice(0, -1) + "у" :
+    w.endsWith("я") ? w.slice(0, -1) + "ю" : w
+  ).join(" ");
+}
+
+// Inanimate masculine and neuter accusative equals the nominative. Animate
+// masculines (брат → брата) follow no safe suffix rule, so they carry an
+// explicit `accusative` field in the vocab data, which always wins.
+function ukAccusativeNoun(cid, base) {
+  const entry = vocab().languages?.uk?.forms?.[cid];
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return base;
+  if (typeof entry.accusative === "string") return entry.accusative;
+  if (entry.gender === "f") return ukFeminineAccusative(base);
+  return base;
+}
+
+// A noun at ordered[idx] is a direct object when the nearest preceding
+// concept — skipping a possessive («я маю мою книгу») — is a non-copular
+// verb. Predicate nouns after BE («це книга») stay nominative.
+function isDirectObjectPosition(ordered, idx) {
+  let j = idx - 1;
+  if (j >= 0 && vocab().concepts?.[ordered[j]]?.semantic_role === "possessive") j--;
+  if (j < 0) return false;
+  const prev = ordered[j];
+  return vocab().concepts?.[prev]?.type === "verb" && !isCopulaConcept(prev);
+}
+
 // `opts.plural`: when true, render plural form and drop the indefinite
 // article. Used when the predicate noun follows a plural subject pronoun
 // ("they are wizards" not "they are a wizard").
+// `opts.directObject`: when true, case-marking languages render the noun in
+// its object case (uk accusative: «воду» not «вода»). Article languages
+// ignore it — their objects look like any other noun phrase.
 function nounPhrase(lang, cid, opts = {}) {
 
   const meta = vocab().concepts[cid];
   const entry = vocab().languages?.[lang]?.forms?.[cid] || {};
 
-  const base = entry.form || formOf(lang, cid);
+  let base = entry.form || formOf(lang, cid);
+  if (lang === "uk" && opts.directObject && !opts.plural && !entry.pluralOnly) {
+    const acc = ukAccusativeNoun(cid, base);
+    if (acc !== base) {
+      noteRule("accusative_object");
+      base = acc;
+    }
+  }
 
   // pluralOnly nouns (e.g. clothes/shoes/pants) have no singular form and
   // never take an indefinite article. The bare form is already plural, so
@@ -485,7 +532,21 @@ if (orderType === "SOV") {
       return getVerbForm(targetConcept, subjectCid, targetLang);
     }
 
-    return tpl.surface?.[targetLang]?.[targetConcept] || formOf(targetLang, targetConcept);
+    const authored = tpl.surface?.[targetLang]?.[targetConcept];
+    if (authored) return authored;
+
+    // Match the case the engine actually renders: a uk noun in object
+    // position appears in the accusative («воду»), and blanking/prompting
+    // with the dictionary form would no longer find it in the sentence.
+    if (targetLang === "uk" && meta.type === "noun") {
+      const ordered = orderedConceptsForTemplate(tpl, targetLang);
+      const idx = ordered.indexOf(targetConcept);
+      if (idx !== -1 && isDirectObjectPosition(ordered, idx)) {
+        return ukAccusativeNoun(targetConcept, formOf(targetLang, targetConcept));
+      }
+    }
+
+    return formOf(targetLang, targetConcept);
   }
 
   function isModifierConcept(cid) {
@@ -870,10 +931,10 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
   const subject = formOf(lang, subjectCid);
   const verb = getVerbForm(verbCid, subjectCid, lang);
   // Use nounPhrase (not bare formOf) so a direct object gets its indefinite
-  // article where the language uses one ("casts a spell", "isst ein Brot");
-  // mass/uncountable nouns ("learns magic") and article-less languages are
-  // returned unchanged.
-  const object = nounPhrase(lang, objectCid);
+  // article where the language uses one ("casts a spell", "isst ein Brot")
+  // or its object case where the language declines instead (uk «воду»);
+  // mass/uncountable nouns ("learns magic") pass through unchanged.
+  const object = nounPhrase(lang, objectCid, { directObject: true });
   // The "with his X" companion is optional: plain SVO templates omit these slots.
   // Only build it when a companion noun is present, so undefined slots don't leak
   // into the sentence as the literal word "undefined".
@@ -1042,13 +1103,28 @@ if (tpl.structure?.type === "complex_clause") {
   // If the template itself has a possessive directly before this noun, suppress the article.
   const precededByPossessive = idx > 0 &&
     vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive";
+  // Direct objects take the object case in declining languages (uk
+  // accusative). Possessed objects only shift for the regular feminine
+  // rule — an explicit animate-masculine override would clash with the
+  // possessive word, which has no accusative data of its own.
+  const isObject = isDirectObjectPosition(ordered, idx);
+  const ukObjectCase = lang === "uk" && isObject && !pluralAgreement;
   // Copular agreement: this noun is the predicate after a plural subject.
   // Possessed nouns (their/our + noun) follow the possessive's own number,
   // not the subject's, so skip them.
   const useCopularPlural = pluralAgreement && !precededByPossessive;
+  let possessedForm = formOf(lang, cid);
+  if (ukObjectCase && precededByPossessive &&
+      vocab().languages?.uk?.forms?.[cid]?.gender === "f") {
+    const acc = ukFeminineAccusative(possessedForm);
+    if (acc !== possessedForm) {
+      noteRule("accusative_object");
+      possessedForm = acc;
+    }
+  }
   let phrase = precededByPossessive
-    ? formOf(lang, cid)
-    : nounPhrase(lang, cid, { plural: useCopularPlural });
+    ? possessedForm
+    : nounPhrase(lang, cid, { plural: useCopularPlural, directObject: isObject });
   // When the noun was rendered as plural via copular agreement, the bare
   // form used by the modifier branches below also needs to be plural so
   // adjective insertion produces "small leaders" not "small leader".
@@ -1137,8 +1213,19 @@ if (tpl.structure?.type === "complex_clause") {
   // When copular plural agreement applies, the bare form used by the
   // adjective branches must also be plural ("they are small leaders").
   if (adjectiveWord || numberWord) noteModifier();
-  const bare = bareNoun || formOf(lang, cid);
+  // The bare form must match the case actually rendered in `phrase`, or the
+  // article/adjective splicing below misassembles the noun phrase.
+  const bare = bareNoun ||
+    (ukObjectCase && !precededByPossessive ? ukAccusativeNoun(cid, formOf(lang, cid)) :
+     ukObjectCase ? possessedForm :
+     formOf(lang, cid));
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
+  // An adjective on a feminine accusative object agrees in case too:
+  // «я п'ю холодну воду», not «холодна воду». Ukrainian feminine adjectives
+  // end in -а/-я like the nouns, so the same ending shift applies.
+  const ukShiftAdj = ukObjectCase && !useCopularPlural &&
+    vocab().languages?.uk?.forms?.[cid]?.gender === "f";
+  if (ukShiftAdj && adjectiveWord) adjectiveWord = ukFeminineAccusative(adjectiveWord);
 
   if (numberWord) {
     // Same surface capture for a forced number modifier (see adjective note).
@@ -1239,6 +1326,26 @@ if (tpl.structure?.type === "complex_clause") {
       return genderedFormOf(lang, cid, subjectCid);
     }
 
+    // A possessive directly before a noun agrees with that noun's gender
+    // («моя мама», "minha casa") — surfaceForm alone returns the base
+    // (masculine) form. French is excluded: its vowel-initial rule (mon amie)
+    // is handled by frenchPossessivePhrase, not by plain gender agreement.
+    // When the possessed noun is a feminine direct object in Ukrainian, the
+    // possessive shifts to the accusative with it («я маю мою книгу»).
+    if (meta.type === "adjective" && meta.semantic_role === "possessive" &&
+        lang !== "fr") {
+      const nextCid = ordered[idx + 1];
+      if (vocab().concepts[nextCid]?.type === "noun") {
+        let form = genderedFormOf(lang, cid, nextCid);
+        if (lang === "uk" && isDirectObjectPosition(ordered, idx + 1) &&
+            !pluralAgreement &&
+            vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
+          form = ukFeminineAccusative(form);
+        }
+        return form;
+      }
+    }
+
     return surfaceForm(lang, cid);
   });
 
@@ -1298,6 +1405,9 @@ export {
   orderedConceptsForTemplate,
   blankSentence,
   safeSurfaceForConcept,
+  isDirectObjectPosition,
+  ukFeminineAccusative,
+  ukAccusativeNoun,
   isModifierConcept,
   BROAD_SOURCE_FILES,
   ADJECTIVE_ROLE_COMPAT,

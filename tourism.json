@@ -817,7 +817,7 @@
         "MONUMENT": { "gender": "m", "form": "пам'ятник", "plural": "пам'ятники" },
         "RESTAURANT": { "gender": "m", "form": "ресторан", "plural": "ресторани" },
         "MENU": { "gender": "n", "form": "меню", "plural": "меню" },
-        "WAITER": { "gender": "m", "form": "офіціант", "plural": "офіціанти" },
+        "WAITER": { "gender": "m", "form": "офіціант", "accusative": "офіціанта", "plural": "офіціанти" },
         "MARKET": { "gender": "m", "form": "ринок", "plural": "ринки" },
         "SOUVENIR": { "gender": "m", "form": "сувенір", "plural": "сувеніри" },
         "BARGAIN": { "gender": "f", "form": "вигідна угода" },
@@ -830,7 +830,7 @@
         "EMBASSY": { "gender": "n", "form": "посольство", "plural": "посольства" },
         "ADVENTURE": { "gender": "f", "form": "пригода" },
         "ITINERARY": { "gender": "m", "form": "маршрут подорожі", "plural": "маршрути подорожі" },
-        "GUIDE": { "gender": "m", "form": "гід", "plural": "гіди" },
+        "GUIDE": { "gender": "m", "form": "гід", "accusative": "гіда", "plural": "гіди" },
 
         "BOARD": { "base": "сідати", "1_singular": "сідаю", "2_singular": "сідаєш", "3_singular": "сідає", "1_plural": "сідаємо", "2_plural": "сідаєте", "3_plural": "сідають" },
         "RESERVE": { "base": "бронювати", "1_singular": "бронюю", "2_singular": "бронюєш", "3_singular": "бронює", "1_plural": "бронюємо", "2_plural": "бронюєте", "3_plural": "бронюють" },

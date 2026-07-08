@@ -78,6 +78,7 @@ test("rule ids are stable and documented", () => {
   assert.deepEqual(
     [...GRAMMAR_RULE_IDS].sort(),
     [
+      "accusative_object",
       "french_elision",
       "french_possessive_agreement",
       "gender_agreement",

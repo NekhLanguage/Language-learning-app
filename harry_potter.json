@@ -425,7 +425,7 @@
 
     "WAND": { "gender": "f", "form": "паличка", "plural": "палички" },
     "MAGIC": { "gender": "f", "form": "магія" },
-    "WIZARD": { "gender": "m", "form": "чарівник", "plural": "чарівники" },
+    "WIZARD": { "gender": "m", "form": "чарівник", "accusative": "чарівника", "plural": "чарівники" },
     "WITCH": { "gender": "f", "form": "відьма", "plural": "відьми" },
     "SPELL": { "gender": "n", "form": "закляття", "plural": "закляття" },
     "POTION": { "gender": "n", "form": "зілля", "plural": "зілля" },
@@ -438,7 +438,7 @@
     "PROFESSOR": { "gender": "m", "form": "професор", "plural": "професори" },
     "STUDENT": { "gender": "m", "form": "студент", "plural": "студенти" },
     "ELF": { "gender": "m", "form": "ельф", "plural": "ельфи" },
-    "UNICORN": { "gender": "m", "form": "єдиноріг", "plural": "єдинороги" },
+    "UNICORN": { "gender": "m", "form": "єдиноріг", "accusative": "єдинорога", "plural": "єдинороги" },
     "GIANT": { "gender": "m", "form": "велетень", "plural": "велетні" },
     "TROLL": { "gender": "m", "form": "троль" },
     "GHOST": { "gender": "m", "form": "привид", "plural": "привиди" },
@@ -456,8 +456,8 @@
     "CHANCE": { "gender": "m", "form": "шанс", "plural": "шанси" },
     "MYSTERY": { "gender": "f", "form": "таємниця", "plural": "таємниці" },
     "SECRET": { "gender": "m", "form": "секрет", "plural": "секрети" },
-    "FRIEND": { "gender": "m", "form": "друг", "plural": "друзі" },
-    "ENEMY": { "gender": "m", "form": "ворог", "plural": "вороги" },
+    "FRIEND": { "gender": "m", "form": "друг", "accusative": "друга", "plural": "друзі" },
+    "ENEMY": { "gender": "m", "form": "ворог", "accusative": "ворога", "plural": "вороги" },
     "CLOAK": { "gender": "f", "form": "мантія", "plural": "мантії" },
     "DOOR": { "gender": "f", "form": "двері", "plural": "двері" },
 

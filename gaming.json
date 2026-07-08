@@ -556,7 +556,7 @@
         "TIER": { "gender": "m", "form": "рівень", "plural": "рівні" },
         "PIXEL": { "gender": "m", "form": "піксель", "plural": "пікселі" },
         "AVATAR": { "gender": "m", "form": "аватар", "plural": "аватари" },
-        "BOSS": { "gender": "m", "form": "бос", "plural": "боси" },
+        "BOSS": { "gender": "m", "form": "бос", "accusative": "боса", "plural": "боси" },
         "NPC": { "gender": "m", "form": "NPC" },
         "COMPANION": { "gender": "m", "form": "супутник", "plural": "супутники" },
         "COMBO": { "gender": "n", "form": "комбо", "plural": "комбо" },

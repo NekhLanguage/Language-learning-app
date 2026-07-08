@@ -285,6 +285,7 @@
     },
     "SON": {
       "form": "син",
+      "accusative": "сина",
       "gender": "m",
       "plural": "сини"
     },
@@ -295,6 +296,7 @@
     },
     "BROTHER": {
       "form": "брат",
+      "accusative": "брата",
       "gender": "m",
       "plural": "брати"
     },
