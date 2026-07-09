@@ -16,7 +16,8 @@
         "tr": "{detail} her yeni kelimeyle biraz daha yaklaşıyor.",
         "uk": "{detail} — ще на кілька слів ближче.",
         "zh": "{detail}又近了一点。",
-        "ar": "{detail} — أقرب قليلًا مع كل كلمة جديدة."
+        "ar": "{detail} — أقرب قليلًا مع كل كلمة جديدة.",
+        "it": "{detail} è appena diventato un po' più vicino."
       },
       "mid": {
         "en": "You're speaking in sentences now — {detail} is starting to feel real.",
@@ -31,7 +32,8 @@
         "tr": "Artık cümleler kuruyorsun — {detail} gitgide gerçek oluyor.",
         "uk": "Ти вже говориш реченнями — {detail} набуває обрисів.",
         "zh": "已经能说完整的句子了——{detail}正一点点变成现实。",
-        "ar": "جمل كاملة الآن — {detail} أقرب إلى الواقع من أي وقت مضى."
+        "ar": "جمل كاملة الآن — {detail} أقرب إلى الواقع من أي وقت مضى.",
+        "it": "Ora parli per frasi intere — {detail} inizia a sembrare reale."
       },
       "late": {
         "en": "You won't just visit {detail} — you'll understand it.",
@@ -46,7 +48,8 @@
         "tr": "{detail} — vardığında, konuşarak varacaksın.",
         "uk": "{detail} — коли приїдеш, приїдеш уже зі словами.",
         "zh": "等你抵达{detail}，开口就能交流。",
-        "ar": "حين تصل إلى {detail}، ستصل وأنت تتكلم."
+        "ar": "حين تصل إلى {detail}، ستصل وأنت تتكلم.",
+        "it": "Non visiterai soltanto {detail} — lo capirai."
       }
     },
     "person": {
@@ -63,7 +66,8 @@
         "tr": "{detail} — her yeni kelime, bir gün paylaşacağınız bir kelime.",
         "uk": "{detail} — кожне нове слово це ще один крок назустріч.",
         "zh": "每学一个新词，都是将来和{detail}分享的一个词。",
-        "ar": "كل كلمة جديدة هي كلمة ستتشاركها مع {detail}."
+        "ar": "كل كلمة جديدة هي كلمة ستتشاركها مع {detail}.",
+        "it": "Ogni nuova parola è una in più da condividere con {detail}."
       },
       "mid": {
         "en": "Real sentences now — the kind {detail} will actually hear.",
@@ -78,7 +82,8 @@
         "tr": "Artık gerçek cümleler — {detail} yakında bunları duyacak.",
         "uk": "Справжні речення — саме ті, що незабаром почує {detail}.",
         "zh": "现在是真正的句子了——{detail}很快就能听到。",
-        "ar": "جمل حقيقية الآن — كلام سيصل يومًا إلى {detail}."
+        "ar": "جمل حقيقية الآن — كلام سيصل يومًا إلى {detail}.",
+        "it": "Frasi vere, ora — quelle che {detail} sentirà davvero."
       },
       "late": {
         "en": "Whole conversations with {detail} aren't far off now.",
@@ -93,7 +98,8 @@
         "tr": "{detail} — upuzun sohbetler artık çok da uzak değil.",
         "uk": "{detail} — цілі розмови вже не за горами.",
         "zh": "和{detail}完整地聊上一场，已经不远了。",
-        "ar": "محادثات كاملة مع {detail} لم تعد بعيدة."
+        "ar": "محادثات كاملة مع {detail} لم تعد بعيدة.",
+        "it": "Intere conversazioni con {detail} non sono più così lontane."
       }
     },
     "career": {
@@ -110,7 +116,8 @@
         "tr": "{detail} sessiz ama kararlı adımlarla yaklaşıyor.",
         "uk": "{detail} — тихі, впевнені кроки саме туди.",
         "zh": "朝着{detail}，安静而踏实地前进。",
-        "ar": "خطوات هادئة وثابتة نحو {detail}."
+        "ar": "خطوات هادئة وثابتة نحو {detail}.",
+        "it": "Passi silenziosi e costanti verso {detail}."
       },
       "mid": {
         "en": "This is how {detail} gets built — word by word.",
@@ -125,7 +132,8 @@
         "tr": "{detail} böyle kurulur — kelime kelime.",
         "uk": "Так і будується {detail} — слово за словом.",
         "zh": "{detail}就是这样一词一词搭起来的。",
-        "ar": "هكذا تُبنى الأشياء الكبيرة — كلمة بعد كلمة نحو {detail}."
+        "ar": "هكذا تُبنى الأشياء الكبيرة — كلمة بعد كلمة نحو {detail}.",
+        "it": "È così che si costruisce {detail} — parola dopo parola."
       },
       "late": {
         "en": "{detail} is looking less like a dream and more like a plan.",
@@ -140,7 +148,8 @@
         "tr": "{detail} artık hayalden çok bir plana benziyor.",
         "uk": "{detail} — дедалі менше мрія, дедалі більше план.",
         "zh": "{detail}看起来越来越不像梦想，越来越像计划。",
-        "ar": "{detail} — أقرب إلى خطة من حلم، يومًا بعد يوم."
+        "ar": "{detail} — أقرب إلى خطة من حلم، يومًا بعد يوم.",
+        "it": "{detail} somiglia sempre meno a un sogno e sempre più a un piano."
       }
     },
     "heritage": {
@@ -157,7 +166,8 @@
         "tr": "{detail} öğrendiğin her kelimenin içinde.",
         "uk": "{detail} — у кожному слові, яке ти вчиш.",
         "zh": "你学的每一个词里，都有{detail}。",
-        "ar": "في كل كلمة تتعلمها شيء من {detail}."
+        "ar": "في كل كلمة تتعلمها شيء من {detail}.",
+        "it": "{detail} è in ogni parola che impari."
       },
       "mid": {
         "en": "These words were always part of {detail} — now they're part of you.",
@@ -172,7 +182,8 @@
         "tr": "{detail} — bu kelimeler hep onun bir parçasıydı, şimdi senin de.",
         "uk": "Ці слова завжди були поруч — {detail} живе в них.",
         "zh": "这些词一直是{detail}的一部分——现在也成了你的。",
-        "ar": "هذه الكلمات كانت دائمًا جزءًا من {detail} — والآن تصبح جزءًا منك."
+        "ar": "هذه الكلمات كانت دائمًا جزءًا من {detail} — والآن تصبح جزءًا منك.",
+        "it": "Queste parole sono sempre state parte di {detail} — ora sono parte di te."
       },
       "late": {
         "en": "You're carrying {detail} forward, one word at a time.",
@@ -187,7 +198,8 @@
         "tr": "{detail} — kelime kelime ileriye taşıyorsun.",
         "uk": "{detail} — ти несеш це далі, слово за словом.",
         "zh": "你正把{detail}一词一词地传下去。",
-        "ar": "أنت تحمل {detail} إلى الأمام، كلمة بعد كلمة."
+        "ar": "أنت تحمل {detail} إلى الأمام، كلمة بعد كلمة.",
+        "it": "Stai portando avanti {detail}, una parola alla volta."
       }
     },
     "culture": {
@@ -204,7 +216,8 @@
         "tr": "{detail} — kendi sesi var ve sen onu duymayı öğreniyorsun.",
         "uk": "{detail} — голос, який ти вчишся чути.",
         "zh": "{detail}有自己的声音——你正在学着听懂它。",
-        "ar": "{detail} — صوت خاص، وأنت تتعلم الإصغاء إليه."
+        "ar": "{detail} — صوت خاص، وأنت تتعلم الإصغاء إليه.",
+        "it": "{detail} ha una voce tutta sua — stai imparando a sentirla."
       },
       "mid": {
         "en": "You're starting to know {detail} from the inside.",
@@ -219,7 +232,8 @@
         "tr": "{detail} — artık içeriden tanımaya başlıyorsun.",
         "uk": "{detail} — ти починаєш пізнавати це зсередини.",
         "zh": "你开始从内部认识{detail}了。",
-        "ar": "بدأت تتعرف على {detail} من الداخل."
+        "ar": "بدأت تتعرف على {detail} من الداخل.",
+        "it": "Stai iniziando a conoscere {detail} dall'interno."
       },
       "late": {
         "en": "Soon you'll take in {detail} with nothing lost in translation.",
@@ -234,7 +248,8 @@
         "tr": "{detail} — yakında araya çeviri girmeden, doğrudan seninle.",
         "uk": "Незабаром {detail} звучатиме для тебе без перекладу.",
         "zh": "很快，你就能不靠翻译去体会{detail}。",
-        "ar": "قريبًا ستعيش {detail} دون ترجمة."
+        "ar": "قريبًا ستعيش {detail} دون ترجمة.",
+        "it": "Presto vivrai {detail} senza perdere nulla nella traduzione."
       }
     },
     "fun": {
@@ -251,7 +266,8 @@
         "tr": "{n} kelime, sırf istediğin için.",
         "uk": "{n} слів — просто тому, що захотілося.",
         "zh": "{n}个词，只因为你想学。",
-        "ar": "{n} كلمة، فقط لأنك أردت ذلك."
+        "ar": "{n} كلمة، فقط لأنك أردت ذلك.",
+        "it": "{n} parole, solo perché ne avevi voglia."
       },
       "mid": {
         "en": "{lang} is turning into a genuinely good habit.",
@@ -266,7 +282,8 @@
         "tr": "{lang} gerçekten iyi bir alışkanlığa dönüşüyor.",
         "uk": "{lang} стає направду доброю звичкою.",
         "zh": "{lang}正在变成一个很好的习惯。",
-        "ar": "{lang} تتحول إلى عادة جميلة حقًا."
+        "ar": "{lang} تتحول إلى عادة جميلة حقًا.",
+        "it": "{lang} sta diventando davvero una buona abitudine."
       },
       "late": {
         "en": "{n} words deep, purely for the joy of it!",
@@ -281,7 +298,8 @@
         "tr": "{n} kelime, sırf keyfinden!",
         "uk": "{n} слів — і все це з чистого задоволення!",
         "zh": "{n}个词，纯粹为了开心！",
-        "ar": "{n} كلمة، من أجل المتعة وحدها!"
+        "ar": "{n} كلمة، من أجل المتعة وحدها!",
+        "it": "{n} parole, per puro piacere!"
       }
     },
     "generic": {
@@ -298,7 +316,8 @@
         "tr": "{n} kelime — ve kimse onları senden alamaz.",
         "uk": "{n} слів — і їх уже ніхто не забере.",
         "zh": "{n}个词——谁也拿不走。",
-        "ar": "{n} كلمة — ولا أحد يستطيع أن يأخذها منك."
+        "ar": "{n} كلمة — ولا أحد يستطيع أن يأخذها منك.",
+        "it": "{n} parole imparate — e nessuno può togliertele."
       },
       "mid": {
         "en": "It's coming together — {lang} is starting to make sense.",
@@ -313,7 +332,8 @@
         "tr": "Parçalar yerine oturuyor — {lang} anlam kazanmaya başladı.",
         "uk": "Все складається — {lang} починає набувати сенсу.",
         "zh": "一切开始串起来了——{lang}越来越有感觉。",
-        "ar": "الأمور تترابط — {lang} بدأت تتضح."
+        "ar": "الأمور تترابط — {lang} بدأت تتضح.",
+        "it": "Sta prendendo forma — {lang} inizia ad avere senso."
       },
       "late": {
         "en": "{n} words — every one of them yours.",
@@ -328,7 +348,8 @@
         "tr": "{n} kelime — her biri senin.",
         "uk": "{n} слів — і кожне з них твоє.",
         "zh": "{n}个词——每一个都是你的。",
-        "ar": "{n} كلمة — كل واحدة منها لك."
+        "ar": "{n} كلمة — كل واحدة منها لك.",
+        "it": "{n} parole — ognuna di loro tua."
       }
     }
   },
@@ -410,6 +431,12 @@
       "المواظبة هي السر كله.",
       "أحسنت — والآن دع ما تعلمته يستقر.",
       "كلمات الغد ستأتي أسهل بفضل اليوم."
+    ],
+    "it": [
+      "Un'altra sessione fatta — tutto si somma.",
+      "Presentarsi è tutto il segreto.",
+      "Ottimo lavoro; ora lascia che si depositi.",
+      "Le parole di domani verranno più facili grazie a oggi."
     ]
   }
 }

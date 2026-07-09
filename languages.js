@@ -7,6 +7,7 @@ export const AVAILABLE_LANGUAGES = [
   { code: "fr", label: "French",     nativeLabel: "Français",    short: "FR", ttsCode: "fr-FR", isRTL: false, beta: true  },
   { code: "de", label: "German",     nativeLabel: "Deutsch",     short: "DE", ttsCode: "de-DE", isRTL: false, beta: true  },
   { code: "el", label: "Greek",      nativeLabel: "Ελληνικά",    short: "EL", ttsCode: "el-GR", isRTL: false, beta: true  },
+  { code: "it", label: "Italian",    nativeLabel: "Italiano",    short: "IT", ttsCode: "it-IT", isRTL: false, beta: true  },
   { code: "ja", label: "Japanese",   nativeLabel: "日本語",       short: "JA", ttsCode: "ja-JP", isRTL: false, beta: true  },
   { code: "ko", label: "Korean",     nativeLabel: "한국어",        short: "KO", ttsCode: "ko-KR", isRTL: false, beta: true  },
   { code: "zh", label: "Mandarin",   nativeLabel: "中文",         short: "ZH", ttsCode: "zh-CN", isRTL: false, beta: true  },

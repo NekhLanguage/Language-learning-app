@@ -54,6 +54,10 @@
       "ar": {
         "title": "الفعل يتغيّر مع الفاعل",
         "body": "في {lang}، يتّخذ الفعل صيغة مختلفة حسب من يقوم بالفعل — مثل 'I eat' (أنا آكل) و'he eats' (هو يأكل) في الإنجليزية، ولكن مع كل الضمائر."
+      },
+      "it": {
+        "title": "Il verbo cambia con il soggetto",
+        "body": "In {lang} il verbo prende una forma diversa a seconda di chi compie l'azione — come «io mangio» e «lui mangia», ma per ogni persona."
       }
     },
     "zero_copula": {
@@ -108,6 +112,10 @@
       "ar": {
         "title": "لا 'يكون' في الزمن الحاضر",
         "body": "في {lang} تُحذف كلمة 'يكون' من جمل الزمن الحاضر — تمامًا كما في العربية، حيث نقول 'هو طالب' من دون فعل."
+      },
+      "it": {
+        "title": "Niente «essere» al presente",
+        "body": "In {lang} il verbo «essere» si omette al presente: si dice l'equivalente di «Questo — un telefono», senza «è»."
       }
     },
     "zh_predicate_adjective": {
@@ -162,6 +170,10 @@
       "ar": {
         "title": "很 بدل 'يكون'",
         "body": "تربط لغة الماندرين الصفات بالفاعل بـ 很 (hěn) لا بـ 是 (shì): فعبارة 他很强 تعني حرفيًا 'هو جدًّا قوي' — ولا يُقال أبدًا 他是强."
+      },
+      "it": {
+        "title": "很 al posto di «essere»",
+        "body": "In cinese, prima di un aggettivo non si usa 是 («essere») ma 很: 他很强 — letteralmente «lui molto forte»."
       }
     },
     "post_nominal_adjective": {
@@ -216,6 +228,10 @@
       "ar": {
         "title": "الصفة تأتي بعد الاسم",
         "body": "في {lang}، تأتي الكلمات الواصفة عادةً بعد الشيء الذي تصفه — تمامًا كما في العربية: 'بيت كبير' لا 'كبير بيت'."
+      },
+      "it": {
+        "title": "L'aggettivo dopo il nome",
+        "body": "In {lang} l'aggettivo di solito segue il nome: «una casa grande», non «una grande casa» come in inglese."
       }
     },
     "french_elision": {
@@ -270,6 +286,10 @@
       "ar": {
         "title": "الكلمات الصغيرة تندمج",
         "body": "في الفرنسية، تفقد الكلمات الصغيرة مثل je وle وla حرف العلّة فيها قبل صوت علّة: je aime → j'aime، وla eau → l'eau."
+      },
+      "it": {
+        "title": "L'elisione",
+        "body": "In francese alcune paroline perdono la vocale davanti a un'altra vocale: je aime → j'aime, le eau → l'eau. Succede anche in italiano: l'acqua."
       }
     },
     "french_possessive_agreement": {
@@ -324,6 +344,10 @@
       "ar": {
         "title": "'لي/له/لها' تتبع الشيء المملوك",
         "body": "في الفرنسية، كلمات مثل mon/ma ('لي') تتبع جنس الشيء المملوك لا جنس المالك: sa fille 'ابنته هو'، وson père 'أبوها هي'."
+      },
+      "it": {
+        "title": "Il possessivo concorda con la cosa",
+        "body": "In francese «suo/sua» concorda con la cosa posseduta, non con chi la possiede: sa fille (sua figlia), son père (suo padre) — come in italiano."
       }
     },
     "gender_agreement": {
@@ -378,6 +402,10 @@
       "ar": {
         "title": "الكلمات تتطابق في الجنس",
         "body": "في {lang}، لكل اسم جنس نحوي، والكلمات التي تصفه تغيّر شكلها لتطابقه — فالاسم المؤنث يأخذ الصيغة المؤنثة."
+      },
+      "it": {
+        "title": "L'accordo di genere",
+        "body": "In {lang} l'aggettivo concorda con il genere del nome — come in italiano «casa bianca» ma «libro bianco»."
       }
     },
     "sov_word_order": {
@@ -432,6 +460,10 @@
       "ar": {
         "title": "الفعل يأتي في النهاية",
         "body": "في {lang} يأتي الفعل في نهاية الجملة: 'أنا الطعامَ آكل' بدلًا من 'أنا آكل الطعام'."
+      },
+      "it": {
+        "title": "Il verbo alla fine",
+        "body": "In {lang} il verbo va alla fine della frase: «Io acqua bevo» invece di «Io bevo acqua»."
       }
     },
     "vso_word_order": {
@@ -486,6 +518,10 @@
       "ar": {
         "title": "الفعل يأتي أولًا",
         "body": "في {lang} تبدأ الجملة غالبًا بالفعل — تمامًا كما في العربية الفصحى: 'يأكل الولدُ الطعامَ' بدلًا من 'الولدُ يأكل الطعامَ'."
+      },
+      "it": {
+        "title": "Il verbo all'inizio",
+        "body": "In {lang} la frase può iniziare con il verbo: «Beve lui acqua» invece di «Lui beve acqua»."
       }
     },
     "indefinite_article": {
@@ -540,6 +576,10 @@
       "ar": {
         "title": "اختيار الكلمة الدالة على 'واحد'",
         "body": "الكلمة الصغيرة التي تعني 'واحدًا' (مثل 'a' الإنجليزية) تتغيّر مع الاسم — في الإنجليزية حسب الصوت (a book, an apple)، وفي {lang} حسب جنس الاسم أو شكله."
+      },
+      "it": {
+        "title": "Scegliere la parola per «un»",
+        "body": "La parolina per «un» cambia con il nome — in inglese secondo il suono (a book, an apple), in {lang} secondo il genere o la forma del nome."
       }
     },
     "ja_counter": {
@@ -594,6 +634,10 @@
       "ar": {
         "title": "العدّ بكلمات العدّ",
         "body": "في اليابانية، ترتبط الأرقام بالأسماء عبر كلمة عدّ متبوعة بـ の: فعبارة 二つの食べ物 تعني حرفيًا 'قطعتان من الطعام'."
+      },
+      "it": {
+        "title": "Contare con i classificatori",
+        "body": "In giapponese i numeri si legano ai nomi con un classificatore e の: 二つの食べ物 — letteralmente «due-pezzi di cibo»."
       }
     },
     "accusative_object": {
@@ -648,6 +692,10 @@
       "ar": {
         "title": "نهاية الاسم تُظهر دوره",
         "body": "لا توجد في {lang} كلمة تقابل 'a' أو 'the' — نهاية الاسم هي التي تقوم بهذا الدور. الاسم الذي يقع عليه الفعل تتغيّر نهايته: книга (كتاب) تصبح Я читаю книгу (أقرأ كتابًا)."
+      },
+      "it": {
+        "title": "La desinenza del nome mostra il suo ruolo",
+        "body": "In {lang} non c'è una parola per «un» o «il» — quel lavoro lo fa la desinenza del nome. Il nome che riceve l'azione cambia desinenza: книга diventa Я читаю книгу (io leggo un libro)."
       }
     },
     "prepositional_case": {
@@ -702,6 +750,10 @@
       "ar": {
         "title": "الكلمات الصغيرة تغيّر النهاية",
         "body": "في {lang}، يغيّر حرف الجر نهاية الكلمة التي تليه: на цьому (على هذا)، перед книгою (أمام الكتاب)، до будинку (إلى المنزل). النهاية تُظهر علاقة الكلمة ببقية الجملة — كما يعمل الجرّ في العربية."
+      },
+      "it": {
+        "title": "Le paroline cambiano la desinenza",
+        "body": "In {lang} una preposizione cambia la desinenza della parola che la segue: на цьому (su questo), перед книгою (davanti al libro), до будинку (verso la casa)."
       }
     },
     "definite_article": {
@@ -756,6 +808,10 @@
       "ar": {
         "title": "الحديث عن شيء محدد",
         "body": "عندما تصف الجملة شيئًا محددًا، تضع {lang} عليه علامة التعريف — مثل 'الـ' في العربية: The book is red (الكتاب أحمر)، وليس 'a book' (كتابٌ ما)."
+      },
+      "it": {
+        "title": "Parlare di una cosa precisa",
+        "body": "Quando la frase descrive una cosa precisa, {lang} la segnala con l'articolo determinativo — come «il/la» in italiano: The book is red (Il libro è rosso), non «un libro»."
       }
     }
   }

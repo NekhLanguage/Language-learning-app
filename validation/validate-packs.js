@@ -18,7 +18,7 @@ const ROOT = path.join(__dirname, '..');
 
 // Languages where countable nouns should carry a gender field.
 // Mirrors validate-structure.js, plus French which is also gendered.
-const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es']);
+const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es', 'it']);
 
 // Languages where EVERY noun (countable or not) must carry a gender field,
 // because adjectives agree with the noun's gender (genderedFormOf in app.js
@@ -33,7 +33,7 @@ const FULL_GENDER_LANGS = new Set(['uk', 'el', 'ar']);
 // instead of «чаклує»). Require the full present paradigm for these.
 // en needs only base + 3_singular; no uses a uniform `present`/base; and
 // ja/ko/zh do not inflect verbs by person, so base alone is correct.
-const VERB_PERSON_LANGS = new Set(['es', 'fr', 'de', 'pt', 'uk', 'ar', 'el', 'tr']);
+const VERB_PERSON_LANGS = new Set(['es', 'fr', 'de', 'pt', 'uk', 'ar', 'el', 'tr', 'it']);
 const PERSON_PARADIGM_KEYS = ['1_singular', '2_singular', '3_singular', '1_plural', '2_plural', '3_plural'];
 
 // ─── Canonical language list (sourced from languages.js) ─────────────────────

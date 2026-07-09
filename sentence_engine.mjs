@@ -237,6 +237,11 @@ function ukAccusativeNoun(cid, base) {
 // quantifier, number: «я маю мою книгу», «я читаю лише книгу») — is a
 // non-copular verb. Predicate nouns after BE («це книга») stay nominative.
 const OBJECT_MODIFIER_TYPES = new Set(["adjective", "quantifier", "number"]);
+
+// Concept metadata of the word directly before ordered[idx] (or null).
+function prevMetaEarly(ordered, idx) {
+  return idx > 0 ? vocab().concepts?.[ordered[idx - 1]] ?? null : null;
+}
 function isDirectObjectPosition(ordered, idx) {
   let j = idx - 1;
   while (j >= 0) {
@@ -351,11 +356,29 @@ function definiteNounPhrase(lang, cid) {
     if (base.endsWith("e")) return base + "n";
     return base + "en";
   }
+  if (lang === "it") {
+    if (!g && !plural) return base;
+    noteRule("definite_article");
+    if (plural) {
+      if (g === "f") return "le " + base;
+      return (IT_LO_INITIAL.test(base) || IT_VOWEL_INITIAL.test(base) ? "gli " : "i ") + base;
+    }
+    if (IT_VOWEL_INITIAL.test(base)) return "l'" + base;
+    if (g === "f") return "la " + base;
+    return (IT_LO_INITIAL.test(base) ? "lo " : "il ") + base;
+  }
   return base;
 }
 
 // Languages whose nounPhrase adds an indefinite article (the branches below).
-const ARTICLE_LANGS = new Set(["en", "pt", "no", "de", "el", "es", "fr"]);
+const ARTICLE_LANGS = new Set(["en", "pt", "no", "de", "el", "es", "fr", "it"]);
+
+// Italian article allomorphy is phonological: masculine takes lo/gli/uno
+// before s+consonant, z, gn, ps, pn, x, y («lo zaino», «gli gnocchi»,
+// «uno sport»); l'/un' elide before a vowel («l'ora», «un'amica»); plain
+// il/i/un/una elsewhere.
+const IT_LO_INITIAL = /^(s[bcdfghj-np-tv-z]|z|gn|ps|pn|x|y)/i;
+const IT_VOWEL_INITIAL = /^[aeiouàèéìíòóùú]/i;
 
 // `opts.plural`: when true, render plural form and drop the indefinite
 // article. Used when the predicate noun follows a plural subject pronoun
@@ -382,6 +405,17 @@ function nounPhrase(lang, cid, opts = {}) {
   // both opts.plural and the article path return it unchanged. noArticle
   // marks per-language article-less usage on an otherwise ordinary noun
   // ("I eat breakfast", "Ich esse Frühstück" — but «le petit-déjeuner»).
+  // Italian instead uses the plural partitive («Lei ha delle scarpe») and
+  // marks a few definite-object nouns with `definite` («mangio la
+  // colazione»).
+  if (lang === "it" && entry.pluralOnly && entry.gender) {
+    noteRule("indefinite_article");
+    return (entry.gender === "f" ? "delle "
+      : (IT_LO_INITIAL.test(base) || IT_VOWEL_INITIAL.test(base)) ? "degli " : "dei ") + base;
+  }
+  if (lang === "it" && entry.definite) {
+    return definiteNounPhrase(lang, cid);
+  }
   if (entry.pluralOnly || entry.noArticle) return base;
 
   if (opts.plural) {
@@ -448,6 +482,15 @@ function nounPhrase(lang, cid, opts = {}) {
     if (!entry.gender) return base;
     noteRule("indefinite_article");
     return (entry.gender === "f" ? "une " : "un ") + base;
+  }
+
+  if (lang === "it") {
+    if (!entry.gender) return base;
+    noteRule("indefinite_article");
+    if (entry.gender === "f") {
+      return IT_VOWEL_INITIAL.test(base) ? "un'" + base : "una " + base;
+    }
+    return (IT_LO_INITIAL.test(base) ? "uno " : "un ") + base;
   }
 
   return base;
@@ -924,6 +967,25 @@ function finalizeSentence(lang, sentence) {
     s = s.replace(new RegExp(`^В\\s+(?=[${C}])`), "У ");
     return s;
   }
+  // Italian preposition + definite-article contractions, applied to the
+  // finished string (mirrors frenchElision): «accanto a il telefono» →
+  // «accanto al telefono», «a la sua stanza» → «alla sua stanza».
+  if (lang === "it") {
+    const HEADS = { a: "a", da: "da", su: "su", in: "ne", di: "de" };
+    const TAILS = { il: "l", lo: "llo", la: "lla", "l'": "ll'", i: "i", gli: "gli", le: "lle" };
+    return sentence.replace(
+      /\b(a|da|su|in|di)\s+(il|lo|la|l'|i|gli|le)(\s|$)/gi,
+      (m, prep, art, sp) => {
+        const head = HEADS[prep.toLowerCase()];
+        const tail = TAILS[art.toLowerCase()];
+        if (!head || !tail) return m;
+        // in+il → nel (not neil); di+il → del
+        const joined = (head === "ne" || head === "de") && tail === "l" ? head + "l"
+          : head + tail;
+        return joined + (tail === "ll'" ? "" : sp);
+      }
+    );
+  }
   // CJK text takes no inter-word spaces and a full-width stop. The generic
   // assembly paths join words with spaces and end with "." — normalize both
   // (ja's particle path emits no terminal punctuation at all).
@@ -983,11 +1045,20 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
       noun = declined;
     }
   }
-  return `${genderedFormOf(lang, possessiveCid, nounCid)} ${noun}`;
+  const possessive = genderedFormOf(lang, possessiveCid, nounCid);
+  // Italian possessives take the definite article («il tuo telefono») —
+  // except before singular family nouns («con sua figlia»).
+  if (lang === "it") {
+    const nounEntry = vocab().languages?.it?.forms?.[nounCid];
+    if (!nounEntry?.noArticleWithPossessive) {
+      return `${nounEntry?.gender === "f" ? "la" : "il"} ${possessive} ${noun}`;
+    }
+  }
+  return `${possessive} ${noun}`;
 }
 
 // Languages where adjective follows the noun (e.g. "casa grande")
-const POST_ADJECTIVE_LANGS = new Set(["pt", "ar"]);
+const POST_ADJECTIVE_LANGS = new Set(["pt", "ar", "it"]);
 
 // Languages that omit the present-tense copula. Ukrainian (and Russian-style
 // Slavic) drop "to be" in the present ("Це телефон", not "Це є телефон"),
@@ -1137,14 +1208,16 @@ function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid
 
   return [subject, verb, companion].filter(Boolean).join(" ");
 }
-function buildComplexClauseSentence(lang, linkerCid, clauseA, clauseB, subordinateFirst = false) {
+function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subordinateFirst = false) {
   const linker = formOf(lang, linkerCid);
 
   if (subordinateFirst) {
-    return capitalizeFirst(`${linker} ${clauseA}, ${clauseB}.`);
+    return capitalizeFirst(`${linker} ${subClause}, ${mainClause}.`);
   }
 
-  return capitalizeFirst(`${clauseA} ${linker} ${clauseB}.`);
+  // Trailing subordinate clause: the MAIN clause leads ("He eats dinner
+  // with his mom because he is home"), the linker + subordinate follow.
+  return capitalizeFirst(`${mainClause} ${linker} ${subClause}.`);
 }
 // `sharedChoices` (optional) is a per-noun cache of randomly-injected
 // modifiers, keyed by noun cid. When two languages render the same template
@@ -1336,6 +1409,24 @@ if (tpl.structure?.type === "complex_clause") {
     return definiteNounPhrase(lang, cid);
   }
 
+  // A noun singled out by a limiting quantifier is definite: "I read only
+  // THE book", «leggo solo il libro» — the indefinite reading contradicts
+  // the exclusivity ONLY asserts. Article languages only: case languages
+  // handle the same noun through their case logic below.
+  if (ARTICLE_LANGS.has(lang) &&
+      prevMetaEarly(ordered, idx)?.semantic_role === "quantity_limit") {
+    return definiteNounPhrase(lang, cid);
+  }
+
+  // Italian prepositional objects take the definite article — the
+  // contraction pass then fuses them («a la casa» → «alla casa»). Nouns
+  // flagged noArticle stay bare («a mano», «a casa»).
+  if (lang === "it" && idx > 0 &&
+      vocab().concepts[ordered[idx - 1]]?.type === "glue" &&
+      !vocab().languages?.it?.forms?.[cid]?.noArticle) {
+    return definiteNounPhrase(lang, cid);
+  }
+
   // If the template itself has a possessive directly before this noun, suppress the article.
   const precededByPossessive = idx > 0 &&
     vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive";
@@ -1459,13 +1550,15 @@ if (tpl.structure?.type === "complex_clause") {
   // The template's authored surface knows inflections the engine cannot
   // derive («додому», "eve"). For a plain noun (no injected modifier) whose
   // authored surface differs from the dictionary form, the authored surface
-  // IS the correct rendering. Limited to article-less languages — surfaces
-  // are stored bare ("Arbeit", not "eine Arbeit"), so in article languages
-  // preferring them would silently drop the article.
-  if (!ARTICLE_LANGS.has(lang) && !adjectiveWord && !numberWord && !useCopularPlural) {
+  // IS the correct rendering. In article languages surfaces are stored bare
+  // ("Arbeit", not "eine Arbeit"), so preferring a different lexeme would
+  // silently drop the article — only surfaces that visibly extend the
+  // dictionary form («a casa» ⊃ «casa») are safe to prefer there.
+  if (!adjectiveWord && !numberWord && !useCopularPlural) {
     const authoredNounSurface = tpl.surface?.[lang]?.[cid];
     if (typeof authoredNounSurface === "string" &&
-        authoredNounSurface !== formOf(lang, cid)) {
+        authoredNounSurface !== formOf(lang, cid) &&
+        (!ARTICLE_LANGS.has(lang) || authoredNounSurface.includes(formOf(lang, cid)))) {
       return authoredNounSurface;
     }
   }
@@ -1645,6 +1738,13 @@ if (tpl.structure?.type === "complex_clause") {
           vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
         form = ukFeminineAccusative(form);
       }
+      // Italian keeps the indefinite article before a determiner-like
+      // quantifier: «un altro libro», «un'altra casa».
+      if (lang === "it" && meta.semantic_role === "quantity_additional") {
+        const g = vocab().languages?.it?.forms?.[nextCid]?.gender;
+        form = g === "f" && IT_VOWEL_INITIAL.test(form) ? "un'" + form
+          : (g === "f" ? "una " : "un ") + form;
+      }
       return form;
     }
 
@@ -1663,6 +1763,15 @@ if (tpl.structure?.type === "complex_clause") {
             !pluralAgreement &&
             vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
           form = ukFeminineAccusative(form);
+        }
+        // Italian possessives take the definite article («la mia mano»,
+        // «il tuo telefono») — except before singular family nouns
+        // («con sua figlia»), flagged in the data.
+        if (lang === "it") {
+          const nounEntry = vocab().languages?.it?.forms?.[nextCid];
+          if (!nounEntry?.noArticleWithPossessive) {
+            form = (nounEntry?.gender === "f" ? "la " : "il ") + form;
+          }
         }
         return form;
       }

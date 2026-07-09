@@ -1,0 +1,647 @@
+{
+  "I_EAT_FOOD": {
+    "render": "Io mangio cibo.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "EAT": "mangio",
+      "FOOD": "cibo"
+    },
+    "questions": {
+      "pronoun": "Chi mangia cibo?",
+      "verb": "Che cosa faccio?",
+      "object": "Che cosa mangio?"
+    }
+  },
+  "HE_READ_BOOK": {
+    "render": "Lui legge un libro.",
+    "surface": {
+      "HE": "lui",
+      "READ": "legge",
+      "BOOK": "libro"
+    },
+    "questions": {
+      "pronoun": "Chi legge un libro?",
+      "verb": "Che cosa fa lui?",
+      "object": "Che cosa legge lui?"
+    }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "Lei vede un telefono.",
+    "surface": {
+      "SHE": "lei",
+      "SEE": "vede",
+      "PHONE": "telefono"
+    },
+    "questions": {
+      "pronoun": "Chi vede un telefono?",
+      "verb": "Che cosa fa lei?",
+      "object": "Che cosa vede lei?"
+    }
+  },
+  "WE_HAVE_JOB": {
+    "render": "Noi abbiamo un lavoro.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "noi",
+      "HAVE": "abbiamo",
+      "JOB": "lavoro"
+    },
+    "questions": {
+      "pronoun": "Chi ha un lavoro?",
+      "verb": "Che cosa facciamo?",
+      "object": "Che cosa abbiamo?"
+    }
+  },
+  "I_DRINK_WATER": {
+    "render": "Io bevo acqua.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "DRINK": "bevo",
+      "WATER": "acqua"
+    },
+    "questions": {
+      "pronoun": "Chi beve acqua?",
+      "verb": "Che cosa faccio?",
+      "object": "Che cosa bevo?"
+    }
+  },
+  "YOU_READ_BOOK": {
+    "render": "Tu leggi un libro.",
+    "surface": {
+      "SECOND_PERSON": "tu",
+      "READ": "leggi",
+      "BOOK": "libro"
+    },
+    "questions": {
+      "pronoun": "Chi legge un libro?",
+      "verb": "Che cosa fai?",
+      "object": "Che cosa leggi?"
+    }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "Voi bevete acqua.",
+    "surface": {
+      "SECOND_PERSON_PLURAL": "voi",
+      "DRINK": "bevete",
+      "WATER": "acqua"
+    },
+    "questions": {
+      "pronoun": "Chi beve acqua?",
+      "verb": "Che cosa fate?",
+      "object": "Che cosa bevete?"
+    }
+  },
+  "THEY_SLEEP": {
+    "render": "Loro dormono.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "loro",
+      "SLEEP": "dormono"
+    },
+    "questions": {
+      "pronoun": "Chi dorme?",
+      "verb": "Che cosa fanno?"
+    }
+  },
+  "I_AM_MAN": {
+    "render": "Io sono un uomo.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "BE": "sono",
+      "MAN": "uomo"
+    },
+    "questions": {
+      "verb": "Che cosa sono?",
+      "object": "Che cosa sono?"
+    }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "Lei è una donna.",
+    "surface": {
+      "SHE": "lei",
+      "BE": "è",
+      "WOMAN": "donna"
+    },
+    "questions": {
+      "pronoun": "Chi è una donna?",
+      "verb": "Che cos'è lei?",
+      "object": "Che cos'è lei?"
+    }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "Tu sei una ragazza.",
+    "surface": {
+      "SECOND_PERSON": "tu",
+      "BE": "sei",
+      "GIRL": "ragazza"
+    },
+    "questions": {
+      "pronoun": "Chi è una ragazza?",
+      "verb": "Che cosa sei?",
+      "object": "Che cosa sei?"
+    }
+  },
+  "HE_IS_BOY": {
+    "render": "Lui è un ragazzo.",
+    "surface": {
+      "HE": "lui",
+      "BE": "è",
+      "BOY": "ragazzo"
+    },
+    "questions": {
+      "pronoun": "Chi è un ragazzo?",
+      "verb": "Che cos'è lui?",
+      "object": "Che cos'è lui?"
+    }
+  },
+  "WE_STOP_EATING": {
+    "render": "Noi smettiamo di mangiare.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "noi",
+      "STOP": "smettiamo di",
+      "EAT": "mangiare"
+    },
+    "questions": {
+      "pronoun": "Chi smette di mangiare?",
+      "verb": "Che cosa facciamo?"
+    }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "Loro iniziano a dormire.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "loro",
+      "START": "iniziano",
+      "SLEEP": "a dormire"
+    },
+    "questions": {
+      "pronoun": "Chi inizia a dormire?",
+      "verb": "Che cosa fanno?"
+    }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "Lui vede una camicia.",
+    "surface": {
+      "HE": "lui",
+      "SEE": "vede",
+      "SHIRT": "camicia"
+    },
+    "questions": {
+      "pronoun": "Chi vede una camicia?",
+      "verb": "Che cosa fa lui?",
+      "object": "Che cosa vede lui?"
+    }
+  },
+  "I_GO_HOME": {
+    "render": "Io vado a casa.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "GO": "vado",
+      "HOME": "a casa"
+    },
+    "questions": {
+      "pronoun": "Chi va a casa?",
+      "verb": "Che cosa faccio?",
+      "object": "Dove vado?"
+    }
+  },
+  "I_USE_PHONE": {
+    "render": "Io uso un telefono.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "USE": "uso",
+      "PHONE": "telefono"
+    },
+    "questions": {
+      "pronoun": "Chi usa un telefono?",
+      "verb": "Che cosa faccio?",
+      "object": "Che cosa uso?"
+    }
+  },
+  "I_GET_BOOK": {
+    "render": "Io prendo un libro.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "GET": "prendo",
+      "BOOK": "libro"
+    },
+    "questions": {
+      "pronoun": "Chi prende un libro?",
+      "verb": "Che cosa faccio?",
+      "object": "Che cosa prendo?"
+    }
+  },
+  "I_SEE_HOUSE": {
+    "render": "Io vedo una casa.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "SEE": "vedo",
+      "HOUSE": "casa"
+    },
+    "questions": {
+      "pronoun": "Chi vede una casa?",
+      "verb": "Che cosa faccio?",
+      "object": "Che cosa vedo?"
+    }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "Lei vede una stanza.",
+    "surface": {
+      "SHE": "lei",
+      "SEE": "vede",
+      "ROOM": "stanza"
+    },
+    "questions": {
+      "pronoun": "Chi vede una stanza?",
+      "verb": "Che cosa fa lei?",
+      "object": "Che cosa vede lei?"
+    }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "Io ho una camicia.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "HAVE": "ho",
+      "SHIRT": "camicia"
+    },
+    "questions": {
+      "pronoun": "Chi ha una camicia?",
+      "verb": "Che cosa faccio?",
+      "object": "Che cosa ho?"
+    }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "Lei ha delle scarpe.",
+    "surface": {
+      "SHE": "lei",
+      "HAVE": "ha",
+      "SHOES": "scarpe"
+    },
+    "questions": {
+      "pronoun": "Chi ha delle scarpe?",
+      "verb": "Che cosa fa lei?",
+      "object": "Che cosa ha lei?"
+    }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "Loro hanno dei pantaloni.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "loro",
+      "HAVE": "hanno",
+      "PANTS": "pantaloni"
+    }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "Noi abbiamo dei vestiti.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "noi",
+      "HAVE": "abbiamo",
+      "CLOTHES": "vestiti"
+    }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "Io mangio la colazione.",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "io",
+      "EAT": "mangio",
+      "BREAKFAST": "colazione"
+    }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "Noi mangiamo il pranzo.",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "noi",
+      "EAT": "mangiamo",
+      "LUNCH": "pranzo"
+    }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "Loro mangiano la cena.",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "loro",
+      "EAT": "mangiano",
+      "DINNER": "cena"
+    }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "Questa è la mia mano.",
+    "surface": {
+      "THIS": "questa",
+      "BE": "è",
+      "MY": "mia",
+      "HAND": "mano"
+    }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "Questa è la tua testa.",
+    "surface": {
+      "THIS": "questa",
+      "BE": "è",
+      "YOUR": "tua",
+      "HEAD": "testa"
+    }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "Quello è il mio braccio.",
+    "surface": {
+      "THAT": "quello",
+      "BE": "è",
+      "MY": "mio",
+      "ARM": "braccio"
+    }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "Quella è la tua gamba.",
+    "surface": {
+      "THAT": "quella",
+      "BE": "è",
+      "YOUR": "tua",
+      "LEG": "gamba"
+    }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "Lei è la mia mamma.",
+    "surface": {
+      "SHE": "lei",
+      "BE": "è",
+      "MY": "mia",
+      "MOM": "mamma"
+    }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "Lui è il mio papà.",
+    "surface": {
+      "HE": "lui",
+      "BE": "è",
+      "MY": "mio",
+      "DAD": "papà"
+    }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "Questa è la mia mano e questa è la tua testa."
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "Lei è la mia mamma e lui è il mio papà."
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "Io mangio e bevo."
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "Lui mangia la colazione ma non il pranzo."
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "Lei va nella sua stanza."
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "Questo è un buon libro."
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "È quello il tuo telefono?"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "Lui mangia la cena con la sua mamma perché è a casa."
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "Se lui è a casa, mangia con sua figlia."
+  },
+  "BOOK_IS_RED": {
+    "render": "Il libro è rosso."
+  },
+  "PHONE_IS_BLUE": {
+    "render": "Il telefono è blu."
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "La camicia è verde."
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "La casa è bianca."
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "I pantaloni sono neri."
+  },
+  "I_EAT_TODAY": {
+    "render": "Io mangio oggi."
+  },
+  "HE_READS_TODAY": {
+    "render": "Lui legge oggi."
+  },
+  "WE_GO_TOMORROW": {
+    "render": "Noi andiamo domani."
+  },
+  "I_READ_NOW": {
+    "render": "Io leggo adesso."
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "Lui ha lavorato ieri."
+  },
+  "WHO_EATS": {
+    "render": "Chi mangia?"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "Perché vai?"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "Quando mangiamo?"
+  },
+  "I_EAT_BEFORE": {
+    "render": "Io mangio prima."
+  },
+  "WE_GO_AFTER": {
+    "render": "Noi andiamo dopo."
+  },
+  "WHERE_IS_BOOK": {
+    "render": "Dov'è il libro?"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "Come leggi?"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "Che cosa ho?"
+  },
+  "WHICH_BOOK": {
+    "render": "Quale libro?"
+  },
+  "WE_EAT_ALL": {
+    "render": "Noi mangiamo tutto."
+  },
+  "BOOK_ON_THIS": {
+    "render": "Il libro è su questo."
+  },
+  "PHONE_IN_THAT": {
+    "render": "Il telefono è in quello."
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "Le scarpe sono sotto questo."
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "Il libro è accanto al telefono."
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "Il telefono è davanti al libro."
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "Il libro è dietro il telefono."
+  },
+  "PHONE_OFF_THIS": {
+    "render": "Il telefono è fuori da questo."
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "Il libro è tra questo e quello."
+  },
+  "SHOES_IN_THIS": {
+    "render": "Le scarpe sono in questo."
+  },
+  "PHONE_ON_THAT": {
+    "render": "Il telefono è su quello."
+  },
+  "WE_GO_BACK": {
+    "render": "Noi torniamo indietro."
+  },
+  "I_GO_OUT": {
+    "render": "Io esco."
+  },
+  "WE_GO_NORTH": {
+    "render": "Noi andiamo a nord."
+  },
+  "WE_GO_SOUTH": {
+    "render": "Noi andiamo a sud."
+  },
+  "WE_GO_EAST": {
+    "render": "Noi andiamo a est."
+  },
+  "WE_GO_WEST": {
+    "render": "Noi andiamo a ovest."
+  },
+  "BOOK_IS_LONG": {
+    "render": "Il libro è lungo."
+  },
+  "DAY_IS_SHORT": {
+    "render": "Il giorno è corto."
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "Il libro è pesante."
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "Il telefono è leggero."
+  },
+  "NIGHT_IS_DARK": {
+    "render": "La notte è buia."
+  },
+  "BOY_IS_YOUNG": {
+    "render": "Il ragazzo è giovane."
+  },
+  "BOOK_IS_EASY": {
+    "render": "Il libro è facile."
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "Il libro è difficile."
+  },
+  "THIS_IS_RIGHT": {
+    "render": "Questo è a destra."
+  },
+  "THIS_IS_LEFT": {
+    "render": "Questo è a sinistra."
+  },
+  "THIS_IS_CORRECT": {
+    "render": "Questo è corretto."
+  },
+  "THIS_IS_WRONG": {
+    "render": "Questo è sbagliato."
+  },
+  "THIS_IS_NICE": {
+    "render": "Questo è bello."
+  },
+  "YEAR_IS_LONG": {
+    "render": "L'anno è lungo."
+  },
+  "MONTH_IS_LONG": {
+    "render": "Il mese è lungo."
+  },
+  "WEEK_IS_SHORT": {
+    "render": "La settimana è corta."
+  },
+  "DAY_IS_LONG": {
+    "render": "Il giorno è lungo."
+  },
+  "HOUR_IS_SHORT": {
+    "render": "L'ora è corta."
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "Il minuto è corto."
+  },
+  "SECOND_IS_SHORT": {
+    "render": "Il secondo è corto."
+  },
+  "MORNING_IS_GOOD": {
+    "render": "La mattina è buona."
+  },
+  "NIGHT_IS_BAD": {
+    "render": "La notte è cattiva."
+  },
+  "WINTER_IS_COLD": {
+    "render": "L'inverno è freddo."
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "L'estate è buona."
+  },
+  "SPRING_IS_NEW": {
+    "render": "La primavera è nuova."
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "L'autunno è vecchio."
+  },
+  "THIS_IS_THING": {
+    "render": "Questa è una cosa."
+  },
+  "PLEASE_READ": {
+    "render": "Per favore, leggi."
+  },
+  "MAYBE_I_GO": {
+    "render": "Forse vado."
+  },
+  "THANKS": {
+    "render": "Grazie."
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "Io vado a prendere del cibo."
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "Io ho qualcosa."
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "Io ho un altro libro."
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "Io leggo solo il libro."
+  },
+  "I_GO_FROM_HOME": {
+    "render": "Io vado via da casa."
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "Io vado alla casa."
+  },
+  "I_GO_AROUND": {
+    "render": "Io vado in giro."
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "Io faccio questo a mano."
+  },
+  "YES_I_DO": {
+    "render": "Sì, lo faccio."
+  },
+  "NO_I_DO_NOT": {
+    "render": "No, non lo faccio."
+  },
+  "THIS_IS_MINE": {
+    "render": "Questo è mio."
+  },
+  "THIS_IS_YOURS": {
+    "render": "Questo è tuo."
+  },
+  "THIS_IS_HERS": {
+    "render": "Questo è suo."
+  },
+  "THIS_IS_OURS": {
+    "render": "Questo è nostro."
+  },
+  "THIS_IS_THEIRS": {
+    "render": "Questo è loro."
+  }
+}

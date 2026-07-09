@@ -74,7 +74,7 @@
     "milestoneReasonCulture": "{detail}، بصوتها الخاص.",
     "milestoneReasonFun": "وأنت بدأت للتو."
   },
-  "hubNames": {
+  "hubNames": { "it": "الإيطالية",
     "en": "الإنجليزية",
     "pt": "البرتغالية",
     "ja": "اليابانية",
