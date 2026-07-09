@@ -595,6 +595,60 @@
         "title": "العدّ بكلمات العدّ",
         "body": "في اليابانية، ترتبط الأرقام بالأسماء عبر كلمة عدّ متبوعة بـ の: فعبارة 二つの食べ物 تعني حرفيًا 'قطعتان من الطعام'."
       }
+    },
+    "accusative_object": {
+      "en": {
+        "title": "The noun's ending shows its role",
+        "body": "{lang} has no word for 'a' or 'the' — the noun's ending does that work instead. A noun receiving the action changes its ending: книга (a book) becomes Я читаю книгу (I read a book)."
+      },
+      "pt": {
+        "title": "A terminação do substantivo mostra seu papel",
+        "body": "Em {lang} não existe palavra para 'um' ou 'o' — é a terminação do substantivo que faz esse trabalho. O substantivo que recebe a ação muda de terminação: книга (um livro) vira Я читаю книгу (eu leio um livro)."
+      },
+      "fr": {
+        "title": "La terminaison du nom montre son rôle",
+        "body": "En {lang}, il n'y a pas de mot pour 'un' ou 'le' — c'est la terminaison du nom qui joue ce rôle. Le nom qui reçoit l'action change de terminaison : книга (un livre) devient Я читаю книгу (je lis un livre)."
+      },
+      "de": {
+        "title": "Die Endung des Substantivs zeigt seine Rolle",
+        "body": "In {lang} gibt es kein Wort für 'ein' oder 'der' — diese Arbeit übernimmt die Endung des Substantivs. Ein Substantiv, das die Handlung empfängt, ändert seine Endung: книга (ein Buch) wird zu Я читаю книгу (ich lese ein Buch)."
+      },
+      "el": {
+        "title": "Η κατάληξη του ουσιαστικού δείχνει τον ρόλο του",
+        "body": "Στα {lang} δεν υπάρχει λέξη για το 'ένα' ή το 'το' — αυτή τη δουλειά την κάνει η κατάληξη του ουσιαστικού. Το ουσιαστικό που δέχεται την ενέργεια αλλάζει κατάληξη: το книга (ένα βιβλίο) γίνεται Я читаю книгу (διαβάζω ένα βιβλίο)."
+      },
+      "es": {
+        "title": "La terminación del sustantivo muestra su papel",
+        "body": "En {lang} no hay palabra para 'un' o 'el' — ese trabajo lo hace la terminación del sustantivo. El sustantivo que recibe la acción cambia su terminación: книга (un libro) se convierte en Я читаю книгу (leo un libro)."
+      },
+      "ja": {
+        "title": "名詞の語尾が役割を示す",
+        "body": "{lang}には「a」や「the」にあたる言葉がなく、名詞の語尾がその役割を果たします。動作を受ける名詞は語尾が変わります：книга（本）は Я читаю книгу（私は本を読む）になります。日本語の「を」に似た働きです。"
+      },
+      "ko": {
+        "title": "명사의 어미가 역할을 나타내요",
+        "body": "{lang}에는 'a'나 'the'에 해당하는 말이 없고, 명사의 어미가 그 역할을 해요. 동작을 받는 명사는 어미가 바뀌어요: книга(책)는 Я читаю книгу(나는 책을 읽어요)가 돼요. 한국어의 '을/를'과 비슷해요."
+      },
+      "no": {
+        "title": "Endelsen på substantivet viser rollen",
+        "body": "{lang} har ikke noe ord for 'en' eller 'den' — den jobben gjør endelsen på substantivet. Et substantiv som mottar handlingen endrer endelse: книга (en bok) blir Я читаю книгу (jeg leser en bok)."
+      },
+      "tr": {
+        "title": "İsmin eki rolünü gösterir",
+        "body": "{lang} dilinde 'bir' veya 'the' için ayrı bir kelime yoktur — bu işi ismin eki yapar. Eylemi alan isim ekini değiştirir: книга (kitap), Я читаю книгу (kitabı okuyorum) olur. Türkçedeki -ı/-i belirtme ekine benzer."
+      },
+      "uk": {
+        "title": "Закінчення іменника показує його роль",
+        "body": "В українській немає слів на кшталт 'a' чи 'the' — цю роботу виконує закінчення іменника. Іменник, на який спрямована дія, змінює закінчення: книга → Я читаю книгу."
+      },
+      "zh": {
+        "title": "名词的词尾显示它的角色",
+        "body": "{lang}里没有'一个'或'这个'这样的冠词——这个工作由名词的词尾来完成。承受动作的名词会改变词尾：книга（书）变成 Я читаю книгу（我读书）。"
+      },
+      "ar": {
+        "title": "نهاية الاسم تُظهر دوره",
+        "body": "لا توجد في {lang} كلمة تقابل 'a' أو 'the' — نهاية الاسم هي التي تقوم بهذا الدور. الاسم الذي يقع عليه الفعل تتغيّر نهايته: книга (كتاب) تصبح Я читаю книгу (أقرأ كتابًا)."
+      }
     }
   }
 }

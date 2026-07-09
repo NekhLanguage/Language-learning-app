@@ -650,10 +650,10 @@
     "uk": {
       "label": "Ukrainian",
       "forms": {
-        "HERO": { "gender": "m", "form": "герой", "plural": "герої" },
-        "VILLAIN": { "gender": "m", "form": "лиходій", "plural": "лиходії" },
-        "WARRIOR": { "gender": "m", "form": "воїн", "plural": "воїни" },
-        "RIVAL": { "gender": "m", "form": "суперник", "plural": "суперники" },
+        "HERO": { "gender": "m", "form": "герой", "accusative": "героя", "plural": "герої" },
+        "VILLAIN": { "gender": "m", "form": "лиходій", "accusative": "лиходія", "plural": "лиходії" },
+        "WARRIOR": { "gender": "m", "form": "воїн", "accusative": "воїна", "plural": "воїни" },
+        "RIVAL": { "gender": "m", "form": "суперник", "accusative": "суперника", "plural": "суперники" },
         "BRAVE":     ["хоробрий"],
 
         "SWORD":     { "gender": "m", "form": "меч" },
@@ -662,9 +662,9 @@
         "ATTACK":    { "base": "атакувати", "1_singular": "атакую", "2_singular": "атакуєш", "3_singular": "атакує", "1_plural": "атакуємо", "2_plural": "атакуєте", "3_plural": "атакують" },
         "DEFEND":    { "base": "захищати", "1_singular": "захищаю", "2_singular": "захищаєш", "3_singular": "захищає", "1_plural": "захищаємо", "2_plural": "захищаєте", "3_plural": "захищають" },
 
-        "DRAGON": { "gender": "m", "form": "дракон", "plural": "дракони" },
-        "DEMON": { "gender": "m", "form": "демон", "plural": "демони" },
-        "SPIRIT": { "gender": "m", "form": "дух", "plural": "духи" },
+        "DRAGON": { "gender": "m", "form": "дракон", "accusative": "дракона", "plural": "дракони" },
+        "DEMON": { "gender": "m", "form": "демон", "accusative": "демона", "plural": "демони" },
+        "SPIRIT": { "gender": "m", "form": "дух", "accusative": "духа", "plural": "духи" },
         "SUMMON":    { "base": "закликати", "1_singular": "закликаю", "2_singular": "закликаєш", "3_singular": "закликає", "1_plural": "закликаємо", "2_plural": "закликаєте", "3_plural": "закликають" },
         "SINISTER":  ["зловісний"],
 
@@ -699,7 +699,7 @@
         "SACRED":    ["священний"],
 
         "TRAIN":     { "base": "тренуватися", "1_singular": "тренуюся", "2_singular": "тренуєшся", "3_singular": "тренується", "1_plural": "тренуємося", "2_plural": "тренуєтеся", "3_plural": "тренуються" },
-        "MASTER": { "gender": "m", "form": "майстер", "plural": "майстри" },
+        "MASTER": { "gender": "m", "form": "майстер", "accusative": "майстра", "plural": "майстри" },
         "CLAN": { "gender": "m", "form": "клан", "plural": "клани" },
         "AWAKEN":    { "base": "прокидатися", "1_singular": "прокидаюся", "2_singular": "прокидаєшся", "3_singular": "прокидається", "1_plural": "прокидаємося", "2_plural": "прокидаєтеся", "3_plural": "прокидаються" },
         "LEGENDARY": ["легендарний"],

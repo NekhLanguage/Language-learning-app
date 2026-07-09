@@ -656,11 +656,11 @@
         "STADIUM": { "gender": "m", "form": "стадіон", "plural": "стадіони" },
         "WHISTLE": { "gender": "m", "form": "свисток", "plural": "свистки" },
 
-        "STRIKER": { "gender": "m", "form": "нападник", "plural": "нападники" },
-        "GOALKEEPER": { "gender": "m", "form": "воротар", "plural": "воротарі" },
-        "CAPTAIN": { "gender": "m", "form": "капітан", "plural": "капітани" },
-        "REFEREE": { "gender": "m", "form": "суддя", "plural": "судді" },
-        "COACH": { "gender": "m", "form": "тренер", "plural": "тренери" },
+        "STRIKER": { "gender": "m", "form": "нападник", "accusative": "нападника", "plural": "нападники" },
+        "GOALKEEPER": { "gender": "m", "form": "воротар", "accusative": "воротаря", "plural": "воротарі" },
+        "CAPTAIN": { "gender": "m", "form": "капітан", "accusative": "капітана", "plural": "капітани" },
+        "REFEREE": { "gender": "m", "form": "суддя", "accusative": "суддю", "plural": "судді" },
+        "COACH": { "gender": "m", "form": "тренер", "accusative": "тренера", "plural": "тренери" },
 
         "KICK":       { "base": "бити", "1_singular": "б'ю", "2_singular": "б'єш", "3_singular": "б'є", "1_plural": "б'ємо", "2_plural": "б'єте", "3_plural": "б'ють" },
         "PASS":       { "base": "пасувати", "1_singular": "пасую", "2_singular": "пасуєш", "3_singular": "пасує", "1_plural": "пасуємо", "2_plural": "пасуєте", "3_plural": "пасують" },

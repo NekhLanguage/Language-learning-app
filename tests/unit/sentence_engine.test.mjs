@@ -121,6 +121,41 @@ test("blankSentence leaves the string unchanged when the surface is absent", () 
   assert.ok(blankSentence("Ти бачиш школу.", "школу").includes("_____"));
 });
 
+test("Ukrainian direct objects take the accusative", () => {
+  // User-reported: the app rendered «Я п'ю вода» / «Він читає книга» —
+  // dictionary (nominative) forms where Ukrainian marks the object with a
+  // case ending instead of an article.
+  assert.equal(buildSentence("uk", tplById("I_DRINK_WATER")), "Я п'ю воду.");
+  assert.equal(buildSentence("uk", tplById("HE_READ_BOOK")), "Він читає книгу.");
+  assert.equal(buildSentence("uk", tplById("I_EAT_FOOD")), "Я їм їжу.");
+  assert.equal(buildSentence("uk", tplById("WE_HAVE_JOB")), "Ми маємо роботу.");
+});
+
+test("Ukrainian predicate and subject nouns stay nominative", () => {
+  // Case applies to direct objects only — a predicate noun after the
+  // (dropped) copula keeps the dictionary form.
+  const pred = buildSentence("uk", tplById("THIS_IS_A_GOOD_BOOK"));
+  assert.ok(pred.includes("книга"), `expected nominative «книга» in: ${pred}`);
+  const en = buildSentence("en", tplById("I_DRINK_WATER"));
+  assert.equal(en, "I drink water.", "en is untouched by uk case logic");
+});
+
+test("Ukrainian animate masculine objects use the explicit accusative data", () => {
+  assert.equal(nounPhrase("uk", "WIZARD", { directObject: true }), "чарівника");
+  assert.equal(nounPhrase("uk", "WIZARD"), "чарівник");
+  // Inanimate masculine accusative equals the nominative.
+  assert.equal(nounPhrase("uk", "PHONE", { directObject: true }), "телефон");
+});
+
+test("possessives agree with the possessed noun's gender", () => {
+  // User-reported class: «Це мій рука» — the possessive rendered in its
+  // base (masculine) form regardless of the noun it modifies.
+  const uk = buildSentence("uk", tplById("THIS_IS_MY_HAND"));
+  assert.ok(uk.includes("моя"), `expected feminine «моя» in: ${uk}`);
+  const pt = buildSentence("pt", tplById("THIS_IS_MY_HAND"));
+  assert.ok(pt.includes("minha"), `expected feminine «minha» in: ${pt}`);
+});
+
 test("every core template renders a non-empty English sentence", () => {
   const core = templates.filter((t) => t._file === "sentence_templates.json");
   assert.ok(core.length > 100, "core template set is present");
