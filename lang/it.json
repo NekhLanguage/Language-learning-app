@@ -79,6 +79,7 @@
     "milestoneReasonFun": "E hai appena cominciato."
   },
   "hubNames": {
+    "th": "Tailandese",
     "en": "Inglese",
     "pt": "Portoghese",
     "ja": "Giapponese",
@@ -236,17 +237,20 @@
     "BREAKFAST": {
       "form": "colazione",
       "gender": "f",
-      "definite": true
+      "definite": true,
+      "plural": "colazioni"
     },
     "LUNCH": {
       "form": "pranzo",
       "gender": "m",
-      "definite": true
+      "definite": true,
+      "plural": "pranzi"
     },
     "DINNER": {
       "form": "cena",
       "gender": "f",
-      "definite": true
+      "definite": true,
+      "plural": "cene"
     },
     "CLOTHES": {
       "form": "vestiti",
@@ -830,39 +834,48 @@
     ],
     "MORNING": {
       "form": "mattina",
-      "gender": "f"
+      "gender": "f",
+      "plural": "mattine"
     },
     "DAY": {
       "form": "giorno",
-      "gender": "m"
+      "gender": "m",
+      "plural": "giorni"
     },
     "NIGHT": {
       "form": "notte",
-      "gender": "f"
+      "gender": "f",
+      "plural": "notti"
     },
     "WEEK": {
       "form": "settimana",
-      "gender": "f"
+      "gender": "f",
+      "plural": "settimane"
     },
     "MONTH": {
       "form": "mese",
-      "gender": "m"
+      "gender": "m",
+      "plural": "mesi"
     },
     "YEAR": {
       "form": "anno",
-      "gender": "m"
+      "gender": "m",
+      "plural": "anni"
     },
     "HOUR": {
       "form": "ora",
-      "gender": "f"
+      "gender": "f",
+      "plural": "ore"
     },
     "MINUTE": {
       "form": "minuto",
-      "gender": "m"
+      "gender": "m",
+      "plural": "minuti"
     },
     "SECOND": {
       "form": "secondo",
-      "gender": "m"
+      "gender": "m",
+      "plural": "secondi"
     },
     "NOW": [
       "adesso"
@@ -881,19 +894,23 @@
     ],
     "SPRING": {
       "form": "primavera",
-      "gender": "f"
+      "gender": "f",
+      "plural": "primavere"
     },
     "SUMMER": {
       "form": "estate",
-      "gender": "f"
+      "gender": "f",
+      "plural": "estati"
     },
     "AUTUMN": {
       "form": "autunno",
-      "gender": "m"
+      "gender": "m",
+      "plural": "autunni"
     },
     "WINTER": {
       "form": "inverno",
-      "gender": "m"
+      "gender": "m",
+      "plural": "inverni"
     },
     "ONE": [
       "uno"

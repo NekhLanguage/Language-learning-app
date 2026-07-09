@@ -24,7 +24,7 @@ const CHECK_ONLY = process.argv.includes('--check');
 // The 10 languages absent from the original file, plus pt/ar which the original
 // only partially covered (render present on ~35/123 templates). The merge only
 // fills ABSENT keys, so existing pt/ar values are preserved.
-const NEW_LANGS = ['de', 'el', 'es', 'fr', 'it', 'ja', 'ko', 'no', 'tr', 'uk', 'zh', 'pt', 'ar'];
+const NEW_LANGS = ['de', 'el', 'es', 'fr', 'it', 'ja', 'ko', 'no', 'th', 'tr', 'uk', 'zh', 'pt', 'ar'];
 
 // Copula-less languages drop "to be"; BE has no surface form for them.
 const COPULA_DROP_LANGS = new Set(['ar', 'uk']);

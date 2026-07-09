@@ -60,6 +60,12 @@ template × language and compares findings against
 `validation/sentence-baseline.json`; new findings fail CI, fixed ones can be
 removed with `npm run validate:sentences:update`.
 
+`validation/validate-injection.mjs` exercises the modifier-INJECTION paths
+(random adjectives/numbers) that the render validators never see — mass-noun
+guards, plural-data completeness, forced-injection render lints (L3 blank
+contract, spaceless-script spacing) — ratcheted via
+`validation/injection-baseline.json` (`npm run validate:injection:update`).
+
 `validation/validate-render-divergence.mjs` compares every generated sentence
 against the human-authored `render` strings (the native-speaker ground truth)
 and ratchets the result via `validation/render-divergence-baseline.json`: any
@@ -87,7 +93,7 @@ for Ukrainian). Work through this list; don't skip to "the app boots":
    (`finalizeSentence`), counters/particles (ja). Per-word exceptions have
    flags: `noArticle`, `pluralOnly`, `invariantPlural`, `predicative`,
    `article`.
-3. **Run `npm run validate:divergence`** and read every divergence for the
+3. **Run `npm run validate:divergence` AND `npm run validate:injection`** and read every finding for the
    new language. Fix what the engine/data can express; only then baseline the
    rest with `npm run validate:divergence:update`. The baseline diff in your
    PR is the reviewable list of known-imperfect sentences learners will see —

@@ -74,7 +74,7 @@
     "feedbackSent": "✓ Rapport envoyé — merci !",
     "feedbackFailed": "Échec de l'envoi — veuillez réessayer."
   },
-  "hubNames": { "it": "Italien",
+  "hubNames": { "th": "Thaï", "it": "Italien",
     "en": "Anglais",
     "pt": "Portugais",
     "ja": "Japonais",

@@ -14,6 +14,7 @@ export const AVAILABLE_LANGUAGES = [
   { code: "no", label: "Norwegian",  nativeLabel: "Norsk",       short: "NO", ttsCode: "nb-NO", isRTL: false, beta: false },
   { code: "pt", label: "Portuguese", nativeLabel: "Português",   short: "PT", ttsCode: "pt-BR", isRTL: false, beta: false },
   { code: "es", label: "Spanish",    nativeLabel: "Español",     short: "ES", ttsCode: "es-ES", isRTL: false, beta: true  },
+  { code: "th", label: "Thai",       nativeLabel: "ไทย",         short: "TH", ttsCode: "th-TH", isRTL: false, beta: true  },
   { code: "tr", label: "Turkish",    nativeLabel: "Türkçe",      short: "TR", ttsCode: "tr-TR", isRTL: false, beta: true  },
   { code: "uk", label: "Ukrainian",  nativeLabel: "Українська",  short: "UK", ttsCode: "uk-UA", isRTL: false, beta: true  }
 ];
