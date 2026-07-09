@@ -1,0 +1,959 @@
+{
+  "uiStrings": {
+    "openApp": "APRI L'APP",
+    "languagesTitle": "LINGUE",
+    "chooseLanguage": "Scegli una lingua da studiare",
+    "quitLearning": "ESCI",
+    "sessionTitle": "SESSIONE DI OGGI",
+    "runCompleteTitle": "HAI FINITO!",
+    "runCompleteBody": "Hai imparato tutti i concetti disponibili nei tuoi pacchetti.",
+    "runCompleteStats": "{concepts} concetti imparati · {sessions} sessioni completate",
+    "runCompleteBack": "Torna alle lingue",
+    "startSubtitle": "Apprendimento delle lingue",
+    "chooseTranslation": "Scegli la traduzione corretta di:",
+    "originalSentence": "Frase originale:",
+    "fillMissing": "Completa la parola mancante:",
+    "inThisSentence": "In questa frase:",
+    "check": "Verifica",
+    "continue": "Continua",
+    "correct": "Corretto.",
+    "incorrect": "Sbagliato.",
+    "level": "Livello",
+    "blueprint": "Il Language Blueprint di Nekh",
+    "skool": "Community Skool",
+    "offer": "Migliora il tuo sistema di apprendimento",
+    "sessionComplete": "Sessione completata",
+    "sessionFinished": "Sessione {n} terminata.",
+    "enterEmail": "Inserisci la tua email",
+    "buyAccess": "Non sei iscritto? Ottieni l'accesso",
+    "noAccess": "Nessun accesso trovato per questa email",
+    "resourcePacks": "PACCHETTI TEMATICI",
+    "choosePacks": "Scegli fino a 2 pacchetti",
+    "start": "INIZIA",
+    "selectPack": "Seleziona almeno 1 pacchetto",
+    "feedbackOpen": "Segnala un errore o lascia un feedback",
+    "feedbackClose": "Chiudi il feedback",
+    "feedbackTitle": "Segnala un errore",
+    "feedbackSubtitle": "Dicci cosa non ha funzionato — leggiamo ogni segnalazione.",
+    "feedbackPlaceholder": "Descrivi il problema...",
+    "feedbackSubmit": "Invia segnalazione",
+    "feedbackSending": "Invio…",
+    "feedbackSent": "✓ Segnalazione inviata — grazie!",
+    "feedbackFailed": "Invio non riuscito — riprova.",
+    "reasonTitle": "PERCHÉ {lang}?",
+    "reasonSubtitle": "Non ci sono risposte sbagliate — ci aiuta solo a celebrare i momenti che contano per te.",
+    "reasonContinue": "CONTINUA",
+    "reasonOptionTravel": "Viaggi",
+    "reasonOptionPerson": "Una persona nella mia vita",
+    "reasonOptionCareer": "Lavoro o studio",
+    "reasonOptionHeritage": "Origini",
+    "reasonOptionCulture": "Libri, film e musica",
+    "reasonOptionFun": "Solo per divertimento",
+    "reasonDetailTravel": "Dove stai andando?",
+    "reasonDetailPerson": "Chi è?",
+    "reasonDetailCareer": "Qual è l'obiettivo?",
+    "reasonDetailHeritage": "Qual è il legame?",
+    "reasonDetailCulture": "Cosa ti attira?",
+    "reasonDetailPlaceholderTravel": "es. Lisbona",
+    "reasonDetailPlaceholderPerson": "es. il mio partner",
+    "reasonDetailPlaceholderCareer": "es. un cliente a Madrid",
+    "reasonDetailPlaceholderHeritage": "es. la mia famiglia viene dalla Norvegia",
+    "reasonDetailPlaceholderCulture": "es. Studio Ghibli",
+    "reasonDetailHint": "Facoltativo — puoi saltarlo.",
+    "roadmapTitle": "IL TUO VIAGGIO",
+    "roadmapCounter": "{done} di {total} tappe sbloccate",
+    "roadmapCounterFull": "{done} completate · {inprogress} in corso · {ahead} davanti",
+    "roadmapSessionFinished": "Sessione {n} completata. Un'altra tappa alle spalle.",
+    "roadmapBegin": "INIZIA IL TUO VIAGGIO",
+    "roadmapBack": "← INDIETRO",
+    "roadmapBehindLabel": "{n} dietro",
+    "roadmapAheadLabel": "{n} davanti",
+    "journeyBtn": "VIAGGIO",
+    "milestoneHeadline": "{n} PAROLE",
+    "milestoneGeneric": "Ognuna di loro — tua.",
+    "milestoneReasonTravel": "{detail} è più vicino a ogni parola.",
+    "milestoneReasonPerson": "{detail} è più vicino a ogni parola.",
+    "milestoneReasonCareer": "Un altro passo verso {detail}.",
+    "milestoneReasonHeritage": "{detail} vive in queste parole.",
+    "milestoneReasonCulture": "{detail}, con la sua voce.",
+    "milestoneReasonFun": "E hai appena cominciato."
+  },
+  "hubNames": {
+    "en": "Inglese",
+    "pt": "Portoghese",
+    "ja": "Giapponese",
+    "no": "Norvegese",
+    "ar": "Arabo",
+    "ko": "Coreano",
+    "uk": "Ucraino",
+    "de": "Tedesco",
+    "el": "Greco",
+    "tr": "Turco",
+    "es": "Spagnolo",
+    "fr": "Francese",
+    "zh": "Cinese",
+    "it": "Italiano"
+  },
+  "forms": {
+    "WATER": {
+      "form": "acqua",
+      "gender": "f"
+    },
+    "FOOD": {
+      "form": "cibo",
+      "gender": "m"
+    },
+    "HOUSE": {
+      "form": "casa",
+      "gender": "f",
+      "plural": "case"
+    },
+    "HOME": {
+      "form": "casa",
+      "gender": "f",
+      "noArticle": true,
+      "predicative": "a casa"
+    },
+    "BOOK": {
+      "form": "libro",
+      "gender": "m",
+      "plural": "libri"
+    },
+    "THING": {
+      "form": "cosa",
+      "gender": "f",
+      "plural": "cose"
+    },
+    "JOB": {
+      "form": "lavoro",
+      "gender": "m",
+      "plural": "lavori"
+    },
+    "ROOM": {
+      "form": "stanza",
+      "gender": "f",
+      "plural": "stanze"
+    },
+    "BOY": {
+      "form": "ragazzo",
+      "gender": "m",
+      "plural": "ragazzi"
+    },
+    "GIRL": {
+      "form": "ragazza",
+      "gender": "f",
+      "plural": "ragazze"
+    },
+    "MAN": {
+      "form": "uomo",
+      "gender": "m",
+      "plural": "uomini"
+    },
+    "WOMAN": {
+      "form": "donna",
+      "gender": "f",
+      "plural": "donne"
+    },
+    "MOM": {
+      "form": "mamma",
+      "gender": "f",
+      "plural": "mamme"
+    },
+    "DAD": {
+      "form": "papà",
+      "gender": "m"
+    },
+    "SON": {
+      "form": "figlio",
+      "gender": "m",
+      "plural": "figli",
+      "noArticleWithPossessive": true
+    },
+    "DAUGHTER": {
+      "form": "figlia",
+      "gender": "f",
+      "plural": "figlie",
+      "noArticleWithPossessive": true
+    },
+    "BROTHER": {
+      "form": "fratello",
+      "gender": "m",
+      "plural": "fratelli",
+      "noArticleWithPossessive": true
+    },
+    "SISTER": {
+      "form": "sorella",
+      "gender": "f",
+      "plural": "sorelle",
+      "noArticleWithPossessive": true
+    },
+    "HEAD": {
+      "form": "testa",
+      "gender": "f",
+      "plural": "teste"
+    },
+    "ARM": {
+      "form": "braccio",
+      "gender": "m",
+      "plural": "braccia"
+    },
+    "HAND": {
+      "form": "mano",
+      "gender": "f",
+      "plural": "mani",
+      "noArticle": true
+    },
+    "LEG": {
+      "form": "gamba",
+      "gender": "f",
+      "plural": "gambe"
+    },
+    "FOOT": {
+      "form": "piede",
+      "gender": "m",
+      "plural": "piedi"
+    },
+    "FINGER": {
+      "form": "dito",
+      "gender": "m",
+      "plural": "dita"
+    },
+    "EYE": {
+      "form": "occhio",
+      "gender": "m",
+      "plural": "occhi"
+    },
+    "MOUTH": {
+      "form": "bocca",
+      "gender": "f",
+      "plural": "bocche"
+    },
+    "FACE": {
+      "form": "viso",
+      "gender": "m",
+      "plural": "visi"
+    },
+    "BREAKFAST": {
+      "form": "colazione",
+      "gender": "f",
+      "definite": true
+    },
+    "LUNCH": {
+      "form": "pranzo",
+      "gender": "m",
+      "definite": true
+    },
+    "DINNER": {
+      "form": "cena",
+      "gender": "f",
+      "definite": true
+    },
+    "CLOTHES": {
+      "form": "vestiti",
+      "gender": "m",
+      "pluralOnly": true
+    },
+    "SHIRT": {
+      "form": "camicia",
+      "gender": "f",
+      "plural": "camicie"
+    },
+    "SHOES": {
+      "form": "scarpe",
+      "gender": "f",
+      "pluralOnly": true
+    },
+    "PHONE": {
+      "form": "telefono",
+      "gender": "m",
+      "plural": "telefoni"
+    },
+    "PANTS": {
+      "form": "pantaloni",
+      "gender": "m",
+      "pluralOnly": true
+    },
+    "DO": {
+      "base": "fare",
+      "1_singular": "faccio",
+      "2_singular": "fai",
+      "3_singular": "fa",
+      "1_plural": "facciamo",
+      "2_plural": "fate",
+      "3_plural": "fanno"
+    },
+    "GO": {
+      "base": "andare",
+      "1_singular": "vado",
+      "2_singular": "vai",
+      "3_singular": "va",
+      "1_plural": "andiamo",
+      "2_plural": "andate",
+      "3_plural": "vanno"
+    },
+    "EAT": {
+      "base": "mangiare",
+      "1_singular": "mangio",
+      "2_singular": "mangi",
+      "3_singular": "mangia",
+      "1_plural": "mangiamo",
+      "2_plural": "mangiate",
+      "3_plural": "mangiano"
+    },
+    "DRINK": {
+      "base": "bere",
+      "1_singular": "bevo",
+      "2_singular": "bevi",
+      "3_singular": "beve",
+      "1_plural": "beviamo",
+      "2_plural": "bevete",
+      "3_plural": "bevono"
+    },
+    "READ": {
+      "base": "leggere",
+      "1_singular": "leggo",
+      "2_singular": "leggi",
+      "3_singular": "legge",
+      "1_plural": "leggiamo",
+      "2_plural": "leggete",
+      "3_plural": "leggono"
+    },
+    "SEE": {
+      "base": "vedere",
+      "1_singular": "vedo",
+      "2_singular": "vedi",
+      "3_singular": "vede",
+      "1_plural": "vediamo",
+      "2_plural": "vedete",
+      "3_plural": "vedono"
+    },
+    "START": {
+      "base": "iniziare",
+      "1_singular": "inizio",
+      "2_singular": "inizi",
+      "3_singular": "inizia",
+      "1_plural": "iniziamo",
+      "2_plural": "iniziate",
+      "3_plural": "iniziano"
+    },
+    "STOP": {
+      "base": "smettere di",
+      "1_singular": "smetto di",
+      "2_singular": "smetti di",
+      "3_singular": "smette di",
+      "1_plural": "smettiamo di",
+      "2_plural": "smettete di",
+      "3_plural": "smettono di"
+    },
+    "SLEEP": {
+      "base": "dormire",
+      "1_singular": "dormo",
+      "2_singular": "dormi",
+      "3_singular": "dorme",
+      "1_plural": "dormiamo",
+      "2_plural": "dormite",
+      "3_plural": "dormono"
+    },
+    "HAVE": {
+      "base": "avere",
+      "1_singular": "ho",
+      "2_singular": "hai",
+      "3_singular": "ha",
+      "1_plural": "abbiamo",
+      "2_plural": "avete",
+      "3_plural": "hanno"
+    },
+    "COME": {
+      "base": "venire",
+      "1_singular": "vengo",
+      "2_singular": "vieni",
+      "3_singular": "viene",
+      "1_plural": "veniamo",
+      "2_plural": "venite",
+      "3_plural": "vengono"
+    },
+    "USE": {
+      "base": "usare",
+      "1_singular": "uso",
+      "2_singular": "usi",
+      "3_singular": "usa",
+      "1_plural": "usiamo",
+      "2_plural": "usate",
+      "3_plural": "usano"
+    },
+    "GET": {
+      "base": "prendere",
+      "1_singular": "prendo",
+      "2_singular": "prendi",
+      "3_singular": "prende",
+      "1_plural": "prendiamo",
+      "2_plural": "prendete",
+      "3_plural": "prendono"
+    },
+    "BE": {
+      "base": "essere",
+      "1_singular": "sono",
+      "2_singular": "sei",
+      "3_singular": "è",
+      "1_plural": "siamo",
+      "2_plural": "siete",
+      "3_plural": "sono"
+    },
+    "MAY": {
+      "base": "potere",
+      "1_singular": "posso",
+      "2_singular": "puoi",
+      "3_singular": "può",
+      "1_plural": "possiamo",
+      "2_plural": "potete",
+      "3_plural": "possono"
+    },
+    "BIG": {
+      "form": "grande",
+      "f": "grande",
+      "plural": "grandi",
+      "fp": "grandi"
+    },
+    "SMALL": {
+      "form": "piccolo",
+      "f": "piccola",
+      "plural": "piccoli",
+      "fp": "piccole"
+    },
+    "GOOD": {
+      "form": "buono",
+      "f": "buona",
+      "plural": "buoni",
+      "fp": "buone"
+    },
+    "BAD": {
+      "form": "cattivo",
+      "f": "cattiva",
+      "plural": "cattivi",
+      "fp": "cattive"
+    },
+    "NEW": {
+      "form": "nuovo",
+      "f": "nuova",
+      "plural": "nuovi",
+      "fp": "nuove"
+    },
+    "OLD": {
+      "form": "vecchio",
+      "f": "vecchia",
+      "plural": "vecchi",
+      "fp": "vecchie"
+    },
+    "EASY": {
+      "form": "facile",
+      "f": "facile",
+      "plural": "facili",
+      "fp": "facili"
+    },
+    "DIFFICULT": {
+      "form": "difficile",
+      "f": "difficile",
+      "plural": "difficili",
+      "fp": "difficili"
+    },
+    "MY": {
+      "form": "mio",
+      "f": "mia",
+      "plural": "miei",
+      "fp": "mie"
+    },
+    "YOUR": {
+      "form": "tuo",
+      "f": "tua",
+      "plural": "tuoi",
+      "fp": "tue"
+    },
+    "HIS": {
+      "form": "suo",
+      "f": "sua",
+      "plural": "suoi",
+      "fp": "sue"
+    },
+    "HER": {
+      "form": "suo",
+      "f": "sua",
+      "plural": "suoi",
+      "fp": "sue"
+    },
+    "OUR": {
+      "form": "nostro",
+      "f": "nostra",
+      "plural": "nostri",
+      "fp": "nostre"
+    },
+    "THEIR": {
+      "form": "loro",
+      "f": "loro",
+      "plural": "loro",
+      "fp": "loro"
+    },
+    "BLACK": {
+      "form": "nero",
+      "f": "nera",
+      "plural": "neri",
+      "fp": "nere"
+    },
+    "WHITE": {
+      "form": "bianco",
+      "f": "bianca",
+      "plural": "bianchi",
+      "fp": "bianche"
+    },
+    "RED": {
+      "form": "rosso",
+      "f": "rossa",
+      "plural": "rossi",
+      "fp": "rosse"
+    },
+    "BLUE": {
+      "form": "blu",
+      "f": "blu",
+      "plural": "blu",
+      "fp": "blu"
+    },
+    "GREEN": {
+      "form": "verde",
+      "f": "verde",
+      "plural": "verdi",
+      "fp": "verdi"
+    },
+    "YELLOW": {
+      "form": "giallo",
+      "f": "gialla",
+      "plural": "gialli",
+      "fp": "gialle"
+    },
+    "PURPLE": {
+      "form": "viola",
+      "f": "viola",
+      "plural": "viola",
+      "fp": "viola"
+    },
+    "ORANGE": {
+      "form": "arancione",
+      "f": "arancione",
+      "plural": "arancioni",
+      "fp": "arancioni"
+    },
+    "FAST": {
+      "form": "veloce",
+      "f": "veloce",
+      "plural": "veloci",
+      "fp": "veloci"
+    },
+    "SLOW": {
+      "form": "lento",
+      "f": "lenta",
+      "plural": "lenti",
+      "fp": "lente"
+    },
+    "LONG": {
+      "form": "lungo",
+      "f": "lunga",
+      "plural": "lunghi",
+      "fp": "lunghe"
+    },
+    "SHORT": {
+      "form": "corto",
+      "f": "corta",
+      "plural": "corti",
+      "fp": "corte"
+    },
+    "HEAVY": {
+      "form": "pesante",
+      "f": "pesante",
+      "plural": "pesanti",
+      "fp": "pesanti"
+    },
+    "LIGHT": {
+      "form": "leggero",
+      "f": "leggera",
+      "plural": "leggeri",
+      "fp": "leggere"
+    },
+    "DARK": {
+      "form": "buio",
+      "f": "buia",
+      "plural": "bui",
+      "fp": "buie"
+    },
+    "YOUNG": {
+      "form": "giovane",
+      "f": "giovane",
+      "plural": "giovani",
+      "fp": "giovani"
+    },
+    "RIGHT": {
+      "form": "destro",
+      "f": "destra",
+      "plural": "destri",
+      "fp": "destre"
+    },
+    "LEFT": {
+      "form": "sinistro",
+      "f": "sinistra",
+      "plural": "sinistri",
+      "fp": "sinistre"
+    },
+    "CORRECT": {
+      "form": "corretto",
+      "f": "corretta",
+      "plural": "corretti",
+      "fp": "corrette"
+    },
+    "WRONG": {
+      "form": "sbagliato",
+      "f": "sbagliata",
+      "plural": "sbagliati",
+      "fp": "sbagliate"
+    },
+    "NICE": {
+      "form": "bello",
+      "f": "bella",
+      "plural": "belli",
+      "fp": "belle"
+    },
+    "COLD": {
+      "form": "freddo",
+      "f": "fredda",
+      "plural": "freddi",
+      "fp": "fredde"
+    },
+    "FIRST_PERSON_SINGULAR": [
+      "io"
+    ],
+    "SECOND_PERSON": [
+      "tu"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "voi"
+    ],
+    "HE": [
+      "lui"
+    ],
+    "SHE": [
+      "lei"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "noi"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "loro"
+    ],
+    "THIS": {
+      "form": "questo",
+      "f": "questa"
+    },
+    "THAT": {
+      "form": "quello",
+      "f": "quella"
+    },
+    "IT": [
+      "esso"
+    ],
+    "ITS": [
+      "suo"
+    ],
+    "MINE": [
+      "mio"
+    ],
+    "YOURS": [
+      "tuo"
+    ],
+    "HERS": [
+      "suo"
+    ],
+    "OURS": [
+      "nostro"
+    ],
+    "THEIRS": [
+      "loro"
+    ],
+    "WHO": [
+      "chi"
+    ],
+    "WHAT": [
+      "che cosa"
+    ],
+    "WHEN": [
+      "quando"
+    ],
+    "WHERE": [
+      "dove"
+    ],
+    "WHY": [
+      "perché"
+    ],
+    "HOW": [
+      "come"
+    ],
+    "WHICH": [
+      "quale"
+    ],
+    "ANY": [
+      "qualsiasi"
+    ],
+    "ONLY": [
+      "solo"
+    ],
+    "ANOTHER": {
+      "form": "altro",
+      "f": "altra"
+    },
+    "SOMETHING": [
+      "qualcosa"
+    ],
+    "ALL": [
+      "tutto"
+    ],
+    "AND": [
+      "e"
+    ],
+    "BUT": [
+      "ma"
+    ],
+    "ALSO": [
+      "anche"
+    ],
+    "BECAUSE": [
+      "perché"
+    ],
+    "IF": [
+      "se"
+    ],
+    "FOR": [
+      "per"
+    ],
+    "WITH": [
+      "con"
+    ],
+    "FROM": [
+      "da"
+    ],
+    "TO": [
+      "a"
+    ],
+    "BY": [
+      "a"
+    ],
+    "WHILE": [
+      "mentre"
+    ],
+    "AS": [
+      "come"
+    ],
+    "PLEASE": [
+      "per favore"
+    ],
+    "MAYBE": [
+      "forse"
+    ],
+    "JUST": [
+      "solo"
+    ],
+    "YES": [
+      "sì"
+    ],
+    "NO": [
+      "no"
+    ],
+    "NOT": [
+      "non"
+    ],
+    "THANKS": [
+      "grazie"
+    ],
+    "TOP": [
+      "cima"
+    ],
+    "BOTTOM": [
+      "fondo"
+    ],
+    "UNDER": [
+      "sotto"
+    ],
+    "NEXT_TO": [
+      "accanto a"
+    ],
+    "FRONT": [
+      "davanti a"
+    ],
+    "BEHIND": [
+      "dietro"
+    ],
+    "IN": [
+      "in"
+    ],
+    "ON": [
+      "su"
+    ],
+    "OFF": [
+      "fuori da"
+    ],
+    "BETWEEN": [
+      "tra"
+    ],
+    "BACK": [
+      "indietro"
+    ],
+    "OUT": [
+      "fuori"
+    ],
+    "NORTH": [
+      "nord"
+    ],
+    "SOUTH": [
+      "sud"
+    ],
+    "EAST": [
+      "est"
+    ],
+    "WEST": [
+      "ovest"
+    ],
+    "AROUND": [
+      "in giro"
+    ],
+    "TODAY": [
+      "oggi"
+    ],
+    "YESTERDAY": [
+      "ieri"
+    ],
+    "TOMORROW": [
+      "domani"
+    ],
+    "MORNING": {
+      "form": "mattina",
+      "gender": "f"
+    },
+    "DAY": {
+      "form": "giorno",
+      "gender": "m"
+    },
+    "NIGHT": {
+      "form": "notte",
+      "gender": "f"
+    },
+    "WEEK": {
+      "form": "settimana",
+      "gender": "f"
+    },
+    "MONTH": {
+      "form": "mese",
+      "gender": "m"
+    },
+    "YEAR": {
+      "form": "anno",
+      "gender": "m"
+    },
+    "HOUR": {
+      "form": "ora",
+      "gender": "f"
+    },
+    "MINUTE": {
+      "form": "minuto",
+      "gender": "m"
+    },
+    "SECOND": {
+      "form": "secondo",
+      "gender": "m"
+    },
+    "NOW": [
+      "adesso"
+    ],
+    "BEFORE": [
+      "prima"
+    ],
+    "AFTER": [
+      "dopo"
+    ],
+    "LATER": [
+      "più tardi"
+    ],
+    "NEXT": [
+      "prossimo"
+    ],
+    "SPRING": {
+      "form": "primavera",
+      "gender": "f"
+    },
+    "SUMMER": {
+      "form": "estate",
+      "gender": "f"
+    },
+    "AUTUMN": {
+      "form": "autunno",
+      "gender": "m"
+    },
+    "WINTER": {
+      "form": "inverno",
+      "gender": "m"
+    },
+    "ONE": [
+      "uno"
+    ],
+    "TWO": [
+      "due"
+    ],
+    "THREE": [
+      "tre"
+    ],
+    "FOUR": [
+      "quattro"
+    ],
+    "FIVE": [
+      "cinque"
+    ],
+    "SIX": [
+      "sei"
+    ],
+    "SEVEN": [
+      "sette"
+    ],
+    "EIGHT": [
+      "otto"
+    ],
+    "NINE": [
+      "nove"
+    ],
+    "TEN": [
+      "dieci"
+    ],
+    "ELEVEN": [
+      "undici"
+    ],
+    "TWELVE": [
+      "dodici"
+    ],
+    "THIRTEEN": [
+      "tredici"
+    ],
+    "FOURTEEN": [
+      "quattordici"
+    ],
+    "FIFTEEN": [
+      "quindici"
+    ],
+    "SIXTEEN": [
+      "sedici"
+    ],
+    "SEVENTEEN": [
+      "diciassette"
+    ],
+    "EIGHTEEN": [
+      "diciotto"
+    ],
+    "NINETEEN": [
+      "diciannove"
+    ],
+    "TWENTY": [
+      "venti"
+    ]
+  }
+}

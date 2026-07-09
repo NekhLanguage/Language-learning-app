@@ -28,7 +28,7 @@ const VOCAB_FILES = [
 ];
 
 // Languages where countable nouns should carry a gender field
-const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar']);
+const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'it']);
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 

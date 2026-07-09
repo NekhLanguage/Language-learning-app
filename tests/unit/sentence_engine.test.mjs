@@ -212,6 +212,29 @@ test("per-language noArticle data suppresses the indefinite article", () => {
   assert.equal(buildSentence("pt", tplById("SHE_HAS_SHOES")), "Ela tem sapatos.");
 });
 
+test("Italian articles: allomorphy, definiteness, partitive, contraction", () => {
+  assert.equal(buildSentence("it", tplById("HE_READ_BOOK")), "Lui legge un libro.");
+  assert.equal(buildSentence("it", tplById("BOOK_IS_RED")), "Il libro è rosso.");
+  assert.equal(buildSentence("it", tplById("YEAR_IS_LONG")), "L'anno è lungo.");
+  assert.equal(buildSentence("it", tplById("PANTS_ARE_BLACK")), "I pantaloni sono neri.");
+  assert.equal(buildSentence("it", tplById("SHE_HAS_SHOES")), "Lei ha delle scarpe.");
+  assert.equal(buildSentence("it", tplById("BOOK_NEXT_TO_PHONE")),
+    "Il libro è accanto al telefono.");
+});
+
+test("Italian possessives take the definite article", () => {
+  assert.equal(buildSentence("it", tplById("THIS_IS_MY_HAND")), "Questa è la mia mano.");
+  assert.equal(buildSentence("it", tplById("IS_THAT_YOUR_PHONE")), "È quello il tuo telefono?");
+});
+
+test("trailing subordinate clauses put the main clause first", () => {
+  // Cross-language fix surfaced by the Italian systems test: the BECAUSE
+  // clause used to lead ("He is home because he eats dinner...").
+  const en = buildSentence("en", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME"));
+  assert.ok(en.startsWith("He eats dinner"), en);
+  assert.ok(en.includes("because he is home"), en);
+});
+
 test("every core template renders a non-empty English sentence", () => {
   const core = templates.filter((t) => t._file === "sentence_templates.json");
   assert.ok(core.length > 100, "core template set is present");

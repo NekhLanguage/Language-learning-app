@@ -74,7 +74,7 @@
     "feedbackSent": "✓ 报告已发送——谢谢！",
     "feedbackFailed": "发送失败——请重试。"
   },
-  "hubNames": {
+  "hubNames": { "it": "意大利语",
     "en": "英语",
     "pt": "葡萄牙语",
     "ja": "日语",

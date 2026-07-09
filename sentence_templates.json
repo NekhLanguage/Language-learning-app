@@ -16,7 +16,8 @@
         "no": "Jeg spiser mat.",
         "tr": "Ben yemek yerim.",
         "uk": "Я їм їжу.",
-        "zh": "我吃食物。"
+        "zh": "我吃食物。",
+        "it": "Io mangio cibo."
       },
       "surface": {
         "en": {
@@ -83,6 +84,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "EAT": "吃",
           "FOOD": "食物"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "EAT": "mangio",
+          "FOOD": "cibo"
         }
       },
       "questions": {
@@ -100,7 +106,8 @@
             "no": "Hvem spiser mat?",
             "tr": "Kim yemek yer?",
             "uk": "Хто їсть їжу?",
-            "zh": "谁吃食物？"
+            "zh": "谁吃食物？",
+            "it": "Chi mangia cibo?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -119,7 +126,8 @@
             "no": "Hva gjør jeg?",
             "tr": "Ben ne yaparım?",
             "uk": "Що я роблю?",
-            "zh": "我做什么？"
+            "zh": "我做什么？",
+            "it": "Che cosa faccio?"
           },
           "choices": ["EAT", "READ", "SLEEP", "SEE"],
           "answer": "EAT"
@@ -138,7 +146,8 @@
             "no": "Hva spiser jeg?",
             "tr": "Ben ne yerim?",
             "uk": "Що я їм?",
-            "zh": "我吃什么？"
+            "zh": "我吃什么？",
+            "it": "Che cosa mangio?"
           },
           "choices": ["FOOD", "BOOK", "PHONE", "JOB"],
           "answer": "FOOD"
@@ -161,7 +170,8 @@
         "no": "Han leser en bok.",
         "tr": "O bir kitap okur.",
         "uk": "Він читає книгу.",
-        "zh": "他读一本书。"
+        "zh": "他读一本书。",
+        "it": "Lui legge un libro."
       },
       "surface": {
         "en": {
@@ -228,6 +238,11 @@
           "HE": "他",
           "READ": "读",
           "BOOK": "书"
+        },
+        "it": {
+          "HE": "lui",
+          "READ": "legge",
+          "BOOK": "libro"
         }
       },
       "questions": {
@@ -245,7 +260,8 @@
             "no": "Hvem leser en bok?",
             "tr": "Kim bir kitap okur?",
             "uk": "Хто читає книгу?",
-            "zh": "谁读书？"
+            "zh": "谁读书？",
+            "it": "Chi legge un libro?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "HE"
@@ -264,7 +280,8 @@
             "no": "Hva gjør han?",
             "tr": "O ne yapar?",
             "uk": "Що він робить?",
-            "zh": "他做什么？"
+            "zh": "他做什么？",
+            "it": "Che cosa fa lui?"
           },
           "choices": ["READ", "EAT", "SEE", "SLEEP"],
           "answer": "READ"
@@ -283,7 +300,8 @@
             "no": "Hva leser han?",
             "tr": "O ne okur?",
             "uk": "Що він читає?",
-            "zh": "他读什么？"
+            "zh": "他读什么？",
+            "it": "Che cosa legge lui?"
           },
           "choices": ["BOOK", "FOOD", "PHONE", "JOB"],
           "answer": "BOOK"
@@ -306,7 +324,8 @@
         "no": "Hun ser en telefon.",
         "tr": "O bir telefon görür.",
         "uk": "Вона бачить телефон.",
-        "zh": "她看见一部手机。"
+        "zh": "她看见一部手机。",
+        "it": "Lei vede un telefono."
       },
       "surface": {
         "en": {
@@ -373,6 +392,11 @@
           "SHE": "她",
           "SEE": "看见",
           "PHONE": "手机"
+        },
+        "it": {
+          "SHE": "lei",
+          "SEE": "vede",
+          "PHONE": "telefono"
         }
       },
       "questions": {
@@ -390,7 +414,8 @@
             "no": "Hvem ser en telefon?",
             "tr": "Kim bir telefon görür?",
             "uk": "Хто бачить телефон?",
-            "zh": "谁看见手机？"
+            "zh": "谁看见手机？",
+            "it": "Chi vede un telefono?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "SHE"
@@ -409,7 +434,8 @@
             "no": "Hva gjør hun?",
             "tr": "O ne yapar?",
             "uk": "Що вона робить?",
-            "zh": "她做什么？"
+            "zh": "她做什么？",
+            "it": "Che cosa fa lei?"
           },
           "choices": ["SEE", "EAT", "READ", "SLEEP"],
           "answer": "SEE"
@@ -428,7 +454,8 @@
             "no": "Hva ser hun?",
             "tr": "O ne görür?",
             "uk": "Що вона бачить?",
-            "zh": "她看见什么？"
+            "zh": "她看见什么？",
+            "it": "Che cosa vede lei?"
           },
           "choices": ["PHONE", "BOOK", "FOOD", "JOB"],
           "answer": "PHONE"
@@ -451,7 +478,8 @@
         "no": "Vi har en jobb.",
         "tr": "Bizim bir işimiz var.",
         "uk": "Ми маємо роботу.",
-        "zh": "我们有一份工作。"
+        "zh": "我们有一份工作。",
+        "it": "Noi abbiamo un lavoro."
       },
       "surface": {
         "en": {
@@ -518,6 +546,11 @@
           "FIRST_PERSON_PLURAL": "我们",
           "HAVE": "有",
           "JOB": "工作"
+        },
+        "it": {
+          "FIRST_PERSON_PLURAL": "noi",
+          "HAVE": "abbiamo",
+          "JOB": "lavoro"
         }
       },
       "questions": {
@@ -535,7 +568,8 @@
             "no": "Hvem har en jobb?",
             "tr": "Kimin bir işi var?",
             "uk": "Хто має роботу?",
-            "zh": "谁有工作？"
+            "zh": "谁有工作？",
+            "it": "Chi ha un lavoro?"
           },
           "choices": ["FIRST_PERSON_PLURAL", "FIRST_PERSON_SINGULAR", "HE", "SHE"],
           "answer": "FIRST_PERSON_PLURAL"
@@ -554,7 +588,8 @@
             "no": "Hva gjør vi?",
             "tr": "Biz ne yaparız?",
             "uk": "Що ми робимо?",
-            "zh": "我们做什么？"
+            "zh": "我们做什么？",
+            "it": "Che cosa facciamo?"
           },
           "choices": ["HAVE", "READ", "SEE", "EAT"],
           "answer": "HAVE"
@@ -573,7 +608,8 @@
             "no": "Hva har vi?",
             "tr": "Bizim neyimiz var?",
             "uk": "Що ми маємо?",
-            "zh": "我们有什么？"
+            "zh": "我们有什么？",
+            "it": "Che cosa abbiamo?"
           },
           "choices": ["JOB", "BOOK", "FOOD", "PHONE"],
           "answer": "JOB"
@@ -596,7 +632,8 @@
         "no": "Jeg drikker vann.",
         "tr": "Ben su içerim.",
         "uk": "Я п'ю воду.",
-        "zh": "我喝水。"
+        "zh": "我喝水。",
+        "it": "Io bevo acqua."
       },
       "surface": {
         "en": {
@@ -663,6 +700,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "DRINK": "喝",
           "WATER": "水"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "DRINK": "bevo",
+          "WATER": "acqua"
         }
       },
       "questions": {
@@ -680,7 +722,8 @@
             "no": "Hvem drikker vann?",
             "tr": "Kim su içer?",
             "uk": "Хто п'є воду?",
-            "zh": "谁喝水？"
+            "zh": "谁喝水？",
+            "it": "Chi beve acqua?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -699,7 +742,8 @@
             "no": "Hva gjør jeg?",
             "tr": "Ben ne yaparım?",
             "uk": "Що я роблю?",
-            "zh": "我做什么？"
+            "zh": "我做什么？",
+            "it": "Che cosa faccio?"
           },
           "choices": ["DRINK", "EAT", "READ", "SEE"],
           "answer": "DRINK"
@@ -718,7 +762,8 @@
             "no": "Hva drikker jeg?",
             "tr": "Ben ne içerim?",
             "uk": "Що я п'ю?",
-            "zh": "我喝什么？"
+            "zh": "我喝什么？",
+            "it": "Che cosa bevo?"
           },
           "choices": ["WATER", "FOOD", "BOOK", "PHONE"],
           "answer": "WATER"
@@ -741,7 +786,8 @@
         "no": "Du leser en bok.",
         "tr": "Sen bir kitap okursun.",
         "uk": "Ти читаєш книгу.",
-        "zh": "你读一本书。"
+        "zh": "你读一本书。",
+        "it": "Tu leggi un libro."
       },
       "surface": {
         "en": {
@@ -808,6 +854,11 @@
           "SECOND_PERSON": "你",
           "READ": "读",
           "BOOK": "书"
+        },
+        "it": {
+          "SECOND_PERSON": "tu",
+          "READ": "leggi",
+          "BOOK": "libro"
         }
       },
       "questions": {
@@ -825,7 +876,8 @@
             "no": "Hvem leser en bok?",
             "tr": "Kim bir kitap okur?",
             "uk": "Хто читає книгу?",
-            "zh": "谁读书？"
+            "zh": "谁读书？",
+            "it": "Chi legge un libro?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "SECOND_PERSON"
@@ -844,7 +896,8 @@
             "no": "Hva gjør du?",
             "tr": "Sen ne yaparsın?",
             "uk": "Що ти робиш?",
-            "zh": "你做什么？"
+            "zh": "你做什么？",
+            "it": "Che cosa fai?"
           },
           "choices": ["READ", "EAT", "DRINK", "SEE"],
           "answer": "READ"
@@ -863,7 +916,8 @@
             "no": "Hva leser du?",
             "tr": "Sen ne okursun?",
             "uk": "Що ти читаєш?",
-            "zh": "你读什么？"
+            "zh": "你读什么？",
+            "it": "Che cosa leggi?"
           },
           "choices": ["BOOK", "FOOD", "PHONE", "JOB"],
           "answer": "BOOK"
@@ -886,7 +940,8 @@
         "no": "Dere drikker vann.",
         "tr": "Siz su içersiniz.",
         "uk": "Ви п'єте воду.",
-        "zh": "你们喝水。"
+        "zh": "你们喝水。",
+        "it": "Voi bevete acqua."
       },
       "surface": {
         "en": {
@@ -953,6 +1008,11 @@
           "SECOND_PERSON_PLURAL": "你们",
           "DRINK": "喝",
           "WATER": "水"
+        },
+        "it": {
+          "SECOND_PERSON_PLURAL": "voi",
+          "DRINK": "bevete",
+          "WATER": "acqua"
         }
       },
       "questions": {
@@ -970,7 +1030,8 @@
             "no": "Hvem drikker vann?",
             "tr": "Kim su içer?",
             "uk": "Хто п'є воду?",
-            "zh": "谁喝水？"
+            "zh": "谁喝水？",
+            "it": "Chi beve acqua?"
           },
           "choices": ["SECOND_PERSON_PLURAL", "FIRST_PERSON_PLURAL", "HE", "SHE"],
           "answer": "SECOND_PERSON_PLURAL"
@@ -989,7 +1050,8 @@
             "no": "Hva gjør dere?",
             "tr": "Siz ne yaparsınız?",
             "uk": "Що ви робите?",
-            "zh": "你们做什么？"
+            "zh": "你们做什么？",
+            "it": "Che cosa fate?"
           },
           "choices": ["DRINK", "EAT", "READ", "SEE"],
           "answer": "DRINK"
@@ -1008,7 +1070,8 @@
             "no": "Hva drikker dere?",
             "tr": "Siz ne içersiniz?",
             "uk": "Що ви п'єте?",
-            "zh": "你们喝什么？"
+            "zh": "你们喝什么？",
+            "it": "Che cosa bevete?"
           },
           "choices": ["WATER", "FOOD", "BOOK", "PHONE"],
           "answer": "WATER"
@@ -1031,7 +1094,8 @@
         "no": "De sover.",
         "tr": "Onlar uyurlar.",
         "uk": "Вони сплять.",
-        "zh": "他们睡觉。"
+        "zh": "他们睡觉。",
+        "it": "Loro dormono."
       },
       "surface": {
         "en": {
@@ -1085,6 +1149,10 @@
         "zh": {
           "THIRD_PERSON_PLURAL": "他们",
           "SLEEP": "睡觉"
+        },
+        "it": {
+          "THIRD_PERSON_PLURAL": "loro",
+          "SLEEP": "dormono"
         }
       },
       "questions": {
@@ -1102,7 +1170,8 @@
             "no": "Hvem sover?",
             "tr": "Kim uyur?",
             "uk": "Хто спить?",
-            "zh": "谁睡觉？"
+            "zh": "谁睡觉？",
+            "it": "Chi dorme?"
           },
           "choices": ["THIRD_PERSON_PLURAL", "FIRST_PERSON_PLURAL", "HE", "SHE"],
           "answer": "THIRD_PERSON_PLURAL"
@@ -1121,7 +1190,8 @@
             "no": "Hva gjør de?",
             "tr": "Onlar ne yaparlar?",
             "uk": "Що вони роблять?",
-            "zh": "他们做什么？"
+            "zh": "他们做什么？",
+            "it": "Che cosa fanno?"
           },
           "choices": ["SLEEP", "READ", "EAT", "DRINK"],
           "answer": "SLEEP"
@@ -1144,7 +1214,8 @@
         "no": "Jeg er en mann.",
         "tr": "Ben bir adamım.",
         "uk": "Я чоловік.",
-        "zh": "我是一个男人。"
+        "zh": "我是一个男人。",
+        "it": "Io sono un uomo."
       },
       "surface": {
         "en": {
@@ -1210,6 +1281,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "BE": "是",
           "MAN": "男人"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "BE": "sono",
+          "MAN": "uomo"
         }
       },
       "questions": {
@@ -1227,7 +1303,8 @@
             "no": "Hva er jeg?",
             "tr": "Ben neyim?",
             "uk": "Хто я є?",
-            "zh": "我是什么？"
+            "zh": "我是什么？",
+            "it": "Che cosa sono?"
           },
           "choices": ["BE", "EAT", "READ", "SEE"],
           "answer": "BE"
@@ -1246,7 +1323,8 @@
             "no": "Hva er jeg?",
             "tr": "Ben neyim?",
             "uk": "Хто я?",
-            "zh": "我是什么？"
+            "zh": "我是什么？",
+            "it": "Che cosa sono?"
           },
           "choices": ["MAN", "WOMAN", "BOY", "GIRL"],
           "answer": "MAN"
@@ -1269,7 +1347,8 @@
         "no": "Hun er en kvinne.",
         "tr": "O bir kadındır.",
         "uk": "Вона жінка.",
-        "zh": "她是一个女人。"
+        "zh": "她是一个女人。",
+        "it": "Lei è una donna."
       },
       "surface": {
         "en": {
@@ -1335,6 +1414,11 @@
           "SHE": "她",
           "BE": "是",
           "WOMAN": "女人"
+        },
+        "it": {
+          "SHE": "lei",
+          "BE": "è",
+          "WOMAN": "donna"
         }
       },
       "questions": {
@@ -1352,7 +1436,8 @@
             "no": "Hvem er en kvinne?",
             "tr": "Kim bir kadındır?",
             "uk": "Хто жінка?",
-            "zh": "谁是女人？"
+            "zh": "谁是女人？",
+            "it": "Chi è una donna?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "SHE"
@@ -1371,7 +1456,8 @@
             "no": "Hva er hun?",
             "tr": "O nedir?",
             "uk": "Хто вона є?",
-            "zh": "她是什么？"
+            "zh": "她是什么？",
+            "it": "Che cos'è lei?"
           },
           "choices": ["BE", "EAT", "READ", "SEE"],
           "answer": "BE"
@@ -1390,7 +1476,8 @@
             "no": "Hva er hun?",
             "tr": "O nedir?",
             "uk": "Хто вона?",
-            "zh": "她是什么？"
+            "zh": "她是什么？",
+            "it": "Che cos'è lei?"
           },
           "choices": ["WOMAN", "MAN", "BOY", "GIRL"],
           "answer": "WOMAN"
@@ -1413,7 +1500,8 @@
         "no": "Du er en jente.",
         "tr": "Sen bir kızsın.",
         "uk": "Ти дівчина.",
-        "zh": "你是一个女孩。"
+        "zh": "你是一个女孩。",
+        "it": "Tu sei una ragazza."
       },
       "surface": {
         "en": {
@@ -1479,6 +1567,11 @@
           "SECOND_PERSON": "你",
           "BE": "是",
           "GIRL": "女孩"
+        },
+        "it": {
+          "SECOND_PERSON": "tu",
+          "BE": "sei",
+          "GIRL": "ragazza"
         }
       },
       "questions": {
@@ -1496,7 +1589,8 @@
             "no": "Hvem er en jente?",
             "tr": "Kim bir kızdır?",
             "uk": "Хто дівчина?",
-            "zh": "谁是女孩？"
+            "zh": "谁是女孩？",
+            "it": "Chi è una ragazza?"
           },
           "choices": ["SECOND_PERSON", "FIRST_PERSON_SINGULAR", "HE", "SHE"],
           "answer": "SECOND_PERSON"
@@ -1515,7 +1609,8 @@
             "no": "Hva er du?",
             "tr": "Sen nesin?",
             "uk": "Хто ти є?",
-            "zh": "你是什么？"
+            "zh": "你是什么？",
+            "it": "Che cosa sei?"
           },
           "choices": ["BE", "EAT", "READ", "SEE"],
           "answer": "BE"
@@ -1534,7 +1629,8 @@
             "no": "Hva er du?",
             "tr": "Sen nesin?",
             "uk": "Хто ти?",
-            "zh": "你是什么？"
+            "zh": "你是什么？",
+            "it": "Che cosa sei?"
           },
           "choices": ["GIRL", "BOY", "MAN", "WOMAN"],
           "answer": "GIRL"
@@ -1557,7 +1653,8 @@
         "no": "Han er en gutt.",
         "tr": "O bir oğlandır.",
         "uk": "Він хлопець.",
-        "zh": "他是一个男孩。"
+        "zh": "他是一个男孩。",
+        "it": "Lui è un ragazzo."
       },
       "surface": {
         "en": {
@@ -1623,6 +1720,11 @@
           "HE": "他",
           "BE": "是",
           "BOY": "男孩"
+        },
+        "it": {
+          "HE": "lui",
+          "BE": "è",
+          "BOY": "ragazzo"
         }
       },
       "questions": {
@@ -1640,7 +1742,8 @@
             "no": "Hvem er en gutt?",
             "tr": "Kim bir oğlandır?",
             "uk": "Хто хлопець?",
-            "zh": "谁是男孩？"
+            "zh": "谁是男孩？",
+            "it": "Chi è un ragazzo?"
           },
           "choices": ["HE", "SHE", "SECOND_PERSON", "FIRST_PERSON_SINGULAR"],
           "answer": "HE"
@@ -1659,7 +1762,8 @@
             "no": "Hva er han?",
             "tr": "O nedir?",
             "uk": "Хто він є?",
-            "zh": "他是什么？"
+            "zh": "他是什么？",
+            "it": "Che cos'è lui?"
           },
           "choices": ["BE", "EAT", "READ", "SEE"],
           "answer": "BE"
@@ -1678,7 +1782,8 @@
             "no": "Hva er han?",
             "tr": "O nedir?",
             "uk": "Хто він?",
-            "zh": "他是什么？"
+            "zh": "他是什么？",
+            "it": "Che cos'è lui?"
           },
           "choices": ["BOY", "GIRL", "MAN", "WOMAN"],
           "answer": "BOY"
@@ -1701,7 +1806,8 @@
         "no": "Vi slutter å spise.",
         "tr": "Biz yemeyi bırakırız.",
         "uk": "Ми перестаємо їсти.",
-        "zh": "我们停止吃饭。"
+        "zh": "我们停止吃饭。",
+        "it": "Noi smettiamo di mangiare."
       },
       "surface": {
         "en": {
@@ -1768,6 +1874,11 @@
           "FIRST_PERSON_PLURAL": "我们",
           "STOP": "停止",
           "EAT": "吃饭"
+        },
+        "it": {
+          "FIRST_PERSON_PLURAL": "noi",
+          "STOP": "smettiamo di",
+          "EAT": "mangiare"
         }
       },
       "questions": {
@@ -1785,7 +1896,8 @@
             "no": "Hvem slutter å spise?",
             "tr": "Kim yemeyi bırakır?",
             "uk": "Хто перестає їсти?",
-            "zh": "谁停止吃饭？"
+            "zh": "谁停止吃饭？",
+            "it": "Chi smette di mangiare?"
           },
           "choices": ["FIRST_PERSON_PLURAL", "FIRST_PERSON_SINGULAR", "HE", "SHE"],
           "answer": "FIRST_PERSON_PLURAL"
@@ -1804,7 +1916,8 @@
             "no": "Hva gjør vi?",
             "tr": "Biz ne yaparız?",
             "uk": "Що ми робимо?",
-            "zh": "我们做什么？"
+            "zh": "我们做什么？",
+            "it": "Che cosa facciamo?"
           },
           "choices": ["STOP", "EAT", "READ", "SEE"],
           "answer": "STOP"
@@ -1827,7 +1940,8 @@
         "no": "De begynner å sove.",
         "tr": "Onlar uyumaya başlarlar.",
         "uk": "Вони починають спати.",
-        "zh": "他们开始睡觉。"
+        "zh": "他们开始睡觉。",
+        "it": "Loro iniziano a dormire."
       },
       "surface": {
         "en": {
@@ -1894,6 +2008,11 @@
           "THIRD_PERSON_PLURAL": "他们",
           "START": "开始",
           "SLEEP": "睡觉"
+        },
+        "it": {
+          "THIRD_PERSON_PLURAL": "loro",
+          "START": "iniziano",
+          "SLEEP": "a dormire"
         }
       },
       "questions": {
@@ -1911,7 +2030,8 @@
             "no": "Hvem begynner å sove?",
             "tr": "Kim uyumaya başlar?",
             "uk": "Хто починає спати?",
-            "zh": "谁开始睡觉？"
+            "zh": "谁开始睡觉？",
+            "it": "Chi inizia a dormire?"
           },
           "choices": ["THIRD_PERSON_PLURAL", "FIRST_PERSON_PLURAL", "HE", "SHE"],
           "answer": "THIRD_PERSON_PLURAL"
@@ -1930,7 +2050,8 @@
             "no": "Hva gjør de?",
             "tr": "Onlar ne yaparlar?",
             "uk": "Що вони роблять?",
-            "zh": "他们做什么？"
+            "zh": "他们做什么？",
+            "it": "Che cosa fanno?"
           },
           "choices": ["START", "SLEEP", "READ", "EAT"],
           "answer": "START"
@@ -1953,7 +2074,8 @@
         "no": "Han ser en skjorte.",
         "tr": "O bir gömlek görür.",
         "uk": "Він бачить сорочку.",
-        "zh": "他看见一件衬衫。"
+        "zh": "他看见一件衬衫。",
+        "it": "Lui vede una camicia."
       },
       "surface": {
         "en": {
@@ -2020,6 +2142,11 @@
           "HE": "他",
           "SEE": "看见",
           "SHIRT": "衬衫"
+        },
+        "it": {
+          "HE": "lui",
+          "SEE": "vede",
+          "SHIRT": "camicia"
         }
       },
       "questions": {
@@ -2037,7 +2164,8 @@
             "no": "Hvem ser en skjorte?",
             "tr": "Kim bir gömlek görür?",
             "uk": "Хто бачить сорочку?",
-            "zh": "谁看见衬衫？"
+            "zh": "谁看见衬衫？",
+            "it": "Chi vede una camicia?"
           },
           "choices": ["HE", "SHE", "SECOND_PERSON", "FIRST_PERSON_SINGULAR"],
           "answer": "HE"
@@ -2056,7 +2184,8 @@
             "no": "Hva gjør han?",
             "tr": "O ne yapar?",
             "uk": "Що він робить?",
-            "zh": "他做什么？"
+            "zh": "他做什么？",
+            "it": "Che cosa fa lui?"
           },
           "choices": ["SEE", "READ", "EAT", "SLEEP"],
           "answer": "SEE"
@@ -2075,7 +2204,8 @@
             "no": "Hva ser han?",
             "tr": "O ne görür?",
             "uk": "Що він бачить?",
-            "zh": "他看见什么？"
+            "zh": "他看见什么？",
+            "it": "Che cosa vede lui?"
           },
           "choices": ["SHIRT", "BOOK", "PHONE", "FOOD"],
           "answer": "SHIRT"
@@ -2098,7 +2228,8 @@
         "no": "Jeg går hjem.",
         "tr": "Ben eve giderim.",
         "uk": "Я йду додому.",
-        "zh": "我回家。"
+        "zh": "我回家。",
+        "it": "Io vado a casa."
       },
       "surface": {
         "en": {
@@ -2165,6 +2296,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "GO": "回",
           "HOME": "家"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "GO": "vado",
+          "HOME": "a casa"
         }
       },
       "questions": {
@@ -2182,7 +2318,8 @@
             "no": "Hvem går hjem?",
             "tr": "Kim eve gider?",
             "uk": "Хто йде додому?",
-            "zh": "谁回家？"
+            "zh": "谁回家？",
+            "it": "Chi va a casa?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -2201,7 +2338,8 @@
             "no": "Hva gjør jeg?",
             "tr": "Ben ne yaparım?",
             "uk": "Що я роблю?",
-            "zh": "我做什么？"
+            "zh": "我做什么？",
+            "it": "Che cosa faccio?"
           },
           "choices": ["GO", "EAT", "READ", "SEE"],
           "answer": "GO"
@@ -2220,7 +2358,8 @@
             "no": "Hvor går jeg?",
             "tr": "Ben nereye giderim?",
             "uk": "Куди я йду?",
-            "zh": "我去哪里？"
+            "zh": "我去哪里？",
+            "it": "Dove vado?"
           },
           "choices": ["HOME", "ROOM", "JOB", "HOUSE"],
           "answer": "HOME"
@@ -2243,7 +2382,8 @@
         "no": "Jeg bruker en telefon.",
         "tr": "Ben bir telefon kullanırım.",
         "uk": "Я використовую телефон.",
-        "zh": "我用一部手机。"
+        "zh": "我用一部手机。",
+        "it": "Io uso un telefono."
       },
       "surface": {
         "en": {
@@ -2310,6 +2450,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "USE": "用",
           "PHONE": "手机"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "USE": "uso",
+          "PHONE": "telefono"
         }
       },
       "questions": {
@@ -2327,7 +2472,8 @@
             "no": "Hvem bruker en telefon?",
             "tr": "Kim bir telefon kullanır?",
             "uk": "Хто використовує телефон?",
-            "zh": "谁用手机？"
+            "zh": "谁用手机？",
+            "it": "Chi usa un telefono?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -2346,7 +2492,8 @@
             "no": "Hva gjør jeg?",
             "tr": "Ben ne yaparım?",
             "uk": "Що я роблю?",
-            "zh": "我做什么？"
+            "zh": "我做什么？",
+            "it": "Che cosa faccio?"
           },
           "choices": ["USE", "READ", "EAT", "SEE"],
           "answer": "USE"
@@ -2365,7 +2512,8 @@
             "no": "Hva bruker jeg?",
             "tr": "Ben ne kullanırım?",
             "uk": "Що я використовую?",
-            "zh": "我用什么？"
+            "zh": "我用什么？",
+            "it": "Che cosa uso?"
           },
           "choices": ["PHONE", "BOOK", "FOOD", "JOB"],
           "answer": "PHONE"
@@ -2388,7 +2536,8 @@
         "no": "Jeg får en bok.",
         "tr": "Ben bir kitap alırım.",
         "uk": "Я отримую книгу.",
-        "zh": "我拿到一本书。"
+        "zh": "我拿到一本书。",
+        "it": "Io prendo un libro."
       },
       "surface": {
         "en": {
@@ -2455,6 +2604,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "GET": "拿到",
           "BOOK": "书"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "GET": "prendo",
+          "BOOK": "libro"
         }
       },
       "questions": {
@@ -2472,7 +2626,8 @@
             "no": "Hvem får en bok?",
             "tr": "Kim bir kitap alır?",
             "uk": "Хто отримує книгу?",
-            "zh": "谁拿到书？"
+            "zh": "谁拿到书？",
+            "it": "Chi prende un libro?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -2491,7 +2646,8 @@
             "no": "Hva gjør jeg?",
             "tr": "Ben ne yaparım?",
             "uk": "Що я роблю?",
-            "zh": "我做什么？"
+            "zh": "我做什么？",
+            "it": "Che cosa faccio?"
           },
           "choices": ["GET", "READ", "EAT", "SEE"],
           "answer": "GET"
@@ -2510,7 +2666,8 @@
             "no": "Hva får jeg?",
             "tr": "Ben ne alırım?",
             "uk": "Що я отримую?",
-            "zh": "我拿到什么？"
+            "zh": "我拿到什么？",
+            "it": "Che cosa prendo?"
           },
           "choices": ["BOOK", "PHONE", "FOOD", "JOB"],
           "answer": "BOOK"
@@ -2533,7 +2690,8 @@
         "no": "Jeg ser et hus.",
         "tr": "Ben bir ev görürüm.",
         "uk": "Я бачу будинок.",
-        "zh": "我看见一座房子。"
+        "zh": "我看见一座房子。",
+        "it": "Io vedo una casa."
       },
       "surface": {
         "en": {
@@ -2600,6 +2758,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "SEE": "看见",
           "HOUSE": "房子"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "SEE": "vedo",
+          "HOUSE": "casa"
         }
       },
       "questions": {
@@ -2617,7 +2780,8 @@
             "no": "Hvem ser et hus?",
             "tr": "Kim bir ev görür?",
             "uk": "Хто бачить будинок?",
-            "zh": "谁看见房子？"
+            "zh": "谁看见房子？",
+            "it": "Chi vede una casa?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -2636,7 +2800,8 @@
             "no": "Hva gjør jeg?",
             "tr": "Ben ne yaparım?",
             "uk": "Що я роблю?",
-            "zh": "我做什么？"
+            "zh": "我做什么？",
+            "it": "Che cosa faccio?"
           },
           "choices": ["SEE", "READ", "EAT", "SLEEP"],
           "answer": "SEE"
@@ -2655,7 +2820,8 @@
             "no": "Hva ser jeg?",
             "tr": "Ben ne görürüm?",
             "uk": "Що я бачу?",
-            "zh": "我看见什么？"
+            "zh": "我看见什么？",
+            "it": "Che cosa vedo?"
           },
           "choices": ["HOUSE", "BOOK", "PHONE", "FOOD"],
           "answer": "HOUSE"
@@ -2678,7 +2844,8 @@
         "no": "Hun ser et rom.",
         "tr": "O bir oda görür.",
         "uk": "Вона бачить кімнату.",
-        "zh": "她看见一个房间。"
+        "zh": "她看见一个房间。",
+        "it": "Lei vede una stanza."
       },
       "surface": {
         "en": {
@@ -2745,6 +2912,11 @@
           "SHE": "她",
           "SEE": "看见",
           "ROOM": "房间"
+        },
+        "it": {
+          "SHE": "lei",
+          "SEE": "vede",
+          "ROOM": "stanza"
         }
       },
       "questions": {
@@ -2762,7 +2934,8 @@
             "no": "Hvem ser et rom?",
             "tr": "Kim bir oda görür?",
             "uk": "Хто бачить кімнату?",
-            "zh": "谁看见房间？"
+            "zh": "谁看见房间？",
+            "it": "Chi vede una stanza?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "SHE"
@@ -2781,7 +2954,8 @@
             "no": "Hva gjør hun?",
             "tr": "O ne yapar?",
             "uk": "Що вона робить?",
-            "zh": "她做什么？"
+            "zh": "她做什么？",
+            "it": "Che cosa fa lei?"
           },
           "choices": ["SEE", "READ", "EAT", "SLEEP"],
           "answer": "SEE"
@@ -2800,7 +2974,8 @@
             "no": "Hva ser hun?",
             "tr": "O ne görür?",
             "uk": "Що вона бачить?",
-            "zh": "她看见什么？"
+            "zh": "她看见什么？",
+            "it": "Che cosa vede lei?"
           },
           "choices": ["ROOM", "BOOK", "PHONE", "FOOD"],
           "answer": "ROOM"
@@ -2823,7 +2998,8 @@
         "no": "Jeg har en skjorte.",
         "tr": "Benim bir gömleğim var.",
         "uk": "Я маю сорочку.",
-        "zh": "我有一件衬衫。"
+        "zh": "我有一件衬衫。",
+        "it": "Io ho una camicia."
       },
       "surface": {
         "en": {
@@ -2890,6 +3066,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "HAVE": "有",
           "SHIRT": "衬衫"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "HAVE": "ho",
+          "SHIRT": "camicia"
         }
       },
       "questions": {
@@ -2907,7 +3088,8 @@
             "no": "Hvem har en skjorte?",
             "tr": "Kimin bir gömleği var?",
             "uk": "Хто має сорочку?",
-            "zh": "谁有衬衫？"
+            "zh": "谁有衬衫？",
+            "it": "Chi ha una camicia?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "FIRST_PERSON_SINGULAR"
@@ -2926,7 +3108,8 @@
             "no": "Hva gjør jeg?",
             "tr": "Ben ne yaparım?",
             "uk": "Що я роблю?",
-            "zh": "我做什么？"
+            "zh": "我做什么？",
+            "it": "Che cosa faccio?"
           },
           "choices": ["HAVE", "READ", "EAT", "SEE"],
           "answer": "HAVE"
@@ -2945,7 +3128,8 @@
             "no": "Hva har jeg?",
             "tr": "Benim neyim var?",
             "uk": "Що я маю?",
-            "zh": "我有什么？"
+            "zh": "我有什么？",
+            "it": "Che cosa ho?"
           },
           "choices": ["SHIRT", "BOOK", "PHONE", "FOOD"],
           "answer": "SHIRT"
@@ -2968,7 +3152,8 @@
         "no": "Hun har sko.",
         "tr": "Onun ayakkabıları var.",
         "uk": "Вона має взуття.",
-        "zh": "她有鞋子。"
+        "zh": "她有鞋子。",
+        "it": "Lei ha delle scarpe."
       },
       "surface": {
         "en": {
@@ -3035,6 +3220,11 @@
           "SHE": "她",
           "HAVE": "有",
           "SHOES": "鞋子"
+        },
+        "it": {
+          "SHE": "lei",
+          "HAVE": "ha",
+          "SHOES": "scarpe"
         }
       },
       "questions": {
@@ -3052,7 +3242,8 @@
             "no": "Hvem har sko?",
             "tr": "Kimin ayakkabıları var?",
             "uk": "Хто має взуття?",
-            "zh": "谁有鞋子？"
+            "zh": "谁有鞋子？",
+            "it": "Chi ha delle scarpe?"
           },
           "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
           "answer": "SHE"
@@ -3071,7 +3262,8 @@
             "no": "Hva gjør hun?",
             "tr": "O ne yapar?",
             "uk": "Що вона робить?",
-            "zh": "她做什么？"
+            "zh": "她做什么？",
+            "it": "Che cosa fa lei?"
           },
           "choices": ["HAVE", "READ", "EAT", "SEE"],
           "answer": "HAVE"
@@ -3090,7 +3282,8 @@
             "no": "Hva har hun?",
             "tr": "Onun neyi var?",
             "uk": "Що вона має?",
-            "zh": "她有什么？"
+            "zh": "她有什么？",
+            "it": "Che cosa ha lei?"
           },
           "choices": ["SHOES", "BOOK", "PHONE", "FOOD"],
           "answer": "SHOES"
@@ -3113,7 +3306,8 @@
         "no": "De har en bukse.",
         "tr": "Onların pantolonları var.",
         "uk": "Вони мають штани.",
-        "zh": "他们有裤子。"
+        "zh": "他们有裤子。",
+        "it": "Loro hanno dei pantaloni."
       },
       "surface": {
         "en": {
@@ -3180,6 +3374,11 @@
           "THIRD_PERSON_PLURAL": "他们",
           "HAVE": "有",
           "PANTS": "裤子"
+        },
+        "it": {
+          "THIRD_PERSON_PLURAL": "loro",
+          "HAVE": "hanno",
+          "PANTS": "pantaloni"
         }
       }
     },
@@ -3199,7 +3398,8 @@
         "no": "Vi har klær.",
         "tr": "Bizim kıyafetlerimiz var.",
         "uk": "Ми маємо одяг.",
-        "zh": "我们有衣服。"
+        "zh": "我们有衣服。",
+        "it": "Noi abbiamo dei vestiti."
       },
       "surface": {
         "en": {
@@ -3266,6 +3466,11 @@
           "FIRST_PERSON_PLURAL": "我们",
           "HAVE": "有",
           "CLOTHES": "衣服"
+        },
+        "it": {
+          "FIRST_PERSON_PLURAL": "noi",
+          "HAVE": "abbiamo",
+          "CLOTHES": "vestiti"
         }
       }
     },
@@ -3285,7 +3490,8 @@
         "no": "Jeg spiser frokost.",
         "tr": "Ben kahvaltı yaparım.",
         "uk": "Я їм сніданок.",
-        "zh": "我吃早餐。"
+        "zh": "我吃早餐。",
+        "it": "Io mangio la colazione."
       },
       "surface": {
         "en": {
@@ -3352,6 +3558,11 @@
           "FIRST_PERSON_SINGULAR": "我",
           "EAT": "吃",
           "BREAKFAST": "早餐"
+        },
+        "it": {
+          "FIRST_PERSON_SINGULAR": "io",
+          "EAT": "mangio",
+          "BREAKFAST": "colazione"
         }
       }
     },
@@ -3371,7 +3582,8 @@
         "no": "Vi spiser lunsj.",
         "tr": "Biz öğle yemeği yeriz.",
         "uk": "Ми їмо обід.",
-        "zh": "我们吃午餐。"
+        "zh": "我们吃午餐。",
+        "it": "Noi mangiamo il pranzo."
       },
       "surface": {
         "en": {
@@ -3438,6 +3650,11 @@
           "FIRST_PERSON_PLURAL": "我们",
           "EAT": "吃",
           "LUNCH": "午餐"
+        },
+        "it": {
+          "FIRST_PERSON_PLURAL": "noi",
+          "EAT": "mangiamo",
+          "LUNCH": "pranzo"
         }
       }
     },
@@ -3457,7 +3674,8 @@
         "no": "De spiser middag.",
         "tr": "Onlar akşam yemeği yerler.",
         "uk": "Вони їдять вечерю.",
-        "zh": "他们吃晚餐。"
+        "zh": "他们吃晚餐。",
+        "it": "Loro mangiano la cena."
       },
       "surface": {
         "en": {
@@ -3524,6 +3742,11 @@
           "THIRD_PERSON_PLURAL": "他们",
           "EAT": "吃",
           "DINNER": "晚餐"
+        },
+        "it": {
+          "THIRD_PERSON_PLURAL": "loro",
+          "EAT": "mangiano",
+          "DINNER": "cena"
         }
       }
     },
@@ -3543,7 +3766,8 @@
         "no": "Dette er hånden min.",
         "tr": "Bu benim elimdir.",
         "uk": "Це моя рука.",
-        "zh": "这是我的手。"
+        "zh": "这是我的手。",
+        "it": "Questa è la mia mano."
       },
       "surface": {
         "en": {
@@ -3622,6 +3846,12 @@
           "BE": "是",
           "MY": "我的",
           "HAND": "手"
+        },
+        "it": {
+          "THIS": "questa",
+          "BE": "è",
+          "MY": "mia",
+          "HAND": "mano"
         }
       }
     },
@@ -3641,7 +3871,8 @@
         "no": "Dette er hodet ditt.",
         "tr": "Bu senin başındır.",
         "uk": "Це твоя голова.",
-        "zh": "这是你的头。"
+        "zh": "这是你的头。",
+        "it": "Questa è la tua testa."
       },
       "surface": {
         "en": {
@@ -3720,6 +3951,12 @@
           "BE": "是",
           "YOUR": "你的",
           "HEAD": "头"
+        },
+        "it": {
+          "THIS": "questa",
+          "BE": "è",
+          "YOUR": "tua",
+          "HEAD": "testa"
         }
       }
     },
@@ -3739,7 +3976,8 @@
         "no": "Det er armen min.",
         "tr": "Şu benim kolumdur.",
         "uk": "То моя рука.",
-        "zh": "那是我的手臂。"
+        "zh": "那是我的手臂。",
+        "it": "Quello è il mio braccio."
       },
       "surface": {
         "en": {
@@ -3818,6 +4056,12 @@
           "BE": "是",
           "MY": "我的",
           "ARM": "手臂"
+        },
+        "it": {
+          "THAT": "quello",
+          "BE": "è",
+          "MY": "mio",
+          "ARM": "braccio"
         }
       }
     },
@@ -3837,7 +4081,8 @@
         "no": "Det er beinet ditt.",
         "tr": "Şu senin bacağındır.",
         "uk": "То твоя нога.",
-        "zh": "那是你的腿。"
+        "zh": "那是你的腿。",
+        "it": "Quella è la tua gamba."
       },
       "surface": {
         "en": {
@@ -3916,6 +4161,12 @@
           "BE": "是",
           "YOUR": "你的",
           "LEG": "腿"
+        },
+        "it": {
+          "THAT": "quella",
+          "BE": "è",
+          "YOUR": "tua",
+          "LEG": "gamba"
         }
       }
     },
@@ -3935,7 +4186,8 @@
         "no": "Hun er moren min.",
         "tr": "O benim annemdir.",
         "uk": "Вона моя мама.",
-        "zh": "她是我的妈妈。"
+        "zh": "她是我的妈妈。",
+        "it": "Lei è la mia mamma."
       },
       "surface": {
         "en": {
@@ -4014,6 +4266,12 @@
           "BE": "是",
           "MY": "我的",
           "MOM": "妈妈"
+        },
+        "it": {
+          "SHE": "lei",
+          "BE": "è",
+          "MY": "mia",
+          "MOM": "mamma"
         }
       }
     },
@@ -4033,7 +4291,8 @@
         "no": "Han er faren min.",
         "tr": "O benim babamdır.",
         "uk": "Він мій тато.",
-        "zh": "他是我的爸爸。"
+        "zh": "他是我的爸爸。",
+        "it": "Lui è il mio papà."
       },
       "surface": {
         "en": {
@@ -4112,6 +4371,12 @@
           "BE": "是",
           "MY": "我的",
           "DAD": "爸爸"
+        },
+        "it": {
+          "HE": "lui",
+          "BE": "è",
+          "MY": "mio",
+          "DAD": "papà"
         }
       }
     },
@@ -4131,7 +4396,8 @@
         "no": "Dette er hånden min, og dette er hodet ditt.",
         "tr": "Bu benim elim ve bu senin başın.",
         "uk": "Це моя рука, а це твоя голова.",
-        "zh": "这是我的手，这是你的头。"
+        "zh": "这是我的手，这是你的头。",
+        "it": "Questa è la mia mano e questa è la tua testa."
       }
     },
     {
@@ -4150,7 +4416,8 @@
         "no": "Hun er moren min, og han er faren min.",
         "tr": "O benim annem ve o benim babam.",
         "uk": "Вона моя мама, а він мій тато.",
-        "zh": "她是我的妈妈，他是我的爸爸。"
+        "zh": "她是我的妈妈，他是我的爸爸。",
+        "it": "Lei è la mia mamma e lui è il mio papà."
       }
     },
     {
@@ -4169,7 +4436,8 @@
         "uk": "Я їм і п'ю.",
         "zh": "我吃也喝。",
         "pt": "Eu como e bebo.",
-        "ar": "أنا آكل وأشرب."
+        "ar": "أنا آكل وأشرب.",
+        "it": "Io mangio e bevo."
       }
     },
     {
@@ -4188,7 +4456,8 @@
         "uk": "Він їсть сніданок, але не обід.",
         "zh": "他吃早餐，但不吃午餐。",
         "pt": "Ele come café da manhã, mas não almoço.",
-        "ar": "هو يأكل الفطور لكن ليس الغداء."
+        "ar": "هو يأكل الفطور لكن ليس الغداء.",
+        "it": "Lui mangia la colazione ma non il pranzo."
       }
     },
     {
@@ -4207,7 +4476,8 @@
         "uk": "Вона йде до своєї кімнати.",
         "zh": "她去她的房间。",
         "pt": "Ela vai para o quarto dela.",
-        "ar": "هي تذهب إلى غرفتها."
+        "ar": "هي تذهب إلى غرفتها.",
+        "it": "Lei va nella sua stanza."
       }
     },
     {
@@ -4235,7 +4505,8 @@
         "uk": "Це гарна книга.",
         "zh": "这是一本好书。",
         "pt": "Este é um bom livro.",
-        "ar": "هذا كتاب جيد."
+        "ar": "هذا كتاب جيد.",
+        "it": "Questo è un buon libro."
       }
     },
     {
@@ -4263,7 +4534,8 @@
         "uk": "Це твій телефон?",
         "zh": "那是你的手机吗？",
         "pt": "Esse é o seu telefone?",
-        "ar": "هل ذلك هاتفك؟"
+        "ar": "هل ذلك هاتفك؟",
+        "it": "È quello il tuo telefono?"
       }
     },
     {
@@ -4298,7 +4570,8 @@
         "uk": "Він вечеряє зі своєю мамою, тому що він удома.",
         "zh": "他和他的妈妈一起吃晚餐，因为他在家。",
         "pt": "Ele janta com a mãe dele porque está em casa.",
-        "ar": "هو يأكل العشاء مع أمه لأنه في المنزل."
+        "ar": "هو يأكل العشاء مع أمه لأنه في المنزل.",
+        "it": "Lui mangia la cena con la sua mamma perché è a casa."
       }
     },
     {
@@ -4332,7 +4605,8 @@
         "uk": "Якщо він удома, він їсть зі своєю донькою.",
         "zh": "如果他在家，他就和他的女儿一起吃。",
         "pt": "Se ele está em casa, ele come com a filha dele.",
-        "ar": "إذا كان في المنزل، فإنه يأكل مع ابنته."
+        "ar": "إذا كان في المنزل، فإنه يأكل مع ابنته.",
+        "it": "Se lui è a casa, mangia con sua figlia."
       }
     },
     {
@@ -4359,7 +4633,8 @@
         "uk": "Книга червона.",
         "zh": "这本书是红色的。",
         "pt": "O livro é vermelho.",
-        "ar": "الكتاب أحمر."
+        "ar": "الكتاب أحمر.",
+        "it": "Il libro è rosso."
       }
     },
     {
@@ -4386,7 +4661,8 @@
         "uk": "Телефон синій.",
         "zh": "这部手机是蓝色的。",
         "pt": "O telefone é azul.",
-        "ar": "الهاتف أزرق."
+        "ar": "الهاتف أزرق.",
+        "it": "Il telefono è blu."
       }
     },
     {
@@ -4408,7 +4684,8 @@
         "uk": "Сорочка зелена.",
         "zh": "这件衬衫是绿色的。",
         "pt": "A camisa é verde.",
-        "ar": "القميص أخضر."
+        "ar": "القميص أخضر.",
+        "it": "La camicia è verde."
       }
     },
     {
@@ -4430,7 +4707,8 @@
         "uk": "Будинок білий.",
         "zh": "这座房子是白色的。",
         "pt": "A casa é branca.",
-        "ar": "البيت أبيض."
+        "ar": "البيت أبيض.",
+        "it": "La casa è bianca."
       }
     },
     {
@@ -4452,7 +4730,8 @@
         "uk": "Штани чорні.",
         "zh": "这条裤子是黑色的。",
         "pt": "As calças são pretas.",
-        "ar": "البنطال أسود."
+        "ar": "البنطال أسود.",
+        "it": "I pantaloni sono neri."
       }
     },
     {
@@ -4474,7 +4753,8 @@
         "uk": "Я їм сьогодні.",
         "zh": "我今天吃。",
         "pt": "Eu como hoje.",
-        "ar": "أنا آكل اليوم."
+        "ar": "أنا آكل اليوم.",
+        "it": "Io mangio oggi."
       }
     },
     {
@@ -4496,7 +4776,8 @@
         "uk": "Він читає сьогодні.",
         "zh": "他今天读书。",
         "pt": "Ele lê hoje.",
-        "ar": "هو يقرأ اليوم."
+        "ar": "هو يقرأ اليوم.",
+        "it": "Lui legge oggi."
       }
     },
     {
@@ -4518,7 +4799,8 @@
         "uk": "Ми йдемо завтра.",
         "zh": "我们明天去。",
         "pt": "Nós vamos amanhã.",
-        "ar": "نحن نذهب غداً."
+        "ar": "نحن نذهب غداً.",
+        "it": "Noi andiamo domani."
       }
     },
     {
@@ -4540,7 +4822,8 @@
         "uk": "Я читаю зараз.",
         "zh": "我现在读书。",
         "pt": "Eu leio agora.",
-        "ar": "أنا أقرأ الآن."
+        "ar": "أنا أقرأ الآن.",
+        "it": "Io leggo adesso."
       }
     },
     {
@@ -4562,7 +4845,8 @@
         "uk": "Він працював учора.",
         "zh": "他昨天工作了。",
         "pt": "Ele trabalha ontem.",
-        "ar": "هو يعمل أمس."
+        "ar": "هو يعمل أمس.",
+        "it": "Lui ha lavorato ieri."
       }
     },
     {
@@ -4584,7 +4868,8 @@
         "uk": "Хто їсть?",
         "zh": "谁吃？",
         "pt": "Quem come?",
-        "ar": "من يأكل؟"
+        "ar": "من يأكل؟",
+        "it": "Chi mangia?"
       }
     },
     {
@@ -4606,7 +4891,8 @@
         "uk": "Чому ти йдеш?",
         "zh": "你为什么去？",
         "pt": "Por que você vai?",
-        "ar": "لماذا تذهب؟"
+        "ar": "لماذا تذهب؟",
+        "it": "Perché vai?"
       }
     },
     {
@@ -4628,7 +4914,8 @@
         "uk": "Коли ми їмо?",
         "zh": "我们什么时候吃？",
         "pt": "Quando nós comemos?",
-        "ar": "متى نأكل؟"
+        "ar": "متى نأكل؟",
+        "it": "Quando mangiamo?"
       }
     },
     {
@@ -4650,7 +4937,8 @@
         "uk": "Я їм перед тим.",
         "zh": "我之前吃。",
         "pt": "Eu como antes.",
-        "ar": "أنا آكل قبل."
+        "ar": "أنا آكل قبل.",
+        "it": "Io mangio prima."
       }
     },
     {
@@ -4672,7 +4960,8 @@
         "uk": "Ми йдемо після.",
         "zh": "我们之后去。",
         "pt": "Nós vamos depois.",
-        "ar": "نحن نذهب بعد."
+        "ar": "نحن نذهب بعد.",
+        "it": "Noi andiamo dopo."
       }
     },
     {
@@ -4694,7 +4983,8 @@
         "uk": "Де книга?",
         "zh": "书在哪里？",
         "pt": "Onde está o livro?",
-        "ar": "أين الكتاب؟"
+        "ar": "أين الكتاب؟",
+        "it": "Dov'è il libro?"
       }
     },
     {
@@ -4716,7 +5006,8 @@
         "uk": "Як ти читаєш?",
         "zh": "你怎么读？",
         "pt": "Como você lê?",
-        "ar": "كيف تقرأ؟"
+        "ar": "كيف تقرأ؟",
+        "it": "Come leggi?"
       }
     },
     {
@@ -4738,7 +5029,8 @@
         "uk": "Що я маю?",
         "zh": "我有什么？",
         "pt": "O que eu tenho?",
-        "ar": "ماذا لدي؟"
+        "ar": "ماذا لدي؟",
+        "it": "Che cosa ho?"
       }
     },
     {
@@ -4760,7 +5052,8 @@
         "uk": "Яка книга?",
         "zh": "哪本书？",
         "pt": "Qual livro?",
-        "ar": "أي كتاب؟"
+        "ar": "أي كتاب؟",
+        "it": "Quale libro?"
       }
     },
     {
@@ -4782,7 +5075,8 @@
         "uk": "Ми їмо все.",
         "zh": "我们全部吃。",
         "pt": "Nós comemos tudo.",
-        "ar": "نحن نأكل كل شيء."
+        "ar": "نحن نأكل كل شيء.",
+        "it": "Noi mangiamo tutto."
       }
     },
     {
@@ -4804,7 +5098,8 @@
         "uk": "Книга на цьому.",
         "zh": "书在这上面。",
         "pt": "O livro está sobre isto.",
-        "ar": "الكتاب على هذا."
+        "ar": "الكتاب على هذا.",
+        "it": "Il libro è su questo."
       }
     },
     {
@@ -4826,7 +5121,8 @@
         "uk": "Телефон у тому.",
         "zh": "手机在那里面。",
         "pt": "O telefone está dentro daquilo.",
-        "ar": "الهاتف في ذلك."
+        "ar": "الهاتف في ذلك.",
+        "it": "Il telefono è in quello."
       }
     },
     {
@@ -4848,7 +5144,8 @@
         "uk": "Взуття під цим.",
         "zh": "鞋子在这下面。",
         "pt": "Os sapatos estão debaixo disto.",
-        "ar": "الأحذية تحت هذا."
+        "ar": "الأحذية تحت هذا.",
+        "it": "Le scarpe sono sotto questo."
       }
     },
     {
@@ -4870,7 +5167,8 @@
         "uk": "Книга поруч із телефоном.",
         "zh": "书在手机旁边。",
         "pt": "O livro está ao lado do telefone.",
-        "ar": "الكتاب بجانب الهاتف."
+        "ar": "الكتاب بجانب الهاتف.",
+        "it": "Il libro è accanto al telefono."
       }
     },
     {
@@ -4892,7 +5190,8 @@
         "uk": "Телефон перед книгою.",
         "zh": "手机在书前面。",
         "pt": "O telefone está na frente do livro.",
-        "ar": "الهاتف أمام الكتاب."
+        "ar": "الهاتف أمام الكتاب.",
+        "it": "Il telefono è davanti al libro."
       }
     },
     {
@@ -4914,7 +5213,8 @@
         "uk": "Книга за телефоном.",
         "zh": "书在手机后面。",
         "pt": "O livro está atrás do telefone.",
-        "ar": "الكتاب خلف الهاتف."
+        "ar": "الكتاب خلف الهاتف.",
+        "it": "Il libro è dietro il telefono."
       }
     },
     {
@@ -4936,7 +5236,8 @@
         "uk": "Телефон не на цьому.",
         "zh": "手机离开了这个。",
         "pt": "O telefone está fora disto.",
-        "ar": "الهاتف بعيد عن هذا."
+        "ar": "الهاتف بعيد عن هذا.",
+        "it": "Il telefono è fuori da questo."
       }
     },
     {
@@ -4958,7 +5259,8 @@
         "uk": "Книга між цим і тим.",
         "zh": "书在这个和那个之间。",
         "pt": "O livro está entre isto e aquilo.",
-        "ar": "الكتاب بين هذا وذلك."
+        "ar": "الكتاب بين هذا وذلك.",
+        "it": "Il libro è tra questo e quello."
       }
     },
     {
@@ -4980,7 +5282,8 @@
         "uk": "Взуття в цьому.",
         "zh": "鞋子在这里面。",
         "pt": "Os sapatos estão dentro disto.",
-        "ar": "الأحذية في هذا."
+        "ar": "الأحذية في هذا.",
+        "it": "Le scarpe sono in questo."
       }
     },
     {
@@ -5002,7 +5305,8 @@
         "uk": "Телефон на тому.",
         "zh": "手机在那上面。",
         "pt": "O telefone está sobre aquilo.",
-        "ar": "الهاتف على ذلك."
+        "ar": "الهاتف على ذلك.",
+        "it": "Il telefono è su quello."
       }
     },
     {
@@ -5024,7 +5328,8 @@
         "uk": "Ми повертаємося.",
         "zh": "我们回去。",
         "pt": "Nós voltamos.",
-        "ar": "نحن نعود."
+        "ar": "نحن نعود.",
+        "it": "Noi torniamo indietro."
       }
     },
     {
@@ -5046,7 +5351,8 @@
         "uk": "Я виходжу.",
         "zh": "我出去。",
         "pt": "Eu saio.",
-        "ar": "أنا أخرج."
+        "ar": "أنا أخرج.",
+        "it": "Io esco."
       }
     },
     {
@@ -5068,7 +5374,8 @@
         "uk": "Ми йдемо на північ.",
         "zh": "我们往北走。",
         "pt": "Nós vamos para o norte.",
-        "ar": "نحن نذهب شمالاً."
+        "ar": "نحن نذهب شمالاً.",
+        "it": "Noi andiamo a nord."
       }
     },
     {
@@ -5090,7 +5397,8 @@
         "uk": "Ми йдемо на південь.",
         "zh": "我们往南走。",
         "pt": "Nós vamos para o sul.",
-        "ar": "نحن نذهب جنوباً."
+        "ar": "نحن نذهب جنوباً.",
+        "it": "Noi andiamo a sud."
       }
     },
     {
@@ -5112,7 +5420,8 @@
         "uk": "Ми йдемо на схід.",
         "zh": "我们往东走。",
         "pt": "Nós vamos para o leste.",
-        "ar": "نحن نذهب شرقاً."
+        "ar": "نحن نذهب شرقاً.",
+        "it": "Noi andiamo a est."
       }
     },
     {
@@ -5134,7 +5443,8 @@
         "uk": "Ми йдемо на захід.",
         "zh": "我们往西走。",
         "pt": "Nós vamos para o oeste.",
-        "ar": "نحن نذهب غرباً."
+        "ar": "نحن نذهب غرباً.",
+        "it": "Noi andiamo a ovest."
       }
     },
     {
@@ -5156,7 +5466,8 @@
         "uk": "Книга довга.",
         "zh": "这本书很长。",
         "pt": "O livro é longo.",
-        "ar": "الكتاب طويل."
+        "ar": "الكتاب طويل.",
+        "it": "Il libro è lungo."
       }
     },
     {
@@ -5178,7 +5489,8 @@
         "uk": "День короткий.",
         "zh": "白天很短。",
         "pt": "O dia é curto.",
-        "ar": "اليوم قصير."
+        "ar": "اليوم قصير.",
+        "it": "Il giorno è corto."
       }
     },
     {
@@ -5200,7 +5512,8 @@
         "uk": "Книга важка.",
         "zh": "这本书很重。",
         "pt": "O livro é pesado.",
-        "ar": "الكتاب ثقيل."
+        "ar": "الكتاب ثقيل.",
+        "it": "Il libro è pesante."
       }
     },
     {
@@ -5222,7 +5535,8 @@
         "uk": "Телефон легкий.",
         "zh": "这部手机很轻。",
         "pt": "O telefone é leve.",
-        "ar": "الهاتف خفيف."
+        "ar": "الهاتف خفيف.",
+        "it": "Il telefono è leggero."
       }
     },
     {
@@ -5244,7 +5558,8 @@
         "uk": "Ніч темна.",
         "zh": "夜晚很黑。",
         "pt": "A noite é escura.",
-        "ar": "الليل مظلم."
+        "ar": "الليل مظلم.",
+        "it": "La notte è buia."
       }
     },
     {
@@ -5266,7 +5581,8 @@
         "uk": "Хлопець молодий.",
         "zh": "这个男孩很年轻。",
         "pt": "O menino é jovem.",
-        "ar": "الولد صغير."
+        "ar": "الولد صغير.",
+        "it": "Il ragazzo è giovane."
       }
     },
     {
@@ -5288,7 +5604,8 @@
         "uk": "Книга легка.",
         "zh": "这本书很容易。",
         "pt": "O livro é fácil.",
-        "ar": "الكتاب سهل."
+        "ar": "الكتاب سهل.",
+        "it": "Il libro è facile."
       }
     },
     {
@@ -5310,7 +5627,8 @@
         "uk": "Книга важка для розуміння.",
         "zh": "这本书很难。",
         "pt": "O livro é difícil.",
-        "ar": "الكتاب صعب."
+        "ar": "الكتاب صعب.",
+        "it": "Il libro è difficile."
       }
     },
     {
@@ -5332,7 +5650,8 @@
         "uk": "Це праворуч.",
         "zh": "这是右边。",
         "pt": "Isto é à direita.",
-        "ar": "هذا يمين."
+        "ar": "هذا يمين.",
+        "it": "Questo è a destra."
       }
     },
     {
@@ -5354,7 +5673,8 @@
         "uk": "Це ліворуч.",
         "zh": "这是左边。",
         "pt": "Isto é à esquerda.",
-        "ar": "هذا يسار."
+        "ar": "هذا يسار.",
+        "it": "Questo è a sinistra."
       }
     },
     {
@@ -5376,7 +5696,8 @@
         "uk": "Це правильно.",
         "zh": "这是对的。",
         "pt": "Isto está correto.",
-        "ar": "هذا صحيح."
+        "ar": "هذا صحيح.",
+        "it": "Questo è corretto."
       }
     },
     {
@@ -5398,7 +5719,8 @@
         "uk": "Це неправильно.",
         "zh": "这是错的。",
         "pt": "Isto está errado.",
-        "ar": "هذا خطأ."
+        "ar": "هذا خطأ.",
+        "it": "Questo è sbagliato."
       }
     },
     {
@@ -5420,7 +5742,8 @@
         "uk": "Це гарно.",
         "zh": "这很好。",
         "pt": "Isto é agradável.",
-        "ar": "هذا لطيف."
+        "ar": "هذا لطيف.",
+        "it": "Questo è bello."
       }
     },
     {
@@ -5442,7 +5765,8 @@
         "uk": "Рік довгий.",
         "zh": "这一年很长。",
         "pt": "O ano é longo.",
-        "ar": "السنة طويلة."
+        "ar": "السنة طويلة.",
+        "it": "L'anno è lungo."
       }
     },
     {
@@ -5464,7 +5788,8 @@
         "uk": "Місяць довгий.",
         "zh": "这个月很长。",
         "pt": "O mês é longo.",
-        "ar": "الشهر طويل."
+        "ar": "الشهر طويل.",
+        "it": "Il mese è lungo."
       }
     },
     {
@@ -5486,7 +5811,8 @@
         "uk": "Тиждень короткий.",
         "zh": "这一周很短。",
         "pt": "A semana é curta.",
-        "ar": "الأسبوع قصير."
+        "ar": "الأسبوع قصير.",
+        "it": "La settimana è corta."
       }
     },
     {
@@ -5508,7 +5834,8 @@
         "uk": "День довгий.",
         "zh": "白天很长。",
         "pt": "O dia é longo.",
-        "ar": "اليوم طويل."
+        "ar": "اليوم طويل.",
+        "it": "Il giorno è lungo."
       }
     },
     {
@@ -5530,7 +5857,8 @@
         "uk": "Година коротка.",
         "zh": "一个小时很短。",
         "pt": "A hora é curta.",
-        "ar": "الساعة قصيرة."
+        "ar": "الساعة قصيرة.",
+        "it": "L'ora è corta."
       }
     },
     {
@@ -5552,7 +5880,8 @@
         "uk": "Хвилина коротка.",
         "zh": "一分钟很短。",
         "pt": "O minuto é curto.",
-        "ar": "الدقيقة قصيرة."
+        "ar": "الدقيقة قصيرة.",
+        "it": "Il minuto è corto."
       }
     },
     {
@@ -5574,7 +5903,8 @@
         "uk": "Секунда коротка.",
         "zh": "一秒钟很短。",
         "pt": "O segundo é curto.",
-        "ar": "الثانية قصيرة."
+        "ar": "الثانية قصيرة.",
+        "it": "Il secondo è corto."
       }
     },
     {
@@ -5596,7 +5926,8 @@
         "uk": "Ранок добрий.",
         "zh": "早晨很好。",
         "pt": "A manhã é boa.",
-        "ar": "الصباح جيد."
+        "ar": "الصباح جيد.",
+        "it": "La mattina è buona."
       }
     },
     {
@@ -5618,7 +5949,8 @@
         "uk": "Ніч погана.",
         "zh": "夜晚很糟。",
         "pt": "A noite é ruim.",
-        "ar": "الليل سيئ."
+        "ar": "الليل سيئ.",
+        "it": "La notte è cattiva."
       }
     },
     {
@@ -5640,7 +5972,8 @@
         "uk": "Зима холодна.",
         "zh": "冬天很冷。",
         "pt": "O inverno é frio.",
-        "ar": "الشتاء بارد."
+        "ar": "الشتاء بارد.",
+        "it": "L'inverno è freddo."
       }
     },
     {
@@ -5662,7 +5995,8 @@
         "uk": "Літо добре.",
         "zh": "夏天很好。",
         "pt": "O verão é bom.",
-        "ar": "الصيف جيد."
+        "ar": "الصيف جيد.",
+        "it": "L'estate è buona."
       }
     },
     {
@@ -5684,7 +6018,8 @@
         "uk": "Весна нова.",
         "zh": "春天是新的。",
         "pt": "A primavera é nova.",
-        "ar": "الربيع جديد."
+        "ar": "الربيع جديد.",
+        "it": "La primavera è nuova."
       }
     },
     {
@@ -5706,7 +6041,8 @@
         "uk": "Осінь стара.",
         "zh": "秋天是旧的。",
         "pt": "O outono é velho.",
-        "ar": "الخريف قديم."
+        "ar": "الخريف قديم.",
+        "it": "L'autunno è vecchio."
       }
     },
     {
@@ -5728,7 +6064,8 @@
         "uk": "Це річ.",
         "zh": "这是一个东西。",
         "pt": "Isto é uma coisa.",
-        "ar": "هذا شيء."
+        "ar": "هذا شيء.",
+        "it": "Questa è una cosa."
       }
     },
     {
@@ -5750,7 +6087,8 @@
         "uk": "Будь ласка, читай.",
         "zh": "请读。",
         "pt": "Por favor, leia.",
-        "ar": "من فضلك اقرأ."
+        "ar": "من فضلك اقرأ.",
+        "it": "Per favore, leggi."
       }
     },
     {
@@ -5772,7 +6110,8 @@
         "uk": "Можливо, я піду.",
         "zh": "也许我去。",
         "pt": "Talvez eu vá.",
-        "ar": "ربما أذهب."
+        "ar": "ربما أذهب.",
+        "it": "Forse vado."
       }
     },
     {
@@ -5794,7 +6133,8 @@
         "uk": "Дякую.",
         "zh": "谢谢。",
         "pt": "Obrigado.",
-        "ar": "شكراً."
+        "ar": "شكراً.",
+        "it": "Grazie."
       }
     },
     {
@@ -5816,7 +6156,8 @@
         "uk": "Я йду по їжу.",
         "zh": "我去拿食物。",
         "pt": "Eu vou buscar comida.",
-        "ar": "أنا أذهب من أجل الطعام."
+        "ar": "أنا أذهب من أجل الطعام.",
+        "it": "Io vado a prendere del cibo."
       }
     },
     {
@@ -5838,7 +6179,8 @@
         "uk": "Я маю щось.",
         "zh": "我有一些东西。",
         "pt": "Eu tenho algo.",
-        "ar": "أنا لدي شيء."
+        "ar": "أنا لدي شيء.",
+        "it": "Io ho qualcosa."
       }
     },
     {
@@ -5860,7 +6202,8 @@
         "uk": "Я маю іншу книгу.",
         "zh": "我有另一本书。",
         "pt": "Eu tenho outro livro.",
-        "ar": "أنا لدي كتاب آخر."
+        "ar": "أنا لدي كتاب آخر.",
+        "it": "Io ho un altro libro."
       }
     },
     {
@@ -5882,7 +6225,8 @@
         "uk": "Я читаю лише книгу.",
         "zh": "我只读这本书。",
         "pt": "Eu leio apenas o livro.",
-        "ar": "أنا أقرأ الكتاب فقط."
+        "ar": "أنا أقرأ الكتاب فقط.",
+        "it": "Io leggo solo il libro."
       }
     },
     {
@@ -5904,7 +6248,8 @@
         "uk": "Я йду з дому.",
         "zh": "我从家里出发。",
         "pt": "Eu vou de casa.",
-        "ar": "أنا أذهب من المنزل."
+        "ar": "أنا أذهب من المنزل.",
+        "it": "Io vado via da casa."
       }
     },
     {
@@ -5926,7 +6271,8 @@
         "uk": "Я йду до будинку.",
         "zh": "我去那座房子。",
         "pt": "Eu vou para a casa.",
-        "ar": "أنا أذهب إلى البيت."
+        "ar": "أنا أذهب إلى البيت.",
+        "it": "Io vado alla casa."
       }
     },
     {
@@ -5948,12 +6294,15 @@
         "uk": "Я ходжу навколо.",
         "zh": "我四处走走。",
         "pt": "Eu ando por aí.",
-        "ar": "أنا أتجول."
+        "ar": "أنا أتجول.",
+        "it": "Io vado in giro."
       }
     },
     {
       "template_id": "I_DO_THIS_BY_HAND",
-      "order": { "default": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"] },
+      "order": {
+        "default": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"]
+      },
       "concepts": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"],
       "structure": {
         "type": "relation"
@@ -5971,7 +6320,8 @@
         "uk": "Я роблю це рукою.",
         "zh": "我用手做这个。",
         "pt": "Eu faço isto à mão.",
-        "ar": "أنا أفعل هذا باليد."
+        "ar": "أنا أفعل هذا باليد.",
+        "it": "Io faccio questo a mano."
       }
     },
     {
@@ -5993,7 +6343,8 @@
         "uk": "Так, я роблю.",
         "zh": "是的，我做。",
         "pt": "Sim, eu faço.",
-        "ar": "نعم، أفعل."
+        "ar": "نعم، أفعل.",
+        "it": "Sì, lo faccio."
       }
     },
     {
@@ -6015,7 +6366,8 @@
         "uk": "Ні, я не роблю.",
         "zh": "不，我不做。",
         "pt": "Não, eu não faço.",
-        "ar": "لا، لا أفعل."
+        "ar": "لا، لا أفعل.",
+        "it": "No, non lo faccio."
       }
     },
     {
@@ -6037,7 +6389,8 @@
         "uk": "Це моє.",
         "zh": "这是我的。",
         "pt": "Isto é meu.",
-        "ar": "هذا لي."
+        "ar": "هذا لي.",
+        "it": "Questo è mio."
       }
     },
     {
@@ -6059,7 +6412,8 @@
         "uk": "Це твоє.",
         "zh": "这是你的。",
         "pt": "Isto é seu.",
-        "ar": "هذا لك."
+        "ar": "هذا لك.",
+        "it": "Questo è tuo."
       }
     },
     {
@@ -6081,7 +6435,8 @@
         "uk": "Це її.",
         "zh": "这是她的。",
         "pt": "Isto é dela.",
-        "ar": "هذا لها."
+        "ar": "هذا لها.",
+        "it": "Questo è suo."
       }
     },
     {
@@ -6103,7 +6458,8 @@
         "uk": "Це наше.",
         "zh": "这是我们的。",
         "pt": "Isto é nosso.",
-        "ar": "هذا لنا."
+        "ar": "هذا لنا.",
+        "it": "Questo è nostro."
       }
     },
     {
@@ -6125,7 +6481,8 @@
         "uk": "Це їхнє.",
         "zh": "这是他们的。",
         "pt": "Isto é deles.",
-        "ar": "هذا لهم."
+        "ar": "هذا لهم.",
+        "it": "Questo è loro."
       }
     }
   ]
