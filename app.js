@@ -3486,7 +3486,20 @@ else if (tpl.concepts.includes("SECOND_PERSON")) {
   disambiguation = "(singular)";
 }
 
-const targetSentence = safe(buildSentence(targetLang, tpl));
+// Suppress random adjective/number injection so the expected answer stays
+// faithful to the authored support sentence shown as the prompt. Without
+// this, buildSentence may inject a modifier («Я використовую червоний
+// телефон») the prompt ("I use a phone.") never mentions, making the
+// exercise unanswerable.
+const sharedChoices = {};
+for (const c of tpl.concepts) {
+  if (window.GLOBAL_VOCAB.concepts[c]?.type === "noun") {
+    sharedChoices["adj_" + c] = null;
+    sharedChoices["num_" + c] = null;
+  }
+}
+
+const targetSentence = safe(buildSentence(targetLang, tpl, null, sharedChoices));
 
   LAST_EXERCISE = { type: "free_production", answer: targetSentence };
 

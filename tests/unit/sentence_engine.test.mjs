@@ -291,6 +291,43 @@ test("Italian nouns pluralize under injected numbers", () => {
     "Io mangio due colazioni.");
 });
 
+test("null adj_/num_ sharedChoices suppress random modifier injection", () => {
+  // Regression: L7 free production showed the authored prompt ("I use a
+  // phone.") but graded against an engine sentence with a randomly injected
+  // adjective («Я використовую червоний телефон») the prompt never mentioned.
+  // L6/L7 suppress injection by pre-nulling the per-noun sharedChoices cache;
+  // this pins that contract with an rng that would otherwise always inject.
+  const vocab = loadVocab(loadLanguageCodes());
+  const tpl = tplById("I_USE_PHONE");
+  const inject = () => configureEngine({
+    vocab: () => vocab,
+    getReleased: () => Object.keys(vocab.concepts),
+    ensureProgress: () => ({ level: 4, completed: false }),
+    rng: () => 0, // below every injection threshold — always inject
+  });
+  try {
+    inject();
+    const injected = buildSentence("uk", tpl);
+    assert.notEqual(injected, tpl.render.uk,
+      "premise: an unsuppressed build injects a modifier");
+    for (const lc of ["uk", "en"]) {
+      inject();
+      assert.equal(
+        buildSentence(lc, tpl, null, { adj_PHONE: null, num_PHONE: null }),
+        tpl.render[lc],
+        lc
+      );
+    }
+  } finally {
+    configureEngine({
+      vocab: () => vocab,
+      getReleased: () => Object.keys(vocab.concepts),
+      ensureProgress: () => ({ level: 99, completed: false }),
+      rng: () => 0.999,
+    });
+  }
+});
+
 test("every core template renders a non-empty English sentence", () => {
   const core = templates.filter((t) => t._file === "sentence_templates.json");
   assert.ok(core.length > 100, "core template set is present");
