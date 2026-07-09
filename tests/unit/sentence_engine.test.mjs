@@ -17,6 +17,8 @@ import {
   nounPhrase,
   surfaceForm,
   adjectiveSuitsNoun,
+  isModifierCompatible,
+  nounWithPossessive,
   blankSentence,
   ZERO_PRESENT_COPULA,
   PLURAL_EXCEPTIONS,
@@ -257,6 +259,36 @@ test("Thai possessors follow the noun; yes-no asks with ใช่ไหม", () 
 
 test("Thai counts with a classifier after the number", () => {
   assert.equal(buildSentence("th", tplById("I_HAVE_ANOTHER_BOOK")), "ฉันมีหนังสืออีกเล่ม");
+});
+
+test("countable:false beats gender data — mass nouns never take numbers", () => {
+  // Adding gender to WATER (for article/agreement work) used to re-open it
+  // to number injection: «tre acqua buone».
+  assert.equal(isModifierCompatible("it", "TWO", "WATER"), false);
+  assert.equal(isModifierCompatible("uk", "TWO", "WATER"), false);
+  assert.equal(isModifierCompatible("it", "GOOD", "WATER"), false);
+  // Meals reject person-adjectives: no «la colazione giovane».
+  assert.equal(isModifierCompatible("it", "YOUNG", "BREAKFAST"), false);
+});
+
+test("Thai injected modifiers join spacelessly with the classifier", () => {
+  // Forced injection is the live L3/L5 path the authored-render validators
+  // never exercise: number takes a classifier, adjective attaches bare.
+  assert.equal(buildSentence("th", tplById("HE_READ_BOOK"), "TWO"),
+    "เขาอ่านหนังสือสองเล่ม");
+  assert.equal(buildSentence("th", tplById("HE_READ_BOOK"), "GOOD"),
+    "เขาอ่านหนังสือดี");
+});
+
+test("Italian pluralOnly nouns take plural possessive articles", () => {
+  // «le mie scarpe», not «la mia scarpe».
+  assert.equal(nounWithPossessive("it", "MY", "SHOES"), "le mie scarpe");
+  assert.equal(nounWithPossessive("it", "MY", "PANTS"), "i miei pantaloni");
+});
+
+test("Italian nouns pluralize under injected numbers", () => {
+  assert.equal(buildSentence("it", tplById("I_EAT_BREAKFAST"), "TWO"),
+    "Io mangio due colazioni.");
 });
 
 test("every core template renders a non-empty English sentence", () => {

@@ -814,7 +814,7 @@ const ADJECTIVE_ROLE_COMPAT = {
 // suppress nonsense like "young answer" (youth -> abstract) and "wrong magic"
 // (correctness -> substance) without enumerating every concrete noun role.
 const ADJECTIVE_ROLE_BLOCK = {
-  property_youth:       new Set(["abstract", "substance"]),
+  property_youth:       new Set(["abstract", "substance", "meal"]),
   property_correctness: new Set(["substance"]),
 };
 
@@ -847,6 +847,9 @@ function adjectiveSuitsNoun(adjCid, nounCid) {
 function isModifierCompatible(lang, modifierCid, nounCid) {
   const nounMeta  = vocab().concepts[nounCid];
   const nounEntry = vocab().languages?.[lang]?.forms?.[nounCid] || {};
+  // An explicit countable:false always wins — gender data (added for
+  // article/agreement) must not re-open mass nouns to "tre acqua".
+  if (nounMeta?.countable === false) return false;
   const canTakeModifier = nounMeta?.countable || nounEntry.article || nounEntry.gender;
   if (!canTakeModifier) return false;
 
@@ -1063,11 +1066,15 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
   if (lang === "th") {
     return `${noun}${possessive}`;
   }
-  // Italian possessives take the definite article («il tuo telefono») —
-  // except before singular family nouns («con sua figlia»).
+  // Italian possessives take the definite article («il tuo telefono»,
+  // «le tue scarpe») — except before singular family nouns («con sua figlia»).
   if (lang === "it") {
     const nounEntry = vocab().languages?.it?.forms?.[nounCid];
     if (!nounEntry?.noArticleWithPossessive) {
+      if (nounEntry?.pluralOnly) {
+        const pl = genderedFormOf(lang, possessiveCid, nounCid, true);
+        return `${nounEntry.gender === "f" ? "le" : "i"} ${pl} ${noun}`;
+      }
       return `${nounEntry?.gender === "f" ? "la" : "il"} ${possessive} ${noun}`;
     }
   }
@@ -1685,9 +1692,10 @@ if (tpl.structure?.type === "complex_clause") {
     // Thai counts with a classifier AFTER the number, and the whole
     // quantifier follows the noun: หนังสือสองเล่ม ("book two CLF").
     if (lang === "th") {
+      // Adjective precedes the quantifier: หนังสือดีสามเล่ม ("book good
+      // three CLF").
       const clf = vocab().languages?.th?.forms?.[cid]?.classifier || "อัน";
-      const quantified = joinWords(lang, [nounForm, numberWord, clf]);
-      return joinWords(lang, [quantified, adjectiveWord]);
+      return joinWords(lang, [nounForm, adjectiveWord, numberWord, clf]);
     }
     // Japanese requires a counter when a number quantifies a noun. Render as
     // "<number><counter>の<noun>" so "二 食べ物" becomes "二つの食べ物"
@@ -1727,10 +1735,10 @@ if (tpl.structure?.type === "complex_clause") {
     }
     if (adjectiveIsPossessive) {
       // Possessives replace the article entirely: "her wizard" not "a her wizard"
-      phrase = adjForm + " " + bare;
+      phrase = joinWords(lang, [adjForm, bare]);
     } else if (POST_ADJ) {
-      // Article + noun + adjective: "uma casa grande"
-      phrase = phrase + " " + adjForm;
+      // Article + noun + adjective: "uma casa grande" (spaceless in th)
+      phrase = joinWords(lang, [phrase, adjForm]);
     } else if (phrase !== bare) {
       // Has article — insert adjective between: "a big house"
       let article = phrase.substring(0, phrase.length - bare.length).trimEnd();
@@ -1887,12 +1895,17 @@ if (tpl.structure?.type === "complex_clause") {
           form = ukFeminineAccusative(form);
         }
         // Italian possessives take the definite article («la mia mano»,
-        // «il tuo telefono») — except before singular family nouns
-        // («con sua figlia»), flagged in the data.
+        // «il tuo telefono», «le mie scarpe») — except before singular
+        // family nouns («con sua figlia»), flagged in the data.
         if (lang === "it") {
           const nounEntry = vocab().languages?.it?.forms?.[nextCid];
           if (!nounEntry?.noArticleWithPossessive) {
-            form = (nounEntry?.gender === "f" ? "la " : "il ") + form;
+            if (nounEntry?.pluralOnly) {
+              form = (nounEntry.gender === "f" ? "le " : "i ") +
+                genderedFormOf(lang, cid, nextCid, true);
+            } else {
+              form = (nounEntry?.gender === "f" ? "la " : "il ") + form;
+            }
           }
         }
         return form;
