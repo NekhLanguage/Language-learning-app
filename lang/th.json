@@ -1,0 +1,696 @@
+{
+  "uiStrings": {
+    "openApp": "เปิดแอป",
+    "languagesTitle": "ภาษา",
+    "chooseLanguage": "เลือกภาษาที่จะเรียน",
+    "quitLearning": "ออก",
+    "sessionTitle": "บทเรียนวันนี้",
+    "runCompleteTitle": "คุณเรียนจบแล้ว!",
+    "runCompleteBody": "คุณเรียนรู้ทุกคำในแพ็กของคุณครบแล้ว",
+    "runCompleteStats": "เรียนรู้ {concepts} คำ · เล่นไป {sessions} บทเรียน",
+    "runCompleteBack": "กลับไปหน้าภาษา",
+    "startSubtitle": "การเรียนภาษา",
+    "chooseTranslation": "เลือกคำแปลที่ถูกต้องของ:",
+    "originalSentence": "ประโยคต้นฉบับ:",
+    "fillMissing": "เติมคำที่หายไป:",
+    "inThisSentence": "ในประโยคนี้:",
+    "check": "ตรวจ",
+    "continue": "ต่อไป",
+    "correct": "ถูกต้อง",
+    "incorrect": "ไม่ถูกต้อง",
+    "level": "ระดับ",
+    "blueprint": "Language Blueprint ของ Nekh",
+    "skool": "คอมมูนิตี้ Skool",
+    "offer": "อัปเกรดระบบการเรียนภาษาของคุณ",
+    "sessionComplete": "จบบทเรียน",
+    "sessionFinished": "จบบทเรียนที่ {n} แล้ว",
+    "enterEmail": "กรอกอีเมลของคุณ",
+    "buyAccess": "ยังไม่เป็นสมาชิก? สมัครเลย",
+    "noAccess": "ไม่พบสิทธิ์การใช้งานสำหรับอีเมลนี้",
+    "resourcePacks": "แพ็กคำศัพท์",
+    "choosePacks": "เลือกได้สูงสุด 2 แพ็ก",
+    "start": "เริ่ม",
+    "selectPack": "เลือกอย่างน้อย 1 แพ็ก",
+    "feedbackOpen": "แจ้งปัญหาหรือส่งความคิดเห็น",
+    "feedbackClose": "ปิดหน้าความคิดเห็น",
+    "feedbackTitle": "แจ้งปัญหา",
+    "feedbackSubtitle": "บอกเราว่าเกิดอะไรขึ้น — เราอ่านทุกรายงาน",
+    "feedbackPlaceholder": "อธิบายปัญหา...",
+    "feedbackSubmit": "ส่งรายงาน",
+    "feedbackSending": "กำลังส่ง…",
+    "feedbackSent": "✓ ส่งรายงานแล้ว — ขอบคุณ!",
+    "feedbackFailed": "ส่งไม่สำเร็จ — กรุณาลองใหม่",
+    "reasonTitle": "ทำไมถึงเรียน{lang}?",
+    "reasonSubtitle": "ไม่มีคำตอบที่ผิด — คำตอบช่วยให้เราร่วมฉลองช่วงเวลาที่สำคัญกับคุณ",
+    "reasonContinue": "ต่อไป",
+    "reasonOptionTravel": "ท่องเที่ยว",
+    "reasonOptionPerson": "คนสำคัญในชีวิต",
+    "reasonOptionCareer": "งานหรือการเรียน",
+    "reasonOptionHeritage": "รากเหง้า",
+    "reasonOptionCulture": "หนังสือ ภาพยนตร์ และเพลง",
+    "reasonOptionFun": "เพื่อความสนุก",
+    "reasonDetailTravel": "คุณจะไปที่ไหน?",
+    "reasonDetailPerson": "ใครคือคนนั้น?",
+    "reasonDetailCareer": "เป้าหมายคืออะไร?",
+    "reasonDetailHeritage": "ความเชื่อมโยงคืออะไร?",
+    "reasonDetailCulture": "อะไรดึงดูดคุณ?",
+    "reasonDetailPlaceholderTravel": "เช่น กรุงเทพฯ",
+    "reasonDetailPlaceholderPerson": "เช่น คู่ของฉัน",
+    "reasonDetailPlaceholderCareer": "เช่น ลูกค้าที่มาดริด",
+    "reasonDetailPlaceholderHeritage": "เช่น ครอบครัวของฉันมาจากนอร์เวย์",
+    "reasonDetailPlaceholderCulture": "เช่น Studio Ghibli",
+    "reasonDetailHint": "ไม่บังคับ — ข้ามได้เลย",
+    "roadmapTitle": "เส้นทางของคุณ",
+    "roadmapCounter": "ปลดล็อกแล้ว {done} จาก {total} จุด",
+    "roadmapCounterFull": "เสร็จแล้ว {done} · กำลังเรียน {inprogress} · รออยู่ {ahead}",
+    "roadmapSessionFinished": "จบบทเรียนที่ {n} แล้ว อีกหนึ่งจุดผ่านไป",
+    "roadmapBegin": "เริ่มการเดินทาง",
+    "roadmapBack": "← กลับ",
+    "roadmapBehindLabel": "ผ่านแล้ว {n}",
+    "roadmapAheadLabel": "รออยู่ {n}",
+    "journeyBtn": "เส้นทาง",
+    "milestoneHeadline": "{n} คำ",
+    "milestoneGeneric": "ทุกคำ — เป็นของคุณ",
+    "milestoneReasonTravel": "{detail} ใกล้เข้ามาทุกคำ",
+    "milestoneReasonPerson": "{detail} ใกล้ขึ้นทุกคำที่เรียน",
+    "milestoneReasonCareer": "อีกก้าวหนึ่งสู่ {detail}",
+    "milestoneReasonHeritage": "{detail} อยู่ในทุกคำเหล่านี้",
+    "milestoneReasonCulture": "{detail} ด้วยเสียงของมันเอง",
+    "milestoneReasonFun": "และคุณเพิ่งเริ่มต้นเท่านั้น"
+  },
+  "hubNames": {
+    "en": "อังกฤษ",
+    "pt": "โปรตุเกส",
+    "ja": "ญี่ปุ่น",
+    "no": "นอร์เวย์",
+    "ar": "อาหรับ",
+    "ko": "เกาหลี",
+    "uk": "ยูเครน",
+    "de": "เยอรมัน",
+    "el": "กรีก",
+    "tr": "ตุรกี",
+    "es": "สเปน",
+    "fr": "ฝรั่งเศส",
+    "zh": "จีน",
+    "it": "อิตาลี",
+    "th": "ไทย"
+  },
+  "forms": {
+    "WATER": {
+      "form": "น้ำ"
+    },
+    "FOOD": {
+      "form": "อาหาร"
+    },
+    "HOUSE": {
+      "form": "บ้าน",
+      "classifier": "หลัง"
+    },
+    "HOME": {
+      "form": "บ้าน",
+      "predicative": "อยู่บ้าน"
+    },
+    "BOOK": {
+      "form": "หนังสือ",
+      "classifier": "เล่ม"
+    },
+    "THING": {
+      "form": "สิ่งของ",
+      "classifier": "อย่าง"
+    },
+    "JOB": {
+      "form": "งาน"
+    },
+    "ROOM": {
+      "form": "ห้อง",
+      "classifier": "ห้อง"
+    },
+    "BOY": {
+      "form": "เด็กผู้ชาย",
+      "classifier": "คน"
+    },
+    "GIRL": {
+      "form": "เด็กผู้หญิง",
+      "classifier": "คน"
+    },
+    "MAN": {
+      "form": "ผู้ชาย",
+      "classifier": "คน"
+    },
+    "WOMAN": {
+      "form": "ผู้หญิง",
+      "classifier": "คน"
+    },
+    "MOM": {
+      "form": "แม่",
+      "classifier": "คน"
+    },
+    "DAD": {
+      "form": "พ่อ",
+      "classifier": "คน"
+    },
+    "SON": {
+      "form": "ลูกชาย",
+      "classifier": "คน"
+    },
+    "DAUGHTER": {
+      "form": "ลูกสาว",
+      "classifier": "คน"
+    },
+    "BROTHER": {
+      "form": "พี่ชาย",
+      "classifier": "คน"
+    },
+    "SISTER": {
+      "form": "พี่สาว",
+      "classifier": "คน"
+    },
+    "HEAD": {
+      "form": "หัว"
+    },
+    "ARM": {
+      "form": "แขน"
+    },
+    "HAND": {
+      "form": "มือ"
+    },
+    "LEG": {
+      "form": "ขา"
+    },
+    "FOOT": {
+      "form": "เท้า"
+    },
+    "FINGER": {
+      "form": "นิ้ว"
+    },
+    "EYE": {
+      "form": "ตา"
+    },
+    "MOUTH": {
+      "form": "ปาก"
+    },
+    "FACE": {
+      "form": "ใบหน้า"
+    },
+    "BREAKFAST": {
+      "form": "อาหารเช้า"
+    },
+    "LUNCH": {
+      "form": "อาหารกลางวัน"
+    },
+    "DINNER": {
+      "form": "อาหารเย็น"
+    },
+    "CLOTHES": {
+      "form": "เสื้อผ้า"
+    },
+    "SHIRT": {
+      "form": "เสื้อ",
+      "classifier": "ตัว"
+    },
+    "SHOES": {
+      "form": "รองเท้า",
+      "classifier": "คู่"
+    },
+    "PHONE": {
+      "form": "โทรศัพท์",
+      "classifier": "เครื่อง"
+    },
+    "PANTS": {
+      "form": "กางเกง",
+      "classifier": "ตัว"
+    },
+    "DO": {
+      "base": "ทำ"
+    },
+    "GO": {
+      "base": "ไป"
+    },
+    "EAT": {
+      "base": "กิน"
+    },
+    "DRINK": {
+      "base": "ดื่ม"
+    },
+    "READ": {
+      "base": "อ่าน"
+    },
+    "SEE": {
+      "base": "เห็น"
+    },
+    "START": {
+      "base": "เริ่ม"
+    },
+    "STOP": {
+      "base": "หยุด"
+    },
+    "SLEEP": {
+      "base": "นอน"
+    },
+    "HAVE": {
+      "base": "มี"
+    },
+    "COME": {
+      "base": "มา"
+    },
+    "USE": {
+      "base": "ใช้"
+    },
+    "GET": {
+      "base": "ได้รับ"
+    },
+    "BE": {
+      "base": "เป็น"
+    },
+    "MAY": {
+      "base": "อาจ"
+    },
+    "BIG": [
+      "ใหญ่"
+    ],
+    "SMALL": [
+      "เล็ก"
+    ],
+    "GOOD": [
+      "ดี"
+    ],
+    "BAD": [
+      "แย่"
+    ],
+    "NEW": [
+      "ใหม่"
+    ],
+    "OLD": [
+      "เก่า"
+    ],
+    "EASY": [
+      "ง่าย"
+    ],
+    "DIFFICULT": [
+      "ยาก"
+    ],
+    "MY": [
+      "ของฉัน"
+    ],
+    "YOUR": [
+      "ของคุณ"
+    ],
+    "HIS": [
+      "ของเขา"
+    ],
+    "HER": [
+      "ของเธอ"
+    ],
+    "OUR": [
+      "ของเรา"
+    ],
+    "THEIR": [
+      "ของพวกเขา"
+    ],
+    "BLACK": [
+      "สีดำ"
+    ],
+    "WHITE": [
+      "สีขาว"
+    ],
+    "RED": [
+      "สีแดง"
+    ],
+    "BLUE": [
+      "สีน้ำเงิน"
+    ],
+    "GREEN": [
+      "สีเขียว"
+    ],
+    "YELLOW": [
+      "สีเหลือง"
+    ],
+    "PURPLE": [
+      "สีม่วง"
+    ],
+    "ORANGE": [
+      "สีส้ม"
+    ],
+    "FAST": [
+      "เร็ว"
+    ],
+    "SLOW": [
+      "ช้า"
+    ],
+    "LONG": [
+      "ยาว"
+    ],
+    "SHORT": [
+      "สั้น"
+    ],
+    "HEAVY": [
+      "หนัก"
+    ],
+    "LIGHT": [
+      "เบา"
+    ],
+    "DARK": [
+      "มืด"
+    ],
+    "YOUNG": [
+      "อายุน้อย"
+    ],
+    "RIGHT": [
+      "ขวา"
+    ],
+    "LEFT": [
+      "ซ้าย"
+    ],
+    "CORRECT": [
+      "ถูกต้อง"
+    ],
+    "WRONG": [
+      "ผิด"
+    ],
+    "NICE": [
+      "ดี"
+    ],
+    "COLD": [
+      "หนาว"
+    ],
+    "FIRST_PERSON_SINGULAR": [
+      "ฉัน"
+    ],
+    "SECOND_PERSON": [
+      "คุณ"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "พวกคุณ"
+    ],
+    "HE": [
+      "เขา"
+    ],
+    "SHE": [
+      "เธอ"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "เรา"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "พวกเขา"
+    ],
+    "THIS": {
+      "form": "นี่",
+      "governed": "นี้",
+      "objectForm": "สิ่งนี้"
+    },
+    "THAT": {
+      "form": "นั่น",
+      "governed": "นั้น",
+      "objectForm": "สิ่งนั้น"
+    },
+    "IT": [
+      "มัน"
+    ],
+    "ITS": [
+      "ของมัน"
+    ],
+    "MINE": [
+      "ของฉัน"
+    ],
+    "YOURS": [
+      "ของคุณ"
+    ],
+    "HERS": [
+      "ของเธอ"
+    ],
+    "OURS": [
+      "ของเรา"
+    ],
+    "THEIRS": [
+      "ของพวกเขา"
+    ],
+    "WHO": [
+      "ใคร"
+    ],
+    "WHAT": [
+      "อะไร"
+    ],
+    "WHEN": [
+      "เมื่อไหร่"
+    ],
+    "WHERE": [
+      "ที่ไหน"
+    ],
+    "WHY": [
+      "ทำไม"
+    ],
+    "HOW": [
+      "อย่างไร"
+    ],
+    "WHICH": [
+      "อันไหน"
+    ],
+    "ANY": [
+      "ใดๆ"
+    ],
+    "ONLY": [
+      "แค่"
+    ],
+    "ANOTHER": [
+      "อีก"
+    ],
+    "SOMETHING": [
+      "บางอย่าง"
+    ],
+    "ALL": [
+      "ทั้งหมด"
+    ],
+    "AND": [
+      "และ"
+    ],
+    "BUT": [
+      "แต่"
+    ],
+    "ALSO": [
+      "ด้วย"
+    ],
+    "BECAUSE": [
+      "เพราะ"
+    ],
+    "IF": [
+      "ถ้า"
+    ],
+    "FOR": [
+      "เพื่อ"
+    ],
+    "WITH": [
+      "กับ"
+    ],
+    "FROM": [
+      "จาก"
+    ],
+    "TO": [
+      "ที่"
+    ],
+    "BY": [
+      "ด้วย"
+    ],
+    "WHILE": [
+      "ขณะที่"
+    ],
+    "AS": [
+      "เหมือน"
+    ],
+    "PLEASE": [
+      "กรุณา"
+    ],
+    "MAYBE": [
+      "บางที"
+    ],
+    "JUST": [
+      "แค่"
+    ],
+    "YES": [
+      "ใช่"
+    ],
+    "NO": [
+      "ไม่"
+    ],
+    "NOT": [
+      "ไม่"
+    ],
+    "THANKS": [
+      "ขอบคุณ"
+    ],
+    "TOP": [
+      "ด้านบน"
+    ],
+    "BOTTOM": [
+      "ด้านล่าง"
+    ],
+    "UNDER": [
+      "ใต้"
+    ],
+    "NEXT_TO": [
+      "ข้างๆ"
+    ],
+    "FRONT": [
+      "ข้างหน้า"
+    ],
+    "BEHIND": [
+      "ข้างหลัง"
+    ],
+    "IN": [
+      "ใน"
+    ],
+    "ON": [
+      "บน"
+    ],
+    "OFF": [
+      "ไม่ได้อยู่บน"
+    ],
+    "BETWEEN": [
+      "ระหว่าง"
+    ],
+    "BACK": [
+      "กลับ"
+    ],
+    "OUT": [
+      "ออกไป"
+    ],
+    "NORTH": [
+      "ทิศเหนือ"
+    ],
+    "SOUTH": [
+      "ทิศใต้"
+    ],
+    "EAST": [
+      "ทิศตะวันออก"
+    ],
+    "WEST": [
+      "ทิศตะวันตก"
+    ],
+    "AROUND": [
+      "รอบๆ"
+    ],
+    "TODAY": [
+      "วันนี้"
+    ],
+    "YESTERDAY": [
+      "เมื่อวาน"
+    ],
+    "TOMORROW": [
+      "พรุ่งนี้"
+    ],
+    "MORNING": {
+      "form": "ตอนเช้า"
+    },
+    "DAY": {
+      "form": "กลางวัน"
+    },
+    "NIGHT": {
+      "form": "กลางคืน"
+    },
+    "WEEK": {
+      "form": "สัปดาห์"
+    },
+    "MONTH": {
+      "form": "เดือน"
+    },
+    "YEAR": {
+      "form": "ปี"
+    },
+    "HOUR": {
+      "form": "ชั่วโมง"
+    },
+    "MINUTE": {
+      "form": "นาที"
+    },
+    "SECOND": {
+      "form": "วินาที"
+    },
+    "NOW": [
+      "ตอนนี้"
+    ],
+    "BEFORE": [
+      "ก่อน"
+    ],
+    "AFTER": [
+      "หลังจากนั้น"
+    ],
+    "LATER": [
+      "ทีหลัง"
+    ],
+    "NEXT": [
+      "ถัดไป"
+    ],
+    "SPRING": {
+      "form": "ฤดูใบไม้ผลิ"
+    },
+    "SUMMER": {
+      "form": "ฤดูร้อน"
+    },
+    "AUTUMN": {
+      "form": "ฤดูใบไม้ร่วง"
+    },
+    "WINTER": {
+      "form": "ฤดูหนาว"
+    },
+    "ONE": [
+      "หนึ่ง"
+    ],
+    "TWO": [
+      "สอง"
+    ],
+    "THREE": [
+      "สาม"
+    ],
+    "FOUR": [
+      "สี่"
+    ],
+    "FIVE": [
+      "ห้า"
+    ],
+    "SIX": [
+      "หก"
+    ],
+    "SEVEN": [
+      "เจ็ด"
+    ],
+    "EIGHT": [
+      "แปด"
+    ],
+    "NINE": [
+      "เก้า"
+    ],
+    "TEN": [
+      "สิบ"
+    ],
+    "ELEVEN": [
+      "สิบเอ็ด"
+    ],
+    "TWELVE": [
+      "สิบสอง"
+    ],
+    "THIRTEEN": [
+      "สิบสาม"
+    ],
+    "FOURTEEN": [
+      "สิบสี่"
+    ],
+    "FIFTEEN": [
+      "สิบห้า"
+    ],
+    "SIXTEEN": [
+      "สิบหก"
+    ],
+    "SEVENTEEN": [
+      "สิบเจ็ด"
+    ],
+    "EIGHTEEN": [
+      "สิบแปด"
+    ],
+    "NINETEEN": [
+      "สิบเก้า"
+    ],
+    "TWENTY": [
+      "ยี่สิบ"
+    ]
+  }
+}

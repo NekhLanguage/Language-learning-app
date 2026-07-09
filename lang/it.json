@@ -78,7 +78,7 @@
     "milestoneReasonCulture": "{detail}, con la sua voce.",
     "milestoneReasonFun": "E hai appena cominciato."
   },
-  "hubNames": {
+  "hubNames": { "th": "Tailandese",
     "en": "Inglese",
     "pt": "Portoghese",
     "ja": "Giapponese",

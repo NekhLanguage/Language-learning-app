@@ -235,6 +235,30 @@ test("trailing subordinate clauses put the main clause first", () => {
   assert.ok(en.includes("because he is home"), en);
 });
 
+test("Thai: spaceless script, no terminal punctuation", () => {
+  assert.equal(buildSentence("th", tplById("I_EAT_FOOD")), "ฉันกินอาหาร");
+  assert.equal(buildSentence("th", tplById("HE_READ_BOOK")), "เขาอ่านหนังสือ");
+});
+
+test("Thai copula splits three ways", () => {
+  // Zero before a stative adjective, อยู่ for location, เป็น for noun
+  // predicates, คือ after a demonstrative subject.
+  assert.equal(buildSentence("th", tplById("BOOK_IS_RED")), "หนังสือสีแดง");
+  assert.equal(buildSentence("th", tplById("BOOK_ON_THIS")), "หนังสืออยู่บนนี้");
+  assert.equal(buildSentence("th", tplById("I_AM_MAN")), "ฉันเป็นผู้ชาย");
+  assert.equal(buildSentence("th", tplById("THIS_IS_MY_HAND")), "นี่คือมือของฉัน");
+});
+
+test("Thai possessors follow the noun; yes-no asks with ใช่ไหม", () => {
+  assert.equal(buildSentence("th", tplById("SHE_IS_MY_MOM")), "เธอเป็นแม่ของฉัน");
+  assert.equal(buildSentence("th", tplById("IS_THAT_YOUR_PHONE")),
+    "นั่นคือโทรศัพท์ของคุณใช่ไหม");
+});
+
+test("Thai counts with a classifier after the number", () => {
+  assert.equal(buildSentence("th", tplById("I_HAVE_ANOTHER_BOOK")), "ฉันมีหนังสืออีกเล่ม");
+});
+
 test("every core template renders a non-empty English sentence", () => {
   const core = templates.filter((t) => t._file === "sentence_templates.json");
   assert.ok(core.length > 100, "core template set is present");

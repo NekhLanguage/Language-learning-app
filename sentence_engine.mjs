@@ -902,6 +902,12 @@ function capitalizeFirst(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+// Thai writes without spaces between words — joins are spaceless there.
+const SPACELESS_JOIN_LANGS = new Set(["th"]);
+function joinWords(lang, words) {
+  return words.filter(Boolean).join(SPACELESS_JOIN_LANGS.has(lang) ? "" : " ");
+}
+
 function joinSentence(words, punctuation = ".") {
   return capitalizeFirst(words.filter(Boolean).join(" ")) + punctuation;
 }
@@ -986,6 +992,13 @@ function finalizeSentence(lang, sentence) {
       }
     );
   }
+  // Thai uses no terminal punctuation ("?" is replaced by particles like
+  // ไหม) and no commas — a clause boundary is a space. Word-level joining
+  // is spaceless at assembly time (joinWords), so authored clause spaces
+  // survive here untouched.
+  if (lang === "th") {
+    return sentence.replace(/,\s*/g, " ").replace(/[.?]+$/, "").trim();
+  }
   // CJK text takes no inter-word spaces and a full-width stop. The generic
   // assembly paths join words with spaces and end with "." — normalize both
   // (ja's particle path emits no terminal punctuation at all).
@@ -1046,6 +1059,10 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
     }
   }
   const possessive = genderedFormOf(lang, possessiveCid, nounCid);
+  // Thai postposes the possessor: โทรศัพท์ของคุณ ("phone of-you").
+  if (lang === "th") {
+    return `${noun}${possessive}`;
+  }
   // Italian possessives take the definite article («il tuo telefono») —
   // except before singular family nouns («con sua figlia»).
   if (lang === "it") {
@@ -1058,7 +1075,7 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
 }
 
 // Languages where adjective follows the noun (e.g. "casa grande")
-const POST_ADJECTIVE_LANGS = new Set(["pt", "ar", "it"]);
+const POST_ADJECTIVE_LANGS = new Set(["pt", "ar", "it", "th"]);
 
 // Languages that omit the present-tense copula. Ukrainian (and Russian-style
 // Slavic) drop "to be" in the present ("Це телефон", not "Це є телефон"),
@@ -1088,6 +1105,41 @@ function zhCopulaOverride(lang, beCid, complementCid) {
     return "很";
   }
   return null;
+}
+
+// Thai splits the copula three ways: adjectives are stative verbs and take
+// NO copula at all (เขาแข็งแรง — "he strong"), locations take อยู่
+// (หนังสืออยู่บนนี้), and noun predicates take เป็น — or คือ after a
+// demonstrative subject (นี่คือมือของฉัน). Returns the copula surface
+// ("" = drop it) or null to fall through to copulaForm.
+function thCopulaOverride(lang, beCid, complementCid, subjectCid) {
+  if (lang !== "th" || !isCopulaConcept(beCid)) return null;
+  const compMeta = vocab().concepts?.[complementCid];
+  // A possessive is grammatically an adjective but heads a NOUN predicate
+  // (นี่คือมือของฉัน) — fall through to the noun-predicate copulas.
+  if (isAdjectiveConcept(complementCid) &&
+      compMeta?.semantic_role !== "possessive") {
+    noteRule("zero_copula");
+    return "";
+  }
+  if (compMeta?.type === "position") {
+    // A locative whose own form already carries อยู่ (OFF «ไม่ได้อยู่บน» —
+    // the negated copula lives inside the phrase) absorbs the copula.
+    if (formOf("th", complementCid).includes("อยู่")) return "";
+    return "อยู่";
+  }
+  if (subjectCid === "THIS" || subjectCid === "THAT") {
+    return "คือ";
+  }
+  return null; // noun predicate — เป็น via the normal path
+}
+
+// Combined copula override for languages with special copula behavior;
+// null falls through to copulaForm.
+function copulaOverride(lang, beCid, complementCid, subjectCid) {
+  const th = thCopulaOverride(lang, beCid, complementCid, subjectCid);
+  if (th !== null) return th;
+  return zhCopulaOverride(lang, beCid, complementCid);
 }
 
 // Copula surface for a given language. Returns "" for languages that drop the
@@ -1130,7 +1182,7 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
 
   if (POST_ADJECTIVE_LANGS.has(lang)) {
     noteRule("post_nominal_adjective");
-    return `${withArticle} ${adjective}`;
+    return joinWords(lang, [withArticle, adjective]);
   }
   // Insert adjective between article and noun
   if (withArticle !== bare) {
@@ -1146,17 +1198,25 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
 }
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
-  const be = copulaForm(lang, beCid, subjectCid);
+  const override = copulaOverride(lang, beCid, nounCid, subjectCid);
+  const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const plural = isPluralPronoun(subjectCid);
   const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid, { plural });
+  if (lang === "th") return joinWords(lang, [subject, be, complement]) + ".";
   return joinSentence([subject, be, complement]);
 }
 
 function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
-  const be = copulaForm(lang, beCid, subjectCid);
+  const override = copulaOverride(lang, beCid, nounCid, subjectCid);
+  const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const complement = nounWithPossessive(lang, possessiveCid, nounCid);
 
+  // Thai keeps declarative order and asks with the tag particle ใช่ไหม —
+  // no question mark (นั่นคือโทรศัพท์ของคุณใช่ไหม).
+  if (lang === "th") {
+    return joinWords(lang, [subject, be, complement]) + "ใช่ไหม";
+  }
   // Copula-dropping languages form the yes/no question without "to be"
   // («Це твій телефон?»); pt/es keep declarative order and mark the question
   // with intonation («Esse é o seu telefone?»); the rest front the copula
@@ -1168,7 +1228,8 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = formOf(lang, subjectCid);
-  const be = zhCopulaOverride(lang, beCid, nounCid) || copulaForm(lang, beCid, subjectCid);
+  const override = copulaOverride(lang, beCid, nounCid, subjectCid);
+  const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   // A predicate noun may carry a dedicated predicative form — uk HOME is
   // «удома» ("he is at home"), not the dictionary «дім» ("he is a house").
   const entry = vocab().languages?.[lang]?.forms?.[nounCid];
@@ -1176,7 +1237,9 @@ function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
     ? entry.predicative : null;
   const noun = predicative ||
     nounPhrase(lang, nounCid, { plural: isPluralPronoun(subjectCid) });
-  return [subject, be, noun].filter(Boolean).join(" ");
+  // Thai predicative forms carry their own verb (อยู่บ้าน) — no copula.
+  const beWord = (lang === "th" && predicative) ? "" : be;
+  return joinWords(lang, [subject, beWord, noun]);
 }
 
 function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
@@ -1191,25 +1254,33 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
   // Only build it when a companion noun is present, so undefined slots don't leak
   // into the sentence as the literal word "undefined".
   const companion = nounCid
-    ? `${formOf(lang, withCid)} ${nounWithPossessive(lang, possessiveCid, nounCid,
-        lang === "uk" ? UK_PREP_CASE[withCid] : null)}`
+    ? joinWords(lang, [formOf(lang, withCid), nounWithPossessive(lang, possessiveCid, nounCid,
+        lang === "uk" ? UK_PREP_CASE[withCid] : null)])
     : "";
 
-  return [subject, verb, object, companion].filter(Boolean).join(" ");
+  return joinWords(lang, [subject, verb, object, companion]);
 }
 
 function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid, possessiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
   const verb = getVerbForm(verbCid, subjectCid, lang);
   const companion = nounCid
-    ? `${formOf(lang, withCid)} ${nounWithPossessive(lang, possessiveCid, nounCid,
-        lang === "uk" ? UK_PREP_CASE[withCid] : null)}`
+    ? joinWords(lang, [formOf(lang, withCid), nounWithPossessive(lang, possessiveCid, nounCid,
+        lang === "uk" ? UK_PREP_CASE[withCid] : null)])
     : "";
 
-  return [subject, verb, companion].filter(Boolean).join(" ");
+  return joinWords(lang, [subject, verb, companion]);
 }
 function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subordinateFirst = false) {
   const linker = formOf(lang, linkerCid);
+
+  // Thai joins clauses without commas; the clause boundary is a space
+  // (ถ้าเขาอยู่บ้าน เขากิน...) and a trailing linker attaches directly.
+  if (lang === "th") {
+    return subordinateFirst
+      ? `${linker}${subClause} ${mainClause}`
+      : `${mainClause}${linker}${subClause}`;
+  }
 
   if (subordinateFirst) {
     return capitalizeFirst(`${linker} ${subClause}, ${mainClause}.`);
@@ -1375,10 +1446,11 @@ if (tpl.structure?.type === "complex_clause") {
       }
       // Copula in a present-tense statement: dropped entirely in
       // copula-less languages (uk/ar), replaced by 很 before a Chinese
-      // predicate adjective, conjugated everywhere else.
+      // predicate adjective, split three ways in Thai (zero/อยู่/คือ),
+      // conjugated everywhere else.
       if (isCopulaConcept(cid)) {
-        return zhCopulaOverride(lang, cid, ordered[idx + 1]) ||
-          copulaForm(lang, cid, subjectCid);
+        const override = copulaOverride(lang, cid, ordered[idx + 1], subjectCid);
+        return override !== null ? override : copulaForm(lang, cid, subjectCid);
       }
       return getVerbForm(cid, subjectCid, lang);
     }
@@ -1459,6 +1531,18 @@ if (tpl.structure?.type === "complex_clause") {
       noteRule("accusative_object");
       possessedForm = acc;
     }
+  }
+  // Thai possessors follow the noun: มือของฉัน ("hand of-me") — the
+  // possessive word (ของฉัน) attaches after the possessed noun, and its
+  // own ordered-walk slot renders empty. "Another" postposes with the
+  // classifier: หนังสืออีกเล่ม.
+  if (lang === "th" && precededByPossessive) {
+    return possessedForm + formOf(lang, ordered[idx - 1]);
+  }
+  if (lang === "th" && precededByModifier &&
+      prevMeta?.semantic_role === "quantity_additional") {
+    const clf = vocab().languages?.th?.forms?.[cid]?.classifier || "อัน";
+    return possessedForm + formOf(lang, ordered[idx - 1]) + clf;
   }
   let phrase = bareDetermined
     ? possessedForm
@@ -1598,6 +1682,13 @@ if (tpl.structure?.type === "complex_clause") {
     } else {
       nounForm = pluralFormOf(lang, cid);
     }
+    // Thai counts with a classifier AFTER the number, and the whole
+    // quantifier follows the noun: หนังสือสองเล่ม ("book two CLF").
+    if (lang === "th") {
+      const clf = vocab().languages?.th?.forms?.[cid]?.classifier || "อัน";
+      const quantified = joinWords(lang, [nounForm, numberWord, clf]);
+      return joinWords(lang, [quantified, adjectiveWord]);
+    }
     // Japanese requires a counter when a number quantifies a noun. Render as
     // "<number><counter>の<noun>" so "二 食べ物" becomes "二つの食べ物"
     // ("two foods"). Adjectives sit between の and the noun, matching the
@@ -1695,6 +1786,26 @@ if (tpl.structure?.type === "complex_clause") {
         noteRule("prepositional_case");
         return governed;
       }
+      // Thai demonstratives have a bound form after a preposition:
+      // standalone นี่ ("this") but บนนี้ ("on this"), surviving a
+      // conjunction (ระหว่างนี้และนั้น) — carried in the data. A direct-
+      // object demonstrative takes its full form (ทำสิ่งนี้).
+      if (lang === "th") {
+        const e = vocab().languages?.th?.forms?.[cid];
+        if (e && !Array.isArray(e) && typeof e === "object") {
+          let j = idx - 1;
+          while (j >= 0 &&
+                 ["connector", "pronoun"].includes(vocab().concepts[ordered[j]]?.type)) j--;
+          if (vocab().concepts[ordered[j]]?.type === "position" &&
+              typeof e.governed === "string") {
+            return e.governed;
+          }
+          if (typeof e.objectForm === "string" &&
+              isDirectObjectPosition(ordered, idx)) {
+            return e.objectForm;
+          }
+        }
+      }
     }
 
     // A demonstrative subject agrees with the predicate noun's gender where
@@ -1738,6 +1849,12 @@ if (tpl.structure?.type === "complex_clause") {
           vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
         form = ukFeminineAccusative(form);
       }
+      // Thai postposes "another" with the classifier: หนังสืออีกเล่ม
+      // ("book more CLF") — rendered inside the noun slot, so this one
+      // stays empty.
+      if (lang === "th" && meta.semantic_role === "quantity_additional") {
+        return "";
+      }
       // Italian keeps the indefinite article before a determiner-like
       // quantifier: «un altro libro», «un'altra casa».
       if (lang === "it" && meta.semantic_role === "quantity_additional") {
@@ -1757,6 +1874,11 @@ if (tpl.structure?.type === "complex_clause") {
     if (meta.type === "adjective" && meta.semantic_role === "possessive" &&
         lang !== "fr") {
       const nextCid = ordered[idx + 1];
+      // Thai renders the possessor inside the noun slot (มือของฉัน) —
+      // this slot stays empty.
+      if (lang === "th" && vocab().concepts[nextCid]?.type === "noun") {
+        return "";
+      }
       if (vocab().concepts[nextCid]?.type === "noun") {
         let form = genderedFormOf(lang, cid, nextCid);
         if (lang === "uk" && isDirectObjectPosition(ordered, idx + 1) &&
@@ -1808,7 +1930,7 @@ if (tpl.structure?.type === "complex_clause") {
     return wordsWithParticles.join("");
   }
 
-  let sentence = words.filter(w => w !== "" && w != null).join(" ");
+  let sentence = joinWords(lang, words.filter(w => w !== "" && w != null));
   sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
   return sentence + ".";
 }

@@ -1,0 +1,647 @@
+{
+  "I_EAT_FOOD": {
+    "render": "ฉันกินอาหาร",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "EAT": "กิน",
+      "FOOD": "อาหาร"
+    },
+    "questions": {
+      "pronoun": "ใครกินอาหาร",
+      "verb": "ฉันทำอะไร",
+      "object": "ฉันกินอะไร"
+    }
+  },
+  "HE_READ_BOOK": {
+    "render": "เขาอ่านหนังสือ",
+    "surface": {
+      "HE": "เขา",
+      "READ": "อ่าน",
+      "BOOK": "หนังสือ"
+    },
+    "questions": {
+      "pronoun": "ใครอ่านหนังสือ",
+      "verb": "เขาทำอะไร",
+      "object": "เขาอ่านอะไร"
+    }
+  },
+  "SHE_SEES_PHONE": {
+    "render": "เธอเห็นโทรศัพท์",
+    "surface": {
+      "SHE": "เธอ",
+      "SEE": "เห็น",
+      "PHONE": "โทรศัพท์"
+    },
+    "questions": {
+      "pronoun": "ใครเห็นโทรศัพท์",
+      "verb": "เธอทำอะไร",
+      "object": "เธอเห็นอะไร"
+    }
+  },
+  "WE_HAVE_JOB": {
+    "render": "เรามีงาน",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "เรา",
+      "HAVE": "มี",
+      "JOB": "งาน"
+    },
+    "questions": {
+      "pronoun": "ใครมีงาน",
+      "verb": "เราทำอะไร",
+      "object": "เรามีอะไร"
+    }
+  },
+  "I_DRINK_WATER": {
+    "render": "ฉันดื่มน้ำ",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "DRINK": "ดื่ม",
+      "WATER": "น้ำ"
+    },
+    "questions": {
+      "pronoun": "ใครดื่มน้ำ",
+      "verb": "ฉันทำอะไร",
+      "object": "ฉันดื่มอะไร"
+    }
+  },
+  "YOU_READ_BOOK": {
+    "render": "คุณอ่านหนังสือ",
+    "surface": {
+      "SECOND_PERSON": "คุณ",
+      "READ": "อ่าน",
+      "BOOK": "หนังสือ"
+    },
+    "questions": {
+      "pronoun": "ใครอ่านหนังสือ",
+      "verb": "คุณทำอะไร",
+      "object": "คุณอ่านอะไร"
+    }
+  },
+  "YOU_PLURAL_DRINK_WATER": {
+    "render": "พวกคุณดื่มน้ำ",
+    "surface": {
+      "SECOND_PERSON_PLURAL": "พวกคุณ",
+      "DRINK": "ดื่ม",
+      "WATER": "น้ำ"
+    },
+    "questions": {
+      "pronoun": "ใครดื่มน้ำ",
+      "verb": "พวกคุณทำอะไร",
+      "object": "พวกคุณดื่มอะไร"
+    }
+  },
+  "THEY_SLEEP": {
+    "render": "พวกเขานอน",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "พวกเขา",
+      "SLEEP": "นอน"
+    },
+    "questions": {
+      "pronoun": "ใครนอน",
+      "verb": "พวกเขาทำอะไร"
+    }
+  },
+  "I_AM_MAN": {
+    "render": "ฉันเป็นผู้ชาย",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "BE": "เป็น",
+      "MAN": "ผู้ชาย"
+    },
+    "questions": {
+      "verb": "ฉันเป็นอะไร",
+      "object": "ฉันเป็นอะไร"
+    }
+  },
+  "SHE_IS_WOMAN": {
+    "render": "เธอเป็นผู้หญิง",
+    "surface": {
+      "SHE": "เธอ",
+      "BE": "เป็น",
+      "WOMAN": "ผู้หญิง"
+    },
+    "questions": {
+      "pronoun": "ใครเป็นผู้หญิง",
+      "verb": "เธอเป็นอะไร",
+      "object": "เธอเป็นอะไร"
+    }
+  },
+  "YOU_ARE_GIRL": {
+    "render": "คุณเป็นเด็กผู้หญิง",
+    "surface": {
+      "SECOND_PERSON": "คุณ",
+      "BE": "เป็น",
+      "GIRL": "เด็กผู้หญิง"
+    },
+    "questions": {
+      "pronoun": "ใครเป็นเด็กผู้หญิง",
+      "verb": "คุณเป็นอะไร",
+      "object": "คุณเป็นอะไร"
+    }
+  },
+  "HE_IS_BOY": {
+    "render": "เขาเป็นเด็กผู้ชาย",
+    "surface": {
+      "HE": "เขา",
+      "BE": "เป็น",
+      "BOY": "เด็กผู้ชาย"
+    },
+    "questions": {
+      "pronoun": "ใครเป็นเด็กผู้ชาย",
+      "verb": "เขาเป็นอะไร",
+      "object": "เขาเป็นอะไร"
+    }
+  },
+  "WE_STOP_EATING": {
+    "render": "เราหยุดกิน",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "เรา",
+      "STOP": "หยุด",
+      "EAT": "กิน"
+    },
+    "questions": {
+      "pronoun": "ใครหยุดกิน",
+      "verb": "เราทำอะไร"
+    }
+  },
+  "THEY_START_SLEEPING": {
+    "render": "พวกเขาเริ่มนอน",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "พวกเขา",
+      "START": "เริ่ม",
+      "SLEEP": "นอน"
+    },
+    "questions": {
+      "pronoun": "ใครเริ่มนอน",
+      "verb": "พวกเขาทำอะไร"
+    }
+  },
+  "HE_SEES_SHIRT": {
+    "render": "เขาเห็นเสื้อ",
+    "surface": {
+      "HE": "เขา",
+      "SEE": "เห็น",
+      "SHIRT": "เสื้อ"
+    },
+    "questions": {
+      "pronoun": "ใครเห็นเสื้อ",
+      "verb": "เขาทำอะไร",
+      "object": "เขาเห็นอะไร"
+    }
+  },
+  "I_GO_HOME": {
+    "render": "ฉันไปบ้าน",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "GO": "ไป",
+      "HOME": "บ้าน"
+    },
+    "questions": {
+      "pronoun": "ใครไปบ้าน",
+      "verb": "ฉันทำอะไร",
+      "object": "ฉันไปที่ไหน"
+    }
+  },
+  "I_USE_PHONE": {
+    "render": "ฉันใช้โทรศัพท์",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "USE": "ใช้",
+      "PHONE": "โทรศัพท์"
+    },
+    "questions": {
+      "pronoun": "ใครใช้โทรศัพท์",
+      "verb": "ฉันทำอะไร",
+      "object": "ฉันใช้อะไร"
+    }
+  },
+  "I_GET_BOOK": {
+    "render": "ฉันได้รับหนังสือ",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "GET": "ได้รับ",
+      "BOOK": "หนังสือ"
+    },
+    "questions": {
+      "pronoun": "ใครได้รับหนังสือ",
+      "verb": "ฉันทำอะไร",
+      "object": "ฉันได้รับอะไร"
+    }
+  },
+  "I_SEE_HOUSE": {
+    "render": "ฉันเห็นบ้าน",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "SEE": "เห็น",
+      "HOUSE": "บ้าน"
+    },
+    "questions": {
+      "pronoun": "ใครเห็นบ้าน",
+      "verb": "ฉันทำอะไร",
+      "object": "ฉันเห็นอะไร"
+    }
+  },
+  "SHE_SEES_ROOM": {
+    "render": "เธอเห็นห้อง",
+    "surface": {
+      "SHE": "เธอ",
+      "SEE": "เห็น",
+      "ROOM": "ห้อง"
+    },
+    "questions": {
+      "pronoun": "ใครเห็นห้อง",
+      "verb": "เธอทำอะไร",
+      "object": "เธอเห็นอะไร"
+    }
+  },
+  "I_HAVE_SHIRT": {
+    "render": "ฉันมีเสื้อ",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "HAVE": "มี",
+      "SHIRT": "เสื้อ"
+    },
+    "questions": {
+      "pronoun": "ใครมีเสื้อ",
+      "verb": "ฉันทำอะไร",
+      "object": "ฉันมีอะไร"
+    }
+  },
+  "SHE_HAS_SHOES": {
+    "render": "เธอมีรองเท้า",
+    "surface": {
+      "SHE": "เธอ",
+      "HAVE": "มี",
+      "SHOES": "รองเท้า"
+    },
+    "questions": {
+      "pronoun": "ใครมีรองเท้า",
+      "verb": "เธอทำอะไร",
+      "object": "เธอมีอะไร"
+    }
+  },
+  "THEY_HAVE_PANTS": {
+    "render": "พวกเขามีกางเกง",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "พวกเขา",
+      "HAVE": "มี",
+      "PANTS": "กางเกง"
+    }
+  },
+  "WE_HAVE_CLOTHES": {
+    "render": "เรามีเสื้อผ้า",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "เรา",
+      "HAVE": "มี",
+      "CLOTHES": "เสื้อผ้า"
+    }
+  },
+  "I_EAT_BREAKFAST": {
+    "render": "ฉันกินอาหารเช้า",
+    "surface": {
+      "FIRST_PERSON_SINGULAR": "ฉัน",
+      "EAT": "กิน",
+      "BREAKFAST": "อาหารเช้า"
+    }
+  },
+  "WE_EAT_LUNCH": {
+    "render": "เรากินอาหารกลางวัน",
+    "surface": {
+      "FIRST_PERSON_PLURAL": "เรา",
+      "EAT": "กิน",
+      "LUNCH": "อาหารกลางวัน"
+    }
+  },
+  "THEY_EAT_DINNER": {
+    "render": "พวกเขากินอาหารเย็น",
+    "surface": {
+      "THIRD_PERSON_PLURAL": "พวกเขา",
+      "EAT": "กิน",
+      "DINNER": "อาหารเย็น"
+    }
+  },
+  "THIS_IS_MY_HAND": {
+    "render": "นี่คือมือของฉัน",
+    "surface": {
+      "THIS": "นี่",
+      "BE": "คือ",
+      "MY": "ของฉัน",
+      "HAND": "มือ"
+    }
+  },
+  "THIS_IS_YOUR_HEAD": {
+    "render": "นี่คือหัวของคุณ",
+    "surface": {
+      "THIS": "นี่",
+      "BE": "คือ",
+      "YOUR": "ของคุณ",
+      "HEAD": "หัว"
+    }
+  },
+  "THAT_IS_MY_ARM": {
+    "render": "นั่นคือแขนของฉัน",
+    "surface": {
+      "THAT": "นั่น",
+      "BE": "คือ",
+      "MY": "ของฉัน",
+      "ARM": "แขน"
+    }
+  },
+  "THAT_IS_YOUR_LEG": {
+    "render": "นั่นคือขาของคุณ",
+    "surface": {
+      "THAT": "นั่น",
+      "BE": "คือ",
+      "YOUR": "ของคุณ",
+      "LEG": "ขา"
+    }
+  },
+  "SHE_IS_MY_MOM": {
+    "render": "เธอเป็นแม่ของฉัน",
+    "surface": {
+      "SHE": "เธอ",
+      "BE": "เป็น",
+      "MY": "ของฉัน",
+      "MOM": "แม่"
+    }
+  },
+  "HE_IS_MY_DAD": {
+    "render": "เขาเป็นพ่อของฉัน",
+    "surface": {
+      "HE": "เขา",
+      "BE": "เป็น",
+      "MY": "ของฉัน",
+      "DAD": "พ่อ"
+    }
+  },
+  "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD": {
+    "render": "นี่คือมือของฉันและนี่คือหัวของคุณ"
+  },
+  "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD": {
+    "render": "เธอเป็นแม่ของฉันและเขาเป็นพ่อของฉัน"
+  },
+  "I_EAT_AND_DRINK": {
+    "render": "ฉันกินและดื่ม"
+  },
+  "HE_EAT_BREAKFAST_BUT_NOT_LUNCH": {
+    "render": "เขากินอาหารเช้าแต่ไม่กินอาหารกลางวัน"
+  },
+  "SHE_GO_TO_HER_ROOM": {
+    "render": "เธอไปที่ห้องของเธอ"
+  },
+  "THIS_IS_A_GOOD_BOOK": {
+    "render": "นี่คือหนังสือที่ดี"
+  },
+  "IS_THAT_YOUR_PHONE": {
+    "render": "นั่นคือโทรศัพท์ของคุณใช่ไหม"
+  },
+  "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME": {
+    "render": "เขากินอาหารเย็นกับแม่ของเขาเพราะเขาอยู่บ้าน"
+  },
+  "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER": {
+    "render": "ถ้าเขาอยู่บ้าน เขากินกับลูกสาวของเขา"
+  },
+  "BOOK_IS_RED": {
+    "render": "หนังสือสีแดง"
+  },
+  "PHONE_IS_BLUE": {
+    "render": "โทรศัพท์สีน้ำเงิน"
+  },
+  "SHIRT_IS_GREEN": {
+    "render": "เสื้อสีเขียว"
+  },
+  "HOUSE_IS_WHITE": {
+    "render": "บ้านสีขาว"
+  },
+  "PANTS_ARE_BLACK": {
+    "render": "กางเกงสีดำ"
+  },
+  "I_EAT_TODAY": {
+    "render": "ฉันกินวันนี้"
+  },
+  "HE_READS_TODAY": {
+    "render": "เขาอ่านวันนี้"
+  },
+  "WE_GO_TOMORROW": {
+    "render": "เราไปพรุ่งนี้"
+  },
+  "I_READ_NOW": {
+    "render": "ฉันอ่านตอนนี้"
+  },
+  "HE_WORKS_YESTERDAY": {
+    "render": "เมื่อวานเขาทำงาน"
+  },
+  "WHO_EATS": {
+    "render": "ใครกิน"
+  },
+  "WHY_DO_YOU_GO": {
+    "render": "คุณไปทำไม"
+  },
+  "WHEN_DO_WE_EAT": {
+    "render": "เรากินเมื่อไหร่"
+  },
+  "I_EAT_BEFORE": {
+    "render": "ฉันกินก่อน"
+  },
+  "WE_GO_AFTER": {
+    "render": "เราไปหลังจากนั้น"
+  },
+  "WHERE_IS_BOOK": {
+    "render": "หนังสืออยู่ที่ไหน"
+  },
+  "HOW_DO_YOU_READ": {
+    "render": "คุณอ่านอย่างไร"
+  },
+  "WHAT_DO_I_HAVE": {
+    "render": "ฉันมีอะไร"
+  },
+  "WHICH_BOOK": {
+    "render": "หนังสือเล่มไหน"
+  },
+  "WE_EAT_ALL": {
+    "render": "เรากินทั้งหมด"
+  },
+  "BOOK_ON_THIS": {
+    "render": "หนังสืออยู่บนนี้"
+  },
+  "PHONE_IN_THAT": {
+    "render": "โทรศัพท์อยู่ในนั้น"
+  },
+  "SHOES_UNDER_THIS": {
+    "render": "รองเท้าอยู่ใต้นี้"
+  },
+  "BOOK_NEXT_TO_PHONE": {
+    "render": "หนังสืออยู่ข้างๆโทรศัพท์"
+  },
+  "PHONE_IN_FRONT_OF_BOOK": {
+    "render": "โทรศัพท์อยู่ข้างหน้าหนังสือ"
+  },
+  "BOOK_BEHIND_PHONE": {
+    "render": "หนังสืออยู่ข้างหลังโทรศัพท์"
+  },
+  "PHONE_OFF_THIS": {
+    "render": "โทรศัพท์ไม่ได้อยู่บนนี้"
+  },
+  "BOOK_BETWEEN_THIS_AND_THAT": {
+    "render": "หนังสืออยู่ระหว่างนี้และนั้น"
+  },
+  "SHOES_IN_THIS": {
+    "render": "รองเท้าอยู่ในนี้"
+  },
+  "PHONE_ON_THAT": {
+    "render": "โทรศัพท์อยู่บนนั้น"
+  },
+  "WE_GO_BACK": {
+    "render": "เรากลับไป"
+  },
+  "I_GO_OUT": {
+    "render": "ฉันออกไป"
+  },
+  "WE_GO_NORTH": {
+    "render": "เราไปทางทิศเหนือ"
+  },
+  "WE_GO_SOUTH": {
+    "render": "เราไปทางทิศใต้"
+  },
+  "WE_GO_EAST": {
+    "render": "เราไปทางทิศตะวันออก"
+  },
+  "WE_GO_WEST": {
+    "render": "เราไปทางทิศตะวันตก"
+  },
+  "BOOK_IS_LONG": {
+    "render": "หนังสือยาว"
+  },
+  "DAY_IS_SHORT": {
+    "render": "กลางวันสั้น"
+  },
+  "BOOK_IS_HEAVY": {
+    "render": "หนังสือหนัก"
+  },
+  "PHONE_IS_LIGHT": {
+    "render": "โทรศัพท์เบา"
+  },
+  "NIGHT_IS_DARK": {
+    "render": "กลางคืนมืด"
+  },
+  "BOY_IS_YOUNG": {
+    "render": "เด็กผู้ชายอายุน้อย"
+  },
+  "BOOK_IS_EASY": {
+    "render": "หนังสือง่าย"
+  },
+  "BOOK_IS_DIFFICULT": {
+    "render": "หนังสือยาก"
+  },
+  "THIS_IS_RIGHT": {
+    "render": "นี่อยู่ทางขวา"
+  },
+  "THIS_IS_LEFT": {
+    "render": "นี่อยู่ทางซ้าย"
+  },
+  "THIS_IS_CORRECT": {
+    "render": "นี่ถูกต้อง"
+  },
+  "THIS_IS_WRONG": {
+    "render": "นี่ผิด"
+  },
+  "THIS_IS_NICE": {
+    "render": "นี่ดี"
+  },
+  "YEAR_IS_LONG": {
+    "render": "ปียาว"
+  },
+  "MONTH_IS_LONG": {
+    "render": "เดือนยาว"
+  },
+  "WEEK_IS_SHORT": {
+    "render": "สัปดาห์สั้น"
+  },
+  "DAY_IS_LONG": {
+    "render": "กลางวันยาว"
+  },
+  "HOUR_IS_SHORT": {
+    "render": "ชั่วโมงสั้น"
+  },
+  "MINUTE_IS_SHORT": {
+    "render": "นาทีสั้น"
+  },
+  "SECOND_IS_SHORT": {
+    "render": "วินาทีสั้น"
+  },
+  "MORNING_IS_GOOD": {
+    "render": "ตอนเช้าดี"
+  },
+  "NIGHT_IS_BAD": {
+    "render": "กลางคืนแย่"
+  },
+  "WINTER_IS_COLD": {
+    "render": "ฤดูหนาวหนาว"
+  },
+  "SUMMER_IS_GOOD": {
+    "render": "ฤดูร้อนดี"
+  },
+  "SPRING_IS_NEW": {
+    "render": "ฤดูใบไม้ผลิใหม่"
+  },
+  "AUTUMN_IS_OLD": {
+    "render": "ฤดูใบไม้ร่วงเก่า"
+  },
+  "THIS_IS_THING": {
+    "render": "นี่คือสิ่งของ"
+  },
+  "PLEASE_READ": {
+    "render": "กรุณาอ่าน"
+  },
+  "MAYBE_I_GO": {
+    "render": "บางทีฉันอาจจะไป"
+  },
+  "THANKS": {
+    "render": "ขอบคุณ"
+  },
+  "I_GO_FOR_FOOD": {
+    "render": "ฉันไปเอาอาหาร"
+  },
+  "I_HAVE_SOMETHING": {
+    "render": "ฉันมีบางอย่าง"
+  },
+  "I_HAVE_ANOTHER_BOOK": {
+    "render": "ฉันมีหนังสืออีกเล่ม"
+  },
+  "I_READ_ONLY_BOOK": {
+    "render": "ฉันอ่านแค่หนังสือ"
+  },
+  "I_GO_FROM_HOME": {
+    "render": "ฉันออกจากบ้าน"
+  },
+  "I_GO_TO_HOUSE": {
+    "render": "ฉันไปที่บ้าน"
+  },
+  "I_GO_AROUND": {
+    "render": "ฉันไปรอบๆ"
+  },
+  "I_DO_THIS_BY_HAND": {
+    "render": "ฉันทำสิ่งนี้ด้วยมือ"
+  },
+  "YES_I_DO": {
+    "render": "ใช่ ฉันทำ"
+  },
+  "NO_I_DO_NOT": {
+    "render": "ไม่ ฉันไม่ทำ"
+  },
+  "THIS_IS_MINE": {
+    "render": "นี่คือของฉัน"
+  },
+  "THIS_IS_YOURS": {
+    "render": "นี่คือของคุณ"
+  },
+  "THIS_IS_HERS": {
+    "render": "นี่คือของเธอ"
+  },
+  "THIS_IS_OURS": {
+    "render": "นี่คือของเรา"
+  },
+  "THIS_IS_THEIRS": {
+    "render": "นี่คือของพวกเขา"
+  }
+}

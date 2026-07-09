@@ -58,6 +58,10 @@
       "it": {
         "title": "Il verbo cambia con il soggetto",
         "body": "In {lang} il verbo prende una forma diversa a seconda di chi compie l'azione — come «io mangio» e «lui mangia», ma per ogni persona."
+      },
+      "th": {
+        "title": "กริยาเปลี่ยนตามประธาน",
+        "body": "ใน{lang} กริยาจะเปลี่ยนรูปตามผู้กระทำ — ต่างจากภาษาไทยที่ใช้รูปเดียวเสมอ เช่น 'I eat' กับ 'he eats' ในภาษาอังกฤษ"
       }
     },
     "zero_copula": {
@@ -116,6 +120,10 @@
       "it": {
         "title": "Niente «essere» al presente",
         "body": "In {lang} il verbo «essere» si omette al presente: si dice l'equivalente di «Questo — un telefono», senza «è»."
+      },
+      "th": {
+        "title": "ไม่มีคำว่า 'เป็น' ในปัจจุบัน",
+        "body": "ใน{lang} จะละคำว่า 'เป็น' ในประโยคปัจจุบัน: 'เขาเป็นนักเรียน' จะพูดเพียง 'เขา นักเรียน' — คล้ายกับที่ภาษาไทยละ 'เป็น' หน้าคำคุณศัพท์"
       }
     },
     "zh_predicate_adjective": {
@@ -174,6 +182,10 @@
       "it": {
         "title": "很 al posto di «essere»",
         "body": "In cinese, prima di un aggettivo non si usa 是 («essere») ma 很: 他很强 — letteralmente «lui molto forte»."
+      },
+      "th": {
+        "title": "ใช้ 很 แทน 'เป็น'",
+        "body": "ภาษาจีนเชื่อมคำคุณศัพท์กับประธานด้วย 很 (hěn) ไม่ใช่ 是 (shì): 他很强 แปลตรงตัวว่า 'เขา มาก แข็งแรง'"
       }
     },
     "post_nominal_adjective": {
@@ -232,6 +244,10 @@
       "it": {
         "title": "L'aggettivo dopo il nome",
         "body": "In {lang} l'aggettivo di solito segue il nome: «una casa grande», non «una grande casa» come in inglese."
+      },
+      "th": {
+        "title": "คำคุณศัพท์ตามหลังคำนาม",
+        "body": "ใน{lang} คำคุณศัพท์มักอยู่หลังคำนาม เช่น 'บ้านใหญ่' — เหมือนภาษาไทย ต่างจากภาษาอังกฤษที่พูดว่า 'big house'"
       }
     },
     "french_elision": {
@@ -290,6 +306,10 @@
       "it": {
         "title": "L'elisione",
         "body": "In francese alcune paroline perdono la vocale davanti a un'altra vocale: je aime → j'aime, le eau → l'eau. Succede anche in italiano: l'acqua."
+      },
+      "th": {
+        "title": "การละสระ",
+        "body": "ในภาษาฝรั่งเศส คำเล็กๆ บางคำจะตัดสระทิ้งเมื่ออยู่หน้าสระ: je aime → j'aime, le eau → l'eau"
       }
     },
     "french_possessive_agreement": {
@@ -348,6 +368,10 @@
       "it": {
         "title": "Il possessivo concorda con la cosa",
         "body": "In francese «suo/sua» concorda con la cosa posseduta, non con chi la possiede: sa fille (sua figlia), son père (suo padre) — come in italiano."
+      },
+      "th": {
+        "title": "คำแสดงความเป็นเจ้าของผันตามสิ่งของ",
+        "body": "ในภาษาฝรั่งเศส คำว่า 'ของเขา/ของเธอ' ผันตามสิ่งที่ถูกครอบครอง ไม่ใช่ตามเจ้าของ: sa fille (ลูกสาวของเขา), son père (พ่อของเขา)"
       }
     },
     "gender_agreement": {
@@ -406,6 +430,10 @@
       "it": {
         "title": "L'accordo di genere",
         "body": "In {lang} l'aggettivo concorda con il genere del nome — come in italiano «casa bianca» ma «libro bianco»."
+      },
+      "th": {
+        "title": "การผันตามเพศของคำนาม",
+        "body": "ใน{lang} คำคุณศัพท์ต้องผันตามเพศทางไวยากรณ์ของคำนาม — ภาษาไทยไม่มีระบบนี้ ทุกคำนามใช้คุณศัพท์รูปเดียวกัน"
       }
     },
     "sov_word_order": {
@@ -464,6 +492,10 @@
       "it": {
         "title": "Il verbo alla fine",
         "body": "In {lang} il verbo va alla fine della frase: «Io acqua bevo» invece di «Io bevo acqua»."
+      },
+      "th": {
+        "title": "กริยาอยู่ท้ายประโยค",
+        "body": "ใน{lang} กริยาจะอยู่ท้ายประโยค: 'ฉัน น้ำ ดื่ม' แทนที่จะเป็น 'ฉันดื่มน้ำ' แบบภาษาไทย"
       }
     },
     "vso_word_order": {
@@ -522,6 +554,10 @@
       "it": {
         "title": "Il verbo all'inizio",
         "body": "In {lang} la frase può iniziare con il verbo: «Beve lui acqua» invece di «Lui beve acqua»."
+      },
+      "th": {
+        "title": "กริยาขึ้นต้นประโยค",
+        "body": "ใน{lang} ประโยคอาจขึ้นต้นด้วยกริยา: 'ดื่ม เขา น้ำ' แทนที่จะเป็น 'เขาดื่มน้ำ'"
       }
     },
     "indefinite_article": {
@@ -580,6 +616,10 @@
       "it": {
         "title": "Scegliere la parola per «un»",
         "body": "La parolina per «un» cambia con il nome — in inglese secondo il suono (a book, an apple), in {lang} secondo il genere o la forma del nome."
+      },
+      "th": {
+        "title": "การเลือกคำนำหน้านาม",
+        "body": "คำนำหน้านามที่แปลว่า 'หนึ่ง' ใน{lang}เปลี่ยนตามคำนาม — ภาษาอังกฤษเปลี่ยนตามเสียง (a book, an apple) ภาษาอื่นเปลี่ยนตามเพศของคำนาม ภาษาไทยไม่มีคำแบบนี้"
       }
     },
     "ja_counter": {
@@ -638,6 +678,10 @@
       "it": {
         "title": "Contare con i classificatori",
         "body": "In giapponese i numeri si legano ai nomi con un classificatore e の: 二つの食べ物 — letteralmente «due-pezzi di cibo»."
+      },
+      "th": {
+        "title": "การนับด้วยลักษณนาม",
+        "body": "ภาษาญี่ปุ่นเชื่อมตัวเลขกับคำนามด้วยลักษณนามและ の: 二つの食べ物 — เหมือนลักษณนามในภาษาไทย เช่น หนังสือสองเล่ม"
       }
     },
     "accusative_object": {
@@ -696,6 +740,10 @@
       "it": {
         "title": "La desinenza del nome mostra il suo ruolo",
         "body": "In {lang} non c'è una parola per «un» o «il» — quel lavoro lo fa la desinenza del nome. Il nome che riceve l'azione cambia desinenza: книга diventa Я читаю книгу (io leggo un libro)."
+      },
+      "th": {
+        "title": "ท้ายคำบอกหน้าที่ของคำ",
+        "body": "ใน{lang}ไม่มีคำนำหน้านาม — ท้ายคำทำหน้าที่นั้นแทน คำนามที่ถูกกระทำจะเปลี่ยนท้ายคำ: книга กลายเป็น Я читаю книгу (ฉันอ่านหนังสือ)"
       }
     },
     "prepositional_case": {
@@ -754,6 +802,10 @@
       "it": {
         "title": "Le paroline cambiano la desinenza",
         "body": "In {lang} una preposizione cambia la desinenza della parola che la segue: на цьому (su questo), перед книгою (davanti al libro), до будинку (verso la casa)."
+      },
+      "th": {
+        "title": "คำบุพบทเปลี่ยนท้ายคำ",
+        "body": "ใน{lang} คำบุพบทจะเปลี่ยนท้ายคำที่ตามมา: на цьому (บนนี้), перед книгою (ข้างหน้าหนังสือ), до будинку (ไปที่บ้าน)"
       }
     },
     "definite_article": {
@@ -812,6 +864,10 @@
       "it": {
         "title": "Parlare di una cosa precisa",
         "body": "Quando la frase descrive una cosa precisa, {lang} la segnala con l'articolo determinativo — come «il/la» in italiano: The book is red (Il libro è rosso), non «un libro»."
+      },
+      "th": {
+        "title": "การพูดถึงสิ่งที่เจาะจง",
+        "body": "เมื่อประโยคพูดถึงสิ่งที่เจาะจง {lang}จะใส่คำนำหน้านามชี้เฉพาะ — เหมือน the ในภาษาอังกฤษ: The book is red (หนังสือเล่มนั้นสีแดง)"
       }
     }
   }
