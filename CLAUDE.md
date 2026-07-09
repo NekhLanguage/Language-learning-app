@@ -60,6 +60,45 @@ template × language and compares findings against
 `validation/sentence-baseline.json`; new findings fail CI, fixed ones can be
 removed with `npm run validate:sentences:update`.
 
+`validation/validate-render-divergence.mjs` compares every generated sentence
+against the human-authored `render` strings (the native-speaker ground truth)
+and ratchets the result via `validation/render-divergence-baseline.json`: any
+NEW divergence fails CI, fixed ones can be pruned with
+`npm run validate:divergence:update`. `validation/report-render-divergence.mjs
+--lang <code>` lists every current divergence for one language — that list is
+the priority queue for engine grammar work.
+
+### Adding a new language
+
+The engine renders the TARGET language from concept data — an unhandled
+grammar feature produces wrong sentences silently (this shipped «Я п'ю вода»
+for Ukrainian). Work through this list; don't skip to "the app boots":
+
+1. **Author the ground truth first.** Fill `render.<code>` (and
+   `surface.<code>`) for every core template in `sentence_templates.json`,
+   written/reviewed by a native speaker. Pack files also need per-language
+   `forms` — `npm run validate` enforces completeness.
+2. **Audit the grammar features the language needs** against what the engine
+   has, and declare a plan for each: articles (in/definite — `nounPhrase`,
+   `definiteNounPhrase`), grammatical gender + agreement (`gender`, `f`/`n`/
+   `plural`/`fp` fields), noun case (uk-style `accusative`/`genitive`/
+   `locative`/`instrumental` fields + engine mapping), copula behavior
+   (`ZERO_PRESENT_COPULA`), word order (`WORD_ORDER`), script/punctuation
+   (`finalizeSentence`), counters/particles (ja). Per-word exceptions have
+   flags: `noArticle`, `pluralOnly`, `invariantPlural`, `predicative`,
+   `article`.
+3. **Run `npm run validate:divergence`** and read every divergence for the
+   new language. Fix what the engine/data can express; only then baseline the
+   rest with `npm run validate:divergence:update`. The baseline diff in your
+   PR is the reviewable list of known-imperfect sentences learners will see —
+   a high rate is a launch decision someone should sign off on, not a
+   surprise.
+4. **Grammar notes**: every rule id in `GRAMMAR_RULE_IDS` needs a note in the
+   new language (`grammar_notes.json`) — `validate-grammar-notes` enforces it.
+5. **Gate AI features** for the language in `capabilities.mjs` until verified.
+6. Drive the real app once with the language selected (see `tests/e2e/` for
+   the harness) and read the sentences on L1–L7 like a learner would.
+
 ### Changing the shape of user state
 
 The persisted `USER` blob (localStorage `zth_user`, mirrored to Supabase) is

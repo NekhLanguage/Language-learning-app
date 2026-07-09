@@ -163,9 +163,7 @@
     "NEXT_TO": [
       "next to"
     ],
-    "FRONT": [
-      "front"
-    ],
+    "FRONT": ["in front of"],
     "BEHIND": [
       "behind"
     ],
@@ -230,10 +228,7 @@
       "form": "house",
       "article": "a"
     },
-    "HOME": {
-      "form": "home",
-      "article": "a"
-    },
+    "HOME": {"form": "home", "noArticle": true},
     "BOOK": {
       "form": "book",
       "article": "a"
@@ -326,15 +321,9 @@
       "form": "face",
       "article": "a"
     },
-    "BREAKFAST": {
-      "form": "breakfast"
-    },
-    "LUNCH": {
-      "form": "lunch"
-    },
-    "DINNER": {
-      "form": "dinner"
-    },
+    "BREAKFAST": {"form": "breakfast", "noArticle": true},
+    "LUNCH": {"form": "lunch", "noArticle": true},
+    "DINNER": {"form": "dinner", "noArticle": true},
     "CLOTHES": {
       "form": "clothes",
       "pluralOnly": true

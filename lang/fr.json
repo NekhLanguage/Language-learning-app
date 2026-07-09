@@ -99,19 +99,19 @@
       "plural": "petits"
     },
     "GOOD": {
-      "form": "bon",
+      "form": "bon", "f": "bonne",
       "plural": "bons"
     },
     "BAD": {
-      "form": "mauvais",
+      "form": "mauvais", "f": "mauvaise",
       "plural": "mauvais"
     },
     "NEW": {
-      "form": "nouveau",
+      "form": "nouveau", "f": "nouvelle",
       "plural": "nouveaux"
     },
     "OLD": {
-      "form": "vieux",
+      "form": "vieux", "f": "vieille",
       "plural": "vieux"
     },
     "EASY": {
@@ -551,21 +551,11 @@
     "MORNING": [
       "matin"
     ],
-    "DAY": [
-      "jour"
-    ],
-    "NIGHT": [
-      "nuit"
-    ],
-    "WEEK": [
-      "semaine"
-    ],
-    "MONTH": [
-      "mois"
-    ],
-    "YEAR": [
-      "année"
-    ],
+    "DAY": {"form": "jour", "gender": "m"},
+    "NIGHT": {"form": "nuit", "gender": "f"},
+    "WEEK": {"form": "semaine", "gender": "f"},
+    "MONTH": {"form": "mois", "gender": "m"},
+    "YEAR": {"form": "année", "gender": "f"},
     "DO": {
       "base": "faire",
       "1_singular": "fais",
@@ -692,27 +682,27 @@
       "2_plural": "êtes",
       "3_plural": "sont"
     },
-    "BLACK": ["noir"],
-    "WHITE": ["blanc"],
+    "BLACK": {"form": "noir", "f": "noire"},
+    "WHITE": {"form": "blanc", "f": "blanche"},
     "RED": ["rouge"],
-    "BLUE": ["bleu"],
-    "GREEN": ["vert"],
+    "BLUE": {"form": "bleu", "f": "bleue"},
+    "GREEN": {"form": "vert", "f": "verte"},
     "YELLOW": ["jaune"],
     "PURPLE": ["violet"],
     "ORANGE": ["orange"],
     "FAST": ["rapide"],
     "SLOW": ["lent"],
-    "LONG": ["long"],
-    "SHORT": ["court"],
-    "HEAVY": ["lourd"],
-    "LIGHT": ["léger"],
+    "LONG": {"form": "long", "f": "longue"},
+    "SHORT": {"form": "court", "f": "courte"},
+    "HEAVY": {"form": "lourd", "f": "lourde"},
+    "LIGHT": {"form": "léger", "f": "légère"},
     "DARK": ["sombre"],
     "YOUNG": ["jeune"],
     "RIGHT": ["droit"],
     "LEFT": ["gauche"],
     "CORRECT": ["correct"],
     "WRONG": ["faux"],
-    "COLD": {"form":"froid","plural":"froids"},
+    "COLD": {"form":"froid","f":"froide","plural":"froids"},
     "NICE": ["gentil"],
     "THIS": ["ce"],
     "THAT": ["cela"],
@@ -723,18 +713,18 @@
     "HERS": ["le sien"],
     "OURS": ["le nôtre"],
     "THEIRS": ["le leur"],
-    "HOUR": ["heure"],
-    "MINUTE": ["minute"],
-    "SECOND": ["seconde"],
+    "HOUR": {"form": "heure", "gender": "f"},
+    "MINUTE": {"form": "minute", "gender": "f"},
+    "SECOND": {"form": "seconde", "gender": "f"},
     "NOW": ["maintenant"],
     "BEFORE": ["avant"],
     "AFTER": ["après"],
     "LATER": ["plus tard"],
     "NEXT": ["prochain"],
-    "SPRING": ["printemps"],
-    "SUMMER": ["été"],
-    "AUTUMN": ["automne"],
-    "WINTER": ["hiver"],
+    "SPRING": {"form": "printemps", "gender": "m"},
+    "SUMMER": {"form": "été", "gender": "m"},
+    "AUTUMN": {"form": "automne", "gender": "m"},
+    "WINTER": {"form": "hiver", "gender": "m"},
     "ALL": ["tout"],
     "AROUND": ["autour"],
     "THANKS": ["merci"],

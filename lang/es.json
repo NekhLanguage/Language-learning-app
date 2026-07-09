@@ -99,19 +99,19 @@
       "plural": "pequeños"
     },
     "GOOD": {
-      "form": "bueno",
+      "form": "bueno", "f": "buena",
       "plural": "buenos"
     },
     "BAD": {
-      "form": "malo",
+      "form": "malo", "f": "mala",
       "plural": "malos"
     },
     "NEW": {
-      "form": "nuevo",
+      "form": "nuevo", "f": "nueva",
       "plural": "nuevos"
     },
     "OLD": {
-      "form": "viejo",
+      "form": "viejo", "f": "vieja",
       "plural": "viejos"
     },
     "EASY": {
@@ -378,19 +378,13 @@
       "gender": "f",
       "plural": "camisas"
     },
-    "SHOES": {
-      "form": "zapatos",
-      "gender": "m"
-    },
+    "SHOES": {"form": "zapatos", "gender": "m", "pluralOnly": true},
     "PHONE": {
       "form": "teléfono",
       "gender": "m",
       "plural": "teléfonos"
     },
-    "PANTS": {
-      "form": "pantalón",
-      "gender": "m"
-    },
+    "PANTS": {"form": "pantalones", "gender": "m", "pluralOnly": true},
     "ONE": [
       "uno"
     ],
@@ -538,21 +532,11 @@
     "MORNING": [
       "mañana"
     ],
-    "DAY": [
-      "día"
-    ],
-    "NIGHT": [
-      "noche"
-    ],
-    "WEEK": [
-      "semana"
-    ],
-    "MONTH": [
-      "mes"
-    ],
-    "YEAR": [
-      "año"
-    ],
+    "DAY": {"form": "día", "gender": "m"},
+    "NIGHT": {"form": "noche", "gender": "f"},
+    "WEEK": {"form": "semana", "gender": "f"},
+    "MONTH": {"form": "mes", "gender": "m"},
+    "YEAR": {"form": "año", "gender": "m"},
     "DO": {
       "base": "hacer",
       "1_singular": "hago",
@@ -616,15 +600,7 @@
       "2_plural": "empezáis",
       "3_plural": "empiezan"
     },
-    "STOP": {
-      "base": "parar",
-      "1_singular": "paro",
-      "2_singular": "paras",
-      "3_singular": "para",
-      "1_plural": "paramos",
-      "2_plural": "paráis",
-      "3_plural": "paran"
-    },
+    "STOP": {"base": "dejar de", "1_singular": "dejo de", "2_singular": "dejas de", "3_singular": "deja de", "1_plural": "dejamos de", "2_plural": "dejáis de", "3_plural": "dejan de"},
     "SLEEP": {
       "base": "dormir",
       "1_singular": "duermo",
@@ -679,9 +655,9 @@
       "2_plural": "sois",
       "3_plural": "son"
     },
-    "BLACK": ["negro"],
-    "WHITE": ["blanco"],
-    "RED": ["rojo"],
+    "BLACK": {"form": "negro", "f": "negra"},
+    "WHITE": {"form": "blanco", "f": "blanca"},
+    "RED": {"form": "rojo", "f": "roja"},
     "BLUE": ["azul"],
     "GREEN": ["verde"],
     "YELLOW": ["amarillo"],
@@ -689,20 +665,20 @@
     "ORANGE": ["naranja"],
     "FAST": ["rápido"],
     "SLOW": ["lento"],
-    "LONG": ["largo"],
-    "SHORT": ["corto"],
-    "HEAVY": ["pesado"],
-    "LIGHT": ["ligero"],
-    "DARK": ["oscuro"],
+    "LONG": {"form": "largo", "f": "larga"},
+    "SHORT": {"form": "corto", "f": "corta"},
+    "HEAVY": {"form": "pesado", "f": "pesada"},
+    "LIGHT": {"form": "ligero", "f": "ligera"},
+    "DARK": {"form": "oscuro", "f": "oscura"},
     "YOUNG": ["joven"],
     "RIGHT": ["derecho"],
     "LEFT": ["izquierdo"],
     "CORRECT": ["correcto"],
     "WRONG": ["incorrecto"],
-    "COLD": {"form":"frío","plural":"fríos"},
+    "COLD": {"form":"frío","f":"fría","plural":"fríos"},
     "NICE": ["agradable"],
-    "THIS": ["este"],
-    "THAT": ["ese"],
+    "THIS": {"form": "este", "f": "esta"},
+    "THAT": {"form": "ese", "f": "esa"},
     "IT": ["él"],
     "ITS": ["su"],
     "MINE": ["mío"],
@@ -710,18 +686,18 @@
     "HERS": ["suyo"],
     "OURS": ["nuestro"],
     "THEIRS": ["suyo"],
-    "HOUR": ["hora"],
-    "MINUTE": ["minuto"],
-    "SECOND": ["segundo"],
+    "HOUR": {"form": "hora", "gender": "f"},
+    "MINUTE": {"form": "minuto", "gender": "m"},
+    "SECOND": {"form": "segundo", "gender": "m"},
     "NOW": ["ahora"],
     "BEFORE": ["antes"],
     "AFTER": ["después"],
     "LATER": ["más tarde"],
     "NEXT": ["próximo"],
-    "SPRING": ["primavera"],
-    "SUMMER": ["verano"],
-    "AUTUMN": ["otoño"],
-    "WINTER": ["invierno"],
+    "SPRING": {"form": "primavera", "gender": "f"},
+    "SUMMER": {"form": "verano", "gender": "m"},
+    "AUTUMN": {"form": "otoño", "gender": "m"},
+    "WINTER": {"form": "invierno", "gender": "m"},
     "ALL": ["todo"],
     "AROUND": ["alrededor"],
     "THANKS": ["gracias"],

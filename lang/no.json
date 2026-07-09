@@ -99,7 +99,7 @@
       "plural": "små"
     },
     "GOOD": {
-      "form": "god",
+      "form": "god", "n": "godt",
       "plural": "gode"
     },
     "BAD": {
@@ -107,11 +107,11 @@
       "plural": "dårlige"
     },
     "NEW": {
-      "form": "ny",
+      "form": "ny", "n": "nytt",
       "plural": "nye"
     },
     "OLD": {
-      "form": "gammel",
+      "form": "gammel", "n": "gammelt",
       "plural": "gamle"
     },
     "EASY": {
@@ -235,10 +235,7 @@
       "form": "hus",
       "gender": "n"
     },
-    "HOME": {
-      "form": "hjem",
-      "gender": "n"
-    },
+    "HOME": {"form": "hjem", "gender": "n", "noArticle": true},
     "BOOK": {
       "form": "bok",
       "gender": "m",
@@ -366,25 +363,19 @@
       "gender": "m",
       "plural": "middager"
     },
-    "CLOTHES": {
-      "form": "klær"
-    },
+    "CLOTHES": {"form": "klær", "pluralOnly": true},
     "SHIRT": {
       "form": "skjorte",
       "gender": "f",
       "plural": "skjorter"
     },
-    "SHOES": {
-      "form": "sko"
-    },
+    "SHOES": {"form": "sko", "pluralOnly": true},
     "PHONE": {
       "form": "telefon",
       "gender": "m",
       "plural": "telefoner"
     },
-    "PANTS": {
-      "form": "bukser"
-    },
+    "PANTS": {"form": "bukse", "gender": "m"},
     "ONE": [
       "en",
       "ett"
@@ -554,21 +545,11 @@
     "MORNING": [
       "morgen"
     ],
-    "DAY": [
-      "dag"
-    ],
-    "NIGHT": [
-      "natt"
-    ],
-    "WEEK": [
-      "uke"
-    ],
-    "MONTH": [
-      "måned"
-    ],
-    "YEAR": [
-      "år"
-    ],
+    "DAY": {"form": "dag", "gender": "m"},
+    "NIGHT": {"form": "natt", "gender": "f"},
+    "WEEK": {"form": "uke", "gender": "f"},
+    "MONTH": {"form": "måned", "gender": "m"},
+    "YEAR": {"form": "år", "gender": "n"},
     "DO": {
       "base": "gjøre",
       "present": "gjør"
@@ -597,10 +578,7 @@
       "base": "starte",
       "present": "starter"
     },
-    "STOP": {
-      "base": "stoppe",
-      "present": "stopper"
-    },
+    "STOP": {"base": "slutte", "present": "slutter"},
     "SLEEP": {
       "base": "sove",
       "present": "sover"
@@ -626,26 +604,26 @@
       "present": "er"
     },
     "BLACK": ["svart"],
-    "WHITE": ["hvit"],
-    "RED": ["rød"],
-    "BLUE": ["blå"],
-    "GREEN": ["grønn"],
+    "WHITE": {"form": "hvit", "n": "hvitt"},
+    "RED": {"form": "rød", "n": "rødt"},
+    "BLUE": {"form": "blå", "n": "blått"},
+    "GREEN": {"form": "grønn", "n": "grønt"},
     "YELLOW": ["gul"],
     "PURPLE": ["lilla"],
     "ORANGE": ["oransje"],
     "FAST": ["rask"],
     "SLOW": ["sakte"],
-    "LONG": ["lang"],
+    "LONG": {"form": "lang", "n": "langt"},
     "SHORT": ["kort"],
-    "HEAVY": ["tung"],
+    "HEAVY": {"form": "tung", "n": "tungt"},
     "LIGHT": ["lett"],
-    "DARK": ["mørk"],
+    "DARK": {"form": "mørk", "n": "mørkt"},
     "YOUNG": ["ung"],
     "RIGHT": ["høyre"],
     "LEFT": ["venstre"],
     "CORRECT": ["riktig"],
     "WRONG": ["feil"],
-    "COLD": {"form":"kald","plural":"kalde"},
+    "COLD": {"form":"kald","n":"kaldt","plural":"kalde"},
     "NICE": ["hyggelig"],
     "THIS": ["dette"],
     "THAT": ["det"],
@@ -656,18 +634,18 @@
     "HERS": ["hennes"],
     "OURS": ["vårt"],
     "THEIRS": ["deres"],
-    "HOUR": ["time"],
-    "MINUTE": ["minutt"],
-    "SECOND": ["sekund"],
+    "HOUR": {"form": "time", "gender": "m"},
+    "MINUTE": {"form": "minutt", "gender": "n"},
+    "SECOND": {"form": "sekund", "gender": "n"},
     "NOW": ["nå"],
     "BEFORE": ["før"],
     "AFTER": ["etter"],
     "LATER": ["senere"],
     "NEXT": ["neste"],
-    "SPRING": ["vår"],
-    "SUMMER": ["sommer"],
-    "AUTUMN": ["høst"],
-    "WINTER": ["vinter"],
+    "SPRING": {"form": "vår", "gender": "m"},
+    "SUMMER": {"form": "sommer", "gender": "m"},
+    "AUTUMN": {"form": "høst", "gender": "m"},
+    "WINTER": {"form": "vinter", "gender": "m"},
     "ALL": ["alle"],
     "AROUND": ["rundt"],
     "THANKS": ["takk"],

@@ -156,6 +156,62 @@ test("possessives agree with the possessed noun's gender", () => {
   assert.ok(pt.includes("minha"), `expected feminine «minha» in: ${pt}`);
 });
 
+test("Ukrainian prepositions govern the case of the following nominal", () => {
+  // «на» + locative, «перед» + instrumental, «до» + genitive — data-driven
+  // via locative/instrumental/genitive fields on the uk entries.
+  assert.equal(buildSentence("uk", tplById("BOOK_ON_THIS")), "Книга на цьому.");
+  assert.equal(buildSentence("uk", tplById("PHONE_IN_FRONT_OF_BOOK")), "Телефон перед книгою.");
+  assert.equal(buildSentence("uk", tplById("I_GO_TO_HOUSE")), "Я йду до будинку.");
+  // Bare instrumental expresses means — the BY word disappears into the ending.
+  assert.equal(buildSentence("uk", tplById("I_DO_THIS_BY_HAND")), "Я роблю це рукою.");
+});
+
+test("fixed-form structures pass the authored render through", () => {
+  // Questions need do-support/inversion, directions need derived adverbials —
+  // grammar the generator cannot synthesize, so the authored string wins.
+  assert.equal(buildSentence("en", tplById("WHY_DO_YOU_GO")), "Why do you go?");
+  assert.equal(buildSentence("uk", tplById("WHY_DO_YOU_GO")), "Чому ти йдеш?");
+  assert.equal(buildSentence("uk", tplById("WE_GO_NORTH")), "Ми йдемо на північ.");
+});
+
+test("described noun subjects take the definite article", () => {
+  assert.equal(buildSentence("en", tplById("BOOK_IS_RED")), "The book is red.");
+  assert.equal(buildSentence("pt", tplById("BOOK_IS_RED")), "O livro é vermelho.");
+  assert.equal(buildSentence("no", tplById("BOOK_IS_RED")), "Boken er rød.");
+  // Predicate nouns after a personal pronoun stay indefinite.
+  assert.equal(buildSentence("en", tplById("SHE_IS_WOMAN")), "She is a woman.");
+});
+
+test("plural-only subjects get plural copula and adjective agreement", () => {
+  assert.equal(buildSentence("en", tplById("PANTS_ARE_BLACK")), "The pants are black.");
+  assert.equal(buildSentence("uk", tplById("PANTS_ARE_BLACK")), "Штани чорні.");
+  assert.equal(buildSentence("pt", tplById("PANTS_ARE_BLACK")), "As calças são pretas.");
+});
+
+test("CJK sentences join without spaces and end with a full-width stop", () => {
+  assert.equal(buildSentence("zh", tplById("I_EAT_FOOD")), "我吃食物。");
+  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "わたしは食べ物を食べる。");
+});
+
+test("attributive modifiers agree with the noun and absorb its article", () => {
+  // «іншу книгу» — feminine accusative agreement; "another book" — no
+  // double article.
+  assert.equal(buildSentence("uk", tplById("I_HAVE_ANOTHER_BOOK")), "Я маю іншу книгу.");
+  assert.equal(buildSentence("en", tplById("I_HAVE_ANOTHER_BOOK")), "I have another book.");
+});
+
+test("Ukrainian conjunctions take a comma; time-word subjects agree", () => {
+  assert.equal(buildSentence("uk", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")),
+    "Він їсть сніданок, але не обід.");
+  assert.equal(buildSentence("uk", tplById("NIGHT_IS_DARK")), "Ніч темна.");
+});
+
+test("per-language noArticle data suppresses the indefinite article", () => {
+  assert.equal(buildSentence("en", tplById("I_EAT_BREAKFAST")), "I eat breakfast.");
+  assert.equal(buildSentence("en", tplById("I_GO_HOME")), "I go home.");
+  assert.equal(buildSentence("pt", tplById("SHE_HAS_SHOES")), "Ela tem sapatos.");
+});
+
 test("every core template renders a non-empty English sentence", () => {
   const core = templates.filter((t) => t._file === "sentence_templates.json");
   assert.ok(core.length > 100, "core template set is present");

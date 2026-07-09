@@ -41,6 +41,8 @@ export const GRAMMAR_RULE_IDS = [
   "indefinite_article",      // a/an, um/uma, ein/eine, … chosen by gender/sound
   "ja_counter",              // ja numbers attach through a counter + の
   "accusative_object",       // uk direct objects take the accusative ending
+  "prepositional_case",      // uk prepositions govern the noun's case ending
+  "definite_article",        // the/o/der/… for a described noun subject
 ];
 
 let firedRules = null;
@@ -231,15 +233,129 @@ function ukAccusativeNoun(cid, base) {
 }
 
 // A noun at ordered[idx] is a direct object when the nearest preceding
-// concept — skipping a possessive («я маю мою книгу») — is a non-copular
-// verb. Predicate nouns after BE («це книга») stay nominative.
+// concept — skipping the noun's own modifiers (possessive, adjective,
+// quantifier, number: «я маю мою книгу», «я читаю лише книгу») — is a
+// non-copular verb. Predicate nouns after BE («це книга») stay nominative.
+const OBJECT_MODIFIER_TYPES = new Set(["adjective", "quantifier", "number"]);
 function isDirectObjectPosition(ordered, idx) {
   let j = idx - 1;
-  if (j >= 0 && vocab().concepts?.[ordered[j]]?.semantic_role === "possessive") j--;
+  while (j >= 0) {
+    const m = vocab().concepts?.[ordered[j]];
+    if (m?.semantic_role === "possessive" || OBJECT_MODIFIER_TYPES.has(m?.type)) { j--; continue; }
+    break;
+  }
   if (j < 0) return false;
   const prev = ordered[j];
   return vocab().concepts?.[prev]?.type === "verb" && !isCopulaConcept(prev);
 }
+
+// --- Ukrainian prepositional case -------------------------------------------
+// uk prepositions govern the case of the nominal(s) that follow: «на цьому»
+// (locative), «перед книгою» (instrumental), «до будинку» (genitive). Purely
+// data-driven: a form only changes when its entry carries the matching case
+// field, so entries without case data — and every other language — are
+// untouched. The pending case survives modifiers and conjunctions («між цим
+// і тим») and clears at a verb.
+const UK_PREP_CASE = {
+  ON: "locative", IN: "locative", OFF: "locative",
+  UNDER: "instrumental", BEHIND: "instrumental", FRONT: "instrumental",
+  BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
+  WITH: "instrumental",
+  TO: "genitive", FROM: "genitive", FOR: "genitive",
+};
+
+// Case each ordered position is governed by (uk only; null elsewhere).
+function ukCaseMap(lang, ordered) {
+  if (lang !== "uk") return ordered.map(() => null);
+  let pending = null;
+  return ordered.map((cid) => {
+    if (UK_PREP_CASE[cid]) { pending = UK_PREP_CASE[cid]; return null; }
+    const t = vocab().concepts?.[cid]?.type;
+    if (t === "verb") { pending = null; return null; }
+    if (t === "noun" || t === "pronoun") return pending;
+    return null; // modifiers / conjunctions pass the case along
+  });
+}
+
+// The declined form for a governed nominal, or null when no data exists.
+function ukCaseForm(cid, caseName) {
+  if (!caseName) return null;
+  const entry = vocab().languages?.uk?.forms?.[cid];
+  if (entry && !Array.isArray(entry) && typeof entry === "object" &&
+      typeof entry[caseName] === "string") {
+    return entry[caseName];
+  }
+  return null;
+}
+
+// --- Definite article for described noun subjects ----------------------------
+// A noun subject being described takes the definite article: "The book is
+// red", «O livro é vermelho», "Das Buch ist auf diesem". English leaves
+// seasons bare ("Winter is cold") while the others keep the article. no
+// suffixes definiteness onto the noun instead (bok → boken, hus → huset).
+// Article-less languages (uk/ar/tr/ja/ko/zh) return the bare form.
+const DEFINITE_SUBJECT_STRUCTURES = new Set([
+  "copular", "spatial_relation", "spatial_relation_complex",
+  "time_description",
+]);
+
+// English describes seasons bare ("Winter is cold"); the other article
+// languages keep the definite article («O inverno é frio»).
+const EN_BARE_SUBJECTS = new Set(["WINTER", "SUMMER", "SPRING", "AUTUMN"]);
+
+function definiteNounPhrase(lang, cid) {
+  const entry = vocab().languages?.[lang]?.forms?.[cid] || {};
+  const base = entry.form || formOf(lang, cid);
+  const g = entry.gender;
+  const plural = !!entry.pluralOnly;
+
+  if (lang === "en") {
+    // Seasons read as proper-ish nouns in English: "Winter is cold".
+    if (EN_BARE_SUBJECTS.has(cid)) return base;
+    noteRule("definite_article");
+    return "the " + base;
+  }
+  if (lang === "pt") {
+    if (!g && !plural) return base; // no gender data — leave bare, not mis-gendered
+    noteRule("definite_article");
+    return (plural ? (g === "f" ? "as " : "os ") : (g === "f" ? "a " : "o ")) + base;
+  }
+  if (lang === "es") {
+    if (!g && !plural) return base;
+    noteRule("definite_article");
+    return (plural ? (g === "f" ? "las " : "los ") : (g === "f" ? "la " : "el ")) + base;
+  }
+  if (lang === "fr") {
+    if (!g && !plural) return base;
+    noteRule("definite_article");
+    // «le eau» is contracted to «l'eau» by the elision pass.
+    return (plural ? "les " : (g === "f" ? "la " : "le ")) + base;
+  }
+  if (lang === "de") {
+    if (!g && !plural) return base;
+    noteRule("definite_article");
+    return (plural ? "die " : (g === "f" ? "die " : g === "n" ? "das " : "der ")) + base;
+  }
+  if (lang === "el") {
+    if (!g && !plural) return base;
+    noteRule("definite_article");
+    if (plural) return (g === "n" ? "τα " : "οι ") + base;
+    return (g === "m" ? "ο " : g === "f" ? "η " : "το ") + base;
+  }
+  if (lang === "no") {
+    // Definite suffix: plural +ene (sko → skoene), -e final +n (bukse →
+    // buksen), neuter +et (hus → huset), else +en (bok → boken).
+    noteRule("definite_article");
+    if (plural) return base + "ene";
+    if (g === "n") return base + (base.endsWith("e") ? "t" : "et");
+    if (base.endsWith("e")) return base + "n";
+    return base + "en";
+  }
+  return base;
+}
+
+// Languages whose nounPhrase adds an indefinite article (the branches below).
+const ARTICLE_LANGS = new Set(["en", "pt", "no", "de", "el", "es", "fr"]);
 
 // `opts.plural`: when true, render plural form and drop the indefinite
 // article. Used when the predicate noun follows a plural subject pronoun
@@ -263,8 +379,10 @@ function nounPhrase(lang, cid, opts = {}) {
 
   // pluralOnly nouns (e.g. clothes/shoes/pants) have no singular form and
   // never take an indefinite article. The bare form is already plural, so
-  // both opts.plural and the article path return it unchanged.
-  if (entry.pluralOnly) return base;
+  // both opts.plural and the article path return it unchanged. noArticle
+  // marks per-language article-less usage on an otherwise ordinary noun
+  // ("I eat breakfast", "Ich esse Frühstück" — but «le petit-déjeuner»).
+  if (entry.pluralOnly || entry.noArticle) return base;
 
   if (opts.plural) {
     if (lang === "en") {
@@ -299,8 +417,9 @@ function nounPhrase(lang, cid, opts = {}) {
 
   if (lang === "no") {
     noteRule("indefinite_article");
+    // Bokmål: feminine nouns take "en" in the common-gender style the
+    // authored corpus uses throughout ("en kvinne", not "ei kvinne").
     if (entry.gender === "n") return "et " + base;
-    if (entry.gender === "f") return "ei " + base;
     return "en " + base;
   }
 
@@ -360,7 +479,11 @@ function surfaceForm(lang, cid) {
   let number = subject.number;
   if (!person || !number) {
     person = 3;
-    number = isPluralPronoun(subjectCid) ? "plural" : "singular";
+    // Plural-only noun subjects conjugate plural: "the pants ARE black".
+    const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
+    const pluralOnlySubject = !!(subjEntry && typeof subjEntry === "object" &&
+      !Array.isArray(subjEntry) && subjEntry.pluralOnly);
+    number = (isPluralPronoun(subjectCid) || pluralOnlySubject) ? "plural" : "singular";
   }
 
   // Build dynamic key (e.g. "1_singular", "2_plural", etc.)
@@ -448,6 +571,15 @@ function orderedConceptsForTemplate(tpl, lang) {
     return tpl.concepts.slice();
   }
 
+  // 1c) Fixed-form structures render from the authored string (see
+  // AUTHORED_ONLY_STRUCTURES); their concept arrays are authored in linear
+  // order, so word tiles / blanks should follow that order too, not the
+  // generic subject-verb-object guess (which strands question words at
+  // the end: "you go why").
+  if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type) && Array.isArray(tpl.concepts)) {
+    return tpl.concepts.slice();
+  }
+
   // 2) Fallback: derive order based on basic word order
   //    This keeps things working even before you finish adding tpl.order everywhere.
   const concepts = tpl.concepts || [];
@@ -463,7 +595,7 @@ function orderedConceptsForTemplate(tpl, lang) {
     c === "BE" || vocab().concepts[c]?.semantic_role === "copula"
   );
   const nounSubject = (!pronoun && isCopular)
-    ? concepts.find(c => vocab().concepts[c]?.type === "noun")
+    ? concepts.find(c => ["noun", "time"].includes(vocab().concepts[c]?.type))
     : null;
   const subject = pronoun || nounSubject;
   const object = concepts.find(c => {
@@ -474,7 +606,10 @@ function orderedConceptsForTemplate(tpl, lang) {
 
   const WORD_ORDER = {
   ja: "SOV",
-  ar: "VSO",
+  // MSA's canonical order is VSO, but SVO is equally standard in modern
+  // usage and it is what the authored corpus uses throughout («أنا أشرب
+  // ماء»), so the generator matches it.
+  ar: "SVO",
   en: "SVO",
   pt: "SVO",
   no: "SVO",
@@ -773,10 +908,35 @@ function frenchElision(s) {
 
 // Single hook for per-language final passes on an assembled sentence.
 function finalizeSentence(lang, sentence) {
-  if (lang !== "fr") return sentence;
-  const elided = frenchElision(sentence);
-  if (elided !== sentence) noteRule("french_elision");
-  return elided;
+  if (lang === "fr") {
+    const elided = frenchElision(sentence);
+    if (elided !== sentence) noteRule("french_elision");
+    return elided;
+  }
+  // Ukrainian sets off its conjunctions with a comma: «сніданок, але не
+  // обід», «..., тому що він удома» — and alternates в/у for euphony: «у»
+  // between consonants («Телефон у тому»), «в» next to a vowel. Applied to
+  // the finished string since clauses are assembled by several builders.
+  if (lang === "uk") {
+    let s = sentence.replace(/([^,])\s+(але|тому що)\s/g, "$1, $2 ");
+    const C = "бвгґджзйклмнпрстфхцчшщщьБВГҐДЖЗЙКЛМНПРСТФХЦЧШЩ";
+    s = s.replace(new RegExp(`([${C}])\\s+в\\s+(?=[${C}])`, "g"), "$1 у ");
+    s = s.replace(new RegExp(`^В\\s+(?=[${C}])`), "У ");
+    return s;
+  }
+  // CJK text takes no inter-word spaces and a full-width stop. The generic
+  // assembly paths join words with spaces and end with "." — normalize both
+  // (ja's particle path emits no terminal punctuation at all).
+  if (lang === "ja" || lang === "zh") {
+    let s = sentence.replace(
+      /([⺀-鿿、-ヿ＀-￯])\s+(?=[⺀-鿿、-ヿ＀-￯])/g,
+      "$1"
+    );
+    s = s.replace(/\.$/, "。").replace(/\?$/, "？");
+    if (!/[。？！]$/.test(s)) s += "。";
+    return s;
+  }
+  return sentence;
 }
 function possessiveWord(lang, cid) {
   return surfaceForm(lang, cid);
@@ -811,9 +971,19 @@ function frenchPossessivePhrase(possessiveCid, nounCid) {
   return `${poss} ${nounForm}`;
 }
 
-function nounWithPossessive(lang, possessiveCid, nounCid) {
+// `caseName` (uk): render the possessed noun in the case its governing
+// preposition demands («з його мамою»), when the entry carries the data.
+function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
   if (lang === "fr") return frenchPossessivePhrase(possessiveCid, nounCid);
-  return `${genderedFormOf(lang, possessiveCid, nounCid)} ${formOf(lang, nounCid)}`;
+  let noun = formOf(lang, nounCid);
+  if (lang === "uk") {
+    const declined = ukCaseForm(nounCid, caseName);
+    if (declined) {
+      noteRule("prepositional_case");
+      noun = declined;
+    }
+  }
+  return `${genderedFormOf(lang, possessiveCid, nounCid)} ${noun}`;
 }
 
 // Languages where adjective follows the noun (e.g. "casa grande")
@@ -917,13 +1087,24 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   const complement = nounWithPossessive(lang, possessiveCid, nounCid);
 
   // Copula-dropping languages form the yes/no question without "to be"
-  // ("Це твій телефон?"); others front the copula ("Is this your phone?").
-  return capitalizeFirst([be, subject, complement].filter(Boolean).join(" ") + "?");
+  // («Це твій телефон?»); pt/es keep declarative order and mark the question
+  // with intonation («Esse é o seu telefone?»); the rest front the copula
+  // ("Is this your phone?", "Ist das dein Telefon?").
+  const words = (lang === "pt" || lang === "es")
+    ? [subject, be, complement]
+    : [be, subject, complement];
+  return capitalizeFirst(words.filter(Boolean).join(" ") + "?");
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = formOf(lang, subjectCid);
   const be = zhCopulaOverride(lang, beCid, nounCid) || copulaForm(lang, beCid, subjectCid);
-  const noun = nounPhrase(lang, nounCid, { plural: isPluralPronoun(subjectCid) });
+  // A predicate noun may carry a dedicated predicative form — uk HOME is
+  // «удома» ("he is at home"), not the dictionary «дім» ("he is a house").
+  const entry = vocab().languages?.[lang]?.forms?.[nounCid];
+  const predicative = entry && !Array.isArray(entry) && typeof entry === "object"
+    ? entry.predicative : null;
+  const noun = predicative ||
+    nounPhrase(lang, nounCid, { plural: isPluralPronoun(subjectCid) });
   return [subject, be, noun].filter(Boolean).join(" ");
 }
 
@@ -939,7 +1120,8 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
   // Only build it when a companion noun is present, so undefined slots don't leak
   // into the sentence as the literal word "undefined".
   const companion = nounCid
-    ? `${formOf(lang, withCid)} ${nounWithPossessive(lang, possessiveCid, nounCid)}`
+    ? `${formOf(lang, withCid)} ${nounWithPossessive(lang, possessiveCid, nounCid,
+        lang === "uk" ? UK_PREP_CASE[withCid] : null)}`
     : "";
 
   return [subject, verb, object, companion].filter(Boolean).join(" ");
@@ -949,7 +1131,8 @@ function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid
   const subject = formOf(lang, subjectCid);
   const verb = getVerbForm(verbCid, subjectCid, lang);
   const companion = nounCid
-    ? `${formOf(lang, withCid)} ${nounWithPossessive(lang, possessiveCid, nounCid)}`
+    ? `${formOf(lang, withCid)} ${nounWithPossessive(lang, possessiveCid, nounCid,
+        lang === "uk" ? UK_PREP_CASE[withCid] : null)}`
     : "";
 
   return [subject, verb, companion].filter(Boolean).join(" ");
@@ -974,7 +1157,24 @@ function buildSentence(lang, tpl, forcedConcept = null, sharedChoices = null) {
   );
 }
 
+// Fixed-form structures whose grammar the generator cannot synthesize:
+// questions need do-support («Why do you go?») or subject–verb inversion
+// («Warum gehst du?»), directions need derived adverbials («на північ»,
+// «nach Norden»), and politeness/modality/response/evaluation tags are fixed
+// idioms with authored word order («Так, я роблю», «Це праворуч»). These
+// templates carry no injectable noun slot in practice, so the human-authored
+// render always describes exactly what would be shown — pass it through.
+const AUTHORED_ONLY_STRUCTURES = new Set([
+  "question", "direction", "selection", "response",
+  "politeness", "modality", "evaluation",
+  "time_statement", "time_relation",
+]);
+
 function buildSentenceRaw(lang, tpl, forcedConcept = null, sharedChoices = null) {
+if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type)) {
+  const authored = tpl.render?.[lang];
+  if (typeof authored === "string" && authored.trim()) return authored.trim();
+}
 if (tpl.structure?.type === "copular_demonstrative") {
   const s = tpl.slots;
   return buildCopularDemonstrative(
@@ -1048,12 +1248,21 @@ if (tpl.structure?.type === "complex_clause") {
   );
 
   // The subject is normally a pronoun. Copular templates ("autumn is old",
-  // "the book is red") often have a noun subject instead — without it the
-  // copula has no subject and English renders the bare infinitive ("Be
-  // autumn old") rather than conjugating to "is".
-  const subjectCid = ordered.find(c => vocab().concepts[c]?.type === "pronoun") ||
+  // "the book is red", "night is dark") often have a noun — or time-word —
+  // subject instead; without it the copula has no subject and English
+  // renders the bare infinitive ("Be autumn old") rather than "is", and the
+  // predicate adjective has nothing to agree with («ніч темна»). Relational
+  // templates ("the shoes are under this") lead with their head noun — the
+  // trailing demonstrative is a landmark, not the subject, and must not
+  // steal copula agreement ("the shoes IS under this").
+  const relationalHead =
+    RELATIONAL_STRUCTURES.has(tpl.structure?.type) &&
+    ["noun", "time"].includes(vocab().concepts[ordered[0]]?.type)
+      ? ordered[0] : null;
+  const subjectCid = relationalHead ||
+    ordered.find(c => vocab().concepts[c]?.type === "pronoun") ||
     (isCopularTemplate
-      ? ordered.find(c => vocab().concepts[c]?.type === "noun")
+      ? ordered.find(c => ["noun", "time"].includes(vocab().concepts[c]?.type))
       : undefined);
 
   // For copular templates (subject + BE + predicate-noun), the predicate
@@ -1063,6 +1272,9 @@ if (tpl.structure?.type === "complex_clause") {
   // intentionally keeps the singular object.
   const subjectIsPluralPronoun = isPluralPronoun(subjectCid);
   const pluralAgreement = subjectIsPluralPronoun && isCopularTemplate;
+
+  // Which case (if any) governs each position — uk prepositional case.
+  const caseAt = ukCaseMap(lang, ordered);
 
   const words = ordered.map((cid, idx) => {
     const meta = vocab().concepts[cid];
@@ -1100,9 +1312,43 @@ if (tpl.structure?.type === "complex_clause") {
 
     if (meta.type === "noun") {
 
+  // A preposition-governed nominal renders in its declined case form when
+  // the data provides one («перед книгою», «до будинку»). Case data is
+  // authored for the exact templates that need it; modifier injection is
+  // skipped here — an injected adjective could not agree with an oblique
+  // case anyway.
+  const governedForm = ukCaseForm(cid, caseAt[idx]);
+  if (governedForm) {
+    noteRule("prepositional_case");
+    return governedForm;
+  }
+
+  // A described noun subject — and the landmark noun after a spatial
+  // preposition — take the definite article ("The book is next to the
+  // phone", «O livro está ao lado do telefone»); the indefinite reading is
+  // wrong there in every article language. Predicate nouns after a personal
+  // pronoun stay indefinite ("she is A woman").
+  const afterPosition = idx > 0 &&
+    vocab().concepts[ordered[idx - 1]]?.type === "position";
+  const subjectIsPersonal = !!vocab().concepts[subjectCid]?.person;
+  if (DEFINITE_SUBJECT_STRUCTURES.has(tpl.structure?.type) &&
+      (afterPosition || (cid === subjectCid && !subjectIsPersonal))) {
+    return definiteNounPhrase(lang, cid);
+  }
+
   // If the template itself has a possessive directly before this noun, suppress the article.
   const precededByPossessive = idx > 0 &&
     vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive";
+  // An attributive adjective, number, or determiner-like quantifier directly
+  // before the noun replaces the article the same way a possessive does
+  // ("another book" — not "another a book"). Adverb-like quantifiers (ONLY,
+  // quantity_limit) do NOT absorb the article ("only a book"), so they are
+  // excluded.
+  const prevMeta = idx > 0 ? vocab().concepts[ordered[idx - 1]] : null;
+  const precededByModifier = !!prevMeta && ordered[idx - 1] !== subjectCid &&
+    ((prevMeta.type === "adjective" && prevMeta.semantic_role !== "possessive") ||
+     prevMeta.type === "number" ||
+     (prevMeta.type === "quantifier" && prevMeta.semantic_role !== "quantity_limit"));
   // Direct objects take the object case in declining languages (uk
   // accusative). Possessed objects only shift for the regular feminine
   // rule — an explicit animate-masculine override would clash with the
@@ -1112,9 +1358,10 @@ if (tpl.structure?.type === "complex_clause") {
   // Copular agreement: this noun is the predicate after a plural subject.
   // Possessed nouns (their/our + noun) follow the possessive's own number,
   // not the subject's, so skip them.
-  const useCopularPlural = pluralAgreement && !precededByPossessive;
+  const bareDetermined = precededByPossessive || precededByModifier;
+  const useCopularPlural = pluralAgreement && !bareDetermined;
   let possessedForm = formOf(lang, cid);
-  if (ukObjectCase && precededByPossessive &&
+  if (ukObjectCase && bareDetermined &&
       vocab().languages?.uk?.forms?.[cid]?.gender === "f") {
     const acc = ukFeminineAccusative(possessedForm);
     if (acc !== possessedForm) {
@@ -1122,7 +1369,7 @@ if (tpl.structure?.type === "complex_clause") {
       possessedForm = acc;
     }
   }
-  let phrase = precededByPossessive
+  let phrase = bareDetermined
     ? possessedForm
     : nounPhrase(lang, cid, { plural: useCopularPlural, directObject: isObject });
   // When the noun was rendered as plural via copular agreement, the bare
@@ -1209,6 +1456,20 @@ if (tpl.structure?.type === "complex_clause") {
     if (sharedChoices) sharedChoices["num_" + cid] = numberCid;
   }
 
+  // The template's authored surface knows inflections the engine cannot
+  // derive («додому», "eve"). For a plain noun (no injected modifier) whose
+  // authored surface differs from the dictionary form, the authored surface
+  // IS the correct rendering. Limited to article-less languages — surfaces
+  // are stored bare ("Arbeit", not "eine Arbeit"), so in article languages
+  // preferring them would silently drop the article.
+  if (!ARTICLE_LANGS.has(lang) && !adjectiveWord && !numberWord && !useCopularPlural) {
+    const authoredNounSurface = tpl.surface?.[lang]?.[cid];
+    if (typeof authoredNounSurface === "string" &&
+        authoredNounSurface !== formOf(lang, cid)) {
+      return authoredNounSurface;
+    }
+  }
+
   // apply modifiers
   // When copular plural agreement applies, the bare form used by the
   // adjective branches must also be plural ("they are small leaders").
@@ -1216,7 +1477,7 @@ if (tpl.structure?.type === "complex_clause") {
   // The bare form must match the case actually rendered in `phrase`, or the
   // article/adjective splicing below misassembles the noun phrase.
   const bare = bareNoun ||
-    (ukObjectCase && !precededByPossessive ? ukAccusativeNoun(cid, formOf(lang, cid)) :
+    (ukObjectCase && !bareDetermined ? ukAccusativeNoun(cid, formOf(lang, cid)) :
      ukObjectCase ? possessedForm :
      formOf(lang, cid));
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
@@ -1317,13 +1578,74 @@ if (tpl.structure?.type === "complex_clause") {
       }
     }
 
+    // Time-word subjects are described definites too: "The night is dark",
+    // «O dia é curto». (Time words are their own concept type, so the noun
+    // branch above never sees them.)
+    if (meta.type === "time" && cid === subjectCid &&
+        DEFINITE_SUBJECT_STRUCTURES.has(tpl.structure?.type)) {
+      return definiteNounPhrase(lang, cid);
+    }
+
+    // Ukrainian expresses means with the bare instrumental — the case ending
+    // IS the "by" («роблю це рукою», not «за допомогою руки»). Drop the BY
+    // word whenever the following nominal can carry the instrumental itself.
+    if (lang === "uk" && cid === "BY" &&
+        ukCaseForm(ordered[idx + 1], "instrumental")) {
+      return "";
+    }
+
+    // A preposition-governed pronoun/demonstrative declines like a governed
+    // noun («на цьому», «між цим і тим») when case data exists.
+    if (meta.type === "pronoun") {
+      const governed = ukCaseForm(cid, caseAt[idx]);
+      if (governed) {
+        noteRule("prepositional_case");
+        return governed;
+      }
+    }
+
+    // A demonstrative subject agrees with the predicate noun's gender where
+    // the language declines it («Esta es mi mano», «Este é um bom livro»).
+    // Data-driven: only fires when the demonstrative entry carries gendered
+    // forms, so uk «це» / en "this" are untouched.
+    if (idx === 0 && meta.type === "pronoun" && isCopularTemplate) {
+      const predNoun = ordered.find(c => vocab().concepts[c]?.type === "noun");
+      const entry = vocab().languages?.[lang]?.forms?.[cid];
+      if (predNoun && entry && !Array.isArray(entry) &&
+          typeof entry === "object" && (entry.f || entry.n)) {
+        return genderedFormOf(lang, cid, predNoun);
+      }
+    }
+
     // Predicate adjective in a copular sentence ("autumn is OLD") must agree
-    // with the subject noun in gender — "осінь стара", not "осінь старий".
-    // surfaceForm would return the bare (masculine) form. Restricted to noun
-    // subjects, since a pronoun carries no usable grammatical gender.
+    // with the subject noun in gender — "осінь стара", not "осінь старий" —
+    // and in number for plural-only subjects («штани чорні», "as calças são
+    // pretas"). surfaceForm would return the bare (masculine singular) form.
+    // Restricted to noun subjects, since a pronoun carries no usable
+    // grammatical gender.
     if (meta.type === "adjective" && meta.semantic_role !== "possessive" &&
-        isCopularTemplate && vocab().concepts[subjectCid]?.type === "noun") {
-      return genderedFormOf(lang, cid, subjectCid);
+        isCopularTemplate &&
+        ["noun", "time"].includes(vocab().concepts[subjectCid]?.type)) {
+      const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
+      const subjPlural = !!(subjEntry && typeof subjEntry === "object" &&
+        !Array.isArray(subjEntry) && subjEntry.pluralOnly);
+      return genderedFormOf(lang, cid, subjectCid, subjPlural);
+    }
+
+    // An attributive adjective/quantifier directly before a noun agrees with
+    // it («іншу книгу», "outra casa") — data-driven via gendered forms, and
+    // shifted to the accusative alongside a feminine uk direct object.
+    if ((meta.type === "quantifier" ||
+         (meta.type === "adjective" && meta.semantic_role !== "possessive")) &&
+        vocab().concepts[ordered[idx + 1]]?.type === "noun") {
+      const nextCid = ordered[idx + 1];
+      let form = genderedFormOf(lang, cid, nextCid);
+      if (lang === "uk" && isDirectObjectPosition(ordered, idx + 1) &&
+          !pluralAgreement &&
+          vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
+        form = ukFeminineAccusative(form);
+      }
+      return form;
     }
 
     // A possessive directly before a noun agrees with that noun's gender
