@@ -322,31 +322,16 @@
       "form": "Gesicht",
       "gender": "n"
     },
-    "BREAKFAST": {
-      "form": "Frühstück",
-      "gender": "n"
-    },
-    "LUNCH": {
-      "form": "Mittagessen",
-      "gender": "n"
-    },
-    "DINNER": {
-      "form": "Abendessen",
-      "gender": "n"
-    },
-    "CLOTHES": {
-      "form": "Kleidung",
-      "gender": "f"
-    },
+    "BREAKFAST": {"form": "Frühstück", "gender": "n", "noArticle": true},
+    "LUNCH": {"form": "Mittagessen", "gender": "n", "noArticle": true},
+    "DINNER": {"form": "Abendessen", "gender": "n", "noArticle": true},
+    "CLOTHES": {"form": "Kleidung", "gender": "f", "noArticle": true},
     "SHIRT": {
       "form": "Hemd",
       "gender": "n",
       "plural": "Hemden"
     },
-    "SHOES": {
-      "form": "Schuhe",
-      "gender": "m"
-    },
+    "SHOES": {"form": "Schuhe", "gender": "m", "pluralOnly": true},
     "PHONE": {
       "form": "Telefon",
       "gender": "n",
@@ -505,21 +490,11 @@
     "MORNING": [
       "Morgen"
     ],
-    "DAY": [
-      "Tag"
-    ],
-    "NIGHT": [
-      "Nacht"
-    ],
-    "WEEK": [
-      "Woche"
-    ],
-    "MONTH": [
-      "Monat"
-    ],
-    "YEAR": [
-      "Jahr"
-    ],
+    "DAY": {"form": "Tag", "gender": "m"},
+    "NIGHT": {"form": "Nacht", "gender": "f"},
+    "WEEK": {"form": "Woche", "gender": "f"},
+    "MONTH": {"form": "Monat", "gender": "m"},
+    "YEAR": {"form": "Jahr", "gender": "n"},
     "DO": {
       "base": "machen",
       "1_singular": "mache",
@@ -583,15 +558,7 @@
       "2_plural": "startet",
       "3_plural": "starten"
     },
-    "STOP": {
-      "base": "stoppen",
-      "1_singular": "stoppe",
-      "2_singular": "stoppst",
-      "3_singular": "stoppt",
-      "1_plural": "stoppen",
-      "2_plural": "stoppt",
-      "3_plural": "stoppen"
-    },
+    "STOP": {"base": "aufhören", "1_singular": "höre auf", "2_singular": "hörst auf", "3_singular": "hört auf", "1_plural": "hören auf", "2_plural": "hört auf", "3_plural": "hören auf"},
     "SLEEP": {
       "base": "schlafen",
       "1_singular": "schlafe",
@@ -668,7 +635,7 @@
     "WRONG": ["falsch"],
     "COLD": {"form":"kalt","plural":"kalte"},
     "NICE": ["nett"],
-    "THIS": ["dies"],
+    "THIS": ["das"],
     "THAT": ["das"],
     "IT": ["es"],
     "ITS": ["sein"],
@@ -677,19 +644,19 @@
     "HERS": ["ihrs"],
     "OURS": ["unsers"],
     "THEIRS": ["ihrs"],
-    "HOUR": ["Stunde"],
-    "MINUTE": ["Minute"],
-    "SECOND": ["Sekunde"],
+    "HOUR": {"form": "Stunde", "gender": "f"},
+    "MINUTE": {"form": "Minute", "gender": "f"},
+    "SECOND": {"form": "Sekunde", "gender": "f"},
     "NOW": ["jetzt"],
     "BEFORE": ["vor"],
     "AFTER": ["nach"],
     "LATER": ["später"],
     "NEXT": ["nächster"],
-    "SPRING": ["Frühling"],
-    "SUMMER": ["Sommer"],
-    "AUTUMN": ["Herbst"],
-    "WINTER": ["Winter"],
-    "ALL": ["alle"],
+    "SPRING": {"form": "Frühling", "gender": "m"},
+    "SUMMER": {"form": "Sommer", "gender": "m"},
+    "AUTUMN": {"form": "Herbst", "gender": "m"},
+    "WINTER": {"form": "Winter", "gender": "m"},
+    "ALL": ["alles"],
     "AROUND": ["herum"],
     "THANKS": ["danke"],
     "MAY": { "base": "darf" }

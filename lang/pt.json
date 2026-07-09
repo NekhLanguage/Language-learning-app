@@ -395,38 +395,32 @@
     },
     "BREAKFAST": {
       "form": "café da manhã",
-      "gender": "m"
+      "gender": "m",
+      "noArticle": true
     },
     "LUNCH": {
       "form": "almoço",
-      "gender": "m"
+      "gender": "m",
+      "noArticle": true
     },
     "DINNER": {
       "form": "jantar",
-      "gender": "m"
+      "gender": "m",
+      "noArticle": true
     },
-    "CLOTHES": {
-      "form": "roupas",
-      "gender": "f"
-    },
+    "CLOTHES": {"form": "roupas", "gender": "f", "pluralOnly": true},
     "SHIRT": {
       "form": "camisa",
       "gender": "f",
       "plural": "camisas"
     },
-    "SHOES": {
-      "form": "sapatos",
-      "gender": "m"
-    },
+    "SHOES": {"form": "sapatos", "gender": "m", "pluralOnly": true},
     "PHONE": {
       "form": "telefone",
       "gender": "m",
       "plural": "telefones"
     },
-    "PANTS": {
-      "form": "calças",
-      "gender": "f"
-    },
+    "PANTS": {"form": "calças", "gender": "f", "pluralOnly": true},
     "ONE": [
       "um"
     ],
@@ -539,12 +533,8 @@
       "deles",
       "delas"
     ],
-    "THIS": [
-      "este"
-    ],
-    "THAT": [
-      "esse"
-    ],
+    "THIS": {"form": "este", "f": "esta"},
+    "THAT": {"form": "esse", "f": "essa"},
     "ANY": [
       "qualquer"
     ],
@@ -590,21 +580,11 @@
     "MORNING": [
       "manhã"
     ],
-    "DAY": [
-      "dia"
-    ],
-    "NIGHT": [
-      "noite"
-    ],
-    "WEEK": [
-      "semana"
-    ],
-    "MONTH": [
-      "mês"
-    ],
-    "YEAR": [
-      "ano"
-    ],
+    "DAY": {"form": "dia", "gender": "m"},
+    "NIGHT": {"form": "noite", "gender": "f"},
+    "WEEK": {"form": "semana", "gender": "f"},
+    "MONTH": {"form": "mês", "gender": "m"},
+    "YEAR": {"form": "ano", "gender": "m"},
     "EAT": {
       "base": "comer",
       "1_singular": "como",
@@ -759,18 +739,18 @@
     "HERS": ["dela"],
     "OURS": ["nosso"],
     "THEIRS": ["deles"],
-    "HOUR": ["hora"],
-    "MINUTE": ["minuto"],
-    "SECOND": ["segundo"],
+    "HOUR": {"form": "hora", "gender": "f"},
+    "MINUTE": {"form": "minuto", "gender": "m"},
+    "SECOND": {"form": "segundo", "gender": "m"},
     "NOW": ["agora"],
     "BEFORE": ["antes"],
     "AFTER": ["depois"],
     "LATER": ["mais tarde"],
     "NEXT": ["próximo"],
-    "SPRING": ["primavera"],
-    "SUMMER": ["verão"],
-    "AUTUMN": ["outono"],
-    "WINTER": ["inverno"],
+    "SPRING": {"form": "primavera", "gender": "f"},
+    "SUMMER": {"form": "verão", "gender": "m"},
+    "AUTUMN": {"form": "outono", "gender": "m"},
+    "WINTER": {"form": "inverno", "gender": "m"},
     "ALL": ["todo"],
     "AROUND": ["ao redor"],
     "THANKS": ["obrigado"],

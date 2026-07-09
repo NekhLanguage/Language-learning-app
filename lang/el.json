@@ -331,25 +331,18 @@
       "form": "βραδινό",
       "gender": "n"
     },
-    "CLOTHES": { "gender": "n",
-      "form": "ρούχα"
-    },
+    "CLOTHES": {"gender": "n", "form": "ρούχα", "pluralOnly": true},
     "SHIRT": {
       "form": "πουκάμισο",
       "gender": "n"
     },
-    "SHOES": { "gender": "n",
-      "form": "παπούτσια"
-    },
+    "SHOES": {"gender": "n", "form": "παπούτσια", "pluralOnly": true},
     "PHONE": {
       "form": "τηλέφωνο",
       "gender": "n",
       "plural": "τηλέφωνα"
     },
-    "PANTS": {
-      "form": "παντελόνι",
-      "gender": "n"
-    },
+    "PANTS": {"form": "παντελόνι", "gender": "n", "noArticle": true},
     "ONE": [
       "ένα",
       "μία",
@@ -504,21 +497,11 @@
     "MORNING": [
       "πρωί"
     ],
-    "DAY": [
-      "μέρα"
-    ],
-    "NIGHT": [
-      "νύχτα"
-    ],
-    "WEEK": [
-      "εβδομάδα"
-    ],
-    "MONTH": [
-      "μήνας"
-    ],
-    "YEAR": [
-      "χρόνος"
-    ],
+    "DAY": {"form": "μέρα", "gender": "f"},
+    "NIGHT": {"form": "νύχτα", "gender": "f"},
+    "WEEK": {"form": "εβδομάδα", "gender": "f"},
+    "MONTH": {"form": "μήνας", "gender": "m"},
+    "YEAR": {"form": "χρόνος", "gender": "m"},
     "DO": {
       "base": "κάνω",
       "1_singular": "κάνω",
@@ -676,18 +659,18 @@
     "HERS": ["δικό της"],
     "OURS": ["δικό μας"],
     "THEIRS": ["δικό τους"],
-    "HOUR": ["ώρα"],
-    "MINUTE": ["λεπτό"],
-    "SECOND": ["δευτερόλεπτο"],
+    "HOUR": {"form": "ώρα", "gender": "f"},
+    "MINUTE": {"form": "λεπτό", "gender": "n"},
+    "SECOND": {"form": "δευτερόλεπτο", "gender": "n"},
     "NOW": ["τώρα"],
     "BEFORE": ["πριν"],
     "AFTER": ["μετά"],
     "LATER": ["αργότερα"],
     "NEXT": ["επόμενο"],
-    "SPRING": ["άνοιξη"],
-    "SUMMER": ["καλοκαίρι"],
-    "AUTUMN": ["φθινόπωρο"],
-    "WINTER": ["χειμώνας"],
+    "SPRING": {"form": "άνοιξη", "gender": "f"},
+    "SUMMER": {"form": "καλοκαίρι", "gender": "n"},
+    "AUTUMN": {"form": "φθινόπωρο", "gender": "n"},
+    "WINTER": {"form": "χειμώνας", "gender": "m"},
     "ALL": ["όλα"],
     "AROUND": ["γύρω"],
     "THANKS": ["ευχαριστώ"],

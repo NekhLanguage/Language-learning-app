@@ -162,9 +162,7 @@
     "UNDER": [
       "під"
     ],
-    "NEXT_TO": [
-      "поруч"
-    ],
+    "NEXT_TO": ["поруч із"],
     "FRONT": [
       "перед"
     ],
@@ -177,9 +175,7 @@
     "ON": [
       "на"
     ],
-    "OFF": [
-      "з"
-    ],
+    "OFF": ["не на"],
     "BETWEEN": [
       "між"
     ],
@@ -213,9 +209,7 @@
     "TO": [
       "до"
     ],
-    "BY": [
-      "за допомогою"
-    ],
+    "BY": ["за допомогою"],
     "WHILE": [
       "поки"
     ],
@@ -226,20 +220,21 @@
       "form": "вода",
       "gender": "f"
     },
-    "FOOD": {
-      "form": "їжа",
-      "gender": "f"
-    },
+    "FOOD": {"form": "їжа", "genitive": "їжі", "gender": "f"},
     "HOUSE": {
       "form": "будинок",
+      "genitive": "будинку",
       "gender": "m"
     },
     "HOME": {
       "form": "дім",
+      "predicative": "удома",
+      "genitive": "дому",
       "gender": "m"
     },
     "BOOK": {
       "form": "книга",
+      "instrumental": "книгою",
       "gender": "f",
       "plural": "книги"
     },
@@ -251,10 +246,7 @@
       "form": "робота",
       "gender": "f"
     },
-    "ROOM": {
-      "form": "кімната",
-      "gender": "f"
-    },
+    "ROOM": {"form": "кімната", "genitive": "кімнати", "gender": "f"},
     "BOY": {
       "form": "хлопець",
       "gender": "m",
@@ -277,6 +269,7 @@
     },
     "MOM": {
       "form": "мама",
+      "instrumental": "мамою",
       "gender": "f"
     },
     "DAD": {
@@ -291,6 +284,7 @@
     },
     "DAUGHTER": {
       "form": "дочка",
+      "instrumental": "дочкою",
       "gender": "f",
       "plural": "дочки"
     },
@@ -314,10 +308,7 @@
       "gender": "f",
       "plural": "руки"
     },
-    "HAND": {
-      "form": "кисть",
-      "gender": "f"
-    },
+    "HAND": {"form": "рука", "gender": "f", "plural": "руки", "instrumental": "рукою"},
     "LEG": {
       "form": "нога",
       "gender": "f"
@@ -369,12 +360,11 @@
     },
     "PHONE": {
       "form": "телефон",
+      "instrumental": "телефоном",
       "gender": "m",
       "plural": "телефони"
     },
-    "PANTS": { "gender": "m",
-      "form": "штани"
-    },
+    "PANTS": {"gender": "m", "form": "штани", "pluralOnly": true},
     "ONE": [
       "один"
     ],
@@ -485,9 +475,7 @@
     "ONLY": [
       "лише"
     ],
-    "ANOTHER": [
-      "інший"
-    ],
+    "ANOTHER": {"form": "інший", "f": "інша", "n": "інше", "plural": "інші"},
     "SOMETHING": [
       "щось"
     ],
@@ -524,21 +512,11 @@
     "MORNING": [
       "ранок"
     ],
-    "DAY": [
-      "день"
-    ],
-    "NIGHT": [
-      "ніч"
-    ],
-    "WEEK": [
-      "тиждень"
-    ],
-    "MONTH": [
-      "місяць"
-    ],
-    "YEAR": [
-      "рік"
-    ],
+    "DAY": {"form": "день", "gender": "m"},
+    "NIGHT": {"form": "ніч", "gender": "f"},
+    "WEEK": {"form": "тиждень", "gender": "m"},
+    "MONTH": {"form": "місяць", "gender": "m"},
+    "YEAR": {"form": "рік", "gender": "m"},
     "DO": {
       "base": "робити",
       "1_singular": "роблю",
@@ -602,15 +580,7 @@
       "2_plural": "починаєте",
       "3_plural": "починають"
     },
-    "STOP": {
-      "base": "зупинятися",
-      "1_singular": "зупиняюся",
-      "2_singular": "зупиняєшся",
-      "3_singular": "зупиняється",
-      "1_plural": "зупиняємося",
-      "2_plural": "зупиняєтеся",
-      "3_plural": "зупиняються"
-    },
+    "STOP": {"base": "переставати", "1_singular": "перестаю", "2_singular": "перестаєш", "3_singular": "перестає", "1_plural": "перестаємо", "2_plural": "перестаєте", "3_plural": "перестають"},
     "SLEEP": {
       "base": "спати",
       "1_singular": "сплю",
@@ -687,8 +657,8 @@
     "WRONG": { "form": "неправильний", "f": "неправильна", "n": "неправильне", "plural": "неправильні" },
     "COLD": {"form":"холодний","f":"холодна","n":"холодне","plural":"холодні"},
     "NICE": { "form": "гарний", "f": "гарна", "n": "гарне", "plural": "гарні" },
-    "THIS": ["це"],
-    "THAT": ["те"],
+    "THIS": {"form": "це", "locative": "цьому", "instrumental": "цим"},
+    "THAT": {"form": "то", "locative": "тому", "instrumental": "тим"},
     "IT": ["воно"],
     "ITS": ["його"],
     "MINE": ["моє"],
@@ -696,9 +666,9 @@
     "HERS": ["її"],
     "OURS": ["наше"],
     "THEIRS": ["їхнє"],
-    "HOUR": ["година"],
-    "MINUTE": ["хвилина"],
-    "SECOND": ["секунда"],
+    "HOUR": {"form": "година", "gender": "f"},
+    "MINUTE": {"form": "хвилина", "gender": "f"},
+    "SECOND": {"form": "секунда", "gender": "f"},
     "NOW": ["зараз"],
     "BEFORE": ["до"],
     "AFTER": ["після"],
@@ -708,7 +678,7 @@
     "SUMMER": { "form": "літо", "gender": "n", "plural": "літа" },
     "AUTUMN": { "form": "осінь", "gender": "f", "plural": "осені" },
     "WINTER": { "form": "зима", "gender": "f", "plural": "зими" },
-    "ALL": ["всі"],
+    "ALL": ["все"],
     "AROUND": ["навколо"],
     "THANKS": ["дякую"],
     "MAY": { "base": "може" }

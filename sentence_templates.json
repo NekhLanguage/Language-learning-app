@@ -5953,6 +5953,7 @@
     },
     {
       "template_id": "I_DO_THIS_BY_HAND",
+      "order": { "default": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"] },
       "concepts": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"],
       "structure": {
         "type": "relation"

@@ -649,6 +649,114 @@
         "title": "نهاية الاسم تُظهر دوره",
         "body": "لا توجد في {lang} كلمة تقابل 'a' أو 'the' — نهاية الاسم هي التي تقوم بهذا الدور. الاسم الذي يقع عليه الفعل تتغيّر نهايته: книга (كتاب) تصبح Я читаю книгу (أقرأ كتابًا)."
       }
+    },
+    "prepositional_case": {
+      "en": {
+        "title": "Little words change the ending",
+        "body": "In {lang}, a preposition changes the ending of the word after it: на цьому (on this), перед книгою (in front of the book), до будинку (to the house). The ending tells you how the word relates to the rest."
+      },
+      "pt": {
+        "title": "Palavrinhas mudam a terminação",
+        "body": "Em {lang}, uma preposição muda a terminação da palavra seguinte: на цьому (sobre isto), перед книгою (na frente do livro), до будинку (para a casa). A terminação mostra a relação com o resto da frase."
+      },
+      "fr": {
+        "title": "Les petits mots changent la terminaison",
+        "body": "En {lang}, une préposition change la terminaison du mot qui la suit : на цьому (sur ceci), перед книгою (devant le livre), до будинку (vers la maison). La terminaison indique la relation avec le reste."
+      },
+      "de": {
+        "title": "Kleine Wörter ändern die Endung",
+        "body": "In {lang} ändert eine Präposition die Endung des folgenden Wortes: на цьому (auf diesem), перед книгою (vor dem Buch), до будинку (zum Haus) — ähnlich wie die deutschen Fälle nach Präpositionen."
+      },
+      "el": {
+        "title": "Οι μικρές λέξεις αλλάζουν την κατάληξη",
+        "body": "Στα {lang}, μια πρόθεση αλλάζει την κατάληξη της επόμενης λέξης: на цьому (πάνω σε αυτό), перед книгою (μπροστά από το βιβλίο), до будинку (προς το σπίτι). Η κατάληξη δείχνει τη σχέση με τα υπόλοιπα."
+      },
+      "es": {
+        "title": "Las palabritas cambian la terminación",
+        "body": "En {lang}, una preposición cambia la terminación de la palabra siguiente: на цьому (sobre esto), перед книгою (delante del libro), до будинку (hacia la casa). La terminación muestra la relación con el resto."
+      },
+      "ja": {
+        "title": "前置詞が語尾を変える",
+        "body": "{lang}では、前置詞が次の言葉の語尾を変えます：на цьому（この上に）、перед книгою（本の前に）、до будинку（家へ）。日本語の「に・で・へ」のような働きを語尾がします。"
+      },
+      "ko": {
+        "title": "전치사가 어미를 바꿔요",
+        "body": "{lang}에서는 전치사가 다음 단어의 어미를 바꿔요: на цьому(이것 위에), перед книгою(책 앞에), до будинку(집으로). 한국어의 '에/에서/으로' 같은 역할을 어미가 해요."
+      },
+      "no": {
+        "title": "Småord endrer endelsen",
+        "body": "I {lang} endrer en preposisjon endelsen på ordet etter: на цьому (på denne), перед книгою (foran boken), до будинку (til huset). Endelsen viser forholdet til resten av setningen."
+      },
+      "tr": {
+        "title": "Küçük kelimeler eki değiştirir",
+        "body": "{lang} dilinde bir edat, sonraki kelimenin ekini değiştirir: на цьому (bunun üstünde), перед книгою (kitabın önünde), до будинку (eve doğru). Türkçedeki -de/-e ekleri gibi çalışır."
+      },
+      "uk": {
+        "title": "Прийменник керує відмінком",
+        "body": "В українській прийменник змінює закінчення наступного слова: на цьому, перед книгою, до будинку. Закінчення показує, як слово пов'язане з рештою речення."
+      },
+      "zh": {
+        "title": "介词改变词尾",
+        "body": "在{lang}里，介词会改变后面词的词尾：на цьому（在这上面）、перед книгою（在书前面）、до будинку（到房子去）。词尾起到类似中文'在/到/向'的作用。"
+      },
+      "ar": {
+        "title": "الكلمات الصغيرة تغيّر النهاية",
+        "body": "في {lang}، يغيّر حرف الجر نهاية الكلمة التي تليه: на цьому (على هذا)، перед книгою (أمام الكتاب)، до будинку (إلى المنزل). النهاية تُظهر علاقة الكلمة ببقية الجملة — كما يعمل الجرّ في العربية."
+      }
+    },
+    "definite_article": {
+      "en": {
+        "title": "Talking about a specific thing",
+        "body": "When a sentence describes a specific thing, {lang} marks it as definite — like English 'the': The book is red, not 'a book is red'."
+      },
+      "pt": {
+        "title": "Falando de algo específico",
+        "body": "Quando a frase descreve algo específico, {lang} usa o artigo definido — como 'o/a' em português: The book is red (O livro é vermelho), não 'um livro'."
+      },
+      "fr": {
+        "title": "Parler d'une chose précise",
+        "body": "Quand la phrase décrit une chose précise, {lang} la marque comme définie — comme «le/la» en français : The book is red (Le livre est rouge), pas «un livre»."
+      },
+      "de": {
+        "title": "Über eine bestimmte Sache sprechen",
+        "body": "Wenn der Satz eine bestimmte Sache beschreibt, markiert {lang} sie als bestimmt — wie 'der/die/das': The book is red (Das Buch ist rot), nicht 'ein Buch'."
+      },
+      "el": {
+        "title": "Μιλώντας για κάτι συγκεκριμένο",
+        "body": "Όταν η πρόταση περιγράφει κάτι συγκεκριμένο, τα {lang} το δηλώνουν ως οριστικό — όπως το «ο/η/το»: The book is red (Το βιβλίο είναι κόκκινο), όχι «ένα βιβλίο»."
+      },
+      "es": {
+        "title": "Hablar de algo específico",
+        "body": "Cuando la frase describe algo específico, {lang} lo marca como definido — como 'el/la': The book is red (El libro es rojo), no 'un libro'."
+      },
+      "ja": {
+        "title": "特定のものについて話す",
+        "body": "文が特定のものを描写するとき、{lang}ではそれを定（既知のもの）として印を付けます。英語の the のように：The book is red（その本は赤い）。「a book（ある本）」ではありません。"
+      },
+      "ko": {
+        "title": "특정한 것에 대해 말하기",
+        "body": "문장이 특정한 것을 묘사할 때 {lang}는 그것을 한정된 것으로 표시해요 — 영어의 the처럼: The book is red(그 책은 빨갛다). 'a book(어떤 책)'이 아니에요."
+      },
+      "no": {
+        "title": "Å snakke om en bestemt ting",
+        "body": "Når setningen beskriver en bestemt ting, markerer {lang} den som bestemt — på norsk skjer det med endelsen: boken er rød, ikke 'en bok er rød'."
+      },
+      "tr": {
+        "title": "Belirli bir şeyden bahsetmek",
+        "body": "Cümle belirli bir şeyi anlatırken {lang} onu belirli olarak işaretler — İngilizcedeki the gibi: The book is red (Kitap kırmızı). 'a book (bir kitap)' değil."
+      },
+      "uk": {
+        "title": "Мова про конкретну річ",
+        "body": "Коли речення описує конкретну річ, {lang} позначає її означеним артиклем — як the в англійській: The book is red (Ця книга червона), а не 'a book' (якась книга)."
+      },
+      "zh": {
+        "title": "谈论特定的东西",
+        "body": "当句子描述某个特定的东西时，{lang}会把它标记为特指——就像英语的 the：The book is red（这本书是红色的），而不是'a book（一本书）'。"
+      },
+      "ar": {
+        "title": "الحديث عن شيء محدد",
+        "body": "عندما تصف الجملة شيئًا محددًا، تضع {lang} عليه علامة التعريف — مثل 'الـ' في العربية: The book is red (الكتاب أحمر)، وليس 'a book' (كتابٌ ما)."
+      }
     }
   }
 }
