@@ -951,57 +951,28 @@ if (!hasAccess()) {
   }
 
   document.body.innerHTML = `
-    <div style="text-align:center;margin-top:100px;">
-      
-      <h2>${strings.enterEmail || "Enter your email"}</h2>
-      
-      <input 
-        id="email-input" 
+    <div class="gate-screen">
+      <h1 class="title">ZERO TO HERO</h1>
+
+      <h2 class="gate-heading">${strings.enterEmail || "Enter your email"}</h2>
+
+      <input
+        id="email-input"
+        class="gate-input"
         type="email"
-        placeholder="your@email.com" 
-        style="
-          padding:8px;
-          border-radius:6px;
-          border:none;
-          margin-top:10px;
-        "
+        placeholder="your@email.com"
+        autocomplete="email"
       />
 
-      <br><br>
-
-      <button id="login-btn" style="
-        padding:12px 24px;
-        border-radius:999px;
-        border:none;
-        font-weight:800;
-        cursor:pointer;
-      ">
+      <button id="login-btn" class="gate-btn" type="button">
         ${strings.continue}
       </button>
 
-      <div style="margin:24px auto 0;text-align:center;max-width:300px;">
+      <div class="gate-note">
+        Start learning with the Zero to Hero app
+      </div>
 
-  <div style="font-size:0.9rem;opacity:0.85;margin-bottom:10px;">
-    Start learning with the Zero to Hero app
-  </div>
-
-  <button 
-    id="link-buy-access"
-    style="
-      padding:12px 24px;
-      border-radius:999px;
-      border:none;
-      font-weight:800;
-      cursor:pointer;
-      background:white;
-      color:#5a1f5f;
-      width:100%;
-    "
-  >
-  </button>
-
-</div>
-
+      <button id="link-buy-access" class="gate-secondary" type="button"></button>
     </div>
   `;
 
@@ -1608,10 +1579,18 @@ function releaseNextBundle(run) {
 // Support Language UI (Abbreviation + Native Name)
 // --------------------
 
+// Inline SVG icons — emoji render inconsistently across platforms (and as
+// monochrome blobs where no color-emoji font exists), so UI glyphs are SVG.
+// All inherit currentColor and size via the .icon class.
+const ICON_SPEAKER = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+const ICON_MIC = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5.3-3a5.3 5.3 0 0 1-10.6 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-1.7z"/></svg>`;
+const ICON_BULB = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19a7 7 0 0 0-4 12.74c.6.44 1 1.13 1 1.88V18h6v-1.38c0-.75.4-1.44 1-1.88A7 7 0 0 0 12 2z"/></svg>`;
+const ICON_SPARK = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2l1.9 5.7L19 9l-5.1 1.8L12 16l-1.9-5.2L5 9l5.1-1.3L12 2zm7 11l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3zM5 14l.8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8L5 14z"/></svg>`;
+
 // TTS helper: inline speaker button for innerHTML templates
 function ttsHtml(text, lang) {
   const e = String(text).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-  return `<button class="tts-inline" data-tts="${e}" data-lang="${lang}" type="button">🔊</button>`;
+  return `<button class="tts-inline" data-tts="${e}" data-lang="${lang}" type="button" aria-label="Play audio">${ICON_SPEAKER}</button>`;
 }
 
 // Walks back from the speaker button to find the visible text node it belongs
@@ -1658,7 +1637,8 @@ function wrapAdjacentTextForHighlight(btn) {
 function createTtsBtn(text, lang) {
   const btn = document.createElement("button");
   btn.className = "tts-inline";
-  btn.textContent = "🔊";
+  btn.innerHTML = ICON_SPEAKER;
+  btn.setAttribute("aria-label", "Play audio");
   btn.type = "button";
   btn.onclick = (e) => {
     e.stopPropagation();
@@ -1813,10 +1793,17 @@ function updateSupportUI(code) {
 
   entries.forEach(({ lang, progress, name }) => {
     const btn = document.createElement("button");
-    btn.className = "primary";
+    btn.className = "lang-card";
+    const pct = Math.max(0, Math.min(100, progress));
+    // Endonym as a secondary line, unless it just repeats the hub name.
+    const native = lang.nativeLabel && lang.nativeLabel !== name ? lang.nativeLabel : "";
     btn.innerHTML = `
-      <div>${name}${lang.beta ? ' <span class="beta-badge">BETA</span>' : ''}</div>
-      <div style="font-size:12px;opacity:0.7;margin-top:4px;">${progress}%</div>
+      <span class="lang-card-top"><span class="lang-card-name">${name}</span>${lang.beta ? '<span class="beta-badge">BETA</span>' : ''}</span>
+      ${native ? `<span class="lang-card-native">${native}</span>` : ""}
+      <span class="lang-card-meter" aria-hidden="true">
+        <span class="lang-card-track"><span class="lang-card-fill" style="width:${pct}%"></span></span>
+        <span class="lang-card-pct">${pct}%</span>
+      </span>
     `;
     btn.onclick = () => enterLanguage(lang.code);
     languageButtonsContainer.appendChild(btn);
@@ -2270,7 +2257,6 @@ return tpl;
     const label = String(ui("correct") || "Correct").replace(/[.\s]+$/, "");
     const banner = document.createElement("div");
     banner.className = "correct-answer-reveal";
-    banner.style.cssText = "margin-top:16px;color:#fff;font-weight:bold;text-align:center;";
     banner.innerHTML = `${safe(label)}: <span>${safe(text)}</span> ${ttsHtml(text, targetLang)}`;
     content.appendChild(banner);
     wireTts();
@@ -2302,7 +2288,7 @@ return tpl;
       .slice(0, 2); // at most two chips — a hint, not a lesson page
     if (!items.length) return "";
     const chips = items.map(({ rule, note }) =>
-      `<button type="button" class="grammar-chip" data-rule="${rule}">💡 ${safe(note.title)}</button>`
+      `<button type="button" class="grammar-chip" data-rule="${rule}">${ICON_BULB} ${safe(note.title)}</button>`
     ).join("");
     const panels = items.map(({ rule, note }) =>
       `<div class="grammar-note-panel hidden" data-rule-panel="${rule}"><strong>${safe(note.title)}</strong><p>${safe(note.body)}</p></div>`
@@ -2347,11 +2333,11 @@ return tpl;
   content.innerHTML = `
     <h2>${safe(headword(formOf(targetLang, targetConcept)))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
     <p>${safe(headword(formOf(supportLang, targetConcept)))}</p>
-    ${wordNote ? `<p class="word-note">🧠 ${safe(wordNote)}</p>` : ""}
+    ${wordNote ? `<p class="word-note">${ICON_SPARK} ${safe(wordNote)}</p>` : ""}
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
-    ${canSpeak ? `<button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="Say the sentence">🎤 ${ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt")}</button><div id="spoken-diff" class="spoken-diff"></div>` : ""}
+    ${canSpeak ? `<button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="Say the sentence">${ICON_MIC} ${ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt")}</button><div id="spoken-diff" class="spoken-diff"></div>` : ""}
     ${grammarChipsHtml(grammarRules, targetLang, supportLang)}
     <button id="continue-btn">${ui("continue")}</button>
   `;
@@ -2363,11 +2349,11 @@ return tpl;
     speakBtn.onclick = async () => {
       const diffEl = document.getElementById("spoken-diff");
       speakBtn.disabled = true;
-      speakBtn.textContent = "🎤 …";
+      speakBtn.innerHTML = `${ICON_MIC} …`;
       const ttsCode = AVAILABLE_LANGUAGES.find(l => l.code === targetLang)?.ttsCode || targetLang;
       const transcript = await recognizeOnce({ lang: ttsCode });
       speakBtn.disabled = false;
-      speakBtn.textContent = "🎤 " + (ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt"));
+      speakBtn.innerHTML = `${ICON_MIC} ` + safe(ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt"));
 
       if (transcript == null) {
         diffEl.textContent = "…";
@@ -3612,14 +3598,14 @@ checkBtn.onclick = async () => {
   inputField.disabled = true;
 
   if (resultType === "perfect") {
-    inputField.style.borderColor = "#4CAF50";
-    feedbackDiv.innerHTML = `<div style="color:#4CAF50;">Correct.</div>`;
+    inputField.style.borderColor = "var(--success-text)";
+    feedbackDiv.innerHTML = `<div style="color:var(--success-text);">Correct.</div>`;
   }
 
   if (resultType === "accent") {
-    inputField.style.borderColor = "#4CAF50";
+    inputField.style.borderColor = "var(--success-text)";
     feedbackDiv.innerHTML = `
-      <div style="color:#4CAF50;">
+      <div style="color:var(--success-text);">
         ${ui("correct")}.<br/>
         Proper form: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
@@ -3627,9 +3613,9 @@ checkBtn.onclick = async () => {
   }
 
   if (resultType === "semantic") {
-    inputField.style.borderColor = "#4CAF50";
+    inputField.style.borderColor = "var(--success-text)";
     feedbackDiv.innerHTML = `
-      <div style="color:#4CAF50;">
+      <div style="color:var(--success-text);">
         ${ui("correct")}.${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>
         Expected: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
@@ -3637,9 +3623,9 @@ checkBtn.onclick = async () => {
   }
 
   if (resultType === "incorrect") {
-    inputField.style.borderColor = "#D32F2F";
+    inputField.style.borderColor = "var(--danger-text)";
     feedbackDiv.innerHTML = `
-      <div style="color:#D32F2F;">
+      <div style="color:var(--danger-text);">
         ${ui("incorrect")}.<br/>
         Correct answer: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
