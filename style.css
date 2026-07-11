@@ -1,21 +1,80 @@
 /* =========================
    Zero to Hero – Base Styles
-   ========================= */
+   =========================
+   Structure: tokens → base → typography → buttons → forms → learning
+   layout → exercise elements → hub → overlays → screens → responsive.
+   All class names double as JS/test hooks — rename nothing without
+   checking app.js and tests/e2e. */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Display face for Latin headings/labels; CJK and other scripts fall
+   through to the system stack in --font-ui. Weight range 400–900. */
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("fonts/outfit-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("fonts/outfit-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root{
+  /* Brand */
   --bg1:#7a2c7d;
   --bg2:#4a144c;
   --ink:#ffffff;
   --btnInk:#5a1f5f;
   --grid: rgba(255,255,255,0.05);
-  
+
+  /* Accent gradient — deep stops for CTAs (white text needs the
+     contrast), soft stops for decorative fills (progress bar, badges). */
+  --accent-1:#a855f7;
+  --accent-2:#f43f5e;
+  --accent-1-soft:#c084fc;
+  --accent-2-soft:#fb7185;
+  --grad-cta: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  --grad-soft: linear-gradient(90deg, var(--accent-1-soft), var(--accent-2-soft));
+  --gold:#ffd166;
+
+  /* Semantic feedback — fills carry white text, text variants sit
+     directly on the purple background. */
+  --success:#2ea86d;
+  --success-text:#7ee2a8;
+  --danger:#dc3d4e;
+  --danger-text:#ff9aa4;
+
+  /* Glass surfaces */
+  --glass-bg: rgba(255,255,255,0.07);
+  --glass-bg-strong: rgba(255,255,255,0.10);
+  --glass-brd: rgba(255,255,255,0.15);
+  --glass-brd-strong: rgba(255,255,255,0.25);
+
+  /* Radii */
+  --r-xl: 24px;
+  --r-lg: 16px;
+  --r-md: 12px;
+  --r-sm: 8px;
+  --r-pill: 999px;
+
+  --shadow-1: 0 6px 16px rgba(0,0,0,0.25);
+  --shadow-2: 0 10px 30px rgba(0,0,0,0.3);
+
   --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
     "Hiragino Sans", "Hiragino Kaku Gothic ProN",
     "Yu Gothic", "Meiryo",
     "Noto Sans JP", "Noto Sans CJK JP",
     sans-serif;
+
+  --font-display: "Outfit", var(--font-ui);
 
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New",
@@ -44,6 +103,25 @@ body::before{
   pointer-events: none;
 }
 
+/* Keyboard focus — visible ring on every interactive element.
+   (Pointer clicks don't trigger :focus-visible, so no visual noise.) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline: 3px solid rgba(255,255,255,0.75);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .screen{
   min-height: 100vh;
   min-height: 100dvh;
@@ -68,9 +146,10 @@ body::before{
 
 /* Typography */
 .title{
+  font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 900;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   margin-bottom: 0.75rem;
 }
 
@@ -101,17 +180,17 @@ button, a.secondary{
   border: none;
   cursor: pointer;
   padding: 1.05rem 1.6rem;
-  border-radius: 999px;
-  font-family: var(--font-ui);
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
   font-size: 1rem;
   font-style: normal;
   font-variant: normal;
   font-weight: 800;
   line-height: 1.2;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   background: #fff;
   color: var(--btnInk);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   text-decoration: none;
 }
 
@@ -125,16 +204,51 @@ a.secondary{
 
 button:hover, a.secondary:hover{
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  box-shadow: var(--shadow-1);
 }
 
 button:active{
   transform: translateY(1px);
 }
 
+button:disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 button.primary.small{
   padding: 0.8rem 1.2rem;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
+}
+
+/* Primary call-to-action — the one button per screen that moves the
+   learner forward. Gradient sets it apart from nav/utility pills.
+   (IDs cover JS-generated buttons; .cta covers authored markup.) */
+.cta,
+#check-btn, #check-l6, #check-l7, #check-matches,
+#continue-btn, #login-btn, #open-app,
+#start-run, #reason-continue, #roadmap-continue,
+#run-complete-back, #feedback-submit{
+  background: var(--grad-cta);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(168, 85, 247, 0.35);
+}
+
+.cta:hover,
+#check-btn:hover, #check-l6:hover, #check-l7:hover, #check-matches:hover,
+#continue-btn:hover, #login-btn:hover, #open-app:hover,
+#start-run:hover, #reason-continue:hover, #roadmap-continue:hover,
+#run-complete-back:hover, #feedback-submit:hover{
+  box-shadow: 0 10px 24px rgba(244, 63, 94, 0.4);
+}
+
+.cta:disabled,
+#check-btn:disabled, #check-l6:disabled, #check-l7:disabled,
+#check-matches:disabled, #continue-btn:disabled, #reason-continue:disabled{
+  box-shadow: none;
+  filter: saturate(0.5);
 }
 
 /* Quit button */
@@ -146,7 +260,7 @@ button.primary.small{
   color: white;
   border: 2px solid rgba(255,255,255,0.65);
   padding: 0.55rem 0.95rem;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   font-weight: 800;
@@ -156,6 +270,12 @@ button.primary.small{
   background: rgba(255,255,255,0.10);
   box-shadow: none;
   transform: none;
+}
+
+/* Right-aligned variant (e.g. RESET PROGRESS on the hub) */
+.quit-button--right{
+  left: auto;
+  right: 1.25rem;
 }
 
 /* Learning layout */
@@ -204,9 +324,9 @@ label{
 
 select{
   padding: 0.65rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.10);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--glass-brd-strong);
+  background: var(--glass-bg-strong);
   color: white;
   outline: none;
 }
@@ -215,16 +335,21 @@ select option{
   color: #1a1a1a;
 }
 
+/* The exercise card hugs its content and floats centered in the
+   leftover space — a content-sized card reads better than a panel
+   stretched to fill the viewport, especially on desktop. */
 .content{
   width: min(720px, 100%);
   text-align: left;
-  background: rgba(255,255,255,0.07);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 24px;
-  padding: 1.25rem 1.25rem;
-  flex: 1 1 auto;
+  border: 1px solid var(--glass-brd);
+  border-radius: var(--r-xl);
+  padding: 1.75rem 1.5rem;
+  flex: 0 1 auto;
+  margin-top: auto;
+  margin-bottom: auto;
   min-height: 0;
   overflow: hidden;
   display: flex;
@@ -274,6 +399,67 @@ select option{
   grid-template-columns: minmax(200px, 400px);
   width: min(400px, 100%);
   margin-top: 0.75rem;
+  gap: 0.85rem;
+}
+
+/* Language cards: name + endonym + progress at a glance. */
+button.lang-card{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+  text-align: left;
+  padding: 0.95rem 1.25rem 0.85rem;
+  border-radius: var(--r-lg);
+}
+
+.lang-card-top{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-card-name{
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.lang-card-native{
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.lang-card-meter{
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+}
+
+.lang-card-track{
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: rgba(90, 31, 95, 0.15);
+  overflow: hidden;
+}
+
+.lang-card-fill{
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--grad-soft);
+}
+
+.lang-card-pct{
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  opacity: 0.65;
+  min-width: 2.4em;
+  text-align: right;
 }
 
 .language-search{
@@ -281,8 +467,8 @@ select option{
   width: min(400px, 100%);
   margin-top: 0.75rem;
   padding: 0.7rem 1rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--glass-brd-strong);
   background: rgba(255,255,255,0.08);
   color: white;
   font-size: 0.95rem;
@@ -295,7 +481,7 @@ select option{
 }
 
 .language-search:focus{
-  border-color: #2B7FFF;
+  border-color: var(--accent-1-soft);
   background: rgba(255,255,255,0.14);
 }
 
@@ -310,18 +496,34 @@ select option{
 @media (max-width: 520px){
   .button-grid{ grid-template-columns: 1fr; }
   .quit-button{ top: 1rem; left: 1rem; }
+  .quit-button--right{ left: auto; right: 1rem; }
   #language-screen { padding-top: 4.5rem; }
   #language-screen #language-buttons { width: 100%; }
 }
 
+/* Answer feedback states (class names are JS hooks — see app.js). */
+@keyframes correctPop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+
 button.correct {
-  background-color: #4caf50 !important;
+  background-color: var(--success) !important;
   color: white !important;
+  animation: correctPop 0.3s ease;
 }
 
 button.incorrect {
-  background-color: #e57373 !important;
+  background-color: var(--danger) !important;
   color: white !important;
+  animation: wrongShake 0.3s ease;
 }
 
 button.selected {
@@ -329,18 +531,20 @@ button.selected {
 }
 
 button.paired {
-  background-color: #4CAF50 !important;
+  background-color: var(--success) !important;
   color: white;
 }
 
 button.matched {
-  background-color: #4CAF50 !important;
+  background-color: var(--success) !important;
   color: white;
+  animation: correctPop 0.3s ease;
 }
 
 button.wrong {
-  background-color: #D32F2F !important;
+  background-color: var(--danger) !important;
   color: white;
+  animation: wrongShake 0.3s ease;
 }
 
 .sentence-slot {
@@ -348,18 +552,23 @@ button.wrong {
 }
 
 .sentence-slot.correct {
-  background-color: #4caf50;
+  background-color: var(--success);
   color: #fff;
 }
 
 .sentence-slot.incorrect {
-  background-color: #e57373;
+  background-color: var(--danger);
   color: #fff;
 }
 
-button.selected {
-  outline: 2px solid white;
+/* Inline "Correct: …" reveal under wrong answers (L3/L4/L6). */
+.correct-answer-reveal{
+  margin-top: 16px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
 }
+
 /* =========================
    Support Language Selector
    ========================= */
@@ -380,7 +589,7 @@ button.selected {
   background:white;
   color:#1a1a1a;
   padding:0.9rem 1.6rem;
-  border-radius:999px;
+  border-radius:var(--r-pill);
   cursor:pointer;
   font-weight:800;
   min-width:260px;
@@ -389,7 +598,7 @@ button.selected {
 
 .support-pill:hover{
   transform:translateY(-1px);
-  box-shadow:0 6px 16px rgba(0,0,0,0.25);
+  box-shadow:var(--shadow-1);
 }
 
 /* Short code (EN / PT / JA etc.) */
@@ -406,13 +615,13 @@ button.selected {
 .support-dropdown{
   margin-top:0.75rem;
   background:white;
-  border-radius:16px;
+  border-radius:var(--r-lg);
   padding:0.5rem;
   width:280px;
   display:flex;
   flex-direction:column;
   gap:0.25rem;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  box-shadow:var(--shadow-2);
 }
 
 .support-search{
@@ -420,7 +629,7 @@ button.selected {
   box-sizing:border-box;
   padding:0.55rem 0.85rem;
   border:1px solid rgba(0,0,0,0.12);
-  border-radius:10px;
+  border-radius:var(--r-md);
   font-size:0.95rem;
   font-weight:600;
   color:#1a1a1a;
@@ -430,7 +639,7 @@ button.selected {
 }
 
 .support-search:focus{
-  border-color:#2B7FFF;
+  border-color: var(--accent-1);
   background:white;
 }
 
@@ -455,7 +664,7 @@ button.selected {
   align-items:center;
   gap:1rem;
   padding:0.65rem 1rem;
-  border-radius:12px;
+  border-radius:var(--r-md);
   cursor:pointer;
   font-weight:700;
   color:#1a1a1a;
@@ -474,22 +683,83 @@ button.selected {
 }
 
 /* =========================
+   Access gate (login screen)
+   ========================= */
+
+.gate-screen{
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  gap: 0.75rem;
+}
+
+.gate-heading{
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.gate-input{
+  width: min(320px, 100%);
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-brd-strong);
+  background: rgba(255,255,255,0.96);
+  color: var(--btnInk);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  outline: none;
+}
+
+.gate-input:focus{
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.45);
+}
+
+.gate-btn{
+  min-width: 200px;
+  margin-top: 0.5rem;
+}
+
+.gate-note{
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.gate-secondary{
+  width: min(300px, 100%);
+}
+
+/* =========================
    Feedback button + modal
    ========================= */
 
+/* Floating utility buttons (feedback, alphabet) — compact icon circles
+   so they don't compete with the exercise for attention. */
 .feedback-btn {
   position: fixed;
   bottom: 1.5rem;
   right: 1.25rem;
   z-index: 150;
+  width: 3.4rem;
+  height: 3.4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.65);
-  border-radius: 999px;
-  font-size: 1.4rem;
+  border-radius: 50%;
+  font-size: 1.1rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
-  padding: 1.1rem 1.9rem;
+  letter-spacing: 0;
   transition: background 0.15s ease;
 }
 
@@ -507,7 +777,7 @@ button.selected {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .feedback-modal.hidden {
@@ -516,17 +786,21 @@ button.selected {
 
 .feedback-panel {
   background: linear-gradient(160deg, #5a1d5f, #3a0d3d);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 24px;
-  padding: 2rem 1.75rem 1.75rem;
+  border: 1px solid var(--glass-brd);
+  border-radius: var(--r-xl);
   width: min(480px, 100%);
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: hidden;
+  padding: 1.5rem 1.5rem 1.25rem;
+  gap: 0.65rem;
 }
 
 .feedback-modal-title {
+  font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -535,7 +809,7 @@ button.selected {
 
 .feedback-modal-subtitle {
   font-size: 0.85rem;
-  opacity: 0.65;
+  opacity: 0.75;
   font-family: var(--font-mono);
   margin-top: -0.25rem;
 }
@@ -545,11 +819,12 @@ button.selected {
   padding: 0.8rem 1rem;
   font-size: 0.95rem;
   font-family: inherit;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.07);
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-brd-strong);
+  background: var(--glass-bg);
   color: white;
-  resize: vertical;
+  resize: none;
+  max-height: 32dvh;
   outline: none;
   transition: border-color 0.15s ease;
 }
@@ -559,20 +834,20 @@ button.selected {
 }
 
 .feedback-textarea::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .feedback-context {
   font-size: 0.72rem;
   font-family: var(--font-mono);
-  opacity: 0.45;
+  opacity: 0.65;
   letter-spacing: 0.06em;
   line-height: 1.6;
 }
 
 .run-complete-stats {
   font-family: var(--font-mono);
-  opacity: 0.6;
+  opacity: 0.7;
   letter-spacing: 0.04em;
   margin-bottom: 2rem;
 }
@@ -600,13 +875,17 @@ button.selected {
   font-weight: 900;
   letter-spacing: 0.12em;
   color: var(--btnInk);
-  background: linear-gradient(90deg, #c084fc, #fb7185);
-  border-radius: 999px;
+  background: var(--grad-soft);
+  border-radius: var(--r-pill);
   padding: 0.15em 0.55em;
   vertical-align: middle;
   margin-left: 0.4em;
   position: relative;
   top: -0.1em;
+}
+
+.lang-card .beta-badge {
+  margin-left: 0;
 }
 
 /* Version tag below subtitle */
@@ -615,7 +894,7 @@ button.selected {
   font-size: 0.72rem;
   font-family: var(--font-mono);
   letter-spacing: 0.14em;
-  opacity: 0.55;
+  opacity: 0.7;
   margin-top: 0.35rem;
 }
 
@@ -623,15 +902,16 @@ button.selected {
 .hidden{
   display:none;
 }
+
 /* =========================
    Progress Bar
    ========================= */
 
 #progress-bar-container {
-  width: 100%;
+  width: min(720px, 100%);
   height: 10px;
   background: rgba(0,0,0,0.35);
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   margin: 10px 0 20px;
   overflow: hidden;
 }
@@ -639,11 +919,12 @@ button.selected {
 #progress-bar-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #c084fc, #fb7185);
+  background: var(--grad-soft);
   box-shadow: 0 0 14px rgba(251, 113, 133, 0.6);
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   transition: width 0.3s ease;
 }
+
 #logout-btn {
   top: 1.25rem;
   left: 1.25rem;
@@ -660,14 +941,19 @@ button.selected {
   bottom: 1.5rem;
   left: 1.25rem;
   z-index: 150;
+  width: 3.4rem;
+  height: 3.4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.65);
-  border-radius: 999px;
-  font-size: 1.4rem;
+  border-radius: 50%;
+  font-size: 1.25rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
-  padding: 1.1rem 1.9rem;
+  letter-spacing: 0;
   transition: background 0.15s ease;
 }
 
@@ -690,7 +976,9 @@ button.selected {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2.5rem 1.5rem 3rem;
+  padding: 1.75rem 1rem 1.25rem;
+  max-height: 100vh;
+  max-height: 100dvh;
 }
 
 .alphabet-overlay.hidden {
@@ -698,6 +986,10 @@ button.selected {
 }
 
 .alphabet-panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   width: min(680px, 100%);
   position: relative;
 }
@@ -728,12 +1020,22 @@ button.selected {
 }
 
 .alphabet-overlay-title {
+  font-family: var(--font-display);
   text-align: center;
   font-size: clamp(1.3rem, 3vw, 1.8rem);
   font-weight: 900;
   letter-spacing: 0.12em;
-  margin-bottom: 2rem;
+  margin-bottom: 0.85rem;
   padding-right: 3rem;
+}
+
+.alphabet-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .alphabet-section-name {
@@ -741,7 +1043,7 @@ button.selected {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   opacity: 0.6;
-  margin: 1.5rem 0 0.75rem;
+  margin: 0.6rem 0 0.3rem;
   font-weight: 700;
 }
 
@@ -751,20 +1053,20 @@ button.selected {
 
 .letter-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  gap: 0.5rem;
 }
 
 .letter-card {
   background: white;
   color: #4a144c;
-  border-radius: 21px;
-  padding: 1.275rem 0.6rem 1.05rem;
+  border-radius: 14px;
+  padding: 0.5rem 0.4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 108px;
+  min-height: 0;
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
@@ -775,48 +1077,49 @@ button.selected {
 }
 
 .letter-char {
-  font-size: 2.6rem;
+  font-size: clamp(1.1rem, 4.5vw, 1.8rem);
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.1rem;
 }
 
 .letter-romanization {
-  font-size: 1.1rem;
+  font-size: clamp(0.6rem, 2.2vw, 0.85rem);
   font-weight: 600;
   opacity: 0.6;
   line-height: 1;
 }
 
 .letter-sound {
-  font-size: 0.9rem;
+  font-size: clamp(0.55rem, 1.9vw, 0.7rem);
   font-weight: 500;
   opacity: 0.45;
-  margin-top: 0.3rem;
+  margin-top: 0.1rem;
   text-align: center;
   line-height: 1.2;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   .letter-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+    gap: 0.35rem;
   }
-  .letter-char {
-    font-size: 2.2rem;
-  }
+  .alphabet-overlay { padding: 1.5rem 0.75rem 1rem; }
 }
 
 /* Inline TTS speaker button */
 .tts-inline {
   background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.8);
-  padding: 0.2rem 0.4rem;
+  color: rgba(255,255,255,0.85);
+  padding: 0.3rem 0.4rem;
   font-size: 0.85rem;
   font-weight: 400;
   letter-spacing: 0;
-  border-radius: 6px;
+  border-radius: var(--r-sm);
   min-width: auto;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   vertical-align: middle;
   margin-left: 0.3rem;
   line-height: 1;
@@ -826,6 +1129,22 @@ button.selected {
   color: white;
   transform: none;
   box-shadow: none;
+}
+
+/* Inline SVG icons (speaker, mic, bulb, …) inherit currentColor. */
+.icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+.tts-inline .icon {
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: middle;
 }
 
 /* TTS highlighting — applied to per-word and per-letter spans while audio plays. */
@@ -854,8 +1173,8 @@ button.selected {
 
 /* Choice buttons — squircle, dark glass */
 #choices button:not(.tts-inline) {
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.10);
+  border-radius: var(--r-lg);
+  background: var(--glass-bg-strong);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 0.9rem 1rem;
@@ -883,11 +1202,16 @@ button.selected {
   align-items: center;
   gap: 4px;
   margin: 0;
+  min-width: 0;
 }
 
 #choices .word-bank-chip button:not(.tts-inline) {
   flex: 1;
   width: auto;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.2;
 }
 
 /* =========================
@@ -897,7 +1221,7 @@ button.selected {
 .sentence-slot {
   min-width: 60px;
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: var(--r-sm);
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -942,7 +1266,7 @@ button.selected {
   padding: 10px 14px;
   font-size: 16px;
   font-family: inherit;
-  border-radius: 8px;
+  border-radius: var(--r-sm);
   border: 2px solid rgba(255, 255, 255, 0.45);
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
@@ -974,10 +1298,11 @@ button.selected {
 }
 
 .session-complete h2 {
+  font-family: var(--font-display);
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 900;
   letter-spacing: 0.06em;
-  background: linear-gradient(90deg, #c084fc, #fb7185);
+  background: var(--grad-soft);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -996,7 +1321,7 @@ button.selected {
 }
 
 .coaching-link {
-  color: #c084fc;
+  color: var(--accent-1-soft);
   text-decoration: none;
   border-bottom: 1px solid rgba(192, 132, 252, 0.35);
   transition: opacity 0.15s;
@@ -1023,7 +1348,7 @@ button.selected {
 }
 
 .content strong {
-  color: #c084fc;
+  color: var(--accent-1-soft);
 }
 
 .content small {
@@ -1090,13 +1415,6 @@ button.selected {
   text-align: left;
 }
 
-.reason-continue:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
 @media (max-width: 600px) {
   .reason-grid {
     grid-template-columns: 1fr;
@@ -1116,7 +1434,7 @@ button.selected {
   background: transparent;
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.65);
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -1175,11 +1493,11 @@ button.selected {
 }
 
 .roadmap-milestone-headline {
-  font-family: var(--font-ui);
+  font-family: var(--font-display);
   font-size: clamp(1.6rem, 4.5vw, 2.2rem);
   font-weight: 900;
   letter-spacing: 0.14em;
-  color: #ffd166;
+  color: var(--gold);
 }
 
 .roadmap-milestone-line {
@@ -1270,8 +1588,8 @@ button.selected {
 
 /* The one stop the learner is actively working on — pulses. */
 .roadmap-stop.current .roadmap-stop-dot {
-  background: #ffd166;
-  border-color: #ffd166;
+  background: var(--gold);
+  border-color: var(--gold);
   color: var(--btnInk);
   box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.25);
   animation: roadmapPulse 2.2s ease-in-out infinite;
@@ -1280,8 +1598,8 @@ button.selected {
 /* Older released bundles with unfinished concepts — visible but quiet. */
 .roadmap-stop.in-progress .roadmap-stop-dot {
   background: transparent;
-  border-color: #ffd166;
-  color: #ffd166;
+  border-color: var(--gold);
+  color: var(--gold);
 }
 .roadmap-stop.in-progress::before {
   background: rgba(255, 209, 102, 0.35);
@@ -1359,7 +1677,7 @@ button.selected {
 }
 
 .roadmap-coaching a {
-  color: #ffd166;
+  color: var(--gold);
   font-weight: 700;
   text-decoration: underline;
 }
@@ -1386,7 +1704,7 @@ button.selected {
 
 /* =========================
    Fit-to-viewport compression
-   - exercises, alphabet, feedback
+   - exercises, feedback
    Goal: no scrolling in any direction on a normal phone viewport.
    ========================= */
 
@@ -1397,7 +1715,7 @@ button.selected {
     padding: 0.7rem 0.8rem;
     font-size: 0.95rem;
   }
-  #learning-screen .content { padding: 1rem 1.1rem; }
+  #learning-screen .content { padding: 1.25rem 1.1rem; }
 }
 @media (max-height: 680px) {
   #learning-screen {
@@ -1411,97 +1729,7 @@ button.selected {
   #learning-screen .subtitle { font-size: 0.85rem; margin-bottom: 0.25rem; }
 }
 
-/* Guard against TTS buttons causing horizontal overflow in choices.
-   Long words (e.g. Ukrainian) must wrap rather than push past the chip. */
-#choices .word-bank-chip {
-  min-width: 0;
-}
-#choices .word-bank-chip button:not(.tts-inline) {
-  min-width: 0;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  line-height: 1.2;
-}
-
-/* Alphabet overlay: bound to viewport but scroll when content overflows
-   (e.g. Cyrillic, Japanese kana, alphabets with many sections). */
-.alphabet-overlay {
-  overflow-y: auto;
-  padding: 1.75rem 1rem 1.25rem;
-  max-height: 100vh;
-  max-height: 100dvh;
-}
-
-.alphabet-panel {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  width: min(680px, 100%);
-}
-
-.alphabet-overlay-title { margin-bottom: 0.85rem; }
-
-.alphabet-content {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.alphabet-section-name {
-  margin: 0.6rem 0 0.3rem;
-}
-.alphabet-section-name:first-child { margin-top: 0; }
-
-.letter-grid {
-  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
-  gap: 0.5rem;
-}
-
-.letter-card {
-  padding: 0.5rem 0.4rem;
-  min-height: 0;
-  border-radius: 14px;
-}
-
-.letter-char {
-  font-size: clamp(1.1rem, 4.5vw, 1.8rem);
-  margin-bottom: 0.1rem;
-}
-.letter-romanization {
-  font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-}
-.letter-sound {
-  font-size: clamp(0.55rem, 1.9vw, 0.7rem);
-  margin-top: 0.1rem;
-}
-
-@media (max-width: 520px) {
-  .letter-grid {
-    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
-    gap: 0.35rem;
-  }
-  .alphabet-overlay { padding: 1.5rem 0.75rem 1rem; }
-}
-
-/* Feedback modal: never exceeds viewport; textarea bounded */
-.feedback-modal {
-  padding: 1rem;
-}
-.feedback-panel {
-  max-height: calc(100vh - 2rem);
-  max-height: calc(100dvh - 2rem);
-  overflow: hidden;
-  padding: 1.5rem 1.5rem 1.25rem;
-  gap: 0.65rem;
-}
-.feedback-textarea {
-  resize: none;
-  max-height: 32dvh;
-}
+/* Feedback modal compression on short screens */
 @media (max-height: 680px) {
   .feedback-panel {
     padding: 1.1rem 1.15rem 0.9rem;
@@ -1511,6 +1739,7 @@ button.selected {
   .feedback-modal-subtitle { font-size: 0.78rem; }
   .feedback-textarea { max-height: 22dvh; }
 }
+
 /* ── Grammar "why?" chips (exposure cards) ─────────────────────────────── */
 .grammar-chips {
   display: flex;
@@ -1523,7 +1752,7 @@ button.selected {
 .grammar-chip {
   font-size: 0.8rem;
   padding: 6px 12px;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.08);
   color: inherit;
@@ -1534,11 +1763,15 @@ button.selected {
   background: rgba(255, 255, 255, 0.18);
 }
 
+.grammar-chip .icon {
+  color: var(--gold);
+}
+
 .grammar-note-panel {
   margin: 10px auto 4px;
   max-width: 420px;
   padding: 10px 14px;
-  border-radius: 12px;
+  border-radius: var(--r-md);
   background: rgba(255, 255, 255, 0.1);
   font-size: 0.9rem;
   line-height: 1.4;
@@ -1562,11 +1795,15 @@ button.selected {
   line-height: 1.4;
 }
 
+.word-note .icon {
+  color: var(--accent-1-soft);
+}
+
 /* ── Speaking practice (exposure cards) ────────────────────────────────── */
 .speak-check-btn {
   margin: 8px auto 0;
   padding: 8px 16px;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
   border: 1px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.08);
   color: inherit;
@@ -1586,11 +1823,11 @@ button.selected {
 }
 
 .spoken-diff .spoken-ok {
-  color: #4caf50;
+  color: var(--success-text);
   font-weight: 600;
 }
 
 .spoken-diff .spoken-miss {
-  color: #d32f2f;
+  color: var(--danger-text);
   text-decoration: underline dotted;
 }
