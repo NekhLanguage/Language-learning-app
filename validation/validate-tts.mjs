@@ -1,34 +1,33 @@
 #!/usr/bin/env node
-// validate-tts.js
-// Sends sample words from each language to the TTS endpoint and verifies
-// the response is a valid, non-silent MP3.
+// validate-tts.mjs
+// Sends sample words from each supported language to the TTS endpoint and
+// verifies the response is a valid, non-silent MP3.
+//
+// Language list is sourced from languages.js at run time. Registering a new
+// language in that file makes it automatically included here — no separate
+// register-and-forget list.
 //
 // Requirements:
 //   - Netlify dev server running locally (netlify dev) OR live URL via env
 //   - Google TTS credentials in the environment (same as production)
 //
 // Usage:
-//   node validation/validate-tts.js
-//   TTS_BASE_URL=https://your-site.netlify.app node validation/validate-tts.js
+//   node validation/validate-tts.mjs
+//   TTS_BASE_URL=https://your-site.netlify.app node validation/validate-tts.mjs
 //
 // The script exits 0 on full pass, 1 on any failure.
 
-'use strict';
+import path from 'node:path';
+import fs from 'node:fs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-// Node 18+ has native fetch. For older Node, this will error with a clear message.
-if (typeof fetch === 'undefined') {
-  console.error('ERROR: fetch is not available. Use Node 18+ or run: npm install node-fetch');
-  process.exit(1);
-}
-
-const path = require('path');
-const fs   = require('fs');
-
-const ROOT     = path.join(__dirname, '..');
-const LANG_DIR = path.join(ROOT, 'lang');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+const ROOT       = path.join(__dirname, '..');
+const LANG_DIR   = path.join(ROOT, 'lang');
 
 // Base URL — default to local Netlify dev server
-const BASE_URL   = (process.env.TTS_BASE_URL || 'http://localhost:8888').replace(/\/$/, '');
+const BASE_URL     = (process.env.TTS_BASE_URL || 'http://localhost:8888').replace(/\/$/, '');
 const TTS_ENDPOINT = `${BASE_URL}/.netlify/functions/tts`;
 
 // Minimum MP3 body size in bytes. A real word should be well over 2KB.
@@ -38,27 +37,18 @@ const MIN_MP3_BYTES = 1500;
 // Timeout per request in milliseconds
 const REQUEST_TIMEOUT_MS = 10000;
 
-// ─── Language definitions (mirrors languages.js) ─────────────────────────────
-
-const LANGUAGES = [
-  { code: 'pt', label: 'Portuguese', ttsCode: 'pt-BR' },
-  { code: 'ja', label: 'Japanese',   ttsCode: 'ja-JP' },
-  { code: 'no', label: 'Norwegian',  ttsCode: 'nb-NO' },
-  { code: 'en', label: 'English',    ttsCode: 'en-US' },
-  { code: 'ar', label: 'Arabic',     ttsCode: 'ar-SA' },
-  { code: 'ko', label: 'Korean',     ttsCode: 'ko-KR' },
-  { code: 'uk', label: 'Ukrainian',  ttsCode: 'uk-UA' },
-  { code: 'de', label: 'German',     ttsCode: 'de-DE' },
-  { code: 'el', label: 'Greek',      ttsCode: 'el-GR' },
-  { code: 'tr', label: 'Turkish',    ttsCode: 'tr-TR' },
-];
-
 // Sample concept IDs to test per language.
 // Chosen to exercise: a basic noun, a body noun, a verb (base form),
 // an adjective, and a question word.
 const SAMPLE_CONCEPTS = ['WATER', 'HAND', 'EAT', 'GOOD', 'WHAT'];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
+
+async function loadLanguageRegistry() {
+  const url = pathToFileURL(path.join(ROOT, 'languages.js')).href;
+  const mod = await import(url);
+  return mod.AVAILABLE_LANGUAGES;
+}
 
 function getFormString(entry) {
   if (!entry) return null;
@@ -145,8 +135,11 @@ async function testWord(ttsCode, text) {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('=== validate-tts.js ===\n');
+  const LANGUAGES = await loadLanguageRegistry();
+
+  console.log('=== validate-tts.mjs ===\n');
   console.log(`Endpoint : ${TTS_ENDPOINT}`);
+  console.log(`Languages: ${LANGUAGES.length} from languages.js (${LANGUAGES.map(l => l.code).join(', ')})`);
   console.log(`Samples  : ${SAMPLE_CONCEPTS.join(', ')}`);
   console.log(`Timeout  : ${REQUEST_TIMEOUT_MS}ms per request\n`);
 
