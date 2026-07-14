@@ -6,7 +6,7 @@
 //
 // Types currently emitted by the client:
 //   - "error"            : window error / unhandledrejection
-//   - "cta_click"        : click on a stan.store link
+//   - "cta_click"        : click on a checkout link (Cal.com or Stripe)
 //   - "session_start"    : app loaded with an email present
 //   - "session_complete" : a learning session finished
 //

@@ -676,14 +676,15 @@ setVoiceMap(Object.fromEntries(AVAILABLE_LANGUAGES.map(l => [l.code, l.ttsCode])
 const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
-  offer: "https://stan.store/Nekhslanguageblueprint/p/fluency-planning-call",
-  buyAccess: "https://stan.store/Nekhslanguageblueprint/p/zero-to-hero-app-beta-copy"
+  offer: "https://cal.com/fredrik-johansen-bw1mgs/discovery-call",
+  buyAccess: "https://buy.stripe.com/bJe00ibcwdgIahS2Gs9sk00"
 };
 
 // Launch-spike observability. Keep this tiny and self-contained: one global
 // error listener, one unhandled-rejection listener, one delegated click
-// listener that fires when any stan.store link is clicked. Everything posts
-// to /.netlify/functions/beacon. See netlify/functions/beacon.js.
+// listener that fires when a checkout link is clicked (Cal.com discovery-call
+// or Stripe app checkout). Everything posts to /.netlify/functions/beacon.
+// See netlify/functions/beacon.js.
 (function initBeacon() {
   const ENDPOINT = "/.netlify/functions/beacon";
   function send(type, payload) {
@@ -727,16 +728,18 @@ const EXTERNAL_LINKS = {
   });
 
   document.addEventListener("click", (e) => {
-    const a = e.target && e.target.closest ? e.target.closest("a[href^='https://stan.store/']") : null;
+    const a = e.target && e.target.closest
+      ? e.target.closest("a[href^='https://cal.com/'], a[href^='https://buy.stripe.com/']")
+      : null;
     if (!a) return;
     const href = a.getAttribute("href") || "";
     const surface = a.id || (a.closest("[id]") && a.closest("[id]").id) || "unknown";
-    // Map the Stan Store href to a coarse offer label so the analytics layer
+    // Map the checkout href to a coarse offer label so the analytics layer
     // can split coaching/discovery-call clicks from buy-access clicks without
     // re-parsing the URL each time.
     let offer = "other";
-    if (href.indexOf("fluency-planning-call") !== -1) offer = "coaching";
-    else if (href.indexOf("zero-to-hero-app-beta") !== -1) offer = "buy_access";
+    if (href.indexOf("cal.com/") !== -1) offer = "coaching";
+    else if (href.indexOf("buy.stripe.com/") !== -1) offer = "buy_access";
     let sessionCount = 0;
     let sessionNumber = null;
     let sessionExerciseCount = null;
@@ -1930,7 +1933,7 @@ if (offerLink) {
   const buyAccess = document.getElementById("link-buy-access");
 
 if (buyAccess) {
-  buyAccess.href = EXTERNAL_LINKS.offer;
+  buyAccess.href = EXTERNAL_LINKS.buyAccess;
   buyAccess.textContent = strings.buyAccess;
 }
 
