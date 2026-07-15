@@ -194,6 +194,7 @@ function genderedFormOf(lang, modifierCid, nounCid, plural = false) {
   const g = noun?.gender;
   if (plural) {
     if (g === "f" && mod.fp) { noteRule("gender_agreement"); return mod.fp; }
+    if (g === "n" && mod.np) { noteRule("gender_agreement"); return mod.np; }
     return pluralFormOf(lang, modifierCid);
   }
   if (g === "f" && mod.f) { noteRule("gender_agreement"); return mod.f; }
