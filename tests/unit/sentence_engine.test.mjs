@@ -184,6 +184,20 @@ test("described noun subjects take the definite article", () => {
   assert.equal(buildSentence("en", tplById("SHE_IS_WOMAN")), "She is a woman.");
 });
 
+test("copular structure is inferred for franchise-pack [noun, BE, adj] templates", () => {
+  // The pack templates ship without an explicit `structure: {type: "copular"}`
+  // field, but their [nonPronounNoun, BE, adjective] shape is copular
+  // whenever the authored EN render leads with a definite article. Without
+  // inference the definite-article gate drops through and generates "A
+  // striker is aggressive" — a regression against the ~50 baselined EN
+  // divergences the 2026-07-18 fix pruned.
+  assert.equal(buildSentence("en", tplById("PLAYER_IS_AGGRESSIVE")), "The striker is aggressive.");
+  assert.equal(buildSentence("en", tplById("GUITAR_IS_LOUD")), "The guitar is loud.");
+  // Fitness templates authored "A muscle is sore" (generic reading) stay
+  // indefinite — the authored render is the author's declaration of intent.
+  assert.equal(buildSentence("en", tplById("MUSCLE_IS_SORE")), "A muscle is sore.");
+});
+
 test("plural-only subjects get plural copula and adjective agreement", () => {
   assert.equal(buildSentence("en", tplById("PANTS_ARE_BLACK")), "The pants are black.");
   assert.equal(buildSentence("uk", tplById("PANTS_ARE_BLACK")), "Штани чорні.");

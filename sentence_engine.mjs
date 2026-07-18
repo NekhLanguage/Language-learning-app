@@ -305,6 +305,31 @@ const DEFINITE_SUBJECT_STRUCTURES = new Set([
   "time_description",
 ]);
 
+// Templates in the franchise packs ship without the `structure` field, but
+// [noun-subject, BE, adjective] is structurally copular whenever the subject
+// picks out a specific referent ("The striker is aggressive"). Some packs
+// (fitness) instead author the same shape as a generic definition ("A muscle
+// is sore", "Protein is healthy") — the engine cannot distinguish those two
+// readings from concepts alone, so it reads the authored EN render as the
+// author's declaration of intent: a leading "The " means definite-subject
+// copular; anything else keeps the current indefinite/bare behavior. Only
+// fires when `structure` is absent, so explicit author intent (e.g.
+// time_description on SEASON_IS_ADJ) still wins unchanged.
+function effectiveStructureType(tpl) {
+  if (tpl?.structure?.type) return tpl.structure.type;
+  const concepts = tpl?.concepts;
+  if (!Array.isArray(concepts) || concepts.length !== 3) return undefined;
+  if (concepts[1] !== "BE") return undefined;
+  const subj = vocab().concepts?.[concepts[0]];
+  const pred = vocab().concepts?.[concepts[2]];
+  if (subj?.type !== "noun" || subj.person || pred?.type !== "adjective") {
+    return undefined;
+  }
+  const en = tpl?.render?.en;
+  if (typeof en === "string" && /^The\s/.test(en)) return "copular";
+  return undefined;
+}
+
 // English describes seasons bare ("Winter is cold"); the other article
 // languages keep the definite article («O inverno é frio»).
 const EN_BARE_SUBJECTS = new Set(["WINTER", "SUMMER", "SPRING", "AUTUMN"]);
@@ -1484,7 +1509,7 @@ if (tpl.structure?.type === "complex_clause") {
   const afterPosition = idx > 0 &&
     vocab().concepts[ordered[idx - 1]]?.type === "position";
   const subjectIsPersonal = !!vocab().concepts[subjectCid]?.person;
-  if (DEFINITE_SUBJECT_STRUCTURES.has(tpl.structure?.type) &&
+  if (DEFINITE_SUBJECT_STRUCTURES.has(effectiveStructureType(tpl)) &&
       (afterPosition || (cid === subjectCid && !subjectIsPersonal))) {
     return definiteNounPhrase(lang, cid);
   }
@@ -1775,7 +1800,7 @@ if (tpl.structure?.type === "complex_clause") {
     // «O dia é curto». (Time words are their own concept type, so the noun
     // branch above never sees them.)
     if (meta.type === "time" && cid === subjectCid &&
-        DEFINITE_SUBJECT_STRUCTURES.has(tpl.structure?.type)) {
+        DEFINITE_SUBJECT_STRUCTURES.has(effectiveStructureType(tpl))) {
       return definiteNounPhrase(lang, cid);
     }
 
