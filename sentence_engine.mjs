@@ -1184,6 +1184,89 @@ function copulaForm(lang, beCid, subjectCid) {
   }
   return getVerbForm(beCid, subjectCid, lang);
 }
+
+// Turkish suffixal copula (predicative -DIR): formal present-tense nominal
+// sentences carry a bound copular suffix on the predicate — "Kitap kırmızıdır"
+// ("The book is red"), "Sabah iyidir" ("Morning is good"), "Bu benim elimdir"
+// ("This is my hand"). The variant is picked by vowel harmony (last vowel of
+// the stem: a/ı → ı, e/i → i, o/u → u, ö/ü → ü) and consonant assimilation
+// (voiceless final consonant p/ç/t/k/f/s/ş/h → t-, otherwise d-). ZERO_PRESENT
+// _COPULA still drops the verb as a separate word — the suffix attaches
+// post-render to the last word of the sentence, so the copular still fires
+// noteRule("zero_copula") through copulaForm above and this pass is silent.
+const TR_BACK_UNROUNDED_VOWELS  = new Set(["a", "ı"]);
+const TR_BACK_ROUNDED_VOWELS    = new Set(["o", "u"]);
+const TR_FRONT_UNROUNDED_VOWELS = new Set(["e", "i"]);
+const TR_FRONT_ROUNDED_VOWELS   = new Set(["ö", "ü"]);
+const TR_VOWELS = new Set([
+  ...TR_BACK_UNROUNDED_VOWELS,
+  ...TR_BACK_ROUNDED_VOWELS,
+  ...TR_FRONT_UNROUNDED_VOWELS,
+  ...TR_FRONT_ROUNDED_VOWELS,
+]);
+const TR_VOICELESS_CONSONANTS = new Set(["p", "ç", "t", "k", "f", "s", "ş", "h"]);
+
+function turkishCopulaSuffix(word) {
+  const lower = word.toLowerCase();
+  let harmony = null;
+  for (let i = lower.length - 1; i >= 0; i--) {
+    const ch = lower[i];
+    if (!TR_VOWELS.has(ch)) continue;
+    if (TR_BACK_UNROUNDED_VOWELS.has(ch))       harmony = "ı";
+    else if (TR_BACK_ROUNDED_VOWELS.has(ch))    harmony = "u";
+    else if (TR_FRONT_UNROUNDED_VOWELS.has(ch)) harmony = "i";
+    else if (TR_FRONT_ROUNDED_VOWELS.has(ch))   harmony = "ü";
+    break;
+  }
+  if (!harmony) return word;
+  const initial = TR_VOICELESS_CONSONANTS.has(lower[lower.length - 1]) ? "t" : "d";
+  return word + initial + harmony + "r";
+}
+
+// Structures whose Turkish authored render does NOT carry the -DIR suffix.
+// AUTHORED_ONLY_STRUCTURES bypass the engine entirely (declared below). The
+// remaining exclusions:
+//   - spatial_relation / spatial_relation_complex — locative predicates
+//     ("Kitap bunun üstünde") sit unsuffixed;
+//   - complex_clause — coordinated / subordinate clauses drop the suffix
+//     ("Bu benim elim ve bu senin başın");
+//   - yes_no_question_copular — the question particle "mu" takes the
+//     tail slot instead ("Şu senin telefonun mu?");
+//   - copular_demonstrative — an adjective-modified indefinite noun predicate
+//     ("Bu iyi bir kitap") reads as introduction, not general truth.
+const TR_NON_DIR_STRUCTURES = new Set([
+  "spatial_relation", "spatial_relation_complex",
+  "complex_clause", "yes_no_question_copular",
+  "copular_demonstrative",
+]);
+
+function applyTurkishCopulaSuffix(lang, tpl, sentence) {
+  if (lang !== "tr" || !sentence) return sentence;
+  const concepts = tpl?.concepts;
+  if (!Array.isArray(concepts) || !concepts.includes("BE")) return sentence;
+  const structType = tpl?.structure?.type;
+  if (TR_NON_DIR_STRUCTURES.has(structType)) return sentence;
+  if (AUTHORED_ONLY_STRUCTURES.has(structType)) return sentence;
+  // First/second person subjects take -(y)Im / -sIn / -(y)Iz / -sInIz instead
+  // of -DIr ("Ben bir adamım", "Sen bir kızsın"). Those personal endings are
+  // out of scope here — leave the sentence alone so the personal templates
+  // stay in their existing (still-baselined) state.
+  const conceptTable = vocab().concepts || {};
+  const subjectCid = concepts.find(c => conceptTable[c]?.type === "pronoun") ||
+                     concepts[0];
+  const subjectPerson = conceptTable[subjectCid]?.person;
+  if (subjectPerson === "1" || subjectPerson === "2") return sentence;
+  // Peel any terminal punctuation, splice the suffix onto the last word, then
+  // re-attach — cleaner than a regex that has to know periods are non-whitespace.
+  const punctMatch = sentence.match(/[.?!]+$/);
+  const punct = punctMatch ? punctMatch[0] : "";
+  const body = punct ? sentence.slice(0, -punct.length) : sentence;
+  const spaceIdx = body.lastIndexOf(" ");
+  const lead = spaceIdx >= 0 ? body.slice(0, spaceIdx + 1) : "";
+  const lastWord = spaceIdx >= 0 ? body.slice(spaceIdx + 1) : body;
+  if (!lastWord) return sentence;
+  return lead + turkishCopulaSuffix(lastWord) + punct;
+}
 // All others (en, ja, ko, no, uk, de, el, tr) place adjective before noun
 
 // Numbers that take the kun-yomi generic counter つ in Japanese (ひとつ,
@@ -1328,10 +1411,11 @@ function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subo
 // (target + support pair), passing the same object to both calls keeps the
 // chosen adjective / number in sync so the sentences match in content.
 function buildSentence(lang, tpl, forcedConcept = null, sharedChoices = null) {
-  return finalizeSentence(
+  const finalized = finalizeSentence(
     lang,
     buildSentenceRaw(lang, tpl, forcedConcept, sharedChoices)
   );
+  return applyTurkishCopulaSuffix(lang, tpl, finalized);
 }
 
 // Fixed-form structures whose grammar the generator cannot synthesize:
