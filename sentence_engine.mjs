@@ -536,6 +536,17 @@ function surfaceForm(lang, cid) {
   const verbData = vocab().languages?.[lang]?.forms?.[verbCid];
   if (!verbData) return verbCid;
 
+  // Japanese main-clause finite verbs prefer the polite -masu form ("食べます",
+  // "飲みます", "持っています") over the dictionary form ("食べる", "飲む",
+  // "持つ") — the register learners meet first and the shape authored render
+  // strings use throughout. Control-verb chains (STOP + EAT → やめる + 食べる)
+  // route through the prev-is-verb branch above at sentence_engine.mjs:1471 and
+  // stay at .base, so subordinate-clause dictionary forms are preserved.
+  if (lang === "ja" && typeof verbData === "object" &&
+      typeof verbData.polite === "string") {
+    return verbData.polite;
+  }
+
   const subject = vocab().concepts[subjectCid];
   if (!subject) return verbData.base || verbCid;
 

@@ -482,43 +482,56 @@
       "年"
     ],
     "EAT": {
-      "base": "食べる"
+      "base": "食べる",
+      "polite": "食べます"
     },
     "DRINK": {
-      "base": "飲む"
+      "base": "飲む",
+      "polite": "飲みます"
     },
     "READ": {
-      "base": "読む"
+      "base": "読む",
+      "polite": "読みます"
     },
     "SEE": {
-      "base": "見る"
+      "base": "見る",
+      "polite": "見ます"
     },
     "SLEEP": {
-      "base": "寝る"
+      "base": "寝る",
+      "polite": "寝ます"
     },
     "HAVE": {
-      "base": "持つ"
+      "base": "持つ",
+      "polite": "持っています"
     },
     "DO": {
-      "base": "する"
+      "base": "する",
+      "polite": "します"
     },
     "GO": {
-      "base": "行く"
+      "base": "行く",
+      "polite": "行きます"
     },
     "START": {
-      "base": "始める"
+      "base": "始める",
+      "polite": "始めます"
     },
     "STOP": {
-      "base": "止める"
+      "base": "止める",
+      "polite": "止めます"
     },
     "COME": {
-      "base": "来る"
+      "base": "来る",
+      "polite": "来ます"
     },
     "USE": {
-      "base": "使う"
+      "base": "使う",
+      "polite": "使います"
     },
     "GET": {
-      "base": "得る"
+      "base": "得る",
+      "polite": "得ます"
     },
     "BE": {
       "base": "だ",
