@@ -206,7 +206,21 @@ test("plural-only subjects get plural copula and adjective agreement", () => {
 
 test("CJK sentences join without spaces and end with a full-width stop", () => {
   assert.equal(buildSentence("zh", tplById("I_EAT_FOOD")), "我吃食物。");
-  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "わたしは食べ物を食べる。");
+  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "私は食べ物を食べる。");
+});
+
+test("Japanese noun-subject copular sentences take the topic marker は", () => {
+  // Non-pronoun subject in an X_IS_ADJ sentence: the engine previously left
+  // the subject unmarked ("本赤いです"), missing the topic particle every
+  // authored render carries. Both structure.type "copular" (BOOK_IS_RED)
+  // and structure.type "time_description" (AUTUMN_IS_OLD) are covered.
+  assert.equal(buildSentence("ja", tplById("BOOK_IS_RED")), "本は赤いです。");
+  assert.equal(buildSentence("ja", tplById("PANTS_ARE_BLACK")), "ズボンは黒いです。");
+  assert.equal(buildSentence("ja", tplById("AUTUMN_IS_OLD")), "秋は古いです。");
+  assert.equal(buildSentence("ja", tplById("NIGHT_IS_DARK")), "夜は暗いです。");
+  // Pronoun subjects still get は via the existing pronoun-based path —
+  // the new branch only fires when no pronoun is present.
+  assert.equal(buildSentence("ja", tplById("I_AM_MAN")), "私は男です。");
 });
 
 test("attributive modifiers agree with the noun and absorb its article", () => {

@@ -1950,7 +1950,21 @@ if (tpl.structure?.type === "complex_clause") {
 
     // Insert in reverse index order so earlier splices don't shift later indices
     const insertions = [];
-    if (pronounIndex !== -1) insertions.push({ idx: pronounIndex + 1, particle: "は" });
+    if (pronounIndex !== -1) {
+      insertions.push({ idx: pronounIndex + 1, particle: "は" });
+    } else if (subjectCid &&
+               ["copular", "time_description"].includes(tpl.structure?.type) &&
+               ["noun", "time"].includes(vocab().concepts[subjectCid]?.type)) {
+      // Non-pronoun subject in an X_IS_ADJ copular sentence ("book is red",
+      // "autumn is old"): attach the topic marker after the subject —
+      // "本は赤いです。", "秋は古いです。". Restricted to the two structure
+      // types that are structurally X_IS_ADJ (copular for BOOK_IS_RED etc.,
+      // time_description for SEASON/DAY_IS_ADJ) so spatial_relation /
+      // copular_demonstrative / yes_no_question_copular (all currently
+      // baselined and structurally broken) are left alone.
+      const subjIdx = ordered.indexOf(subjectCid);
+      if (subjIdx !== -1) insertions.push({ idx: subjIdx + 1, particle: "は" });
+    }
     // Copular templates ("X is Y") never take を — the predicate noun sits
     // directly before the copula です/だ. Inserting を produces ungrammatical
     // strings like "彼らは隣人をです". Non-copular SVO templates ("X eats Y")
