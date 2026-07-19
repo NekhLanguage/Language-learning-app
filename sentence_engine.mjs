@@ -397,7 +397,9 @@ function definiteNounPhrase(lang, cid) {
 }
 
 // Languages whose nounPhrase adds an indefinite article (the branches below).
-const ARTICLE_LANGS = new Set(["en", "pt", "no", "de", "el", "es", "fr", "it"]);
+// tr's "bir" is invariant (no gender/harmony), which makes the shape identical
+// to the other article languages even though Turkish has no definite article.
+const ARTICLE_LANGS = new Set(["en", "pt", "no", "de", "el", "es", "fr", "it", "tr"]);
 
 // Italian article allomorphy is phonological: masculine takes lo/gli/uno
 // before s+consonant, z, gn, ps, pn, x, y («lo zaino», «gli gnocchi»,
@@ -517,6 +519,16 @@ function nounPhrase(lang, cid, opts = {}) {
       return IT_VOWEL_INITIAL.test(base) ? "un'" + base : "una " + base;
     }
     return (IT_LO_INITIAL.test(base) ? "uno " : "un ") + base;
+  }
+
+  if (lang === "tr") {
+    // "bir" is Turkish's only indefinite article — invariant, always
+    // prenominal. Attaches to any countable noun that reaches this branch
+    // (direct objects, predicate nouns after a personal pronoun subject).
+    // Definite-subject structures, mass nouns, pluralOnly and noArticle
+    // entries all short-circuit above, so a plain "bir X" here is safe.
+    noteRule("indefinite_article");
+    return "bir " + base;
   }
 
   return base;

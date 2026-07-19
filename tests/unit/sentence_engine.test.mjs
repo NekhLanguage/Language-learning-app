@@ -243,6 +243,32 @@ test("Italian possessives take the definite article", () => {
   assert.equal(buildSentence("it", tplById("IS_THAT_YOUR_PHONE")), "È quello il tuo telefono?");
 });
 
+test("Turkish indefinite article \"bir\" attaches to direct objects and predicate nouns", () => {
+  // "bir" is Turkish's only indefinite article — invariant (no gender or
+  // harmony) and always immediately prenominal. It attaches to countable
+  // direct objects of a non-copula verb and to predicate nouns in copular
+  // sentences with a personal subject; definite-subject copulars keep the
+  // noun bare (Turkish has no definite article).
+  assert.equal(buildSentence("tr", tplById("HE_READ_BOOK")), "O bir kitap okur.");
+  assert.equal(buildSentence("tr", tplById("I_USE_PHONE")), "Ben bir telefon kullanırım.");
+  assert.equal(buildSentence("tr", tplById("SHE_SEES_ROOM")), "O bir oda görür.");
+  assert.equal(buildSentence("tr", tplById("I_SEE_HOUSE")), "Ben bir ev görürüm.");
+  // Definite-subject copulars stay bare — no "bir" on the subject noun, no
+  // definite article either. The -DIR suffix that ends the authored render
+  // is a separate rule class handled by applyTurkishCopulaSuffix.
+  assert.equal(buildSentence("tr", tplById("BOOK_IS_RED")), "Kitap kırmızı.");
+  // Meal nouns stay bare in compound-verb constructions
+  // ("kahvaltı yapmak" = "to have breakfast"). Marked noArticle in tr forms.
+  assert.equal(buildSentence("tr", tplById("WE_EAT_LUNCH")), "Biz öğle yemeği yeriz.");
+  assert.equal(buildSentence("tr", tplById("THEY_EAT_DINNER")), "Onlar akşam yemeği yerler.");
+  // Authored surface overrides survive the article gate — HOME is authored
+  // as "eve" (dative-marked "ev") in I_GO_HOME; the containment check
+  // ("eve" ⊇ "ev") preserves it after the article-language switch.
+  assert.equal(buildSentence("tr", tplById("I_GO_HOME")), "Ben eve giderim.");
+  // Mass nouns never take an article ("Ben yemek yerim", not "Ben bir yemek yerim").
+  assert.equal(buildSentence("tr", tplById("I_EAT_FOOD")), "Ben yemek yerim.");
+});
+
 test("trailing subordinate clauses put the main clause first", () => {
   // Cross-language fix surfaced by the Italian systems test: the BECAUSE
   // clause used to lead ("He is home because he eats dinner...").

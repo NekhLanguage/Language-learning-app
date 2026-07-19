@@ -225,13 +225,13 @@
       "form": "su"
     },
     "FOOD": {
-      "form": "yiyecek"
+      "form": "yemek"
     },
     "HOUSE": {
       "form": "ev"
     },
     "HOME": {
-      "form": "yuva"
+      "form": "ev"
     },
     "BOOK": {
       "form": "kitap"
@@ -303,13 +303,16 @@
       "form": "yüz"
     },
     "BREAKFAST": {
-      "form": "kahvaltı"
+      "form": "kahvaltı",
+      "noArticle": true
     },
     "LUNCH": {
-      "form": "öğle yemeği"
+      "form": "öğle yemeği",
+      "noArticle": true
     },
     "DINNER": {
-      "form": "akşam yemeği"
+      "form": "akşam yemeği",
+      "noArticle": true
     },
     "CLOTHES": {
       "form": "kıyafet"
