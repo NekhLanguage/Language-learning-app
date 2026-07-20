@@ -927,8 +927,14 @@ function buildSameTypeOptions(targetConcept, desiredTotal = 4, targetLang = null
 
   return shuffle([targetConcept, ...shuffle(pool).slice(0, desiredTotal - 1)]);
 }
-function capitalizeFirst(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+function capitalizeFirst(str, lang) {
+  // Turkish needs locale-aware uppercasing so a leading lowercase "i" (U+0069)
+  // becomes dotted "İ" (U+0130), not the dotless "I" (U+0049) the default path
+  // produces — e.g. "ilkbahar" → "İlkbahar", "iş" → "İş".
+  const first = lang === "tr"
+    ? str.charAt(0).toLocaleUpperCase("tr")
+    : str.charAt(0).toUpperCase();
+  return first + str.slice(1);
 }
 
 // Thai writes without spaces between words — joins are spaceless there.
@@ -937,8 +943,8 @@ function joinWords(lang, words) {
   return words.filter(Boolean).join(SPACELESS_JOIN_LANGS.has(lang) ? "" : " ");
 }
 
-function joinSentence(words, punctuation = ".") {
-  return capitalizeFirst(words.filter(Boolean).join(" ")) + punctuation;
+function joinSentence(words, punctuation = ".", lang) {
+  return capitalizeFirst(words.filter(Boolean).join(" "), lang) + punctuation;
 }
 
 // French obligatory elision/contraction, applied as a final pass to an assembled
@@ -1236,7 +1242,7 @@ function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCi
   const plural = isPluralPronoun(subjectCid);
   const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid, { plural });
   if (lang === "th") return joinWords(lang, [subject, be, complement]) + ".";
-  return joinSentence([subject, be, complement]);
+  return joinSentence([subject, be, complement], ".", lang);
 }
 
 function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
@@ -1257,7 +1263,7 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   const words = (lang === "pt" || lang === "es")
     ? [subject, be, complement]
     : [be, subject, complement];
-  return capitalizeFirst(words.filter(Boolean).join(" ") + "?");
+  return capitalizeFirst(words.filter(Boolean).join(" ") + "?", lang);
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = formOf(lang, subjectCid);
@@ -1316,12 +1322,12 @@ function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subo
   }
 
   if (subordinateFirst) {
-    return capitalizeFirst(`${linker} ${subClause}, ${mainClause}.`);
+    return capitalizeFirst(`${linker} ${subClause}, ${mainClause}.`, lang);
   }
 
   // Trailing subordinate clause: the MAIN clause leads ("He eats dinner
   // with his mom because he is home"), the linker + subordinate follow.
-  return capitalizeFirst(`${mainClause} ${linker} ${subClause}.`);
+  return capitalizeFirst(`${mainClause} ${linker} ${subClause}.`, lang);
 }
 // `sharedChoices` (optional) is a per-noun cache of randomly-injected
 // modifiers, keyed by noun cid. When two languages render the same template
@@ -1969,8 +1975,10 @@ if (tpl.structure?.type === "complex_clause") {
     return wordsWithParticles.join("");
   }
 
-  let sentence = joinWords(lang, words.filter(w => w !== "" && w != null));
-  sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+  const sentence = capitalizeFirst(
+    joinWords(lang, words.filter(w => w !== "" && w != null)),
+    lang
+  );
   return sentence + ".";
 }
 

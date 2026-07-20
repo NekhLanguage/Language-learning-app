@@ -350,3 +350,13 @@ test("every core template renders a non-empty English sentence", () => {
     assert.ok(s && s.trim().length > 0, `${tpl.template_id} rendered empty`);
   }
 });
+
+test("Turkish leading lowercase 'i' capitalizes to dotted İ (U+0130), not I", () => {
+  // Turkish's dotted/dotless i distinction: default toUpperCase() maps "i" to
+  // "I" (U+0049), but Turkish orthography requires "İ" (U+0130). Locale-aware
+  // uppercasing is the fix — this test pins the sentence-initial path where
+  // SPRING_IS_NEW's "ilkbahar" would otherwise capitalize as "Ilkbahar".
+  const s = buildSentence("tr", tplById("SPRING_IS_NEW"));
+  assert.equal(s.charCodeAt(0), 0x130, `expected İ (U+0130), got "${s[0]}" (U+${s.charCodeAt(0).toString(16)})`);
+  assert.ok(s.startsWith("İlkbahar"), `expected "İlkbahar…", got "${s}"`);
+});
