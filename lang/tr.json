@@ -228,34 +228,43 @@
       "form": "yiyecek"
     },
     "HOUSE": {
-      "form": "ev"
+      "form": "ev",
+      "accusative": "evi"
     },
     "HOME": {
       "form": "yuva"
     },
     "BOOK": {
-      "form": "kitap"
+      "form": "kitap",
+      "accusative": "kitabı"
     },
     "THING": {
-      "form": "şey"
+      "form": "şey",
+      "accusative": "şeyi"
     },
     "JOB": {
-      "form": "iş"
+      "form": "iş",
+      "accusative": "işi"
     },
     "ROOM": {
-      "form": "oda"
+      "form": "oda",
+      "accusative": "odayı"
     },
     "BOY": {
-      "form": "erkek çocuk"
+      "form": "erkek çocuk",
+      "accusative": "erkek çocuğu"
     },
     "GIRL": {
-      "form": "kız"
+      "form": "kız",
+      "accusative": "kızı"
     },
     "MAN": {
-      "form": "adam"
+      "form": "adam",
+      "accusative": "adamı"
     },
     "WOMAN": {
-      "form": "kadın"
+      "form": "kadın",
+      "accusative": "kadını"
     },
     "MOM": {
       "form": "anne"
@@ -276,16 +285,20 @@
       "form": "kız kardeş"
     },
     "HEAD": {
-      "form": "kafa"
+      "form": "kafa",
+      "accusative": "kafayı"
     },
     "ARM": {
-      "form": "kol"
+      "form": "kol",
+      "accusative": "kolu"
     },
     "HAND": {
-      "form": "el"
+      "form": "el",
+      "accusative": "eli"
     },
     "LEG": {
-      "form": "bacak"
+      "form": "bacak",
+      "accusative": "bacağı"
     },
     "FOOT": {
       "form": "ayak"
@@ -303,25 +316,31 @@
       "form": "yüz"
     },
     "BREAKFAST": {
-      "form": "kahvaltı"
+      "form": "kahvaltı",
+      "accusative": "kahvaltıyı"
     },
     "LUNCH": {
-      "form": "öğle yemeği"
+      "form": "öğle yemeği",
+      "accusative": "öğle yemeğini"
     },
     "DINNER": {
-      "form": "akşam yemeği"
+      "form": "akşam yemeği",
+      "accusative": "akşam yemeğini"
     },
     "CLOTHES": {
-      "form": "kıyafet"
+      "form": "kıyafet",
+      "accusative": "kıyafeti"
     },
     "SHIRT": {
-      "form": "gömlek"
+      "form": "gömlek",
+      "accusative": "gömleği"
     },
     "SHOES": {
       "form": "ayakkabı"
     },
     "PHONE": {
-      "form": "telefon"
+      "form": "telefon",
+      "accusative": "telefonu"
     },
     "PANTS": {
       "form": "pantolon"
@@ -436,9 +455,10 @@
       "başka",
       "bir başka"
     ],
-    "SOMETHING": [
-      "bir şey"
-    ],
+    "SOMETHING": {
+      "form": "bir şey",
+      "accusative": "bir şeyi"
+    },
     "WHO": [
       "kim"
     ],
@@ -635,9 +655,18 @@
     "WRONG": ["yanlış"],
     "COLD": ["soğuk"],
     "NICE": ["güzel"],
-    "THIS": ["bu"],
-    "THAT": ["şu"],
-    "IT": ["o"],
+    "THIS": {
+      "form": "bu",
+      "accusative": "bunu"
+    },
+    "THAT": {
+      "form": "şu",
+      "accusative": "şunu"
+    },
+    "IT": {
+      "form": "o",
+      "accusative": "onu"
+    },
     "ITS": ["onun"],
     "MINE": ["benim"],
     "YOURS": ["senin"],
@@ -656,7 +685,10 @@
     "SUMMER": ["yaz"],
     "AUTUMN": ["sonbahar"],
     "WINTER": ["kış"],
-    "ALL": ["tüm"],
+    "ALL": {
+      "form": "tüm",
+      "accusative": "hepsini"
+    },
     "AROUND": ["etrafında"],
     "THANKS": ["teşekkürler"],
     "MAY": { "base": "olabilir" }

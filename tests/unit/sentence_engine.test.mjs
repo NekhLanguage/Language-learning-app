@@ -350,3 +350,62 @@ test("every core template renders a non-empty English sentence", () => {
     assert.ok(s && s.trim().length > 0, `${tpl.template_id} rendered empty`);
   }
 });
+
+test("Turkish accusative fires on definite direct objects", () => {
+  // Nouns with a definiteness signal in the template (ONLY, ALL,
+  // THIS/THAT/IT, possessive) surface in the accusative. All four target
+  // templates use the data-first `accusative` field.
+  assert.equal(
+    buildSentence("tr", tplById("I_READ_ONLY_BOOK")),
+    "Ben sadece kitabı okurum.",
+    "ONLY + BOOK: kitap → kitabı (p→b, -ı)"
+  );
+  assert.equal(
+    buildSentence("tr", tplById("WE_EAT_ALL")),
+    "Biz hepsini yeriz.",
+    "ALL as object: hep → hepsini (frozen possessive form)"
+  );
+  assert.equal(
+    buildSentence("tr", tplById("WE_STOP_EATING")),
+    "Biz yemeyi bırakırız.",
+    "control-verb chain: EAT nominalized to yemeyi + STOP surface"
+  );
+});
+
+test("Turkish demonstrative-object accusative + bonus close on I_EAT_BREAKFAST", () => {
+  // THIS in object position renders bunu; the by-hand prep-object HAND
+  // stays bare (instrumental case is out of scope) so I_DO_THIS_BY_HAND
+  // is a half-ship — accusative half is correct.
+  const s = buildSentence("tr", tplById("I_DO_THIS_BY_HAND"));
+  assert.ok(s.includes("bunu"), `THIS → bunu; got ${JSON.stringify(s)}`);
+  assert.ok(!s.includes(" eli "), `HAND stays bare (prep-object), not accusative; got ${JSON.stringify(s)}`);
+  // I_EAT_BREAKFAST closes as a bonus via the new tr main-verb surface
+  // path (kahvaltı yapmak, not yemek).
+  assert.equal(
+    buildSentence("tr", tplById("I_EAT_BREAKFAST")),
+    "Ben kahvaltı yaparım.",
+    "tr surface override on main verb: EAT → yaparım"
+  );
+});
+
+test("Turkish indefinite direct objects stay bare (accusative gates on definiteness)", () => {
+  // Without a definiteness signal, the object is indefinite — bare on
+  // main HEAD (the `bir` article ship covers the countable-indefinite
+  // article separately). These stay baselined until `bir` merges.
+  const heRead = buildSentence("tr", tplById("HE_READ_BOOK"));
+  assert.ok(heRead.includes("kitap") && !heRead.includes("kitabı"),
+    `HE_READ_BOOK stays indefinite; got ${JSON.stringify(heRead)}`);
+  const sheSees = buildSentence("tr", tplById("SHE_SEES_PHONE"));
+  assert.ok(sheSees.includes("telefon") && !sheSees.includes("telefonu"),
+    `SHE_SEES_PHONE stays indefinite; got ${JSON.stringify(sheSees)}`);
+});
+
+test("Turkish accusative does not fire in copular templates or on subjects", () => {
+  // THIS_IS_MY_HAND has THIS + possessive (both definiteness signals) but
+  // no non-copular verb — the trTemplateHasActionVerb gate must keep HAND
+  // out of the accusative branch. Predicate form is possessive "elim",
+  // not accusative "eli".
+  const s = buildSentence("tr", tplById("THIS_IS_MY_HAND"));
+  assert.ok(!/\beli\b/.test(s),
+    `copular predicate stays out of accusative; got ${JSON.stringify(s)}`);
+});

@@ -1898,6 +1898,9 @@
     {
       "template_id": "WE_STOP_EATING",
       "concepts": ["FIRST_PERSON_PLURAL", "STOP", "EAT"],
+      "order": {
+        "tr": ["FIRST_PERSON_PLURAL", "EAT", "STOP"]
+      },
       "render": {
         "en": "We stop eating.",
         "pt": "Nós paramos de comer.",
@@ -6552,6 +6555,9 @@
     {
       "template_id": "I_READ_ONLY_BOOK",
       "concepts": ["FIRST_PERSON_SINGULAR", "READ", "ONLY", "BOOK"],
+      "order": {
+        "tr": ["FIRST_PERSON_SINGULAR", "ONLY", "BOOK", "READ"]
+      },
       "structure": {
         "type": "quantifier"
       },

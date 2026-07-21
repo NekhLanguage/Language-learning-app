@@ -233,6 +233,87 @@ function ukAccusativeNoun(cid, base) {
   return base;
 }
 
+// Turkish marks DEFINITE direct objects with accusative case: «Ben sadece
+// kitabı okurum» ("I read only THE book"), «Biz hepsini yeriz» ("we eat all
+// of it"). The morphology has three interacting rules: (1) 4-way vowel
+// harmony -I/-i/-u/-ü on the last stem vowel; (2) intervocalic softening of
+// final voiceless stops (p→b, ç→c, t→d, k→ğ) in multisyllabic native words
+// (monosyllabic natives and many loanwords don't soften); (3) buffer -y- on
+// vowel-final stems, -n- on pronouns/demonstratives and possessive-suffixed
+// nouns. Because the softening exceptions are lexical, this ship is
+// data-first: an explicit `accusative` field in the vocab data always wins;
+// no auto-suffix fallback is applied for the current template set.
+function trAccusativeForm(cid) {
+  const entry = vocab().languages?.tr?.forms?.[cid];
+  if (!entry) return null;
+  if (Array.isArray(entry) || typeof entry !== "object") return null;
+  return typeof entry.accusative === "string" ? entry.accusative : null;
+}
+function trAccusativeNoun(cid, base) {
+  const explicit = trAccusativeForm(cid);
+  return explicit || base;
+}
+
+// Turkish accusative gates on DEFINITENESS (not on the noun itself — the
+// language marks the OBJECT's definiteness, unlike article languages that
+// mark it on the noun with the/a). Templates whose object carries an
+// explicit definiteness signal — a limiting quantifier ONLY, universal ALL,
+// a demonstrative THIS/THAT/IT, or a possessive modifier — surface their
+// object in the accusative. Templates without such a signal treat the
+// object as indefinite and leave it bare (the `bir` article ship covers
+// the countable-indefinite case separately). Detection is at the template
+// level: a signal anywhere in the concept array flags every non-subject
+// nominal as a definite-object candidate. Copular templates (X BE Y) are
+// gated out — the accusative is for verb objects, not predicate nouns.
+const TR_DEFINITENESS_SIGNAL_CIDS = new Set([
+  "THIS", "THAT", "IT", "ONLY", "ALL",
+]);
+function trTemplateHasDefinitenessSignal(tpl) {
+  if (tpl?.definite === true) return true;
+  const concepts = Array.isArray(tpl?.concepts) ? tpl.concepts : [];
+  for (const cid of concepts) {
+    if (TR_DEFINITENESS_SIGNAL_CIDS.has(cid)) return true;
+    const m = vocab().concepts?.[cid];
+    if (m?.semantic_role === "possessive") return true;
+  }
+  return false;
+}
+function trTemplateHasActionVerb(tpl) {
+  const concepts = Array.isArray(tpl?.concepts) ? tpl.concepts : [];
+  return concepts.some(cid => {
+    const m = vocab().concepts?.[cid];
+    return m?.type === "verb" && !isCopulaConcept(cid);
+  });
+}
+
+// A nominal that follows a glue/preposition or position word in the
+// template's authored concept array is that preposition's object — not
+// a direct object of the verb. `I_DO_THIS_BY_HAND` has [SUBJ, DO, THIS,
+// BY, HAND] — HAND is the object of BY (an instrumental means-phrase),
+// not the direct object of DO. Prep-objects don't take accusative;
+// they take a different case (instrumental, dative, ablative — out of
+// scope for this ship). Walks backward past nominal modifiers to find
+// the true preceding non-modifier.
+function trIsPrepGoverned(tpl, cid) {
+  const concepts = Array.isArray(tpl?.concepts) ? tpl.concepts : [];
+  const idx = concepts.indexOf(cid);
+  if (idx <= 0) return false;
+  let j = idx - 1;
+  while (j >= 0) {
+    const m = vocab().concepts?.[concepts[j]];
+    if (m?.semantic_role === "possessive" ||
+        m?.type === "adjective" || m?.type === "quantifier" ||
+        m?.type === "number") {
+      j--;
+      continue;
+    }
+    break;
+  }
+  if (j < 0) return false;
+  const prevMeta = vocab().concepts?.[concepts[j]];
+  return prevMeta?.type === "glue" || prevMeta?.type === "position";
+}
+
 // A noun at ordered[idx] is a direct object when the nearest preceding
 // concept — skipping the noun's own modifiers (possessive, adjective,
 // quantifier, number: «я маю мою книгу», «я читаю лише книгу») — is a
@@ -420,6 +501,14 @@ function nounPhrase(lang, cid, opts = {}) {
   let base = entry.form || formOf(lang, cid);
   if (lang === "uk" && opts.directObject && !opts.plural && !entry.pluralOnly) {
     const acc = ukAccusativeNoun(cid, base);
+    if (acc !== base) {
+      noteRule("accusative_object");
+      base = acc;
+    }
+  }
+  if (lang === "tr" && opts.directObject && opts.definite &&
+      !opts.plural && !entry.pluralOnly) {
+    const acc = trAccusativeNoun(cid, base);
     if (acc !== base) {
       noteRule("accusative_object");
       base = acc;
@@ -1485,6 +1574,20 @@ if (tpl.structure?.type === "complex_clause") {
         const override = copulaOverride(lang, cid, ordered[idx + 1], subjectCid);
         return override !== null ? override : copulaForm(lang, cid, subjectCid);
       }
+      // Turkish main-verb per-template surface override — needed for
+      // control-verb constructions where SOV ordering puts the non-finite
+      // complement FIRST and the finite verb LAST (Biz yemeyi bırakırız),
+      // so the finite verb is not preceded by another verb and the
+      // control-verb branch above doesn't fire on it. Also covers per-
+      // template lexical swaps (kahvaltı YAPMAK "have breakfast" rather
+      // than YEMEK "eat"). Only fires when a surface value is authored;
+      // when it matches getVerbForm the effect is a no-op.
+      if (lang === "tr") {
+        const surfaceOverride = tpl.surface?.[lang]?.[cid];
+        if (typeof surfaceOverride === "string" && surfaceOverride.length > 0) {
+          return surfaceOverride;
+        }
+      }
       return getVerbForm(cid, subjectCid, lang);
     }
 
@@ -1565,6 +1668,18 @@ if (tpl.structure?.type === "complex_clause") {
       possessedForm = acc;
     }
   }
+  // Turkish possessed direct objects take the accusative too — data-first
+  // via the `accusative` field, no auto-suffix. Currently no in-scope
+  // template hits this branch (the four target templates use bare demonstrative
+  // or quantifier objects), but the routing keeps the possessive path
+  // symmetric with the uk shape.
+  if (lang === "tr" && isObject && bareDetermined && !pluralAgreement) {
+    const acc = trAccusativeForm(cid);
+    if (acc) {
+      noteRule("accusative_object");
+      possessedForm = acc;
+    }
+  }
   // Thai possessors follow the noun: มือของฉัน ("hand of-me") — the
   // possessive word (ของฉัน) attaches after the possessed noun, and its
   // own ordered-walk slot renders empty. "Another" postposes with the
@@ -1577,9 +1692,24 @@ if (tpl.structure?.type === "complex_clause") {
     const clf = vocab().languages?.th?.forms?.[cid]?.classifier || "อัน";
     return possessedForm + formOf(lang, ordered[idx - 1]) + clf;
   }
+  // Turkish definite-object detection is template-level, not modifier-chain.
+  // A definiteness signal like ONLY can sit anywhere in the concept array,
+  // not always immediately before the noun, and SOV word order means the
+  // verb follows the object — so isDirectObjectPosition (which walks
+  // backward for a preceding verb) misses SOV object slots entirely.
+  // Instead: fire on any non-subject noun when the template carries a
+  // non-copular action verb AND a definiteness signal. That leaves subject
+  // nouns and predicate-copular nouns bare (they never take accusative).
+  const trDefiniteObject = lang === "tr" && cid !== subjectCid &&
+    trTemplateHasDefinitenessSignal(tpl) && trTemplateHasActionVerb(tpl) &&
+    !trIsPrepGoverned(tpl, cid);
   let phrase = bareDetermined
     ? possessedForm
-    : nounPhrase(lang, cid, { plural: useCopularPlural, directObject: isObject });
+    : nounPhrase(lang, cid, {
+        plural: useCopularPlural,
+        directObject: isObject || trDefiniteObject,
+        definite: trDefiniteObject
+      });
   // When the noun was rendered as plural via copular agreement, the bare
   // form used by the modifier branches below also needs to be plural so
   // adjective insertion produces "small leaders" not "small leader".
@@ -1793,6 +1923,25 @@ if (tpl.structure?.type === "complex_clause") {
       const prevCid = ordered[idx - 1];
       if (vocab().concepts[prevCid]?.type === "position") {
         return formOf(lang, cid) + " one";
+      }
+    }
+
+    // Turkish accusative on non-noun direct objects — demonstratives
+    // THIS/THAT/IT and standalone quantifiers ALL. Nouns route through
+    // nounPhrase (which fires its own tr accusative branch above); these
+    // fall through to surfaceForm and never see nounPhrase, so the shift
+    // has to happen here. Gated on the same template-level definiteness
+    // signal + non-copular action verb as the noun path, plus the concept
+    // not being the subject.
+    if (lang === "tr" && cid !== subjectCid &&
+        (meta.type === "pronoun" || meta.type === "quantifier") &&
+        trTemplateHasActionVerb(tpl) &&
+        trTemplateHasDefinitenessSignal(tpl) &&
+        !trIsPrepGoverned(tpl, cid)) {
+      const acc = trAccusativeForm(cid);
+      if (acc) {
+        noteRule("accusative_object");
+        return acc;
       }
     }
 
