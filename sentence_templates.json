@@ -492,6 +492,7 @@
     {
       "template_id": "WE_HAVE_JOB",
       "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "JOB"],
+      "tr": {"insertBir": true},
       "render": {
         "en": "We have a job.",
         "pt": "Nós temos um trabalho.",
@@ -3160,6 +3161,7 @@
     {
       "template_id": "I_HAVE_SHIRT",
       "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SHIRT"],
+      "tr": {"insertBir": true},
       "render": {
         "en": "I have a shirt.",
         "pt": "Eu tenho uma camisa.",

@@ -43,6 +43,8 @@ export const GRAMMAR_RULE_IDS = [
   "accusative_object",       // uk direct objects take the accusative ending
   "prepositional_case",      // uk prepositions govern the noun's case ending
   "definite_article",        // the/o/der/… for a described noun subject
+  "genitive_possessor",      // tr possessor takes the genitive case (benim, bizim, onun)
+  "have_existential",        // tr HAVE = genitive-possessor + possessed-noun + var
 ];
 
 let firedRules = null;
@@ -231,6 +233,86 @@ function ukAccusativeNoun(cid, base) {
   if (typeof entry.accusative === "string") return entry.accusative;
   if (entry.gender === "f") return ukFeminineAccusative(base);
   return base;
+}
+
+// --- Turkish HAVE existential possession ------------------------------------
+// Turkish has no direct verb "to have"; possession is expressed with an
+// existential clause: [POSSESSOR-GEN] [bir?] [POSSESSED-with-possessive-suffix]
+// var. Three sub-rules interact — genitive on the possessor pronoun, matching
+// possessive suffix on the possessed noun (with consonant assimilation and
+// vowel harmony), and optional `bir` when the possessed is grammatically
+// singular. This route bypasses the standard word-loop for tr HAVE templates
+// entirely.
+
+// Possessor pronoun in the genitive case («ben» → «benim»). Data-first: reads
+// entry.genitive from lang/tr.json; falls back to the nominative surface so a
+// missing-data bug fails visibly rather than silently.
+function trGenitivePronoun(cid) {
+  const entry = vocab().languages?.tr?.forms?.[cid];
+  if (entry && typeof entry === "object" && !Array.isArray(entry) &&
+      typeof entry.genitive === "string") {
+    noteRule("genitive_possessor");
+    return entry.genitive;
+  }
+  return formOf("tr", cid);
+}
+
+// The possessed noun bearing the person/number-matching possessive suffix
+// («iş» + 1pl → «işimiz»; «gömlek» + 1sg → «gömleğim»). Data-first — each
+// in-scope noun stores its 6 possessed surfaces explicitly to sidestep the
+// consonant-assimilation + vowel-harmony + portmanteau -lArI minefield. Falls
+// back to the bare form when no data exists so the failure mode is visible.
+function trPossessedForm(cid, personKey) {
+  const entry = vocab().languages?.tr?.forms?.[cid];
+  if (entry && typeof entry === "object" && !Array.isArray(entry) &&
+      entry.possessed && typeof entry.possessed[personKey] === "string") {
+    return entry.possessed[personKey];
+  }
+  return formOf("tr", cid);
+}
+
+// Maps a subject pronoun concept to the possessive-suffix key used in the
+// noun's `possessed` map. HE/SHE/IT all collapse to 3s (Turkish has no
+// grammatical gender).
+const TR_POSSESSOR_KEY = {
+  FIRST_PERSON_SINGULAR: "1s",
+  SECOND_PERSON: "2s",
+  HE: "3s", SHE: "3s", IT: "3s",
+  FIRST_PERSON_PLURAL: "1p",
+  SECOND_PERSON_PLURAL: "2p",
+  THIRD_PERSON_PLURAL: "3p",
+};
+
+// True when the template expresses HAVE — every HAVE template in the current
+// catalog is existential possession (no metaphorical uses), so the concept
+// membership check alone is sufficient.
+function trIsHaveTemplate(tpl) {
+  return Array.isArray(tpl?.concepts) && tpl.concepts.includes("HAVE");
+}
+
+// Assembles the full tr HAVE sentence, bypassing the standard clause builder.
+// Emits: capitalize(genitive) + (bir?) + possessed-noun + " var" + finalizer.
+// `bir` is inserted when the template carries an explicit `tr.insertBir` flag
+// — safer than a substring heuristic on the possessed surface as HAVE
+// templates proliferate.
+function buildTrHavePossession(tpl) {
+  const concepts = tpl?.concepts || [];
+  const subjectCid = concepts.find(c => TR_POSSESSOR_KEY[c]);
+  const objectCid = concepts.find(c =>
+    vocab().concepts?.[c]?.type === "noun"
+  );
+  if (!subjectCid || !objectCid) return null;
+
+  const personKey = TR_POSSESSOR_KEY[subjectCid];
+  const possessor = trGenitivePronoun(subjectCid);
+  const possessed = trPossessedForm(objectCid, personKey);
+  const insertBir = tpl?.tr?.insertBir === true;
+
+  noteRule("have_existential");
+  const parts = [capitalizeFirst(possessor)];
+  if (insertBir) parts.push("bir");
+  parts.push(possessed, "var");
+  return parts.join(" ") + ".";
 }
 
 // A noun at ordered[idx] is a direct object when the nearest preceding
@@ -1351,6 +1433,10 @@ function buildSentenceRaw(lang, tpl, forcedConcept = null, sharedChoices = null)
 if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type)) {
   const authored = tpl.render?.[lang];
   if (typeof authored === "string" && authored.trim()) return authored.trim();
+}
+if (lang === "tr" && trIsHaveTemplate(tpl)) {
+  const built = buildTrHavePossession(tpl);
+  if (built) return built;
 }
 if (tpl.structure?.type === "copular_demonstrative") {
   const s = tpl.slots;

@@ -83,6 +83,8 @@ test("rule ids are stable and documented", () => {
       "french_elision",
       "french_possessive_agreement",
       "gender_agreement",
+      "genitive_possessor",
+      "have_existential",
       "indefinite_article",
       "ja_counter",
       "post_nominal_adjective",

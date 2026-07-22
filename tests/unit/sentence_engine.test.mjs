@@ -342,6 +342,33 @@ test("null adj_/num_ sharedChoices suppress random modifier injection", () => {
   }
 });
 
+test("Turkish HAVE templates render as genitive-possessor + var (not sahip ol-)", () => {
+  const cases = [
+    ["WE_HAVE_JOB",     "Bizim bir işimiz var."],
+    ["I_HAVE_SHIRT",    "Benim bir gömleğim var."],
+    ["SHE_HAS_SHOES",   "Onun ayakkabıları var."],
+    ["THEY_HAVE_PANTS", "Onların pantolonları var."],
+    ["WE_HAVE_CLOTHES", "Bizim kıyafetlerimiz var."],
+  ];
+  for (const [id, expected] of cases) {
+    assert.equal(buildSentence("tr", tplById(id)), expected, id);
+  }
+});
+
+test("Turkish non-HAVE templates keep nominative subject (no bleed of the genitive route)", () => {
+  const stop = tplById("WE_STOP_EATING");
+  assert.ok(stop, "WE_STOP_EATING exists");
+  const s = buildSentence("tr", stop);
+  assert.ok(s.startsWith("Biz "), `1pl non-HAVE stays nominative: ${s}`);
+  assert.ok(!s.startsWith("Bizim"), `1pl non-HAVE must not use genitive: ${s}`);
+});
+
+test("HAVE templates in other languages still route through the standard clause path", () => {
+  const t = tplById("WE_HAVE_JOB");
+  assert.equal(buildSentence("en", t), t.render.en);
+  assert.equal(buildSentence("pt", t), t.render.pt);
+});
+
 test("every core template renders a non-empty English sentence", () => {
   const core = templates.filter((t) => t._file === "sentence_templates.json");
   assert.ok(core.length > 100, "core template set is present");

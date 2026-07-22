@@ -869,6 +869,130 @@
         "title": "การพูดถึงสิ่งที่เจาะจง",
         "body": "เมื่อประโยคพูดถึงสิ่งที่เจาะจง {lang}จะใส่คำนำหน้านามชี้เฉพาะ — เหมือน the ในภาษาอังกฤษ: The book is red (หนังสือเล่มนั้นสีแดง)"
       }
+    },
+    "genitive_possessor": {
+      "en": {
+        "title": "The owner takes a special form",
+        "body": "In {lang}, the pronoun that owns something changes shape — ben (I) becomes benim (my/mine), biz (we) becomes bizim (our/ours), o (he/she/it) becomes onun (his/her/its)."
+      },
+      "pt": {
+        "title": "O dono ganha uma forma especial",
+        "body": "Em {lang}, o pronome do dono muda de forma — ben (eu) vira benim (meu/de mim), biz (nós) vira bizim (nosso), o (ele/ela) vira onun (dele/dela)."
+      },
+      "fr": {
+        "title": "Le possesseur prend une forme spéciale",
+        "body": "En {lang}, le pronom du possesseur change de forme — ben (moi) devient benim (à moi), biz (nous) devient bizim (à nous), o (lui/elle) devient onun (à lui/à elle)."
+      },
+      "de": {
+        "title": "Der Besitzer bekommt eine besondere Form",
+        "body": "In {lang} ändert das Pronomen des Besitzers seine Form — ben (ich) wird zu benim (mein), biz (wir) wird zu bizim (unser), o (er/sie) wird zu onun (sein/ihr)."
+      },
+      "el": {
+        "title": "Ο κάτοχος παίρνει ειδική μορφή",
+        "body": "Στα {lang}, η αντωνυμία του κατόχου αλλάζει μορφή — ben (εγώ) γίνεται benim (δικός/-ή/-ό μου), biz (εμείς) γίνεται bizim (δικός μας), o (αυτός/-ή) γίνεται onun (δικός του/της)."
+      },
+      "es": {
+        "title": "El poseedor toma una forma especial",
+        "body": "En {lang}, el pronombre del poseedor cambia de forma — ben (yo) se convierte en benim (mío), biz (nosotros) se convierte en bizim (nuestro), o (él/ella) se convierte en onun (suyo)."
+      },
+      "ja": {
+        "title": "所有者は形が変わる",
+        "body": "{lang}では、所有者を表す代名詞は形が変わります。ben（私）は benim（私の）に、biz（私たち）は bizim（私たちの）に、o（彼/彼女）は onun（彼/彼女の）になります。"
+      },
+      "ko": {
+        "title": "소유자는 형태가 달라져요",
+        "body": "{lang}에서는 소유자를 나타내는 대명사의 형태가 달라져요. ben(나)은 benim(나의)이 되고, biz(우리)는 bizim(우리의)이 되고, o(그/그녀)는 onun(그의/그녀의)이 돼요."
+      },
+      "no": {
+        "title": "Eieren får en egen form",
+        "body": "På {lang} endrer eierens pronomen form — ben (jeg) blir benim (min/mitt), biz (vi) blir bizim (vår), o (han/hun) blir onun (hans/hennes)."
+      },
+      "tr": {
+        "title": "Sahip için özel bir biçim",
+        "body": "{lang} dilinde bir şeye sahip olan zamir biçim değiştirir — ben → benim, biz → bizim, o → onun. Bu, Türkçedeki ilgi hâline benzer."
+      },
+      "uk": {
+        "title": "Присвійна форма для власника",
+        "body": "У {lang} займенник власника змінює форму — ben (я) стає benim (мій), biz (ми) стає bizim (наш), o (він/вона) стає onun (його/її)."
+      },
+      "zh": {
+        "title": "所有者有专门的形式",
+        "body": "在{lang}中，表示所有者的代词会变形——ben（我）变成 benim（我的），biz（我们）变成 bizim（我们的），o（他/她）变成 onun（他的/她的）。"
+      },
+      "ar": {
+        "title": "المالك يأخذ شكلاً خاصًا",
+        "body": "في {lang}، يتغير شكل الضمير الدال على المالك — ben (أنا) تصبح benim (خاصتي)، biz (نحن) تصبح bizim (خاصتنا)، o (هو/هي) تصبح onun (خاصته/خاصتها)."
+      },
+      "it": {
+        "title": "Il possessore prende una forma speciale",
+        "body": "In {lang}, il pronome del possessore cambia forma — ben (io) diventa benim (mio), biz (noi) diventa bizim (nostro), o (lui/lei) diventa onun (suo)."
+      },
+      "th": {
+        "title": "ผู้เป็นเจ้าของมีรูปพิเศษ",
+        "body": "ใน{lang} สรรพนามที่แสดงความเป็นเจ้าของจะเปลี่ยนรูป — ben (ฉัน) กลายเป็น benim (ของฉัน), biz (เรา) กลายเป็น bizim (ของเรา), o (เขา/เธอ) กลายเป็น onun (ของเขา/เธอ)"
+      }
+    },
+    "have_existential": {
+      "en": {
+        "title": "'Have' is really 'there exists'",
+        "body": "{lang} has no verb for 'to have'. Possession is expressed as 'my X exists' — Benim bir işimiz var literally reads 'our job exists', with the owner in the genitive and var meaning 'there is'."
+      },
+      "pt": {
+        "title": "'Ter' é na verdade 'existir'",
+        "body": "{lang} não tem verbo 'ter'. A posse é expressa como 'meu X existe' — Bizim bir işimiz var significa literalmente 'nosso trabalho existe', com o dono no genitivo e var querendo dizer 'há'."
+      },
+      "fr": {
+        "title": "«Avoir» s'exprime avec «il y a»",
+        "body": "{lang} n'a pas de verbe «avoir». La possession s'exprime comme «mon X existe» — Bizim bir işimiz var signifie littéralement «notre travail existe», avec le possesseur au génitif et var qui veut dire «il y a»."
+      },
+      "de": {
+        "title": "«Haben» ist eigentlich «es gibt»",
+        "body": "{lang} hat kein Verb für «haben». Besitz wird ausgedrückt als «mein X existiert» — Bizim bir işimiz var heißt wörtlich «unsere Arbeit existiert», mit dem Besitzer im Genitiv und var («es gibt»)."
+      },
+      "el": {
+        "title": "Το «έχω» είναι στην πραγματικότητα «υπάρχει»",
+        "body": "Τα {lang} δεν έχουν ρήμα για το «έχω». Η κτήση εκφράζεται σαν «το Χ μου υπάρχει» — Bizim bir işimiz var κυριολεκτικά σημαίνει «η δουλειά μας υπάρχει», με τον κάτοχο σε γενική και το var να σημαίνει «υπάρχει»."
+      },
+      "es": {
+        "title": "'Tener' es en realidad 'hay'",
+        "body": "{lang} no tiene un verbo para 'tener'. La posesión se expresa como 'mi X existe' — Bizim bir işimiz var significa literalmente 'nuestro trabajo existe', con el poseedor en genitivo y var que significa 'hay'."
+      },
+      "ja": {
+        "title": "「持つ」は実は「ある」",
+        "body": "{lang}には「持つ」という動詞がありません。所有は「私のXが存在する」と表現します。Bizim bir işimiz var は直訳すると「私たちの仕事がある」で、所有者は属格、var は「ある」を意味します。"
+      },
+      "ko": {
+        "title": "'가지다'는 사실 '있다'",
+        "body": "{lang}에는 '가지다'에 해당하는 동사가 없어요. 소유는 '나의 X가 있다'로 표현해요. Bizim bir işimiz var는 직역하면 '우리의 일이 있다'이고, 소유자는 소유격, var는 '있다'라는 뜻이에요."
+      },
+      "no": {
+        "title": "«Ha» er egentlig «det finnes»",
+        "body": "{lang} har ikke noe verb for «å ha». Eierskap uttrykkes som «min X finnes» — Bizim bir işimiz var betyr bokstavelig «jobben vår finnes», med eieren i genitiv og var som betyr «det er»."
+      },
+      "tr": {
+        "title": "'Sahip olmak' yerine 'var' yapısı",
+        "body": "{lang} dilinde bir şeye sahip olmayı anlatmak için 'var' kullanılır. Benim bir gömleğim var — sahip ilgi hâlinde, sahip olunan şey iyelik ekiyle, sonunda 'var'."
+      },
+      "uk": {
+        "title": "«Мати» — це насправді «існує»",
+        "body": "У {lang} немає дієслова «мати». Володіння виражають як «моє Х існує» — Bizim bir işimiz var буквально «наша робота існує», з власником у родовому відмінку та var зі значенням «є»."
+      },
+      "zh": {
+        "title": "'有'其实是'存在'",
+        "body": "{lang}没有'有'这个动词。所有关系用'我的X存在'来表达——Bizim bir işimiz var 字面意思是'我们的工作存在'，所有者用属格，var 表示'存在/有'。"
+      },
+      "ar": {
+        "title": "'يمتلك' في الحقيقة 'يوجد'",
+        "body": "لا يوجد في {lang} فعل بمعنى 'يمتلك'. الملكية يُعبَّر عنها بـ 'X خاصتي موجود' — Bizim bir işimiz var تعني حرفيًا 'عملنا موجود'، المالك في حالة الإضافة (الجر) وvar بمعنى 'يوجد'."
+      },
+      "it": {
+        "title": "«Avere» è in realtà «esiste»",
+        "body": "{lang} non ha un verbo per «avere». Il possesso si esprime come «il mio X esiste» — Bizim bir işimiz var significa letteralmente «il nostro lavoro esiste», con il possessore al genitivo e var che vuol dire «c'è»."
+      },
+      "th": {
+        "title": "'มี' คือ 'มีอยู่'",
+        "body": "{lang}ไม่มีคำกริยา 'มี' โดยตรง การครอบครองถูกแสดงเป็น 'X ของฉันมีอยู่' — Bizim bir işimiz var แปลตรงตัวว่า 'งานของเรามีอยู่' โดยผู้ครอบครองอยู่ในรูปแสดงความเป็นเจ้าของ ส่วน var แปลว่า 'มี'"
+      }
     }
   }
 }
