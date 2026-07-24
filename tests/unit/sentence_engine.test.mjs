@@ -184,6 +184,31 @@ test("described noun subjects take the definite article", () => {
   assert.equal(buildSentence("en", tplById("SHE_IS_WOMAN")), "She is a woman.");
 });
 
+test("Turkish 3rd-person copular sentences carry the -DIR suffix", () => {
+  // Formal-Turkish predicative copula: a 3rd-person copular sentence attaches
+  // a suffix to the last word of the predicate. Variant chosen by vowel
+  // harmony + consonant assimilation. Present-tense "to be" still drops as a
+  // separate word (Turkish stays in ZERO_PRESENT_COPULA).
+  // Adjective predicate, vowel-final stem, back-unrounded harmony → -dır:
+  assert.equal(buildSentence("tr", tplById("BOOK_IS_RED")), "Kitap kırmızıdır.");
+  // Back-rounded harmony after -un:
+  assert.equal(buildSentence("tr", tplById("BOOK_IS_LONG")), "Kitap uzundur.");
+  // Voiceless-final consonant assimilation → -tur:
+  assert.equal(buildSentence("tr", tplById("WINTER_IS_COLD")), "Kış soğuktur.");
+  // Front-unrounded harmony, vowel-final:
+  assert.equal(buildSentence("tr", tplById("MORNING_IS_GOOD")), "Sabah iyidir.");
+  // Possessed-noun predicate (structure=undefined):
+  assert.equal(buildSentence("tr", tplById("THIS_IS_MY_HAND")), "Bu benim elimdir.");
+  // Possessive-pronoun predicate (structure=possessive):
+  assert.equal(buildSentence("tr", tplById("THIS_IS_MINE")), "Bu benimdir.");
+  // Plural possessive pronoun (last vowel of "onların" is ı):
+  assert.equal(buildSentence("tr", tplById("THIS_IS_THEIRS")), "Bu onlarındır.");
+  // Spatial-relation templates keep no suffix ("Kitap bunun üstünde."), so
+  // engine output stays baseline-diverged (no fake -dır on a locative).
+  assert.equal(buildSentence("tr", tplById("BOOK_ON_THIS")).endsWith("dir.") ||
+               buildSentence("tr", tplById("BOOK_ON_THIS")).endsWith("dır."), false);
+});
+
 test("copular structure is inferred for franchise-pack [noun, BE, adj] templates", () => {
   // The pack templates ship without an explicit `structure: {type: "copular"}`
   // field, but their [nonPronounNoun, BE, adjective] shape is copular
