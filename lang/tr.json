@@ -240,7 +240,15 @@
       "form": "şey"
     },
     "JOB": {
-      "form": "iş"
+      "form": "iş",
+      "possessed": {
+        "1s": "işim",
+        "2s": "işin",
+        "3s": "işi",
+        "1p": "işimiz",
+        "2p": "işiniz",
+        "3p": "işleri"
+      }
     },
     "ROOM": {
       "form": "oda"
@@ -312,19 +320,51 @@
       "form": "akşam yemeği"
     },
     "CLOTHES": {
-      "form": "kıyafet"
+      "form": "kıyafet",
+      "possessed": {
+        "1s": "kıyafetlerim",
+        "2s": "kıyafetlerin",
+        "3s": "kıyafetleri",
+        "1p": "kıyafetlerimiz",
+        "2p": "kıyafetleriniz",
+        "3p": "kıyafetleri"
+      }
     },
     "SHIRT": {
-      "form": "gömlek"
+      "form": "gömlek",
+      "possessed": {
+        "1s": "gömleğim",
+        "2s": "gömleğin",
+        "3s": "gömleği",
+        "1p": "gömleğimiz",
+        "2p": "gömleğiniz",
+        "3p": "gömlekleri"
+      }
     },
     "SHOES": {
-      "form": "ayakkabı"
+      "form": "ayakkabı",
+      "possessed": {
+        "1s": "ayakkabılarım",
+        "2s": "ayakkabıların",
+        "3s": "ayakkabıları",
+        "1p": "ayakkabılarımız",
+        "2p": "ayakkabılarınız",
+        "3p": "ayakkabıları"
+      }
     },
     "PHONE": {
       "form": "telefon"
     },
     "PANTS": {
-      "form": "pantolon"
+      "form": "pantolon",
+      "possessed": {
+        "1s": "pantolonum",
+        "2s": "pantolonun",
+        "3s": "pantolonu",
+        "1p": "pantolonumuz",
+        "2p": "pantolonunuz",
+        "3p": "pantolonları"
+      }
     },
     "ONE": [
       "bir"
@@ -404,27 +444,34 @@
     "NOT": [
       "değil"
     ],
-    "FIRST_PERSON_SINGULAR": [
-      "ben"
-    ],
-    "SECOND_PERSON": [
-      "sen"
-    ],
-    "SECOND_PERSON_PLURAL": [
-      "siz"
-    ],
-    "HE": [
-      "o"
-    ],
-    "SHE": [
-      "o"
-    ],
-    "FIRST_PERSON_PLURAL": [
-      "biz"
-    ],
-    "THIRD_PERSON_PLURAL": [
-      "onlar"
-    ],
+    "FIRST_PERSON_SINGULAR": {
+      "form": "ben",
+      "genitive": "Benim"
+    },
+    "SECOND_PERSON": {
+      "form": "sen",
+      "genitive": "Senin"
+    },
+    "SECOND_PERSON_PLURAL": {
+      "form": "siz",
+      "genitive": "Sizin"
+    },
+    "HE": {
+      "form": "o",
+      "genitive": "Onun"
+    },
+    "SHE": {
+      "form": "o",
+      "genitive": "Onun"
+    },
+    "FIRST_PERSON_PLURAL": {
+      "form": "biz",
+      "genitive": "Bizim"
+    },
+    "THIRD_PERSON_PLURAL": {
+      "form": "onlar",
+      "genitive": "Onların"
+    },
     "ANY": [
       "herhangi",
       "herhangi bir"
@@ -637,7 +684,7 @@
     "NICE": ["güzel"],
     "THIS": ["bu"],
     "THAT": ["şu"],
-    "IT": ["o"],
+    "IT": {"form": "o", "genitive": "Onun"},
     "ITS": ["onun"],
     "MINE": ["benim"],
     "YOURS": ["senin"],
