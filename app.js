@@ -531,18 +531,6 @@ function reconcileRecognitionCompletion(user) {
   }
 }
 
-// Fluency-aware spaced repetition: time an exercise from the moment it
-// renders to the moment the learner answers, and use that response time to
-// modulate the cooldown. Correctness criteria are unchanged — speed only
-// affects *when* the concept resurfaces, never whether it counts as correct.
-// Fast correct → long cooldown (concept feels owned).
-// Slow correct → short cooldown (bring it back soon; needs reinforcement).
-let currentExerciseStartedAt = 0;
-function markExerciseStart() { currentExerciseStartedAt = Date.now(); }
-function exerciseElapsedMs() {
-  return currentExerciseStartedAt ? Date.now() - currentExerciseStartedAt : 0;
-}
-
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
   const APP_VERSION = "v1.1.0";
@@ -1073,7 +1061,6 @@ function migrateRun(run, fromVersion, toVersion) {
         run.progress[cid] = {
           level: 1,
           streak: 0,
-          cooldown: 0,
           completed: false,
           lastShownAt: -Infinity,
           lastResult: null
@@ -2079,12 +2066,6 @@ function canConceptBeIntroduced(cid) {
     return ensureProgress(cid).level;
   }
 
-  function decrementCooldowns() {
-    Object.values(run.progress).forEach(p => {
-      if (p.cooldown > 0) p.cooldown--;
-    });
-  }
-
  function initRun() {
 
   run = createRunState();
@@ -2123,11 +2104,10 @@ function migrateRunState() {
   run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
   run.sessionExerciseCount = (run.sessionExerciseCount || 0) + 1;
 
-  // The streak/level/cooldown state machine lives in progression.mjs.
+  // The streak/level state machine lives in progression.mjs.
   const outcome = applyAnswer(state, {
     correct,
     exerciseIndex: run.exerciseCounter,
-    elapsedMs: exerciseElapsedMs(),
     levelCap: levelCapFor({
       isRecognition: RECOGNITION_CONCEPTS.has(cid),
       isModifier: isModifierConcept(cid),
@@ -2371,7 +2351,6 @@ return tpl;
   }
 
   document.getElementById("continue-btn").onclick = () => {
-    decrementCooldowns();
     applyResult(targetConcept, true);
     setTimeout(() => renderNext(targetLang, supportLang), 0);
   };
@@ -2432,7 +2411,6 @@ btn.textContent = meta?.type === "noun"
         if (value === selectedOption && !correct) btn.classList.add("incorrect");
       });
 
-      decrementCooldowns();
       applyResult(targetConcept, correct);
 
       checkBtn.textContent = ui("continue");
@@ -2501,7 +2479,6 @@ const options = shuffle([...releasedOptions]).slice(0, 4);
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
 
-    decrementCooldowns();
     applyResult(targetConcept, correct);
 
     checkBtn.textContent = ui("continue");
@@ -2688,7 +2665,6 @@ if (isModifierConcept(targetConcept)) {
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
 
-    decrementCooldowns();
     applyResult(targetConcept, correct);
 
     checkBtn.disabled = false;
@@ -2820,7 +2796,6 @@ if (!options || options.length < 4) {
       if (opt === selectedOption && !correct) btn.classList.add("incorrect");
     });
 
-    decrementCooldowns();
     applyResult(targetConcept, correct);
 
     checkBtn.disabled = false;
@@ -3000,7 +2975,6 @@ if (!finalOptions.includes(targetConcept)) {
         if (opt === selectedOption && !correct) btn.classList.add("incorrect");
       });
 
-      decrementCooldowns();
       applyResult(targetConcept, correct);
 
       checkBtn.disabled = false;
@@ -4197,7 +4171,6 @@ function renderRunComplete(targetLang, supportLang) {
 }
 
 function renderNext(targetLang, supportLang) {
-  markExerciseStart();
   // Retrigger the fade-in animation on every new exercise. Removing
   // and force-reflowing the class ensures the keyframes replay.
   if (content) {
@@ -4271,7 +4244,6 @@ for (let attempts = 0; attempts < 25; attempts++) {
       return endSession(targetLang, supportLang);
     }
 
-    decrementCooldowns();
     setTimeout(() => renderNext(targetLang, supportLang), 0);
     return;
   }
@@ -4371,7 +4343,6 @@ if (level === 2) {
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
 
-    decrementCooldowns();
     applyResult(targetConcept, correct);
 
     checkBtn.textContent = ui("continue");

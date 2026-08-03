@@ -88,7 +88,6 @@ export async function seedAllConceptsAt(page, level, { bundles = 4, restrictType
       run.progress[cid] = {
         level: eligible ? level : 1,
         streak: 0,
-        cooldown: 0,
         completed: !eligible,
         lastShownAt: -999999,
         lastResult: null,

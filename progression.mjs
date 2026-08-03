@@ -1,25 +1,15 @@
 // progression.mjs
 // Pure progression rules for the 7-level mastery ladder: per-concept state,
-// spacing (spaced repetition by exercise distance), speed-aware cooldowns,
-// and the level-up state machine. No DOM, no app state — app.js supplies
-// the inputs, unit tests exercise the rules directly.
+// spacing (spaced repetition by exercise distance), and the level-up state
+// machine. No DOM, no app state — app.js supplies the inputs, unit tests
+// exercise the rules directly.
 
 export const MAX_LEVEL = 7;
-
-// Speed-aware cooldown: fast recall pushes the next review out,
-// slow recall pulls it in for reinforcement.
-export function cooldownForElapsed(ms) {
-  if (ms <= 0) return 4;          // no timing signal — treat as normal
-  if (ms < 4000) return 8;         // fast: push review further out
-  if (ms > 15000) return 2;        // slow: bring it back soon
-  return 4;                         // normal
-}
 
 export function createProgress() {
   return {
     level: 1,
     streak: 0,
-    cooldown: 0,
     completed: false,
     lastShownAt: -Infinity,
     lastResult: null,
@@ -61,18 +51,16 @@ export function levelCapFor({ isRecognition, isModifier }) {
 // exhaustedLevelUps=true reproduces the app's early-exit: a concept that
 // already leveled up 3 times this session banks nothing further from the
 // streak it just finished.
-export function applyAnswer(state, { correct, exerciseIndex, elapsedMs, levelCap, sessionLevelUps }) {
+export function applyAnswer(state, { correct, exerciseIndex, levelCap, sessionLevelUps }) {
   state.lastShownAt = exerciseIndex;
   state.lastResult = correct;
 
   if (!correct) {
     state.streak = 0;
-    state.cooldown = 2;
     return { leveledUp: false, exhaustedLevelUps: false };
   }
 
   state.streak++;
-  state.cooldown = cooldownForElapsed(elapsedMs);
 
   let leveledUp = false;
   const needed = state.level === 1 ? 1 : 2;
