@@ -37,7 +37,7 @@ const FEATURE_AVAILABILITY = {
   // Prompt API handles well and expand only after verification.
   semantic_grading: { targets: ["en", "es", "ja"] },
 
-  // Web Speech API recognition in Chrome covers all 13 app languages
+  // Web Speech API recognition in Chrome covers all 15 app languages
   // (nb-NO included); runtime detection still gates actual use.
   speech_practice: "all",
 };
