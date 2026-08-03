@@ -1,25 +1,15 @@
-// Unit tests for the progression rules (progression.mjs): spacing, speed-aware
-// cooldowns, level caps, and the level-up state machine.
+// Unit tests for the progression rules (progression.mjs): spacing, level caps,
+// and the level-up state machine.
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   MAX_LEVEL,
-  cooldownForElapsed,
   createProgress,
   passesSpacing,
   levelCapFor,
   applyAnswer,
 } from "../../progression.mjs";
-
-test("cooldownForElapsed maps answer speed to review distance", () => {
-  assert.equal(cooldownForElapsed(0), 4);      // no signal
-  assert.equal(cooldownForElapsed(-5), 4);
-  assert.equal(cooldownForElapsed(3999), 8);   // fast → push out
-  assert.equal(cooldownForElapsed(4000), 4);   // normal band
-  assert.equal(cooldownForElapsed(15000), 4);
-  assert.equal(cooldownForElapsed(15001), 2);  // slow → bring back soon
-});
 
 test("fresh progress always passes spacing", () => {
   assert.equal(passesSpacing(createProgress(), 0), true);
@@ -67,18 +57,16 @@ const answer = (state, overrides = {}) =>
   applyAnswer(state, {
     correct: true,
     exerciseIndex: 0,
-    elapsedMs: 5000,
     levelCap: MAX_LEVEL,
     sessionLevelUps: 0,
     ...overrides,
   });
 
-test("a wrong answer resets the streak and sets a short cooldown", () => {
+test("a wrong answer resets the streak", () => {
   const s = { ...createProgress(), level: 3, streak: 1 };
   const out = answer(s, { correct: false, exerciseIndex: 7 });
   assert.deepEqual(out, { leveledUp: false, exhaustedLevelUps: false });
   assert.equal(s.streak, 0);
-  assert.equal(s.cooldown, 2);
   assert.equal(s.lastResult, false);
   assert.equal(s.lastShownAt, 7);
   assert.equal(s.level, 3);
@@ -113,14 +101,4 @@ test("three session level-ups block further progress this session", () => {
   assert.deepEqual(out, { leveledUp: false, exhaustedLevelUps: true });
   assert.equal(s.level, 3);
   assert.equal(s.streak, 0);
-});
-
-test("correct answers store the speed-aware cooldown", () => {
-  const fast = { ...createProgress(), level: 2 };
-  answer(fast, { elapsedMs: 1000 });
-  assert.equal(fast.cooldown, 8);
-
-  const slow = { ...createProgress(), level: 2 };
-  answer(slow, { elapsedMs: 20000 });
-  assert.equal(slow.cooldown, 2);
 });
