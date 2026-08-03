@@ -62,7 +62,8 @@ import {
   buildComplexClauseSentence,
   buildSentence,
   buildSentenceWithRules,
-  buildSentenceRaw
+  buildSentenceRaw,
+  sentenceTilesForTemplate
 } from "./sentence_engine.mjs";
 const CORE_BUNDLES = [
 
@@ -3258,32 +3259,43 @@ const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
   hadModifier: false,
 });
 
-const ordered = orderedConceptsForTemplate(tpl, targetLang);
+// Tiles come from the engine's own render path — the same segments
+// buildSentence joins into the graded sentence — so prepositional case
+// («з дому»), copula drop, demonstrative declension («на цьому») and
+// definite articles all appear in the tiles too. Fixed-form template
+// shapes return null and use the per-concept mapping below instead.
+const tileSegments = sentenceTilesForTemplate(targetLang, tpl, sharedChoices);
 
-const subjectCid = ordered.find(c =>
-  window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-);
+let correctWords;
+if (tileSegments && tileSegments.length) {
+  correctWords = tileSegments.map(s => String(s.text).toLowerCase());
+} else {
+  const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
-const correctWords = ordered.map((cid, idx) => {
-  const meta = window.GLOBAL_VOCAB.concepts[cid];
+  const subjectCid = ordered.find(c =>
+    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+  );
 
-  if (!meta) return String(cid).toLowerCase();
+  correctWords = ordered.map((cid, idx) => {
+    const meta = window.GLOBAL_VOCAB.concepts[cid];
 
-  if (meta.type === "verb") {
-    return String(getVerbForm(cid, subjectCid, targetLang)).toLowerCase();
-  }
+    if (!meta) return String(cid).toLowerCase();
 
-  if (meta.type === "noun") {
-    // Object-position nouns carry their object case in declining languages
-    // (uk «воду»), matching the support translation the learner assembles.
-    return String(nounPhrase(targetLang, cid, {
-      directObject: isDirectObjectPosition(ordered, idx),
-    })).toLowerCase();
-  }
+    if (meta.type === "verb") {
+      return String(getVerbForm(cid, subjectCid, targetLang)).toLowerCase();
+    }
 
-  // ✅ ADD THIS FALLBACK (CRITICAL)
-  return String(surfaceForm(targetLang, cid)).toLowerCase();
-});
+    if (meta.type === "noun") {
+      // Object-position nouns carry their object case in declining languages
+      // (uk «воду»), matching the support translation the learner assembles.
+      return String(nounPhrase(targetLang, cid, {
+        directObject: isDirectObjectPosition(ordered, idx),
+      })).toLowerCase();
+    }
+
+    return String(surfaceForm(targetLang, cid)).toLowerCase();
+  });
+}
 
   LAST_EXERCISE = { type: "sentence_builder", correctWords };
 
@@ -3422,8 +3434,12 @@ const correctWords = ordered.map((cid, idx) => {
       applyResult(targetConcept, false);
 
       // The correct sentence isn't visible anywhere on screen (the tiles
-      // are mixed up in the slots), so keep the banner reveal here.
-      const correctSentence = capitalizeFirst(correctWords.join(" ")) + ".";
+      // are mixed up in the slots), so keep the banner reveal here. When the
+      // tiles came from the engine path, show the engine's finalized
+      // sentence rather than re-joining lowercased tiles.
+      const correctSentence = tileSegments && tileSegments.length
+        ? safe(buildSentence(targetLang, tpl, null, sharedChoices))
+        : capitalizeFirst(correctWords.join(" ")) + ".";
       revealCorrectAnswerBanner(correctSentence, targetLang);
 
       checkL6Btn.disabled = false;

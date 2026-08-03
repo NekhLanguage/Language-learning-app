@@ -737,15 +737,12 @@ function orderedConceptsForTemplate(tpl, lang) {
 
   const pronoun = concepts.find(c => vocab().concepts[c]?.type === "pronoun");
   const verb = concepts.find(c => vocab().concepts[c]?.type === "verb");
-  // Copular templates ("X is Y") often have no pronoun — the subject is a noun
-  // ("autumn is old", "the book is red"). Without this the leading noun is
-  // misread as the object and stranded after the copula ("Be autumn old"),
-  // and the copula has no subject to conjugate against. Treat the first noun
-  // as the subject in that case.
-  const isCopular = concepts.some(c =>
-    c === "BE" || vocab().concepts[c]?.semantic_role === "copula"
-  );
-  const nounSubject = (!pronoun && isCopular)
+  // Pronoun-less templates lead with a noun subject — copular ("autumn is
+  // old", "the book is red") and plain SVO alike ("a Pokémon has a type").
+  // Without this the leading noun is misread as the object («Мати покемона
+  // тип» — infinitive verb, subject case-marked accusative) and the verb has
+  // no subject to conjugate against. Treat the first noun as the subject.
+  const nounSubject = !pronoun
     ? concepts.find(c => ["noun", "time"].includes(vocab().concepts[c]?.type))
     : null;
   const subject = pronoun || nounSubject;
@@ -1609,11 +1606,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     c === "BE" || vocab().concepts[c]?.semantic_role === "copula"
   );
 
-  // The subject is normally a pronoun. Copular templates ("autumn is old",
-  // "the book is red", "night is dark") often have a noun — or time-word —
-  // subject instead; without it the copula has no subject and English
-  // renders the bare infinitive ("Be autumn old") rather than "is", and the
-  // predicate adjective has nothing to agree with («ніч темна»). Relational
+  // The subject is normally a pronoun. Pronoun-less templates ("autumn is
+  // old", "a Pokémon has a type") have a noun — or time-word — subject
+  // instead; without it the verb has no subject and renders the bare
+  // infinitive ("Be autumn old", «Мати покемона тип»), and the predicate
+  // adjective has nothing to agree with («ніч темна»). Relational
   // templates ("the shoes are under this") lead with their head noun — the
   // trailing demonstrative is a landmark, not the subject, and must not
   // steal copula agreement ("the shoes IS under this").
@@ -1623,9 +1620,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       ? ordered[0] : null;
   const subjectCid = relationalHead ||
     ordered.find(c => vocab().concepts[c]?.type === "pronoun") ||
-    (isCopularTemplate
-      ? ordered.find(c => ["noun", "time"].includes(vocab().concepts[c]?.type))
-      : undefined);
+    ordered.find(c => ["noun", "time"].includes(vocab().concepts[c]?.type));
 
   // For copular templates (subject + BE + predicate-noun), the predicate
   // noun must agree with the subject in number. We treat any template that
@@ -1970,13 +1965,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // English demonstrative pronouns read awkwardly as bare prepositional
     // objects — "the phone is in that" / "a red phone is in that". English
     // wants a head noun there, so render the demonstrative as "that one" /
-    // "this one" when it directly follows a positional preposition (in/on/
-    // under/off/…). Other languages take a standalone demonstrative naturally
-    // (e.g. uk «у тому», de «in jenem»), so this is English-only and keyed off
-    // the preceding concept being a position word.
+    // "this one" when it follows a positional preposition (in/on/under/…),
+    // walking back over connectors and fellow demonstratives so a coordinated
+    // pair stays parallel ("between this one and that one"). Other languages
+    // take a standalone demonstrative naturally (e.g. uk «у тому», de «in
+    // jenem»), so this is English-only.
     if (lang === "en" && (cid === "THIS" || cid === "THAT")) {
-      const prevCid = ordered[idx - 1];
-      if (vocab().concepts[prevCid]?.type === "position") {
+      let j = idx - 1;
+      while (j >= 0 &&
+             ["connector", "pronoun"].includes(vocab().concepts[ordered[j]]?.type)) j--;
+      if (j >= 0 && vocab().concepts[ordered[j]]?.type === "position") {
         return formOf(lang, cid) + " one";
       }
     }

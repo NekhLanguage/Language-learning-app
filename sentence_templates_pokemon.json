@@ -173,7 +173,7 @@
         "MOVE"
       ],
       "render": {
-        "en": "Pokémon have a move."
+        "en": "A Pokémon has a move."
       }
     },
     {
@@ -284,7 +284,7 @@
         "GAIN_EXPERIENCE"
       ],
       "render": {
-        "en": "Pokémon gain experience."
+        "en": "A Pokémon gains experience."
       }
     },
     {
@@ -294,7 +294,7 @@
         "EVOLVE"
       ],
       "render": {
-        "en": "Pokémon evolve."
+        "en": "A Pokémon evolves."
       }
     },
     {
@@ -317,7 +317,7 @@
         "ABILITY"
       ],
       "render": {
-        "en": "Pokémon have an ability."
+        "en": "A Pokémon has an ability."
       }
     },
     {
@@ -361,7 +361,7 @@
         "MOVE"
       ],
       "render": {
-        "en": "Pokémon use a move."
+        "en": "A Pokémon uses a move."
       }
     },
     {
@@ -548,30 +548,7 @@
         "TYPE"
       ],
       "render": {
-        "en": "Pokémon have a type."
-      }
-    },
-    {
-      "template_id": "POKEMON_HAVE_TYPES",
-      "concepts": [
-        "POKEMON",
-        "HAVE",
-        "TYPES"
-      ],
-      "render": {
-        "en": "Pokémon have types."
-      }
-    },
-    {
-      "template_id": "I_GO_TO_CENTER",
-      "concepts": [
-        "FIRST_PERSON_SINGULAR",
-        "GO",
-        "TO",
-        "CENTER"
-      ],
-      "render": {
-        "en": "I go to the center."
+        "en": "A Pokémon has a type."
       }
     },
     {
@@ -601,8 +578,7 @@
       "template_id": "I_GAIN_EXPERIENCE",
       "concepts": [
         "FIRST_PERSON_SINGULAR",
-        "GAIN",
-        "EXPERIENCE"
+        "GAIN_EXPERIENCE"
       ],
       "render": {
         "en": "I gain experience."
