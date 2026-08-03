@@ -1583,8 +1583,23 @@ if (tpl.structure?.type === "complex_clause") {
     tpl.structure.subordinate_first
   );
 }
+  const segments = renderSegments(lang, tpl, forcedConcept, sharedChoices);
+  if (!segments) return "";
+  if (lang === "ja") return segments.map(s => s.text).join("");
+  let sentence = joinWords(lang, segments.map(s => s.text));
+  sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+  return sentence + ".";
+}
+
+// The generic render path shared by buildSentenceRaw and the L6 word-tile
+// builder: renders each ordered concept to its surface text and returns
+// [{cid, text}] segments (ja particles carry cid: null; empty renders such
+// as a dropped copula are filtered out). Keeping tiles on this exact code
+// path is what guarantees they always match the sentence the engine grades
+// against.
+function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const ordered = orderedConceptsForTemplate(tpl, lang);
-  if (!ordered || !ordered.length) return "";
+  if (!ordered || !ordered.length) return null;
 
   const forcedMeta = forcedConcept
     ? vocab().concepts[forcedConcept]
@@ -2111,9 +2126,9 @@ if (tpl.structure?.type === "complex_clause") {
     return surfaceForm(lang, cid);
   });
 
-  if (lang === "ja") {
-    const wordsWithParticles = [...words];
+  const segments = ordered.map((cid, idx) => ({ cid, text: words[idx] }));
 
+  if (lang === "ja") {
     const pronounIndex = ordered.findIndex(c =>
       vocab().concepts[c]?.type === "pronoun"
     );
@@ -2147,15 +2162,30 @@ if (tpl.structure?.type === "complex_clause") {
     }
     insertions.sort((a, b) => b.idx - a.idx);
     for (const ins of insertions) {
-      wordsWithParticles.splice(ins.idx, 0, ins.particle);
+      segments.splice(ins.idx, 0, { cid: null, text: ins.particle });
     }
-
-    return wordsWithParticles.join("");
   }
 
-  let sentence = joinWords(lang, words.filter(w => w !== "" && w != null));
-  sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
-  return sentence + ".";
+  return segments.filter(s => s.text !== "" && s.text != null);
+}
+
+// Word tiles for the L6 sentence builder, drawn from the same render path as
+// buildSentence. Returns null for the fixed-form template shapes that render
+// from an authored string or a dedicated builder — the caller falls back to
+// its per-concept tiles for those.
+function sentenceTilesForTemplate(lang, tpl, sharedChoices = null) {
+  if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type)) {
+    const authored = tpl.render?.[lang];
+    if (typeof authored === "string" && authored.trim()) return null;
+  }
+  if (lang === "tr" && trIsHaveTemplate(tpl) && buildTrHavePossession(tpl)) {
+    return null;
+  }
+  if (["copular_demonstrative", "yes_no_question_copular", "complex_clause"]
+      .includes(tpl.structure?.type)) {
+    return null;
+  }
+  return renderSegments(lang, tpl, null, sharedChoices);
 }
 
 
@@ -2179,6 +2209,7 @@ export {
   resolvePrompt,
   RELATIONAL_STRUCTURES,
   orderedConceptsForTemplate,
+  sentenceTilesForTemplate,
   blankSentence,
   safeSurfaceForConcept,
   isDirectObjectPosition,
