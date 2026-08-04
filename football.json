@@ -682,7 +682,7 @@
 
         "SQUAD":      { "gender": "f", "form": "команда" },
         "FORMATION": { "gender": "f", "form": "формація", "plural": "формації" },
-        "LEAGUE": { "gender": "f", "form": "ліга", "plural": "ліги" },
+        "LEAGUE": { "gender": "f", "form": "ліга", "plural": "ліги", "genitive": "ліги" },
         "SUBSTITUTE": { "gender": "m", "form": "запасний гравець", "plural": "запасні гравці" },
         "ASSIST":     { "gender": "m", "form": "асист" },
 

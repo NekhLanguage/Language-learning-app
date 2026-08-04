@@ -5526,7 +5526,7 @@
         "type": "spatial_relation"
       },
       "render": {
-        "en": "The phone is off this.",
+        "en": "The phone is not on this one.",
         "de": "Das Telefon ist von diesem entfernt.",
         "el": "Το τηλέφωνο είναι μακριά από αυτό.",
         "es": "El teléfono está lejos de esto.",
@@ -5550,7 +5550,7 @@
         "type": "spatial_relation_complex"
       },
       "render": {
-        "en": "The book is between this and that.",
+        "en": "The book is between this one and that one.",
         "de": "Das Buch ist zwischen diesem und jenem.",
         "el": "Το βιβλίο είναι ανάμεσα σε αυτό και εκείνο.",
         "es": "El libro está entre esto y eso.",

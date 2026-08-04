@@ -22,6 +22,8 @@ import {
   blankSentence,
   ZERO_PRESENT_COPULA,
   PLURAL_EXCEPTIONS,
+  sentenceTilesForTemplate,
+  capitalizeFirst,
 } from "../../sentence_engine.mjs";
 
 let templates;
@@ -414,5 +416,67 @@ test("every core template renders a non-empty English sentence", () => {
   for (const tpl of core) {
     const s = buildSentence("en", tpl);
     assert.ok(s && s.trim().length > 0, `${tpl.template_id} rendered empty`);
+  }
+});
+
+test("pronoun-less noun-subject templates conjugate against the noun", () => {
+  // User-reported: «Мати покемона тип.» — the noun subject wasn't
+  // recognized outside copular templates, so the verb fell back to the
+  // infinitive and the subject was case-marked as a direct object.
+  const tpl = tplById("POKEMON_HAVE_TYPE");
+  assert.ok(tpl, "POKEMON_HAVE_TYPE exists");
+  assert.deepEqual(orderedConceptsForTemplate(tpl, "en"), [
+    "POKEMON", "HAVE", "TYPE",
+  ]);
+  assert.equal(getVerbForm("HAVE", "POKEMON", "uk"), "має");
+  assert.equal(buildSentence("uk", tpl), "Покемон має тип.");
+  assert.equal(buildSentence("en", tpl), tpl.render.en);
+  const damage = tplById("MOVE_DO_DAMAGE");
+  assert.equal(buildSentence("en", damage), damage.render.en);
+  assert.equal(buildSentence("en", tplById("CLAN_HAS_MASTER")), "A clan has a master.");
+});
+
+test("uk nouns decline after case-governing prepositions", () => {
+  // User-reported: «я йду з дім» tiles. до/з govern the genitive.
+  assert.equal(buildSentence("uk", tplById("I_GO_FROM_HOME")), "Я йду з дому.");
+  assert.equal(buildSentence("uk", tplById("I_GO_TO_GYM")), "Я йду до залу.");
+  assert.equal(buildSentence("uk", tplById("I_GO_TO_LEAGUE")), "Я йду до ліги.");
+  assert.equal(buildSentence("uk", tplById("HEAL_POKEMON_CENTER")), "Я йду до центру покемонів.");
+  assert.equal(buildSentence("uk", tplById("I_GAIN_EXPERIENCE")), "Я отримую досвід.");
+});
+
+test("English demonstratives after positions render as this one / that one", () => {
+  // User-reported: "The phone is off this." The OFF form is now "not on",
+  // and a coordinated demonstrative pair stays parallel across the
+  // connector ("between this one and that one").
+  const phone = tplById("PHONE_OFF_THIS");
+  assert.equal(buildSentence("en", phone), "The phone is not on this one.");
+  assert.equal(buildSentence("en", phone), phone.render.en);
+  assert.equal(buildSentence("uk", phone), "Телефон не на цьому.");
+  const book = tplById("BOOK_BETWEEN_THIS_AND_THAT");
+  assert.equal(buildSentence("en", book), "The book is between this one and that one.");
+  assert.equal(buildSentence("en", book), book.render.en);
+});
+
+test("L6 word tiles join to the exact sentence buildSentence grades", () => {
+  // The tiles must come from the same render path as the graded sentence —
+  // a divergent tile («дім» vs «дому», a spurious «є» copula) forces the
+  // learner to assemble a wrong answer.
+  const cases = [
+    ["I_GO_FROM_HOME", "uk"],
+    ["PHONE_OFF_THIS", "uk"],
+    ["PHONE_OFF_THIS", "en"],
+    ["BOOK_BETWEEN_THIS_AND_THAT", "uk"],
+    ["POKEMON_HAVE_TYPE", "uk"],
+    ["I_GO_TO_GYM", "uk"],
+    ["CLAN_HAS_MASTER", "en"],
+  ];
+  for (const [id, lc] of cases) {
+    const tpl = tplById(id);
+    assert.ok(tpl, `${id} exists`);
+    const segments = sentenceTilesForTemplate(lc, tpl);
+    assert.ok(segments && segments.length, `${id} ${lc} has tile segments`);
+    const sentence = capitalizeFirst(segments.map((s) => s.text).join(" ")) + ".";
+    assert.equal(sentence, buildSentence(lc, tpl), `${id} ${lc}`);
   }
 });
