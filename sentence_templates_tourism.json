@@ -162,7 +162,7 @@
         "GUIDE"
       ],
       "render": {
-        "en": "I am a tourist."
+        "en": "I am a guide."
       }
     },
     {
@@ -304,6 +304,7 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "ORDER",
+        "FROM",
         "MENU"
       ],
       "render": {
@@ -490,6 +491,7 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "INSURE",
+        "MY",
         "LUGGAGE"
       ],
       "render": {

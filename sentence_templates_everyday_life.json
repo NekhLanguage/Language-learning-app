@@ -272,10 +272,10 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "DELIVER",
-        "GROCERY"
+        "FOOD"
       ],
       "render": {
-        "en": "I deliver groceries."
+        "en": "I deliver food."
       }
     },
     {

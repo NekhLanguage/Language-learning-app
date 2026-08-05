@@ -103,7 +103,7 @@
 
         "MATCH":      { "form": "match", "article": "a" },
         "VICTORY":    { "form": "victory", "article": "a" },
-        "DEFEAT":     { "form": "defeat", "article": "a" },
+        "DEFEAT":     { "form": "defeat", "noArticle": true },
         "DRAW":       { "form": "draw", "article": "a" },
         "TROPHY":     { "form": "trophy", "article": "a" },
 

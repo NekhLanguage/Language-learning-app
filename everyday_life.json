@@ -94,7 +94,7 @@
         "SCHEDULE": { "base": "schedule", "3_singular": "schedules" },
         "DRIZZLE": { "base": "drizzle", "3_singular": "drizzles" },
         "APOLOGIZE": { "base": "apologize", "3_singular": "apologizes" },
-        "AFFORD": { "base": "afford", "3_singular": "affords" },
+        "AFFORD": { "base": "can afford", "3_singular": "can afford" },
         "EXERCISE": { "base": "exercise", "3_singular": "exercises" },
         "REPAIR": { "base": "repair", "3_singular": "repairs" },
         "RELAX": { "base": "relax", "3_singular": "relaxes" },
