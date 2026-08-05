@@ -405,6 +405,7 @@
       "form": "παπούτσια",
       "pluralOnly": true
     },
+    "TABLE": { "form": "τραπέζι", "gender": "n", "plural": "τραπέζια" },
     "PHONE": {
       "form": "τηλέφωνο",
       "gender": "n",

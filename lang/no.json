@@ -370,6 +370,7 @@
       "plural": "skjorter"
     },
     "SHOES": {"form": "sko", "pluralOnly": true},
+    "TABLE": { "form": "bord", "gender": "n", "invariantPlural": true },
     "PHONE": {
       "form": "telefon",
       "gender": "m",

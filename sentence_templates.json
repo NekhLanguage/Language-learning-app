@@ -5520,6 +5520,126 @@
       }
     },
     {
+      "template_id": "BOOK_ON_TABLE",
+      "concepts": ["BOOK", "BE", "ON", "TABLE"],
+      "structure": {
+        "type": "spatial_relation"
+      },
+      "render": {
+        "en": "The book is on the table.",
+        "de": "Das Buch ist auf dem Tisch.",
+        "el": "Το βιβλίο είναι πάνω στο τραπέζι.",
+        "es": "El libro está sobre la mesa.",
+        "fr": "Le livre est sur la table.",
+        "ja": "本はテーブルの上にあります。",
+        "ko": "책은 테이블 위에 있어요.",
+        "no": "Boken er på bordet.",
+        "tr": "Kitap masanın üstünde.",
+        "uk": "Книга на столі.",
+        "zh": "书在桌子上面。",
+        "pt": "O livro está sobre a mesa.",
+        "ar": "الكتاب على الطاولة.",
+        "it": "Il libro è sul tavolo.",
+        "th": "หนังสืออยู่บนโต๊ะ"
+      }
+    },
+    {
+      "template_id": "PHONE_UNDER_TABLE",
+      "concepts": ["PHONE", "BE", "UNDER", "TABLE"],
+      "structure": {
+        "type": "spatial_relation"
+      },
+      "render": {
+        "en": "The phone is under the table.",
+        "de": "Das Telefon ist unter dem Tisch.",
+        "el": "Το τηλέφωνο είναι κάτω από το τραπέζι.",
+        "es": "El teléfono está debajo de la mesa.",
+        "fr": "Le téléphone est sous la table.",
+        "ja": "電話はテーブルの下にあります。",
+        "ko": "전화는 테이블 아래에 있어요.",
+        "no": "Telefonen er under bordet.",
+        "tr": "Telefon masanın altında.",
+        "uk": "Телефон під столом.",
+        "zh": "电话在桌子下面。",
+        "pt": "O telefone está debaixo da mesa.",
+        "ar": "الهاتف تحت الطاولة.",
+        "it": "Il telefono è sotto il tavolo.",
+        "th": "โทรศัพท์อยู่ใต้โต๊ะ"
+      }
+    },
+    {
+      "template_id": "BOOK_NEXT_TO_TABLE",
+      "concepts": ["BOOK", "BE", "NEXT_TO", "TABLE"],
+      "structure": {
+        "type": "spatial_relation"
+      },
+      "render": {
+        "en": "The book is next to the table.",
+        "de": "Das Buch ist neben dem Tisch.",
+        "el": "Το βιβλίο είναι δίπλα στο τραπέζι.",
+        "es": "El libro está al lado de la mesa.",
+        "fr": "Le livre est à côté de la table.",
+        "ja": "本はテーブルの隣にあります。",
+        "ko": "책은 테이블 옆에 있어요.",
+        "no": "Boken er ved siden av bordet.",
+        "tr": "Kitap masanın yanında.",
+        "uk": "Книга поруч із столом.",
+        "zh": "书在桌子旁边。",
+        "pt": "O livro está ao lado da mesa.",
+        "ar": "الكتاب بجانب الطاولة.",
+        "it": "Il libro è accanto al tavolo.",
+        "th": "หนังสืออยู่ข้างๆโต๊ะ"
+      }
+    },
+    {
+      "template_id": "PHONE_BEHIND_TABLE",
+      "concepts": ["PHONE", "BE", "BEHIND", "TABLE"],
+      "structure": {
+        "type": "spatial_relation"
+      },
+      "render": {
+        "en": "The phone is behind the table.",
+        "de": "Das Telefon ist hinter dem Tisch.",
+        "el": "Το τηλέφωνο είναι πίσω από το τραπέζι.",
+        "es": "El teléfono está detrás de la mesa.",
+        "fr": "Le téléphone est derrière la table.",
+        "ja": "電話はテーブルの後ろにあります。",
+        "ko": "전화는 테이블 뒤에 있어요.",
+        "no": "Telefonen er bak bordet.",
+        "tr": "Telefon masanın arkasında.",
+        "uk": "Телефон за столом.",
+        "zh": "电话在桌子后面。",
+        "pt": "O telefone está atrás da mesa.",
+        "ar": "الهاتف خلف الطاولة.",
+        "it": "Il telefono è dietro il tavolo.",
+        "th": "โทรศัพท์อยู่ข้างหลังโต๊ะ"
+      }
+    },
+    {
+      "template_id": "I_GO_TO_TABLE",
+      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "TO", "TABLE"],
+      "structure": {
+        "type": "relation"
+      },
+      "render": {
+        "en": "I go to the table.",
+        "de": "Ich gehe zum Tisch.",
+        "el": "Εγώ πηγαίνω στο τραπέζι.",
+        "es": "Yo voy a la mesa.",
+        "fr": "Je vais à la table.",
+        "ja": "私はテーブルに行きます。",
+        "ko": "저는 테이블에 가요.",
+        "no": "Jeg går til bordet.",
+        "tr": "Ben masaya giderim.",
+        "uk": "Я йду до столу.",
+        "zh": "我去那张桌子。",
+        "pt": "Eu vou para a mesa.",
+        "ar": "أنا أذهب إلى الطاولة.",
+        "it": "Io vado al tavolo.",
+        "th": "ฉันไปที่โต๊ะ"
+      }
+    },
+    {
       "template_id": "PHONE_OFF_THIS",
       "concepts": ["PHONE", "BE", "OFF", "THIS"],
       "structure": {

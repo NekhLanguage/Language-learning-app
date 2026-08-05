@@ -415,6 +415,7 @@
       "plural": "camisas"
     },
     "SHOES": {"form": "sapatos", "gender": "m", "pluralOnly": true},
+    "TABLE": { "form": "mesa", "gender": "f", "plural": "mesas" },
     "PHONE": {
       "form": "telefone",
       "gender": "m",

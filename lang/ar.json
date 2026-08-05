@@ -330,6 +330,7 @@
       "form": "حذاء",
       "gender": "m"
     },
+    "TABLE": { "form": "طاولة", "gender": "f" },
     "PHONE": {
       "form": "هاتف",
       "gender": "m"

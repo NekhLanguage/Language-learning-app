@@ -222,3 +222,22 @@ test("L6 with a drilled adjective shows it in prompt and tiles together", async 
   const tilesHaveIt = tiles.includes(stem(forms.target));
   expect(promptHasIt).toBe(tilesHaveIt);
 });
+
+test("a concept added to an already-released bundle is backfilled", async ({ page }) => {
+  // Release plans are frozen at signup; when a concept joins an existing
+  // bundle's definition (TABLE → core_28), backfillReleasedBundles releases
+  // it for runs already past that bundle. Idempotent on a second pass.
+  await startNewRun(page);
+  const result = await page.evaluate(() => {
+    const app = window.__app;
+    const run = app.run;
+    run.releasedBundleIds = ["core_28"];
+    run.released = ["BEHIND", "IN", "ON", "OFF", "BETWEEN"];
+    const changed = app.backfillReleasedBundles(run);
+    const again = app.backfillReleasedBundles(run);
+    return { changed, again, hasTable: run.released.includes("TABLE") };
+  });
+  expect(result.changed).toBe(true);
+  expect(result.hasTable).toBe(true);
+  expect(result.again).toBe(false);
+});

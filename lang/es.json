@@ -395,6 +395,7 @@
       "gender": "m",
       "pluralOnly": true
     },
+    "TABLE": { "form": "mesa", "gender": "f", "plural": "mesas" },
     "PHONE": {
       "form": "teléfono",
       "gender": "m",
