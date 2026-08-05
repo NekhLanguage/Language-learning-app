@@ -25,6 +25,7 @@ import {
   sentenceTilesForTemplate,
   capitalizeFirst,
   safeSurfaceForConcept,
+  finalizeSentence,
 } from "../../sentence_engine.mjs";
 
 let templates;
@@ -510,4 +511,42 @@ test("feminine referent: blanking surfaces use the feminitive", () => {
   const surface = safeSurfaceForConcept(tpl, "uk", "PROFESSOR");
   assert.equal(surface, "професорка");
   assert.ok(blankSentence(buildSentence("uk", tpl), surface).includes("_____"));
+});
+
+test("L6 tiles can rebuild the graded sentence for every template (uk, en)", () => {
+  // Fixed-form templates (questions, directions, evaluations, complex
+  // clauses) used to hand out per-concept tiles that could not rebuild the
+  // sentence — phantom «є» copula, raw «бути», missing «на північ». Tiles
+  // now tokenize the graded sentence itself, so joining them (modulo
+  // finalization, punctuation, and case) must reproduce it exactly.
+  const strip = (s) => s
+    .replace(/^[¿¡]+\s*/, "")
+    .replace(/[.?!;。？！]+\s*$/, "")
+    .replace(/,/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+  for (const lc of ["uk", "en"]) {
+    for (const tpl of templates) {
+      const tiles = sentenceTilesForTemplate(lc, tpl);
+      assert.ok(tiles && tiles.length, `${tpl.template_id} ${lc} has tiles`);
+      const joined = strip(finalizeSentence(lc, tiles.map((s) => s.text).join(" ")));
+      assert.equal(joined, strip(buildSentence(lc, tpl)), `${tpl.template_id} ${lc}`);
+    }
+  }
+});
+
+test("fixed-form templates tokenize into faithful tiles", () => {
+  const cases = [
+    ["THIS_IS_A_GOOD_BOOK", "uk", ["це", "добра", "книга"]],
+    ["WE_GO_NORTH", "uk", ["ми", "йдемо", "на", "північ"]],
+    ["WHO_EATS", "uk", ["хто", "їсть"]],
+    ["IS_THAT_YOUR_PHONE", "uk", ["то", "твій", "телефон"]],
+  ];
+  for (const [id, lc, expected] of cases) {
+    const tiles = sentenceTilesForTemplate(lc, tplById(id));
+    assert.deepEqual(tiles.map((s) => s.text.toLowerCase()), expected, `${id} ${lc}`);
+  }
+  // Spaceless scripts keep the legacy per-concept path (null → caller falls back).
+  assert.equal(sentenceTilesForTemplate("ja", tplById("WHO_EATS")), null);
 });

@@ -2223,21 +2223,44 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   return segments.filter(s => s.text !== "" && s.text != null);
 }
 
+// Spaceless scripts can't be split into word tiles by whitespace — those
+// targets keep the legacy per-concept tile path in the caller.
+const SPACELESS_TILE_LANGS = new Set(["ja", "zh", "th"]);
+
+// Tiles for fixed-form template shapes: tokenize the graded sentence itself,
+// so the tiles can always rebuild it — the per-concept mapper knows nothing
+// about authored word order, dropped copulas («є»), or derived adverbials
+// («на північ»).
+function tokenizedTiles(lang, tpl, sharedChoices) {
+  if (SPACELESS_TILE_LANGS.has(lang)) return null;
+  const sentence = buildSentence(lang, tpl, null, sharedChoices);
+  if (!sentence || !sentence.trim()) return null;
+  return sentence
+    .replace(/^[¿¡]+\s*/, "")
+    .replace(/[.?!;。？！]+\s*$/, "")
+    .replace(/,/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((text) => ({ cid: null, text }));
+}
+
 // Word tiles for the L6 sentence builder, drawn from the same render path as
-// buildSentence. Returns null for the fixed-form template shapes that render
-// from an authored string or a dedicated builder — the caller falls back to
-// its per-concept tiles for those.
+// buildSentence. Fixed-form template shapes (authored strings, dedicated
+// builders) tokenize the finished sentence instead; a null return (spaceless
+// scripts, empty renders) sends the caller to its legacy per-concept tiles.
 function sentenceTilesForTemplate(lang, tpl, sharedChoices = null) {
   if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type)) {
     const authored = tpl.render?.[lang];
-    if (typeof authored === "string" && authored.trim()) return null;
+    if (typeof authored === "string" && authored.trim()) {
+      return tokenizedTiles(lang, tpl, sharedChoices);
+    }
   }
   if (lang === "tr" && trIsHaveTemplate(tpl) && buildTrHavePossession(tpl)) {
-    return null;
+    return tokenizedTiles(lang, tpl, sharedChoices);
   }
   if (["copular_demonstrative", "yes_no_question_copular", "complex_clause"]
       .includes(tpl.structure?.type)) {
-    return null;
+    return tokenizedTiles(lang, tpl, sharedChoices);
   }
   return renderSegments(lang, tpl, null, sharedChoices);
 }
