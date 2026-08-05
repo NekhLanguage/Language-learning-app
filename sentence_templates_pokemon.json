@@ -342,12 +342,12 @@
     {
       "template_id": "ATTACK_IS_STRONG",
       "concepts": [
-        "ATTACK",
+        "MOVE",
         "BE",
         "STRONG"
       ],
       "render": {
-        "en": "The attack is strong."
+        "en": "A move is strong."
       }
     },
     {
