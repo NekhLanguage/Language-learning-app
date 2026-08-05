@@ -550,3 +550,18 @@ test("fixed-form templates tokenize into faithful tiles", () => {
   // Spaceless scripts keep the legacy per-concept path (null → caller falls back).
   assert.equal(sentenceTilesForTemplate("ja", tplById("WHO_EATS")), null);
 });
+
+test("a seeded drilled modifier appears in prompt, tiles, and answer alike", () => {
+  // User-reported shape: prompt "They read a red book." with no tile for
+  // "red". When a modifier is drilled, app.js seeds sharedChoices with it;
+  // every consumer of that cache must then contain the word.
+  const tpl = tplById("HE_READ_BOOK");
+  const sc = { adj_BOOK: "RED", num_BOOK: null };
+  assert.equal(buildSentence("en", tpl, null, sc), "He reads a red book.");
+  assert.equal(buildSentence("uk", tpl, null, sc), "Він читає червону книгу.");
+  const ukTiles = sentenceTilesForTemplate("uk", tpl, { adj_BOOK: "RED", num_BOOK: null });
+  assert.ok(ukTiles.some((s) => s.text.includes("червону")), "uk tile carries the adjective");
+  // And the suppressed case stays modifier-free.
+  const plain = { adj_BOOK: null, num_BOOK: null };
+  assert.equal(buildSentence("uk", tpl, null, plain), "Він читає книгу.");
+});
