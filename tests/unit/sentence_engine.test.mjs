@@ -565,3 +565,25 @@ test("a seeded drilled modifier appears in prompt, tiles, and answer alike", () 
   const plain = { adj_BOOK: null, num_BOOK: null };
   assert.equal(buildSentence("uk", tpl, null, plain), "Він читає книгу.");
 });
+
+test("TABLE declines through the uk preposition cases", () => {
+  // The reason TABLE was added: a concrete landmark noun for preposition
+  // drills. на + locative, під + instrumental, поруч із + instrumental,
+  // за + instrumental, до + genitive.
+  assert.equal(buildSentence("uk", tplById("BOOK_ON_TABLE")), "Книга на столі.");
+  assert.equal(buildSentence("uk", tplById("PHONE_UNDER_TABLE")), "Телефон під столом.");
+  assert.equal(buildSentence("uk", tplById("BOOK_NEXT_TO_TABLE")), "Книга поруч із столом.");
+  assert.equal(buildSentence("uk", tplById("PHONE_BEHIND_TABLE")), "Телефон за столом.");
+  assert.equal(buildSentence("uk", tplById("I_GO_TO_TABLE")), "Я йду до столу.");
+});
+
+test("TABLE templates match their authored English", () => {
+  for (const id of ["BOOK_ON_TABLE", "PHONE_UNDER_TABLE", "BOOK_NEXT_TO_TABLE", "PHONE_BEHIND_TABLE"]) {
+    const tpl = tplById(id);
+    assert.ok(tpl, `${id} exists`);
+    assert.equal(buildSentence("en", tpl), tpl.render.en, id);
+  }
+  // I_GO_TO_TABLE reads definite in the authored English ("the table") but
+  // generates indefinite — the same accepted divergence as I_GO_TO_HOUSE.
+  assert.equal(buildSentence("en", tplById("I_GO_TO_TABLE")), "I go to a table.");
+});

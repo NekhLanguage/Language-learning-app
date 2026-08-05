@@ -267,6 +267,7 @@
       "gender": "f",
       "pluralOnly": true
     },
+    "TABLE": { "form": "tavolo", "gender": "m", "plural": "tavoli" },
     "PHONE": {
       "form": "telefono",
       "gender": "m",

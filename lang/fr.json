@@ -391,6 +391,7 @@
       "form": "chaussures",
       "gender": "f"
     },
+    "TABLE": { "form": "table", "gender": "f", "plural": "tables" },
     "PHONE": {
       "form": "téléphone",
       "gender": "m",

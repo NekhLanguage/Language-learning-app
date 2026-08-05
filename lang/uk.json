@@ -358,6 +358,7 @@
       "form": "взуття",
       "gender": "n"
     },
+    "TABLE": { "form": "стіл", "gender": "m", "plural": "столи", "locative": "столі", "instrumental": "столом", "genitive": "столу" },
     "PHONE": {
       "form": "телефон",
       "instrumental": "телефоном",

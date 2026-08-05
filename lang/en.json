@@ -336,6 +336,7 @@
       "form": "shoes",
       "pluralOnly": true
     },
+    "TABLE": { "form": "table", "article": "a" },
     "PHONE": {
       "form": "phone",
       "article": "a"

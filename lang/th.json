@@ -212,6 +212,7 @@
       "form": "รองเท้า",
       "classifier": "คู่"
     },
+    "TABLE": { "form": "โต๊ะ", "classifier": "ตัว" },
     "PHONE": {
       "form": "โทรศัพท์",
       "classifier": "เครื่อง"

@@ -70,7 +70,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.1.2";
+const APP_DATA_VERSION = "1.1.3";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 const CORE_BUNDLES = [
@@ -129,7 +129,7 @@ const CORE_BUNDLES = [
 
 { id: "core_27", concepts: ["TOP","BOTTOM","UNDER","NEXT_TO","FRONT"] },
 
-{ id: "core_28", concepts: ["BEHIND","IN","ON","OFF","BETWEEN"] },
+{ id: "core_28", concepts: ["BEHIND","IN","ON","OFF","BETWEEN","TABLE"] },
 
 { id: "core_29", concepts: ["BACK","OUT","NORTH","SOUTH","EAST"] },
 
@@ -2103,6 +2103,24 @@ function migrateRunState() {
   saveUser();
 }
 
+// A run's release plan is frozen at signup, so a concept added to an
+// already-released bundle's definition (TABLE → core_28) would otherwise
+// never reach existing learners. Backfill: anything the current bundle
+// definitions say a released bundle contains is released. Idempotent —
+// no-op for up-to-date runs. Requires BUNDLE_INDEX to be built.
+function backfillReleasedBundles(r) {
+  let changed = false;
+  for (const bundleId of r.releasedBundleIds || []) {
+    for (const cid of BUNDLE_INDEX[bundleId]?.concepts || []) {
+      if (!r.released.includes(cid)) {
+        r.released.push(cid);
+        changed = true;
+      }
+    }
+  }
+  return changed;
+}
+
   function applyResult(cid, correct) {
   const state = ensureProgress(cid);
 
@@ -3884,6 +3902,10 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   USER.runs[langCode] = run;
   saveUser();
 }
+  if (backfillReleasedBundles(run)) {
+    run.released.forEach(ensureProgress);
+    saveUser();
+  }
   await loadTemplates(run.selectedResourcePacks || []);
   languageScreen.classList.remove("active");
   learningScreen.classList.add("active");
@@ -4647,5 +4669,6 @@ window.__app = {
   get bundleIndex(){ return BUNDLE_INDEX; },
   get lastExercise(){ return LAST_EXERCISE; },
   rerender(){ renderNext(languageState.target, languageState.support); },
+  backfillReleasedBundles,
 };
 });

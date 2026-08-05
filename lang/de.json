@@ -332,6 +332,7 @@
       "plural": "Hemden"
     },
     "SHOES": {"form": "Schuhe", "gender": "m", "pluralOnly": true},
+    "TABLE": { "form": "Tisch", "gender": "m", "plural": "Tische" },
     "PHONE": {
       "form": "Telefon",
       "gender": "n",
