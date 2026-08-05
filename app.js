@@ -65,6 +65,14 @@ import {
   buildSentenceRaw,
   sentenceTilesForTemplate
 } from "./sentence_engine.mjs";
+
+// Cache-buster for every static data fetch (templates, vocab packs, lang
+// files, notes). Browsers may serve stale cached JSON across deploys —
+// learners then see sentences from data that no longer exists. Bump this
+// together with the app.js ?v= in index.html on every release.
+const APP_DATA_VERSION = "1.1.2";
+const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
+
 const CORE_BUNDLES = [
 
   { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
@@ -544,7 +552,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // rule id → support language. Loaded in the background; exposure cards
   // simply skip the "why?" chips until it arrives (or if it never does).
   let GRAMMAR_NOTES = null;
-  fetch("grammar_notes.json")
+  fetch(dataUrl("grammar_notes.json"))
     .then(r => (r.ok ? r.json() : null))
     .then(d => { GRAMMAR_NOTES = d?.notes || null; })
     .catch(() => {});
@@ -552,7 +560,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Optional per-word mnemonic hooks (word_notes.json), keyed
   // concept → target language → support language. Same graceful loading.
   let WORD_NOTES = null;
-  fetch("word_notes.json")
+  fetch(dataUrl("word_notes.json"))
     .then(r => (r.ok ? r.json() : null))
     .then(d => { WORD_NOTES = d?.notes || null; })
     .catch(() => {});
@@ -560,7 +568,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Personalized coaching lines (milestones + session-complete variety).
   // Falls back to the legacy uiStrings templates when absent.
   let COACHING_LINES = null;
-  fetch("coaching_lines.json")
+  fetch(dataUrl("coaching_lines.json"))
     .then(r => (r.ok ? r.json() : null))
     .then(d => { COACHING_LINES = d || null; })
     .catch(() => {});
@@ -801,7 +809,7 @@ const LANG_FILE_CACHE = {};
 async function getLangFileData(code) {
   if (!LANG_FILE_CACHE[code]) {
     try {
-      const res = await fetch(`lang/${code}.json`);
+      const res = await fetch(dataUrl(`lang/${code}.json`));
       if (!res.ok) throw new Error(`Failed to load lang/${code}.json (${res.status})`);
       LANG_FILE_CACHE[code] = await res.json();
     } catch (err) {
@@ -1807,7 +1815,7 @@ function updateSupportUI(code) {
 
     // Fetch all vocab files in parallel
     const vocabResults = await Promise.all(
-      VOCAB_FILES.map(file => fetch(file).then(r => {
+      VOCAB_FILES.map(file => fetch(dataUrl(file)).then(r => {
         if (!r.ok) throw new Error(`Failed to load ${file} (${r.status})`);
         return r.json();
       }))
@@ -1866,7 +1874,7 @@ async function loadTemplates(selectedPacks = []) {
   });
 
   // Fetch all template files in parallel
-  const results = await Promise.all(files.map(file => fetch(file).then(r => {
+  const results = await Promise.all(files.map(file => fetch(dataUrl(file)).then(r => {
     if (!r.ok) throw new Error(`Failed to load ${file} (${r.status})`);
     return r.json();
   })));

@@ -121,6 +121,10 @@ localStorage writes to `zth_user`.
 ## Release flow
 
 1. Branch, commit, push, open a PR. CI must be green.
+   - If app.js or any data JSON (templates, packs, lang files, notes)
+     changed, bump `APP_DATA_VERSION` in app.js AND the matching
+     `app.js?v=` in index.html (same version string) so browsers can't
+     serve stale cached code or data across the deploy.
 2. Verify the change on the **Netlify Deploy Preview** for the PR (the
    `netlify/zerotoherolanguage` check on the PR) before merging — CI can't
    see the real Supabase/TTS backends; the preview can.
