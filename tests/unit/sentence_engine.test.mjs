@@ -24,6 +24,7 @@ import {
   PLURAL_EXCEPTIONS,
   sentenceTilesForTemplate,
   capitalizeFirst,
+  safeSurfaceForConcept,
 } from "../../sentence_engine.mjs";
 
 let templates;
@@ -479,4 +480,34 @@ test("L6 word tiles join to the exact sentence buildSentence grades", () => {
     const sentence = capitalizeFirst(segments.map((s) => s.text).join(" ")) + ".";
     assert.equal(sentence, buildSentence(lc, tpl), `${id} ${lc}`);
   }
+});
+
+test("feminine referent: predicate nouns use feminitives after 'she'", () => {
+  // User-reported: «Вона професор.» — the predicate noun (and its article
+  // in article languages) stayed masculine for a female referent.
+  const tpl = tplById("SHE_IS_PROFESSOR");
+  assert.equal(buildSentence("uk", tpl), "Вона професорка.");
+  assert.equal(buildSentence("pt", tpl), "Ela é uma professora.");
+  assert.equal(buildSentence("de", tpl), "Sie ist eine Professorin.");
+  assert.equal(buildSentence("it", tplById("SHE_IS_TRAINER")), "Lei è un'allenatrice.");
+  // The masculine twin is untouched.
+  assert.equal(buildSentence("uk", tplById("HE_IS_TRAINER")), "Він тренер.");
+  assert.equal(buildSentence("pt", tplById("HE_IS_TRAINER")), "Ele é um treinador.");
+  // Nouns without a feminitive in the data keep the base form.
+  assert.equal(buildSentence("uk", tplById("SHE_IS_GUIDE")), "Вона гід.");
+});
+
+test("feminine referent: predicate adjectives agree with 'she'", () => {
+  assert.equal(buildSentence("uk", tplById("SHE_IS_MOTIVATED")), "Вона вмотивована.");
+  assert.equal(buildSentence("pt", tplById("SHE_IS_MOTIVATED")), "Ela é motivada.");
+  assert.equal(buildSentence("fr", tplById("SHE_IS_FRIENDLY")), "Elle est amicale.");
+});
+
+test("feminine referent: blanking surfaces use the feminitive", () => {
+  // Without this the L3 blank substring-matches «професор» inside
+  // «професорка» and shows «_____ка».
+  const tpl = tplById("SHE_IS_PROFESSOR");
+  const surface = safeSurfaceForConcept(tpl, "uk", "PROFESSOR");
+  assert.equal(surface, "професорка");
+  assert.ok(blankSentence(buildSentence("uk", tpl), surface).includes("_____"));
 });

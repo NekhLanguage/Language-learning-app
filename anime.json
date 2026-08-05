@@ -132,8 +132,8 @@
       "forms": {
         "HERO": { "form": "herói", "gender": "m", "plural": "heróis" },
         "VILLAIN": { "form": "vilão", "gender": "m", "plural": "vilões" },
-        "WARRIOR": { "form": "guerreiro", "gender": "m", "plural": "guerreiros" },
-        "RIVAL": { "form": "rival", "gender": "m", "plural": "rivais" },
+        "WARRIOR": { "form": "guerreiro", "gender": "m", "plural": "guerreiros", "feminine": "guerreira" },
+        "RIVAL": { "form": "rival", "gender": "m", "plural": "rivais", "feminine": "rival" },
         "BRAVE":     ["corajoso"],
 
         "SWORD":     { "form": "espada", "gender": "f" },
@@ -148,9 +148,9 @@
         "SUMMON":    { "base": "invocar",     "1_singular": "invoco",      "2_singular": "invocas",     "3_singular": "invoca",      "1_plural": "invocamos",   "2_plural": "invocam",    "3_plural": "invocam" },
         "SINISTER":  ["sinistro"],
 
-        "NINJA":     { "form": "ninja", "gender": "m" },
+        "NINJA": { "form": "ninja", "gender": "m", "feminine": "ninja" },
         "SAMURAI":   { "form": "samurai", "gender": "m" },
-        "SENSEI":    { "form": "sensei", "gender": "m" },
+        "SENSEI": { "form": "sensei", "gender": "m", "feminine": "sensei" },
         "SHADOW": { "form": "sombra", "gender": "f", "plural": "sombras" },
         "STRIKE":    { "base": "golpear",     "1_singular": "golpeio",     "2_singular": "golpeias",    "3_singular": "golpeia",     "1_plural": "golpeamos",   "2_plural": "golpeiam",   "3_plural": "golpeiam" },
 
@@ -262,8 +262,8 @@
       "forms": {
         "HERO": { "form": "Held", "gender": "m", "plural": "Helden" },
         "VILLAIN": { "form": "Bösewicht", "gender": "m", "plural": "Bösewichte" },
-        "WARRIOR": { "form": "Krieger", "gender": "m", "plural": "Krieger" },
-        "RIVAL": { "form": "Rivale", "gender": "m", "plural": "Rivalen" },
+        "WARRIOR": { "form": "Krieger", "gender": "m", "plural": "Krieger", "feminine": "Kriegerin" },
+        "RIVAL": { "form": "Rivale", "gender": "m", "plural": "Rivalen", "feminine": "Rivalin" },
         "BRAVE":     ["mutig"],
 
         "SWORD":     { "form": "Schwert", "gender": "n" },
@@ -653,7 +653,7 @@
         "HERO": { "gender": "m", "form": "герой", "accusative": "героя", "plural": "герої" },
         "VILLAIN": { "gender": "m", "form": "лиходій", "accusative": "лиходія", "plural": "лиходії" },
         "WARRIOR": { "gender": "m", "form": "воїн", "accusative": "воїна", "plural": "воїни" },
-        "RIVAL": { "gender": "m", "form": "суперник", "accusative": "суперника", "plural": "суперники" },
+        "RIVAL": { "gender": "m", "form": "суперник", "accusative": "суперника", "plural": "суперники", "feminine": "суперниця" },
         "BRAVE":     ["хоробрий"],
 
         "SWORD":     { "gender": "m", "form": "меч" },
@@ -717,8 +717,8 @@
       "forms": {
         "HERO": { "form": "héroe", "gender": "m", "plural": "héroes" },
         "VILLAIN": { "form": "villano", "gender": "m", "plural": "villanos" },
-        "WARRIOR": { "form": "guerrero", "gender": "m", "plural": "guerreros" },
-        "RIVAL": { "form": "rival", "gender": "m", "plural": "rivales" },
+        "WARRIOR": { "form": "guerrero", "gender": "m", "plural": "guerreros", "feminine": "guerrera" },
+        "RIVAL": { "form": "rival", "gender": "m", "plural": "rivales", "feminine": "rival" },
         "BRAVE":     ["valiente"],
 
         "SWORD":     { "form": "espada", "gender": "f" },
@@ -733,9 +733,9 @@
         "SUMMON":    { "base": "invocar",     "1_singular": "invoco",      "2_singular": "invocas",     "3_singular": "invoca",      "1_plural": "invocamos",   "2_plural": "invocáis",   "3_plural": "invocan" },
         "SINISTER":  ["siniestro"],
 
-        "NINJA":     { "form": "ninja", "gender": "m" },
+        "NINJA": { "form": "ninja", "gender": "m", "feminine": "ninja" },
         "SAMURAI":   { "form": "samurái", "gender": "m" },
-        "SENSEI":    { "form": "sensei", "gender": "m" },
+        "SENSEI": { "form": "sensei", "gender": "m", "feminine": "sensei" },
         "SHADOW": { "form": "sombra", "gender": "f", "plural": "sombras" },
         "STRIKE":    { "base": "golpear",     "1_singular": "golpeo",      "2_singular": "golpeas",     "3_singular": "golpea",      "1_plural": "golpeamos",   "2_plural": "golpeáis",   "3_plural": "golpean" },
 
@@ -781,8 +781,8 @@
       "forms": {
         "HERO": {"form":"héros","gender":"m","plural":"héros"},
         "VILLAIN": {"form":"méchant","gender":"m","plural":"méchants"},
-        "WARRIOR": {"form":"guerrier","gender":"m","plural":"guerriers"},
-        "RIVAL": {"form":"rival","gender":"m","plural":"rivaux"},
+        "WARRIOR": {"form":"guerrier","gender":"m","plural":"guerriers", "feminine": "guerrière" },
+        "RIVAL": {"form":"rival","gender":"m","plural":"rivaux", "feminine": "rivale" },
         "BRAVE": ["courageux"],
         "SWORD": {"form":"épée","gender":"f","plural":"épées"},
         "ARMOR": {"form":"armure","gender":"f","plural":"armures"},
@@ -794,7 +794,7 @@
         "SPIRIT": {"form":"esprit","gender":"m","plural":"esprits"},
         "SUMMON": {"base":"invoquer","1_singular":"invoque","2_singular":"invoques","3_singular":"invoque","1_plural":"invoquons","2_plural":"invoquez","3_plural":"invoquent"},
         "SINISTER": ["sinistre"],
-        "NINJA": {"form":"ninja","gender":"m","plural":"ninjas"},
+        "NINJA": {"form":"ninja","gender":"m","plural":"ninjas", "feminine": "ninja" },
         "SAMURAI": {"form":"samouraï","gender":"m","plural":"samouraïs"},
         "SENSEI": {"form":"sensei","gender":"m","plural":"senseis"},
         "SHADOW": {"form":"ombre","gender":"f","plural":"ombres"},
@@ -891,8 +891,8 @@
       "forms": {
         "HERO": {"form":"eroe","gender":"m","plural":"eroi"},
         "VILLAIN": {"form":"cattivo","gender":"m","plural":"cattivi"},
-        "WARRIOR": {"form":"guerriero","gender":"m","plural":"guerrieri"},
-        "RIVAL": {"form":"rivale","gender":"m","plural":"rivali"},
+        "WARRIOR": {"form":"guerriero","gender":"m","plural":"guerrieri", "feminine": "guerriera" },
+        "RIVAL": {"form":"rivale","gender":"m","plural":"rivali", "feminine": "rivale" },
         "BRAVE": ["coraggioso"],
         "SWORD": {"form":"spada","gender":"f","plural":"spade"},
         "ARMOR": {"form":"armatura","gender":"f","plural":"armature"},
@@ -904,9 +904,9 @@
         "SPIRIT": {"form":"spirito","gender":"m","plural":"spiriti"},
         "SUMMON": {"base":"evocare","1_singular":"evoco","2_singular":"evochi","3_singular":"evoca","1_plural":"evochiamo","2_plural":"evocate","3_plural":"evocano"},
         "SINISTER": ["sinistro"],
-        "NINJA": {"form":"ninja","gender":"m","plural":"ninja"},
+        "NINJA": {"form":"ninja","gender":"m","plural":"ninja", "feminine": "ninja" },
         "SAMURAI": {"form":"samurai","gender":"m","plural":"samurai"},
-        "SENSEI": {"form":"sensei","gender":"m","plural":"sensei"},
+        "SENSEI": {"form":"sensei","gender":"m","plural":"sensei", "feminine": "sensei" },
         "SHADOW": {"form":"ombra","gender":"f","plural":"ombre"},
         "STRIKE": {"base":"colpire","1_singular":"colpisco","2_singular":"colpisci","3_singular":"colpisce","1_plural":"colpiamo","2_plural":"colpite","3_plural":"colpiscono"},
         "TRANSFORM": {"base":"trasformare","1_singular":"trasformo","2_singular":"trasformi","3_singular":"trasforma","1_plural":"trasformiamo","2_plural":"trasformate","3_plural":"trasformano"},

@@ -485,7 +485,8 @@
     "RUNNER": {
      "form": "corredor",
      "gender": "m",
-     "plural": "corredores"
+     "plural": "corredores",
+     "feminine": "corredora"
     },
     "RACE": {
      "form": "corrida",
@@ -666,9 +667,7 @@
     "WEAK": [
      "fraco"
     ],
-    "MOTIVATED": [
-     "motivado"
-    ],
+    "MOTIVATED": { "form": "motivado", "f": "motivada" },
     "EXHAUSTED": [
      "exausto"
     ],
@@ -1028,7 +1027,8 @@
     "RUNNER": {
      "form": "Läufer",
      "gender": "m",
-     "plural": "Läufer"
+     "plural": "Läufer",
+     "feminine": "Läuferin"
     },
     "RACE": {
      "form": "Rennen",
@@ -2384,7 +2384,8 @@
     "RUNNER": {
      "form": "бігун",
      "gender": "m",
-     "plural": "бігуни"
+     "plural": "бігуни",
+     "feminine": "бігунка"
     },
     "RACE": {
      "form": "забіг",
@@ -2556,18 +2557,14 @@
     "SORE": [
      "натруджений"
     ],
-    "FLEXIBLE": [
-     "гнучкий"
-    ],
+    "FLEXIBLE": { "form": "гнучкий", "f": "гнучка" },
     "INTENSE": [
      "інтенсивний"
     ],
     "WEAK": [
      "слабкий"
     ],
-    "MOTIVATED": [
-     "вмотивований"
-    ],
+    "MOTIVATED": { "form": "вмотивований", "f": "вмотивована" },
     "EXHAUSTED": [
      "виснажений"
     ],
@@ -2661,7 +2658,8 @@
     "RUNNER": {
      "form": "corredor",
      "gender": "m",
-     "plural": "corredores"
+     "plural": "corredores",
+     "feminine": "corredora"
     },
     "RACE": {
      "form": "carrera",
@@ -2842,9 +2840,7 @@
     "WEAK": [
      "débil"
     ],
-    "MOTIVATED": [
-     "motivado"
-    ],
+    "MOTIVATED": { "form": "motivado", "f": "motivada" },
     "EXHAUSTED": [
      "agotado"
     ],
@@ -2938,7 +2934,8 @@
     "RUNNER": {
      "form": "coureur",
      "gender": "m",
-     "plural": "coureurs"
+     "plural": "coureurs",
+     "feminine": "coureuse"
     },
     "RACE": {
      "form": "course",
@@ -3119,9 +3116,7 @@
     "WEAK": [
      "faible"
     ],
-    "MOTIVATED": [
-     "motivé"
-    ],
+    "MOTIVATED": { "form": "motivé", "f": "motivée" },
     "EXHAUSTED": [
      "épuisé"
     ],
@@ -3337,7 +3332,7 @@
         "FLEXIBLE": ["flessibile"],
         "INTENSE": ["intenso"],
         "WEAK": ["debole"],
-        "MOTIVATED": ["motivato"],
+        "MOTIVATED": { "form": "motivato", "f": "motivata" },
         "EXHAUSTED": ["esausto"],
         "DAILY": ["quotidiano"],
         "MUSCULAR": ["muscoloso"]
