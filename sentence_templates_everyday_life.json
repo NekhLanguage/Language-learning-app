@@ -272,10 +272,10 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "DELIVER",
-        "GROCERY"
+        "FOOD"
       ],
       "render": {
-        "en": "I deliver groceries."
+        "en": "I deliver food."
       }
     },
     {
@@ -365,7 +365,7 @@
     {
       "template_id": "IT_DRIZZLES",
       "concepts": [
-        "HE",
+        "IT",
         "DRIZZLE"
       ],
       "render": {

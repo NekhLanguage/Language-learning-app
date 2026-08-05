@@ -187,13 +187,13 @@ function pluralFormOf(lang, cid) {
 // when the language doesn't store gendered variants for that modifier, or
 // when the noun has no recorded gender — keeping non-PT/UK languages working
 // unchanged.
-function genderedFormOf(lang, modifierCid, nounCid, plural = false) {
+function genderedFormOf(lang, modifierCid, nounCid, plural = false, genderOverride = null) {
   const mod = vocab().languages?.[lang]?.forms?.[modifierCid];
   if (!mod || typeof mod !== "object" || Array.isArray(mod)) {
     return plural ? pluralFormOf(lang, modifierCid) : formOf(lang, modifierCid);
   }
   const noun = vocab().languages?.[lang]?.forms?.[nounCid];
-  const g = noun?.gender;
+  const g = genderOverride || noun?.gender;
   if (plural) {
     if (g === "f" && mod.fp) { noteRule("gender_agreement"); return mod.fp; }
     if (g === "n" && mod.np) { noteRule("gender_agreement"); return mod.np; }
@@ -335,6 +335,21 @@ function isDirectObjectPosition(ordered, idx) {
   if (j < 0) return false;
   const prev = ordered[j];
   return vocab().concepts?.[prev]?.type === "verb" && !isCopulaConcept(prev);
+}
+
+// The predicate-noun slot of a copular clause: the word before it (skipping
+// modifiers/possessives) is the copula («вона Є професорка», "she IS a
+// professor"). Mirrors isDirectObjectPosition, which deliberately excludes
+// copulas.
+function isCopularPredicatePosition(ordered, idx) {
+  let j = idx - 1;
+  while (j >= 0) {
+    const m = vocab().concepts?.[ordered[j]];
+    if (m?.semantic_role === "possessive" || OBJECT_MODIFIER_TYPES.has(m?.type)) { j--; continue; }
+    break;
+  }
+  if (j < 0) return false;
+  return isCopulaConcept(ordered[j]);
 }
 
 // --- Ukrainian prepositional case -------------------------------------------
@@ -497,7 +512,15 @@ const IT_VOWEL_INITIAL = /^[aeiouàèéìíòóùú]/i;
 function nounPhrase(lang, cid, opts = {}) {
 
   const meta = vocab().concepts[cid];
-  const entry = vocab().languages?.[lang]?.forms?.[cid] || {};
+  let entry = vocab().languages?.[lang]?.forms?.[cid] || {};
+
+  // Feminine-referent predicate («Вона професорка», "Ela é uma professora"):
+  // shadow the entry with the feminitive form and feminine gender so every
+  // per-language article branch below agrees without further special-casing.
+  if (opts.feminineReferent && typeof entry.feminine === "string") {
+    noteRule("gender_agreement");
+    entry = { ...entry, form: entry.feminine, gender: "f" };
+  }
 
   let base = entry.form || formOf(lang, cid);
   if (lang === "uk" && opts.directObject && !opts.plural && !entry.pluralOnly) {
@@ -818,13 +841,23 @@ if (orderType === "SOV") {
     const authored = tpl.surface?.[targetLang]?.[targetConcept];
     if (authored) return authored;
 
-    // Match the case the engine actually renders: a uk noun in object
-    // position appears in the accusative («воду»), and blanking/prompting
-    // with the dictionary form would no longer find it in the sentence.
-    if (targetLang === "uk" && meta.type === "noun") {
+    if (meta.type === "noun") {
+      // Match the form the engine actually renders — blanking/prompting with
+      // the dictionary form would no longer find it in the sentence.
       const ordered = orderedConceptsForTemplate(tpl, targetLang);
       const idx = ordered.indexOf(targetConcept);
-      if (idx !== -1 && isDirectObjectPosition(ordered, idx)) {
+      // Feminitive predicate after a feminine subject («Вона професорка») —
+      // without this the blank substring-matches «професор» inside
+      // «професорка» and renders «_____ка».
+      const entry = vocab().languages?.[targetLang]?.forms?.[targetConcept];
+      if (idx !== -1 && typeof entry?.feminine === "string" &&
+          vocab().concepts[subjectCid]?.gender === "f" &&
+          isCopularPredicatePosition(ordered, idx)) {
+        return entry.feminine;
+      }
+      // A uk noun in object position appears in the accusative («воду»).
+      if (targetLang === "uk" && idx !== -1 &&
+          isDirectObjectPosition(ordered, idx)) {
         return ukAccusativeNoun(targetConcept, formOf(targetLang, targetConcept));
       }
     }
@@ -1736,7 +1769,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // not the subject's, so skip them.
   const bareDetermined = precededByPossessive || precededByModifier;
   const useCopularPlural = pluralAgreement && !bareDetermined;
-  let possessedForm = formOf(lang, cid);
+  // A predicate noun after a feminine-referent subject pronoun uses its
+  // feminitive when the data provides one: «Вона професорка», "Ela é uma
+  // professora" — the masculine dictionary form (and its article) misgender
+  // the referent. Data-driven via the per-language `feminine` field; nouns
+  // without it, other subjects, and non-predicate positions are untouched.
+  const nounEntry = vocab().languages?.[lang]?.forms?.[cid];
+  const feminineReferent = isCopularTemplate &&
+    vocab().concepts[subjectCid]?.type === "pronoun" &&
+    vocab().concepts[subjectCid]?.gender === "f" &&
+    isCopularPredicatePosition(ordered, idx) &&
+    typeof nounEntry?.feminine === "string";
+  let possessedForm = feminineReferent ? nounEntry.feminine : formOf(lang, cid);
   if (ukObjectCase && bareDetermined &&
       vocab().languages?.uk?.forms?.[cid]?.gender === "f") {
     const acc = ukFeminineAccusative(possessedForm);
@@ -1759,7 +1803,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   }
   let phrase = bareDetermined
     ? possessedForm
-    : nounPhrase(lang, cid, { plural: useCopularPlural, directObject: isObject });
+    : nounPhrase(lang, cid, {
+        plural: useCopularPlural,
+        directObject: isObject,
+        feminineReferent,
+      });
   // When the noun was rendered as plural via copular agreement, the bare
   // form used by the modifier branches below also needs to be plural so
   // adjective insertion produces "small leaders" not "small leader".
@@ -1776,12 +1824,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const cachedAdj = sharedChoices && Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)
     ? sharedChoices["adj_" + cid]
     : undefined;
+  const adjGenderOverride = feminineReferent ? "f" : null;
   if (forcedMeta?.type === "adjective") {
     adjectiveCid = forcedConcept;
-    adjectiveWord = genderedFormOf(lang, forcedConcept, cid);
+    adjectiveWord = genderedFormOf(lang, forcedConcept, cid, false, adjGenderOverride);
   } else if (cachedAdj !== undefined) {
     adjectiveCid = cachedAdj;
-    adjectiveWord = cachedAdj ? genderedFormOf(lang, cachedAdj, cid) : null;
+    adjectiveWord = cachedAdj ? genderedFormOf(lang, cachedAdj, cid, false, adjGenderOverride) : null;
   } else {
     const adjectives = getReleased().filter(c => {
       const m = vocab().concepts[c];
@@ -1797,7 +1846,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (adjectives.length && rng() < 0.75) {
       const adj = adjectives[Math.floor(rng() * adjectives.length)];
       adjectiveCid = adj;
-      adjectiveWord = genderedFormOf(lang, adj, cid);
+      adjectiveWord = genderedFormOf(lang, adj, cid, false, adjGenderOverride);
     }
     if (sharedChoices) sharedChoices["adj_" + cid] = adjectiveCid;
   }
@@ -1869,6 +1918,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const bare = bareNoun ||
     (ukObjectCase && !bareDetermined ? ukAccusativeNoun(cid, formOf(lang, cid)) :
      ukObjectCase ? possessedForm :
+     feminineReferent ? possessedForm :
      formOf(lang, cid));
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
   // An adjective on a feminine accusative object agrees in case too:
@@ -2039,18 +2089,24 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     }
 
     // Predicate adjective in a copular sentence ("autumn is OLD") must agree
-    // with the subject noun in gender — "осінь стара", not "осінь старий" —
-    // and in number for plural-only subjects («штани чорні», "as calças são
+    // with the subject in gender — "осінь стара", not "осінь старий" — and
+    // in number for plural-only subjects («штани чорні», "as calças são
     // pretas"). surfaceForm would return the bare (masculine singular) form.
-    // Restricted to noun subjects, since a pronoun carries no usable
-    // grammatical gender.
+    // Noun subjects agree via their own recorded gender; pronoun subjects
+    // agree via the referent gender on the concept (SHE → «Вона вмотивована»,
+    // "Ela é motivada"), which genderedFormOf takes as an override.
     if (meta.type === "adjective" && meta.semantic_role !== "possessive" &&
-        isCopularTemplate &&
-        ["noun", "time"].includes(vocab().concepts[subjectCid]?.type)) {
-      const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
-      const subjPlural = !!(subjEntry && typeof subjEntry === "object" &&
-        !Array.isArray(subjEntry) && subjEntry.pluralOnly);
-      return genderedFormOf(lang, cid, subjectCid, subjPlural);
+        isCopularTemplate) {
+      const subjMeta = vocab().concepts[subjectCid];
+      if (["noun", "time"].includes(subjMeta?.type)) {
+        const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
+        const subjPlural = !!(subjEntry && typeof subjEntry === "object" &&
+          !Array.isArray(subjEntry) && subjEntry.pluralOnly);
+        return genderedFormOf(lang, cid, subjectCid, subjPlural);
+      }
+      if (subjMeta?.type === "pronoun" && subjMeta?.gender === "f") {
+        return genderedFormOf(lang, cid, subjectCid, false, "f");
+      }
     }
 
     // An attributive adjective/quantifier directly before a noun agrees with
@@ -2167,21 +2223,44 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   return segments.filter(s => s.text !== "" && s.text != null);
 }
 
+// Spaceless scripts can't be split into word tiles by whitespace — those
+// targets keep the legacy per-concept tile path in the caller.
+const SPACELESS_TILE_LANGS = new Set(["ja", "zh", "th"]);
+
+// Tiles for fixed-form template shapes: tokenize the graded sentence itself,
+// so the tiles can always rebuild it — the per-concept mapper knows nothing
+// about authored word order, dropped copulas («є»), or derived adverbials
+// («на північ»).
+function tokenizedTiles(lang, tpl, sharedChoices) {
+  if (SPACELESS_TILE_LANGS.has(lang)) return null;
+  const sentence = buildSentence(lang, tpl, null, sharedChoices);
+  if (!sentence || !sentence.trim()) return null;
+  return sentence
+    .replace(/^[¿¡]+\s*/, "")
+    .replace(/[.?!;。？！]+\s*$/, "")
+    .replace(/,/g, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((text) => ({ cid: null, text }));
+}
+
 // Word tiles for the L6 sentence builder, drawn from the same render path as
-// buildSentence. Returns null for the fixed-form template shapes that render
-// from an authored string or a dedicated builder — the caller falls back to
-// its per-concept tiles for those.
+// buildSentence. Fixed-form template shapes (authored strings, dedicated
+// builders) tokenize the finished sentence instead; a null return (spaceless
+// scripts, empty renders) sends the caller to its legacy per-concept tiles.
 function sentenceTilesForTemplate(lang, tpl, sharedChoices = null) {
   if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type)) {
     const authored = tpl.render?.[lang];
-    if (typeof authored === "string" && authored.trim()) return null;
+    if (typeof authored === "string" && authored.trim()) {
+      return tokenizedTiles(lang, tpl, sharedChoices);
+    }
   }
   if (lang === "tr" && trIsHaveTemplate(tpl) && buildTrHavePossession(tpl)) {
-    return null;
+    return tokenizedTiles(lang, tpl, sharedChoices);
   }
   if (["copular_demonstrative", "yes_no_question_copular", "complex_clause"]
       .includes(tpl.structure?.type)) {
-    return null;
+    return tokenizedTiles(lang, tpl, sharedChoices);
   }
   return renderSegments(lang, tpl, null, sharedChoices);
 }

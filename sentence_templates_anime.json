@@ -353,6 +353,7 @@
       "concepts": [
         "FIRST_PERSON_SINGULAR",
         "CHANNEL",
+        "MY",
         "POWER"
       ],
       "render": {
@@ -364,6 +365,7 @@
       "concepts": [
         "HE",
         "UNLEASH",
+        "HIS",
         "POWER"
       ],
       "render": {
@@ -375,6 +377,7 @@
       "concepts": [
         "SHE",
         "CHANNEL",
+        "HER",
         "POWER"
       ],
       "render": {
@@ -386,6 +389,7 @@
       "concepts": [
         "THIRD_PERSON_PLURAL",
         "UNLEASH",
+        "THEIR",
         "POWER"
       ],
       "render": {

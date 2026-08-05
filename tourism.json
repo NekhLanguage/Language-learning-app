@@ -150,7 +150,7 @@
         "EMBASSY": { "form": "embaixada", "gender": "f", "plural": "embaixadas" },
         "ADVENTURE": { "form": "aventura", "gender": "f" },
         "ITINERARY": { "form": "itinerário", "gender": "m", "plural": "itinerários" },
-        "GUIDE": { "form": "guia", "gender": "m", "plural": "guias" },
+        "GUIDE": { "form": "guia", "gender": "m", "plural": "guias", "feminine": "guia" },
 
         "BOARD": {
           "base": "embarcar",
@@ -372,7 +372,7 @@
         "EMBASSY": { "form": "Botschaft", "gender": "f", "plural": "Botschaften" },
         "ADVENTURE": { "form": "Abenteuer", "gender": "n" },
         "ITINERARY": { "form": "Reiseplan", "gender": "m", "plural": "Reisepläne" },
-        "GUIDE": { "form": "Reiseführer", "gender": "m", "plural": "Reiseführer" },
+        "GUIDE": { "form": "Reiseführer", "gender": "m", "plural": "Reiseführer", "feminine": "Reiseführerin" },
 
         "BOARD": {
           "base": "einsteigen",
@@ -889,7 +889,7 @@
         "EMBASSY": { "form": "embajada", "gender": "f", "plural": "embajadas" },
         "ADVENTURE": { "form": "aventura", "gender": "f" },
         "ITINERARY": { "form": "itinerario", "gender": "m", "plural": "itinerarios" },
-        "GUIDE": { "form": "guía", "gender": "m", "plural": "guías" },
+        "GUIDE": { "form": "guía", "gender": "m", "plural": "guías", "feminine": "guía" },
 
         "BOARD": {
           "base": "abordar",
@@ -1051,7 +1051,7 @@
         "EMBASSY": {"form":"ambassade","gender":"f","plural":"ambassades"},
         "ADVENTURE": {"form":"aventure","gender":"f","plural":"aventures"},
         "ITINERARY": {"form":"itinéraire","gender":"m","plural":"itinéraires"},
-        "GUIDE": {"form":"guide","gender":"m","plural":"guides"},
+        "GUIDE": {"form":"guide","gender":"m","plural":"guides", "feminine": "guide" },
         "BOARD": {"base":"embarquer","1_singular":"embarque","2_singular":"embarques","3_singular":"embarque","1_plural":"embarquons","2_plural":"embarquez","3_plural":"embarquent"},
         "RESERVE": {"base":"réserver","1_singular":"réserve","2_singular":"réserves","3_singular":"réserve","1_plural":"réservons","2_plural":"réservez","3_plural":"réservent"},
         "NAVIGATE": {"base":"se repérer","1_singular":"me repère","2_singular":"te repères","3_singular":"se repère","1_plural":"nous repérons","2_plural":"vous repérez","3_plural":"se repèrent"},

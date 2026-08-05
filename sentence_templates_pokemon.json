@@ -275,6 +275,14 @@
       ],
       "render": {
         "en": "He has a high level."
+      },
+      "surface": {
+        "en": {
+          "LEVEL": "a high level"
+        },
+        "uk": {
+          "LEVEL": "високий рівень"
+        }
       }
     },
     {
@@ -334,12 +342,12 @@
     {
       "template_id": "ATTACK_IS_STRONG",
       "concepts": [
-        "ATTACK",
+        "MOVE",
         "BE",
         "STRONG"
       ],
       "render": {
-        "en": "The attack is strong."
+        "en": "A move is strong."
       }
     },
     {
@@ -383,6 +391,15 @@
       ],
       "render": {
         "en": "He defeats a trainer."
+      },
+      "surface": {
+        "en": {
+          "DEFEAT": "defeats"
+        },
+        "uk": {
+          "DEFEAT": "перемагає",
+          "TRAINER": "тренера"
+        }
       }
     },
     {
@@ -425,7 +442,15 @@
         "BURN"
       ],
       "render": {
-        "en": "The Pokémon is burned."
+        "en": "A Pokémon is burned."
+      },
+      "surface": {
+        "en": {
+          "BURN": "burned"
+        },
+        "uk": {
+          "BURN": "спалений"
+        }
       }
     },
     {
@@ -436,7 +461,15 @@
         "POISON"
       ],
       "render": {
-        "en": "The Pokémon is poisoned."
+        "en": "A Pokémon is poisoned."
+      },
+      "surface": {
+        "en": {
+          "POISON": "poisoned"
+        },
+        "uk": {
+          "POISON": "отруєний"
+        }
       }
     },
     {
@@ -447,7 +480,15 @@
         "SLEEP_STATUS"
       ],
       "render": {
-        "en": "The Pokémon is asleep."
+        "en": "A Pokémon is asleep."
+      },
+      "surface": {
+        "en": {
+          "SLEEP_STATUS": "asleep"
+        },
+        "uk": {
+          "SLEEP_STATUS": "спить"
+        }
       }
     },
     {
@@ -458,7 +499,15 @@
         "PARALYZE"
       ],
       "render": {
-        "en": "The Pokémon is paralyzed."
+        "en": "A Pokémon is paralyzed."
+      },
+      "surface": {
+        "en": {
+          "PARALYZE": "paralyzed"
+        },
+        "uk": {
+          "PARALYZE": "паралізований"
+        }
       }
     },
     {
@@ -649,6 +698,15 @@
       ],
       "render": {
         "en": "You defeat a trainer."
+      },
+      "surface": {
+        "en": {
+          "DEFEAT": "defeat"
+        },
+        "uk": {
+          "DEFEAT": "перемагаєш",
+          "TRAINER": "тренера"
+        }
       }
     },
     {
@@ -805,6 +863,15 @@
       ],
       "render": {
         "en": "She defeats a trainer."
+      },
+      "surface": {
+        "en": {
+          "DEFEAT": "defeats"
+        },
+        "uk": {
+          "DEFEAT": "перемагає",
+          "TRAINER": "тренера"
+        }
       }
     },
     {
@@ -839,6 +906,15 @@
       ],
       "render": {
         "en": "I defeat a trainer."
+      },
+      "surface": {
+        "en": {
+          "DEFEAT": "defeat"
+        },
+        "uk": {
+          "DEFEAT": "перемагаю",
+          "TRAINER": "тренера"
+        }
       }
     },
     {

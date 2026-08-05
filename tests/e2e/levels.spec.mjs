@@ -189,3 +189,36 @@ test("L7 free production: a wrong answer reveals the correct sentence", async ({
   const progress = await page.evaluate((c) => window.__app.run.progress[c], cid);
   expect(progress.lastResult).toBe(false);
 });
+
+test("L6 with a drilled adjective shows it in prompt and tiles together", async ({ page }) => {
+  // Regression net for the "They read a red book." screenshot: the prompt
+  // promised an adjective no tile could supply. Whenever the drilled
+  // modifier appears in the support prompt it must be buildable from the
+  // tile bank, and vice versa.
+  await startNewRun(page);
+  await seedAllConceptsAt(page, 6, { restrictTypes: ["adjective"] });
+
+  await expect(page.locator("#slot-container")).toBeVisible();
+
+  const cid = await lastTargetConcept(page);
+  const forms = await page.evaluate((c) => {
+    const f = (lang) => {
+      const e = window.GLOBAL_VOCAB.languages[lang]?.forms?.[c];
+      if (Array.isArray(e)) return e[0];
+      return e?.form || (typeof e === "string" ? e : "");
+    };
+    // startNewRun always begins a Portuguese course (fixtures.mjs default).
+    return { en: f("en"), target: f("pt") };
+  }, cid);
+
+  const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
+  const { correctWords } = await page.evaluate(() => window.__app.lastExercise);
+  const tiles = correctWords.join(" ").toLowerCase();
+
+  // Gendered agreement can shift the final vowel («червоний» → «червону»,
+  // "motivado" → "motivada") — compare on the stem.
+  const stem = (w) => w.toLowerCase().slice(0, Math.max(3, w.length - 1));
+  const promptHasIt = prompt.includes(forms.en.toLowerCase());
+  const tilesHaveIt = tiles.includes(stem(forms.target));
+  expect(promptHasIt).toBe(tilesHaveIt);
+});

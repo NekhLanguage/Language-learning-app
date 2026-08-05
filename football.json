@@ -103,7 +103,7 @@
 
         "MATCH":      { "form": "match", "article": "a" },
         "VICTORY":    { "form": "victory", "article": "a" },
-        "DEFEAT":     { "form": "defeat", "article": "a" },
+        "DEFEAT":     { "form": "defeat", "noArticle": true },
         "DRAW":       { "form": "draw", "article": "a" },
         "TROPHY":     { "form": "trophy", "article": "a" },
 
@@ -137,9 +137,9 @@
         "WHISTLE": { "form": "apito", "gender": "m", "plural": "apitos" },
 
         "STRIKER": { "form": "atacante", "gender": "m", "plural": "atacantes" },
-        "GOALKEEPER": { "form": "goleiro", "gender": "m", "plural": "goleiros" },
+        "GOALKEEPER": { "form": "goleiro", "gender": "m", "plural": "goleiros", "feminine": "goleira" },
         "CAPTAIN": { "form": "capitão", "gender": "m", "plural": "capitães" },
-        "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros" },
+        "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros", "feminine": "árbitra" },
         "COACH": { "form": "treinador", "gender": "m", "plural": "treinadores" },
 
         "KICK":       { "base": "chutar",     "1_singular": "chuto",      "2_singular": "chutas",     "3_singular": "chuta",      "1_plural": "chutamos",    "2_plural": "chutam",     "3_plural": "chutam" },
@@ -267,9 +267,9 @@
         "WHISTLE": { "form": "Pfeife", "gender": "f", "plural": "Pfeifen" },
 
         "STRIKER": { "form": "Stürmer", "gender": "m", "plural": "Stürmer" },
-        "GOALKEEPER": { "form": "Torwart", "gender": "m", "plural": "Torwarte" },
+        "GOALKEEPER": { "form": "Torwart", "gender": "m", "plural": "Torwarte", "feminine": "Torhüterin" },
         "CAPTAIN": { "form": "Kapitän", "gender": "m", "plural": "Kapitäne" },
-        "REFEREE": { "form": "Schiedsrichter", "gender": "m", "plural": "Schiedsrichter" },
+        "REFEREE": { "form": "Schiedsrichter", "gender": "m", "plural": "Schiedsrichter", "feminine": "Schiedsrichterin" },
         "COACH": { "form": "Trainer", "gender": "m", "plural": "Trainer" },
 
         "KICK":       { "base": "treten",       "1_singular": "trete",        "2_singular": "trittst",      "3_singular": "tritt",        "1_plural": "treten",       "2_plural": "tretet",       "3_plural": "treten" },
@@ -657,7 +657,7 @@
         "WHISTLE": { "gender": "m", "form": "свисток", "plural": "свистки" },
 
         "STRIKER": { "gender": "m", "form": "нападник", "accusative": "нападника", "plural": "нападники" },
-        "GOALKEEPER": { "gender": "m", "form": "воротар", "accusative": "воротаря", "plural": "воротарі" },
+        "GOALKEEPER": { "gender": "m", "form": "воротар", "accusative": "воротаря", "plural": "воротарі", "feminine": "воротарка" },
         "CAPTAIN": { "gender": "m", "form": "капітан", "accusative": "капітана", "plural": "капітани" },
         "REFEREE": { "gender": "m", "form": "суддя", "accusative": "суддю", "plural": "судді" },
         "COACH": { "gender": "m", "form": "тренер", "accusative": "тренера", "plural": "тренери" },
@@ -722,9 +722,9 @@
         "WHISTLE": { "form": "silbato", "gender": "m", "plural": "silbatos" },
 
         "STRIKER": { "form": "delantero", "gender": "m", "plural": "delanteros" },
-        "GOALKEEPER": { "form": "portero", "gender": "m", "plural": "porteros" },
+        "GOALKEEPER": { "form": "portero", "gender": "m", "plural": "porteros", "feminine": "portera" },
         "CAPTAIN": { "form": "capitán", "gender": "m", "plural": "capitanes" },
-        "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros" },
+        "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros", "feminine": "árbitra" },
         "COACH": { "form": "entrenador", "gender": "m", "plural": "entrenadores" },
 
         "KICK":       { "base": "patear",       "1_singular": "pateo",       "2_singular": "pateas",      "3_singular": "patea",       "1_plural": "pateamos",    "2_plural": "pateáis",    "3_plural": "patean" },
@@ -785,9 +785,9 @@
         "STADIUM": {"form":"stade","gender":"m","plural":"stades"},
         "WHISTLE": {"form":"sifflet","gender":"m","plural":"sifflets"},
         "STRIKER": {"form":"attaquant","gender":"m","plural":"attaquants"},
-        "GOALKEEPER": {"form":"gardien","gender":"m","plural":"gardiens"},
+        "GOALKEEPER": {"form":"gardien","gender":"m","plural":"gardiens", "feminine": "gardienne" },
         "CAPTAIN": {"form":"capitaine","gender":"m","plural":"capitaines"},
-        "REFEREE": {"form":"arbitre","gender":"m","plural":"arbitres"},
+        "REFEREE": {"form":"arbitre","gender":"m","plural":"arbitres", "feminine": "arbitre" },
         "COACH": {"form":"entraîneur","gender":"m","plural":"entraîneurs"},
         "KICK": {"base":"frapper","1_singular":"frappe","2_singular":"frappes","3_singular":"frappe","1_plural":"frappons","2_plural":"frappez","3_plural":"frappent"},
         "PASS": {"base":"passer","1_singular":"passe","2_singular":"passes","3_singular":"passe","1_plural":"passons","2_plural":"passez","3_plural":"passent"},
@@ -895,9 +895,9 @@
         "STADIUM": {"form":"stadio","gender":"m","plural":"stadi"},
         "WHISTLE": {"form":"fischietto","gender":"m","plural":"fischietti"},
         "STRIKER": {"form":"attaccante","gender":"m","plural":"attaccanti"},
-        "GOALKEEPER": {"form":"portiere","gender":"m","plural":"portieri"},
+        "GOALKEEPER": {"form":"portiere","gender":"m","plural":"portieri", "feminine": "portiera" },
         "CAPTAIN": {"form":"capitano","gender":"m","plural":"capitani"},
-        "REFEREE": {"form":"arbitro","gender":"m","plural":"arbitri"},
+        "REFEREE": {"form":"arbitro","gender":"m","plural":"arbitri", "feminine": "arbitra" },
         "COACH": {"form":"allenatore","gender":"m","plural":"allenatori"},
         "KICK": {"base":"calciare","1_singular":"calcio","2_singular":"calci","3_singular":"calcia","1_plural":"calciamo","2_plural":"calciate","3_plural":"calciano"},
         "PASS": {"base":"passare","1_singular":"passo","2_singular":"passi","3_singular":"passa","1_plural":"passiamo","2_plural":"passate","3_plural":"passano"},

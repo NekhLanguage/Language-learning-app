@@ -125,10 +125,10 @@
       "forms": {
 
         "POKEMON": { "form": "pokémon", "gender": "m", "invariantPlural": true },
-        "TRAINER": { "form": "treinador", "gender": "m", "plural": "treinadores" },
+        "TRAINER": { "form": "treinador", "gender": "m", "plural": "treinadores", "feminine": "treinadora" },
         "GYM": { "form": "ginásio", "gender": "m" },
         "LEAGUE": { "form": "liga", "gender": "f", "plural": "ligas" },
-        "GYM_LEADER": { "form": "líder de ginásio", "gender": "m", "plural": "líderes de ginásio" },
+        "GYM_LEADER": { "form": "líder de ginásio", "gender": "m", "plural": "líderes de ginásio", "feminine": "líder de ginásio" },
         "ELITE_FOUR": { "form": "elite dos quatro" },
         "POKEMON_CENTER": { "form": "centro pokémon", "gender": "m" },
         "FOREST": { "form": "floresta", "gender": "f", "plural": "florestas" },
@@ -852,10 +852,10 @@
   "forms": {
 
     "POKEMON": { "gender": "m", "form": "покемон", "accusative": "покемона", "invariantPlural": true },
-    "TRAINER": { "gender": "m", "form": "тренер", "accusative": "тренера", "plural": "тренери" },
+    "TRAINER": { "gender": "m", "form": "тренер", "accusative": "тренера", "plural": "тренери", "feminine": "тренерка" },
     "GYM": { "gender": "m", "form": "зал", "genitive": "залу" },
     "LEAGUE": { "gender": "f", "form": "ліга", "plural": "ліги", "genitive": "ліги" },
-    "GYM_LEADER": { "gender": "m", "form": "лідер залу", "accusative": "лідера залу", "plural": "лідери залів" },
+    "GYM_LEADER": { "gender": "m", "form": "лідер залу", "accusative": "лідера залу", "plural": "лідери залів", "feminine": "лідерка залу" },
     "ELITE_FOUR": { "gender": "f", "form": "еліта чотири" },
     "POKEMON_CENTER": { "gender": "m", "form": "центр покемонів", "genitive": "центру покемонів" },
     "FOREST": { "gender": "m", "form": "ліс", "plural": "ліси" },
@@ -917,10 +917,10 @@
   "forms": {
 
     "POKEMON": { "form": "pokémon", "gender": "m", "invariantPlural": true },
-    "TRAINER": { "form": "entrenador", "gender": "m", "plural": "entrenadores" },
+    "TRAINER": { "form": "entrenador", "gender": "m", "plural": "entrenadores", "feminine": "entrenadora" },
     "GYM": { "form": "gimnasio", "gender": "m" },
     "LEAGUE": { "form": "liga", "gender": "f", "plural": "ligas" },
-    "GYM_LEADER": { "form": "líder de gimnasio", "gender": "m", "plural": "líderes de gimnasio" },
+    "GYM_LEADER": { "form": "líder de gimnasio", "gender": "m", "plural": "líderes de gimnasio", "feminine": "líder de gimnasio" },
     "ELITE_FOUR": { "form": "alto mando" },
     "POKEMON_CENTER": { "form": "centro pokémon", "gender": "m" },
     "FOREST": { "form": "bosque", "gender": "m", "plural": "bosques" },
@@ -981,10 +981,10 @@
       "label": "German",
       "forms": {
         "POKEMON": {"form":"Pokémon","gender":"n","plural":"Pokémon"},
-        "TRAINER": {"form":"Trainer","gender":"m","plural":"Trainer"},
+        "TRAINER": {"form":"Trainer","gender":"m","plural":"Trainer", "feminine": "Trainerin" },
         "GYM": {"form":"Arena","gender":"f","plural":"Arenen"},
         "LEAGUE": {"form":"Liga","gender":"f","plural":"Ligen"},
-        "GYM_LEADER": {"form":"Arenaleiter","gender":"m","plural":"Arenaleiter"},
+        "GYM_LEADER": {"form":"Arenaleiter","gender":"m","plural":"Arenaleiter", "feminine": "Arenaleiterin" },
         "ELITE_FOUR": {"form":"Top Vier","gender":"f","plural":"Top Vier"},
         "POKEMON_CENTER": {"form":"Pokémon-Center","gender":"n","plural":"Pokémon-Center"},
         "FOREST": {"form":"Wald","gender":"m","plural":"Wälder"},
@@ -1093,10 +1093,10 @@
       "label": "French",
       "forms": {
         "POKEMON": {"form":"pokémon","gender":"m","plural":"pokémon"},
-        "TRAINER": {"form":"dresseur","gender":"m","plural":"dresseurs"},
+        "TRAINER": {"form":"dresseur","gender":"m","plural":"dresseurs", "feminine": "dresseuse" },
         "GYM": {"form":"arène","gender":"f","plural":"arènes"},
         "LEAGUE": {"form":"ligue","gender":"f","plural":"ligues"},
-        "GYM_LEADER": {"form":"champion d'arène","gender":"m","plural":"champions d'arène"},
+        "GYM_LEADER": {"form":"champion d'arène","gender":"m","plural":"champions d'arène", "feminine": "championne d'arène" },
         "ELITE_FOUR": {"form":"conseil 4","gender":"m","plural":"conseils 4"},
         "POKEMON_CENTER": {"form":"centre pokémon","gender":"m","plural":"centres pokémon"},
         "FOREST": {"form":"forêt","gender":"f","plural":"forêts"},
@@ -1261,10 +1261,10 @@
       "label": "Italian",
       "forms": {
         "POKEMON": {"form":"pokémon","gender":"m","plural":"pokémon"},
-        "TRAINER": {"form":"allenatore","gender":"m","plural":"allenatori"},
+        "TRAINER": {"form":"allenatore","gender":"m","plural":"allenatori", "feminine": "allenatrice" },
         "GYM": {"form":"palestra","gender":"f","plural":"palestre"},
         "LEAGUE": {"form":"lega","gender":"f","plural":"leghe"},
-        "GYM_LEADER": {"form":"capopalestra","gender":"m","plural":"capipalestra"},
+        "GYM_LEADER": {"form":"capopalestra","gender":"m","plural":"capipalestra", "feminine": "capopalestra" },
         "ELITE_FOUR": {"form":"superquattro","gender":"m","plural":"superquattro"},
         "POKEMON_CENTER": {"form":"centro pokémon","gender":"m","plural":"centri pokémon"},
         "FOREST": {"form":"foresta","gender":"f","plural":"foreste"},
