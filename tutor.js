@@ -316,7 +316,7 @@ async function init() {
   }
   addMessage(
     "status",
-    `Say hi to start — try greeting your tutor in ${state.targetLabel}.`
+    `Say hi to start — try greeting Anna in ${state.targetLabel}.`
   );
 
   els.send.addEventListener("click", sendMessage);

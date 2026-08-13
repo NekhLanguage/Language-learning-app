@@ -70,7 +70,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.1.3";
+const APP_DATA_VERSION = "1.2.0";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 const CORE_BUNDLES = [
@@ -542,7 +542,7 @@ function reconcileRecognitionCompletion(user) {
 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v1.1.0";
+  const APP_VERSION = "v1.2.0";
   const MAX_LEVEL = 7;
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
@@ -4672,3 +4672,32 @@ window.__app = {
   backfillReleasedBundles,
 };
 });
+
+// --- Anna (AI tutor) start-screen entry ----------------------------------
+// The tutor button ships locked (visible but unclickable). It only unlocks
+// when the tutor function confirms this email is on the invite allowlist —
+// mode:"ping" is a pure access check, no model call. Everyone else keeps
+// seeing the locked teaser, and the real gate stays server-side.
+(async function initTutorEntry() {
+  const btn = document.getElementById("link-tutor");
+  if (!btn) return;
+  const email = (localStorage.getItem("zth_email") || "").trim();
+  if (!email) return;
+  try {
+    const res = await fetch("/.netlify/functions/tutor", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mode: "ping", email }),
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data && data.allowed) {
+      btn.classList.remove("locked");
+      btn.removeAttribute("aria-disabled");
+      btn.href = "tutor.html";
+      btn.textContent = "Anna — AI Tutor";
+    }
+  } catch (_) {
+    // Network failure: button simply stays locked.
+  }
+})();
