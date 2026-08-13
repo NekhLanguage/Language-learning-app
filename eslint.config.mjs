@@ -34,7 +34,7 @@ export default [
       "app.js", "audioengine.js", "languages.js", "user_state.js",
       "sentence_engine.mjs", "progression.mjs", "storage.mjs",
       "capabilities.mjs", "coaching.mjs", "display.mjs", "grading.mjs",
-      "speech.mjs",
+      "speech.mjs", "tutor.js", "tutor_profile.mjs",
     ],
     languageOptions: {
       ecmaVersion: 2023,

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zero to Hero – AI Tutor</title>
+  <meta name="theme-color" content="#4a144c" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Test-version tutor page — self-contained layout on top of the app's
+       base stylesheet. */
+    .tutor-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      box-sizing: border-box;
+      gap: 12px;
+    }
+    .tutor-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .tutor-header h1 { font-size: 1.2rem; margin: 0; }
+    .tutor-header a { color: inherit; }
+    .tutor-prefs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .tutor-prefs label { display: flex; flex-direction: column; gap: 2px; }
+    .tutor-prefs select, .tutor-prefs input[type="text"] {
+      font: inherit;
+      padding: 4px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.25);
+    }
+    #tutor-note { min-width: 220px; flex: 1; }
+    #tutor-chat {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 8px 4px;
+      min-height: 300px;
+    }
+    .tutor-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .tutor-msg.user {
+      align-self: flex-end;
+      background: #4a144c;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .tutor-msg.assistant {
+      align-self: flex-start;
+      background: rgba(0,0,0,0.07);
+      border-bottom-left-radius: 4px;
+    }
+    .tutor-msg.status {
+      align-self: center;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      background: none;
+    }
+    #tutor-input-row { display: flex; gap: 8px; }
+    #tutor-input {
+      flex: 1;
+      font: inherit;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.25);
+    }
+    .tutor-btn {
+      font: inherit;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: none;
+      background: #4a144c;
+      color: #fff;
+      cursor: pointer;
+    }
+    .tutor-btn[disabled] { opacity: 0.5; cursor: default; }
+    .tutor-btn.secondary { background: rgba(0,0,0,0.12); color: inherit; }
+    #tutor-gate { text-align: center; padding: 40px 16px; }
+  </style>
+</head>
+<body>
+  <div class="tutor-wrap">
+    <div class="tutor-header">
+      <h1>AI Tutor <span id="tutor-lang-label"></span></h1>
+      <a href="index.html">← back to the app</a>
+    </div>
+
+    <div id="tutor-gate" hidden></div>
+
+    <div id="tutor-main" hidden>
+      <div class="tutor-prefs">
+        <label>Corrections
+          <select id="pref-correction">
+            <option value="light">Light — just recast</option>
+            <option value="medium" selected>Medium — short notes</option>
+            <option value="deep">Deep — full explanations</option>
+          </select>
+        </label>
+        <label>Challenge
+          <select id="pref-challenge">
+            <option value="comfort">Comfort zone</option>
+            <option value="stretch" selected>Stretch me</option>
+            <option value="push">Push me</option>
+          </select>
+        </label>
+        <label>Language
+          <select id="pref-languagemix">
+            <option value="immersion">Target language only</option>
+            <option value="balanced" selected>Balanced</option>
+            <option value="support">Explain freely</option>
+          </select>
+        </label>
+        <label>Anything else your tutor should know
+          <input type="text" id="tutor-note" placeholder="e.g. I'm learning for a trip in June" />
+        </label>
+      </div>
+
+      <div id="tutor-chat" aria-live="polite"></div>
+
+      <div id="tutor-input-row">
+        <input type="text" id="tutor-input" placeholder="Type your message…" autocomplete="off" />
+        <button class="tutor-btn" id="tutor-send" type="button">Send</button>
+        <button class="tutor-btn secondary" id="tutor-end" type="button" title="Wraps up and saves what your tutor learned about you">End session</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="tutor.js"></script>
+</body>
+</html>

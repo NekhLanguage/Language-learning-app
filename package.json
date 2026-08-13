@@ -18,6 +18,7 @@
     "validate:gloss:update": "node validation/validate-gloss-coverage.mjs --update-baseline"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.0",
     "@google-cloud/text-to-speech": "^5.0.0"
   },
   "devDependencies": {
