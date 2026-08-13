@@ -6,7 +6,8 @@
       "Bash(node add_alphabets.js)",
       "Bash(rm add_alphabets.js)",
       "Bash(cp /root/.claude/projects/-home-user-Language-learning-app/15ae1277-38d2-5c38-996d-6387338e8758/tool-results/mcp-Notion-notion-fetch-1786190554984.txt /tmp/angus_out.txt)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "mcp__Claude_Code_Remote__unsubscribe_pr_activity"
     ]
   }
 }
