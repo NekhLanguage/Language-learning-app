@@ -5,6 +5,9 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "zisi"
+  # The tutor function reads its system-prompt markdown at runtime; zisi's
+  # static analysis won't see a plain fs.readFileSync, so include it explicitly.
+  included_files = ["netlify/functions/tutor-instructions.md"]
 
 [build.environment]
   NODE_VERSION = "18"

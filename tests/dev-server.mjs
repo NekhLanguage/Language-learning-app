@@ -108,6 +108,26 @@ async function handleFunction(name, req, res, url) {
     case "submitBug": {
       return sendJson(res, 200, { ok: true });
     }
+    case "tutor": {
+      // Canned tutor so the chat page works offline. Chat mode echoes; summary
+      // mode returns one fake new word so the personal-vocab path is exercised.
+      if (body.mode === "summary") {
+        return sendJson(res, 200, {
+          summary: {
+            sessionSummary: "Dev-stub session: practiced greetings.",
+            wins: ["Greeted confidently"],
+            struggles: ["Verb endings"],
+            newWords: [{ word: "mercado", translation: "market", note: "dev stub word" }],
+            nextFocus: "Keep practicing verb endings.",
+          },
+        });
+      }
+      const msgs = Array.isArray(body.messages) ? body.messages : [];
+      const last = msgs.length ? String(msgs[msgs.length - 1].content || "") : "";
+      return sendJson(res, 200, {
+        reply: `Olá! (dev stub tutor in ${body.targetLang || "?"}) You said: ${last}`,
+      });
+    }
     case "tts": {
       const text = url.searchParams.get("text") || body.text || "";
       if (!text) return sendJson(res, 400, { error: "Missing text" });
