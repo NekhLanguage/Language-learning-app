@@ -1831,3 +1831,10 @@ button.wrong {
   color: var(--danger-text);
   text-decoration: underline dotted;
 }
+
+/* Anna (AI tutor) start-screen entry: locked = visible but unclickable. */
+a.secondary.locked {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: default;
+}

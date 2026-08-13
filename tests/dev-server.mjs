@@ -109,8 +109,13 @@ async function handleFunction(name, req, res, url) {
       return sendJson(res, 200, { ok: true });
     }
     case "tutor": {
-      // Canned tutor so the chat page works offline. Chat mode echoes; summary
-      // mode returns one fake new word so the personal-vocab path is exercised.
+      // Canned tutor so the chat page works offline. Ping mirrors the real
+      // allowlist shape; chat mode echoes; summary mode returns one fake new
+      // word so the personal-vocab path is exercised.
+      if (body.mode === "ping") {
+        const email = String(body.email || "").toLowerCase();
+        return sendJson(res, 200, { allowed: !!email && !email.includes("noaccess") });
+      }
       if (body.mode === "summary") {
         return sendJson(res, 200, {
           summary: {

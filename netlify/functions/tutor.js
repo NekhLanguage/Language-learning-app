@@ -136,11 +136,21 @@ const SUMMARY_SCHEMA = {
 exports.handler = async (event) => {
   try {
     if (event.httpMethod !== "POST") return { statusCode: 405, body: "" };
+
+    const body = JSON.parse(event.body || "{}");
+
+    // Access probe for the app's start-screen button. Always 200 (a 403 here
+    // would trip the e2e harness's failed-request detector), never calls the
+    // model, and doesn't require the API key to be configured.
+    if (body.mode === "ping") {
+      const allowed = tutorEnabled(body.email) && (await hasAccess(body.email));
+      return json(200, { allowed });
+    }
+
     if (!process.env.ANTHROPIC_API_KEY) {
       return json(503, { error: "Tutor not configured (missing API key)" });
     }
 
-    const body = JSON.parse(event.body || "{}");
     const mode = body.mode === "summary" ? "summary" : "chat";
 
     if (!tutorEnabled(body.email)) {
