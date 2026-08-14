@@ -36,6 +36,15 @@ export function tierConcepts(run) {
   return tiers;
 }
 
+// The level tier is computed HERE, in code, and handed to the model as a
+// fact — models are unreliable at counting long word lists themselves.
+export function levelTier(tiers) {
+  const known = tiers.production.length + tiers.practicing.length;
+  if (known < 50) return { key: "ABSOLUTE BEGINNER", known, rule: "sentences of 3–6 words, one short question, gloss anything new" };
+  if (known < 150) return { key: "EARLY LEARNER", known, rule: "single-clause sentences up to ~8 words, one question" };
+  return { key: "DEVELOPING", known, rule: "normal i+1 conversation" };
+}
+
 function wordList(cids, targetForms, supportForms) {
   return cids
     .map((cid) => {
@@ -55,8 +64,13 @@ function wordList(cids, targetForms, supportForms) {
 export function buildProfileText(opts) {
   const { run, targetForms, supportForms, targetLabel, supportLabel } = opts;
   const tiers = tierConcepts(run);
+  const tier = levelTier(tiers);
   const lines = [];
 
+  lines.push(
+    `LEVEL TIER (computed by the app — do not re-estimate): ${tier.key} ` +
+      `(${tier.known} production+practicing words). Calibration: ${tier.rule}.`
+  );
   lines.push(
     `Learning ${targetLabel} (support language: ${supportLabel}). ` +
       `App session number: ${run?.sessionNumber ?? 1}. ` +

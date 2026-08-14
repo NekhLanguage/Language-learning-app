@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import {
   baseForm,
   tierConcepts,
+  levelTier,
   buildProfileText,
   buildMemoryText,
   pickTutorRun,
@@ -60,6 +61,28 @@ test("tierConcepts only includes released concepts", () => {
   run.progress.SECRET = { level: 7, completed: true }; // not released
   const tiers = tierConcepts(run);
   assert.ok(!tiers.production.includes("SECRET"));
+});
+
+test("levelTier maps production+practicing counts to tiers", () => {
+  const mk = (n) => ({ production: Array(n).fill("X"), practicing: [], seen: [] });
+  assert.equal(levelTier(mk(0)).key, "ABSOLUTE BEGINNER");
+  assert.equal(levelTier(mk(49)).key, "ABSOLUTE BEGINNER");
+  assert.equal(levelTier(mk(50)).key, "EARLY LEARNER");
+  assert.equal(levelTier(mk(149)).key, "EARLY LEARNER");
+  assert.equal(levelTier(mk(150)).key, "DEVELOPING");
+  assert.equal(levelTier(mk(3)).known, 3);
+});
+
+test("buildProfileText leads with the computed level tier", () => {
+  const text = buildProfileText({
+    run: fakeRun(),
+    targetForms: TARGET_FORMS,
+    supportForms: SUPPORT_FORMS,
+    targetLabel: "Spanish",
+    supportLabel: "English",
+    personalVocab: [],
+  });
+  assert.match(text, /^LEVEL TIER \(computed by the app — do not re-estimate\): ABSOLUTE BEGINNER \(3 production\+practicing words\)/);
 });
 
 test("buildProfileText renders tiers with target = support pairs", () => {
