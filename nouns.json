@@ -44,6 +44,7 @@
       "type": "noun",
       "semantic_role": "place",
       "countable": true,
+      "noModifier": true,
       "core": true,
       "interaction_profile": {
         "see_translate": true,

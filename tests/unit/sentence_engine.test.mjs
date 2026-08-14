@@ -9,6 +9,7 @@ import { loadVocab, loadLanguageCodes, loadTemplates } from "../../validation/lo
 import {
   configureEngine,
   buildSentence,
+  buildSentenceWithRules,
   getVerbForm,
   orderedConceptsForTemplate,
   frenchElision,
@@ -564,6 +565,60 @@ test("a seeded drilled modifier appears in prompt, tiles, and answer alike", () 
   // And the suppressed case stays modifier-free.
   const plain = { adj_BOOK: null, num_BOOK: null };
   assert.equal(buildSentence("uk", tpl, null, plain), "Він читає книгу.");
+});
+
+test("an authored surface the engine cannot derive wins over injected modifiers", () => {
+  // User-reported: "You go red home." / would-be «Ти йдеш червоний дім».
+  // Injecting an adjective used to discard the authored adverbial surface
+  // («додому», "eve") and rebuild the slot from the dictionary form. The
+  // authored surface now wins outright; hadModifier stays false so L6/L7
+  // (and L2's support-sentence choice) know the modifier did not land.
+  const tpl = tplById("I_GO_HOME");
+  const sc = () => ({ adj_HOME: "RED", num_HOME: null });
+  const uk = buildSentenceWithRules("uk", tpl, null, sc());
+  assert.equal(uk.sentence, "Я йду додому.");
+  assert.equal(uk.hadModifier, false);
+  const tr = buildSentenceWithRules("tr", tpl, null, sc());
+  assert.equal(tr.sentence, "Ben eve giderim.");
+  assert.equal(tr.hadModifier, false);
+  // Surfaces the engine derives identically anyway (the regular accusative
+  // «книгу») keep accepting modifiers — «червону книгу» must not regress.
+  const book = buildSentenceWithRules("uk", tplById("HE_READ_BOOK"),
+    null, { adj_BOOK: "RED", num_BOOK: null });
+  assert.equal(book.sentence, "Він читає червону книгу.");
+  assert.equal(book.hadModifier, true);
+});
+
+test("hadModifier reports the render fact, not the seeding intent", () => {
+  // The L6/L7 guard relies on this asymmetry: the same seeded cache lands
+  // the adjective in the en support but not in a target whose render path
+  // cannot express it — a case-governed uk noun, or the tr have-possession
+  // structure. The exercise must then bail rather than show a prompt word
+  // with no matching tile (the "They have red clothes." screenshot).
+  const gym = tplById("I_GO_TO_GYM");
+  assert.equal(buildSentenceWithRules("uk", gym, null,
+    { adj_GYM: "BIG", num_GYM: null }).hadModifier, false);
+  assert.equal(buildSentenceWithRules("en", gym, null,
+    { adj_GYM: "BIG", num_GYM: null }).hadModifier, true);
+  const clothes = tplById("WE_HAVE_CLOTHES");
+  assert.equal(buildSentenceWithRules("tr", clothes, null,
+    { adj_CLOTHES: "RED", num_CLOTHES: null }).hadModifier, false);
+  // uk expresses it fine — and reports so.
+  const uk = buildSentenceWithRules("uk", clothes, null,
+    { adj_CLOTHES: "RED", num_CLOTHES: null });
+  assert.equal(uk.sentence, "Ми маємо червоний одяг.");
+  assert.equal(uk.hadModifier, true);
+});
+
+test("noModifier nouns reject drilled and random modifiers in every language", () => {
+  // HOME renders adverbially ("home", «додому», "eve") — "red home" is not
+  // a noun phrase in any of them, so neither the drilled-modifier seeding
+  // nor random injection may ever pick it.
+  assert.equal(adjectiveSuitsNoun("RED", "HOME"), false);
+  for (const lc of ["en", "uk", "pt", "tr", "it"]) {
+    assert.equal(isModifierCompatible(lc, "RED", "HOME"), false, `adj ${lc}`);
+    assert.equal(isModifierCompatible(lc, "TWO", "HOME"), false, `num ${lc}`);
+  }
 });
 
 test("TABLE declines through the uk preposition cases", () => {
