@@ -204,6 +204,7 @@ exports.handler = async (event) => {
         messages,
       });
       if (response.stop_reason === "refusal") {
+        console.warn("TUTOR REFUSAL:", JSON.stringify(response.stop_details || null));
         return json(200, { reply: null, refused: true });
       }
       const reply = response.content
@@ -211,6 +212,14 @@ exports.handler = async (event) => {
         .map((b) => b.text)
         .join("")
         .trim();
+      if (!reply) {
+        // Diagnosable in the Netlify function logs if it ever recurs.
+        console.warn(
+          "TUTOR EMPTY REPLY:",
+          response.stop_reason,
+          response.content.map((b) => b.type).join(",")
+        );
+      }
       return json(200, { reply });
     }
 
