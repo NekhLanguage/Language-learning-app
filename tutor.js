@@ -33,6 +33,12 @@ const els = {
   prefChallenge: document.getElementById("pref-challenge"),
   prefLanguageMix: document.getElementById("pref-languagemix"),
   note: document.getElementById("tutor-note"),
+  settings: document.getElementById("tutor-settings"),
+  settingsBtn: document.getElementById("tutor-settings-btn"),
+  settingsTitle: document.getElementById("tutor-settings-title"),
+  settingsSave: document.getElementById("tutor-settings-save"),
+  settingsClose: document.getElementById("tutor-settings-close"),
+  settingsHint: document.getElementById("tutor-settings-hint"),
 };
 
 const state = {
@@ -89,6 +95,34 @@ function restorePreferences() {
 
 function persistPreferences() {
   localStorage.setItem(prefsStoreKey(), JSON.stringify(currentPreferences()));
+}
+
+function hasSavedPrefs() {
+  return localStorage.getItem(prefsStoreKey()) !== null;
+}
+
+// One panel, two modes: "setup" (first visit, blocking, no close) and
+// "settings" (later edits via the ⚙️ button, closable without saving).
+function openSettings(mode) {
+  els.settingsTitle.textContent = mode === "setup" ? "Set up Anna" : "Settings";
+  els.settingsSave.textContent = mode === "setup" ? "Start talking" : "Save";
+  els.settingsClose.hidden = mode === "setup";
+  els.settingsHint.hidden = mode !== "setup";
+  els.settings.dataset.mode = mode;
+  els.settings.hidden = false;
+}
+
+function saveSettings() {
+  const mode = els.settings.dataset.mode;
+  persistPreferences();
+  els.settings.hidden = true;
+  if (mode === "setup") {
+    addMessage("status", "Saved — change these anytime with the ⚙️ button.");
+    addMessage("status", `Say hi to start — try greeting Anna in ${state.targetLabel}.`);
+  } else {
+    addMessage("status", "Settings saved.");
+  }
+  els.input.focus();
 }
 
 function showGate(html) {
@@ -174,6 +208,9 @@ async function callTutor(mode) {
     body: JSON.stringify(buildRequestBody(mode)),
   });
   if (!res.ok) {
+    if (res.status === 503) {
+      throw new Error("Anna isn't fully set up on the server yet — missing API key");
+    }
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || `Tutor request failed (${res.status})`);
   }
@@ -184,7 +221,6 @@ async function sendMessage() {
   const text = els.input.value.trim();
   if (!text || state.busy) return;
   els.input.value = "";
-  persistPreferences();
 
   state.messages.push({ role: "user", content: text });
   addMessage("user", text);
@@ -335,15 +371,23 @@ async function startWithRun(targetLang, run) {
 
   restorePreferences();
   els.main.hidden = false;
+  els.settingsBtn.hidden = false;
 
   const store = loadTutorStore();
   if (store.sessions.length && store.sessions[0].nextFocus) {
     addMessage("status", `Last time's focus: ${store.sessions[0].nextFocus}`);
   }
-  addMessage(
-    "status",
-    `Say hi to start — try greeting Anna in ${state.targetLabel}.`
-  );
+
+  // First visit for this language: ask the preferences once, up front.
+  // Afterwards they're saved and live behind the ⚙️ button.
+  if (!hasSavedPrefs()) {
+    openSettings("setup");
+  } else {
+    addMessage(
+      "status",
+      `Say hi to start — try greeting Anna in ${state.targetLabel}.`
+    );
+  }
 
   els.send.addEventListener("click", sendMessage);
   els.input.addEventListener("keydown", (e) => {
@@ -353,6 +397,12 @@ async function startWithRun(targetLang, run) {
     }
   });
   els.end.addEventListener("click", endSession);
+  els.settingsBtn.addEventListener("click", () => openSettings("settings"));
+  els.settingsSave.addEventListener("click", saveSettings);
+  els.settingsClose.addEventListener("click", () => {
+    restorePreferences(); // discard unsaved edits
+    els.settings.hidden = true;
+  });
   els.input.focus();
 }
 
