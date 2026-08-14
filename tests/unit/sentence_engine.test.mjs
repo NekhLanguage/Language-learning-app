@@ -19,6 +19,8 @@ import {
   surfaceForm,
   adjectiveSuitsNoun,
   isModifierCompatible,
+  copularGenderClash,
+  templateGenderClash,
   nounWithPossessive,
   blankSentence,
   ZERO_PRESENT_COPULA,
@@ -641,4 +643,37 @@ test("TABLE templates match their authored English", () => {
   // I_GO_TO_TABLE reads definite in the authored English ("the table") but
   // generates indefinite — the same accepted divergence as I_GO_TO_HOUSE.
   assert.equal(buildSentence("en", tplById("I_GO_TO_TABLE")), "I go to a table.");
+});
+
+test("copular gender clash blocks mismatched subject/predicate pairs", () => {
+  // The guard behind both templateEligible() and the subject-variation
+  // filter in maybeVarySubject() — the swap that shipped "He is a girl."
+  assert.equal(copularGenderClash("HE", "GIRL"), true);
+  assert.equal(copularGenderClash("SHE", "BOY"), true);
+  assert.equal(copularGenderClash("SHE", "GIRL"), false);
+  assert.equal(copularGenderClash("HE", "BOY"), false);
+  // Ungendered participants never clash: "I am a girl", "They are girls"
+  // and gender-neutral predicates ("He is a leader") all stay allowed.
+  assert.equal(copularGenderClash("FIRST_PERSON_SINGULAR", "GIRL"), false);
+  assert.equal(copularGenderClash("THIRD_PERSON_PLURAL", "GIRL"), false);
+  assert.equal(copularGenderClash("HE", "FOOD"), false);
+});
+
+test("templateGenderClash flags a copular template after a bad subject swap", () => {
+  const tpl = tplById("YOU_ARE_GIRL");
+  assert.ok(tpl, "core template YOU_ARE_GIRL exists");
+  assert.equal(templateGenderClash(tpl), false);
+  // The same template with its subject rotated to HE — the exact shape
+  // maybeVarySubject() builds — must be recognized as a clash.
+  const swapped = {
+    ...tpl,
+    concepts: tpl.concepts.map((c) => (c === "SECOND_PERSON" ? "HE" : c)),
+  };
+  assert.equal(templateGenderClash(swapped), true);
+  // Non-copular templates are exempt: "He has a girl[friend]"-shaped
+  // transitives don't identify subject with object.
+  assert.equal(
+    templateGenderClash({ concepts: ["HE", "HAVE", "GIRL"] }),
+    false
+  );
 });
