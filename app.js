@@ -542,7 +542,7 @@ function reconcileRecognitionCompletion(user) {
 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v1.2.1";
+  const APP_VERSION = "v1.2.2";
   const MAX_LEVEL = 7;
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
@@ -4134,6 +4134,13 @@ function maybeVarySubject(tpl, targetConcept) {
     if (c === currentSubject) return false;
     const m = window.GLOBAL_VOCAB.concepts[c];
     if (m?.type !== "pronoun") return false;
+    // In a copular template the subject identifies with the predicate noun,
+    // so a gendered pronoun must not clash with it — swapping YOU into HE
+    // in front of GIRL produced "He is a girl." Authored templates get the
+    // same guard via templateGenderClash() in templateEligible().
+    if (isCopular && tpl.concepts.some(n =>
+      window.GLOBAL_VOCAB.concepts[n]?.type === "noun" && copularGenderClash(c, n)
+    )) return false;
     const st = ensureProgress(c);
     return !st.completed && st.level >= 4;
   });
