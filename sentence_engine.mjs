@@ -979,6 +979,9 @@ function adjectiveSuitsNoun(adjCid, nounCid) {
   const adjMeta  = vocab().concepts[adjCid];
   const nounMeta = vocab().concepts[nounCid];
   if (!adjMeta || !nounMeta) return true;
+  // Nouns whose usual rendering is adverbial ("home" → «додому», "eve")
+  // never take attributive modifiers — "red home" isn't a noun phrase.
+  if (nounMeta.noModifier) return false;
   return adjectiveRoleAllowsNoun(adjMeta.semantic_role, nounMeta.semantic_role);
 }
 
@@ -988,6 +991,9 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
   // An explicit countable:false always wins — gender data (added for
   // article/agreement) must not re-open mass nouns to "tre acqua".
   if (nounMeta?.countable === false) return false;
+  // noModifier: the noun's usual rendering is adverbial ("home" → «додому»),
+  // so neither adjectives nor numbers can attach to it in any language.
+  if (nounMeta?.noModifier) return false;
   const canTakeModifier = nounMeta?.countable || nounEntry.article || nounEntry.gender;
   if (!canTakeModifier) return false;
 
@@ -1814,6 +1820,24 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   let bareNoun = useCopularPlural
     ? (lang === "en" ? pluralize(formOf(lang, cid)) : pluralFormOf(lang, cid))
     : null;
+
+  // An authored surface the engine cannot derive itself («додому», "eve")
+  // IS the correct rendering of this slot — injecting a modifier would
+  // discard it and rebuild from the dictionary form («Ти йдеш червоний
+  // дім»: nominative, motion sense lost). The authored surface wins outright
+  // and injection is skipped; hadModifier stays false so callers know the
+  // modifier did not land. Surfaces the engine derives identically anyway
+  // («книгу», the regular accusative) keep accepting modifiers. Article
+  // languages store surfaces bare — same containment guard as below.
+  if (!useCopularPlural) {
+    const surfaceOverride = tpl.surface?.[lang]?.[cid];
+    if (typeof surfaceOverride === "string" &&
+        surfaceOverride !== formOf(lang, cid) &&
+        (!ARTICLE_LANGS.has(lang) || surfaceOverride.includes(formOf(lang, cid))) &&
+        surfaceOverride !== phrase) {
+      return surfaceOverride;
+    }
+  }
 
   let adjectiveWord = null;
   let adjectiveCid = null;

@@ -223,6 +223,75 @@ test("L6 with a drilled adjective shows it in prompt and tiles together", async 
   expect(promptHasIt).toBe(tilesHaveIt);
 });
 
+// Ukrainian (rather than Portuguese) exercises the engine paths that can
+// legitimately drop a modifier — oblique case «до залу», authored adverbials
+// «додому». Gender/case agreement can rewrite the ending well before the
+// last letter («новий» → «нову»), so compare on a short shared prefix.
+const sharesStem = (tile, form) => {
+  const a = tile.toLowerCase();
+  const b = form.toLowerCase();
+  const n = Math.min(3, b.length);
+  return a.slice(0, n) === b.slice(0, n);
+};
+
+test("uk L6: a drilled adjective in the prompt is its own placeable tile", async ({ page }) => {
+  // Regression net for the "They have red clothes." / «вони|мають|одяг»
+  // screenshots: the en prompt promised an adjective the uk tile bank could
+  // not supply. L6 now bails when the target render can't express the
+  // drilled modifier, and when it can, the adjective is a separate tile.
+  await startNewRun(page, { language: "Ukrainian" });
+  await seedAllConceptsAt(page, 6, { restrictTypes: ["adjective"] });
+
+  await expect(page.locator("#slot-container")).toBeVisible();
+
+  const cid = await lastTargetConcept(page);
+  const forms = await page.evaluate((c) => {
+    const f = (lang) => {
+      const e = window.GLOBAL_VOCAB.languages[lang]?.forms?.[c];
+      if (Array.isArray(e)) return e[0];
+      return e?.form || (typeof e === "string" ? e : "");
+    };
+    return { en: f("en"), target: f("uk") };
+  }, cid);
+
+  const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
+  const { correctWords } = await page.evaluate(() => window.__app.lastExercise);
+
+  const promptHasIt = prompt.includes(forms.en.toLowerCase());
+  const ownTile = correctWords.some((w) => sharesStem(w, forms.target));
+  // The contract both ways: an adjective the prompt demands is buildable as
+  // its own tile, and no phantom adjective appears in the tiles either.
+  expect(promptHasIt).toBe(ownTile);
+});
+
+test("uk L7: a drilled adjective in the prompt appears in the graded answer", async ({ page }) => {
+  // Same contract for free production: the learner types what the prompt
+  // says, so a support sentence with "red" whose expected answer lacks
+  // «червон…» would mark every faithful translation wrong.
+  await startNewRun(page, { language: "Ukrainian" });
+  await seedAllConceptsAt(page, 7, { restrictTypes: ["adjective"] });
+
+  await expect(page.locator("#l7-input")).toBeVisible();
+
+  const cid = await lastTargetConcept(page);
+  const forms = await page.evaluate((c) => {
+    const f = (lang) => {
+      const e = window.GLOBAL_VOCAB.languages[lang]?.forms?.[c];
+      if (Array.isArray(e)) return e[0];
+      return e?.form || (typeof e === "string" ? e : "");
+    };
+    return { en: f("en"), target: f("uk") };
+  }, cid);
+
+  const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
+  const { answer } = await page.evaluate(() => window.__app.lastExercise);
+
+  const promptHasIt = prompt.includes(forms.en.toLowerCase());
+  const answerHasIt = answer.toLowerCase().split(/\s+/)
+    .some((w) => sharesStem(w, forms.target));
+  expect(promptHasIt).toBe(answerHasIt);
+});
+
 test("a concept added to an already-released bundle is backfilled", async ({ page }) => {
   // Release plans are frozen at signup; when a concept joins an existing
   // bundle's definition (TABLE → core_28), backfillReleasedBundles releases

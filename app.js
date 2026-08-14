@@ -70,7 +70,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.1";
+const APP_DATA_VERSION = "1.2.2";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 const CORE_BUNDLES = [
@@ -3255,14 +3255,14 @@ activeSelection = null;
 // into the sentence via the shared modifier cache: a learner drilling RED
 // must be graded on a sentence that actually contains «червону», and the
 // prompt, tiles, expected answer, and reveal banner must all agree — they
-// all consume the same sharedChoices. Returns true when a compatible noun
-// was found and seeded.
+// all consume the same sharedChoices. Returns the concept id of the noun
+// that was seeded, or null when no compatible noun was found.
 function seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang) {
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
   const isModifier = meta &&
     ((meta.type === "adjective" && meta.semantic_role !== "possessive") ||
      meta.type === "number");
-  if (!isModifier) return false;
+  if (!isModifier) return null;
   const nouns = (tpl.concepts || []).filter(c =>
     window.GLOBAL_VOCAB.concepts[c]?.type === "noun");
   // Mirror chooseTemplateForConcept: adjectives prefer a noun they suit
@@ -3274,9 +3274,9 @@ function seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang) {
     ? nouns.find(c => adjectiveSuitsNoun(targetConcept, c))
     : null) ||
     nouns.find(c => isModifierCompatible(targetLang, targetConcept, c));
-  if (!noun) return false;
+  if (!noun) return null;
   sharedChoices[(meta.type === "number" ? "num_" : "adj_") + noun] = targetConcept;
-  return true;
+  return noun;
 }
 
 // -------------------------
@@ -3307,12 +3307,24 @@ for (const c of tpl.concepts) {
   }
 }
 const forcedModifier = seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang);
+// Seeding is an intent, not a fact: several render paths legitimately
+// cannot express a modifier (uk oblique case «з дому», tr have-possession,
+// authored adverbial surfaces, missing agreement data) and drop it
+// silently. Build both sides and verify the drilled modifier actually
+// landed in each — otherwise the prompt would demand a word the tiles
+// cannot supply. Bailing lets the caller pick another template (the L3/L4
+// convention).
+const targetBuild = buildSentenceWithRules(targetLang, tpl, null, sharedChoices);
+const supportBuild = buildSentenceWithRules(supportLang, tpl, null, sharedChoices);
+if (forcedModifier && (!targetBuild.hadModifier || !supportBuild.hadModifier)) {
+  return null;
+}
 // With injection suppressed the sentence is the plain template and the
 // authored translation is faithful; with a drilled modifier forced in, only
 // the generated gloss contains it, so the authored render must not win.
 const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
-  generated: safe(buildSentence(supportLang, tpl, null, sharedChoices)),
-  hadModifier: forcedModifier,
+  generated: safe(supportBuild.sentence),
+  hadModifier: supportBuild.hadModifier,
 });
 
 // Tiles come from the engine's own render path — the same segments
@@ -3324,7 +3336,16 @@ const tileSegments = sentenceTilesForTemplate(targetLang, tpl, sharedChoices);
 
 let correctWords;
 if (tileSegments && tileSegments.length) {
-  correctWords = tileSegments.map(s => String(s.text).toLowerCase());
+  // The drilled modifier is spliced into its noun's segment («червону
+  // книгу»); split that one segment on whitespace so the modifier is its
+  // own placeable tile. Other segments keep their existing one-tile shape,
+  // and spaceless scripts are unaffected (nothing to split).
+  correctWords = tileSegments.flatMap(s => {
+    const text = String(s.text).toLowerCase();
+    return forcedModifier && s.cid === forcedModifier
+      ? text.split(/\s+/).filter(Boolean)
+      : [text];
+  });
 } else {
   const ordered = orderedConceptsForTemplate(tpl, targetLang);
 
@@ -3533,15 +3554,26 @@ for (const c of tpl.concepts) {
   }
 }
 const forcedModifier = seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang);
+// Seeding is an intent, not a fact: several render paths legitimately
+// cannot express a modifier (uk oblique case «з дому», tr have-possession,
+// authored adverbial surfaces, missing agreement data) and drop it
+// silently. Verify the drilled modifier actually landed in BOTH renders —
+// otherwise the prompt demands a word the graded answer doesn't contain
+// (or vice versa). Bailing lets the caller pick another template.
+const targetBuild = buildSentenceWithRules(targetLang, tpl, null, sharedChoices);
+const supportBuild = buildSentenceWithRules(supportLang, tpl, null, sharedChoices);
+if (forcedModifier && (!targetBuild.hadModifier || !supportBuild.hadModifier)) {
+  return null;
+}
 // The prompt prefers the authored render, but a drilled modifier only
 // exists in the generated gloss — and render-less pack templates need the
 // generated gloss anyway (the prompt used to come up empty for them).
 const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
-  generated: safe(buildSentence(supportLang, tpl, null, sharedChoices)),
-  hadModifier: forcedModifier,
+  generated: safe(supportBuild.sentence),
+  hadModifier: supportBuild.hadModifier,
 });
 
-const targetSentence = safe(buildSentence(targetLang, tpl, null, sharedChoices));
+const targetSentence = safe(targetBuild.sentence);
 
   LAST_EXERCISE = { type: "free_production", answer: targetSentence };
 
@@ -4530,7 +4562,13 @@ if (level === 2) {
       continue;
     }
 
-    renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept);
+    // null: the target language can't express the drilled modifier in this
+    // template (e.g. uk oblique case) — skip the concept for this round.
+    if (renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) === null) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
     run.exerciseCounter++;
     return;
   }
@@ -4544,7 +4582,12 @@ if (level === 2) {
       continue;
     }
 
-    renderFreeProductionL7(targetLang, supportLang, tpl, targetConcept);
+    // Same bail-out contract as level 6.
+    if (renderFreeProductionL7(targetLang, supportLang, tpl, targetConcept) === null) {
+      excluded.add(targetConcept);
+      continue;
+    }
+
     run.exerciseCounter++;
     return;
   }

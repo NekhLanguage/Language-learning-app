@@ -28,6 +28,14 @@
 //          between native characters.
 //        - LINT: double spaces, leaked CONCEPT_IDs, empty output, th
 //          terminal punctuation.
+//   D. MODIFIER_DROPPED — a drilled modifier the en support render expresses
+//      must land in the target render built from the same shared choices.
+//      Several target-only render paths (uk oblique case, tr have-possession,
+//      authored adverbial surfaces) drop it silently while the support keeps
+//      it — the L6/L7 learner then sees a prompt word with no matching tile
+//      and no accepted answer. The app bails on these combos at runtime;
+//      baselined entries are the inventory of what the engine cannot yet
+//      express, and NEW entries are regressions.
 //
 // Ratcheted via validation/injection-baseline.json: pre-existing findings
 // don't fail, NEW ones do. Refresh deliberately with --update-baseline.
@@ -38,7 +46,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { loadVocab, loadTemplates, loadLanguageCodes } from './load-vocab.mjs';
-import { configureEngine, buildSentence, isModifierCompatible } from '../sentence_engine.mjs';
+import {
+  configureEngine, buildSentence, buildSentenceWithRules,
+  isModifierCompatible, adjectiveSuitsNoun,
+} from '../sentence_engine.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BASELINE_FILE = path.join(HERE, 'injection-baseline.json');
@@ -156,6 +167,52 @@ for (const tpl of templates) {
       const surface = shared[`blankSurface_${lang}`];
       if (surface && !sentence.toLowerCase().includes(String(surface).toLowerCase())) {
         add(`BLANK_LOST|${lang}|${id}|${kind}`, `"${surface}" not in "${sentence}"`);
+      }
+    }
+  }
+}
+
+// ── D. drilled modifiers must land in the target render too ──────────────────
+// Mirrors the app's seedDrilledModifier: the drilled adjective prefers a noun
+// it semantically suits, then any injection-compatible noun; drilled numbers
+// require injection compatibility. One representative modifier per seeded
+// noun is enough — whether the modifier lands depends on the render path and
+// the noun, not on which particular adjective was chosen (genderedFormOf
+// always falls back to a base form rather than dropping the word).
+for (const tpl of templates) {
+  // Structured (slot-based) templates never receive drilled modifiers —
+  // chooseTemplateForConcept filters them out for modifier concepts.
+  if (tpl.structure?.type) continue;
+  const nouns = (tpl.concepts || []).filter((c) => concepts[c]?.type === 'noun');
+  if (!nouns.length) continue;
+  const id = tpl.template_id || '(no id)';
+  for (const lang of langCodes) {
+    if (lang === 'en') continue; // en is the support reference itself
+    const reps = [];
+    const seenNouns = new Set();
+    for (const adj of sampleAdjectives) {
+      const noun = nouns.find((n) => adjectiveSuitsNoun(adj, n)) ||
+        nouns.find((n) => isModifierCompatible(lang, adj, n));
+      if (!noun || seenNouns.has(noun)) continue;
+      seenNouns.add(noun);
+      reps.push(['adj', adj, noun]);
+    }
+    const numNoun = nouns.find((n) => isModifierCompatible(lang, TWO, n));
+    if (numNoun) reps.push(['num', TWO, numNoun]);
+    for (const [kind, mod, noun] of reps) {
+      // Same shared-cache shape the app seeds: every noun's random slots
+      // pinned closed, the drilled modifier forced onto its noun.
+      const shared = {};
+      for (const n of nouns) { shared['adj_' + n] = null; shared['num_' + n] = null; }
+      shared[(kind === 'num' ? 'num_' : 'adj_') + noun] = mod;
+      let target, support;
+      try {
+        target = buildSentenceWithRules(lang, tpl, null, shared);
+        support = buildSentenceWithRules('en', tpl, null, shared);
+      } catch { continue; } // build crashes are section C's THREW findings
+      if (support.hadModifier && !target.hadModifier) {
+        add(`MODIFIER_DROPPED|${lang}|${id}|${kind}|${noun}`,
+          `${mod} lands in en ("${support.sentence}") but not in ${lang} ("${target.sentence}")`);
       }
     }
   }
