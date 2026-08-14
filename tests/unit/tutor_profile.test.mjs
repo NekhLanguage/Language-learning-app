@@ -8,6 +8,7 @@ import {
   tierConcepts,
   buildProfileText,
   buildMemoryText,
+  pickTutorRun,
 } from "../../tutor_profile.mjs";
 
 function fakeRun() {
@@ -114,4 +115,39 @@ test("buildMemoryText leads with the latest next focus", () => {
 test("buildMemoryText is empty for no sessions", () => {
   assert.equal(buildMemoryText({ sessions: [] }), "");
   assert.equal(buildMemoryText(undefined), "");
+});
+
+const RUN_PT = { released: ["A", "B", "C"], progress: {} };
+const RUN_ES = { released: ["A"], progress: {} };
+
+test("pickTutorRun follows a valid lastActiveLanguage pointer", () => {
+  const pick = pickTutorRun({ lastActiveLanguage: "es", runs: { pt: RUN_PT, es: RUN_ES } });
+  assert.equal(pick.targetLang, "es");
+  assert.equal(pick.run, RUN_ES);
+});
+
+test("pickTutorRun auto-selects a sole run when the pointer is null", () => {
+  const pick = pickTutorRun({ lastActiveLanguage: null, runs: { pt: RUN_PT } });
+  assert.equal(pick.targetLang, "pt");
+  assert.equal(pick.run, RUN_PT);
+});
+
+test("pickTutorRun returns candidates (most progress first) when several runs and no pointer", () => {
+  const pick = pickTutorRun({ lastActiveLanguage: null, runs: { es: RUN_ES, pt: RUN_PT } });
+  assert.equal(pick.targetLang, null);
+  assert.equal(pick.run, null);
+  assert.deepEqual(pick.candidates.map((c) => c.lang), ["pt", "es"]);
+});
+
+test("pickTutorRun ignores a pointer to a non-existent run", () => {
+  const pick = pickTutorRun({ lastActiveLanguage: "uk", runs: { pt: RUN_PT } });
+  assert.equal(pick.targetLang, "pt"); // falls through to the sole-run rule
+});
+
+test("pickTutorRun handles no runs and malformed users", () => {
+  assert.deepEqual(pickTutorRun({ runs: {} }).candidates, []);
+  assert.equal(pickTutorRun({}).run, null);
+  assert.equal(pickTutorRun(null).run, null);
+  // Non-object run values are not candidates.
+  assert.deepEqual(pickTutorRun({ runs: { pt: 7 } }).candidates, []);
 });

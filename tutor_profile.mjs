@@ -90,6 +90,32 @@ export function buildProfileText(opts) {
   return lines.join("\n");
 }
 
+// Resolves which run the tutor should use. `lastActiveLanguage` was a
+// null-forever field until v1.2.1, so old blobs (and blobs from before the
+// learner's next app visit) need a fallback:
+//   - pointer names a real run        -> use it
+//   - exactly one run exists          -> use it
+//   - several runs, no valid pointer  -> return candidates for the UI to ask
+//   - no runs                         -> empty candidates
+// Returns { targetLang, run, candidates } where candidates is
+// [{lang, run}] sorted by released-word count, most progress first.
+export function pickTutorRun(user) {
+  const runs = user?.runs && typeof user.runs === "object" ? user.runs : {};
+  const candidates = Object.entries(runs)
+    .filter(([, run]) => run && typeof run === "object")
+    .map(([lang, run]) => ({ lang, run }))
+    .sort((a, b) => (b.run.released?.length || 0) - (a.run.released?.length || 0));
+
+  const pointed = user?.lastActiveLanguage
+    ? candidates.find((c) => c.lang === user.lastActiveLanguage)
+    : null;
+  if (pointed) return { targetLang: pointed.lang, run: pointed.run, candidates };
+  if (candidates.length === 1) {
+    return { targetLang: candidates[0].lang, run: candidates[0].run, candidates };
+  }
+  return { targetLang: null, run: null, candidates };
+}
+
 // Renders stored session memory for the tutor's MEMORY block.
 // `memory` = { sessions: [{when, sessionSummary, struggles, nextFocus}], ... }
 export function buildMemoryText(memory) {
