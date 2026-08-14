@@ -6,7 +6,7 @@
 
 import { recoverUser, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
-import { buildProfileText, buildMemoryText } from "./tutor_profile.mjs";
+import { buildProfileText, buildMemoryText, pickTutorRun } from "./tutor_profile.mjs";
 
 const VOCAB_FILES = [
   "adjectives.json", "connectors.json", "directions_positions.json",
@@ -281,17 +281,43 @@ async function init() {
     return;
   }
 
-  state.targetLang = user.lastActiveLanguage || "";
   state.supportLang = user.supportLanguage || "en";
-  state.run = state.targetLang && user.runs ? user.runs[state.targetLang] : null;
 
-  if (!state.targetLang || !state.run) {
-    showGate(
-      "<p>No active language found. Pick a language and do a few exercises in the app, then come back.</p>" +
-      '<p><a href="index.html">Go to the app</a></p>'
-    );
+  // lastActiveLanguage was never written before app v1.2.1, so older blobs
+  // need a fallback: auto-select a sole run, or ask when there are several.
+  const pick = pickTutorRun(user);
+  if (pick.run) {
+    return startWithRun(pick.targetLang, pick.run);
+  }
+  if (pick.candidates.length) {
+    els.gate.hidden = false;
+    els.gate.innerHTML = "<p>Which language do you want to practice with Anna?</p>";
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "display:flex;flex-direction:column;gap:8px;max-width:320px;margin:16px auto 0;";
+    for (const c of pick.candidates) {
+      const meta = AVAILABLE_LANGUAGES.find((l) => l.code === c.lang);
+      const b = document.createElement("button");
+      b.className = "tutor-btn";
+      b.type = "button";
+      b.textContent = `${meta?.label || c.lang} · ${(c.run.released || []).length} words`;
+      b.addEventListener("click", () => startWithRun(c.lang, c.run));
+      wrap.appendChild(b);
+    }
+    els.gate.appendChild(wrap);
     return;
   }
+
+  showGate(
+    "<p>No active language found. Pick a language and do a few exercises in the app, then come back.</p>" +
+    '<p><a href="index.html">Go to the app</a></p>'
+  );
+}
+
+async function startWithRun(targetLang, run) {
+  state.targetLang = targetLang;
+  state.run = run;
+  els.gate.hidden = true;
+  els.gate.innerHTML = "";
 
   const targetMeta = AVAILABLE_LANGUAGES.find((l) => l.code === state.targetLang);
   const supportMeta = AVAILABLE_LANGUAGES.find((l) => l.code === state.supportLang);

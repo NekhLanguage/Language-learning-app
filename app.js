@@ -70,7 +70,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.0";
+const APP_DATA_VERSION = "1.2.1";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 const CORE_BUNDLES = [
@@ -542,7 +542,7 @@ function reconcileRecognitionCompletion(user) {
 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v1.2.0";
+  const APP_VERSION = "v1.2.1";
   const MAX_LEVEL = 7;
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
@@ -3877,6 +3877,14 @@ function renderAlphabetOverlay(langCode) {
   async function enterLanguage(langCode) {
 
   languageState.target = langCode;
+
+  // Persist the active language. This field existed since v1 but was never
+  // written; the tutor (and feedback context) read it to know which run is
+  // current.
+  if (USER.lastActiveLanguage !== langCode) {
+    USER.lastActiveLanguage = langCode;
+    saveUser();
+  }
 
   await loadAndMergeVocab();
 
