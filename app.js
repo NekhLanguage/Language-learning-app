@@ -70,7 +70,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.3";
+const APP_DATA_VERSION = "1.2.4";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 const CORE_BUNDLES = [
@@ -2060,7 +2060,20 @@ if (level === 2) {
     return !!options && options.length >= 4;
   });
 }
+// A concept admitted by the tutor lives on `run.tutorVocab[cid]` — the
+// only place its base form / translation / note exist. GLOBAL_VOCAB and
+// the sentence templates know nothing about it, which is why exercise
+// selection at L2+ naturally skips it (no template references the cid).
+// The L1 intro card is the one surface that renders these concepts.
+function isTutorConcept(cid) {
+  return !!(run?.tutorVocab && run.tutorVocab[cid]);
+}
+
 function canConceptBeIntroduced(cid) {
+
+  // Tutor-admitted concepts don't need a template to be introduced —
+  // renderTutorIntro handles them from run.tutorVocab data directly.
+  if (isTutorConcept(cid)) return true;
 
   return TEMPLATE_CACHE.some(tpl => {
 
@@ -2384,6 +2397,46 @@ return tpl;
     setTimeout(() => renderNext(targetLang, supportLang), 0);
   };
 }
+
+  // L1 intro card for a tutor-admitted concept. Data comes from
+  // run.tutorVocab[cid] — the word, translation, note, and pos captured by
+  // the tutor's summary pass. No sentence template involved (GLOBAL_VOCAB
+  // has no entry for the cid); the card shows the word in isolation with
+  // TTS, the support-language translation, the tutor note if present, and
+  // a "from Anna" badge so the learner knows why this concept appeared.
+  function renderTutorIntro(targetLang, supportLang, targetConcept) {
+    subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
+
+    const entry = run.tutorVocab?.[targetConcept];
+    if (!entry) {
+      // Defensive: if tutorVocab lost the entry (shouldn't happen), advance
+      // past this concept rather than crash the session.
+      applyResult(targetConcept, true);
+      setTimeout(() => renderNext(targetLang, supportLang), 0);
+      return;
+    }
+
+    const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+    const word = String(entry.word || "");
+    const translation = String(entry.translation || "");
+    const note = String(entry.note || "").trim();
+
+    LAST_EXERCISE = { type: "tutor_intro", cid: targetConcept, word, translation, note };
+
+    content.innerHTML = `
+    <div class="tutor-intro-badge" aria-label="Introduced by Anna">${ICON_SPARK} from Anna</div>
+    <h2>${safe(headword(word))} ${ttsHtml(word, targetLang)}</h2>
+    ${translation ? `<p>${safe(headword(translation))}</p>` : ""}
+    ${note ? `<p class="word-note">${ICON_BULB} ${safe(note)}</p>` : ""}
+    <button id="continue-btn">${ui("continue")}</button>
+  `;
+    wireTts();
+
+    document.getElementById("continue-btn").onclick = () => {
+      applyResult(targetConcept, true);
+      setTimeout(() => renderNext(targetLang, supportLang), 0);
+    };
+  }
 
   function renderComprehension(targetLang, supportLang, tpl, targetConcept) {
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
@@ -4384,6 +4437,16 @@ for (let attempts = 0; attempts < 25; attempts++) {
 
   // ✅ Level 1
   if (level === 1) {
+    // Tutor-admitted concepts render their intro card from run.tutorVocab —
+    // no template needed. After this L1 exposure they advance to L2 and
+    // canConceptBeTested filters them out (no template references the cid),
+    // so they sit dormant until a later PR adds selection weighting.
+    if (isTutorConcept(targetConcept)) {
+      renderTutorIntro(targetLang, supportLang, targetConcept);
+      run.exerciseCounter++;
+      return;
+    }
+
     const tpl = chooseTemplateForConcept(targetConcept);
 
     if (!tpl) {
