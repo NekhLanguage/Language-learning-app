@@ -88,9 +88,28 @@ function runPersonalVocab() {
 // Same persist-then-sync shape as app.js's saveUser(): localStorage first
 // (source of truth for this device), then best-effort Supabase mirror. The
 // app re-runs its own server merge at next boot, so no read-back here.
+//
+// Merge-on-write: an app tab open alongside the tutor may have saved newer
+// state since this page loaded, so re-read the stored blob and graft only
+// the tutor-owned fields (personalVocab / pendingAdmission) onto it instead
+// of overwriting wholesale. (The reverse race — an app tab saving its stale
+// in-memory blob AFTER this write — can't be fixed from this side.)
 async function persistUser() {
-  const user = state.user;
+  let user = state.user;
   if (!user || !user.runs) return;
+  const { user: stored } = recoverUser(localStorage.getItem(USER_KEY), null);
+  if (stored && stored.runs) {
+    const target = stored.runs[state.targetLang];
+    if (target && typeof target === "object") {
+      target.personalVocab = state.run.personalVocab || [];
+      target.pendingAdmission = state.run.pendingAdmission || [];
+      user = stored;
+      state.user = stored;
+      // Keep state.run pointing into the blob we now persist, preserving
+      // the tutor-owned lists just grafted.
+      state.run = target;
+    }
+  }
   user.lastLocalChange = Date.now();
   localStorage.setItem(USER_KEY, JSON.stringify(user));
   const email = state.email.toLowerCase();
