@@ -22,6 +22,63 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const MODEL = process.env.TUTOR_MODEL || "claude-sonnet-5";
 
+// --- Cost telemetry (public.tutor_sessions) -------------------------------
+// One row per messages.create() call so per-user variable cost is measurable
+// against the subscription floor. Fire-and-forget: a Supabase hiccup must
+// never slow or break the learner's chat.
+
+// Per-1M-token prices in US cents. UPDATE ON ANY MODEL SWAP or Anthropic
+// price change (verified against the current price list 2026-08-15; the
+// telemetry spec's opus/fable rows were stale and are corrected here).
+// claude-sonnet-5 has an intro rate ($2/$10 per MTok) through 2026-08-31;
+// the sticker rate below slightly overstates cost until then, which is the
+// conservative direction for a pricing-floor decision.
+const MODEL_PRICES_CENTS_PER_MTOK = {
+  "claude-sonnet-5":           { input: 300,  output: 1500, cache_read: 30,  cache_write: 375  },
+  "claude-opus-5":             { input: 500,  output: 2500, cache_read: 50,  cache_write: 625  },
+  "claude-haiku-4-5-20251001": { input: 100,  output: 500,  cache_read: 10,  cache_write: 125  },
+  "claude-fable-5":            { input: 1000, output: 5000, cache_read: 100, cache_write: 1250 },
+};
+
+function costCents(model, usage) {
+  const p = MODEL_PRICES_CENTS_PER_MTOK[model];
+  if (!p) return 0; // unknown model -> row still lands at 0; a busy user with $0.00 spent flags a missing price entry
+  const inTok  = usage?.input_tokens || 0;
+  const outTok = usage?.output_tokens || 0;
+  const cacheR = usage?.cache_read_input_tokens || 0;
+  const cacheW = usage?.cache_creation_input_tokens || 0;
+  const raw =
+    (inTok  * p.input       / 1_000_000) +
+    (outTok * p.output      / 1_000_000) +
+    (cacheR * p.cache_read  / 1_000_000) +
+    (cacheW * p.cache_write / 1_000_000);
+  // Round to nearest cent, min 1 if any tokens moved.
+  return Math.max(inTok + outTok > 0 ? 1 : 0, Math.round(raw));
+}
+
+async function logTutorSession(row) {
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!key) {
+    console.warn("tutor_sessions log skipped: SUPABASE_SERVICE_ROLE_KEY unset");
+    return;
+  }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/tutor_sessions`, {
+      method: "POST",
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify(row),
+    });
+    if (!res.ok) console.warn("tutor_sessions insert failed:", res.status, await res.text());
+  } catch (err) {
+    console.warn("tutor_sessions insert threw:", err);
+  }
+}
+
 // Request caps — a test feature shouldn't be an open token faucet.
 const MAX_MESSAGES = 60;
 const MAX_MESSAGE_CHARS = 2000;
@@ -224,6 +281,24 @@ exports.handler = async (event) => {
         system,
         messages,
       });
+      // Fire-and-forget; do NOT await — learner latency comes first. On
+      // Netlify's invocation lifecycle the fetch usually completes before the
+      // container freezes; if not, we lose one telemetry row, not the reply.
+      logTutorSession({
+        user_email: String(body.email || "").toLowerCase().trim(),
+        mode: "chat",
+        model: MODEL,
+        tokens_in: response.usage?.input_tokens || 0,
+        tokens_out: response.usage?.output_tokens || 0,
+        cache_read_tokens: response.usage?.cache_read_input_tokens || 0,
+        cache_write_tokens: response.usage?.cache_creation_input_tokens || 0,
+        cost_est_cents: costCents(MODEL, response.usage),
+        session_len_sec: null,
+        subject: "chat",
+        target_lang: targetLang,
+        support_lang: supportLang,
+        turn_index: Math.floor(messages.length / 2), // rough: user+assistant pairs so far
+      });
       if (response.stop_reason === "refusal") {
         console.warn("TUTOR REFUSAL:", JSON.stringify(response.stop_details || null));
         return json(200, { reply: null, refused: true });
@@ -257,6 +332,23 @@ exports.handler = async (event) => {
       system,
       messages,
       output_config: { format: { type: "json_schema", schema: SUMMARY_SCHEMA } },
+    });
+    logTutorSession({
+      user_email: String(body.email || "").toLowerCase().trim(),
+      mode: "summary",
+      model: MODEL,
+      tokens_in: response.usage?.input_tokens || 0,
+      tokens_out: response.usage?.output_tokens || 0,
+      cache_read_tokens: response.usage?.cache_read_input_tokens || 0,
+      cache_write_tokens: response.usage?.cache_creation_input_tokens || 0,
+      cost_est_cents: costCents(MODEL, response.usage),
+      // Wall-clock session length isn't computable inside a single function
+      // invocation; plumb a client-side session_start_ts later if Dan wants it.
+      session_len_sec: null,
+      subject: "summary",
+      target_lang: targetLang,
+      support_lang: supportLang,
+      turn_index: null,
     });
     if (response.stop_reason === "refusal") {
       return json(200, { summary: null, refused: true });
