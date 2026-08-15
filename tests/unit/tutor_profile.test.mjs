@@ -10,6 +10,7 @@ import {
   buildProfileText,
   buildMemoryText,
   pickTutorRun,
+  mergePersonalVocab,
 } from "../../tutor_profile.mjs";
 
 function fakeRun() {
@@ -173,4 +174,40 @@ test("pickTutorRun handles no runs and malformed users", () => {
   assert.equal(pickTutorRun(null).run, null);
   // Non-object run values are not candidates.
   assert.deepEqual(pickTutorRun({ runs: { pt: 7 } }).candidates, []);
+});
+
+test("mergePersonalVocab pulls legacy entries into the run list, normalized to v2 shape", () => {
+  const run = [{ word: "praia", translation: "beach", note: "", pos: "noun", seenInSessions: ["2026-08-01"], admittedAt: null }];
+  const legacy = [
+    { word: "mercado", translation: "market", note: "dev" },
+    { word: "Praia", translation: "dupe — run entry wins" },
+  ];
+  const { vocab, added } = mergePersonalVocab(run, legacy, 200);
+  assert.equal(added, 1);
+  assert.equal(vocab.length, 2);
+  // Run entry untouched, legacy entry normalized.
+  assert.equal(vocab[0].translation, "beach");
+  assert.deepEqual(vocab[1], {
+    word: "mercado", translation: "market", note: "dev",
+    pos: "noun", seenInSessions: [], admittedAt: null,
+  });
+  // Input array not mutated.
+  assert.equal(run.length, 1);
+});
+
+test("mergePersonalVocab respects the cap and is null-safe", () => {
+  const { vocab, added } = mergePersonalVocab(
+    [{ word: "a" }],
+    [{ word: "b" }, { word: "c" }, null, { noWord: true }],
+    2
+  );
+  assert.equal(added, 1);
+  assert.deepEqual(vocab.map((w) => w.word), ["a", "b"]);
+  assert.deepEqual(mergePersonalVocab(null, null, 10), { vocab: [], added: 0 });
+});
+
+test("mergePersonalVocab with nothing to add reports added: 0", () => {
+  const run = [{ word: "praia" }];
+  const { added } = mergePersonalVocab(run, [{ word: "PRAIA" }], 200);
+  assert.equal(added, 0);
 });

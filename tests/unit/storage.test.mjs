@@ -12,13 +12,82 @@ test("migrateUserState stamps pre-versioning blobs", () => {
   assert.equal(user.schemaVersion, undefined);
   const migrated = migrateUserState(user);
   assert.equal(migrated.schemaVersion, CURRENT_SCHEMA_VERSION);
-  // Data untouched.
-  assert.deepEqual(migrated.runs, { pt: { released: [] } });
+  // Pre-existing data untouched; v2 seeds the tutor-vocab containers.
+  assert.deepEqual(migrated.runs, {
+    pt: { released: [], personalVocab: [], pendingAdmission: [] },
+  });
 });
 
 test("migrateUserState leaves current-version blobs alone", () => {
   const user = { ...validUser(), schemaVersion: CURRENT_SCHEMA_VERSION };
   assert.equal(migrateUserState(user).schemaVersion, CURRENT_SCHEMA_VERSION);
+});
+
+test("v1 → v2 stamps provenance on every progress entry and preserves the rest", () => {
+  const user = {
+    id: "u1",
+    schemaVersion: 1,
+    supportLanguage: "en",
+    runs: {
+      uk: {
+        released: ["WATER", "HOUSE"],
+        progress: {
+          WATER: { level: 4, streak: 2, completed: false, lastShownAt: 10, lastResult: true },
+          HOUSE: { level: 7, streak: 0, completed: true, lastShownAt: 3, lastResult: null },
+        },
+      },
+    },
+  };
+  const migrated = migrateUserState(user);
+  assert.equal(migrated.schemaVersion, 2);
+  for (const cid of ["WATER", "HOUSE"]) {
+    assert.equal(migrated.runs.uk.progress[cid].provenance, "pack");
+    assert.equal(migrated.runs.uk.progress[cid].admittedFrom, null);
+  }
+  // Existing progress fields preserved.
+  assert.equal(migrated.runs.uk.progress.WATER.level, 4);
+  assert.equal(migrated.runs.uk.progress.WATER.streak, 2);
+  assert.equal(migrated.runs.uk.progress.HOUSE.completed, true);
+  // Tutor-vocab containers seeded on the run.
+  assert.deepEqual(migrated.runs.uk.personalVocab, []);
+  assert.deepEqual(migrated.runs.uk.pendingAdmission, []);
+});
+
+test("v1 → v2 is null-safe on runs without progress", () => {
+  const user = { id: "u1", schemaVersion: 1, runs: { pt: {}, es: null } };
+  const migrated = migrateUserState(user);
+  assert.equal(migrated.schemaVersion, 2);
+  assert.deepEqual(migrated.runs.pt.personalVocab, []);
+  assert.deepEqual(migrated.runs.pt.pendingAdmission, []);
+  assert.equal(migrated.runs.es, null);
+});
+
+test("v1 → v2 is idempotent and never downgrades tutor provenance", () => {
+  const user = {
+    id: "u1",
+    schemaVersion: 1,
+    runs: {
+      pt: {
+        progress: {
+          TUTOR_MERCADO: {
+            level: 1, streak: 0, completed: false, lastShownAt: -Infinity, lastResult: null,
+            provenance: "tutor",
+            admittedFrom: { mode: "tutor", sessionDate: "2026-08-10" },
+          },
+        },
+        personalVocab: [{ word: "praia", translation: "beach", note: "" }],
+        pendingAdmission: [],
+      },
+    },
+  };
+  const once = migrateUserState(user);
+  const twice = migrateUserState(JSON.parse(JSON.stringify(once)));
+  assert.deepEqual(JSON.parse(JSON.stringify(twice)), JSON.parse(JSON.stringify(once)));
+  // A provenance already set (e.g. by a newer device) is never overwritten.
+  assert.equal(once.runs.pt.progress.TUTOR_MERCADO.provenance, "tutor");
+  assert.deepEqual(once.runs.pt.progress.TUTOR_MERCADO.admittedFrom, { mode: "tutor", sessionDate: "2026-08-10" });
+  // An existing personalVocab list is kept, not re-seeded.
+  assert.equal(once.runs.pt.personalVocab.length, 1);
 });
 
 test("recoverUser parses a healthy primary blob", () => {

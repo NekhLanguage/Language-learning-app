@@ -67,6 +67,22 @@ function tutorEnabled(email) {
   return allowlist.includes(normalized);
 }
 
+// Vocabulary write-back cohort — independent of tutor access, because the
+// beta cohort for write-back may be a subset of tutor users. Same env-var
+// allowlist shape as TUTOR_ALLOWED_EMAILS: unset/empty means NOBODY (the
+// feature ships OFF), "*" opens it to every tutor user, and adding an email
+// needs no deploy. The client reads this via ping at session start.
+function writebackEnabled(email) {
+  const normalized = String(email || "").toLowerCase().trim();
+  const allowlist = (process.env.TUTOR_VOCAB_WRITEBACK_EMAILS || "")
+    .split(",")
+    .map((e) => e.toLowerCase().trim())
+    .filter(Boolean);
+  if (!allowlist.length) return false;
+  if (allowlist.includes("*")) return true;
+  return allowlist.includes(normalized);
+}
+
 async function hasAccess(email) {
   const normalized = String(email || "").toLowerCase().trim();
   if (!normalized) return false;
@@ -122,8 +138,13 @@ const SUMMARY_SCHEMA = {
           word: { type: "string" },
           translation: { type: "string" },
           note: { type: "string", description: "One short usage note, may be empty." },
+          pos: {
+            type: "string",
+            enum: ["noun", "verb", "adjective", "other"],
+            description: "Part of speech of the base form. Load-bearing: mastery-level caps are derived from it.",
+          },
         },
-        required: ["word", "translation", "note"],
+        required: ["word", "translation", "note", "pos"],
         additionalProperties: false,
       },
     },
@@ -144,7 +165,7 @@ exports.handler = async (event) => {
     // model, and doesn't require the API key to be configured.
     if (body.mode === "ping") {
       const allowed = tutorEnabled(body.email) && (await hasAccess(body.email));
-      return json(200, { allowed });
+      return json(200, { allowed, vocabWriteback: allowed && writebackEnabled(body.email) });
     }
 
     if (!process.env.ANTHROPIC_API_KEY) {
