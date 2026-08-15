@@ -9,6 +9,7 @@
 import { recoverUser, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
 import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab } from "./tutor_profile.mjs";
+import { processTutorSession, applyAdmissions } from "./tutor_admission.mjs";
 
 const VOCAB_FILES = [
   "adjectives.json", "connectors.json", "directions_positions.json",
@@ -103,6 +104,18 @@ async function persistUser() {
     if (target && typeof target === "object") {
       target.personalVocab = state.run.personalVocab || [];
       target.pendingAdmission = state.run.pendingAdmission || [];
+      if (state.run.tutorVocab) target.tutorVocab = state.run.tutorVocab;
+      // Tutor-admitted concepts are tutor-owned writes too: merge them into
+      // the stored run's ladder rather than losing them to the graft.
+      for (const cid of state.run.released || []) {
+        if (!cid.startsWith("TUTOR_")) continue;
+        if (!Array.isArray(target.released)) target.released = [];
+        if (!target.released.includes(cid)) target.released.push(cid);
+        if (state.run.progress?.[cid]) {
+          if (!target.progress || typeof target.progress !== "object") target.progress = {};
+          if (!target.progress[cid]) target.progress[cid] = state.run.progress[cid];
+        }
+      }
       user = stored;
       state.user = stored;
       // Keep state.run pointing into the blob we now persist, preserving
@@ -268,7 +281,10 @@ function buildRequestBody(mode) {
       supportForms: state.forms[state.supportLang],
       targetLabel: state.targetLabel,
       supportLabel: state.supportLabel,
-      personalVocab: runPersonalVocab(),
+      // Pending-admission words are still tutor-held vocabulary — keep them
+      // visible to the model so it recycles them (which is exactly what
+      // earns their next sighting).
+      personalVocab: [...runPersonalVocab(), ...(state.run.pendingAdmission || [])],
     }),
     preferences: currentPreferences(),
     memory: buildMemoryText(store),
@@ -354,24 +370,65 @@ async function endSession() {
     // cross-device. The legacy store.personalVocab is no longer written —
     // its existing entries were merged in at startWithRun and are kept in
     // place so a rollback loses nothing.
-    const vocab = runPersonalVocab();
-    const known = new Set(vocab.map((w) => w.word.toLowerCase()));
-    let captured = false;
-    for (const w of Array.isArray(summary.newWords) ? summary.newWords : []) {
-      if (w && w.word && !known.has(w.word.toLowerCase()) && vocab.length < MAX_PERSONAL_VOCAB) {
-        vocab.push({
-          word: w.word,
-          translation: w.translation || "",
-          note: w.note || "",
-          pos: w.pos || "noun",
-          seenInSessions: [today],
-          admittedAt: null,
-        });
-        known.add(w.word.toLowerCase());
-        captured = true;
+    let admissions = [];
+    if (state.vocabWriteback) {
+      // Full admission pipeline: capture + repeat-sighting + promotion +
+      // threshold-3 admission, capped at 10/session. Repeat sightings come
+      // from the summary AND from the tutor re-using a held word in its
+      // replies this session.
+      const assistantText = state.messages
+        .filter((m) => m.role === "assistant")
+        .map((m) => m.content)
+        .join("\n");
+      const taken = new Set([
+        ...Object.keys(state.forms[state.targetLang] || {}),
+        ...(state.run.released || []),
+      ]);
+      const { admitted, collided } = processTutorSession(
+        state.run, summary.newWords, assistantText, today, (cid) => taken.has(cid)
+      );
+      if (collided.length) {
+        console.warn("tutor admission skipped (cid collision):", collided.map((c) => c.word));
       }
+      admissions = applyAdmissions(state.run, admitted, today);
+      await persistUser();
+    } else {
+      // Flag off: capture-only, the pre-write-back behavior.
+      const vocab = runPersonalVocab();
+      const known = new Set(vocab.map((w) => w.word.toLowerCase()));
+      let captured = false;
+      for (const w of Array.isArray(summary.newWords) ? summary.newWords : []) {
+        if (w && w.word && !known.has(w.word.toLowerCase()) && vocab.length < MAX_PERSONAL_VOCAB) {
+          vocab.push({
+            word: w.word,
+            translation: w.translation || "",
+            note: w.note || "",
+            pos: w.pos || "noun",
+            seenInSessions: [today],
+            admittedAt: null,
+          });
+          known.add(w.word.toLowerCase());
+          captured = true;
+        }
+      }
+      if (captured) await persistUser();
     }
-    if (captured) await persistUser();
+
+    if (admissions.length) {
+      // Fire-and-forget append to the public.vocab_admissions retention
+      // ledger (server-side, service-role writer). Losing a row on a network
+      // blip costs analytics, never learner state.
+      fetch("/.netlify/functions/tutor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mode: "admissions",
+          email: state.email,
+          lang: state.targetLang,
+          admissions,
+        }),
+      }).catch(() => {});
+    }
 
     state.messages = [];
     els.chat.innerHTML = "";
@@ -379,6 +436,12 @@ async function endSession() {
     if (summary.nextFocus) addMessage("status", `Next focus: ${summary.nextFocus}`);
     const added = (summary.newWords || []).length;
     if (added) addMessage("status", `New words added to your personal vocabulary: ${added}.`);
+    if (admissions.length) {
+      addMessage(
+        "status",
+        `Added to your app vocabulary (seen in 3 sessions): ${admissions.map((a) => a.word).join(", ")}.`
+      );
+    }
   } catch (err) {
     console.warn("tutor summary failed:", err);
     saving.remove();
