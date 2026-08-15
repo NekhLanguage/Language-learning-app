@@ -1,12 +1,14 @@
 // tutor.js — the AI Tutor test page (tutor.html).
-// Reads the learner's real app state (read-only — never writes zth_user),
-// builds the mastery profile, and drives a chat with the tutor serverless
-// function. Session memory + personal vocabulary live in their own
-// localStorage key per target language, separate from the versioned USER blob.
+// Reads the learner's real app state, builds the mastery profile, and drives
+// a chat with the tutor serverless function. Session memory lives in a
+// device-local localStorage key per target language; personal vocabulary is
+// canonical on USER.runs[lang].personalVocab (schema v2) so it syncs
+// cross-device, and the only zth_user writes made here go through the same
+// persist-then-sync shape as app.js's saveUser().
 
 import { recoverUser, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
-import { buildProfileText, buildMemoryText, pickTutorRun } from "./tutor_profile.mjs";
+import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab } from "./tutor_profile.mjs";
 
 const VOCAB_FILES = [
   "adjectives.json", "connectors.json", "directions_positions.json",
@@ -47,10 +49,14 @@ const state = {
   supportLang: "",
   targetLabel: "",
   supportLabel: "",
+  user: null,       // the full migrated USER blob (run below points into it)
   run: null,
   forms: {},        // lang -> cid -> entry
   messages: [],     // [{role, content}]
   busy: false,
+  // Vocabulary write-back cohort flag. Plumbing only for now — resolved at
+  // session start, gates nothing until the admission logic ships.
+  vocabWriteback: false,
 };
 
 function tutorStoreKey() { return `zth_tutor_${state.targetLang}`; }
@@ -70,6 +76,75 @@ function loadTutorStore() {
 
 function saveTutorStore(store) {
   localStorage.setItem(tutorStoreKey(), JSON.stringify(store));
+}
+
+// The run's canonical personal-vocab list (schema v2 seeds it, but stay
+// null-safe against blobs the migration hasn't touched yet).
+function runPersonalVocab() {
+  if (!Array.isArray(state.run.personalVocab)) state.run.personalVocab = [];
+  return state.run.personalVocab;
+}
+
+// Same persist-then-sync shape as app.js's saveUser(): localStorage first
+// (source of truth for this device), then best-effort Supabase mirror. The
+// app re-runs its own server merge at next boot, so no read-back here.
+//
+// Merge-on-write: an app tab open alongside the tutor may have saved newer
+// state since this page loaded, so re-read the stored blob and graft only
+// the tutor-owned fields (personalVocab / pendingAdmission) onto it instead
+// of overwriting wholesale. (The reverse race — an app tab saving its stale
+// in-memory blob AFTER this write — can't be fixed from this side.)
+async function persistUser() {
+  let user = state.user;
+  if (!user || !user.runs) return;
+  const { user: stored } = recoverUser(localStorage.getItem(USER_KEY), null);
+  if (stored && stored.runs) {
+    const target = stored.runs[state.targetLang];
+    if (target && typeof target === "object") {
+      target.personalVocab = state.run.personalVocab || [];
+      target.pendingAdmission = state.run.pendingAdmission || [];
+      user = stored;
+      state.user = stored;
+      // Keep state.run pointing into the blob we now persist, preserving
+      // the tutor-owned lists just grafted.
+      state.run = target;
+    }
+  }
+  user.lastLocalChange = Date.now();
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+  const email = state.email.toLowerCase();
+  if (!email) return;
+  try {
+    await fetch("/.netlify/functions/saveUser", {
+      method: "POST",
+      body: JSON.stringify({ email, user }),
+    });
+    user.lastSyncedAt = Date.now();
+  } catch (err) {
+    console.warn("tutor: user sync failed:", err);
+  }
+}
+
+// Resolves whether this learner is in the vocabulary write-back cohort.
+// Server-side allowlist (TUTOR_VOCAB_WRITEBACK_EMAILS, same pattern as
+// tutor access itself) so Nekh can add beta users without a deploy; the
+// localStorage override exists for local iteration only.
+async function resolveWritebackFlag() {
+  const override = localStorage.getItem("zth_tutor_writeback_override");
+  if (override === "on") return true;
+  if (override === "off") return false;
+  try {
+    const res = await fetch("/.netlify/functions/tutor", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mode: "ping", email: state.email }),
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    return data.vocabWriteback === true;
+  } catch {
+    return false;
+  }
 }
 
 function currentPreferences() {
@@ -193,7 +268,7 @@ function buildRequestBody(mode) {
       supportForms: state.forms[state.supportLang],
       targetLabel: state.targetLabel,
       supportLabel: state.supportLabel,
-      personalVocab: store.personalVocab,
+      personalVocab: runPersonalVocab(),
     }),
     preferences: currentPreferences(),
     memory: buildMemoryText(store),
@@ -264,28 +339,39 @@ async function endSession() {
     const summary = data.summary;
     if (!summary) throw new Error("no summary returned");
 
+    const today = new Date().toISOString().slice(0, 10);
     const store = loadTutorStore();
     store.sessions.unshift({
-      when: new Date().toISOString().slice(0, 10),
+      when: today,
       sessionSummary: summary.sessionSummary || "",
       struggles: Array.isArray(summary.struggles) ? summary.struggles : [],
       nextFocus: summary.nextFocus || "",
     });
     store.sessions = store.sessions.slice(0, MAX_STORED_SESSIONS);
+    saveTutorStore(store);
 
-    const known = new Set(store.personalVocab.map((w) => w.word.toLowerCase()));
+    // New words land on the run's canonical list (schema v2) so they sync
+    // cross-device. The legacy store.personalVocab is no longer written —
+    // its existing entries were merged in at startWithRun and are kept in
+    // place so a rollback loses nothing.
+    const vocab = runPersonalVocab();
+    const known = new Set(vocab.map((w) => w.word.toLowerCase()));
+    let captured = false;
     for (const w of Array.isArray(summary.newWords) ? summary.newWords : []) {
-      if (w && w.word && !known.has(w.word.toLowerCase())) {
-        store.personalVocab.push({
+      if (w && w.word && !known.has(w.word.toLowerCase()) && vocab.length < MAX_PERSONAL_VOCAB) {
+        vocab.push({
           word: w.word,
           translation: w.translation || "",
           note: w.note || "",
+          pos: w.pos || "noun",
+          seenInSessions: [today],
+          admittedAt: null,
         });
         known.add(w.word.toLowerCase());
+        captured = true;
       }
     }
-    store.personalVocab = store.personalVocab.slice(0, MAX_PERSONAL_VOCAB);
-    saveTutorStore(store);
+    if (captured) await persistUser();
 
     state.messages = [];
     els.chat.innerHTML = "";
@@ -317,6 +403,7 @@ async function init() {
     return;
   }
 
+  state.user = user;
   state.supportLang = user.supportLanguage || "en";
 
   // lastActiveLanguage was never written before app v1.2.1, so older blobs
@@ -374,6 +461,17 @@ async function startWithRun(targetLang, run) {
   els.settingsBtn.hidden = false;
 
   const store = loadTutorStore();
+
+  // One-time pull of this device's legacy personal vocab into the run
+  // (idempotent — deduped by word, legacy entries left in place).
+  const merged = mergePersonalVocab(state.run.personalVocab, store.personalVocab, MAX_PERSONAL_VOCAB);
+  state.run.personalVocab = merged.vocab;
+  if (merged.added) persistUser();
+
+  // Plumbing only: the flag is resolved and stored, but nothing gates on it
+  // until the admission logic ships.
+  resolveWritebackFlag().then((on) => { state.vocabWriteback = on; });
+
   if (store.sessions.length && store.sessions[0].nextFocus) {
     addMessage("status", `Last time's focus: ${store.sessions[0].nextFocus}`);
   }

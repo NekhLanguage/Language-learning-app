@@ -13,6 +13,10 @@ export function createProgress() {
     completed: false,
     lastShownAt: -Infinity,
     lastResult: null,
+    // Where the concept came from ("pack" | "tutor") — schema v2. Admission
+    // metadata is only set for tutor-admitted concepts.
+    provenance: "pack",
+    admittedFrom: null,
   };
 }
 

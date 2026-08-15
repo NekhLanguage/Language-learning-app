@@ -70,7 +70,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.2";
+const APP_DATA_VERSION = "1.2.3";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 const CORE_BUNDLES = [
@@ -1072,7 +1072,9 @@ function migrateRun(run, fromVersion, toVersion) {
           streak: 0,
           completed: false,
           lastShownAt: -Infinity,
-          lastResult: null
+          lastResult: null,
+          provenance: "pack",
+          admittedFrom: null
         };
       }
     });

@@ -3,7 +3,7 @@
 // for the persisted `zth_user` blob. Pure functions — app.js owns the actual
 // localStorage reads/writes, unit tests exercise the logic directly.
 
-export const CURRENT_SCHEMA_VERSION = 1;
+export const CURRENT_SCHEMA_VERSION = 2;
 
 export const USER_KEY = "zth_user";
 export const USER_BACKUP_KEY = "zth_user_backup";
@@ -18,6 +18,29 @@ export function migrateUserState(user) {
     // v0 → v1: blobs written before versioning existed. Shape is unchanged;
     // this just stamps them.
     user.schemaVersion = 1;
+  }
+
+  if (user.schemaVersion < 2) {
+    // v1 → v2: tutor→app vocabulary write-back groundwork.
+    // - Every concept-progress entry gets `provenance` ("pack" — nothing
+    //   tutor-admitted can exist before v2) and `admittedFrom` (null unless
+    //   tutor-admitted). Retention analytics depend on this stamp existing
+    //   from day one.
+    // - `personalVocab` / `pendingAdmission` move into the run so tutor
+    //   vocabulary rides the existing Supabase save/load path cross-device
+    //   (the legacy device-local zth_tutor_<lang> copy is merged in by
+    //   tutor.js on first load).
+    for (const run of Object.values(user.runs || {})) {
+      if (!run || typeof run !== "object") continue;
+      for (const p of Object.values(run.progress || {})) {
+        if (!p || typeof p !== "object") continue;
+        if (!p.provenance) p.provenance = "pack";
+        if (p.admittedFrom === undefined) p.admittedFrom = null;
+      }
+      if (!Array.isArray(run.personalVocab)) run.personalVocab = [];
+      if (!Array.isArray(run.pendingAdmission)) run.pendingAdmission = [];
+    }
+    user.schemaVersion = 2;
   }
 
   return user;

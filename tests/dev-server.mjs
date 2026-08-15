@@ -114,7 +114,9 @@ async function handleFunction(name, req, res, url) {
       // word so the personal-vocab path is exercised.
       if (body.mode === "ping") {
         const email = String(body.email || "").toLowerCase();
-        return sendJson(res, 200, { allowed: !!email && !email.includes("noaccess") });
+        const allowed = !!email && !email.includes("noaccess");
+        // vocabWriteback mirrors production's ships-OFF default.
+        return sendJson(res, 200, { allowed, vocabWriteback: false });
       }
       if (body.mode === "summary") {
         return sendJson(res, 200, {
@@ -122,7 +124,7 @@ async function handleFunction(name, req, res, url) {
             sessionSummary: "Dev-stub session: practiced greetings.",
             wins: ["Greeted confidently"],
             struggles: ["Verb endings"],
-            newWords: [{ word: "mercado", translation: "market", note: "dev stub word" }],
+            newWords: [{ word: "mercado", translation: "market", note: "dev stub word", pos: "noun" }],
             nextFocus: "Keep practicing verb endings.",
           },
         });

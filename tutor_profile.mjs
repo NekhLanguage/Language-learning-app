@@ -104,6 +104,37 @@ export function buildProfileText(opts) {
   return lines.join("\n");
 }
 
+// Merges legacy device-local personal vocab (zth_tutor_<lang>) into the
+// run's canonical list (USER.runs[lang].personalVocab — schema v2, synced
+// cross-device via the existing save/load path). Dedupes case-insensitively
+// by word with run entries winning, normalizes entries to the v2 shape
+// (pos / seenInSessions / admittedAt), and only adds up to `cap` total
+// entries. Returns { vocab, added } so callers persist only when the merge
+// actually pulled something in.
+export function mergePersonalVocab(runVocab, legacyVocab, cap) {
+  const vocab = Array.isArray(runVocab) ? runVocab.slice() : [];
+  const known = new Set(
+    vocab.map((w) => String(w?.word || "").toLowerCase()).filter(Boolean)
+  );
+  let added = 0;
+  for (const w of Array.isArray(legacyVocab) ? legacyVocab : []) {
+    if (!w || !w.word) continue;
+    const key = String(w.word).toLowerCase();
+    if (known.has(key) || vocab.length >= cap) continue;
+    vocab.push({
+      word: w.word,
+      translation: w.translation || "",
+      note: w.note || "",
+      pos: w.pos || "noun",
+      seenInSessions: Array.isArray(w.seenInSessions) ? w.seenInSessions : [],
+      admittedAt: w.admittedAt || null,
+    });
+    known.add(key);
+    added++;
+  }
+  return { vocab, added };
+}
+
 // Resolves which run the tutor should use. `lastActiveLanguage` was a
 // null-forever field until v1.2.1, so old blobs (and blobs from before the
 // learner's next app visit) need a fallback:
