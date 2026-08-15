@@ -225,6 +225,54 @@ exports.handler = async (event) => {
       return json(200, { allowed, vocabWriteback: allowed && writebackEnabled(body.email) });
     }
 
+    // Append admissions to the public.vocab_admissions retention ledger.
+    // Client fires this after applying admissions locally; the ledger is
+    // analytics-only, so failures here never block learner state. Requires
+    // the write-back cohort gate (not just tutor access) and the service
+    // role key — no anon policies exist on the table by design.
+    if (body.mode === "admissions") {
+      if (!tutorEnabled(body.email) || !writebackEnabled(body.email)) {
+        return json(403, { error: "Write-back is not enabled for this account." });
+      }
+      if (!(await hasAccess(body.email))) {
+        return json(403, { error: "No access" });
+      }
+      const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+      if (!serviceKey) {
+        console.warn("vocab_admissions log skipped: SUPABASE_SERVICE_ROLE_KEY unset");
+        return json(200, { ok: false, skipped: "service key unset" });
+      }
+      const rows = (Array.isArray(body.admissions) ? body.admissions : [])
+        .slice(0, 20)
+        .filter((a) => a && a.cid && a.word)
+        .map((a) => ({
+          user_email: String(body.email || "").toLowerCase().trim(),
+          lang: String(body.lang || "").slice(0, 10),
+          cid: String(a.cid).slice(0, 80),
+          word: String(a.word).slice(0, 80),
+          translation: String(a.translation || "").slice(0, 200),
+          pos: String(a.pos || "noun").slice(0, 20),
+          admitted_from: "tutor",
+          sessions_seen: Number.isInteger(a.sessionsSeen) ? a.sessionsSeen : 3,
+        }));
+      if (!rows.length) return json(400, { error: "No admissions" });
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/vocab_admissions`, {
+        method: "POST",
+        headers: {
+          apikey: serviceKey,
+          Authorization: `Bearer ${serviceKey}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal",
+        },
+        body: JSON.stringify(rows),
+      });
+      if (!res.ok) {
+        console.warn("vocab_admissions insert failed:", res.status, await res.text());
+        return json(200, { ok: false });
+      }
+      return json(200, { ok: true, count: rows.length });
+    }
+
     if (!process.env.ANTHROPIC_API_KEY) {
       return json(503, { error: "Tutor not configured (missing API key)" });
     }

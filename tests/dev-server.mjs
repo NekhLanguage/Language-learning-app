@@ -118,6 +118,9 @@ async function handleFunction(name, req, res, url) {
         // vocabWriteback mirrors production's ships-OFF default.
         return sendJson(res, 200, { allowed, vocabWriteback: false });
       }
+      if (body.mode === "admissions") {
+        return sendJson(res, 200, { ok: true, count: (body.admissions || []).length });
+      }
       if (body.mode === "summary") {
         return sendJson(res, 200, {
           summary: {
