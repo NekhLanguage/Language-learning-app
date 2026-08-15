@@ -2,6 +2,11 @@ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
+import {
+  baseCompletionRatio as computeBaseCompletionRatio,
+  conceptSelectionWeight as pureConceptSelectionWeight,
+  weightedPickFrom,
+} from "./selection.mjs";
 import { isFeatureAvailable } from "./capabilities.mjs";
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import { chooseSupportSentence } from "./display.mjs";
@@ -70,8 +75,17 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.4";
+const APP_DATA_VERSION = "1.2.5";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
+
+// Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
+// read from templates and GLOBAL_VOCAB, neither of which knows about a
+// tutor-admitted cid, so advancing past L2 would re-open the dormancy the
+// MVP cap is here to close. Scope-spec Q5 is preserved: this cap lives in
+// app.js, not in progression.levelCapFor(), because it's a rendering-
+// capability limit rather than a per-type ceiling. Lift it to MAX_LEVEL
+// once tutor concepts get L3+ renderers (bounded-tutor-context work).
+const TUTOR_MVP_LEVEL_CAP = 2;
 
 const CORE_BUNDLES = [
 
@@ -2146,14 +2160,20 @@ function backfillReleasedBundles(r) {
   run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
   run.sessionExerciseCount = (run.sessionExerciseCount || 0) + 1;
 
-  // The streak/level state machine lives in progression.mjs.
+  // The streak/level state machine lives in progression.mjs. Tutor-
+  // admitted concepts ride a lower rendering-capability cap because L3+
+  // renderers need templates the tutor cid doesn't have (MVP; lift once
+  // tutor sentence generation lands).
+  const cap = isTutorConcept(cid)
+    ? TUTOR_MVP_LEVEL_CAP
+    : levelCapFor({
+        isRecognition: RECOGNITION_CONCEPTS.has(cid),
+        isModifier: isModifierConcept(cid),
+      });
   const outcome = applyAnswer(state, {
     correct,
     exerciseIndex: run.exerciseCounter,
-    levelCap: levelCapFor({
-      isRecognition: RECOGNITION_CONCEPTS.has(cid),
-      isModifier: isModifierConcept(cid),
-    }),
+    levelCap: cap,
     sessionLevelUps: run.sessionLevelUps[cid] || 0,
   });
 
@@ -2170,6 +2190,12 @@ function backfillReleasedBundles(r) {
 
   const s = ensureProgress(c);
   if (s.completed) return false;
+
+  // Tutor-admitted concepts render via run.tutorVocab at L1 (intro card)
+  // and L2 (recognition MCQ); count them as schedulable so the all-
+  // fatigued session-end check doesn't drop the session while the tutor
+  // pool still has gas.
+  if (isTutorConcept(c)) return true;
 
   // concept must be schedulable
   const meta = window.GLOBAL_VOCAB.concepts[c];
@@ -2435,6 +2461,122 @@ return tpl;
     document.getElementById("continue-btn").onclick = () => {
       applyResult(targetConcept, true);
       setTimeout(() => renderNext(targetLang, supportLang), 0);
+    };
+  }
+
+  // L2 recognition MCQ for a tutor-admitted concept — closes the dormancy
+  // that L1-only rendering leaves behind. GLOBAL_VOCAB and the sentence
+  // templates know nothing about this cid, so we build the four options
+  // ourselves: the correct translation from run.tutorVocab[cid], plus three
+  // distractors sampled from released pack concepts of matching POS.
+  // Mastering it advances the concept toward the TUTOR_MVP_LEVEL_CAP; on
+  // completion the concept leaves the active pool exactly like a mastered
+  // pack concept, no dormant middle state.
+  function renderTutorRecognition(targetLang, supportLang, targetConcept) {
+    subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
+
+    const entry = run.tutorVocab?.[targetConcept];
+    if (!entry) {
+      // Defensive: run.tutorVocab lost the entry (shouldn't happen). Mark
+      // the concept satisfied and move on rather than stall the session.
+      applyResult(targetConcept, true);
+      setTimeout(() => renderNext(targetLang, supportLang), 0);
+      return;
+    }
+
+    const targetWord = String(entry.word || "");
+    const correctTranslation = String(entry.translation || "").trim();
+    const pos = entry.pos || "noun";
+
+    // Distractor pool: released pack concepts of the same coarse POS whose
+    // support-language surface differs from the correct translation.
+    const distractorPool = run.released.filter(cid => {
+      if (cid === targetConcept) return false;
+      if (isTutorConcept(cid)) return false;
+      const m = window.GLOBAL_VOCAB.concepts[cid];
+      if (!m) return false;
+      if (pos === "verb" || pos === "adjective") return m.type === pos;
+      return m.type === "noun";
+    });
+
+    const seenSupport = new Set([correctTranslation.toLowerCase()]);
+    const distractors = [];
+    for (const cid of shuffle(distractorPool)) {
+      const s = String(surfaceForm(supportLang, cid) || "").trim();
+      if (!s) continue;
+      const key = s.toLowerCase();
+      if (seenSupport.has(key)) continue;
+      seenSupport.add(key);
+      distractors.push({ cid, translation: s });
+      if (distractors.length === 3) break;
+    }
+
+    if (!correctTranslation || distractors.length < 3) {
+      // Fresh learner without enough pack vocabulary to build a 4-option
+      // MCQ. Fall back to the intro card so the concept still surfaces
+      // rather than going dormant — mastery just waits until the pool grows.
+      renderTutorIntro(targetLang, supportLang, targetConcept);
+      return;
+    }
+
+    const CORRECT_TAG = "__tutor_correct__";
+    const options = shuffle([
+      { tag: CORRECT_TAG, translation: correctTranslation },
+      ...distractors.map(d => ({ tag: d.cid, translation: d.translation })),
+    ]);
+
+    LAST_EXERCISE = {
+      type: "tutor_l2",
+      cid: targetConcept,
+      word: targetWord,
+      answer: correctTranslation,
+    };
+
+    const capitalize = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+    let selectedTag = null;
+
+    content.innerHTML = `
+    <div class="tutor-intro-badge" aria-label="Introduced by Anna">${ICON_SPARK} from Anna</div>
+    <p><strong>${ui("chooseTranslation")}</strong></p>
+    <h2>${safe(capitalize(targetWord))} ${ttsHtml(targetWord, targetLang)}</h2>
+    <div id="choices"></div>
+    <div style="margin-top:20px;text-align:center;">
+      <button id="check-btn" disabled>${ui("check")}</button>
+    </div>
+  `;
+    wireTts();
+
+    const container = document.getElementById("choices");
+    const checkBtn = document.getElementById("check-btn");
+
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt.translation;
+      btn.dataset.cid = opt.tag;
+
+      btn.onclick = () => {
+        container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+        selectedTag = opt.tag;
+        btn.classList.add("selected");
+        checkBtn.disabled = false;
+      };
+
+      container.appendChild(btn);
+    });
+
+    checkBtn.onclick = () => {
+      if (!selectedTag) return;
+      const correct = selectedTag === CORRECT_TAG;
+
+      container.querySelectorAll("button").forEach(btn => {
+        if (btn.dataset.cid === CORRECT_TAG) btn.classList.add("correct");
+        if (btn.dataset.cid === selectedTag && !correct) btn.classList.add("incorrect");
+      });
+
+      applyResult(targetConcept, correct);
+
+      checkBtn.textContent = ui("continue");
+      checkBtn.onclick = () => renderNext(targetLang, supportLang);
     };
   }
 
@@ -4081,6 +4223,27 @@ function endSession(targetLang, supportLang) {
   connector: 6,
   quantifier: 7
 };
+// Base-vocab selection weighting (Nekh 2026-08-14 requirement, scope spec
+// Q3 addendum). Pack concepts get a slight per-candidate boost so tutor-
+// admitted words don't crowd the curated 250-word method out of the
+// exercise stream. The boost decays with pack-base completion so the end-
+// game (pack fully mastered) doesn't starve the remaining tutor pool.
+//   - Applied on top of passesSpacing(), never as a hard block — tutor
+//     concepts stay eligible for every pick, they just weigh 1 while a pack
+//     concept weighs up to 1.5.
+//   - Mid-base (no pack completed): pack weight = 1.5, tutor = 1.
+//   - Full base mastery: both = 1.
+//   - Signal is per-concept `progress.provenance` (stamped on admission,
+//     defaults to "pack" via the v2 migration).
+// The pure math (baseCompletionRatio / packSelectionBoost / weightedPickFrom)
+// lives in selection.mjs so it's unit-testable outside the DOM.
+function baseCompletionRatio() {
+  return computeBaseCompletionRatio(run.released, run.progress);
+}
+function conceptSelectionWeight(cid, baseCompletion) {
+  return pureConceptSelectionWeight(isTutorConcept(cid), baseCompletion);
+}
+
 function chooseConcept(excluded = new Set()) {
   let candidates = run.released.filter(cid => {
     if (excluded.has(cid)) return false;
@@ -4140,10 +4303,12 @@ function chooseConcept(excluded = new Set()) {
     if (r <= 0) { chosenLevel = levels[i]; break; }
   }
   const bucket = byLevel.get(chosenLevel);
+  const baseCompletion = baseCompletionRatio();
 
   if (planExhausted) {
-    // Stalest-first with a little variety: random among the 3 words that
-    // have waited longest.
+    // Stalest-first with a little variety: weighted-random among the 3
+    // words that have waited longest, so the pack boost still tilts the
+    // final pick without ever hard-blocking tutor concepts.
     const byStaleness = [...bucket].sort((a, b) => {
       const at = (c) => {
         const shown = ensureProgress(c).lastShownAt;
@@ -4152,10 +4317,10 @@ function chooseConcept(excluded = new Set()) {
       return at(a) - at(b);
     });
     const pool = byStaleness.slice(0, 3);
-    return pool[Math.floor(Math.random() * pool.length)];
+    return weightedPickFrom(pool, c => conceptSelectionWeight(c, baseCompletion));
   }
 
-  return bucket[Math.floor(Math.random() * bucket.length)];
+  return weightedPickFrom(bucket, c => conceptSelectionWeight(c, baseCompletion));
 }
 // Rotate the subject pronoun in a template to a different one the learner
 // has already unlocked. Widens effective variety without writing new
@@ -4438,9 +4603,9 @@ for (let attempts = 0; attempts < 25; attempts++) {
   // ✅ Level 1
   if (level === 1) {
     // Tutor-admitted concepts render their intro card from run.tutorVocab —
-    // no template needed. After this L1 exposure they advance to L2 and
-    // canConceptBeTested filters them out (no template references the cid),
-    // so they sit dormant until a later PR adds selection weighting.
+    // no template needed. After this L1 exposure they advance to L2 where
+    // renderTutorRecognition takes over, and TUTOR_MVP_LEVEL_CAP marks
+    // them completed once L2 is mastered.
     if (isTutorConcept(targetConcept)) {
       renderTutorIntro(targetLang, supportLang, targetConcept);
       run.exerciseCounter++;
@@ -4467,6 +4632,15 @@ for (let attempts = 0; attempts < 25; attempts++) {
 
  // ---------- Level 2 ----------
 if (level === 2) {
+
+  // Tutor-admitted concepts: recognition MCQ built from run.tutorVocab
+  // (correct translation) plus pack-sourced distractors. No template
+  // involved — GLOBAL_VOCAB has no entry for a tutor cid.
+  if (isTutorConcept(targetConcept)) {
+    renderTutorRecognition(targetLang, supportLang, targetConcept);
+    run.exerciseCounter++;
+    return;
+  }
 
   // ✅ 1. Get a template for sentence context
   const tpl = chooseTemplateForConcept(targetConcept);
