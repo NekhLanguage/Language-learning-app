@@ -84,6 +84,10 @@ const MAX_MESSAGES = 60;
 const MAX_MESSAGE_CHARS = 2000;
 const MAX_PROFILE_CHARS = 20000;
 const MAX_MEMORY_CHARS = 8000;
+// Learner-facts cap. Client already bounds this via `learner_facts.mjs`'s
+// 20-entry hard cap; the byte cap here is a belt-and-braces guard against
+// a client-side bug that would otherwise flood the system prompt.
+const MAX_LEARNER_FACTS_CHARS = 6000;
 
 let cachedClient = null;
 function getClient() {
@@ -157,10 +161,19 @@ async function hasAccess(email) {
 
 // The per-learner context block. Rendered after the (cached) instructions so
 // the instructions prefix stays byte-identical across all learners.
-function contextBlock({ targetLang, supportLang, profile, preferences, memory }) {
+//
+// Order is load-bearing: LEARNER FACTS come first, verbatim, so identity /
+// subject ground truth ("learner is Norwegian teaching in Norway",
+// "Pokémon is a video-game franchise, not real animals") never has to
+// compete with 500 words of vocabulary or a rolling session summary for
+// the model's attention. See `learner_facts.mjs`.
+function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts }) {
   return [
     `TARGET LANGUAGE: ${targetLang}`,
     `SUPPORT LANGUAGE: ${supportLang}`,
+    "",
+    "=== LEARNER FACTS (persistent ground truth — take these as given, do not challenge or forget) ===",
+    learnerFacts || "(no facts on file yet)",
     "",
     "=== LEARNER PROFILE (from app exercise data — ground truth) ===",
     profile || "(no profile data — treat as a brand-new learner)",
@@ -206,8 +219,30 @@ const SUMMARY_SCHEMA = {
       },
     },
     nextFocus: { type: "string", description: "The single most useful focus for the next session, one line." },
+    newLearnerFacts: {
+      type: "array",
+      description:
+        "Durable identity/subject facts learned this session that the tutor must remember forever (not just next session). Examples: 'learner works as a maths teacher', 'partner is Ukrainian', 'main target language is Ukrainian', 'Pokémon is a video-game franchise, not real animals'. Each entry is a short self-contained sentence (max ~30 words). Do NOT include vocabulary here (those go in newWords). Do NOT include transient session state (that goes in sessionSummary). At most 5.",
+      items: { type: "string" },
+      maxItems: 5,
+    },
+    correctedLearnerFacts: {
+      type: "array",
+      description:
+        "Corrections to previously-stored learner facts (from the LEARNER FACTS block in the system prompt). Each item names the existing fact being replaced and the new wording. Use this when the learner tells you a stored fact is wrong or has changed. At most 3.",
+      items: {
+        type: "object",
+        properties: {
+          replaces: { type: "string", description: "The existing fact text to replace, verbatim from the LEARNER FACTS block." },
+          text: { type: "string", description: "The corrected fact wording." },
+        },
+        required: ["replaces", "text"],
+        additionalProperties: false,
+      },
+      maxItems: 3,
+    },
   },
-  required: ["sessionSummary", "wins", "struggles", "newWords", "nextFocus"],
+  required: ["sessionSummary", "wins", "struggles", "newWords", "nextFocus", "newLearnerFacts", "correctedLearnerFacts"],
   additionalProperties: false,
 };
 
@@ -315,6 +350,7 @@ exports.handler = async (event) => {
           profile: String(body.profile || "").slice(0, MAX_PROFILE_CHARS),
           preferences: body.preferences,
           memory: String(body.memory || "").slice(0, MAX_MEMORY_CHARS),
+          learnerFacts: String(body.learnerFacts || "").slice(0, MAX_LEARNER_FACTS_CHARS),
         }),
         cache_control: { type: "ephemeral" },
       },

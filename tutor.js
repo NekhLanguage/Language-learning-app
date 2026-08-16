@@ -10,6 +10,11 @@ import { recoverUser, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
 import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab } from "./tutor_profile.mjs";
 import { processTutorSession, applyAdmissions } from "./tutor_admission.mjs";
+import {
+  getLearnerFacts,
+  renderLearnerFactsText,
+  applyTutorLearnerFacts,
+} from "./learner_facts.mjs";
 
 const VOCAB_FILES = [
   "adjectives.json", "connectors.json", "directions_positions.json",
@@ -98,6 +103,11 @@ function runPersonalVocab() {
 async function persistUser() {
   let user = state.user;
   if (!user || !user.runs) return;
+  // Snapshot tutor-owned user-level fields BEFORE the merge-on-write swap
+  // below reassigns state.user to the freshly-loaded blob — otherwise the
+  // graft would copy stored.learnerFacts back onto itself and this
+  // session's fact writes would be lost.
+  const tutorLearnerFacts = Array.isArray(user.learnerFacts) ? user.learnerFacts : null;
   const { user: stored } = recoverUser(localStorage.getItem(USER_KEY), null);
   if (stored && stored.runs) {
     const target = stored.runs[state.targetLang];
@@ -122,6 +132,11 @@ async function persistUser() {
       // the tutor-owned lists just grafted.
       state.run = target;
     }
+    // learnerFacts is a user-level tutor-owned field (bounded via
+    // learner_facts.mjs). Graft the snapshot onto the freshly-loaded stored
+    // blob so an app tab that saved after the tutor page loaded doesn't
+    // roll back this session's fact writes. The app never writes learnerFacts.
+    if (tutorLearnerFacts) stored.learnerFacts = tutorLearnerFacts;
   }
   user.lastLocalChange = Date.now();
   localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -288,6 +303,10 @@ function buildRequestBody(mode) {
     }),
     preferences: currentPreferences(),
     memory: buildMemoryText(store),
+    // Bounded (20-entry hard cap on the client), user-level, cross-language.
+    // The function renders them at the top of the system prompt above the
+    // vocab profile — see learner_facts.mjs and netlify/functions/tutor.js.
+    learnerFacts: renderLearnerFactsText(getLearnerFacts(state.user)),
     messages: state.messages,
   };
 }
@@ -428,6 +447,17 @@ async function endSession() {
           admissions,
         }),
       }).catch(() => {});
+    }
+
+    // Bounded learner-facts write-path (separate from vocab admission).
+    // Fires whether or not vocab write-back is enabled — identity/subject
+    // facts are not gated on the write-back cohort.
+    const facts = applyTutorLearnerFacts(state.user, summary, today);
+    if (facts.added.length || facts.corrected.length) {
+      await persistUser();
+    }
+    if (facts.dropped.length) {
+      console.warn("learner facts dropped (cap or empty):", facts.dropped);
     }
 
     state.messages = [];
