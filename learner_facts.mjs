@@ -79,6 +79,24 @@ export function correctLearnerFact(user, oldText, newText, { source = "tutor", a
   return { corrected: true, entry };
 }
 
+// Removes the fact at `index`. Returns { removed, entry }:
+//   - removed=true, entry=the entry that was spliced out — success.
+//   - removed=false, entry=null — the index was out of range or the store
+//                                 was not an array; the user blob is left
+//                                 untouched.
+// Learner-driven correction path (the tutor's own corrections go through
+// applyTutorLearnerFacts): the "what Anna remembers about you" UI calls
+// this when the learner hits ✕ on a row.
+export function removeLearnerFact(user, index) {
+  if (!user || !Array.isArray(user.learnerFacts)) return { removed: false, entry: null };
+  const i = Number(index);
+  if (!Number.isInteger(i) || i < 0 || i >= user.learnerFacts.length) {
+    return { removed: false, entry: null };
+  }
+  const [entry] = user.learnerFacts.splice(i, 1);
+  return { removed: true, entry };
+}
+
 // Renders the facts for the tutor system prompt, verbatim as a bullet list.
 // Empty list returns "" so the caller can decide whether to emit the block.
 export function renderLearnerFactsText(facts) {

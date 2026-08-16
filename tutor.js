@@ -14,6 +14,7 @@ import {
   getLearnerFacts,
   renderLearnerFactsText,
   applyTutorLearnerFacts,
+  removeLearnerFact,
 } from "./learner_facts.mjs";
 
 const VOCAB_FILES = [
@@ -47,6 +48,10 @@ const els = {
   settingsSave: document.getElementById("tutor-settings-save"),
   settingsClose: document.getElementById("tutor-settings-close"),
   settingsHint: document.getElementById("tutor-settings-hint"),
+  memory: document.getElementById("tutor-memory"),
+  memoryBtn: document.getElementById("tutor-memory-btn"),
+  memoryClose: document.getElementById("tutor-memory-close"),
+  memoryList: document.getElementById("tutor-memory-list"),
 };
 
 const state = {
@@ -226,6 +231,57 @@ function saveSettings() {
     addMessage("status", "Settings saved.");
   }
   els.input.focus();
+}
+
+// Renders the current learner-facts list into the memory panel. Each row is
+// the fact text + a ✕ that splices the entry and persists. Reads state.user
+// live every render so the panel reflects whatever the last End-session
+// admission wrote, not a stale snapshot from when the panel opened.
+function renderMemory() {
+  const facts = getLearnerFacts(state.user);
+  els.memoryList.innerHTML = "";
+  if (!facts.length) {
+    const empty = document.createElement("p");
+    empty.className = "tutor-memory-empty";
+    empty.textContent = "Nothing yet. Anna will start remembering identity and subject facts as you talk — you can come back here to remove any that miss the mark.";
+    els.memoryList.appendChild(empty);
+    return;
+  }
+  facts.forEach((fact, idx) => {
+    const li = document.createElement("li");
+    li.className = "tutor-memory-item";
+    const span = document.createElement("span");
+    span.className = "tutor-memory-text";
+    span.textContent = fact?.text || "";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "tutor-memory-remove";
+    btn.textContent = "✕";
+    btn.setAttribute("aria-label", `Remove: ${fact?.text || ""}`);
+    btn.addEventListener("click", () => {
+      // Splice by INDEX (not text) so two facts with identical text — the
+      // store dedupes case-insensitively on add but not on correction — can
+      // still be removed unambiguously.
+      const { removed } = removeLearnerFact(state.user, idx);
+      if (!removed) return;
+      renderMemory();
+      // Persist through the tutor's own merge-on-write path so a concurrent
+      // app tab's newer state isn't clobbered.
+      persistUser();
+    });
+    li.appendChild(span);
+    li.appendChild(btn);
+    els.memoryList.appendChild(li);
+  });
+}
+
+function openMemory() {
+  renderMemory();
+  els.memory.hidden = false;
+}
+
+function closeMemory() {
+  els.memory.hidden = true;
 }
 
 function showGate(html) {
@@ -578,6 +634,7 @@ async function startWithRun(targetLang, run) {
   restorePreferences();
   els.main.hidden = false;
   els.settingsBtn.hidden = false;
+  els.memoryBtn.hidden = false;
 
   const store = loadTutorStore();
 
@@ -620,6 +677,8 @@ async function startWithRun(targetLang, run) {
     restorePreferences(); // discard unsaved edits
     els.settings.hidden = true;
   });
+  els.memoryBtn.addEventListener("click", openMemory);
+  els.memoryClose.addEventListener("click", closeMemory);
   els.input.focus();
 }
 
