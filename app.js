@@ -75,7 +75,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.6";
+const APP_DATA_VERSION = "1.2.7";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -556,7 +556,11 @@ function reconcileRecognitionCompletion(user) {
 
 let USER = null;
 document.addEventListener("DOMContentLoaded", async () => {
-  const APP_VERSION = "v1.2.2";
+  // Derived from APP_DATA_VERSION — the single version constant — so the
+  // displayed build string can never drift from the cache-bust again. (A
+  // hand-maintained copy here sat at "v1.2.2" through four releases and
+  // fed the start screen, beacon, and feedback payloads the wrong build.)
+  const APP_VERSION = "v" + APP_DATA_VERSION;
   const MAX_LEVEL = 7;
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.

@@ -135,6 +135,19 @@ export function mergePersonalVocab(runVocab, legacyVocab, cap) {
   return { vocab, added };
 }
 
+// Word-count string for the tutor language-selection screen: pack words and
+// tutor-admitted words counted separately — "284 + 5", not "289" — so the
+// write-back is visible as a feature (and Nekh's fastest dogfood read on
+// whether admission fires). Provenance (schema v2) is the signal.
+export function wordCountLabel(run) {
+  const released = Array.isArray(run?.released) ? run.released : [];
+  const tutor = released.filter(
+    (cid) => run?.progress?.[cid]?.provenance === "tutor"
+  ).length;
+  const pack = released.length - tutor;
+  return tutor ? `${pack} + ${tutor}` : `${pack}`;
+}
+
 // Resolves which run the tutor should use. `lastActiveLanguage` was a
 // null-forever field until v1.2.1, so old blobs (and blobs from before the
 // learner's next app visit) need a fallback:
