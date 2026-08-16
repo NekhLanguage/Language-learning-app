@@ -108,6 +108,70 @@ test("buildProfileText renders tiers with target = support pairs", () => {
   assert.match(text, /mercado = market/);
 });
 
+test("buildProfileText bounds tiers by recency once they exceed the cap", () => {
+  // 100 practicing concepts; cap for practicing is 80. Concept N carries
+  // lastShownAt = N so the top-80 are p20..p99 (in that order).
+  const released = [];
+  const progress = {};
+  const targetForms = {};
+  const supportForms = {};
+  for (let i = 0; i < 100; i++) {
+    const cid = `PRAC${i}`;
+    released.push(cid);
+    progress[cid] = { level: 4, completed: false, lastShownAt: i };
+    targetForms[cid] = { form: `t${i}` };
+    supportForms[cid] = { form: `s${i}` };
+  }
+  const text = buildProfileText({
+    run: { released, progress },
+    targetForms, supportForms,
+    targetLabel: "Spanish", supportLabel: "English",
+    personalVocab: [],
+  });
+  assert.match(text, /PRACTICING \(100 words, showing 80 most-recent/);
+  assert.match(text, /\(and 20 more not shown\)/);
+  // Newest (PRAC99) is shown, oldest (PRAC0) is trimmed.
+  assert.match(text, /t99 = s99/);
+  assert.equal(text.includes("t0 = s0"), false);
+  // Under-cap tiers keep the plain header shape.
+  assert.match(text, /PRODUCTION VOCABULARY \(0 words —/);
+});
+
+test("buildProfileText bounds personal vocab by latest sighting once past cap", () => {
+  // 50 personal entries; cap is 40. Entry N carries a session date encoding N
+  // so the top-40 are the higher-N entries.
+  const personalVocab = [];
+  for (let i = 0; i < 50; i++) {
+    const dd = String(i + 1).padStart(2, "0");
+    personalVocab.push({ word: `w${i}`, translation: `t${i}`, seenInSessions: [`2026-08-${dd}`] });
+  }
+  const text = buildProfileText({
+    run: { released: [], progress: {} },
+    targetForms: {}, supportForms: {},
+    targetLabel: "Spanish", supportLabel: "English",
+    personalVocab,
+  });
+  assert.match(text, /PERSONAL VOCABULARY \(50 words, showing 40 most-recent/);
+  assert.match(text, /\(and 10 more not shown\)/);
+  assert.match(text, /w49 = t49/); // newest survives
+  assert.equal(text.includes("w0 = t0"), false); // oldest trimmed
+});
+
+test("buildProfileText leaves under-cap tiers unlabelled as truncated", () => {
+  // Same fixture as the vanilla render test — verifies no regression on the
+  // "no truncation" header shape.
+  const text = buildProfileText({
+    run: fakeRun(),
+    targetForms: TARGET_FORMS,
+    supportForms: SUPPORT_FORMS,
+    targetLabel: "Spanish",
+    supportLabel: "English",
+    personalVocab: [{ word: "mercado", translation: "market" }],
+  });
+  assert.equal(text.includes("most-recent"), false);
+  assert.equal(text.includes("not shown"), false);
+});
+
 test("buildProfileText survives an empty run", () => {
   const text = buildProfileText({
     run: { released: [], progress: {} },
