@@ -72,3 +72,14 @@ test("SUMMARY_SCHEMA still declares the fields the client consumes", () => {
     assert.ok(SUMMARY_SCHEMA.required.includes(field), `not required: ${field}`);
   }
 });
+
+test("newWords items declare exampleSentence + exampleTranslation as required strings", () => {
+  const item = SUMMARY_SCHEMA.properties.newWords.items;
+  for (const field of ["word", "translation", "note", "pos", "exampleSentence", "exampleTranslation"]) {
+    assert.ok(item.properties[field], `newWords item missing property: ${field}`);
+    assert.ok(item.required.includes(field), `newWords item not required: ${field}`);
+  }
+  assert.equal(item.properties.exampleSentence.type, "string");
+  assert.equal(item.properties.exampleTranslation.type, "string");
+  assert.equal(item.additionalProperties, false);
+});

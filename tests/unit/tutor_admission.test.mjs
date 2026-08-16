@@ -62,6 +62,29 @@ test("session 1 captures a new word with one sighting", () => {
   assert.deepEqual(run.personalVocab[0].seenInSessions, ["2026-08-15"]);
 });
 
+test("first-sighting captures exampleSentence + exampleTranslation onto personalVocab", () => {
+  const run = freshRun();
+  processTutorSession(
+    run,
+    [{ word: "praia", translation: "beach", note: "", pos: "noun",
+       exampleSentence: "Vamos à praia amanhã.", exampleTranslation: "Let's go to the beach tomorrow." }],
+    "", "2026-08-15", () => false,
+  );
+  assert.equal(run.personalVocab[0].exampleSentence, "Vamos à praia amanhã.");
+  assert.equal(run.personalVocab[0].exampleTranslation, "Let's go to the beach tomorrow.");
+});
+
+test("first-sighting without example fields defaults to empty strings (backward compatible)", () => {
+  const run = freshRun();
+  processTutorSession(
+    run,
+    [{ word: "praia", translation: "beach", note: "", pos: "noun" }],
+    "", "2026-08-15", () => false,
+  );
+  assert.equal(run.personalVocab[0].exampleSentence, "");
+  assert.equal(run.personalVocab[0].exampleTranslation, "");
+});
+
 test("second distinct-day sighting promotes to pendingAdmission", () => {
   const run = freshRun({ personalVocab: [entry("praia", ["2026-08-13"])] });
   processTutorSession(run, [{ word: "praia" }], "", "2026-08-15", () => false);
@@ -127,11 +150,24 @@ test("applyAdmissions puts the concept on the ladder with tutor provenance", () 
   assert.deepEqual(p.admittedFrom, { mode: "tutor", sessionDate: "2026-08-15" });
   assert.deepEqual(run.tutorVocab.TUTOR_PRAIA, {
     word: "praia", translation: "praia-en", note: "", pos: "noun",
+    exampleSentence: "", exampleTranslation: "",
   });
   assert.equal(admittedEntry.admittedAt, "2026-08-15");
   // Idempotent across devices: applying again is a no-op.
   assert.deepEqual(applyAdmissions(run, [admittedEntry], "2026-08-16"), []);
   assert.equal(run.released.filter((c) => c === "TUTOR_PRAIA").length, 1);
+});
+
+test("applyAdmissions carries banked example sentence into tutorVocab", () => {
+  const run = freshRun();
+  const admittedEntry = {
+    ...entry("praia", ["2026-08-11", "2026-08-13", "2026-08-15"]),
+    exampleSentence: "Vamos à praia amanhã.",
+    exampleTranslation: "Let's go to the beach tomorrow.",
+  };
+  applyAdmissions(run, [admittedEntry], "2026-08-15");
+  assert.equal(run.tutorVocab.TUTOR_PRAIA.exampleSentence, "Vamos à praia amanhã.");
+  assert.equal(run.tutorVocab.TUTOR_PRAIA.exampleTranslation, "Let's go to the beach tomorrow.");
 });
 
 test("capture respects the 200-entry personalVocab cap", () => {

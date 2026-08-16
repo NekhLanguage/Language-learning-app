@@ -220,8 +220,16 @@ const SUMMARY_SCHEMA = {
             enum: ["noun", "verb", "adjective", "other"],
             description: "Part of speech of the base form. Load-bearing: mastery-level caps are derived from it.",
           },
+          exampleSentence: {
+            type: "string",
+            description: "One short natural target-language sentence using this word — the actual sentence you used in conversation this session when possible, otherwise a fresh one at the learner's level. Empty string only if you truly cannot produce one.",
+          },
+          exampleTranslation: {
+            type: "string",
+            description: "Support-language translation of exampleSentence. Empty string if exampleSentence is empty.",
+          },
         },
-        required: ["word", "translation", "note", "pos"],
+        required: ["word", "translation", "note", "pos", "exampleSentence", "exampleTranslation"],
         additionalProperties: false,
       },
     },
