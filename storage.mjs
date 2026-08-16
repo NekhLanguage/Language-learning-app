@@ -3,7 +3,7 @@
 // for the persisted `zth_user` blob. Pure functions — app.js owns the actual
 // localStorage reads/writes, unit tests exercise the logic directly.
 
-export const CURRENT_SCHEMA_VERSION = 2;
+export const CURRENT_SCHEMA_VERSION = 3;
 
 export const USER_KEY = "zth_user";
 export const USER_BACKUP_KEY = "zth_user_backup";
@@ -41,6 +41,17 @@ export function migrateUserState(user) {
       if (!Array.isArray(run.pendingAdmission)) run.pendingAdmission = [];
     }
     user.schemaVersion = 2;
+  }
+
+  if (user.schemaVersion < 3) {
+    // v2 → v3: learner-facts store (bounded tutor context, step 1).
+    // User-level (not per-run) because identity facts cross languages —
+    // "learner is Norwegian" is true whether they're practicing Ukrainian
+    // or Spanish, and duplicating the fact per run would waste both the
+    // cap and the model's attention. Seeded empty; the tutor write-path
+    // fills it. See `learner_facts.mjs` for the policy.
+    if (!Array.isArray(user.learnerFacts)) user.learnerFacts = [];
+    user.schemaVersion = 3;
   }
 
   return user;

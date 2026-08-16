@@ -39,7 +39,7 @@ test("v1 → v2 stamps provenance on every progress entry and preserves the rest
     },
   };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 2);
+  assert.equal(migrated.schemaVersion, CURRENT_SCHEMA_VERSION);
   for (const cid of ["WATER", "HOUSE"]) {
     assert.equal(migrated.runs.uk.progress[cid].provenance, "pack");
     assert.equal(migrated.runs.uk.progress[cid].admittedFrom, null);
@@ -56,7 +56,7 @@ test("v1 → v2 stamps provenance on every progress entry and preserves the rest
 test("v1 → v2 is null-safe on runs without progress", () => {
   const user = { id: "u1", schemaVersion: 1, runs: { pt: {}, es: null } };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 2);
+  assert.equal(migrated.schemaVersion, CURRENT_SCHEMA_VERSION);
   assert.deepEqual(migrated.runs.pt.personalVocab, []);
   assert.deepEqual(migrated.runs.pt.pendingAdmission, []);
   assert.equal(migrated.runs.es, null);
@@ -109,4 +109,39 @@ test("recoverUser falls back to the backup when the primary is corrupt", () => {
 test("recoverUser returns null when nothing is recoverable", () => {
   assert.deepEqual(recoverUser("{oops", "{also oops"), { user: null, source: null });
   assert.deepEqual(recoverUser(null, null), { user: null, source: null });
+});
+
+test("v2 → v3 seeds an empty user-level learnerFacts array", () => {
+  const user = {
+    id: "u1",
+    schemaVersion: 2,
+    supportLanguage: "en",
+    runs: { pt: { released: [], personalVocab: [], pendingAdmission: [] } },
+  };
+  const migrated = migrateUserState(user);
+  assert.equal(migrated.schemaVersion, 3);
+  assert.deepEqual(migrated.learnerFacts, []);
+  // Existing run-level state is untouched.
+  assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
+});
+
+test("v2 → v3 preserves an already-populated learnerFacts", () => {
+  const user = {
+    id: "u1",
+    schemaVersion: 2,
+    runs: {},
+    learnerFacts: [{ text: "learner is Norwegian", source: "tutor", addedAt: "2026-08-16" }],
+  };
+  const migrated = migrateUserState(user);
+  assert.equal(migrated.schemaVersion, 3);
+  assert.equal(migrated.learnerFacts.length, 1);
+  assert.equal(migrated.learnerFacts[0].text, "learner is Norwegian");
+});
+
+test("full migration path v0 → v3 stamps every field once", () => {
+  const user = validUser();
+  const migrated = migrateUserState(user);
+  assert.equal(migrated.schemaVersion, 3);
+  assert.deepEqual(migrated.learnerFacts, []);
+  assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
 });

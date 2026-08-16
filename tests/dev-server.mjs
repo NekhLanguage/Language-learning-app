@@ -129,6 +129,12 @@ async function handleFunction(name, req, res, url) {
             struggles: ["Verb endings"],
             newWords: [{ word: "mercado", translation: "market", note: "dev stub word", pos: "noun" }],
             nextFocus: "Keep practicing verb endings.",
+            // Extension for the learner-facts write-path (schema v3): the
+            // real function's summary schema requires these; the stub
+            // returns one canonical fact so the client's applyTutorLearnerFacts
+            // path is exercised offline.
+            newLearnerFacts: ["Dev-stub learner facts write-path is wired."],
+            correctedLearnerFacts: [],
           },
         });
       }
