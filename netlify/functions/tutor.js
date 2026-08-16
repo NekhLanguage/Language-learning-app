@@ -186,6 +186,13 @@ function contextBlock({ targetLang, supportLang, profile, preferences, memory, l
   ].join("\n");
 }
 
+// This schema is sent raw to the structured-outputs API, which supports only
+// a subset of JSON Schema: array/string constraints (maxItems, minItems,
+// minLength, maxLength, pattern, minimum, maximum...) are rejected with a 400,
+// which surfaces to the learner as "Couldn't save the session". Express size
+// limits in the field descriptions instead, and enforce hard caps client-side
+// (see learner_facts.mjs / tutor_admission.mjs). tests/unit/tutor_schema.test.mjs
+// lints the schema for unsupported keywords.
 const SUMMARY_SCHEMA = {
   type: "object",
   properties: {
@@ -224,7 +231,6 @@ const SUMMARY_SCHEMA = {
       description:
         "Durable identity/subject facts learned this session that the tutor must remember forever (not just next session). Examples: 'learner works as a maths teacher', 'partner is Ukrainian', 'main target language is Ukrainian', 'Pokémon is a video-game franchise, not real animals'. Each entry is a short self-contained sentence (max ~30 words). Do NOT include vocabulary here (those go in newWords). Do NOT include transient session state (that goes in sessionSummary). At most 5.",
       items: { type: "string" },
-      maxItems: 5,
     },
     correctedLearnerFacts: {
       type: "array",
@@ -239,7 +245,6 @@ const SUMMARY_SCHEMA = {
         required: ["replaces", "text"],
         additionalProperties: false,
       },
-      maxItems: 3,
     },
   },
   required: ["sessionSummary", "wins", "struggles", "newWords", "nextFocus", "newLearnerFacts", "correctedLearnerFacts"],
@@ -412,7 +417,7 @@ exports.handler = async (event) => {
     });
     const response = await client.messages.create({
       model: MODEL,
-      max_tokens: 1024,
+      max_tokens: 2048,
       system,
       messages,
       output_config: { format: { type: "json_schema", schema: SUMMARY_SCHEMA } },
@@ -437,6 +442,12 @@ exports.handler = async (event) => {
     if (response.stop_reason === "refusal") {
       return json(200, { summary: null, refused: true });
     }
+    if (response.stop_reason === "max_tokens") {
+      // The JSON is cut off mid-document; parsing it would throw and turn a
+      // known condition into an opaque 500.
+      console.warn("TUTOR SUMMARY TRUNCATED at", response.usage?.output_tokens, "output tokens");
+      return json(200, { summary: null, truncated: true });
+    }
     const text = response.content
       .filter((b) => b.type === "text")
       .map((b) => b.text)
@@ -455,3 +466,6 @@ function json(statusCode, obj) {
     body: JSON.stringify(obj),
   };
 }
+
+// For tests only (tests/unit/tutor_schema.test.mjs).
+exports.SUMMARY_SCHEMA = SUMMARY_SCHEMA;
