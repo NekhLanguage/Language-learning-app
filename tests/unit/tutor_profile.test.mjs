@@ -11,6 +11,7 @@ import {
   buildMemoryText,
   pickTutorRun,
   mergePersonalVocab,
+  wordCountLabel,
 } from "../../tutor_profile.mjs";
 
 function fakeRun() {
@@ -210,4 +211,22 @@ test("mergePersonalVocab with nothing to add reports added: 0", () => {
   const run = [{ word: "praia" }];
   const { added } = mergePersonalVocab(run, [{ word: "PRAIA" }], 200);
   assert.equal(added, 0);
+});
+
+test("wordCountLabel splits pack and tutor-admitted counts", () => {
+  const run = {
+    released: ["WATER", "HOUSE", "TUTOR_PRAIA"],
+    progress: {
+      WATER: { provenance: "pack" },
+      HOUSE: { provenance: "pack" },
+      TUTOR_PRAIA: { provenance: "tutor" },
+    },
+  };
+  assert.equal(wordCountLabel(run), "2 + 1");
+});
+
+test("wordCountLabel is plain when nothing is tutor-admitted, and null-safe", () => {
+  assert.equal(wordCountLabel({ released: ["A", "B"], progress: {} }), "2");
+  assert.equal(wordCountLabel({ released: [] }), "0");
+  assert.equal(wordCountLabel(null), "0");
 });

@@ -8,7 +8,7 @@
 
 import { recoverUser, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
-import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab } from "./tutor_profile.mjs";
+import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab, wordCountLabel } from "./tutor_profile.mjs";
 import { processTutorSession, applyAdmissions } from "./tutor_admission.mjs";
 import {
   getLearnerFacts,
@@ -481,7 +481,19 @@ async function endSession() {
   }
 }
 
+// Standing rule: the build version is visible on every surface. The tutor
+// page shows the ?v= its own script was ACTUALLY loaded with — a stale
+// cached tutor.html shows its old value, which is exactly the diagnostic
+// the display exists to give.
+function showBuildVersion() {
+  const tag = document.getElementById("tutor-version-tag");
+  const src = document.querySelector('script[src*="tutor.js"]')?.getAttribute("src") || "";
+  const v = new URLSearchParams(src.split("?")[1] || "").get("v");
+  if (tag && v) tag.textContent = `v${v}`;
+}
+
 async function init() {
+  showBuildVersion();
   state.email = (localStorage.getItem("zth_email") || "").trim();
   const { user } = recoverUser(
     localStorage.getItem(USER_KEY),
@@ -499,28 +511,42 @@ async function init() {
   state.user = user;
   state.supportLang = user.supportLanguage || "en";
 
-  // lastActiveLanguage was never written before app v1.2.1, so older blobs
-  // need a fallback: auto-select a sole run, or ask when there are several.
+  // A learner with SEVERAL languages always gets the selection screen — it
+  // is the product surface where a language is chosen and word totals are
+  // read (restored 2026-08-16 per Nekh: commit ead582f started stamping
+  // lastActiveLanguage, which made pickTutorRun's auto-bind happy path fire
+  // and silently retired this screen). Auto-start only with exactly one run;
+  // the pointer now just sorts the last-used language to the top.
   const pick = pickTutorRun(user);
-  if (pick.run) {
+  if (pick.candidates.length === 1 && pick.run) {
     return startWithRun(pick.targetLang, pick.run);
   }
   if (pick.candidates.length) {
+    const candidates = [...pick.candidates].sort((a, b) => {
+      if (a.lang === user.lastActiveLanguage) return -1;
+      if (b.lang === user.lastActiveLanguage) return 1;
+      return 0; // keep pickTutorRun's most-progress-first order otherwise
+    });
     els.gate.hidden = false;
     els.gate.innerHTML = "<p>Which language do you want to practice with Anna?</p>";
     const wrap = document.createElement("div");
     wrap.style.cssText = "display:flex;flex-direction:column;gap:8px;max-width:320px;margin:16px auto 0;";
-    for (const c of pick.candidates) {
+    for (const c of candidates) {
       const meta = AVAILABLE_LANGUAGES.find((l) => l.code === c.lang);
       const b = document.createElement("button");
       b.className = "tutor-btn";
       b.type = "button";
-      b.textContent = `${meta?.label || c.lang} · ${(c.run.released || []).length} words`;
+      // Pack + tutor-admitted counted separately ("284 + 5 words") so the
+      // write-back is visible as a feature.
+      b.textContent = `${meta?.label || c.lang} · ${wordCountLabel(c.run)} words`;
       b.addEventListener("click", () => startWithRun(c.lang, c.run));
       wrap.appendChild(b);
     }
     els.gate.appendChild(wrap);
     return;
+  }
+  if (pick.run) {
+    return startWithRun(pick.targetLang, pick.run);
   }
 
   showGate(
