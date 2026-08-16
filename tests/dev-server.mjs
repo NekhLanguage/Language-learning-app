@@ -127,7 +127,14 @@ async function handleFunction(name, req, res, url) {
             sessionSummary: "Dev-stub session: practiced greetings.",
             wins: ["Greeted confidently"],
             struggles: ["Verb endings"],
-            newWords: [{ word: "mercado", translation: "market", note: "dev stub word", pos: "noun" }],
+            newWords: [{
+              word: "mercado",
+              translation: "market",
+              note: "dev stub word",
+              pos: "noun",
+              exampleSentence: "Vou ao mercado hoje.",
+              exampleTranslation: "I'm going to the market today.",
+            }],
             nextFocus: "Keep practicing verb endings.",
             // Extension for the learner-facts write-path (schema v3): the
             // real function's summary schema requires these; the stub

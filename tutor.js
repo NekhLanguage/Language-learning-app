@@ -423,6 +423,8 @@ async function endSession() {
             translation: w.translation || "",
             note: w.note || "",
             pos: w.pos || "noun",
+            exampleSentence: w.exampleSentence || "",
+            exampleTranslation: w.exampleTranslation || "",
             seenInSessions: [today],
             admittedAt: null,
           });

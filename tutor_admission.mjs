@@ -95,6 +95,13 @@ export function processTutorSession(run, newWords, assistantText, today, isCidTa
         translation: w.translation || "",
         note: w.note || "",
         pos: w.pos || "noun",
+        // Banked at first-sighting so the sentence the tutor actually used
+        // to introduce the word travels with it into admission. Words
+        // captured before this field existed have empty strings —
+        // provenance-ledger, they simply won't seed sentence-based
+        // exercises later. Missing example is not a rejection reason.
+        exampleSentence: w.exampleSentence || "",
+        exampleTranslation: w.exampleTranslation || "",
         seenInSessions: [today],
         admittedAt: null,
       };
@@ -166,6 +173,12 @@ export function applyAdmissions(run, admitted, today) {
       translation: entry.translation || "",
       note: entry.note || "",
       pos: entry.pos || "noun",
+      // Example sentence banked at first-sighting travels with the word into
+      // the mastery ladder. Later renderers (L3/L4/L6/L7) can seed
+      // exercises from it. Empty for entries captured before the field
+      // existed — that's the provenance ledger, not a bug.
+      exampleSentence: entry.exampleSentence || "",
+      exampleTranslation: entry.exampleTranslation || "",
     };
     entry.admittedAt = today;
     applied.push({
