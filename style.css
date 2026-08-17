@@ -1862,3 +1862,393 @@ a.secondary.locked {
   pointer-events: none;
   cursor: default;
 }
+
+/* =========================
+   Anna — AI tutor page (tutor.html)
+   Standalone page on the same stylesheet; these rules sit last so they
+   win over the global button/pill base where they must.
+   ========================= */
+
+.tutor-wrap {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  padding: 1rem 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  gap: 0.75rem;
+}
+
+.tutor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tutor-header .title {
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  margin-bottom: 0;
+}
+
+#tutor-version-tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  opacity: 0.45;
+}
+
+.tutor-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Back-to-app link: the quit-button pill, inline instead of absolute. */
+.tutor-header-actions a {
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: var(--r-pill);
+  padding: 0.45rem 0.85rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  transition: background-color 0.15s ease;
+}
+
+.tutor-header-actions a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Header icon buttons — quiet utility chips, not white pills. */
+#tutor-settings-btn,
+#tutor-memory-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 4px 8px;
+  font-size: 1.25rem;
+  line-height: 1;
+  border-radius: var(--r-sm);
+}
+
+#tutor-settings-btn:hover,
+#tutor-memory-btn:hover {
+  background: var(--glass-bg-strong);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Settings + memory overlays share the feedback-modal pattern. */
+#tutor-settings,
+#tutor-memory {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 10;
+}
+
+#tutor-settings[hidden],
+#tutor-memory[hidden] {
+  display: none;
+}
+
+.tutor-settings-panel,
+.tutor-memory-panel {
+  background: linear-gradient(160deg, #5a1d5f, #3a0d3d);
+  color: var(--ink);
+  border: 1px solid var(--glass-brd);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-2);
+  padding: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.tutor-settings-panel {
+  max-width: 380px;
+}
+
+.tutor-memory-panel {
+  max-width: 420px;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+}
+
+.tutor-settings-panel h2,
+.tutor-memory-panel h2 {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  padding-right: 2.5rem;
+}
+
+.tutor-settings-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.tutor-settings-panel input[type="text"] {
+  font: inherit;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-brd-strong);
+  background: var(--glass-bg);
+  color: #fff;
+  outline: none;
+}
+
+.tutor-settings-panel input[type="text"]:focus {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.tutor-settings-panel input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.tutor-settings-hint,
+.tutor-memory-hint {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  margin: 0;
+}
+
+/* Circular close chips (alphabet-close recipe). */
+#tutor-settings-close,
+#tutor-memory-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#tutor-settings-close:hover,
+#tutor-memory-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: none;
+  box-shadow: none;
+}
+
+#tutor-settings-close[hidden],
+#tutor-memory-close[hidden] {
+  display: none;
+}
+
+.tutor-memory-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tutor-memory-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--glass-brd);
+  border-radius: var(--r-md);
+  background: var(--glass-bg);
+  text-align: left;
+}
+
+.tutor-memory-text {
+  flex: 1;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.tutor-memory-remove {
+  flex: none;
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutor-memory-remove:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: none;
+  box-shadow: none;
+}
+
+.tutor-memory-empty {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+#tutor-chat {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0.25rem;
+  min-height: 300px;
+}
+
+.tutor-msg {
+  max-width: 85%;
+  padding: 0.65rem 0.9rem;
+  border-radius: var(--r-lg);
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-align: left;
+}
+
+.tutor-msg.user {
+  align-self: flex-end;
+  background: var(--grad-cta);
+  color: #fff;
+  border-bottom-right-radius: var(--r-sm);
+}
+
+.tutor-msg.assistant {
+  align-self: flex-start;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-brd);
+  border-bottom-left-radius: var(--r-sm);
+}
+
+.tutor-msg.status {
+  align-self: center;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+#tutor-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#tutor-input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding: 0.7rem 1rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--glass-brd-strong);
+  background: var(--glass-bg-strong);
+  color: #fff;
+  outline: none;
+}
+
+#tutor-input:focus {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+#tutor-input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Tutor CTA — the gradient primary recipe at the small-button size. */
+.tutor-btn {
+  padding: 0.8rem 1.2rem;
+  background: var(--grad-cta);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(168, 85, 247, 0.35);
+}
+
+.tutor-btn:hover {
+  box-shadow: 0 10px 24px rgba(244, 63, 94, 0.4);
+}
+
+.tutor-btn:disabled {
+  box-shadow: none;
+  filter: saturate(0.5);
+}
+
+.tutor-btn.secondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  box-shadow: none;
+}
+
+.tutor-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+#tutor-gate {
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+#tutor-gate p {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+#tutor-gate a {
+  color: #fff;
+}
+
+.tutor-lang-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 320px;
+  margin: 1rem auto 0;
+}
+
+@media (max-width: 520px) {
+  .tutor-msg {
+    max-width: 92%;
+  }
+
+  .tutor-btn {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  #tutor-input-row {
+    flex-wrap: wrap;
+  }
+
+  #tutor-input {
+    flex-basis: 100%;
+  }
+}
