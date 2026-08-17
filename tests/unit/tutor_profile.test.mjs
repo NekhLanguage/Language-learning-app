@@ -289,8 +289,28 @@ test("wordCountLabel splits pack and tutor-admitted counts", () => {
   assert.equal(wordCountLabel(run), "2 + 1");
 });
 
-test("wordCountLabel is plain when nothing is tutor-admitted, and null-safe", () => {
+test("wordCountLabel is plain when the tutor holds no words, and null-safe", () => {
   assert.equal(wordCountLabel({ released: ["A", "B"], progress: {} }), "2");
   assert.equal(wordCountLabel({ released: [] }), "0");
   assert.equal(wordCountLabel(null), "0");
+});
+
+test("wordCountLabel counts captured and pending words on the tutor side", () => {
+  // Freshly captured words live in personalVocab (then pendingAdmission)
+  // before admission moves them into released — the label must show them
+  // as soon as a session ends, not three sightings later.
+  const run = {
+    released: ["WATER", "HOUSE"],
+    progress: {
+      WATER: { provenance: "pack" },
+      HOUSE: { provenance: "pack" },
+    },
+    personalVocab: [{ word: "praia" }],
+  };
+  assert.equal(wordCountLabel(run), "2 + 1");
+
+  run.pendingAdmission = [{ word: "saudade" }];
+  run.released.push("TUTOR_FAROL");
+  run.progress.TUTOR_FAROL = { provenance: "tutor" };
+  assert.equal(wordCountLabel(run), "2 + 3");
 });
