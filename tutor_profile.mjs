@@ -215,15 +215,23 @@ export function mergePersonalVocab(runVocab, legacyVocab, cap) {
 }
 
 // Word-count string for the tutor language-selection screen: pack words and
-// tutor-admitted words counted separately — "284 + 5", not "289" — so the
-// write-back is visible as a feature (and Nekh's fastest dogfood read on
-// whether admission fires). Provenance (schema v2) is the signal.
+// tutor words counted separately — "284 + 5", not "289" — so the write-back
+// is visible as a feature (and Nekh's fastest dogfood read on whether
+// admission fires). The tutor side is every word Anna holds for the learner,
+// wherever it sits in the admission pipeline: captured (personalVocab),
+// pending (pendingAdmission), or admitted into released (provenance
+// "tutor"). The three buckets are disjoint — admission removes from the
+// first two — so summing never double-counts.
 export function wordCountLabel(run) {
   const released = Array.isArray(run?.released) ? run.released : [];
-  const tutor = released.filter(
+  const admitted = released.filter(
     (cid) => run?.progress?.[cid]?.provenance === "tutor"
   ).length;
-  const pack = released.length - tutor;
+  const captured =
+    (Array.isArray(run?.personalVocab) ? run.personalVocab.length : 0) +
+    (Array.isArray(run?.pendingAdmission) ? run.pendingAdmission.length : 0);
+  const tutor = admitted + captured;
+  const pack = released.length - admitted;
   return tutor ? `${pack} + ${tutor}` : `${pack}`;
 }
 
