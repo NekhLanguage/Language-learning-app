@@ -588,7 +588,7 @@ async function init() {
     els.gate.hidden = false;
     els.gate.innerHTML = "<p>Which language do you want to practice with Anna?</p>";
     const wrap = document.createElement("div");
-    wrap.style.cssText = "display:flex;flex-direction:column;gap:8px;max-width:320px;margin:16px auto 0;";
+    wrap.className = "tutor-lang-choices";
     for (const c of candidates) {
       const meta = AVAILABLE_LANGUAGES.find((l) => l.code === c.lang);
       const b = document.createElement("button");
