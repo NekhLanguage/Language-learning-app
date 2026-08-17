@@ -9,6 +9,7 @@ import {
   getLearnerFacts,
   addLearnerFact,
   correctLearnerFact,
+  removeLearnerFact,
   renderLearnerFactsText,
   applyTutorLearnerFacts,
 } from "../../learner_facts.mjs";
@@ -103,6 +104,43 @@ test("correctLearnerFact ignores empty new text", () => {
   assert.equal(corrected, false);
   assert.equal(entry, null);
   assert.equal(user.learnerFacts[0].text, "fact 0");
+});
+
+test("removeLearnerFact splices the entry at the given index", () => {
+  const user = {};
+  addLearnerFact(user, "fact 0");
+  addLearnerFact(user, "fact 1");
+  addLearnerFact(user, "fact 2");
+  const { removed, entry } = removeLearnerFact(user, 1);
+  assert.equal(removed, true);
+  assert.equal(entry.text, "fact 1");
+  assert.equal(user.learnerFacts.length, 2);
+  assert.equal(user.learnerFacts[0].text, "fact 0");
+  assert.equal(user.learnerFacts[1].text, "fact 2");
+});
+
+test("removeLearnerFact is null-safe on out-of-range or non-array stores", () => {
+  assert.deepEqual(removeLearnerFact(null, 0), { removed: false, entry: null });
+  assert.deepEqual(removeLearnerFact({}, 0), { removed: false, entry: null });
+  const user = { learnerFacts: [] };
+  assert.deepEqual(removeLearnerFact(user, 0), { removed: false, entry: null });
+  addLearnerFact(user, "only fact");
+  assert.deepEqual(removeLearnerFact(user, 5), { removed: false, entry: null });
+  assert.deepEqual(removeLearnerFact(user, -1), { removed: false, entry: null });
+  assert.deepEqual(removeLearnerFact(user, 1.5), { removed: false, entry: null });
+  assert.deepEqual(removeLearnerFact(user, "not a number"), { removed: false, entry: null });
+  assert.equal(user.learnerFacts.length, 1);
+});
+
+test("removeLearnerFact frees a slot so a subsequent add lands even from a full store", () => {
+  const user = {};
+  for (let i = 0; i < LEARNER_FACTS_CAP; i++) addLearnerFact(user, `fact ${i}`);
+  assert.equal(addLearnerFact(user, "would overflow").added, false);
+  removeLearnerFact(user, 3);
+  const { added } = addLearnerFact(user, "fits now");
+  assert.equal(added, true);
+  assert.equal(user.learnerFacts.length, LEARNER_FACTS_CAP);
+  assert.equal(user.learnerFacts[user.learnerFacts.length - 1].text, "fits now");
 });
 
 test("renderLearnerFactsText produces a plain bullet list, empty→\"\"", () => {

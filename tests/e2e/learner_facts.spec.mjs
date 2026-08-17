@@ -44,6 +44,55 @@ test("tutor page sends stored learnerFacts in the request body", async ({ page }
   expect(body.learnerFacts.split("\n").every((l) => l.startsWith("- "))).toBe(true);
 });
 
+test("memory panel lists stored learnerFacts and removes on ✕ click", async ({ page }) => {
+  await startNewRun(page);
+  await seedLearnerFacts(page, [
+    { text: "learner is Norwegian teaching in Norway", source: "tutor", addedAt: "2026-08-16" },
+    { text: "Pokémon is a video-game franchise, not real animals", source: "tutor", addedAt: "2026-08-16" },
+    { text: "main target language is Ukrainian", source: "tutor", addedAt: "2026-08-16" },
+  ]);
+
+  await page.goto("/tutor.html");
+  await expect(page.locator("#tutor-main")).toBeVisible();
+  await page.click("#tutor-settings-save");
+
+  // Panel is closed until the header 🧠 button opens it.
+  await expect(page.locator("#tutor-memory")).toBeHidden();
+  await page.click("#tutor-memory-btn");
+  await expect(page.locator("#tutor-memory")).toBeVisible();
+
+  const items = page.locator(".tutor-memory-item");
+  await expect(items).toHaveCount(3);
+  await expect(items.nth(1)).toContainText("Pokémon is a video-game franchise");
+
+  // Remove the middle row — the store splices and re-renders.
+  await items.nth(1).locator(".tutor-memory-remove").click();
+  await expect(page.locator(".tutor-memory-item")).toHaveCount(2);
+
+  // The persisted USER blob no longer holds the removed fact.
+  const facts = await page.evaluate(() => {
+    const u = JSON.parse(localStorage.getItem("zth_user") || "{}");
+    return u.learnerFacts || [];
+  });
+  expect(facts.length).toBe(2);
+  expect(facts.some((f) => /Pokémon/i.test(f.text))).toBe(false);
+  expect(facts.some((f) => /Norwegian/i.test(f.text))).toBe(true);
+  expect(facts.some((f) => /Ukrainian/i.test(f.text))).toBe(true);
+});
+
+test("memory panel shows empty-state copy when no facts have accrued yet", async ({ page }) => {
+  await startNewRun(page);
+
+  await page.goto("/tutor.html");
+  await expect(page.locator("#tutor-main")).toBeVisible();
+  await page.click("#tutor-settings-save");
+
+  await page.click("#tutor-memory-btn");
+  await expect(page.locator("#tutor-memory")).toBeVisible();
+  await expect(page.locator(".tutor-memory-empty")).toBeVisible();
+  await expect(page.locator(".tutor-memory-item")).toHaveCount(0);
+});
+
 test("tutor session summary writes newLearnerFacts back into USER blob", async ({ page }) => {
   await startNewRun(page);
 

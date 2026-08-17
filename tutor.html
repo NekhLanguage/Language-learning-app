@@ -79,7 +79,7 @@
       background: #fff;
       color: inherit;
     }
-    #tutor-settings-close {
+    #tutor-settings-close, #tutor-memory-close {
       position: absolute;
       top: 10px;
       right: 12px;
@@ -91,6 +91,79 @@
       padding: 4px;
     }
     .tutor-settings-hint { font-size: 0.8rem; opacity: 0.7; margin: 0; }
+    /* "What Anna remembers about you" — mirrors the settings overlay pattern. */
+    #tutor-memory {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 10;
+    }
+    #tutor-memory[hidden] { display: none; }
+    .tutor-memory-panel {
+      background: #fff;
+      color: #222;
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      max-width: 420px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .tutor-memory-panel h2 { margin: 0 0 4px; font-size: 1.1rem; }
+    .tutor-memory-hint { font-size: 0.8rem; opacity: 0.7; margin: 0; }
+    .tutor-memory-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tutor-memory-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.02);
+    }
+    .tutor-memory-text {
+      flex: 1;
+      font-size: 0.9rem;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .tutor-memory-remove {
+      flex: none;
+      background: none;
+      border: 1px solid rgba(0,0,0,0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 2px 8px;
+      color: inherit;
+    }
+    .tutor-memory-remove:hover { background: rgba(0,0,0,0.06); }
+    .tutor-memory-empty { font-size: 0.85rem; opacity: 0.7; margin: 0; }
+    #tutor-memory-btn {
+      font-size: 1.2rem;
+      line-height: 1;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: inherit;
+    }
     #tutor-chat {
       flex: 1;
       overflow-y: auto;
@@ -152,6 +225,7 @@
     <div class="tutor-header">
       <h1>Anna <span id="tutor-lang-label"></span> <span id="tutor-version-tag" style="font-size:11px;opacity:0.45;font-weight:normal;"></span></h1>
       <div class="tutor-header-actions">
+        <button id="tutor-memory-btn" type="button" aria-label="What Anna remembers about you" title="What Anna remembers about you" hidden>🧠</button>
         <button id="tutor-settings-btn" type="button" aria-label="Tutor settings" hidden>⚙️</button>
         <a href="index.html">← back to the app</a>
       </div>
@@ -192,6 +266,15 @@
       </div>
     </div>
 
+    <div id="tutor-memory" hidden>
+      <div class="tutor-memory-panel">
+        <button id="tutor-memory-close" type="button" aria-label="Close memory">✕</button>
+        <h2>What Anna remembers about you</h2>
+        <p class="tutor-memory-hint">These identity and subject facts ride into every session's system prompt above your vocabulary. Anna writes them in when you correct her or share something durable. Remove any that are wrong or outdated.</p>
+        <ul id="tutor-memory-list" class="tutor-memory-list" aria-live="polite"></ul>
+      </div>
+    </div>
+
     <div id="tutor-main" hidden>
       <div id="tutor-chat" aria-live="polite"></div>
 
@@ -203,6 +286,6 @@
     </div>
   </div>
 
-  <script type="module" src="tutor.js?v=1.2.8"></script>
+  <script type="module" src="tutor.js?v=1.2.9"></script>
 </body>
 </html>
