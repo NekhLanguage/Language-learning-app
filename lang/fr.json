@@ -14,6 +14,8 @@
     "continue": "Continuer",
     "correct": "Correct.",
     "incorrect": "Incorrect.",
+    "syncFailedLocalCopy": "Impossible de joindre le serveur — progression enregistrée sur cet appareil affichée.",
+    "l7Placeholder": "Écris ta traduction",
     "level": "Niveau",
     "blueprint": "Plan de Langues de Nekh",
     "skool": "Communauté Skool",

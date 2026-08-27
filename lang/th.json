@@ -18,6 +18,8 @@
     "continue": "ต่อไป",
     "correct": "ถูกต้อง",
     "incorrect": "ไม่ถูกต้อง",
+    "syncFailedLocalCopy": "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ — กำลังแสดงความคืบหน้าที่บันทึกไว้ในเครื่องนี้",
+    "l7Placeholder": "พิมพ์คำแปลของคุณ",
     "level": "ระดับ",
     "blueprint": "Language Blueprint ของ Nekh",
     "skool": "คอมมูนิตี้ Skool",

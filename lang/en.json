@@ -18,6 +18,8 @@
     "continue": "Continue",
     "correct": "Correct.",
     "incorrect": "Incorrect.",
+    "syncFailedLocalCopy": "Couldn't reach the server — showing this device's saved progress.",
+    "l7Placeholder": "Type your translation",
     "level": "Level",
     "blueprint": "Nekh's Language Blueprint",
     "skool": "Skool Community",

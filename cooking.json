@@ -74,7 +74,7 @@
         "HEAT": { "base": "heat", "3_singular": "heats" },
 
         "PAN": { "form": "pan", "article": "a" },
-        "KNIFE": { "form": "knife", "article": "a" },
+        "KNIFE": { "form": "knife", "article": "a", "plural": "knives" },
         "FORK": { "form": "fork", "article": "a" },
         "SPOON": { "form": "spoon", "article": "a" },
         "SPATULA": { "form": "spatula", "article": "a" },

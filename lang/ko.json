@@ -14,6 +14,8 @@
     "continue": "계속",
     "correct": "정답입니다.",
     "incorrect": "틀렸습니다.",
+    "syncFailedLocalCopy": "서버에 연결할 수 없습니다. 이 기기에 저장된 진행 상황을 표시합니다.",
+    "l7Placeholder": "번역을 입력하세요",
     "level": "레벨",
     "blueprint": "Nekh의 언어 설계",
     "skool": "Skool 커뮤니티",

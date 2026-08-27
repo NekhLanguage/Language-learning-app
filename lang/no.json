@@ -14,6 +14,8 @@
     "continue": "Fortsett",
     "correct": "Riktig.",
     "incorrect": "Feil.",
+    "syncFailedLocalCopy": "Fikk ikke kontakt med serveren — viser fremgangen som er lagret på denne enheten.",
+    "l7Placeholder": "Skriv oversettelsen din",
     "level": "Nivå",
     "blueprint": "Nekh's språkplan",
     "skool": "Skool-fellesskap",
