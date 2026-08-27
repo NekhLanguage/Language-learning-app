@@ -74,7 +74,9 @@
     "milestoneReasonCulture": "{detail}, in its own voice.",
     "milestoneReasonFun": "And you're just getting started."
   },
-  "hubNames": { "th": "Thailändisch", "it": "Italienisch",
+  "hubNames": {
+    "th": "Thailändisch",
+    "it": "Italienisch",
     "en": "Englisch",
     "pt": "Portugiesisch",
     "ja": "Japanisch",
@@ -87,17 +89,42 @@
     "tr": "Türkisch",
     "es": "Spanisch",
     "fr": "Französisch",
-    "zh": "Chinesisch"
+    "zh": "Chinesisch",
+    "pl": "Polnisch"
   },
   "forms": {
-    "BIG": { "form": "groß", "plural": "große" },
-    "SMALL": { "form": "klein", "plural": "kleine" },
-    "GOOD": { "form": "gut", "plural": "gute" },
-    "BAD": { "form": "schlecht", "plural": "schlechte" },
-    "NEW": { "form": "neu", "plural": "neue" },
-    "OLD": { "form": "alt", "plural": "alte" },
-    "EASY": { "form": "einfach", "plural": "einfache" },
-    "DIFFICULT": { "form": "schwierig", "plural": "schwierige" },
+    "BIG": {
+      "form": "groß",
+      "plural": "große"
+    },
+    "SMALL": {
+      "form": "klein",
+      "plural": "kleine"
+    },
+    "GOOD": {
+      "form": "gut",
+      "plural": "gute"
+    },
+    "BAD": {
+      "form": "schlecht",
+      "plural": "schlechte"
+    },
+    "NEW": {
+      "form": "neu",
+      "plural": "neue"
+    },
+    "OLD": {
+      "form": "alt",
+      "plural": "alte"
+    },
+    "EASY": {
+      "form": "einfach",
+      "plural": "einfache"
+    },
+    "DIFFICULT": {
+      "form": "schwierig",
+      "plural": "schwierige"
+    },
     "MY": [
       "mein"
     ],
@@ -322,17 +349,41 @@
       "form": "Gesicht",
       "gender": "n"
     },
-    "BREAKFAST": {"form": "Frühstück", "gender": "n", "noArticle": true},
-    "LUNCH": {"form": "Mittagessen", "gender": "n", "noArticle": true},
-    "DINNER": {"form": "Abendessen", "gender": "n", "noArticle": true},
-    "CLOTHES": {"form": "Kleidung", "gender": "f", "noArticle": true},
+    "BREAKFAST": {
+      "form": "Frühstück",
+      "gender": "n",
+      "noArticle": true
+    },
+    "LUNCH": {
+      "form": "Mittagessen",
+      "gender": "n",
+      "noArticle": true
+    },
+    "DINNER": {
+      "form": "Abendessen",
+      "gender": "n",
+      "noArticle": true
+    },
+    "CLOTHES": {
+      "form": "Kleidung",
+      "gender": "f",
+      "noArticle": true
+    },
     "SHIRT": {
       "form": "Hemd",
       "gender": "n",
       "plural": "Hemden"
     },
-    "SHOES": {"form": "Schuhe", "gender": "m", "pluralOnly": true},
-    "TABLE": { "form": "Tisch", "gender": "m", "plural": "Tische" },
+    "SHOES": {
+      "form": "Schuhe",
+      "gender": "m",
+      "pluralOnly": true
+    },
+    "TABLE": {
+      "form": "Tisch",
+      "gender": "m",
+      "plural": "Tische"
+    },
     "PHONE": {
       "form": "Telefon",
       "gender": "n",
@@ -491,11 +542,26 @@
     "MORNING": [
       "Morgen"
     ],
-    "DAY": {"form": "Tag", "gender": "m"},
-    "NIGHT": {"form": "Nacht", "gender": "f"},
-    "WEEK": {"form": "Woche", "gender": "f"},
-    "MONTH": {"form": "Monat", "gender": "m"},
-    "YEAR": {"form": "Jahr", "gender": "n"},
+    "DAY": {
+      "form": "Tag",
+      "gender": "m"
+    },
+    "NIGHT": {
+      "form": "Nacht",
+      "gender": "f"
+    },
+    "WEEK": {
+      "form": "Woche",
+      "gender": "f"
+    },
+    "MONTH": {
+      "form": "Monat",
+      "gender": "m"
+    },
+    "YEAR": {
+      "form": "Jahr",
+      "gender": "n"
+    },
     "DO": {
       "base": "machen",
       "1_singular": "mache",
@@ -559,7 +625,15 @@
       "2_plural": "startet",
       "3_plural": "starten"
     },
-    "STOP": {"base": "aufhören", "1_singular": "höre auf", "2_singular": "hörst auf", "3_singular": "hört auf", "1_plural": "hören auf", "2_plural": "hört auf", "3_plural": "hören auf"},
+    "STOP": {
+      "base": "aufhören",
+      "1_singular": "höre auf",
+      "2_singular": "hörst auf",
+      "3_singular": "hört auf",
+      "1_plural": "hören auf",
+      "2_plural": "hört auf",
+      "3_plural": "hören auf"
+    },
     "SLEEP": {
       "base": "schlafen",
       "1_singular": "schlafe",
@@ -614,53 +688,155 @@
       "2_plural": "seid",
       "3_plural": "sind"
     },
-    "BLACK": ["schwarz"],
-    "WHITE": ["weiß"],
-    "RED": ["rot"],
-    "BLUE": ["blau"],
-    "GREEN": ["grün"],
-    "YELLOW": ["gelb"],
-    "PURPLE": ["lila"],
-    "ORANGE": ["orange"],
-    "FAST": ["schnell"],
-    "SLOW": ["langsam"],
-    "LONG": ["lang"],
-    "SHORT": ["kurz"],
-    "HEAVY": ["schwer"],
-    "LIGHT": ["leicht"],
-    "DARK": ["dunkel"],
-    "YOUNG": ["jung"],
-    "RIGHT": ["rechts"],
-    "LEFT": ["links"],
-    "CORRECT": ["richtig"],
-    "WRONG": ["falsch"],
-    "COLD": {"form":"kalt","plural":"kalte"},
-    "NICE": ["nett"],
-    "THIS": ["das"],
-    "THAT": ["das"],
-    "IT": ["es"],
-    "ITS": ["sein"],
-    "MINE": ["meins"],
-    "YOURS": ["deins"],
-    "HERS": ["ihrs"],
-    "OURS": ["unsers"],
-    "THEIRS": ["ihrs"],
-    "HOUR": {"form": "Stunde", "gender": "f"},
-    "MINUTE": {"form": "Minute", "gender": "f"},
-    "SECOND": {"form": "Sekunde", "gender": "f"},
-    "NOW": ["jetzt"],
-    "BEFORE": ["vor"],
-    "AFTER": ["nach"],
-    "LATER": ["später"],
-    "NEXT": ["nächster"],
-    "SPRING": {"form": "Frühling", "gender": "m"},
-    "SUMMER": {"form": "Sommer", "gender": "m"},
-    "AUTUMN": {"form": "Herbst", "gender": "m"},
-    "WINTER": {"form": "Winter", "gender": "m"},
-    "ALL": ["alles"],
-    "AROUND": ["herum"],
-    "THANKS": ["danke"],
-    "MAY": { "base": "darf" }
+    "BLACK": [
+      "schwarz"
+    ],
+    "WHITE": [
+      "weiß"
+    ],
+    "RED": [
+      "rot"
+    ],
+    "BLUE": [
+      "blau"
+    ],
+    "GREEN": [
+      "grün"
+    ],
+    "YELLOW": [
+      "gelb"
+    ],
+    "PURPLE": [
+      "lila"
+    ],
+    "ORANGE": [
+      "orange"
+    ],
+    "FAST": [
+      "schnell"
+    ],
+    "SLOW": [
+      "langsam"
+    ],
+    "LONG": [
+      "lang"
+    ],
+    "SHORT": [
+      "kurz"
+    ],
+    "HEAVY": [
+      "schwer"
+    ],
+    "LIGHT": [
+      "leicht"
+    ],
+    "DARK": [
+      "dunkel"
+    ],
+    "YOUNG": [
+      "jung"
+    ],
+    "RIGHT": [
+      "rechts"
+    ],
+    "LEFT": [
+      "links"
+    ],
+    "CORRECT": [
+      "richtig"
+    ],
+    "WRONG": [
+      "falsch"
+    ],
+    "COLD": {
+      "form": "kalt",
+      "plural": "kalte"
+    },
+    "NICE": [
+      "nett"
+    ],
+    "THIS": [
+      "das"
+    ],
+    "THAT": [
+      "das"
+    ],
+    "IT": [
+      "es"
+    ],
+    "ITS": [
+      "sein"
+    ],
+    "MINE": [
+      "meins"
+    ],
+    "YOURS": [
+      "deins"
+    ],
+    "HERS": [
+      "ihrs"
+    ],
+    "OURS": [
+      "unsers"
+    ],
+    "THEIRS": [
+      "ihrs"
+    ],
+    "HOUR": {
+      "form": "Stunde",
+      "gender": "f"
+    },
+    "MINUTE": {
+      "form": "Minute",
+      "gender": "f"
+    },
+    "SECOND": {
+      "form": "Sekunde",
+      "gender": "f"
+    },
+    "NOW": [
+      "jetzt"
+    ],
+    "BEFORE": [
+      "vor"
+    ],
+    "AFTER": [
+      "nach"
+    ],
+    "LATER": [
+      "später"
+    ],
+    "NEXT": [
+      "nächster"
+    ],
+    "SPRING": {
+      "form": "Frühling",
+      "gender": "m"
+    },
+    "SUMMER": {
+      "form": "Sommer",
+      "gender": "m"
+    },
+    "AUTUMN": {
+      "form": "Herbst",
+      "gender": "m"
+    },
+    "WINTER": {
+      "form": "Winter",
+      "gender": "m"
+    },
+    "ALL": [
+      "alles"
+    ],
+    "AROUND": [
+      "herum"
+    ],
+    "THANKS": [
+      "danke"
+    ],
+    "MAY": {
+      "base": "darf"
+    }
   },
   "alphabet": {
     "sections": [

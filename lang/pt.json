@@ -78,7 +78,9 @@
     "milestoneReasonCulture": "{detail}, in its own voice.",
     "milestoneReasonFun": "And you're just getting started."
   },
-  "hubNames": { "th": "Tailandês", "it": "Italiano",
+  "hubNames": {
+    "th": "Tailandês",
+    "it": "Italiano",
     "en": "Inglês",
     "pt": "Português",
     "ja": "Japonês",
@@ -91,7 +93,8 @@
     "tr": "Turco",
     "es": "Espanhol",
     "fr": "Francês",
-    "zh": "Mandarim"
+    "zh": "Mandarim",
+    "pl": "Polonês"
   },
   "forms": {
     "BIG": {
@@ -408,20 +411,36 @@
       "gender": "m",
       "noArticle": true
     },
-    "CLOTHES": {"form": "roupas", "gender": "f", "pluralOnly": true},
+    "CLOTHES": {
+      "form": "roupas",
+      "gender": "f",
+      "pluralOnly": true
+    },
     "SHIRT": {
       "form": "camisa",
       "gender": "f",
       "plural": "camisas"
     },
-    "SHOES": {"form": "sapatos", "gender": "m", "pluralOnly": true},
-    "TABLE": { "form": "mesa", "gender": "f", "plural": "mesas" },
+    "SHOES": {
+      "form": "sapatos",
+      "gender": "m",
+      "pluralOnly": true
+    },
+    "TABLE": {
+      "form": "mesa",
+      "gender": "f",
+      "plural": "mesas"
+    },
     "PHONE": {
       "form": "telefone",
       "gender": "m",
       "plural": "telefones"
     },
-    "PANTS": {"form": "calças", "gender": "f", "pluralOnly": true},
+    "PANTS": {
+      "form": "calças",
+      "gender": "f",
+      "pluralOnly": true
+    },
     "ONE": [
       "um"
     ],
@@ -534,8 +553,14 @@
       "deles",
       "delas"
     ],
-    "THIS": {"form": "este", "f": "esta"},
-    "THAT": {"form": "esse", "f": "essa"},
+    "THIS": {
+      "form": "este",
+      "f": "esta"
+    },
+    "THAT": {
+      "form": "esse",
+      "f": "essa"
+    },
     "ANY": [
       "qualquer"
     ],
@@ -581,11 +606,26 @@
     "MORNING": [
       "manhã"
     ],
-    "DAY": {"form": "dia", "gender": "m"},
-    "NIGHT": {"form": "noite", "gender": "f"},
-    "WEEK": {"form": "semana", "gender": "f"},
-    "MONTH": {"form": "mês", "gender": "m"},
-    "YEAR": {"form": "ano", "gender": "m"},
+    "DAY": {
+      "form": "dia",
+      "gender": "m"
+    },
+    "NIGHT": {
+      "form": "noite",
+      "gender": "f"
+    },
+    "WEEK": {
+      "form": "semana",
+      "gender": "f"
+    },
+    "MONTH": {
+      "form": "mês",
+      "gender": "m"
+    },
+    "YEAR": {
+      "form": "ano",
+      "gender": "m"
+    },
     "EAT": {
       "base": "comer",
       "1_singular": "como",
@@ -711,50 +751,213 @@
       "1_plural": "somos",
       "3_plural": "são"
     },
-    "BLACK": { "form": "preto", "f": "preta", "plural": "pretos", "fp": "pretas" },
-    "WHITE": { "form": "branco", "f": "branca", "plural": "brancos", "fp": "brancas" },
-    "RED": { "form": "vermelho", "f": "vermelha", "plural": "vermelhos", "fp": "vermelhas" },
-    "BLUE": { "form": "azul", "f": "azul", "plural": "azuis", "fp": "azuis" },
-    "GREEN": { "form": "verde", "f": "verde", "plural": "verdes", "fp": "verdes" },
-    "YELLOW": { "form": "amarelo", "f": "amarela", "plural": "amarelos", "fp": "amarelas" },
-    "PURPLE": { "form": "roxo", "f": "roxa", "plural": "roxos", "fp": "roxas" },
-    "ORANGE": { "form": "laranja", "f": "laranja", "plural": "laranjas", "fp": "laranjas" },
-    "FAST": { "form": "rápido", "f": "rápida", "plural": "rápidos", "fp": "rápidas" },
-    "SLOW": { "form": "lento", "f": "lenta", "plural": "lentos", "fp": "lentas" },
-    "LONG": { "form": "longo", "f": "longa", "plural": "longos", "fp": "longas" },
-    "SHORT": { "form": "curto", "f": "curta", "plural": "curtos", "fp": "curtas" },
-    "HEAVY": { "form": "pesado", "f": "pesada", "plural": "pesados", "fp": "pesadas" },
-    "LIGHT": { "form": "leve", "f": "leve", "plural": "leves", "fp": "leves" },
-    "DARK": { "form": "escuro", "f": "escura", "plural": "escuros", "fp": "escuras" },
-    "YOUNG": { "form": "jovem", "f": "jovem", "plural": "jovens", "fp": "jovens" },
-    "RIGHT": { "form": "direito", "f": "direita", "plural": "direitos", "fp": "direitas" },
-    "LEFT": { "form": "esquerdo", "f": "esquerda", "plural": "esquerdos", "fp": "esquerdas" },
-    "CORRECT": { "form": "correto", "f": "correta", "plural": "corretos", "fp": "corretas" },
-    "WRONG": { "form": "errado", "f": "errada", "plural": "errados", "fp": "erradas" },
-    "COLD": {"form":"frio","f":"fria","plural":"frios","fp":"frias"},
-    "NICE": { "form": "legal", "f": "legal", "plural": "legais", "fp": "legais" },
-    "IT": ["ele"],
-    "ITS": ["seu"],
-    "MINE": ["meu"],
-    "YOURS": ["seu"],
-    "HERS": ["dela"],
-    "OURS": ["nosso"],
-    "THEIRS": ["deles"],
-    "HOUR": {"form": "hora", "gender": "f"},
-    "MINUTE": {"form": "minuto", "gender": "m"},
-    "SECOND": {"form": "segundo", "gender": "m"},
-    "NOW": ["agora"],
-    "BEFORE": ["antes"],
-    "AFTER": ["depois"],
-    "LATER": ["mais tarde"],
-    "NEXT": ["próximo"],
-    "SPRING": {"form": "primavera", "gender": "f"},
-    "SUMMER": {"form": "verão", "gender": "m"},
-    "AUTUMN": {"form": "outono", "gender": "m"},
-    "WINTER": {"form": "inverno", "gender": "m"},
-    "ALL": ["todo"],
-    "AROUND": ["ao redor"],
-    "THANKS": ["obrigado"],
-    "MAY": { "base": "pode" }
+    "BLACK": {
+      "form": "preto",
+      "f": "preta",
+      "plural": "pretos",
+      "fp": "pretas"
+    },
+    "WHITE": {
+      "form": "branco",
+      "f": "branca",
+      "plural": "brancos",
+      "fp": "brancas"
+    },
+    "RED": {
+      "form": "vermelho",
+      "f": "vermelha",
+      "plural": "vermelhos",
+      "fp": "vermelhas"
+    },
+    "BLUE": {
+      "form": "azul",
+      "f": "azul",
+      "plural": "azuis",
+      "fp": "azuis"
+    },
+    "GREEN": {
+      "form": "verde",
+      "f": "verde",
+      "plural": "verdes",
+      "fp": "verdes"
+    },
+    "YELLOW": {
+      "form": "amarelo",
+      "f": "amarela",
+      "plural": "amarelos",
+      "fp": "amarelas"
+    },
+    "PURPLE": {
+      "form": "roxo",
+      "f": "roxa",
+      "plural": "roxos",
+      "fp": "roxas"
+    },
+    "ORANGE": {
+      "form": "laranja",
+      "f": "laranja",
+      "plural": "laranjas",
+      "fp": "laranjas"
+    },
+    "FAST": {
+      "form": "rápido",
+      "f": "rápida",
+      "plural": "rápidos",
+      "fp": "rápidas"
+    },
+    "SLOW": {
+      "form": "lento",
+      "f": "lenta",
+      "plural": "lentos",
+      "fp": "lentas"
+    },
+    "LONG": {
+      "form": "longo",
+      "f": "longa",
+      "plural": "longos",
+      "fp": "longas"
+    },
+    "SHORT": {
+      "form": "curto",
+      "f": "curta",
+      "plural": "curtos",
+      "fp": "curtas"
+    },
+    "HEAVY": {
+      "form": "pesado",
+      "f": "pesada",
+      "plural": "pesados",
+      "fp": "pesadas"
+    },
+    "LIGHT": {
+      "form": "leve",
+      "f": "leve",
+      "plural": "leves",
+      "fp": "leves"
+    },
+    "DARK": {
+      "form": "escuro",
+      "f": "escura",
+      "plural": "escuros",
+      "fp": "escuras"
+    },
+    "YOUNG": {
+      "form": "jovem",
+      "f": "jovem",
+      "plural": "jovens",
+      "fp": "jovens"
+    },
+    "RIGHT": {
+      "form": "direito",
+      "f": "direita",
+      "plural": "direitos",
+      "fp": "direitas"
+    },
+    "LEFT": {
+      "form": "esquerdo",
+      "f": "esquerda",
+      "plural": "esquerdos",
+      "fp": "esquerdas"
+    },
+    "CORRECT": {
+      "form": "correto",
+      "f": "correta",
+      "plural": "corretos",
+      "fp": "corretas"
+    },
+    "WRONG": {
+      "form": "errado",
+      "f": "errada",
+      "plural": "errados",
+      "fp": "erradas"
+    },
+    "COLD": {
+      "form": "frio",
+      "f": "fria",
+      "plural": "frios",
+      "fp": "frias"
+    },
+    "NICE": {
+      "form": "legal",
+      "f": "legal",
+      "plural": "legais",
+      "fp": "legais"
+    },
+    "IT": [
+      "ele"
+    ],
+    "ITS": [
+      "seu"
+    ],
+    "MINE": [
+      "meu"
+    ],
+    "YOURS": [
+      "seu"
+    ],
+    "HERS": [
+      "dela"
+    ],
+    "OURS": [
+      "nosso"
+    ],
+    "THEIRS": [
+      "deles"
+    ],
+    "HOUR": {
+      "form": "hora",
+      "gender": "f"
+    },
+    "MINUTE": {
+      "form": "minuto",
+      "gender": "m"
+    },
+    "SECOND": {
+      "form": "segundo",
+      "gender": "m"
+    },
+    "NOW": [
+      "agora"
+    ],
+    "BEFORE": [
+      "antes"
+    ],
+    "AFTER": [
+      "depois"
+    ],
+    "LATER": [
+      "mais tarde"
+    ],
+    "NEXT": [
+      "próximo"
+    ],
+    "SPRING": {
+      "form": "primavera",
+      "gender": "f"
+    },
+    "SUMMER": {
+      "form": "verão",
+      "gender": "m"
+    },
+    "AUTUMN": {
+      "form": "outono",
+      "gender": "m"
+    },
+    "WINTER": {
+      "form": "inverno",
+      "gender": "m"
+    },
+    "ALL": [
+      "todo"
+    ],
+    "AROUND": [
+      "ao redor"
+    ],
+    "THANKS": [
+      "obrigado"
+    ],
+    "MAY": {
+      "base": "pode"
+    }
   }
 }

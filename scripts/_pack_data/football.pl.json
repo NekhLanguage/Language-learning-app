@@ -1,0 +1,341 @@
+{
+  "label": "Polish",
+  "forms": {
+    "PITCH": {
+      "form": "boisko",
+      "gender": "n",
+      "plural": "boiska",
+      "genitive_plural": "boisk"
+    },
+    "GOAL": {
+      "form": "gol",
+      "gender": "m",
+      "plural": "gole",
+      "genitive_plural": "goli",
+      "accusative": "gola"
+    },
+    "NET": {
+      "form": "siatka",
+      "gender": "f",
+      "plural": "siatki",
+      "genitive_plural": "siatek"
+    },
+    "STADIUM": {
+      "form": "stadion",
+      "gender": "m",
+      "plural": "stadiony",
+      "genitive_plural": "stadionów"
+    },
+    "WHISTLE": {
+      "form": "gwizdek",
+      "gender": "m",
+      "plural": "gwizdki",
+      "genitive_plural": "gwizdków"
+    },
+    "STRIKER": {
+      "form": "napastnik",
+      "gender": "m",
+      "plural": "napastnicy",
+      "genitive_plural": "napastników",
+      "accusative": "napastnika",
+      "virile": true
+    },
+    "GOALKEEPER": {
+      "form": "bramkarz",
+      "gender": "m",
+      "plural": "bramkarze",
+      "genitive_plural": "bramkarzy",
+      "accusative": "bramkarza",
+      "virile": true
+    },
+    "CAPTAIN": {
+      "form": "kapitan",
+      "gender": "m",
+      "plural": "kapitanowie",
+      "genitive_plural": "kapitanów",
+      "accusative": "kapitana",
+      "virile": true
+    },
+    "REFEREE": {
+      "form": "sędzia",
+      "gender": "m",
+      "plural": "sędziowie",
+      "genitive_plural": "sędziów",
+      "accusative": "sędziego",
+      "virile": true
+    },
+    "COACH": {
+      "form": "trener",
+      "gender": "m",
+      "plural": "trenerzy",
+      "genitive_plural": "trenerów",
+      "accusative": "trenera",
+      "virile": true
+    },
+    "KICK": {
+      "base": "kopać",
+      "1_singular": "kopię",
+      "2_singular": "kopiesz",
+      "3_singular": "kopie",
+      "1_plural": "kopiemy",
+      "2_plural": "kopiecie",
+      "3_plural": "kopią"
+    },
+    "PASS": {
+      "base": "podawać",
+      "1_singular": "podaję",
+      "2_singular": "podajesz",
+      "3_singular": "podaje",
+      "1_plural": "podajemy",
+      "2_plural": "podajecie",
+      "3_plural": "podają"
+    },
+    "SHOOT": {
+      "base": "strzelać",
+      "1_singular": "strzelam",
+      "2_singular": "strzelasz",
+      "3_singular": "strzela",
+      "1_plural": "strzelamy",
+      "2_plural": "strzelacie",
+      "3_plural": "strzelają"
+    },
+    "DRIBBLE": {
+      "base": "dryblować",
+      "1_singular": "drybluję",
+      "2_singular": "dryblujesz",
+      "3_singular": "drybluje",
+      "1_plural": "dryblujemy",
+      "2_plural": "dryblujecie",
+      "3_plural": "dryblują"
+    },
+    "SCORE": {
+      "base": "zdobywać",
+      "1_singular": "zdobywam",
+      "2_singular": "zdobywasz",
+      "3_singular": "zdobywa",
+      "1_plural": "zdobywamy",
+      "2_plural": "zdobywacie",
+      "3_plural": "zdobywają"
+    },
+    "HEADER": {
+      "form": "główka",
+      "gender": "f",
+      "plural": "główki",
+      "genitive_plural": "główek"
+    },
+    "TACKLE": {
+      "base": "odbierać",
+      "1_singular": "odbieram",
+      "2_singular": "odbierasz",
+      "3_singular": "odbiera",
+      "1_plural": "odbieramy",
+      "2_plural": "odbieracie",
+      "3_plural": "odbierają"
+    },
+    "CROSS": {
+      "base": "dośrodkowywać",
+      "1_singular": "dośrodkowuję",
+      "2_singular": "dośrodkowujesz",
+      "3_singular": "dośrodkowuje",
+      "1_plural": "dośrodkowujemy",
+      "2_plural": "dośrodkowujecie",
+      "3_plural": "dośrodkowują"
+    },
+    "VOLLEY": {
+      "form": "wolej",
+      "gender": "m",
+      "plural": "woleje",
+      "genitive_plural": "wolejów"
+    },
+    "SPRINT": {
+      "base": "sprintować",
+      "1_singular": "sprintuję",
+      "2_singular": "sprintujesz",
+      "3_singular": "sprintuje",
+      "1_plural": "sprintujemy",
+      "2_plural": "sprintujecie",
+      "3_plural": "sprintują"
+    },
+    "FOUL": {
+      "form": "faul",
+      "gender": "m",
+      "plural": "faule",
+      "genitive_plural": "fauli"
+    },
+    "PENALTY": {
+      "form": "rzut karny",
+      "gender": "m",
+      "plural": "rzuty karne",
+      "genitive_plural": "rzutów karnych"
+    },
+    "CORNER": {
+      "form": "rzut rożny",
+      "gender": "m",
+      "plural": "rzuty rożne",
+      "genitive_plural": "rzutów rożnych"
+    },
+    "OFFSIDE": [
+      "spalony"
+    ],
+    "HALFTIME": {
+      "form": "przerwa",
+      "gender": "f",
+      "plural": "przerwy",
+      "genitive_plural": "przerw"
+    },
+    "SQUAD": {
+      "form": "kadra",
+      "gender": "f",
+      "plural": "kadry",
+      "genitive_plural": "kadr"
+    },
+    "FORMATION": {
+      "form": "formacja",
+      "gender": "f",
+      "plural": "formacje",
+      "genitive_plural": "formacji"
+    },
+    "LEAGUE": {
+      "form": "liga",
+      "gender": "f",
+      "plural": "ligi",
+      "genitive_plural": "lig"
+    },
+    "SUBSTITUTE": {
+      "form": "rezerwowy",
+      "gender": "m",
+      "plural": "rezerwowi",
+      "genitive_plural": "rezerwowych",
+      "accusative": "rezerwowego",
+      "virile": true
+    },
+    "ASSIST": {
+      "form": "asysta",
+      "gender": "f",
+      "plural": "asysty",
+      "genitive_plural": "asyst"
+    },
+    "MATCH": {
+      "form": "mecz",
+      "gender": "m",
+      "plural": "mecze",
+      "genitive_plural": "meczów"
+    },
+    "VICTORY": {
+      "form": "zwycięstwo",
+      "gender": "n",
+      "plural": "zwycięstwa",
+      "genitive_plural": "zwycięstw"
+    },
+    "DEFEAT": {
+      "form": "porażka",
+      "gender": "f",
+      "plural": "porażki",
+      "genitive_plural": "porażek"
+    },
+    "DRAW": {
+      "form": "remis",
+      "gender": "m",
+      "plural": "remisy",
+      "genitive_plural": "remisów"
+    },
+    "TROPHY": {
+      "form": "trofeum",
+      "gender": "n",
+      "plural": "trofea",
+      "genitive_plural": "trofeów"
+    },
+    "SWIFT": [
+      "szybki"
+    ],
+    "SKILLED": [
+      "wprawny"
+    ],
+    "AGGRESSIVE": [
+      "agresywny"
+    ],
+    "DECISIVE": [
+      "zdecydowany"
+    ],
+    "CLINICAL": [
+      "skuteczny"
+    ],
+    "INTERCEPT": {
+      "base": "przechwytywać",
+      "1_singular": "przechwytuję",
+      "2_singular": "przechwytujesz",
+      "3_singular": "przechwytuje",
+      "1_plural": "przechwytujemy",
+      "2_plural": "przechwytujecie",
+      "3_plural": "przechwytują"
+    },
+    "DEFEND": {
+      "base": "bronić",
+      "1_singular": "bronię",
+      "2_singular": "bronisz",
+      "3_singular": "broni",
+      "1_plural": "bronimy",
+      "2_plural": "bronicie",
+      "3_plural": "bronią"
+    },
+    "BLOCK": {
+      "base": "blokować",
+      "1_singular": "blokuję",
+      "2_singular": "blokujesz",
+      "3_singular": "blokuje",
+      "1_plural": "blokujemy",
+      "2_plural": "blokujecie",
+      "3_plural": "blokują"
+    },
+    "COUNTER": {
+      "base": "kontratakować",
+      "1_singular": "kontratakuję",
+      "2_singular": "kontratakujesz",
+      "3_singular": "kontratakuje",
+      "1_plural": "kontratakujemy",
+      "2_plural": "kontratakujecie",
+      "3_plural": "kontratakują"
+    },
+    "DOMINATE": {
+      "base": "dominować",
+      "1_singular": "dominuję",
+      "2_singular": "dominujesz",
+      "3_singular": "dominuje",
+      "1_plural": "dominujemy",
+      "2_plural": "dominujecie",
+      "3_plural": "dominują"
+    },
+    "CHAMPION": {
+      "form": "mistrz",
+      "gender": "m",
+      "plural": "mistrzowie",
+      "genitive_plural": "mistrzów",
+      "accusative": "mistrza",
+      "virile": true
+    },
+    "CROWD": {
+      "form": "tłum",
+      "gender": "m",
+      "plural": "tłumy",
+      "genitive_plural": "tłumów"
+    },
+    "CELEBRATE": {
+      "base": "świętować",
+      "1_singular": "świętuję",
+      "2_singular": "świętujesz",
+      "3_singular": "świętuje",
+      "1_plural": "świętujemy",
+      "2_plural": "świętujecie",
+      "3_plural": "świętują"
+    },
+    "FINAL": {
+      "form": "finał",
+      "gender": "m",
+      "plural": "finały",
+      "genitive_plural": "finałów"
+    },
+    "UNBEATABLE": [
+      "niepokonany"
+    ]
+  }
+}

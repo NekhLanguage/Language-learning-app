@@ -78,7 +78,9 @@
     "milestoneReasonCulture": "{detail}, in its own voice.",
     "milestoneReasonFun": "And you're just getting started."
   },
-  "hubNames": { "th": "Thai", "it": "Italian",
+  "hubNames": {
+    "th": "Thai",
+    "it": "Italian",
     "en": "English",
     "pt": "Portuguese",
     "ja": "Japanese",
@@ -91,7 +93,8 @@
     "tr": "Turkish",
     "es": "Spanish",
     "fr": "French",
-    "zh": "Mandarin"
+    "zh": "Mandarin",
+    "pl": "Polish"
   },
   "forms": {
     "BIG": [
@@ -163,7 +166,9 @@
     "NEXT_TO": [
       "next to"
     ],
-    "FRONT": ["in front of"],
+    "FRONT": [
+      "in front of"
+    ],
     "BEHIND": [
       "behind"
     ],
@@ -228,7 +233,10 @@
       "form": "house",
       "article": "a"
     },
-    "HOME": {"form": "home", "noArticle": true},
+    "HOME": {
+      "form": "home",
+      "noArticle": true
+    },
     "BOOK": {
       "form": "book",
       "article": "a"
@@ -321,9 +329,18 @@
       "form": "face",
       "article": "a"
     },
-    "BREAKFAST": {"form": "breakfast", "noArticle": true},
-    "LUNCH": {"form": "lunch", "noArticle": true},
-    "DINNER": {"form": "dinner", "noArticle": true},
+    "BREAKFAST": {
+      "form": "breakfast",
+      "noArticle": true
+    },
+    "LUNCH": {
+      "form": "lunch",
+      "noArticle": true
+    },
+    "DINNER": {
+      "form": "dinner",
+      "noArticle": true
+    },
     "CLOTHES": {
       "form": "clothes",
       "pluralOnly": true
@@ -336,7 +353,10 @@
       "form": "shoes",
       "pluralOnly": true
     },
-    "TABLE": { "form": "table", "article": "a" },
+    "TABLE": {
+      "form": "table",
+      "article": "a"
+    },
     "PHONE": {
       "form": "phone",
       "article": "a"
@@ -588,50 +608,140 @@
       "2_plural": "are",
       "3_plural": "are"
     },
-    "BLACK": ["black"],
-    "WHITE": ["white"],
-    "RED": ["red"],
-    "BLUE": ["blue"],
-    "GREEN": ["green"],
-    "YELLOW": ["yellow"],
-    "PURPLE": ["purple"],
-    "ORANGE": ["orange"],
-    "FAST": ["fast"],
-    "SLOW": ["slow"],
-    "LONG": ["long"],
-    "SHORT": ["short"],
-    "HEAVY": ["heavy"],
-    "LIGHT": ["light"],
-    "DARK": ["dark"],
-    "YOUNG": ["young"],
-    "RIGHT": ["right"],
-    "LEFT": ["left"],
-    "CORRECT": ["correct"],
-    "WRONG": ["wrong"],
-    "COLD": ["cold"],
-    "NICE": ["nice"],
-    "IT": ["it"],
-    "ITS": ["its"],
-    "MINE": ["mine"],
-    "YOURS": ["yours"],
-    "HERS": ["hers"],
-    "OURS": ["ours"],
-    "THEIRS": ["theirs"],
-    "HOUR": ["hour"],
-    "MINUTE": ["minute"],
-    "SECOND": ["second"],
-    "NOW": ["now"],
-    "BEFORE": ["before"],
-    "AFTER": ["after"],
-    "LATER": ["later"],
-    "NEXT": ["next"],
-    "SPRING": ["spring"],
-    "SUMMER": ["summer"],
-    "AUTUMN": ["autumn"],
-    "WINTER": ["winter"],
-    "ALL": ["all"],
-    "AROUND": ["around"],
-    "THANKS": ["thanks"],
-    "MAY": { "base": "may" }
+    "BLACK": [
+      "black"
+    ],
+    "WHITE": [
+      "white"
+    ],
+    "RED": [
+      "red"
+    ],
+    "BLUE": [
+      "blue"
+    ],
+    "GREEN": [
+      "green"
+    ],
+    "YELLOW": [
+      "yellow"
+    ],
+    "PURPLE": [
+      "purple"
+    ],
+    "ORANGE": [
+      "orange"
+    ],
+    "FAST": [
+      "fast"
+    ],
+    "SLOW": [
+      "slow"
+    ],
+    "LONG": [
+      "long"
+    ],
+    "SHORT": [
+      "short"
+    ],
+    "HEAVY": [
+      "heavy"
+    ],
+    "LIGHT": [
+      "light"
+    ],
+    "DARK": [
+      "dark"
+    ],
+    "YOUNG": [
+      "young"
+    ],
+    "RIGHT": [
+      "right"
+    ],
+    "LEFT": [
+      "left"
+    ],
+    "CORRECT": [
+      "correct"
+    ],
+    "WRONG": [
+      "wrong"
+    ],
+    "COLD": [
+      "cold"
+    ],
+    "NICE": [
+      "nice"
+    ],
+    "IT": [
+      "it"
+    ],
+    "ITS": [
+      "its"
+    ],
+    "MINE": [
+      "mine"
+    ],
+    "YOURS": [
+      "yours"
+    ],
+    "HERS": [
+      "hers"
+    ],
+    "OURS": [
+      "ours"
+    ],
+    "THEIRS": [
+      "theirs"
+    ],
+    "HOUR": [
+      "hour"
+    ],
+    "MINUTE": [
+      "minute"
+    ],
+    "SECOND": [
+      "second"
+    ],
+    "NOW": [
+      "now"
+    ],
+    "BEFORE": [
+      "before"
+    ],
+    "AFTER": [
+      "after"
+    ],
+    "LATER": [
+      "later"
+    ],
+    "NEXT": [
+      "next"
+    ],
+    "SPRING": [
+      "spring"
+    ],
+    "SUMMER": [
+      "summer"
+    ],
+    "AUTUMN": [
+      "autumn"
+    ],
+    "WINTER": [
+      "winter"
+    ],
+    "ALL": [
+      "all"
+    ],
+    "AROUND": [
+      "around"
+    ],
+    "THANKS": [
+      "thanks"
+    ],
+    "MAY": {
+      "base": "may"
+    }
   }
 }

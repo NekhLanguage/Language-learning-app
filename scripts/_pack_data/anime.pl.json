@@ -1,0 +1,327 @@
+{
+  "label": "Polish",
+  "forms": {
+    "HERO": {
+      "form": "bohater",
+      "gender": "m",
+      "plural": "bohaterowie",
+      "genitive_plural": "bohaterów",
+      "accusative": "bohatera",
+      "virile": true
+    },
+    "VILLAIN": {
+      "form": "złoczyńca",
+      "gender": "m",
+      "plural": "złoczyńcy",
+      "genitive_plural": "złoczyńców",
+      "accusative": "złoczyńcę",
+      "virile": true
+    },
+    "WARRIOR": {
+      "form": "wojownik",
+      "gender": "m",
+      "plural": "wojownicy",
+      "genitive_plural": "wojowników",
+      "accusative": "wojownika",
+      "virile": true
+    },
+    "RIVAL": {
+      "form": "rywal",
+      "gender": "m",
+      "plural": "rywale",
+      "genitive_plural": "rywali",
+      "accusative": "rywala",
+      "virile": true
+    },
+    "BRAVE": [
+      "odważny"
+    ],
+    "SWORD": {
+      "form": "miecz",
+      "gender": "m",
+      "plural": "miecze",
+      "genitive_plural": "mieczy"
+    },
+    "ARMOR": {
+      "form": "zbroja",
+      "gender": "f",
+      "plural": "zbroje",
+      "genitive_plural": "zbroi"
+    },
+    "SHIELD": {
+      "form": "tarcza",
+      "gender": "f",
+      "plural": "tarcze",
+      "genitive_plural": "tarcz"
+    },
+    "ATTACK": {
+      "base": "atakować",
+      "1_singular": "atakuję",
+      "2_singular": "atakujesz",
+      "3_singular": "atakuje",
+      "1_plural": "atakujemy",
+      "2_plural": "atakujecie",
+      "3_plural": "atakują"
+    },
+    "DEFEND": {
+      "base": "bronić",
+      "1_singular": "bronię",
+      "2_singular": "bronisz",
+      "3_singular": "broni",
+      "1_plural": "bronimy",
+      "2_plural": "bronicie",
+      "3_plural": "bronią"
+    },
+    "DRAGON": {
+      "form": "smok",
+      "gender": "m",
+      "plural": "smoki",
+      "genitive_plural": "smoków",
+      "accusative": "smoka"
+    },
+    "DEMON": {
+      "form": "demon",
+      "gender": "m",
+      "plural": "demony",
+      "genitive_plural": "demonów",
+      "accusative": "demona"
+    },
+    "SPIRIT": {
+      "form": "duch",
+      "gender": "m",
+      "plural": "duchy",
+      "genitive_plural": "duchów",
+      "accusative": "ducha"
+    },
+    "SUMMON": {
+      "base": "przyzywać",
+      "1_singular": "przyzywam",
+      "2_singular": "przyzywasz",
+      "3_singular": "przyzywa",
+      "1_plural": "przyzywamy",
+      "2_plural": "przyzywacie",
+      "3_plural": "przyzywają"
+    },
+    "SINISTER": [
+      "złowrogi"
+    ],
+    "NINJA": {
+      "form": "ninja",
+      "gender": "m",
+      "plural": "ninja"
+    },
+    "SAMURAI": {
+      "form": "samuraj",
+      "gender": "m",
+      "plural": "samurajowie",
+      "genitive_plural": "samurajów",
+      "accusative": "samuraja",
+      "virile": true
+    },
+    "SENSEI": {
+      "form": "sensei",
+      "gender": "m",
+      "plural": "sensei"
+    },
+    "SHADOW": {
+      "form": "cień",
+      "gender": "m",
+      "plural": "cienie",
+      "genitive_plural": "cieni"
+    },
+    "STRIKE": {
+      "base": "uderzać",
+      "1_singular": "uderzam",
+      "2_singular": "uderzasz",
+      "3_singular": "uderza",
+      "1_plural": "uderzamy",
+      "2_plural": "uderzacie",
+      "3_plural": "uderzają"
+    },
+    "TRANSFORM": {
+      "base": "przemieniać",
+      "1_singular": "przemieniam",
+      "2_singular": "przemieniasz",
+      "3_singular": "przemienia",
+      "1_plural": "przemieniamy",
+      "2_plural": "przemieniacie",
+      "3_plural": "przemieniają"
+    },
+    "POWER": {
+      "form": "moc",
+      "gender": "f",
+      "plural": "moce",
+      "genitive_plural": "mocy"
+    },
+    "CHANNEL": {
+      "base": "skupiać",
+      "1_singular": "skupiam",
+      "2_singular": "skupiasz",
+      "3_singular": "skupia",
+      "1_plural": "skupiamy",
+      "2_plural": "skupiacie",
+      "3_plural": "skupiają"
+    },
+    "UNLEASH": {
+      "base": "uwalniać",
+      "1_singular": "uwalniam",
+      "2_singular": "uwalniasz",
+      "3_singular": "uwalnia",
+      "1_plural": "uwalniamy",
+      "2_plural": "uwalniacie",
+      "3_plural": "uwalniają"
+    },
+    "POWERFUL": [
+      "potężny"
+    ],
+    "QUEST": {
+      "form": "wyprawa",
+      "gender": "f",
+      "plural": "wyprawy",
+      "genitive_plural": "wypraw"
+    },
+    "DESTINY": {
+      "form": "przeznaczenie",
+      "gender": "n",
+      "plural": "przeznaczenia",
+      "genitive_plural": "przeznaczeń"
+    },
+    "KINGDOM": {
+      "form": "królestwo",
+      "gender": "n",
+      "plural": "królestwa",
+      "genitive_plural": "królestw"
+    },
+    "TEMPLE": {
+      "form": "świątynia",
+      "gender": "f",
+      "plural": "świątynie",
+      "genitive_plural": "świątyń"
+    },
+    "ANCIENT": [
+      "starożytny"
+    ],
+    "BATTLE": {
+      "form": "bitwa",
+      "gender": "f",
+      "plural": "bitwy",
+      "genitive_plural": "bitew"
+    },
+    "DODGE": {
+      "base": "unikać",
+      "1_singular": "unikam",
+      "2_singular": "unikasz",
+      "3_singular": "unika",
+      "1_plural": "unikamy",
+      "2_plural": "unikacie",
+      "3_plural": "unikają"
+    },
+    "PROTECT": {
+      "base": "chronić",
+      "1_singular": "chronię",
+      "2_singular": "chronisz",
+      "3_singular": "chroni",
+      "1_plural": "chronimy",
+      "2_plural": "chronicie",
+      "3_plural": "chronią"
+    },
+    "FIERCE": [
+      "zaciekły"
+    ],
+    "MIGHTY": [
+      "mocarny"
+    ],
+    "CRYSTAL": {
+      "form": "kryształ",
+      "gender": "m",
+      "plural": "kryształy",
+      "genitive_plural": "kryształów"
+    },
+    "SCROLL": {
+      "form": "zwój",
+      "gender": "m",
+      "plural": "zwoje",
+      "genitive_plural": "zwojów"
+    },
+    "PORTAL": {
+      "form": "portal",
+      "gender": "m",
+      "plural": "portale",
+      "genitive_plural": "portali"
+    },
+    "CURSED": [
+      "przeklęty"
+    ],
+    "SACRED": [
+      "święty"
+    ],
+    "TRAIN": {
+      "base": "trenować",
+      "1_singular": "trenuję",
+      "2_singular": "trenujesz",
+      "3_singular": "trenuje",
+      "1_plural": "trenujemy",
+      "2_plural": "trenujecie",
+      "3_plural": "trenują"
+    },
+    "MASTER": {
+      "form": "mistrz",
+      "gender": "m",
+      "plural": "mistrzowie",
+      "genitive_plural": "mistrzów",
+      "accusative": "mistrza",
+      "virile": true
+    },
+    "CLAN": {
+      "form": "klan",
+      "gender": "m",
+      "plural": "klany",
+      "genitive_plural": "klanów"
+    },
+    "AWAKEN": {
+      "base": "przebudzać",
+      "1_singular": "przebudzam",
+      "2_singular": "przebudzasz",
+      "3_singular": "przebudza",
+      "1_plural": "przebudzamy",
+      "2_plural": "przebudzacie",
+      "3_plural": "przebudzają"
+    },
+    "LEGENDARY": [
+      "legendarny"
+    ],
+    "MECHA": {
+      "form": "mech",
+      "gender": "m",
+      "plural": "mechy",
+      "genitive_plural": "mechów"
+    },
+    "ARENA": {
+      "form": "arena",
+      "gender": "f",
+      "plural": "areny",
+      "genitive_plural": "aren"
+    },
+    "CONQUER": {
+      "base": "podbijać",
+      "1_singular": "podbijam",
+      "2_singular": "podbijasz",
+      "3_singular": "podbija",
+      "1_plural": "podbijamy",
+      "2_plural": "podbijacie",
+      "3_plural": "podbijają"
+    },
+    "TRANSCEND": {
+      "base": "przekraczać",
+      "1_singular": "przekraczam",
+      "2_singular": "przekraczasz",
+      "3_singular": "przekracza",
+      "1_plural": "przekraczamy",
+      "2_plural": "przekraczacie",
+      "3_plural": "przekraczają"
+    },
+    "ETERNAL": [
+      "wieczny"
+    ]
+  }
+}

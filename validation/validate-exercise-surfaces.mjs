@@ -57,7 +57,7 @@ import { loadVocab, loadTemplates, loadLanguageCodes } from './load-vocab.mjs';
 import {
   configureEngine, buildSentence, buildSentenceWithRules,
   resolveNounBlank, buildSameTypeOptions, acceptedAnswerVariants,
-  orderedConceptsForTemplate, ukCaseMap, ukCaseForm, formOf,
+  orderedConceptsForTemplate, caseMap, caseFormFor, formOf,
 } from '../sentence_engine.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -215,13 +215,13 @@ for (const lang of langCodes) {
     const id = tpl.template_id || tpl._file + '?';
     const ordered = orderedConceptsForTemplate(tpl, lang);
     if (!ordered || !ordered.length) continue;
-    const caseAt = ukCaseMap(lang, ordered);
+    const caseAt = caseMap(lang, ordered);
     ordered.forEach((cid, idx) => {
       const caseName = caseAt[idx];
       if (!caseName) return;
       const type = concepts[cid]?.type;
       if (type !== 'noun' && type !== 'pronoun') return;
-      if (!ukCaseForm(cid, caseName)) {
+      if (!caseFormFor(lang, cid, caseName)) {
         add(`CASE_FALLBACK|${lang}|${id}|${cid}|${caseName}`,
           `${caseName} demanded but no ${caseName} field — nominative ships`);
       }

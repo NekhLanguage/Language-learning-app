@@ -1,0 +1,316 @@
+{
+  "label": "Polish",
+  "forms": {
+    "CONSOLE": {
+      "form": "konsola",
+      "gender": "f",
+      "plural": "konsole",
+      "genitive_plural": "konsol"
+    },
+    "CONTROLLER": {
+      "form": "kontroler",
+      "gender": "m",
+      "plural": "kontrolery",
+      "genitive_plural": "kontrolerów"
+    },
+    "SCREEN": {
+      "form": "ekran",
+      "gender": "m",
+      "plural": "ekrany",
+      "genitive_plural": "ekranów"
+    },
+    "TIER": {
+      "form": "tier",
+      "gender": "m",
+      "plural": "tiery",
+      "genitive_plural": "tierów"
+    },
+    "PIXEL": {
+      "form": "piksel",
+      "gender": "m",
+      "plural": "piksele",
+      "genitive_plural": "pikseli"
+    },
+    "AVATAR": {
+      "form": "awatar",
+      "gender": "m",
+      "plural": "awatary",
+      "genitive_plural": "awatarów"
+    },
+    "BOSS": {
+      "form": "boss",
+      "gender": "m",
+      "plural": "bossy",
+      "genitive_plural": "bossów",
+      "accusative": "bossa"
+    },
+    "NPC": {
+      "form": "NPC",
+      "gender": "m",
+      "plural": "NPC"
+    },
+    "COMPANION": {
+      "form": "towarzysz",
+      "gender": "m",
+      "plural": "towarzysze",
+      "genitive_plural": "towarzyszy",
+      "accusative": "towarzysza",
+      "virile": true
+    },
+    "COMBO": {
+      "form": "kombo",
+      "gender": "n",
+      "plural": "kombo"
+    },
+    "HARM": {
+      "form": "szkoda",
+      "gender": "f",
+      "plural": "szkody",
+      "genitive_plural": "szkód"
+    },
+    "VITALITY": {
+      "form": "witalność",
+      "gender": "f"
+    },
+    "MISSION": {
+      "form": "misja",
+      "gender": "f",
+      "plural": "misje",
+      "genitive_plural": "misji"
+    },
+    "ACHIEVEMENT": {
+      "form": "osiągnięcie",
+      "gender": "n",
+      "plural": "osiągnięcia",
+      "genitive_plural": "osiągnięć"
+    },
+    "UPGRADE": {
+      "form": "ulepszenie",
+      "gender": "n",
+      "plural": "ulepszenia",
+      "genitive_plural": "ulepszeń"
+    },
+    "DUNGEON": {
+      "form": "loch",
+      "gender": "m",
+      "plural": "lochy",
+      "genitive_plural": "lochów"
+    },
+    "SPAWN": {
+      "form": "spawn",
+      "gender": "m",
+      "plural": "spawny",
+      "genitive_plural": "spawnów"
+    },
+    "MAP": {
+      "form": "mapa",
+      "gender": "f",
+      "plural": "mapy",
+      "genitive_plural": "map"
+    },
+    "PARTY": {
+      "form": "drużyna",
+      "gender": "f",
+      "plural": "drużyny",
+      "genitive_plural": "drużyn"
+    },
+    "RAID": {
+      "form": "rajd",
+      "gender": "m",
+      "plural": "rajdy",
+      "genitive_plural": "rajdów"
+    },
+    "GUILD": {
+      "form": "gildia",
+      "gender": "f",
+      "plural": "gildie",
+      "genitive_plural": "gildii"
+    },
+    "INVENTORY": {
+      "form": "ekwipunek",
+      "gender": "m",
+      "plural": "ekwipunki",
+      "genitive_plural": "ekwipunków"
+    },
+    "VIAL": {
+      "form": "fiolka",
+      "gender": "f",
+      "plural": "fiolki",
+      "genitive_plural": "fiolek"
+    },
+    "GEM": {
+      "form": "klejnot",
+      "gender": "m",
+      "plural": "klejnoty",
+      "genitive_plural": "klejnotów"
+    },
+    "LOADOUT": {
+      "form": "wyposażenie",
+      "gender": "n",
+      "plural": "wyposażenia",
+      "genitive_plural": "wyposażeń"
+    },
+    "COOLDOWN": {
+      "form": "odnowienie",
+      "gender": "n",
+      "plural": "odnowienia",
+      "genitive_plural": "odnowień"
+    },
+    "STRATEGY": {
+      "form": "strategia",
+      "gender": "f",
+      "plural": "strategie",
+      "genitive_plural": "strategii"
+    },
+    "LEADERBOARD": {
+      "form": "ranking",
+      "gender": "m",
+      "plural": "rankingi",
+      "genitive_plural": "rankingów"
+    },
+    "RANK": {
+      "form": "ranga",
+      "gender": "f",
+      "plural": "rangi",
+      "genitive_plural": "rang"
+    },
+    "SPEEDRUN": {
+      "form": "speedrun",
+      "gender": "m",
+      "plural": "speedruny",
+      "genitive_plural": "speedrunów"
+    },
+    "RESPAWN": {
+      "base": "odradzać się",
+      "1_singular": "odradzam się",
+      "2_singular": "odradzasz się",
+      "3_singular": "odradza się",
+      "1_plural": "odradzamy się",
+      "2_plural": "odradzacie się",
+      "3_plural": "odradzają się"
+    },
+    "LOOT": {
+      "base": "łupić",
+      "1_singular": "łupię",
+      "2_singular": "łupisz",
+      "3_singular": "łupi",
+      "1_plural": "łupimy",
+      "2_plural": "łupicie",
+      "3_plural": "łupią"
+    },
+    "CRAFT": {
+      "base": "wytwarzać",
+      "1_singular": "wytwarzam",
+      "2_singular": "wytwarzasz",
+      "3_singular": "wytwarza",
+      "1_plural": "wytwarzamy",
+      "2_plural": "wytwarzacie",
+      "3_plural": "wytwarzają"
+    },
+    "EQUIP": {
+      "base": "zakładać",
+      "1_singular": "zakładam",
+      "2_singular": "zakładasz",
+      "3_singular": "zakłada",
+      "1_plural": "zakładamy",
+      "2_plural": "zakładacie",
+      "3_plural": "zakładają"
+    },
+    "GRIND": {
+      "base": "grindować",
+      "1_singular": "grinduję",
+      "2_singular": "grindujesz",
+      "3_singular": "grinduje",
+      "1_plural": "grindujemy",
+      "2_plural": "grindujecie",
+      "3_plural": "grindują"
+    },
+    "SLAY": {
+      "base": "zabijać",
+      "1_singular": "zabijam",
+      "2_singular": "zabijasz",
+      "3_singular": "zabija",
+      "1_plural": "zabijamy",
+      "2_plural": "zabijacie",
+      "3_plural": "zabijają"
+    },
+    "UNLOCK": {
+      "base": "odblokowywać",
+      "1_singular": "odblokowuję",
+      "2_singular": "odblokowujesz",
+      "3_singular": "odblokowuje",
+      "1_plural": "odblokowujemy",
+      "2_plural": "odblokowujecie",
+      "3_plural": "odblokowują"
+    },
+    "ROAM": {
+      "base": "wędrować",
+      "1_singular": "wędruję",
+      "2_singular": "wędrujesz",
+      "3_singular": "wędruje",
+      "1_plural": "wędrujemy",
+      "2_plural": "wędrujecie",
+      "3_plural": "wędrują"
+    },
+    "STREAM": {
+      "base": "streamować",
+      "1_singular": "streamuję",
+      "2_singular": "streamujesz",
+      "3_singular": "streamuje",
+      "1_plural": "streamujemy",
+      "2_plural": "streamujecie",
+      "3_plural": "streamują"
+    },
+    "COLLECT": {
+      "base": "zbierać",
+      "1_singular": "zbieram",
+      "2_singular": "zbierasz",
+      "3_singular": "zbiera",
+      "1_plural": "zbieramy",
+      "2_plural": "zbieracie",
+      "3_plural": "zbierają"
+    },
+    "AMBUSH": {
+      "base": "zaskakiwać",
+      "1_singular": "zaskakuję",
+      "2_singular": "zaskakujesz",
+      "3_singular": "zaskakuje",
+      "1_plural": "zaskakujemy",
+      "2_plural": "zaskakujecie",
+      "3_plural": "zaskakują"
+    },
+    "CLUTCH": {
+      "base": "ratować",
+      "1_singular": "ratuję",
+      "2_singular": "ratujesz",
+      "3_singular": "ratuje",
+      "1_plural": "ratujemy",
+      "2_plural": "ratujecie",
+      "3_plural": "ratują"
+    },
+    "ELITE": [
+      "elitarny"
+    ],
+    "CRITICAL": [
+      "krytyczny"
+    ],
+    "RARE": [
+      "rzadki"
+    ],
+    "HIDDEN": [
+      "ukryty"
+    ],
+    "COMPETITIVE": [
+      "rywalizacyjny"
+    ],
+    "MYTHIC": [
+      "mityczny"
+    ],
+    "TACTICAL": [
+      "taktyczny"
+    ],
+    "OVERPOWERED": [
+      "przegięty"
+    ]
+  }
+}
