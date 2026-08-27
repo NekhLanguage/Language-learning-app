@@ -178,6 +178,25 @@ export const LANGUAGE_RULES = {
       articleCaseMarking: true, declinesAttributiveAdjectives: true,
     },
     indefiniteArticle: true,
+    // German marks case on the DETERMINER (ein→einen/einem, der→den/dem),
+    // not as a noun suffix — caseOn: "determiner" routes the case
+    // machinery to the article emitters instead of noun fields. Attributive
+    // adjective endings come from the "german" declension strategy
+    // (weak/mixed/strong × gender × case); adjective entries stay
+    // stem-only {form, plural} — never author gender/case variants.
+    // Corpus scope: nominative/accusative/dative (no genitive templates).
+    adjectiveDeclension: "german",
+    caseMarking: {
+      directObjectCase: "accusative",
+      caseOn: "determiner",
+      prepositions: {
+        ON: "dative", IN: "dative", OFF: "dative",
+        UNDER: "dative", BEHIND: "dative", FRONT: "dative",
+        BETWEEN: "dative", NEXT_TO: "dative", BY: "dative",
+        WITH: "dative", TO: "dative", FROM: "dative",
+        FOR: "accusative",
+      },
+    },
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true, latinEncodingChecks: true,
   },

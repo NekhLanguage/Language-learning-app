@@ -1,10 +1,6 @@
 [
   "COVERAGE_GAP|ar|declinesAttributiveAdjectives",
   "COVERAGE_GAP|ar|definitenessAgreement",
-  "COVERAGE_GAP|de|articleCaseMarking",
-  "COVERAGE_GAP|de|declinesAttributiveAdjectives",
-  "COVERAGE_GAP|de|marksCaseAfterPrepositions",
-  "COVERAGE_GAP|de|marksCaseOnDirectObjects",
   "COVERAGE_GAP|el|articleCaseMarking",
   "COVERAGE_GAP|el|declinesAttributiveAdjectives",
   "COVERAGE_GAP|el|marksCaseOnDirectObjects",

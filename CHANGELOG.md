@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-27
 
+### German grammar: cases and adjective endings now correct
+German was shipping without its case system: every attributive adjective appeared without its ending («ein neu Buch») and masculine direct objects went unmarked («Wir haben ein Job»). Both are fixed everywhere sentences are generated: adjectives take their declined endings («ein neues Buch», «einen alten Flughafen», «eine schlechte Pfanne» — while predicative stays correctly bare: «Das Buch ist rot»), masculine objects take «einen», prepositions govern the dative on the article («auf dem Tisch», «unter dem Tisch», «auf diesem»), possessives agree and decline («meine Hand», «mit seiner Mutter»), and «zu dem»/«in dem» contract to «zum»/«im». Fourteen sentences that previously diverged from what a German speaker would write now match exactly.
+
 ### Exercises now match the grammar the app already knows
 Four fixes to how exercises are assembled, found in Polish testing but benefiting every language. Fill-in-the-blank tiles now carry the form the sentence actually needs — «Ona jest _____.» offers «kobietą», never the dictionary form «kobieta», and every wrong option is declined to fit the same slot. Blanks always hold a whole word — no more «Ja idę do _____u.» with half the word stranded in the frame. The translation prompt can no longer ask for words the graded answer doesn't contain ("They see three new airports." will never again stand over an answer of «Oni widzą lotnisko.»). And adjectives now agree with their noun everywhere the noun changes form: «Ja mam dużego syna», «osiem dużych twarzy», Italian «pantaloni grandi». Saying what someone is also works across all the topic packs now — «On jest kelnerem», «Oni są mistrzami».
 
