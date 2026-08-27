@@ -66,6 +66,15 @@ guards, plural-data completeness, forced-injection render lints (L3 blank
 contract, spaceless-script spacing) — ratcheted via
 `validation/injection-baseline.json` (`npm run validate:injection:update`).
 
+`validation/validate-exercise-surfaces.mjs` walks EXERCISE ASSEMBLY per
+language — the layer the sentence validators never see (Italian shipped four
+high bugs there with every validator green): the L3 blank partition contract,
+option-set surface distinctness, the L7 accepted-answer/modifier-parity
+contract, a per-language inventory of silently-untestable concepts, and
+case-field fallbacks in case-marking languages — ratcheted via
+`validation/surface-baseline.json` (`npm run validate:surface:update`). Its
+hubNames completeness check is a hard fail, never baselined.
+
 `validation/validate-render-divergence.mjs` compares every generated sentence
 against the human-authored `render` strings (the native-speaker ground truth)
 and ratchets the result via `validation/render-divergence-baseline.json`: any
