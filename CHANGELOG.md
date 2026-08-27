@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-27
 
+### New language: Polish (beta)
+Polish joins as the 16th language, in beta while it gets its final review. The full 250-word core method and all twelve topic packs are covered, and the engine handles the grammar that makes Polish tricky: noun endings change when a word is the object of the sentence («Czytam książkę»), after "to be" when you say what someone is («Jestem mężczyzną»), after prepositions («na stole», «z domu»), and after the numbers five and up («pięć książek»). If you spot a sentence that reads oddly, that's what beta means — tell us and it gets fixed.
+
 ### Small fixes: phantom ABC button, log out, reset guard
 The round "ABC" script-guide button no longer appears for languages written in the Latin alphabet (it opened an empty screen). "Log out and reset local data" now clears all of it, including the backup copy of your progress — what the confirmation promises is what happens. And the "reset all progress" button now looks like the destructive action it is and asks twice before erasing every language.
 

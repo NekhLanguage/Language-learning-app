@@ -1,0 +1,286 @@
+{
+  "label": "Polish",
+  "forms": {
+    "COOK": {
+      "base": "gotować",
+      "1_singular": "gotuję",
+      "2_singular": "gotujesz",
+      "3_singular": "gotuje",
+      "1_plural": "gotujemy",
+      "2_plural": "gotujecie",
+      "3_plural": "gotują"
+    },
+    "CUT": {
+      "base": "kroić",
+      "1_singular": "kroję",
+      "2_singular": "kroisz",
+      "3_singular": "kroi",
+      "1_plural": "kroimy",
+      "2_plural": "kroicie",
+      "3_plural": "kroją"
+    },
+    "BOIL": {
+      "base": "zagotowywać",
+      "1_singular": "zagotowuję",
+      "2_singular": "zagotowujesz",
+      "3_singular": "zagotowuje",
+      "1_plural": "zagotowujemy",
+      "2_plural": "zagotowujecie",
+      "3_plural": "zagotowują"
+    },
+    "PEEL": {
+      "base": "obierać",
+      "1_singular": "obieram",
+      "2_singular": "obierasz",
+      "3_singular": "obiera",
+      "1_plural": "obieramy",
+      "2_plural": "obieracie",
+      "3_plural": "obierają"
+    },
+    "FRY": {
+      "base": "smażyć",
+      "1_singular": "smażę",
+      "2_singular": "smażysz",
+      "3_singular": "smaży",
+      "1_plural": "smażymy",
+      "2_plural": "smażycie",
+      "3_plural": "smażą"
+    },
+    "STIR": {
+      "base": "mieszać",
+      "1_singular": "mieszam",
+      "2_singular": "mieszasz",
+      "3_singular": "miesza",
+      "1_plural": "mieszamy",
+      "2_plural": "mieszacie",
+      "3_plural": "mieszają"
+    },
+    "MIX": {
+      "base": "miksować",
+      "1_singular": "miksuję",
+      "2_singular": "miksujesz",
+      "3_singular": "miksuje",
+      "1_plural": "miksujemy",
+      "2_plural": "miksujecie",
+      "3_plural": "miksują"
+    },
+    "WASH": {
+      "base": "myć",
+      "1_singular": "myję",
+      "2_singular": "myjesz",
+      "3_singular": "myje",
+      "1_plural": "myjemy",
+      "2_plural": "myjecie",
+      "3_plural": "myją"
+    },
+    "HEAT": {
+      "base": "podgrzewać",
+      "1_singular": "podgrzewam",
+      "2_singular": "podgrzewasz",
+      "3_singular": "podgrzewa",
+      "1_plural": "podgrzewamy",
+      "2_plural": "podgrzewacie",
+      "3_plural": "podgrzewają"
+    },
+    "PAN": {
+      "form": "patelnia",
+      "gender": "f",
+      "plural": "patelnie",
+      "genitive_plural": "patelni"
+    },
+    "KNIFE": {
+      "form": "nóż",
+      "gender": "m",
+      "plural": "noże",
+      "genitive_plural": "noży"
+    },
+    "FORK": {
+      "form": "widelec",
+      "gender": "m",
+      "plural": "widelce",
+      "genitive_plural": "widelców"
+    },
+    "SPOON": {
+      "form": "łyżka",
+      "gender": "f",
+      "plural": "łyżki",
+      "genitive_plural": "łyżek"
+    },
+    "SPATULA": {
+      "form": "łopatka",
+      "gender": "f",
+      "plural": "łopatki",
+      "genitive_plural": "łopatek"
+    },
+    "POT": {
+      "form": "garnek",
+      "gender": "m",
+      "plural": "garnki",
+      "genitive_plural": "garnków"
+    },
+    "GLASS": {
+      "form": "szklanka",
+      "gender": "f",
+      "plural": "szklanki",
+      "genitive_plural": "szklanek"
+    },
+    "LITRE": {
+      "form": "litr"
+    },
+    "DECILITRE": {
+      "form": "decylitr"
+    },
+    "MILLILITRE": {
+      "form": "mililitr"
+    },
+    "GRAM": {
+      "form": "gram"
+    },
+    "KILOGRAM": {
+      "form": "kilogram"
+    },
+    "MEAT": {
+      "form": "mięso",
+      "gender": "n"
+    },
+    "CHICKEN": {
+      "form": "kurczak",
+      "gender": "m",
+      "plural": "kurczaki",
+      "genitive_plural": "kurczaków",
+      "accusative": "kurczaka"
+    },
+    "FISH": {
+      "form": "ryba",
+      "gender": "f",
+      "plural": "ryby",
+      "genitive_plural": "ryb"
+    },
+    "VEGETABLE": {
+      "form": "warzywo",
+      "gender": "n",
+      "plural": "warzywa",
+      "genitive_plural": "warzyw"
+    },
+    "POTATO": {
+      "form": "ziemniak",
+      "gender": "m",
+      "plural": "ziemniaki",
+      "genitive_plural": "ziemniaków"
+    },
+    "SALAD": {
+      "form": "sałatka",
+      "gender": "f",
+      "plural": "sałatki",
+      "genitive_plural": "sałatek"
+    },
+    "FRUIT": {
+      "form": "owoc",
+      "gender": "m",
+      "plural": "owoce",
+      "genitive_plural": "owoców"
+    },
+    "BANANA": {
+      "form": "banan",
+      "gender": "m",
+      "plural": "banany",
+      "genitive_plural": "bananów"
+    },
+    "SOUP": {
+      "form": "zupa",
+      "gender": "f",
+      "plural": "zupy",
+      "genitive_plural": "zup"
+    },
+    "DOUGH": {
+      "form": "ciasto",
+      "gender": "n"
+    },
+    "SAUCE": {
+      "form": "sos",
+      "gender": "m",
+      "plural": "sosy",
+      "genitive_plural": "sosów"
+    },
+    "INGREDIENT": {
+      "form": "składnik",
+      "gender": "m",
+      "plural": "składniki",
+      "genitive_plural": "składników"
+    },
+    "KITCHEN": {
+      "form": "kuchnia",
+      "gender": "f",
+      "plural": "kuchnie",
+      "genitive_plural": "kuchni"
+    },
+    "OVEN": {
+      "form": "piekarnik",
+      "gender": "m",
+      "plural": "piekarniki",
+      "genitive_plural": "piekarników"
+    },
+    "STOVE": {
+      "form": "kuchenka",
+      "gender": "f",
+      "plural": "kuchenki",
+      "genitive_plural": "kuchenek"
+    },
+    "SINK": {
+      "form": "zlew",
+      "gender": "m",
+      "plural": "zlewy",
+      "genitive_plural": "zlewów"
+    },
+    "FREEZER": {
+      "form": "zamrażarka",
+      "gender": "f",
+      "plural": "zamrażarki",
+      "genitive_plural": "zamrażarek"
+    },
+    "SALT": {
+      "form": "sól",
+      "gender": "f"
+    },
+    "PEPPER": {
+      "form": "pieprz",
+      "gender": "m",
+      "plural": "pieprze",
+      "genitive_plural": "pieprzy"
+    },
+    "BUTTER": {
+      "form": "masło",
+      "gender": "n"
+    },
+    "SPICE": {
+      "form": "przyprawa",
+      "gender": "f",
+      "plural": "przyprawy",
+      "genitive_plural": "przypraw"
+    },
+    "RECIPE": {
+      "form": "przepis",
+      "gender": "m",
+      "plural": "przepisy",
+      "genitive_plural": "przepisów"
+    },
+    "SWEET": [
+      "słodki"
+    ],
+    "SALTY": [
+      "słony"
+    ],
+    "SOUR": [
+      "kwaśny"
+    ],
+    "FRESH": [
+      "świeży"
+    ],
+    "FROZEN": [
+      "mrożony"
+    ],
+    "RAW": [
+      "surowy"
+    ]
+  }
+}
