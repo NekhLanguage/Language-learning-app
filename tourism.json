@@ -1143,7 +1143,7 @@
         "STATION": {"form":"stazione","gender":"f","plural":"stazioni"},
         "TICKET": {"form":"biglietto","gender":"m","plural":"biglietti"},
         "ROUTE": {"form":"percorso","gender":"m","plural":"percorsi"},
-        "LANDMARK": {"form":"attrazione","gender":"f","plural":"attrazioni"},
+        "LANDMARK": {"form":"monumento","gender":"m","plural":"monumenti"},
         "MUSEUM": {"form":"museo","gender":"m","plural":"musei"},
         "MONUMENT": {"form":"monumento","gender":"m","plural":"monumenti"},
         "RESTAURANT": {"form":"ristorante","gender":"m","plural":"ristoranti"},
