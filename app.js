@@ -33,6 +33,8 @@ import {
   orderedConceptsForTemplate,
   blankSentence,
   safeSurfaceForConcept,
+  acceptedAnswerVariants,
+  resolveNounBlank,
   isDirectObjectPosition,
   isModifierConcept,
   BROAD_SOURCE_FILES,
@@ -75,7 +77,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.10";
+const APP_DATA_VERSION = "1.2.11";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -2765,11 +2767,28 @@ const options = shuffle([
   // -------------------------
   // Level 3 – Recognition (with support sentence shown)
   // -------------------------
-function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
+function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions, targetLang = null) {
 
   const currentLevel = levelOf(targetConcept);
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
   if (!meta) return null;
+
+  // Two options must never share one target-language surface: «suo»
+  // covers HIS and HER in Italian (es «su» covers three), so a set holding
+  // both makes a correct answer rejectable — the learner picks the other
+  // gloss of the exact same word and is marked wrong (Dan ruling 2,
+  // 2026-08-27). Dedupe against the drilled concept AND between
+  // distractors, keyed on the target-language form.
+  const seenSurfaces = new Set(
+    targetLang ? [formOf(targetLang, targetConcept)] : [],
+  );
+  const distinctSurface = (cid) => {
+    if (!targetLang) return true;
+    const f = formOf(targetLang, cid);
+    if (seenSurfaces.has(f)) return false;
+    seenSurfaces.add(f);
+    return true;
+  };
 
   // Strict pool
   const strictPool = run.released.filter(cid => {
@@ -2796,15 +2815,18 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions) {
   const pool = strictPool.length >= 3 ? strictPool : relaxedPool;
 
   if (pool.length < 3) {
-  const fallback = run.released.filter(cid => cid !== targetConcept);
+  const fallback = shuffle(run.released.filter(cid => cid !== targetConcept))
+    .filter(distinctSurface);
   if (fallback.length < 3) return null;
-  return shuffle([targetConcept, ...shuffle(fallback).slice(0,3)]);
+  return shuffle([targetConcept, ...fallback.slice(0, 3)]);
 }
 
-  const targetTotal = Math.max(4, Math.min(desiredTotalOptions, pool.length + 1));
+  const distinctPool = shuffle(pool).filter(distinctSurface);
+  if (distinctPool.length < 3) return null;
+  const targetTotal = Math.max(4, Math.min(desiredTotalOptions, distinctPool.length + 1));
   const distractorCount = targetTotal - 1;
 
-  return shuffle([targetConcept, ...shuffle(pool).slice(0, distractorCount)]);
+  return shuffle([targetConcept, ...distinctPool.slice(0, distractorCount)]);
 }
 
   function renderRecognitionL3(targetLang, supportLang, tpl, targetConcept) {
@@ -2915,19 +2937,21 @@ if (isModifierConcept(targetConcept)) {
     hadModifier: l3HadModifier,
   });
 
-// ✅ Get correct surface form (CRITICAL)
-const surface = safeSurfaceForConcept(tpl, targetLang, targetConcept);
-
-if (!surface) return null;
-
-// ✅ Blank based on REAL word, not position
-const blanked = blankSentence(sentenceTarget, surface);
+// Blank contract: the frame and the option tiles partition the sentence —
+// the article lives on exactly one side. Nouns blank their full rendered
+// phrase (article included) so the frame never keeps an article the
+// articled option would double («Loro vedono un [un aeroporto]» was Emi
+// bug 2026-08-26-02); where the noun renders bare (possessive/number/
+// mass/contracted-article contexts) the blank falls back to the bare form
+// and bareMode makes the option tiles render bare to match.
+const blankInfo = resolveNounBlank(sentenceTarget, tpl, targetLang, targetConcept);
 
 // Never show a fill-in-the-blank whose blank could not be placed (surface
 // form not found in the generated sentence — e.g. inflection mismatch).
-if (!blanked.includes("_____")) return null;
+if (!blankInfo) return null;
+const { blanked, bareMode } = blankInfo;
 
- const options = buildRecognitionOptions(tpl, targetConcept, 4);
+ const options = buildRecognitionOptions(tpl, targetConcept, 4, targetLang);
  // 🔥 Remove duplicate meanings (same fix as Level 2)
 const usedSupport = new Set();
 const filteredOptions = [];
@@ -2984,7 +3008,11 @@ if (!options || options.length < 4) {
       text = getVerbForm(opt, subjectCid, targetLang);
     }
     else if (meta?.type === "noun") {
-      text = nounPhrase(targetLang, opt);
+      // Match the blank's mode: an articled blank takes articled options
+      // («un aeroporto» completing «Loro vedono _____»); a bare blank
+      // (possessive/number/mass/contracted-article frame) takes bare ones
+      // — mixing the two rebuilt the doubled article this fixes.
+      text = bareMode ? formOf(targetLang, opt) : nounPhrase(targetLang, opt);
     }
     else {
       text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
@@ -3129,7 +3157,7 @@ if (!options || options.length < 4) {
       // If we couldn't reach 4 options with uniqueness, fall back to strict builder
       // (still respects ladder rules; only loses the "no duplicate meaning" nicety).
       if (chosen.length < 4) {
-        return buildRecognitionOptions(tpl, targetConcept, 6);
+        return buildRecognitionOptions(tpl, targetConcept, 6, targetLang);
       }
 
       return shuffle(chosen);
@@ -3520,6 +3548,15 @@ const supportBuild = buildSentenceWithRules(supportLang, tpl, null, sharedChoice
 if (forcedModifier && (!targetBuild.hadModifier || !supportBuild.hadModifier)) {
   return null;
 }
+// Hard invariant, no exceptions: if one side of the pair rendered a
+// modifier the other side dropped, the prompt asks for words the graded
+// answer doesn't contain (or vice versa) — the exercise is unpassable and
+// the "correct answer" it reveals teaches a mistranslation. Bail and let
+// the caller pick another template. This closes the class behind Emi bug
+// 2026-08-26-01 regardless of which render path dropped the modifier.
+if (targetBuild.hadModifier !== supportBuild.hadModifier) {
+  return null;
+}
 // With injection suppressed the sentence is the plain template and the
 // authored translation is faithful; with a drilled modifier forced in, only
 // the generated gloss contains it, so the authored render must not win.
@@ -3766,6 +3803,15 @@ const supportBuild = buildSentenceWithRules(supportLang, tpl, null, sharedChoice
 if (forcedModifier && (!targetBuild.hadModifier || !supportBuild.hadModifier)) {
   return null;
 }
+// Hard invariant, no exceptions: if one side of the pair rendered a
+// modifier the other side dropped, the prompt asks for words the graded
+// answer doesn't contain (or vice versa) — the exercise is unpassable and
+// the "correct answer" it reveals teaches a mistranslation. Bail and let
+// the caller pick another template. This closes the class behind Emi bug
+// 2026-08-26-01 regardless of which render path dropped the modifier.
+if (targetBuild.hadModifier !== supportBuild.hadModifier) {
+  return null;
+}
 // The prompt prefers the authored render, but a drilled modifier only
 // exists in the generated gloss — and render-less pack templates need the
 // generated gloss anyway (the prompt used to come up empty for them).
@@ -3775,6 +3821,16 @@ const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
 });
 
 const targetSentence = safe(targetBuild.sentence);
+
+// Everything the grader accepts for this build (language_rules-driven):
+// the taught sentence, the pre-nominal adjective order where both orders
+// are grammatical, and the pronoun-dropped forms in pro-drop languages.
+// «Leggiamo un libro piccolo» and «Tu leggi un piccolo libro» are correct
+// Italian for "You read a small book" — rejecting them was Emi bug
+// 2026-08-26-01's second half (Dan rulings 1 + 3, 2026-08-27).
+const acceptedAnswers = acceptedAnswerVariants(
+  targetLang, tpl, targetSentence, sharedChoices,
+);
 
   LAST_EXERCISE = { type: "free_production", answer: targetSentence };
 
@@ -3817,20 +3873,17 @@ checkBtn.onclick = async () => {
   const userInput = inputField.value;
 
   const strictUser = normalizeStrict(userInput);
-  const strictCorrect = normalizeStrict(targetSentence);
-
   const looseUser = normalizeLoose(userInput);
-  const looseCorrect = normalizeLoose(targetSentence);
 
   const tState = ensureTemplateProgress(tpl);
 
   let resultType;
   let semanticNote = "";
 
-  if (strictUser === strictCorrect) {
+  if (acceptedAnswers.some((a) => strictUser === normalizeStrict(a))) {
     resultType = "perfect";
   }
-  else if (looseUser === looseCorrect) {
+  else if (acceptedAnswers.some((a) => looseUser === normalizeLoose(a))) {
     resultType = "accent";
   }
   else {
@@ -4423,6 +4476,15 @@ function chooseTemplateForConcept(cid) {
       if (!tpl.concepts.some(c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun")) return false;
       // Numbers don't make sense in copular sentences ("He is two a leader")
       if (meta.type === "number" && tpl.concepts.includes("BE")) return false;
+      // A drilled number needs a COUNTABLE noun to land on — mass-noun
+      // templates («Io bevo quattro acqua», "I drink eight waters") must
+      // never be offered for a number drill. The render-side gate would
+      // drop the number silently, leaving a number drill with no number.
+      if (meta.type === "number" &&
+          !tpl.concepts.some(c => {
+            const m = window.GLOBAL_VOCAB.concepts[c];
+            return m?.type === "noun" && m.countable !== false && !m.noModifier;
+          })) return false;
       // Possessives: reject templates that would produce reflexive/stacked nonsense.
       // Copular + matching subject → "He is his gym leader" (reflexive vacuum).
       // Any template with another possessive → "He is my his dad" (stacked).

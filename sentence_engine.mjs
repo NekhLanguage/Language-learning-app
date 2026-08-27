@@ -7,6 +7,8 @@
 // The browser configures live accessors; the validator injects a full vocab
 // snapshot + a seeded RNG for deterministic, reproducible runs.
 
+import { langRule, langsWith } from "./language_rules.mjs";
+
 let _vocab        = () => (typeof window !== 'undefined' ? window.GLOBAL_VOCAB : undefined);
 let _getReleased  = () => (typeof window !== 'undefined' && window.run ? window.run.released : []);
 let ensureProgress = (cid) => ({ level: 99, completed: false });
@@ -62,6 +64,92 @@ function noteModifier() {
 // Like buildSentence, but also reports which grammar rules fired while
 // building and whether a modifier made the sentence diverge from the plain
 // template — { sentence, rules, hadModifier }.
+// Grading-variant support (language_rules: flexibleAdjectiveOrder). When
+// set to "pre", the adjective splice renders pre-nominally in languages
+// declaring the rule — used ONLY to derive accepted answers for the free-
+// translation grader; the taught form stays the language's default order.
+let _adjectiveOrderOverride = null;
+function adjectivePreOrder(lang) {
+  return _adjectiveOrderOverride === "pre" && langRule(lang, "flexibleAdjectiveOrder");
+}
+
+// Strip the template's subject pronoun off the front of a rendered
+// sentence («Noi leggiamo un libro» → «Leggiamo un libro»). Returns null
+// when the sentence doesn't start with that pronoun. Pure string surgery
+// on the engine's own render, so it can never invent a form the engine
+// didn't produce.
+function dropSubjectPronoun(lang, tpl, sentence) {
+  const pronounCid = (tpl.concepts || []).find(
+    (c) => vocab().concepts[c]?.type === "pronoun",
+  );
+  if (!pronounCid || !sentence) return null;
+  const word = formOf(lang, pronounCid);
+  if (!word || typeof sentence !== "string") return null;
+  if (!sentence.toLowerCase().startsWith(word.toLowerCase() + " ")) return null;
+  const rest = sentence.slice(word.length + 1);
+  return rest.charAt(0).toUpperCase() + rest.slice(1);
+}
+
+// Every answer the free-translation grader should accept for this build.
+// Always contains the taught sentence itself; per language_rules it adds
+//   - the pre-nominal adjective order (flexibleAdjectiveOrder: «Tu leggi
+//     un vecchio libro» alongside «Tu leggi un libro vecchio»), rendered
+//     through the SAME engine path so agreement/articles stay right;
+//   - the pronoun-dropped form of each variant (proDrop: «Leggiamo un
+//     libro» — standard Italian/Spanish/Portuguese; rejecting it teaches
+//     the learner that natural speech is wrong).
+// Dan ruling 2026-08-27: grader accepts these, generator keeps teaching
+// the explicit-pronoun, default-order form.
+function acceptedAnswerVariants(lang, tpl, targetSentence, sharedChoices = null) {
+  const variants = new Set();
+  if (targetSentence) variants.add(targetSentence);
+  if (langRule(lang, "flexibleAdjectiveOrder") && sharedChoices) {
+    _adjectiveOrderOverride = "pre";
+    try {
+      const v = buildSentence(lang, tpl, null, sharedChoices);
+      if (v) variants.add(v);
+    } finally {
+      _adjectiveOrderOverride = null;
+    }
+  }
+  if (langRule(lang, "proDrop")) {
+    for (const s of [...variants]) {
+      const dropped = dropSubjectPronoun(lang, tpl, s);
+      if (dropped) variants.add(dropped);
+    }
+  }
+  return [...variants];
+}
+
+// Resolve what an L3 fill-in-the-blank should blank for `targetConcept`
+// inside `sentence`, honouring the blank contract: the frame and the
+// option tiles must partition the sentence exactly — the article lives on
+// exactly one side. Nouns first try their full rendered phrase (article
+// included: blanking «un aeroporto» out of «Loro vedono un aeroporto»
+// leaves the frame article-free, and the articled option completes it).
+// Where the noun renders bare — possessives, template numbers, mass nouns,
+// contracted prepositional articles («alla stazione») — the bare form is
+// blanked instead and `bareMode` tells the caller to render bare option
+// tiles, so the learner never assembles «un un aeroporto» again.
+function resolveNounBlank(sentence, tpl, targetLang, targetConcept) {
+  const meta = vocab().concepts[targetConcept];
+  const base = safeSurfaceForConcept(tpl, targetLang, targetConcept);
+  if (meta?.type === "noun") {
+    const phrase = nounPhrase(targetLang, targetConcept);
+    if (phrase && phrase !== base) {
+      const blanked = blankSentence(sentence, phrase);
+      if (blanked.includes("_____")) {
+        return { blanked, surface: phrase, bareMode: false };
+      }
+    }
+  }
+  const blanked = blankSentence(sentence, base);
+  if (blanked.includes("_____")) {
+    return { blanked, surface: base, bareMode: meta?.type === "noun" };
+  }
+  return null;
+}
+
 function buildSentenceWithRules(lang, tpl, forcedConcept = null, sharedChoices = null) {
   firedRules = new Set();
   tracedModifier = false;
@@ -494,7 +582,8 @@ function definiteNounPhrase(lang, cid) {
 }
 
 // Languages whose nounPhrase adds an indefinite article (the branches below).
-const ARTICLE_LANGS = new Set(["en", "pt", "no", "de", "el", "es", "fr", "it"]);
+// Derived from language_rules.mjs — the declaration lives there.
+const ARTICLE_LANGS = langsWith("indefiniteArticle");
 
 // Italian article allomorphy is phonological: masculine takes lo/gli/uno
 // before s+consonant, z, gn, ps, pn, x, y («lo zaino», «gli gnocchi»,
@@ -954,6 +1043,12 @@ const ADJECTIVE_ROLE_COMPAT = {
 const ADJECTIVE_ROLE_BLOCK = {
   property_youth:       new Set(["abstract", "substance", "meal"]),
   property_correctness: new Set(["substance"]),
+  // Animacy filter (Dan ruling 2026-08-27): OLD/NEW never modify people —
+  // 古い女の子 ("old girl" with the inanimate 古い) was Emi's Japanese
+  // catch, and the class is wrong-not-odd across languages. YOUNG stays the
+  // people-age adjective via property_youth above. Standing line: wrong
+  // gets filtered, odd gets shipped.
+  property_time:        new Set(["person", "family", "role"]),
 };
 
 // Shared role-compatibility verdict used by both adjectiveSuitsNoun (forced
@@ -1050,7 +1145,7 @@ function capitalizeFirst(str) {
 }
 
 // Thai writes without spaces between words — joins are spaceless there.
-const SPACELESS_JOIN_LANGS = new Set(["th"]);
+const SPACELESS_JOIN_LANGS = langsWith("spacelessJoin");
 function joinWords(lang, words) {
   return words.filter(Boolean).join(SPACELESS_JOIN_LANGS.has(lang) ? "" : " ");
 }
@@ -1193,6 +1288,28 @@ function frenchPossessivePhrase(possessiveCid, nounCid) {
   return `${poss} ${nounForm}`;
 }
 
+// Per-language rule (language_rules: possessiveDefiniteArticle): the
+// definite article a possessive noun phrase carries, or null when the
+// language (or this noun) takes none. Italian: «la mia mano», «il suo
+// taxi», «le mie scarpe» — except nouns flagged noArticleWithPossessive
+// (singular unmodified family members: «sua figlia»). This is THE single
+// implementation of the rule — every render path that emits a possessive +
+// noun pair (template slot walk, forced-modifier splice, clause builders)
+// must call it rather than re-deriving the article locally. That is what
+// keeps the rule from silently missing a path, which is exactly how the
+// Italian launch shipped «suo taxi».
+function possessiveArticleFor(lang, nounCid, plural = false) {
+  if (!langRule(lang, "possessiveDefiniteArticle")) return null;
+  const entry = vocab().languages?.[lang]?.forms?.[nounCid];
+  if (!entry || entry.noArticleWithPossessive) return null;
+  if (lang === "it") {
+    const f = entry.gender === "f";
+    if (plural || entry.pluralOnly) return f ? "le" : "i";
+    return f ? "la" : "il";
+  }
+  return null;
+}
+
 // `caseName` (uk): render the possessed noun in the case its governing
 // preposition demands («з його мамою»), when the entry carries the data.
 function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
@@ -1210,23 +1327,26 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
   if (lang === "th") {
     return `${noun}${possessive}`;
   }
-  // Italian possessives take the definite article («il tuo telefono»,
-  // «le tue scarpe») — except before singular family nouns («con sua figlia»).
-  if (lang === "it") {
-    const nounEntry = vocab().languages?.it?.forms?.[nounCid];
-    if (!nounEntry?.noArticleWithPossessive) {
+  // Possessive noun phrases take the definite article in languages
+  // declaring possessiveDefiniteArticle («il tuo telefono», «le tue
+  // scarpe») — the rule lives once, in possessiveArticleFor.
+  {
+    const nounEntry = vocab().languages?.[lang]?.forms?.[nounCid];
+    const art = possessiveArticleFor(lang, nounCid);
+    if (art) {
       if (nounEntry?.pluralOnly) {
         const pl = genderedFormOf(lang, possessiveCid, nounCid, true);
-        return `${nounEntry.gender === "f" ? "le" : "i"} ${pl} ${noun}`;
+        return `${art} ${pl} ${noun}`;
       }
-      return `${nounEntry?.gender === "f" ? "la" : "il"} ${possessive} ${noun}`;
+      return `${art} ${possessive} ${noun}`;
     }
   }
   return `${possessive} ${noun}`;
 }
 
-// Languages where adjective follows the noun (e.g. "casa grande")
-const POST_ADJECTIVE_LANGS = new Set(["pt", "ar", "it", "th"]);
+// Languages where adjective follows the noun (e.g. "casa grande").
+// Derived from language_rules.mjs — the declaration lives there.
+const POST_ADJECTIVE_LANGS = langsWith("postNominalAdjectives");
 
 // Languages that omit the present-tense copula. Ukrainian (and Russian-style
 // Slavic) drop "to be" in the present ("Це телефон", not "Це є телефон"),
@@ -1235,7 +1355,8 @@ const POST_ADJECTIVE_LANGS = new Set(["pt", "ar", "it", "th"]);
 // "O olur öğrenci" — olmak means "to become"). Other supported languages
 // (en/es/pt/de/fr/el/no) keep an overt copula. Present tense only — these
 // templates are all present tense.
-const ZERO_PRESENT_COPULA = new Set(["uk", "ar", "tr"]);
+// Derived from language_rules.mjs — the declaration lives there.
+const ZERO_PRESENT_COPULA = langsWith("zeroPresentCopula");
 
 function isCopulaConcept(cid) {
   return cid === "BE" ||
@@ -1850,8 +1971,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     : undefined;
   const adjGenderOverride = feminineReferent ? "f" : null;
   if (forcedMeta?.type === "adjective") {
-    adjectiveCid = forcedConcept;
-    adjectiveWord = genderedFormOf(lang, forcedConcept, cid, false, adjGenderOverride);
+    // The forced path must respect the same compatibility rule as random
+    // injection — this is the mass-noun/animacy filter for drilled
+    // modifiers («quattro acqua», "old girl"). Possessives are exempt:
+    // they are determiners, and "his water" / «il suo cibo» is fine.
+    const forcedPossessive = forcedMeta.semantic_role === "possessive";
+    if (forcedPossessive || isModifierCompatible(lang, forcedConcept, cid)) {
+      adjectiveCid = forcedConcept;
+      adjectiveWord = genderedFormOf(lang, forcedConcept, cid, false, adjGenderOverride);
+    }
   } else if (cachedAdj !== undefined) {
     adjectiveCid = cachedAdj;
     adjectiveWord = cachedAdj ? genderedFormOf(lang, cachedAdj, cid, false, adjGenderOverride) : null;
@@ -1880,8 +2008,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     ? sharedChoices["num_" + cid]
     : undefined;
   if (forcedMeta?.type === "number") {
-    numberCid = forcedConcept;
-    numberWord = formOf(lang, forcedConcept);
+    // Same compatibility gate as random injection: a number never counts a
+    // mass noun, in ANY language — «Io bevo quattro acqua» / "I drink eight
+    // waters" both came from this path skipping the check.
+    if (isModifierCompatible(lang, forcedConcept, cid)) {
+      numberCid = forcedConcept;
+      numberWord = formOf(lang, forcedConcept);
+    }
   } else if (cachedNum !== undefined) {
     numberCid = cachedNum;
     numberWord = cachedNum ? formOf(lang, cachedNum) : null;
@@ -1991,7 +2124,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const adjForm = (isPlural && adjectiveCid && lang !== "en")
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjectiveWord;
-      return POST_ADJ
+      return (POST_ADJ && !adjectivePreOrder(lang))
         ? numberWord + " " + nounForm + " " + adjForm
         : numberWord + " " + adjForm + " " + nounForm;
     }
@@ -2014,9 +2147,20 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (!(k in sharedChoices)) sharedChoices[k] = adjForm;
     }
     if (adjectiveIsPossessive) {
-      // Possessives replace the article entirely: "her wizard" not "a her wizard"
-      phrase = joinWords(lang, [adjForm, bare]);
-    } else if (POST_ADJ) {
+      // Possessives replace the indefinite article ("her wizard", not
+      // "a her wizard") — but possessiveDefiniteArticle languages put the
+      // definite article in front of the pair: «il suo cibo», «le sue
+      // scarpe». This is the forced-modifier path (drilled possessives at
+      // L2/L3), which shipped «suo taxi» for Italian because the article
+      // rule previously lived only on the template-slot path.
+      const possNounEntry = vocab().languages?.[lang]?.forms?.[cid];
+      const possPlural = !!possNounEntry?.pluralOnly;
+      const possForm = possPlural
+        ? genderedFormOf(lang, adjectiveCid, cid, true)
+        : adjForm;
+      const art = possessiveArticleFor(lang, cid, possPlural);
+      phrase = joinWords(lang, art ? [art, possForm, bare] : [possForm, bare]);
+    } else if (POST_ADJ && !adjectivePreOrder(lang)) {
       // Article + noun + adjective: "uma casa grande" (spaceless in th)
       phrase = joinWords(lang, [phrase, adjForm]);
     } else if (phrase !== bare) {
@@ -2026,7 +2170,17 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (lang === "en" && /^an?$/i.test(article)) {
         article = englishIndefiniteArticle(adjForm);
       }
-      phrase = article + " " + adjForm + " " + bare;
+      // Italian allomorphy also keys on the following word — «uno zaino»
+      // but «un vecchio zaino», «un'attrazione» but «una vecchia
+      // attrazione». Only reached via the pre-order grading variant.
+      if (lang === "it" && /^(un'|un|una|uno)$/i.test(article)) {
+        article = /^(una|un')$/i.test(article)
+          ? (IT_VOWEL_INITIAL.test(adjForm) ? "un'" : "una")
+          : (IT_LO_INITIAL.test(adjForm) ? "uno" : "un");
+      }
+      phrase = article.endsWith("'")
+        ? article + adjForm + " " + bare
+        : article + " " + adjForm + " " + bare;
     } else {
       // No article: "big water"
       phrase = adjForm + " " + bare;
@@ -2183,18 +2337,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
             vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
           form = ukFeminineAccusative(form);
         }
-        // Italian possessives take the definite article («la mia mano»,
-        // «il tuo telefono», «le mie scarpe») — except before singular
-        // family nouns («con sua figlia»), flagged in the data.
-        if (lang === "it") {
-          const nounEntry = vocab().languages?.it?.forms?.[nextCid];
-          if (!nounEntry?.noArticleWithPossessive) {
-            if (nounEntry?.pluralOnly) {
-              form = (nounEntry.gender === "f" ? "le " : "i ") +
-                genderedFormOf(lang, cid, nextCid, true);
-            } else {
-              form = (nounEntry?.gender === "f" ? "la " : "il ") + form;
-            }
+        // Possessive noun phrases take the definite article in languages
+        // declaring possessiveDefiniteArticle («la mia mano», «le mie
+        // scarpe») — the rule lives once, in possessiveArticleFor.
+        {
+          const nounEntry = vocab().languages?.[lang]?.forms?.[nextCid];
+          const art = possessiveArticleFor(lang, nextCid);
+          if (art) {
+            form = nounEntry?.pluralOnly
+              ? art + " " + genderedFormOf(lang, cid, nextCid, true)
+              : art + " " + form;
           }
         }
         return form;
@@ -2249,7 +2401,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
 
 // Spaceless scripts can't be split into word tiles by whitespace — those
 // targets keep the legacy per-concept tile path in the caller.
-const SPACELESS_TILE_LANGS = new Set(["ja", "zh", "th"]);
+const SPACELESS_TILE_LANGS = langsWith("spacelessTiles");
 
 // Tiles for fixed-form template shapes: tokenize the graded sentence itself,
 // so the tiles can always rebuild it — the per-concept mapper knows nothing
@@ -2349,5 +2501,9 @@ export {
   buildComplexClauseSentence,
   buildSentence,
   buildSentenceRaw,
-  buildSentenceWithRules
+  buildSentenceWithRules,
+  possessiveArticleFor,
+  acceptedAnswerVariants,
+  dropSubjectPronoun,
+  resolveNounBlank
 };
