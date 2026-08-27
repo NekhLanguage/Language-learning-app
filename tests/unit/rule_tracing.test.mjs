@@ -79,6 +79,7 @@ test("rule ids are stable and documented", () => {
     [...GRAMMAR_RULE_IDS].sort(),
     [
       "accusative_object",
+      "apocope",
       "definite_article",
       "french_elision",
       "french_possessive_agreement",

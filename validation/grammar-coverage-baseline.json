@@ -4,14 +4,7 @@
   "COVERAGE_GAP|el|articleCaseMarking",
   "COVERAGE_GAP|el|declinesAttributiveAdjectives",
   "COVERAGE_GAP|el|marksCaseOnDirectObjects",
-  "COVERAGE_GAP|es|adjectivePosition",
-  "COVERAGE_GAP|es|apocope",
   "COVERAGE_GAP|es|declinesAttributiveAdjectives",
-  "COVERAGE_GAP|fr|adjectivePosition",
-  "COVERAGE_GAP|fr|declinesAttributiveAdjectives",
-  "COVERAGE_GAP|it|adjectivePosition",
-  "COVERAGE_GAP|it|apocope",
   "COVERAGE_GAP|no|declinesAttributiveAdjectives",
-  "COVERAGE_GAP|pt|adjectivePosition",
   "COVERAGE_GAP|tr|marksCaseOnDirectObjects"
 ]

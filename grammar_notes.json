@@ -1189,6 +1189,72 @@
         "title": "Od pięciu w górę rzeczownik zmienia się znowu",
         "body": "W języku {lang} liczby od pięciu wzwyż biorą jeszcze inną formę rzeczownika — „dwie książki”, ale „pięć książek”."
       }
+    },
+    "apocope": {
+      "en": {
+        "title": "Short forms before the noun",
+        "body": "Some adjectives shorten when they stand before a masculine singular noun — Spanish bueno becomes buen (un buen libro), Italian buono becomes buon (un buon libro)."
+      },
+      "pt": {
+        "title": "Formas curtas antes do substantivo",
+        "body": "Alguns adjetivos encurtam antes de um substantivo masculino singular — em espanhol bueno vira buen (un buen libro), em italiano buono vira buon (un buon libro)."
+      },
+      "fr": {
+        "title": "Formes courtes devant le nom",
+        "body": "Certains adjectifs se raccourcissent devant un nom masculin singulier — en espagnol bueno devient buen (un buen libro), en italien buono devient buon (un buon libro)."
+      },
+      "de": {
+        "title": "Kurzformen vor dem Substantiv",
+        "body": "Manche Adjektive werden vor einem maskulinen Substantiv im Singular verkürzt — spanisch bueno wird zu buen (un buen libro), italienisch buono zu buon (un buon libro)."
+      },
+      "el": {
+        "title": "Σύντομες μορφές πριν από το ουσιαστικό",
+        "body": "Ορισμένα επίθετα συντομεύονται πριν από αρσενικό ουσιαστικό ενικού — το ισπανικό bueno γίνεται buen (un buen libro), το ιταλικό buono γίνεται buon (un buon libro)."
+      },
+      "es": {
+        "title": "Formas cortas ante el sustantivo",
+        "body": "Algunos adjetivos se acortan delante de un sustantivo masculino singular: bueno pasa a buen (un buen libro) y malo a mal (un mal día)."
+      },
+      "ja": {
+        "title": "名詞の前の短縮形",
+        "body": "一部の形容詞は男性単数名詞の前で短くなります。スペイン語の bueno は buen に（un buen libro）、イタリア語の buono は buon になります（un buon libro）。"
+      },
+      "ko": {
+        "title": "명사 앞의 축약형",
+        "body": "일부 형용사는 남성 단수 명사 앞에서 짧아집니다. 스페인어 bueno는 buen이 되고(un buen libro), 이탈리아어 buono는 buon이 됩니다(un buon libro)."
+      },
+      "zh": {
+        "title": "名词前的缩短形式",
+        "body": "有些形容词在阳性单数名词前会缩短——西班牙语的 bueno 变成 buen（un buen libro），意大利语的 buono 变成 buon（un buon libro）。"
+      },
+      "no": {
+        "title": "Kortformer foran substantivet",
+        "body": "Noen adjektiv forkortes foran et hankjønnsord i entall — spansk bueno blir buen (un buen libro), italiensk buono blir buon (un buon libro)."
+      },
+      "th": {
+        "title": "รูปย่อหน้าคำนาม",
+        "body": "คำคุณศัพท์บางคำจะสั้นลงเมื่ออยู่หน้าคำนามเพศชายเอกพจน์ เช่น bueno ในภาษาสเปนกลายเป็น buen (un buen libro) และ buono ในภาษาอิตาลีกลายเป็น buon (un buon libro)"
+      },
+      "tr": {
+        "title": "İsimden önce kısa biçimler",
+        "body": "Bazı sıfatlar eril tekil bir isimden önce kısalır — İspanyolca bueno, buen olur (un buen libro); İtalyanca buono, buon olur (un buon libro)."
+      },
+      "uk": {
+        "title": "Короткі форми перед іменником",
+        "body": "Деякі прикметники скорочуються перед іменником чоловічого роду однини — іспанське bueno стає buen (un buen libro), італійське buono стає buon (un buon libro)."
+      },
+      "ar": {
+        "title": "صيغ قصيرة قبل الاسم",
+        "body": "تُختصر بعض الصفات قبل الاسم المذكر المفرد — الإسبانية bueno تصبح buen (un buen libro)، والإيطالية buono تصبح buon (un buon libro)."
+      },
+      "it": {
+        "title": "Forme tronche davanti al nome",
+        "body": "Alcuni aggettivi si accorciano davanti a un nome maschile singolare: buono diventa buon (un buon libro)."
+      },
+      "pl": {
+        "title": "Formy skrócone przed rzeczownikiem",
+        "body": "Niektóre przymiotniki skracają się przed rzeczownikiem rodzaju męskiego w liczbie pojedynczej — hiszpańskie bueno staje się buen (un buen libro), włoskie buono staje się buon (un buon libro)."
+      }
     }
   }
 }

@@ -67,8 +67,11 @@ test("no LANGUAGE_RULES row for a language the app does not ship", () => {
 test("derived sets keep their pre-consolidation memberships", () => {
   assert.deepEqual([...langsWith("indefiniteArticle")].sort(),
     ["de", "el", "en", "es", "fr", "it", "no", "pt"]);
+  // fr/es joined 2026-08-27: post-nominal is their correct DEFAULT (the
+  // missing flag shipped «un noir livre» — Emi -12); role-based
+  // pre-nominal placement refines it per language.
   assert.deepEqual([...langsWith("postNominalAdjectives")].sort(),
-    ["ar", "it", "pt", "th"]);
+    ["ar", "es", "fr", "it", "pt", "th"]);
   assert.deepEqual([...langsWith("zeroPresentCopula")].sort(),
     ["ar", "tr", "uk"]);
   assert.deepEqual([...langsWith("spacelessJoin")].sort(), ["th"]);
@@ -297,6 +300,73 @@ test("de: finalizeSentence contracts preposition + dative article", () => {
     "Ich gehe zum Haus.");
   assert.equal(finalizeSentence("de", "Das Buch ist in dem Haus."),
     "Das Buch ist im Haus.");
+});
+
+// ---------------------------------------------------------------------
+// Romance adjective placement + apocope — Emi 2026-08-27-12 / -13
+// ---------------------------------------------------------------------
+
+test("fr: adjectives are post-nominal by default, BAGS roles pre-nominal", () => {
+  assert.equal(buildSentence("fr", tplById("I_GET_BOOK"), "BLACK", {}),
+    "J'obtiens un livre noir.");
+  // Beauty/age/goodness/size stay in front: «un nouveau livre», «un bon livre».
+  assert.equal(buildSentence("fr", tplById("I_GET_BOOK"), "NEW", {}),
+    "J'obtiens un nouveau livre.");
+  assert.equal(buildSentence("fr", tplById("I_GET_BOOK"), "GOOD", {}),
+    "J'obtiens un bon livre.");
+  // («C'est…» vs authored «Ceci est…» is a separate baselined divergence —
+  // assert the noun phrase, which is what this rule owns.)
+  const s = buildSentence("fr", tplById("THIS_IS_A_GOOD_BOOK"));
+  assert.ok(s.includes("un bon livre"), s);
+});
+
+test("es: adjectives post-nominal; buen/mal apocopate before masc singulars", () => {
+  assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "BLACK", {}),
+    "Yo obtengo un libro negro.");
+  assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "NEW", {}),
+    "Yo obtengo un libro nuevo.");
+  assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "GOOD", {}),
+    "Yo obtengo un buen libro.");
+  assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "BAD", {}),
+    "Yo obtengo un mal libro.");
+  assert.equal(buildSentence("es", tplById("THIS_IS_A_GOOD_BOOK")),
+    tplById("THIS_IS_A_GOOD_BOOK").render.es);
+  // Feminine heads block apocope: «una buena camisa», never «una buen camisa».
+  assert.equal(buildSentence("es", tplById("HE_SEES_SHIRT"), "GOOD", {}),
+    "Él ve una buena camisa.");
+  assert.equal(buildSentence("es", tplById("HE_SEES_SHIRT"), "BAD", {}),
+    "Él ve una mala camisa.");
+});
+
+test("it/pt: quality adjectives pre-nominal, everything else post-nominal", () => {
+  assert.equal(buildSentence("it", tplById("I_GET_BOOK"), "BLACK", {}),
+    "Io prendo un libro nero.");
+  assert.equal(buildSentence("it", tplById("I_GET_BOOK"), "GOOD", {}),
+    "Io prendo un buon libro.");
+  assert.equal(buildSentence("it", tplById("HE_SEES_SHIRT"), "GOOD", {}),
+    "Lui vede una buona camicia.");
+  assert.equal(buildSentence("it", tplById("THIS_IS_A_GOOD_BOOK")),
+    tplById("THIS_IS_A_GOOD_BOOK").render.it);
+  assert.equal(buildSentence("pt", tplById("I_GET_BOOK"), "BLACK", {}),
+    "Eu pego um livro preto.");
+  assert.equal(buildSentence("pt", tplById("I_GET_BOOK"), "GOOD", {}),
+    "Eu pego um bom livro.");
+  assert.equal(buildSentence("pt", tplById("THIS_IS_A_GOOD_BOOK")),
+    tplById("THIS_IS_A_GOOD_BOOK").render.pt);
+});
+
+test("apocope surfaces are what the L3 blank contract records", () => {
+  // The blank must match the «buen» actually rendered, not citation «bueno».
+  const shared = {};
+  buildSentence("es", tplById("I_GET_BOOK"), "GOOD", shared);
+  assert.equal(shared.blankSurface_es, "buen");
+  const sharedIt = {};
+  buildSentence("it", tplById("I_GET_BOOK"), "GOOD", sharedIt);
+  assert.equal(sharedIt.blankSurface_it, "buon");
+  // Post-nominal placement keeps the full form.
+  const sharedPost = {};
+  buildSentence("es", tplById("I_GET_BOOK"), "BLACK", sharedPost);
+  assert.equal(sharedPost.blankSurface_es, "negro");
 });
 
 test("wordOrder declarations preserve the historic WORD_ORDER map", () => {
