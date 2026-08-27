@@ -84,15 +84,24 @@ for Ukrainian). Work through this list; don't skip to "the app boots":
    `surface.<code>`) for every core template in `sentence_templates.json`,
    written/reviewed by a native speaker. Pack files also need per-language
    `forms` — `npm run validate` enforces completeness.
-2. **Audit the grammar features the language needs** against what the engine
-   has, and declare a plan for each: articles (in/definite — `nounPhrase`,
-   `definiteNounPhrase`), grammatical gender + agreement (`gender`, `f`/`n`/
-   `plural`/`fp` fields), noun case (uk-style `accusative`/`genitive`/
-   `locative`/`instrumental` fields + engine mapping), copula behavior
-   (`ZERO_PRESENT_COPULA`), word order (`WORD_ORDER`), script/punctuation
+2. **Declare the language's grammar rules in `language_rules.mjs`** — this
+   is enforced: the unit suite fails if a shipped language has no rules
+   row. Audit the grammar features the language needs against the flags
+   that exist (indefinite article, adjective order, possessive articles,
+   zero copula, pro-drop, spaceless script) and against the engine
+   features they drive: articles (`nounPhrase`, `definiteNounPhrase`),
+   gender + agreement (`gender`, `f`/`n`/`plural`/`fp` fields), noun case
+   (uk-style `accusative`/`genitive`/`locative`/`instrumental` fields +
+   engine mapping), word order (`WORD_ORDER`), script/punctuation
    (`finalizeSentence`), counters/particles (ja). Per-word exceptions have
    flags: `noArticle`, `pluralOnly`, `invariantPlural`, `predicative`,
-   `article`.
+   `article`, `noArticleWithPossessive`. A grammar behaviour the flags
+   can't express means a NEW flag plus a rule implementation the other
+   languages can also declare — never an `if (lang === "xx")` buried in a
+   render path, and never a rule that fires on one render path but not
+   the others (the Italian launch shipped «suo taxi» exactly that way).
+   Add per-language behaviour tests to
+   `tests/unit/language_rules.test.mjs` for every flag you set.
 3. **Run `npm run validate:divergence` AND `npm run validate:injection`** and read every finding for the
    new language. Fix what the engine/data can express; only then baseline the
    rest with `npm run validate:divergence:update`. The baseline diff in your
