@@ -993,6 +993,130 @@
         "title": "'มี' คือ 'มีอยู่'",
         "body": "{lang}ไม่มีคำกริยา 'มี' โดยตรง การครอบครองถูกแสดงเป็น 'X ของฉันมีอยู่' — Bizim bir işimiz var แปลตรงตัวว่า 'งานของเรามีอยู่' โดยผู้ครอบครองอยู่ในรูปแสดงความเป็นเจ้าของ ส่วน var แปลว่า 'มี'"
       }
+    },
+    "predicate_instrumental": {
+      "en": {
+        "title": "'To be' changes the noun's ending",
+        "body": "In {lang}, a noun after 'to be' takes a special ending — saying what someone IS uses a different form of the word than naming it."
+      },
+      "pt": {
+        "title": "'Ser' muda a terminação do substantivo",
+        "body": "Em {lang}, um substantivo depois de 'ser' recebe uma terminação especial — dizer o que alguém É usa uma forma diferente da palavra."
+      },
+      "es": {
+        "title": "'Ser' cambia la terminación del sustantivo",
+        "body": "En {lang}, un sustantivo después de 'ser' lleva una terminación especial: decir lo que alguien ES usa otra forma de la palabra."
+      },
+      "fr": {
+        "title": "« Être » change la terminaison du nom",
+        "body": "En {lang}, un nom placé après « être » prend une terminaison spéciale — dire ce que quelqu'un EST utilise une autre forme du mot."
+      },
+      "de": {
+        "title": "'Sein' ändert die Endung des Substantivs",
+        "body": "In {lang} bekommt ein Substantiv nach 'sein' eine besondere Endung — zu sagen, was jemand IST, verwendet eine andere Form des Wortes."
+      },
+      "el": {
+        "title": "Το «είμαι» αλλάζει την κατάληξη του ουσιαστικού",
+        "body": "Στα {lang}, ένα ουσιαστικό μετά το «είμαι» παίρνει ειδική κατάληξη — το να πεις τι ΕΙΝΑΙ κάποιος χρησιμοποιεί άλλη μορφή της λέξης."
+      },
+      "it": {
+        "title": "'Essere' cambia la desinenza del sostantivo",
+        "body": "In {lang}, un sostantivo dopo 'essere' prende una desinenza speciale: dire ciò che qualcuno È usa una forma diversa della parola."
+      },
+      "no": {
+        "title": "'Å være' endrer substantivets ending",
+        "body": "På {lang} får et substantiv etter 'å være' en egen ending — å si hva noen ER bruker en annen form av ordet."
+      },
+      "uk": {
+        "title": "«Бути» змінює закінчення іменника",
+        "body": "У {lang} іменник після «бути» отримує особливе закінчення — сказати, ким хтось Є, вимагає іншої форми слова."
+      },
+      "ar": {
+        "title": "«يكون» يغيّر نهاية الاسم",
+        "body": "في {lang}، يأخذ الاسم بعد «يكون» نهاية خاصة — قول ما يكونه شخص ما يستعمل صيغة مختلفة من الكلمة."
+      },
+      "tr": {
+        "title": "'Olmak' ismin ekini değiştirir",
+        "body": "{lang} dilinde 'olmak' fiilinden sonra gelen isim özel bir ek alır — birinin NE olduğunu söylemek kelimenin farklı bir biçimini kullanır."
+      },
+      "ja": {
+        "title": "「〜である」で名詞の形が変わる",
+        "body": "{lang}では、「〜である」の後の名詞は特別な語尾を取ります。誰かが何であるかを言うときは、単語の別の形を使います。"
+      },
+      "ko": {
+        "title": "'이다' 뒤에서 명사의 어미가 바뀝니다",
+        "body": "{lang}에서는 '이다' 뒤의 명사가 특별한 어미를 가집니다. 누군가가 무엇인지 말할 때는 단어의 다른 형태를 사용합니다."
+      },
+      "zh": {
+        "title": "『是』会改变名词的词尾",
+        "body": "在{lang}中,『是』后面的名词要用特殊的词尾——说某人是什么时,要用这个词的另一种形式。"
+      },
+      "th": {
+        "title": "'เป็น' เปลี่ยนท้ายคำนาม",
+        "body": "ใน{lang} คำนามหลัง 'เป็น' จะมีท้ายคำพิเศษ — การบอกว่าใครเป็นอะไรใช้รูปคำอีกแบบหนึ่ง"
+      }
+    },
+    "numeral_government": {
+      "en": {
+        "title": "Five and up change the noun again",
+        "body": "In {lang}, the numbers five and above take yet another form of the noun — 'two books' and 'five books' end differently."
+      },
+      "pt": {
+        "title": "De cinco em diante o substantivo muda de novo",
+        "body": "Em {lang}, os números a partir de cinco pedem outra forma do substantivo — 'dois livros' e 'cinco livros' terminam de maneira diferente."
+      },
+      "es": {
+        "title": "A partir de cinco el sustantivo cambia otra vez",
+        "body": "En {lang}, los números a partir de cinco piden otra forma del sustantivo: 'dos libros' y 'cinco libros' terminan distinto."
+      },
+      "fr": {
+        "title": "À partir de cinq, le nom change encore",
+        "body": "En {lang}, les nombres à partir de cinq demandent une autre forme du nom — « deux livres » et « cinq livres » ne se terminent pas pareil."
+      },
+      "de": {
+        "title": "Ab fünf ändert sich das Substantiv erneut",
+        "body": "In {lang} verlangen die Zahlen ab fünf noch eine andere Form des Substantivs — 'zwei Bücher' und 'fünf Bücher' enden unterschiedlich."
+      },
+      "el": {
+        "title": "Από το πέντε και πάνω το ουσιαστικό αλλάζει ξανά",
+        "body": "Στα {lang}, οι αριθμοί από το πέντε και πάνω θέλουν άλλη μορφή του ουσιαστικού — το «δύο βιβλία» και το «πέντε βιβλία» τελειώνουν διαφορετικά."
+      },
+      "it": {
+        "title": "Da cinque in su il sostantivo cambia di nuovo",
+        "body": "In {lang}, i numeri da cinque in su richiedono un'altra forma del sostantivo: 'due libri' e 'cinque libri' finiscono in modo diverso."
+      },
+      "no": {
+        "title": "Fra fem og oppover endrer substantivet seg igjen",
+        "body": "På {lang} krever tallene fra fem og oppover enda en form av substantivet — 'to bøker' og 'fem bøker' slutter ulikt."
+      },
+      "uk": {
+        "title": "Від п'яти іменник знову змінюється",
+        "body": "У {lang} числа від п'яти вимагають ще однієї форми іменника — «дві книжки» і «п'ять книжок» закінчуються по-різному."
+      },
+      "ar": {
+        "title": "من خمسة فصاعدًا يتغير الاسم مجددًا",
+        "body": "في {lang}، تتطلب الأعداد من خمسة فصاعدًا صيغة أخرى من الاسم — «كتابان» و«خمسة كتب» تنتهيان بشكل مختلف."
+      },
+      "tr": {
+        "title": "Beşten itibaren isim yine değişir",
+        "body": "{lang} dilinde beş ve üzeri sayılar ismin başka bir biçimini ister — 'iki kitap' ile 'beş kitap' farklı biter."
+      },
+      "ja": {
+        "title": "5以上で名詞の形がまた変わる",
+        "body": "{lang}では、5以上の数字は名詞のさらに別の形を取ります。「2冊の本」と「5冊の本」では語尾が異なります。"
+      },
+      "ko": {
+        "title": "다섯부터는 명사가 또 바뀝니다",
+        "body": "{lang}에서는 다섯 이상의 숫자가 명사의 또 다른 형태를 요구합니다. '책 두 권'과 '책 다섯 권'의 어미가 다릅니다."
+      },
+      "zh": {
+        "title": "五以上名词再次变化",
+        "body": "在{lang}中,五及以上的数字要求名词用另一种形式——'两本书'和'五本书'的词尾不同。"
+      },
+      "th": {
+        "title": "ตั้งแต่ห้าขึ้นไปคำนามเปลี่ยนอีกครั้ง",
+        "body": "ใน{lang} ตัวเลขตั้งแต่ห้าขึ้นไปต้องใช้คำนามอีกรูปหนึ่ง — 'หนังสือสองเล่ม' กับ 'หนังสือห้าเล่ม' ลงท้ายต่างกัน"
+      }
     }
   }
 }

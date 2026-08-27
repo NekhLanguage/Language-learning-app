@@ -47,6 +47,8 @@ export const GRAMMAR_RULE_IDS = [
   "definite_article",        // the/o/der/… for a described noun subject
   "genitive_possessor",      // tr possessor takes the genitive case (benim, bizim, onun)
   "have_existential",        // tr HAVE = genitive-possessor + possessed-noun + var
+  "predicate_instrumental",  // pl predicate nouns after być take the instrumental
+  "numeral_government",      // pl numbers five+ govern the genitive plural
 ];
 
 let firedRules = null;
@@ -283,6 +285,13 @@ function genderedFormOf(lang, modifierCid, nounCid, plural = false, genderOverri
   const noun = vocab().languages?.[lang]?.forms?.[nounCid];
   const g = genderOverride || noun?.gender;
   if (plural) {
+    // Virile split (language_rules: virilePlural — Polish): a plural
+    // agreeing with a masculine-personal noun takes the vp form («nowi
+    // studenci»); everything else takes the ordinary plural («nowe
+    // telefony/kobiety»). Nouns flag `virile: true` in the data.
+    if (langRule(lang, "virilePlural") && noun?.virile && mod.vp) {
+      noteRule("gender_agreement"); return mod.vp;
+    }
     if (g === "f" && mod.fp) { noteRule("gender_agreement"); return mod.fp; }
     if (g === "n" && mod.np) { noteRule("gender_agreement"); return mod.np; }
     return pluralFormOf(lang, modifierCid);
@@ -522,6 +531,32 @@ function caseFormFor(lang, cid, caseName) {
     return entry[caseName];
   }
   return null;
+}
+
+// Predicate-noun case (language_rules caseMarking.predicateNounCase —
+// Polish instrumental: «Jestem mężczyzną»). Returns the case name when it
+// applies to this ordered position, or null. Demonstrative subjects are
+// exempt («To jest telefon» stays nominative); predicate ADJECTIVES never
+// route here (they render through the adjective branch, nominative).
+function predicateNounCaseFor(lang, ordered, idx, subjectCid, isCopularTemplate) {
+  const predCase = langRuleValue(lang, "caseMarking")?.predicateNounCase;
+  if (!predCase || !isCopularTemplate) return null;
+  if (!isCopularPredicatePosition(ordered, idx)) return null;
+  if (vocab().concepts?.[subjectCid]?.semantic_role === "demonstrative") return null;
+  return predCase;
+}
+
+// The possessive's own declined form agreeing with a governed possessed
+// noun: entry fields `<case>` (masc/neut) and `f_<case>` (feminine), e.g.
+// pl instrumental «moim» / f_instrumental «moją». Null when data missing —
+// the caller then keeps the whole phrase nominative so the two halves
+// never mix cases.
+function possessiveCaseForm(lang, possessiveCid, nounCid, caseName) {
+  const mod = vocab().languages?.[lang]?.forms?.[possessiveCid];
+  if (!mod || typeof mod !== "object" || Array.isArray(mod)) return null;
+  const g = vocab().languages?.[lang]?.forms?.[nounCid]?.gender;
+  const key = g === "f" ? `f_${caseName}` : caseName;
+  return typeof mod[key] === "string" ? mod[key] : null;
 }
 
 // --- Definite article for described noun subjects ----------------------------
@@ -1123,6 +1158,15 @@ function adjectiveSuitsNoun(adjCid, nounCid) {
   return adjectiveRoleAllowsNoun(adjMeta.semantic_role, nounMeta.semantic_role);
 }
 
+// Numeric value of the number concepts (ONE..TWENTY) — used by numeral
+// government (language_rules: numeralGenitivePlural).
+const NUMBER_VALUES = {
+  ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5, SIX: 6, SEVEN: 7, EIGHT: 8,
+  NINE: 9, TEN: 10, ELEVEN: 11, TWELVE: 12, THIRTEEN: 13, FOURTEEN: 14,
+  FIFTEEN: 15, SIXTEEN: 16, SEVENTEEN: 17, EIGHTEEN: 18, NINETEEN: 19,
+  TWENTY: 20,
+};
+
 function isModifierCompatible(lang, modifierCid, nounCid) {
   const nounMeta  = vocab().concepts[nounCid];
   const nounEntry = vocab().languages?.[lang]?.forms?.[nounCid] || {};
@@ -1142,6 +1186,27 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
   // match the noun role; a role with an exclusion list rejects tagged nouns;
   // otherwise (broad quality/time adjectives) fall through to the source rule.
   if (!adjectiveRoleAllowsNoun(modMeta.semantic_role, nounMeta?.semantic_role)) {
+    return false;
+  }
+
+  // Numeral government (language_rules: numeralGenitivePlural — Polish):
+  // five and above govern the genitive plural («pięć książek»). A noun
+  // without the genitive_plural field cannot take such a number — the
+  // number is skipped rather than shipping «pięć książki». Wrong gets
+  // filtered, odd gets shipped.
+  if (modMeta.type === "number" &&
+      langRule(lang, "numeralGenitivePlural") &&
+      (NUMBER_VALUES[modifierCid] || 0) >= 5 &&
+      typeof nounEntry.genitive_plural !== "string") {
+    return false;
+  }
+
+  // Virile (masculine-personal) nouns take special numeral forms the
+  // engine has no data for («pięciu mężczyzn», «czterej bracia» — not the
+  // counting forms pięć/cztery). Skip numbers on virile nouns entirely
+  // rather than shipping the non-virile numeral. Wrong gets filtered.
+  if (modMeta.type === "number" &&
+      langRule(lang, "virilePlural") && nounEntry.virile) {
     return false;
   }
 
@@ -1256,6 +1321,20 @@ function finalizeSentence(lang, sentence) {
     const C = "бвгґджзйклмнпрстфхцчшщщьБВГҐДЖЗЙКЛМНПРСТФХЦЧШЩ";
     s = s.replace(new RegExp(`([${C}])\\s+в\\s+(?=[${C}])`, "g"), "$1 у ");
     s = s.replace(new RegExp(`^В\\s+(?=[${C}])`), "У ");
+    return s;
+  }
+  // Polish sets off its conjunctions with a comma («śniadanie, ale nie
+  // obiad», «..., ponieważ on jest w domu») — and lengthens z/w before
+  // clusters the short form can't precede: «ze swoją mamą», «we wtorek».
+  // Applied to the finished string since clauses are assembled by several
+  // builders.
+  if (lang === "pl") {
+    let s = sentence.replace(/([^,])\s+(ale|ponieważ)\s/g, "$1, $2 ");
+    const C = "bcćdfghjklłmnńprsśtwzźż";
+    s = s.replace(new RegExp(`(^|\\s)([zZ])\\s+(?=[sśzźż][${C}])`, "g"),
+      (m, pre, z) => pre + (z === "Z" ? "Ze " : "ze "));
+    s = s.replace(new RegExp(`(^|\\s)([wW])\\s+(?=[wf][${C}])`, "g"),
+      (m, pre, w) => pre + (w === "W" ? "We " : "we "));
     return s;
   }
   // Italian preposition + definite-article contractions, applied to the
@@ -1972,6 +2051,25 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const clf = vocab().languages?.th?.forms?.[cid]?.classifier || "อัน";
     return possessedForm + formOf(lang, ordered[idx - 1]) + clf;
   }
+  // Predicate nouns after the copula take a declared case in some
+  // languages («Jestem mężczyzną», plural «Oni są studentami»). When the
+  // slot is possessed, BOTH halves must decline or neither does («Ona
+  // jest moją mamą» — never «moja mamą»); the possessive slot mirrors
+  // this check. Modifier injection is deliberately skipped on a declined
+  // predicate — an injected adjective cannot agree in case yet, and
+  // wrong gets filtered, odd gets shipped. Missing case data falls back
+  // to the nominative phrase, which validate-exercise-surfaces ratchets.
+  const predNounCase = predicateNounCaseFor(lang, ordered, idx, subjectCid, isCopularTemplate);
+  if (predNounCase) {
+    const declined = caseFormFor(lang, cid,
+      useCopularPlural ? predNounCase + "_plural" : predNounCase);
+    if (declined && (!precededByPossessive ||
+        possessiveCaseForm(lang, ordered[idx - 1], cid, predNounCase))) {
+      noteRule("predicate_instrumental");
+      return declined;
+    }
+  }
+
   let phrase = bareDetermined
     ? possessedForm
     : nounPhrase(lang, cid, {
@@ -2143,6 +2241,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     } else if (lang === "en") {
       const enEntry = vocab().languages?.en?.forms?.[cid] || {};
       nounForm = (enEntry.invariantPlural || enEntry.pluralOnly) ? bare : pluralize(bare);
+    } else if (langRule(lang, "numeralGenitivePlural") &&
+               (NUMBER_VALUES[numberCid] || 0) >= 5 &&
+               typeof vocab().languages?.[lang]?.forms?.[cid]?.genitive_plural === "string") {
+      // Numeral government: «pięć książek», not «pięć książki». The
+      // compatibility gate guarantees the field exists when the number
+      // landed here.
+      noteRule("numeral_government");
+      nounForm = vocab().languages?.[lang]?.forms?.[cid].genitive_plural;
     } else {
       nounForm = pluralFormOf(lang, cid);
     }
@@ -2376,6 +2482,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       }
       if (vocab().concepts[nextCid]?.type === "noun") {
         let form = genderedFormOf(lang, cid, nextCid);
+        // Mirror of the predicate-case check in the noun slot: when the
+        // possessed predicate noun declines, the possessive declines with
+        // it («moją mamą») — and when either half lacks data, both stay
+        // nominative together.
+        const possPredCase = predicateNounCaseFor(lang, ordered, idx + 1, subjectCid, isCopularTemplate);
+        if (possPredCase && caseFormFor(lang, nextCid, possPredCase)) {
+          const declinedPoss = possessiveCaseForm(lang, cid, nextCid, possPredCase);
+          if (declinedPoss) return declinedPoss;
+        }
         if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
             isDirectObjectPosition(ordered, idx + 1) && !pluralAgreement &&
             vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {

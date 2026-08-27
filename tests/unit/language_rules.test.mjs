@@ -122,6 +122,129 @@ test("uk caseMarking declaration matches the engine's historic behaviour", () =>
   });
 });
 
+test("pl caseMarking declaration pins the launch grammar", () => {
+  const cm = LANGUAGE_RULES.pl.caseMarking;
+  assert.equal(cm.directObjectCase, "accusative");
+  assert.equal(cm.femAccusativeStrategy, "pl");
+  assert.equal(cm.bareInstrumentalMeans, true);
+  assert.equal(cm.predicateNounCase, "instrumental");
+  assert.deepEqual(cm.prepositions, {
+    ON: "locative", IN: "locative", OFF: "locative",
+    UNDER: "instrumental", BEHIND: "instrumental", FRONT: "instrumental",
+    BETWEEN: "instrumental", WITH: "instrumental",
+    BY: "instrumental",
+    NEXT_TO: "genitive", TO: "genitive", FROM: "genitive",
+    FOR: "genitive",
+  });
+  // Polish is NOT a zero-copula language — być is overt on every path.
+  assert.equal(langRule("pl", "zeroPresentCopula"), false);
+});
+
+// ---------------------------------------------------------------------
+// pl: predicate nouns take the instrumental («Jestem mężczyzną»)
+// ---------------------------------------------------------------------
+
+test("pl: predicate noun after the copula is instrumental", () => {
+  assert.equal(buildSentence("pl", tplById("I_AM_MAN")),
+    "Ja jestem mężczyzną.");
+  // Possessive + noun decline TOGETHER or not at all («moją mamą»).
+  assert.equal(buildSentence("pl", tplById("SHE_IS_MY_MOM")),
+    "Ona jest moją mamą.");
+});
+
+test("pl: demonstrative-subject predicates stay nominative", () => {
+  // «To jest rzecz» — identification, not classification: the predicate
+  // noun does NOT take the instrumental after a demonstrative subject.
+  assert.equal(buildSentence("pl", tplById("THIS_IS_THING")),
+    "To jest rzecz.");
+  // Possessive + noun predicates too («moja ręka», not «moją ręką»).
+  assert.equal(buildSentence("pl", tplById("THIS_IS_MY_HAND")),
+    "To jest moja ręka.");
+});
+
+// ---------------------------------------------------------------------
+// pl: numbers five and above govern the genitive plural
+// ---------------------------------------------------------------------
+
+test("pl: 5+ takes genitive plural, 2–4 the plain plural", () => {
+  const tpl = tplById("YOU_READ_BOOK");
+  assert.equal(buildSentence("pl", tpl, "FIVE", {}),
+    "Ty czytasz pięć książek.");
+  assert.equal(buildSentence("pl", tpl, "FOUR", {}),
+    "Ty czytasz cztery książki.");
+});
+
+test("pl: 5+ number is dropped when genitive_plural data is missing", () => {
+  // Compat gate: a noun without the field skips the number rather than
+  // shipping «pięć książki».
+  const entry = vocab.languages.pl.forms.BOOK;
+  const saved = entry.genitive_plural;
+  delete entry.genitive_plural;
+  try {
+    assert.equal(isModifierCompatible("pl", "FIVE", "BOOK"), false);
+    assert.equal(isModifierCompatible("pl", "FOUR", "BOOK"), true);
+  } finally {
+    entry.genitive_plural = saved;
+  }
+});
+
+test("pl: numbers never land on virile nouns (special numeral forms)", () => {
+  // «pięciu mężczyzn» / «czterej bracia» need numeral forms the engine has
+  // no data for — the compat gate skips the number instead.
+  assert.equal(isModifierCompatible("pl", "FIVE", "MAN"), false);
+  assert.equal(isModifierCompatible("pl", "FOUR", "MAN"), false);
+  assert.equal(isModifierCompatible("pl", "FIVE", "BOOK"), true);
+});
+
+test("pl: virile nouns and adjectives carry the vp agreement data", () => {
+  const forms = vocab.languages.pl.forms;
+  const virile = Object.values(forms).filter((e) => e && e.virile);
+  assert.ok(virile.length > 0, "pl.json declares virile nouns");
+  // Every declinable pl adjective with a plural form also carries vp —
+  // a virile subject must never agree with the non-virile plural.
+  for (const [cid, e] of Object.entries(forms)) {
+    if (!e || !e.plural || !e.f) continue; // adjectives carry f + plural
+    assert.equal(typeof e.vp, "string",
+      `pl adjective ${cid} lacks the virile plural (vp) form`);
+  }
+});
+
+// ---------------------------------------------------------------------
+// pl: feminine accusative fallback strategy («woda» → «wodę»)
+// ---------------------------------------------------------------------
+
+test("pl: fem accusative derives -a→-ę when no explicit field exists", () => {
+  assert.equal(vocab.languages.pl.forms.WATER.accusative, undefined,
+    "WATER relies on the strategy, not authored data");
+  assert.equal(buildSentence("pl", tplById("I_DRINK_WATER")),
+    "Ja piję wodę.");
+});
+
+// ---------------------------------------------------------------------
+// pl: bare instrumental of means + finalizeSentence euphony/punctuation
+// ---------------------------------------------------------------------
+
+test("pl: means is the bare instrumental — BY drops", () => {
+  assert.equal(buildSentence("pl", tplById("I_DO_THIS_BY_HAND")),
+    "Ja robię to ręką.");
+});
+
+test("pl: conjunctions take a comma; z lengthens to ze before clusters", () => {
+  assert.equal(buildSentence("pl", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")),
+    "On je śniadanie, ale nie obiad.");
+});
+
+// ---------------------------------------------------------------------
+// pl: preposition-governed cases (locative / instrumental / genitive)
+// ---------------------------------------------------------------------
+
+test("pl: prepositions govern their declared cases", () => {
+  assert.equal(buildSentence("pl", tplById("BOOK_ON_TABLE")),
+    "Książka jest na stole."); // ON → locative
+  assert.equal(buildSentence("pl", tplById("I_GO_FROM_HOME")),
+    "Ja idę z domu."); // FROM → genitive
+});
+
 test("wordOrder declarations preserve the historic WORD_ORDER map", () => {
   const sov = Object.keys(LANGUAGE_RULES)
     .filter((l) => LANGUAGE_RULES[l].wordOrder === "SOV").sort();

@@ -150,6 +150,28 @@ export const LANGUAGE_RULES = {
     indefiniteArticle: true,
     inflectsNounPlural: true, latinEncodingChecks: true,
   },
+  pl: {
+    proDrop: true,
+    virilePlural: true,
+    numeralGenitivePlural: true,
+    inflectsNounPlural: true, fullNounGender: true,
+    nounGenderForCountables: true, verbPersonParadigm: true,
+    latinEncodingChecks: true,
+    caseMarking: {
+      directObjectCase: "accusative",
+      prepositions: {
+        ON: "locative", IN: "locative", OFF: "locative",
+        UNDER: "instrumental", BEHIND: "instrumental", FRONT: "instrumental",
+        BETWEEN: "instrumental", WITH: "instrumental",
+        BY: "instrumental",
+        NEXT_TO: "genitive", TO: "genitive", FROM: "genitive",
+        FOR: "genitive",
+      },
+      femAccusativeStrategy: "pl",
+      bareInstrumentalMeans: true,
+      predicateNounCase: "instrumental",
+    },
+  },
   pt: {
     indefiniteArticle: true, postNominalAdjectives: true, proDrop: true,
     secondPersonAsThird: true,

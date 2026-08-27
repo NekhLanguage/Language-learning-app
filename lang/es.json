@@ -89,7 +89,8 @@
     "tr": "Turco",
     "es": "Español",
     "fr": "Francés",
-    "zh": "Chino"
+    "zh": "Chino",
+    "pl": "Polaco"
   },
   "forms": {
     "BIG": {
@@ -395,7 +396,11 @@
       "gender": "m",
       "pluralOnly": true
     },
-    "TABLE": { "form": "mesa", "gender": "f", "plural": "mesas" },
+    "TABLE": {
+      "form": "mesa",
+      "gender": "f",
+      "plural": "mesas"
+    },
     "PHONE": {
       "form": "teléfono",
       "gender": "m",

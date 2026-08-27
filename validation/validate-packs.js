@@ -19,14 +19,14 @@ const ROOT = path.join(__dirname, '..');
 // Languages where countable nouns should carry a gender field.
 // Kept in sync with language_rules.mjs nounGenderForCountables (unit test
 // asserts the membership matches the declaration).
-const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es', 'it']);
+const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es', 'it', 'pl']);
 
 // Languages where EVERY noun (countable or not) must carry a gender field,
 // because adjectives agree with the noun's gender (genderedFormOf in app.js
 // reads noun.gender and otherwise falls back to the masculine base form, e.g.
 // uk «новий відповідь» instead of «нова відповідь»). Enforced as an error.
 // uk, el and ar are fully backfilled.
-const FULL_GENDER_LANGS = new Set(['uk', 'el', 'ar']);
+const FULL_GENDER_LANGS = new Set(['uk', 'el', 'ar', 'pl']);
 
 // Languages whose present-tense verbs inflect by person/number. The grammar
 // engine (getVerbForm in app.js) reads a `${person}_${number}` key for these;
@@ -34,7 +34,7 @@ const FULL_GENDER_LANGS = new Set(['uk', 'el', 'ar']);
 // instead of «чаклує»). Require the full present paradigm for these.
 // en needs only base + 3_singular; no uses a uniform `present`/base; and
 // ja/ko/zh do not inflect verbs by person, so base alone is correct.
-const VERB_PERSON_LANGS = new Set(['es', 'fr', 'de', 'pt', 'uk', 'ar', 'el', 'tr', 'it']);
+const VERB_PERSON_LANGS = new Set(['es', 'fr', 'de', 'pt', 'uk', 'ar', 'el', 'tr', 'it', 'pl']);
 const PERSON_PARADIGM_KEYS = ['1_singular', '2_singular', '3_singular', '1_plural', '2_plural', '3_plural'];
 
 // ─── Canonical language list (sourced from languages.js) ─────────────────────

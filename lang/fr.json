@@ -74,7 +74,9 @@
     "feedbackSent": "✓ Rapport envoyé — merci !",
     "feedbackFailed": "Échec de l'envoi — veuillez réessayer."
   },
-  "hubNames": { "th": "Thaï", "it": "Italien",
+  "hubNames": {
+    "th": "Thaï",
+    "it": "Italien",
     "en": "Anglais",
     "pt": "Portugais",
     "ja": "Japonais",
@@ -87,7 +89,8 @@
     "tr": "Turc",
     "es": "Espagnol",
     "fr": "Français",
-    "zh": "Chinois"
+    "zh": "Chinois",
+    "pl": "Polonais"
   },
   "forms": {
     "BIG": {
@@ -99,19 +102,23 @@
       "plural": "petits"
     },
     "GOOD": {
-      "form": "bon", "f": "bonne",
+      "form": "bon",
+      "f": "bonne",
       "plural": "bons"
     },
     "BAD": {
-      "form": "mauvais", "f": "mauvaise",
+      "form": "mauvais",
+      "f": "mauvaise",
       "plural": "mauvais"
     },
     "NEW": {
-      "form": "nouveau", "f": "nouvelle",
+      "form": "nouveau",
+      "f": "nouvelle",
       "plural": "nouveaux"
     },
     "OLD": {
-      "form": "vieux", "f": "vieille",
+      "form": "vieux",
+      "f": "vieille",
       "plural": "vieux"
     },
     "EASY": {
@@ -391,7 +398,11 @@
       "form": "chaussures",
       "gender": "f"
     },
-    "TABLE": { "form": "table", "gender": "f", "plural": "tables" },
+    "TABLE": {
+      "form": "table",
+      "gender": "f",
+      "plural": "tables"
+    },
     "PHONE": {
       "form": "téléphone",
       "gender": "m",
@@ -552,11 +563,26 @@
     "MORNING": [
       "matin"
     ],
-    "DAY": {"form": "jour", "gender": "m"},
-    "NIGHT": {"form": "nuit", "gender": "f"},
-    "WEEK": {"form": "semaine", "gender": "f"},
-    "MONTH": {"form": "mois", "gender": "m"},
-    "YEAR": {"form": "année", "gender": "f"},
+    "DAY": {
+      "form": "jour",
+      "gender": "m"
+    },
+    "NIGHT": {
+      "form": "nuit",
+      "gender": "f"
+    },
+    "WEEK": {
+      "form": "semaine",
+      "gender": "f"
+    },
+    "MONTH": {
+      "form": "mois",
+      "gender": "m"
+    },
+    "YEAR": {
+      "form": "année",
+      "gender": "f"
+    },
     "DO": {
       "base": "faire",
       "1_singular": "fais",
@@ -683,52 +709,163 @@
       "2_plural": "êtes",
       "3_plural": "sont"
     },
-    "BLACK": {"form": "noir", "f": "noire"},
-    "WHITE": {"form": "blanc", "f": "blanche"},
-    "RED": ["rouge"],
-    "BLUE": {"form": "bleu", "f": "bleue"},
-    "GREEN": {"form": "vert", "f": "verte"},
-    "YELLOW": ["jaune"],
-    "PURPLE": ["violet"],
-    "ORANGE": ["orange"],
-    "FAST": ["rapide"],
-    "SLOW": ["lent"],
-    "LONG": {"form": "long", "f": "longue"},
-    "SHORT": {"form": "court", "f": "courte"},
-    "HEAVY": {"form": "lourd", "f": "lourde"},
-    "LIGHT": {"form": "léger", "f": "légère"},
-    "DARK": ["sombre"],
-    "YOUNG": ["jeune"],
-    "RIGHT": ["droit"],
-    "LEFT": ["gauche"],
-    "CORRECT": ["correct"],
-    "WRONG": ["faux"],
-    "COLD": {"form":"froid","f":"froide","plural":"froids"},
-    "NICE": ["gentil"],
-    "THIS": ["ce"],
-    "THAT": ["cela"],
-    "IT": ["il"],
-    "ITS": ["son"],
-    "MINE": ["le mien"],
-    "YOURS": ["le tien"],
-    "HERS": ["le sien"],
-    "OURS": ["le nôtre"],
-    "THEIRS": ["le leur"],
-    "HOUR": {"form": "heure", "gender": "f"},
-    "MINUTE": {"form": "minute", "gender": "f"},
-    "SECOND": {"form": "seconde", "gender": "f"},
-    "NOW": ["maintenant"],
-    "BEFORE": ["avant"],
-    "AFTER": ["après"],
-    "LATER": ["plus tard"],
-    "NEXT": ["prochain"],
-    "SPRING": {"form": "printemps", "gender": "m"},
-    "SUMMER": {"form": "été", "gender": "m"},
-    "AUTUMN": {"form": "automne", "gender": "m"},
-    "WINTER": {"form": "hiver", "gender": "m"},
-    "ALL": ["tout"],
-    "AROUND": ["autour"],
-    "THANKS": ["merci"],
-    "MAY": { "base": "peut" }
+    "BLACK": {
+      "form": "noir",
+      "f": "noire"
+    },
+    "WHITE": {
+      "form": "blanc",
+      "f": "blanche"
+    },
+    "RED": [
+      "rouge"
+    ],
+    "BLUE": {
+      "form": "bleu",
+      "f": "bleue"
+    },
+    "GREEN": {
+      "form": "vert",
+      "f": "verte"
+    },
+    "YELLOW": [
+      "jaune"
+    ],
+    "PURPLE": [
+      "violet"
+    ],
+    "ORANGE": [
+      "orange"
+    ],
+    "FAST": [
+      "rapide"
+    ],
+    "SLOW": [
+      "lent"
+    ],
+    "LONG": {
+      "form": "long",
+      "f": "longue"
+    },
+    "SHORT": {
+      "form": "court",
+      "f": "courte"
+    },
+    "HEAVY": {
+      "form": "lourd",
+      "f": "lourde"
+    },
+    "LIGHT": {
+      "form": "léger",
+      "f": "légère"
+    },
+    "DARK": [
+      "sombre"
+    ],
+    "YOUNG": [
+      "jeune"
+    ],
+    "RIGHT": [
+      "droit"
+    ],
+    "LEFT": [
+      "gauche"
+    ],
+    "CORRECT": [
+      "correct"
+    ],
+    "WRONG": [
+      "faux"
+    ],
+    "COLD": {
+      "form": "froid",
+      "f": "froide",
+      "plural": "froids"
+    },
+    "NICE": [
+      "gentil"
+    ],
+    "THIS": [
+      "ce"
+    ],
+    "THAT": [
+      "cela"
+    ],
+    "IT": [
+      "il"
+    ],
+    "ITS": [
+      "son"
+    ],
+    "MINE": [
+      "le mien"
+    ],
+    "YOURS": [
+      "le tien"
+    ],
+    "HERS": [
+      "le sien"
+    ],
+    "OURS": [
+      "le nôtre"
+    ],
+    "THEIRS": [
+      "le leur"
+    ],
+    "HOUR": {
+      "form": "heure",
+      "gender": "f"
+    },
+    "MINUTE": {
+      "form": "minute",
+      "gender": "f"
+    },
+    "SECOND": {
+      "form": "seconde",
+      "gender": "f"
+    },
+    "NOW": [
+      "maintenant"
+    ],
+    "BEFORE": [
+      "avant"
+    ],
+    "AFTER": [
+      "après"
+    ],
+    "LATER": [
+      "plus tard"
+    ],
+    "NEXT": [
+      "prochain"
+    ],
+    "SPRING": {
+      "form": "printemps",
+      "gender": "m"
+    },
+    "SUMMER": {
+      "form": "été",
+      "gender": "m"
+    },
+    "AUTUMN": {
+      "form": "automne",
+      "gender": "m"
+    },
+    "WINTER": {
+      "form": "hiver",
+      "gender": "m"
+    },
+    "ALL": [
+      "tout"
+    ],
+    "AROUND": [
+      "autour"
+    ],
+    "THANKS": [
+      "merci"
+    ],
+    "MAY": {
+      "base": "peut"
+    }
   }
 }
