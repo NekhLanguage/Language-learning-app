@@ -1,0 +1,285 @@
+#!/usr/bin/env node
+// validate-exercise-surfaces.mjs
+// The regression net for EXERCISE ASSEMBLY — the layer between the sentence
+// engine and the learner that no other validator walks. Emi run 3 proved
+// the gap: Italian passed every content validator while shipping four
+// high-severity exercise bugs, because the defects lived in blanks, option
+// tiles and grading, not in the rendered sentence string.
+//
+// Per language this validator asserts the app-facing contracts headlessly,
+// through the same engine exports the app uses:
+//
+//   A. BLANK_PARTITION — the L3 fill-in-the-blank contract: wherever a
+//      blank resolves (resolveNounBlank), frame + blanked surface must
+//      partition the sentence EXACTLY — reassembling the frame with the
+//      option surface reproduces the sentence, so the article lives on
+//      exactly one side («Loro vedono un [un aeroporto]» was Emi
+//      2026-08-26-02). An unresolvable blank is NOT a finding here — the
+//      app skips those combos — it feeds section D's concept-level
+//      inventory instead.
+//   B. OPTIONS_SHORT / SURFACE_COLLISION — the option-set contract: every
+//      drillable concept must yield 4 options whose TARGET-language
+//      surfaces are pairwise distinct. A collision makes a correct answer
+//      rejectable («suo» glosses both HIS and HER — Dan ruling 2,
+//      2026-08-27); a short pool silently excludes the concept from
+//      testing (canConceptBeTested returns false and the learner never
+//      sees it again).
+//   C. L7_NO_VARIANTS / L7_MODIFIER_MISMATCH — the free-translation
+//      grading contract: the accepted-answer set is non-empty and the
+//      target/support builds agree on modifier landing (the app bails at
+//      runtime on a mismatch; baselined entries inventory what a language
+//      loses, NEW entries are regressions).
+//   D. EXCLUDED — the invisible-exclusion inventory: a drillable concept
+//      for which NO plain template survives contracts A+B in this
+//      language. These concepts silently plateau — the learner is never
+//      tested past exposure, and nothing in the UI says so.
+//   E. CASE_FALLBACK — for case-marking languages (uk today): a
+//      preposition-governed noun/pronoun slot whose entry lacks the
+//      demanded case field. The engine falls back to the nominative with
+//      no warning — the «Я п'ю вода» failure mode, position by position.
+//      Uses the engine's own case map so the walk can never drift from
+//      render behaviour.
+//
+//   Plus one HARD check (never baselined): HUBNAME_MISSING — every lang
+//   file's hubNames block must name every shipped language. No other
+//   validator covers this; a gap falls back to English silently.
+//
+// Ratcheted via validation/surface-baseline.json: pre-existing findings
+// don't fail, NEW ones do. Refresh deliberately with --update-baseline.
+// The initial baseline IS the per-language improvement worklist.
+//
+// Run:  node validation/validate-exercise-surfaces.mjs [--update-baseline]
+
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { loadVocab, loadTemplates, loadLanguageCodes } from './load-vocab.mjs';
+import {
+  configureEngine, buildSentence, buildSentenceWithRules,
+  resolveNounBlank, buildSameTypeOptions, acceptedAnswerVariants,
+  orderedConceptsForTemplate, ukCaseMap, ukCaseForm, formOf,
+} from '../sentence_engine.mjs';
+
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(HERE, '..');
+const BASELINE_FILE = path.join(HERE, 'surface-baseline.json');
+const UPDATE = process.argv.includes('--update-baseline');
+
+const langCodes = loadLanguageCodes();
+const vocab = loadVocab(langCodes);
+const templates = loadTemplates();
+
+configureEngine({
+  vocab: () => vocab,
+  getReleased: () => Object.keys(vocab.concepts),
+  ensureProgress: () => ({ level: 99, completed: false }),
+  // High rng: no random modifier injection — contracts are asserted on the
+  // deterministic build, exactly like the sibling validators.
+  rng: () => 0.999,
+});
+
+const findings = [];
+const add = (key, detail) => findings.push({ key, detail });
+
+const concepts = vocab.concepts;
+// The concept types the app actually drills through L2-L7 exercise
+// surfaces. Other types (glue, connectors, politeness tags…) surface only
+// inside authored structures and have no option-set/blank contract.
+const DRILLABLE = new Set(['noun', 'verb', 'adjective', 'number']);
+const BLANKABLE = new Set(['noun', 'verb']);
+
+// Plain templates: the generic render path. Structure-typed templates are
+// authored-only or slot-built and are not offered for modifier/blank
+// drills (chooseTemplateForConcept filters them the same way).
+const plainTemplates = templates.filter((t) => !t.structure?.type && Array.isArray(t.concepts));
+
+// ── A. blank partition, per language × template × blankable concept ─────────
+// blankOk[lang] = Set of "tplId|cid" combos that produced a valid blank —
+// reused by section D so exclusion mirrors exactly what A measured.
+const blankOk = Object.fromEntries(langCodes.map((lc) => [lc, new Set()]));
+for (const lang of langCodes) {
+  for (const tpl of plainTemplates) {
+    const id = tpl.template_id || tpl._file + '?';
+    let sentence;
+    try {
+      sentence = buildSentence(lang, tpl, null, {});
+    } catch (e) {
+      add(`BLANK_THREW|${lang}|${id}`, String(e && e.message || e));
+      continue;
+    }
+    if (!sentence || !sentence.trim()) continue; // EMPTY is validate-injection's finding
+    for (const cid of tpl.concepts) {
+      if (!BLANKABLE.has(concepts[cid]?.type)) continue;
+      const blank = resolveNounBlank(sentence, tpl, lang, cid);
+      if (!blank) {
+        // Not a finding by itself: the app returns null and skips this
+        // template. The learner-facing question is whether ANY template
+        // works for the concept — section D reports that.
+        continue;
+      }
+      const reassembled = blank.blanked.replace('_____', blank.surface);
+      if (reassembled.toLowerCase() !== sentence.toLowerCase()) {
+        add(`BLANK_PARTITION|${lang}|${id}|${cid}`,
+          `frame "${blank.blanked}" + "${blank.surface}" != "${sentence}"`);
+        continue;
+      }
+      blankOk[lang].add(`${id}|${cid}`);
+    }
+  }
+}
+
+// ── B. option-set integrity, per language × drillable concept ───────────────
+const optionsOk = Object.fromEntries(langCodes.map((lc) => [lc, new Set()]));
+const drillableIds = Object.keys(concepts).filter((c) => DRILLABLE.has(concepts[c].type));
+for (const lang of langCodes) {
+  for (const cid of drillableIds) {
+    const opts = buildSameTypeOptions(cid, 4, lang);
+    if (!opts || opts.length < 4) {
+      add(`OPTIONS_SHORT|${lang}|${cid}`,
+        `only ${opts ? opts.length : 0} distinct-surface options`);
+      continue;
+    }
+    const target = formOf(lang, cid);
+    const collision = opts.find((o) => o !== cid && formOf(lang, o) === target);
+    if (collision) {
+      // The engine dedupes surfaces at build time, so a hit here is a
+      // regression in that dedupe, not a data problem.
+      add(`SURFACE_COLLISION|${lang}|${cid}|${collision}`,
+        `both render "${target}" in ${lang}`);
+      continue;
+    }
+    optionsOk[lang].add(cid);
+  }
+}
+
+// ── C. L7 grading contract, per language × plain template ───────────────────
+for (const lang of langCodes) {
+  if (lang === 'en') continue; // en is support-only in the L7 direction checked
+  for (const tpl of plainTemplates) {
+    const id = tpl.template_id || tpl._file + '?';
+    const sc = {};
+    for (const c of tpl.concepts) {
+      if (concepts[c]?.type === 'noun') { sc['adj_' + c] = null; sc['num_' + c] = null; }
+    }
+    let target, support;
+    try {
+      target = buildSentenceWithRules(lang, tpl, null, sc);
+      support = buildSentenceWithRules('en', tpl, null, sc);
+    } catch (e) {
+      add(`L7_THREW|${lang}|${id}`, String(e && e.message || e));
+      continue;
+    }
+    if (!target.sentence || !target.sentence.trim()) continue;
+    if (target.hadModifier !== support.hadModifier) {
+      add(`L7_MODIFIER_MISMATCH|${lang}|${id}`,
+        `target(${target.hadModifier}) vs en(${support.hadModifier})`);
+      continue;
+    }
+    const variants = acceptedAnswerVariants(lang, tpl, target.sentence, sc);
+    if (!variants.length) {
+      add(`L7_NO_VARIANTS|${lang}|${id}`, `no accepted answers for "${target.sentence}"`);
+    }
+  }
+}
+
+// ── D. invisible-exclusion inventory, per language × drillable concept ──────
+// A noun/verb that appears in plain templates but has NO template where
+// both the blank (A) and the option set (B) hold is silently untestable at
+// L3 in this language.
+const conceptTemplates = new Map();
+for (const tpl of plainTemplates) {
+  const id = tpl.template_id || tpl._file + '?';
+  for (const cid of tpl.concepts) {
+    if (!BLANKABLE.has(concepts[cid]?.type)) continue;
+    if (!conceptTemplates.has(cid)) conceptTemplates.set(cid, []);
+    conceptTemplates.get(cid).push(id);
+  }
+}
+for (const lang of langCodes) {
+  for (const [cid, tplIds] of conceptTemplates) {
+    if (!optionsOk[lang].has(cid)) continue; // already reported as OPTIONS_SHORT
+    if (!tplIds.some((id) => blankOk[lang].has(`${id}|${cid}`))) {
+      add(`EXCLUDED|${lang}|${cid}`,
+        `no plain template yields a valid L3 blank (${tplIds.length} candidate template(s))`);
+    }
+  }
+}
+
+// ── E. case-fallback inventory, case-marking languages ──────────────────────
+// Walk each plain template with the ENGINE'S OWN case map (so this can
+// never drift from render behaviour) and flag every position where a case
+// is demanded but the entry has no such field — the engine will silently
+// render the nominative there.
+for (const lang of langCodes) {
+  for (const tpl of plainTemplates) {
+    const id = tpl.template_id || tpl._file + '?';
+    const ordered = orderedConceptsForTemplate(tpl, lang);
+    if (!ordered || !ordered.length) continue;
+    const caseAt = ukCaseMap(lang, ordered);
+    ordered.forEach((cid, idx) => {
+      const caseName = caseAt[idx];
+      if (!caseName) return;
+      const type = concepts[cid]?.type;
+      if (type !== 'noun' && type !== 'pronoun') return;
+      if (!ukCaseForm(cid, caseName)) {
+        add(`CASE_FALLBACK|${lang}|${id}|${cid}|${caseName}`,
+          `${caseName} demanded but no ${caseName} field — nominative ships`);
+      }
+    });
+  }
+}
+
+// ── HARD check: hubNames completeness (never baselined) ─────────────────────
+const hubErrors = [];
+for (const lc of langCodes) {
+  let data;
+  try {
+    data = JSON.parse(fs.readFileSync(path.join(ROOT, 'lang', `${lc}.json`), 'utf8'));
+  } catch {
+    continue; // lang file completeness is validate-structure's job
+  }
+  const hub = data.hubNames || {};
+  for (const other of langCodes) {
+    if (!hub[other] || !String(hub[other]).trim()) {
+      hubErrors.push(`HUBNAME_MISSING|${lc}.json|${other}`);
+    }
+  }
+}
+if (hubErrors.length) {
+  console.error(`Exercise surfaces: ${hubErrors.length} hubNames gap(s) — hard fail (not baselined):`);
+  for (const e of hubErrors) console.error('  ' + e);
+  process.exit(1);
+}
+
+// ── Ratchet ─────────────────────────────────────────────────────────────────
+const byType = {};
+for (const f of findings) {
+  const t = f.key.split('|')[0];
+  byType[t] = (byType[t] || 0) + 1;
+}
+console.log(`Exercise-surface invariants: ${findings.length} finding(s)`,
+  Object.keys(byType).length ? byType : '');
+
+if (UPDATE) {
+  fs.writeFileSync(BASELINE_FILE,
+    JSON.stringify(findings.map((f) => f.key).sort(), null, 2) + '\n');
+  console.log(`Baseline updated: ${findings.length} entries -> ${BASELINE_FILE}`);
+  process.exit(0);
+}
+
+let baseline = [];
+try { baseline = JSON.parse(fs.readFileSync(BASELINE_FILE, 'utf8')); } catch { /* first run */ }
+const known = new Set(baseline);
+const fresh = findings.filter((f) => !known.has(f.key));
+const fixed = baseline.filter((k) => !findings.some((f) => f.key === k));
+
+console.log(`Baseline: ${baseline.length} known · new: ${fresh.length} · fixed (removable): ${fixed.length}`);
+if (fresh.length) {
+  console.error('\nNEW exercise-surface findings (fail):');
+  for (const f of fresh) console.error(`  ${f.key}\n    ${f.detail}`);
+  process.exit(1);
+}
+if (fixed.length) {
+  console.log('Fixed findings — prune with: npm run validate:surface:update');
+}
+console.log('No new exercise-surface findings. PASS.');

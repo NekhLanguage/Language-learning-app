@@ -919,8 +919,16 @@ if (orderType === "SOV") {
     const meta = vocab().concepts[targetConcept];
     if (!meta) return null;
 
+    // Mirror renderSegments' subject resolution: pronoun subject first,
+    // else the noun/time subject ("The hero IS brave", "Autumn IS old").
+    // Restricting this to pronouns made getVerbForm fall back to the base
+    // form ("be") for every noun-subject template, so the L3 blank never
+    // matched the rendered "is" and ~80 template×verb combos per language
+    // were silently untestable (surfaced by validate-exercise-surfaces).
     const subjectCid = (tpl.concepts || []).find(c =>
       vocab().concepts[c]?.type === "pronoun"
+    ) || (tpl.concepts || []).find(c =>
+      ["noun", "time"].includes(vocab().concepts[c]?.type)
     );
 
     if (meta.type === "verb") {
@@ -2462,6 +2470,8 @@ export {
   resolvePrompt,
   RELATIONAL_STRUCTURES,
   orderedConceptsForTemplate,
+  ukCaseMap,
+  ukCaseForm,
   sentenceTilesForTemplate,
   blankSentence,
   safeSurfaceForConcept,
