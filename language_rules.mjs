@@ -101,6 +101,36 @@
 //                            nouns flag `virile: true`, adjectives carry a
 //                            `vp` (virile plural) form («nowi» vs «nowe»).
 //
+// ── features: the grammar coverage matrix ────────────────────────────────
+// Each row also declares `features` — LINGUISTIC FACTS about the language
+// (what it NEEDS), as opposed to the flags above (what the engine DOES).
+// validate-grammar-coverage.mjs fails when a needed feature has no
+// implementing rule/data, and hard-fails when an implementing flag exists
+// with no declared feature (stale matrix). This is what turns "has a row"
+// into "has the RIGHT row": de/fr/es shipped broken with green CI because
+// the old contract only checked that a row existed (Emi 2026-08-27 sweep).
+//
+//   indefiniteArticle          noun phrases need an indefinite article
+//   marksCaseOnDirectObjects   direct objects change form (or their
+//                              determiner does)
+//   marksCaseAfterPrepositions prepositions govern a case
+//   predicateNounCase          predicate nouns take a non-nominative case
+//   declinesAttributiveAdjectives
+//                              attributive adjectives agree (gender/number
+//                              at minimum) — implemented by agreement DATA
+//                              (`f` fields on adjectives) or a declared
+//                              adjectiveDeclension strategy
+//   adjectivePosition          "pre" | "post" | "roleBased" — where
+//                              attributive adjectives go; "post"/"roleBased"
+//                              need postNominalAdjectives (+ role list)
+//   apocope                    some adjectives shorten pre-nominally
+//                              («buen libro», «buon libro»)
+//   articleCaseMarking         case is realized on the determiner (de/el)
+//   virilePlural               masculine-personal plural agreement
+//   numeralGovernment          numerals govern a noun case
+//   zeroPresentCopula          present-tense "to be" is dropped/suffixed
+//   definitenessAgreement      adjectives agree in definiteness (ar)
+//
 // Validator-membership flags (single source for lists that used to be
 // hardcoded in validation/*.js — memberships preserved exactly):
 //   inflectsNounPlural       countable nouns inflect for number
@@ -117,30 +147,55 @@
 
 export const LANGUAGE_RULES = {
   ar: {
+    features: {
+      adjectivePosition: "post", zeroPresentCopula: true,
+      declinesAttributiveAdjectives: true, definitenessAgreement: true,
+    },
     postNominalAdjectives: true, zeroPresentCopula: true,
     inflectsNounPlural: true, fullNounGender: true,
     nounGenderForCountables: true, verbPersonParadigm: true,
   },
   en: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "pre",
+    },
     indefiniteArticle: true,
     inflectsNounPlural: true, latinEncodingChecks: true,
   },
   fr: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "roleBased",
+      declinesAttributiveAdjectives: true,
+    },
     indefiniteArticle: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
   de: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "pre",
+      marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
+      articleCaseMarking: true, declinesAttributiveAdjectives: true,
+    },
     indefiniteArticle: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true, latinEncodingChecks: true,
   },
   el: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "pre",
+      marksCaseOnDirectObjects: true, articleCaseMarking: true,
+      declinesAttributiveAdjectives: true,
+    },
     indefiniteArticle: true,
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,
   },
   it: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "roleBased",
+      declinesAttributiveAdjectives: true, apocope: true,
+    },
     indefiniteArticle: true,
     postNominalAdjectives: true,
     possessiveDefiniteArticle: true,
@@ -149,14 +204,27 @@ export const LANGUAGE_RULES = {
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
-  ja: { spacelessTiles: true, wordOrder: "SOV" },
-  ko: { wordOrder: "SOV" },
-  zh: { spacelessTiles: true },
+  ja: {
+    features: { adjectivePosition: "pre" }, spacelessTiles: true, wordOrder: "SOV" },
+  ko: {
+    features: { adjectivePosition: "pre" }, wordOrder: "SOV" },
+  zh: {
+    features: { adjectivePosition: "pre" }, spacelessTiles: true },
   no: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "pre",
+      declinesAttributiveAdjectives: true,
+    },
     indefiniteArticle: true,
     inflectsNounPlural: true, latinEncodingChecks: true,
   },
   pl: {
+    features: {
+      adjectivePosition: "pre",
+      marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
+      predicateNounCase: true, declinesAttributiveAdjectives: true,
+      virilePlural: true, numeralGovernment: true,
+    },
     proDrop: true,
     questionParticle: "Czy",
     virilePlural: true,
@@ -180,23 +248,41 @@ export const LANGUAGE_RULES = {
     },
   },
   pt: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "roleBased",
+      declinesAttributiveAdjectives: true,
+    },
     indefiniteArticle: true, postNominalAdjectives: true, proDrop: true,
     secondPersonAsThird: true, statementOrderQuestion: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true, latinEncodingChecks: true,
   },
   es: {
+    features: {
+      indefiniteArticle: true, adjectivePosition: "roleBased",
+      declinesAttributiveAdjectives: true, apocope: true,
+    },
     indefiniteArticle: true, proDrop: true, statementOrderQuestion: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
-  th: { postNominalAdjectives: true, spacelessJoin: true, spacelessTiles: true },
+  th: {
+    features: { adjectivePosition: "post" }, postNominalAdjectives: true, spacelessJoin: true, spacelessTiles: true },
   tr: {
+    features: {
+      adjectivePosition: "pre", zeroPresentCopula: true,
+      marksCaseOnDirectObjects: true,
+    },
     zeroPresentCopula: true, wordOrder: "SOV",
     inflectsNounPlural: true, verbPersonParadigm: true,
     latinEncodingChecks: true,
   },
   uk: {
+    features: {
+      adjectivePosition: "pre", zeroPresentCopula: true,
+      marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
+      declinesAttributiveAdjectives: true,
+    },
     zeroPresentCopula: true,
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,

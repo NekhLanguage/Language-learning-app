@@ -75,6 +75,19 @@ case-field fallbacks in case-marking languages — ratcheted via
 `validation/surface-baseline.json` (`npm run validate:surface:update`). Its
 hubNames completeness check is a hard fail, never baselined.
 
+`validation/validate-grammar-coverage.mjs` is the **grammar coverage
+matrix**: every language's `language_rules.mjs` row declares `features` —
+linguistic facts about what the language NEEDS (case on objects, adjective
+declension, adjective position, apocope, …) — and the validator fails when
+a declared need has no implementing rule/data. Ratcheted via
+`validation/grammar-coverage-baseline.json` (`npm run
+validate:coverage:update`): the baseline is the owner-visible list of
+known-unimplemented grammar per language. Hard fails (never baselined): an
+implementing flag with no declared feature (stale matrix), and any gap in
+a launch-verified language (pl, uk). This is what turns "has a rules row"
+into "has the RIGHT row" — de/fr/es shipped broken with green CI because
+only row existence was checked.
+
 `validation/validate-render-divergence.mjs` compares every generated sentence
 against the human-authored `render` strings (the native-speaker ground truth)
 and ratchets the result via `validation/render-divergence-baseline.json`: any
@@ -93,9 +106,13 @@ for Ukrainian). Work through this list; don't skip to "the app boots":
    `surface.<code>`) for every core template in `sentence_templates.json`,
    written/reviewed by a native speaker. Pack files also need per-language
    `forms` — `npm run validate` enforces completeness.
-2. **Declare the language's grammar rules in `language_rules.mjs`** — this
-   is enforced: the unit suite fails if a shipped language has no rules
-   row. Audit the grammar features the language needs against the flags
+2. **Declare the language's grammar rules AND its `features` block in
+   `language_rules.mjs`** — both are enforced: the unit suite fails if a
+   shipped language has no rules row or no features block, and
+   `validate-grammar-coverage` fails when a declared feature (what the
+   language NEEDS) has no implementing rule. Write the features block
+   FIRST, from linguistic facts — it is the checklist the validator then
+   holds you to. Audit the grammar features the language needs against the flags
    that exist (indefinite article, adjective order, possessive articles,
    zero copula, pro-drop, spaceless script) and against the engine
    features they drive: articles (`nounPhrase`, `definiteNounPhrase`),
