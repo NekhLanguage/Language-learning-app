@@ -1002,7 +1002,7 @@
         "GUITAR": {"form":"gitara","gender":"f","plural":"gitary","genitive_plural":"gitar"},
         "DRUM": {"form":"bęben","gender":"m","plural":"bębny","genitive_plural":"bębnów"},
         "PIANO": {"form":"fortepian","gender":"m","plural":"fortepiany","genitive_plural":"fortepianów"},
-        "VIOLIN": {"form":"skrzypce","gender":"n","plural":"skrzypce","genitive_plural":"skrzypiec"},
+        "VIOLIN": {"form":"skrzypce","gender":"n","plural":"skrzypce","genitive_plural":"skrzypiec", "pluralOnly": true},
         "MICROPHONE": {"form":"mikrofon","gender":"m","plural":"mikrofony","genitive_plural":"mikrofonów"},
         "MELODY": {"form":"melodia","gender":"f","plural":"melodie","genitive_plural":"melodii"},
         "RHYTHM": {"form":"rytm","gender":"m","plural":"rytmy","genitive_plural":"rytmów"},

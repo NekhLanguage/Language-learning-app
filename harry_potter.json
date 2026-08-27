@@ -954,7 +954,7 @@
         "FRIEND": {"form":"przyjaciel","gender":"m","plural":"przyjaciele","genitive_plural":"przyjaciół","accusative":"przyjaciela","virile":true},
         "ENEMY": {"form":"wróg","gender":"m","plural":"wrogowie","genitive_plural":"wrogów","accusative":"wroga","virile":true},
         "CLOAK": {"form":"peleryna","gender":"f","plural":"peleryny","genitive_plural":"peleryn"},
-        "DOOR": {"form":"drzwi","gender":"n","plural":"drzwi","genitive_plural":"drzwi"},
+        "DOOR": {"form":"drzwi","gender":"n","plural":"drzwi","genitive_plural":"drzwi", "pluralOnly": true},
         "CAST": {"base":"rzucać","1_singular":"rzucam","2_singular":"rzucasz","3_singular":"rzuca","1_plural":"rzucamy","2_plural":"rzucacie","3_plural":"rzucają"},
         "PROTECT": {"base":"chronić","1_singular":"chronię","2_singular":"chronisz","3_singular":"chroni","1_plural":"chronimy","2_plural":"chronicie","3_plural":"chronią"},
         "CHARM": {"base":"oczarowywać","1_singular":"oczarowuję","2_singular":"oczarowujesz","3_singular":"oczarowuje","1_plural":"oczarowujemy","2_plural":"oczarowujecie","3_plural":"oczarowują"},

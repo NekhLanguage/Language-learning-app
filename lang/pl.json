@@ -199,7 +199,8 @@
     "FOOD": {
       "form": "jedzenie",
       "gender": "n",
-      "instrumental": "jedzeniem"
+      "instrumental": "jedzeniem",
+      "genitive": "jedzenia"
     },
     "HOUSE": {
       "form": "dom",
@@ -993,16 +994,16 @@
       "jego"
     ],
     "MINE": [
-      "mój"
+      "moje"
     ],
     "YOURS": [
-      "twój"
+      "twoje"
     ],
     "HERS": [
       "jej"
     ],
     "OURS": [
-      "nasz"
+      "nasze"
     ],
     "THEIRS": [
       "ich"

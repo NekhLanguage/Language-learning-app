@@ -882,7 +882,7 @@
       "forms": {
         "JACKET": {"form":"kurtka","gender":"f","plural":"kurtki","genitive_plural":"kurtek"},
         "DRESS": {"form":"sukienka","gender":"f","plural":"sukienki","genitive_plural":"sukienek"},
-        "SNEAKERS": {"form":"trampki","gender":"m","plural":"trampki","genitive_plural":"trampek"},
+        "SNEAKERS": {"form":"trampki","gender":"m","plural":"trampki","genitive_plural":"trampek", "pluralOnly": true},
         "FABRIC": {"form":"tkanina","gender":"f","plural":"tkaniny","genitive_plural":"tkanin"},
         "LEATHER": {"form":"skóra","gender":"f"},
         "SILK": {"form":"jedwab","gender":"m"},
@@ -897,7 +897,7 @@
         "TREND": {"form":"trend","gender":"m","plural":"trendy","genitive_plural":"trendów"},
         "NECKLACE": {"form":"naszyjnik","gender":"m","plural":"naszyjniki","genitive_plural":"naszyjników"},
         "BRACELET": {"form":"bransoletka","gender":"f","plural":"bransoletki","genitive_plural":"bransoletek"},
-        "SUNGLASSES": {"form":"okulary przeciwsłoneczne","gender":"m","plural":"okulary przeciwsłoneczne","genitive_plural":"okularów przeciwsłonecznych"},
+        "SUNGLASSES": {"form":"okulary przeciwsłoneczne","gender":"m","plural":"okulary przeciwsłoneczne","genitive_plural":"okularów przeciwsłonecznych", "pluralOnly": true},
         "MAKEUP": {"form":"makijaż","gender":"m"},
         "LIPSTICK": {"form":"szminka","gender":"f","plural":"szminki","genitive_plural":"szminek"},
         "HAIRSTYLE": {"form":"fryzura","gender":"f","plural":"fryzury","genitive_plural":"fryzur"},

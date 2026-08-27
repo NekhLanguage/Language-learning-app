@@ -91,6 +91,12 @@
 //                            plural («pięć książek») — the noun entry's
 //                            `genitive_plural` field; a number is skipped
 //                            (compat-gated) when the field is missing.
+//   statementOrderQuestion   yes/no questions keep declarative order and
+//                            ask with intonation («Esse é o seu
+//                            telefone?») instead of fronting the copula.
+//   questionParticle         yes/no questions keep declarative order
+//                            behind this fronted particle («Czy to jest
+//                            twój telefon?»).
 //   virilePlural             plural agreement splits virile/non-virile:
 //                            nouns flag `virile: true`, adjectives carry a
 //                            `vp` (virile plural) form («nowi» vs «nowe»).
@@ -152,6 +158,7 @@ export const LANGUAGE_RULES = {
   },
   pl: {
     proDrop: true,
+    questionParticle: "Czy",
     virilePlural: true,
     numeralGenitivePlural: true,
     inflectsNounPlural: true, fullNounGender: true,
@@ -174,12 +181,12 @@ export const LANGUAGE_RULES = {
   },
   pt: {
     indefiniteArticle: true, postNominalAdjectives: true, proDrop: true,
-    secondPersonAsThird: true,
+    secondPersonAsThird: true, statementOrderQuestion: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true, latinEncodingChecks: true,
   },
   es: {
-    indefiniteArticle: true, proDrop: true,
+    indefiniteArticle: true, proDrop: true, statementOrderQuestion: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },

@@ -1330,6 +1330,11 @@ function finalizeSentence(lang, sentence) {
   // builders.
   if (lang === "pl") {
     let s = sentence.replace(/([^,])\s+(ale|ponieważ)\s/g, "$1, $2 ");
+    // Negation attaches to the verb: OFF renders as «nie na», but the
+    // negator must precede the copula — «nie jest na tym», never
+    // «jest nie na tym».
+    s = s.replace(/\b(jestem|jesteś|jest|jesteśmy|jesteście|są)\s+nie\s+/g,
+      "nie $1 ");
     const C = "bcćdfghjklłmnńprsśtwzźż";
     s = s.replace(new RegExp(`(^|\\s)([zZ])\\s+(?=[sśzźż][${C}])`, "g"),
       (m, pre, z) => pre + (z === "Z" ? "Ze " : "ze "));
@@ -1696,10 +1701,15 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   }
   // Copula-dropping languages form the yes/no question without "to be"
   // («Це твій телефон?»); pt/es keep declarative order and mark the question
-  // with intonation («Esse é o seu telefone?»); the rest front the copula
-  // ("Is this your phone?", "Ist das dein Telefon?").
-  const words = (lang === "pt" || lang === "es")
-    ? [subject, be, complement]
+  // with intonation («Esse é o seu telefone?»); question strategy is
+  // declared per language (language_rules.mjs): statementOrderQuestion
+  // keeps declarative order and asks with intonation; questionParticle
+  // keeps declarative order behind a fronted particle («Czy to jest twój
+  // telefon?»); the default fronts the copula ("Is this your phone?",
+  // "Ist das dein Telefon?").
+  const particle = langRuleValue(lang, "questionParticle");
+  const words = (particle || langRule(lang, "statementOrderQuestion"))
+    ? [particle || "", subject, be, complement]
     : [be, subject, complement];
   return capitalizeFirst(words.filter(Boolean).join(" ") + "?");
 }

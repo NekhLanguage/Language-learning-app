@@ -1026,7 +1026,7 @@
         "HALFTIME": {"form":"przerwa","gender":"f","plural":"przerwy","genitive_plural":"przerw"},
         "SQUAD": {"form":"kadra","gender":"f","plural":"kadry","genitive_plural":"kadr"},
         "FORMATION": {"form":"formacja","gender":"f","plural":"formacje","genitive_plural":"formacji"},
-        "LEAGUE": {"form":"liga","gender":"f","plural":"ligi","genitive_plural":"lig"},
+        "LEAGUE": {"form":"liga","gender":"f","plural":"ligi","genitive_plural":"lig", "genitive": "ligi"},
         "SUBSTITUTE": {"form":"rezerwowy","gender":"m","plural":"rezerwowi","genitive_plural":"rezerwowych","accusative":"rezerwowego","virile":true},
         "ASSIST": {"form":"asysta","gender":"f","plural":"asysty","genitive_plural":"asyst"},
         "MATCH": {"form":"mecz","gender":"m","plural":"mecze","genitive_plural":"meczów"},
