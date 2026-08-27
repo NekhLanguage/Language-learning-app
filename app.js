@@ -915,7 +915,6 @@ email = email?.toLowerCase().trim();
 
   if (!res.ok) { console.error("loadUser failed:", res.status); return; }
   const data = await res.json();
-  console.log("LOADED FROM SERVER", data.user);
 
   if (data.user) {
     USER = migrateUserState(data.user);
@@ -3991,6 +3990,10 @@ const alphabetOverlay = document.getElementById("alphabet-overlay");
 const alphabetClose   = document.getElementById("alphabet-close");
 
 alphabetBtn.addEventListener("click", () => {
+  // No script guide for this language — never open an empty overlay
+  // (belt-and-braces with the .hidden fix: the button should not even be
+  // visible for Latin-script languages).
+  if (!LANG_FILE_CACHE[languageState.target]?.alphabet) return;
   renderAlphabetOverlay(languageState.target);
   alphabetOverlay.classList.remove("hidden");
 });
@@ -4982,8 +4985,16 @@ if (hubQuitBtn) {
 if (resetBtn) {
   resetBtn.onclick = async () => {
 
-    const confirmed = confirm("Reset ALL progress? This cannot be undone.");
+    // Destructive and irreversible across every language — one mis-tap
+    // must not be enough (Emi 2026-08-26-12). Two explicit confirms.
+    const confirmed = confirm(
+      "Reset ALL progress in ALL languages? This cannot be undone."
+    );
     if (!confirmed) return;
+    const doubleChecked = confirm(
+      "Last check: every language's progress will be permanently erased. Reset everything?"
+    );
+    if (!doubleChecked) return;
 
     const email = localStorage.getItem("zth_email")?.toLowerCase();
 
@@ -5013,9 +5024,13 @@ if (logoutBtn) {
     const confirmed = confirm("Log out and reset local data?");
     if (!confirmed) return;
 
-    // 🔥 Clear auth + user
+    // 🔥 Clear auth + user — INCLUDING the boot-time backup. "Reset local
+    // data" must mean all of it: the backup holds the full profile and
+    // learner facts (~55 KB) and leaving it behind on a shared machine
+    // breaks the promise the confirm just made (Emi 2026-08-26-11).
     localStorage.removeItem("zth_email");
     localStorage.removeItem("zth_user");
+    localStorage.removeItem("zth_user_backup");
 
     // Optional: clear everything (safer fail-safe)
     // localStorage.clear();
