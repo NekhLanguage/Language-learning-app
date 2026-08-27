@@ -402,6 +402,80 @@ function adjCaseStrategy(lang) {
   return ADJ_CASE_STRATEGIES[langRuleValue(lang, "caseMarking")?.femAccusativeStrategy] || null;
 }
 
+// --- Determiner-side case marking (German) ----------------------------------
+// German realizes case on the DETERMINER (ein → einen/einem, der → den/dem)
+// rather than as a noun suffix. Activated by caseMarking.caseOn:
+// "determiner" — the noun-side case machinery (accusativeNoun / caseFormFor
+// noun fields) stays unused for such languages, and adjective endings come
+// from the adjectiveDeclension strategy below. Scope: nominative,
+// accusative, dative — the corpus never demands the genitive.
+const GERMAN_DEF_ARTICLES = {
+  nominative: { m: "der", f: "die", n: "das", pl: "die" },
+  accusative: { m: "den", f: "die", n: "das", pl: "die" },
+  dative:     { m: "dem", f: "der", n: "dem", pl: "den" },
+};
+const GERMAN_EIN_ENDINGS = {
+  nominative: { m: "", f: "e", n: "" },
+  accusative: { m: "en", f: "e", n: "" },
+  dative:     { m: "em", f: "er", n: "em" },
+};
+// Attributive adjective endings by determiner class × case × gender —
+// weak after the definite article («das neue Buch»), mixed after ein-words
+// and possessives («ein neues Buch», «meine neue Pfanne»), strong with no
+// determiner («neues Wasser»). de adjective entries stay stem-only
+// ({form, plural}); the ending is appended here, never authored.
+const GERMAN_ADJ_ENDINGS = {
+  weak: {
+    nominative: { m: "e", f: "e", n: "e" },
+    accusative: { m: "en", f: "e", n: "e" },
+    dative: { m: "en", f: "en", n: "en" },
+  },
+  mixed: {
+    nominative: { m: "er", f: "e", n: "es" },
+    accusative: { m: "en", f: "e", n: "es" },
+    dative: { m: "en", f: "en", n: "en" },
+  },
+  strong: {
+    nominative: { m: "er", f: "e", n: "es" },
+    accusative: { m: "en", f: "e", n: "es" },
+    dative: { m: "em", f: "er", n: "em" },
+  },
+};
+
+function determinerCaseMarking(lang) {
+  return langRuleValue(lang, "caseMarking")?.caseOn === "determiner";
+}
+
+function germanEinArticle(gender, caseName) {
+  const g = gender === "f" ? "f" : gender === "n" ? "n" : "m";
+  return "ein" + (GERMAN_EIN_ENDINGS[caseName || "nominative"]?.[g] ?? "");
+}
+
+function germanDefArticle(gender, caseName, plural) {
+  const row = GERMAN_DEF_ARTICLES[caseName || "nominative"] || GERMAN_DEF_ARTICLES.nominative;
+  if (plural) return row.pl;
+  const g = gender === "f" ? "f" : gender === "n" ? "n" : "m";
+  return row[g];
+}
+
+// Append the attributive ending to a German adjective stem, choosing the
+// declension class from the determiner that precedes the phrase. Fires
+// only for languages declaring adjectiveDeclension: "german"; identity
+// everywhere else. Plural attributive forms come from the entry's own
+// `plural` field, so plural slots skip the appender.
+function applyAdjectiveDeclension(lang, adjWord, article, gender, caseName) {
+  if (langRuleValue(lang, "adjectiveDeclension") !== "german" || !adjWord) {
+    return adjWord;
+  }
+  const art = String(article || "").trim().toLowerCase();
+  const detClass = !art ? "strong"
+    : /^(der|die|das|dem|den)$/.test(art) ? "weak"
+    : "mixed"; // ein-words including possessives (mein/dein/sein/ihr/unser)
+  const g = gender === "f" ? "f" : gender === "n" ? "n" : "m";
+  const ending = GERMAN_ADJ_ENDINGS[detClass][caseName || "nominative"]?.[g] ?? "";
+  return adjWord + ending;
+}
+
 function ukObjectCaseApplies(lang) {
   return langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative";
 }
@@ -657,7 +731,7 @@ function effectiveStructureType(tpl) {
 // languages keep the definite article («O inverno é frio»).
 const EN_BARE_SUBJECTS = new Set(["WINTER", "SUMMER", "SPRING", "AUTUMN"]);
 
-function definiteNounPhrase(lang, cid) {
+function definiteNounPhrase(lang, cid, opts = {}) {
   const entry = vocab().languages?.[lang]?.forms?.[cid] || {};
   const base = entry.form || formOf(lang, cid);
   const g = entry.gender;
@@ -688,7 +762,8 @@ function definiteNounPhrase(lang, cid) {
   if (lang === "de") {
     if (!g && !plural) return base;
     noteRule("definite_article");
-    return (plural ? "die " : (g === "f" ? "die " : g === "n" ? "das " : "der ")) + base;
+    // Case rides the determiner: «auf dem Tisch», «hinter dem Telefon».
+    return germanDefArticle(g, opts.caseName, plural) + " " + base;
   }
   if (lang === "el") {
     if (!g && !plural) return base;
@@ -819,8 +894,14 @@ function nounPhrase(lang, cid, opts = {}) {
   if (lang === "de") {
     if (!entry.gender) return base; // mass nouns / uncountable — no article
     noteRule("indefinite_article");
-    if (entry.gender === "f") return "eine " + base;
-    return "ein " + base; // m and n both use "ein"
+    // Case rides the determiner (caseMarking.caseOn: "determiner"):
+    // «einen Job» as a direct object, «einem Tisch» after a dative
+    // preposition, plain «ein Buch»/«eine Pfanne» in the nominative.
+    let caseName = opts.caseName || null;
+    if (!caseName && opts.directObject && determinerCaseMarking(lang)) {
+      caseName = langRuleValue(lang, "caseMarking").directObjectCase;
+    }
+    return germanEinArticle(entry.gender, caseName) + " " + base;
   }
 
   if (lang === "el") {
@@ -1193,6 +1274,11 @@ if (orderType === "SOV") {
       }
     }
     if (slot?.caseName) {
+      // Determiner-marking languages (de) leave the NOUN unchanged — the
+      // declined determiner lives in the frame, so tiles stay bare.
+      if (determinerCaseMarking(targetLang)) {
+        return formOf(targetLang, cid);
+      }
       if (slot.position === "directObject" && slot.caseName === "accusative") {
         // Explicit field wins, then the declared strategy, then the
         // nominative — accusative/nominative syncretism IS the surface
@@ -1518,6 +1604,19 @@ function finalizeSentence(lang, sentence) {
     s = s.replace(new RegExp(`^В\\s+(?=[${C}])`), "У ");
     return s;
   }
+  // German preposition + dative-article contractions, applied to the
+  // finished string (mirrors the Italian pass): «zu dem Tisch» → «zum
+  // Tisch», «in dem Haus» → «im Haus». Only the standard, obligatory-in-
+  // neutral-register set.
+  if (lang === "de") {
+    return sentence
+      .replace(/\bzu dem\b/g, "zum")
+      .replace(/\bzu der\b/g, "zur")
+      .replace(/\bin dem\b/g, "im")
+      .replace(/\ban dem\b/g, "am")
+      .replace(/\bvon dem\b/g, "vom")
+      .replace(/\bbei dem\b/g, "beim");
+  }
   // Polish sets off its conjunctions with a comma («śniadanie, ale nie
   // obiad», «..., ponieważ on jest w domu») — and lengthens z/w before
   // clusters the short form can't precede: «ze swoją mamą», «we wtorek».
@@ -1644,7 +1743,14 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
       noun = declined;
     }
   }
-  const possessive = genderedFormOf(lang, possessiveCid, nounCid);
+  let possessive = genderedFormOf(lang, possessiveCid, nounCid);
+  // The possessive declines with the governed case where its entry
+  // carries the field («mit seiner Mutter» — f_dative): data-driven, so
+  // languages without possessive case fields are untouched.
+  if (caseName) {
+    const declinedPoss = possessiveCaseForm(lang, possessiveCid, nounCid, caseName);
+    if (declinedPoss) possessive = declinedPoss;
+  }
   // Thai postposes the possessor: โทรศัพท์ของคุณ ("phone of-you").
   if (lang === "th") {
     return `${noun}${possessive}`;
@@ -1862,6 +1968,7 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
     return joinWords(lang, [withArticle, adjective]);
   }
   // Insert adjective between article and noun
+  const nounGender = vocab().languages?.[lang]?.forms?.[nounCid]?.gender;
   if (withArticle !== bare) {
     let article = withArticle.substring(0, withArticle.length - bare.length).trimEnd();
     // For English, the article must agree with the adjective (now the next word),
@@ -1869,9 +1976,11 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
     if (lang === "en" && /^an?$/i.test(article)) {
       article = englishIndefiniteArticle(adjective);
     }
-    return `${article} ${adjective} ${bare}`;
+    const declined = applyAdjectiveDeclension(
+      lang, adjective, article, nounGender, opts.caseName);
+    return `${article} ${declined} ${bare}`;
   }
-  return `${adjective} ${bare}`;
+  return `${applyAdjectiveDeclension(lang, adjective, null, nounGender, opts.caseName)} ${bare}`;
 }
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
@@ -2178,7 +2287,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const subjectIsPersonal = !!vocab().concepts[subjectCid]?.person;
   if (DEFINITE_SUBJECT_STRUCTURES.has(effectiveStructureType(tpl)) &&
       (afterPosition || (cid === subjectCid && !subjectIsPersonal))) {
-    return definiteNounPhrase(lang, cid);
+    // The governed case reaches the determiner in determiner-marking
+    // languages («auf dem Tisch»); noun-suffix languages already returned
+    // above via governedForm.
+    return definiteNounPhrase(lang, cid, { caseName: caseAt[idx] });
   }
 
   // A noun singled out by a limiting quantifier is definite: "I read only
@@ -2294,6 +2406,9 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         plural: useCopularPlural,
         directObject: isObject,
         feminineReferent,
+        // Preposition-governed case for determiner-marking languages
+        // («zu einem Tisch») — noun-suffix languages consumed it above.
+        caseName: caseAt[idx] || null,
       });
   // When the noun was rendered as plural via copular agreement, the bare
   // form used by the modifier branches below also needs to be plural so
@@ -2565,9 +2680,24 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const adjectiveIsPossessive =
       vocab().concepts[adjectiveCid]?.semantic_role === "possessive";
     // Non-English languages typically inflect the adjective for number too.
-    const adjForm = (useCopularPlural && lang !== "en" && !adjectiveIsPossessive)
+    let adjForm = (useCopularPlural && lang !== "en" && !adjectiveIsPossessive)
       ? genderedFormOf(lang, adjectiveCid, cid, true)
       : adjectiveWord;
+    // German attributive endings key on the determiner class and the
+    // slot's case («ein neues Buch», «einen neuen Job», «neues Wasser»).
+    // Applied BEFORE the blank-surface capture below so L3 blanks match
+    // the adjective actually rendered; identity for every other language.
+    if (!adjectiveIsPossessive && !useCopularPlural && adjForm &&
+        langRuleValue(lang, "adjectiveDeclension")) {
+      const articleGuess = phrase !== bare
+        ? phrase.substring(0, phrase.length - bare.length).trimEnd()
+        : null;
+      adjForm = applyAdjectiveDeclension(lang, adjForm, articleGuess,
+        headEntry?.gender,
+        caseAt[idx] || (isObject && determinerCaseMarking(lang)
+          ? langRuleValue(lang, "caseMarking").directObjectCase
+          : null));
+    }
     // Record the exact surface rendered for a forced modifier so the L3
     // "fill in the missing word" blank can match the inflected form actually
     // shown (e.g. uk «темна»), not the base form returned by formOf. Keyed by
@@ -2612,7 +2742,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         ? article + adjForm + " " + bare
         : article + " " + adjForm + " " + bare;
     } else {
-      // No article: "big water"
+      // No article: "big water" (German strong declension already applied
+      // to adjForm above — «neues Wasser»)
       phrase = adjForm + " " + bare;
     }
   }
@@ -2769,6 +2900,25 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         const possPredCase = predicateNounCaseFor(lang, ordered, idx + 1, subjectCid, isCopularTemplate);
         if (possPredCase && caseFormFor(lang, nextCid, possPredCase)) {
           const declinedPoss = possessiveCaseForm(lang, cid, nextCid, possPredCase);
+          if (declinedPoss) return declinedPoss;
+        }
+        // Mirror for preposition-governed possessed nouns («mit seiner
+        // Mutter») — the possessive declines with the case the preposition
+        // assigns. Data-driven via the same <case>/f_<case> fields; a
+        // language whose possessives carry no case fields is untouched.
+        const possGoverned = caseAt[idx + 1];
+        if (possGoverned) {
+          const declinedPoss = possessiveCaseForm(lang, cid, nextCid, possGoverned);
+          if (declinedPoss) return declinedPoss;
+        }
+        // Determiner-marking languages decline the possessive of a direct
+        // object too («Ich sehe seinen Bruder» — masc accusative field;
+        // feminine falls through to plain gender agreement, whose form IS
+        // the accusative). uk/pl keep their strategy-shift path below.
+        if (!possGoverned && determinerCaseMarking(lang) &&
+            isDirectObjectPosition(ordered, idx + 1)) {
+          const doCase = langRuleValue(lang, "caseMarking").directObjectCase;
+          const declinedPoss = possessiveCaseForm(lang, cid, nextCid, doCase);
           if (declinedPoss) return declinedPoss;
         }
         if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&

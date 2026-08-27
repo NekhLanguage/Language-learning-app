@@ -125,24 +125,54 @@
       "form": "schwierig",
       "plural": "schwierige"
     },
-    "MY": [
-      "mein"
-    ],
-    "YOUR": [
-      "dein"
-    ],
-    "HIS": [
-      "sein"
-    ],
-    "HER": [
-      "ihr"
-    ],
-    "OUR": [
-      "unser"
-    ],
-    "THEIR": [
-      "ihre"
-    ],
+    "MY": {
+      "form": "mein",
+      "f": "meine",
+      "plural": "meine",
+      "accusative": "meinen",
+      "dative": "meinem",
+      "f_dative": "meiner"
+    },
+    "YOUR": {
+      "form": "dein",
+      "f": "deine",
+      "plural": "deine",
+      "accusative": "deinen",
+      "dative": "deinem",
+      "f_dative": "deiner"
+    },
+    "HIS": {
+      "form": "sein",
+      "f": "seine",
+      "plural": "seine",
+      "accusative": "seinen",
+      "dative": "seinem",
+      "f_dative": "seiner"
+    },
+    "HER": {
+      "form": "ihr",
+      "f": "ihre",
+      "plural": "ihre",
+      "accusative": "ihren",
+      "dative": "ihrem",
+      "f_dative": "ihrer"
+    },
+    "OUR": {
+      "form": "unser",
+      "f": "unsere",
+      "plural": "unsere",
+      "accusative": "unseren",
+      "dative": "unserem",
+      "f_dative": "unserer"
+    },
+    "THEIR": {
+      "form": "ihr",
+      "f": "ihre",
+      "plural": "ihre",
+      "accusative": "ihren",
+      "dative": "ihrem",
+      "f_dative": "ihrer"
+    },
     "AND": [
       "und"
     ],
@@ -755,12 +785,16 @@
     "NICE": [
       "nett"
     ],
-    "THIS": [
-      "das"
-    ],
-    "THAT": [
-      "das"
-    ],
+    "THIS": {
+      "form": "das",
+      "accusative": "das",
+      "dative": "diesem"
+    },
+    "THAT": {
+      "form": "das",
+      "accusative": "das",
+      "dative": "jenem"
+    },
     "IT": [
       "es"
     ],

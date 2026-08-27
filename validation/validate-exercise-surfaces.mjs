@@ -61,7 +61,7 @@ import {
   optionSurfaceFor, predicateNounCaseFor, isPluralPronoun,
   adjectiveSuitsNoun, isModifierCompatible,
 } from '../sentence_engine.mjs';
-import { langsWith } from '../language_rules.mjs';
+import { langsWith, LANGUAGE_RULES } from '../language_rules.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..');
@@ -291,11 +291,19 @@ for (const lang of langCodes) {
     const ordered = orderedConceptsForTemplate(tpl, lang);
     if (!ordered || !ordered.length) continue;
     const caseAt = caseMap(lang, ordered);
+    // Determiner-marking languages (caseOn: "determiner") realize case on
+    // the article, not the noun — noun entries carry no case fields by
+    // design, so only PRONOUNS (which do decline: «auf diesem») are
+    // checked there.
+    const nounsDecline =
+      langsWith('caseMarking').has(lang) &&
+      LANGUAGE_RULES[lang].caseMarking.caseOn !== 'determiner';
     ordered.forEach((cid, idx) => {
       const caseName = caseAt[idx];
       if (!caseName) return;
       const type = concepts[cid]?.type;
       if (type !== 'noun' && type !== 'pronoun') return;
+      if (type === 'noun' && !nounsDecline) return;
       if (!caseFormFor(lang, cid, caseName)) {
         add(`CASE_FALLBACK|${lang}|${id}|${cid}|${caseName}`,
           `${caseName} demanded but no ${caseName} field — nominative ships`);
