@@ -167,6 +167,14 @@ html[lang="ja"] .subtitle{
   font-family: var(--font-ui);
 }
 
+/* One-line hub notice when the server copy of progress can't be loaded. */
+.sync-status{
+  font-size: 0.8rem;
+  opacity: 0.75;
+  margin-top: -1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 /* Button grid */
 .button-grid{
   display: grid;

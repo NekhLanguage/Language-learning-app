@@ -14,6 +14,8 @@
     "continue": "متابعة",
     "correct": "صحيح.",
     "incorrect": "خطأ.",
+    "syncFailedLocalCopy": "تعذّر الاتصال بالخادم — يتم عرض التقدم المحفوظ على هذا الجهاز.",
+    "l7Placeholder": "اكتب ترجمتك",
     "level": "المستوى",
     "blueprint": "مخطط اللغة لنخ",
     "skool": "مجتمع سكول",

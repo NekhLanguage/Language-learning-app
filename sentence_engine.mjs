@@ -256,8 +256,18 @@ function pluralize(word) {
   }
   if (/[^aeiou]y$/i.test(word)) return word.slice(0, -1) + "ies";
   if (/(s|sh|ch|x|z)$/i.test(word)) return word + "es";
+  // -f/-fe → -ves (knife→knives, leaf→leaves, shelf→shelves) — but not the
+  // regular class (roofs, chiefs, beliefs, chefs, safes, cafes) and not
+  // double-f words (cliffs, staffs).
+  if (/[^f](f|fe)$/i.test(word) && !F_PLURAL_REGULARS.has(lower)) {
+    return word.replace(/fe?$/i, "ves");
+  }
   return word + "s";
 }
+
+const F_PLURAL_REGULARS = new Set([
+  "roof", "chief", "belief", "chef", "safe", "cafe", "café",
+]);
 
 // Returns true when subject and predicate noun would clash in semantic
 // gender — e.g. "He is a witch" (HE: m, WITCH: f). Only meaningful in

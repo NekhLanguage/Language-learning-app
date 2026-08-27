@@ -14,6 +14,8 @@
     "continue": "继续",
     "correct": "正确。",
     "incorrect": "错误。",
+    "syncFailedLocalCopy": "无法连接服务器——正在显示本设备上保存的进度。",
+    "l7Placeholder": "输入你的翻译",
     "level": "等级",
     "blueprint": "Nekh 的语言计划",
     "skool": "Skool 社区",

@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
-  <link rel="modulepreload" href="app.js?v=1.2.15" />
+  <link rel="modulepreload" href="app.js?v=1.2.16" />
   <link rel="modulepreload" href="languages.js?v=0.9.99.14" />
   <link rel="modulepreload" href="audioengine.js" />
   <link rel="stylesheet" href="style.css" />
@@ -78,6 +78,7 @@
     <section id="language-screen" class="screen" aria-label="Language hub">
   <h2 class="title small">LANGUAGES</h2>
   <p class="subtitle">Choose a language to study</p>
+  <p id="sync-status" class="subtitle sync-status hidden" role="status"></p>
 
   <input
     id="language-search"
@@ -195,6 +196,6 @@
 
   <!-- User + run persistence (non-module) -->
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=1.2.15"></script>
+<script type="module" src="app.js?v=1.2.16"></script>
 </body>
 </html>
