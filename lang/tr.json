@@ -74,7 +74,9 @@
     "milestoneReasonCulture": "{detail}, in its own voice.",
     "milestoneReasonFun": "And you're just getting started."
   },
-  "hubNames": { "th": "Tayca", "it": "İtalyanca",
+  "hubNames": {
+    "th": "Tayca",
+    "it": "İtalyanca",
     "en": "İngilizce",
     "pt": "Portekizce",
     "ja": "Japonca",
@@ -87,7 +89,8 @@
     "tr": "Türkçe",
     "es": "İspanyolca",
     "fr": "Fransızca",
-    "zh": "Çince"
+    "zh": "Çince",
+    "pl": "Lehçe"
   },
   "forms": {
     "BIG": [
@@ -352,7 +355,9 @@
         "3p": "ayakkabıları"
       }
     },
-    "TABLE": { "form": "masa" },
+    "TABLE": {
+      "form": "masa"
+    },
     "PHONE": {
       "form": "telefon"
     },
@@ -661,53 +666,148 @@
       "2_plural": "olursunuz",
       "3_plural": "olurlar"
     },
-    "BLACK": ["siyah"],
-    "WHITE": ["beyaz"],
-    "RED": ["kırmızı"],
-    "BLUE": ["mavi"],
-    "GREEN": ["yeşil"],
-    "YELLOW": ["sarı"],
-    "PURPLE": ["mor"],
-    "ORANGE": ["turuncu"],
-    "FAST": ["hızlı"],
-    "SLOW": ["yavaş"],
-    "LONG": ["uzun"],
-    "SHORT": ["kısa"],
-    "HEAVY": ["ağır"],
-    "LIGHT": ["hafif"],
-    "DARK": ["karanlık"],
-    "YOUNG": ["genç"],
-    "RIGHT": ["sağ"],
-    "LEFT": ["sol"],
-    "CORRECT": ["doğru"],
-    "WRONG": ["yanlış"],
-    "COLD": ["soğuk"],
-    "NICE": ["güzel"],
-    "THIS": ["bu"],
-    "THAT": ["şu"],
-    "IT": {"form": "o", "genitive": "Onun"},
-    "ITS": ["onun"],
-    "MINE": ["benim"],
-    "YOURS": ["senin"],
-    "HERS": ["onun"],
-    "OURS": ["bizim"],
-    "THEIRS": ["onların"],
-    "HOUR": ["saat"],
-    "MINUTE": ["dakika"],
-    "SECOND": ["saniye"],
-    "NOW": ["şimdi"],
-    "BEFORE": ["önce"],
-    "AFTER": ["sonra"],
-    "LATER": ["daha sonra"],
-    "NEXT": ["sonraki"],
-    "SPRING": ["ilkbahar"],
-    "SUMMER": ["yaz"],
-    "AUTUMN": ["sonbahar"],
-    "WINTER": ["kış"],
-    "ALL": ["tüm"],
-    "AROUND": ["etrafında"],
-    "THANKS": ["teşekkürler"],
-    "MAY": { "base": "olabilir" }
+    "BLACK": [
+      "siyah"
+    ],
+    "WHITE": [
+      "beyaz"
+    ],
+    "RED": [
+      "kırmızı"
+    ],
+    "BLUE": [
+      "mavi"
+    ],
+    "GREEN": [
+      "yeşil"
+    ],
+    "YELLOW": [
+      "sarı"
+    ],
+    "PURPLE": [
+      "mor"
+    ],
+    "ORANGE": [
+      "turuncu"
+    ],
+    "FAST": [
+      "hızlı"
+    ],
+    "SLOW": [
+      "yavaş"
+    ],
+    "LONG": [
+      "uzun"
+    ],
+    "SHORT": [
+      "kısa"
+    ],
+    "HEAVY": [
+      "ağır"
+    ],
+    "LIGHT": [
+      "hafif"
+    ],
+    "DARK": [
+      "karanlık"
+    ],
+    "YOUNG": [
+      "genç"
+    ],
+    "RIGHT": [
+      "sağ"
+    ],
+    "LEFT": [
+      "sol"
+    ],
+    "CORRECT": [
+      "doğru"
+    ],
+    "WRONG": [
+      "yanlış"
+    ],
+    "COLD": [
+      "soğuk"
+    ],
+    "NICE": [
+      "güzel"
+    ],
+    "THIS": [
+      "bu"
+    ],
+    "THAT": [
+      "şu"
+    ],
+    "IT": {
+      "form": "o",
+      "genitive": "Onun"
+    },
+    "ITS": [
+      "onun"
+    ],
+    "MINE": [
+      "benim"
+    ],
+    "YOURS": [
+      "senin"
+    ],
+    "HERS": [
+      "onun"
+    ],
+    "OURS": [
+      "bizim"
+    ],
+    "THEIRS": [
+      "onların"
+    ],
+    "HOUR": [
+      "saat"
+    ],
+    "MINUTE": [
+      "dakika"
+    ],
+    "SECOND": [
+      "saniye"
+    ],
+    "NOW": [
+      "şimdi"
+    ],
+    "BEFORE": [
+      "önce"
+    ],
+    "AFTER": [
+      "sonra"
+    ],
+    "LATER": [
+      "daha sonra"
+    ],
+    "NEXT": [
+      "sonraki"
+    ],
+    "SPRING": [
+      "ilkbahar"
+    ],
+    "SUMMER": [
+      "yaz"
+    ],
+    "AUTUMN": [
+      "sonbahar"
+    ],
+    "WINTER": [
+      "kış"
+    ],
+    "ALL": [
+      "tüm"
+    ],
+    "AROUND": [
+      "etrafında"
+    ],
+    "THANKS": [
+      "teşekkürler"
+    ],
+    "MAY": {
+      "base": "olabilir"
+    }
   },
   "alphabet": {
     "sections": [

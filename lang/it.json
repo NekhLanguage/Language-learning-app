@@ -93,7 +93,8 @@
     "es": "Spagnolo",
     "fr": "Francese",
     "zh": "Cinese",
-    "it": "Italiano"
+    "it": "Italiano",
+    "pl": "Polacco"
   },
   "forms": {
     "WATER": {
@@ -267,7 +268,11 @@
       "gender": "f",
       "pluralOnly": true
     },
-    "TABLE": { "form": "tavolo", "gender": "m", "plural": "tavoli" },
+    "TABLE": {
+      "form": "tavolo",
+      "gender": "m",
+      "plural": "tavoli"
+    },
     "PHONE": {
       "form": "telefono",
       "gender": "m",

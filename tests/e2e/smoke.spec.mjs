@@ -45,6 +45,6 @@ test("start screen leads to the language hub", async ({ page }) => {
   await page.click("#open-app");
   await expect(page.locator("#language-screen.active")).toBeVisible();
 
-  // 15 registered languages minus the support language (English).
-  await expect(page.locator("#language-buttons button")).toHaveCount(14);
+  // 16 registered languages minus the support language (English).
+  await expect(page.locator("#language-buttons button")).toHaveCount(15);
 });

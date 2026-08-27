@@ -74,7 +74,9 @@
     "milestoneReasonCulture": "{detail}, in its own voice.",
     "milestoneReasonFun": "And you're just getting started."
   },
-  "hubNames": { "th": "Thai", "it": "Italiensk",
+  "hubNames": {
+    "th": "Thai",
+    "it": "Italiensk",
     "en": "Engelsk",
     "pt": "Portugisisk",
     "ja": "Japansk",
@@ -87,7 +89,8 @@
     "tr": "Tyrkisk",
     "es": "Spansk",
     "fr": "Fransk",
-    "zh": "Kinesisk"
+    "zh": "Kinesisk",
+    "pl": "Polsk"
   },
   "forms": {
     "BIG": {
@@ -99,7 +102,8 @@
       "plural": "små"
     },
     "GOOD": {
-      "form": "god", "n": "godt",
+      "form": "god",
+      "n": "godt",
       "plural": "gode"
     },
     "BAD": {
@@ -107,11 +111,13 @@
       "plural": "dårlige"
     },
     "NEW": {
-      "form": "ny", "n": "nytt",
+      "form": "ny",
+      "n": "nytt",
       "plural": "nye"
     },
     "OLD": {
-      "form": "gammel", "n": "gammelt",
+      "form": "gammel",
+      "n": "gammelt",
       "plural": "gamle"
     },
     "EASY": {
@@ -235,7 +241,11 @@
       "form": "hus",
       "gender": "n"
     },
-    "HOME": {"form": "hjem", "gender": "n", "noArticle": true},
+    "HOME": {
+      "form": "hjem",
+      "gender": "n",
+      "noArticle": true
+    },
     "BOOK": {
       "form": "bok",
       "gender": "m",
@@ -363,20 +373,33 @@
       "gender": "m",
       "plural": "middager"
     },
-    "CLOTHES": {"form": "klær", "pluralOnly": true},
+    "CLOTHES": {
+      "form": "klær",
+      "pluralOnly": true
+    },
     "SHIRT": {
       "form": "skjorte",
       "gender": "f",
       "plural": "skjorter"
     },
-    "SHOES": {"form": "sko", "pluralOnly": true},
-    "TABLE": { "form": "bord", "gender": "n", "invariantPlural": true },
+    "SHOES": {
+      "form": "sko",
+      "pluralOnly": true
+    },
+    "TABLE": {
+      "form": "bord",
+      "gender": "n",
+      "invariantPlural": true
+    },
     "PHONE": {
       "form": "telefon",
       "gender": "m",
       "plural": "telefoner"
     },
-    "PANTS": {"form": "bukse", "gender": "m"},
+    "PANTS": {
+      "form": "bukse",
+      "gender": "m"
+    },
     "ONE": [
       "en",
       "ett"
@@ -546,11 +569,26 @@
     "MORNING": [
       "morgen"
     ],
-    "DAY": {"form": "dag", "gender": "m"},
-    "NIGHT": {"form": "natt", "gender": "f"},
-    "WEEK": {"form": "uke", "gender": "f"},
-    "MONTH": {"form": "måned", "gender": "m"},
-    "YEAR": {"form": "år", "gender": "n"},
+    "DAY": {
+      "form": "dag",
+      "gender": "m"
+    },
+    "NIGHT": {
+      "form": "natt",
+      "gender": "f"
+    },
+    "WEEK": {
+      "form": "uke",
+      "gender": "f"
+    },
+    "MONTH": {
+      "form": "måned",
+      "gender": "m"
+    },
+    "YEAR": {
+      "form": "år",
+      "gender": "n"
+    },
     "DO": {
       "base": "gjøre",
       "present": "gjør"
@@ -579,7 +617,10 @@
       "base": "starte",
       "present": "starter"
     },
-    "STOP": {"base": "slutte", "present": "slutter"},
+    "STOP": {
+      "base": "slutte",
+      "present": "slutter"
+    },
     "SLEEP": {
       "base": "sove",
       "present": "sover"
@@ -604,53 +645,163 @@
       "base": "være",
       "present": "er"
     },
-    "BLACK": ["svart"],
-    "WHITE": {"form": "hvit", "n": "hvitt"},
-    "RED": {"form": "rød", "n": "rødt"},
-    "BLUE": {"form": "blå", "n": "blått"},
-    "GREEN": {"form": "grønn", "n": "grønt"},
-    "YELLOW": ["gul"],
-    "PURPLE": ["lilla"],
-    "ORANGE": ["oransje"],
-    "FAST": ["rask"],
-    "SLOW": ["sakte"],
-    "LONG": {"form": "lang", "n": "langt"},
-    "SHORT": ["kort"],
-    "HEAVY": {"form": "tung", "n": "tungt"},
-    "LIGHT": ["lett"],
-    "DARK": {"form": "mørk", "n": "mørkt"},
-    "YOUNG": ["ung"],
-    "RIGHT": ["høyre"],
-    "LEFT": ["venstre"],
-    "CORRECT": ["riktig"],
-    "WRONG": ["feil"],
-    "COLD": {"form":"kald","n":"kaldt","plural":"kalde"},
-    "NICE": ["hyggelig"],
-    "THIS": ["dette"],
-    "THAT": ["det"],
-    "IT": ["det"],
-    "ITS": ["dets"],
-    "MINE": ["mitt"],
-    "YOURS": ["ditt"],
-    "HERS": ["hennes"],
-    "OURS": ["vårt"],
-    "THEIRS": ["deres"],
-    "HOUR": {"form": "time", "gender": "m"},
-    "MINUTE": {"form": "minutt", "gender": "n"},
-    "SECOND": {"form": "sekund", "gender": "n"},
-    "NOW": ["nå"],
-    "BEFORE": ["før"],
-    "AFTER": ["etter"],
-    "LATER": ["senere"],
-    "NEXT": ["neste"],
-    "SPRING": {"form": "vår", "gender": "m"},
-    "SUMMER": {"form": "sommer", "gender": "m"},
-    "AUTUMN": {"form": "høst", "gender": "m"},
-    "WINTER": {"form": "vinter", "gender": "m"},
-    "ALL": ["alle"],
-    "AROUND": ["rundt"],
-    "THANKS": ["takk"],
-    "MAY": { "base": "kan" }
+    "BLACK": [
+      "svart"
+    ],
+    "WHITE": {
+      "form": "hvit",
+      "n": "hvitt"
+    },
+    "RED": {
+      "form": "rød",
+      "n": "rødt"
+    },
+    "BLUE": {
+      "form": "blå",
+      "n": "blått"
+    },
+    "GREEN": {
+      "form": "grønn",
+      "n": "grønt"
+    },
+    "YELLOW": [
+      "gul"
+    ],
+    "PURPLE": [
+      "lilla"
+    ],
+    "ORANGE": [
+      "oransje"
+    ],
+    "FAST": [
+      "rask"
+    ],
+    "SLOW": [
+      "sakte"
+    ],
+    "LONG": {
+      "form": "lang",
+      "n": "langt"
+    },
+    "SHORT": [
+      "kort"
+    ],
+    "HEAVY": {
+      "form": "tung",
+      "n": "tungt"
+    },
+    "LIGHT": [
+      "lett"
+    ],
+    "DARK": {
+      "form": "mørk",
+      "n": "mørkt"
+    },
+    "YOUNG": [
+      "ung"
+    ],
+    "RIGHT": [
+      "høyre"
+    ],
+    "LEFT": [
+      "venstre"
+    ],
+    "CORRECT": [
+      "riktig"
+    ],
+    "WRONG": [
+      "feil"
+    ],
+    "COLD": {
+      "form": "kald",
+      "n": "kaldt",
+      "plural": "kalde"
+    },
+    "NICE": [
+      "hyggelig"
+    ],
+    "THIS": [
+      "dette"
+    ],
+    "THAT": [
+      "det"
+    ],
+    "IT": [
+      "det"
+    ],
+    "ITS": [
+      "dets"
+    ],
+    "MINE": [
+      "mitt"
+    ],
+    "YOURS": [
+      "ditt"
+    ],
+    "HERS": [
+      "hennes"
+    ],
+    "OURS": [
+      "vårt"
+    ],
+    "THEIRS": [
+      "deres"
+    ],
+    "HOUR": {
+      "form": "time",
+      "gender": "m"
+    },
+    "MINUTE": {
+      "form": "minutt",
+      "gender": "n"
+    },
+    "SECOND": {
+      "form": "sekund",
+      "gender": "n"
+    },
+    "NOW": [
+      "nå"
+    ],
+    "BEFORE": [
+      "før"
+    ],
+    "AFTER": [
+      "etter"
+    ],
+    "LATER": [
+      "senere"
+    ],
+    "NEXT": [
+      "neste"
+    ],
+    "SPRING": {
+      "form": "vår",
+      "gender": "m"
+    },
+    "SUMMER": {
+      "form": "sommer",
+      "gender": "m"
+    },
+    "AUTUMN": {
+      "form": "høst",
+      "gender": "m"
+    },
+    "WINTER": {
+      "form": "vinter",
+      "gender": "m"
+    },
+    "ALL": [
+      "alle"
+    ],
+    "AROUND": [
+      "rundt"
+    ],
+    "THANKS": [
+      "takk"
+    ],
+    "MAY": {
+      "base": "kan"
+    }
   },
   "alphabet": {
     "sections": [

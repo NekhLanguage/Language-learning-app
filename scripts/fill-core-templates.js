@@ -24,7 +24,7 @@ const CHECK_ONLY = process.argv.includes('--check');
 // The 10 languages absent from the original file, plus pt/ar which the original
 // only partially covered (render present on ~35/123 templates). The merge only
 // fills ABSENT keys, so existing pt/ar values are preserved.
-const NEW_LANGS = ['de', 'el', 'es', 'fr', 'it', 'ja', 'ko', 'no', 'th', 'tr', 'uk', 'zh', 'pt', 'ar'];
+const NEW_LANGS = ['de', 'el', 'es', 'fr', 'it', 'ja', 'ko', 'no', 'th', 'tr', 'uk', 'zh', 'pt', 'ar', 'pl'];
 
 // Copula-less languages drop "to be"; BE has no surface form for them.
 const COPULA_DROP_LANGS = new Set(['ar', 'uk']);
@@ -90,15 +90,18 @@ function main() {
     data[lang] = JSON.parse(fs.readFileSync(fp, 'utf8'));
   }
 
-  // Validate coverage of loaded data before mutating
+  // Validate coverage of loaded data before mutating. A staging-file gap only
+  // counts when the LIVE file also lacks the value — staging files authored
+  // before later template additions stay valid as long as those templates were
+  // already merged (the merge never overwrites existing keys anyway).
   let problems = 0;
   for (const lang of Object.keys(data)) {
     for (const t of templates) {
-      const d = data[lang][t.template_id];
-      if (!d || !d.render || !String(d.render).trim()) {
+      const d = data[lang][t.template_id] || {};
+      if (!t.render[lang] && (!d.render || !String(d.render).trim())) {
         console.error(`  ✗ ${lang}: missing render for ${t.template_id}`); problems++; continue;
       }
-      if (t.surface && Object.keys(t.surface).length) {
+      if (t.surface && Object.keys(t.surface).length && !t.surface[lang]) {
         const needCids = Object.keys(t.surface.en || {})
           .filter(c => !(COPULA_CONCEPTS.has(c) && COPULA_DROP_LANGS.has(lang)));
         const got = d.surface || {};
@@ -107,6 +110,7 @@ function main() {
       }
       if (t.questions && Object.keys(t.questions).length) {
         for (const role of Object.keys(t.questions)) {
+          if (t.questions[role].prompt && t.questions[role].prompt[lang]) continue;
           const p = d.questions && d.questions[role];
           if (!p || !String(p).trim()) { console.error(`  ✗ ${lang}: ${t.template_id} q.${role} prompt missing`); problems++; }
         }

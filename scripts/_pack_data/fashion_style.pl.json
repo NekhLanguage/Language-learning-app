@@ -1,0 +1,305 @@
+{
+  "label": "Polish",
+  "forms": {
+    "JACKET": {
+      "form": "kurtka",
+      "gender": "f",
+      "plural": "kurtki",
+      "genitive_plural": "kurtek"
+    },
+    "DRESS": {
+      "form": "sukienka",
+      "gender": "f",
+      "plural": "sukienki",
+      "genitive_plural": "sukienek"
+    },
+    "SNEAKERS": {
+      "form": "trampki",
+      "gender": "m",
+      "plural": "trampki",
+      "genitive_plural": "trampek"
+    },
+    "FABRIC": {
+      "form": "tkanina",
+      "gender": "f",
+      "plural": "tkaniny",
+      "genitive_plural": "tkanin"
+    },
+    "LEATHER": {
+      "form": "skóra",
+      "gender": "f"
+    },
+    "SILK": {
+      "form": "jedwab",
+      "gender": "m"
+    },
+    "PATTERN": {
+      "form": "wzór",
+      "gender": "m",
+      "plural": "wzory",
+      "genitive_plural": "wzorów"
+    },
+    "STITCH": {
+      "form": "ścieg",
+      "gender": "m",
+      "plural": "ściegi",
+      "genitive_plural": "ściegów"
+    },
+    "TAILOR": {
+      "form": "krawiec",
+      "gender": "m",
+      "plural": "krawcy",
+      "genitive_plural": "krawców",
+      "accusative": "krawca",
+      "virile": true
+    },
+    "RUNWAY": {
+      "form": "wybieg",
+      "gender": "m",
+      "plural": "wybiegi",
+      "genitive_plural": "wybiegów"
+    },
+    "MODEL": {
+      "form": "modelka",
+      "gender": "f",
+      "plural": "modelki",
+      "genitive_plural": "modelek"
+    },
+    "COLLECTION": {
+      "form": "kolekcja",
+      "gender": "f",
+      "plural": "kolekcje",
+      "genitive_plural": "kolekcji"
+    },
+    "BOUTIQUE": {
+      "form": "butik",
+      "gender": "m",
+      "plural": "butiki",
+      "genitive_plural": "butików"
+    },
+    "WARDROBE": {
+      "form": "szafa",
+      "gender": "f",
+      "plural": "szafy",
+      "genitive_plural": "szaf"
+    },
+    "TREND": {
+      "form": "trend",
+      "gender": "m",
+      "plural": "trendy",
+      "genitive_plural": "trendów"
+    },
+    "NECKLACE": {
+      "form": "naszyjnik",
+      "gender": "m",
+      "plural": "naszyjniki",
+      "genitive_plural": "naszyjników"
+    },
+    "BRACELET": {
+      "form": "bransoletka",
+      "gender": "f",
+      "plural": "bransoletki",
+      "genitive_plural": "bransoletek"
+    },
+    "SUNGLASSES": {
+      "form": "okulary przeciwsłoneczne",
+      "gender": "m",
+      "plural": "okulary przeciwsłoneczne",
+      "genitive_plural": "okularów przeciwsłonecznych"
+    },
+    "MAKEUP": {
+      "form": "makijaż",
+      "gender": "m"
+    },
+    "LIPSTICK": {
+      "form": "szminka",
+      "gender": "f",
+      "plural": "szminki",
+      "genitive_plural": "szminek"
+    },
+    "HAIRSTYLE": {
+      "form": "fryzura",
+      "gender": "f",
+      "plural": "fryzury",
+      "genitive_plural": "fryzur"
+    },
+    "OUTFIT": {
+      "form": "strój",
+      "gender": "m",
+      "plural": "stroje",
+      "genitive_plural": "strojów"
+    },
+    "LOOKBOOK": {
+      "form": "lookbook",
+      "gender": "m",
+      "plural": "lookbooki",
+      "genitive_plural": "lookbooków"
+    },
+    "AESTHETIC": {
+      "form": "estetyka",
+      "gender": "f",
+      "plural": "estetyki",
+      "genitive_plural": "estetyk"
+    },
+    "DESIGNER": {
+      "form": "projektant",
+      "gender": "m",
+      "plural": "projektanci",
+      "genitive_plural": "projektantów",
+      "accusative": "projektanta",
+      "virile": true
+    },
+    "BRAND": {
+      "form": "marka",
+      "gender": "f",
+      "plural": "marki",
+      "genitive_plural": "marek"
+    },
+    "CAMPAIGN": {
+      "form": "kampania",
+      "gender": "f",
+      "plural": "kampanie",
+      "genitive_plural": "kampanii"
+    },
+    "INFLUENCER": {
+      "form": "influencer",
+      "gender": "m",
+      "plural": "influencerzy",
+      "genitive_plural": "influencerów",
+      "accusative": "influencera",
+      "virile": true
+    },
+    "EDITORIAL": {
+      "form": "edytorial",
+      "gender": "m",
+      "plural": "edytoriale",
+      "genitive_plural": "edytoriali"
+    },
+    "COUTURE": {
+      "form": "haute couture",
+      "gender": "f",
+      "plural": "haute couture",
+      "genitive_plural": "haute couture"
+    },
+    "EMBROIDER": {
+      "base": "haftować",
+      "1_singular": "haftuję",
+      "2_singular": "haftujesz",
+      "3_singular": "haftuje",
+      "1_plural": "haftujemy",
+      "2_plural": "haftujecie",
+      "3_plural": "haftują"
+    },
+    "DRAPE": {
+      "base": "drapować",
+      "1_singular": "drapuję",
+      "2_singular": "drapujesz",
+      "3_singular": "drapuje",
+      "1_plural": "drapujemy",
+      "2_plural": "drapujecie",
+      "3_plural": "drapują"
+    },
+    "DESIGN": {
+      "base": "projektować",
+      "1_singular": "projektuję",
+      "2_singular": "projektujesz",
+      "3_singular": "projektuje",
+      "1_plural": "projektujemy",
+      "2_plural": "projektujecie",
+      "3_plural": "projektują"
+    },
+    "STRUT": {
+      "base": "kroczyć",
+      "1_singular": "kroczę",
+      "2_singular": "kroczysz",
+      "3_singular": "kroczy",
+      "1_plural": "kroczymy",
+      "2_plural": "kroczycie",
+      "3_plural": "kroczą"
+    },
+    "BROWSE": {
+      "base": "przeglądać",
+      "1_singular": "przeglądam",
+      "2_singular": "przeglądasz",
+      "3_singular": "przegląda",
+      "1_plural": "przeglądamy",
+      "2_plural": "przeglądacie",
+      "3_plural": "przeglądają"
+    },
+    "ADORN": {
+      "base": "ozdabiać",
+      "1_singular": "ozdabiam",
+      "2_singular": "ozdabiasz",
+      "3_singular": "ozdabia",
+      "1_plural": "ozdabiamy",
+      "2_plural": "ozdabiacie",
+      "3_plural": "ozdabiają"
+    },
+    "CONTOUR": {
+      "base": "konturować",
+      "1_singular": "konturuję",
+      "2_singular": "konturujesz",
+      "3_singular": "konturuje",
+      "1_plural": "konturujemy",
+      "2_plural": "konturujecie",
+      "3_plural": "konturują"
+    },
+    "COORDINATE": {
+      "base": "zestawiać",
+      "1_singular": "zestawiam",
+      "2_singular": "zestawiasz",
+      "3_singular": "zestawia",
+      "1_plural": "zestawiamy",
+      "2_plural": "zestawiacie",
+      "3_plural": "zestawiają"
+    },
+    "UNVEIL": {
+      "base": "odsłaniać",
+      "1_singular": "odsłaniam",
+      "2_singular": "odsłaniasz",
+      "3_singular": "odsłania",
+      "1_plural": "odsłaniamy",
+      "2_plural": "odsłaniacie",
+      "3_plural": "odsłaniają"
+    },
+    "SHOWCASE": {
+      "base": "prezentować",
+      "1_singular": "prezentuję",
+      "2_singular": "prezentujesz",
+      "3_singular": "prezentuje",
+      "1_plural": "prezentujemy",
+      "2_plural": "prezentujecie",
+      "3_plural": "prezentują"
+    },
+    "ELEGANT": [
+      "elegancki"
+    ],
+    "TEXTURED": [
+      "teksturowany"
+    ],
+    "VINTAGE": [
+      "vintage"
+    ],
+    "GLAMOROUS": [
+      "wytworny"
+    ],
+    "AFFORDABLE": [
+      "przystępny"
+    ],
+    "DAZZLING": [
+      "olśniewający"
+    ],
+    "FLAWLESS": [
+      "nieskazitelny"
+    ],
+    "CHIC": [
+      "szykowny"
+    ],
+    "EXCLUSIVE": [
+      "ekskluzywny"
+    ],
+    "ICONIC": [
+      "kultowy"
+    ]
+  }
+}

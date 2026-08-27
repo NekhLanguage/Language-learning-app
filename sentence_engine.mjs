@@ -7,7 +7,7 @@
 // The browser configures live accessors; the validator injects a full vocab
 // snapshot + a seeded RNG for deterministic, reproducible runs.
 
-import { langRule, langsWith } from "./language_rules.mjs";
+import { langRule, langsWith, langRuleValue } from "./language_rules.mjs";
 
 let _vocab        = () => (typeof window !== 'undefined' ? window.GLOBAL_VOCAB : undefined);
 let _getReleased  = () => (typeof window !== 'undefined' && window.run ? window.run.released : []);
@@ -47,6 +47,8 @@ export const GRAMMAR_RULE_IDS = [
   "definite_article",        // the/o/der/… for a described noun subject
   "genitive_possessor",      // tr possessor takes the genitive case (benim, bizim, onun)
   "have_existential",        // tr HAVE = genitive-possessor + possessed-noun + var
+  "predicate_instrumental",  // pl predicate nouns after być take the instrumental
+  "numeral_government",      // pl numbers five+ govern the genitive plural
 ];
 
 let firedRules = null;
@@ -283,6 +285,13 @@ function genderedFormOf(lang, modifierCid, nounCid, plural = false, genderOverri
   const noun = vocab().languages?.[lang]?.forms?.[nounCid];
   const g = genderOverride || noun?.gender;
   if (plural) {
+    // Virile split (language_rules: virilePlural — Polish): a plural
+    // agreeing with a masculine-personal noun takes the vp form («nowi
+    // studenci»); everything else takes the ordinary plural («nowe
+    // telefony/kobiety»). Nouns flag `virile: true` in the data.
+    if (langRule(lang, "virilePlural") && noun?.virile && mod.vp) {
+      noteRule("gender_agreement"); return mod.vp;
+    }
     if (g === "f" && mod.fp) { noteRule("gender_agreement"); return mod.fp; }
     if (g === "n" && mod.np) { noteRule("gender_agreement"); return mod.np; }
     return pluralFormOf(lang, modifierCid);
@@ -312,15 +321,60 @@ function ukFeminineAccusative(form) {
   ).join(" ");
 }
 
+// Polish regular feminine accusatives: noun -a→-ę («kobieta»→«kobietę»),
+// adjective -a→-ą («nowa»→«nową»). Single-word forms only — a multi-word
+// Polish noun form must author its `accusative` field explicitly, because
+// the noun and adjective endings differ (unlike uk, where one shift covers
+// both words of «бігова доріжка»).
+function plFeminineAccusativeNoun(form) {
+  const w = String(form);
+  return w.includes(" ") ? w : (w.endsWith("a") ? w.slice(0, -1) + "ę" : w);
+}
+function plFeminineAccusativeAdjective(form) {
+  const w = String(form);
+  return w.includes(" ") ? w : (w.endsWith("a") ? w.slice(0, -1) + "ą" : w);
+}
+
+// Feminine-accusative fallback strategies, selected by the language's
+// declared caseMarking.femAccusativeStrategy (language_rules.mjs). An
+// explicit `accusative` field on the entry always wins; the strategy only
+// covers the regular pattern so not every feminine noun needs the field.
+const FEM_ACC_STRATEGIES = {
+  uk: { noun: ukFeminineAccusative, adjective: ukFeminineAccusative },
+  pl: { noun: plFeminineAccusativeNoun, adjective: plFeminineAccusativeAdjective },
+};
+
+function ukObjectCaseApplies(lang) {
+  return langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative";
+}
+
+function femAccStrategy(lang) {
+  return FEM_ACC_STRATEGIES[langRuleValue(lang, "caseMarking")?.femAccusativeStrategy] || null;
+}
+
+// Shift a rendered form to the feminine accusative via the language's
+// declared strategy; identity when the language declares none. `kind` is
+// "noun" or "adjective" — the endings differ in some languages.
+function femAccusativeShift(lang, form, kind) {
+  const strat = femAccStrategy(lang);
+  return strat ? strat[kind](form) : form;
+}
+
 // Inanimate masculine and neuter accusative equals the nominative. Animate
-// masculines (брат → брата) follow no safe suffix rule, so they carry an
-// explicit `accusative` field in the vocab data, which always wins.
-function ukAccusativeNoun(cid, base) {
-  const entry = vocab().languages?.uk?.forms?.[cid];
+// masculines (брат → брата, pl «student» → «studenta») follow no safe
+// suffix rule, so they carry an explicit `accusative` field in the vocab
+// data, which always wins. Feminine falls back to the declared strategy.
+function accusativeNoun(lang, cid, base) {
+  const entry = vocab().languages?.[lang]?.forms?.[cid];
   if (!entry || typeof entry !== "object" || Array.isArray(entry)) return base;
   if (typeof entry.accusative === "string") return entry.accusative;
-  if (entry.gender === "f") return ukFeminineAccusative(base);
+  const strat = femAccStrategy(lang);
+  if (strat && entry.gender === "f") return strat.noun(base);
   return base;
+}
+// Back-compat alias (unit tests pin the uk behaviour through this name).
+function ukAccusativeNoun(cid, base) {
+  return accusativeNoun("uk", cid, base);
 }
 
 // --- Turkish HAVE existential possession ------------------------------------
@@ -447,20 +501,20 @@ function isCopularPredicatePosition(ordered, idx) {
 // field, so entries without case data — and every other language — are
 // untouched. The pending case survives modifiers and conjunctions («між цим
 // і тим») and clears at a verb.
-const UK_PREP_CASE = {
-  ON: "locative", IN: "locative", OFF: "locative",
-  UNDER: "instrumental", BEHIND: "instrumental", FRONT: "instrumental",
-  BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
-  WITH: "instrumental",
-  TO: "genitive", FROM: "genitive", FOR: "genitive",
-};
+// The preposition→case table a language declares (language_rules.mjs
+// caseMarking.prepositions), or null for non-case-marking languages.
+function prepCaseTable(lang) {
+  return langRuleValue(lang, "caseMarking")?.prepositions || null;
+}
 
-// Case each ordered position is governed by (uk only; null elsewhere).
-function ukCaseMap(lang, ordered) {
-  if (lang !== "uk") return ordered.map(() => null);
+// Case each ordered position is governed by (declared case-marking
+// languages only; null elsewhere).
+function caseMap(lang, ordered) {
+  const preps = prepCaseTable(lang);
+  if (!preps) return ordered.map(() => null);
   let pending = null;
   return ordered.map((cid) => {
-    if (UK_PREP_CASE[cid]) { pending = UK_PREP_CASE[cid]; return null; }
+    if (preps[cid]) { pending = preps[cid]; return null; }
     const t = vocab().concepts?.[cid]?.type;
     if (t === "verb") { pending = null; return null; }
     if (t === "noun" || t === "pronoun") return pending;
@@ -469,14 +523,40 @@ function ukCaseMap(lang, ordered) {
 }
 
 // The declined form for a governed nominal, or null when no data exists.
-function ukCaseForm(cid, caseName) {
+function caseFormFor(lang, cid, caseName) {
   if (!caseName) return null;
-  const entry = vocab().languages?.uk?.forms?.[cid];
+  const entry = vocab().languages?.[lang]?.forms?.[cid];
   if (entry && !Array.isArray(entry) && typeof entry === "object" &&
       typeof entry[caseName] === "string") {
     return entry[caseName];
   }
   return null;
+}
+
+// Predicate-noun case (language_rules caseMarking.predicateNounCase —
+// Polish instrumental: «Jestem mężczyzną»). Returns the case name when it
+// applies to this ordered position, or null. Demonstrative subjects are
+// exempt («To jest telefon» stays nominative); predicate ADJECTIVES never
+// route here (they render through the adjective branch, nominative).
+function predicateNounCaseFor(lang, ordered, idx, subjectCid, isCopularTemplate) {
+  const predCase = langRuleValue(lang, "caseMarking")?.predicateNounCase;
+  if (!predCase || !isCopularTemplate) return null;
+  if (!isCopularPredicatePosition(ordered, idx)) return null;
+  if (vocab().concepts?.[subjectCid]?.semantic_role === "demonstrative") return null;
+  return predCase;
+}
+
+// The possessive's own declined form agreeing with a governed possessed
+// noun: entry fields `<case>` (masc/neut) and `f_<case>` (feminine), e.g.
+// pl instrumental «moim» / f_instrumental «moją». Null when data missing —
+// the caller then keeps the whole phrase nominative so the two halves
+// never mix cases.
+function possessiveCaseForm(lang, possessiveCid, nounCid, caseName) {
+  const mod = vocab().languages?.[lang]?.forms?.[possessiveCid];
+  if (!mod || typeof mod !== "object" || Array.isArray(mod)) return null;
+  const g = vocab().languages?.[lang]?.forms?.[nounCid]?.gender;
+  const key = g === "f" ? `f_${caseName}` : caseName;
+  return typeof mod[key] === "string" ? mod[key] : null;
 }
 
 // --- Definite article for described noun subjects ----------------------------
@@ -612,8 +692,9 @@ function nounPhrase(lang, cid, opts = {}) {
   }
 
   let base = entry.form || formOf(lang, cid);
-  if (lang === "uk" && opts.directObject && !opts.plural && !entry.pluralOnly) {
-    const acc = ukAccusativeNoun(cid, base);
+  if (langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
+      opts.directObject && !opts.plural && !entry.pluralOnly) {
+    const acc = accusativeNoun(lang, cid, base);
     if (acc !== base) {
       noteRule("accusative_object");
       base = acc;
@@ -752,8 +833,9 @@ function surfaceForm(lang, cid) {
   // Build dynamic key (e.g. "1_singular", "2_plural", etc.)
   let key = `${person}_${number}`;
 
-// Portuguese: "você/vocês" conjugate like 3rd person
-if (lang === "pt") {
+// Declared rule (language_rules.mjs secondPersonAsThird): 2nd-person
+// subjects conjugate with 3rd-person morphology (pt você/vocês).
+if (langRule(lang, "secondPersonAsThird")) {
   if (subjectCid === "SECOND_PERSON") key = "3_singular";
   if (subjectCid === "SECOND_PERSON_PLURAL") key = "3_plural";
 }
@@ -864,23 +946,11 @@ function orderedConceptsForTemplate(tpl, lang) {
     return t && t !== "pronoun" && t !== "verb";
   });
 
-  const WORD_ORDER = {
-  ja: "SOV",
+  // Declared per language (language_rules.mjs `wordOrder`); SVO default.
   // MSA's canonical order is VSO, but SVO is equally standard in modern
   // usage and it is what the authored corpus uses throughout («أنا أشرب
-  // ماء»), so the generator matches it.
-  ar: "SVO",
-  en: "SVO",
-  pt: "SVO",
-  no: "SVO",
-  ko: "SOV",
-  uk: "SVO",
-  de: "SVO",
-  el: "SVO",
-  tr: "SOV"
-};
-
-const orderType = WORD_ORDER[lang] || "SVO";
+  // ماء»), so ar declares nothing and takes the default.
+const orderType = langRuleValue(lang, "wordOrder") || "SVO";
 
 let ordered;
 
@@ -953,9 +1023,9 @@ if (orderType === "SOV") {
         return entry.feminine;
       }
       // A uk noun in object position appears in the accusative («воду»).
-      if (targetLang === "uk" && idx !== -1 &&
-          isDirectObjectPosition(ordered, idx)) {
-        return ukAccusativeNoun(targetConcept, formOf(targetLang, targetConcept));
+      if (langRuleValue(targetLang, "caseMarking")?.directObjectCase === "accusative" &&
+          idx !== -1 && isDirectObjectPosition(ordered, idx)) {
+        return accusativeNoun(targetLang, targetConcept, formOf(targetLang, targetConcept));
       }
     }
 
@@ -1088,6 +1158,15 @@ function adjectiveSuitsNoun(adjCid, nounCid) {
   return adjectiveRoleAllowsNoun(adjMeta.semantic_role, nounMeta.semantic_role);
 }
 
+// Numeric value of the number concepts (ONE..TWENTY) — used by numeral
+// government (language_rules: numeralGenitivePlural).
+const NUMBER_VALUES = {
+  ONE: 1, TWO: 2, THREE: 3, FOUR: 4, FIVE: 5, SIX: 6, SEVEN: 7, EIGHT: 8,
+  NINE: 9, TEN: 10, ELEVEN: 11, TWELVE: 12, THIRTEEN: 13, FOURTEEN: 14,
+  FIFTEEN: 15, SIXTEEN: 16, SEVENTEEN: 17, EIGHTEEN: 18, NINETEEN: 19,
+  TWENTY: 20,
+};
+
 function isModifierCompatible(lang, modifierCid, nounCid) {
   const nounMeta  = vocab().concepts[nounCid];
   const nounEntry = vocab().languages?.[lang]?.forms?.[nounCid] || {};
@@ -1107,6 +1186,27 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
   // match the noun role; a role with an exclusion list rejects tagged nouns;
   // otherwise (broad quality/time adjectives) fall through to the source rule.
   if (!adjectiveRoleAllowsNoun(modMeta.semantic_role, nounMeta?.semantic_role)) {
+    return false;
+  }
+
+  // Numeral government (language_rules: numeralGenitivePlural — Polish):
+  // five and above govern the genitive plural («pięć książek»). A noun
+  // without the genitive_plural field cannot take such a number — the
+  // number is skipped rather than shipping «pięć książki». Wrong gets
+  // filtered, odd gets shipped.
+  if (modMeta.type === "number" &&
+      langRule(lang, "numeralGenitivePlural") &&
+      (NUMBER_VALUES[modifierCid] || 0) >= 5 &&
+      typeof nounEntry.genitive_plural !== "string") {
+    return false;
+  }
+
+  // Virile (masculine-personal) nouns take special numeral forms the
+  // engine has no data for («pięciu mężczyzn», «czterej bracia» — not the
+  // counting forms pięć/cztery). Skip numbers on virile nouns entirely
+  // rather than shipping the non-virile numeral. Wrong gets filtered.
+  if (modMeta.type === "number" &&
+      langRule(lang, "virilePlural") && nounEntry.virile) {
     return false;
   }
 
@@ -1223,6 +1323,25 @@ function finalizeSentence(lang, sentence) {
     s = s.replace(new RegExp(`^В\\s+(?=[${C}])`), "У ");
     return s;
   }
+  // Polish sets off its conjunctions with a comma («śniadanie, ale nie
+  // obiad», «..., ponieważ on jest w domu») — and lengthens z/w before
+  // clusters the short form can't precede: «ze swoją mamą», «we wtorek».
+  // Applied to the finished string since clauses are assembled by several
+  // builders.
+  if (lang === "pl") {
+    let s = sentence.replace(/([^,])\s+(ale|ponieważ)\s/g, "$1, $2 ");
+    // Negation attaches to the verb: OFF renders as «nie na», but the
+    // negator must precede the copula — «nie jest na tym», never
+    // «jest nie na tym».
+    s = s.replace(/\b(jestem|jesteś|jest|jesteśmy|jesteście|są)\s+nie\s+/g,
+      "nie $1 ");
+    const C = "bcćdfghjklłmnńprsśtwzźż";
+    s = s.replace(new RegExp(`(^|\\s)([zZ])\\s+(?=[sśzźż][${C}])`, "g"),
+      (m, pre, z) => pre + (z === "Z" ? "Ze " : "ze "));
+    s = s.replace(new RegExp(`(^|\\s)([wW])\\s+(?=[wf][${C}])`, "g"),
+      (m, pre, w) => pre + (w === "W" ? "We " : "we "));
+    return s;
+  }
   // Italian preposition + definite-article contractions, applied to the
   // finished string (mirrors frenchElision): «accanto a il telefono» →
   // «accanto al telefono», «a la sua stanza» → «alla sua stanza».
@@ -1323,8 +1442,8 @@ function possessiveArticleFor(lang, nounCid, plural = false) {
 function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
   if (lang === "fr") return frenchPossessivePhrase(possessiveCid, nounCid);
   let noun = formOf(lang, nounCid);
-  if (lang === "uk") {
-    const declined = ukCaseForm(nounCid, caseName);
+  if (langRuleValue(lang, "caseMarking")) {
+    const declined = caseFormFor(lang, nounCid, caseName);
     if (declined) {
       noteRule("prepositional_case");
       noun = declined;
@@ -1582,10 +1701,15 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   }
   // Copula-dropping languages form the yes/no question without "to be"
   // («Це твій телефон?»); pt/es keep declarative order and mark the question
-  // with intonation («Esse é o seu telefone?»); the rest front the copula
-  // ("Is this your phone?", "Ist das dein Telefon?").
-  const words = (lang === "pt" || lang === "es")
-    ? [subject, be, complement]
+  // with intonation («Esse é o seu telefone?»); question strategy is
+  // declared per language (language_rules.mjs): statementOrderQuestion
+  // keeps declarative order and asks with intonation; questionParticle
+  // keeps declarative order behind a fronted particle («Czy to jest twój
+  // telefon?»); the default fronts the copula ("Is this your phone?",
+  // "Ist das dein Telefon?").
+  const particle = langRuleValue(lang, "questionParticle");
+  const words = (particle || langRule(lang, "statementOrderQuestion"))
+    ? [particle || "", subject, be, complement]
     : [be, subject, complement];
   return capitalizeFirst(words.filter(Boolean).join(" ") + "?");
 }
@@ -1618,7 +1742,7 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
   // into the sentence as the literal word "undefined".
   const companion = nounCid
     ? joinWords(lang, [formOf(lang, withCid), nounWithPossessive(lang, possessiveCid, nounCid,
-        lang === "uk" ? UK_PREP_CASE[withCid] : null)])
+        prepCaseTable(lang)?.[withCid] || null)])
     : "";
 
   return joinWords(lang, [subject, verb, object, companion]);
@@ -1629,7 +1753,7 @@ function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid
   const verb = getVerbForm(verbCid, subjectCid, lang);
   const companion = nounCid
     ? joinWords(lang, [formOf(lang, withCid), nounWithPossessive(lang, possessiveCid, nounCid,
-        lang === "uk" ? UK_PREP_CASE[withCid] : null)])
+        prepCaseTable(lang)?.[withCid] || null)])
     : "";
 
   return joinWords(lang, [subject, verb, companion]);
@@ -1799,7 +1923,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const pluralAgreement = subjectIsPluralPronoun && isCopularTemplate;
 
   // Which case (if any) governs each position — uk prepositional case.
-  const caseAt = ukCaseMap(lang, ordered);
+  const caseAt = caseMap(lang, ordered);
 
   const words = ordered.map((cid, idx) => {
     const meta = vocab().concepts[cid];
@@ -1843,7 +1967,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // authored for the exact templates that need it; modifier injection is
   // skipped here — an injected adjective could not agree with an oblique
   // case anyway.
-  const governedForm = ukCaseForm(cid, caseAt[idx]);
+  const governedForm = caseFormFor(lang, cid, caseAt[idx]);
   if (governedForm) {
     noteRule("prepositional_case");
     return governedForm;
@@ -1898,7 +2022,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // rule — an explicit animate-masculine override would clash with the
   // possessive word, which has no accusative data of its own.
   const isObject = isDirectObjectPosition(ordered, idx);
-  const ukObjectCase = lang === "uk" && isObject && !pluralAgreement;
+  const ukObjectCase = langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
+    isObject && !pluralAgreement;
   // Copular agreement: this noun is the predicate after a plural subject.
   // Possessed nouns (their/our + noun) follow the possessive's own number,
   // not the subject's, so skip them.
@@ -1917,8 +2042,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     typeof nounEntry?.feminine === "string";
   let possessedForm = feminineReferent ? nounEntry.feminine : formOf(lang, cid);
   if (ukObjectCase && bareDetermined &&
-      vocab().languages?.uk?.forms?.[cid]?.gender === "f") {
-    const acc = ukFeminineAccusative(possessedForm);
+      vocab().languages?.[lang]?.forms?.[cid]?.gender === "f") {
+    const acc = femAccusativeShift(lang, possessedForm, "noun");
     if (acc !== possessedForm) {
       noteRule("accusative_object");
       possessedForm = acc;
@@ -1936,6 +2061,25 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const clf = vocab().languages?.th?.forms?.[cid]?.classifier || "อัน";
     return possessedForm + formOf(lang, ordered[idx - 1]) + clf;
   }
+  // Predicate nouns after the copula take a declared case in some
+  // languages («Jestem mężczyzną», plural «Oni są studentami»). When the
+  // slot is possessed, BOTH halves must decline or neither does («Ona
+  // jest moją mamą» — never «moja mamą»); the possessive slot mirrors
+  // this check. Modifier injection is deliberately skipped on a declined
+  // predicate — an injected adjective cannot agree in case yet, and
+  // wrong gets filtered, odd gets shipped. Missing case data falls back
+  // to the nominative phrase, which validate-exercise-surfaces ratchets.
+  const predNounCase = predicateNounCaseFor(lang, ordered, idx, subjectCid, isCopularTemplate);
+  if (predNounCase) {
+    const declined = caseFormFor(lang, cid,
+      useCopularPlural ? predNounCase + "_plural" : predNounCase);
+    if (declined && (!precededByPossessive ||
+        possessiveCaseForm(lang, ordered[idx - 1], cid, predNounCase))) {
+      noteRule("predicate_instrumental");
+      return declined;
+    }
+  }
+
   let phrase = bareDetermined
     ? possessedForm
     : nounPhrase(lang, cid, {
@@ -2081,7 +2225,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // The bare form must match the case actually rendered in `phrase`, or the
   // article/adjective splicing below misassembles the noun phrase.
   const bare = bareNoun ||
-    (ukObjectCase && !bareDetermined ? ukAccusativeNoun(cid, formOf(lang, cid)) :
+    (ukObjectCase && !bareDetermined ? accusativeNoun(lang, cid, formOf(lang, cid)) :
      ukObjectCase ? possessedForm :
      feminineReferent ? possessedForm :
      formOf(lang, cid));
@@ -2090,8 +2234,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // «я п'ю холодну воду», not «холодна воду». Ukrainian feminine adjectives
   // end in -а/-я like the nouns, so the same ending shift applies.
   const ukShiftAdj = ukObjectCase && !useCopularPlural &&
-    vocab().languages?.uk?.forms?.[cid]?.gender === "f";
-  if (ukShiftAdj && adjectiveWord) adjectiveWord = ukFeminineAccusative(adjectiveWord);
+    vocab().languages?.[lang]?.forms?.[cid]?.gender === "f";
+  if (ukShiftAdj && adjectiveWord) adjectiveWord = femAccusativeShift(lang, adjectiveWord, "adjective");
 
   if (numberWord) {
     // Same surface capture for a forced number modifier (see adjective note).
@@ -2107,6 +2251,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     } else if (lang === "en") {
       const enEntry = vocab().languages?.en?.forms?.[cid] || {};
       nounForm = (enEntry.invariantPlural || enEntry.pluralOnly) ? bare : pluralize(bare);
+    } else if (langRule(lang, "numeralGenitivePlural") &&
+               (NUMBER_VALUES[numberCid] || 0) >= 5 &&
+               typeof vocab().languages?.[lang]?.forms?.[cid]?.genitive_plural === "string") {
+      // Numeral government: «pięć książek», not «pięć książki». The
+      // compatibility gate guarantees the field exists when the number
+      // landed here.
+      noteRule("numeral_government");
+      nounForm = vocab().languages?.[lang]?.forms?.[cid].genitive_plural;
     } else {
       nounForm = pluralFormOf(lang, cid);
     }
@@ -2226,15 +2378,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // Ukrainian expresses means with the bare instrumental — the case ending
     // IS the "by" («роблю це рукою», not «за допомогою руки»). Drop the BY
     // word whenever the following nominal can carry the instrumental itself.
-    if (lang === "uk" && cid === "BY" &&
-        ukCaseForm(ordered[idx + 1], "instrumental")) {
+    if (langRuleValue(lang, "caseMarking")?.bareInstrumentalMeans && cid === "BY" &&
+        caseFormFor(lang, ordered[idx + 1], "instrumental")) {
       return "";
     }
 
     // A preposition-governed pronoun/demonstrative declines like a governed
     // noun («на цьому», «між цим і тим») when case data exists.
     if (meta.type === "pronoun") {
-      const governed = ukCaseForm(cid, caseAt[idx]);
+      const governed = caseFormFor(lang, cid, caseAt[idx]);
       if (governed) {
         noteRule("prepositional_case");
         return governed;
@@ -2303,10 +2455,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         vocab().concepts[ordered[idx + 1]]?.type === "noun") {
       const nextCid = ordered[idx + 1];
       let form = genderedFormOf(lang, cid, nextCid);
-      if (lang === "uk" && isDirectObjectPosition(ordered, idx + 1) &&
-          !pluralAgreement &&
-          vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
-        form = ukFeminineAccusative(form);
+      if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
+          isDirectObjectPosition(ordered, idx + 1) && !pluralAgreement &&
+          vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
+        form = femAccusativeShift(lang, form, "adjective");
       }
       // Thai postposes "another" with the classifier: หนังสืออีกเล่ม
       // ("book more CLF") — rendered inside the noun slot, so this one
@@ -2340,10 +2492,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       }
       if (vocab().concepts[nextCid]?.type === "noun") {
         let form = genderedFormOf(lang, cid, nextCid);
-        if (lang === "uk" && isDirectObjectPosition(ordered, idx + 1) &&
-            !pluralAgreement &&
-            vocab().languages?.uk?.forms?.[nextCid]?.gender === "f") {
-          form = ukFeminineAccusative(form);
+        // Mirror of the predicate-case check in the noun slot: when the
+        // possessed predicate noun declines, the possessive declines with
+        // it («moją mamą») — and when either half lacks data, both stay
+        // nominative together.
+        const possPredCase = predicateNounCaseFor(lang, ordered, idx + 1, subjectCid, isCopularTemplate);
+        if (possPredCase && caseFormFor(lang, nextCid, possPredCase)) {
+          const declinedPoss = possessiveCaseForm(lang, cid, nextCid, possPredCase);
+          if (declinedPoss) return declinedPoss;
+        }
+        if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
+            isDirectObjectPosition(ordered, idx + 1) && !pluralAgreement &&
+            vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
+          form = femAccusativeShift(lang, form, "adjective");
         }
         // Possessive noun phrases take the definite article in languages
         // declaring possessiveDefiniteArticle («la mia mano», «le mie
@@ -2470,8 +2631,9 @@ export {
   resolvePrompt,
   RELATIONAL_STRUCTURES,
   orderedConceptsForTemplate,
-  ukCaseMap,
-  ukCaseForm,
+  caseMap,
+  caseFormFor,
+  accusativeNoun,
   sentenceTilesForTemplate,
   blankSentence,
   safeSurfaceForConcept,

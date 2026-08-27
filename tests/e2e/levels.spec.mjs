@@ -292,6 +292,78 @@ test("uk L7: a drilled adjective in the prompt appears in the graded answer", as
   expect(promptHasIt).toBe(answerHasIt);
 });
 
+// Polish exercises the same case machinery as Ukrainian (accusative
+// objects, instrumental predicates) but with an overt copula and Latin
+// script — the L3/L6/L7 drives below are the beta language's regression
+// net.
+
+test("pl L3 fill-in-the-blank works with declined noun surfaces", async ({ page }) => {
+  // Accusative objects mean the blanked surface can differ from the
+  // citation form («książkę», not «książka») — the tile and the frame
+  // must still reassemble the sentence exactly.
+  await startNewRun(page, { language: "Polish" });
+  await seedAllConceptsAt(page, 3);
+
+  await expect(page.locator("#choices .word-bank-chip")).not.toHaveCount(0);
+
+  const cid = await lastTargetConcept(page);
+  await page.locator(`#choices button[data-cid="${cid}"]`).click();
+  await page.click("#check-btn");
+
+  await expect(page.locator(`#choices button[data-cid="${cid}"]`)).toHaveClass(/correct/);
+  const progress = await page.evaluate((c) => window.__app.run.progress[c], cid);
+  expect(progress.lastResult).toBe(true);
+});
+
+test("pl L6: a drilled adjective in the prompt is its own placeable tile", async ({ page }) => {
+  await startNewRun(page, { language: "Polish" });
+  await seedAllConceptsAt(page, 6, { restrictTypes: ["adjective"] });
+
+  await expect(page.locator("#slot-container")).toBeVisible();
+
+  const cid = await lastTargetConcept(page);
+  const forms = await page.evaluate((c) => {
+    const f = (lang) => {
+      const e = window.GLOBAL_VOCAB.languages[lang]?.forms?.[c];
+      if (Array.isArray(e)) return e[0];
+      return e?.form || (typeof e === "string" ? e : "");
+    };
+    return { en: f("en"), target: f("pl") };
+  }, cid);
+
+  const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
+  const { correctWords } = await page.evaluate(() => window.__app.lastExercise);
+
+  const promptHasIt = prompt.includes(forms.en.toLowerCase());
+  const ownTile = correctWords.some((w) => sharesStem(w, forms.target));
+  expect(promptHasIt).toBe(ownTile);
+});
+
+test("pl L7: a drilled adjective in the prompt appears in the graded answer", async ({ page }) => {
+  await startNewRun(page, { language: "Polish" });
+  await seedAllConceptsAt(page, 7, { restrictTypes: ["adjective"] });
+
+  await expect(page.locator("#l7-input")).toBeVisible();
+
+  const cid = await lastTargetConcept(page);
+  const forms = await page.evaluate((c) => {
+    const f = (lang) => {
+      const e = window.GLOBAL_VOCAB.languages[lang]?.forms?.[c];
+      if (Array.isArray(e)) return e[0];
+      return e?.form || (typeof e === "string" ? e : "");
+    };
+    return { en: f("en"), target: f("pl") };
+  }, cid);
+
+  const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
+  const { answer } = await page.evaluate(() => window.__app.lastExercise);
+
+  const promptHasIt = prompt.includes(forms.en.toLowerCase());
+  const answerHasIt = answer.toLowerCase().split(/\s+/)
+    .some((w) => sharesStem(w, forms.target));
+  expect(promptHasIt).toBe(answerHasIt);
+});
+
 test("a concept added to an already-released bundle is backfilled", async ({ page }) => {
   // Release plans are frozen at signup; when a concept joins an existing
   // bundle's definition (TABLE → core_28), backfillReleasedBundles releases
