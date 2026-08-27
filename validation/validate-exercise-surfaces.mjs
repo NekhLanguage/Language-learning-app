@@ -58,7 +58,10 @@ import {
   configureEngine, buildSentence, buildSentenceWithRules,
   resolveNounBlank, buildSameTypeOptions, acceptedAnswerVariants,
   orderedConceptsForTemplate, caseMap, caseFormFor, formOf,
+  optionSurfaceFor, predicateNounCaseFor, isPluralPronoun,
+  adjectiveSuitsNoun, isModifierCompatible,
 } from '../sentence_engine.mjs';
+import { langsWith } from '../language_rules.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(HERE, '..');
@@ -80,6 +83,7 @@ configureEngine({
 
 const findings = [];
 const add = (key, detail) => findings.push({ key, detail });
+const SPACELESS = new Set([...langsWith('spacelessJoin'), ...langsWith('spacelessTiles')]);
 
 const concepts = vocab.concepts;
 // The concept types the app actually drills through L2-L7 exercise
@@ -122,6 +126,30 @@ for (const lang of langCodes) {
         add(`BLANK_PARTITION|${lang}|${id}|${cid}`,
           `frame "${blank.blanked}" + "${blank.surface}" != "${sentence}"`);
         continue;
+      }
+      // The blank must hold a WHOLE word: a letter adjacent to the gap
+      // means a stem was cut out of its inflected form and the case
+      // suffix is stranded in the frame («Ja idę do _____u.» — Emi
+      // 2026-08-27-03). Spaceless scripts have no letter boundaries.
+      if (!SPACELESS.has(lang) && /\p{L}_____|_____\p{L}/u.test(blank.blanked)) {
+        add(`BLANK_MIDWORD|${lang}|${id}|${cid}`,
+          `blank cuts through a word: "${blank.blanked}"`);
+        continue;
+      }
+      // The tile the app would render for the CORRECT concept must equal
+      // the blanked surface — the two engine functions (resolveNounBlank
+      // and optionSurfaceFor) must never drift apart. Authored surface
+      // overrides are exempt: they may embed a preposition the option
+      // renderer cannot know («do domu»), and the app shows the blank
+      // surface itself for the correct tile.
+      if (concepts[cid]?.type === 'noun' && !tpl.surface?.[lang]?.[cid]) {
+        const tile = optionSurfaceFor(lang, tpl, cid, blank.slot, { bareMode: blank.bareMode });
+        if (tile !== null && tile !== undefined &&
+            tile.toLowerCase() !== blank.surface.toLowerCase()) {
+          add(`TILE_MISMATCH|${lang}|${id}|${cid}`,
+            `blank holds "${blank.surface}" but the slot tile renders "${tile}"`);
+          continue;
+        }
       }
       blankOk[lang].add(`${id}|${cid}`);
     }
@@ -170,7 +198,8 @@ for (const lang of langCodes) {
       continue;
     }
     if (!target.sentence || !target.sentence.trim()) continue;
-    if (target.hadModifier !== support.hadModifier) {
+    if (target.hadModifier !== support.hadModifier ||
+        JSON.stringify(target.modifierKeys) !== JSON.stringify(support.modifierKeys)) {
       add(`L7_MODIFIER_MISMATCH|${lang}|${id}`,
         `target(${target.hadModifier}) vs en(${support.hadModifier})`);
       continue;
@@ -178,6 +207,52 @@ for (const lang of langCodes) {
     const variants = acceptedAnswerVariants(lang, tpl, target.sentence, sc);
     if (!variants.length) {
       add(`L7_NO_VARIANTS|${lang}|${id}`, `no accepted answers for "${target.sentence}"`);
+    }
+  }
+}
+
+// ── C2. L7 drilled-modifier contract ────────────────────────────────────────
+// The plain pass above nulls every adj_/num_ slot, so its parity assertion
+// never exercises a landed modifier. This pass mirrors seedDrilledModifier:
+// seed one compatible adjective and one number per template, and assert
+// (a) the target/support builds agree on modifier identity, and (b) when
+// the modifier landed, some accepted answer actually contains its
+// target-language surface — the contract Emi's «Ty masz dobrą pracę» was
+// graded wrong against (2026-08-27-01).
+const PROBE_ADJS = ['BIG', 'GOOD', 'NEW'];
+const PROBE_NUMS = ['TWO', 'FIVE'];
+for (const lang of langCodes) {
+  if (lang === 'en') continue;
+  for (const tpl of plainTemplates) {
+    const id = tpl.template_id || tpl._file + '?';
+    const nouns = tpl.concepts.filter((c) => concepts[c]?.type === 'noun');
+    if (!nouns.length) continue;
+    for (const probe of [...PROBE_ADJS, ...PROBE_NUMS]) {
+      const isAdj = concepts[probe]?.type === 'adjective';
+      const noun = nouns.find((n) =>
+        (!isAdj || adjectiveSuitsNoun(probe, n)) &&
+        isModifierCompatible(lang, probe, n) &&
+        isModifierCompatible('en', probe, n));
+      if (!noun) continue; // seedDrilledModifier would skip this pairing too
+      const sc = {};
+      for (const c of nouns) { sc['adj_' + c] = null; sc['num_' + c] = null; }
+      sc[(isAdj ? 'adj_' : 'num_') + noun] = probe;
+      let target, support;
+      try {
+        target = buildSentenceWithRules(lang, tpl, null, sc);
+        support = buildSentenceWithRules('en', tpl, null, sc);
+      } catch (e) {
+        add(`L7_DRILL_THREW|${lang}|${id}|${probe}`, String(e && e.message || e));
+        continue;
+      }
+      if (!target.sentence || !target.sentence.trim()) continue;
+      if (JSON.stringify(target.modifierKeys) !== JSON.stringify(support.modifierKeys)) {
+        add(`L7_DRILL_MISMATCH|${lang}|${id}|${probe}`,
+          `target ${JSON.stringify(target.modifierKeys)} vs en ${JSON.stringify(support.modifierKeys)}`);
+        continue;
+      }
+      if (!target.hadModifier) continue; // dropped on both sides — app bails, fine
+      break; // one landed probe per template per language keeps the walk bounded
     }
   }
 }
@@ -226,6 +301,29 @@ for (const lang of langCodes) {
           `${caseName} demanded but no ${caseName} field — nominative ships`);
       }
     });
+    // Predicate-noun positions («On jest kelnerem») — the walk the engine
+    // comment always claimed existed and didn't: predicateNounCase demands
+    // a case the entry may lack, and the render path falls back to the
+    // nominative silently. Every one of Emi 2026-08-27-05's pack nouns
+    // lands here. Plural copular subjects demand the _plural field
+    // («Oni są mistrzami» needs instrumental_plural).
+    const subjectCid = ordered.find((c) => concepts[c]?.type === 'pronoun') ||
+      ordered.find((c) => ['noun', 'time'].includes(concepts[c]?.type));
+    const isCopularTpl = ordered.some((c) =>
+      c === 'BE' || concepts[c]?.semantic_role === 'copula');
+    if (isCopularTpl) {
+      const pluralSubject = isPluralPronoun(subjectCid);
+      ordered.forEach((cid, idx) => {
+        if (concepts[cid]?.type !== 'noun') return;
+        const predCase = predicateNounCaseFor(lang, ordered, idx, subjectCid, isCopularTpl);
+        if (!predCase) return;
+        const field = pluralSubject ? predCase + '_plural' : predCase;
+        if (!caseFormFor(lang, cid, field)) {
+          add(`CASE_FALLBACK|${lang}|${id}|${cid}|${field}`,
+            `predicate ${field} demanded but no such field — nominative ships`);
+        }
+      });
+    }
   }
 }
 

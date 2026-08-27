@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-27
 
+### Exercises now match the grammar the app already knows
+Four fixes to how exercises are assembled, found in Polish testing but benefiting every language. Fill-in-the-blank tiles now carry the form the sentence actually needs — «Ona jest _____.» offers «kobietą», never the dictionary form «kobieta», and every wrong option is declined to fit the same slot. Blanks always hold a whole word — no more «Ja idę do _____u.» with half the word stranded in the frame. The translation prompt can no longer ask for words the graded answer doesn't contain ("They see three new airports." will never again stand over an answer of «Oni widzą lotnisko.»). And adjectives now agree with their noun everywhere the noun changes form: «Ja mam dużego syna», «osiem dużych twarzy», Italian «pantaloni grandi». Saying what someone is also works across all the topic packs now — «On jest kelnerem», «Oni są mistrzami».
+
 ### New language: Polish (beta)
 Polish joins as the 16th language, in beta while it gets its final review. The full 250-word core method and all twelve topic packs are covered, and the engine handles the grammar that makes Polish tricky: noun endings change when a word is the object of the sentence («Czytam książkę»), after "to be" when you say what someone is («Jestem mężczyzną»), after prepositions («na stole», «z domu»), and after the numbers five and up («pięć książek»). If you spot a sentence that reads oddly, that's what beta means — tell us and it gets fixed.
 

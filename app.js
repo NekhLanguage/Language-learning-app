@@ -33,6 +33,9 @@ import {
   orderedConceptsForTemplate,
   blankSentence,
   safeSurfaceForConcept,
+  slotContextFor,
+  optionSurfaceFor,
+  modifierSurfaceFor,
   acceptedAnswerVariants,
   resolveNounBlank,
   isDirectObjectPosition,
@@ -77,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.12";
+const APP_DATA_VERSION = "1.2.13";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -2368,13 +2371,17 @@ return tpl;
   subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
   const sharedChoices = {};
-  const { sentence: targetSentence, rules: grammarRules, hadModifier } =
+  const { sentence: targetSentence, rules: grammarRules } =
     buildSentenceWithRules(targetLang, tpl, targetConcept, sharedChoices);
   // Prefer the human-authored translation when it still describes this
-  // sentence (no injected modifier); engine generation is the fallback.
+  // sentence (no injected modifier). The authored-vs-generated decision
+  // must follow the SUPPORT build's own modifier state — the target's flag
+  // said nothing about whether the English gloss carries a modifier.
+  const exposureSupportBuild =
+    buildSentenceWithRules(supportLang, tpl, targetConcept, sharedChoices);
   const { sentence: supportSentence, source: supportSource } = chooseSupportSentence(tpl, supportLang, {
-    generated: buildSentence(supportLang, tpl, targetConcept, sharedChoices),
-    hadModifier,
+    generated: exposureSupportBuild.sentence,
+    hadModifier: exposureSupportBuild.hadModifier,
   });
 
   const wordNote = wordNoteFor(targetConcept, targetLang, supportLang);
@@ -2835,37 +2842,53 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions, target
 if (isModifierConcept(targetConcept)) {
 
   const sharedChoicesL3 = {};
-  const sentenceTarget = buildSentence(targetLang, tpl, targetConcept, sharedChoicesL3);
-  const sentenceSupport = buildSentence(supportLang, tpl, targetConcept, sharedChoicesL3);
+  const targetBuildL3 = buildSentenceWithRules(targetLang, tpl, targetConcept, sharedChoicesL3);
+  const supportBuildL3 = buildSentenceWithRules(supportLang, tpl, targetConcept, sharedChoicesL3);
+  // Modifier-identity fence (same invariant as L6/L7): if the drilled
+  // modifier landed differently in the two builds, the support sentence
+  // and the frame disagree — bail and let the caller repick.
+  if (targetBuildL3.hadModifier !== supportBuildL3.hadModifier ||
+      JSON.stringify(targetBuildL3.modifierKeys) !== JSON.stringify(supportBuildL3.modifierKeys)) {
+    return null;
+  }
+  const sentenceTarget = targetBuildL3.sentence;
+  const sentenceSupport = supportBuildL3.sentence;
 
-  // Blank the surface actually rendered (inflected for gender/number agreement),
-  // captured during the buildSentence(targetLang, …) call above; fall back to the
-  // base form if nothing was captured.
+  // Blank the surface actually rendered (inflected for gender/number/case
+  // agreement), captured during the buildSentence(targetLang, …) call above;
+  // fall back to the base form if nothing was captured.
   const targetSurface = sharedChoicesL3["blankSurface_" + targetLang] ||
     formOf(targetLang, targetConcept);
-  const blanked = blankSentence(sentenceTarget, targetSurface);
+  const blanked = blankSentence(sentenceTarget, targetSurface, targetLang);
 
   // A fill-in-the-blank without a blank is never a valid exercise. This can
   // happen when the drilled modifier never made it into the sentence (e.g.
   // a slot-based structured template ignoring the forced concept).
   if (!blanked.includes("_____")) return null;
 
-  const options = buildSameTypeOptions(targetConcept, 4, targetLang);
+  // Render each option agreeing with the head noun it modifies in gender
+  // AND case ("помаранчева книга"; «dużą» completing «My mamy _____
+  // pracę», never nominative «duża» — Emi 2026-08-27-02), so the tiles
+  // match the inflected blank. The correct tile is the captured blank
+  // surface itself, so it can never diverge from the frame.
+  const headNounCid = (tpl.concepts || []).find(
+    c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
+  );
+  const headSlot = headNounCid
+    ? slotContextFor(tpl, targetLang, headNounCid)
+    : null;
+  const optionText = opt => {
+    if (opt === targetConcept) return targetSurface;
+    return modifierSurfaceFor(targetLang, opt, headNounCid, {
+      caseName: headSlot?.caseName || null,
+    }) || formOf(targetLang, opt);
+  };
+
+  const options = buildSameTypeOptions(targetConcept, 4, targetLang, optionText);
 
   if (!options) {
     return null;
   }
-
-  // Render each adjective option agreeing in gender with the head noun it
-  // modifies ("помаранчева книга", not the bare masculine "помаранчевий"),
-  // so the tiles match the inflected blank. Falls back to the base form when
-  // there's no noun to agree with.
-  const headNounCid = (tpl.concepts || []).find(
-    c => window.GLOBAL_VOCAB.concepts[c]?.type === "noun"
-  );
-  const optionText = opt => headNounCid
-    ? genderedFormOf(targetLang, opt, headNounCid)
-    : formOf(targetLang, opt);
 
   content.innerHTML = `
     <p><strong>${ui("originalSentence")}</strong></p>
@@ -2929,11 +2952,23 @@ if (isModifierConcept(targetConcept)) {
   // modifier injection; the support build then reuses the cached choice, and
   // the authored translation is preferred whenever nothing was injected.
   const sharedChoicesCore = {};
-  const { sentence: sentenceTarget, hadModifier: l3HadModifier } =
-    buildSentenceWithRules(targetLang, tpl, null, sharedChoicesCore);
+  const targetBuild = buildSentenceWithRules(targetLang, tpl, null, sharedChoicesCore);
+  const supportBuild = buildSentenceWithRules(supportLang, tpl, null, sharedChoicesCore);
+  // Same hard invariant L6/L7 carry, extended to identity: if the two
+  // builds disagree about WHICH modifier landed on WHICH noun, the support
+  // sentence describes words the frame doesn't contain (or vice versa) —
+  // bail and let the caller pick another template. L3 previously had no
+  // fence at all AND passed the target's flag as the support's, which is
+  // how "You see ten bad houses." fronted «Ty widzisz _____.» (Emi
+  // 2026-08-27-01's Level 3 half).
+  if (targetBuild.hadModifier !== supportBuild.hadModifier ||
+      JSON.stringify(targetBuild.modifierKeys) !== JSON.stringify(supportBuild.modifierKeys)) {
+    return null;
+  }
+  const sentenceTarget = targetBuild.sentence;
   const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
-    generated: safe(buildSentence(supportLang, tpl, null, sharedChoicesCore)),
-    hadModifier: l3HadModifier,
+    generated: safe(supportBuild.sentence),
+    hadModifier: supportBuild.hadModifier,
   });
 
 // Blank contract: the frame and the option tiles partition the sentence —
@@ -2942,39 +2977,62 @@ if (isModifierConcept(targetConcept)) {
 // articled option would double («Loro vedono un [un aeroporto]» was Emi
 // bug 2026-08-26-02); where the noun renders bare (possessive/number/
 // mass/contracted-article contexts) the blank falls back to the bare form
-// and bareMode makes the option tiles render bare to match.
+// and bareMode makes the option tiles render bare to match. In a
+// case-governed slot the blank holds the declined word and `slot` carries
+// the case so every tile declines identically (Emi 2026-08-27-02/-03).
 const blankInfo = resolveNounBlank(sentenceTarget, tpl, targetLang, targetConcept);
 
 // Never show a fill-in-the-blank whose blank could not be placed (surface
 // form not found in the generated sentence — e.g. inflection mismatch).
 if (!blankInfo) return null;
-const { blanked, bareMode } = blankInfo;
+const { blanked, bareMode, surface: blankSurface, slot } = blankInfo;
 
- const options = buildRecognitionOptions(tpl, targetConcept, 4, targetLang);
- // 🔥 Remove duplicate meanings (same fix as Level 2)
-const usedSupport = new Set();
-const filteredOptions = [];
+const subjectCid = tpl.concepts.find(c =>
+  window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
+);
 
+// Every tile renders through the SAME slot-aware surface as the blank:
+// the correct tile IS the blanked surface, distractors decline to fit the
+// same slot, and a concept with no form for a case-governed slot is
+// unusable as a distractor («Ty jesteś _____» offering nominative
+// «kobieta» for «kobietą» was Emi 2026-08-27-02).
+const tileText = (opt) => {
+  const meta = window.GLOBAL_VOCAB.concepts[opt];
+  if (meta?.type === "verb") return getVerbForm(opt, subjectCid, targetLang);
+  if (meta?.type === "noun") {
+    if (opt === targetConcept) return blankSurface;
+    return optionSurfaceFor(targetLang, tpl, opt, slot, { bareMode });
+  }
+  return tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
+};
+
+const options = buildRecognitionOptions(tpl, targetConcept, 8, targetLang);
+if (!options) return null;
+
+// Dedupe on BOTH surfaces: two options must never share a support meaning
+// (Level-2 fix) nor a displayed target surface (suo/sua class — and case
+// syncretism can collide two distinct citation forms in the slot).
+const correctText = tileText(targetConcept);
+if (!correctText) return null;
+const usedSupport = new Set([surfaceForm(supportLang, targetConcept)]);
+const usedTarget = new Set([correctText]);
+const tileTexts = new Map([[targetConcept, correctText]]);
 for (const cid of options) {
+  if (cid === targetConcept) continue;
+  const text = tileText(cid);
+  if (text === null || text === undefined) continue;
   const s = surfaceForm(supportLang, cid);
-  if (usedSupport.has(s)) continue;
-
+  if (usedSupport.has(s) || usedTarget.has(text)) continue;
   usedSupport.add(s);
-  filteredOptions.push(cid);
+  usedTarget.add(text);
+  tileTexts.set(cid, text);
 }
 
-if (filteredOptions.length < 4) return null;
-
-let finalOptions = filteredOptions.slice(0, 4);
-
-// ensure correct answer always included
+if (tileTexts.size < 4) return null;
+let finalOptions = shuffle([...tileTexts.keys()].slice(0, 4));
 if (!finalOptions.includes(targetConcept)) {
   finalOptions[0] = targetConcept;
   finalOptions = shuffle(finalOptions);
-}
-
-if (!options || options.length < 4) {
-  return null;
 }
 
   content.innerHTML = `
@@ -2993,29 +3051,11 @@ if (!options || options.length < 4) {
   const checkBtn = document.getElementById("check-btn");
   let selectedOption = null;
   const isSentenceStart = blanked.trim().startsWith("_____");
-  const subjectCid = tpl.concepts.find(c =>
-    window.GLOBAL_VOCAB.concepts[c]?.type === "pronoun"
-  );
   const optionButtons = []; // [{ opt, btn }]
 
   finalOptions.forEach(opt => {
 
-    const meta = window.GLOBAL_VOCAB.concepts[opt];
-    let text;
-
-    if (meta?.type === "verb") {
-      text = getVerbForm(opt, subjectCid, targetLang);
-    }
-    else if (meta?.type === "noun") {
-      // Match the blank's mode: an articled blank takes articled options
-      // («un aeroporto» completing «Loro vedono _____»); a bare blank
-      // (possessive/number/mass/contracted-article frame) takes bare ones
-      // — mixing the two rebuilt the doubled article this fixes.
-      text = bareMode ? formOf(targetLang, opt) : nounPhrase(targetLang, opt);
-    }
-    else {
-      text = tpl.surface?.[targetLang]?.[opt] || formOf(targetLang, opt);
-    }
+    let text = tileTexts.get(opt);
 
     text = isSentenceStart
       ? text.charAt(0).toUpperCase() + text.slice(1)
@@ -3498,10 +3538,19 @@ function seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang) {
   // noun; numbers require injection compatibility (mass nouns and missing
   // plural data would break the phrase). No candidate → leave the exercise
   // modifier-free, exactly as before.
+  // A candidate must be expressible in BOTH the target and the support
+  // language — a pairing only one side can render forces the parity fence
+  // to bail at render time, which silently shrinks the exercise pool
+  // (13k+ bails measured for pl). Checking here picks a workable noun
+  // up front instead.
+  const supportLang = languageState.support || "en";
+  const pairCompatible = c =>
+    isModifierCompatible(targetLang, targetConcept, c) &&
+    isModifierCompatible(supportLang, targetConcept, c);
   const noun = (meta.type === "adjective"
-    ? nouns.find(c => adjectiveSuitsNoun(targetConcept, c))
+    ? nouns.find(c => adjectiveSuitsNoun(targetConcept, c) && pairCompatible(c))
     : null) ||
-    nouns.find(c => isModifierCompatible(targetLang, targetConcept, c));
+    nouns.find(pairCompatible);
   if (!noun) return null;
   sharedChoices[(meta.type === "number" ? "num_" : "adj_") + noun] = targetConcept;
   return noun;
@@ -3553,7 +3602,8 @@ if (forcedModifier && (!targetBuild.hadModifier || !supportBuild.hadModifier)) {
 // the "correct answer" it reveals teaches a mistranslation. Bail and let
 // the caller pick another template. This closes the class behind Emi bug
 // 2026-08-26-01 regardless of which render path dropped the modifier.
-if (targetBuild.hadModifier !== supportBuild.hadModifier) {
+if (targetBuild.hadModifier !== supportBuild.hadModifier ||
+    JSON.stringify(targetBuild.modifierKeys) !== JSON.stringify(supportBuild.modifierKeys)) {
   return null;
 }
 // With injection suppressed the sentence is the plain template and the
@@ -3808,7 +3858,8 @@ if (forcedModifier && (!targetBuild.hadModifier || !supportBuild.hadModifier)) {
 // the "correct answer" it reveals teaches a mistranslation. Bail and let
 // the caller pick another template. This closes the class behind Emi bug
 // 2026-08-26-01 regardless of which render path dropped the modifier.
-if (targetBuild.hadModifier !== supportBuild.hadModifier) {
+if (targetBuild.hadModifier !== supportBuild.hadModifier ||
+    JSON.stringify(targetBuild.modifierKeys) !== JSON.stringify(supportBuild.modifierKeys)) {
   return null;
 }
 // The prompt prefers the authored render, but a drilled modifier only
@@ -4437,9 +4488,24 @@ function maybeVarySubject(tpl, targetConcept) {
   // buildSentence is the same engine used for target rendering (and is
   // already used for support lang in other exercise types), so it produces
   // consistently-built glosses without any new grammar rules.
+  //
+  // Injection MUST be suppressed here: this gloss replaces the authored
+  // render, which every downstream consumer (chooseSupportSentence) treats
+  // as modifier-free. A random adjective baked in here bypasses the L6/L7
+  // modifier-parity fence entirely — the fence compares the two live
+  // builds, never this string — and ships a prompt demanding words the
+  // graded answer doesn't contain ("They see three new airports." →
+  // «Oni widzą lotnisko.»). This was Emi bug 2026-08-27-01.
   const supportLang = languageState.support || "en";
+  const noInjection = {};
+  for (const c of newConcepts) {
+    if (window.GLOBAL_VOCAB.concepts[c]?.type === "noun") {
+      noInjection["adj_" + c] = null;
+      noInjection["num_" + c] = null;
+    }
+  }
   try {
-    const regenerated = buildSentence(supportLang, modified);
+    const regenerated = buildSentence(supportLang, modified, null, noInjection);
     if (regenerated) modified.render[supportLang] = regenerated;
   } catch (e) {
     // On any failure, fall back to the original template unchanged.

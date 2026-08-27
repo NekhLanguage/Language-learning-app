@@ -53,14 +53,24 @@ export const GRAMMAR_RULE_IDS = [
 
 let firedRules = null;
 let tracedModifier = false;
+let tracedModifierIds = null;
 function noteRule(id) {
   if (firedRules) firedRules.add(id);
 }
 // Marks the traced build as carrying an adjective/number modifier — the
 // sentence then differs from the plain template, so authored render strings
-// no longer describe it.
-function noteModifier() {
-  if (firedRules) tracedModifier = true;
+// no longer describe it. Records WHICH modifier landed on WHICH noun, so
+// fences can compare identity across the target/support pair, not just a
+// boolean (a modifier landing on noun A in one build and noun B in the
+// other passed the boolean check).
+function noteModifier(nounCid = null, adjCid = null, numCid = null) {
+  if (firedRules) {
+    tracedModifier = true;
+    if (tracedModifierIds) {
+      if (adjCid) tracedModifierIds.push("adj:" + adjCid + ">" + nounCid);
+      if (numCid) tracedModifierIds.push("num:" + numCid + ">" + nounCid);
+    }
+  }
 }
 
 // Like buildSentence, but also reports which grammar rules fired while
@@ -136,18 +146,25 @@ function acceptedAnswerVariants(lang, tpl, targetSentence, sharedChoices = null)
 function resolveNounBlank(sentence, tpl, targetLang, targetConcept) {
   const meta = vocab().concepts[targetConcept];
   const base = safeSurfaceForConcept(tpl, targetLang, targetConcept);
+  const slot = slotContextFor(tpl, targetLang, targetConcept);
   if (meta?.type === "noun") {
+    // A case-governed slot blanks the declined word — the slot-aware base
+    // — never the citation phrase (whose stem would only match inside the
+    // inflected form; the boundary guard in blankSentence now rejects
+    // that, but trying the citation first would still lose the article-
+    // free contract for declining languages). Article-language slots keep
+    // trying the full articled phrase first so the article rides the tile.
     const phrase = nounPhrase(targetLang, targetConcept);
-    if (phrase && phrase !== base) {
-      const blanked = blankSentence(sentence, phrase);
+    if (!slot.caseName && phrase && phrase !== base) {
+      const blanked = blankSentence(sentence, phrase, targetLang);
       if (blanked.includes("_____")) {
-        return { blanked, surface: phrase, bareMode: false };
+        return { blanked, surface: phrase, bareMode: false, slot };
       }
     }
   }
-  const blanked = blankSentence(sentence, base);
+  const blanked = blankSentence(sentence, base, targetLang);
   if (blanked.includes("_____")) {
-    return { blanked, surface: base, bareMode: meta?.type === "noun" };
+    return { blanked, surface: base, bareMode: meta?.type === "noun", slot };
   }
   return null;
 }
@@ -155,12 +172,22 @@ function resolveNounBlank(sentence, tpl, targetLang, targetConcept) {
 function buildSentenceWithRules(lang, tpl, forcedConcept = null, sharedChoices = null) {
   firedRules = new Set();
   tracedModifier = false;
+  tracedModifierIds = [];
   try {
     const sentence = buildSentence(lang, tpl, forcedConcept, sharedChoices);
-    return { sentence, rules: [...firedRules], hadModifier: tracedModifier };
+    return {
+      sentence,
+      rules: [...firedRules],
+      hadModifier: tracedModifier,
+      // Sorted "kind:modifier>noun" keys — deep-equal across a
+      // target/support pair means the same modifiers landed on the same
+      // nouns in both builds.
+      modifierKeys: [...tracedModifierIds].sort(),
+    };
   } finally {
     firedRules = null;
     tracedModifier = false;
+    tracedModifierIds = null;
   }
 }
 
@@ -343,6 +370,37 @@ const FEM_ACC_STRATEGIES = {
   uk: { noun: ukFeminineAccusative, adjective: ukFeminineAccusative },
   pl: { noun: plFeminineAccusativeNoun, adjective: plFeminineAccusativeAdjective },
 };
+
+// Adjective case shifts derivable by regular suffix rule, keyed by the same
+// declared strategy id as FEM_ACC_STRATEGIES. Fired only where the head
+// noun actually took the corresponding case, so languages that declare no
+// strategy (or the "uk" strategy, which has no derivable entries here) are
+// untouched. Multi-word forms are left alone, like the fem strategies.
+const ADJ_CASE_STRATEGIES = {
+  pl: {
+    // masc-animate accusative: «duży»→«dużego», «drogi»→«drogiego»
+    animateAccusative: (w) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (s.endsWith("i")) return s + "ego";
+      if (s.endsWith("y")) return s.slice(0, -1) + "ego";
+      return s;
+    },
+    // genitive plural from the plural form: «duże»→«dużych»,
+    // «niebieskie»→«niebieskich»
+    genitivePluralFromPlural: (w) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (s.endsWith("ie")) return s.slice(0, -1) + "ch";
+      if (s.endsWith("e")) return s.slice(0, -1) + "ych";
+      return s;
+    },
+  },
+};
+
+function adjCaseStrategy(lang) {
+  return ADJ_CASE_STRATEGIES[langRuleValue(lang, "caseMarking")?.femAccusativeStrategy] || null;
+}
 
 function ukObjectCaseApplies(lang) {
   return langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative";
@@ -970,16 +1028,28 @@ if (orderType === "SOV") {
 
   return ordered.filter(Boolean);
 }
-  function blankSentence(sentence, surface) {
+  function blankSentence(sentence, surface, lang = null) {
     const str = String(sentence || "");
     const target = String(surface || "").toLowerCase().trim();
 
     // If we don't know what to blank, don't pretend we did.
     if (!target) return str;
 
-    // Use substring matching so multi-word surface forms (e.g. "gym leader",
-    // "лідер залу") are found and blanked correctly.
-    const idx = str.toLowerCase().indexOf(target);
+    // Substring matching so multi-word surface forms (e.g. "gym leader",
+    // "лідер залу") are found and blanked correctly — but anchored on word
+    // boundaries, so a citation stem never matches INSIDE its own inflected
+    // form («dom» inside «домu» produced «Ja idę do _____u.» with the case
+    // suffix stranded in the frame — Emi 2026-08-27-03). Spaceless-script
+    // languages have no letter boundaries to anchor on and keep plain search.
+    const lower = str.toLowerCase();
+    const boundaryFree = lang !== null &&
+      (SPACELESS_JOIN_LANGS.has(lang) || SPACELESS_TILE_LANGS.has(lang));
+    const isLetter = (ch) => !!ch && /\p{L}/u.test(ch);
+    let idx = lower.indexOf(target);
+    while (idx !== -1 && !boundaryFree &&
+           (isLetter(str[idx - 1]) || isLetter(str[idx + target.length]))) {
+      idx = lower.indexOf(target, idx + 1);
+    }
     if (idx === -1) return str;
 
     return str.slice(0, idx) + "_____" + str.slice(idx + target.length);
@@ -1022,6 +1092,43 @@ if (orderType === "SOV") {
           isCopularPredicatePosition(ordered, idx)) {
         return entry.feminine;
       }
+      // A predicate noun takes its declared case («On jest kelnerem») —
+      // same rule the render path applies via predicateNounCaseFor;
+      // missing case data falls through to the nominative, exactly like
+      // the render path does.
+      if (idx !== -1) {
+        const isCopularTpl = ordered.some(c =>
+          c === "BE" || vocab().concepts[c]?.semantic_role === "copula");
+        const predCase = predicateNounCaseFor(
+          targetLang, ordered, idx, subjectCid, isCopularTpl);
+        if (predCase) {
+          const declined = caseFormFor(targetLang, targetConcept, predCase);
+          if (declined) return declined;
+        }
+        // A preposition-governed noun appears in the governed case
+        // («do domu», «na stole») — the blank must hold the whole
+        // declined word, not the citation stem.
+        const governed = caseMap(targetLang, ordered)[idx];
+        if (governed) {
+          const declined = caseFormFor(targetLang, targetConcept, governed);
+          if (declined) return declined;
+        }
+        // A template-carried numeral five+ governs the genitive plural
+        // («pięć książek») — mirror the render path's numeral government.
+        if (langRule(targetLang, "numeralGenitivePlural")) {
+          for (let j = idx - 1; j >= 0; j--) {
+            const t = vocab().concepts[ordered[j]]?.type;
+            if (t === "verb") break;
+            if (t === "number") {
+              if ((NUMBER_VALUES[ordered[j]] || 0) >= 5) {
+                const gp = entry?.genitive_plural;
+                if (gp) return gp;
+              }
+              break;
+            }
+          }
+        }
+      }
       // A uk noun in object position appears in the accusative («воду»).
       if (langRuleValue(targetLang, "caseMarking")?.directObjectCase === "accusative" &&
           idx !== -1 && isDirectObjectPosition(ordered, idx)) {
@@ -1030,6 +1137,88 @@ if (orderType === "SOV") {
     }
 
     return formOf(targetLang, targetConcept);
+  }
+
+  // The slot a concept occupies in a template, as the case machinery sees
+  // it — the shared context that keeps the L3 blank and its option tiles
+  // rendering through identical rules (Emi 2026-08-27-02).
+  function slotContextFor(tpl, targetLang, targetConcept) {
+    const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+    const idx = ordered.indexOf(targetConcept);
+    if (idx === -1) return { position: "other", caseName: null };
+    const subjectCid = ordered.find(c => vocab().concepts[c]?.type === "pronoun") ||
+      ordered.find(c => ["noun", "time"].includes(vocab().concepts[c]?.type));
+    const isCopularTpl = ordered.some(c =>
+      c === "BE" || vocab().concepts[c]?.semantic_role === "copula");
+    const feminineSubject = vocab().concepts[subjectCid]?.gender === "f";
+    const predCase = predicateNounCaseFor(
+      targetLang, ordered, idx, subjectCid, isCopularTpl);
+    if (predCase) return { position: "predicateNoun", caseName: predCase, feminineSubject };
+    if (isCopularTpl && isCopularPredicatePosition(ordered, idx)) {
+      // Predicate position in a language without predicateNounCase — no
+      // case, but the feminitive rule still applies («Elle est une
+      // guerrière», "Sie ist eine Kriegerin").
+      return { position: "predicateNoun", caseName: null, feminineSubject };
+    }
+    const prepCase = caseMap(targetLang, ordered)[idx];
+    if (prepCase) return { position: "prepObject", caseName: prepCase };
+    if (isDirectObjectPosition(ordered, idx)) {
+      const doCase = langRuleValue(targetLang, "caseMarking")?.directObjectCase || null;
+      return { position: "directObject", caseName: doCase };
+    }
+    return { position: idx === 0 ? "subject" : "other", caseName: null };
+  }
+
+  // Render `cid` as it would surface in the given slot — the ONE function
+  // both the L3 blank and every option tile go through, so they cannot
+  // diverge (the frame demanded «kobietą» while tiles offered «kobieta»).
+  // Returns null when the concept has no form for a case-governed slot —
+  // callers skip such distractors rather than showing a nominative that
+  // cannot fill the blank.
+  function optionSurfaceFor(targetLang, tpl, cid, slot, { bareMode = false } = {}) {
+    const meta = vocab().concepts[cid];
+    if (!meta) return null;
+    if (meta.type === "verb") {
+      return safeSurfaceForConcept(tpl, targetLang, cid);
+    }
+    // Feminitive predicate after a feminine subject — the same rule
+    // safeSurfaceForConcept applies to the blank («guerrière», never the
+    // masculine «guerrier» on a SHE_IS_… tile).
+    if (slot?.position === "predicateNoun" && slot.feminineSubject) {
+      const entry = vocab().languages?.[targetLang]?.forms?.[cid];
+      if (typeof entry?.feminine === "string") {
+        return bareMode || !ARTICLE_LANGS.has(targetLang)
+          ? entry.feminine
+          : nounPhrase(targetLang, cid, { feminineReferent: true });
+      }
+    }
+    if (slot?.caseName) {
+      if (slot.position === "directObject" && slot.caseName === "accusative") {
+        // Explicit field wins, then the declared strategy, then the
+        // nominative — accusative/nominative syncretism IS the surface
+        // for inanimates, so this never returns null.
+        return accusativeNoun(targetLang, cid, formOf(targetLang, cid));
+      }
+      return caseFormFor(targetLang, cid, slot.caseName);
+    }
+    return bareMode ? formOf(targetLang, cid) : nounPhrase(targetLang, cid);
+  }
+
+  // Case/gender/number-aware surface for a modifier tile agreeing with
+  // `headNounCid` — mirrors what the render path does to the adjective
+  // (genderedFormOf plus the feminine-accusative shift), so the tile
+  // matches the blank («dużą», not «duża»).
+  function modifierSurfaceFor(targetLang, modifierCid, headNounCid,
+    { plural = false, genderOverride = null, caseName = null } = {}) {
+    if (!vocab().concepts[modifierCid]) return null;
+    let word = headNounCid
+      ? genderedFormOf(targetLang, modifierCid, headNounCid, plural, genderOverride)
+      : formOf(targetLang, modifierCid);
+    if (word && caseName === "accusative" && !plural &&
+        vocab().languages?.[targetLang]?.forms?.[headNounCid]?.gender === "f") {
+      word = femAccusativeShift(targetLang, word, "adjective");
+    }
+    return word;
   }
 
   function isModifierConcept(cid) {
@@ -1214,7 +1403,7 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
   return modMeta.source === nounMeta?.source;
 }
 
-function buildSameTypeOptions(targetConcept, desiredTotal = 4, targetLang = null) {
+function buildSameTypeOptions(targetConcept, desiredTotal = 4, targetLang = null, surfaceFn = null) {
   const meta = vocab().concepts[targetConcept];
   if (!meta) return null;
 
@@ -1232,12 +1421,18 @@ function buildSameTypeOptions(targetConcept, desiredTotal = 4, targetLang = null
   // LIGHT both render "легкий", es HIS/HER/THEIR all render "su" — which would
   // otherwise produce duplicate buttons. Seed the "seen" set with the correct
   // answer so it is always kept, then take distinct-surface distractors.
+  // `surfaceFn` lets the caller dedupe (and filter) on the SLOT surface the
+  // tiles will actually show — a null return marks a concept with no valid
+  // surface for the slot (missing case data) and skips it.
   if (targetLang) {
-    const seen = new Set([formOf(targetLang, targetConcept)]);
+    const surface = surfaceFn || ((cid) => formOf(targetLang, cid));
+    const correctSurface = surface(targetConcept);
+    if (correctSurface === null || correctSurface === undefined) return null;
+    const seen = new Set([correctSurface]);
     const distractors = [];
     for (const cid of shuffle(pool)) {
-      const form = formOf(targetLang, cid);
-      if (seen.has(form)) continue;
+      const form = surface(cid);
+      if (form === null || form === undefined || seen.has(form)) continue;
       seen.add(form);
       distractors.push(cid);
       if (distractors.length === desiredTotal - 1) break;
@@ -2076,6 +2271,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (declined && (!precededByPossessive ||
         possessiveCaseForm(lang, ordered[idx - 1], cid, predNounCase))) {
       noteRule("predicate_instrumental");
+      // Same cross-build guard as the surface-override return below: this
+      // noun rendered declined with no modifier — pin that in
+      // sharedChoices (only unset keys) so the paired build cannot roll
+      // its own rng modifier for it («She is a big woman.» prompting
+      // «Ona jest kobietą.» was Emi 2026-08-27-01's copular face).
+      if (sharedChoices) {
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)) {
+          sharedChoices["adj_" + cid] = null;
+        }
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)) {
+          sharedChoices["num_" + cid] = null;
+        }
+      }
       return declined;
     }
   }
@@ -2108,6 +2316,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         surfaceOverride !== formOf(lang, cid) &&
         (!ARTICLE_LANGS.has(lang) || surfaceOverride.includes(formOf(lang, cid))) &&
         surfaceOverride !== phrase) {
+      // Returning before the modifier branches means no random modifier can
+      // land on this noun — record that in sharedChoices (only where the
+      // key is still unset, so a seeded drilled modifier keeps its bail
+      // semantics) or the OTHER language's build would roll its own rng
+      // modifier for the same noun and the pair would diverge silently.
+      if (sharedChoices) {
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)) {
+          sharedChoices["adj_" + cid] = null;
+        }
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)) {
+          sharedChoices["num_" + cid] = null;
+        }
+      }
       return surfaceOverride;
     }
   }
@@ -2133,6 +2354,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       adjectiveWord = genderedFormOf(lang, forcedConcept, cid, false, adjGenderOverride);
     }
   } else if (cachedAdj !== undefined) {
+    // Cached choices render unchecked BY DESIGN: the choice already passed
+    // the compat gate where it was made (random injection or the drill
+    // seeding), and re-gating here would desync the target/support pair —
+    // the pair must render the same choice or bail together, and the
+    // modifier-identity fence is what catches genuine asymmetries.
     adjectiveCid = cachedAdj;
     adjectiveWord = cachedAdj ? genderedFormOf(lang, cachedAdj, cid, false, adjGenderOverride) : null;
   } else {
@@ -2168,6 +2394,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       numberWord = formOf(lang, forcedConcept);
     }
   } else if (cachedNum !== undefined) {
+    // Cached choices render unchecked by design — see the adjective note.
     numberCid = cachedNum;
     numberWord = cachedNum ? formOf(lang, cachedNum) : null;
   } else {
@@ -2214,6 +2441,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (typeof authoredNounSurface === "string" &&
         authoredNounSurface !== formOf(lang, cid) &&
         (!ARTICLE_LANGS.has(lang) || authoredNounSurface.includes(formOf(lang, cid)))) {
+      // Same cross-build guard as the surface-override return above: this
+      // noun rendered without a modifier — pin that for the paired build.
+      if (sharedChoices) {
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)) {
+          sharedChoices["adj_" + cid] = null;
+        }
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)) {
+          sharedChoices["num_" + cid] = null;
+        }
+      }
       return authoredNounSurface;
     }
   }
@@ -2221,7 +2458,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // apply modifiers
   // When copular plural agreement applies, the bare form used by the
   // adjective branches must also be plural ("they are small leaders").
-  if (adjectiveWord || numberWord) noteModifier();
+  if (adjectiveWord || numberWord) noteModifier(cid, adjectiveCid, numberCid);
   // The bare form must match the case actually rendered in `phrase`, or the
   // article/adjective splicing below misassembles the noun phrase.
   const bare = bareNoun ||
@@ -2230,12 +2467,34 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
      feminineReferent ? possessedForm :
      formOf(lang, cid));
   const POST_ADJ = POST_ADJECTIVE_LANGS.has(lang);
+  const headEntry = vocab().languages?.[lang]?.forms?.[cid];
+  // A plural-only head noun takes plural agreement even without a number:
+  // «dei pantaloni grandi», never «dei pantaloni grande» (Emi 2026-08-27-04's
+  // Italian half).
+  if (adjectiveWord && adjectiveCid && lang !== "en" && headEntry?.pluralOnly) {
+    adjectiveWord = genderedFormOf(lang, adjectiveCid, cid, true, adjGenderOverride);
+  }
   // An adjective on a feminine accusative object agrees in case too:
   // «я п'ю холодну воду», not «холодна воду». Ukrainian feminine adjectives
   // end in -а/-я like the nouns, so the same ending shift applies.
   const ukShiftAdj = ukObjectCase && !useCopularPlural &&
-    vocab().languages?.[lang]?.forms?.[cid]?.gender === "f";
+    headEntry?.gender === "f";
   if (ukShiftAdj && adjectiveWord) adjectiveWord = femAccusativeShift(lang, adjectiveWord, "adjective");
+  // A masculine-animate accusative object carries the adjective with it:
+  // «On ma dużego syna», never «On ma duży syna». The noun's explicit
+  // `accusative` differing from the nominative is the animacy marker; the
+  // shift itself comes from the language's declared strategy family
+  // (Emi 2026-08-27-04's Polish half — uk declares no derivable entry
+  // here, so uk output is unchanged).
+  if (adjectiveWord && ukObjectCase && !useCopularPlural &&
+      headEntry?.gender === "m" &&
+      typeof headEntry?.accusative === "string" &&
+      headEntry.accusative !== formOf(lang, cid)) {
+    const strat = adjCaseStrategy(lang);
+    if (strat?.animateAccusative) {
+      adjectiveWord = strat.animateAccusative(adjectiveWord);
+    }
+  }
 
   if (numberWord) {
     // Same surface capture for a forced number modifier (see adjective note).
@@ -2246,6 +2505,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // Numbers replace the article: "two books" not "two a book"
     const isPlural = numberCid !== "ONE";
     let nounForm;
+    let numeralGoverned = false;
     if (!isPlural) {
       nounForm = bare;
     } else if (lang === "en") {
@@ -2259,6 +2519,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // landed here.
       noteRule("numeral_government");
       nounForm = vocab().languages?.[lang]?.forms?.[cid].genitive_plural;
+      numeralGoverned = true;
     } else {
       nounForm = pluralFormOf(lang, cid);
     }
@@ -2281,9 +2542,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         : prefix + nounForm;
     }
     if (adjectiveWord) {
-      const adjForm = (isPlural && adjectiveCid && lang !== "en")
+      let adjForm = (isPlural && adjectiveCid && lang !== "en")
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjectiveWord;
+      // Numeral government carries the adjective along: «osiem dużych
+      // twarzy», never «osiem duże twarzy» (Emi 2026-08-27-04). Derived
+      // from the plural form via the language's declared strategy family.
+      if (numeralGoverned) {
+        const strat = adjCaseStrategy(lang);
+        if (strat?.genitivePluralFromPlural) {
+          adjForm = strat.genitivePluralFromPlural(adjForm);
+        }
+      }
       return (POST_ADJ && !adjectivePreOrder(lang))
         ? numberWord + " " + nounForm + " " + adjForm
         : numberWord + " " + adjForm + " " + nounForm;
@@ -2634,9 +2904,13 @@ export {
   caseMap,
   caseFormFor,
   accusativeNoun,
+  predicateNounCaseFor,
   sentenceTilesForTemplate,
   blankSentence,
   safeSurfaceForConcept,
+  slotContextFor,
+  optionSurfaceFor,
+  modifierSurfaceFor,
   isDirectObjectPosition,
   ukFeminineAccusative,
   ukAccusativeNoun,

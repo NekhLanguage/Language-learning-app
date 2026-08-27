@@ -41,7 +41,8 @@
       "plural": "sąsiedzi",
       "genitive_plural": "sąsiadów",
       "accusative": "sąsiada",
-      "virile": true
+      "virile": true,
+      "instrumental": "sąsiadem"
     },
     "GROCERY": {
       "form": "sklep spożywczy",

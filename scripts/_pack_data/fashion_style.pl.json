@@ -51,7 +51,8 @@
       "plural": "krawcy",
       "genitive_plural": "krawców",
       "accusative": "krawca",
-      "virile": true
+      "virile": true,
+      "instrumental": "krawcem"
     },
     "RUNWAY": {
       "form": "wybieg",
@@ -63,7 +64,8 @@
       "form": "modelka",
       "gender": "f",
       "plural": "modelki",
-      "genitive_plural": "modelek"
+      "genitive_plural": "modelek",
+      "instrumental": "modelką"
     },
     "COLLECTION": {
       "form": "kolekcja",
@@ -147,7 +149,8 @@
       "plural": "projektanci",
       "genitive_plural": "projektantów",
       "accusative": "projektanta",
-      "virile": true
+      "virile": true,
+      "instrumental": "projektantem"
     },
     "BRAND": {
       "form": "marka",
@@ -167,7 +170,8 @@
       "plural": "influencerzy",
       "genitive_plural": "influencerów",
       "accusative": "influencera",
-      "virile": true
+      "virile": true,
+      "instrumental": "influencerem"
     },
     "EDITORIAL": {
       "form": "edytorial",

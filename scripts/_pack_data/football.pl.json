@@ -38,7 +38,8 @@
       "plural": "napastnicy",
       "genitive_plural": "napastników",
       "accusative": "napastnika",
-      "virile": true
+      "virile": true,
+      "instrumental": "napastnikiem"
     },
     "GOALKEEPER": {
       "form": "bramkarz",
@@ -46,7 +47,8 @@
       "plural": "bramkarze",
       "genitive_plural": "bramkarzy",
       "accusative": "bramkarza",
-      "virile": true
+      "virile": true,
+      "instrumental": "bramkarzem"
     },
     "CAPTAIN": {
       "form": "kapitan",
@@ -54,7 +56,8 @@
       "plural": "kapitanowie",
       "genitive_plural": "kapitanów",
       "accusative": "kapitana",
-      "virile": true
+      "virile": true,
+      "instrumental": "kapitanem"
     },
     "REFEREE": {
       "form": "sędzia",
@@ -62,7 +65,8 @@
       "plural": "sędziowie",
       "genitive_plural": "sędziów",
       "accusative": "sędziego",
-      "virile": true
+      "virile": true,
+      "instrumental": "sędzią"
     },
     "COACH": {
       "form": "trener",
@@ -70,7 +74,8 @@
       "plural": "trenerzy",
       "genitive_plural": "trenerów",
       "accusative": "trenera",
-      "virile": true
+      "virile": true,
+      "instrumental": "trenerem"
     },
     "KICK": {
       "base": "kopać",
@@ -311,7 +316,9 @@
       "plural": "mistrzowie",
       "genitive_plural": "mistrzów",
       "accusative": "mistrza",
-      "virile": true
+      "virile": true,
+      "instrumental": "mistrzem",
+      "instrumental_plural": "mistrzami"
     },
     "CROWD": {
       "form": "tłum",

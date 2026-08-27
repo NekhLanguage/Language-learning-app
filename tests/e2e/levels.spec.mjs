@@ -364,6 +364,59 @@ test("pl L7: a drilled adjective in the prompt appears in the graded answer", as
   expect(promptHasIt).toBe(answerHasIt);
 });
 
+test("pl L7: the prompt never demands a modifier the graded answer lacks", async ({ page }) => {
+  // Regression net for Emi 2026-08-27-01: maybeVarySubject regenerated the
+  // support gloss WITHOUT injection suppression, baking a random adjective
+  // into what chooseSupportSentence treats as the authored render — the
+  // parity fence compares the two live builds and never sees the displayed
+  // string, so "They see three new airports." shipped over «Oni widzą
+  // lotnisko.». Real rng, many rerenders, live progress state that keeps
+  // the injection pools populated (the leak needs L4+ non-completed
+  // concepts to draw from).
+  await startNewRun(page, { language: "Polish" });
+  const MOD_MAP = {
+    good: ["dobr"], bad: ["zł", "źl"], big: ["duż"], small: ["mał"],
+    new: ["now"], old: ["star"], black: ["czarn"], white: ["biał"],
+    red: ["czerwon"], blue: ["niebiesk"], green: ["zielon"],
+    two: ["dwa", "dwie"], three: ["trzy"], four: ["cztery"],
+    five: ["pięć", "pięci"], eight: ["osiem", "ośmi"], ten: ["dziesięć", "dziesięci"],
+  };
+  for (let i = 0; i < 25; i++) {
+    await page.evaluate(() => {
+      const app = window.__app;
+      const run = app.run;
+      const index = app.bundleIndex;
+      const bundleIds = run.releasePlan.slice(0, 8);
+      run.releasedBundleIds = bundleIds;
+      run.releasePlanIndex = bundleIds.length;
+      run.released = [...new Set(bundleIds.flatMap((id) => index[id]?.concepts || []))];
+      run.progress = {};
+      for (const cid of run.released) {
+        const type = window.GLOBAL_VOCAB.concepts[cid]?.type;
+        const eligible = type === "noun" || type === "adjective" || type === "number";
+        run.progress[cid] = { level: eligible ? 7 : 5, streak: 0,
+          completed: false, lastShownAt: eligible ? -999999 : 0, lastResult: null };
+      }
+      app.rerender();
+    });
+    const state = await page.evaluate(() => ({
+      prompt: document.querySelector("#content strong")?.innerText || "",
+      answer: window.__app.lastExercise?.answer || "",
+      type: window.__app.lastExercise?.type || "",
+    }));
+    if (state.type !== "free_production" || !state.prompt || !state.answer) continue;
+    const p = state.prompt.toLowerCase();
+    const a = state.answer.toLowerCase();
+    for (const [en, stems] of Object.entries(MOD_MAP)) {
+      if (new RegExp(`\\b${en}\\b`).test(p)) {
+        expect(stems.some((s) => a.includes(s)),
+          `prompt "${state.prompt}" demands "${en}" missing from answer "${state.answer}"`
+        ).toBe(true);
+      }
+    }
+  }
+});
+
 test("a concept added to an already-released bundle is backfilled", async ({ page }) => {
   // Release plans are frozen at signup; when a concept joins an existing
   // bundle's definition (TABLE → core_28), backfillReleasedBundles releases

@@ -43,7 +43,8 @@
       "plural": "astronauci",
       "genitive_plural": "astronautów",
       "accusative": "astronautę",
-      "virile": true
+      "virile": true,
+      "instrumental": "astronautą"
     },
     "TELESCOPE": {
       "form": "teleskop",
@@ -70,7 +71,8 @@
       "plural": "kosmici",
       "genitive_plural": "kosmitów",
       "accusative": "kosmitę",
-      "virile": true
+      "virile": true,
+      "instrumental": "kosmitą"
     },
     "CREATURE": {
       "form": "stworzenie",
@@ -101,7 +103,8 @@
       "gender": "m",
       "plural": "androidy",
       "genitive_plural": "androidów",
-      "accusative": "androida"
+      "accusative": "androida",
+      "instrumental": "androidem"
     },
     "COCKPIT": {
       "form": "kokpit",

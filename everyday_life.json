@@ -1219,7 +1219,7 @@
         "APARTMENT": {"form":"mieszkanie","gender":"n","plural":"mieszkania","genitive_plural":"mieszkań"},
         "LIVING_ROOM": {"form":"salon","gender":"m","plural":"salony","genitive_plural":"salonów"},
         "FURNITURE": {"form":"meble","gender":"m"},
-        "NEIGHBOR": {"form":"sąsiad","gender":"m","plural":"sąsiedzi","genitive_plural":"sąsiadów","accusative":"sąsiada","virile":true},
+        "NEIGHBOR": {"form":"sąsiad","gender":"m","plural":"sąsiedzi","genitive_plural":"sąsiadów","accusative":"sąsiada","virile":true, "instrumental": "sąsiadem"},
         "GROCERY": {"form":"sklep spożywczy","gender":"m","plural":"sklepy spożywcze","genitive_plural":"sklepów spożywczych"},
         "PHARMACY": {"form":"apteka","gender":"f","plural":"apteki","genitive_plural":"aptek"},
         "OFFICE": {"form":"biuro","gender":"n","plural":"biura","genitive_plural":"biur"},
