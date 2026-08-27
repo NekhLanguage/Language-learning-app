@@ -50,6 +50,7 @@ import {
   configureEngine, buildSentence, buildSentenceWithRules,
   isModifierCompatible, adjectiveSuitsNoun,
 } from '../sentence_engine.mjs';
+import { langsWith } from '../language_rules.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BASELINE_FILE = path.join(HERE, 'injection-baseline.json');
@@ -68,8 +69,9 @@ configureEngine({
   rng: () => 0.999,
 });
 
-// Languages whose countable nouns inflect for number.
-const PLURAL_LANGS = new Set(['en', 'pt', 'es', 'fr', 'de', 'el', 'no', 'it', 'uk', 'ar', 'tr']);
+// Languages whose countable nouns inflect for number — declared per
+// language in language_rules.mjs (inflectsNounPlural).
+const PLURAL_LANGS = langsWith('inflectsNounPlural');
 // Scripts written without inter-word spaces.
 const SPACELESS = {
   th: /[฀-๿]\s+[฀-๿]/,

@@ -75,6 +75,62 @@ test("derived sets keep their pre-consolidation memberships", () => {
 });
 
 // ---------------------------------------------------------------------
+// The CJS validators cannot import this ESM registry, so their hardcoded
+// language sets are kept in sync BY THIS TEST: it parses each validator's
+// set literal and asserts the membership equals the declared flag. Drift
+// fails here, naming the file.
+// ---------------------------------------------------------------------
+
+test("CJS validator language lists match the declared flags", async () => {
+  const fs = await import("node:fs");
+  const read = (p) => fs.readFileSync(new URL(`../../${p}`, import.meta.url), "utf8");
+  const extractSet = (src, constName) => {
+    const m = src.match(new RegExp(`const ${constName} = new Set\\(\\[([^\\]]*)\\]\\)`));
+    assert.ok(m, `${constName} set literal found`);
+    return [...m[1].matchAll(/'([a-z]{2})'/g)].map((x) => x[1]).sort();
+  };
+  const packs = read("validation/validate-packs.js");
+  const structure = read("validation/validate-structure.js");
+  const encoding = read("validation/validate-encoding.js");
+  assert.deepEqual(extractSet(packs, "GENDER_REQUIRED_LANGS"),
+    [...langsWith("nounGenderForCountables")].sort(), "validate-packs GENDER_REQUIRED_LANGS");
+  assert.deepEqual(extractSet(structure, "GENDER_REQUIRED_LANGS"),
+    [...langsWith("nounGenderForCountables")].sort(), "validate-structure GENDER_REQUIRED_LANGS");
+  assert.deepEqual(extractSet(packs, "FULL_GENDER_LANGS"),
+    [...langsWith("fullNounGender")].sort(), "validate-packs FULL_GENDER_LANGS");
+  assert.deepEqual(extractSet(packs, "VERB_PERSON_LANGS"),
+    [...langsWith("verbPersonParadigm")].sort(), "validate-packs VERB_PERSON_LANGS");
+  assert.deepEqual(extractSet(encoding, "LATIN_LANGS"),
+    [...langsWith("latinEncodingChecks")].sort(), "validate-encoding LATIN_LANGS");
+});
+
+// ---------------------------------------------------------------------
+// caseMarking declarations drive the engine's case machinery
+// ---------------------------------------------------------------------
+
+test("uk caseMarking declaration matches the engine's historic behaviour", () => {
+  const cm = LANGUAGE_RULES.uk.caseMarking;
+  assert.equal(cm.directObjectCase, "accusative");
+  assert.equal(cm.femAccusativeStrategy, "uk");
+  assert.equal(cm.bareInstrumentalMeans, true);
+  assert.deepEqual(cm.prepositions, {
+    ON: "locative", IN: "locative", OFF: "locative",
+    UNDER: "instrumental", BEHIND: "instrumental", FRONT: "instrumental",
+    BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
+    WITH: "instrumental",
+    TO: "genitive", FROM: "genitive", FOR: "genitive",
+  });
+});
+
+test("wordOrder declarations preserve the historic WORD_ORDER map", () => {
+  const sov = Object.keys(LANGUAGE_RULES)
+    .filter((l) => LANGUAGE_RULES[l].wordOrder === "SOV").sort();
+  assert.deepEqual(sov, ["ja", "ko", "tr"]);
+  // Everything else defaults to SVO — no language declares VSO today.
+  assert.ok(!Object.values(LANGUAGE_RULES).some((r) => r.wordOrder === "VSO"));
+});
+
+// ---------------------------------------------------------------------
 // possessiveDefiniteArticle — Emi 2026-08-26-03
 // ---------------------------------------------------------------------
 

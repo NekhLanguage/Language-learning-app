@@ -28,7 +28,9 @@ const VOCAB_FILES = [
 ];
 
 // Languages where countable nouns should carry a gender field
-const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'it']);
+// Kept in sync with language_rules.mjs nounGenderForCountables — a unit
+// test asserts the membership matches the declaration.
+const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es', 'it']);
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 

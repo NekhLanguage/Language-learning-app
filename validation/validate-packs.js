@@ -17,7 +17,8 @@ const fs   = require('fs');
 const ROOT = path.join(__dirname, '..');
 
 // Languages where countable nouns should carry a gender field.
-// Mirrors validate-structure.js, plus French which is also gendered.
+// Kept in sync with language_rules.mjs nounGenderForCountables (unit test
+// asserts the membership matches the declaration).
 const GENDER_REQUIRED_LANGS = new Set(['de', 'pt', 'ar', 'fr', 'es', 'it']);
 
 // Languages where EVERY noun (countable or not) must carry a gender field,
