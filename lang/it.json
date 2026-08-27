@@ -434,7 +434,8 @@
       "form": "buono",
       "f": "buona",
       "plural": "buoni",
-      "fp": "buone"
+      "fp": "buone",
+      "apocope": "buon"
     },
     "BAD": {
       "form": "cattivo",

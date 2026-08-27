@@ -97,6 +97,15 @@
 //   questionParticle         yes/no questions keep declarative order
 //                            behind this fronted particle («Czy to jest
 //                            twój telefon?»).
+//   preNominalAdjectiveRoles adjective semantic_role values placed BEFORE
+//                            the noun in a postNominalAdjectives language
+//                            («un bon livre» while «un livre noir») — the
+//                            role-aware refinement of the position
+//                            default. Per-word escapes: preNominal /
+//                            postNominal on the form entry.
+//   apocope                  pre-nominal masc-singular adjectives use the
+//                            entry's `apocope` short form («buen libro»,
+//                            «buon libro»).
 //   virilePlural             plural agreement splits virile/non-virile:
 //                            nouns flag `virile: true`, adjectives carry a
 //                            `vp` (virile plural) form («nowi» vs «nowe»).
@@ -168,6 +177,10 @@ export const LANGUAGE_RULES = {
       declinesAttributiveAdjectives: true,
     },
     indefiniteArticle: true,
+    postNominalAdjectives: true,
+    preNominalAdjectiveRoles: [
+      "property_size", "property_quality", "property_time", "property_youth",
+    ],
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
@@ -217,6 +230,8 @@ export const LANGUAGE_RULES = {
     },
     indefiniteArticle: true,
     postNominalAdjectives: true,
+    preNominalAdjectiveRoles: ["property_quality"],
+    apocope: true,
     possessiveDefiniteArticle: true,
     proDrop: true,
     flexibleAdjectiveOrder: true,
@@ -272,6 +287,7 @@ export const LANGUAGE_RULES = {
       declinesAttributiveAdjectives: true,
     },
     indefiniteArticle: true, postNominalAdjectives: true, proDrop: true,
+    preNominalAdjectiveRoles: ["property_quality"],
     secondPersonAsThird: true, statementOrderQuestion: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true, latinEncodingChecks: true,
@@ -282,6 +298,9 @@ export const LANGUAGE_RULES = {
       declinesAttributiveAdjectives: true, apocope: true,
     },
     indefiniteArticle: true, proDrop: true, statementOrderQuestion: true,
+    postNominalAdjectives: true,
+    preNominalAdjectiveRoles: ["property_quality"],
+    apocope: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
