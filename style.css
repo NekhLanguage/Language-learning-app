@@ -898,9 +898,24 @@ button.wrong {
   margin-top: 0.35rem;
 }
 
-/* Utility */
+/* Utility. !important so .hidden always wins — .alphabet-btn's
+   display:flex sits later in the file with equal specificity and was
+   beating it, shipping a visible button that opened an empty overlay
+   for Latin-script languages (Emi 2026-08-26-08). */
 .hidden{
-  display:none;
+  display:none !important;
+}
+
+/* Destructive action (Emi 2026-08-26-12): RESET must not look like the
+   harmless QUIT pill it sits opposite. */
+.quit-button--danger{
+  border-color: rgba(248, 113, 113, 0.85);
+  color: #fecaca;
+  background: rgba(127, 29, 29, 0.35);
+}
+.quit-button--danger:hover{
+  background: rgba(153, 27, 27, 0.5);
+  color: #ffffff;
 }
 
 /* =========================

@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-27
 
+### Small fixes: phantom ABC button, log out, reset guard
+The round "ABC" script-guide button no longer appears for languages written in the Latin alphabet (it opened an empty screen). "Log out and reset local data" now clears all of it, including the backup copy of your progress — what the confirmation promises is what happens. And the "reset all progress" button now looks like the destructive action it is and asks twice before erasing every language.
+
 ### Italian grammar corrected across four exercise surfaces
 Four Italian generator defects found in testing are fixed. Possessives now carry their definite article everywhere («il suo taxi», not «suo taxi»). Fill-in-the-blank frames no longer double the article — the blank takes the article with it, so you assemble «Loro vedono [un aeroporto]», never «un un aeroporto». Numbers no longer count mass nouns in any language (no more «Io bevo quattro acqua» / "I drink eight waters"). And the free-translation grader now accepts standard Italian you'd actually say: dropping the subject pronoun («Leggiamo un libro») and either adjective order («un libro piccolo» or «un piccolo libro») both count as correct, while the app keeps teaching the fuller beginner-friendly form. Also: "landmark" now translates as «monumento», translation exercises never show a prompt whose reference answer is missing words from it, and answer options never contain two words that are spelled identically in Italian (like «suo» for both "his" and "her") so a right answer can't be marked wrong.
 
