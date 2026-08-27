@@ -3412,7 +3412,7 @@
         "KNEE": {"form":"kolano","gender":"n","plural":"kolana","genitive_plural":"kolan"},
         "SHOULDER": {"form":"ramię","gender":"n","plural":"ramiona","genitive_plural":"ramion"},
         "CALORIE": {"form":"kaloria","gender":"f","plural":"kalorie","genitive_plural":"kalorii"},
-        "RUNNER": {"form":"biegacz","gender":"m","plural":"biegacze","genitive_plural":"biegaczy","accusative":"biegacza","virile":true},
+        "RUNNER": {"form":"biegacz","gender":"m","plural":"biegacze","genitive_plural":"biegaczy","accusative":"biegacza","virile":true, "instrumental": "biegaczem"},
         "RACE": {"form":"wyścig","gender":"m","plural":"wyścigi","genitive_plural":"wyścigów"},
         "MARATHON": {"form":"maraton","gender":"m","plural":"maratony","genitive_plural":"maratonów"},
         "WARMUP": {"form":"rozgrzewka","gender":"f","plural":"rozgrzewki","genitive_plural":"rozgrzewek"},

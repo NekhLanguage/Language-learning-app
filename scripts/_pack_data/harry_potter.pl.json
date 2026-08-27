@@ -17,13 +17,15 @@
       "plural": "czarodzieje",
       "genitive_plural": "czarodziejów",
       "accusative": "czarodzieja",
-      "virile": true
+      "virile": true,
+      "instrumental": "czarodziejem"
     },
     "WITCH": {
       "form": "czarownica",
       "gender": "f",
       "plural": "czarownice",
-      "genitive_plural": "czarownic"
+      "genitive_plural": "czarownic",
+      "instrumental": "czarownicą"
     },
     "SPELL": {
       "form": "zaklęcie",
@@ -73,7 +75,8 @@
       "plural": "profesorowie",
       "genitive_plural": "profesorów",
       "accusative": "profesora",
-      "virile": true
+      "virile": true,
+      "instrumental": "profesorem"
     },
     "STUDENT": {
       "form": "uczeń",
@@ -81,7 +84,8 @@
       "plural": "uczniowie",
       "genitive_plural": "uczniów",
       "accusative": "ucznia",
-      "virile": true
+      "virile": true,
+      "instrumental": "uczniem"
     },
     "ELF": {
       "form": "skrzat",

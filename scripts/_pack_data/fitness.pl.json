@@ -95,7 +95,8 @@
       "plural": "biegacze",
       "genitive_plural": "biegaczy",
       "accusative": "biegacza",
-      "virile": true
+      "virile": true,
+      "instrumental": "biegaczem"
     },
     "RACE": {
       "form": "wyścig",

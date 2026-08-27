@@ -14,7 +14,8 @@
       "plural": "trenerzy",
       "genitive_plural": "trenerów",
       "accusative": "trenera",
-      "virile": true
+      "virile": true,
+      "instrumental": "trenerem"
     },
     "GYM": {
       "form": "sala",
@@ -34,7 +35,8 @@
       "plural": "liderzy sali",
       "genitive_plural": "liderów sali",
       "accusative": "lidera sali",
-      "virile": true
+      "virile": true,
+      "instrumental": "liderem sali"
     },
     "ELITE_FOUR": {
       "form": "Elitarna Czwórka",
@@ -182,7 +184,8 @@
       "form": "sen",
       "gender": "m",
       "plural": "sny",
-      "genitive_plural": "snów"
+      "genitive_plural": "snów",
+      "instrumental": "snem"
     },
     "PARALYZE": {
       "base": "paraliżować",

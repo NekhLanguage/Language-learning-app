@@ -106,7 +106,8 @@
       "plural": "kelnerzy",
       "genitive_plural": "kelnerów",
       "accusative": "kelnera",
-      "virile": true
+      "virile": true,
+      "instrumental": "kelnerem"
     },
     "MARKET": {
       "form": "targ",
@@ -186,7 +187,8 @@
       "plural": "przewodnicy",
       "genitive_plural": "przewodników",
       "accusative": "przewodnika",
-      "virile": true
+      "virile": true,
+      "instrumental": "przewodnikiem"
     },
     "BOARD": {
       "base": "wsiadać",
