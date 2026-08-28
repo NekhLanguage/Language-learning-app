@@ -407,6 +407,20 @@ const ADJ_CASE_STRATEGIES = {
       return s;
     },
   },
+  uk: {
+    // genitive plural from the plural form: «погані»→«поганих»,
+    // «білі»→«білих» (Emi 2026-08-28-07: «десять поганих паспортів»).
+    // Hard-stem -і→-их covers the shipped adjective inventory; a soft-stem
+    // adjective («сині»→«синіх») must carry an explicit genitive_plural
+    // field, which wins over the derivation at the call sites.
+    // No animateAccusative on purpose — not observed in uk output.
+    genitivePluralFromPlural: (w) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (s.endsWith("і")) return s.slice(0, -1) + "их";
+      return s;
+    },
+  },
 };
 
 function adjCaseStrategy(lang) {
@@ -1490,6 +1504,27 @@ const NUMBER_VALUES = {
   TWENTY: 20,
 };
 
+// Numeral gender/case agreement with the head noun, declared via the
+// numeralGenderAgreement rule and driven by object-shaped number entries:
+// uk «дві» (TWO.f), «одну роботу» (ONE.f_accusative), el «μία» / «τρεις» /
+// «δεκατέσσερις» (ONE.f / THREE.f / FOURTEEN.f, m for «ένας»). Bare-array
+// number entries and languages without the flag render exactly as before.
+function numberAgreementForm(lang, numberCid, headCid, accusative) {
+  const word = formOf(lang, numberCid);
+  if (!langRule(lang, "numeralGenderAgreement")) return word;
+  const entry = vocab().languages?.[lang]?.forms?.[numberCid];
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return word;
+  const g = vocab().languages?.[lang]?.forms?.[headCid]?.gender;
+  if (g === "f") {
+    if (accusative && typeof entry.f_accusative === "string") return entry.f_accusative;
+    if (typeof entry.f === "string") return entry.f;
+    return word;
+  }
+  if (g === "m" && typeof entry.m === "string") return entry.m;
+  if (g === "n" && typeof entry.n === "string") return entry.n;
+  return word;
+}
+
 function isModifierCompatible(lang, modifierCid, nounCid) {
   const nounMeta  = vocab().concepts[nounCid];
   const nounEntry = vocab().languages?.[lang]?.forms?.[nounCid] || {};
@@ -1521,6 +1556,20 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
       langRule(lang, "numeralGenitivePlural") &&
       (NUMBER_VALUES[modifierCid] || 0) >= 5 &&
       typeof nounEntry.genitive_plural !== "string") {
+    return false;
+  }
+
+  // In a language with plural morphology, a number ≥2 on a noun with no
+  // plural data would ship the singular citation form («δεκαπέντε
+  // διαβατήριο», «два паспорт» — Emi 2026-08-28-04/-07). Refuse instead:
+  // wrong gets filtered, and the NO_PLURAL_DATA baseline is the visible
+  // backlog of what to author.
+  if (modMeta.type === "number" &&
+      lang !== "en" && // en pluralizes algorithmically (pluralize())
+      (NUMBER_VALUES[modifierCid] || 0) >= 2 &&
+      langRule(lang, "inflectsNounPlural") &&
+      !nounEntry.invariantPlural && !nounEntry.pluralOnly &&
+      typeof nounEntry.plural !== "string") {
     return false;
   }
 
@@ -1776,6 +1825,14 @@ function possessiveArticleFor(lang, nounCid, plural = false) {
     if (plural || entry.pluralOnly) return f ? "le" : "i";
     return f ? "la" : "il";
   }
+  // Greek: the possessed noun keeps its definite article and the enclitic
+  // possessive follows («το βιβλίο μου») — same table definiteNounPhrase
+  // uses (Emi 2026-08-28-01: 16/16 possessive sentences shipped without it).
+  if (lang === "el") {
+    const g = entry.gender;
+    if (plural || entry.pluralOnly) return g === "n" ? "τα" : "οι";
+    return g === "f" ? "η" : g === "n" ? "το" : "ο";
+  }
   return null;
 }
 
@@ -1799,9 +1856,13 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
     const declinedPoss = possessiveCaseForm(lang, possessiveCid, nounCid, caseName);
     if (declinedPoss) possessive = declinedPoss;
   }
-  // Thai postposes the possessor: โทรศัพท์ของคุณ ("phone of-you").
-  if (lang === "th") {
-    return `${noun}${possessive}`;
+  // Enclitic possessors follow the noun (declared, not hardcoded): Thai
+  // โทรศัพท์ของคุณ ("phone of-you", no article), Greek «το βιβλίο μου»
+  // (with the definite article from possessiveArticleFor).
+  if (langRule(lang, "possessiveEnclitic")) {
+    const art = possessiveArticleFor(lang, nounCid);
+    const tail = joinWords(lang, [noun, possessive]);
+    return art ? `${art} ${tail}` : tail;
   }
   // Possessive noun phrases take the definite article in languages
   // declaring possessiveDefiniteArticle («il tuo telefono», «le tue
@@ -2513,6 +2574,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     isCopularPredicatePosition(ordered, idx) &&
     typeof nounEntry?.feminine === "string";
   let possessedForm = feminineReferent ? nounEntry.feminine : formOf(lang, cid);
+  // Copular-plural agreement reaches possessed predicates too: «Вони наші
+  // дівчата» — both halves pluralize together (Emi 2026-08-28-09; the
+  // possessive slot mirrors this with its own plural form).
+  if (pluralAgreement && precededByPossessive && !feminineReferent) {
+    possessedForm = lang === "en"
+      ? pluralize(possessedForm)
+      : pluralFormOf(lang, cid);
+  }
   if (ukObjectCase && bareDetermined &&
       vocab().languages?.[lang]?.forms?.[cid]?.gender === "f") {
     const acc = femAccusativeShift(lang, possessedForm, "noun");
@@ -2521,12 +2590,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       possessedForm = acc;
     }
   }
-  // Thai possessors follow the noun: มือของฉัน ("hand of-me") — the
-  // possessive word (ของฉัน) attaches after the possessed noun, and its
-  // own ordered-walk slot renders empty. "Another" postposes with the
-  // classifier: หนังสืออีกเล่ม.
-  if (lang === "th" && precededByPossessive) {
-    return possessedForm + formOf(lang, ordered[idx - 1]);
+  // Enclitic possessors follow the noun — the possessive word attaches
+  // after the possessed noun (its own ordered-walk slot renders empty):
+  // th มือของฉัน ("hand of-me"), el «το βιβλίο μου» with the article.
+  // "Another" postposes with the th classifier: หนังสืออีกเล่ม.
+  if (langRule(lang, "possessiveEnclitic") && precededByPossessive) {
+    const possWord = genderedFormOf(lang, ordered[idx - 1], cid);
+    const art = possessiveArticleFor(lang, cid);
+    const tail = joinWords(lang, [possessedForm, possWord]);
+    return art ? `${art} ${tail}` : tail;
   }
   if (lang === "th" && precededByModifier &&
       prevMeta?.semantic_role === "quantity_additional") {
@@ -2777,6 +2849,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   }
 
   if (numberWord) {
+    // Numeral gender/case agreement with the head noun («дві сковороди»,
+    // «Я маю одну роботу», «δεκατέσσερις κρατήσεις») — applied BEFORE the
+    // blank-surface capture so L3 blanks hold the agreed form
+    // (Emi 2026-08-28-07/-08 uk, -03 el).
+    numberWord = numberAgreementForm(lang, numberCid, cid, ukObjectCase);
     // Same surface capture for a forced number modifier (see adjective note).
     if (sharedChoices && numberCid === forcedConcept) {
       const k = "blankSurface_" + lang;
@@ -2826,12 +2903,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjectiveWord;
       // Numeral government carries the adjective along: «osiem dużych
-      // twarzy», never «osiem duże twarzy» (Emi 2026-08-27-04). Derived
-      // from the plural form via the language's declared strategy family.
+      // twarzy», never «osiem duże twarzy» (Emi 2026-08-27-04). An explicit
+      // genitive_plural field on the adjective wins (soft stems the
+      // derivation can't tell apart — «синіх»); else derived from the
+      // plural form via the language's declared strategy family.
       if (numeralGoverned) {
-        const strat = adjCaseStrategy(lang);
-        if (strat?.genitivePluralFromPlural) {
-          adjForm = strat.genitivePluralFromPlural(adjForm);
+        const adjEntry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
+        if (typeof adjEntry?.genitive_plural === "string") {
+          adjForm = adjEntry.genitive_plural;
+        } else {
+          const strat = adjCaseStrategy(lang);
+          if (strat?.genitivePluralFromPlural) {
+            adjForm = strat.genitivePluralFromPlural(adjForm);
+          }
         }
       }
       return adjectiveGoesPostNominal(lang, adjectiveCid)
@@ -2893,7 +2977,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjForm;
       const art = possessiveArticleFor(lang, cid, possPlural);
-      phrase = joinWords(lang, art ? [art, possForm, bare] : [possForm, bare]);
+      // Enclitic languages postpose the possessive here too (the forced/
+      // drilled path): th «มือของฉัน», el «το βιβλίο μου».
+      const pair = langRule(lang, "possessiveEnclitic")
+        ? [bare, possForm]
+        : [possForm, bare];
+      phrase = joinWords(lang, art ? [art, ...pair] : pair);
     } else if (adjectiveGoesPostNominal(lang, adjectiveCid)) {
       // Article + noun + adjective: "uma casa grande" (spaceless in th)
       phrase = joinWords(lang, [phrase, adjForm]);
@@ -3001,6 +3090,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       }
     }
 
+    // A neuter/inanimate "it" cannot subject an ordinary verb in languages
+    // declaring inanimateSubjectProDrop — Polish drops it: «Mży.», never
+    // «Ono mży.» (Emi 2026-08-28-10; Nekh-approved carve-out from the
+    // explicit-pronoun pedagogy, which keeps personal pronouns explicit).
+    // The verb still conjugates 3sg via subjectCid; the assembler filters
+    // the empty slot and capitalizes the next word.
+    if (idx === 0 && meta.type === "pronoun" &&
+        meta.semantic_role === "third_person_neuter" &&
+        !isCopularTemplate && langRule(lang, "inanimateSubjectProDrop")) {
+      return "";
+    }
+
     // Predicate adjective in a copular sentence ("autumn is OLD") must agree
     // with the subject in gender — "осінь стара", not "осінь старий" — and
     // in number for plural-only subjects («штани чорні», "as calças são
@@ -3060,13 +3161,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (meta.type === "adjective" && meta.semantic_role === "possessive" &&
         lang !== "fr") {
       const nextCid = ordered[idx + 1];
-      // Thai renders the possessor inside the noun slot (มือของฉัน) —
-      // this slot stays empty.
-      if (lang === "th" && vocab().concepts[nextCid]?.type === "noun") {
+      // Enclitic languages render the possessor inside the noun slot
+      // (th มือของฉัน, el «το βιβλίο μου») — this slot stays empty.
+      if (langRule(lang, "possessiveEnclitic") &&
+          vocab().concepts[nextCid]?.type === "noun") {
         return "";
       }
       if (vocab().concepts[nextCid]?.type === "noun") {
-        let form = genderedFormOf(lang, cid, nextCid);
+        // Copular-plural agreement reaches the possessive too: «Вони наші
+        // дівчата», never «Вони наша дівчата» (Emi 2026-08-28-09) — the
+        // predicate noun pluralizes with a plural subject, so its
+        // possessive takes the plural form when the entry has one.
+        let form = genderedFormOf(lang, cid, nextCid, pluralAgreement);
         // Mirror of the predicate-case check in the noun slot: when the
         // possessed predicate noun declines, the possessive declines with
         // it («moją mamą») — and when either half lacks data, both stay

@@ -279,7 +279,9 @@
     "HOUSE": {
       "form": "будинок",
       "genitive": "будинку",
-      "gender": "m"
+      "gender": "m",
+      "plural": "будинки",
+      "genitive_plural": "будинків"
     },
     "HOME": {
       "form": "дім",
@@ -291,124 +293,164 @@
       "form": "книга",
       "instrumental": "книгою",
       "gender": "f",
-      "plural": "книги"
+      "plural": "книги",
+      "genitive_plural": "книг"
     },
     "THING": {
       "form": "річ",
-      "gender": "f"
+      "gender": "f",
+      "plural": "речі",
+      "genitive_plural": "речей"
     },
     "JOB": {
       "form": "робота",
-      "gender": "f"
+      "gender": "f",
+      "plural": "роботи",
+      "genitive_plural": "робіт"
     },
     "ROOM": {
       "form": "кімната",
       "genitive": "кімнати",
-      "gender": "f"
+      "gender": "f",
+      "plural": "кімнати",
+      "genitive_plural": "кімнат"
     },
     "BOY": {
       "form": "хлопець",
       "gender": "m",
-      "plural": "хлопці"
+      "plural": "хлопці",
+      "genitive_plural": "хлопців"
     },
     "GIRL": {
       "form": "дівчина",
       "gender": "f",
-      "plural": "дівчата"
+      "plural": "дівчата",
+      "genitive_plural": "дівчат"
     },
     "MAN": {
       "form": "чоловік",
       "gender": "m",
-      "plural": "чоловіки"
+      "plural": "чоловіки",
+      "genitive_plural": "чоловіків"
     },
     "WOMAN": {
       "form": "жінка",
       "gender": "f",
-      "plural": "жінки"
+      "plural": "жінки",
+      "genitive_plural": "жінок"
     },
     "MOM": {
       "form": "мама",
       "instrumental": "мамою",
-      "gender": "f"
+      "gender": "f",
+      "plural": "мами",
+      "genitive_plural": "мам"
     },
     "DAD": {
       "form": "тато",
-      "gender": "m"
+      "gender": "m",
+      "plural": "тати",
+      "genitive_plural": "татів"
     },
     "SON": {
       "form": "син",
       "accusative": "сина",
       "gender": "m",
-      "plural": "сини"
+      "plural": "сини",
+      "genitive_plural": "синів"
     },
     "DAUGHTER": {
       "form": "дочка",
       "instrumental": "дочкою",
       "gender": "f",
-      "plural": "дочки"
+      "plural": "дочки",
+      "genitive_plural": "дочок"
     },
     "BROTHER": {
       "form": "брат",
       "accusative": "брата",
       "gender": "m",
-      "plural": "брати"
+      "plural": "брати",
+      "genitive_plural": "братів"
     },
     "SISTER": {
       "form": "сестра",
       "gender": "f",
-      "plural": "сестри"
+      "plural": "сестри",
+      "genitive_plural": "сестер"
     },
     "HEAD": {
       "form": "голова",
-      "gender": "f"
+      "gender": "f",
+      "plural": "голови",
+      "genitive_plural": "голів"
     },
     "ARM": {
       "form": "рука",
       "gender": "f",
-      "plural": "руки"
+      "plural": "руки",
+      "genitive_plural": "рук"
     },
     "HAND": {
       "form": "рука",
       "gender": "f",
       "plural": "руки",
-      "instrumental": "рукою"
+      "instrumental": "рукою",
+      "genitive_plural": "рук"
     },
     "LEG": {
       "form": "нога",
-      "gender": "f"
+      "gender": "f",
+      "plural": "ноги",
+      "genitive_plural": "ніг"
     },
     "FOOT": {
       "form": "ступня",
-      "gender": "f"
+      "gender": "f",
+      "plural": "ступні",
+      "genitive_plural": "ступень"
     },
     "FINGER": {
       "form": "палець",
-      "gender": "m"
+      "gender": "m",
+      "plural": "пальці",
+      "genitive_plural": "пальців"
     },
     "EYE": {
       "form": "око",
       "gender": "n",
-      "plural": "очі"
+      "plural": "очі",
+      "genitive_plural": "очей"
     },
     "MOUTH": {
       "form": "рот",
-      "gender": "m"
+      "gender": "m",
+      "plural": "роти",
+      "genitive_plural": "ротів"
     },
     "FACE": {
       "form": "обличчя",
-      "gender": "n"
+      "gender": "n",
+      "plural": "обличчя",
+      "genitive_plural": "облич"
     },
     "BREAKFAST": {
       "form": "сніданок",
-      "gender": "m"
+      "gender": "m",
+      "plural": "сніданки",
+      "genitive_plural": "сніданків"
     },
     "LUNCH": {
       "form": "обід",
-      "gender": "m"
+      "gender": "m",
+      "plural": "обіди",
+      "genitive_plural": "обідів"
     },
     "DINNER": {
       "form": "вечеря",
-      "gender": "f"
+      "gender": "f",
+      "plural": "вечері",
+      "genitive_plural": "вечерь"
     },
     "CLOTHES": {
       "form": "одяг",
@@ -416,7 +458,9 @@
     },
     "SHIRT": {
       "form": "сорочка",
-      "gender": "f"
+      "gender": "f",
+      "plural": "сорочки",
+      "genitive_plural": "сорочок"
     },
     "SHOES": {
       "form": "взуття",
@@ -428,25 +472,32 @@
       "plural": "столи",
       "locative": "столі",
       "instrumental": "столом",
-      "genitive": "столу"
+      "genitive": "столу",
+      "genitive_plural": "столів"
     },
     "PHONE": {
       "form": "телефон",
       "instrumental": "телефоном",
       "gender": "m",
-      "plural": "телефони"
+      "plural": "телефони",
+      "genitive_plural": "телефонів"
     },
     "PANTS": {
       "gender": "m",
       "form": "штани",
-      "pluralOnly": true
+      "pluralOnly": true,
+      "genitive_plural": "штанів"
     },
-    "ONE": [
-      "один"
-    ],
-    "TWO": [
-      "два"
-    ],
+    "ONE": {
+      "form": "один",
+      "f": "одна",
+      "n": "одне",
+      "f_accusative": "одну"
+    },
+    "TWO": {
+      "form": "два",
+      "f": "дві"
+    },
     "THREE": [
       "три"
     ],
@@ -595,23 +646,33 @@
     ],
     "DAY": {
       "form": "день",
-      "gender": "m"
+      "gender": "m",
+      "plural": "дні",
+      "genitive_plural": "днів"
     },
     "NIGHT": {
       "form": "ніч",
-      "gender": "f"
+      "gender": "f",
+      "plural": "ночі",
+      "genitive_plural": "ночей"
     },
     "WEEK": {
       "form": "тиждень",
-      "gender": "m"
+      "gender": "m",
+      "plural": "тижні",
+      "genitive_plural": "тижнів"
     },
     "MONTH": {
       "form": "місяць",
-      "gender": "m"
+      "gender": "m",
+      "plural": "місяці",
+      "genitive_plural": "місяців"
     },
     "YEAR": {
       "form": "рік",
-      "gender": "m"
+      "gender": "m",
+      "plural": "роки",
+      "genitive_plural": "років"
     },
     "DO": {
       "base": "робити",
@@ -904,15 +965,21 @@
     ],
     "HOUR": {
       "form": "година",
-      "gender": "f"
+      "gender": "f",
+      "plural": "години",
+      "genitive_plural": "годин"
     },
     "MINUTE": {
       "form": "хвилина",
-      "gender": "f"
+      "gender": "f",
+      "plural": "хвилини",
+      "genitive_plural": "хвилин"
     },
     "SECOND": {
       "form": "секунда",
-      "gender": "f"
+      "gender": "f",
+      "plural": "секунди",
+      "genitive_plural": "секунд"
     },
     "NOW": [
       "зараз"
@@ -932,22 +999,26 @@
     "SPRING": {
       "form": "весна",
       "gender": "f",
-      "plural": "весни"
+      "plural": "весни",
+      "genitive_plural": "весен"
     },
     "SUMMER": {
       "form": "літо",
       "gender": "n",
-      "plural": "літа"
+      "plural": "літа",
+      "genitive_plural": "літ"
     },
     "AUTUMN": {
       "form": "осінь",
       "gender": "f",
-      "plural": "осені"
+      "plural": "осені",
+      "genitive_plural": "осеней"
     },
     "WINTER": {
       "form": "зима",
       "gender": "f",
-      "plural": "зими"
+      "plural": "зими",
+      "genitive_plural": "зим"
     },
     "ALL": [
       "все"

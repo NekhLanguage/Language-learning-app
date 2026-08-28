@@ -372,6 +372,98 @@ test("apocope surfaces are what the L3 blank contract records", () => {
 });
 
 // ---------------------------------------------------------------------
+// Possessive placement (enclitic) — Emi 2026-08-28-01 (el); pl "it" pro-drop
+// (-10); uk possessive plural agreement (-09)
+// ---------------------------------------------------------------------
+
+test("el: possessives are enclitic with the definite article", () => {
+  // 16/16 observed el possessives shipped as «μου βιβλίο» — article dropped,
+  // possessive pre-nominal. Both faces fixed: article + noun + enclitic.
+  assert.equal(buildSentence("el", tplById("I_EAT_FOOD"), "HIS", {}),
+    "Εγώ τρώω το φαγητό του.");
+  assert.equal(buildSentence("el", tplById("WE_HAVE_PAN"), "HIS", {}),
+    "Εμείς έχουμε το τηγάνι του.");
+  // Template-slot path (authored possessive): «η παλάμη μου».
+  const s = buildSentence("el", tplById("THIS_IS_MY_HAND"));
+  assert.ok(s.includes("η παλάμη μου"), s);
+});
+
+test("th possessives are untouched by the enclitic generalization", () => {
+  // th now declares possessiveEnclitic instead of the old hardcode —
+  // output must be bit-identical (no article, spaceless).
+  assert.equal(buildSentence("th", tplById("THIS_IS_MY_HAND")),
+    tplById("THIS_IS_MY_HAND").render.th);
+  const forced = buildSentence("th", tplById("SHE_SEES_PHONE"), "MY", {});
+  assert.ok(forced.includes("โทรศัพท์ของฉัน"), forced);
+});
+
+test("pl: the inanimate 'it' subject drops before an ordinary verb", () => {
+  assert.equal(buildSentence("pl", tplById("IT_DRIZZLES")), "Mży.");
+  // Languages without the flag keep the pronoun.
+  assert.equal(buildSentence("uk", tplById("IT_DRIZZLES")), "Воно мрячить.");
+  assert.equal(buildSentence("en", tplById("IT_DRIZZLES")), "It drizzles.");
+});
+
+test("uk: copular-plural agreement reaches possessive and possessed noun", () => {
+  // «Вони наша дівчата» (Emi 2026-08-28-09): both halves pluralize.
+  const tpl = { template_id: "SYN_THEY_ARE_OUR_GIRLS",
+    concepts: ["THIRD_PERSON_PLURAL", "BE", "OUR", "GIRL"] };
+  assert.equal(buildSentence("uk", tpl), "Вони наші дівчата.");
+  assert.equal(buildSentence("en", tpl), "They are our girls.");
+  // Singular stays singular.
+  const sg = { template_id: "SYN_SHE_IS_MY_MOM",
+    concepts: ["SHE", "BE", "MY", "MOM"] };
+  assert.equal(buildSentence("uk", sg), "Вона моя мама.");
+});
+
+// ---------------------------------------------------------------------
+// Numeral government + gender agreement — Emi 2026-08-28-07/-08 (uk), -03/-04 (el)
+// ---------------------------------------------------------------------
+
+test("uk: numbers 5+ govern the genitive plural on noun and adjective", () => {
+  // 27 of 30 sampled uk numeral sentences were wrong in run 5.
+  assert.equal(buildSentence("uk", tplById("SHE_SEES_PHONE"), null, { num_PHONE: "NINE" }),
+    "Вона бачить дев’ять телефонів.");
+  assert.equal(buildSentence("uk", tplById("HE_SEES_SHIRT"), null,
+    { num_SHIRT: "TEN", adj_SHIRT: "BAD" }),
+    "Він бачить десять поганих сорочок.");
+});
+
+test("uk: 2–4 take the nominative plural and «два» agrees in gender", () => {
+  assert.equal(buildSentence("uk", tplById("HE_SEES_SHIRT"), null, { num_SHIRT: "TWO" }),
+    "Він бачить дві сорочки.");
+});
+
+test("uk: «один» agrees in gender and case («одну роботу»)", () => {
+  assert.equal(buildSentence("uk", tplById("WE_HAVE_JOB"), null, { num_JOB: "ONE" }),
+    "Ми маємо одну роботу.");
+});
+
+test("el: numerals agree in gender and the noun pluralizes", () => {
+  // «δεκατέσσερα κρατήσεις» / «δεκαπέντε διαβατήριο» were Emi -03/-04.
+  assert.equal(buildSentence("el", tplById("HE_HAS_RESERVATION"), null,
+    { num_RESERVATION: "FOURTEEN" }),
+    "Αυτός έχει δεκατέσσερις κρατήσεις.");
+  assert.equal(buildSentence("el", tplById("HE_HAS_RESERVATION"), null,
+    { num_RESERVATION: "ONE" }),
+    "Αυτός έχει μία κράτηση.");
+  // Neuter heads keep the neuter numeral.
+  assert.equal(buildSentence("el", tplById("I_GET_BOOK"), null, { num_BOOK: "FOURTEEN" }),
+    "Εγώ παίρνω δεκατέσσερα βιβλία.");
+});
+
+test("numbers on plural-less nouns are refused, not shipped as singular", () => {
+  // The silent «δεκαπέντε διαβατήριο» / «два паспорт» class: a number ≥2 on
+  // a noun with no plural data must be filtered by the compat gate.
+  const before = isModifierCompatible("el", "FIFTEEN", "PASSPORT");
+  assert.equal(before, true, "PASSPORT now has plural data — compatible");
+  // A noun with no plural data (pokemon uk GYM) refuses the number…
+  assert.equal(isModifierCompatible("uk", "TWO", "GYM"), false);
+  // …while English stays algorithmic (pluralize()) and never needs the field.
+  assert.equal(isModifierCompatible("en", "FOUR", "BOOK"), true);
+});
+
+// ---------------------------------------------------------------------
 // Turkish possessive suffixes + copular person — Emi 2026-08-28-05 / -06
 // ---------------------------------------------------------------------
 
@@ -607,7 +699,8 @@ test("every features key is a known, checkable feature id", () => {
     "declinesAttributiveAdjectives", "adjectivePosition", "apocope",
     "articleCaseMarking", "virilePlural", "numeralGovernment",
     "zeroPresentCopula", "definitenessAgreement",
-    "possessiveSuffixes", "copulaPersonAgreement",
+    "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
+    "possessivePlacement",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
