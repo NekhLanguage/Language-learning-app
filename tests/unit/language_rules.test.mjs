@@ -26,6 +26,7 @@ import {
   isModifierCompatible,
   nounPhrase,
   formOf,
+  finalizeSentence,
 } from "../../sentence_engine.mjs";
 
 let vocab, templates;
@@ -243,6 +244,59 @@ test("pl: prepositions govern their declared cases", () => {
     "Książka jest na stole."); // ON → locative
   assert.equal(buildSentence("pl", tplById("I_GO_FROM_HOME")),
     "Ja idę z domu."); // FROM → genitive
+});
+
+// ---------------------------------------------------------------------
+// de: determiner-side case marking + adjective declension
+// (Emi 2026-08-27-10/-11 — «ein neu Buch», «Wir haben ein Job»)
+// ---------------------------------------------------------------------
+
+test("de: masculine direct objects take einen", () => {
+  assert.equal(buildSentence("de", tplById("WE_HAVE_JOB")),
+    "Wir haben einen Job.");
+  // Neuter and feminine accusatives equal the nominative — unchanged.
+  assert.equal(buildSentence("de", tplById("I_GET_BOOK")),
+    "Ich bekomme ein Buch.");
+});
+
+test("de: dative after prepositions rides the determiner", () => {
+  assert.equal(buildSentence("de", tplById("BOOK_ON_TABLE")),
+    "Das Buch ist auf dem Tisch.");
+  assert.equal(buildSentence("de", tplById("PHONE_UNDER_TABLE")),
+    "Das Telefon ist unter dem Tisch.");
+  // Demonstratives decline via their own case fields.
+  assert.equal(buildSentence("de", tplById("BOOK_ON_THIS")),
+    "Das Buch ist auf diesem.");
+  assert.equal(buildSentence("de", tplById("PHONE_IN_THAT")),
+    "Das Telefon ist in jenem.");
+});
+
+test("de: possessives agree in gender and decline with the governed case", () => {
+  assert.equal(buildSentence("de", tplById("THIS_IS_MY_HAND")),
+    "Das ist meine Hand.");
+  const s = buildSentence("de", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"));
+  assert.ok(s.includes("mit seiner Tochter"), s);
+});
+
+test("de: attributive adjectives take mixed/strong endings; predicative stays bare", () => {
+  assert.equal(buildSentence("de", tplById("I_GET_BOOK"), "NEW", {}),
+    "Ich bekomme ein neues Buch.");
+  assert.equal(buildSentence("de", tplById("I_GET_BOOK"), "BLACK", {}),
+    "Ich bekomme ein schwarzes Buch.");
+  assert.equal(buildSentence("de", tplById("I_SEE_AIRPORT"), "OLD", {}),
+    "Ich sehe einen alten Flughafen.");
+  assert.equal(buildSentence("de", tplById("THIS_IS_A_GOOD_BOOK")),
+    "Das ist ein gutes Buch.");
+  // Predicative adjectives stay uninflected — the fix must never touch them.
+  assert.equal(buildSentence("de", tplById("BOOK_IS_RED")),
+    "Das Buch ist rot.");
+});
+
+test("de: finalizeSentence contracts preposition + dative article", () => {
+  assert.equal(finalizeSentence("de", "Ich gehe zu dem Haus."),
+    "Ich gehe zum Haus.");
+  assert.equal(finalizeSentence("de", "Das Buch ist in dem Haus."),
+    "Das Buch ist im Haus.");
 });
 
 test("wordOrder declarations preserve the historic WORD_ORDER map", () => {
