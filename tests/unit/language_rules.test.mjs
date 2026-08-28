@@ -434,6 +434,37 @@ test("uk: 2–4 take the nominative plural and «два» agrees in gender", () 
     "Він бачить дві сорочки.");
 });
 
+// Ported from PR #117 (a parallel fix of the same Emi -07, superseded by the
+// merged superset) — extra pins on a different template plus the membership
+// and gate guards its suite added.
+
+test("uk: numeralGenitivePlural membership is exactly pl + uk", () => {
+  assert.equal(langRule("uk", "numeralGenitivePlural"), true);
+  assert.deepEqual([...langsWith("numeralGenitivePlural")].sort(), ["pl", "uk"]);
+});
+
+test("uk: forced 5+ numbers govern the genitive plural on YOU_READ_BOOK", () => {
+  const tpl = tplById("YOU_READ_BOOK");
+  assert.equal(buildSentence("uk", tpl, "FIVE", {}), "Ти читаєш п’ять книг.");
+  assert.equal(buildSentence("uk", tpl, "SEVEN", {}), "Ти читаєш сім книг.");
+  // 2–4 keeps the nominative plural.
+  assert.equal(buildSentence("uk", tpl, "FOUR", {}), "Ти читаєш чотири книги.");
+});
+
+test("uk: a 5+ number is refused when genitive_plural data is missing", () => {
+  // The compat gate skips the number rather than shipping «десять погані
+  // паспорт». BOOK carries the field, so simulate its absence.
+  const entry = vocab.languages.uk.forms.BOOK;
+  const saved = entry.genitive_plural;
+  delete entry.genitive_plural;
+  try {
+    assert.equal(isModifierCompatible("uk", "FIVE", "BOOK"), false);
+    assert.equal(isModifierCompatible("uk", "FOUR", "BOOK"), true);
+  } finally {
+    entry.genitive_plural = saved;
+  }
+});
+
 test("uk: «один» agrees in gender and case («одну роботу»)", () => {
   assert.equal(buildSentence("uk", tplById("WE_HAVE_JOB"), null, { num_JOB: "ONE" }),
     "Ми маємо одну роботу.");
