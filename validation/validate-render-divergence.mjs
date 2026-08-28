@@ -24,44 +24,15 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { loadVocab, loadTemplates, loadLanguageCodes } from './load-vocab.mjs';
-import { configureEngine, buildSentence } from '../sentence_engine.mjs';
+import { computeRenderDivergence } from './lib/render-divergence-core.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const BASELINE_FILE = path.join(HERE, 'render-divergence-baseline.json');
 const UPDATE = process.argv.includes('--update-baseline');
 
-const langCodes = loadLanguageCodes();
-const vocab = loadVocab(langCodes);
-const templates = loadTemplates();
-
-// Deterministic config, mirroring validate-sentences.mjs: everything
-// released, rng high enough to suppress random modifier injection.
-configureEngine({
-  vocab: () => vocab,
-  getReleased: () => Object.keys(vocab.concepts),
-  ensureProgress: () => ({ level: 99, completed: false }),
-  rng: () => 0.999,
-});
-
-const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
-
-const found = new Map(); // key -> { authored, generated }
-const perLang = {};
-for (const tpl of templates) {
-  for (const lc of langCodes) {
-    const authored = tpl.render?.[lc];
-    if (typeof authored !== 'string' || !authored.trim()) continue;
-    perLang[lc] ??= { total: 0, diverged: 0 };
-    perLang[lc].total++;
-    let generated;
-    try { generated = buildSentence(lc, tpl); } catch (e) { generated = `<threw: ${e.message}>`; }
-    if (norm(generated) !== norm(authored)) {
-      perLang[lc].diverged++;
-      found.set(`${tpl._file}|${tpl.template_id}|${lc}`, { authored, generated });
-    }
-  }
-}
+// The computation itself lives in lib/render-divergence-core.mjs, shared
+// with the language gate and the manual report tool.
+const { found, perLang } = computeRenderDivergence();
 
 console.log('lang  authored  diverged  rate');
 for (const [lc, d] of Object.entries(perLang)) {

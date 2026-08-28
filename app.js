@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.23";
+const APP_DATA_VERSION = "1.2.24";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -692,9 +692,12 @@ async function saveUser() {
     console.warn("Sync failed:", err);
   }
 }
-// Built from languages.js — no manual edits needed when adding a language
+// Built from languages.js — no manual edits needed when adding a language.
+// hidden languages are registered for validation but not offered to
+// learners on either picker (see languages.js).
 const SUPPORT_LANGUAGES = Object.fromEntries(
-  AVAILABLE_LANGUAGES.map(l => [l.code, { short: l.short, label: l.nativeLabel }])
+  AVAILABLE_LANGUAGES.filter(l => !l.hidden)
+    .map(l => [l.code, { short: l.short, label: l.nativeLabel }])
 );
 
 // Wire TTS codes into audioengine from the same registry
@@ -1808,7 +1811,9 @@ function updateSupportUI(code) {
   // Build list with progress and display name, excluding the active support language
   const query = languageSearchQuery.trim().toLowerCase();
   const entries = AVAILABLE_LANGUAGES
-    .filter(lang => lang.code !== support)
+    // hidden = registered for validators, invisible to learners until the
+    // language gate passes (languages.js).
+    .filter(lang => !lang.hidden && lang.code !== support)
     .map(lang => {
       const runForLang = USER.runs[lang.code];
       const progress = runForLang ? calculateWeightedProgress(runForLang) : 0;

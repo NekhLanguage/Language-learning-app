@@ -1,0 +1,46 @@
+{
+  "ar": {
+    "maxRate": 0.5,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "fr": {
+    "maxRate": 0.344,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "de": {
+    "maxRate": 0.172,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "el": {
+    "maxRate": 0.336,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "ja": {
+    "maxRate": 0.524,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "ko": {
+    "maxRate": 0.313,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "zh": {
+    "maxRate": 0.618,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "no": {
+    "maxRate": 0.196,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "pt": {
+    "maxRate": 0.29,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "es": {
+    "maxRate": 0.336,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  },
+  "tr": {
+    "maxRate": 0.399,
+    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
+  }
+}

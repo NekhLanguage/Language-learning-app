@@ -11,43 +11,19 @@
 //   node validation/report-render-divergence.mjs            # summary
 //   node validation/report-render-divergence.mjs --lang fr  # every fr diff
 
-import { loadVocab, loadLanguageCodes, loadTemplates } from './load-vocab.mjs';
-import { configureEngine, buildSentence } from '../sentence_engine.mjs';
+import { loadLanguageCodes } from './load-vocab.mjs';
+import { computeRenderDivergence } from './lib/render-divergence-core.mjs';
 
 const langArg = process.argv.indexOf('--lang');
 const onlyLang = langArg !== -1 ? process.argv[langArg + 1] : null;
 
 const langCodes = loadLanguageCodes();
-const vocab = loadVocab(langCodes);
-const templates = loadTemplates();
-
-configureEngine({
-  vocab: () => vocab,
-  getReleased: () => Object.keys(vocab.concepts),
-  ensureProgress: () => ({ level: 99, completed: false }),
-  rng: () => 0.999, // plain sentences — no random modifiers
-});
-
-const norm = (s) => String(s || '').replace(/\s+/g, ' ').trim();
-
+// Shared computation (lib/render-divergence-core.mjs) — same engine config
+// and normalization as the ratchet and the language gate.
+const { perLang } = computeRenderDivergence({ langCodes });
 const byLang = {};
-for (const lc of langCodes) byLang[lc] = { total: 0, diverged: [] };
-
-for (const tpl of templates) {
-  for (const lc of langCodes) {
-    const authored = tpl.render?.[lc];
-    if (typeof authored !== 'string' || !authored.trim()) continue;
-    byLang[lc].total++;
-    let generated;
-    try {
-      generated = buildSentence(lc, tpl);
-    } catch (e) {
-      generated = `<threw: ${e.message}>`;
-    }
-    if (norm(generated) !== norm(authored)) {
-      byLang[lc].diverged.push({ id: tpl.template_id, file: tpl._file, authored, generated });
-    }
-  }
+for (const lc of langCodes) {
+  byLang[lc] = { total: perLang[lc]?.total || 0, diverged: perLang[lc]?.entries || [] };
 }
 
 console.log('Engine output vs authored render (plain sentences, no modifiers)\n');

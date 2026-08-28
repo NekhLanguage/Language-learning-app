@@ -1,5 +1,13 @@
 // VERSION: v1.0.0
 // beta: true = not yet owner-verified. Verified: Portuguese, Norwegian, English.
+// hidden: true = registered for every validator (the language gate, coverage
+//   matrix, divergence ratchet, …) but invisible to learners in both the
+//   target and support pickers. This is the "being built" state a new
+//   language lives in until validate-language-gate passes for it. NOTE: keep
+//   `code` as the FIRST key in every row — the validators discover shipped
+//   languages by scanning this file's text for rows whose first key is the
+//   code (and that scan also reads comments, so never write a row-shaped
+//   literal in one). A unit test pins that the scan matches the export.
 // Registry sorted alphabetically by English label.
 export const AVAILABLE_LANGUAGES = [
   { code: "ar", label: "Arabic",     nativeLabel: "العربية",     short: "AR", ttsCode: "ar-SA", isRTL: true,  beta: true  },
