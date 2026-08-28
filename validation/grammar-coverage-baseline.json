@@ -1,0 +1,21 @@
+[
+  "COVERAGE_GAP|ar|declinesAttributiveAdjectives",
+  "COVERAGE_GAP|ar|definitenessAgreement",
+  "COVERAGE_GAP|de|articleCaseMarking",
+  "COVERAGE_GAP|de|declinesAttributiveAdjectives",
+  "COVERAGE_GAP|de|marksCaseAfterPrepositions",
+  "COVERAGE_GAP|de|marksCaseOnDirectObjects",
+  "COVERAGE_GAP|el|articleCaseMarking",
+  "COVERAGE_GAP|el|declinesAttributiveAdjectives",
+  "COVERAGE_GAP|el|marksCaseOnDirectObjects",
+  "COVERAGE_GAP|es|adjectivePosition",
+  "COVERAGE_GAP|es|apocope",
+  "COVERAGE_GAP|es|declinesAttributiveAdjectives",
+  "COVERAGE_GAP|fr|adjectivePosition",
+  "COVERAGE_GAP|fr|declinesAttributiveAdjectives",
+  "COVERAGE_GAP|it|adjectivePosition",
+  "COVERAGE_GAP|it|apocope",
+  "COVERAGE_GAP|no|declinesAttributiveAdjectives",
+  "COVERAGE_GAP|pt|adjectivePosition",
+  "COVERAGE_GAP|tr|marksCaseOnDirectObjects"
+]

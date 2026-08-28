@@ -411,6 +411,55 @@ test("it: LANDMARK renders monumento", () => {
 });
 
 // ---------------------------------------------------------------------
+// The grammar coverage matrix (features blocks)
+// ---------------------------------------------------------------------
+
+test("every shipped language declares a features block", () => {
+  for (const { code } of AVAILABLE_LANGUAGES) {
+    assert.ok(LANGUAGE_RULES[code]?.features &&
+      Object.keys(LANGUAGE_RULES[code].features).length > 0,
+      `language "${code}" has no features block — the coverage matrix ` +
+        "cannot see what it needs (validate-grammar-coverage hard-fails on this too)");
+  }
+});
+
+test("every features key is a known, checkable feature id", () => {
+  const KNOWN = new Set([
+    "indefiniteArticle", "marksCaseOnDirectObjects",
+    "marksCaseAfterPrepositions", "predicateNounCase",
+    "declinesAttributiveAdjectives", "adjectivePosition", "apocope",
+    "articleCaseMarking", "virilePlural", "numeralGovernment",
+    "zeroPresentCopula", "definitenessAgreement",
+  ]);
+  for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
+    for (const key of Object.keys(row.features || {})) {
+      assert.ok(KNOWN.has(key),
+        `${code}.features.${key} has no check in validate-grammar-coverage — ` +
+          "an uncheckable feature silently passes");
+    }
+  }
+});
+
+test("launch-verified languages have zero coverage gaps (pl, uk)", () => {
+  // Mirrors the validator's VERIFIED_REGRESSION hard fail on the two
+  // properties cheap to assert here: their declared case needs are
+  // implemented in their own rows.
+  for (const code of ["pl", "uk"]) {
+    const row = LANGUAGE_RULES[code];
+    if (row.features.marksCaseOnDirectObjects) {
+      assert.ok(row.caseMarking?.directObjectCase, `${code} direct-object case`);
+    }
+    if (row.features.marksCaseAfterPrepositions) {
+      assert.ok(Object.keys(row.caseMarking?.prepositions || {}).length > 0,
+        `${code} preposition case table`);
+    }
+    if (row.features.predicateNounCase) {
+      assert.ok(row.caseMarking?.predicateNounCase, `${code} predicate case`);
+    }
+  }
+});
+
+// ---------------------------------------------------------------------
 // langRule plumbing
 // ---------------------------------------------------------------------
 
