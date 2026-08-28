@@ -731,7 +731,7 @@ test("every features key is a known, checkable feature id", () => {
     "articleCaseMarking", "virilePlural", "numeralGovernment",
     "zeroPresentCopula", "definitenessAgreement",
     "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
-    "possessivePlacement",
+    "possessivePlacement", "verbGenderAgreement",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
@@ -770,4 +770,37 @@ test("langRule answers declared flags and nothing else", () => {
   assert.equal(langRule("en", "proDrop"), false);
   assert.equal(langRule("xx", "proDrop"), false);
   assert.equal(langRule("it", "notARule"), false);
+});
+
+// ---------------------------------------------------------------------
+// ar: 3rd-person feminine verb agreement — Emi 2026-08-28-15
+// ---------------------------------------------------------------------
+
+test("ar: «هي» takes the feminine verb, every other person unchanged", () => {
+  // 17 of 22 «هي» sentences carried the masculine verb in run 6.
+  assert.equal(buildSentence("ar", tplById("SHE_SEES_PHONE")), "هي ترى هاتف.");
+  assert.equal(buildSentence("ar", tplById("SHE_SEES_ROOM")), "هي ترى غرفة.");
+  // The لدى-possession keeps its own person suffix: «هي لديها».
+  assert.equal(buildSentence("ar", tplById("SHE_HAS_SHOES")), "هي لديها أحذية.");
+  // Every person Emi verified correct stays correct.
+  assert.equal(buildSentence("ar", tplById("I_EAT_FOOD")), "أنا آكل طعام.");
+  assert.equal(buildSentence("ar", tplById("HE_READ_BOOK")), "هو يقرأ كتاب.");
+  assert.equal(buildSentence("ar", tplById("YOU_READ_BOOK")), "أنت تقرأ كتاب.");
+});
+
+test("ar: verbGenderAgreement is declared as rule AND feature", () => {
+  assert.equal(langRule("ar", "verbGenderAgreement"), true);
+  assert.equal(LANGUAGE_RULES.ar.features.verbGenderAgreement, true);
+  // A language without the rule keeps the shared 3_singular cell.
+  assert.equal(langRule("es", "verbGenderAgreement"), false);
+});
+
+test("ar: every core verb carries its 3_singular_f cell", () => {
+  for (const [cid, e] of Object.entries(vocab.languages.ar.forms)) {
+    if (vocab.concepts[cid]?.type !== "verb") continue;
+    if (typeof e !== "object" || Array.isArray(e)) continue;
+    if (typeof e["3_singular"] !== "string") continue;
+    assert.equal(typeof e["3_singular_f"], "string",
+      `ar verb ${cid} is missing 3_singular_f — «هي» falls back to the masculine`);
+  }
 });

@@ -207,17 +207,17 @@
         "REFEREE":    { "form": "حكم", "gender": "m" },
         "COACH":      { "form": "مدرب", "gender": "m" },
 
-        "KICK":       { "base": "يركل",    "1_singular": "أركل",    "2_singular": "تركل",    "3_singular": "يركل",    "1_plural": "نركل",    "2_plural": "تركلون",   "3_plural": "يركلون" },
-        "PASS":       { "base": "يمرر",    "1_singular": "أمرر",    "2_singular": "تمرر",    "3_singular": "يمرر",    "1_plural": "نمرر",    "2_plural": "تمررون",   "3_plural": "يمررون" },
-        "SHOOT":      { "base": "يسدد",    "1_singular": "أسدد",    "2_singular": "تسدد",    "3_singular": "يسدد",    "1_plural": "نسدد",    "2_plural": "تسددون",   "3_plural": "يسددون" },
-        "DRIBBLE":    { "base": "يراوغ",   "1_singular": "أراوغ",   "2_singular": "تراوغ",   "3_singular": "يراوغ",   "1_plural": "نراوغ",   "2_plural": "تراوغون",  "3_plural": "يراوغون" },
-        "SCORE":      { "base": "يسجل",    "1_singular": "أسجل",    "2_singular": "تسجل",    "3_singular": "يسجل",    "1_plural": "نسجل",    "2_plural": "تسجلون",   "3_plural": "يسجلون" },
+        "KICK":       { "base": "يركل",    "1_singular": "أركل",    "2_singular": "تركل",    "3_singular": "يركل", "3_singular_f": "تركل",    "1_plural": "نركل",    "2_plural": "تركلون",   "3_plural": "يركلون" },
+        "PASS":       { "base": "يمرر",    "1_singular": "أمرر",    "2_singular": "تمرر",    "3_singular": "يمرر", "3_singular_f": "تمرر",    "1_plural": "نمرر",    "2_plural": "تمررون",   "3_plural": "يمررون" },
+        "SHOOT":      { "base": "يسدد",    "1_singular": "أسدد",    "2_singular": "تسدد",    "3_singular": "يسدد", "3_singular_f": "تسدد",    "1_plural": "نسدد",    "2_plural": "تسددون",   "3_plural": "يسددون" },
+        "DRIBBLE":    { "base": "يراوغ",   "1_singular": "أراوغ",   "2_singular": "تراوغ",   "3_singular": "يراوغ", "3_singular_f": "تراوغ",   "1_plural": "نراوغ",   "2_plural": "تراوغون",  "3_plural": "يراوغون" },
+        "SCORE":      { "base": "يسجل",    "1_singular": "أسجل",    "2_singular": "تسجل",    "3_singular": "يسجل", "3_singular_f": "تسجل",    "1_plural": "نسجل",    "2_plural": "تسجلون",   "3_plural": "يسجلون" },
 
         "HEADER":     { "form": "ضربة رأس", "gender": "f" },
-        "TACKLE":     { "base": "يشتبك",   "1_singular": "أشتبك",   "2_singular": "تشتبك",   "3_singular": "يشتبك",   "1_plural": "نشتبك",   "2_plural": "تشتبكون",  "3_plural": "يشتبكون" },
-        "CROSS":      { "base": "يعبر",    "1_singular": "أعبر",    "2_singular": "تعبر",    "3_singular": "يعبر",    "1_plural": "نعبر",    "2_plural": "تعبرون",   "3_plural": "يعبرون" },
+        "TACKLE":     { "base": "يشتبك",   "1_singular": "أشتبك",   "2_singular": "تشتبك",   "3_singular": "يشتبك", "3_singular_f": "تشتبك",   "1_plural": "نشتبك",   "2_plural": "تشتبكون",  "3_plural": "يشتبكون" },
+        "CROSS":      { "base": "يعبر",    "1_singular": "أعبر",    "2_singular": "تعبر",    "3_singular": "يعبر", "3_singular_f": "تعبر",    "1_plural": "نعبر",    "2_plural": "تعبرون",   "3_plural": "يعبرون" },
         "VOLLEY":     { "form": "ضربة طائرة", "gender": "f" },
-        "SPRINT":     { "base": "يندفع",   "1_singular": "أندفع",   "2_singular": "تندفع",   "3_singular": "يندفع",   "1_plural": "نندفع",   "2_plural": "تندفعون",  "3_plural": "يندفعون" },
+        "SPRINT":     { "base": "يندفع",   "1_singular": "أندفع",   "2_singular": "تندفع",   "3_singular": "يندفع", "3_singular_f": "تندفع",   "1_plural": "نندفع",   "2_plural": "تندفعون",  "3_plural": "يندفعون" },
 
         "FOUL":       { "form": "مخالفة", "gender": "f" },
         "PENALTY":    { "form": "ركلة جزاء", "gender": "f" },
@@ -243,15 +243,15 @@
         "DECISIVE":   { "form": "حاسم", "f": "حاسمة" },
         "CLINICAL":   { "form": "دقيق", "f": "دقيقة" },
 
-        "INTERCEPT":  { "base": "يعترض",   "1_singular": "أعترض",   "2_singular": "تعترض",   "3_singular": "يعترض",   "1_plural": "نعترض",   "2_plural": "تعترضون",  "3_plural": "يعترضون" },
-        "DEFEND":     { "base": "يدافع",    "1_singular": "أدافع",   "2_singular": "تدافع",   "3_singular": "يدافع",   "1_plural": "ندافع",   "2_plural": "تدافعون",  "3_plural": "يدافعون" },
-        "BLOCK":      { "base": "يصد",      "1_singular": "أصد",     "2_singular": "تصد",     "3_singular": "يصد",     "1_plural": "نصد",     "2_plural": "تصدون",    "3_plural": "يصدون" },
-        "COUNTER":    { "base": "يهجم مضاداً","1_singular": "أهجم مضاداً","2_singular": "تهجم مضاداً","3_singular": "يهجم مضاداً","1_plural": "نهجم مضاداً","2_plural": "تهجمون مضاداً","3_plural": "يهجمون مضاداً" },
-        "DOMINATE":   { "base": "يسيطر",   "1_singular": "أسيطر",   "2_singular": "تسيطر",   "3_singular": "يسيطر",   "1_plural": "نسيطر",   "2_plural": "تسيطرون",  "3_plural": "يسيطرون" },
+        "INTERCEPT":  { "base": "يعترض",   "1_singular": "أعترض",   "2_singular": "تعترض",   "3_singular": "يعترض", "3_singular_f": "تعترض",   "1_plural": "نعترض",   "2_plural": "تعترضون",  "3_plural": "يعترضون" },
+        "DEFEND":     { "base": "يدافع",    "1_singular": "أدافع",   "2_singular": "تدافع",   "3_singular": "يدافع", "3_singular_f": "تدافع",   "1_plural": "ندافع",   "2_plural": "تدافعون",  "3_plural": "يدافعون" },
+        "BLOCK":      { "base": "يصد",      "1_singular": "أصد",     "2_singular": "تصد",     "3_singular": "يصد", "3_singular_f": "تصد",     "1_plural": "نصد",     "2_plural": "تصدون",    "3_plural": "يصدون" },
+        "COUNTER":    { "base": "يهجم مضاداً","1_singular": "أهجم مضاداً","2_singular": "تهجم مضاداً","3_singular": "يهجم مضاداً", "3_singular_f": "تهجم مضاداً","1_plural": "نهجم مضاداً","2_plural": "تهجمون مضاداً","3_plural": "يهجمون مضاداً" },
+        "DOMINATE":   { "base": "يسيطر",   "1_singular": "أسيطر",   "2_singular": "تسيطر",   "3_singular": "يسيطر", "3_singular_f": "تسيطر",   "1_plural": "نسيطر",   "2_plural": "تسيطرون",  "3_plural": "يسيطرون" },
 
         "CHAMPION":   { "form": "بطل", "gender": "m" },
         "CROWD":      { "form": "جمهور", "gender": "m" },
-        "CELEBRATE":  { "base": "يحتفل",   "1_singular": "أحتفل",   "2_singular": "تحتفل",   "3_singular": "يحتفل",   "1_plural": "نحتفل",   "2_plural": "تحتفلون",  "3_plural": "يحتفلون" },
+        "CELEBRATE":  { "base": "يحتفل",   "1_singular": "أحتفل",   "2_singular": "تحتفل",   "3_singular": "يحتفل", "3_singular_f": "تحتفل",   "1_plural": "نحتفل",   "2_plural": "تحتفلون",  "3_plural": "يحتفلون" },
         "FINAL":      { "form": "نهائي", "gender": "m" },
         "UNBEATABLE": ["لا يُقهر"]
       }

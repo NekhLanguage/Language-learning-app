@@ -1008,6 +1008,25 @@ if (langRule(lang, "secondPersonAsThird")) {
   if (subjectCid === "SECOND_PERSON") key = "3_singular";
   if (subjectCid === "SECOND_PERSON_PLURAL") key = "3_plural";
 }
+
+  // Declared rule (verbGenderAgreement): 3rd-person verbs agree with the
+  // subject's gender — ar «هي ترى», never the masculine «هي يرى»
+  // (Emi 2026-08-28-15: 17 of 22 «هي» sentences carried the masculine
+  // verb). The feminine cell lives in the data as `<key>_f`
+  // (3_singular_f today); a missing cell falls back to the masculine
+  // cell, so packs without the field keep their current behaviour.
+  // Pronoun subjects agree via the referent gender on the concept (SHE);
+  // noun subjects via the grammatical gender in the language data.
+  if (langRule(lang, "verbGenderAgreement") && person === 3) {
+    const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
+    const femSubject = subject.gender === "f" ||
+      (subjEntry && typeof subjEntry === "object" && !Array.isArray(subjEntry) &&
+        subjEntry.gender === "f");
+    if (femSubject && verbData[`${key}_f`]) {
+      noteRule("verb_agreement");
+      return verbData[`${key}_f`];
+    }
+  }
   // 1️⃣ Exact match (preferred)
   if (verbData[key]) {
     if (verbData.base && verbData[key] !== verbData.base) noteRule("verb_agreement");

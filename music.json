@@ -207,11 +207,11 @@
         "CHORD":      { "form": "وتر", "gender": "m" },
         "HARMONY":    { "form": "انسجام", "gender": "m" },
 
-        "SING":       { "base": "يغني",    "1_singular": "أغني",    "2_singular": "تغني",    "3_singular": "يغني",    "1_plural": "نغني",    "2_plural": "تغنون",   "3_plural": "يغنون" },
-        "STRUM":      { "base": "يعزف",    "1_singular": "أعزف",    "2_singular": "تعزف",    "3_singular": "يعزف",    "1_plural": "نعزف",    "2_plural": "تعزفون",  "3_plural": "يعزفون" },
-        "COMPOSE":    { "base": "يؤلف",    "1_singular": "أؤلف",    "2_singular": "تؤلف",    "3_singular": "يؤلف",    "1_plural": "نؤلف",    "2_plural": "تؤلفون",  "3_plural": "يؤلفون" },
-        "PERFORM":    { "base": "يؤدي",    "1_singular": "أؤدي",    "2_singular": "تؤدي",    "3_singular": "يؤدي",    "1_plural": "نؤدي",    "2_plural": "تؤدون",   "3_plural": "يؤدون" },
-        "RECORD":     { "base": "يسجل",    "1_singular": "أسجل",    "2_singular": "تسجل",    "3_singular": "يسجل",    "1_plural": "نسجل",    "2_plural": "تسجلون",  "3_plural": "يسجلون" },
+        "SING":       { "base": "يغني",    "1_singular": "أغني",    "2_singular": "تغني",    "3_singular": "يغني", "3_singular_f": "تغني",    "1_plural": "نغني",    "2_plural": "تغنون",   "3_plural": "يغنون" },
+        "STRUM":      { "base": "يعزف",    "1_singular": "أعزف",    "2_singular": "تعزف",    "3_singular": "يعزف", "3_singular_f": "تعزف",    "1_plural": "نعزف",    "2_plural": "تعزفون",  "3_plural": "يعزفون" },
+        "COMPOSE":    { "base": "يؤلف",    "1_singular": "أؤلف",    "2_singular": "تؤلف",    "3_singular": "يؤلف", "3_singular_f": "تؤلف",    "1_plural": "نؤلف",    "2_plural": "تؤلفون",  "3_plural": "يؤلفون" },
+        "PERFORM":    { "base": "يؤدي",    "1_singular": "أؤدي",    "2_singular": "تؤدي",    "3_singular": "يؤدي", "3_singular_f": "تؤدي",    "1_plural": "نؤدي",    "2_plural": "تؤدون",   "3_plural": "يؤدون" },
+        "RECORD":     { "base": "يسجل",    "1_singular": "أسجل",    "2_singular": "تسجل",    "3_singular": "يسجل", "3_singular_f": "تسجل",    "1_plural": "نسجل",    "2_plural": "تسجلون",  "3_plural": "يسجلون" },
 
         "CONCERT":    { "form": "حفلة موسيقية", "gender": "f" },
         "STAGE":      { "form": "مسرح", "gender": "m" },
@@ -237,11 +237,11 @@
         "REMIX":      { "form": "ريميكس", "gender": "m" },
         "SAMPLE":     { "form": "عينة صوتية", "gender": "f" },
 
-        "REHEARSE":   { "base": "يتدرب",   "1_singular": "أتدرب",   "2_singular": "تتدرب",   "3_singular": "يتدرب",   "1_plural": "نتدرب",   "2_plural": "تتدربون", "3_plural": "يتدربون" },
-        "TUNE":       { "base": "يضبط",    "1_singular": "أضبط",    "2_singular": "تضبط",    "3_singular": "يضبط",    "1_plural": "نضبط",    "2_plural": "تضبطون",  "3_plural": "يضبطون" },
-        "IMPROVISE":  { "base": "يرتجل",   "1_singular": "أرتجل",   "2_singular": "ترتجل",   "3_singular": "يرتجل",   "1_plural": "نرتجل",   "2_plural": "ترتجلون", "3_plural": "يرتجلون" },
-        "AMPLIFY":    { "base": "يضخم",    "1_singular": "أضخم",    "2_singular": "تضخم",    "3_singular": "يضخم",    "1_plural": "نضخم",    "2_plural": "تضخمون",  "3_plural": "يضخمون" },
-        "DROP":       { "base": "يطلق",    "1_singular": "أطلق",    "2_singular": "تطلق",    "3_singular": "يطلق",    "1_plural": "نطلق",    "2_plural": "تطلقون",  "3_plural": "يطلقون" },
+        "REHEARSE":   { "base": "يتدرب",   "1_singular": "أتدرب",   "2_singular": "تتدرب",   "3_singular": "يتدرب", "3_singular_f": "تتدرب",   "1_plural": "نتدرب",   "2_plural": "تتدربون", "3_plural": "يتدربون" },
+        "TUNE":       { "base": "يضبط",    "1_singular": "أضبط",    "2_singular": "تضبط",    "3_singular": "يضبط", "3_singular_f": "تضبط",    "1_plural": "نضبط",    "2_plural": "تضبطون",  "3_plural": "يضبطون" },
+        "IMPROVISE":  { "base": "يرتجل",   "1_singular": "أرتجل",   "2_singular": "ترتجل",   "3_singular": "يرتجل", "3_singular_f": "ترتجل",   "1_plural": "نرتجل",   "2_plural": "ترتجلون", "3_plural": "يرتجلون" },
+        "AMPLIFY":    { "base": "يضخم",    "1_singular": "أضخم",    "2_singular": "تضخم",    "3_singular": "يضخم", "3_singular_f": "تضخم",    "1_plural": "نضخم",    "2_plural": "تضخمون",  "3_plural": "يضخمون" },
+        "DROP":       { "base": "يطلق",    "1_singular": "أطلق",    "2_singular": "تطلق",    "3_singular": "يطلق", "3_singular_f": "تطلق",    "1_plural": "نطلق",    "2_plural": "تطلقون",  "3_plural": "يطلقون" },
 
         "LOUD":       { "form": "صاخب", "f": "صاخبة" },
         "SOULFUL":    { "form": "مؤثر", "f": "مؤثرة" },

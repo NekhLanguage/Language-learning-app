@@ -134,6 +134,24 @@ const FEATURE_CHECKS = {
   numeralGovernment: (row) => ({ ok: !!row.numeralGenitivePlural,
     detail: 'needs numeralGenitivePlural' }),
   zeroPresentCopula: (row) => ({ ok: !!row.zeroPresentCopula }),
+  verbGenderAgreement: (row, lang) => {
+    if (!row.verbGenderAgreement) {
+      return { ok: false, detail: 'needs the verbGenderAgreement rule' };
+    }
+    // Data half: the core verbs must carry the feminine 3sg cell, or the
+    // rule is declared over dead data and «هي» keeps the masculine verb.
+    const forms = vocab.languages?.[lang]?.forms || {};
+    const missing = Object.keys(forms).filter((cid) => {
+      const e = forms[cid];
+      return vocab.concepts[cid]?.type === 'verb' &&
+        vocab.concepts[cid]?.source === 'verbs.json' &&
+        e && !Array.isArray(e) && typeof e === 'object' &&
+        typeof e['3_singular'] === 'string' &&
+        typeof e['3_singular_f'] !== 'string';
+    });
+    return { ok: missing.length === 0,
+      detail: missing.length ? `core verbs missing 3_singular_f: ${missing.slice(0, 5).join(', ')}` : '' };
+  },
   definitenessAgreement: () => ({
     ok: false, // no engine mechanism exists yet — always a declared gap
     detail: 'no definiteness-agreement rule exists in the engine yet',
@@ -166,6 +184,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.numeralGenderAgreement],
   [(row) => !!row.possessiveEnclitic, 'possessivePlacement enclitic',
     (f) => f.possessivePlacement === 'enclitic'],
+  [(row) => !!row.verbGenderAgreement, 'verbGenderAgreement',
+    (f) => !!f.verbGenderAgreement],
 ];
 
 const findings = [];

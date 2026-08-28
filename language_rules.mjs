@@ -180,8 +180,13 @@ export const LANGUAGE_RULES = {
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,
+      // 3rd-person verbs agree with the subject's gender: «هي ترى»,
+      // never the masculine «هي يرى» (Emi 2026-08-28-15: 17 of 22 «هي»
+      // sentences took the masculine verb). Data: 3_singular_f cells.
+      verbGenderAgreement: true,
     },
     postNominalAdjectives: true, zeroPresentCopula: true,
+    verbGenderAgreement: true,
     inflectsNounPlural: true, fullNounGender: true,
     nounGenderForCountables: true, verbPersonParadigm: true,
   },
