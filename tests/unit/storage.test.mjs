@@ -3,7 +3,13 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "../../storage.mjs";
+import {
+  CURRENT_SCHEMA_VERSION,
+  migrateUserState,
+  recoverUser,
+  isDefaultTemplateProgress,
+  compactUserForPersist,
+} from "../../storage.mjs";
 
 const validUser = () => ({ id: "u1", supportLanguage: "en", runs: { pt: { released: [] } } });
 
@@ -144,4 +150,91 @@ test("full migration path v0 → v3 stamps every field once", () => {
   assert.equal(migrated.schemaVersion, 3);
   assert.deepEqual(migrated.learnerFacts, []);
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
+});
+
+// Emi 2026-08-28-22: 690 of 794 templateProgress rows across 10 languages
+// carried defaults and pushed the saved USER blob to 236 KB, driving
+// loadUser to a 504. Compact on persist; rehydrate on demand.
+test("isDefaultTemplateProgress accepts the two persisted-default shapes", () => {
+  // In-memory default (freshly created by ensureTemplateProgress).
+  assert.equal(isDefaultTemplateProgress({
+    streak: 0, reinforcementStage: 0, completed: false,
+    lastShownAt: -Infinity, lastResult: null,
+  }), true);
+  // After a save/load round-trip, -Infinity comes back as null.
+  assert.equal(isDefaultTemplateProgress({
+    streak: 0, reinforcementStage: 0, completed: false,
+    lastShownAt: null, lastResult: null,
+  }), true);
+});
+
+test("isDefaultTemplateProgress rejects any user-touched row", () => {
+  const cases = [
+    { streak: 1, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null },
+    { streak: 0, reinforcementStage: 1, completed: false, lastShownAt: null, lastResult: null },
+    { streak: 0, reinforcementStage: 0, completed: true,  lastShownAt: null, lastResult: null },
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: 42,   lastResult: null },
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: true },
+    // Extra keys mean the row carries data outside the known-default set —
+    // never drop it.
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null, extra: 1 },
+    // Missing keys mean an older shape we don't understand — don't drop.
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null },
+  ];
+  for (const row of cases) {
+    assert.equal(isDefaultTemplateProgress(row), false, `should reject ${JSON.stringify(row)}`);
+  }
+});
+
+test("isDefaultTemplateProgress is null/undefined/primitive-safe", () => {
+  for (const v of [null, undefined, 0, "", true, []]) {
+    assert.equal(isDefaultTemplateProgress(v), false);
+  }
+});
+
+test("compactUserForPersist drops default rows and keeps touched ones", () => {
+  const user = {
+    id: "u1",
+    schemaVersion: CURRENT_SCHEMA_VERSION,
+    runs: {
+      pl: {
+        released: ["A", "B", "C"],
+        templateProgress: {
+          T_UNTOUCHED_1: { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: -Infinity, lastResult: null },
+          T_UNTOUCHED_2: { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null },
+          T_ACTIVE: { streak: 3, reinforcementStage: 1, completed: false, lastShownAt: 42, lastResult: true },
+          T_COMPLETED: { streak: 0, reinforcementStage: 0, completed: true, lastShownAt: 99, lastResult: true },
+        },
+      },
+      uk: {
+        released: [],
+        templateProgress: {
+          T_X: { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null },
+        },
+      },
+    },
+  };
+
+  const compact = compactUserForPersist(user);
+
+  // Touched rows survive; other run fields untouched.
+  assert.deepEqual(Object.keys(compact.runs.pl.templateProgress).sort(),
+    ["T_ACTIVE", "T_COMPLETED"]);
+  assert.deepEqual(compact.runs.pl.released, ["A", "B", "C"]);
+  // Run with only default rows compacts to {}.
+  assert.deepEqual(compact.runs.uk.templateProgress, {});
+
+  // The original object is not mutated — the live app keeps every rehydrated row.
+  assert.equal(Object.keys(user.runs.pl.templateProgress).length, 4);
+  assert.equal(user.runs.uk.templateProgress.T_X.streak, 0);
+});
+
+test("compactUserForPersist is safe on empty / missing structures", () => {
+  assert.deepEqual(compactUserForPersist(null), null);
+  assert.deepEqual(compactUserForPersist({}), {});
+  const noRuns = { id: "u", schemaVersion: 3 };
+  assert.deepEqual(compactUserForPersist(noRuns), noRuns);
+  const runsNoTP = { id: "u", schemaVersion: 3, runs: { pt: { released: [] } } };
+  const out = compactUserForPersist(runsNoTP);
+  assert.deepEqual(out.runs.pt, { released: [] });
 });
