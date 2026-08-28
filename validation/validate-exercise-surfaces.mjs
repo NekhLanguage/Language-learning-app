@@ -57,7 +57,7 @@ import { loadVocab, loadTemplates, loadLanguageCodes } from './load-vocab.mjs';
 import {
   configureEngine, buildSentence, buildSentenceWithRules,
   resolveNounBlank, buildSameTypeOptions, acceptedAnswerVariants,
-  orderedConceptsForTemplate, caseMap, caseFormFor, formOf,
+  orderedConceptsForTemplate, caseMap, caseFormFor, formOf, surfaceForm,
   optionSurfaceFor, predicateNounCaseFor, isPluralPronoun,
   adjectiveSuitsNoun, isModifierCompatible,
 } from '../sentence_engine.mjs';
@@ -347,6 +347,34 @@ for (const lang of langCodes) {
       });
     }
   }
+}
+
+// ── HARD check: option display surfaces (never baselined) ───────────────────
+// The L4/L5 option tiles render through the engine's surfaceForm. Its only
+// unsafe path is an object entry with neither `form` nor `base` — formOf then
+// falls back to "first string value in the entry", which is the gender field
+// for gender-first-authored entries (Emi 2026-08-28-02: Greek L5 tiles
+// showing «f» / «n»). Assert the data shape that makes the fallback
+// unreachable, plus non-empty surfaces, for every concept × language.
+const surfaceErrors = [];
+for (const lc of langCodes) {
+  const forms = vocab.languages?.[lc]?.forms || {};
+  for (const [cid, entry] of Object.entries(forms)) {
+    if (entry && typeof entry === 'object' && !Array.isArray(entry) &&
+        typeof entry.form !== 'string' && typeof entry.base !== 'string') {
+      surfaceErrors.push(`OPTION_SURFACE_UNSAFE|${lc}|${cid}|object entry without form/base`);
+      continue;
+    }
+    const s = surfaceForm(lc, cid);
+    if (!s || !String(s).trim()) {
+      surfaceErrors.push(`OPTION_SURFACE_EMPTY|${lc}|${cid}`);
+    }
+  }
+}
+if (surfaceErrors.length) {
+  console.error(`Exercise surfaces: ${surfaceErrors.length} option-surface violation(s) — hard fail (not baselined):`);
+  for (const e of surfaceErrors.slice(0, 40)) console.error('  ' + e);
+  process.exit(1);
 }
 
 // ── HARD check: hubNames completeness (never baselined) ─────────────────────

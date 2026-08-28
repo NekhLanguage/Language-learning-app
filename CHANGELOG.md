@@ -8,7 +8,8 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-28
 
-### Adjectives, numbers and possessives now climb the full ladder
+### Answer tiles always show real words, and never the same word twice
+Two exercise fixes found in Greek and Polish testing that protect every language. The matching level's tiles could show an internal data code instead of the word itself — Greek learners saw «f» and «n» where «αποσκευές» and «φαγητό» belonged — because one screen resolved words through its own shortcut instead of the shared engine path; all option tiles now render through one resolver. And multiple-choice can no longer offer the same written word twice: Polish «dom» translates both "home" and "a house", and the option picker used to treat them as different answers — only one of which counted as correct. Options are now unique by the word you actually see, everywhere.
 Words like "big", "five" and "my" used to stop at Level 5 — the sentence-building and free-translation levels never tested them, which quietly removed a third of the grammar from the top of the course. They now progress through Level 6 and Level 7 like every other word: drilling "big" at Level 7 gives you a sentence that actually contains it («Ty masz dużego brata»), and the prompt and the graded answer are guaranteed to carry the word together — the old failure where the English sentence asked for an adjective the answer didn't contain (or the other way around) is fenced out by construction. Words you had already mastered stay mastered.
 
 ## 2026-08-27
