@@ -29,6 +29,8 @@ import {
   nounPhrase,
   formOf,
   finalizeSentence,
+  optionSurfaceFor,
+  slotContextFor,
 } from "../../sentence_engine.mjs";
 
 let vocab, templates;
@@ -74,8 +76,10 @@ test("derived sets keep their pre-consolidation memberships", () => {
   // pre-nominal placement refines it per language.
   assert.deepEqual([...langsWith("postNominalAdjectives")].sort(),
     ["ar", "es", "fr", "it", "pt", "th"]);
+  // ko joined 2026-08-28: the present copula is the 이에요/예요 suffix on
+  // the nominal predicate, never a standalone word (Emi run 6).
   assert.deepEqual([...langsWith("zeroPresentCopula")].sort(),
-    ["ar", "tr", "uk"]);
+    ["ar", "ko", "tr", "uk"]);
   assert.deepEqual([...langsWith("spacelessJoin")].sort(), ["th"]);
   assert.deepEqual([...langsWith("spacelessTiles")].sort(), ["ja", "th", "zh"]);
 });
@@ -731,7 +735,7 @@ test("every features key is a known, checkable feature id", () => {
     "articleCaseMarking", "virilePlural", "numeralGovernment",
     "zeroPresentCopula", "definitenessAgreement",
     "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
-    "possessivePlacement", "verbGenderAgreement",
+    "possessivePlacement", "verbGenderAgreement", "topicParticle",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
@@ -803,4 +807,67 @@ test("ar: every core verb carries its 3_singular_f cell", () => {
     assert.equal(typeof e["3_singular_f"], "string",
       `ar verb ${cid} is missing 3_singular_f — «هي» falls back to the masculine`);
   }
+});
+
+// ---------------------------------------------------------------------
+// ko: conjugation + particles + suffixal copula — Emi 2026-08-28-12/-13
+// («나 음식 먹다» was the first card of the first Korean lesson: every
+// verb in dictionary form, zero particles in 140 sentences.)
+// ---------------------------------------------------------------------
+
+test("ko: polite present endings, topic and object particles", () => {
+  assert.equal(buildSentence("ko", tplById("I_EAT_FOOD")), "저는 음식을 먹어요.");
+  assert.equal(buildSentence("ko", tplById("I_DRINK_WATER")), "저는 물을 마셔요.");
+  assert.equal(buildSentence("ko", tplById("HE_READ_BOOK")), "그는 책을 읽어요.");
+  // Batchim allomorphy: 그들 ends in a consonant → 은.
+  assert.equal(buildSentence("ko", tplById("THEY_SLEEP")), "그들은 자요.");
+});
+
+test("ko: have-construction is existential — 이/가 on the possessed, 있어요", () => {
+  assert.equal(buildSentence("ko", tplById("I_HAVE_SHIRT")), "저는 셔츠가 있어요.");
+  assert.equal(buildSentence("ko", tplById("WE_HAVE_JOB")), "우리는 일이 있어요.");
+});
+
+test("ko: the present copula is the 이에요/예요 suffix on the predicate", () => {
+  // Batchim-keyed: 남자 (vowel-final) → 예요, 소년 (consonant-final) → 이에요.
+  assert.equal(buildSentence("ko", tplById("I_AM_MAN")), "저는 남자예요.");
+  assert.equal(buildSentence("ko", tplById("HE_IS_BOY")), "그는 소년이에요.");
+  assert.equal(buildSentence("ko", tplById("THIS_IS_MY_HAND")), "이것은 제 손이에요.");
+  // The dedicated builders carry the same particles + suffix.
+  assert.equal(buildSentence("ko", tplById("THIS_IS_A_GOOD_BOOK")),
+    "이것은 좋은 책이에요.");
+  assert.equal(buildSentence("ko", tplById("IS_THAT_YOUR_PHONE")),
+    "그것은 당신의 전화예요?");
+});
+
+test("ko: adjective predicates use their predicative verb form", () => {
+  assert.equal(buildSentence("ko", tplById("BOOK_IS_RED")), "책은 빨개요.");
+  assert.equal(buildSentence("ko", tplById("AUTUMN_IS_OLD")), "가을은 오래됐어요.");
+  // Attributive position keeps the ordinary form (좋은 above), and the
+  // nominal predicate — not the adjective — carries the copula suffix.
+});
+
+test("ko: authored surface overrides keep their own postposition («집에»)", () => {
+  // The object particle must not double up on a case-carrying override.
+  assert.equal(buildSentence("ko", tplById("I_GO_HOME")), "저는 집에 가요.");
+});
+
+test("ko: L3 blank and option tiles carry the particle with the word", () => {
+  const tpl = tplById("I_EAT_FOOD");
+  const sentence = buildSentence("ko", tpl);
+  const blank = resolveNounBlank(sentence, tpl, "ko", "FOOD");
+  assert.ok(blank, "FOOD must be blankable in «저는 음식을 먹어요»");
+  assert.equal(blank.surface, "음식을");
+  assert.ok(blank.blanked.includes("_____"));
+  // A distractor tile in the same slot carries the same decoration.
+  const slot = slotContextFor(tpl, "ko", "FOOD");
+  assert.equal(slot.position, "directObject");
+  assert.equal(optionSurfaceFor("ko", tpl, "BOOK", slot, { bareMode: blank.bareMode }),
+    "책을");
+});
+
+test("ja: particle behaviour survives the nominalParticles generalization", () => {
+  // ja declares the same rule the ko work introduced; renders must be
+  // byte-identical to the old hardcoded branch.
+  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "私は食べ物を食べる。");
 });

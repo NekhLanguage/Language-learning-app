@@ -1775,40 +1775,40 @@
      "form": "휴식"
     },
     "LIFT": {
-     "base": "들어올리다"
+     "base": "들어올리다", "present": "들어올려요"
     },
     "STRETCH": {
-     "base": "스트레칭하다"
+     "base": "스트레칭하다", "present": "스트레칭해요"
     },
     "BREATHE": {
-     "base": "숨을 쉬다"
+     "base": "숨을 쉬다", "present": "숨을 쉬어요"
     },
     "PEDAL": {
-     "base": "페달을 밟다"
+     "base": "페달을 밟다", "present": "페달을 밟아요"
     },
     "PUSH": {
-     "base": "밀다"
+     "base": "밀다", "present": "밀어요"
     },
     "PULL": {
-     "base": "당기다"
+     "base": "당기다", "present": "당겨요"
     },
     "MEASURE": {
-     "base": "측정하다"
+     "base": "측정하다", "present": "측정해요"
     },
     "IMPROVE": {
-     "base": "향상되다"
+     "base": "향상되다", "present": "향상돼요"
     },
     "RECOVER": {
-     "base": "회복하다"
+     "base": "회복하다", "present": "회복해요"
     },
     "WEIGH": {
-     "base": "무게를 재다"
+     "base": "무게를 재다", "present": "무게를 재요"
     },
     "FINISH": {
-     "base": "끝내다"
+     "base": "끝내다", "present": "끝내요"
     },
     "REPEAT": {
-     "base": "반복하다"
+     "base": "반복하다", "present": "반복해요"
     },
     "HEALTHY": [
      "건강한"

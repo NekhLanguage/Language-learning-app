@@ -464,25 +464,25 @@
         "SWORD":     { "form": "검" },
         "ARMOR":     { "form": "갑옷" },
         "SHIELD":    { "form": "방패" },
-        "ATTACK":    { "base": "공격하다" },
-        "DEFEND":    { "base": "방어하다" },
+        "ATTACK":    { "base": "공격하다", "present": "공격해요" },
+        "DEFEND":    { "base": "방어하다", "present": "방어해요" },
 
         "DRAGON":    { "form": "드래곤" },
         "DEMON":     { "form": "악마" },
         "SPIRIT":    { "form": "영혼" },
-        "SUMMON":    { "base": "소환하다" },
+        "SUMMON":    { "base": "소환하다", "present": "소환해요" },
         "SINISTER":  ["불길한"],
 
         "NINJA":     { "form": "닌자" },
         "SAMURAI":   { "form": "사무라이" },
         "SENSEI":    { "form": "선생님" },
         "SHADOW":    { "form": "그림자" },
-        "STRIKE":    { "base": "치다" },
+        "STRIKE":    { "base": "치다", "present": "쳐요" },
 
-        "TRANSFORM": { "base": "변신하다" },
+        "TRANSFORM": { "base": "변신하다", "present": "변신해요" },
         "POWER":     { "form": "힘" },
-        "CHANNEL":   { "base": "집중하다" },
-        "UNLEASH":   { "base": "해방하다" },
+        "CHANNEL":   { "base": "집중하다", "present": "집중해요" },
+        "UNLEASH":   { "base": "해방하다", "present": "해방해요" },
         "POWERFUL":  ["강력한"],
 
         "QUEST":     { "form": "퀘스트" },
@@ -492,8 +492,8 @@
         "ANCIENT":   ["고대의"],
 
         "BATTLE":    { "form": "배틀" },
-        "DODGE":     { "base": "피하다" },
-        "PROTECT":   { "base": "보호하다" },
+        "DODGE":     { "base": "피하다", "present": "피해요" },
+        "PROTECT":   { "base": "보호하다", "present": "보호해요" },
         "FIERCE":    ["맹렬한"],
         "MIGHTY":    ["강대한"],
 
@@ -503,16 +503,16 @@
         "CURSED":    ["저주받은"],
         "SACRED":    ["신성한"],
 
-        "TRAIN":     { "base": "훈련하다" },
+        "TRAIN":     { "base": "훈련하다", "present": "훈련해요" },
         "MASTER":    { "form": "고수" },
         "CLAN":      { "form": "클랜" },
-        "AWAKEN":    { "base": "각성하다" },
+        "AWAKEN":    { "base": "각성하다", "present": "각성해요" },
         "LEGENDARY": ["전설의"],
 
         "MECHA":     { "form": "메카" },
         "ARENA":     { "form": "아레나" },
-        "CONQUER":   { "base": "정복하다" },
-        "TRANSCEND": { "base": "초월하다" },
+        "CONQUER":   { "base": "정복하다", "present": "정복해요" },
+        "TRANSCEND": { "base": "초월하다", "present": "초월해요" },
         "ETERNAL":   ["영원한"]
       }
     },
