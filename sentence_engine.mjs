@@ -665,8 +665,38 @@ function isCopularPredicatePosition(ordered, idx) {
 // і тим») and clears at a verb.
 // The preposition→case table a language declares (language_rules.mjs
 // caseMarking.prepositions), or null for non-case-marking languages.
+// A table value is either the case name ("locative" — de/pl/uk) or an
+// object { case, suppressWord } for languages where the adposition has no
+// word of its own — the case ending IS the adposition (fi «pöydällä»
+// = "on the table", adessive, no separate word). This normalizer returns
+// case names only, so every existing reader keeps its contract;
+// prepSuppressesWord() reads the word-dropping half.
 function prepCaseTable(lang) {
-  return langRuleValue(lang, "caseMarking")?.prepositions || null;
+  const raw = langRuleValue(lang, "caseMarking")?.prepositions;
+  if (!raw) return null;
+  const out = {};
+  for (const [cid, v] of Object.entries(raw)) {
+    out[cid] = typeof v === "string" ? v : v?.case || null;
+  }
+  return out;
+}
+
+// Declared rule (case-only adpositions): the adposition word is dropped
+// and the governed nominal's case ending carries the meaning — fires only
+// when the case form actually exists for the following nominal, so
+// missing data degrades to the visible word rather than silence.
+function prepSuppressesWord(lang, cid) {
+  const raw = langRuleValue(lang, "caseMarking")?.prepositions?.[cid];
+  return !!(raw && typeof raw === "object" && raw.suppressWord);
+}
+
+// A postposed adposition (declared per preposition: {case, postposed} —
+// fi «pöydän alla», "table-GEN under") governs the nominal(s) BEFORE it.
+// The template's order.<lang> puts the adposition after its landmark; this
+// helper says whether the declaration marks it postposed.
+function prepIsPostposed(lang, cid) {
+  const raw = langRuleValue(lang, "caseMarking")?.prepositions?.[cid];
+  return !!(raw && typeof raw === "object" && raw.postposed);
 }
 
 // Case each ordered position is governed by (declared case-marking
@@ -675,13 +705,28 @@ function caseMap(lang, ordered) {
   const preps = prepCaseTable(lang);
   if (!preps) return ordered.map(() => null);
   let pending = null;
-  return ordered.map((cid) => {
+  const map = ordered.map((cid) => {
     if (preps[cid]) { pending = preps[cid]; return null; }
     const t = vocab().concepts?.[cid]?.type;
     if (t === "verb") { pending = null; return null; }
     if (t === "noun" || t === "pronoun") return pending;
     return null; // modifiers / conjunctions pass the case along
   });
+  // Second pass, backward: a POSTPOSED adposition assigns its case to the
+  // nominal(s) preceding it — across connectors, so a coordinated landmark
+  // declines in both halves («tämän ja tuon välissä»). Stops at a verb or
+  // another adposition.
+  for (let i = 0; i < ordered.length; i++) {
+    if (!prepIsPostposed(lang, ordered[i])) continue;
+    const governed = preps[ordered[i]];
+    for (let j = i - 1; j >= 0; j--) {
+      const t = vocab().concepts?.[ordered[j]]?.type;
+      if (t === "noun" || t === "pronoun") { map[j] = governed; continue; }
+      if (t === "connector" || t === "adjective" || t === "number") continue;
+      break;
+    }
+  }
+  return map;
 }
 
 // The declined form for a governed nominal, or null when no data exists.
@@ -1205,6 +1250,18 @@ if (orderType === "SOV") {
       return getVerbForm(targetConcept, subjectCid, targetLang);
     }
 
+    // Existential possession (fi «Minulla on kirja»): the HAVE-subject
+    // blank must hold the possessor-case form the sentence renders
+    // («Minulla», never the nominative «minä»).
+    {
+      const exPoss = langRuleValue(targetLang, "existentialPossession");
+      if (exPoss && targetConcept === subjectCid &&
+          (tpl.concepts || []).includes("HAVE")) {
+        const possForm = caseFormFor(targetLang, targetConcept, exPoss);
+        if (possForm) return possForm;
+      }
+    }
+
     const authored = tpl.surface?.[targetLang]?.[targetConcept];
     if (authored) {
       // An authored surface that IS the plain dictionary form still takes
@@ -1266,24 +1323,44 @@ if (orderType === "SOV") {
         }
         // A template-carried numeral five+ governs the genitive plural
         // («pięć książek») — mirror the render path's numeral government.
-        if (langRule(targetLang, "numeralGenitivePlural")) {
+        if (langRule(targetLang, "numeralGenitivePlural") ||
+            langRule(targetLang, "numeralPartitiveSingular")) {
+          const partitive = langRule(targetLang, "numeralPartitiveSingular");
           for (let j = idx - 1; j >= 0; j--) {
             const t = vocab().concepts[ordered[j]]?.type;
             if (t === "verb") break;
             if (t === "number") {
-              if ((NUMBER_VALUES[ordered[j]] || 0) >= 5) {
-                const gp = entry?.genitive_plural;
-                if (gp) return gp;
+              const value = NUMBER_VALUES[ordered[j]] || 0;
+              if (partitive && value >= 2 && entry?.partitive) return entry.partitive;
+              if (!partitive && value >= 5 && entry?.genitive_plural) {
+                return entry.genitive_plural;
               }
               break;
             }
           }
         }
       }
-      // A uk noun in object position appears in the accusative («воду»).
+      // A uk noun in object position appears in the accusative («воду») —
+      // except in an existential-possession template (fi «Minulla on
+      // paita»), whose possessed noun stays nominative.
       if (langRuleValue(targetLang, "caseMarking")?.directObjectCase === "accusative" &&
-          idx !== -1 && isDirectObjectPosition(ordered, idx)) {
+          idx !== -1 && isDirectObjectPosition(ordered, idx) &&
+          !(langRuleValue(targetLang, "existentialPossession") && ordered.includes("HAVE"))) {
         return accusativeNoun(targetLang, targetConcept, formOf(targetLang, targetConcept));
+      }
+    }
+
+    // A direct-object pronoun/demonstrative blank holds the object-case
+    // form the sentence renders (fi «tämän») — mirror of the render path.
+    if (meta.type === "pronoun" &&
+        langRuleValue(targetLang, "caseMarking")?.directObjectCase === "accusative" &&
+        !(langRuleValue(targetLang, "existentialPossession") &&
+          (tpl.concepts || []).includes("HAVE"))) {
+      const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+      const idx = ordered.indexOf(targetConcept);
+      if (idx !== -1 && isDirectObjectPosition(ordered, idx)) {
+        const objForm = caseFormFor(targetLang, targetConcept, "accusative");
+        if (objForm) return objForm;
       }
     }
 
@@ -1351,7 +1428,12 @@ if (orderType === "SOV") {
     const prepCase = caseMap(targetLang, ordered)[idx];
     if (prepCase) return { position: "prepObject", caseName: prepCase };
     if (isDirectObjectPosition(ordered, idx)) {
-      const doCase = langRuleValue(targetLang, "caseMarking")?.directObjectCase || null;
+      // The possessed noun of an existential-possession template stays
+      // nominative (fi «Minulla on paita») — tiles must not decline it.
+      const exHave = langRuleValue(targetLang, "existentialPossession") &&
+        ordered.includes("HAVE");
+      const doCase = exHave ? null :
+        (langRuleValue(targetLang, "caseMarking")?.directObjectCase || null);
       return { position: "directObject", caseName: doCase };
     }
     // SOV languages put the direct object BEFORE the verb, so the shared
@@ -1659,6 +1741,17 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
     return false;
   }
 
+  // Numeral government, Finnish shape (numeralPartitiveSingular): EVERY
+  // number ≥2 governs the partitive SINGULAR («kaksi kirjaa», «viisi
+  // kirjaa»). A noun without the partitive field refuses the number —
+  // wrong gets filtered, odd gets shipped.
+  if (modMeta.type === "number" &&
+      langRule(lang, "numeralPartitiveSingular") &&
+      (NUMBER_VALUES[modifierCid] || 0) >= 2 &&
+      typeof nounEntry.partitive !== "string") {
+    return false;
+  }
+
   // In a language with plural morphology, a number ≥2 on a noun with no
   // plural data would ship the singular citation form («δεκαπέντε
   // διαβατήριο», «два паспорт» — Emi 2026-08-28-04/-07). Refuse instead:
@@ -1668,6 +1761,9 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
       lang !== "en" && // en pluralizes algorithmically (pluralize())
       (NUMBER_VALUES[modifierCid] || 0) >= 2 &&
       langRule(lang, "inflectsNounPlural") &&
+      // Counting never touches the plural where numbers govern the
+      // partitive singular (fi) — the partitive gate above owns it.
+      !langRule(lang, "numeralPartitiveSingular") &&
       !nounEntry.invariantPlural && !nounEntry.pluralOnly &&
       typeof nounEntry.plural !== "string") {
     return false;
@@ -2647,9 +2743,23 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // Which case (if any) governs each position — uk prepositional case.
   const caseAt = caseMap(lang, ordered);
 
+  // Existential possession (declared: existentialPossession = the
+  // possessor's case — fi «Minulla on kirja», "at-me is book"): the
+  // HAVE-subject renders in that case, HAVE itself conjugates through the
+  // normal verb path (fi pins invariant «on» via its data), and the
+  // possessed noun stays nominative (the direct-object case is skipped).
+  const existentialHave = !!langRuleValue(lang, "existentialPossession") &&
+    !isCopularTemplate && ordered.includes("HAVE");
+
   const words = ordered.map((cid, idx) => {
     const meta = vocab().concepts[cid];
     if (!meta) return cid;
+
+    if (existentialHave && cid === subjectCid) {
+      const possForm = caseFormFor(lang, cid,
+        langRuleValue(lang, "existentialPossession"));
+      if (possForm) return possForm;
+    }
 
     if (meta.type === "verb") {
       // Control-verb chains (start/stop/want/like + verb) need the second
@@ -2746,7 +2856,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // accusative). Possessed objects only shift for the regular feminine
   // rule — an explicit animate-masculine override would clash with the
   // possessive word, which has no accusative data of its own.
-  const isObject = isDirectObjectPosition(ordered, idx);
+  const isObject = isDirectObjectPosition(ordered, idx) && !existentialHave;
   const ukObjectCase = langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
     isObject && !pluralAgreement;
   // Copular agreement: this noun is the predicate after a plural subject.
@@ -3060,6 +3170,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     } else if (lang === "en") {
       const enEntry = vocab().languages?.en?.forms?.[cid] || {};
       nounForm = (enEntry.invariantPlural || enEntry.pluralOnly) ? bare : pluralize(bare);
+    } else if (langRule(lang, "numeralPartitiveSingular") &&
+               (NUMBER_VALUES[numberCid] || 0) >= 2 &&
+               typeof vocab().languages?.[lang]?.forms?.[cid]?.partitive === "string") {
+      // Finnish-shape numeral government: «kaksi kirjaa» — partitive
+      // singular for every number ≥2. Compat gate guarantees the field.
+      noteRule("numeral_government");
+      nounForm = vocab().languages?.[lang]?.forms?.[cid].partitive;
+      numeralGoverned = true;
     } else if (langRule(lang, "numeralGenitivePlural") &&
                (NUMBER_VALUES[numberCid] || 0) >= 5 &&
                typeof vocab().languages?.[lang]?.forms?.[cid]?.genitive_plural === "string") {
@@ -3239,6 +3357,25 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       return "";
     }
 
+    // Case-only adpositions (declared per preposition: {case, suppressWord}
+    // — fi «Kirja on pöydällä», adessive, no separate "on top of" word).
+    // The word drops only when the next nominal can actually carry the
+    // case, so missing data keeps the visible word instead of losing the
+    // relation silently. The generalization of the BY rule above.
+    if (prepSuppressesWord(lang, cid)) {
+      const governedCase = prepCaseTable(lang)?.[cid];
+      let j = idx + 1;
+      while (j < ordered.length &&
+             !["noun", "pronoun"].includes(vocab().concepts[ordered[j]]?.type)) {
+        if (vocab().concepts[ordered[j]]?.type === "verb") { j = ordered.length; break; }
+        j++;
+      }
+      if (j < ordered.length && caseFormFor(lang, ordered[j], governedCase)) {
+        noteRule("prepositional_case");
+        return "";
+      }
+    }
+
     // A preposition-governed pronoun/demonstrative declines like a governed
     // noun («на цьому», «між цим і тим») when case data exists.
     if (meta.type === "pronoun") {
@@ -3246,6 +3383,17 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (governed) {
         noteRule("prepositional_case");
         return governed;
+      }
+      // A direct-object pronoun/demonstrative takes the object case when
+      // the data provides it (fi «Minä teen tämän»); languages whose
+      // entries carry no accusative field are untouched.
+      if (langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
+          !existentialHave && isDirectObjectPosition(ordered, idx)) {
+        const objForm = caseFormFor(lang, cid, "accusative");
+        if (objForm) {
+          noteRule("accusative_object");
+          return objForm;
+        }
       }
       // Thai demonstratives have a bound form after a preposition:
       // standalone นี่ ("this") but บนนี้ ("on this"), surviving a

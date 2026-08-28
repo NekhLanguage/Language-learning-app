@@ -62,6 +62,251 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "GUITAR": {
+          "form": "kitara",
+          "plural": "kitarat"
+        },
+        "DRUM": {
+          "form": "rumpu",
+          "plural": "rummut"
+        },
+        "PIANO": {
+          "form": "piano",
+          "plural": "pianot"
+        },
+        "VIOLIN": {
+          "form": "viulu",
+          "plural": "viulut"
+        },
+        "MICROPHONE": {
+          "form": "mikrofoni",
+          "plural": "mikrofonit"
+        },
+        "MELODY": {
+          "form": "melodia",
+          "plural": "melodiat"
+        },
+        "RHYTHM": {
+          "form": "rytmi",
+          "plural": "rytmit"
+        },
+        "BEAT": {
+          "form": "biitti",
+          "plural": "biitit"
+        },
+        "CHORD": {
+          "form": "sointu",
+          "plural": "soinnut"
+        },
+        "HARMONY": {
+          "form": "harmonia",
+          "plural": "harmoniat"
+        },
+        "SING": {
+          "base": "laulaa",
+          "1_singular": "laulan",
+          "2_singular": "laulat",
+          "3_singular": "laulaa",
+          "1_plural": "laulamme",
+          "2_plural": "laulatte",
+          "3_plural": "laulavat"
+        },
+        "STRUM": {
+          "base": "rämpyttää",
+          "1_singular": "rämpytän",
+          "2_singular": "rämpytät",
+          "3_singular": "rämpyttää",
+          "1_plural": "rämpytämme",
+          "2_plural": "rämpytätte",
+          "3_plural": "rämpyttävät"
+        },
+        "COMPOSE": {
+          "base": "säveltää",
+          "1_singular": "sävellän",
+          "2_singular": "sävellät",
+          "3_singular": "säveltää",
+          "1_plural": "sävellämme",
+          "2_plural": "sävellätte",
+          "3_plural": "säveltävät"
+        },
+        "PERFORM": {
+          "base": "esiintyä",
+          "1_singular": "esiinnyn",
+          "2_singular": "esiinnyt",
+          "3_singular": "esiintyy",
+          "1_plural": "esiinnymme",
+          "2_plural": "esiinnytte",
+          "3_plural": "esiintyvät"
+        },
+        "RECORD": {
+          "base": "äänittää",
+          "1_singular": "äänitän",
+          "2_singular": "äänität",
+          "3_singular": "äänittää",
+          "1_plural": "äänitämme",
+          "2_plural": "äänitätte",
+          "3_plural": "äänittävät"
+        },
+        "CONCERT": {
+          "form": "konsertti",
+          "plural": "konsertit"
+        },
+        "STAGE": {
+          "form": "lava",
+          "plural": "lavat"
+        },
+        "ENCORE": {
+          "form": "ylimääräinen",
+          "plural": "ylimääräiset"
+        },
+        "SPOTLIGHT": {
+          "form": "kohdevalo",
+          "plural": "kohdevalot"
+        },
+        "TOUR": {
+          "form": "kiertue",
+          "plural": "kiertueet"
+        },
+        "LYRIC": {
+          "form": "sanoitus",
+          "plural": "sanoitukset"
+        },
+        "CHORUS": {
+          "form": "kertosäe",
+          "plural": "kertosäkeet"
+        },
+        "VERSE": {
+          "form": "säkeistö",
+          "plural": "säkeistöt"
+        },
+        "SOLO": {
+          "form": "soolo",
+          "plural": "soolot"
+        },
+        "DUET": {
+          "form": "duetto",
+          "plural": "duetot"
+        },
+        "ROCK": {
+          "form": "rock"
+        },
+        "JAZZ": {
+          "form": "jazz"
+        },
+        "CLASSICAL": [
+          "klassinen"
+        ],
+        "ACOUSTIC": [
+          "akustinen"
+        ],
+        "ELECTRONIC": [
+          "elektroninen"
+        ],
+        "STUDIO": {
+          "form": "studio",
+          "plural": "studiot"
+        },
+        "TRACK": {
+          "form": "kappale",
+          "plural": "kappaleet"
+        },
+        "ALBUM": {
+          "form": "albumi",
+          "plural": "albumit"
+        },
+        "REMIX": {
+          "form": "remix",
+          "plural": "remixit"
+        },
+        "SAMPLE": {
+          "form": "sample",
+          "plural": "samplet"
+        },
+        "REHEARSE": {
+          "base": "harjoitella",
+          "1_singular": "harjoittelen",
+          "2_singular": "harjoittelet",
+          "3_singular": "harjoittelee",
+          "1_plural": "harjoittelemme",
+          "2_plural": "harjoittelette",
+          "3_plural": "harjoittelevat"
+        },
+        "TUNE": {
+          "base": "virittää",
+          "1_singular": "viritän",
+          "2_singular": "virität",
+          "3_singular": "virittää",
+          "1_plural": "viritämme",
+          "2_plural": "viritätte",
+          "3_plural": "virittävät"
+        },
+        "IMPROVISE": {
+          "base": "improvisoida",
+          "1_singular": "improvisoin",
+          "2_singular": "improvisoit",
+          "3_singular": "improvisoi",
+          "1_plural": "improvisoimme",
+          "2_plural": "improvisoitte",
+          "3_plural": "improvisoivat"
+        },
+        "AMPLIFY": {
+          "base": "vahvistaa",
+          "1_singular": "vahvistan",
+          "2_singular": "vahvistat",
+          "3_singular": "vahvistaa",
+          "1_plural": "vahvistamme",
+          "2_plural": "vahvistatte",
+          "3_plural": "vahvistavat"
+        },
+        "DROP": {
+          "base": "julkaista",
+          "1_singular": "julkaisen",
+          "2_singular": "julkaiset",
+          "3_singular": "julkaisee",
+          "1_plural": "julkaisemme",
+          "2_plural": "julkaisette",
+          "3_plural": "julkaisevat"
+        },
+        "LOUD": [
+          "äänekäs"
+        ],
+        "SOULFUL": [
+          "sielukas"
+        ],
+        "RHYTHMIC": [
+          "rytmikäs"
+        ],
+        "LIVE": [
+          "live"
+        ],
+        "VIRAL": [
+          "viraali"
+        ],
+        "BAND": {
+          "form": "yhtye",
+          "plural": "yhtyeet"
+        },
+        "ANTHEM": {
+          "form": "hymni",
+          "plural": "hymnit"
+        },
+        "PLAYLIST": {
+          "form": "soittolista",
+          "plural": "soittolistat"
+        },
+        "FESTIVAL": {
+          "form": "festivaali",
+          "plural": "festivaalit"
+        },
+        "FANBASE": {
+          "form": "fanikunta",
+          "plural": "fanikunnat"
+        }
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

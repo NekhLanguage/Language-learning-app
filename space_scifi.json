@@ -53,6 +53,256 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "PLANET": {
+          "form": "planeetta",
+          "plural": "planeetat"
+        },
+        "STAR": {
+          "form": "tähti",
+          "plural": "tähdet"
+        },
+        "GALAXY": {
+          "form": "galaksi",
+          "plural": "galaksit"
+        },
+        "ASTEROID": {
+          "form": "asteroidi",
+          "plural": "asteroidit"
+        },
+        "ROCKET": {
+          "form": "raketti",
+          "plural": "raketit"
+        },
+        "SPACECRAFT": {
+          "form": "avaruusalus",
+          "plural": "avaruusalukset"
+        },
+        "ASTRONAUT": {
+          "form": "astronautti",
+          "plural": "astronautit"
+        },
+        "TELESCOPE": {
+          "form": "teleskooppi",
+          "plural": "teleskoopit"
+        },
+        "SATELLITE": {
+          "form": "satelliitti",
+          "plural": "satelliitit"
+        },
+        "PROBE": {
+          "form": "luotain",
+          "plural": "luotaimet"
+        },
+        "ALIEN": {
+          "form": "avaruusolento",
+          "plural": "avaruusolennot"
+        },
+        "CREATURE": {
+          "form": "olento",
+          "plural": "olennot"
+        },
+        "SIGNAL": {
+          "form": "signaali",
+          "plural": "signaalit"
+        },
+        "LASER": {
+          "form": "laser",
+          "plural": "laserit"
+        },
+        "HOLOGRAM": {
+          "form": "hologrammi",
+          "plural": "hologrammit"
+        },
+        "ANDROID": {
+          "form": "androidi",
+          "plural": "androidit"
+        },
+        "COCKPIT": {
+          "form": "ohjaamo",
+          "plural": "ohjaamot"
+        },
+        "AIRLOCK": {
+          "form": "ilmalukko",
+          "plural": "ilmalukot"
+        },
+        "HULL": {
+          "form": "runko",
+          "plural": "rungot"
+        },
+        "NEBULA": {
+          "form": "tähtisumu",
+          "plural": "tähtisumut"
+        },
+        "WORMHOLE": {
+          "form": "madonreikä",
+          "plural": "madonreiät"
+        },
+        "SUPERNOVA": {
+          "form": "supernova",
+          "plural": "supernovat"
+        },
+        "COLONY": {
+          "form": "siirtokunta",
+          "plural": "siirtokunnat"
+        },
+        "HABITAT": {
+          "form": "habitaatti",
+          "plural": "habitaatit"
+        },
+        "INVASION": {
+          "form": "invaasio",
+          "plural": "invaasiot"
+        },
+        "FLEET": {
+          "form": "laivasto",
+          "plural": "laivastot"
+        },
+        "BLASTER": {
+          "form": "blaster",
+          "plural": "blasterit"
+        },
+        "DIMENSION": {
+          "form": "ulottuvuus",
+          "plural": "ulottuvuudet"
+        },
+        "FRONTIER": {
+          "form": "rajaseutu",
+          "plural": "rajaseudut"
+        },
+        "LAUNCH": {
+          "base": "laukaista",
+          "1_singular": "laukaisen",
+          "2_singular": "laukaiset",
+          "3_singular": "laukaisee",
+          "1_plural": "laukaisemme",
+          "2_plural": "laukaisette",
+          "3_plural": "laukaisevat"
+        },
+        "DISCOVER": {
+          "base": "löytää",
+          "1_singular": "löydän",
+          "2_singular": "löydät",
+          "3_singular": "löytää",
+          "1_plural": "löydämme",
+          "2_plural": "löydätte",
+          "3_plural": "löytävät"
+        },
+        "ENCOUNTER": {
+          "base": "kohdata",
+          "1_singular": "kohtaan",
+          "2_singular": "kohtaat",
+          "3_singular": "kohtaa",
+          "1_plural": "kohtaamme",
+          "2_plural": "kohtaatte",
+          "3_plural": "kohtaavat"
+        },
+        "ACTIVATE": {
+          "base": "aktivoida",
+          "1_singular": "aktivoin",
+          "2_singular": "aktivoit",
+          "3_singular": "aktivoi",
+          "1_plural": "aktivoimme",
+          "2_plural": "aktivoitte",
+          "3_plural": "aktivoivat"
+        },
+        "NAVIGATE": {
+          "base": "navigoida",
+          "1_singular": "navigoin",
+          "2_singular": "navigoit",
+          "3_singular": "navigoi",
+          "1_plural": "navigoimme",
+          "2_plural": "navigoitte",
+          "3_plural": "navigoivat"
+        },
+        "TERRAFORM": {
+          "base": "maankaltaistaa",
+          "1_singular": "maankaltaistan",
+          "2_singular": "maankaltaistat",
+          "3_singular": "maankaltaistaa",
+          "1_plural": "maankaltaistamme",
+          "2_plural": "maankaltaistatte",
+          "3_plural": "maankaltaistavat"
+        },
+        "COLONIZE": {
+          "base": "asuttaa",
+          "1_singular": "asutan",
+          "2_singular": "asutat",
+          "3_singular": "asuttaa",
+          "1_plural": "asutamme",
+          "2_plural": "asutatte",
+          "3_plural": "asuttavat"
+        },
+        "ORBIT": {
+          "base": "kiertää",
+          "1_singular": "kierrän",
+          "2_singular": "kierrät",
+          "3_singular": "kiertää",
+          "1_plural": "kierrämme",
+          "2_plural": "kierrätte",
+          "3_plural": "kiertävät"
+        },
+        "TRANSMIT": {
+          "base": "lähettää",
+          "1_singular": "lähetän",
+          "2_singular": "lähetät",
+          "3_singular": "lähettää",
+          "1_plural": "lähetämme",
+          "2_plural": "lähetätte",
+          "3_plural": "lähettävät"
+        },
+        "WARP": {
+          "base": "hypätä",
+          "1_singular": "hyppään",
+          "2_singular": "hyppäät",
+          "3_singular": "hyppää",
+          "1_plural": "hyppäämme",
+          "2_plural": "hyppäätte",
+          "3_plural": "hyppäävät"
+        },
+        "EVOLVE": {
+          "base": "kehittyä",
+          "1_singular": "kehityn",
+          "2_singular": "kehityt",
+          "3_singular": "kehittyy",
+          "1_plural": "kehitymme",
+          "2_plural": "kehitytte",
+          "3_plural": "kehittyvät"
+        },
+        "COSMIC": [
+          "kosminen"
+        ],
+        "ORBITAL": [
+          "orbitaalinen"
+        ],
+        "DISTANT": [
+          "kaukainen"
+        ],
+        "UNKNOWN": [
+          "tuntematon"
+        ],
+        "ADVANCED": [
+          "kehittynyt"
+        ],
+        "ARTIFICIAL": [
+          "keinotekoinen"
+        ],
+        "INFINITE": [
+          "ääretön"
+        ],
+        "SUSTAINABLE": [
+          "kestävä"
+        ],
+        "HOSTILE": [
+          "vihamielinen"
+        ],
+        "FUTURISTIC": [
+          "futuristinen"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

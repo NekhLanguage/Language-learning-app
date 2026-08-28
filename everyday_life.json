@@ -53,6 +53,259 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "ALARM": {
+          "form": "herätyskello",
+          "plural": "herätyskellot"
+        },
+        "SHOWER": {
+          "form": "suihku",
+          "plural": "suihkut"
+        },
+        "TOOTHBRUSH": {
+          "form": "hammasharja",
+          "plural": "hammasharjat"
+        },
+        "APARTMENT": {
+          "form": "asunto",
+          "plural": "asunnot"
+        },
+        "LIVING_ROOM": {
+          "form": "olohuone",
+          "plural": "olohuoneet"
+        },
+        "FURNITURE": {
+          "form": "huonekalut"
+        },
+        "NEIGHBOR": {
+          "form": "naapuri",
+          "plural": "naapurit"
+        },
+        "GROCERY": {
+          "form": "ruokakauppa",
+          "plural": "ruokakaupat"
+        },
+        "PHARMACY": {
+          "form": "apteekki",
+          "plural": "apteekit"
+        },
+        "OFFICE": {
+          "form": "toimisto",
+          "plural": "toimistot"
+        },
+        "MEETING": {
+          "form": "kokous",
+          "plural": "kokoukset"
+        },
+        "DEADLINE": {
+          "form": "määräaika",
+          "plural": "määräajat"
+        },
+        "STORM": {
+          "form": "myrsky",
+          "plural": "myrskyt"
+        },
+        "UMBRELLA": {
+          "form": "sateenvarjo",
+          "plural": "sateenvarjot"
+        },
+        "FORECAST": {
+          "form": "sääennuste",
+          "plural": "sääennusteet"
+        },
+        "INVITATION": {
+          "form": "kutsu",
+          "plural": "kutsut"
+        },
+        "CONVERSATION": {
+          "form": "keskustelu",
+          "plural": "keskustelut"
+        },
+        "COMPLIMENT": {
+          "form": "kohteliaisuus",
+          "plural": "kohteliaisuudet"
+        },
+        "WALLET": {
+          "form": "lompakko",
+          "plural": "lompakot"
+        },
+        "BILL": {
+          "form": "lasku",
+          "plural": "laskut"
+        },
+        "BUDGET": {
+          "form": "budjetti",
+          "plural": "budjetit"
+        },
+        "HEADACHE": {
+          "form": "päänsärky",
+          "plural": "päänsäryt"
+        },
+        "MEDICINE": {
+          "form": "lääke",
+          "plural": "lääkkeet"
+        },
+        "APPOINTMENT": {
+          "form": "vastaanottoaika",
+          "plural": "vastaanottoajat"
+        },
+        "LAUNDRY": {
+          "form": "pyykki"
+        },
+        "DISHES": {
+          "form": "astiat",
+          "plural": "astiat"
+        },
+        "GARBAGE": {
+          "form": "roskat"
+        },
+        "CANDLE": {
+          "form": "kynttilä",
+          "plural": "kynttilät"
+        },
+        "COUCH": {
+          "form": "sohva",
+          "plural": "sohvat"
+        },
+        "COMMUTE": {
+          "base": "kulkea töihin",
+          "1_singular": "kuljen töihin",
+          "2_singular": "kuljet töihin",
+          "3_singular": "kulkee töihin",
+          "1_plural": "kuljemme töihin",
+          "2_plural": "kuljette töihin",
+          "3_plural": "kulkevat töihin"
+        },
+        "OVERSLEEP": {
+          "base": "nukkua pommiin",
+          "1_singular": "nukun pommiin",
+          "2_singular": "nukut pommiin",
+          "3_singular": "nukkuu pommiin",
+          "1_plural": "nukumme pommiin",
+          "2_plural": "nukutte pommiin",
+          "3_plural": "nukkuvat pommiin"
+        },
+        "DELIVER": {
+          "base": "toimittaa",
+          "1_singular": "toimitan",
+          "2_singular": "toimitat",
+          "3_singular": "toimittaa",
+          "1_plural": "toimitamme",
+          "2_plural": "toimitatte",
+          "3_plural": "toimittavat"
+        },
+        "ORGANIZE": {
+          "base": "järjestää",
+          "1_singular": "järjestän",
+          "2_singular": "järjestät",
+          "3_singular": "järjestää",
+          "1_plural": "järjestämme",
+          "2_plural": "järjestätte",
+          "3_plural": "järjestävät"
+        },
+        "SCHEDULE": {
+          "base": "aikatauluttaa",
+          "1_singular": "aikataulutan",
+          "2_singular": "aikataulutat",
+          "3_singular": "aikatauluttaa",
+          "1_plural": "aikataulutamme",
+          "2_plural": "aikataulutatte",
+          "3_plural": "aikatauluttavat"
+        },
+        "DRIZZLE": {
+          "base": "tihkuttaa",
+          "1_singular": "tihkutan",
+          "2_singular": "tihkutat",
+          "3_singular": "tihkuttaa",
+          "1_plural": "tihkutamme",
+          "2_plural": "tihkutatte",
+          "3_plural": "tihkuttavat"
+        },
+        "APOLOGIZE": {
+          "base": "pyytää anteeksi",
+          "1_singular": "pyydän anteeksi",
+          "2_singular": "pyydät anteeksi",
+          "3_singular": "pyytää anteeksi",
+          "1_plural": "pyydämme anteeksi",
+          "2_plural": "pyydätte anteeksi",
+          "3_plural": "pyytävät anteeksi"
+        },
+        "AFFORD": {
+          "base": "olla varaa",
+          "1_singular": "minulla on varaa",
+          "2_singular": "sinulla on varaa",
+          "3_singular": "hänellä on varaa",
+          "1_plural": "meillä on varaa",
+          "2_plural": "teillä on varaa",
+          "3_plural": "heillä on varaa"
+        },
+        "EXERCISE": {
+          "base": "kuntoilla",
+          "1_singular": "kuntoilen",
+          "2_singular": "kuntoilet",
+          "3_singular": "kuntoilee",
+          "1_plural": "kuntoilemme",
+          "2_plural": "kuntoilette",
+          "3_plural": "kuntoilevat"
+        },
+        "REPAIR": {
+          "base": "korjata",
+          "1_singular": "korjaan",
+          "2_singular": "korjaat",
+          "3_singular": "korjaa",
+          "1_plural": "korjaamme",
+          "2_plural": "korjaatte",
+          "3_plural": "korjaavat"
+        },
+        "RELAX": {
+          "base": "levätä",
+          "1_singular": "lepään",
+          "2_singular": "lepäät",
+          "3_singular": "lepää",
+          "1_plural": "lepäämme",
+          "2_plural": "lepäätte",
+          "3_plural": "lepäävät"
+        },
+        "UNWIND": {
+          "base": "rentoutua",
+          "1_singular": "rentoudun",
+          "2_singular": "rentoudut",
+          "3_singular": "rentoutuu",
+          "1_plural": "rentoudumme",
+          "2_plural": "rentoudutte",
+          "3_plural": "rentoutuvat"
+        },
+        "COMFORTABLE": [
+          "mukava"
+        ],
+        "CONVENIENT": [
+          "kätevä"
+        ],
+        "BUSY": [
+          "kiireinen"
+        ],
+        "CLOUDY": [
+          "pilvinen"
+        ],
+        "FRIENDLY": [
+          "ystävällinen"
+        ],
+        "CHEAP": [
+          "halpa"
+        ],
+        "TIRED": [
+          "väsynyt"
+        ],
+        "MESSY": [
+          "sotkuinen"
+        ],
+        "COZY": [
+          "kodikas"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

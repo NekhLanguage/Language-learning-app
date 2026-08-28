@@ -34,7 +34,7 @@ const FULL_GENDER_LANGS = new Set(['uk', 'el', 'ar', 'pl']);
 // instead of «чаклує»). Require the full present paradigm for these.
 // en needs only base + 3_singular; no uses a uniform `present`/base; and
 // ja/ko/zh do not inflect verbs by person, so base alone is correct.
-const VERB_PERSON_LANGS = new Set(['es', 'fr', 'de', 'pt', 'uk', 'ar', 'el', 'tr', 'it', 'pl']);
+const VERB_PERSON_LANGS = new Set(['es', 'fr', 'de', 'pt', 'uk', 'ar', 'el', 'tr', 'it', 'pl', 'fi']);
 const PERSON_PARADIGM_KEYS = ['1_singular', '2_singular', '3_singular', '1_plural', '2_plural', '3_plural'];
 
 // ─── Canonical language list (sourced from languages.js) ─────────────────────

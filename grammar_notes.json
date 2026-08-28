@@ -66,6 +66,10 @@
       "pl": {
         "title": "Czasownik zmienia się z podmiotem",
         "body": "W języku {lang} czasownik przybiera inną formę w zależności od tego, kto wykonuje czynność — jak polskie „jem” i „je”, dla każdej osoby."
+      },
+      "fi": {
+        "title": "Verbi taipuu tekijän mukaan",
+        "body": "Kielessä {lang} verbi saa eri muodon sen mukaan, kuka tekee — kuten 'minä syön' ja 'hän syö', mutta jokaiselle persoonalle."
       }
     },
     "zero_copula": {
@@ -132,6 +136,10 @@
       "pl": {
         "title": "Brak „być” w czasie teraźniejszym",
         "body": "Język {lang} pomija słowo „być” w zdaniach w czasie teraźniejszym: „On jest studentem” brzmi dosłownie „On student”."
+      },
+      "fi": {
+        "title": "'Olla' jää pois preesensissä",
+        "body": "Kieli {lang} jättää 'olla'-verbin pois preesenslauseista — sanatarkasti 'hän opettaja' tarkoittaa 'hän on opettaja'."
       }
     },
     "zh_predicate_adjective": {
@@ -198,6 +206,10 @@
       "pl": {
         "title": "很 zamiast „jest”",
         "body": "Chiński łączy przymiotnik z podmiotem przez 很 (hěn), nie 是 (shì): 他很强 to dosłownie „on bardzo silny” — nigdy 他是强."
+      },
+      "fi": {
+        "title": "很 eikä 是 adjektiivin edellä",
+        "body": "Kiinassa predikaattiadjektiivin eteen tulee 很 (hěn), ei 是 (shì) — '他很强', ei '他是强'."
       }
     },
     "post_nominal_adjective": {
@@ -264,6 +276,10 @@
       "pl": {
         "title": "Przymiotnik stoi po rzeczowniku",
         "body": "W języku {lang} określenia zwykle następują po tym, co opisują — „dom duży” zamiast „duży dom”."
+      },
+      "fi": {
+        "title": "Adjektiivi tulee substantiivin jälkeen",
+        "body": "Kielessä {lang} adjektiivi seuraa yleensä substantiivia — sanajärjestys on 'kirja punainen', ei 'punainen kirja'."
       }
     },
     "french_elision": {
@@ -330,6 +346,10 @@
       "pl": {
         "title": "Krótkie słowa się ściągają",
         "body": "We francuskim słówka takie jak je, le, la tracą samogłoskę przed samogłoską: je aime → j'aime, la eau → l'eau."
+      },
+      "fi": {
+        "title": "Sana lyhenee vokaalin edellä",
+        "body": "Ranskassa pikkusanat kuten je, le ja la lyhenevät heittomerkilliseen muotoon vokaalin edellä: je aime → j'aime."
       }
     },
     "french_possessive_agreement": {
@@ -396,6 +416,10 @@
       "pl": {
         "title": "„Mój/jego/jej” zgadza się z rzeczą posiadaną",
         "body": "We francuskim słowa mon/ma („mój/moja”) dopasowują się do rodzaju rzeczy posiadanej, nie właściciela: sa fille „jego córka”, son père „jej ojciec”."
+      },
+      "fi": {
+        "title": "Omistussana taipuu omistettavan mukaan",
+        "body": "Ranskan sa ja son valitaan omistettavan sanan suvun mukaan — ei omistajan, toisin kuin englannissa."
       }
     },
     "gender_agreement": {
@@ -462,6 +486,10 @@
       "pl": {
         "title": "Wyrazy zgadzają się w rodzaju",
         "body": "W języku {lang} każdy rzeczownik ma rodzaj gramatyczny, a wyrazy, które go opisują, zmieniają formę, żeby się dopasować — rzeczownik żeński bierze formę żeńską."
+      },
+      "fi": {
+        "title": "Määrite taipuu pääsanan suvussa",
+        "body": "Kielessä {lang} adjektiivit ja muut määritteet taipuvat pääsanansa kieliopillisen suvun mukaan."
       }
     },
     "sov_word_order": {
@@ -528,6 +556,10 @@
       "pl": {
         "title": "Czasownik idzie na koniec",
         "body": "Język {lang} stawia czasownik na końcu zdania: „Ja jedzenie jem” zamiast „Ja jem jedzenie”."
+      },
+      "fi": {
+        "title": "Verbi lauseen lopussa",
+        "body": "Kieli {lang} sijoittaa verbin lauseen loppuun — järjestys on 'minä ruokaa syön'."
       }
     },
     "vso_word_order": {
@@ -594,6 +626,10 @@
       "pl": {
         "title": "Czasownik idzie na początek",
         "body": "Język {lang} często zaczyna zdanie od czasownika: „Jem ja jedzenie” zamiast „Ja jem jedzenie”."
+      },
+      "fi": {
+        "title": "Verbi lauseen alussa",
+        "body": "Arabian lause alkaa usein verbillä — 'syö mies ruokaa' -järjestys on täysin tavallinen."
       }
     },
     "indefinite_article": {
@@ -660,6 +696,10 @@
       "pl": {
         "title": "Wybór słówka „a/an”",
         "body": "Krótki wyraz odpowiadający angielskiemu „a” zmienia się z rzeczownikiem — po angielsku według brzmienia (a book, an apple), w języku {lang} według rodzaju lub formy rzeczownika."
+      },
+      "fi": {
+        "title": "Epämääräinen artikkeli",
+        "body": "Kieli {lang} käyttää epämääräistä artikkelia (kuten englannin a/an) uudesta tai mainitsemattomasta asiasta. Suomessa vastaavaa sanaa ei ole."
       }
     },
     "ja_counter": {
@@ -726,6 +766,10 @@
       "pl": {
         "title": "Liczenie przez klasyfikatory",
         "body": "Po japońsku liczby łączą się z rzeczownikiem przez klasyfikator i の: 二つの食べ物 to dosłownie „dwie-sztuki jedzenia”."
+      },
+      "fi": {
+        "title": "Numero tarvitsee laskusanan",
+        "body": "Japanissa numeron ja substantiivin väliin tulee laskusana ja の: 二つの本 — 'kaksi kappaletta kirjaa'."
       }
     },
     "accusative_object": {
@@ -792,6 +836,10 @@
       "pl": {
         "title": "Końcówka pokazuje rolę wyrazu",
         "body": "Język {lang} nie ma słów „a” ani „the” — tę pracę wykonuje końcówka rzeczownika. Rzeczownik, na który skierowana jest czynność, zmienia końcówkę: книга (książka) staje się Я читаю книгу (czytam książkę)."
+      },
+      "fi": {
+        "title": "Objekti saa oman päätteensä",
+        "body": "Kielessä {lang} suoran objektin muoto muuttuu — samaan tapaan kuin suomen 'juon vettä', ei 'juon vesi'."
       }
     },
     "prepositional_case": {
@@ -858,6 +906,10 @@
       "pl": {
         "title": "Przyimek zmienia końcówkę",
         "body": "W języku {lang} przyimek zmienia końcówkę następującego po nim wyrazu: на цьому (na tym), перед книгою (przed książką), до будинку (do domu). Końcówka mówi, jak wyraz łączy się z resztą zdania."
+      },
+      "fi": {
+        "title": "Prepositio määrää sijamuodon",
+        "body": "Kielessä {lang} prepositio määrää sitä seuraavan sanan sijamuodon — pääte kertoo suhteen, kuten suomen sijapäätteet."
       }
     },
     "definite_article": {
@@ -924,6 +976,10 @@
       "pl": {
         "title": "Mowa o konkretnej rzeczy",
         "body": "Kiedy zdanie opisuje konkretną rzecz, język {lang} oznacza ją jako określoną — jak angielskie „the”: The book is red, a nie „a book is red”."
+      },
+      "fi": {
+        "title": "Määräinen artikkeli",
+        "body": "Kieli {lang} käyttää määräistä artikkelia (kuten englannin the) jo tunnetusta asiasta. Suomessa vastaavaa sanaa ei ole."
       }
     },
     "genitive_possessor": {
@@ -990,6 +1046,10 @@
       "pl": {
         "title": "Właściciel przybiera specjalną formę",
         "body": "W języku {lang} zaimek oznaczający właściciela zmienia postać — ben (ja) staje się benim (mój), biz (my) staje się bizim (nasz), o (on/ona/ono) staje się onun (jego/jej)."
+      },
+      "fi": {
+        "title": "Omistaja genetiivissä",
+        "body": "Turkissa omistaja on genetiivimuodossa: benim ('minun'), senin ('sinun') — ja omistettava saa oman päätteensä."
       }
     },
     "have_existential": {
@@ -1056,6 +1116,10 @@
       "pl": {
         "title": "„Mieć” to naprawdę „istnieje”",
         "body": "Język {lang} nie ma czasownika „mieć”. Posiadanie wyraża się jako „moje X istnieje” — Benim bir işimiz var czyta się dosłownie „nasza praca istnieje”, z właścicielem w dopełniaczu i var znaczącym „jest”."
+      },
+      "fi": {
+        "title": "Omistaminen sanotaan 'on olemassa' -rakenteella",
+        "body": "Turkissa ei sanota 'minä omistan kirjan' vaan 'minun kirjani on' — Benim kitabım var."
       }
     },
     "predicate_instrumental": {
@@ -1122,6 +1186,10 @@
       "pl": {
         "title": "„Być” zmienia końcówkę rzeczownika",
         "body": "W języku {lang} rzeczownik po „być” przybiera specjalną końcówkę — mówiąc, KIM ktoś jest, używa się innej formy wyrazu niż przy jego nazywaniu: mężczyzna → Jestem mężczyzną."
+      },
+      "fi": {
+        "title": "Predikatiivi instrumentaalissa",
+        "body": "Puolassa 'olla'-verbin jälkeinen substantiivi on instrumentaalissa: Jestem mężczyzną — 'olen miehenä'-tyyppinen muoto."
       }
     },
     "numeral_government": {
@@ -1188,6 +1256,10 @@
       "pl": {
         "title": "Od pięciu w górę rzeczownik zmienia się znowu",
         "body": "W języku {lang} liczby od pięciu wzwyż biorą jeszcze inną formę rzeczownika — „dwie książki”, ale „pięć książek”."
+      },
+      "fi": {
+        "title": "Numero määrää substantiivin muodon",
+        "body": "Kielessä {lang} lukusanan jälkeinen substantiivi vaihtaa muotoa — kuten suomen 'kaksi kirjaa', ei 'kaksi kirjat'."
       }
     },
     "apocope": {
@@ -1254,6 +1326,10 @@
       "pl": {
         "title": "Formy skrócone przed rzeczownikiem",
         "body": "Niektóre przymiotniki skracają się przed rzeczownikiem rodzaju męskiego w liczbie pojedynczej — hiszpańskie bueno staje się buen (un buen libro), włoskie buono staje się buon (un buon libro)."
+      },
+      "fi": {
+        "title": "Adjektiivi lyhenee substantiivin edellä",
+        "body": "Espanjassa ja italiassa jotkin adjektiivit lyhenevät substantiivin edellä: bueno → buen (buen libro)."
       }
     }
   }

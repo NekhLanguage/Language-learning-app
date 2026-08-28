@@ -214,6 +214,45 @@ export const LANGUAGE_RULES = {
     indefiniteArticle: true,
     inflectsNounPlural: true, latinEncodingChecks: true,
   },
+  fi: {
+    features: {
+      adjectivePosition: "pre",
+      // Objects change form — fi's `accusative` data field carries the
+      // ACTUAL object-case surface the corpus uses per noun (partitive
+      // «vettä»/«ruokaa» for atelic objects, genitive-accusative
+      // «puhelimen» for telic ones); the literal "accusative" routes the
+      // engine's object machinery, the data decides the ending.
+      marksCaseOnDirectObjects: true,
+      // Locative relations are case endings, not preposition words
+      // («pöydällä» = on the table) — and the spatial postpositions
+      // govern the genitive («pöydän alla»).
+      marksCaseAfterPrepositions: true,
+      // Every number ≥2 governs the partitive singular («kaksi kirjaa»).
+      numeralGovernment: true,
+    },
+    verbPersonParadigm: true, inflectsNounPlural: true,
+    latinEncodingChecks: true,
+    numeralPartitiveSingular: true,
+    // Possession is existential: possessor in the adessive + invariant
+    // «on» + possessed in the nominative («Minulla on kirja»). The HAVE
+    // entry pins «on» via the uniform-present path.
+    existentialPossession: "adessive",
+    caseMarking: {
+      directObjectCase: "accusative",
+      prepositions: {
+        ON: { case: "adessive", suppressWord: true },
+        IN: { case: "inessive", suppressWord: true },
+        FROM: { case: "elative", suppressWord: true },
+        TO: { case: "illative", suppressWord: true },
+        BY: { case: "adessive", suppressWord: true },
+        UNDER: { case: "genitive", postposed: true },
+        BEHIND: { case: "genitive", postposed: true },
+        FRONT: { case: "genitive", postposed: true },
+        NEXT_TO: { case: "genitive", postposed: true },
+        BETWEEN: { case: "genitive", postposed: true },
+      },
+    },
+  },
   fr: {
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",

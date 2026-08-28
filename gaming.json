@@ -52,6 +52,261 @@
     { "concept_id": "OVERPOWERED", "type": "adjective" }
   ],
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "CONSOLE": {
+          "form": "konsoli",
+          "plural": "konsolit"
+        },
+        "CONTROLLER": {
+          "form": "ohjain",
+          "plural": "ohjaimet"
+        },
+        "SCREEN": {
+          "form": "näyttö",
+          "plural": "näytöt"
+        },
+        "TIER": {
+          "form": "tier",
+          "plural": "tierit"
+        },
+        "PIXEL": {
+          "form": "pikseli",
+          "plural": "pikselit"
+        },
+        "AVATAR": {
+          "form": "avatar",
+          "plural": "avatarit"
+        },
+        "BOSS": {
+          "form": "pomo",
+          "plural": "pomot"
+        },
+        "NPC": {
+          "form": "NPC",
+          "plural": "NPC:t"
+        },
+        "COMPANION": {
+          "form": "kumppani",
+          "plural": "kumppanit"
+        },
+        "COMBO": {
+          "form": "kombo",
+          "plural": "kombot"
+        },
+        "HARM": {
+          "form": "vahinko"
+        },
+        "VITALITY": {
+          "form": "elinvoima"
+        },
+        "MISSION": {
+          "form": "tehtävä",
+          "plural": "tehtävät"
+        },
+        "ACHIEVEMENT": {
+          "form": "saavutus",
+          "plural": "saavutukset"
+        },
+        "UPGRADE": {
+          "form": "päivitys",
+          "plural": "päivitykset"
+        },
+        "DUNGEON": {
+          "form": "luolasto",
+          "plural": "luolastot"
+        },
+        "SPAWN": {
+          "form": "spawni",
+          "plural": "spawnit"
+        },
+        "MAP": {
+          "form": "kartta",
+          "plural": "kartat"
+        },
+        "PARTY": {
+          "form": "ryhmä",
+          "plural": "ryhmät"
+        },
+        "RAID": {
+          "form": "raidi",
+          "plural": "raidit"
+        },
+        "GUILD": {
+          "form": "kilta",
+          "plural": "killat"
+        },
+        "INVENTORY": {
+          "form": "inventaario",
+          "plural": "inventaariot"
+        },
+        "VIAL": {
+          "form": "ampulli",
+          "plural": "ampullit"
+        },
+        "GEM": {
+          "form": "jalokivi",
+          "plural": "jalokivet"
+        },
+        "LOADOUT": {
+          "form": "varustus",
+          "plural": "varustukset"
+        },
+        "COOLDOWN": {
+          "form": "palautumisaika",
+          "plural": "palautumisajat"
+        },
+        "STRATEGY": {
+          "form": "strategia",
+          "plural": "strategiat"
+        },
+        "LEADERBOARD": {
+          "form": "tulostaulukko",
+          "plural": "tulostaulukot"
+        },
+        "RANK": {
+          "form": "ranki",
+          "plural": "rankit"
+        },
+        "SPEEDRUN": {
+          "form": "speedrun",
+          "plural": "speedrunit"
+        },
+        "RESPAWN": {
+          "base": "respawnata",
+          "1_singular": "respawnaan",
+          "2_singular": "respawnaat",
+          "3_singular": "respawnaa",
+          "1_plural": "respawnaamme",
+          "2_plural": "respawnaatte",
+          "3_plural": "respawnaavat"
+        },
+        "LOOT": {
+          "base": "lootata",
+          "1_singular": "loottaan",
+          "2_singular": "loottaat",
+          "3_singular": "loottaa",
+          "1_plural": "loottaamme",
+          "2_plural": "loottaatte",
+          "3_plural": "loottaavat"
+        },
+        "CRAFT": {
+          "base": "valmistaa",
+          "1_singular": "valmistan",
+          "2_singular": "valmistat",
+          "3_singular": "valmistaa",
+          "1_plural": "valmistamme",
+          "2_plural": "valmistatte",
+          "3_plural": "valmistavat"
+        },
+        "EQUIP": {
+          "base": "varustaa",
+          "1_singular": "varustan",
+          "2_singular": "varustat",
+          "3_singular": "varustaa",
+          "1_plural": "varustamme",
+          "2_plural": "varustatte",
+          "3_plural": "varustavat"
+        },
+        "GRIND": {
+          "base": "grindata",
+          "1_singular": "grindaan",
+          "2_singular": "grindaat",
+          "3_singular": "grindaa",
+          "1_plural": "grindaamme",
+          "2_plural": "grindaatte",
+          "3_plural": "grindaavat"
+        },
+        "SLAY": {
+          "base": "surmata",
+          "1_singular": "surmaan",
+          "2_singular": "surmaat",
+          "3_singular": "surmaa",
+          "1_plural": "surmaamme",
+          "2_plural": "surmaatte",
+          "3_plural": "surmaavat"
+        },
+        "UNLOCK": {
+          "base": "avata",
+          "1_singular": "avaan",
+          "2_singular": "avaat",
+          "3_singular": "avaa",
+          "1_plural": "avaamme",
+          "2_plural": "avaatte",
+          "3_plural": "avaavat"
+        },
+        "ROAM": {
+          "base": "vaeltaa",
+          "1_singular": "vaellan",
+          "2_singular": "vaellat",
+          "3_singular": "vaeltaa",
+          "1_plural": "vaellamme",
+          "2_plural": "vaellatte",
+          "3_plural": "vaeltavat"
+        },
+        "STREAM": {
+          "base": "striimata",
+          "1_singular": "striimaan",
+          "2_singular": "striimaat",
+          "3_singular": "striimaa",
+          "1_plural": "striimaamme",
+          "2_plural": "striimaatte",
+          "3_plural": "striimaavat"
+        },
+        "COLLECT": {
+          "base": "kerätä",
+          "1_singular": "kerään",
+          "2_singular": "keräät",
+          "3_singular": "kerää",
+          "1_plural": "keräämme",
+          "2_plural": "keräätte",
+          "3_plural": "keräävät"
+        },
+        "AMBUSH": {
+          "base": "väijyttää",
+          "1_singular": "väijytän",
+          "2_singular": "väijytät",
+          "3_singular": "väijyttää",
+          "1_plural": "väijytämme",
+          "2_plural": "väijytätte",
+          "3_plural": "väijyttävät"
+        },
+        "CLUTCH": {
+          "base": "pelastaa",
+          "1_singular": "pelastan",
+          "2_singular": "pelastat",
+          "3_singular": "pelastaa",
+          "1_plural": "pelastamme",
+          "2_plural": "pelastatte",
+          "3_plural": "pelastavat"
+        },
+        "ELITE": [
+          "eliitti"
+        ],
+        "CRITICAL": [
+          "kriittinen"
+        ],
+        "RARE": [
+          "harvinainen"
+        ],
+        "HIDDEN": [
+          "piilotettu"
+        ],
+        "COMPETITIVE": [
+          "kilpailullinen"
+        ],
+        "MYTHIC": [
+          "myyttinen"
+        ],
+        "TACTICAL": [
+          "taktinen"
+        ],
+        "OVERPOWERED": [
+          "ylivoimainen"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

@@ -41,7 +41,7 @@ const SCRIPT_RULES = {
 };
 
 // Languages exempt from script checking (Latin-script languages)
-const LATIN_LANGS = new Set(['en', 'de', 'pt', 'no', 'tr', 'pl']);
+const LATIN_LANGS = new Set(['en', 'de', 'pt', 'no', 'tr', 'pl', 'fi']);
 
 // HTML entity patterns that should never appear in translated values
 const HTML_ENTITY_RE = /&(?:[a-zA-Z]{2,8}|#\d{1,6}|#x[\da-fA-F]{1,6});/;

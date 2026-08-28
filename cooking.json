@@ -59,6 +59,237 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "COOK": {
+          "base": "kokata",
+          "1_singular": "kokkaan",
+          "2_singular": "kokkaat",
+          "3_singular": "kokkaa",
+          "1_plural": "kokkaamme",
+          "2_plural": "kokkaatte",
+          "3_plural": "kokkaavat"
+        },
+        "CUT": {
+          "base": "leikata",
+          "1_singular": "leikkaan",
+          "2_singular": "leikkaat",
+          "3_singular": "leikkaa",
+          "1_plural": "leikkaamme",
+          "2_plural": "leikkaatte",
+          "3_plural": "leikkaavat"
+        },
+        "BOIL": {
+          "base": "keittää",
+          "1_singular": "keitän",
+          "2_singular": "keität",
+          "3_singular": "keittää",
+          "1_plural": "keitämme",
+          "2_plural": "keitätte",
+          "3_plural": "keittävät"
+        },
+        "PEEL": {
+          "base": "kuoria",
+          "1_singular": "kuorin",
+          "2_singular": "kuorit",
+          "3_singular": "kuorii",
+          "1_plural": "kuorimme",
+          "2_plural": "kuoritte",
+          "3_plural": "kuorivat"
+        },
+        "FRY": {
+          "base": "paistaa",
+          "1_singular": "paistan",
+          "2_singular": "paistat",
+          "3_singular": "paistaa",
+          "1_plural": "paistamme",
+          "2_plural": "paistatte",
+          "3_plural": "paistavat"
+        },
+        "STIR": {
+          "base": "hämmentää",
+          "1_singular": "hämmennän",
+          "2_singular": "hämmennät",
+          "3_singular": "hämmentää",
+          "1_plural": "hämmennämme",
+          "2_plural": "hämmennätte",
+          "3_plural": "hämmentävät"
+        },
+        "MIX": {
+          "base": "sekoittaa",
+          "1_singular": "sekoitan",
+          "2_singular": "sekoitat",
+          "3_singular": "sekoittaa",
+          "1_plural": "sekoitamme",
+          "2_plural": "sekoitatte",
+          "3_plural": "sekoittavat"
+        },
+        "WASH": {
+          "base": "pestä",
+          "1_singular": "pesen",
+          "2_singular": "peset",
+          "3_singular": "pesee",
+          "1_plural": "pesemme",
+          "2_plural": "pesette",
+          "3_plural": "pesevät"
+        },
+        "HEAT": {
+          "base": "kuumentaa",
+          "1_singular": "kuumennan",
+          "2_singular": "kuumennat",
+          "3_singular": "kuumentaa",
+          "1_plural": "kuumennamme",
+          "2_plural": "kuumennatte",
+          "3_plural": "kuumentavat"
+        },
+        "PAN": {
+          "form": "paistinpannu",
+          "plural": "paistinpannut"
+        },
+        "KNIFE": {
+          "form": "veitsi",
+          "plural": "veitset"
+        },
+        "FORK": {
+          "form": "haarukka",
+          "plural": "haarukat"
+        },
+        "SPOON": {
+          "form": "lusikka",
+          "plural": "lusikat"
+        },
+        "SPATULA": {
+          "form": "lasta",
+          "plural": "lastat"
+        },
+        "POT": {
+          "form": "kattila",
+          "plural": "kattilat"
+        },
+        "GLASS": {
+          "form": "lasi",
+          "plural": "lasit"
+        },
+        "LITRE": {
+          "form": "litra"
+        },
+        "DECILITRE": {
+          "form": "desilitra"
+        },
+        "MILLILITRE": {
+          "form": "millilitra"
+        },
+        "GRAM": {
+          "form": "gramma"
+        },
+        "KILOGRAM": {
+          "form": "kilogramma"
+        },
+        "MEAT": {
+          "form": "liha"
+        },
+        "CHICKEN": {
+          "form": "kana",
+          "plural": "kanat"
+        },
+        "FISH": {
+          "form": "kala",
+          "plural": "kalat"
+        },
+        "VEGETABLE": {
+          "form": "vihannes",
+          "plural": "vihannekset"
+        },
+        "POTATO": {
+          "form": "peruna",
+          "plural": "perunat"
+        },
+        "SALAD": {
+          "form": "salaatti",
+          "plural": "salaatit"
+        },
+        "FRUIT": {
+          "form": "hedelmä",
+          "plural": "hedelmät"
+        },
+        "BANANA": {
+          "form": "banaani",
+          "plural": "banaanit"
+        },
+        "SOUP": {
+          "form": "keitto",
+          "plural": "keitot"
+        },
+        "DOUGH": {
+          "form": "taikina"
+        },
+        "SAUCE": {
+          "form": "kastike",
+          "plural": "kastikkeet"
+        },
+        "INGREDIENT": {
+          "form": "ainesosa",
+          "plural": "ainesosat"
+        },
+        "KITCHEN": {
+          "form": "keittiö",
+          "plural": "keittiöt"
+        },
+        "OVEN": {
+          "form": "uuni",
+          "plural": "uunit"
+        },
+        "STOVE": {
+          "form": "liesi",
+          "plural": "liedet"
+        },
+        "SINK": {
+          "form": "tiskiallas",
+          "plural": "tiskialtaat"
+        },
+        "FREEZER": {
+          "form": "pakastin",
+          "plural": "pakastimet"
+        },
+        "SALT": {
+          "form": "suola"
+        },
+        "PEPPER": {
+          "form": "pippuri",
+          "plural": "pippurit"
+        },
+        "BUTTER": {
+          "form": "voi"
+        },
+        "SPICE": {
+          "form": "mauste",
+          "plural": "mausteet"
+        },
+        "RECIPE": {
+          "form": "resepti",
+          "plural": "reseptit"
+        },
+        "SWEET": [
+          "makea"
+        ],
+        "SALTY": [
+          "suolainen"
+        ],
+        "SOUR": [
+          "hapan"
+        ],
+        "FRESH": [
+          "tuore"
+        ],
+        "FROZEN": [
+          "pakastettu"
+        ],
+        "RAW": [
+          "raaka"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

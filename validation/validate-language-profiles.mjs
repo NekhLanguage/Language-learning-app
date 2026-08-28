@@ -59,7 +59,7 @@ const AXIS_EVIDENCE = {
   apocope: ['apocope'],
   politenessRegisters: [],
   numeralInteraction: ['numeralGovernment', 'numeralGenderAgreement'],
-  specialPossession: ['possessiveSuffixes', 'possessivePlacement'],
+  specialPossession: ['possessiveSuffixes', 'possessivePlacement', 'existentialPossession'],
 };
 const AXES = Object.keys(AXIS_EVIDENCE);
 

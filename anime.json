@@ -62,6 +62,265 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "HERO": {
+          "form": "sankari",
+          "plural": "sankarit"
+        },
+        "VILLAIN": {
+          "form": "konna",
+          "plural": "konnat"
+        },
+        "WARRIOR": {
+          "form": "soturi",
+          "plural": "soturit"
+        },
+        "RIVAL": {
+          "form": "kilpailija",
+          "plural": "kilpailijat"
+        },
+        "BRAVE": [
+          "rohkea"
+        ],
+        "SWORD": {
+          "form": "miekka",
+          "plural": "miekat"
+        },
+        "ARMOR": {
+          "form": "haarniska",
+          "plural": "haarniskat"
+        },
+        "SHIELD": {
+          "form": "kilpi",
+          "plural": "kilvet"
+        },
+        "ATTACK": {
+          "base": "hyökätä",
+          "1_singular": "hyökkään",
+          "2_singular": "hyökkäät",
+          "3_singular": "hyökkää",
+          "1_plural": "hyökkäämme",
+          "2_plural": "hyökkäätte",
+          "3_plural": "hyökkäävät"
+        },
+        "DEFEND": {
+          "base": "puolustaa",
+          "1_singular": "puolustan",
+          "2_singular": "puolustat",
+          "3_singular": "puolustaa",
+          "1_plural": "puolustamme",
+          "2_plural": "puolustatte",
+          "3_plural": "puolustavat"
+        },
+        "DRAGON": {
+          "form": "lohikäärme",
+          "plural": "lohikäärmeet"
+        },
+        "DEMON": {
+          "form": "demoni",
+          "plural": "demonit"
+        },
+        "SPIRIT": {
+          "form": "henki",
+          "plural": "henget"
+        },
+        "SUMMON": {
+          "base": "kutsua",
+          "1_singular": "kutsun",
+          "2_singular": "kutsut",
+          "3_singular": "kutsuu",
+          "1_plural": "kutsumme",
+          "2_plural": "kutsutte",
+          "3_plural": "kutsuvat"
+        },
+        "SINISTER": [
+          "pahaenteinen"
+        ],
+        "NINJA": {
+          "form": "ninja",
+          "plural": "ninjat"
+        },
+        "SAMURAI": {
+          "form": "samurai",
+          "plural": "samurait"
+        },
+        "SENSEI": {
+          "form": "sensei",
+          "plural": "senseit"
+        },
+        "SHADOW": {
+          "form": "varjo",
+          "plural": "varjot"
+        },
+        "STRIKE": {
+          "base": "iskeä",
+          "1_singular": "isken",
+          "2_singular": "isket",
+          "3_singular": "iskee",
+          "1_plural": "iskemme",
+          "2_plural": "iskette",
+          "3_plural": "iskevät"
+        },
+        "TRANSFORM": {
+          "base": "muuntaa",
+          "1_singular": "muunnan",
+          "2_singular": "muunnat",
+          "3_singular": "muuntaa",
+          "1_plural": "muunnamme",
+          "2_plural": "muunnatte",
+          "3_plural": "muuntavat"
+        },
+        "POWER": {
+          "form": "voima",
+          "plural": "voimat"
+        },
+        "CHANNEL": {
+          "base": "kanavoida",
+          "1_singular": "kanavoin",
+          "2_singular": "kanavoit",
+          "3_singular": "kanavoi",
+          "1_plural": "kanavoimme",
+          "2_plural": "kanavoitte",
+          "3_plural": "kanavoivat"
+        },
+        "UNLEASH": {
+          "base": "vapauttaa",
+          "1_singular": "vapautan",
+          "2_singular": "vapautat",
+          "3_singular": "vapauttaa",
+          "1_plural": "vapautamme",
+          "2_plural": "vapautatte",
+          "3_plural": "vapauttavat"
+        },
+        "POWERFUL": [
+          "voimakas"
+        ],
+        "QUEST": {
+          "form": "tehtävä",
+          "plural": "tehtävät"
+        },
+        "DESTINY": {
+          "form": "kohtalo"
+        },
+        "KINGDOM": {
+          "form": "kuningaskunta",
+          "plural": "kuningaskunnat"
+        },
+        "TEMPLE": {
+          "form": "temppeli",
+          "plural": "temppelit"
+        },
+        "ANCIENT": [
+          "muinainen"
+        ],
+        "BATTLE": {
+          "form": "taistelu",
+          "plural": "taistelut"
+        },
+        "DODGE": {
+          "base": "väistää",
+          "1_singular": "väistän",
+          "2_singular": "väistät",
+          "3_singular": "väistää",
+          "1_plural": "väistämme",
+          "2_plural": "väistätte",
+          "3_plural": "väistävät"
+        },
+        "PROTECT": {
+          "base": "suojella",
+          "1_singular": "suojelen",
+          "2_singular": "suojelet",
+          "3_singular": "suojelee",
+          "1_plural": "suojelemme",
+          "2_plural": "suojelette",
+          "3_plural": "suojelevat"
+        },
+        "FIERCE": [
+          "hurja"
+        ],
+        "MIGHTY": [
+          "mahtava"
+        ],
+        "CRYSTAL": {
+          "form": "kristalli",
+          "plural": "kristallit"
+        },
+        "SCROLL": {
+          "form": "kirjakäärö",
+          "plural": "kirjakääröt"
+        },
+        "PORTAL": {
+          "form": "portaali",
+          "plural": "portaalit"
+        },
+        "CURSED": [
+          "kirottu"
+        ],
+        "SACRED": [
+          "pyhä"
+        ],
+        "TRAIN": {
+          "base": "harjoitella",
+          "1_singular": "harjoittelen",
+          "2_singular": "harjoittelet",
+          "3_singular": "harjoittelee",
+          "1_plural": "harjoittelemme",
+          "2_plural": "harjoittelette",
+          "3_plural": "harjoittelevat"
+        },
+        "MASTER": {
+          "form": "mestari",
+          "plural": "mestarit"
+        },
+        "CLAN": {
+          "form": "klaani",
+          "plural": "klaanit"
+        },
+        "AWAKEN": {
+          "base": "herättää",
+          "1_singular": "herätän",
+          "2_singular": "herätät",
+          "3_singular": "herättää",
+          "1_plural": "herätämme",
+          "2_plural": "herätätte",
+          "3_plural": "herättävät"
+        },
+        "LEGENDARY": [
+          "legendaarinen"
+        ],
+        "MECHA": {
+          "form": "mecha",
+          "plural": "mechat"
+        },
+        "ARENA": {
+          "form": "areena",
+          "plural": "areenat"
+        },
+        "CONQUER": {
+          "base": "valloittaa",
+          "1_singular": "valloitan",
+          "2_singular": "valloitat",
+          "3_singular": "valloittaa",
+          "1_plural": "valloitamme",
+          "2_plural": "valloitatte",
+          "3_plural": "valloittavat"
+        },
+        "TRANSCEND": {
+          "base": "ylittää",
+          "1_singular": "ylitän",
+          "2_singular": "ylität",
+          "3_singular": "ylittää",
+          "1_plural": "ylitämme",
+          "2_plural": "ylitätte",
+          "3_plural": "ylittävät"
+        },
+        "ETERNAL": [
+          "ikuinen"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

@@ -1,0 +1,1014 @@
+{
+  "uiStrings": {
+    "openApp": "AVAA SOVELLUS",
+    "languagesTitle": "KIELET",
+    "chooseLanguage": "Valitse opiskeltava kieli",
+    "quitLearning": "LOPETA",
+    "sessionTitle": "TÄMÄN PÄIVÄN SESSIO",
+    "runCompleteTitle": "SAIT KAIKEN VALMIIKSI!",
+    "runCompleteBody": "Olet hallinnut kaikki pakettiesi käsitteet.",
+    "runCompleteStats": "{concepts} käsitettä hallussa · {sessions} sessiota pelattu",
+    "runCompleteBack": "Takaisin kieliin",
+    "startSubtitle": "Kieltenoppimista",
+    "chooseTranslation": "Valitse oikea käännös:",
+    "originalSentence": "Alkuperäinen lause:",
+    "fillMissing": "Täydennä puuttuva sana:",
+    "inThisSentence": "Tässä lauseessa:",
+    "check": "Tarkista",
+    "continue": "Jatka",
+    "correct": "Oikein.",
+    "incorrect": "Väärin.",
+    "syncFailedLocalCopy": "Palvelimeen ei saatu yhteyttä — näytetään tämän laitteen tallennettu edistyminen.",
+    "l7Placeholder": "Kirjoita käännöksesi",
+    "level": "Taso",
+    "blueprint": "Nekh's Language Blueprint",
+    "skool": "Skool-yhteisö",
+    "offer": "Päivitä kielisysteemisi",
+    "sessionComplete": "Sessio valmis",
+    "sessionFinished": "Sessio {n} valmis.",
+    "enterEmail": "Syötä sähköpostisi",
+    "buyAccess": "Ei tunnusta? Hanki pääsy",
+    "noAccess": "Tälle sähköpostille ei löytynyt pääsyä",
+    "resourcePacks": "AIHEPAKETIT",
+    "choosePacks": "Valitse enintään 2 pakettia",
+    "start": "ALOITA",
+    "selectPack": "Valitse vähintään 1 aihepaketti",
+    "feedbackOpen": "Ilmoita viasta tai anna palautetta",
+    "feedbackClose": "Sulje palaute",
+    "feedbackTitle": "Ilmoita viasta",
+    "feedbackSubtitle": "Kerro mikä meni vikaan — luemme jokaisen ilmoituksen.",
+    "feedbackPlaceholder": "Kuvaile ongelma...",
+    "feedbackSubmit": "Lähetä ilmoitus",
+    "feedbackSending": "Lähetetään…",
+    "feedbackSent": "✓ Ilmoitus lähetetty — kiitos!",
+    "feedbackFailed": "Lähetys epäonnistui — yritä uudelleen.",
+    "reasonTitle": "MIKSI {lang}?",
+    "reasonSubtitle": "Vääriä vastauksia ei ole — tämä auttaa meitä juhlimaan sinulle tärkeitä hetkiä.",
+    "reasonContinue": "JATKA",
+    "reasonOptionTravel": "Matkustelu",
+    "reasonOptionPerson": "Joku elämässäni",
+    "reasonOptionCareer": "Työ tai opiskelu",
+    "reasonOptionHeritage": "Juuret",
+    "reasonOptionCulture": "Kirjat, elokuvat & musiikki",
+    "reasonOptionFun": "Ihan vain huvin vuoksi",
+    "reasonDetailTravel": "Minne olet menossa?",
+    "reasonDetailPerson": "Kuka hän on?",
+    "reasonDetailCareer": "Mikä on tavoite?",
+    "reasonDetailHeritage": "Mikä on yhteys?",
+    "reasonDetailCulture": "Mikä sinua kiehtoo?",
+    "reasonDetailPlaceholderTravel": "esim. Lissabon",
+    "reasonDetailPlaceholderPerson": "esim. kumppanini",
+    "reasonDetailPlaceholderCareer": "esim. asiakas Madridissa",
+    "reasonDetailPlaceholderHeritage": "esim. sukuni on Norjasta",
+    "reasonDetailPlaceholderCulture": "esim. Studio Ghibli",
+    "reasonDetailHint": "Vapaaehtoinen — voit hyvin ohittaa tämän.",
+    "roadmapTitle": "MATKASI",
+    "roadmapCounter": "{done} / {total} etappia avattu",
+    "roadmapCounterFull": "{done} valmiina · {inprogress} kesken · {ahead} edessä",
+    "roadmapSessionFinished": "Sessio {n} valmis. Taas yksi etappi takana.",
+    "roadmapBegin": "ALOITA MATKASI",
+    "roadmapBack": "← TAKAISIN",
+    "roadmapBehindLabel": "{n} takana",
+    "roadmapAheadLabel": "{n} edessä",
+    "journeyBtn": "MATKA",
+    "milestoneHeadline": "{n} SANAA",
+    "milestoneGeneric": "Jokainen niistä — sinun.",
+    "milestoneReasonTravel": "{detail} tuntuu lähemmältä joka sanan myötä.",
+    "milestoneReasonPerson": "{detail} on lähempänä joka sanan myötä.",
+    "milestoneReasonCareer": "Askel lähemmäs kohdetta: {detail}.",
+    "milestoneReasonHeritage": "{detail} elää näissä sanoissa.",
+    "milestoneReasonCulture": "{detail}, omalla äänellään.",
+    "milestoneReasonFun": "Ja tämä on vasta alkua."
+  },
+  "hubNames": {
+    "ar": "arabia",
+    "en": "englanti",
+    "fi": "suomi",
+    "fr": "ranska",
+    "de": "saksa",
+    "el": "kreikka",
+    "it": "italia",
+    "ja": "japani",
+    "ko": "korea",
+    "zh": "kiina",
+    "no": "norja",
+    "pl": "puola",
+    "pt": "portugali",
+    "es": "espanja",
+    "th": "thai",
+    "tr": "turkki",
+    "uk": "ukraina"
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Finnish letters",
+        "letters": [
+          {
+            "char": "Ä",
+            "romanization": "ä",
+            "sound": "like 'a' in 'cat'"
+          },
+          {
+            "char": "ä",
+            "romanization": "ä",
+            "sound": "like 'a' in 'cat'"
+          },
+          {
+            "char": "Ö",
+            "romanization": "ö",
+            "sound": "like 'u' in 'burn'"
+          },
+          {
+            "char": "ö",
+            "romanization": "ö",
+            "sound": "like 'u' in 'burn'"
+          },
+          {
+            "char": "Y",
+            "romanization": "y",
+            "sound": "like German 'ü' — say 'ee' with rounded lips"
+          },
+          {
+            "char": "y",
+            "romanization": "y",
+            "sound": "like German 'ü' — say 'ee' with rounded lips"
+          }
+        ]
+      },
+      {
+        "name": "Double letters",
+        "letters": [
+          {
+            "char": "kk",
+            "romanization": "kk",
+            "sound": "held longer than single k — 'kukka' (flower)"
+          },
+          {
+            "char": "aa",
+            "romanization": "aa",
+            "sound": "a long 'a' — vowel length changes the word"
+          }
+        ]
+      }
+    ]
+  },
+  "forms": {
+    "FIRST_PERSON_SINGULAR": {
+      "form": "minä",
+      "genitive": "minun",
+      "adessive": "minulla",
+      "partitive": "minua"
+    },
+    "SECOND_PERSON": {
+      "form": "sinä",
+      "genitive": "sinun",
+      "adessive": "sinulla",
+      "partitive": "sinua"
+    },
+    "SECOND_PERSON_PLURAL": {
+      "form": "te",
+      "genitive": "teidän",
+      "adessive": "teillä",
+      "partitive": "teitä"
+    },
+    "HE": {
+      "form": "hän",
+      "genitive": "hänen",
+      "adessive": "hänellä",
+      "partitive": "häntä"
+    },
+    "SHE": {
+      "form": "hän",
+      "genitive": "hänen",
+      "adessive": "hänellä",
+      "partitive": "häntä"
+    },
+    "IT": {
+      "form": "se",
+      "genitive": "sen",
+      "adessive": "sillä",
+      "partitive": "sitä",
+      "accusative": "sen"
+    },
+    "FIRST_PERSON_PLURAL": {
+      "form": "me",
+      "genitive": "meidän",
+      "adessive": "meillä",
+      "partitive": "meitä"
+    },
+    "THIRD_PERSON_PLURAL": {
+      "form": "he",
+      "genitive": "heidän",
+      "adessive": "heillä",
+      "partitive": "heitä"
+    },
+    "THIS": {
+      "form": "tämä",
+      "genitive": "tämän",
+      "accusative": "tämän",
+      "partitive": "tätä",
+      "adessive": "tällä",
+      "inessive": "tässä"
+    },
+    "THAT": {
+      "form": "tuo",
+      "genitive": "tuon",
+      "accusative": "tuon",
+      "partitive": "tuota",
+      "adessive": "tuolla",
+      "inessive": "tuossa"
+    },
+    "MY": [
+      "minun"
+    ],
+    "YOUR": [
+      "sinun"
+    ],
+    "HIS": [
+      "hänen"
+    ],
+    "HER": [
+      "hänen"
+    ],
+    "ITS": [
+      "sen"
+    ],
+    "OUR": [
+      "meidän"
+    ],
+    "THEIR": [
+      "heidän"
+    ],
+    "MINE": [
+      "minun"
+    ],
+    "YOURS": [
+      "sinun"
+    ],
+    "HERS": [
+      "hänen"
+    ],
+    "OURS": [
+      "meidän"
+    ],
+    "THEIRS": [
+      "heidän"
+    ],
+    "BE": {
+      "base": "olla",
+      "1_singular": "olen",
+      "2_singular": "olet",
+      "3_singular": "on",
+      "1_plural": "olemme",
+      "2_plural": "olette",
+      "3_plural": "ovat"
+    },
+    "HAVE": {
+      "base": "olla",
+      "present": "on"
+    },
+    "EAT": {
+      "base": "syödä",
+      "1_singular": "syön",
+      "2_singular": "syöt",
+      "3_singular": "syö",
+      "1_plural": "syömme",
+      "2_plural": "syötte",
+      "3_plural": "syövät"
+    },
+    "DRINK": {
+      "base": "juoda",
+      "1_singular": "juon",
+      "2_singular": "juot",
+      "3_singular": "juo",
+      "1_plural": "juomme",
+      "2_plural": "juotte",
+      "3_plural": "juovat"
+    },
+    "READ": {
+      "base": "lukea",
+      "1_singular": "luen",
+      "2_singular": "luet",
+      "3_singular": "lukee",
+      "1_plural": "luemme",
+      "2_plural": "luette",
+      "3_plural": "lukevat"
+    },
+    "SEE": {
+      "base": "nähdä",
+      "1_singular": "näen",
+      "2_singular": "näet",
+      "3_singular": "näkee",
+      "1_plural": "näemme",
+      "2_plural": "näette",
+      "3_plural": "näkevät"
+    },
+    "DO": {
+      "base": "tehdä",
+      "1_singular": "teen",
+      "2_singular": "teet",
+      "3_singular": "tekee",
+      "1_plural": "teemme",
+      "2_plural": "teette",
+      "3_plural": "tekevät"
+    },
+    "GO": {
+      "base": "mennä",
+      "1_singular": "menen",
+      "2_singular": "menet",
+      "3_singular": "menee",
+      "1_plural": "menemme",
+      "2_plural": "menette",
+      "3_plural": "menevät"
+    },
+    "START": {
+      "base": "aloittaa",
+      "1_singular": "aloitan",
+      "2_singular": "aloitat",
+      "3_singular": "aloittaa",
+      "1_plural": "aloitamme",
+      "2_plural": "aloitatte",
+      "3_plural": "aloittavat"
+    },
+    "STOP": {
+      "base": "lopettaa",
+      "1_singular": "lopetan",
+      "2_singular": "lopetat",
+      "3_singular": "lopettaa",
+      "1_plural": "lopetamme",
+      "2_plural": "lopetatte",
+      "3_plural": "lopettavat"
+    },
+    "SLEEP": {
+      "base": "nukkua",
+      "1_singular": "nukun",
+      "2_singular": "nukut",
+      "3_singular": "nukkuu",
+      "1_plural": "nukumme",
+      "2_plural": "nukutte",
+      "3_plural": "nukkuvat"
+    },
+    "COME": {
+      "base": "tulla",
+      "1_singular": "tulen",
+      "2_singular": "tulet",
+      "3_singular": "tulee",
+      "1_plural": "tulemme",
+      "2_plural": "tulette",
+      "3_plural": "tulevat"
+    },
+    "USE": {
+      "base": "käyttää",
+      "1_singular": "käytän",
+      "2_singular": "käytät",
+      "3_singular": "käyttää",
+      "1_plural": "käytämme",
+      "2_plural": "käytätte",
+      "3_plural": "käyttävät"
+    },
+    "GET": {
+      "base": "saada",
+      "1_singular": "saan",
+      "2_singular": "saat",
+      "3_singular": "saa",
+      "1_plural": "saamme",
+      "2_plural": "saatte",
+      "3_plural": "saavat"
+    },
+    "MAY": {
+      "base": "saattaa"
+    },
+    "WATER": {
+      "form": "vesi",
+      "partitive": "vettä",
+      "accusative": "vettä"
+    },
+    "FOOD": {
+      "form": "ruoka",
+      "partitive": "ruokaa",
+      "accusative": "ruokaa"
+    },
+    "HOUSE": {
+      "form": "talo",
+      "plural": "talot",
+      "partitive": "taloa",
+      "accusative": "talon",
+      "illative": "taloon"
+    },
+    "HOME": {
+      "form": "koti",
+      "plural": "kodit",
+      "partitive": "kotia",
+      "predicative": "kotona",
+      "illative": "kotiin",
+      "elative": "kotoa"
+    },
+    "BOOK": {
+      "form": "kirja",
+      "plural": "kirjat",
+      "partitive": "kirjaa",
+      "accusative": "kirjaa",
+      "genitive": "kirjan"
+    },
+    "THING": {
+      "form": "asia",
+      "plural": "asiat",
+      "partitive": "asiaa",
+      "accusative": "asian"
+    },
+    "JOB": {
+      "form": "työ",
+      "plural": "työt",
+      "partitive": "työtä",
+      "accusative": "työn"
+    },
+    "ROOM": {
+      "form": "huone",
+      "plural": "huoneet",
+      "partitive": "huonetta",
+      "accusative": "huoneen",
+      "illative": "huoneeseen"
+    },
+    "BOY": {
+      "form": "poika",
+      "plural": "pojat",
+      "partitive": "poikaa",
+      "accusative": "pojan"
+    },
+    "GIRL": {
+      "form": "tyttö",
+      "plural": "tytöt",
+      "partitive": "tyttöä",
+      "accusative": "tytön"
+    },
+    "MAN": {
+      "form": "mies",
+      "plural": "miehet",
+      "partitive": "miestä",
+      "accusative": "miehen"
+    },
+    "WOMAN": {
+      "form": "nainen",
+      "plural": "naiset",
+      "partitive": "naista",
+      "accusative": "naisen"
+    },
+    "MOM": {
+      "form": "äiti",
+      "plural": "äidit",
+      "partitive": "äitiä",
+      "accusative": "äidin"
+    },
+    "DAD": {
+      "form": "isä",
+      "plural": "isät",
+      "partitive": "isää",
+      "accusative": "isän"
+    },
+    "SON": {
+      "form": "poika",
+      "plural": "pojat",
+      "partitive": "poikaa",
+      "accusative": "pojan"
+    },
+    "DAUGHTER": {
+      "form": "tytär",
+      "plural": "tyttäret",
+      "partitive": "tytärtä",
+      "accusative": "tyttären"
+    },
+    "BROTHER": {
+      "form": "veli",
+      "plural": "veljet",
+      "partitive": "veljeä",
+      "accusative": "veljen"
+    },
+    "SISTER": {
+      "form": "sisko",
+      "plural": "siskot",
+      "partitive": "siskoa",
+      "accusative": "siskon"
+    },
+    "HEAD": {
+      "form": "pää",
+      "plural": "päät",
+      "partitive": "päätä",
+      "accusative": "pään"
+    },
+    "ARM": {
+      "form": "käsivarsi",
+      "plural": "käsivarret",
+      "partitive": "käsivartta",
+      "accusative": "käsivarren"
+    },
+    "HAND": {
+      "form": "käsi",
+      "plural": "kädet",
+      "partitive": "kättä",
+      "accusative": "käden",
+      "adessive": "kädellä"
+    },
+    "LEG": {
+      "form": "jalka",
+      "plural": "jalat",
+      "partitive": "jalkaa",
+      "accusative": "jalan"
+    },
+    "FOOT": {
+      "form": "jalkaterä",
+      "plural": "jalkaterät",
+      "partitive": "jalkaterää",
+      "accusative": "jalkaterän"
+    },
+    "FINGER": {
+      "form": "sormi",
+      "plural": "sormet",
+      "partitive": "sormea",
+      "accusative": "sormen"
+    },
+    "EYE": {
+      "form": "silmä",
+      "plural": "silmät",
+      "partitive": "silmää",
+      "accusative": "silmän"
+    },
+    "MOUTH": {
+      "form": "suu",
+      "plural": "suut",
+      "partitive": "suuta",
+      "accusative": "suun"
+    },
+    "FACE": {
+      "form": "kasvot",
+      "pluralOnly": true,
+      "partitive": "kasvoja"
+    },
+    "BREAKFAST": {
+      "form": "aamiainen",
+      "plural": "aamiaiset",
+      "partitive": "aamiaista",
+      "accusative": "aamiaisen"
+    },
+    "LUNCH": {
+      "form": "lounas",
+      "plural": "lounaat",
+      "partitive": "lounasta",
+      "accusative": "lounaan"
+    },
+    "DINNER": {
+      "form": "illallinen",
+      "plural": "illalliset",
+      "partitive": "illallista",
+      "accusative": "illallisen"
+    },
+    "CLOTHES": {
+      "form": "vaatteet",
+      "pluralOnly": true,
+      "partitive": "vaatteita"
+    },
+    "SHIRT": {
+      "form": "paita",
+      "plural": "paidat",
+      "partitive": "paitaa",
+      "accusative": "paidan"
+    },
+    "SHOES": {
+      "form": "kengät",
+      "pluralOnly": true,
+      "partitive": "kenkiä"
+    },
+    "PANTS": {
+      "form": "housut",
+      "pluralOnly": true,
+      "partitive": "housuja"
+    },
+    "TABLE": {
+      "form": "pöytä",
+      "plural": "pöydät",
+      "partitive": "pöytää",
+      "accusative": "pöydän",
+      "genitive": "pöydän",
+      "adessive": "pöydällä",
+      "inessive": "pöydässä"
+    },
+    "PHONE": {
+      "form": "puhelin",
+      "plural": "puhelimet",
+      "partitive": "puhelinta",
+      "accusative": "puhelimen",
+      "genitive": "puhelimen",
+      "adessive": "puhelimella",
+      "inessive": "puhelimessa"
+    },
+    "ONE": [
+      "yksi"
+    ],
+    "TWO": [
+      "kaksi"
+    ],
+    "THREE": [
+      "kolme"
+    ],
+    "FOUR": [
+      "neljä"
+    ],
+    "FIVE": [
+      "viisi"
+    ],
+    "SIX": [
+      "kuusi"
+    ],
+    "SEVEN": [
+      "seitsemän"
+    ],
+    "EIGHT": [
+      "kahdeksan"
+    ],
+    "NINE": [
+      "yhdeksän"
+    ],
+    "TEN": [
+      "kymmenen"
+    ],
+    "ELEVEN": [
+      "yksitoista"
+    ],
+    "TWELVE": [
+      "kaksitoista"
+    ],
+    "THIRTEEN": [
+      "kolmetoista"
+    ],
+    "FOURTEEN": [
+      "neljätoista"
+    ],
+    "FIFTEEN": [
+      "viisitoista"
+    ],
+    "SIXTEEN": [
+      "kuusitoista"
+    ],
+    "SEVENTEEN": [
+      "seitsemäntoista"
+    ],
+    "EIGHTEEN": [
+      "kahdeksantoista"
+    ],
+    "NINETEEN": [
+      "yhdeksäntoista"
+    ],
+    "TWENTY": [
+      "kaksikymmentä"
+    ],
+    "BIG": {
+      "form": "iso",
+      "plural": "isot"
+    },
+    "SMALL": {
+      "form": "pieni",
+      "plural": "pienet"
+    },
+    "GOOD": {
+      "form": "hyvä",
+      "plural": "hyvät"
+    },
+    "BAD": {
+      "form": "huono",
+      "plural": "huonot"
+    },
+    "NEW": {
+      "form": "uusi",
+      "plural": "uudet"
+    },
+    "OLD": {
+      "form": "vanha",
+      "plural": "vanhat"
+    },
+    "EASY": {
+      "form": "helppo",
+      "plural": "helpot"
+    },
+    "DIFFICULT": {
+      "form": "vaikea",
+      "plural": "vaikeat"
+    },
+    "BLACK": {
+      "form": "musta",
+      "plural": "mustat"
+    },
+    "WHITE": {
+      "form": "valkoinen",
+      "plural": "valkoiset"
+    },
+    "RED": {
+      "form": "punainen",
+      "plural": "punaiset"
+    },
+    "BLUE": {
+      "form": "sininen",
+      "plural": "siniset"
+    },
+    "GREEN": {
+      "form": "vihreä",
+      "plural": "vihreät"
+    },
+    "YELLOW": {
+      "form": "keltainen",
+      "plural": "keltaiset"
+    },
+    "PURPLE": {
+      "form": "violetti",
+      "plural": "violetit"
+    },
+    "ORANGE": {
+      "form": "oranssi",
+      "plural": "oranssit"
+    },
+    "FAST": {
+      "form": "nopea",
+      "plural": "nopeat"
+    },
+    "SLOW": {
+      "form": "hidas",
+      "plural": "hitaat"
+    },
+    "LONG": {
+      "form": "pitkä",
+      "plural": "pitkät"
+    },
+    "SHORT": {
+      "form": "lyhyt",
+      "plural": "lyhyet"
+    },
+    "HEAVY": {
+      "form": "painava",
+      "plural": "painavat"
+    },
+    "LIGHT": {
+      "form": "kevyt",
+      "plural": "kevyet"
+    },
+    "DARK": {
+      "form": "pimeä",
+      "plural": "pimeät"
+    },
+    "YOUNG": {
+      "form": "nuori",
+      "plural": "nuoret"
+    },
+    "COLD": {
+      "form": "kylmä",
+      "plural": "kylmät"
+    },
+    "NICE": {
+      "form": "mukava",
+      "plural": "mukavat"
+    },
+    "RIGHT": [
+      "oikea"
+    ],
+    "LEFT": [
+      "vasen"
+    ],
+    "CORRECT": [
+      "oikein"
+    ],
+    "WRONG": [
+      "väärin"
+    ],
+    "AND": [
+      "ja"
+    ],
+    "BUT": [
+      "mutta"
+    ],
+    "ALSO": [
+      "myös"
+    ],
+    "BECAUSE": [
+      "koska"
+    ],
+    "IF": [
+      "jos"
+    ],
+    "WHILE": [
+      "kun"
+    ],
+    "AS": [
+      "kuten"
+    ],
+    "NOT": [
+      "ei"
+    ],
+    "YES": [
+      "kyllä"
+    ],
+    "NO": [
+      "ei"
+    ],
+    "PLEASE": [
+      "ole hyvä"
+    ],
+    "MAYBE": [
+      "ehkä"
+    ],
+    "JUST": [
+      "vain"
+    ],
+    "THANKS": [
+      "kiitos"
+    ],
+    "ONLY": [
+      "vain"
+    ],
+    "ANOTHER": [
+      "toinen"
+    ],
+    "ANY": [
+      "mikään"
+    ],
+    "SOMETHING": [
+      "jotakin"
+    ],
+    "ALL": [
+      "kaikki"
+    ],
+    "AROUND": [
+      "ympäri"
+    ],
+    "TOP": [
+      "ylhäällä"
+    ],
+    "BOTTOM": [
+      "alhaalla"
+    ],
+    "UNDER": [
+      "alla"
+    ],
+    "NEXT_TO": [
+      "vieressä"
+    ],
+    "FRONT": [
+      "edessä"
+    ],
+    "BEHIND": [
+      "takana"
+    ],
+    "BETWEEN": [
+      "välissä"
+    ],
+    "IN": [
+      "sisällä"
+    ],
+    "ON": [
+      "päällä"
+    ],
+    "OFF": [
+      "pois"
+    ],
+    "BACK": [
+      "takaisin"
+    ],
+    "OUT": [
+      "ulos"
+    ],
+    "NORTH": [
+      "pohjoinen"
+    ],
+    "SOUTH": [
+      "etelä"
+    ],
+    "EAST": [
+      "itä"
+    ],
+    "WEST": [
+      "länsi"
+    ],
+    "FOR": [
+      "varten"
+    ],
+    "WITH": [
+      "kanssa"
+    ],
+    "FROM": [
+      "luota"
+    ],
+    "TO": [
+      "luokse"
+    ],
+    "BY": [
+      "avulla"
+    ],
+    "WHO": [
+      "kuka"
+    ],
+    "WHAT": [
+      "mikä"
+    ],
+    "WHEN": [
+      "milloin"
+    ],
+    "WHERE": [
+      "missä"
+    ],
+    "WHY": [
+      "miksi"
+    ],
+    "HOW": [
+      "miten"
+    ],
+    "WHICH": [
+      "mikä"
+    ],
+    "TODAY": [
+      "tänään"
+    ],
+    "YESTERDAY": [
+      "eilen"
+    ],
+    "TOMORROW": [
+      "huomenna"
+    ],
+    "MORNING": {
+      "form": "aamu",
+      "plural": "aamut",
+      "partitive": "aamua"
+    },
+    "DAY": {
+      "form": "päivä",
+      "plural": "päivät",
+      "partitive": "päivää"
+    },
+    "NIGHT": {
+      "form": "yö",
+      "plural": "yöt",
+      "partitive": "yötä"
+    },
+    "WEEK": {
+      "form": "viikko",
+      "plural": "viikot",
+      "partitive": "viikkoa"
+    },
+    "MONTH": {
+      "form": "kuukausi",
+      "plural": "kuukaudet",
+      "partitive": "kuukautta"
+    },
+    "YEAR": {
+      "form": "vuosi",
+      "plural": "vuodet",
+      "partitive": "vuotta"
+    },
+    "HOUR": {
+      "form": "tunti",
+      "plural": "tunnit",
+      "partitive": "tuntia"
+    },
+    "MINUTE": {
+      "form": "minuutti",
+      "plural": "minuutit",
+      "partitive": "minuuttia"
+    },
+    "SECOND": {
+      "form": "sekunti",
+      "plural": "sekunnit",
+      "partitive": "sekuntia"
+    },
+    "NOW": [
+      "nyt"
+    ],
+    "BEFORE": [
+      "ennen"
+    ],
+    "AFTER": [
+      "jälkeen"
+    ],
+    "LATER": [
+      "myöhemmin"
+    ],
+    "NEXT": [
+      "seuraava"
+    ],
+    "SPRING": {
+      "form": "kevät",
+      "plural": "keväät",
+      "partitive": "kevättä"
+    },
+    "SUMMER": {
+      "form": "kesä",
+      "plural": "kesät",
+      "partitive": "kesää"
+    },
+    "AUTUMN": {
+      "form": "syksy",
+      "plural": "syksyt",
+      "partitive": "syksyä"
+    },
+    "WINTER": {
+      "form": "talvi",
+      "plural": "talvet",
+      "partitive": "talvea"
+    }
+  }
+}
