@@ -372,6 +372,53 @@ test("apocope surfaces are what the L3 blank contract records", () => {
 });
 
 // ---------------------------------------------------------------------
+// Numeral government + gender agreement — Emi 2026-08-28-07/-08 (uk), -03/-04 (el)
+// ---------------------------------------------------------------------
+
+test("uk: numbers 5+ govern the genitive plural on noun and adjective", () => {
+  // 27 of 30 sampled uk numeral sentences were wrong in run 5.
+  assert.equal(buildSentence("uk", tplById("SHE_SEES_PHONE"), null, { num_PHONE: "NINE" }),
+    "Вона бачить дев’ять телефонів.");
+  assert.equal(buildSentence("uk", tplById("HE_SEES_SHIRT"), null,
+    { num_SHIRT: "TEN", adj_SHIRT: "BAD" }),
+    "Він бачить десять поганих сорочок.");
+});
+
+test("uk: 2–4 take the nominative plural and «два» agrees in gender", () => {
+  assert.equal(buildSentence("uk", tplById("HE_SEES_SHIRT"), null, { num_SHIRT: "TWO" }),
+    "Він бачить дві сорочки.");
+});
+
+test("uk: «один» agrees in gender and case («одну роботу»)", () => {
+  assert.equal(buildSentence("uk", tplById("WE_HAVE_JOB"), null, { num_JOB: "ONE" }),
+    "Ми маємо одну роботу.");
+});
+
+test("el: numerals agree in gender and the noun pluralizes", () => {
+  // «δεκατέσσερα κρατήσεις» / «δεκαπέντε διαβατήριο» were Emi -03/-04.
+  assert.equal(buildSentence("el", tplById("HE_HAS_RESERVATION"), null,
+    { num_RESERVATION: "FOURTEEN" }),
+    "Αυτός έχει δεκατέσσερις κρατήσεις.");
+  assert.equal(buildSentence("el", tplById("HE_HAS_RESERVATION"), null,
+    { num_RESERVATION: "ONE" }),
+    "Αυτός έχει μία κράτηση.");
+  // Neuter heads keep the neuter numeral.
+  assert.equal(buildSentence("el", tplById("I_GET_BOOK"), null, { num_BOOK: "FOURTEEN" }),
+    "Εγώ παίρνω δεκατέσσερα βιβλία.");
+});
+
+test("numbers on plural-less nouns are refused, not shipped as singular", () => {
+  // The silent «δεκαπέντε διαβατήριο» / «два паспорт» class: a number ≥2 on
+  // a noun with no plural data must be filtered by the compat gate.
+  const before = isModifierCompatible("el", "FIFTEEN", "PASSPORT");
+  assert.equal(before, true, "PASSPORT now has plural data — compatible");
+  // A noun with no plural data (pokemon uk GYM) refuses the number…
+  assert.equal(isModifierCompatible("uk", "TWO", "GYM"), false);
+  // …while English stays algorithmic (pluralize()) and never needs the field.
+  assert.equal(isModifierCompatible("en", "FOUR", "BOOK"), true);
+});
+
+// ---------------------------------------------------------------------
 // Turkish possessive suffixes + copular person — Emi 2026-08-28-05 / -06
 // ---------------------------------------------------------------------
 
@@ -607,7 +654,7 @@ test("every features key is a known, checkable feature id", () => {
     "declinesAttributiveAdjectives", "adjectivePosition", "apocope",
     "articleCaseMarking", "virilePlural", "numeralGovernment",
     "zeroPresentCopula", "definitenessAgreement",
-    "possessiveSuffixes", "copulaPersonAgreement",
+    "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {

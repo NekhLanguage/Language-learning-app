@@ -161,6 +161,11 @@
 //   copulaPersonSuffixes     predicate nominals take personal copular
 //                            endings by subject person/number; -DIr only in
 //                            3sg («Ben adamım», «Onlar kızlar» — tr today)
+//   numeralGenderAgreement   number words agree with the head noun's gender
+//                            (and case, for ONE) via object-shaped number
+//                            entries: f / n / m / f_accusative fields
+//                            («дві сковороди», «одну роботу», «μία» /
+//                            «τρεις» / «δεκατέσσερις» — uk, el)
 
 export const LANGUAGE_RULES = {
   ar: {
@@ -226,10 +231,15 @@ export const LANGUAGE_RULES = {
       indefiniteArticle: true, adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, articleCaseMarking: true,
       declinesAttributiveAdjectives: true,
+      // 1, 3, 4 (and their -teen compounds) inflect for gender:
+      // «δεκατέσσερις κρατήσεις», never «δεκατέσσερα κρατήσεις»
+      // (Emi 2026-08-28-03).
+      numeralGenderAgreement: true,
     },
     indefiniteArticle: true,
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,
+    numeralGenderAgreement: true,
   },
   it: {
     features: {
@@ -333,10 +343,16 @@ export const LANGUAGE_RULES = {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
       declinesAttributiveAdjectives: true,
+      // Numbers 5+ govern the genitive plural on noun AND adjective
+      // («шість книг», «десять поганих паспортів»); 1 and 2 agree in
+      // gender («одна робота», «дві сковороди») and 1 in case too
+      // («Я маю одну роботу») — Emi 2026-08-28-07/-08.
+      numeralGovernment: true, numeralGenderAgreement: true,
     },
     zeroPresentCopula: true,
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,
+    numeralGenitivePlural: true, numeralGenderAgreement: true,
     caseMarking: {
       directObjectCase: "accusative",
       prepositions: {

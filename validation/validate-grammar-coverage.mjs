@@ -108,6 +108,17 @@ const FEATURE_CHECKS = {
     ok: !!row.copulaPersonSuffixes,
     detail: 'needs the copulaPersonSuffixes rule (personal endings, -DIr only 3sg)',
   }),
+  numeralGenderAgreement: (row, lang) => {
+    if (!row.numeralGenderAgreement) {
+      return { ok: false, detail: 'needs the numeralGenderAgreement rule' };
+    }
+    // Data half: at least ONE must be object-shaped with a feminine form,
+    // or the rule is declared over dead bare-array data.
+    const one = vocab.languages?.[lang]?.forms?.ONE;
+    const ok = !!one && typeof one === 'object' && !Array.isArray(one) &&
+      typeof one.f === 'string';
+    return { ok, detail: ok ? '' : 'ONE has no object entry with an f form' };
+  },
   articleCaseMarking: (row) => ({
     ok: row.caseMarking?.caseOn === 'determiner',
     detail: 'needs caseMarking.caseOn: "determiner"',
@@ -144,6 +155,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.possessiveSuffixes],
   [(row) => !!row.copulaPersonSuffixes, 'copulaPersonAgreement',
     (f) => !!f.copulaPersonAgreement],
+  [(row) => !!row.numeralGenderAgreement, 'numeralGenderAgreement',
+    (f) => !!f.numeralGenderAgreement],
 ];
 
 const findings = [];

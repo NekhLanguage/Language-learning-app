@@ -407,6 +407,20 @@ const ADJ_CASE_STRATEGIES = {
       return s;
     },
   },
+  uk: {
+    // genitive plural from the plural form: «погані»→«поганих»,
+    // «білі»→«білих» (Emi 2026-08-28-07: «десять поганих паспортів»).
+    // Hard-stem -і→-их covers the shipped adjective inventory; a soft-stem
+    // adjective («сині»→«синіх») must carry an explicit genitive_plural
+    // field, which wins over the derivation at the call sites.
+    // No animateAccusative on purpose — not observed in uk output.
+    genitivePluralFromPlural: (w) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (s.endsWith("і")) return s.slice(0, -1) + "их";
+      return s;
+    },
+  },
 };
 
 function adjCaseStrategy(lang) {
@@ -1490,6 +1504,27 @@ const NUMBER_VALUES = {
   TWENTY: 20,
 };
 
+// Numeral gender/case agreement with the head noun, declared via the
+// numeralGenderAgreement rule and driven by object-shaped number entries:
+// uk «дві» (TWO.f), «одну роботу» (ONE.f_accusative), el «μία» / «τρεις» /
+// «δεκατέσσερις» (ONE.f / THREE.f / FOURTEEN.f, m for «ένας»). Bare-array
+// number entries and languages without the flag render exactly as before.
+function numberAgreementForm(lang, numberCid, headCid, accusative) {
+  const word = formOf(lang, numberCid);
+  if (!langRule(lang, "numeralGenderAgreement")) return word;
+  const entry = vocab().languages?.[lang]?.forms?.[numberCid];
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return word;
+  const g = vocab().languages?.[lang]?.forms?.[headCid]?.gender;
+  if (g === "f") {
+    if (accusative && typeof entry.f_accusative === "string") return entry.f_accusative;
+    if (typeof entry.f === "string") return entry.f;
+    return word;
+  }
+  if (g === "m" && typeof entry.m === "string") return entry.m;
+  if (g === "n" && typeof entry.n === "string") return entry.n;
+  return word;
+}
+
 function isModifierCompatible(lang, modifierCid, nounCid) {
   const nounMeta  = vocab().concepts[nounCid];
   const nounEntry = vocab().languages?.[lang]?.forms?.[nounCid] || {};
@@ -1521,6 +1556,20 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
       langRule(lang, "numeralGenitivePlural") &&
       (NUMBER_VALUES[modifierCid] || 0) >= 5 &&
       typeof nounEntry.genitive_plural !== "string") {
+    return false;
+  }
+
+  // In a language with plural morphology, a number ≥2 on a noun with no
+  // plural data would ship the singular citation form («δεκαπέντε
+  // διαβατήριο», «два паспорт» — Emi 2026-08-28-04/-07). Refuse instead:
+  // wrong gets filtered, and the NO_PLURAL_DATA baseline is the visible
+  // backlog of what to author.
+  if (modMeta.type === "number" &&
+      lang !== "en" && // en pluralizes algorithmically (pluralize())
+      (NUMBER_VALUES[modifierCid] || 0) >= 2 &&
+      langRule(lang, "inflectsNounPlural") &&
+      !nounEntry.invariantPlural && !nounEntry.pluralOnly &&
+      typeof nounEntry.plural !== "string") {
     return false;
   }
 
@@ -2777,6 +2826,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   }
 
   if (numberWord) {
+    // Numeral gender/case agreement with the head noun («дві сковороди»,
+    // «Я маю одну роботу», «δεκατέσσερις κρατήσεις») — applied BEFORE the
+    // blank-surface capture so L3 blanks hold the agreed form
+    // (Emi 2026-08-28-07/-08 uk, -03 el).
+    numberWord = numberAgreementForm(lang, numberCid, cid, ukObjectCase);
     // Same surface capture for a forced number modifier (see adjective note).
     if (sharedChoices && numberCid === forcedConcept) {
       const k = "blankSurface_" + lang;
@@ -2826,12 +2880,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjectiveWord;
       // Numeral government carries the adjective along: «osiem dużych
-      // twarzy», never «osiem duże twarzy» (Emi 2026-08-27-04). Derived
-      // from the plural form via the language's declared strategy family.
+      // twarzy», never «osiem duże twarzy» (Emi 2026-08-27-04). An explicit
+      // genitive_plural field on the adjective wins (soft stems the
+      // derivation can't tell apart — «синіх»); else derived from the
+      // plural form via the language's declared strategy family.
       if (numeralGoverned) {
-        const strat = adjCaseStrategy(lang);
-        if (strat?.genitivePluralFromPlural) {
-          adjForm = strat.genitivePluralFromPlural(adjForm);
+        const adjEntry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
+        if (typeof adjEntry?.genitive_plural === "string") {
+          adjForm = adjEntry.genitive_plural;
+        } else {
+          const strat = adjCaseStrategy(lang);
+          if (strat?.genitivePluralFromPlural) {
+            adjForm = strat.genitivePluralFromPlural(adjForm);
+          }
         }
       }
       return adjectiveGoesPostNominal(lang, adjectiveCid)
