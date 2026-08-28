@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.16";
+const APP_DATA_VERSION = "1.2.17";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -3540,18 +3540,20 @@ activeSelection = null;
   };
 }
 
-// When the drilled concept is itself a modifier (adjective/number), force it
-// into the sentence via the shared modifier cache: a learner drilling RED
-// must be graded on a sentence that actually contains «червону», and the
+// When the drilled concept is itself a modifier (adjective/number/possessive),
+// force it into the sentence via the shared modifier cache: a learner drilling
+// RED must be graded on a sentence that actually contains «червону», and the
 // prompt, tiles, expected answer, and reveal banner must all agree — they
 // all consume the same sharedChoices. Returns the concept id of the noun
 // that was seeded, or null when no compatible noun was found.
 function seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang) {
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
-  const isModifier = meta &&
-    ((meta.type === "adjective" && meta.semantic_role !== "possessive") ||
-     meta.type === "number");
-  if (!isModifier) return null;
+  if (!meta || !(meta.type === "adjective" || meta.type === "number")) return null;
+  // A template that already authors the drilled modifier tests it natively —
+  // seeding on top would double it («She is my my mom»). Render as authored.
+  if ((tpl.concepts || []).includes(targetConcept)) return null;
+  const isPossessive = meta.type === "adjective" &&
+    meta.semantic_role === "possessive";
   const nouns = (tpl.concepts || []).filter(c =>
     window.GLOBAL_VOCAB.concepts[c]?.type === "noun");
   // Mirror chooseTemplateForConcept: adjectives prefer a noun they suit
@@ -3564,14 +3566,19 @@ function seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang) {
   // to bail at render time, which silently shrinks the exercise pool
   // (13k+ bails measured for pl). Checking here picks a workable noun
   // up front instead.
+  // Possessives are exempt from isModifierCompatible, mirroring the engine's
+  // forced path: they are determiners — "his water" / «il suo cibo» is fine
+  // where "four waters" is not. The parity fence still verifies landing.
   const supportLang = languageState.support || "en";
   const pairCompatible = c =>
     isModifierCompatible(targetLang, targetConcept, c) &&
     isModifierCompatible(supportLang, targetConcept, c);
-  const noun = (meta.type === "adjective"
-    ? nouns.find(c => adjectiveSuitsNoun(targetConcept, c) && pairCompatible(c))
-    : null) ||
-    nouns.find(pairCompatible);
+  const noun = isPossessive
+    ? nouns.find(c => adjectiveSuitsNoun(targetConcept, c))
+    : ((meta.type === "adjective"
+        ? nouns.find(c => adjectiveSuitsNoun(targetConcept, c) && pairCompatible(c))
+        : null) ||
+       nouns.find(pairCompatible));
   if (!noun) return null;
   sharedChoices[(meta.type === "number" ? "num_" : "adj_") + noun] = targetConcept;
   return noun;

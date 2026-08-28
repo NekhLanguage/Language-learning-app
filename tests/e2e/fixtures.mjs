@@ -70,8 +70,8 @@ export async function startNewRun(page, { language = "Portuguese", packId = "eve
 // first `bundles` entries of the release plan for realistic distractor pools,
 // then re-renders. For L6/L7 pass restrictTypes to keep modifier/recognition
 // concepts (whose level caps are lower) out of the exercise pool.
-export async function seedAllConceptsAt(page, level, { bundles = 4, restrictTypes = null } = {}) {
-  await page.evaluate(({ level, bundles, restrictTypes }) => {
+export async function seedAllConceptsAt(page, level, { bundles = 4, restrictTypes = null, restrictRoles = null } = {}) {
+  await page.evaluate(({ level, bundles, restrictTypes, restrictRoles }) => {
     const app = window.__app;
     const run = app.run;
     const index = app.bundleIndex;
@@ -83,8 +83,10 @@ export async function seedAllConceptsAt(page, level, { bundles = 4, restrictType
 
     run.progress = {};
     for (const cid of run.released) {
-      const type = window.GLOBAL_VOCAB.concepts[cid]?.type;
-      const eligible = !restrictTypes || restrictTypes.includes(type);
+      const meta = window.GLOBAL_VOCAB.concepts[cid] || {};
+      const type = meta.type;
+      const eligible = (!restrictTypes || restrictTypes.includes(type)) &&
+        (!restrictRoles || restrictRoles.includes(meta.semantic_role));
       run.progress[cid] = {
         level: eligible ? level : 1,
         streak: 0,
@@ -103,7 +105,7 @@ export async function seedAllConceptsAt(page, level, { bundles = 4, restrictType
     run.sessionComplete = false;
 
     app.rerender();
-  }, { level, bundles, restrictTypes });
+  }, { level, bundles, restrictTypes, restrictRoles });
 }
 
 // The concept the current exercise is asking about.

@@ -6,6 +6,11 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-08-28
+
+### Adjectives, numbers and possessives now climb the full ladder
+Words like "big", "five" and "my" used to stop at Level 5 — the sentence-building and free-translation levels never tested them, which quietly removed a third of the grammar from the top of the course. They now progress through Level 6 and Level 7 like every other word: drilling "big" at Level 7 gives you a sentence that actually contains it («Ty masz dużego brata»), and the prompt and the graded answer are guaranteed to carry the word together — the old failure where the English sentence asked for an adjective the answer didn't contain (or the other way around) is fenced out by construction. Words you had already mastered stay mastered.
+
 ## 2026-08-27
 
 ### Small fixes across the app

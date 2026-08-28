@@ -42,10 +42,13 @@ export function passesSpacing(state, currentIndex, opts = {}) {
 }
 
 // The ceiling a concept can climb to. Recognition-only concepts stop at
-// L4, modifiers (adjectives/numbers) at L5, everything else at MAX_LEVEL.
-export function levelCapFor({ isRecognition, isModifier }) {
+// L4; everything else — modifiers included — climbs to MAX_LEVEL. Modifiers
+// were capped at 5 while L6/L7 couldn't render them safely; with symmetric
+// drilled-modifier seeding fenced at L6/L7, the full ladder is back
+// (Nekh ruling 2026-08-28: L7 must test modifiers too). Concepts already
+// completed at the old cap stay completed — the cap only gates promotion.
+export function levelCapFor({ isRecognition }) {
   if (isRecognition) return 4;
-  if (isModifier) return 5;
   return MAX_LEVEL;
 }
 
