@@ -100,6 +100,14 @@ const FEATURE_CHECKS = {
     return { ok: false, detail: `unknown adjectivePosition "${value}"` };
   },
   apocope: (row) => ({ ok: !!row.apocope, detail: 'needs the apocope rule' }),
+  possessiveSuffixes: (row) => ({
+    ok: !!row.possessiveSuffixes,
+    detail: 'needs the possessiveSuffixes rule (suffix generator + possessed-map overrides)',
+  }),
+  copulaPersonAgreement: (row) => ({
+    ok: !!row.copulaPersonSuffixes,
+    detail: 'needs the copulaPersonSuffixes rule (personal endings, -DIr only 3sg)',
+  }),
   articleCaseMarking: (row) => ({
     ok: row.caseMarking?.caseOn === 'determiner',
     detail: 'needs caseMarking.caseOn: "determiner"',
@@ -132,6 +140,10 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.numeralGovernment],
   [(row) => !!row.zeroPresentCopula, 'zeroPresentCopula',
     (f) => !!f.zeroPresentCopula],
+  [(row) => !!row.possessiveSuffixes, 'possessiveSuffixes',
+    (f) => !!f.possessiveSuffixes],
+  [(row) => !!row.copulaPersonSuffixes, 'copulaPersonAgreement',
+    (f) => !!f.copulaPersonAgreement],
 ];
 
 const findings = [];
