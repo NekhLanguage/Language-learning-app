@@ -1,0 +1,44 @@
+{
+  "ar": [
+    "definiteArticles",
+    "nounCaseOnObjects",
+    "numeralInteraction",
+    "prepositionalCase",
+    "specialPossession"
+  ],
+  "de": [],
+  "el": [
+    "prepositionalCase"
+  ],
+  "en": [
+    "verbPersonConjugation"
+  ],
+  "es": [],
+  "fr": [],
+  "it": [],
+  "ja": [
+    "classifiersOrCounters",
+    "politenessRegisters"
+  ],
+  "ko": [
+    "classifiersOrCounters",
+    "politenessRegisters",
+    "specialPossession"
+  ],
+  "no": [
+    "grammaticalGender"
+  ],
+  "pl": [],
+  "pt": [],
+  "th": [
+    "classifiersOrCounters",
+    "zeroOrSuffixalCopula"
+  ],
+  "tr": [
+    "prepositionalCase"
+  ],
+  "uk": [],
+  "zh": [
+    "classifiersOrCounters"
+  ]
+}
