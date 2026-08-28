@@ -19,6 +19,8 @@ import {
   configureEngine,
   buildSentence,
   buildSentenceWithRules,
+  trPossessiveSuffix,
+  turkishPersonalCopulaSuffix,
   possessiveArticleFor,
   acceptedAnswerVariants,
   dropSubjectPronoun,
@@ -369,6 +371,57 @@ test("apocope surfaces are what the L3 blank contract records", () => {
   assert.equal(sharedPost.blankSurface_es, "negro");
 });
 
+// ---------------------------------------------------------------------
+// Turkish possessive suffixes + copular person — Emi 2026-08-28-05 / -06
+// ---------------------------------------------------------------------
+
+test("tr: possessive suffix generator covers Emi's exact wrong/right pairs", () => {
+  // Every wrong sentence from the run-5 sweep, generated correctly:
+  assert.equal(trPossessiveSuffix("yiyecek", "1s"), "yiyeceğim");
+  assert.equal(trPossessiveSuffix("rezervasyon", "3s"), "rezervasyonu");
+  assert.equal(trPossessiveSuffix("bagaj", "1p"), "bagajımız");
+  assert.equal(trPossessiveSuffix("pasaport", "3s"), "pasaportu"); // -t stays hard
+  assert.equal(trPossessiveSuffix("tava", "1s"), "tavam");
+  assert.equal(trPossessiveSuffix("yiyecek", "3p"), "yiyecekleri");
+  // The generator reproduces the authored maps it now backs up:
+  assert.equal(trPossessiveSuffix("iş", "1s"), "işim");
+  assert.equal(trPossessiveSuffix("iş", "2s"), "işin");
+  assert.equal(trPossessiveSuffix("iş", "1p"), "işimiz");
+  assert.equal(trPossessiveSuffix("iş", "3p"), "işleri");
+  assert.equal(trPossessiveSuffix("gömlek", "1s"), "gömleğim"); // k→ğ
+});
+
+test("tr: have-possession renders the suffixed noun («Benim yiyeceğim var»)", () => {
+  assert.equal(buildSentence("tr", tplById("I_HAVE_FOOD")),
+    "Benim yiyeceğim var.");
+  assert.equal(buildSentence("tr", tplById("I_HAVE_PAN")),
+    "Benim tavam var.");
+  // Authored possessed maps still win (plural-possessed «kıyafetlerim» class).
+  assert.equal(buildSentence("tr", tplById("WE_HAVE_JOB")),
+    "Bizim bir işimiz var.");
+});
+
+test("tr: copular predicates agree in person and number", () => {
+  // 11 of 13 copular sentences were «-dır» for every person (Emi -06).
+  assert.equal(turkishPersonalCopulaSuffix("adam", 1, false), "adamım");
+  assert.equal(turkishPersonalCopulaSuffix("kız", 2, false), "kızsın");
+  assert.equal(turkishPersonalCopulaSuffix("adam", 1, true), "adamız");
+  assert.equal(turkishPersonalCopulaSuffix("kız", 2, true), "kızsınız");
+  assert.equal(turkishPersonalCopulaSuffix("kız", 3, true), "kızlar");
+  assert.equal(turkishPersonalCopulaSuffix("kadın", 3, true), "kadınlar");
+  // 3sg keeps -DIr — Emi verified «O oğlandır» correct.
+  assert.equal(turkishPersonalCopulaSuffix("oğlan", 3, false), "oğlandır");
+  // Vowel-final stems take the y buffer; vowel-initial suffixes soften k.
+  assert.equal(turkishPersonalCopulaSuffix("anne", 1, false), "anneyim");
+  assert.equal(turkishPersonalCopulaSuffix("küçük", 1, false), "küçüğüm");
+  // Consonant-initial -sIn never softens.
+  assert.equal(turkishPersonalCopulaSuffix("küçük", 2, false), "küçüksün");
+  // Full sentences, per Emi's list:
+  assert.equal(buildSentence("tr", tplById("I_AM_MAN")), "Ben adamım.");
+  assert.equal(buildSentence("tr", tplById("YOU_ARE_GIRL")), "Sen kızsın.");
+  assert.equal(buildSentence("tr", tplById("HE_IS_BOY")), "O oğlandır.");
+});
+
 test("wordOrder declarations preserve the historic WORD_ORDER map", () => {
   const sov = Object.keys(LANGUAGE_RULES)
     .filter((l) => LANGUAGE_RULES[l].wordOrder === "SOV").sort();
@@ -554,6 +607,7 @@ test("every features key is a known, checkable feature id", () => {
     "declinesAttributiveAdjectives", "adjectivePosition", "apocope",
     "articleCaseMarking", "virilePlural", "numeralGovernment",
     "zeroPresentCopula", "definitenessAgreement",
+    "possessiveSuffixes", "copulaPersonAgreement",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
