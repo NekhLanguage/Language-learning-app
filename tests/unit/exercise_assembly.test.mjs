@@ -18,6 +18,7 @@ import {
   modifierSurfaceFor,
   slotContextFor,
   buildSameTypeOptions,
+  surfaceForm,
 } from "../../sentence_engine.mjs";
 
 let vocab, templates;
@@ -203,4 +204,25 @@ test("declined early returns pin no-modifier into sharedChoices", () => {
       rng: () => 0.999,
     });
   }
+});
+
+test("option tiles render real surfaces, never metadata codes (Emi 2026-08-28-02)", () => {
+  // The Greek L5 matching tiles showed «f» / «n» — a local resolver in
+  // app.js fell back to "first string value in the entry", which is the
+  // gender field for gender-first-authored entries. Both L4 and L5 now
+  // delegate to surfaceForm, whose formOf reads entry.form first.
+  assert.equal(surfaceForm("el", "LUGGAGE"), "αποσκευές");
+  assert.equal(surfaceForm("el", "FOOD"), "φαγητό");
+  assert.equal(surfaceForm("el", "SIX"), "έξι");
+  // uk/ar author gender-first too — same class.
+  assert.notEqual(surfaceForm("uk", "BOOK"), "f");
+  assert.ok(surfaceForm("uk", "BOOK").length > 1, surfaceForm("uk", "BOOK"));
+});
+
+test("pl HOME and HOUSE share the surface «dom» (Emi 2026-08-28-11 premise)", () => {
+  // Two concepts, one rendered word. The L4 option builder dedupes on the
+  // rendered target surface so they can never appear as twin tiles; this
+  // pins the collision the dedupe exists for.
+  assert.equal(surfaceForm("pl", "HOME"), surfaceForm("pl", "HOUSE"));
+  assert.equal(surfaceForm("pl", "HOME"), "dom");
 });

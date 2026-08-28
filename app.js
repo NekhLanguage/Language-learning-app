@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.17";
+const APP_DATA_VERSION = "1.2.18";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -2617,8 +2617,22 @@ return tpl;
 
   // --- Modifier path ---
   if (isModifierConcept(targetConcept)) {
-    const options = buildSameTypeOptions(targetConcept, 4);
-    if (!options) return null;
+    const rawOptions = buildSameTypeOptions(targetConcept, 6);
+    if (!rawOptions) return null;
+    // Options render in the SUPPORT language below — dedupe on that surface
+    // so two concepts sharing a gloss never appear as identical buttons
+    // (the builder's own dedupe is target-language-keyed and only runs
+    // when a targetLang is passed).
+    const seenSupport = new Set([surfaceForm(supportLang, targetConcept)]);
+    const distractors = rawOptions.filter(opt => {
+      if (opt === targetConcept) return false;
+      const s = surfaceForm(supportLang, opt);
+      if (seenSupport.has(s)) return false;
+      seenSupport.add(s);
+      return true;
+    });
+    if (distractors.length < 3) return null;
+    const options = shuffle([targetConcept, ...distractors.slice(0, 3)]);
 
     const sentence = buildSentence(targetLang, tpl, targetConcept);
 
@@ -2638,10 +2652,8 @@ return tpl;
 
     options.forEach(opt => {
       const btn = document.createElement("button");
-      const meta = window.GLOBAL_VOCAB.concepts[opt];
-btn.textContent = meta?.type === "noun"
-  ? nounPhrase(supportLang, opt)
-  : formOf(supportLang, opt);
+      btn.textContent = surfaceForm(supportLang, opt);
+      btn.dataset.cid = opt;
 
       btn.onclick = () => {
         container.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
@@ -2658,8 +2670,10 @@ btn.textContent = meta?.type === "noun"
 
       const correct = selectedOption === targetConcept;
 
+      // Mark by concept id, not by reverse text lookup — text lookup
+      // mis-attributed whenever two options shared a rendered surface.
       container.querySelectorAll("button").forEach(btn => {
-        const value = options.find(o => formOf(supportLang, o) === btn.textContent);
+        const value = btn.dataset.cid;
         if (value === targetConcept) btn.classList.add("correct");
         if (value === selectedOption && !correct) btn.classList.add("incorrect");
       });
@@ -3134,40 +3148,15 @@ if (!finalOptions.includes(targetConcept)) {
 
     const promptSupport = formOf(supportLang, targetConcept);
 
+    // One shared display-surface resolver for option tiles: the engine's
+    // surfaceForm (nouns → articled nounPhrase, everything else → formOf,
+    // which reads entry.form BEFORE any fallback). The old local copy here
+    // and its L5 twin had diverged — the L5 one skipped entry.form and
+    // leaked metadata field values as tile text (Emi 2026-08-28-02: Greek
+    // tiles showing «f» / «n»).
     function resolveTargetSurface(cid) {
-
-  const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[cid];
-  const meta = window.GLOBAL_VOCAB.concepts[cid];
-
-  if (entry === undefined || entry === null) return cid;
-
-  // NOUNS → use noun phrase (adds articles)
-  if (meta?.type === "noun") {
-    return nounPhrase(targetLang, cid);
-  }
-
-  // VERBS → strictly base / infinitive only
-  if (meta?.type === "verb") {
-    if (typeof entry === "object") {
-      if (typeof entry.base === "string") return entry.base;
-      if (typeof entry.infinitive === "string") return entry.infinitive;
+      return surfaceForm(targetLang, cid);
     }
-    if (typeof entry === "string") return entry;
-    return cid;
-  }
-
-  // OTHER TYPES
-  if (typeof entry === "string") return entry;
-
-  if (Array.isArray(entry)) return entry[0];
-
-  if (typeof entry === "object") {
-    const firstString = Object.values(entry).find(v => typeof v === "string");
-    if (firstString) return firstString;
-  }
-
-  return cid;
-}
 
     function buildLevel4Options() {
       const currentLevel = levelOf(targetConcept);
@@ -3199,25 +3188,46 @@ if (!finalOptions.includes(targetConcept)) {
       // Try to build up to 6 options, but always >= 4
       const desiredTotal = Math.max(4, Math.min(6, pool.length + 1));
 
-      // Shuffle pool and pick distractors with unique support meanings
+      // Shuffle pool and pick distractors with unique support meanings AND
+      // unique rendered target surfaces. Two concepts can share a target
+      // form while their support glosses differ — pl HOME and HOUSE both
+      // render «dom», so support-only dedupe showed the same tile twice
+      // and only one of them counted as correct (Emi 2026-08-28-11).
       const shuffled = shuffle([...pool]);
       const chosen = [targetConcept];
       const usedSupport = new Set([promptSupport]);
+      const usedTarget = new Set([resolveTargetSurface(targetConcept)]);
 
       for (const cid of shuffled) {
         if (chosen.length >= desiredTotal) break;
 
         const s = formOf(supportLang, cid);
         if (usedSupport.has(s)) continue;
+        const t = resolveTargetSurface(cid);
+        if (usedTarget.has(t)) continue;
 
         usedSupport.add(s);
+        usedTarget.add(t);
         chosen.push(cid);
       }
 
-      // If we couldn't reach 4 options with uniqueness, fall back to strict builder
-      // (still respects ladder rules; only loses the "no duplicate meaning" nicety).
+      // If we couldn't reach 4 options with uniqueness, fall back to the
+      // strict builder — then re-apply the rendered-surface dedupe, which
+      // the strict builder's formOf-keyed check can miss in article
+      // languages (formOf «casa» ≠ nounPhrase «una casa»).
       if (chosen.length < 4) {
-        return buildRecognitionOptions(tpl, targetConcept, 6, targetLang);
+        const fallback = buildRecognitionOptions(tpl, targetConcept, 6, targetLang);
+        if (!fallback) return [];
+        // Keep the correct answer no matter where the shuffle put it.
+        const seen = new Set([resolveTargetSurface(targetConcept)]);
+        const unique = [targetConcept, ...fallback.filter(cid => {
+          if (cid === targetConcept) return false;
+          const t = resolveTargetSurface(cid);
+          if (seen.has(t)) return false;
+          seen.add(t);
+          return true;
+        })];
+        return unique.length >= 4 ? shuffle(unique) : [];
       }
 
       return shuffle(chosen);
@@ -3462,29 +3472,13 @@ activeSelection = null;
 }
 
 
+  // Same shared resolver as L4 — the engine's surfaceForm. The local copy
+  // that lived here skipped entry.form and fell back to "first string value
+  // in the entry", which rendered the gender field («f», «n») as the tile
+  // for every el/uk/ar entry authored gender-first, and collapsed those
+  // pools in the dedupe above (Emi 2026-08-28-02).
   function resolveTargetSurface(cid) {
-    const entry = window.GLOBAL_VOCAB.languages?.[targetLang]?.forms?.[cid];
-    const meta = window.GLOBAL_VOCAB.concepts[cid];
-
-    if (!entry) return cid;
-
-    if (meta?.type === "verb") {
-      if (typeof entry === "object") {
-        if (entry.base) return entry.base;
-        if (entry.infinitive) return entry.infinitive;
-      }
-      if (typeof entry === "string") return entry;
-      return cid;
-    }
-
-    if (typeof entry === "string") return entry;
-    if (Array.isArray(entry)) return entry[0];
-    if (typeof entry === "object") {
-      const first = Object.values(entry).find(v => typeof v === "string");
-      if (first) return first;
-    }
-
-    return cid;
+    return surfaceForm(targetLang, cid);
   }
 
   leftItems.forEach(cid => {
