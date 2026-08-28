@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-27
 
+### Small fixes across the app
+A batch of quality fixes from Polish testing. The Polish alphabet guide now explains its letters in English (the panel was written in Polish — unreadable to the learner it exists for), and the round alphabet button shows «Ą» uppercased so it can't be misread as «q». If your progress can't be loaded from the server, the app now says so on the language hub instead of silently showing an older local copy. The translation box on the free-production level tells you what to do with it. Plurals of words like knife are now «knives», never «knifes» (roofs and chiefs stay regular). Double punctuation after "Incorrect.." is gone, and fill-in-the-blank subject options no longer offer "This" for sentences where it reads absurdly ("This has a reservation").
+
 ### French and Spanish adjectives now go where native speakers put them
 French and Spanish were placing every adjective in front of the noun, English-style («un nouveau livre» was right by luck, but «un noir livre» was not). Adjectives now follow the noun by default («un livre noir», «un libro rojo») while the classes that genuinely go in front — good, bad, big, small, new, old, young — stay there («un bon livre», «un buen libro»). Spanish and Italian also apocopate where the language demands it: «un buen libro» and «un mal libro», never «un bueno libro», with the full form kept where it belongs («una buena camisa», «un libro bueno» stays valid in grading). Italian and Portuguese picked up the same role-aware placement, fixing the few cases where the old all-or-nothing rule put quality words on the wrong side. French colour and shape adjectives also gained their feminine forms («une chemise verte»).
 

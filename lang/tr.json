@@ -14,6 +14,8 @@
     "continue": "Devam Et",
     "correct": "Doğru.",
     "incorrect": "Yanlış.",
+    "syncFailedLocalCopy": "Sunucuya ulaşılamadı — bu cihazda kayıtlı ilerleme gösteriliyor.",
+    "l7Placeholder": "Çevirini yaz",
     "level": "Seviye",
     "blueprint": "Nekh'in Dil Planı",
     "skool": "Skool Topluluğu",

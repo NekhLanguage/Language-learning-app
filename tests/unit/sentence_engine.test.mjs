@@ -101,6 +101,21 @@ test("pluralize handles regular and irregular nouns", () => {
   assert.equal(PLURAL_EXCEPTIONS["child"], "children");
 });
 
+test("pluralize -f/-fe class: knives, not knifes (Emi 2026-08-27-08)", () => {
+  assert.equal(pluralize("knife"), "knives");
+  assert.equal(pluralize("leaf"), "leaves");
+  assert.equal(pluralize("shelf"), "shelves");
+  assert.equal(pluralize("wife"), "wives");
+  // The regular class and double-f words keep plain -s.
+  assert.equal(pluralize("roof"), "roofs");
+  assert.equal(pluralize("chief"), "chiefs");
+  assert.equal(pluralize("belief"), "beliefs");
+  assert.equal(pluralize("chef"), "chefs");
+  assert.equal(pluralize("safe"), "safes");
+  assert.equal(pluralize("cliff"), "cliffs");
+  assert.equal(pluralize("giraffe"), "giraffes");
+});
+
 test("zero-copula languages are uk, ar, tr", () => {
   assert.deepEqual([...ZERO_PRESENT_COPULA].sort(), ["ar", "tr", "uk"]);
 });

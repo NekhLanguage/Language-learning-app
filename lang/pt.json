@@ -18,6 +18,8 @@
     "continue": "Continuar",
     "correct": "Correto.",
     "incorrect": "Incorreto.",
+    "syncFailedLocalCopy": "Não foi possível conectar ao servidor — mostrando o progresso salvo neste dispositivo.",
+    "l7Placeholder": "Digite sua tradução",
     "level": "Nível",
     "blueprint": "Plano de Idiomas do Nekh",
     "skool": "Comunidade Skool",

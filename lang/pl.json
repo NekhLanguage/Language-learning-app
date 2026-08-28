@@ -18,6 +18,8 @@
     "continue": "Dalej",
     "correct": "Dobrze.",
     "incorrect": "Źle.",
+    "syncFailedLocalCopy": "Brak połączenia z serwerem — wyświetlamy postępy zapisane na tym urządzeniu.",
+    "l7Placeholder": "Wpisz swoje tłumaczenie",
     "level": "Poziom",
     "blueprint": "Nekh's Language Blueprint",
     "skool": "Społeczność Skool",
@@ -99,31 +101,31 @@
   "alphabet": {
     "sections": [
       {
-        "name": "Polskie znaki diakrytyczne",
+        "name": "Polish diacritics",
         "letters": [
           {
             "char": "ą",
-            "romanization": "on/om (nosowe a)",
+            "romanization": "on/om (nasal a)",
             "ttsText": "ą"
           },
           {
             "char": "ć",
-            "romanization": "ci (miękkie cz)",
+            "romanization": "ch (soft ch)",
             "ttsText": "ć"
           },
           {
             "char": "ę",
-            "romanization": "en/em (nosowe e)",
+            "romanization": "en/em (nasal e)",
             "ttsText": "ę"
           },
           {
             "char": "ł",
-            "romanization": "w (jak angielskie w)",
+            "romanization": "w (like English w)",
             "ttsText": "ł"
           },
           {
             "char": "ń",
-            "romanization": "ni (miękkie n)",
+            "romanization": "ny (soft n, like Spanish ñ)",
             "ttsText": "ń"
           },
           {
@@ -133,23 +135,23 @@
           },
           {
             "char": "ś",
-            "romanization": "si (miękkie sz)",
+            "romanization": "sh (soft sh)",
             "ttsText": "ś"
           },
           {
             "char": "ź",
-            "romanization": "zi (miękkie ż)",
+            "romanization": "zh (soft zh)",
             "ttsText": "ź"
           },
           {
             "char": "ż",
-            "romanization": "ż (jak s w angielskim pleasure)",
+            "romanization": "zh (like s in pleasure)",
             "ttsText": "ż"
           }
         ]
       },
       {
-        "name": "Dwuznaki",
+        "name": "Digraphs",
         "letters": [
           {
             "char": "ch",
@@ -158,7 +160,7 @@
           },
           {
             "char": "cz",
-            "romanization": "cz (twarde)",
+            "romanization": "ch (hard)",
             "ttsText": "cz"
           },
           {
@@ -168,22 +170,22 @@
           },
           {
             "char": "dź",
-            "romanization": "dzi (miękkie)",
+            "romanization": "j (soft)",
             "ttsText": "dź"
           },
           {
             "char": "dż",
-            "romanization": "dż (jak j w job)",
+            "romanization": "j (like j in job)",
             "ttsText": "dż"
           },
           {
             "char": "rz",
-            "romanization": "ż",
+            "romanization": "zh (same as ż)",
             "ttsText": "rz"
           },
           {
             "char": "sz",
-            "romanization": "sz (twarde)",
+            "romanization": "sh (hard)",
             "ttsText": "sz"
           }
         ]

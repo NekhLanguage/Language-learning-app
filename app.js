@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.15";
+const APP_DATA_VERSION = "1.2.16";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -859,8 +859,14 @@ languageState.support = USER.supportLanguage || "en";
 // index.html primes the lang file during HTML parse, so it's typically already
 // in cache by the time this line runs.
 const langP = getLangFileData(languageState.support);
+// -07: a failed server load must not be silent — the learner is looking at
+// this device's local copy and should know it (Emi 2026-08-27-07).
+let serverSyncFailed = false;
 const serverSyncP = email
-  ? loadUserFromServer(email).catch(err => { console.warn("Server sync failed:", err); })
+  ? loadUserFromServer(email).catch(err => {
+      console.warn("Server sync failed:", err);
+      serverSyncFailed = true;
+    })
   : null;
 
 if (email) {
@@ -907,6 +913,13 @@ if (serverSyncP) {
       updateUIStrings(languageState.support);
     }
     renderLanguageButtons();
+    // Surface -07: one status line on the hub, localized, screen-reader
+    // announced via role="status". Progress still saves locally either way.
+    const syncStatusEl = document.getElementById("sync-status");
+    if (serverSyncFailed && syncStatusEl) {
+      syncStatusEl.textContent = ui("syncFailedLocalCopy");
+      syncStatusEl.classList.remove("hidden");
+    }
   });
 }
 async function loadUserFromServer(email) {
@@ -916,7 +929,11 @@ email = email?.toLowerCase().trim();
     body: JSON.stringify({ email })
   });
 
-  if (!res.ok) { console.error("loadUser failed:", res.status); return; }
+  if (!res.ok) {
+    console.error("loadUser failed:", res.status);
+    serverSyncFailed = true;
+    return;
+  }
   const data = await res.json();
 
   if (data.user) {
@@ -3019,6 +3036,10 @@ const usedTarget = new Set([correctText]);
 const tileTexts = new Map([[targetConcept, correctText]]);
 for (const cid of options) {
   if (cid === targetConcept) continue;
+  // Demonstratives read oddly as subjects of non-copular verbs («This has
+  // a reservation.») — keep them only for «_____ is …» frames (Emi run-3).
+  if (window.GLOBAL_VOCAB.concepts[cid]?.semantic_role === "demonstrative" &&
+      !tpl.concepts.includes("BE")) continue;
   const text = tileText(cid);
   if (text === null || text === undefined) continue;
   const s = surfaceForm(supportLang, cid);
@@ -3891,7 +3912,7 @@ const acceptedAnswers = acceptedAnswerVariants(
   </div>
   
     <div style="margin-bottom:20px;">
-      <input id="l7-input" type="text" class="free-input" />
+      <input id="l7-input" type="text" class="free-input" placeholder="${safe(ui("l7Placeholder"))}" />
     </div>
 
     <div style="text-align:center;">
@@ -3998,7 +4019,7 @@ checkBtn.onclick = async () => {
     inputField.style.borderColor = "var(--success-text)";
     feedbackDiv.innerHTML = `
       <div style="color:var(--success-text);">
-        ${ui("correct")}.<br/>
+        ${ui("correct")}<br/>
         Proper form: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
@@ -4008,7 +4029,7 @@ checkBtn.onclick = async () => {
     inputField.style.borderColor = "var(--success-text)";
     feedbackDiv.innerHTML = `
       <div style="color:var(--success-text);">
-        ${ui("correct")}.${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>
+        ${ui("correct")}${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>
         Expected: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
@@ -4018,7 +4039,7 @@ checkBtn.onclick = async () => {
     inputField.style.borderColor = "var(--danger-text)";
     feedbackDiv.innerHTML = `
       <div style="color:var(--danger-text);">
-        ${ui("incorrect")}.<br/>
+        ${ui("incorrect")}<br/>
         Correct answer: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
@@ -4151,9 +4172,11 @@ document.addEventListener("keydown", e => {
 function updateAlphabetButton(langCode) {
   const data = LANG_FILE_CACHE[langCode];
   if (data?.alphabet?.sections?.length) {
-    // Use the first character as a visual hint on the button
+    // Use the first character as a visual hint on the button, uppercased so
+    // lowercase diacritics stay legible at button size («ą» read as «q»);
+    // locale-aware for tr dotted/dotless i, no-op for CJK/Thai.
     const firstChar = data.alphabet.sections[0].letters[0]?.char || "ABC";
-    alphabetBtn.textContent = firstChar;
+    alphabetBtn.textContent = firstChar.toLocaleUpperCase(langCode);
     alphabetBtn.classList.remove("hidden");
   } else {
     alphabetBtn.classList.add("hidden");
