@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-28
 
+### Ukrainian and Greek numbers now agree the way the languages demand
+Ukrainian counting was the single worst construction in testing — 27 of 30 sampled sentences wrong. Fixed across the board: five and above now govern the genitive plural on the noun AND its adjective («шість книг», «дев’ять телефонів», «десять поганих паспортів»), two to four take the proper plural («два паспорти»), «два» becomes «дві» before feminine nouns («дві сорочки»), and «один» agrees in gender and case («Я маю одну роботу»). Greek numerals now inflect for gender too — «δεκατέσσερις κρατήσεις», never «δεκατέσσερα κρατήσεις» — and nouns pluralize after numbers («δεκαπέντε διαβατήρια»). Behind it all sits a new engine-wide guard: a number can no longer land on a word whose plural the app doesn't know — the sentence is simply never generated, instead of shipping a singular where a plural belongs, in every language at once.
+
 ### Turkish possession and "to be" now agree with the person
 Two systematic Turkish fixes from testing. Saying what you have now carries the required possessive suffix on the thing owned: «Benim yiyeceğim var», «Onun pasaportu var», «Bizim bagajımız var» — never the bare «Benim yiyecek var». The engine generates the suffix by the regular rules (vowel harmony, the k→ğ softening in «yiyeceğim»), with hand-authored forms still winning where the paradigm is irregular; fill-in-the-blank tiles offer the suffixed forms too. And "to be" sentences now agree with their subject: «Ben adamım», «Sen kızsın», «Biz adamız», «Onlar kızlar» — the «-dır» ending that was wrongly stamped on every person now appears only where it belongs, in the third person singular («O kadındır»).
 

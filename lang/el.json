@@ -277,11 +277,13 @@
     },
     "HOUSE": {
       "form": "σπίτι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "σπίτια"
     },
     "HOME": {
       "form": "κατοικία",
-      "gender": "f"
+      "gender": "f",
+      "plural": "κατοικίες"
     },
     "BOOK": {
       "form": "βιβλίο",
@@ -290,15 +292,18 @@
     },
     "THING": {
       "form": "πράγμα",
-      "gender": "n"
+      "gender": "n",
+      "plural": "πράγματα"
     },
     "JOB": {
       "form": "δουλειά",
-      "gender": "f"
+      "gender": "f",
+      "plural": "δουλειές"
     },
     "ROOM": {
       "form": "δωμάτιο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "δωμάτια"
     },
     "BOY": {
       "form": "αγόρι",
@@ -322,31 +327,38 @@
     },
     "MOM": {
       "form": "μαμά",
-      "gender": "f"
+      "gender": "f",
+      "plural": "μαμάδες"
     },
     "DAD": {
       "form": "μπαμπάς",
-      "gender": "m"
+      "gender": "m",
+      "plural": "μπαμπάδες"
     },
     "SON": {
       "form": "γιος",
-      "gender": "m"
+      "gender": "m",
+      "plural": "γιοι"
     },
     "DAUGHTER": {
       "form": "κόρη",
-      "gender": "f"
+      "gender": "f",
+      "plural": "κόρες"
     },
     "BROTHER": {
       "form": "αδερφός",
-      "gender": "m"
+      "gender": "m",
+      "plural": "αδερφοί"
     },
     "SISTER": {
       "form": "αδερφή",
-      "gender": "f"
+      "gender": "f",
+      "plural": "αδερφές"
     },
     "HEAD": {
       "form": "κεφάλι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "κεφάλια"
     },
     "ARM": {
       "form": "χέρι",
@@ -355,19 +367,23 @@
     },
     "HAND": {
       "form": "παλάμη",
-      "gender": "f"
+      "gender": "f",
+      "plural": "παλάμες"
     },
     "LEG": {
       "form": "πόδι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "πόδια"
     },
     "FOOT": {
       "form": "πέλμα",
-      "gender": "n"
+      "gender": "n",
+      "plural": "πέλματα"
     },
     "FINGER": {
       "form": "δάχτυλο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "δάχτυλα"
     },
     "EYE": {
       "form": "μάτι",
@@ -376,23 +392,28 @@
     },
     "MOUTH": {
       "form": "στόμα",
-      "gender": "n"
+      "gender": "n",
+      "plural": "στόματα"
     },
     "FACE": {
       "form": "πρόσωπο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "πρόσωπα"
     },
     "BREAKFAST": {
       "form": "πρωινό",
-      "gender": "n"
+      "gender": "n",
+      "plural": "πρωινά"
     },
     "LUNCH": {
       "form": "μεσημεριανό",
-      "gender": "n"
+      "gender": "n",
+      "plural": "μεσημεριανά"
     },
     "DINNER": {
       "form": "βραδινό",
-      "gender": "n"
+      "gender": "n",
+      "plural": "βραδινά"
     },
     "CLOTHES": {
       "gender": "n",
@@ -401,7 +422,8 @@
     },
     "SHIRT": {
       "form": "πουκάμισο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "πουκάμισα"
     },
     "SHOES": {
       "gender": "n",
@@ -421,22 +443,27 @@
     "PANTS": {
       "form": "παντελόνι",
       "gender": "n",
-      "noArticle": true
+      "noArticle": true,
+      "plural": "παντελόνια"
     },
-    "ONE": [
-      "ένα",
-      "μία",
-      "ένας"
-    ],
+    "ONE": {
+      "form": "ένα",
+      "f": "μία",
+      "m": "ένας"
+    },
     "TWO": [
       "δύο"
     ],
-    "THREE": [
-      "τρία"
-    ],
-    "FOUR": [
-      "τέσσερα"
-    ],
+    "THREE": {
+      "form": "τρία",
+      "f": "τρεις",
+      "m": "τρεις"
+    },
+    "FOUR": {
+      "form": "τέσσερα",
+      "f": "τέσσερις",
+      "m": "τέσσερις"
+    },
     "FIVE": [
       "πέντε"
     ],
@@ -464,12 +491,16 @@
     "TWELVE": [
       "δώδεκα"
     ],
-    "THIRTEEN": [
-      "δεκατρία"
-    ],
-    "FOURTEEN": [
-      "δεκατέσσερα"
-    ],
+    "THIRTEEN": {
+      "form": "δεκατρία",
+      "f": "δεκατρείς",
+      "m": "δεκατρείς"
+    },
+    "FOURTEEN": {
+      "form": "δεκατέσσερα",
+      "f": "δεκατέσσερις",
+      "m": "δεκατέσσερις"
+    },
     "FIFTEEN": [
       "δεκαπέντε"
     ],
@@ -579,23 +610,28 @@
     ],
     "DAY": {
       "form": "μέρα",
-      "gender": "f"
+      "gender": "f",
+      "plural": "μέρες"
     },
     "NIGHT": {
       "form": "νύχτα",
-      "gender": "f"
+      "gender": "f",
+      "plural": "νύχτες"
     },
     "WEEK": {
       "form": "εβδομάδα",
-      "gender": "f"
+      "gender": "f",
+      "plural": "εβδομάδες"
     },
     "MONTH": {
       "form": "μήνας",
-      "gender": "m"
+      "gender": "m",
+      "plural": "μήνες"
     },
     "YEAR": {
       "form": "χρόνος",
-      "gender": "m"
+      "gender": "m",
+      "plural": "χρόνια"
     },
     "DO": {
       "base": "κάνω",
@@ -912,15 +948,18 @@
     ],
     "HOUR": {
       "form": "ώρα",
-      "gender": "f"
+      "gender": "f",
+      "plural": "ώρες"
     },
     "MINUTE": {
       "form": "λεπτό",
-      "gender": "n"
+      "gender": "n",
+      "plural": "λεπτά"
     },
     "SECOND": {
       "form": "δευτερόλεπτο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "δευτερόλεπτα"
     },
     "NOW": [
       "τώρα"
@@ -939,19 +978,23 @@
     ],
     "SPRING": {
       "form": "άνοιξη",
-      "gender": "f"
+      "gender": "f",
+      "plural": "ανοίξεις"
     },
     "SUMMER": {
       "form": "καλοκαίρι",
-      "gender": "n"
+      "gender": "n",
+      "plural": "καλοκαίρια"
     },
     "AUTUMN": {
       "form": "φθινόπωρο",
-      "gender": "n"
+      "gender": "n",
+      "plural": "φθινόπωρα"
     },
     "WINTER": {
       "form": "χειμώνας",
-      "gender": "m"
+      "gender": "m",
+      "plural": "χειμώνες"
     },
     "ALL": [
       "όλα"
