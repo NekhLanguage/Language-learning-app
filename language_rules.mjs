@@ -109,10 +109,6 @@
 //   virilePlural             plural agreement splits virile/non-virile:
 //                            nouns flag `virile: true`, adjectives carry a
 //                            `vp` (virile plural) form («nowi» vs «nowe»).
-//   verbGenderAgreement      3rd-person verbs agree with the subject's
-//                            gender via a `3_singular_f` paradigm cell
-//                            («هي ترى», never «هي يرى»). Missing cells
-//                            fall back to the shared masculine cell.
 //   nominalParticles         topic/object particles on nominals. Values:
 //                            topic/object/haveObject, each either a fixed
 //                            string (ja は/を) or {afterConsonant,
@@ -169,6 +165,12 @@
 //                            validate-structure)
 //   verbPersonParadigm       verbs need the full six-cell person paradigm
 //                            (validate-packs VERB_PERSON_LANGS)
+//   verbGenderParadigm       3sg (at minimum) also agrees in gender — the
+//                            engine prefers `${p}_${n}_feminine` /
+//                            `${p}_${n}_masculine` when the subject carries
+//                            gender, and only falls back to the plain key.
+//                            Arabic today: «هي ترى» not «هي يرى» (Emi
+//                            2026-08-28-15)
 //   latinEncodingChecks      run the Latin-script mojibake checks
 //                            (validate-encoding LATIN_LANGS)
 //   possessiveSuffixes       the possessed noun in the have-construction
@@ -198,15 +200,12 @@ export const LANGUAGE_RULES = {
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,
-      // 3rd-person verbs agree with the subject's gender: «هي ترى»,
-      // never the masculine «هي يرى» (Emi 2026-08-28-15: 17 of 22 «هي»
-      // sentences took the masculine verb). Data: 3_singular_f cells.
-      verbGenderAgreement: true,
+      verbGenderParadigm: true,
     },
     postNominalAdjectives: true, zeroPresentCopula: true,
-    verbGenderAgreement: true,
     inflectsNounPlural: true, fullNounGender: true,
     nounGenderForCountables: true, verbPersonParadigm: true,
+    verbGenderParadigm: true,
   },
   en: {
     features: {

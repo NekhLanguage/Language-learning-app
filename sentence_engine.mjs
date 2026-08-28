@@ -1009,24 +1009,24 @@ if (langRule(lang, "secondPersonAsThird")) {
   if (subjectCid === "SECOND_PERSON_PLURAL") key = "3_plural";
 }
 
-  // Declared rule (verbGenderAgreement): 3rd-person verbs agree with the
-  // subject's gender — ar «هي ترى», never the masculine «هي يرى»
-  // (Emi 2026-08-28-15: 17 of 22 «هي» sentences carried the masculine
-  // verb). The feminine cell lives in the data as `<key>_f`
-  // (3_singular_f today); a missing cell falls back to the masculine
-  // cell, so packs without the field keep their current behaviour.
-  // Pronoun subjects agree via the referent gender on the concept (SHE);
-  // noun subjects via the grammatical gender in the language data.
-  if (langRule(lang, "verbGenderAgreement") && person === 3) {
-    const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
-    const femSubject = subject.gender === "f" ||
-      (subjEntry && typeof subjEntry === "object" && !Array.isArray(subjEntry) &&
-        subjEntry.gender === "f");
-    if (femSubject && verbData[`${key}_f`]) {
-      noteRule("verb_agreement");
-      return verbData[`${key}_f`];
+// Declared rule (language_rules.mjs verbGenderParadigm — Arabic today):
+// verbs agree in gender with the subject as well as in person and number.
+// «هي يرى» is wrong Arabic — the correct 3fs is «هي ترى». Prefer a gendered
+// key (e.g. "3_singular_feminine") when the subject carries gender and the
+// language declares the paradigm; fall through to the plain key when the
+// gendered entry is missing (Emi 2026-08-28-15).
+if (langRule(lang, "verbGenderParadigm") && subject.gender) {
+  const genderName = subject.gender === "f" ? "feminine" :
+                     subject.gender === "m" ? "masculine" : null;
+  if (genderName) {
+    const genderedKey = `${key}_${genderName}`;
+    if (verbData[genderedKey]) {
+      if (verbData.base && verbData[genderedKey] !== verbData.base) noteRule("verb_agreement");
+      return verbData[genderedKey];
     }
   }
+}
+
   // 1️⃣ Exact match (preferred)
   if (verbData[key]) {
     if (verbData.base && verbData[key] !== verbData.base) noteRule("verb_agreement");

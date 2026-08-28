@@ -3,8 +3,13 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser,
-  isDefaultTemplateProgress, compactUserState } from "../../storage.mjs";
+import {
+  CURRENT_SCHEMA_VERSION,
+  migrateUserState,
+  recoverUser,
+  isDefaultTemplateProgress,
+  compactUserForPersist,
+} from "../../storage.mjs";
 
 const validUser = () => ({ id: "u1", supportLanguage: "en", runs: { pt: { released: [] } } });
 
@@ -147,73 +152,89 @@ test("full migration path v0 → v3 stamps every field once", () => {
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
 });
 
-// ---------------------------------------------------------------------
-// Serialization-time compaction (Emi 2026-08-28-22): default
-// templateProgress rows are dropped — 690 of 794 rows on a real account
-// carried every field at its default, 73 KB of dead weight that pushed
-// Supabase loadUser past its timeout.
-// ---------------------------------------------------------------------
-
-const DEFAULT_ROW = () => ({
-  streak: 0, reinforcementStage: 0, completed: false,
-  lastShownAt: null, lastResult: null,
+// Emi 2026-08-28-22: 690 of 794 templateProgress rows across 10 languages
+// carried defaults and pushed the saved USER blob to 236 KB, driving
+// loadUser to a 504. Compact on persist; rehydrate on demand.
+test("isDefaultTemplateProgress accepts the two persisted-default shapes", () => {
+  // In-memory default (freshly created by ensureTemplateProgress).
+  assert.equal(isDefaultTemplateProgress({
+    streak: 0, reinforcementStage: 0, completed: false,
+    lastShownAt: -Infinity, lastResult: null,
+  }), true);
+  // After a save/load round-trip, -Infinity comes back as null.
+  assert.equal(isDefaultTemplateProgress({
+    streak: 0, reinforcementStage: 0, completed: false,
+    lastShownAt: null, lastResult: null,
+  }), true);
 });
 
-test("isDefaultTemplateProgress: default rows, live and persisted shape", () => {
-  assert.equal(isDefaultTemplateProgress(DEFAULT_ROW()), true);
-  // The live in-memory row holds -Infinity where JSON persists null.
-  assert.equal(isDefaultTemplateProgress(
-    { ...DEFAULT_ROW(), lastShownAt: -Infinity }), true);
+test("isDefaultTemplateProgress rejects any user-touched row", () => {
+  const cases = [
+    { streak: 1, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null },
+    { streak: 0, reinforcementStage: 1, completed: false, lastShownAt: null, lastResult: null },
+    { streak: 0, reinforcementStage: 0, completed: true,  lastShownAt: null, lastResult: null },
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: 42,   lastResult: null },
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: true },
+    // Extra keys mean the row carries data outside the known-default set —
+    // never drop it.
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null, extra: 1 },
+    // Missing keys mean an older shape we don't understand — don't drop.
+    { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null },
+  ];
+  for (const row of cases) {
+    assert.equal(isDefaultTemplateProgress(row), false, `should reject ${JSON.stringify(row)}`);
+  }
 });
 
-test("isDefaultTemplateProgress: any real signal keeps the row", () => {
-  assert.equal(isDefaultTemplateProgress({ ...DEFAULT_ROW(), streak: 1 }), false);
-  assert.equal(isDefaultTemplateProgress({ ...DEFAULT_ROW(), reinforcementStage: 2 }), false);
-  assert.equal(isDefaultTemplateProgress({ ...DEFAULT_ROW(), completed: true }), false);
-  assert.equal(isDefaultTemplateProgress({ ...DEFAULT_ROW(), lastShownAt: 41 }), false);
-  assert.equal(isDefaultTemplateProgress({ ...DEFAULT_ROW(), lastResult: "correct" }), false);
-  // lastShownAt: 0 is a real sighting (exercise counter starts at 0).
-  assert.equal(isDefaultTemplateProgress({ ...DEFAULT_ROW(), lastShownAt: 0 }), false);
+test("isDefaultTemplateProgress is null/undefined/primitive-safe", () => {
+  for (const v of [null, undefined, 0, "", true, []]) {
+    assert.equal(isDefaultTemplateProgress(v), false);
+  }
 });
 
-test("isDefaultTemplateProgress: a row with an unknown field is never dropped", () => {
-  // A future field this check doesn't know about must not be silently
-  // discarded by the compaction.
-  assert.equal(isDefaultTemplateProgress(
-    { ...DEFAULT_ROW(), someFutureField: 0 }), false);
-});
-
-test("compactUserState drops default rows and keeps everything else", () => {
+test("compactUserForPersist drops default rows and keeps touched ones", () => {
   const user = {
-    id: "u1", schemaVersion: CURRENT_SCHEMA_VERSION,
+    id: "u1",
+    schemaVersion: CURRENT_SCHEMA_VERSION,
     runs: {
       pl: {
-        released: ["WATER"],
+        released: ["A", "B", "C"],
         templateProgress: {
-          T_DEFAULT: DEFAULT_ROW(),
-          T_SEEN: { ...DEFAULT_ROW(), lastShownAt: 12 },
-          T_DONE: { ...DEFAULT_ROW(), completed: true, streak: 3 },
+          T_UNTOUCHED_1: { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: -Infinity, lastResult: null },
+          T_UNTOUCHED_2: { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null },
+          T_ACTIVE: { streak: 3, reinforcementStage: 1, completed: false, lastShownAt: 42, lastResult: true },
+          T_COMPLETED: { streak: 0, reinforcementStage: 0, completed: true, lastShownAt: 99, lastResult: true },
         },
       },
-      uk: { released: [] }, // run without templateProgress survives as-is
+      uk: {
+        released: [],
+        templateProgress: {
+          T_X: { streak: 0, reinforcementStage: 0, completed: false, lastShownAt: null, lastResult: null },
+        },
+      },
     },
   };
-  const compact = compactUserState(user);
+
+  const compact = compactUserForPersist(user);
+
+  // Touched rows survive; other run fields untouched.
   assert.deepEqual(Object.keys(compact.runs.pl.templateProgress).sort(),
-    ["T_DONE", "T_SEEN"]);
-  assert.deepEqual(compact.runs.uk, { released: [] });
-  // Never mutates the live USER object.
-  assert.equal(Object.keys(user.runs.pl.templateProgress).length, 3);
-  // The kept rows are the same data.
-  assert.deepEqual(compact.runs.pl.templateProgress.T_DONE,
-    user.runs.pl.templateProgress.T_DONE);
+    ["T_ACTIVE", "T_COMPLETED"]);
+  assert.deepEqual(compact.runs.pl.released, ["A", "B", "C"]);
+  // Run with only default rows compacts to {}.
+  assert.deepEqual(compact.runs.uk.templateProgress, {});
+
+  // The original object is not mutated — the live app keeps every rehydrated row.
+  assert.equal(Object.keys(user.runs.pl.templateProgress).length, 4);
+  assert.equal(user.runs.uk.templateProgress.T_X.streak, 0);
 });
 
-test("compactUserState round-trips through JSON like the save path does", () => {
-  const user = {
-    id: "u1", runs: { pl: { templateProgress: { A: DEFAULT_ROW(),
-      B: { ...DEFAULT_ROW(), streak: 2 } } } },
-  };
-  const persisted = JSON.parse(JSON.stringify(compactUserState(user)));
-  assert.deepEqual(Object.keys(persisted.runs.pl.templateProgress), ["B"]);
+test("compactUserForPersist is safe on empty / missing structures", () => {
+  assert.deepEqual(compactUserForPersist(null), null);
+  assert.deepEqual(compactUserForPersist({}), {});
+  const noRuns = { id: "u", schemaVersion: 3 };
+  assert.deepEqual(compactUserForPersist(noRuns), noRuns);
+  const runsNoTP = { id: "u", schemaVersion: 3, runs: { pt: { released: [] } } };
+  const out = compactUserForPersist(runsNoTP);
+  assert.deepEqual(out.runs.pt, { released: [] });
 });

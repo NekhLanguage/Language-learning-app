@@ -543,7 +543,7 @@
       "1_singular": "آكل",
       "2_singular": "تأكل",
       "3_singular": "يأكل",
-      "3_singular_f": "تأكل",
+      "3_singular_feminine": "تأكل",
       "1_plural": "نأكل",
       "2_plural": "تأكلون",
       "3_plural": "يأكلون"
@@ -553,7 +553,7 @@
       "1_singular": "أشرب",
       "2_singular": "تشرب",
       "3_singular": "يشرب",
-      "3_singular_f": "تشرب",
+      "3_singular_feminine": "تشرب",
       "1_plural": "نشرب",
       "2_plural": "تشربون",
       "3_plural": "يشربون"
@@ -563,7 +563,7 @@
       "1_singular": "أقرأ",
       "2_singular": "تقرأ",
       "3_singular": "يقرأ",
-      "3_singular_f": "تقرأ",
+      "3_singular_feminine": "تقرأ",
       "1_plural": "نقرأ",
       "2_plural": "تقرأون",
       "3_plural": "يقرأون"
@@ -573,7 +573,7 @@
       "1_singular": "أرى",
       "2_singular": "ترى",
       "3_singular": "يرى",
-      "3_singular_f": "ترى",
+      "3_singular_feminine": "ترى",
       "1_plural": "نرى",
       "2_plural": "ترون",
       "3_plural": "يرون"
@@ -583,7 +583,7 @@
       "1_singular": "لدي",
       "2_singular": "لديك",
       "3_singular": "لديه",
-      "3_singular_f": "لديها",
+      "3_singular_feminine": "لديها",
       "1_plural": "لدينا",
       "2_plural": "لديكم",
       "3_plural": "لديهم"
@@ -593,7 +593,7 @@
       "1_singular": "أفعل",
       "2_singular": "تفعل",
       "3_singular": "يفعل",
-      "3_singular_f": "تفعل",
+      "3_singular_feminine": "تفعل",
       "1_plural": "نفعل",
       "2_plural": "تفعلون",
       "3_plural": "يفعلون"
@@ -603,7 +603,7 @@
       "1_singular": "أذهب",
       "2_singular": "تذهب",
       "3_singular": "يذهب",
-      "3_singular_f": "تذهب",
+      "3_singular_feminine": "تذهب",
       "1_plural": "نذهب",
       "2_plural": "تذهبون",
       "3_plural": "يذهبون"
@@ -613,7 +613,7 @@
       "1_singular": "أبدأ",
       "2_singular": "تبدأ",
       "3_singular": "يبدأ",
-      "3_singular_f": "تبدأ",
+      "3_singular_feminine": "تبدأ",
       "1_plural": "نبدأ",
       "2_plural": "تبدؤون",
       "3_plural": "يبدؤون"
@@ -623,7 +623,7 @@
       "1_singular": "أتوقف",
       "2_singular": "تتوقف",
       "3_singular": "يتوقف",
-      "3_singular_f": "تتوقف",
+      "3_singular_feminine": "تتوقف",
       "1_plural": "نتوقف",
       "2_plural": "تتوقفون",
       "3_plural": "يتوقفون"
@@ -633,7 +633,7 @@
       "1_singular": "أنام",
       "2_singular": "تنام",
       "3_singular": "ينام",
-      "3_singular_f": "تنام",
+      "3_singular_feminine": "تنام",
       "1_plural": "ننام",
       "2_plural": "تنامون",
       "3_plural": "ينامون"
@@ -643,7 +643,7 @@
       "1_singular": "آتي",
       "2_singular": "تأتي",
       "3_singular": "يأتي",
-      "3_singular_f": "تأتي",
+      "3_singular_feminine": "تأتي",
       "1_plural": "نأتي",
       "2_plural": "تأتون",
       "3_plural": "يأتون"
@@ -653,7 +653,7 @@
       "1_singular": "أستخدم",
       "2_singular": "تستخدم",
       "3_singular": "يستخدم",
-      "3_singular_f": "تستخدم",
+      "3_singular_feminine": "تستخدم",
       "1_plural": "نستخدم",
       "2_plural": "تستخدمون",
       "3_plural": "يستخدمون"
@@ -663,7 +663,7 @@
       "1_singular": "أحصل",
       "2_singular": "تحصل",
       "3_singular": "يحصل",
-      "3_singular_f": "تحصل",
+      "3_singular_feminine": "تحصل",
       "1_plural": "نحصل",
       "2_plural": "تحصلون",
       "3_plural": "يحصلون"
@@ -673,7 +673,7 @@
       "1_singular": "أكون",
       "2_singular": "تكون",
       "3_singular": "يكون",
-      "3_singular_f": "تكون",
+      "3_singular_feminine": "تكون",
       "1_plural": "نكون",
       "2_plural": "تكونون",
       "3_plural": "يكونون"

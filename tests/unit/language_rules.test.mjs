@@ -735,7 +735,7 @@ test("every features key is a known, checkable feature id", () => {
     "articleCaseMarking", "virilePlural", "numeralGovernment",
     "zeroPresentCopula", "definitenessAgreement",
     "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
-    "possessivePlacement", "verbGenderAgreement", "topicParticle",
+    "possessivePlacement", "verbGenderParadigm", "topicParticle",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
@@ -778,6 +778,9 @@ test("langRule answers declared flags and nothing else", () => {
 
 // ---------------------------------------------------------------------
 // ar: 3rd-person feminine verb agreement — Emi 2026-08-28-15
+// («هي يرى» is wrong Arabic; a feminine 3sg subject requires the gendered
+// verb form «هي ترى». Mechanism: verbGenderParadigm, merged from PR #121;
+// PR #120's fuller data authoring rides the same paradigm.)
 // ---------------------------------------------------------------------
 
 test("ar: «هي» takes the feminine verb, every other person unchanged", () => {
@@ -792,20 +795,36 @@ test("ar: «هي» takes the feminine verb, every other person unchanged", () =>
   assert.equal(buildSentence("ar", tplById("YOU_READ_BOOK")), "أنت تقرأ كتاب.");
 });
 
-test("ar: verbGenderAgreement is declared as rule AND feature", () => {
-  assert.equal(langRule("ar", "verbGenderAgreement"), true);
-  assert.equal(LANGUAGE_RULES.ar.features.verbGenderAgreement, true);
-  // A language without the rule keeps the shared 3_singular cell.
-  assert.equal(langRule("es", "verbGenderAgreement"), false);
+test("verbGenderParadigm is declared only on ar (today)", () => {
+  assert.deepEqual([...langsWith("verbGenderParadigm")].sort(), ["ar"]);
 });
 
-test("ar: every core verb carries its 3_singular_f cell", () => {
+test("ar: feminine subject picks 3_singular_feminine over 3_singular", () => {
+  const forms = vocab.languages.ar.forms;
+  for (const cid of ["EAT", "READ", "SEE", "DRINK", "SLEEP", "HAVE", "DO", "GO", "COME"]) {
+    const entry = forms[cid];
+    assert.ok(entry && typeof entry === "object" && !Array.isArray(entry),
+      `ar ${cid} missing object entry`);
+    assert.ok(typeof entry["3_singular_feminine"] === "string" &&
+      entry["3_singular_feminine"].length > 0,
+      `ar ${cid} missing 3_singular_feminine`);
+    assert.notEqual(entry["3_singular_feminine"], entry["3_singular"],
+      `ar ${cid} feminine equals masculine — probably wasn't authored`);
+  }
+  // The exact pair from Emi's report.
+  assert.equal(forms.SEE["3_singular_feminine"], "ترى");
+  assert.equal(forms.SEE["3_singular"], "يرى");
+});
+
+test("ar: EVERY verb in the product carries 3_singular_feminine", () => {
+  // PR #121 left 12 compound pack verbs (RESPAWN, GRIND, …) as a follow-up;
+  // that follow-up is closed — «هي» never falls back to the masculine now.
   for (const [cid, e] of Object.entries(vocab.languages.ar.forms)) {
     if (vocab.concepts[cid]?.type !== "verb") continue;
     if (typeof e !== "object" || Array.isArray(e)) continue;
     if (typeof e["3_singular"] !== "string") continue;
-    assert.equal(typeof e["3_singular_f"], "string",
-      `ar verb ${cid} is missing 3_singular_f — «هي» falls back to the masculine`);
+    assert.equal(typeof e["3_singular_feminine"], "string",
+      `ar verb ${cid} is missing 3_singular_feminine — «هي» falls back to the masculine`);
   }
 });
 

@@ -8,6 +8,60 @@ export const CURRENT_SCHEMA_VERSION = 3;
 export const USER_KEY = "zth_user";
 export const USER_BACKUP_KEY = "zth_user_backup";
 
+// The persisted-default shape of a templateProgress row (Emi 2026-08-28-22).
+// A row equal to these defaults carries no user progress and is dropped
+// before persist; `ensureTemplateProgress` in app.js re-creates it lazily on
+// next access. `lastShownAt` uses `null` because `-Infinity` — the in-memory
+// default — is not JSON-serialisable and comes back as `null` after a
+// save/load round-trip; every row that has never been shown is written that
+// way, so `null` is the correct persisted default to match against.
+export const TEMPLATE_PROGRESS_DEFAULT_FIELDS = Object.freeze([
+  "streak", "reinforcementStage", "completed", "lastShownAt", "lastResult",
+]);
+
+export function isDefaultTemplateProgress(row) {
+  if (!row || typeof row !== "object") return false;
+  const keys = Object.keys(row);
+  if (keys.length !== TEMPLATE_PROGRESS_DEFAULT_FIELDS.length) return false;
+  for (const k of keys) {
+    if (!TEMPLATE_PROGRESS_DEFAULT_FIELDS.includes(k)) return false;
+  }
+  if (row.streak !== 0) return false;
+  if (row.reinforcementStage !== 0) return false;
+  if (row.completed !== false) return false;
+  if (row.lastResult !== null) return false;
+  // lastShownAt: in-memory default is -Infinity, on the persist round-trip
+  // it comes back as null. Both count as untouched.
+  const shown = row.lastShownAt;
+  if (shown !== null && shown !== -Infinity) return false;
+  return true;
+}
+
+// Returns a persist-ready copy of `user` with default-only templateProgress
+// rows stripped from every run. The original object is not mutated — the
+// live in-memory USER keeps every rehydrated row so nothing observable
+// changes for the running app (Emi 2026-08-28-22: 690 of 794 rows across
+// 10 languages carried defaults and made loadUser hit 504).
+export function compactUserForPersist(user) {
+  if (!user || typeof user !== "object") return user;
+  const runs = user.runs;
+  if (!runs || typeof runs !== "object") return user;
+
+  const out = { ...user, runs: { ...runs } };
+  for (const [lang, run] of Object.entries(runs)) {
+    if (!run || typeof run !== "object") continue;
+    const tp = run.templateProgress;
+    if (!tp || typeof tp !== "object") continue;
+    const compact = {};
+    for (const [id, row] of Object.entries(tp)) {
+      if (isDefaultTemplateProgress(row)) continue;
+      compact[id] = row;
+    }
+    out.runs[lang] = { ...run, templateProgress: compact };
+  }
+  return out;
+}
+
 // Upgrades a user blob (in place) to the current schema. Add a numbered
 // block here whenever the shape of USER changes; each block must be safe to
 // run on state written by any older version of the app.
@@ -55,49 +109,6 @@ export function migrateUserState(user) {
   }
 
   return user;
-}
-
-// The fields of the default templateProgress row ensureTemplateProgress()
-// creates on demand. A row still equal to the default carries no
-// information — 690 of 794 rows (73 KB of an 84 KB templateProgress) were
-// exactly this on a real account, and the record grew past the Supabase
-// loadUser timeout (Emi 2026-08-28-22).
-const TEMPLATE_PROGRESS_DEFAULT_KEYS = new Set([
-  "streak", "reinforcementStage", "completed", "lastShownAt", "lastResult",
-]);
-
-export function isDefaultTemplateProgress(p) {
-  if (!p || typeof p !== "object") return false;
-  return (p.streak || 0) === 0 &&
-    (p.reinforcementStage || 0) === 0 &&
-    !p.completed &&
-    (p.lastResult ?? null) === null &&
-    // Live rows hold -Infinity, persisted rows null (JSON has no Infinity).
-    (p.lastShownAt == null || p.lastShownAt === -Infinity) &&
-    // A row carrying any key this check doesn't know is NOT default — a
-    // future field can never be silently dropped by this compaction.
-    Object.keys(p).every((k) => TEMPLATE_PROGRESS_DEFAULT_KEYS.has(k));
-}
-
-// Serialization-time compaction: drop templateProgress rows equal to the
-// default. ensureTemplateProgress() recreates a missing row on demand, so
-// absence and default are the same state — no behaviour change, a third
-// of the saved record gone. Returns a copy; never mutates the live USER.
-export function compactUserState(user) {
-  if (!user || typeof user !== "object" || !user.runs) return user;
-  const out = { ...user, runs: {} };
-  for (const [lang, run] of Object.entries(user.runs)) {
-    if (!run || typeof run !== "object" || !run.templateProgress) {
-      out.runs[lang] = run;
-      continue;
-    }
-    const tp = {};
-    for (const [id, p] of Object.entries(run.templateProgress)) {
-      if (!isDefaultTemplateProgress(p)) tp[id] = p;
-    }
-    out.runs[lang] = { ...run, templateProgress: tp };
-  }
-  return out;
 }
 
 // Parses and migrates the stored user blob, falling back to the backup blob
