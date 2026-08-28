@@ -131,3 +131,41 @@ test("hidden languages are excluded from what learners can pick", () => {
   for (const l of visible) assert.ok(!l.hidden);
   assert.ok(visible.length >= 16);
 });
+
+// ---------------------------------------------------------------------
+// The typological questionnaire (PR 2) — shape contracts the validator
+// hard-fails on, pinned here so a refactor can't soften them.
+// ---------------------------------------------------------------------
+
+test("questionnaire: every shipped language has a complete profile", async () => {
+  const fs = await import("node:fs");
+  const raw = JSON.parse(fs.readFileSync(
+    new URL("../../validation/language-profiles.json", import.meta.url), "utf8"));
+  const profiles = Object.fromEntries(
+    Object.entries(raw).filter(([k]) => !k.startsWith("_")));
+  const axes = [
+    "definiteArticles", "indefiniteArticles", "nounCaseOnObjects",
+    "prepositionalCase", "verbPersonConjugation", "verbGenderAgreement",
+    "grammaticalGender", "adjectiveAgreement", "classifiersOrCounters",
+    "topicOrCaseParticles", "zeroOrSuffixalCopula", "pluralInflection",
+    "spacelessScript", "apocope", "politenessRegisters",
+    "numeralInteraction", "specialPossession",
+  ];
+  for (const code of loadLanguageCodes()) {
+    assert.ok(profiles[code], `language "${code}" has not answered the questionnaire`);
+    for (const axis of axes) {
+      assert.equal(typeof profiles[code][axis], "boolean",
+        `${code}.${axis} unanswered — the questionnaire has no skippable questions`);
+    }
+  }
+});
+
+test("questionnaire: the launch-verified languages are declaration-clean", async () => {
+  const fs = await import("node:fs");
+  const baseline = JSON.parse(fs.readFileSync(
+    new URL("../../validation/language-profiles-baseline.json", import.meta.url), "utf8"));
+  // pl and uk are human-verified; a questionnaire gap there would mean the
+  // matrix and the verification disagree.
+  assert.deepEqual(baseline.pl, []);
+  assert.deepEqual(baseline.uk, []);
+});
