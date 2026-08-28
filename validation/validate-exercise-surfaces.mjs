@@ -221,18 +221,32 @@ for (const lang of langCodes) {
 // graded wrong against (2026-08-27-01).
 const PROBE_ADJS = ['BIG', 'GOOD', 'NEW'];
 const PROBE_NUMS = ['TWO', 'FIVE'];
+// Possessives seed at L6/L7 too (cap lift, Nekh 2026-08-28) — exempt from
+// isModifierCompatible like the engine's forced path (determiners: «his
+// water» is fine where «four waters» is not).
+const PROBE_POSS = ['MY'];
 for (const lang of langCodes) {
   if (lang === 'en') continue;
   for (const tpl of plainTemplates) {
     const id = tpl.template_id || tpl._file + '?';
     const nouns = tpl.concepts.filter((c) => concepts[c]?.type === 'noun');
     if (!nouns.length) continue;
-    for (const probe of [...PROBE_ADJS, ...PROBE_NUMS]) {
+    for (const probe of [...PROBE_ADJS, ...PROBE_NUMS, ...PROBE_POSS]) {
+      // Mirrors seedDrilledModifier: a template that already authors the
+      // drilled modifier is rendered as authored, never seeded on top; and
+      // possessive drills never pick templates carrying another possessive
+      // (chooseTemplateForConcept's stacked-possessive guard).
+      if (tpl.concepts.includes(probe)) continue;
       const isAdj = concepts[probe]?.type === 'adjective';
-      const noun = nouns.find((n) =>
-        (!isAdj || adjectiveSuitsNoun(probe, n)) &&
-        isModifierCompatible(lang, probe, n) &&
-        isModifierCompatible('en', probe, n));
+      const isPoss = concepts[probe]?.semantic_role === 'possessive';
+      if (isPoss && tpl.concepts.some((c) =>
+        concepts[c]?.semantic_role === 'possessive')) continue;
+      const noun = isPoss
+        ? nouns.find((n) => adjectiveSuitsNoun(probe, n))
+        : nouns.find((n) =>
+            (!isAdj || adjectiveSuitsNoun(probe, n)) &&
+            isModifierCompatible(lang, probe, n) &&
+            isModifierCompatible('en', probe, n));
       if (!noun) continue; // seedDrilledModifier would skip this pairing too
       const sc = {};
       for (const c of nouns) { sc['adj_' + c] = null; sc['num_' + c] = null; }

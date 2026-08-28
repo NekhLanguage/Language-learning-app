@@ -45,12 +45,26 @@ test("level 7: the post-success gap can be shrunk for the end-game", () => {
   assert.equal(passesSpacing({ ...createProgress(), level: 3, lastShownAt: 10, lastResult: true }, 13, { l7CorrectGap: 4 }), false);
 });
 
-test("level caps: recognition 4, modifiers 5, everything else MAX_LEVEL", () => {
+test("level caps: recognition 4, everything else — modifiers included — MAX_LEVEL", () => {
   assert.equal(levelCapFor({ isRecognition: true, isModifier: false }), 4);
-  assert.equal(levelCapFor({ isRecognition: false, isModifier: true }), 5);
+  // Modifiers climb the full ladder: L6/L7 seed the drilled modifier
+  // symmetrically and fence prompt/answer parity (Nekh ruling 2026-08-28).
+  assert.equal(levelCapFor({ isRecognition: false, isModifier: true }), MAX_LEVEL);
   assert.equal(levelCapFor({ isRecognition: false, isModifier: false }), MAX_LEVEL);
   // Recognition wins if both are set (matches the app's ternary order).
   assert.equal(levelCapFor({ isRecognition: true, isModifier: true }), 4);
+});
+
+test("a modifier completed at the old level-5 cap stays completed", () => {
+  // Live learner state written before the cap lift: level 5, completed:true.
+  // The cap only gates promotion — applyAnswer never un-completes, so the
+  // lift cannot retroactively re-open mastered modifiers (the app's
+  // selection already skips completed concepts entirely).
+  const s = { ...createProgress(), level: 5, completed: true, streak: 1 };
+  applyAnswer(s, {
+    correct: true, exerciseIndex: 3, levelCap: MAX_LEVEL, sessionLevelUps: 0,
+  });
+  assert.equal(s.completed, true);
 });
 
 const answer = (state, overrides = {}) =>

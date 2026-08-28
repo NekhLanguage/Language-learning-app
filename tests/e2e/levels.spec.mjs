@@ -364,6 +364,62 @@ test("pl L7: a drilled adjective in the prompt appears in the graded answer", as
   expect(promptHasIt).toBe(answerHasIt);
 });
 
+test("pl L7: a drilled adjective actually surfaces in the prompt (cap lift)", async ({ page }) => {
+  // Modifiers now climb past level 5 (Nekh ruling 2026-08-28: L7 must test
+  // modifiers). With every drillable concept an adjective, the seeded
+  // modifier should land in the prompt on at least one of a handful of
+  // renders — zero-of-N means the seeding path is dead again.
+  await startNewRun(page, { language: "Polish" });
+  await seedAllConceptsAt(page, 7, { restrictTypes: ["adjective"] });
+
+  let landed = false;
+  for (let i = 0; i < 5 && !landed; i++) {
+    await expect(page.locator("#l7-input")).toBeVisible();
+    const cid = await lastTargetConcept(page);
+    const en = await page.evaluate((c) => {
+      const e = window.GLOBAL_VOCAB.languages.en?.forms?.[c];
+      if (Array.isArray(e)) return e[0];
+      return e?.form || (typeof e === "string" ? e : "");
+    }, cid);
+    const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
+    if (en && new RegExp(`\\b${en.toLowerCase()}\\b`).test(prompt)) landed = true;
+    if (!landed) await page.evaluate(() => window.__app.rerender());
+  }
+  expect(landed).toBe(true);
+});
+
+test("pl L7: a drilled possessive appears in prompt and graded answer together", async ({ page }) => {
+  // Possessives were excluded from L6/L7 seeding; now they seed like other
+  // modifiers (engine forced-path exemption mirrored). The prompt's "my/your/
+  // his…" must be matched by the possessive's Polish form in the answer.
+  await startNewRun(page, { language: "Polish" });
+  await seedAllConceptsAt(page, 7, { bundles: 12, restrictRoles: ["possessive"] });
+
+  await expect(page.locator("#l7-input")).toBeVisible();
+
+  const cid = await lastTargetConcept(page);
+  const data = await page.evaluate((c) => {
+    const en = window.GLOBAL_VOCAB.languages.en?.forms?.[c];
+    const pl = window.GLOBAL_VOCAB.languages.pl?.forms?.[c];
+    const enForm = Array.isArray(en) ? en[0] : (en?.form || en || "");
+    const plForms = Array.isArray(pl) ? pl
+      : (pl && typeof pl === "object")
+        ? Object.values(pl).filter((v) => typeof v === "string")
+        : [String(pl || "")];
+    return { enForm, plForms };
+  }, cid);
+
+  const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
+  const { answer } = await page.evaluate(() => window.__app.lastExercise);
+  const answerWords = answer.toLowerCase().replace(/[.,!?]/g, "").split(/\s+/);
+
+  const promptHasIt = new RegExp(`\\b${data.enForm.toLowerCase()}\\b`).test(prompt);
+  const answerHasIt = data.plForms.some((f) => answerWords.includes(f.toLowerCase()));
+  // Parity both ways — a possessive the prompt demands is in the graded
+  // answer, and no phantom possessive appears either.
+  expect(promptHasIt).toBe(answerHasIt);
+});
+
 test("pl L7: the prompt never demands a modifier the graded answer lacks", async ({ page }) => {
   // Regression net for Emi 2026-08-27-01: maybeVarySubject regenerated the
   // support gloss WITHOUT injection suppression, baking a random adjective
