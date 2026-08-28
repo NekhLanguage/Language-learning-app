@@ -62,6 +62,274 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "PITCH": {
+          "form": "kenttä",
+          "plural": "kentät"
+        },
+        "GOAL": {
+          "form": "maali",
+          "plural": "maalit"
+        },
+        "NET": {
+          "form": "verkko",
+          "plural": "verkot"
+        },
+        "STADIUM": {
+          "form": "stadion",
+          "plural": "stadionit"
+        },
+        "WHISTLE": {
+          "form": "pilli",
+          "plural": "pillit"
+        },
+        "STRIKER": {
+          "form": "hyökkääjä",
+          "plural": "hyökkääjät"
+        },
+        "GOALKEEPER": {
+          "form": "maalivahti",
+          "plural": "maalivahdit"
+        },
+        "CAPTAIN": {
+          "form": "kapteeni",
+          "plural": "kapteenit"
+        },
+        "REFEREE": {
+          "form": "erotuomari",
+          "plural": "erotuomarit"
+        },
+        "COACH": {
+          "form": "valmentaja",
+          "plural": "valmentajat"
+        },
+        "KICK": {
+          "base": "potkaista",
+          "1_singular": "potkaisen",
+          "2_singular": "potkaiset",
+          "3_singular": "potkaisee",
+          "1_plural": "potkaisemme",
+          "2_plural": "potkaisette",
+          "3_plural": "potkaisevat"
+        },
+        "PASS": {
+          "base": "syöttää",
+          "1_singular": "syötän",
+          "2_singular": "syötät",
+          "3_singular": "syöttää",
+          "1_plural": "syötämme",
+          "2_plural": "syötätte",
+          "3_plural": "syöttävät"
+        },
+        "SHOOT": {
+          "base": "laukoa",
+          "1_singular": "lauon",
+          "2_singular": "lauot",
+          "3_singular": "laukoo",
+          "1_plural": "lauomme",
+          "2_plural": "lauotte",
+          "3_plural": "laukovat"
+        },
+        "DRIBBLE": {
+          "base": "kuljettaa",
+          "1_singular": "kuljetan",
+          "2_singular": "kuljetat",
+          "3_singular": "kuljettaa",
+          "1_plural": "kuljetamme",
+          "2_plural": "kuljetatte",
+          "3_plural": "kuljettavat"
+        },
+        "SCORE": {
+          "base": "tehdä maali",
+          "1_singular": "teen maalin",
+          "2_singular": "teet maalin",
+          "3_singular": "tekee maalin",
+          "1_plural": "teemme maalin",
+          "2_plural": "teette maalin",
+          "3_plural": "tekevät maalin"
+        },
+        "HEADER": {
+          "form": "pusku",
+          "plural": "puskut"
+        },
+        "TACKLE": {
+          "base": "taklata",
+          "1_singular": "taklaan",
+          "2_singular": "taklaat",
+          "3_singular": "taklaa",
+          "1_plural": "taklaamme",
+          "2_plural": "taklaatte",
+          "3_plural": "taklaavat"
+        },
+        "CROSS": {
+          "base": "keskittää",
+          "1_singular": "keskitän",
+          "2_singular": "keskität",
+          "3_singular": "keskittää",
+          "1_plural": "keskitämme",
+          "2_plural": "keskitätte",
+          "3_plural": "keskittävät"
+        },
+        "VOLLEY": {
+          "form": "volley",
+          "plural": "volleyt"
+        },
+        "SPRINT": {
+          "base": "spurtata",
+          "1_singular": "spurttaan",
+          "2_singular": "spurttaat",
+          "3_singular": "spurttaa",
+          "1_plural": "spurttaamme",
+          "2_plural": "spurttaatte",
+          "3_plural": "spurttaavat"
+        },
+        "FOUL": {
+          "form": "rikkomus",
+          "plural": "rikkomukset"
+        },
+        "PENALTY": {
+          "form": "rangaistuspotku",
+          "plural": "rangaistuspotkut"
+        },
+        "CORNER": {
+          "form": "kulmapotku",
+          "plural": "kulmapotkut"
+        },
+        "OFFSIDE": [
+          "paitsiossa"
+        ],
+        "HALFTIME": {
+          "form": "puoliaika",
+          "plural": "puoliajat"
+        },
+        "SQUAD": {
+          "form": "kokoonpano",
+          "plural": "kokoonpanot"
+        },
+        "FORMATION": {
+          "form": "ryhmitys",
+          "plural": "ryhmitykset"
+        },
+        "LEAGUE": {
+          "form": "liiga",
+          "plural": "liigat"
+        },
+        "SUBSTITUTE": {
+          "form": "vaihtopelaaja",
+          "plural": "vaihtopelaajat"
+        },
+        "ASSIST": {
+          "form": "maalisyöttö",
+          "plural": "maalisyötöt"
+        },
+        "MATCH": {
+          "form": "ottelu",
+          "plural": "ottelut"
+        },
+        "VICTORY": {
+          "form": "voitto",
+          "plural": "voitot"
+        },
+        "DEFEAT": {
+          "form": "tappio",
+          "plural": "tappiot"
+        },
+        "DRAW": {
+          "form": "tasapeli",
+          "plural": "tasapelit"
+        },
+        "TROPHY": {
+          "form": "pokaali",
+          "plural": "pokaalit"
+        },
+        "SWIFT": [
+          "nopea"
+        ],
+        "SKILLED": [
+          "taitava"
+        ],
+        "AGGRESSIVE": [
+          "aggressiivinen"
+        ],
+        "DECISIVE": [
+          "päättäväinen"
+        ],
+        "CLINICAL": [
+          "tehokas"
+        ],
+        "INTERCEPT": {
+          "base": "katkaista",
+          "1_singular": "katkaisen",
+          "2_singular": "katkaiset",
+          "3_singular": "katkaisee",
+          "1_plural": "katkaisemme",
+          "2_plural": "katkaisette",
+          "3_plural": "katkaisevat"
+        },
+        "DEFEND": {
+          "base": "puolustaa",
+          "1_singular": "puolustan",
+          "2_singular": "puolustat",
+          "3_singular": "puolustaa",
+          "1_plural": "puolustamme",
+          "2_plural": "puolustatte",
+          "3_plural": "puolustavat"
+        },
+        "BLOCK": {
+          "base": "torjua",
+          "1_singular": "torjun",
+          "2_singular": "torjut",
+          "3_singular": "torjuu",
+          "1_plural": "torjumme",
+          "2_plural": "torjutte",
+          "3_plural": "torjuvat"
+        },
+        "COUNTER": {
+          "base": "kontrata",
+          "1_singular": "kontraan",
+          "2_singular": "kontraat",
+          "3_singular": "kontraa",
+          "1_plural": "kontraamme",
+          "2_plural": "kontraatte",
+          "3_plural": "kontraavat"
+        },
+        "DOMINATE": {
+          "base": "hallita",
+          "1_singular": "hallitsen",
+          "2_singular": "hallitset",
+          "3_singular": "hallitsee",
+          "1_plural": "hallitsemme",
+          "2_plural": "hallitsette",
+          "3_plural": "hallitsevat"
+        },
+        "CHAMPION": {
+          "form": "mestari",
+          "plural": "mestarit"
+        },
+        "CROWD": {
+          "form": "yleisö",
+          "plural": "yleisöt"
+        },
+        "CELEBRATE": {
+          "base": "juhlia",
+          "1_singular": "juhlin",
+          "2_singular": "juhlit",
+          "3_singular": "juhlii",
+          "1_plural": "juhlimme",
+          "2_plural": "juhlitte",
+          "3_plural": "juhlivat"
+        },
+        "FINAL": {
+          "form": "finaali",
+          "plural": "finaalit"
+        },
+        "UNBEATABLE": [
+          "lyömätön"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

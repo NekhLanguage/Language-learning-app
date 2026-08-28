@@ -54,6 +54,276 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "POKEMON": {
+          "form": "Pokémon",
+          "invariantPlural": true
+        },
+        "TRAINER": {
+          "form": "kouluttaja",
+          "plural": "kouluttajat"
+        },
+        "GYM": {
+          "form": "sali", "illative": "salille",
+          "plural": "salit"
+        },
+        "LEAGUE": {
+          "form": "liiga", "illative": "liigaan",
+          "plural": "liigat"
+        },
+        "GYM_LEADER": {
+          "form": "salijohtaja",
+          "plural": "salijohtajat"
+        },
+        "ELITE_FOUR": {
+          "form": "Elite Four"
+        },
+        "POKEMON_CENTER": {
+          "form": "Pokémon-keskus", "illative": "Pokémon-keskukseen",
+          "plural": "Pokémon-keskukset"
+        },
+        "FOREST": {
+          "form": "metsä",
+          "plural": "metsät"
+        },
+        "CAVE": {
+          "form": "luola",
+          "plural": "luolat"
+        },
+        "TOWN": {
+          "form": "kaupunki",
+          "plural": "kaupungit"
+        },
+        "BATTLE": {
+          "form": "taistelu",
+          "plural": "taistelut"
+        },
+        "MOVE": {
+          "form": "liike",
+          "plural": "liikkeet"
+        },
+        "DAMAGE": {
+          "form": "vahinko"
+        },
+        "DEFENSE": {
+          "form": "puolustus"
+        },
+        "SPEED": {
+          "form": "nopeus"
+        },
+        "STAT": {
+          "form": "statsi",
+          "plural": "statsit"
+        },
+        "ABILITY": {
+          "form": "kyky",
+          "plural": "kyvyt"
+        },
+        "TYPE": {
+          "form": "tyyppi",
+          "plural": "tyypit"
+        },
+        "POTION": {
+          "form": "taikajuoma",
+          "plural": "taikajuomat"
+        },
+        "REVIVE": {
+          "form": "Revive",
+          "plural": "Revivet"
+        },
+        "TECHNICAL_MACHINE": {
+          "form": "tekninen kone",
+          "plural": "tekniset koneet"
+        },
+        "BADGE": {
+          "form": "merkki",
+          "plural": "merkit"
+        },
+        "ITEM": {
+          "form": "esine",
+          "plural": "esineet"
+        },
+        "LEVEL": {
+          "form": "taso",
+          "plural": "tasot"
+        },
+        "EXPERIENCE": {
+          "form": "kokemus"
+        },
+        "HEALTH": {
+          "form": "terveys"
+        },
+        "BURN": {
+          "base": "polttaa",
+          "1_singular": "poltan",
+          "2_singular": "poltat",
+          "3_singular": "polttaa",
+          "1_plural": "poltamme",
+          "2_plural": "poltatte",
+          "3_plural": "polttavat"
+        },
+        "POISON": {
+          "base": "myrkyttää",
+          "1_singular": "myrkytän",
+          "2_singular": "myrkytät",
+          "3_singular": "myrkyttää",
+          "1_plural": "myrkytämme",
+          "2_plural": "myrkytätte",
+          "3_plural": "myrkyttävät"
+        },
+        "SLEEP_STATUS": {
+          "form": "uni"
+        },
+        "PARALYZE": {
+          "base": "halvaannuttaa",
+          "1_singular": "halvaannutan",
+          "2_singular": "halvaannutat",
+          "3_singular": "halvaannuttaa",
+          "1_plural": "halvaannutamme",
+          "2_plural": "halvaannutatte",
+          "3_plural": "halvaannuttavat"
+        },
+        "SEEN": {
+          "form": "nähty",
+          "plural": "nähdyt"
+        },
+        "CAPTURED": {
+          "form": "napattu",
+          "plural": "napatut"
+        },
+        "ATTACK": {
+          "base": "hyökätä",
+          "1_singular": "hyökkään",
+          "2_singular": "hyökkäät",
+          "3_singular": "hyökkää",
+          "1_plural": "hyökkäämme",
+          "2_plural": "hyökkäätte",
+          "3_plural": "hyökkäävät"
+        },
+        "RUN": {
+          "base": "paeta",
+          "1_singular": "pakenen",
+          "2_singular": "pakenet",
+          "3_singular": "pakenee",
+          "1_plural": "pakenemme",
+          "2_plural": "pakenette",
+          "3_plural": "pakenevat"
+        },
+        "CATCH": {
+          "base": "napata",
+          "1_singular": "nappaan",
+          "2_singular": "nappaat",
+          "3_singular": "nappaa",
+          "1_plural": "nappaamme",
+          "2_plural": "nappaatte",
+          "3_plural": "nappaavat"
+        },
+        "DEFEAT": {
+          "base": "voittaa",
+          "1_singular": "voitan",
+          "2_singular": "voitat",
+          "3_singular": "voittaa",
+          "1_plural": "voitamme",
+          "2_plural": "voitatte",
+          "3_plural": "voittavat"
+        },
+        "SWITCH": {
+          "base": "vaihtaa",
+          "1_singular": "vaihdan",
+          "2_singular": "vaihdat",
+          "3_singular": "vaihtaa",
+          "1_plural": "vaihdamme",
+          "2_plural": "vaihdatte",
+          "3_plural": "vaihtavat"
+        },
+        "USE": {
+          "base": "käyttää",
+          "1_singular": "käytän",
+          "2_singular": "käytät",
+          "3_singular": "käyttää",
+          "1_plural": "käytämme",
+          "2_plural": "käytätte",
+          "3_plural": "käyttävät"
+        },
+        "FLY": {
+          "base": "lentää",
+          "1_singular": "lennän",
+          "2_singular": "lennät",
+          "3_singular": "lentää",
+          "1_plural": "lennämme",
+          "2_plural": "lennätte",
+          "3_plural": "lentävät"
+        },
+        "PLAY": {
+          "base": "pelata",
+          "1_singular": "pelaan",
+          "2_singular": "pelaat",
+          "3_singular": "pelaa",
+          "1_plural": "pelaamme",
+          "2_plural": "pelaatte",
+          "3_plural": "pelaavat"
+        },
+        "HEAL": {
+          "base": "parantaa",
+          "1_singular": "parannan",
+          "2_singular": "parannat",
+          "3_singular": "parantaa",
+          "1_plural": "parannamme",
+          "2_plural": "parannatte",
+          "3_plural": "parantavat"
+        },
+        "RESTORE": {
+          "base": "palauttaa",
+          "1_singular": "palautan",
+          "2_singular": "palautat",
+          "3_singular": "palauttaa",
+          "1_plural": "palautamme",
+          "2_plural": "palautatte",
+          "3_plural": "palauttavat"
+        },
+        "GAIN_EXPERIENCE": {
+          "base": "saada kokemusta",
+          "1_singular": "saan kokemusta",
+          "2_singular": "saat kokemusta",
+          "3_singular": "saa kokemusta",
+          "1_plural": "saamme kokemusta",
+          "2_plural": "saatte kokemusta",
+          "3_plural": "saavat kokemusta"
+        },
+        "EVOLVE": {
+          "base": "kehittyä",
+          "1_singular": "kehityn",
+          "2_singular": "kehityt",
+          "3_singular": "kehittyy",
+          "1_plural": "kehitymme",
+          "2_plural": "kehitytte",
+          "3_plural": "kehittyvät"
+        },
+        "WILD": [
+          "villi"
+        ],
+        "STRONG": [
+          "vahva"
+        ],
+        "EFFECTIVE": [
+          "tehokas"
+        ],
+        "SUPER_EFFECTIVE": [
+          "supertehokas"
+        ],
+        "VERY_EFFECTIVE": [
+          "erittäin tehokas"
+        ],
+        "LEGENDARY": [
+          "legendaarinen"
+        ],
+        "SHINY": [
+          "kiiltävä"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

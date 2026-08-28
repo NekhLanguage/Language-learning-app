@@ -12,6 +12,7 @@
 export const AVAILABLE_LANGUAGES = [
   { code: "ar", label: "Arabic",     nativeLabel: "العربية",     short: "AR", ttsCode: "ar-SA", isRTL: true,  beta: true  },
   { code: "en", label: "English",    nativeLabel: "English",     short: "EN", ttsCode: "en-US", isRTL: false, beta: false },
+  { code: "fi", label: "Finnish",    nativeLabel: "Suomi",       short: "FI", ttsCode: "fi-FI", isRTL: false, beta: true, hidden: true },
   { code: "fr", label: "French",     nativeLabel: "Français",    short: "FR", ttsCode: "fr-FR", isRTL: false, beta: true  },
   { code: "de", label: "German",     nativeLabel: "Deutsch",     short: "DE", ttsCode: "de-DE", isRTL: false, beta: true  },
   { code: "el", label: "Greek",      nativeLabel: "Ελληνικά",    short: "EL", ttsCode: "el-GR", isRTL: false, beta: true  },

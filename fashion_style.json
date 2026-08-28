@@ -52,6 +52,247 @@
     { "concept_id": "ICONIC", "type": "adjective" }
   ],
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "JACKET": {
+          "form": "takki",
+          "plural": "takit"
+        },
+        "DRESS": {
+          "form": "mekko",
+          "plural": "mekot"
+        },
+        "SNEAKERS": {
+          "form": "lenkkarit",
+          "plural": "lenkkarit"
+        },
+        "FABRIC": {
+          "form": "kangas",
+          "plural": "kankaat"
+        },
+        "LEATHER": {
+          "form": "nahka"
+        },
+        "SILK": {
+          "form": "silkki"
+        },
+        "PATTERN": {
+          "form": "kuvio",
+          "plural": "kuviot"
+        },
+        "STITCH": {
+          "form": "tikki",
+          "plural": "tikit"
+        },
+        "TAILOR": {
+          "form": "räätäli",
+          "plural": "räätälit"
+        },
+        "RUNWAY": {
+          "form": "catwalk",
+          "plural": "catwalkit"
+        },
+        "MODEL": {
+          "form": "malli",
+          "plural": "mallit"
+        },
+        "COLLECTION": {
+          "form": "mallisto",
+          "plural": "mallistot"
+        },
+        "BOUTIQUE": {
+          "form": "putiikki",
+          "plural": "putiikit"
+        },
+        "WARDROBE": {
+          "form": "vaatekaappi",
+          "plural": "vaatekaapit"
+        },
+        "TREND": {
+          "form": "trendi",
+          "plural": "trendit"
+        },
+        "NECKLACE": {
+          "form": "kaulakoru",
+          "plural": "kaulakorut"
+        },
+        "BRACELET": {
+          "form": "rannekoru",
+          "plural": "rannekorut"
+        },
+        "SUNGLASSES": {
+          "form": "aurinkolasit",
+          "plural": "aurinkolasit"
+        },
+        "MAKEUP": {
+          "form": "meikki"
+        },
+        "LIPSTICK": {
+          "form": "huulipuna",
+          "plural": "huulipunat"
+        },
+        "HAIRSTYLE": {
+          "form": "kampaus",
+          "plural": "kampaukset"
+        },
+        "OUTFIT": {
+          "form": "asu",
+          "plural": "asut"
+        },
+        "LOOKBOOK": {
+          "form": "lookbook",
+          "plural": "lookbookit"
+        },
+        "AESTHETIC": {
+          "form": "estetiikka",
+          "plural": "estetiikat"
+        },
+        "DESIGNER": {
+          "form": "suunnittelija",
+          "plural": "suunnittelijat"
+        },
+        "BRAND": {
+          "form": "brändi",
+          "plural": "brändit"
+        },
+        "CAMPAIGN": {
+          "form": "kampanja",
+          "plural": "kampanjat"
+        },
+        "INFLUENCER": {
+          "form": "vaikuttaja",
+          "plural": "vaikuttajat"
+        },
+        "EDITORIAL": {
+          "form": "editoriaali",
+          "plural": "editoriaalit"
+        },
+        "COUTURE": {
+          "form": "haute couture"
+        },
+        "EMBROIDER": {
+          "base": "kirjoa",
+          "1_singular": "kirjon",
+          "2_singular": "kirjot",
+          "3_singular": "kirjoo",
+          "1_plural": "kirjomme",
+          "2_plural": "kirjotte",
+          "3_plural": "kirjovat"
+        },
+        "DRAPE": {
+          "base": "laskostaa",
+          "1_singular": "laskostan",
+          "2_singular": "laskostat",
+          "3_singular": "laskostaa",
+          "1_plural": "laskostamme",
+          "2_plural": "laskostatte",
+          "3_plural": "laskostavat"
+        },
+        "DESIGN": {
+          "base": "suunnitella",
+          "1_singular": "suunnittelen",
+          "2_singular": "suunnittelet",
+          "3_singular": "suunnittelee",
+          "1_plural": "suunnittelemme",
+          "2_plural": "suunnittelette",
+          "3_plural": "suunnittelevat"
+        },
+        "STRUT": {
+          "base": "astella",
+          "1_singular": "astelen",
+          "2_singular": "astelet",
+          "3_singular": "astelee",
+          "1_plural": "astelemme",
+          "2_plural": "astelette",
+          "3_plural": "astelevat"
+        },
+        "BROWSE": {
+          "base": "selailla",
+          "1_singular": "selailen",
+          "2_singular": "selailet",
+          "3_singular": "selailee",
+          "1_plural": "selailemme",
+          "2_plural": "selailette",
+          "3_plural": "selailevat"
+        },
+        "ADORN": {
+          "base": "koristella",
+          "1_singular": "koristelen",
+          "2_singular": "koristelet",
+          "3_singular": "koristelee",
+          "1_plural": "koristelemme",
+          "2_plural": "koristelette",
+          "3_plural": "koristelevat"
+        },
+        "CONTOUR": {
+          "base": "muotoilla",
+          "1_singular": "muotoilen",
+          "2_singular": "muotoilet",
+          "3_singular": "muotoilee",
+          "1_plural": "muotoilemme",
+          "2_plural": "muotoilette",
+          "3_plural": "muotoilevat"
+        },
+        "COORDINATE": {
+          "base": "yhdistellä",
+          "1_singular": "yhdistelen",
+          "2_singular": "yhdistelet",
+          "3_singular": "yhdistelee",
+          "1_plural": "yhdistelemme",
+          "2_plural": "yhdistelette",
+          "3_plural": "yhdistelevät"
+        },
+        "UNVEIL": {
+          "base": "paljastaa",
+          "1_singular": "paljastan",
+          "2_singular": "paljastat",
+          "3_singular": "paljastaa",
+          "1_plural": "paljastamme",
+          "2_plural": "paljastatte",
+          "3_plural": "paljastavat"
+        },
+        "SHOWCASE": {
+          "base": "esitellä",
+          "1_singular": "esittelen",
+          "2_singular": "esittelet",
+          "3_singular": "esittelee",
+          "1_plural": "esittelemme",
+          "2_plural": "esittelette",
+          "3_plural": "esittelevät"
+        },
+        "ELEGANT": [
+          "elegantti"
+        ],
+        "TEXTURED": [
+          "teksturoitu"
+        ],
+        "VINTAGE": [
+          "vintage"
+        ],
+        "GLAMOROUS": [
+          "hohdokas"
+        ],
+        "AFFORDABLE": [
+          "edullinen"
+        ],
+        "DAZZLING": [
+          "häikäisevä"
+        ],
+        "FLAWLESS": [
+          "virheetön"
+        ],
+        "CHIC": [
+          "tyylikäs"
+        ],
+        "EXCLUSIVE": [
+          "eksklusiivinen"
+        ],
+        "ICONIC": [
+          "ikoninen"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

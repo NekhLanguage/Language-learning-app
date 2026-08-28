@@ -54,6 +54,17 @@
     "politenessRegisters": false, "numeralInteraction": false,
     "specialPossession": false
   },
+  "fi": {
+    "definiteArticles": false, "indefiniteArticles": false,
+    "nounCaseOnObjects": true, "prepositionalCase": true,
+    "verbPersonConjugation": true, "verbGenderAgreement": false,
+    "grammaticalGender": false, "adjectiveAgreement": false,
+    "classifiersOrCounters": false, "topicOrCaseParticles": false,
+    "zeroOrSuffixalCopula": false, "pluralInflection": true,
+    "spacelessScript": false, "apocope": false,
+    "politenessRegisters": false, "numeralInteraction": true,
+    "specialPossession": true
+  },
   "fr": {
     "definiteArticles": true, "indefiniteArticles": true,
     "nounCaseOnObjects": false, "prepositionalCase": false,

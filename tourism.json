@@ -57,6 +57,268 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "AIRPORT": {
+          "form": "lentokenttä",
+          "plural": "lentokentät"
+        },
+        "PASSPORT": {
+          "form": "passi",
+          "plural": "passit"
+        },
+        "FLIGHT": {
+          "form": "lento",
+          "plural": "lennot"
+        },
+        "LUGGAGE": {
+          "form": "matkatavarat",
+          "plural": "matkatavarat",
+          "pluralOnly": true
+        },
+        "HOTEL": {
+          "form": "hotelli",
+          "plural": "hotellit"
+        },
+        "RESERVATION": {
+          "form": "varaus",
+          "plural": "varaukset"
+        },
+        "LOBBY": {
+          "form": "aula",
+          "plural": "aulat"
+        },
+        "CHECKOUT": {
+          "form": "uloskirjautuminen"
+        },
+        "TAXI": {
+          "form": "taksi",
+          "plural": "taksit"
+        },
+        "STATION": {
+          "form": "asema",
+          "plural": "asemat"
+        },
+        "TICKET": {
+          "form": "lippu",
+          "plural": "liput"
+        },
+        "ROUTE": {
+          "form": "reitti",
+          "plural": "reitit"
+        },
+        "LANDMARK": {
+          "form": "maamerkki",
+          "plural": "maamerkit"
+        },
+        "MUSEUM": {
+          "form": "museo",
+          "plural": "museot"
+        },
+        "MONUMENT": {
+          "form": "muistomerkki",
+          "plural": "muistomerkit"
+        },
+        "RESTAURANT": {
+          "form": "ravintola",
+          "plural": "ravintolat"
+        },
+        "MENU": {
+          "form": "ruokalista", "elative": "menusta",
+          "plural": "ruokalistat"
+        },
+        "WAITER": {
+          "form": "tarjoilija",
+          "plural": "tarjoilijat"
+        },
+        "MARKET": {
+          "form": "tori",
+          "plural": "torit"
+        },
+        "SOUVENIR": {
+          "form": "matkamuisto",
+          "plural": "matkamuistot"
+        },
+        "BARGAIN": {
+          "form": "löytö",
+          "plural": "löydöt"
+        },
+        "PHRASEBOOK": {
+          "form": "fraasisanakirja",
+          "plural": "fraasisanakirjat"
+        },
+        "BEACH": {
+          "form": "ranta",
+          "plural": "rannat"
+        },
+        "CATHEDRAL": {
+          "form": "katedraali",
+          "plural": "katedraalit"
+        },
+        "HARBOR": {
+          "form": "satama",
+          "plural": "satamat"
+        },
+        "CURRENCY": {
+          "form": "valuutta"
+        },
+        "CUSTOMS": {
+          "form": "tulli"
+        },
+        "EMBASSY": {
+          "form": "suurlähetystö",
+          "plural": "suurlähetystöt"
+        },
+        "ADVENTURE": {
+          "form": "seikkailu",
+          "plural": "seikkailut"
+        },
+        "ITINERARY": {
+          "form": "matkasuunnitelma",
+          "plural": "matkasuunnitelmat"
+        },
+        "GUIDE": {
+          "form": "opas",
+          "plural": "oppaat"
+        },
+        "BOARD": {
+          "base": "nousta kyytiin",
+          "1_singular": "nousen kyytiin",
+          "2_singular": "nouset kyytiin",
+          "3_singular": "nousee kyytiin",
+          "1_plural": "nousemme kyytiin",
+          "2_plural": "nousette kyytiin",
+          "3_plural": "nousevat kyytiin"
+        },
+        "RESERVE": {
+          "base": "varata",
+          "1_singular": "varaan",
+          "2_singular": "varaat",
+          "3_singular": "varaa",
+          "1_plural": "varaamme",
+          "2_plural": "varaatte",
+          "3_plural": "varaavat"
+        },
+        "NAVIGATE": {
+          "base": "navigoida",
+          "1_singular": "navigoin",
+          "2_singular": "navigoit",
+          "3_singular": "navigoi",
+          "1_plural": "navigoimme",
+          "2_plural": "navigoitte",
+          "3_plural": "navigoivat"
+        },
+        "PHOTOGRAPH": {
+          "base": "valokuvata",
+          "1_singular": "valokuvaan",
+          "2_singular": "valokuvaat",
+          "3_singular": "valokuvaa",
+          "1_plural": "valokuvaamme",
+          "2_plural": "valokuvaatte",
+          "3_plural": "valokuvaavat"
+        },
+        "ORDER": {
+          "base": "tilata",
+          "1_singular": "tilaan",
+          "2_singular": "tilaat",
+          "3_singular": "tilaa",
+          "1_plural": "tilaamme",
+          "2_plural": "tilaatte",
+          "3_plural": "tilaavat"
+        },
+        "PURCHASE": {
+          "base": "ostaa",
+          "1_singular": "ostan",
+          "2_singular": "ostat",
+          "3_singular": "ostaa",
+          "1_plural": "ostamme",
+          "2_plural": "ostatte",
+          "3_plural": "ostavat"
+        },
+        "TRANSLATE": {
+          "base": "kääntää",
+          "1_singular": "käännän",
+          "2_singular": "käännät",
+          "3_singular": "kääntää",
+          "1_plural": "käännämme",
+          "2_plural": "käännätte",
+          "3_plural": "kääntävät"
+        },
+        "GREET": {
+          "base": "tervehtiä",
+          "1_singular": "tervehdin",
+          "2_singular": "tervehdit",
+          "3_singular": "tervehtii",
+          "1_plural": "tervehdimme",
+          "2_plural": "tervehditte",
+          "3_plural": "tervehtivät"
+        },
+        "PRONOUNCE": {
+          "base": "ääntää",
+          "1_singular": "äännän",
+          "2_singular": "äännät",
+          "3_singular": "ääntää",
+          "1_plural": "äännämme",
+          "2_plural": "äännätte",
+          "3_plural": "ääntävät"
+        },
+        "EXPLORE": {
+          "base": "tutkia",
+          "1_singular": "tutkin",
+          "2_singular": "tutkit",
+          "3_singular": "tutkii",
+          "1_plural": "tutkimme",
+          "2_plural": "tutkitte",
+          "3_plural": "tutkivat"
+        },
+        "EXCHANGE": {
+          "base": "vaihtaa",
+          "1_singular": "vaihdan",
+          "2_singular": "vaihdat",
+          "3_singular": "vaihtaa",
+          "1_plural": "vaihdamme",
+          "2_plural": "vaihdatte",
+          "3_plural": "vaihtavat"
+        },
+        "INSURE": {
+          "base": "vakuuttaa",
+          "1_singular": "vakuutan",
+          "2_singular": "vakuutat",
+          "3_singular": "vakuuttaa",
+          "1_plural": "vakuutamme",
+          "2_plural": "vakuutatte",
+          "3_plural": "vakuuttavat"
+        },
+        "RECOMMEND": {
+          "base": "suositella",
+          "1_singular": "suosittelen",
+          "2_singular": "suosittelet",
+          "3_singular": "suosittelee",
+          "1_plural": "suosittelemme",
+          "2_plural": "suosittelette",
+          "3_plural": "suosittelevat"
+        },
+        "SCENIC": [
+          "luonnonkaunis"
+        ],
+        "DELICIOUS": [
+          "herkullinen"
+        ],
+        "EXPENSIVE": [
+          "kallis"
+        ],
+        "FOREIGN": [
+          "ulkomainen"
+        ],
+        "HISTORIC": [
+          "historiallinen"
+        ],
+        "UNFORGETTABLE": [
+          "unohtumaton"
+        ]
+      }
+    },
     "en": {
       "label": "English",
       "forms": {

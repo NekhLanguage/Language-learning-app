@@ -4,8 +4,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { ALL_LANGUAGE_CODES, isFeatureAvailable, availableFeatures } from "../../capabilities.mjs";
 
-test("registry knows all 16 app languages", () => {
-  assert.equal(ALL_LANGUAGE_CODES.length, 16);
+test("registry knows all 17 app languages", () => {
+  assert.equal(ALL_LANGUAGE_CODES.length, 17);
   assert.ok(ALL_LANGUAGE_CODES.includes("no"));
   assert.ok(ALL_LANGUAGE_CODES.includes("uk"));
   assert.ok(ALL_LANGUAGE_CODES.includes("it"));

@@ -58,6 +58,258 @@
   ],
 
   "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "WAND": {
+          "form": "taikasauva",
+          "plural": "taikasauvat"
+        },
+        "MAGIC": {
+          "form": "taikuus"
+        },
+        "WIZARD": {
+          "form": "velho",
+          "plural": "velhot"
+        },
+        "WITCH": {
+          "form": "noita",
+          "plural": "noidat"
+        },
+        "SPELL": {
+          "form": "loitsu",
+          "plural": "loitsut"
+        },
+        "POTION": {
+          "form": "taikajuoma",
+          "plural": "taikajuomat"
+        },
+        "SCHOOL": {
+          "form": "koulu",
+          "plural": "koulut"
+        },
+        "CAULDRON": {
+          "form": "pata",
+          "plural": "padat"
+        },
+        "BROOM": {
+          "form": "luuta",
+          "plural": "luudat"
+        },
+        "OWL": {
+          "form": "pöllö",
+          "plural": "pöllöt"
+        },
+        "CASTLE": {
+          "form": "linna",
+          "plural": "linnat"
+        },
+        "PROFESSOR": {
+          "form": "professori",
+          "plural": "professorit"
+        },
+        "STUDENT": {
+          "form": "oppilas",
+          "plural": "oppilaat"
+        },
+        "ELF": {
+          "form": "tonttu",
+          "plural": "tontut"
+        },
+        "UNICORN": {
+          "form": "yksisarvinen",
+          "plural": "yksisarviset"
+        },
+        "GIANT": {
+          "form": "jättiläinen",
+          "plural": "jättiläiset"
+        },
+        "TROLL": {
+          "form": "peikko",
+          "plural": "peikot"
+        },
+        "GHOST": {
+          "form": "kummitus",
+          "plural": "kummitukset"
+        },
+        "FOREST": {
+          "form": "metsä",
+          "plural": "metsät"
+        },
+        "SPIDER": {
+          "form": "hämähäkki",
+          "plural": "hämähäkit"
+        },
+        "LIBRARY": {
+          "form": "kirjasto",
+          "plural": "kirjastot"
+        },
+        "CLASS": {
+          "form": "luokka",
+          "plural": "luokat"
+        },
+        "LESSON": {
+          "form": "oppitunti",
+          "plural": "oppitunnit"
+        },
+        "HOMEWORK": {
+          "form": "kotitehtävä",
+          "plural": "kotitehtävät"
+        },
+        "EXAM": {
+          "form": "koe",
+          "plural": "kokeet"
+        },
+        "QUESTION": {
+          "form": "kysymys",
+          "plural": "kysymykset"
+        },
+        "ANSWER": {
+          "form": "vastaus",
+          "plural": "vastaukset"
+        },
+        "IDEA": {
+          "form": "idea",
+          "plural": "ideat"
+        },
+        "CHANCE": {
+          "form": "mahdollisuus",
+          "plural": "mahdollisuudet"
+        },
+        "MYSTERY": {
+          "form": "mysteeri",
+          "plural": "mysteerit"
+        },
+        "SECRET": {
+          "form": "salaisuus",
+          "plural": "salaisuudet"
+        },
+        "FRIEND": {
+          "form": "ystävä",
+          "plural": "ystävät"
+        },
+        "ENEMY": {
+          "form": "vihollinen",
+          "plural": "viholliset"
+        },
+        "CLOAK": {
+          "form": "viitta",
+          "plural": "viitat"
+        },
+        "DOOR": {
+          "form": "ovi",
+          "plural": "ovet"
+        },
+        "CAST": {
+          "base": "loitsia",
+          "1_singular": "loitsin",
+          "2_singular": "loitsit",
+          "3_singular": "loitsii",
+          "1_plural": "loitsimme",
+          "2_plural": "loitsitte",
+          "3_plural": "loitsivat"
+        },
+        "PROTECT": {
+          "base": "suojella",
+          "1_singular": "suojelen",
+          "2_singular": "suojelet",
+          "3_singular": "suojelee",
+          "1_plural": "suojelemme",
+          "2_plural": "suojelette",
+          "3_plural": "suojelevat"
+        },
+        "CHARM": {
+          "base": "lumota",
+          "1_singular": "lumoan",
+          "2_singular": "lumoat",
+          "3_singular": "lumoaa",
+          "1_plural": "lumoamme",
+          "2_plural": "lumoatte",
+          "3_plural": "lumoavat"
+        },
+        "CURSE": {
+          "base": "kirota",
+          "1_singular": "kiroan",
+          "2_singular": "kiroat",
+          "3_singular": "kiroaa",
+          "1_plural": "kiroamme",
+          "2_plural": "kiroatte",
+          "3_plural": "kiroavat"
+        },
+        "LEARN": {
+          "base": "oppia",
+          "1_singular": "opin",
+          "2_singular": "opit",
+          "3_singular": "oppii",
+          "1_plural": "opimme",
+          "2_plural": "opitte",
+          "3_plural": "oppivat"
+        },
+        "WRITE": {
+          "base": "kirjoittaa",
+          "1_singular": "kirjoitan",
+          "2_singular": "kirjoitat",
+          "3_singular": "kirjoittaa",
+          "1_plural": "kirjoitamme",
+          "2_plural": "kirjoitatte",
+          "3_plural": "kirjoittavat"
+        },
+        "STUDY": {
+          "base": "opiskella",
+          "1_singular": "opiskelen",
+          "2_singular": "opiskelet",
+          "3_singular": "opiskelee",
+          "1_plural": "opiskelemme",
+          "2_plural": "opiskelette",
+          "3_plural": "opiskelevat"
+        },
+        "VANISH": {
+          "base": "kadota",
+          "1_singular": "katoan",
+          "2_singular": "katoat",
+          "3_singular": "katoaa",
+          "1_plural": "katoamme",
+          "2_plural": "katoatte",
+          "3_plural": "katoavat"
+        },
+        "TRANSFORM": {
+          "base": "muuttaa",
+          "1_singular": "muutan",
+          "2_singular": "muutat",
+          "3_singular": "muuttaa",
+          "1_plural": "muutamme",
+          "2_plural": "muutatte",
+          "3_plural": "muuttavat"
+        },
+        "FLY": {
+          "base": "lentää",
+          "1_singular": "lennän",
+          "2_singular": "lennät",
+          "3_singular": "lentää",
+          "1_plural": "lennämme",
+          "2_plural": "lennätte",
+          "3_plural": "lentävät"
+        },
+        "SHOUT": {
+          "base": "huutaa",
+          "1_singular": "huudan",
+          "2_singular": "huudat",
+          "3_singular": "huutaa",
+          "1_plural": "huudamme",
+          "2_plural": "huudatte",
+          "3_plural": "huutavat"
+        },
+        "MAGICAL": [
+          "maaginen"
+        ],
+        "STRONG": [
+          "vahva"
+        ],
+        "BRAVE": [
+          "rohkea"
+        ]
+      }
+    },
 
     "en": {
       "label": "English",

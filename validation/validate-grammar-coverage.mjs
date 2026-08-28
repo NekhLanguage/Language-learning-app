@@ -136,8 +136,9 @@ const FEATURE_CHECKS = {
     detail: 'needs caseMarking.caseOn: "determiner"',
   }),
   virilePlural: (row) => ({ ok: !!row.virilePlural }),
-  numeralGovernment: (row) => ({ ok: !!row.numeralGenitivePlural,
-    detail: 'needs numeralGenitivePlural' }),
+  numeralGovernment: (row) => ({
+    ok: !!row.numeralGenitivePlural || !!row.numeralPartitiveSingular,
+    detail: 'needs numeralGenitivePlural (pl/uk 5+) or numeralPartitiveSingular (fi ≥2)' }),
   zeroPresentCopula: (row) => ({ ok: !!row.zeroPresentCopula }),
   definitenessAgreement: () => ({
     ok: false, // no engine mechanism exists yet — always a declared gap
@@ -182,6 +183,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => f.adjectivePosition === 'post' || f.adjectivePosition === 'roleBased'],
   [(row) => !!row.virilePlural, 'virilePlural', (f) => !!f.virilePlural],
   [(row) => !!row.numeralGenitivePlural, 'numeralGovernment',
+    (f) => !!f.numeralGovernment],
+  [(row) => !!row.numeralPartitiveSingular, 'numeralGovernment',
     (f) => !!f.numeralGovernment],
   [(row) => !!row.zeroPresentCopula, 'zeroPresentCopula',
     (f) => !!f.zeroPresentCopula],

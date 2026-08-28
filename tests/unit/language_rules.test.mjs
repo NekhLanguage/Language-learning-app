@@ -890,3 +890,74 @@ test("ja: particle behaviour survives the nominalParticles generalization", () =
   // byte-identical to the old hardcoded branch.
   assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "私は食べ物を食べる。");
 });
+
+// ---------------------------------------------------------------------
+// fi: the first language built THROUGH the new pipeline (questionnaire →
+// hidden registration → corpus → gate). Pins the three declared rules the
+// language introduced: case-only adpositions, postposed adpositions, and
+// existential possession — plus partitive numeral government.
+// ---------------------------------------------------------------------
+
+test("fi: case-only adpositions — the ending IS the preposition", () => {
+  assert.equal(buildSentence("fi", tplById("BOOK_ON_TABLE")), "Kirja on pöydällä.");
+  assert.equal(buildSentence("fi", tplById("BOOK_ON_THIS")), "Kirja on tällä.");
+  assert.equal(buildSentence("fi", tplById("SHOES_IN_THIS")), "Kengät ovat tässä.");
+  // BY rides the same rule: «kädellä», no preposition word.
+  assert.equal(buildSentence("fi", tplById("I_DO_THIS_BY_HAND")), "Minä teen tämän kädellä.");
+});
+
+test("fi: postposed adpositions govern the genitive BEFORE them", () => {
+  assert.equal(buildSentence("fi", tplById("PHONE_UNDER_TABLE")), "Puhelin on pöydän alla.");
+  assert.equal(buildSentence("fi", tplById("BOOK_BEHIND_PHONE")), "Kirja on puhelimen takana.");
+  // Coordinated landmark: both halves decline («tämän ja tuon välissä»).
+  assert.equal(buildSentence("fi", tplById("BOOK_BETWEEN_THIS_AND_THAT")),
+    "Kirja on tämän ja tuon välissä.");
+});
+
+test("fi: possession is existential — adessive possessor, nominative possessed", () => {
+  assert.equal(buildSentence("fi", tplById("I_HAVE_SHIRT")), "Minulla on paita.");
+  assert.equal(buildSentence("fi", tplById("WE_HAVE_JOB")), "Meillä on työ.");
+  assert.equal(buildSentence("fi", tplById("SHE_HAS_SHOES")), "Hänellä on kengät.");
+  // The blank for the possessed noun holds the nominative, never a
+  // declined form.
+  const tpl = tplById("I_HAVE_SHIRT");
+  const blank = resolveNounBlank(buildSentence("fi", tpl), tpl, "fi", "SHIRT");
+  assert.ok(blank);
+  assert.equal(blank.surface, "paita");
+});
+
+test("fi: objects carry their authored object-case form", () => {
+  assert.equal(buildSentence("fi", tplById("I_DRINK_WATER")), "Minä juon vettä.");
+  assert.equal(buildSentence("fi", tplById("I_EAT_FOOD")), "Minä syön ruokaa.");
+  assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE")), "Hän näkee puhelimen.");
+});
+
+test("fi: numbers ≥2 govern the partitive singular («kaksi kirjaa»)", () => {
+  assert.equal(buildSentence("fi", tplById("YOU_READ_BOOK"), "TWO", {}),
+    "Sinä luet kaksi kirjaa.");
+  assert.equal(buildSentence("fi", tplById("YOU_READ_BOOK"), "FIVE", {}),
+    "Sinä luet viisi kirjaa.");
+  // A noun without partitive data refuses the number (wrong gets filtered).
+  const entry = vocab.languages.fi.forms.BOOK;
+  const saved = entry.partitive;
+  delete entry.partitive;
+  try {
+    assert.equal(isModifierCompatible("fi", "TWO", "BOOK"), false);
+  } finally {
+    entry.partitive = saved;
+  }
+});
+
+test("fi: copulars and predicate plural agreement", () => {
+  assert.equal(buildSentence("fi", tplById("BOOK_IS_RED")), "Kirja on punainen.");
+  assert.equal(buildSentence("fi", tplById("WINTER_IS_COLD")), "Talvi on kylmä.");
+  // Plural-only subject: plural copula + plural adjective.
+  assert.equal(buildSentence("fi", tplById("PANTS_ARE_BLACK")), "Housut ovat mustat.");
+});
+
+test("fi: hidden in the registry until the gate passes", () => {
+  const fi = AVAILABLE_LANGUAGES.find((l) => l.code === "fi");
+  assert.ok(fi, "fi must be registered (validators see it)");
+  assert.equal(fi.hidden, true);
+  assert.equal(fi.beta, true);
+});

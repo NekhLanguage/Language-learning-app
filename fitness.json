@@ -214,6 +214,255 @@
   }
  ],
  "languages": {
+    "fi": {
+      "label": "Suomi",
+      "forms": {
+        "WORKOUT": {
+          "form": "treeni",
+          "plural": "treenit"
+        },
+        "MUSCLE": {
+          "form": "lihas",
+          "plural": "lihakset"
+        },
+        "DUMBBELL": {
+          "form": "käsipaino",
+          "plural": "käsipainot"
+        },
+        "TREADMILL": {
+          "form": "juoksumatto",
+          "plural": "juoksumatot"
+        },
+        "WEIGHT": {
+          "form": "paino",
+          "plural": "painot"
+        },
+        "REPETITION": {
+          "form": "toisto",
+          "plural": "toistot"
+        },
+        "SWEAT": {
+          "form": "hiki"
+        },
+        "ENERGY": {
+          "form": "energia"
+        },
+        "PROTEIN": {
+          "form": "proteiini"
+        },
+        "HABIT": {
+          "form": "tapa",
+          "plural": "tavat"
+        },
+        "PROGRESS": {
+          "form": "edistys"
+        },
+        "TARGET": {
+          "form": "tavoite",
+          "plural": "tavoitteet"
+        },
+        "HEART": {
+          "form": "sydän",
+          "plural": "sydämet"
+        },
+        "KNEE": {
+          "form": "polvi",
+          "plural": "polvet"
+        },
+        "SHOULDER": {
+          "form": "olkapää",
+          "plural": "olkapäät"
+        },
+        "CALORIE": {
+          "form": "kalori",
+          "plural": "kalorit"
+        },
+        "RUNNER": {
+          "form": "juoksija",
+          "plural": "juoksijat"
+        },
+        "RACE": {
+          "form": "kilpailu",
+          "plural": "kilpailut"
+        },
+        "MARATHON": {
+          "form": "maraton",
+          "plural": "maratonit"
+        },
+        "WARMUP": {
+          "form": "lämmittely",
+          "plural": "lämmittelyt"
+        },
+        "LOCKER_ROOM": {
+          "form": "pukuhuone",
+          "plural": "pukuhuoneet"
+        },
+        "TOWEL": {
+          "form": "pyyhe",
+          "plural": "pyyhkeet"
+        },
+        "BOTTLE": {
+          "form": "pullo",
+          "plural": "pullot"
+        },
+        "BICYCLE": {
+          "form": "polkupyörä",
+          "plural": "polkupyörät"
+        },
+        "POOL": {
+          "form": "uima-allas",
+          "plural": "uima-altaat"
+        },
+        "STRENGTH": {
+          "form": "voima"
+        },
+        "INJURY": {
+          "form": "vamma",
+          "plural": "vammat"
+        },
+        "REST": {
+          "form": "lepo"
+        },
+        "LIFT": {
+          "base": "nostaa",
+          "1_singular": "nostan",
+          "2_singular": "nostat",
+          "3_singular": "nostaa",
+          "1_plural": "nostamme",
+          "2_plural": "nostatte",
+          "3_plural": "nostavat"
+        },
+        "STRETCH": {
+          "base": "venytellä",
+          "1_singular": "venyttelen",
+          "2_singular": "venyttelet",
+          "3_singular": "venyttelee",
+          "1_plural": "venyttelemme",
+          "2_plural": "venyttelette",
+          "3_plural": "venyttelevät"
+        },
+        "BREATHE": {
+          "base": "hengittää",
+          "1_singular": "hengitän",
+          "2_singular": "hengität",
+          "3_singular": "hengittää",
+          "1_plural": "hengitämme",
+          "2_plural": "hengitätte",
+          "3_plural": "hengittävät"
+        },
+        "PEDAL": {
+          "base": "polkea",
+          "1_singular": "poljen",
+          "2_singular": "poljet",
+          "3_singular": "polkee",
+          "1_plural": "poljemme",
+          "2_plural": "poljette",
+          "3_plural": "polkevat"
+        },
+        "PUSH": {
+          "base": "työntää",
+          "1_singular": "työnnän",
+          "2_singular": "työnnät",
+          "3_singular": "työntää",
+          "1_plural": "työnnämme",
+          "2_plural": "työnnätte",
+          "3_plural": "työntävät"
+        },
+        "PULL": {
+          "base": "vetää",
+          "1_singular": "vedän",
+          "2_singular": "vedät",
+          "3_singular": "vetää",
+          "1_plural": "vedämme",
+          "2_plural": "vedätte",
+          "3_plural": "vetävät"
+        },
+        "MEASURE": {
+          "base": "mitata",
+          "1_singular": "mittaan",
+          "2_singular": "mittaat",
+          "3_singular": "mittaa",
+          "1_plural": "mittaamme",
+          "2_plural": "mittaatte",
+          "3_plural": "mittaavat"
+        },
+        "IMPROVE": {
+          "base": "parantaa",
+          "1_singular": "parannan",
+          "2_singular": "parannat",
+          "3_singular": "parantaa",
+          "1_plural": "parannamme",
+          "2_plural": "parannatte",
+          "3_plural": "parantavat"
+        },
+        "RECOVER": {
+          "base": "palautua",
+          "1_singular": "palaudun",
+          "2_singular": "palaudut",
+          "3_singular": "palautuu",
+          "1_plural": "palaudumme",
+          "2_plural": "palaudutte",
+          "3_plural": "palautuvat"
+        },
+        "WEIGH": {
+          "base": "painaa",
+          "1_singular": "painan",
+          "2_singular": "painat",
+          "3_singular": "painaa",
+          "1_plural": "painamme",
+          "2_plural": "painatte",
+          "3_plural": "painavat"
+        },
+        "FINISH": {
+          "base": "lopettaa",
+          "1_singular": "lopetan",
+          "2_singular": "lopetat",
+          "3_singular": "lopettaa",
+          "1_plural": "lopetamme",
+          "2_plural": "lopetatte",
+          "3_plural": "lopettavat"
+        },
+        "REPEAT": {
+          "base": "toistaa",
+          "1_singular": "toistan",
+          "2_singular": "toistat",
+          "3_singular": "toistaa",
+          "1_plural": "toistamme",
+          "2_plural": "toistatte",
+          "3_plural": "toistavat"
+        },
+        "HEALTHY": [
+          "terve"
+        ],
+        "ACTIVE": [
+          "aktiivinen"
+        ],
+        "SORE": [
+          "kipeä"
+        ],
+        "FLEXIBLE": [
+          "notkea"
+        ],
+        "INTENSE": [
+          "intensiivinen"
+        ],
+        "WEAK": [
+          "heikko"
+        ],
+        "MOTIVATED": [
+          "motivoitunut"
+        ],
+        "EXHAUSTED": [
+          "uupunut"
+        ],
+        "DAILY": [
+          "päivittäinen"
+        ],
+        "MUSCULAR": [
+          "lihaksikas"
+        ]
+      }
+    },
   "en": {
    "label": "English",
    "forms": {

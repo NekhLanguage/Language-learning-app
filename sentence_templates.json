@@ -2,7 +2,11 @@
   "templates": [
     {
       "template_id": "I_EAT_FOOD",
-      "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "FOOD"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "FOOD"
+      ],
       "render": {
         "en": "I eat food.",
         "pt": "Eu como comida.",
@@ -19,7 +23,8 @@
         "zh": "我吃食物。",
         "it": "Io mangio cibo.",
         "th": "ฉันกินอาหาร",
-        "pl": "Ja jem jedzenie."
+        "pl": "Ja jem jedzenie.",
+        "fi": "Minä syön ruokaa."
       },
       "surface": {
         "en": {
@@ -101,6 +106,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "EAT": "jem",
           "FOOD": "jedzenie"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "EAT": "syön",
+          "FOOD": "ruokaa"
         }
       },
       "questions": {
@@ -121,9 +131,15 @@
             "zh": "谁吃食物？",
             "it": "Chi mangia cibo?",
             "th": "ใครกินอาหาร",
-            "pl": "Kto je jedzenie?"
+            "pl": "Kto je jedzenie?",
+            "fi": "Kuka syö ruokaa?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -143,9 +159,15 @@
             "zh": "我做什么？",
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
-            "pl": "Co ja robię?"
+            "pl": "Co ja robię?",
+            "fi": "Mitä minä teen?"
           },
-          "choices": ["EAT", "READ", "SLEEP", "SEE"],
+          "choices": [
+            "EAT",
+            "READ",
+            "SLEEP",
+            "SEE"
+          ],
           "answer": "EAT"
         },
         "object": {
@@ -165,16 +187,26 @@
             "zh": "我吃什么？",
             "it": "Che cosa mangio?",
             "th": "ฉันกินอะไร",
-            "pl": "Co ja jem?"
+            "pl": "Co ja jem?",
+            "fi": "Mitä minä syön?"
           },
-          "choices": ["FOOD", "BOOK", "PHONE", "JOB"],
+          "choices": [
+            "FOOD",
+            "BOOK",
+            "PHONE",
+            "JOB"
+          ],
           "answer": "FOOD"
         }
       }
     },
     {
       "template_id": "HE_READ_BOOK",
-      "concepts": ["HE", "READ", "BOOK"],
+      "concepts": [
+        "HE",
+        "READ",
+        "BOOK"
+      ],
       "render": {
         "en": "He reads a book.",
         "pt": "Ele lê um livro.",
@@ -191,7 +223,8 @@
         "zh": "他读一本书。",
         "it": "Lui legge un libro.",
         "th": "เขาอ่านหนังสือ",
-        "pl": "On czyta książkę."
+        "pl": "On czyta książkę.",
+        "fi": "Hän lukee kirjaa."
       },
       "surface": {
         "en": {
@@ -273,6 +306,11 @@
           "HE": "on",
           "READ": "czyta",
           "BOOK": "książkę"
+        },
+        "fi": {
+          "HE": "hän",
+          "READ": "lukee",
+          "BOOK": "kirjaa"
         }
       },
       "questions": {
@@ -293,9 +331,15 @@
             "zh": "谁读书？",
             "it": "Chi legge un libro?",
             "th": "ใครอ่านหนังสือ",
-            "pl": "Kto czyta książkę?"
+            "pl": "Kto czyta książkę?",
+            "fi": "Kuka lukee kirjaa?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "HE"
         },
         "verb": {
@@ -315,9 +359,15 @@
             "zh": "他做什么？",
             "it": "Che cosa fa lui?",
             "th": "เขาทำอะไร",
-            "pl": "Co on robi?"
+            "pl": "Co on robi?",
+            "fi": "Mitä hän tekee?"
           },
-          "choices": ["READ", "EAT", "SEE", "SLEEP"],
+          "choices": [
+            "READ",
+            "EAT",
+            "SEE",
+            "SLEEP"
+          ],
           "answer": "READ"
         },
         "object": {
@@ -337,16 +387,26 @@
             "zh": "他读什么？",
             "it": "Che cosa legge lui?",
             "th": "เขาอ่านอะไร",
-            "pl": "Co on czyta?"
+            "pl": "Co on czyta?",
+            "fi": "Mitä hän lukee?"
           },
-          "choices": ["BOOK", "FOOD", "PHONE", "JOB"],
+          "choices": [
+            "BOOK",
+            "FOOD",
+            "PHONE",
+            "JOB"
+          ],
           "answer": "BOOK"
         }
       }
     },
     {
       "template_id": "SHE_SEES_PHONE",
-      "concepts": ["SHE", "SEE", "PHONE"],
+      "concepts": [
+        "SHE",
+        "SEE",
+        "PHONE"
+      ],
       "render": {
         "en": "She sees a phone.",
         "pt": "Ela vê um telefone.",
@@ -363,7 +423,8 @@
         "zh": "她看见一部手机。",
         "it": "Lei vede un telefono.",
         "th": "เธอเห็นโทรศัพท์",
-        "pl": "Ona widzi telefon."
+        "pl": "Ona widzi telefon.",
+        "fi": "Hän näkee puhelimen."
       },
       "surface": {
         "en": {
@@ -445,6 +506,11 @@
           "SHE": "ona",
           "SEE": "widzi",
           "PHONE": "telefon"
+        },
+        "fi": {
+          "SHE": "hän",
+          "SEE": "näkee",
+          "PHONE": "puhelimen"
         }
       },
       "questions": {
@@ -465,9 +531,15 @@
             "zh": "谁看见手机？",
             "it": "Chi vede un telefono?",
             "th": "ใครเห็นโทรศัพท์",
-            "pl": "Kto widzi telefon?"
+            "pl": "Kto widzi telefon?",
+            "fi": "Kuka näkee puhelimen?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "SHE"
         },
         "verb": {
@@ -487,9 +559,15 @@
             "zh": "她做什么？",
             "it": "Che cosa fa lei?",
             "th": "เธอทำอะไร",
-            "pl": "Co ona robi?"
+            "pl": "Co ona robi?",
+            "fi": "Mitä hän tekee?"
           },
-          "choices": ["SEE", "EAT", "READ", "SLEEP"],
+          "choices": [
+            "SEE",
+            "EAT",
+            "READ",
+            "SLEEP"
+          ],
           "answer": "SEE"
         },
         "object": {
@@ -509,16 +587,26 @@
             "zh": "她看见什么？",
             "it": "Che cosa vede lei?",
             "th": "เธอเห็นอะไร",
-            "pl": "Co ona widzi?"
+            "pl": "Co ona widzi?",
+            "fi": "Mitä hän näkee?"
           },
-          "choices": ["PHONE", "BOOK", "FOOD", "JOB"],
+          "choices": [
+            "PHONE",
+            "BOOK",
+            "FOOD",
+            "JOB"
+          ],
           "answer": "PHONE"
         }
       }
     },
     {
       "template_id": "WE_HAVE_JOB",
-      "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "JOB"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "HAVE",
+        "JOB"
+      ],
       "tr": {
         "insertBir": true
       },
@@ -538,7 +626,8 @@
         "zh": "我们有一份工作。",
         "it": "Noi abbiamo un lavoro.",
         "th": "เรามีงาน",
-        "pl": "My mamy pracę."
+        "pl": "My mamy pracę.",
+        "fi": "Meillä on työ."
       },
       "surface": {
         "en": {
@@ -620,6 +709,11 @@
           "FIRST_PERSON_PLURAL": "my",
           "HAVE": "mamy",
           "JOB": "pracę"
+        },
+        "fi": {
+          "FIRST_PERSON_PLURAL": "me",
+          "HAVE": "on",
+          "JOB": "työ"
         }
       },
       "questions": {
@@ -640,9 +734,15 @@
             "zh": "谁有工作？",
             "it": "Chi ha un lavoro?",
             "th": "ใครมีงาน",
-            "pl": "Kto ma pracę?"
+            "pl": "Kto ma pracę?",
+            "fi": "Kenellä on työ?"
           },
-          "choices": ["FIRST_PERSON_PLURAL", "FIRST_PERSON_SINGULAR", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_PLURAL",
+            "FIRST_PERSON_SINGULAR",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_PLURAL"
         },
         "verb": {
@@ -662,9 +762,15 @@
             "zh": "我们做什么？",
             "it": "Che cosa facciamo?",
             "th": "เราทำอะไร",
-            "pl": "Co my robimy?"
+            "pl": "Co my robimy?",
+            "fi": "Mitä me teemme?"
           },
-          "choices": ["HAVE", "READ", "SEE", "EAT"],
+          "choices": [
+            "HAVE",
+            "READ",
+            "SEE",
+            "EAT"
+          ],
           "answer": "HAVE"
         },
         "object": {
@@ -684,16 +790,26 @@
             "zh": "我们有什么？",
             "it": "Che cosa abbiamo?",
             "th": "เรามีอะไร",
-            "pl": "Co my mamy?"
+            "pl": "Co my mamy?",
+            "fi": "Mitä meillä on?"
           },
-          "choices": ["JOB", "BOOK", "FOOD", "PHONE"],
+          "choices": [
+            "JOB",
+            "BOOK",
+            "FOOD",
+            "PHONE"
+          ],
           "answer": "JOB"
         }
       }
     },
     {
       "template_id": "I_DRINK_WATER",
-      "concepts": ["FIRST_PERSON_SINGULAR", "DRINK", "WATER"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "DRINK",
+        "WATER"
+      ],
       "render": {
         "en": "I drink water.",
         "pt": "Eu bebo água.",
@@ -710,7 +826,8 @@
         "zh": "我喝水。",
         "it": "Io bevo acqua.",
         "th": "ฉันดื่มน้ำ",
-        "pl": "Ja piję wodę."
+        "pl": "Ja piję wodę.",
+        "fi": "Minä juon vettä."
       },
       "surface": {
         "en": {
@@ -792,6 +909,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "DRINK": "piję",
           "WATER": "wodę"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "DRINK": "juon",
+          "WATER": "vettä"
         }
       },
       "questions": {
@@ -812,9 +934,15 @@
             "zh": "谁喝水？",
             "it": "Chi beve acqua?",
             "th": "ใครดื่มน้ำ",
-            "pl": "Kto pije wodę?"
+            "pl": "Kto pije wodę?",
+            "fi": "Kuka juo vettä?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -834,9 +962,15 @@
             "zh": "我做什么？",
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
-            "pl": "Co ja robię?"
+            "pl": "Co ja robię?",
+            "fi": "Mitä minä teen?"
           },
-          "choices": ["DRINK", "EAT", "READ", "SEE"],
+          "choices": [
+            "DRINK",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "DRINK"
         },
         "object": {
@@ -856,16 +990,26 @@
             "zh": "我喝什么？",
             "it": "Che cosa bevo?",
             "th": "ฉันดื่มอะไร",
-            "pl": "Co ja piję?"
+            "pl": "Co ja piję?",
+            "fi": "Mitä minä juon?"
           },
-          "choices": ["WATER", "FOOD", "BOOK", "PHONE"],
+          "choices": [
+            "WATER",
+            "FOOD",
+            "BOOK",
+            "PHONE"
+          ],
           "answer": "WATER"
         }
       }
     },
     {
       "template_id": "YOU_READ_BOOK",
-      "concepts": ["SECOND_PERSON", "READ", "BOOK"],
+      "concepts": [
+        "SECOND_PERSON",
+        "READ",
+        "BOOK"
+      ],
       "render": {
         "en": "You read a book.",
         "pt": "Você lê um livro.",
@@ -882,7 +1026,8 @@
         "zh": "你读一本书。",
         "it": "Tu leggi un libro.",
         "th": "คุณอ่านหนังสือ",
-        "pl": "Ty czytasz książkę."
+        "pl": "Ty czytasz książkę.",
+        "fi": "Sinä luet kirjaa."
       },
       "surface": {
         "en": {
@@ -964,6 +1109,11 @@
           "SECOND_PERSON": "ty",
           "READ": "czytasz",
           "BOOK": "książkę"
+        },
+        "fi": {
+          "SECOND_PERSON": "sinä",
+          "READ": "luet",
+          "BOOK": "kirjaa"
         }
       },
       "questions": {
@@ -984,9 +1134,15 @@
             "zh": "谁读书？",
             "it": "Chi legge un libro?",
             "th": "ใครอ่านหนังสือ",
-            "pl": "Kto czyta książkę?"
+            "pl": "Kto czyta książkę?",
+            "fi": "Kuka lukee kirjaa?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "SECOND_PERSON"
         },
         "verb": {
@@ -1006,9 +1162,15 @@
             "zh": "你做什么？",
             "it": "Che cosa fai?",
             "th": "คุณทำอะไร",
-            "pl": "Co ty robisz?"
+            "pl": "Co ty robisz?",
+            "fi": "Mitä sinä teet?"
           },
-          "choices": ["READ", "EAT", "DRINK", "SEE"],
+          "choices": [
+            "READ",
+            "EAT",
+            "DRINK",
+            "SEE"
+          ],
           "answer": "READ"
         },
         "object": {
@@ -1028,16 +1190,26 @@
             "zh": "你读什么？",
             "it": "Che cosa leggi?",
             "th": "คุณอ่านอะไร",
-            "pl": "Co ty czytasz?"
+            "pl": "Co ty czytasz?",
+            "fi": "Mitä sinä luet?"
           },
-          "choices": ["BOOK", "FOOD", "PHONE", "JOB"],
+          "choices": [
+            "BOOK",
+            "FOOD",
+            "PHONE",
+            "JOB"
+          ],
           "answer": "BOOK"
         }
       }
     },
     {
       "template_id": "YOU_PLURAL_DRINK_WATER",
-      "concepts": ["SECOND_PERSON_PLURAL", "DRINK", "WATER"],
+      "concepts": [
+        "SECOND_PERSON_PLURAL",
+        "DRINK",
+        "WATER"
+      ],
       "render": {
         "en": "You drink water.",
         "pt": "Vocês bebem água.",
@@ -1054,7 +1226,8 @@
         "zh": "你们喝水。",
         "it": "Voi bevete acqua.",
         "th": "พวกคุณดื่มน้ำ",
-        "pl": "Wy pijecie wodę."
+        "pl": "Wy pijecie wodę.",
+        "fi": "Te juotte vettä."
       },
       "surface": {
         "en": {
@@ -1136,6 +1309,11 @@
           "SECOND_PERSON_PLURAL": "wy",
           "DRINK": "pijecie",
           "WATER": "wodę"
+        },
+        "fi": {
+          "SECOND_PERSON_PLURAL": "te",
+          "DRINK": "juotte",
+          "WATER": "vettä"
         }
       },
       "questions": {
@@ -1156,9 +1334,15 @@
             "zh": "谁喝水？",
             "it": "Chi beve acqua?",
             "th": "ใครดื่มน้ำ",
-            "pl": "Kto pije wodę?"
+            "pl": "Kto pije wodę?",
+            "fi": "Kuka juo vettä?"
           },
-          "choices": ["SECOND_PERSON_PLURAL", "FIRST_PERSON_PLURAL", "HE", "SHE"],
+          "choices": [
+            "SECOND_PERSON_PLURAL",
+            "FIRST_PERSON_PLURAL",
+            "HE",
+            "SHE"
+          ],
           "answer": "SECOND_PERSON_PLURAL"
         },
         "verb": {
@@ -1178,9 +1362,15 @@
             "zh": "你们做什么？",
             "it": "Che cosa fate?",
             "th": "พวกคุณทำอะไร",
-            "pl": "Co wy robicie?"
+            "pl": "Co wy robicie?",
+            "fi": "Mitä sinä teet?"
           },
-          "choices": ["DRINK", "EAT", "READ", "SEE"],
+          "choices": [
+            "DRINK",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "DRINK"
         },
         "object": {
@@ -1200,16 +1390,25 @@
             "zh": "你们喝什么？",
             "it": "Che cosa bevete?",
             "th": "พวกคุณดื่มอะไร",
-            "pl": "Co wy pijecie?"
+            "pl": "Co wy pijecie?",
+            "fi": "Mitä sinä juot?"
           },
-          "choices": ["WATER", "FOOD", "BOOK", "PHONE"],
+          "choices": [
+            "WATER",
+            "FOOD",
+            "BOOK",
+            "PHONE"
+          ],
           "answer": "WATER"
         }
       }
     },
     {
       "template_id": "THEY_SLEEP",
-      "concepts": ["THIRD_PERSON_PLURAL", "SLEEP"],
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "SLEEP"
+      ],
       "render": {
         "en": "They sleep.",
         "pt": "Eles dormem.",
@@ -1226,7 +1425,8 @@
         "zh": "他们睡觉。",
         "it": "Loro dormono.",
         "th": "พวกเขานอน",
-        "pl": "Oni śpią."
+        "pl": "Oni śpią.",
+        "fi": "He nukkuvat."
       },
       "surface": {
         "en": {
@@ -1292,6 +1492,10 @@
         "pl": {
           "THIRD_PERSON_PLURAL": "oni",
           "SLEEP": "śpią"
+        },
+        "fi": {
+          "THIRD_PERSON_PLURAL": "he",
+          "SLEEP": "nukkuvat"
         }
       },
       "questions": {
@@ -1312,9 +1516,15 @@
             "zh": "谁睡觉？",
             "it": "Chi dorme?",
             "th": "ใครนอน",
-            "pl": "Kto śpi?"
+            "pl": "Kto śpi?",
+            "fi": "Kuka nukkuu?"
           },
-          "choices": ["THIRD_PERSON_PLURAL", "FIRST_PERSON_PLURAL", "HE", "SHE"],
+          "choices": [
+            "THIRD_PERSON_PLURAL",
+            "FIRST_PERSON_PLURAL",
+            "HE",
+            "SHE"
+          ],
           "answer": "THIRD_PERSON_PLURAL"
         },
         "verb": {
@@ -1334,16 +1544,26 @@
             "zh": "他们做什么？",
             "it": "Che cosa fanno?",
             "th": "พวกเขาทำอะไร",
-            "pl": "Co oni robią?"
+            "pl": "Co oni robią?",
+            "fi": "Mitä he tekevät?"
           },
-          "choices": ["SLEEP", "READ", "EAT", "DRINK"],
+          "choices": [
+            "SLEEP",
+            "READ",
+            "EAT",
+            "DRINK"
+          ],
           "answer": "SLEEP"
         }
       }
     },
     {
       "template_id": "I_AM_MAN",
-      "concepts": ["FIRST_PERSON_SINGULAR", "BE", "MAN"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "BE",
+        "MAN"
+      ],
       "render": {
         "en": "I am a man.",
         "pt": "Eu sou um homem.",
@@ -1360,7 +1580,8 @@
         "zh": "我是一个男人。",
         "it": "Io sono un uomo.",
         "th": "ฉันเป็นผู้ชาย",
-        "pl": "Ja jestem mężczyzną."
+        "pl": "Ja jestem mężczyzną.",
+        "fi": "Minä olen mies."
       },
       "surface": {
         "en": {
@@ -1441,6 +1662,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "BE": "jestem",
           "MAN": "mężczyzną"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "BE": "olen",
+          "MAN": "mies"
         }
       },
       "questions": {
@@ -1461,9 +1687,15 @@
             "zh": "我是什么？",
             "it": "Che cosa sono?",
             "th": "ฉันเป็นอะไร",
-            "pl": "Kim ja jestem?"
+            "pl": "Kim ja jestem?",
+            "fi": "Mikä minä olen?"
           },
-          "choices": ["BE", "EAT", "READ", "SEE"],
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "BE"
         },
         "object": {
@@ -1483,16 +1715,26 @@
             "zh": "我是什么？",
             "it": "Che cosa sono?",
             "th": "ฉันเป็นอะไร",
-            "pl": "Kim ja jestem?"
+            "pl": "Kim ja jestem?",
+            "fi": "Mikä minä olen?"
           },
-          "choices": ["MAN", "WOMAN", "BOY", "GIRL"],
+          "choices": [
+            "MAN",
+            "WOMAN",
+            "BOY",
+            "GIRL"
+          ],
           "answer": "MAN"
         }
       }
     },
     {
       "template_id": "SHE_IS_WOMAN",
-      "concepts": ["SHE", "BE", "WOMAN"],
+      "concepts": [
+        "SHE",
+        "BE",
+        "WOMAN"
+      ],
       "render": {
         "en": "She is a woman.",
         "pt": "Ela é uma mulher.",
@@ -1509,7 +1751,8 @@
         "zh": "她是一个女人。",
         "it": "Lei è una donna.",
         "th": "เธอเป็นผู้หญิง",
-        "pl": "Ona jest kobietą."
+        "pl": "Ona jest kobietą.",
+        "fi": "Hän on nainen."
       },
       "surface": {
         "en": {
@@ -1590,6 +1833,11 @@
           "SHE": "ona",
           "BE": "jest",
           "WOMAN": "kobietą"
+        },
+        "fi": {
+          "SHE": "hän",
+          "BE": "on",
+          "WOMAN": "nainen"
         }
       },
       "questions": {
@@ -1610,9 +1858,15 @@
             "zh": "谁是女人？",
             "it": "Chi è una donna?",
             "th": "ใครเป็นผู้หญิง",
-            "pl": "Kto jest kobietą?"
+            "pl": "Kto jest kobietą?",
+            "fi": "Kuka on nainen?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "SHE"
         },
         "verb": {
@@ -1632,9 +1886,15 @@
             "zh": "她是什么？",
             "it": "Che cos'è lei?",
             "th": "เธอเป็นอะไร",
-            "pl": "Kim ona jest?"
+            "pl": "Kim ona jest?",
+            "fi": "Mikä hän on?"
           },
-          "choices": ["BE", "EAT", "READ", "SEE"],
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "BE"
         },
         "object": {
@@ -1654,16 +1914,26 @@
             "zh": "她是什么？",
             "it": "Che cos'è lei?",
             "th": "เธอเป็นอะไร",
-            "pl": "Kim ona jest?"
+            "pl": "Kim ona jest?",
+            "fi": "Mikä hän on?"
           },
-          "choices": ["WOMAN", "MAN", "BOY", "GIRL"],
+          "choices": [
+            "WOMAN",
+            "MAN",
+            "BOY",
+            "GIRL"
+          ],
           "answer": "WOMAN"
         }
       }
     },
     {
       "template_id": "YOU_ARE_GIRL",
-      "concepts": ["SECOND_PERSON", "BE", "GIRL"],
+      "concepts": [
+        "SECOND_PERSON",
+        "BE",
+        "GIRL"
+      ],
       "render": {
         "en": "You are a girl.",
         "pt": "Você é uma menina.",
@@ -1680,7 +1950,8 @@
         "zh": "你是一个女孩。",
         "it": "Tu sei una ragazza.",
         "th": "คุณเป็นเด็กผู้หญิง",
-        "pl": "Ty jesteś dziewczyną."
+        "pl": "Ty jesteś dziewczyną.",
+        "fi": "Sinä olet tyttö."
       },
       "surface": {
         "en": {
@@ -1761,6 +2032,11 @@
           "SECOND_PERSON": "ty",
           "BE": "jesteś",
           "GIRL": "dziewczyną"
+        },
+        "fi": {
+          "SECOND_PERSON": "sinä",
+          "BE": "olet",
+          "GIRL": "tyttö"
         }
       },
       "questions": {
@@ -1781,9 +2057,15 @@
             "zh": "谁是女孩？",
             "it": "Chi è una ragazza?",
             "th": "ใครเป็นเด็กผู้หญิง",
-            "pl": "Kto jest dziewczyną?"
+            "pl": "Kto jest dziewczyną?",
+            "fi": "Kuka on tyttö?"
           },
-          "choices": ["SECOND_PERSON", "FIRST_PERSON_SINGULAR", "HE", "SHE"],
+          "choices": [
+            "SECOND_PERSON",
+            "FIRST_PERSON_SINGULAR",
+            "HE",
+            "SHE"
+          ],
           "answer": "SECOND_PERSON"
         },
         "verb": {
@@ -1803,9 +2085,15 @@
             "zh": "你是什么？",
             "it": "Che cosa sei?",
             "th": "คุณเป็นอะไร",
-            "pl": "Kim ty jesteś?"
+            "pl": "Kim ty jesteś?",
+            "fi": "Mikä sinä olet?"
           },
-          "choices": ["BE", "EAT", "READ", "SEE"],
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "BE"
         },
         "object": {
@@ -1825,16 +2113,26 @@
             "zh": "你是什么？",
             "it": "Che cosa sei?",
             "th": "คุณเป็นอะไร",
-            "pl": "Kim ty jesteś?"
+            "pl": "Kim ty jesteś?",
+            "fi": "Mikä sinä olet?"
           },
-          "choices": ["GIRL", "BOY", "MAN", "WOMAN"],
+          "choices": [
+            "GIRL",
+            "BOY",
+            "MAN",
+            "WOMAN"
+          ],
           "answer": "GIRL"
         }
       }
     },
     {
       "template_id": "HE_IS_BOY",
-      "concepts": ["HE", "BE", "BOY"],
+      "concepts": [
+        "HE",
+        "BE",
+        "BOY"
+      ],
       "render": {
         "en": "He is a boy.",
         "pt": "Ele é um menino.",
@@ -1851,7 +2149,8 @@
         "zh": "他是一个男孩。",
         "it": "Lui è un ragazzo.",
         "th": "เขาเป็นเด็กผู้ชาย",
-        "pl": "On jest chłopcem."
+        "pl": "On jest chłopcem.",
+        "fi": "Hän on poika."
       },
       "surface": {
         "en": {
@@ -1932,6 +2231,11 @@
           "HE": "on",
           "BE": "jest",
           "BOY": "chłopcem"
+        },
+        "fi": {
+          "HE": "hän",
+          "BE": "on",
+          "BOY": "poika"
         }
       },
       "questions": {
@@ -1952,9 +2256,15 @@
             "zh": "谁是男孩？",
             "it": "Chi è un ragazzo?",
             "th": "ใครเป็นเด็กผู้ชาย",
-            "pl": "Kto jest chłopcem?"
+            "pl": "Kto jest chłopcem?",
+            "fi": "Kuka on poika?"
           },
-          "choices": ["HE", "SHE", "SECOND_PERSON", "FIRST_PERSON_SINGULAR"],
+          "choices": [
+            "HE",
+            "SHE",
+            "SECOND_PERSON",
+            "FIRST_PERSON_SINGULAR"
+          ],
           "answer": "HE"
         },
         "verb": {
@@ -1974,9 +2284,15 @@
             "zh": "他是什么？",
             "it": "Che cos'è lui?",
             "th": "เขาเป็นอะไร",
-            "pl": "Kim on jest?"
+            "pl": "Kim on jest?",
+            "fi": "Mikä hän on?"
           },
-          "choices": ["BE", "EAT", "READ", "SEE"],
+          "choices": [
+            "BE",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "BE"
         },
         "object": {
@@ -1996,16 +2312,26 @@
             "zh": "他是什么？",
             "it": "Che cos'è lui?",
             "th": "เขาเป็นอะไร",
-            "pl": "Kim on jest?"
+            "pl": "Kim on jest?",
+            "fi": "Mikä hän on?"
           },
-          "choices": ["BOY", "GIRL", "MAN", "WOMAN"],
+          "choices": [
+            "BOY",
+            "GIRL",
+            "MAN",
+            "WOMAN"
+          ],
           "answer": "BOY"
         }
       }
     },
     {
       "template_id": "WE_STOP_EATING",
-      "concepts": ["FIRST_PERSON_PLURAL", "STOP", "EAT"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "STOP",
+        "EAT"
+      ],
       "render": {
         "en": "We stop eating.",
         "pt": "Nós paramos de comer.",
@@ -2022,7 +2348,8 @@
         "zh": "我们停止吃饭。",
         "it": "Noi smettiamo di mangiare.",
         "th": "เราหยุดกิน",
-        "pl": "My przestajemy jeść."
+        "pl": "My przestajemy jeść.",
+        "fi": "Me lopetamme syömisen."
       },
       "surface": {
         "en": {
@@ -2104,6 +2431,11 @@
           "FIRST_PERSON_PLURAL": "my",
           "STOP": "przestajemy",
           "EAT": "jeść"
+        },
+        "fi": {
+          "FIRST_PERSON_PLURAL": "me",
+          "STOP": "lopetamme",
+          "EAT": "syömisen"
         }
       },
       "questions": {
@@ -2124,9 +2456,15 @@
             "zh": "谁停止吃饭？",
             "it": "Chi smette di mangiare?",
             "th": "ใครหยุดกิน",
-            "pl": "Kto przestaje jeść?"
+            "pl": "Kto przestaje jeść?",
+            "fi": "Kuka lopettaa syömisen?"
           },
-          "choices": ["FIRST_PERSON_PLURAL", "FIRST_PERSON_SINGULAR", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_PLURAL",
+            "FIRST_PERSON_SINGULAR",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_PLURAL"
         },
         "verb": {
@@ -2146,16 +2484,26 @@
             "zh": "我们做什么？",
             "it": "Che cosa facciamo?",
             "th": "เราทำอะไร",
-            "pl": "Co my robimy?"
+            "pl": "Co my robimy?",
+            "fi": "Mitä me teemme?"
           },
-          "choices": ["STOP", "EAT", "READ", "SEE"],
+          "choices": [
+            "STOP",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "STOP"
         }
       }
     },
     {
       "template_id": "THEY_START_SLEEPING",
-      "concepts": ["THIRD_PERSON_PLURAL", "START", "SLEEP"],
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "START",
+        "SLEEP"
+      ],
       "render": {
         "en": "They start sleeping.",
         "pt": "Eles começam a dormir.",
@@ -2172,7 +2520,8 @@
         "zh": "他们开始睡觉。",
         "it": "Loro iniziano a dormire.",
         "th": "พวกเขาเริ่มนอน",
-        "pl": "Oni zaczynają spać."
+        "pl": "Oni zaczynają spać.",
+        "fi": "He aloittavat nukkumisen."
       },
       "surface": {
         "en": {
@@ -2254,6 +2603,11 @@
           "THIRD_PERSON_PLURAL": "oni",
           "START": "zaczynają",
           "SLEEP": "spać"
+        },
+        "fi": {
+          "THIRD_PERSON_PLURAL": "he",
+          "START": "aloittavat",
+          "SLEEP": "nukkumisen"
         }
       },
       "questions": {
@@ -2274,9 +2628,15 @@
             "zh": "谁开始睡觉？",
             "it": "Chi inizia a dormire?",
             "th": "ใครเริ่มนอน",
-            "pl": "Kto zaczyna spać?"
+            "pl": "Kto zaczyna spać?",
+            "fi": "Kuka aloittaa nukkumisen?"
           },
-          "choices": ["THIRD_PERSON_PLURAL", "FIRST_PERSON_PLURAL", "HE", "SHE"],
+          "choices": [
+            "THIRD_PERSON_PLURAL",
+            "FIRST_PERSON_PLURAL",
+            "HE",
+            "SHE"
+          ],
           "answer": "THIRD_PERSON_PLURAL"
         },
         "verb": {
@@ -2296,16 +2656,26 @@
             "zh": "他们做什么？",
             "it": "Che cosa fanno?",
             "th": "พวกเขาทำอะไร",
-            "pl": "Co oni robią?"
+            "pl": "Co oni robią?",
+            "fi": "Mitä he tekevät?"
           },
-          "choices": ["START", "SLEEP", "READ", "EAT"],
+          "choices": [
+            "START",
+            "SLEEP",
+            "READ",
+            "EAT"
+          ],
           "answer": "START"
         }
       }
     },
     {
       "template_id": "HE_SEES_SHIRT",
-      "concepts": ["HE", "SEE", "SHIRT"],
+      "concepts": [
+        "HE",
+        "SEE",
+        "SHIRT"
+      ],
       "render": {
         "en": "He sees a shirt.",
         "pt": "Ele vê uma camisa.",
@@ -2322,7 +2692,8 @@
         "zh": "他看见一件衬衫。",
         "it": "Lui vede una camicia.",
         "th": "เขาเห็นเสื้อ",
-        "pl": "On widzi koszulę."
+        "pl": "On widzi koszulę.",
+        "fi": "Hän näkee paidan."
       },
       "surface": {
         "en": {
@@ -2404,6 +2775,11 @@
           "HE": "on",
           "SEE": "widzi",
           "SHIRT": "koszulę"
+        },
+        "fi": {
+          "HE": "hän",
+          "SEE": "näkee",
+          "SHIRT": "paidan"
         }
       },
       "questions": {
@@ -2424,9 +2800,15 @@
             "zh": "谁看见衬衫？",
             "it": "Chi vede una camicia?",
             "th": "ใครเห็นเสื้อ",
-            "pl": "Kto widzi koszulę?"
+            "pl": "Kto widzi koszulę?",
+            "fi": "Kuka näkee paidan?"
           },
-          "choices": ["HE", "SHE", "SECOND_PERSON", "FIRST_PERSON_SINGULAR"],
+          "choices": [
+            "HE",
+            "SHE",
+            "SECOND_PERSON",
+            "FIRST_PERSON_SINGULAR"
+          ],
           "answer": "HE"
         },
         "verb": {
@@ -2446,9 +2828,15 @@
             "zh": "他做什么？",
             "it": "Che cosa fa lui?",
             "th": "เขาทำอะไร",
-            "pl": "Co on robi?"
+            "pl": "Co on robi?",
+            "fi": "Mitä hän tekee?"
           },
-          "choices": ["SEE", "READ", "EAT", "SLEEP"],
+          "choices": [
+            "SEE",
+            "READ",
+            "EAT",
+            "SLEEP"
+          ],
           "answer": "SEE"
         },
         "object": {
@@ -2468,16 +2856,26 @@
             "zh": "他看见什么？",
             "it": "Che cosa vede lui?",
             "th": "เขาเห็นอะไร",
-            "pl": "Co on widzi?"
+            "pl": "Co on widzi?",
+            "fi": "Mitä hän näkee?"
           },
-          "choices": ["SHIRT", "BOOK", "PHONE", "FOOD"],
+          "choices": [
+            "SHIRT",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
           "answer": "SHIRT"
         }
       }
     },
     {
       "template_id": "I_GO_HOME",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "HOME"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "HOME"
+      ],
       "render": {
         "en": "I go home.",
         "pt": "Eu vou para casa.",
@@ -2494,7 +2892,8 @@
         "zh": "我回家。",
         "it": "Io vado a casa.",
         "th": "ฉันไปบ้าน",
-        "pl": "Ja idę do domu."
+        "pl": "Ja idę do domu.",
+        "fi": "Minä menen kotiin."
       },
       "surface": {
         "en": {
@@ -2576,6 +2975,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "GO": "idę",
           "HOME": "do domu"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "GO": "menen",
+          "HOME": "kotiin"
         }
       },
       "questions": {
@@ -2596,9 +3000,15 @@
             "zh": "谁回家？",
             "it": "Chi va a casa?",
             "th": "ใครไปบ้าน",
-            "pl": "Kto idzie do domu?"
+            "pl": "Kto idzie do domu?",
+            "fi": "Kuka menee kotiin?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -2618,9 +3028,15 @@
             "zh": "我做什么？",
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
-            "pl": "Co ja robię?"
+            "pl": "Co ja robię?",
+            "fi": "Mitä minä teen?"
           },
-          "choices": ["GO", "EAT", "READ", "SEE"],
+          "choices": [
+            "GO",
+            "EAT",
+            "READ",
+            "SEE"
+          ],
           "answer": "GO"
         },
         "object": {
@@ -2640,16 +3056,26 @@
             "zh": "我去哪里？",
             "it": "Dove vado?",
             "th": "ฉันไปที่ไหน",
-            "pl": "Dokąd ja idę?"
+            "pl": "Dokąd ja idę?",
+            "fi": "Minne minä menen?"
           },
-          "choices": ["HOME", "ROOM", "JOB", "HOUSE"],
+          "choices": [
+            "HOME",
+            "ROOM",
+            "JOB",
+            "HOUSE"
+          ],
           "answer": "HOME"
         }
       }
     },
     {
       "template_id": "I_USE_PHONE",
-      "concepts": ["FIRST_PERSON_SINGULAR", "USE", "PHONE"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "USE",
+        "PHONE"
+      ],
       "render": {
         "en": "I use a phone.",
         "pt": "Eu uso um telefone.",
@@ -2666,7 +3092,8 @@
         "zh": "我用一部手机。",
         "it": "Io uso un telefono.",
         "th": "ฉันใช้โทรศัพท์",
-        "pl": "Ja używam telefonu."
+        "pl": "Ja używam telefonu.",
+        "fi": "Minä käytän puhelinta."
       },
       "surface": {
         "en": {
@@ -2748,6 +3175,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "USE": "używam",
           "PHONE": "telefonu"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "USE": "käytän",
+          "PHONE": "puhelinta"
         }
       },
       "questions": {
@@ -2768,9 +3200,15 @@
             "zh": "谁用手机？",
             "it": "Chi usa un telefono?",
             "th": "ใครใช้โทรศัพท์",
-            "pl": "Kto używa telefonu?"
+            "pl": "Kto używa telefonu?",
+            "fi": "Kuka käyttää puhelinta?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -2790,9 +3228,15 @@
             "zh": "我做什么？",
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
-            "pl": "Co ja robię?"
+            "pl": "Co ja robię?",
+            "fi": "Mitä minä teen?"
           },
-          "choices": ["USE", "READ", "EAT", "SEE"],
+          "choices": [
+            "USE",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
           "answer": "USE"
         },
         "object": {
@@ -2812,16 +3256,26 @@
             "zh": "我用什么？",
             "it": "Che cosa uso?",
             "th": "ฉันใช้อะไร",
-            "pl": "Czego ja używam?"
+            "pl": "Czego ja używam?",
+            "fi": "Mitä minä käytän?"
           },
-          "choices": ["PHONE", "BOOK", "FOOD", "JOB"],
+          "choices": [
+            "PHONE",
+            "BOOK",
+            "FOOD",
+            "JOB"
+          ],
           "answer": "PHONE"
         }
       }
     },
     {
       "template_id": "I_GET_BOOK",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GET", "BOOK"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GET",
+        "BOOK"
+      ],
       "render": {
         "en": "I get a book.",
         "pt": "Eu pego um livro.",
@@ -2838,7 +3292,8 @@
         "zh": "我拿到一本书。",
         "it": "Io prendo un libro.",
         "th": "ฉันได้รับหนังสือ",
-        "pl": "Ja dostaję książkę."
+        "pl": "Ja dostaję książkę.",
+        "fi": "Minä saan kirjan."
       },
       "surface": {
         "en": {
@@ -2920,6 +3375,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "GET": "dostaję",
           "BOOK": "książkę"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "GET": "saan",
+          "BOOK": "kirjan"
         }
       },
       "questions": {
@@ -2940,9 +3400,15 @@
             "zh": "谁拿到书？",
             "it": "Chi prende un libro?",
             "th": "ใครได้รับหนังสือ",
-            "pl": "Kto dostaje książkę?"
+            "pl": "Kto dostaje książkę?",
+            "fi": "Kuka saa kirjan?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -2962,9 +3428,15 @@
             "zh": "我做什么？",
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
-            "pl": "Co ja robię?"
+            "pl": "Co ja robię?",
+            "fi": "Mitä minä teen?"
           },
-          "choices": ["GET", "READ", "EAT", "SEE"],
+          "choices": [
+            "GET",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
           "answer": "GET"
         },
         "object": {
@@ -2984,16 +3456,26 @@
             "zh": "我拿到什么？",
             "it": "Che cosa prendo?",
             "th": "ฉันได้รับอะไร",
-            "pl": "Co ja dostaję?"
+            "pl": "Co ja dostaję?",
+            "fi": "Mitä minä saan?"
           },
-          "choices": ["BOOK", "PHONE", "FOOD", "JOB"],
+          "choices": [
+            "BOOK",
+            "PHONE",
+            "FOOD",
+            "JOB"
+          ],
           "answer": "BOOK"
         }
       }
     },
     {
       "template_id": "I_SEE_HOUSE",
-      "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "HOUSE"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "SEE",
+        "HOUSE"
+      ],
       "render": {
         "en": "I see a house.",
         "pt": "Eu vejo uma casa.",
@@ -3010,7 +3492,8 @@
         "zh": "我看见一座房子。",
         "it": "Io vedo una casa.",
         "th": "ฉันเห็นบ้าน",
-        "pl": "Ja widzę dom."
+        "pl": "Ja widzę dom.",
+        "fi": "Minä näen talon."
       },
       "surface": {
         "en": {
@@ -3092,6 +3575,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "SEE": "widzę",
           "HOUSE": "dom"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "SEE": "näen",
+          "HOUSE": "talon"
         }
       },
       "questions": {
@@ -3112,9 +3600,15 @@
             "zh": "谁看见房子？",
             "it": "Chi vede una casa?",
             "th": "ใครเห็นบ้าน",
-            "pl": "Kto widzi dom?"
+            "pl": "Kto widzi dom?",
+            "fi": "Kuka näkee talon?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -3134,9 +3628,15 @@
             "zh": "我做什么？",
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
-            "pl": "Co ja robię?"
+            "pl": "Co ja robię?",
+            "fi": "Mitä minä teen?"
           },
-          "choices": ["SEE", "READ", "EAT", "SLEEP"],
+          "choices": [
+            "SEE",
+            "READ",
+            "EAT",
+            "SLEEP"
+          ],
           "answer": "SEE"
         },
         "object": {
@@ -3156,16 +3656,26 @@
             "zh": "我看见什么？",
             "it": "Che cosa vedo?",
             "th": "ฉันเห็นอะไร",
-            "pl": "Co ja widzę?"
+            "pl": "Co ja widzę?",
+            "fi": "Mitä minä näen?"
           },
-          "choices": ["HOUSE", "BOOK", "PHONE", "FOOD"],
+          "choices": [
+            "HOUSE",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
           "answer": "HOUSE"
         }
       }
     },
     {
       "template_id": "SHE_SEES_ROOM",
-      "concepts": ["SHE", "SEE", "ROOM"],
+      "concepts": [
+        "SHE",
+        "SEE",
+        "ROOM"
+      ],
       "render": {
         "en": "She sees a room.",
         "pt": "Ela vê um quarto.",
@@ -3182,7 +3692,8 @@
         "zh": "她看见一个房间。",
         "it": "Lei vede una stanza.",
         "th": "เธอเห็นห้อง",
-        "pl": "Ona widzi pokój."
+        "pl": "Ona widzi pokój.",
+        "fi": "Hän näkee huoneen."
       },
       "surface": {
         "en": {
@@ -3264,6 +3775,11 @@
           "SHE": "ona",
           "SEE": "widzi",
           "ROOM": "pokój"
+        },
+        "fi": {
+          "SHE": "hän",
+          "SEE": "näkee",
+          "ROOM": "huoneen"
         }
       },
       "questions": {
@@ -3284,9 +3800,15 @@
             "zh": "谁看见房间？",
             "it": "Chi vede una stanza?",
             "th": "ใครเห็นห้อง",
-            "pl": "Kto widzi pokój?"
+            "pl": "Kto widzi pokój?",
+            "fi": "Kuka näkee huoneen?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "SHE"
         },
         "verb": {
@@ -3306,9 +3828,15 @@
             "zh": "她做什么？",
             "it": "Che cosa fa lei?",
             "th": "เธอทำอะไร",
-            "pl": "Co ona robi?"
+            "pl": "Co ona robi?",
+            "fi": "Mitä hän tekee?"
           },
-          "choices": ["SEE", "READ", "EAT", "SLEEP"],
+          "choices": [
+            "SEE",
+            "READ",
+            "EAT",
+            "SLEEP"
+          ],
           "answer": "SEE"
         },
         "object": {
@@ -3328,16 +3856,26 @@
             "zh": "她看见什么？",
             "it": "Che cosa vede lei?",
             "th": "เธอเห็นอะไร",
-            "pl": "Co ona widzi?"
+            "pl": "Co ona widzi?",
+            "fi": "Mitä hän näkee?"
           },
-          "choices": ["ROOM", "BOOK", "PHONE", "FOOD"],
+          "choices": [
+            "ROOM",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
           "answer": "ROOM"
         }
       }
     },
     {
       "template_id": "I_HAVE_SHIRT",
-      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SHIRT"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SHIRT"
+      ],
       "tr": {
         "insertBir": true
       },
@@ -3357,7 +3895,8 @@
         "zh": "我有一件衬衫。",
         "it": "Io ho una camicia.",
         "th": "ฉันมีเสื้อ",
-        "pl": "Ja mam koszulę."
+        "pl": "Ja mam koszulę.",
+        "fi": "Minulla on paita."
       },
       "surface": {
         "en": {
@@ -3439,6 +3978,11 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "HAVE": "mam",
           "SHIRT": "koszulę"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "HAVE": "on",
+          "SHIRT": "paita"
         }
       },
       "questions": {
@@ -3459,9 +4003,15 @@
             "zh": "谁有衬衫？",
             "it": "Chi ha una camicia?",
             "th": "ใครมีเสื้อ",
-            "pl": "Kto ma koszulę?"
+            "pl": "Kto ma koszulę?",
+            "fi": "Kenellä on paita?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "FIRST_PERSON_SINGULAR"
         },
         "verb": {
@@ -3481,9 +4031,15 @@
             "zh": "我做什么？",
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
-            "pl": "Co ja robię?"
+            "pl": "Co ja robię?",
+            "fi": "Mitä minä teen?"
           },
-          "choices": ["HAVE", "READ", "EAT", "SEE"],
+          "choices": [
+            "HAVE",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
           "answer": "HAVE"
         },
         "object": {
@@ -3503,16 +4059,26 @@
             "zh": "我有什么？",
             "it": "Che cosa ho?",
             "th": "ฉันมีอะไร",
-            "pl": "Co ja mam?"
+            "pl": "Co ja mam?",
+            "fi": "Mitä minulla on?"
           },
-          "choices": ["SHIRT", "BOOK", "PHONE", "FOOD"],
+          "choices": [
+            "SHIRT",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
           "answer": "SHIRT"
         }
       }
     },
     {
       "template_id": "SHE_HAS_SHOES",
-      "concepts": ["SHE", "HAVE", "SHOES"],
+      "concepts": [
+        "SHE",
+        "HAVE",
+        "SHOES"
+      ],
       "render": {
         "en": "She has shoes.",
         "pt": "Ela tem sapatos.",
@@ -3529,7 +4095,8 @@
         "zh": "她有鞋子。",
         "it": "Lei ha delle scarpe.",
         "th": "เธอมีรองเท้า",
-        "pl": "Ona ma buty."
+        "pl": "Ona ma buty.",
+        "fi": "Hänellä on kengät."
       },
       "surface": {
         "en": {
@@ -3611,6 +4178,11 @@
           "SHE": "ona",
           "HAVE": "ma",
           "SHOES": "buty"
+        },
+        "fi": {
+          "SHE": "hän",
+          "HAVE": "on",
+          "SHOES": "kengät"
         }
       },
       "questions": {
@@ -3631,9 +4203,15 @@
             "zh": "谁有鞋子？",
             "it": "Chi ha delle scarpe?",
             "th": "ใครมีรองเท้า",
-            "pl": "Kto ma buty?"
+            "pl": "Kto ma buty?",
+            "fi": "Kenellä on kengät?"
           },
-          "choices": ["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "SHE"],
+          "choices": [
+            "FIRST_PERSON_SINGULAR",
+            "SECOND_PERSON",
+            "HE",
+            "SHE"
+          ],
           "answer": "SHE"
         },
         "verb": {
@@ -3653,9 +4231,15 @@
             "zh": "她做什么？",
             "it": "Che cosa fa lei?",
             "th": "เธอทำอะไร",
-            "pl": "Co ona robi?"
+            "pl": "Co ona robi?",
+            "fi": "Mitä hän tekee?"
           },
-          "choices": ["HAVE", "READ", "EAT", "SEE"],
+          "choices": [
+            "HAVE",
+            "READ",
+            "EAT",
+            "SEE"
+          ],
           "answer": "HAVE"
         },
         "object": {
@@ -3675,16 +4259,26 @@
             "zh": "她有什么？",
             "it": "Che cosa ha lei?",
             "th": "เธอมีอะไร",
-            "pl": "Co ona ma?"
+            "pl": "Co ona ma?",
+            "fi": "Mitä hänellä on?"
           },
-          "choices": ["SHOES", "BOOK", "PHONE", "FOOD"],
+          "choices": [
+            "SHOES",
+            "BOOK",
+            "PHONE",
+            "FOOD"
+          ],
           "answer": "SHOES"
         }
       }
     },
     {
       "template_id": "THEY_HAVE_PANTS",
-      "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "PANTS"],
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "HAVE",
+        "PANTS"
+      ],
       "render": {
         "en": "They have pants.",
         "pt": "Eles têm calças.",
@@ -3701,7 +4295,8 @@
         "zh": "他们有裤子。",
         "it": "Loro hanno dei pantaloni.",
         "th": "พวกเขามีกางเกง",
-        "pl": "Oni mają spodnie."
+        "pl": "Oni mają spodnie.",
+        "fi": "Heillä on housut."
       },
       "surface": {
         "en": {
@@ -3783,12 +4378,21 @@
           "THIRD_PERSON_PLURAL": "oni",
           "HAVE": "mają",
           "PANTS": "spodnie"
+        },
+        "fi": {
+          "THIRD_PERSON_PLURAL": "he",
+          "HAVE": "on",
+          "PANTS": "housut"
         }
       }
     },
     {
       "template_id": "WE_HAVE_CLOTHES",
-      "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "CLOTHES"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "HAVE",
+        "CLOTHES"
+      ],
       "render": {
         "en": "We have clothes.",
         "pt": "Nós temos roupas.",
@@ -3805,7 +4409,8 @@
         "zh": "我们有衣服。",
         "it": "Noi abbiamo dei vestiti.",
         "th": "เรามีเสื้อผ้า",
-        "pl": "My mamy ubrania."
+        "pl": "My mamy ubrania.",
+        "fi": "Meillä on vaatteet."
       },
       "surface": {
         "en": {
@@ -3887,12 +4492,21 @@
           "FIRST_PERSON_PLURAL": "my",
           "HAVE": "mamy",
           "CLOTHES": "ubrania"
+        },
+        "fi": {
+          "FIRST_PERSON_PLURAL": "me",
+          "HAVE": "on",
+          "CLOTHES": "vaatteet"
         }
       }
     },
     {
       "template_id": "I_EAT_BREAKFAST",
-      "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "BREAKFAST"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "BREAKFAST"
+      ],
       "render": {
         "en": "I eat breakfast.",
         "pt": "Eu como café da manhã.",
@@ -3909,7 +4523,8 @@
         "zh": "我吃早餐。",
         "it": "Io mangio la colazione.",
         "th": "ฉันกินอาหารเช้า",
-        "pl": "Ja jem śniadanie."
+        "pl": "Ja jem śniadanie.",
+        "fi": "Minä syön aamiaisen."
       },
       "surface": {
         "en": {
@@ -3991,12 +4606,21 @@
           "FIRST_PERSON_SINGULAR": "ja",
           "EAT": "jem",
           "BREAKFAST": "śniadanie"
+        },
+        "fi": {
+          "FIRST_PERSON_SINGULAR": "minä",
+          "EAT": "syön",
+          "BREAKFAST": "aamiaisen"
         }
       }
     },
     {
       "template_id": "WE_EAT_LUNCH",
-      "concepts": ["FIRST_PERSON_PLURAL", "EAT", "LUNCH"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "EAT",
+        "LUNCH"
+      ],
       "render": {
         "en": "We eat lunch.",
         "pt": "Nós comemos almoço.",
@@ -4013,7 +4637,8 @@
         "zh": "我们吃午餐。",
         "it": "Noi mangiamo il pranzo.",
         "th": "เรากินอาหารกลางวัน",
-        "pl": "My jemy obiad."
+        "pl": "My jemy obiad.",
+        "fi": "Me syömme lounaan."
       },
       "surface": {
         "en": {
@@ -4095,12 +4720,21 @@
           "FIRST_PERSON_PLURAL": "my",
           "EAT": "jemy",
           "LUNCH": "obiad"
+        },
+        "fi": {
+          "FIRST_PERSON_PLURAL": "me",
+          "EAT": "syömme",
+          "LUNCH": "lounaan"
         }
       }
     },
     {
       "template_id": "THEY_EAT_DINNER",
-      "concepts": ["THIRD_PERSON_PLURAL", "EAT", "DINNER"],
+      "concepts": [
+        "THIRD_PERSON_PLURAL",
+        "EAT",
+        "DINNER"
+      ],
       "render": {
         "en": "They eat dinner.",
         "pt": "Eles comem jantar.",
@@ -4117,7 +4751,8 @@
         "zh": "他们吃晚餐。",
         "it": "Loro mangiano la cena.",
         "th": "พวกเขากินอาหารเย็น",
-        "pl": "Oni jedzą kolację."
+        "pl": "Oni jedzą kolację.",
+        "fi": "He syövät illallisen."
       },
       "surface": {
         "en": {
@@ -4199,12 +4834,22 @@
           "THIRD_PERSON_PLURAL": "oni",
           "EAT": "jedzą",
           "DINNER": "kolację"
+        },
+        "fi": {
+          "THIRD_PERSON_PLURAL": "he",
+          "EAT": "syövät",
+          "DINNER": "illallisen"
         }
       }
     },
     {
       "template_id": "THIS_IS_MY_HAND",
-      "concepts": ["THIS", "BE", "MY", "HAND"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "MY",
+        "HAND"
+      ],
       "render": {
         "en": "This is my hand.",
         "pt": "Esta é minha mão.",
@@ -4221,7 +4866,8 @@
         "zh": "这是我的手。",
         "it": "Questa è la mia mano.",
         "th": "นี่คือมือของฉัน",
-        "pl": "To jest moja ręka."
+        "pl": "To jest moja ręka.",
+        "fi": "Tämä on minun käsi."
       },
       "surface": {
         "en": {
@@ -4318,12 +4964,23 @@
           "BE": "jest",
           "MY": "moja",
           "HAND": "ręka"
+        },
+        "fi": {
+          "THIS": "tämä",
+          "BE": "on",
+          "MY": "minun",
+          "HAND": "käsi"
         }
       }
     },
     {
       "template_id": "THIS_IS_YOUR_HEAD",
-      "concepts": ["THIS", "BE", "YOUR", "HEAD"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "YOUR",
+        "HEAD"
+      ],
       "render": {
         "en": "This is your head.",
         "pt": "Esta é sua cabeça.",
@@ -4340,7 +4997,8 @@
         "zh": "这是你的头。",
         "it": "Questa è la tua testa.",
         "th": "นี่คือหัวของคุณ",
-        "pl": "To jest twoja głowa."
+        "pl": "To jest twoja głowa.",
+        "fi": "Tämä on sinun pää."
       },
       "surface": {
         "en": {
@@ -4437,12 +5095,23 @@
           "BE": "jest",
           "YOUR": "twoja",
           "HEAD": "głowa"
+        },
+        "fi": {
+          "THIS": "tämä",
+          "BE": "on",
+          "YOUR": "sinun",
+          "HEAD": "pää"
         }
       }
     },
     {
       "template_id": "THAT_IS_MY_ARM",
-      "concepts": ["THAT", "BE", "MY", "ARM"],
+      "concepts": [
+        "THAT",
+        "BE",
+        "MY",
+        "ARM"
+      ],
       "render": {
         "en": "That is my arm.",
         "pt": "Esse é meu braço.",
@@ -4459,7 +5128,8 @@
         "zh": "那是我的手臂。",
         "it": "Quello è il mio braccio.",
         "th": "นั่นคือแขนของฉัน",
-        "pl": "Tamto jest moje ramię."
+        "pl": "Tamto jest moje ramię.",
+        "fi": "Tuo on minun käsivarsi."
       },
       "surface": {
         "en": {
@@ -4556,12 +5226,23 @@
           "BE": "jest",
           "MY": "moje",
           "ARM": "ramię"
+        },
+        "fi": {
+          "THAT": "tuo",
+          "BE": "on",
+          "MY": "minun",
+          "ARM": "käsivarsi"
         }
       }
     },
     {
       "template_id": "THAT_IS_YOUR_LEG",
-      "concepts": ["THAT", "BE", "YOUR", "LEG"],
+      "concepts": [
+        "THAT",
+        "BE",
+        "YOUR",
+        "LEG"
+      ],
       "render": {
         "en": "That is your leg.",
         "pt": "Essa é sua perna.",
@@ -4578,7 +5259,8 @@
         "zh": "那是你的腿。",
         "it": "Quella è la tua gamba.",
         "th": "นั่นคือขาของคุณ",
-        "pl": "Tamto jest twoja noga."
+        "pl": "Tamto jest twoja noga.",
+        "fi": "Tuo on sinun jalka."
       },
       "surface": {
         "en": {
@@ -4675,12 +5357,23 @@
           "BE": "jest",
           "YOUR": "twoja",
           "LEG": "noga"
+        },
+        "fi": {
+          "THAT": "tuo",
+          "BE": "on",
+          "YOUR": "sinun",
+          "LEG": "jalka"
         }
       }
     },
     {
       "template_id": "SHE_IS_MY_MOM",
-      "concepts": ["SHE", "BE", "MY", "MOM"],
+      "concepts": [
+        "SHE",
+        "BE",
+        "MY",
+        "MOM"
+      ],
       "render": {
         "en": "She is my mom.",
         "pt": "Ela é minha mãe.",
@@ -4697,7 +5390,8 @@
         "zh": "她是我的妈妈。",
         "it": "Lei è la mia mamma.",
         "th": "เธอเป็นแม่ของฉัน",
-        "pl": "Ona jest moją mamą."
+        "pl": "Ona jest moją mamą.",
+        "fi": "Hän on minun äiti."
       },
       "surface": {
         "en": {
@@ -4794,12 +5488,23 @@
           "BE": "jest",
           "MY": "moją",
           "MOM": "mamą"
+        },
+        "fi": {
+          "SHE": "hän",
+          "BE": "on",
+          "MY": "minun",
+          "MOM": "äiti"
         }
       }
     },
     {
       "template_id": "HE_IS_MY_DAD",
-      "concepts": ["HE", "BE", "MY", "DAD"],
+      "concepts": [
+        "HE",
+        "BE",
+        "MY",
+        "DAD"
+      ],
       "render": {
         "en": "He is my dad.",
         "pt": "Ele é meu pai.",
@@ -4816,7 +5521,8 @@
         "zh": "他是我的爸爸。",
         "it": "Lui è il mio papà.",
         "th": "เขาเป็นพ่อของฉัน",
-        "pl": "On jest moim tatą."
+        "pl": "On jest moim tatą.",
+        "fi": "Hän on minun isä."
       },
       "surface": {
         "en": {
@@ -4913,12 +5619,28 @@
           "BE": "jest",
           "MY": "moim",
           "DAD": "tatą"
+        },
+        "fi": {
+          "HE": "hän",
+          "BE": "on",
+          "MY": "minun",
+          "DAD": "isä"
         }
       }
     },
     {
       "template_id": "THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD",
-      "concepts": ["THIS", "BE", "MY", "HAND", "AND", "THIS", "BE", "YOUR", "HEAD"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "MY",
+        "HAND",
+        "AND",
+        "THIS",
+        "BE",
+        "YOUR",
+        "HEAD"
+      ],
       "render": {
         "en": "This is my hand and this is your head.",
         "pt": "Esta é minha mão e esta é sua cabeça.",
@@ -4935,12 +5657,23 @@
         "zh": "这是我的手，这是你的头。",
         "it": "Questa è la mia mano e questa è la tua testa.",
         "th": "นี่คือมือของฉันและนี่คือหัวของคุณ",
-        "pl": "To jest moja ręka i to jest twoja głowa."
+        "pl": "To jest moja ręka i to jest twoja głowa.",
+        "fi": "Tämä on minun käsi ja tämä on sinun pää."
       }
     },
     {
       "template_id": "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD",
-      "concepts": ["SHE", "BE", "MY", "MOM", "AND", "HE", "BE", "MY", "DAD"],
+      "concepts": [
+        "SHE",
+        "BE",
+        "MY",
+        "MOM",
+        "AND",
+        "HE",
+        "BE",
+        "MY",
+        "DAD"
+      ],
       "render": {
         "en": "She is my mom and he is my dad.",
         "pt": "Ela é minha mãe e ele é meu pai.",
@@ -4957,12 +5690,18 @@
         "zh": "她是我的妈妈，他是我的爸爸。",
         "it": "Lei è la mia mamma e lui è il mio papà.",
         "th": "เธอเป็นแม่ของฉันและเขาเป็นพ่อของฉัน",
-        "pl": "Ona jest moją mamą i on jest moim tatą."
+        "pl": "Ona jest moją mamą i on jest moim tatą.",
+        "fi": "Hän on minun äiti ja hän on minun isä."
       }
     },
     {
       "template_id": "I_EAT_AND_DRINK",
-      "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "AND", "DRINK"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "AND",
+        "DRINK"
+      ],
       "render": {
         "en": "I eat and drink.",
         "de": "Ich esse und trinke.",
@@ -4979,12 +5718,20 @@
         "ar": "أنا آكل وأشرب.",
         "it": "Io mangio e bevo.",
         "th": "ฉันกินและดื่ม",
-        "pl": "Ja jem i piję."
+        "pl": "Ja jem i piję.",
+        "fi": "Minä syön ja juon."
       }
     },
     {
       "template_id": "HE_EAT_BREAKFAST_BUT_NOT_LUNCH",
-      "concepts": ["HE", "EAT", "BREAKFAST", "BUT", "NOT", "LUNCH"],
+      "concepts": [
+        "HE",
+        "EAT",
+        "BREAKFAST",
+        "BUT",
+        "NOT",
+        "LUNCH"
+      ],
       "render": {
         "en": "He eats breakfast but not lunch.",
         "de": "Er isst Frühstück, aber nicht Mittagessen.",
@@ -5001,12 +5748,19 @@
         "ar": "هو يأكل الفطور لكن ليس الغداء.",
         "it": "Lui mangia la colazione ma non il pranzo.",
         "th": "เขากินอาหารเช้าแต่ไม่กินอาหารกลางวัน",
-        "pl": "On je śniadanie, ale nie obiad."
+        "pl": "On je śniadanie, ale nie obiad.",
+        "fi": "Hän syö aamiaisen, mutta ei lounasta."
       }
     },
     {
       "template_id": "SHE_GO_TO_HER_ROOM",
-      "concepts": ["SHE", "GO", "TO", "HER", "ROOM"],
+      "concepts": [
+        "SHE",
+        "GO",
+        "TO",
+        "HER",
+        "ROOM"
+      ],
       "render": {
         "en": "She goes to her room.",
         "de": "Sie geht in ihr Zimmer.",
@@ -5023,12 +5777,18 @@
         "ar": "هي تذهب إلى غرفتها.",
         "it": "Lei va nella sua stanza.",
         "th": "เธอไปที่ห้องของเธอ",
-        "pl": "Ona idzie do swojego pokoju."
+        "pl": "Ona idzie do swojego pokoju.",
+        "fi": "Hän menee huoneeseensa."
       }
     },
     {
       "template_id": "THIS_IS_A_GOOD_BOOK",
-      "concepts": ["THIS", "BE", "GOOD", "BOOK"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "GOOD",
+        "BOOK"
+      ],
       "structure": {
         "type": "copular_demonstrative"
       },
@@ -5054,12 +5814,18 @@
         "ar": "هذا كتاب جيد.",
         "it": "Questo è un buon libro.",
         "th": "นี่คือหนังสือที่ดี",
-        "pl": "To jest dobra książka."
+        "pl": "To jest dobra książka.",
+        "fi": "Tämä on hyvä kirja."
       }
     },
     {
       "template_id": "IS_THAT_YOUR_PHONE",
-      "concepts": ["THAT", "BE", "YOUR", "PHONE"],
+      "concepts": [
+        "THAT",
+        "BE",
+        "YOUR",
+        "PHONE"
+      ],
       "structure": {
         "type": "yes_no_question_copular"
       },
@@ -5085,12 +5851,24 @@
         "ar": "هل ذلك هاتفك؟",
         "it": "È quello il tuo telefono?",
         "th": "นั่นคือโทรศัพท์ของคุณใช่ไหม",
-        "pl": "Czy to twój telefon?"
+        "pl": "Czy to twój telefon?",
+        "fi": "Onko tuo sinun puhelin?"
       }
     },
     {
       "template_id": "HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME",
-      "concepts": ["HE", "EAT", "DINNER", "WITH", "HIS", "MOM", "BECAUSE", "HE", "BE", "HOME"],
+      "concepts": [
+        "HE",
+        "EAT",
+        "DINNER",
+        "WITH",
+        "HIS",
+        "MOM",
+        "BECAUSE",
+        "HE",
+        "BE",
+        "HOME"
+      ],
       "structure": {
         "type": "complex_clause",
         "linker": "BECAUSE",
@@ -5123,12 +5901,23 @@
         "ar": "هو يأكل العشاء مع أمه لأنه في المنزل.",
         "it": "Lui mangia la cena con la sua mamma perché è a casa.",
         "th": "เขากินอาหารเย็นกับแม่ของเขาเพราะเขาอยู่บ้าน",
-        "pl": "On je kolację ze swoją mamą, ponieważ on jest w domu."
+        "pl": "On je kolację ze swoją mamą, ponieważ on jest w domu.",
+        "fi": "Hän syö illallisen äitinsä kanssa, koska hän on kotona."
       }
     },
     {
       "template_id": "IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER",
-      "concepts": ["IF", "HE", "BE", "HOME", "HE", "EAT", "WITH", "HIS", "DAUGHTER"],
+      "concepts": [
+        "IF",
+        "HE",
+        "BE",
+        "HOME",
+        "HE",
+        "EAT",
+        "WITH",
+        "HIS",
+        "DAUGHTER"
+      ],
       "structure": {
         "type": "complex_clause",
         "linker": "IF",
@@ -5160,12 +5949,17 @@
         "ar": "إذا كان في المنزل، فإنه يأكل مع ابنته.",
         "it": "Se lui è a casa, mangia con sua figlia.",
         "th": "ถ้าเขาอยู่บ้าน เขากินกับลูกสาวของเขา",
-        "pl": "Jeśli on jest w domu, on je ze swoją córką."
+        "pl": "Jeśli on jest w domu, on je ze swoją córką.",
+        "fi": "Jos hän on kotona, hän syö tyttärensä kanssa."
       }
     },
     {
       "template_id": "BOOK_IS_RED",
-      "concepts": ["BOOK", "BE", "RED"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "RED"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -5190,12 +5984,17 @@
         "ar": "الكتاب أحمر.",
         "it": "Il libro è rosso.",
         "th": "หนังสือสีแดง",
-        "pl": "Książka jest czerwona."
+        "pl": "Książka jest czerwona.",
+        "fi": "Kirja on punainen."
       }
     },
     {
       "template_id": "PHONE_IS_BLUE",
-      "concepts": ["PHONE", "BE", "BLUE"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "BLUE"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -5220,12 +6019,17 @@
         "ar": "الهاتف أزرق.",
         "it": "Il telefono è blu.",
         "th": "โทรศัพท์สีน้ำเงิน",
-        "pl": "Telefon jest niebieski."
+        "pl": "Telefon jest niebieski.",
+        "fi": "Puhelin on sininen."
       }
     },
     {
       "template_id": "SHIRT_IS_GREEN",
-      "concepts": ["SHIRT", "BE", "GREEN"],
+      "concepts": [
+        "SHIRT",
+        "BE",
+        "GREEN"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -5245,12 +6049,17 @@
         "ar": "القميص أخضر.",
         "it": "La camicia è verde.",
         "th": "เสื้อสีเขียว",
-        "pl": "Koszula jest zielona."
+        "pl": "Koszula jest zielona.",
+        "fi": "Paita on vihreä."
       }
     },
     {
       "template_id": "HOUSE_IS_WHITE",
-      "concepts": ["HOUSE", "BE", "WHITE"],
+      "concepts": [
+        "HOUSE",
+        "BE",
+        "WHITE"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -5270,12 +6079,17 @@
         "ar": "البيت أبيض.",
         "it": "La casa è bianca.",
         "th": "บ้านสีขาว",
-        "pl": "Dom jest biały."
+        "pl": "Dom jest biały.",
+        "fi": "Talo on valkoinen."
       }
     },
     {
       "template_id": "PANTS_ARE_BLACK",
-      "concepts": ["PANTS", "BE", "BLACK"],
+      "concepts": [
+        "PANTS",
+        "BE",
+        "BLACK"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -5295,12 +6109,17 @@
         "ar": "البنطال أسود.",
         "it": "I pantaloni sono neri.",
         "th": "กางเกงสีดำ",
-        "pl": "Spodnie są czarne."
+        "pl": "Spodnie są czarne.",
+        "fi": "Housut ovat mustat."
       }
     },
     {
       "template_id": "I_EAT_TODAY",
-      "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "TODAY"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "TODAY"
+      ],
       "structure": {
         "type": "time_statement"
       },
@@ -5320,12 +6139,17 @@
         "ar": "أنا آكل اليوم.",
         "it": "Io mangio oggi.",
         "th": "ฉันกินวันนี้",
-        "pl": "Ja jem dziś."
+        "pl": "Ja jem dziś.",
+        "fi": "Minä syön tänään."
       }
     },
     {
       "template_id": "HE_READS_TODAY",
-      "concepts": ["HE", "READ", "TODAY"],
+      "concepts": [
+        "HE",
+        "READ",
+        "TODAY"
+      ],
       "structure": {
         "type": "time_statement"
       },
@@ -5345,12 +6169,17 @@
         "ar": "هو يقرأ اليوم.",
         "it": "Lui legge oggi.",
         "th": "เขาอ่านวันนี้",
-        "pl": "On czyta dziś."
+        "pl": "On czyta dziś.",
+        "fi": "Hän lukee tänään."
       }
     },
     {
       "template_id": "WE_GO_TOMORROW",
-      "concepts": ["FIRST_PERSON_PLURAL", "GO", "TOMORROW"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "TOMORROW"
+      ],
       "structure": {
         "type": "time_statement"
       },
@@ -5370,12 +6199,17 @@
         "ar": "نحن نذهب غداً.",
         "it": "Noi andiamo domani.",
         "th": "เราไปพรุ่งนี้",
-        "pl": "My idziemy jutro."
+        "pl": "My idziemy jutro.",
+        "fi": "Me menemme huomenna."
       }
     },
     {
       "template_id": "I_READ_NOW",
-      "concepts": ["FIRST_PERSON_SINGULAR", "READ", "NOW"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "READ",
+        "NOW"
+      ],
       "structure": {
         "type": "time_statement"
       },
@@ -5395,12 +6229,17 @@
         "ar": "أنا أقرأ الآن.",
         "it": "Io leggo adesso.",
         "th": "ฉันอ่านตอนนี้",
-        "pl": "Ja czytam teraz."
+        "pl": "Ja czytam teraz.",
+        "fi": "Minä luen nyt."
       }
     },
     {
       "template_id": "HE_WORKS_YESTERDAY",
-      "concepts": ["HE", "DO", "YESTERDAY"],
+      "concepts": [
+        "HE",
+        "DO",
+        "YESTERDAY"
+      ],
       "structure": {
         "type": "time_statement"
       },
@@ -5420,12 +6259,16 @@
         "ar": "هو يعمل أمس.",
         "it": "Lui ha lavorato ieri.",
         "th": "เมื่อวานเขาทำงาน",
-        "pl": "On pracował wczoraj."
+        "pl": "On pracował wczoraj.",
+        "fi": "Hän työskenteli eilen."
       }
     },
     {
       "template_id": "WHO_EATS",
-      "concepts": ["WHO", "EAT"],
+      "concepts": [
+        "WHO",
+        "EAT"
+      ],
       "structure": {
         "type": "question"
       },
@@ -5445,12 +6288,17 @@
         "ar": "من يأكل؟",
         "it": "Chi mangia?",
         "th": "ใครกิน",
-        "pl": "Kto je?"
+        "pl": "Kto je?",
+        "fi": "Kuka syö?"
       }
     },
     {
       "template_id": "WHY_DO_YOU_GO",
-      "concepts": ["WHY", "SECOND_PERSON", "GO"],
+      "concepts": [
+        "WHY",
+        "SECOND_PERSON",
+        "GO"
+      ],
       "structure": {
         "type": "question"
       },
@@ -5470,12 +6318,17 @@
         "ar": "لماذا تذهب؟",
         "it": "Perché vai?",
         "th": "คุณไปทำไม",
-        "pl": "Dlaczego idziesz?"
+        "pl": "Dlaczego idziesz?",
+        "fi": "Miksi sinä menet?"
       }
     },
     {
       "template_id": "WHEN_DO_WE_EAT",
-      "concepts": ["WHEN", "FIRST_PERSON_PLURAL", "EAT"],
+      "concepts": [
+        "WHEN",
+        "FIRST_PERSON_PLURAL",
+        "EAT"
+      ],
       "structure": {
         "type": "question"
       },
@@ -5495,12 +6348,17 @@
         "ar": "متى نأكل؟",
         "it": "Quando mangiamo?",
         "th": "เรากินเมื่อไหร่",
-        "pl": "Kiedy jemy?"
+        "pl": "Kiedy jemy?",
+        "fi": "Milloin me syömme?"
       }
     },
     {
       "template_id": "I_EAT_BEFORE",
-      "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "BEFORE"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "BEFORE"
+      ],
       "structure": {
         "type": "time_relation"
       },
@@ -5520,12 +6378,17 @@
         "ar": "أنا آكل قبل.",
         "it": "Io mangio prima.",
         "th": "ฉันกินก่อน",
-        "pl": "Ja jem przedtem."
+        "pl": "Ja jem przedtem.",
+        "fi": "Minä syön ennen."
       }
     },
     {
       "template_id": "WE_GO_AFTER",
-      "concepts": ["FIRST_PERSON_PLURAL", "GO", "AFTER"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "AFTER"
+      ],
       "structure": {
         "type": "time_relation"
       },
@@ -5545,12 +6408,17 @@
         "ar": "نحن نذهب بعد.",
         "it": "Noi andiamo dopo.",
         "th": "เราไปหลังจากนั้น",
-        "pl": "My idziemy potem."
+        "pl": "My idziemy potem.",
+        "fi": "Me menemme sen jälkeen."
       }
     },
     {
       "template_id": "WHERE_IS_BOOK",
-      "concepts": ["WHERE", "BE", "BOOK"],
+      "concepts": [
+        "WHERE",
+        "BE",
+        "BOOK"
+      ],
       "structure": {
         "type": "question"
       },
@@ -5570,12 +6438,17 @@
         "ar": "أين الكتاب؟",
         "it": "Dov'è il libro?",
         "th": "หนังสืออยู่ที่ไหน",
-        "pl": "Gdzie jest książka?"
+        "pl": "Gdzie jest książka?",
+        "fi": "Missä kirja on?"
       }
     },
     {
       "template_id": "HOW_DO_YOU_READ",
-      "concepts": ["HOW", "SECOND_PERSON", "READ"],
+      "concepts": [
+        "HOW",
+        "SECOND_PERSON",
+        "READ"
+      ],
       "structure": {
         "type": "question"
       },
@@ -5595,12 +6468,17 @@
         "ar": "كيف تقرأ؟",
         "it": "Come leggi?",
         "th": "คุณอ่านอย่างไร",
-        "pl": "Jak czytasz?"
+        "pl": "Jak czytasz?",
+        "fi": "Miten sinä luet?"
       }
     },
     {
       "template_id": "WHAT_DO_I_HAVE",
-      "concepts": ["WHAT", "FIRST_PERSON_SINGULAR", "HAVE"],
+      "concepts": [
+        "WHAT",
+        "FIRST_PERSON_SINGULAR",
+        "HAVE"
+      ],
       "structure": {
         "type": "question"
       },
@@ -5620,12 +6498,16 @@
         "ar": "ماذا لدي؟",
         "it": "Che cosa ho?",
         "th": "ฉันมีอะไร",
-        "pl": "Co ja mam?"
+        "pl": "Co ja mam?",
+        "fi": "Mitä minulla on?"
       }
     },
     {
       "template_id": "WHICH_BOOK",
-      "concepts": ["WHICH", "BOOK"],
+      "concepts": [
+        "WHICH",
+        "BOOK"
+      ],
       "structure": {
         "type": "selection"
       },
@@ -5645,12 +6527,17 @@
         "ar": "أي كتاب؟",
         "it": "Quale libro?",
         "th": "หนังสือเล่มไหน",
-        "pl": "Która książka?"
+        "pl": "Która książka?",
+        "fi": "Mikä kirja?"
       }
     },
     {
       "template_id": "WE_EAT_ALL",
-      "concepts": ["FIRST_PERSON_PLURAL", "EAT", "ALL"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "EAT",
+        "ALL"
+      ],
       "structure": {
         "type": "quantifier"
       },
@@ -5670,12 +6557,18 @@
         "ar": "نحن نأكل كل شيء.",
         "it": "Noi mangiamo tutto.",
         "th": "เรากินทั้งหมด",
-        "pl": "My jemy wszystko."
+        "pl": "My jemy wszystko.",
+        "fi": "Me syömme kaiken."
       }
     },
     {
       "template_id": "BOOK_ON_THIS",
-      "concepts": ["BOOK", "BE", "ON", "THIS"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "ON",
+        "THIS"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5695,12 +6588,18 @@
         "ar": "الكتاب على هذا.",
         "it": "Il libro è su questo.",
         "th": "หนังสืออยู่บนนี้",
-        "pl": "Książka jest na tym."
+        "pl": "Książka jest na tym.",
+        "fi": "Kirja on tällä."
       }
     },
     {
       "template_id": "PHONE_IN_THAT",
-      "concepts": ["PHONE", "BE", "IN", "THAT"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "IN",
+        "THAT"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5720,12 +6619,18 @@
         "ar": "الهاتف في ذلك.",
         "it": "Il telefono è in quello.",
         "th": "โทรศัพท์อยู่ในนั้น",
-        "pl": "Telefon jest w tamtym."
+        "pl": "Telefon jest w tamtym.",
+        "fi": "Puhelin on tuossa."
       }
     },
     {
       "template_id": "SHOES_UNDER_THIS",
-      "concepts": ["SHOES", "BE", "UNDER", "THIS"],
+      "concepts": [
+        "SHOES",
+        "BE",
+        "UNDER",
+        "THIS"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5745,12 +6650,26 @@
         "ar": "الأحذية تحت هذا.",
         "it": "Le scarpe sono sotto questo.",
         "th": "รองเท้าอยู่ใต้นี้",
-        "pl": "Buty są pod tym."
+        "pl": "Buty są pod tym.",
+        "fi": "Kengät ovat tämän alla."
+      },
+      "order": {
+        "fi": [
+          "SHOES",
+          "BE",
+          "THIS",
+          "UNDER"
+        ]
       }
     },
     {
       "template_id": "BOOK_NEXT_TO_PHONE",
-      "concepts": ["BOOK", "BE", "NEXT_TO", "PHONE"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "NEXT_TO",
+        "PHONE"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5770,12 +6689,26 @@
         "ar": "الكتاب بجانب الهاتف.",
         "it": "Il libro è accanto al telefono.",
         "th": "หนังสืออยู่ข้างๆโทรศัพท์",
-        "pl": "Książka jest obok telefonu."
+        "pl": "Książka jest obok telefonu.",
+        "fi": "Kirja on puhelimen vieressä."
+      },
+      "order": {
+        "fi": [
+          "BOOK",
+          "BE",
+          "PHONE",
+          "NEXT_TO"
+        ]
       }
     },
     {
       "template_id": "PHONE_IN_FRONT_OF_BOOK",
-      "concepts": ["PHONE", "BE", "FRONT", "BOOK"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "FRONT",
+        "BOOK"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5795,12 +6728,26 @@
         "ar": "الهاتف أمام الكتاب.",
         "it": "Il telefono è davanti al libro.",
         "th": "โทรศัพท์อยู่ข้างหน้าหนังสือ",
-        "pl": "Telefon jest przed książką."
+        "pl": "Telefon jest przed książką.",
+        "fi": "Puhelin on kirjan edessä."
+      },
+      "order": {
+        "fi": [
+          "PHONE",
+          "BE",
+          "BOOK",
+          "FRONT"
+        ]
       }
     },
     {
       "template_id": "BOOK_BEHIND_PHONE",
-      "concepts": ["BOOK", "BE", "BEHIND", "PHONE"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "BEHIND",
+        "PHONE"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5820,12 +6767,26 @@
         "ar": "الكتاب خلف الهاتف.",
         "it": "Il libro è dietro il telefono.",
         "th": "หนังสืออยู่ข้างหลังโทรศัพท์",
-        "pl": "Książka jest za telefonem."
+        "pl": "Książka jest za telefonem.",
+        "fi": "Kirja on puhelimen takana."
+      },
+      "order": {
+        "fi": [
+          "BOOK",
+          "BE",
+          "PHONE",
+          "BEHIND"
+        ]
       }
     },
     {
       "template_id": "BOOK_ON_TABLE",
-      "concepts": ["BOOK", "BE", "ON", "TABLE"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "ON",
+        "TABLE"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5845,12 +6806,18 @@
         "ar": "الكتاب على الطاولة.",
         "it": "Il libro è sul tavolo.",
         "th": "หนังสืออยู่บนโต๊ะ",
-        "pl": "Książka jest na stole."
+        "pl": "Książka jest na stole.",
+        "fi": "Kirja on pöydällä."
       }
     },
     {
       "template_id": "PHONE_UNDER_TABLE",
-      "concepts": ["PHONE", "BE", "UNDER", "TABLE"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "UNDER",
+        "TABLE"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5870,12 +6837,26 @@
         "ar": "الهاتف تحت الطاولة.",
         "it": "Il telefono è sotto il tavolo.",
         "th": "โทรศัพท์อยู่ใต้โต๊ะ",
-        "pl": "Telefon jest pod stołem."
+        "pl": "Telefon jest pod stołem.",
+        "fi": "Puhelin on pöydän alla."
+      },
+      "order": {
+        "fi": [
+          "PHONE",
+          "BE",
+          "TABLE",
+          "UNDER"
+        ]
       }
     },
     {
       "template_id": "BOOK_NEXT_TO_TABLE",
-      "concepts": ["BOOK", "BE", "NEXT_TO", "TABLE"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "NEXT_TO",
+        "TABLE"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5895,12 +6876,26 @@
         "ar": "الكتاب بجانب الطاولة.",
         "it": "Il libro è accanto al tavolo.",
         "th": "หนังสืออยู่ข้างๆโต๊ะ",
-        "pl": "Książka jest obok stołu."
+        "pl": "Książka jest obok stołu.",
+        "fi": "Kirja on pöydän vieressä."
+      },
+      "order": {
+        "fi": [
+          "BOOK",
+          "BE",
+          "TABLE",
+          "NEXT_TO"
+        ]
       }
     },
     {
       "template_id": "PHONE_BEHIND_TABLE",
-      "concepts": ["PHONE", "BE", "BEHIND", "TABLE"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "BEHIND",
+        "TABLE"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5920,12 +6915,26 @@
         "ar": "الهاتف خلف الطاولة.",
         "it": "Il telefono è dietro il tavolo.",
         "th": "โทรศัพท์อยู่ข้างหลังโต๊ะ",
-        "pl": "Telefon jest za stołem."
+        "pl": "Telefon jest za stołem.",
+        "fi": "Puhelin on pöydän takana."
+      },
+      "order": {
+        "fi": [
+          "PHONE",
+          "BE",
+          "TABLE",
+          "BEHIND"
+        ]
       }
     },
     {
       "template_id": "I_GO_TO_TABLE",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "TO", "TABLE"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "TO",
+        "TABLE"
+      ],
       "structure": {
         "type": "relation"
       },
@@ -5945,12 +6954,18 @@
         "ar": "أنا أذهب إلى الطاولة.",
         "it": "Io vado al tavolo.",
         "th": "ฉันไปที่โต๊ะ",
-        "pl": "Ja idę do stołu."
+        "pl": "Ja idę do stołu.",
+        "fi": "Minä menen pöydän luo."
       }
     },
     {
       "template_id": "PHONE_OFF_THIS",
-      "concepts": ["PHONE", "BE", "OFF", "THIS"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "OFF",
+        "THIS"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -5970,12 +6985,20 @@
         "ar": "الهاتف بعيد عن هذا.",
         "it": "Il telefono è fuori da questo.",
         "th": "โทรศัพท์ไม่ได้อยู่บนนี้",
-        "pl": "Telefon nie jest na tym."
+        "pl": "Telefon nie jest na tym.",
+        "fi": "Puhelin ei ole tällä."
       }
     },
     {
       "template_id": "BOOK_BETWEEN_THIS_AND_THAT",
-      "concepts": ["BOOK", "BE", "BETWEEN", "THIS", "AND", "THAT"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "BETWEEN",
+        "THIS",
+        "AND",
+        "THAT"
+      ],
       "structure": {
         "type": "spatial_relation_complex"
       },
@@ -5995,12 +7018,28 @@
         "ar": "الكتاب بين هذا وذلك.",
         "it": "Il libro è tra questo e quello.",
         "th": "หนังสืออยู่ระหว่างนี้และนั้น",
-        "pl": "Książka jest między tym i tamtym."
+        "pl": "Książka jest między tym i tamtym.",
+        "fi": "Kirja on tämän ja tuon välissä."
+      },
+      "order": {
+        "fi": [
+          "BOOK",
+          "BE",
+          "THIS",
+          "AND",
+          "THAT",
+          "BETWEEN"
+        ]
       }
     },
     {
       "template_id": "SHOES_IN_THIS",
-      "concepts": ["SHOES", "BE", "IN", "THIS"],
+      "concepts": [
+        "SHOES",
+        "BE",
+        "IN",
+        "THIS"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -6020,12 +7059,18 @@
         "ar": "الأحذية في هذا.",
         "it": "Le scarpe sono in questo.",
         "th": "รองเท้าอยู่ในนี้",
-        "pl": "Buty są w tym."
+        "pl": "Buty są w tym.",
+        "fi": "Kengät ovat tässä."
       }
     },
     {
       "template_id": "PHONE_ON_THAT",
-      "concepts": ["PHONE", "BE", "ON", "THAT"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "ON",
+        "THAT"
+      ],
       "structure": {
         "type": "spatial_relation"
       },
@@ -6045,12 +7090,17 @@
         "ar": "الهاتف على ذلك.",
         "it": "Il telefono è su quello.",
         "th": "โทรศัพท์อยู่บนนั้น",
-        "pl": "Telefon jest na tamtym."
+        "pl": "Telefon jest na tamtym.",
+        "fi": "Puhelin on tuolla."
       }
     },
     {
       "template_id": "WE_GO_BACK",
-      "concepts": ["FIRST_PERSON_PLURAL", "GO", "BACK"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "BACK"
+      ],
       "structure": {
         "type": "direction"
       },
@@ -6070,12 +7120,17 @@
         "ar": "نحن نعود.",
         "it": "Noi torniamo indietro.",
         "th": "เรากลับไป",
-        "pl": "My wracamy."
+        "pl": "My wracamy.",
+        "fi": "Me menemme takaisin."
       }
     },
     {
       "template_id": "I_GO_OUT",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "OUT"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "OUT"
+      ],
       "structure": {
         "type": "direction"
       },
@@ -6095,12 +7150,17 @@
         "ar": "أنا أخرج.",
         "it": "Io esco.",
         "th": "ฉันออกไป",
-        "pl": "Ja wychodzę."
+        "pl": "Ja wychodzę.",
+        "fi": "Minä menen ulos."
       }
     },
     {
       "template_id": "WE_GO_NORTH",
-      "concepts": ["FIRST_PERSON_PLURAL", "GO", "NORTH"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "NORTH"
+      ],
       "structure": {
         "type": "direction"
       },
@@ -6120,12 +7180,17 @@
         "ar": "نحن نذهب شمالاً.",
         "it": "Noi andiamo a nord.",
         "th": "เราไปทางทิศเหนือ",
-        "pl": "My idziemy na północ."
+        "pl": "My idziemy na północ.",
+        "fi": "Me menemme pohjoiseen."
       }
     },
     {
       "template_id": "WE_GO_SOUTH",
-      "concepts": ["FIRST_PERSON_PLURAL", "GO", "SOUTH"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "SOUTH"
+      ],
       "structure": {
         "type": "direction"
       },
@@ -6145,12 +7210,17 @@
         "ar": "نحن نذهب جنوباً.",
         "it": "Noi andiamo a sud.",
         "th": "เราไปทางทิศใต้",
-        "pl": "My idziemy na południe."
+        "pl": "My idziemy na południe.",
+        "fi": "Me menemme etelään."
       }
     },
     {
       "template_id": "WE_GO_EAST",
-      "concepts": ["FIRST_PERSON_PLURAL", "GO", "EAST"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "EAST"
+      ],
       "structure": {
         "type": "direction"
       },
@@ -6170,12 +7240,17 @@
         "ar": "نحن نذهب شرقاً.",
         "it": "Noi andiamo a est.",
         "th": "เราไปทางทิศตะวันออก",
-        "pl": "My idziemy na wschód."
+        "pl": "My idziemy na wschód.",
+        "fi": "Me menemme itään."
       }
     },
     {
       "template_id": "WE_GO_WEST",
-      "concepts": ["FIRST_PERSON_PLURAL", "GO", "WEST"],
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "WEST"
+      ],
       "structure": {
         "type": "direction"
       },
@@ -6195,12 +7270,17 @@
         "ar": "نحن نذهب غرباً.",
         "it": "Noi andiamo a ovest.",
         "th": "เราไปทางทิศตะวันตก",
-        "pl": "My idziemy na zachód."
+        "pl": "My idziemy na zachód.",
+        "fi": "Me menemme länteen."
       }
     },
     {
       "template_id": "BOOK_IS_LONG",
-      "concepts": ["BOOK", "BE", "LONG"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "LONG"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6220,12 +7300,17 @@
         "ar": "الكتاب طويل.",
         "it": "Il libro è lungo.",
         "th": "หนังสือยาว",
-        "pl": "Książka jest długa."
+        "pl": "Książka jest długa.",
+        "fi": "Kirja on pitkä."
       }
     },
     {
       "template_id": "DAY_IS_SHORT",
-      "concepts": ["DAY", "BE", "SHORT"],
+      "concepts": [
+        "DAY",
+        "BE",
+        "SHORT"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6245,12 +7330,17 @@
         "ar": "اليوم قصير.",
         "it": "Il giorno è corto.",
         "th": "กลางวันสั้น",
-        "pl": "Dzień jest krótki."
+        "pl": "Dzień jest krótki.",
+        "fi": "Päivä on lyhyt."
       }
     },
     {
       "template_id": "BOOK_IS_HEAVY",
-      "concepts": ["BOOK", "BE", "HEAVY"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "HEAVY"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6270,12 +7360,17 @@
         "ar": "الكتاب ثقيل.",
         "it": "Il libro è pesante.",
         "th": "หนังสือหนัก",
-        "pl": "Książka jest ciężka."
+        "pl": "Książka jest ciężka.",
+        "fi": "Kirja on painava."
       }
     },
     {
       "template_id": "PHONE_IS_LIGHT",
-      "concepts": ["PHONE", "BE", "LIGHT"],
+      "concepts": [
+        "PHONE",
+        "BE",
+        "LIGHT"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6295,12 +7390,17 @@
         "ar": "الهاتف خفيف.",
         "it": "Il telefono è leggero.",
         "th": "โทรศัพท์เบา",
-        "pl": "Telefon jest lekki."
+        "pl": "Telefon jest lekki.",
+        "fi": "Puhelin on kevyt."
       }
     },
     {
       "template_id": "NIGHT_IS_DARK",
-      "concepts": ["NIGHT", "BE", "DARK"],
+      "concepts": [
+        "NIGHT",
+        "BE",
+        "DARK"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6320,12 +7420,17 @@
         "ar": "الليل مظلم.",
         "it": "La notte è buia.",
         "th": "กลางคืนมืด",
-        "pl": "Noc jest ciemna."
+        "pl": "Noc jest ciemna.",
+        "fi": "Yö on pimeä."
       }
     },
     {
       "template_id": "BOY_IS_YOUNG",
-      "concepts": ["BOY", "BE", "YOUNG"],
+      "concepts": [
+        "BOY",
+        "BE",
+        "YOUNG"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6345,12 +7450,17 @@
         "ar": "الولد صغير.",
         "it": "Il ragazzo è giovane.",
         "th": "เด็กผู้ชายอายุน้อย",
-        "pl": "Chłopiec jest młody."
+        "pl": "Chłopiec jest młody.",
+        "fi": "Poika on nuori."
       }
     },
     {
       "template_id": "BOOK_IS_EASY",
-      "concepts": ["BOOK", "BE", "EASY"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "EASY"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6370,12 +7480,17 @@
         "ar": "الكتاب سهل.",
         "it": "Il libro è facile.",
         "th": "หนังสือง่าย",
-        "pl": "Książka jest łatwa."
+        "pl": "Książka jest łatwa.",
+        "fi": "Kirja on helppo."
       }
     },
     {
       "template_id": "BOOK_IS_DIFFICULT",
-      "concepts": ["BOOK", "BE", "DIFFICULT"],
+      "concepts": [
+        "BOOK",
+        "BE",
+        "DIFFICULT"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6395,12 +7510,17 @@
         "ar": "الكتاب صعب.",
         "it": "Il libro è difficile.",
         "th": "หนังสือยาก",
-        "pl": "Książka jest trudna."
+        "pl": "Książka jest trudna.",
+        "fi": "Kirja on vaikea."
       }
     },
     {
       "template_id": "THIS_IS_RIGHT",
-      "concepts": ["THIS", "BE", "RIGHT"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "RIGHT"
+      ],
       "structure": {
         "type": "evaluation"
       },
@@ -6420,12 +7540,17 @@
         "ar": "هذا يمين.",
         "it": "Questo è a destra.",
         "th": "นี่อยู่ทางขวา",
-        "pl": "To jest po prawej."
+        "pl": "To jest po prawej.",
+        "fi": "Tämä on oikealla."
       }
     },
     {
       "template_id": "THIS_IS_LEFT",
-      "concepts": ["THIS", "BE", "LEFT"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "LEFT"
+      ],
       "structure": {
         "type": "evaluation"
       },
@@ -6445,12 +7570,17 @@
         "ar": "هذا يسار.",
         "it": "Questo è a sinistra.",
         "th": "นี่อยู่ทางซ้าย",
-        "pl": "To jest po lewej."
+        "pl": "To jest po lewej.",
+        "fi": "Tämä on vasemmalla."
       }
     },
     {
       "template_id": "THIS_IS_CORRECT",
-      "concepts": ["THIS", "BE", "CORRECT"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "CORRECT"
+      ],
       "structure": {
         "type": "evaluation"
       },
@@ -6470,12 +7600,17 @@
         "ar": "هذا صحيح.",
         "it": "Questo è corretto.",
         "th": "นี่ถูกต้อง",
-        "pl": "To jest poprawne."
+        "pl": "To jest poprawne.",
+        "fi": "Tämä on oikein."
       }
     },
     {
       "template_id": "THIS_IS_WRONG",
-      "concepts": ["THIS", "BE", "WRONG"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "WRONG"
+      ],
       "structure": {
         "type": "evaluation"
       },
@@ -6495,12 +7630,17 @@
         "ar": "هذا خطأ.",
         "it": "Questo è sbagliato.",
         "th": "นี่ผิด",
-        "pl": "To jest błędne."
+        "pl": "To jest błędne.",
+        "fi": "Tämä on väärin."
       }
     },
     {
       "template_id": "THIS_IS_NICE",
-      "concepts": ["THIS", "BE", "NICE"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "NICE"
+      ],
       "structure": {
         "type": "evaluation"
       },
@@ -6520,12 +7660,17 @@
         "ar": "هذا لطيف.",
         "it": "Questo è bello.",
         "th": "นี่ดี",
-        "pl": "To jest ładne."
+        "pl": "To jest ładne.",
+        "fi": "Tämä on mukavaa."
       }
     },
     {
       "template_id": "YEAR_IS_LONG",
-      "concepts": ["YEAR", "BE", "LONG"],
+      "concepts": [
+        "YEAR",
+        "BE",
+        "LONG"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6545,12 +7690,17 @@
         "ar": "السنة طويلة.",
         "it": "L'anno è lungo.",
         "th": "ปียาว",
-        "pl": "Rok jest długi."
+        "pl": "Rok jest długi.",
+        "fi": "Vuosi on pitkä."
       }
     },
     {
       "template_id": "MONTH_IS_LONG",
-      "concepts": ["MONTH", "BE", "LONG"],
+      "concepts": [
+        "MONTH",
+        "BE",
+        "LONG"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6570,12 +7720,17 @@
         "ar": "الشهر طويل.",
         "it": "Il mese è lungo.",
         "th": "เดือนยาว",
-        "pl": "Miesiąc jest długi."
+        "pl": "Miesiąc jest długi.",
+        "fi": "Kuukausi on pitkä."
       }
     },
     {
       "template_id": "WEEK_IS_SHORT",
-      "concepts": ["WEEK", "BE", "SHORT"],
+      "concepts": [
+        "WEEK",
+        "BE",
+        "SHORT"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6595,12 +7750,17 @@
         "ar": "الأسبوع قصير.",
         "it": "La settimana è corta.",
         "th": "สัปดาห์สั้น",
-        "pl": "Tydzień jest krótki."
+        "pl": "Tydzień jest krótki.",
+        "fi": "Viikko on lyhyt."
       }
     },
     {
       "template_id": "DAY_IS_LONG",
-      "concepts": ["DAY", "BE", "LONG"],
+      "concepts": [
+        "DAY",
+        "BE",
+        "LONG"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6620,12 +7780,17 @@
         "ar": "اليوم طويل.",
         "it": "Il giorno è lungo.",
         "th": "กลางวันยาว",
-        "pl": "Dzień jest długi."
+        "pl": "Dzień jest długi.",
+        "fi": "Päivä on pitkä."
       }
     },
     {
       "template_id": "HOUR_IS_SHORT",
-      "concepts": ["HOUR", "BE", "SHORT"],
+      "concepts": [
+        "HOUR",
+        "BE",
+        "SHORT"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6645,12 +7810,17 @@
         "ar": "الساعة قصيرة.",
         "it": "L'ora è corta.",
         "th": "ชั่วโมงสั้น",
-        "pl": "Godzina jest krótka."
+        "pl": "Godzina jest krótka.",
+        "fi": "Tunti on lyhyt."
       }
     },
     {
       "template_id": "MINUTE_IS_SHORT",
-      "concepts": ["MINUTE", "BE", "SHORT"],
+      "concepts": [
+        "MINUTE",
+        "BE",
+        "SHORT"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6670,12 +7840,17 @@
         "ar": "الدقيقة قصيرة.",
         "it": "Il minuto è corto.",
         "th": "นาทีสั้น",
-        "pl": "Minuta jest krótka."
+        "pl": "Minuta jest krótka.",
+        "fi": "Minuutti on lyhyt."
       }
     },
     {
       "template_id": "SECOND_IS_SHORT",
-      "concepts": ["SECOND", "BE", "SHORT"],
+      "concepts": [
+        "SECOND",
+        "BE",
+        "SHORT"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6695,12 +7870,17 @@
         "ar": "الثانية قصيرة.",
         "it": "Il secondo è corto.",
         "th": "วินาทีสั้น",
-        "pl": "Sekunda jest krótka."
+        "pl": "Sekunda jest krótka.",
+        "fi": "Sekunti on lyhyt."
       }
     },
     {
       "template_id": "MORNING_IS_GOOD",
-      "concepts": ["MORNING", "BE", "GOOD"],
+      "concepts": [
+        "MORNING",
+        "BE",
+        "GOOD"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6720,12 +7900,17 @@
         "ar": "الصباح جيد.",
         "it": "La mattina è buona.",
         "th": "ตอนเช้าดี",
-        "pl": "Poranek jest dobry."
+        "pl": "Poranek jest dobry.",
+        "fi": "Aamu on hyvä."
       }
     },
     {
       "template_id": "NIGHT_IS_BAD",
-      "concepts": ["NIGHT", "BE", "BAD"],
+      "concepts": [
+        "NIGHT",
+        "BE",
+        "BAD"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6745,12 +7930,17 @@
         "ar": "الليل سيئ.",
         "it": "La notte è cattiva.",
         "th": "กลางคืนแย่",
-        "pl": "Noc jest zła."
+        "pl": "Noc jest zła.",
+        "fi": "Yö on huono."
       }
     },
     {
       "template_id": "WINTER_IS_COLD",
-      "concepts": ["WINTER", "BE", "COLD"],
+      "concepts": [
+        "WINTER",
+        "BE",
+        "COLD"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6770,12 +7960,17 @@
         "ar": "الشتاء بارد.",
         "it": "L'inverno è freddo.",
         "th": "ฤดูหนาวหนาว",
-        "pl": "Zima jest zimna."
+        "pl": "Zima jest zimna.",
+        "fi": "Talvi on kylmä."
       }
     },
     {
       "template_id": "SUMMER_IS_GOOD",
-      "concepts": ["SUMMER", "BE", "GOOD"],
+      "concepts": [
+        "SUMMER",
+        "BE",
+        "GOOD"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6795,12 +7990,17 @@
         "ar": "الصيف جيد.",
         "it": "L'estate è buona.",
         "th": "ฤดูร้อนดี",
-        "pl": "Lato jest dobre."
+        "pl": "Lato jest dobre.",
+        "fi": "Kesä on hyvä."
       }
     },
     {
       "template_id": "SPRING_IS_NEW",
-      "concepts": ["SPRING", "BE", "NEW"],
+      "concepts": [
+        "SPRING",
+        "BE",
+        "NEW"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6820,12 +8020,17 @@
         "ar": "الربيع جديد.",
         "it": "La primavera è nuova.",
         "th": "ฤดูใบไม้ผลิใหม่",
-        "pl": "Wiosna jest nowa."
+        "pl": "Wiosna jest nowa.",
+        "fi": "Kevät on uusi."
       }
     },
     {
       "template_id": "AUTUMN_IS_OLD",
-      "concepts": ["AUTUMN", "BE", "OLD"],
+      "concepts": [
+        "AUTUMN",
+        "BE",
+        "OLD"
+      ],
       "structure": {
         "type": "time_description"
       },
@@ -6845,12 +8050,17 @@
         "ar": "الخريف قديم.",
         "it": "L'autunno è vecchio.",
         "th": "ฤดูใบไม้ร่วงเก่า",
-        "pl": "Jesień jest stara."
+        "pl": "Jesień jest stara.",
+        "fi": "Syksy on vanha."
       }
     },
     {
       "template_id": "THIS_IS_THING",
-      "concepts": ["THIS", "BE", "THING"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "THING"
+      ],
       "structure": {
         "type": "copular"
       },
@@ -6870,12 +8080,16 @@
         "ar": "هذا شيء.",
         "it": "Questa è una cosa.",
         "th": "นี่คือสิ่งของ",
-        "pl": "To jest rzecz."
+        "pl": "To jest rzecz.",
+        "fi": "Tämä on asia."
       }
     },
     {
       "template_id": "PLEASE_READ",
-      "concepts": ["PLEASE", "READ"],
+      "concepts": [
+        "PLEASE",
+        "READ"
+      ],
       "structure": {
         "type": "politeness"
       },
@@ -6895,12 +8109,17 @@
         "ar": "من فضلك اقرأ.",
         "it": "Per favore, leggi.",
         "th": "กรุณาอ่าน",
-        "pl": "Proszę, czytaj."
+        "pl": "Proszę, czytaj.",
+        "fi": "Ole hyvä ja lue."
       }
     },
     {
       "template_id": "MAYBE_I_GO",
-      "concepts": ["MAYBE", "FIRST_PERSON_SINGULAR", "GO"],
+      "concepts": [
+        "MAYBE",
+        "FIRST_PERSON_SINGULAR",
+        "GO"
+      ],
       "structure": {
         "type": "modality"
       },
@@ -6920,12 +8139,15 @@
         "ar": "ربما أذهب.",
         "it": "Forse vado.",
         "th": "บางทีฉันอาจจะไป",
-        "pl": "Może pójdę."
+        "pl": "Może pójdę.",
+        "fi": "Ehkä minä menen."
       }
     },
     {
       "template_id": "THANKS",
-      "concepts": ["THANKS"],
+      "concepts": [
+        "THANKS"
+      ],
       "structure": {
         "type": "response"
       },
@@ -6945,12 +8167,18 @@
         "ar": "شكراً.",
         "it": "Grazie.",
         "th": "ขอบคุณ",
-        "pl": "Dziękuję."
+        "pl": "Dziękuję.",
+        "fi": "Kiitos."
       }
     },
     {
       "template_id": "I_GO_FOR_FOOD",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "FOR", "FOOD"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "FOR",
+        "FOOD"
+      ],
       "structure": {
         "type": "relation"
       },
@@ -6970,12 +8198,17 @@
         "ar": "أنا أذهب من أجل الطعام.",
         "it": "Io vado a prendere del cibo.",
         "th": "ฉันไปเอาอาหาร",
-        "pl": "Ja idę po jedzenie."
+        "pl": "Ja idę po jedzenie.",
+        "fi": "Minä menen hakemaan ruokaa."
       }
     },
     {
       "template_id": "I_HAVE_SOMETHING",
-      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SOMETHING"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "SOMETHING"
+      ],
       "structure": {
         "type": "quantifier"
       },
@@ -6995,12 +8228,18 @@
         "ar": "أنا لدي شيء.",
         "it": "Io ho qualcosa.",
         "th": "ฉันมีบางอย่าง",
-        "pl": "Ja mam coś."
+        "pl": "Ja mam coś.",
+        "fi": "Minulla on jotakin."
       }
     },
     {
       "template_id": "I_HAVE_ANOTHER_BOOK",
-      "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "ANOTHER", "BOOK"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "HAVE",
+        "ANOTHER",
+        "BOOK"
+      ],
       "structure": {
         "type": "quantifier"
       },
@@ -7020,12 +8259,18 @@
         "ar": "أنا لدي كتاب آخر.",
         "it": "Io ho un altro libro.",
         "th": "ฉันมีหนังสืออีกเล่ม",
-        "pl": "Ja mam inną książkę."
+        "pl": "Ja mam inną książkę.",
+        "fi": "Minulla on toinen kirja."
       }
     },
     {
       "template_id": "I_READ_ONLY_BOOK",
-      "concepts": ["FIRST_PERSON_SINGULAR", "READ", "ONLY", "BOOK"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "READ",
+        "ONLY",
+        "BOOK"
+      ],
       "structure": {
         "type": "quantifier"
       },
@@ -7045,12 +8290,18 @@
         "ar": "أنا أقرأ الكتاب فقط.",
         "it": "Io leggo solo il libro.",
         "th": "ฉันอ่านแค่หนังสือ",
-        "pl": "Ja czytam tylko książkę."
+        "pl": "Ja czytam tylko książkę.",
+        "fi": "Minä luen vain kirjaa."
       }
     },
     {
       "template_id": "I_GO_FROM_HOME",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "FROM", "HOME"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "FROM",
+        "HOME"
+      ],
       "structure": {
         "type": "relation"
       },
@@ -7070,12 +8321,18 @@
         "ar": "أنا أذهب من المنزل.",
         "it": "Io vado via da casa.",
         "th": "ฉันออกจากบ้าน",
-        "pl": "Ja idę z domu."
+        "pl": "Ja idę z domu.",
+        "fi": "Minä lähden kotoa."
       }
     },
     {
       "template_id": "I_GO_TO_HOUSE",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "TO", "HOUSE"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "TO",
+        "HOUSE"
+      ],
       "structure": {
         "type": "relation"
       },
@@ -7095,12 +8352,17 @@
         "ar": "أنا أذهب إلى البيت.",
         "it": "Io vado alla casa.",
         "th": "ฉันไปที่บ้าน",
-        "pl": "Ja idę do domu."
+        "pl": "Ja idę do domu.",
+        "fi": "Minä menen taloon."
       }
     },
     {
       "template_id": "I_GO_AROUND",
-      "concepts": ["FIRST_PERSON_SINGULAR", "GO", "AROUND"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "GO",
+        "AROUND"
+      ],
       "structure": {
         "type": "relation"
       },
@@ -7120,15 +8382,28 @@
         "ar": "أنا أتجول.",
         "it": "Io vado in giro.",
         "th": "ฉันไปรอบๆ",
-        "pl": "Ja idę dookoła."
+        "pl": "Ja idę dookoła.",
+        "fi": "Minä kuljen ympäriinsä."
       }
     },
     {
       "template_id": "I_DO_THIS_BY_HAND",
       "order": {
-        "default": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"]
+        "default": [
+          "FIRST_PERSON_SINGULAR",
+          "DO",
+          "THIS",
+          "BY",
+          "HAND"
+        ]
       },
-      "concepts": ["FIRST_PERSON_SINGULAR", "DO", "THIS", "BY", "HAND"],
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "DO",
+        "THIS",
+        "BY",
+        "HAND"
+      ],
       "structure": {
         "type": "relation"
       },
@@ -7148,12 +8423,17 @@
         "ar": "أنا أفعل هذا باليد.",
         "it": "Io faccio questo a mano.",
         "th": "ฉันทำสิ่งนี้ด้วยมือ",
-        "pl": "Ja robię to ręką."
+        "pl": "Ja robię to ręką.",
+        "fi": "Minä teen tämän kädellä."
       }
     },
     {
       "template_id": "YES_I_DO",
-      "concepts": ["YES", "FIRST_PERSON_SINGULAR", "DO"],
+      "concepts": [
+        "YES",
+        "FIRST_PERSON_SINGULAR",
+        "DO"
+      ],
       "structure": {
         "type": "response"
       },
@@ -7173,12 +8453,18 @@
         "ar": "نعم، أفعل.",
         "it": "Sì, lo faccio.",
         "th": "ใช่ ฉันทำ",
-        "pl": "Tak, robię."
+        "pl": "Tak, robię.",
+        "fi": "Kyllä, minä teen."
       }
     },
     {
       "template_id": "NO_I_DO_NOT",
-      "concepts": ["NO", "FIRST_PERSON_SINGULAR", "DO", "NOT"],
+      "concepts": [
+        "NO",
+        "FIRST_PERSON_SINGULAR",
+        "DO",
+        "NOT"
+      ],
       "structure": {
         "type": "response"
       },
@@ -7198,12 +8484,17 @@
         "ar": "لا، لا أفعل.",
         "it": "No, non lo faccio.",
         "th": "ไม่ ฉันไม่ทำ",
-        "pl": "Nie, nie robię."
+        "pl": "Nie, nie robię.",
+        "fi": "Ei, minä en tee."
       }
     },
     {
       "template_id": "THIS_IS_MINE",
-      "concepts": ["THIS", "BE", "MINE"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "MINE"
+      ],
       "structure": {
         "type": "possessive"
       },
@@ -7223,12 +8514,17 @@
         "ar": "هذا لي.",
         "it": "Questo è mio.",
         "th": "นี่คือของฉัน",
-        "pl": "To jest moje."
+        "pl": "To jest moje.",
+        "fi": "Tämä on minun."
       }
     },
     {
       "template_id": "THIS_IS_YOURS",
-      "concepts": ["THIS", "BE", "YOURS"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "YOURS"
+      ],
       "structure": {
         "type": "possessive"
       },
@@ -7248,12 +8544,17 @@
         "ar": "هذا لك.",
         "it": "Questo è tuo.",
         "th": "นี่คือของคุณ",
-        "pl": "To jest twoje."
+        "pl": "To jest twoje.",
+        "fi": "Tämä on sinun."
       }
     },
     {
       "template_id": "THIS_IS_HERS",
-      "concepts": ["THIS", "BE", "HERS"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "HERS"
+      ],
       "structure": {
         "type": "possessive"
       },
@@ -7273,12 +8574,17 @@
         "ar": "هذا لها.",
         "it": "Questo è suo.",
         "th": "นี่คือของเธอ",
-        "pl": "To jest jej."
+        "pl": "To jest jej.",
+        "fi": "Tämä on hänen."
       }
     },
     {
       "template_id": "THIS_IS_OURS",
-      "concepts": ["THIS", "BE", "OURS"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "OURS"
+      ],
       "structure": {
         "type": "possessive"
       },
@@ -7298,12 +8604,17 @@
         "ar": "هذا لنا.",
         "it": "Questo è nostro.",
         "th": "นี่คือของเรา",
-        "pl": "To jest nasze."
+        "pl": "To jest nasze.",
+        "fi": "Tämä on meidän."
       }
     },
     {
       "template_id": "THIS_IS_THEIRS",
-      "concepts": ["THIS", "BE", "THEIRS"],
+      "concepts": [
+        "THIS",
+        "BE",
+        "THEIRS"
+      ],
       "structure": {
         "type": "possessive"
       },
@@ -7323,7 +8634,8 @@
         "ar": "هذا لهم.",
         "it": "Questo è loro.",
         "th": "นี่คือของพวกเขา",
-        "pl": "To jest ich."
+        "pl": "To jest ich.",
+        "fi": "Tämä on heidän."
       }
     }
   ]
