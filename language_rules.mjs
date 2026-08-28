@@ -151,6 +151,12 @@
 //                            validate-structure)
 //   verbPersonParadigm       verbs need the full six-cell person paradigm
 //                            (validate-packs VERB_PERSON_LANGS)
+//   verbGenderParadigm       3sg (at minimum) also agrees in gender — the
+//                            engine prefers `${p}_${n}_feminine` /
+//                            `${p}_${n}_masculine` when the subject carries
+//                            gender, and only falls back to the plain key.
+//                            Arabic today: «هي ترى» not «هي يرى» (Emi
+//                            2026-08-28-15)
 //   latinEncodingChecks      run the Latin-script mojibake checks
 //                            (validate-encoding LATIN_LANGS)
 //   possessiveSuffixes       the possessed noun in the have-construction
@@ -180,10 +186,12 @@ export const LANGUAGE_RULES = {
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,
+      verbGenderParadigm: true,
     },
     postNominalAdjectives: true, zeroPresentCopula: true,
     inflectsNounPlural: true, fullNounGender: true,
     nounGenderForCountables: true, verbPersonParadigm: true,
+    verbGenderParadigm: true,
   },
   en: {
     features: {

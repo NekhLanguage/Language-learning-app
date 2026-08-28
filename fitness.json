@@ -799,6 +799,7 @@
      "1_singular": "أرفع",
      "2_singular": "ترفع",
      "3_singular": "يرفع",
+     "3_singular_feminine": "ترفع",
      "1_plural": "نرفع",
      "2_plural": "ترفعون",
      "3_plural": "يرفعون"
@@ -808,6 +809,7 @@
      "1_singular": "أتمدد",
      "2_singular": "تتمدد",
      "3_singular": "يتمدد",
+     "3_singular_feminine": "تتمدد",
      "1_plural": "نتمدد",
      "2_plural": "تتمددون",
      "3_plural": "يتمددون"
@@ -817,6 +819,7 @@
      "1_singular": "أتنفس",
      "2_singular": "تتنفس",
      "3_singular": "يتنفس",
+     "3_singular_feminine": "تتنفس",
      "1_plural": "نتنفس",
      "2_plural": "تتنفسون",
      "3_plural": "يتنفسون"
@@ -826,6 +829,7 @@
      "1_singular": "أدوس",
      "2_singular": "تدوس",
      "3_singular": "يدوس",
+     "3_singular_feminine": "تدوس",
      "1_plural": "ندوس",
      "2_plural": "تدوسون",
      "3_plural": "يدوسون"
@@ -835,6 +839,7 @@
      "1_singular": "أدفع",
      "2_singular": "تدفع",
      "3_singular": "يدفع",
+     "3_singular_feminine": "تدفع",
      "1_plural": "ندفع",
      "2_plural": "تدفعون",
      "3_plural": "يدفعون"
@@ -844,6 +849,7 @@
      "1_singular": "أسحب",
      "2_singular": "تسحب",
      "3_singular": "يسحب",
+     "3_singular_feminine": "تسحب",
      "1_plural": "نسحب",
      "2_plural": "تسحبون",
      "3_plural": "يسحبون"
@@ -853,6 +859,7 @@
      "1_singular": "أقيس",
      "2_singular": "تقيس",
      "3_singular": "يقيس",
+     "3_singular_feminine": "تقيس",
      "1_plural": "نقيس",
      "2_plural": "تقيسون",
      "3_plural": "يقيسون"
@@ -862,6 +869,7 @@
      "1_singular": "أتحسن",
      "2_singular": "تتحسن",
      "3_singular": "يتحسن",
+     "3_singular_feminine": "تتحسن",
      "1_plural": "نتحسن",
      "2_plural": "تتحسنون",
      "3_plural": "يتحسنون"
@@ -871,6 +879,7 @@
      "1_singular": "أتعافى",
      "2_singular": "تتعافى",
      "3_singular": "يتعافى",
+     "3_singular_feminine": "تتعافى",
      "1_plural": "نتعافى",
      "2_plural": "تتعافون",
      "3_plural": "يتعافون"
@@ -880,6 +889,7 @@
      "1_singular": "أزن",
      "2_singular": "تزن",
      "3_singular": "يزن",
+     "3_singular_feminine": "تزن",
      "1_plural": "نزن",
      "2_plural": "تزنون",
      "3_plural": "يزنون"
@@ -889,6 +899,7 @@
      "1_singular": "أنهي",
      "2_singular": "تنهي",
      "3_singular": "ينهي",
+     "3_singular_feminine": "تنهي",
      "1_plural": "ننهي",
      "2_plural": "تنهون",
      "3_plural": "ينهون"
@@ -898,6 +909,7 @@
      "1_singular": "أكرر",
      "2_singular": "تكرر",
      "3_singular": "يكرر",
+     "3_singular_feminine": "تكرر",
      "1_plural": "نكرر",
      "2_plural": "تكررون",
      "3_plural": "يكررون"

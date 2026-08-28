@@ -138,6 +138,28 @@ const FEATURE_CHECKS = {
     ok: false, // no engine mechanism exists yet — always a declared gap
     detail: 'no definiteness-agreement rule exists in the engine yet',
   }),
+  verbGenderParadigm: (row, lang) => {
+    if (!row.verbGenderParadigm) {
+      return { ok: false, detail: 'needs the verbGenderParadigm rule' };
+    }
+    // Data half: at least one core verb must carry `3_singular_feminine`
+    // (or the rule is declared over data that never fills it).
+    const forms = vocab.languages?.[lang]?.forms || {};
+    const coreVerbs = Object.keys(vocab.concepts).filter((cid) => {
+      const m = vocab.concepts[cid];
+      return m && m.type === 'verb' && m.source === 'verbs.json';
+    });
+    const authored = coreVerbs.filter((cid) => {
+      const e = forms[cid];
+      return e && typeof e === 'object' && !Array.isArray(e) &&
+        typeof e['3_singular_feminine'] === 'string';
+    });
+    return {
+      ok: authored.length > 0,
+      detail: authored.length ? '' :
+        'no core verb carries a 3_singular_feminine form',
+    };
+  },
 };
 
 // implementing flag -> the feature that must declare the need (reverse
@@ -166,6 +188,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.numeralGenderAgreement],
   [(row) => !!row.possessiveEnclitic, 'possessivePlacement enclitic',
     (f) => f.possessivePlacement === 'enclitic'],
+  [(row) => !!row.verbGenderParadigm, 'verbGenderParadigm',
+    (f) => !!f.verbGenderParadigm],
 ];
 
 const findings = [];
