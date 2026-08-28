@@ -57,6 +57,49 @@ export function migrateUserState(user) {
   return user;
 }
 
+// The fields of the default templateProgress row ensureTemplateProgress()
+// creates on demand. A row still equal to the default carries no
+// information — 690 of 794 rows (73 KB of an 84 KB templateProgress) were
+// exactly this on a real account, and the record grew past the Supabase
+// loadUser timeout (Emi 2026-08-28-22).
+const TEMPLATE_PROGRESS_DEFAULT_KEYS = new Set([
+  "streak", "reinforcementStage", "completed", "lastShownAt", "lastResult",
+]);
+
+export function isDefaultTemplateProgress(p) {
+  if (!p || typeof p !== "object") return false;
+  return (p.streak || 0) === 0 &&
+    (p.reinforcementStage || 0) === 0 &&
+    !p.completed &&
+    (p.lastResult ?? null) === null &&
+    // Live rows hold -Infinity, persisted rows null (JSON has no Infinity).
+    (p.lastShownAt == null || p.lastShownAt === -Infinity) &&
+    // A row carrying any key this check doesn't know is NOT default — a
+    // future field can never be silently dropped by this compaction.
+    Object.keys(p).every((k) => TEMPLATE_PROGRESS_DEFAULT_KEYS.has(k));
+}
+
+// Serialization-time compaction: drop templateProgress rows equal to the
+// default. ensureTemplateProgress() recreates a missing row on demand, so
+// absence and default are the same state — no behaviour change, a third
+// of the saved record gone. Returns a copy; never mutates the live USER.
+export function compactUserState(user) {
+  if (!user || typeof user !== "object" || !user.runs) return user;
+  const out = { ...user, runs: {} };
+  for (const [lang, run] of Object.entries(user.runs)) {
+    if (!run || typeof run !== "object" || !run.templateProgress) {
+      out.runs[lang] = run;
+      continue;
+    }
+    const tp = {};
+    for (const [id, p] of Object.entries(run.templateProgress)) {
+      if (!isDefaultTemplateProgress(p)) tp[id] = p;
+    }
+    out.runs[lang] = { ...run, templateProgress: tp };
+  }
+  return out;
+}
+
 // Parses and migrates the stored user blob, falling back to the backup blob
 // when the primary is corrupt. Returns { user, source } where source is
 // "primary", "backup", or null (nothing recoverable — caller starts fresh).

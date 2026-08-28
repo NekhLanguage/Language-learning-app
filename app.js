@@ -1,7 +1,7 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
-import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
+import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserState } from "./storage.mjs";
 import {
   baseCompletionRatio as computeBaseCompletionRatio,
   conceptSelectionWeight as pureConceptSelectionWeight,
@@ -649,12 +649,12 @@ function loadUser() {
   USER = user;
   if (source === "backup") {
     console.warn("Primary user state was corrupt — restored from backup");
-    localStorage.setItem("zth_user", JSON.stringify(USER));
+    localStorage.setItem("zth_user", JSON.stringify(compactUserState(USER)));
   }
 
   // Boot-time snapshot: the last known good state, used to recover if a
   // later write corrupts the primary blob.
-  localStorage.setItem("zth_user_backup", JSON.stringify(USER));
+  localStorage.setItem("zth_user_backup", JSON.stringify(compactUserState(USER)));
 }
 
 async function saveUser() {
@@ -663,7 +663,11 @@ async function saveUser() {
 
   USER.lastLocalChange = Date.now();
 
-  localStorage.setItem("zth_user", JSON.stringify(USER));
+  // Serialization-time compaction (storage.mjs): default templateProgress
+  // rows are dropped — ensureTemplateProgress() recreates them on demand,
+  // and persisting them grew the record past the Supabase loadUser
+  // timeout (Emi 2026-08-28-22).
+  localStorage.setItem("zth_user", JSON.stringify(compactUserState(USER)));
 
   const email = localStorage.getItem("zth_email")?.toLowerCase();
   if (!email) return;
@@ -673,7 +677,7 @@ async function saveUser() {
       method: "POST",
       body: JSON.stringify({
         email,
-        user: USER
+        user: compactUserState(USER)
       })
     });
 
@@ -965,7 +969,7 @@ if (run.contentVersion !== CONTENT_VERSION) {
   }
 
   // ✅ ONLY save locally
-  localStorage.setItem("zth_user", JSON.stringify(USER));
+  localStorage.setItem("zth_user", JSON.stringify(compactUserState(USER)));
 }
 
 function hasAccess() {
