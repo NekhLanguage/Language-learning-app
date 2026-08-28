@@ -161,6 +161,14 @@
 //   copulaPersonSuffixes     predicate nominals take personal copular
 //                            endings by subject person/number; -DIr only in
 //                            3sg («Ben adamım», «Onlar kızlar» — tr today)
+//   inanimateSubjectProDrop  the neuter "it" subject of an ordinary verb is
+//                            dropped in generation («Mży.») while personal
+//                            pronouns stay explicit (pl today; the grader's
+//                            proDrop flag is unrelated and grading-only)
+//   possessiveEnclitic       the possessor follows the possessed noun
+//                            (th มือของฉัน; el «το βιβλίο μου» — with the
+//                            definite article when the language also
+//                            declares possessiveDefiniteArticle)
 //   numeralGenderAgreement   number words agree with the head noun's gender
 //                            (and case, for ONE) via object-shaped number
 //                            entries: f / n / m / f_accusative fields
@@ -235,11 +243,16 @@ export const LANGUAGE_RULES = {
       // «δεκατέσσερις κρατήσεις», never «δεκατέσσερα κρατήσεις»
       // (Emi 2026-08-28-03).
       numeralGenderAgreement: true,
+      // Possessives are enclitic: the noun keeps its definite article and
+      // the possessive follows — «το βιβλίο μου», never «μου βιβλίο»
+      // (Emi 2026-08-28-01: 16/16 observed possessives were wrong).
+      possessivePlacement: "enclitic",
     },
     indefiniteArticle: true,
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,
     numeralGenderAgreement: true,
+    possessiveEnclitic: true, possessiveDefiniteArticle: true,
   },
   it: {
     features: {
@@ -278,6 +291,10 @@ export const LANGUAGE_RULES = {
       virilePlural: true, numeralGovernment: true,
     },
     proDrop: true,
+    // The neuter "it" subject of an ordinary verb is dropped in GENERATION
+    // («Mży.», never «Ono mży.» / «To myje…») — a Nekh-approved carve-out
+    // from the explicit-pronoun pedagogy, which personal pronouns keep.
+    inanimateSubjectProDrop: true,
     questionParticle: "Czy",
     virilePlural: true,
     numeralGenitivePlural: true,
@@ -323,7 +340,9 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   th: {
-    features: { adjectivePosition: "post" }, postNominalAdjectives: true, spacelessJoin: true, spacelessTiles: true },
+    features: { adjectivePosition: "post", possessivePlacement: "enclitic" },
+    postNominalAdjectives: true, spacelessJoin: true, spacelessTiles: true,
+    possessiveEnclitic: true },
   tr: {
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,

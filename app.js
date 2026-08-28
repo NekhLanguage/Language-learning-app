@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.20";
+const APP_DATA_VERSION = "1.2.21";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -4489,6 +4489,13 @@ function maybeVarySubject(tpl, targetConcept) {
     if (c === currentSubject) return false;
     const m = window.GLOBAL_VOCAB.concepts[c];
     if (m?.type !== "pronoun") return false;
+    // Demonstratives and neuter "it" only make sense as copular subjects
+    // ("This is a chicken") — swapped into a lexical verb they produce
+    // "This washes a vegetable." / «To myje warzywo», which is ungrammatical
+    // in pro-drop languages where `to` cannot subject an ordinary verb
+    // (Emi 2026-08-28-10; same class as the L3 demonstrative filter).
+    if (!isCopular && (m.semantic_role === "demonstrative" ||
+        m.semantic_role === "third_person_neuter")) return false;
     // In a copular template the subject identifies with the predicate noun,
     // so a gendered pronoun must not clash with it — swapping YOU into HE
     // in front of GIRL produced "He is a girl." Authored templates get the

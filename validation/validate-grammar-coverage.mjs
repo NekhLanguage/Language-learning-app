@@ -108,6 +108,13 @@ const FEATURE_CHECKS = {
     ok: !!row.copulaPersonSuffixes,
     detail: 'needs the copulaPersonSuffixes rule (personal endings, -DIr only 3sg)',
   }),
+  possessivePlacement: (row, lang, value) => {
+    if (value === 'enclitic') {
+      return { ok: !!row.possessiveEnclitic,
+        detail: 'needs the possessiveEnclitic rule' };
+    }
+    return { ok: false, detail: `unknown possessivePlacement "${value}"` };
+  },
   numeralGenderAgreement: (row, lang) => {
     if (!row.numeralGenderAgreement) {
       return { ok: false, detail: 'needs the numeralGenderAgreement rule' };
@@ -157,6 +164,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.copulaPersonAgreement],
   [(row) => !!row.numeralGenderAgreement, 'numeralGenderAgreement',
     (f) => !!f.numeralGenderAgreement],
+  [(row) => !!row.possessiveEnclitic, 'possessivePlacement enclitic',
+    (f) => f.possessivePlacement === 'enclitic'],
 ];
 
 const findings = [];

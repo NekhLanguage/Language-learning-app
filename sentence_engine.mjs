@@ -1825,6 +1825,14 @@ function possessiveArticleFor(lang, nounCid, plural = false) {
     if (plural || entry.pluralOnly) return f ? "le" : "i";
     return f ? "la" : "il";
   }
+  // Greek: the possessed noun keeps its definite article and the enclitic
+  // possessive follows («το βιβλίο μου») — same table definiteNounPhrase
+  // uses (Emi 2026-08-28-01: 16/16 possessive sentences shipped without it).
+  if (lang === "el") {
+    const g = entry.gender;
+    if (plural || entry.pluralOnly) return g === "n" ? "τα" : "οι";
+    return g === "f" ? "η" : g === "n" ? "το" : "ο";
+  }
   return null;
 }
 
@@ -1848,9 +1856,13 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
     const declinedPoss = possessiveCaseForm(lang, possessiveCid, nounCid, caseName);
     if (declinedPoss) possessive = declinedPoss;
   }
-  // Thai postposes the possessor: โทรศัพท์ของคุณ ("phone of-you").
-  if (lang === "th") {
-    return `${noun}${possessive}`;
+  // Enclitic possessors follow the noun (declared, not hardcoded): Thai
+  // โทรศัพท์ของคุณ ("phone of-you", no article), Greek «το βιβλίο μου»
+  // (with the definite article from possessiveArticleFor).
+  if (langRule(lang, "possessiveEnclitic")) {
+    const art = possessiveArticleFor(lang, nounCid);
+    const tail = joinWords(lang, [noun, possessive]);
+    return art ? `${art} ${tail}` : tail;
   }
   // Possessive noun phrases take the definite article in languages
   // declaring possessiveDefiniteArticle («il tuo telefono», «le tue
@@ -2562,6 +2574,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     isCopularPredicatePosition(ordered, idx) &&
     typeof nounEntry?.feminine === "string";
   let possessedForm = feminineReferent ? nounEntry.feminine : formOf(lang, cid);
+  // Copular-plural agreement reaches possessed predicates too: «Вони наші
+  // дівчата» — both halves pluralize together (Emi 2026-08-28-09; the
+  // possessive slot mirrors this with its own plural form).
+  if (pluralAgreement && precededByPossessive && !feminineReferent) {
+    possessedForm = lang === "en"
+      ? pluralize(possessedForm)
+      : pluralFormOf(lang, cid);
+  }
   if (ukObjectCase && bareDetermined &&
       vocab().languages?.[lang]?.forms?.[cid]?.gender === "f") {
     const acc = femAccusativeShift(lang, possessedForm, "noun");
@@ -2570,12 +2590,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       possessedForm = acc;
     }
   }
-  // Thai possessors follow the noun: มือของฉัน ("hand of-me") — the
-  // possessive word (ของฉัน) attaches after the possessed noun, and its
-  // own ordered-walk slot renders empty. "Another" postposes with the
-  // classifier: หนังสืออีกเล่ม.
-  if (lang === "th" && precededByPossessive) {
-    return possessedForm + formOf(lang, ordered[idx - 1]);
+  // Enclitic possessors follow the noun — the possessive word attaches
+  // after the possessed noun (its own ordered-walk slot renders empty):
+  // th มือของฉัน ("hand of-me"), el «το βιβλίο μου» with the article.
+  // "Another" postposes with the th classifier: หนังสืออีกเล่ม.
+  if (langRule(lang, "possessiveEnclitic") && precededByPossessive) {
+    const possWord = genderedFormOf(lang, ordered[idx - 1], cid);
+    const art = possessiveArticleFor(lang, cid);
+    const tail = joinWords(lang, [possessedForm, possWord]);
+    return art ? `${art} ${tail}` : tail;
   }
   if (lang === "th" && precededByModifier &&
       prevMeta?.semantic_role === "quantity_additional") {
@@ -2954,7 +2977,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjForm;
       const art = possessiveArticleFor(lang, cid, possPlural);
-      phrase = joinWords(lang, art ? [art, possForm, bare] : [possForm, bare]);
+      // Enclitic languages postpose the possessive here too (the forced/
+      // drilled path): th «มือของฉัน», el «το βιβλίο μου».
+      const pair = langRule(lang, "possessiveEnclitic")
+        ? [bare, possForm]
+        : [possForm, bare];
+      phrase = joinWords(lang, art ? [art, ...pair] : pair);
     } else if (adjectiveGoesPostNominal(lang, adjectiveCid)) {
       // Article + noun + adjective: "uma casa grande" (spaceless in th)
       phrase = joinWords(lang, [phrase, adjForm]);
@@ -3062,6 +3090,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       }
     }
 
+    // A neuter/inanimate "it" cannot subject an ordinary verb in languages
+    // declaring inanimateSubjectProDrop — Polish drops it: «Mży.», never
+    // «Ono mży.» (Emi 2026-08-28-10; Nekh-approved carve-out from the
+    // explicit-pronoun pedagogy, which keeps personal pronouns explicit).
+    // The verb still conjugates 3sg via subjectCid; the assembler filters
+    // the empty slot and capitalizes the next word.
+    if (idx === 0 && meta.type === "pronoun" &&
+        meta.semantic_role === "third_person_neuter" &&
+        !isCopularTemplate && langRule(lang, "inanimateSubjectProDrop")) {
+      return "";
+    }
+
     // Predicate adjective in a copular sentence ("autumn is OLD") must agree
     // with the subject in gender — "осінь стара", not "осінь старий" — and
     // in number for plural-only subjects («штани чорні», "as calças são
@@ -3121,13 +3161,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (meta.type === "adjective" && meta.semantic_role === "possessive" &&
         lang !== "fr") {
       const nextCid = ordered[idx + 1];
-      // Thai renders the possessor inside the noun slot (มือของฉัน) —
-      // this slot stays empty.
-      if (lang === "th" && vocab().concepts[nextCid]?.type === "noun") {
+      // Enclitic languages render the possessor inside the noun slot
+      // (th มือของฉัน, el «το βιβλίο μου») — this slot stays empty.
+      if (langRule(lang, "possessiveEnclitic") &&
+          vocab().concepts[nextCid]?.type === "noun") {
         return "";
       }
       if (vocab().concepts[nextCid]?.type === "noun") {
-        let form = genderedFormOf(lang, cid, nextCid);
+        // Copular-plural agreement reaches the possessive too: «Вони наші
+        // дівчата», never «Вони наша дівчата» (Emi 2026-08-28-09) — the
+        // predicate noun pluralizes with a plural subject, so its
+        // possessive takes the plural form when the entry has one.
+        let form = genderedFormOf(lang, cid, nextCid, pluralAgreement);
         // Mirror of the predicate-case check in the noun slot: when the
         // possessed predicate noun declines, the possessive declines with
         // it («moją mamą») — and when either half lacks data, both stay

@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-28
 
+### Greek possessives go where Greek puts them
+Every Greek possessive sentence was built backwards — «μου βιβλίο» instead of «το βιβλίο μου». Fixed structurally: the noun keeps its definite article and the possessive follows it, the way Greek actually works — «Αυτή διαβάζει το βιβλίο μου», «Εμείς έχουμε το τηγάνι του», «η παλάμη μου». Thai's same-shaped rule (possessor after the noun) now runs through the same declared machinery instead of a special case, with identical output. Also in this batch: Polish no longer writes «To myje warzywo» — an inanimate "it" can't be the subject of an ordinary Polish verb, so the pronoun is dropped the way a Pole would («Mży» for "it drizzles"), while personal pronouns stay explicit for learning; and "They are our girls" now agrees in both halves in Ukrainian («Вони наші дівчата»).
+
 ### Ukrainian and Greek numbers now agree the way the languages demand
 Ukrainian counting was the single worst construction in testing — 27 of 30 sampled sentences wrong. Fixed across the board: five and above now govern the genitive plural on the noun AND its adjective («шість книг», «дев’ять телефонів», «десять поганих паспортів»), two to four take the proper plural («два паспорти»), «два» becomes «дві» before feminine nouns («дві сорочки»), and «один» agrees in gender and case («Я маю одну роботу»). Greek numerals now inflect for gender too — «δεκατέσσερις κρατήσεις», never «δεκατέσσερα κρατήσεις» — and nouns pluralize after numbers («δεκαπέντε διαβατήρια»). Behind it all sits a new engine-wide guard: a number can no longer land on a word whose plural the app doesn't know — the sentence is simply never generated, instead of shipping a singular where a plural belongs, in every language at once.
 

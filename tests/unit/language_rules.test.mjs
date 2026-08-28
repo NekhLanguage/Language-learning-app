@@ -372,6 +372,51 @@ test("apocope surfaces are what the L3 blank contract records", () => {
 });
 
 // ---------------------------------------------------------------------
+// Possessive placement (enclitic) — Emi 2026-08-28-01 (el); pl "it" pro-drop
+// (-10); uk possessive plural agreement (-09)
+// ---------------------------------------------------------------------
+
+test("el: possessives are enclitic with the definite article", () => {
+  // 16/16 observed el possessives shipped as «μου βιβλίο» — article dropped,
+  // possessive pre-nominal. Both faces fixed: article + noun + enclitic.
+  assert.equal(buildSentence("el", tplById("I_EAT_FOOD"), "HIS", {}),
+    "Εγώ τρώω το φαγητό του.");
+  assert.equal(buildSentence("el", tplById("WE_HAVE_PAN"), "HIS", {}),
+    "Εμείς έχουμε το τηγάνι του.");
+  // Template-slot path (authored possessive): «η παλάμη μου».
+  const s = buildSentence("el", tplById("THIS_IS_MY_HAND"));
+  assert.ok(s.includes("η παλάμη μου"), s);
+});
+
+test("th possessives are untouched by the enclitic generalization", () => {
+  // th now declares possessiveEnclitic instead of the old hardcode —
+  // output must be bit-identical (no article, spaceless).
+  assert.equal(buildSentence("th", tplById("THIS_IS_MY_HAND")),
+    tplById("THIS_IS_MY_HAND").render.th);
+  const forced = buildSentence("th", tplById("SHE_SEES_PHONE"), "MY", {});
+  assert.ok(forced.includes("โทรศัพท์ของฉัน"), forced);
+});
+
+test("pl: the inanimate 'it' subject drops before an ordinary verb", () => {
+  assert.equal(buildSentence("pl", tplById("IT_DRIZZLES")), "Mży.");
+  // Languages without the flag keep the pronoun.
+  assert.equal(buildSentence("uk", tplById("IT_DRIZZLES")), "Воно мрячить.");
+  assert.equal(buildSentence("en", tplById("IT_DRIZZLES")), "It drizzles.");
+});
+
+test("uk: copular-plural agreement reaches possessive and possessed noun", () => {
+  // «Вони наша дівчата» (Emi 2026-08-28-09): both halves pluralize.
+  const tpl = { template_id: "SYN_THEY_ARE_OUR_GIRLS",
+    concepts: ["THIRD_PERSON_PLURAL", "BE", "OUR", "GIRL"] };
+  assert.equal(buildSentence("uk", tpl), "Вони наші дівчата.");
+  assert.equal(buildSentence("en", tpl), "They are our girls.");
+  // Singular stays singular.
+  const sg = { template_id: "SYN_SHE_IS_MY_MOM",
+    concepts: ["SHE", "BE", "MY", "MOM"] };
+  assert.equal(buildSentence("uk", sg), "Вона моя мама.");
+});
+
+// ---------------------------------------------------------------------
 // Numeral government + gender agreement — Emi 2026-08-28-07/-08 (uk), -03/-04 (el)
 // ---------------------------------------------------------------------
 
@@ -655,6 +700,7 @@ test("every features key is a known, checkable feature id", () => {
     "articleCaseMarking", "virilePlural", "numeralGovernment",
     "zeroPresentCopula", "definitenessAgreement",
     "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
+    "possessivePlacement",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
