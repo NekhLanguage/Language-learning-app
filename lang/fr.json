@@ -95,11 +95,15 @@
   "forms": {
     "BIG": {
       "form": "grand",
-      "plural": "grands"
+      "plural": "grands",
+      "f": "grande",
+      "fp": "grandes"
     },
     "SMALL": {
       "form": "petit",
-      "plural": "petits"
+      "plural": "petits",
+      "f": "petite",
+      "fp": "petites"
     },
     "GOOD": {
       "form": "bon",
@@ -123,11 +127,15 @@
     },
     "EASY": {
       "form": "facile",
-      "plural": "faciles"
+      "plural": "faciles",
+      "f": "facile",
+      "fp": "faciles"
     },
     "DIFFICULT": {
       "form": "difficile",
-      "plural": "difficiles"
+      "plural": "difficiles",
+      "f": "difficile",
+      "fp": "difficiles"
     },
     "MY": [
       "mon",
@@ -717,9 +725,12 @@
       "form": "blanc",
       "f": "blanche"
     },
-    "RED": [
-      "rouge"
-    ],
+    "RED": {
+      "form": "rouge",
+      "f": "rouge",
+      "plural": "rouges",
+      "fp": "rouges"
+    },
     "BLUE": {
       "form": "bleu",
       "f": "bleue"
@@ -728,21 +739,36 @@
       "form": "vert",
       "f": "verte"
     },
-    "YELLOW": [
-      "jaune"
-    ],
-    "PURPLE": [
-      "violet"
-    ],
-    "ORANGE": [
-      "orange"
-    ],
-    "FAST": [
-      "rapide"
-    ],
-    "SLOW": [
-      "lent"
-    ],
+    "YELLOW": {
+      "form": "jaune",
+      "f": "jaune",
+      "plural": "jaunes",
+      "fp": "jaunes"
+    },
+    "PURPLE": {
+      "form": "violet",
+      "f": "violette",
+      "plural": "violets",
+      "fp": "violettes"
+    },
+    "ORANGE": {
+      "form": "orange",
+      "f": "orange",
+      "plural": "orange",
+      "fp": "orange"
+    },
+    "FAST": {
+      "form": "rapide",
+      "f": "rapide",
+      "plural": "rapides",
+      "fp": "rapides"
+    },
+    "SLOW": {
+      "form": "lent",
+      "f": "lente",
+      "plural": "lents",
+      "fp": "lentes"
+    },
     "LONG": {
       "form": "long",
       "f": "longue"
@@ -759,32 +785,53 @@
       "form": "léger",
       "f": "légère"
     },
-    "DARK": [
-      "sombre"
-    ],
-    "YOUNG": [
-      "jeune"
-    ],
-    "RIGHT": [
-      "droit"
-    ],
-    "LEFT": [
-      "gauche"
-    ],
-    "CORRECT": [
-      "correct"
-    ],
-    "WRONG": [
-      "faux"
-    ],
+    "DARK": {
+      "form": "sombre",
+      "f": "sombre",
+      "plural": "sombres",
+      "fp": "sombres"
+    },
+    "YOUNG": {
+      "form": "jeune",
+      "f": "jeune",
+      "plural": "jeunes",
+      "fp": "jeunes"
+    },
+    "RIGHT": {
+      "form": "droit",
+      "f": "droite",
+      "plural": "droits",
+      "fp": "droites"
+    },
+    "LEFT": {
+      "form": "gauche",
+      "f": "gauche",
+      "plural": "gauches",
+      "fp": "gauches"
+    },
+    "CORRECT": {
+      "form": "correct",
+      "f": "correcte",
+      "plural": "corrects",
+      "fp": "correctes"
+    },
+    "WRONG": {
+      "form": "faux",
+      "f": "fausse",
+      "plural": "faux",
+      "fp": "fausses"
+    },
     "COLD": {
       "form": "froid",
       "f": "froide",
       "plural": "froids"
     },
-    "NICE": [
-      "gentil"
-    ],
+    "NICE": {
+      "form": "gentil",
+      "f": "gentille",
+      "plural": "gentils",
+      "fp": "gentilles"
+    },
     "THIS": [
       "ce"
     ],

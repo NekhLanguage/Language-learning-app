@@ -49,6 +49,7 @@ export const GRAMMAR_RULE_IDS = [
   "have_existential",        // tr HAVE = genitive-possessor + possessed-noun + var
   "predicate_instrumental",  // pl predicate nouns after być take the instrumental
   "numeral_government",      // pl numbers five+ govern the genitive plural
+  "apocope",                 // es/it pre-nominal masc-sg short forms (buen/buon)
 ];
 
 let firedRules = null;
@@ -1776,6 +1777,46 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
 // Derived from language_rules.mjs — the declaration lives there.
 const POST_ADJECTIVE_LANGS = langsWith("postNominalAdjectives");
 
+// Role-aware placement: postNominalAdjectives is the language DEFAULT;
+// preNominalAdjectiveRoles lists the semantic_role classes that go BEFORE
+// the noun anyway («un bon livre» while «un livre noir» — the blanket
+// boolean shipped «un noir livre» for fr/es and «un libro buono» against
+// the authored «un buon libro» for it/pt, Emi 2026-08-27-12). Per-word
+// escapes: preNominal / postNominal on the form entry beat the role list.
+// The grading-variant override (adjectivePreOrder) still flips the whole
+// build for flexibleAdjectiveOrder graders.
+function adjectiveGoesPostNominal(lang, adjectiveCid) {
+  if (!POST_ADJECTIVE_LANGS.has(lang)) return false;
+  if (adjectivePreOrder(lang)) return false;
+  const entry = adjectiveCid ? vocab().languages?.[lang]?.forms?.[adjectiveCid] : null;
+  if (entry && !Array.isArray(entry) && typeof entry === "object") {
+    if (entry.preNominal) return false;
+    if (entry.postNominal) return true;
+  }
+  const roles = langRuleValue(lang, "preNominalAdjectiveRoles");
+  if (Array.isArray(roles) && adjectiveCid &&
+      roles.includes(vocab().concepts[adjectiveCid]?.semantic_role)) {
+    return false;
+  }
+  return true;
+}
+
+// Pre-nominal masculine-singular apocope («bueno» → «buen libro»,
+// «buono» → «buon libro») — the entry's `apocope` field, applied only
+// where the language declares the rule and the adjective actually landed
+// pre-nominally before a masculine singular noun.
+function apocopeForm(lang, adjectiveCid, adjWord, nounGender, plural) {
+  if (!langRule(lang, "apocope") || plural || nounGender === "f" || !adjectiveCid) {
+    return adjWord;
+  }
+  const entry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
+  if (entry && !Array.isArray(entry) && typeof entry.apocope === "string") {
+    noteRule("apocope");
+    return entry.apocope;
+  }
+  return adjWord;
+}
+
 // Languages that omit the present-tense copula. Ukrainian (and Russian-style
 // Slavic) drop "to be" in the present ("Це телефон", not "Це є телефон"),
 // Arabic nominal sentences carry no copula ("هذا هاتف"), and Turkish present-
@@ -1963,24 +2004,26 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
     : formOf(lang, nounCid);
   const withArticle = nounPhrase(lang, nounCid, opts);
 
-  if (POST_ADJECTIVE_LANGS.has(lang)) {
+  const nounGender = vocab().languages?.[lang]?.forms?.[nounCid]?.gender;
+  if (adjectiveGoesPostNominal(lang, adjectiveCid)) {
     noteRule("post_nominal_adjective");
     return joinWords(lang, [withArticle, adjective]);
   }
-  // Insert adjective between article and noun
-  const nounGender = vocab().languages?.[lang]?.forms?.[nounCid]?.gender;
+  // Insert adjective between article and noun (pre-nominal placement —
+  // apocope applies here and only here).
+  const preAdjective = apocopeForm(lang, adjectiveCid, adjective, nounGender, !!opts.plural);
   if (withArticle !== bare) {
     let article = withArticle.substring(0, withArticle.length - bare.length).trimEnd();
     // For English, the article must agree with the adjective (now the next word),
     // not the noun — "an old spell" not "a old spell".
     if (lang === "en" && /^an?$/i.test(article)) {
-      article = englishIndefiniteArticle(adjective);
+      article = englishIndefiniteArticle(preAdjective);
     }
     const declined = applyAdjectiveDeclension(
-      lang, adjective, article, nounGender, opts.caseName);
+      lang, preAdjective, article, nounGender, opts.caseName);
     return `${article} ${declined} ${bare}`;
   }
-  return `${applyAdjectiveDeclension(lang, adjective, null, nounGender, opts.caseName)} ${bare}`;
+  return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)} ${bare}`;
 }
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = formOf(lang, subjectCid);
@@ -2669,9 +2712,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           adjForm = strat.genitivePluralFromPlural(adjForm);
         }
       }
-      return (POST_ADJ && !adjectivePreOrder(lang))
+      return adjectiveGoesPostNominal(lang, adjectiveCid)
         ? numberWord + " " + nounForm + " " + adjForm
-        : numberWord + " " + adjForm + " " + nounForm;
+        : numberWord + " " +
+          apocopeForm(lang, adjectiveCid, adjForm, headEntry?.gender, isPlural) +
+          " " + nounForm;
     }
     return numberWord + " " + nounForm;
   }
@@ -2698,6 +2743,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           ? langRuleValue(lang, "caseMarking").directObjectCase
           : null));
     }
+    // Apocope fires only pre-nominally («un buen libro» but «un libro
+    // bueno») — applied before the blank-surface capture below so L3 blanks
+    // match the «buen» actually rendered; identity everywhere else.
+    if (!adjectiveIsPossessive && !adjectiveGoesPostNominal(lang, adjectiveCid)) {
+      adjForm = apocopeForm(lang, adjectiveCid, adjForm,
+        headEntry?.gender, useCopularPlural);
+    }
     // Record the exact surface rendered for a forced modifier so the L3
     // "fill in the missing word" blank can match the inflected form actually
     // shown (e.g. uk «темна»), not the base form returned by formOf. Keyed by
@@ -2720,7 +2772,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         : adjForm;
       const art = possessiveArticleFor(lang, cid, possPlural);
       phrase = joinWords(lang, art ? [art, possForm, bare] : [possForm, bare]);
-    } else if (POST_ADJ && !adjectivePreOrder(lang)) {
+    } else if (adjectiveGoesPostNominal(lang, adjectiveCid)) {
       // Article + noun + adjective: "uma casa grande" (spaceless in th)
       phrase = joinWords(lang, [phrase, adjForm]);
     } else if (phrase !== bare) {
@@ -2742,8 +2794,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         ? article + adjForm + " " + bare
         : article + " " + adjForm + " " + bare;
     } else {
-      // No article: "big water" (German strong declension already applied
-      // to adjForm above — «neues Wasser»)
+      // No article: "big water" (German strong declension and apocope
+      // already applied to adjForm above — «neues Wasser»)
       phrase = adjForm + " " + bare;
     }
   }

@@ -107,13 +107,15 @@
       "form": "bueno",
       "f": "buena",
       "plural": "buenos",
-      "fp": "buenas"
+      "fp": "buenas",
+      "apocope": "buen"
     },
     "BAD": {
       "form": "malo",
       "f": "mala",
       "plural": "malos",
-      "fp": "malas"
+      "fp": "malas",
+      "apocope": "mal"
     },
     "NEW": {
       "form": "nuevo",

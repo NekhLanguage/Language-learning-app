@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-27
 
+### French and Spanish adjectives now go where native speakers put them
+French and Spanish were placing every adjective in front of the noun, English-style («un nouveau livre» was right by luck, but «un noir livre» was not). Adjectives now follow the noun by default («un livre noir», «un libro rojo») while the classes that genuinely go in front — good, bad, big, small, new, old, young — stay there («un bon livre», «un buen libro»). Spanish and Italian also apocopate where the language demands it: «un buen libro» and «un mal libro», never «un bueno libro», with the full form kept where it belongs («una buena camisa», «un libro bueno» stays valid in grading). Italian and Portuguese picked up the same role-aware placement, fixing the few cases where the old all-or-nothing rule put quality words on the wrong side. French colour and shape adjectives also gained their feminine forms («une chemise verte»).
+
 ### German grammar: cases and adjective endings now correct
 German was shipping without its case system: every attributive adjective appeared without its ending («ein neu Buch») and masculine direct objects went unmarked («Wir haben ein Job»). Both are fixed everywhere sentences are generated: adjectives take their declined endings («ein neues Buch», «einen alten Flughafen», «eine schlechte Pfanne» — while predicative stays correctly bare: «Das Buch ist rot»), masculine objects take «einen», prepositions govern the dative on the article («auf dem Tisch», «unter dem Tisch», «auf diesem»), possessives agree and decline («meine Hand», «mit seiner Mutter»), and «zu dem»/«in dem» contract to «zum»/«im». Fourteen sentences that previously diverged from what a German speaker would write now match exactly.
 
