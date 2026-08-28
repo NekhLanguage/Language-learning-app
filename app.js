@@ -1,7 +1,7 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
-import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser } from "./storage.mjs";
+import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist } from "./storage.mjs";
 import {
   baseCompletionRatio as computeBaseCompletionRatio,
   conceptSelectionWeight as pureConceptSelectionWeight,
@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.21";
+const APP_DATA_VERSION = "1.2.22";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -663,7 +663,13 @@ async function saveUser() {
 
   USER.lastLocalChange = Date.now();
 
-  localStorage.setItem("zth_user", JSON.stringify(USER));
+  // Strip default-only templateProgress rows before persist. `ensureTemplateProgress`
+  // rehydrates missing rows on demand, so the live app never sees the difference
+  // (Emi 2026-08-28-22: 690 of 794 rows across 10 languages had every field at
+  // its default and pushed the persisted blob to 236 KB / loadUser 504).
+  const payload = compactUserForPersist(USER);
+
+  localStorage.setItem("zth_user", JSON.stringify(payload));
 
   const email = localStorage.getItem("zth_email")?.toLowerCase();
   if (!email) return;
@@ -673,7 +679,7 @@ async function saveUser() {
       method: "POST",
       body: JSON.stringify({
         email,
-        user: USER
+        user: payload
       })
     });
 
