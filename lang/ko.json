@@ -95,35 +95,43 @@
     "pl": "폴란드어"
   },
   "forms": {
-    "BIG": [
-      "큰"
-    ],
-    "SMALL": [
-      "작은"
-    ],
-    "GOOD": [
-      "좋은"
-    ],
-    "BAD": [
-      "나쁜"
-    ],
-    "NEW": [
-      "새로운"
-    ],
-    "OLD": [
-      "오래된"
-    ],
-    "EASY": [
-      "쉬운"
-    ],
-    "DIFFICULT": [
-      "어려운"
-    ],
+    "BIG": {
+      "form": "큰",
+      "predicative": "커요"
+    },
+    "SMALL": {
+      "form": "작은",
+      "predicative": "작아요"
+    },
+    "GOOD": {
+      "form": "좋은",
+      "predicative": "좋아요"
+    },
+    "BAD": {
+      "form": "나쁜",
+      "predicative": "나빠요"
+    },
+    "NEW": {
+      "form": "새로운",
+      "predicative": "새로워요"
+    },
+    "OLD": {
+      "form": "오래된",
+      "predicative": "오래됐어요"
+    },
+    "EASY": {
+      "form": "쉬운",
+      "predicative": "쉬워요"
+    },
+    "DIFFICULT": {
+      "form": "어려운",
+      "predicative": "어려워요"
+    },
     "MY": [
-      "내"
+      "제"
     ],
     "YOUR": [
-      "네"
+      "당신의"
     ],
     "HIS": [
       "그의"
@@ -408,15 +416,15 @@
       "아니다"
     ],
     "FIRST_PERSON_SINGULAR": [
-      "나",
-      "내"
+      "저",
+      "제"
     ],
     "SECOND_PERSON": [
-      "너",
-      "네"
+      "당신",
+      "당신의"
     ],
     "SECOND_PERSON_PLURAL": [
-      "너희"
+      "여러분"
     ],
     "HE": [
       "그"
@@ -491,113 +499,148 @@
       "년"
     ],
     "EAT": {
-      "base": "먹다"
+      "base": "먹다",
+      "present": "먹어요"
     },
     "DRINK": {
-      "base": "마시다"
+      "base": "마시다",
+      "present": "마셔요"
     },
     "READ": {
-      "base": "읽다"
+      "base": "읽다",
+      "present": "읽어요"
     },
     "SEE": {
-      "base": "보다"
+      "base": "보다",
+      "present": "봐요"
     },
     "HAVE": {
-      "base": "가지다"
+      "base": "있다",
+      "present": "있어요"
     },
     "DO": {
-      "base": "하다"
+      "base": "하다",
+      "present": "해요"
     },
     "GO": {
-      "base": "가다"
+      "base": "가다",
+      "present": "가요"
     },
     "START": {
-      "base": "시작하다"
+      "base": "시작하다",
+      "present": "시작해요"
     },
     "STOP": {
-      "base": "멈추다"
+      "base": "멈추다",
+      "present": "멈춰요"
     },
     "SLEEP": {
-      "base": "자다"
+      "base": "자다",
+      "present": "자요"
     },
     "COME": {
-      "base": "오다"
+      "base": "오다",
+      "present": "와요"
     },
     "USE": {
-      "base": "사용하다"
+      "base": "사용하다",
+      "present": "사용해요"
     },
     "GET": {
-      "base": "얻다"
+      "base": "받다",
+      "present": "받아요"
     },
     "BE": {
       "base": "이다"
     },
-    "BLACK": [
-      "검은"
-    ],
-    "WHITE": [
-      "하얀"
-    ],
-    "RED": [
-      "빨간"
-    ],
-    "BLUE": [
-      "파란"
-    ],
-    "GREEN": [
-      "초록"
-    ],
-    "YELLOW": [
-      "노란"
-    ],
-    "PURPLE": [
-      "보라"
-    ],
-    "ORANGE": [
-      "주황"
-    ],
-    "FAST": [
-      "빠른"
-    ],
-    "SLOW": [
-      "느린"
-    ],
-    "LONG": [
-      "긴"
-    ],
-    "SHORT": [
-      "짧은"
-    ],
-    "HEAVY": [
-      "무거운"
-    ],
-    "LIGHT": [
-      "가벼운"
-    ],
-    "DARK": [
-      "어두운"
-    ],
-    "YOUNG": [
-      "젊은"
-    ],
-    "RIGHT": [
-      "오른쪽"
-    ],
-    "LEFT": [
-      "왼쪽"
-    ],
-    "CORRECT": [
-      "옳은"
-    ],
-    "WRONG": [
-      "틀린"
-    ],
-    "COLD": [
-      "추운"
-    ],
-    "NICE": [
-      "좋은"
-    ],
+    "BLACK": {
+      "form": "검은",
+      "predicative": "까매요"
+    },
+    "WHITE": {
+      "form": "하얀",
+      "predicative": "하얘요"
+    },
+    "RED": {
+      "form": "빨간",
+      "predicative": "빨개요"
+    },
+    "BLUE": {
+      "form": "파란",
+      "predicative": "파래요"
+    },
+    "GREEN": {
+      "form": "초록",
+      "predicative": "초록색이에요"
+    },
+    "YELLOW": {
+      "form": "노란",
+      "predicative": "노래요"
+    },
+    "PURPLE": {
+      "form": "보라",
+      "predicative": "보라색이에요"
+    },
+    "ORANGE": {
+      "form": "주황",
+      "predicative": "주황색이에요"
+    },
+    "FAST": {
+      "form": "빠른",
+      "predicative": "빨라요"
+    },
+    "SLOW": {
+      "form": "느린",
+      "predicative": "느려요"
+    },
+    "LONG": {
+      "form": "긴",
+      "predicative": "길어요"
+    },
+    "SHORT": {
+      "form": "짧은",
+      "predicative": "짧아요"
+    },
+    "HEAVY": {
+      "form": "무거운",
+      "predicative": "무거워요"
+    },
+    "LIGHT": {
+      "form": "가벼운",
+      "predicative": "가벼워요"
+    },
+    "DARK": {
+      "form": "어두운",
+      "predicative": "어두워요"
+    },
+    "YOUNG": {
+      "form": "젊은",
+      "predicative": "어려요"
+    },
+    "RIGHT": {
+      "form": "오른쪽",
+      "predicative": "오른쪽이에요"
+    },
+    "LEFT": {
+      "form": "왼쪽",
+      "predicative": "왼쪽이에요"
+    },
+    "CORRECT": {
+      "form": "옳은",
+      "predicative": "맞아요"
+    },
+    "WRONG": {
+      "form": "틀린",
+      "predicative": "틀려요"
+    },
+    "COLD": {
+      "form": "추운",
+      "predicative": "추워요"
+    },
+    "NICE": {
+      "form": "좋은",
+      "predicative": "좋아요"
+    },
     "THIS": [
       "이것"
     ],
@@ -611,19 +654,19 @@
       "그것의"
     ],
     "MINE": [
-      "내 것"
+      "제 거"
     ],
     "YOURS": [
-      "네 것"
+      "당신의 거"
     ],
     "HERS": [
-      "그녀의 것"
+      "그녀의 거"
     ],
     "OURS": [
-      "우리 것"
+      "우리의 거"
     ],
     "THEIRS": [
-      "그들 것"
+      "그들의 거"
     ],
     "HOUR": [
       "시간"

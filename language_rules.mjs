@@ -109,6 +109,20 @@
 //   virilePlural             plural agreement splits virile/non-virile:
 //                            nouns flag `virile: true`, adjectives carry a
 //                            `vp` (virile plural) form («nowi» vs «nowe»).
+//   nominalParticles         topic/object particles on nominals. Values:
+//                            topic/object/haveObject, each either a fixed
+//                            string (ja は/を) or {afterConsonant,
+//                            afterVowel} batchim-keyed allomorphs (ko
+//                            은는/을를/이가); attach: true suffixes the
+//                            particle onto the preceding word instead of
+//                            inserting a standalone segment.
+//   copulaSuffix             the present copula suffixes onto a NOMINAL
+//                            predicate ({afterConsonant, afterVowel} —
+//                            ko 이에요/예요), applied post-render to the
+//                            sentence-final word. Adjective predicates
+//                            use their data `predicative` form instead.
+//                            excludeStructures lists template structures
+//                            whose predicate can't take the suffix.
 //
 // ── features: the grammar coverage matrix ────────────────────────────────
 // Each row also declares `features` — LINGUISTIC FACTS about the language
@@ -278,9 +292,53 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   ja: {
-    features: { adjectivePosition: "pre" }, spacelessTiles: true, wordOrder: "SOV" },
+    features: {
+      adjectivePosition: "pre",
+      // は topics the subject, を marks the direct object — the same
+      // declared rule ko uses (the insertion logic previously lived as a
+      // ja-only branch in renderSegments).
+      topicParticle: true, marksCaseOnDirectObjects: true,
+    },
+    spacelessTiles: true, wordOrder: "SOV",
+    nominalParticles: { topic: "は", object: "を" },
+  },
   ko: {
-    features: { adjectivePosition: "pre" }, wordOrder: "SOV" },
+    features: {
+      adjectivePosition: "pre",
+      // The present copula is never a standalone word — it suffixes onto
+      // the nominal predicate as 이에요/예요 («남자예요», «손이에요»).
+      zeroPresentCopula: true,
+      // 을/를 marks the direct object (이/가 in the existential
+      // have-construction: «셔츠가 있어요»), 은/는 topics the subject —
+      // Emi 2026-08-28-13: zero particles in 140 sentences.
+      topicParticle: true, marksCaseOnDirectObjects: true,
+    },
+    wordOrder: "SOV",
+    zeroPresentCopula: true,
+    // Yes/no questions keep declarative order and ask with intonation:
+    // «그것은 당신의 전화예요?» — never a fronted copula.
+    statementOrderQuestion: true,
+    // Particle allomorphy keys on the final syllable's batchim: 은/이/을
+    // after a consonant-final syllable, 는/가/를 after a vowel-final one.
+    // attach: true suffixes the particle onto the preceding word («나» →
+    // «나는») instead of inserting a standalone segment (ja).
+    nominalParticles: {
+      topic: { afterConsonant: "은", afterVowel: "는" },
+      object: { afterConsonant: "을", afterVowel: "를" },
+      haveObject: { afterConsonant: "이", afterVowel: "가" },
+      attach: true,
+    },
+    // The suffixal present copula on nominal predicates: «소년이에요»,
+    // «여자예요». Adjective predicates carry their own predicative verb
+    // form from the data instead («책은 빨개요»). Locative and clause-
+    // internal copulas can't take the suffix — excluded, ratcheted.
+    copulaSuffix: {
+      afterConsonant: "이에요", afterVowel: "예요",
+      excludeStructures: [
+        "spatial_relation", "spatial_relation_complex", "complex_clause",
+      ],
+    },
+  },
   zh: {
     features: { adjectivePosition: "pre" }, spacelessTiles: true },
   no: {

@@ -1206,7 +1206,16 @@ if (orderType === "SOV") {
     }
 
     const authored = tpl.surface?.[targetLang]?.[targetConcept];
-    if (authored) return authored;
+    if (authored) {
+      // An authored surface that IS the plain dictionary form still takes
+      // the slot's particle decoration («음식» → «음식을») — the render
+      // path only skips the particle for overrides that carry their own
+      // postposition («집에»), and the blank must mirror that exactly.
+      return authored === formOf(targetLang, targetConcept)
+        ? decorateSlotSurface(targetLang, tpl, targetConcept, authored,
+            slotContextFor(tpl, targetLang, targetConcept))
+        : authored;
+    }
 
     if (meta.type === "noun") {
       // The tr have-construction renders the possessed noun with its
@@ -1278,7 +1287,30 @@ if (orderType === "SOV") {
       }
     }
 
-    return formOf(targetLang, targetConcept);
+    // A predicate adjective with a dedicated predicative form renders it
+    // («책은 빨개요») — the blank must hold «빨개요», or the attributive
+    // citation form never matches the sentence. Attributive position (the
+    // adjective directly before its noun) keeps the ordinary form.
+    if (meta.type === "adjective" && meta.semantic_role !== "possessive") {
+      const entry = vocab().languages?.[targetLang]?.forms?.[targetConcept];
+      if (entry && !Array.isArray(entry) &&
+          typeof entry.predicative === "string") {
+        const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+        const idx = ordered.indexOf(targetConcept);
+        const isCopularTpl = ordered.some(c =>
+          c === "BE" || vocab().concepts[c]?.semantic_role === "copula");
+        if (isCopularTpl && idx !== -1 &&
+            vocab().concepts[ordered[idx + 1]]?.type !== "noun") {
+          return entry.predicative;
+        }
+      }
+    }
+
+    // Particle / copular-suffix decoration (ko): the blank holds the same
+    // decorated word the sentence renders («음식을», «남자예요»).
+    return decorateSlotSurface(targetLang, tpl, targetConcept,
+      formOf(targetLang, targetConcept),
+      slotContextFor(tpl, targetLang, targetConcept));
   }
 
   // The slot a concept occupies in a template, as the case machinery sees
@@ -1322,7 +1354,52 @@ if (orderType === "SOV") {
       const doCase = langRuleValue(targetLang, "caseMarking")?.directObjectCase || null;
       return { position: "directObject", caseName: doCase };
     }
+    // SOV languages put the direct object BEFORE the verb, so the shared
+    // prev-is-verb walk above never fires there. The first noun of a
+    // non-copular template is the object slot — the same rule the
+    // particle insertion in renderSegments uses, so blanks and tiles
+    // stay aligned with the rendered «음식을».
+    if (langRuleValue(targetLang, "wordOrder") === "SOV" && !isCopularTpl &&
+        vocab().concepts[targetConcept]?.type === "noun" &&
+        idx === ordered.findIndex(c => vocab().concepts[c]?.type === "noun")) {
+      return { position: "directObject", caseName: null };
+    }
     return { position: idx === 0 ? "subject" : "other", caseName: null };
+  }
+
+  // The particle / copular-suffix decoration renderSegments attaches to a
+  // slot («음식» → «음식을», «남자» → «남자예요») — the L3 blank and every
+  // option tile must carry the same decorated surface, or the blank never
+  // matches the rendered sentence (the pl «domu» class, with the particle
+  // fused into the word instead of a case ending). `slot` carries the
+  // TARGET slot's position; the decoration is a property of the slot, so
+  // distractor tiles decorate identically to the blank.
+  function decorateSlotSurface(targetLang, tpl, cid, surface, slot) {
+    if (!surface) return surface;
+    const meta = vocab().concepts[cid];
+    const particles = langRuleValue(targetLang, "nominalParticles");
+    if (particles?.attach && meta) {
+      if (slot?.position === "directObject" && !slot?.caseName &&
+          meta.type === "noun") {
+        const role = (tpl.concepts || []).includes("HAVE") && particles.haveObject
+          ? "haveObject" : "object";
+        return surface + particleAllomorph(particles[role], surface);
+      }
+      if (slot?.position === "subject" &&
+          (meta.type === "pronoun" ||
+           (["noun", "time"].includes(meta.type) &&
+            ["copular", "time_description"].includes(tpl.structure?.type)))) {
+        return surface + particleAllomorph(particles.topic, surface);
+      }
+    }
+    // The copular suffix belongs to the PREDICATE slot only — a subject-
+    // slot distractor must not pick it up just because it isn't the
+    // template's subject concept.
+    if (!["subject", "directObject", "prepObject"].includes(slot?.position)) {
+      const cop = copulaSuffixSlot(targetLang, tpl, cid);
+      if (cop) return surface + particleAllomorph(cop, surface);
+    }
+    return surface;
   }
 
   // Render `cid` as it would surface in the given slot — the ONE function
@@ -1368,7 +1445,11 @@ if (orderType === "SOV") {
       }
       return caseFormFor(targetLang, cid, slot.caseName);
     }
-    return bareMode ? formOf(targetLang, cid) : nounPhrase(targetLang, cid);
+    // Particle / copular-suffix decoration (ko): every tile carries the
+    // same decorated surface the blank holds («물을» / «책을» in an object
+    // slot, «남자예요» / «여자예요» in a predicate slot).
+    return decorateSlotSurface(targetLang, tpl, cid,
+      bareMode ? formOf(targetLang, cid) : nounPhrase(targetLang, cid), slot);
   }
 
   // Case/gender/number-aware surface for a modifier tile agreeing with
@@ -2128,6 +2209,95 @@ function turkishPersonalCopulaSuffix(word, person, plural) {
   return plural ? word + "s" + I + "n" + I + "z" : word + "s" + I + "n";
 }
 
+// ── Nominal particles + suffixal copula (language_rules nominalParticles /
+// copulaSuffix — ko, with ja's は/を insertion generalized onto the same
+// declaration) ─────────────────────────────────────────────────────────────
+// Hangul batchim test: does the last Hangul syllable of the word end in a
+// final consonant? Drives the 은/는, 을/를, 이/가, 이에요/예요 allomorph
+// choice. Non-Hangul tails (punctuation) are walked over; a word with no
+// Hangul at all counts as vowel-final.
+function hangulHasBatchim(word) {
+  const w = String(word || "");
+  for (let i = w.length - 1; i >= 0; i--) {
+    const code = w.charCodeAt(i);
+    if (code >= 0xac00 && code <= 0xd7a3) return (code - 0xac00) % 28 !== 0;
+  }
+  return false;
+}
+
+// A particle spec is either a fixed string (ja は) or a batchim-keyed
+// allomorph pair (ko {afterConsonant: "은", afterVowel: "는"}).
+function particleAllomorph(spec, word) {
+  if (typeof spec === "string") return spec;
+  if (!spec) return "";
+  return hangulHasBatchim(word) ? spec.afterConsonant : spec.afterVowel;
+}
+
+// Suffix the declared particle for `role` onto a rendered surface — the
+// shared helper every build path uses, so a particle can never fire on one
+// render path but not the others. No-op for languages without attach-mode
+// particles (ja inserts standalone segments in renderSegments instead).
+function attachParticle(lang, surface, role) {
+  const spec = langRuleValue(lang, "nominalParticles");
+  if (!spec?.attach || !surface) return surface;
+  const p = spec[role];
+  if (!p) return surface;
+  return surface + particleAllomorph(p, surface);
+}
+
+// The copulaSuffix spec when it applies to `cid` as a predicate of this
+// template: the concept is a nominal (noun/pronoun/time) other than the
+// subject, the template is copular, and the structure can carry the
+// suffix. Adjective predicates never route here — they render their data
+// `predicative` form. Shared by the render post-pass and the L3
+// blank/option-tile mirror.
+function copulaSuffixSlot(lang, tpl, cid) {
+  const spec = langRuleValue(lang, "copulaSuffix");
+  if (!spec) return null;
+  const structType = tpl?.structure?.type;
+  if (AUTHORED_ONLY_STRUCTURES.has(structType)) return null;
+  if (Array.isArray(spec.excludeStructures) &&
+      spec.excludeStructures.includes(structType)) return null;
+  const concepts = tpl?.concepts || [];
+  if (!concepts.some((c) => isCopulaConcept(c))) return null;
+  const conceptTable = vocab().concepts || {};
+  const subjectCid = concepts.find((c) => conceptTable[c]?.type === "pronoun") ||
+    concepts.find((c) => ["noun", "time"].includes(conceptTable[c]?.type));
+  if (cid === subjectCid) return null;
+  if (!["noun", "pronoun", "time"].includes(conceptTable[cid]?.type)) return null;
+  // Only the LAST nominal carries the suffix — the post-pass splices onto
+  // the sentence-final word, so in a coordinated template («…제 손 그리고
+  // 당신의 머리예요») the first conjunct's predicate stays bare and its
+  // blank/tiles must stay bare with it.
+  const nominals = concepts.filter((c) => c !== subjectCid &&
+    ["noun", "pronoun", "time"].includes(conceptTable[c]?.type));
+  if (cid !== nominals[nominals.length - 1]) return null;
+  return spec;
+}
+
+// Post-render pass: attach the suffixal present copula to the sentence-
+// final word («저는 남자» → «저는 남자예요.»). SOV puts the nominal
+// predicate last, so the splice point is the end of the sentence — the
+// same mechanism as the Turkish -DIr pass below, with the allomorph keyed
+// on batchim instead of vowel harmony. Fires only when the template's
+// predicate is a nominal (copulaSuffixSlot); adjective predicates already
+// carry their own predicative verb form.
+function applyCopulaSuffix(lang, tpl, sentence) {
+  if (!sentence) return sentence;
+  const concepts = tpl?.concepts || [];
+  const predicate = concepts.find((c) => copulaSuffixSlot(lang, tpl, c));
+  if (!predicate) return sentence;
+  const spec = langRuleValue(lang, "copulaSuffix");
+  const punctMatch = sentence.match(/[.?!]+$/);
+  const punct = punctMatch ? punctMatch[0] : "";
+  const body = punct ? sentence.slice(0, -punct.length) : sentence;
+  const spaceIdx = body.lastIndexOf(" ");
+  const lastWord = spaceIdx >= 0 ? body.slice(spaceIdx + 1) : body;
+  if (!lastWord) return sentence;
+  noteRule("zero_copula");
+  return body + particleAllomorph(spec, lastWord) + punct;
+}
+
 // Structures whose Turkish authored render does NOT carry the -DIR suffix.
 // AUTHORED_ONLY_STRUCTURES bypass the engine entirely (declared below). The
 // remaining exclusions:
@@ -2228,7 +2398,7 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
   return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)} ${bare}`;
 }
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
-  const subject = formOf(lang, subjectCid);
+  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid);
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const plural = isPluralPronoun(subjectCid);
@@ -2238,7 +2408,7 @@ function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCi
 }
 
 function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
-  const subject = formOf(lang, subjectCid);
+  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid);
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const complement = nounWithPossessive(lang, possessiveCid, nounCid);
@@ -2263,7 +2433,7 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   return capitalizeFirst(words.filter(Boolean).join(" ") + "?");
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
-  const subject = formOf(lang, subjectCid);
+  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid);
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   // A predicate noun may carry a dedicated predicative form — uk HOME is
@@ -2279,13 +2449,15 @@ function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
 }
 
 function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
-  const subject = formOf(lang, subjectCid);
+  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const verb = getVerbForm(verbCid, subjectCid, lang);
   // Use nounPhrase (not bare formOf) so a direct object gets its indefinite
   // article where the language uses one ("casts a spell", "isst ein Brot")
   // or its object case where the language declines instead (uk «воду»);
   // mass/uncountable nouns ("learns magic") pass through unchanged.
-  const object = nounPhrase(lang, objectCid, { directObject: true });
+  const object = attachParticle(lang,
+    nounPhrase(lang, objectCid, { directObject: true }),
+    verbCid === "HAVE" ? "haveObject" : "object");
   // The "with his X" companion is optional: plain SVO templates omit these slots.
   // Only build it when a companion noun is present, so undefined slots don't leak
   // into the sentence as the literal word "undefined".
@@ -2298,7 +2470,7 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
 }
 
 function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid, possessiveCid, nounCid) {
-  const subject = formOf(lang, subjectCid);
+  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const verb = getVerbForm(verbCid, subjectCid, lang);
   const companion = nounCid
     ? joinWords(lang, [formOf(lang, withCid), nounWithPossessive(lang, possessiveCid, nounCid,
@@ -2335,7 +2507,8 @@ function buildSentence(lang, tpl, forcedConcept = null, sharedChoices = null) {
     lang,
     buildSentenceRaw(lang, tpl, forcedConcept, sharedChoices)
   );
-  return applyTurkishCopulaSuffix(lang, tpl, finalized);
+  return applyTurkishCopulaSuffix(lang, tpl,
+    applyCopulaSuffix(lang, tpl, finalized));
 }
 
 // Fixed-form structures whose grammar the generator cannot synthesize:
@@ -3130,6 +3303,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // "Ela é motivada"), which genderedFormOf takes as an override.
     if (meta.type === "adjective" && meta.semantic_role !== "possessive" &&
         isCopularTemplate) {
+      // A predicate adjective may carry a dedicated predicative form — ko
+      // adjectives are stative verbs and conjugate in predicate position
+      // («책은 빨개요», never the attributive «책은 빨간»). Data-driven via
+      // the per-word `predicative` field; attributive position (an
+      // adjective directly before its noun) keeps the ordinary form.
+      const adjEntry = vocab().languages?.[lang]?.forms?.[cid];
+      if (adjEntry && !Array.isArray(adjEntry) &&
+          typeof adjEntry.predicative === "string" &&
+          vocab().concepts[ordered[idx + 1]]?.type !== "noun") {
+        noteRule("verb_agreement");
+        return adjEntry.predicative;
+      }
       const subjMeta = vocab().concepts[subjectCid];
       if (["noun", "time"].includes(subjMeta?.type)) {
         const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
@@ -3246,41 +3431,72 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
 
   const segments = ordered.map((cid, idx) => ({ cid, text: words[idx] }));
 
-  if (lang === "ja") {
+  // Topic/object particles (language_rules nominalParticles — ja は/を,
+  // ko 은는/을를/이가). Previously a ja-only branch; ko inherits the exact
+  // same placement logic through the declaration (Emi 2026-08-28-13: zero
+  // particles in 140 ko sentences).
+  const particles = langRuleValue(lang, "nominalParticles");
+  if (particles) {
     const pronounIndex = ordered.findIndex(c =>
       vocab().concepts[c]?.type === "pronoun"
     );
 
-    // Insert in reverse index order so earlier splices don't shift later indices
-    const insertions = [];
+    const marks = [];
     if (pronounIndex !== -1) {
-      insertions.push({ idx: pronounIndex + 1, particle: "は" });
+      marks.push({ idx: pronounIndex, role: "topic" });
     } else if (subjectCid &&
                ["copular", "time_description"].includes(tpl.structure?.type) &&
                ["noun", "time"].includes(vocab().concepts[subjectCid]?.type)) {
       // Non-pronoun subject in an X_IS_ADJ copular sentence ("book is red",
       // "autumn is old"): attach the topic marker after the subject —
-      // "本は赤いです。", "秋は古いです。". Restricted to the two structure
+      // "本は赤いです。", «책은 빨개요.». Restricted to the two structure
       // types that are structurally X_IS_ADJ (copular for BOOK_IS_RED etc.,
       // time_description for SEASON/DAY_IS_ADJ) so spatial_relation /
       // copular_demonstrative / yes_no_question_copular (all currently
       // baselined and structurally broken) are left alone.
       const subjIdx = ordered.indexOf(subjectCid);
-      if (subjIdx !== -1) insertions.push({ idx: subjIdx + 1, particle: "は" });
+      if (subjIdx !== -1) marks.push({ idx: subjIdx, role: "topic" });
     }
-    // Copular templates ("X is Y") never take を — the predicate noun sits
-    // directly before the copula です/だ. Inserting を produces ungrammatical
-    // strings like "彼らは隣人をです". Non-copular SVO templates ("X eats Y")
-    // still get を after the direct-object noun.
+    // Copular templates ("X is Y") never take the object particle — the
+    // predicate noun sits directly before the copula です/だ (or carries
+    // the ko copula suffix). Non-copular templates ("X eats Y") mark the
+    // direct-object noun; the ko have-construction is existential and its
+    // "object" takes the subject particle instead («셔츠가 있어요»).
     if (!isCopularTemplate) {
       const nounIndex = ordered.findIndex(c =>
         vocab().concepts[c]?.type === "noun"
       );
-      if (nounIndex !== -1) insertions.push({ idx: nounIndex + 1, particle: "を" });
+      // An authored surface override carries its own postposition/case
+      // («집에» for HOME in "I go home") — marking it again would double
+      // up («집에를»). Attach-mode particles skip such slots; the blank
+      // path skips them the same way (authored surface returned early).
+      const overridden = nounIndex !== -1 &&
+        typeof tpl.surface?.[lang]?.[ordered[nounIndex]] === "string" &&
+        tpl.surface[lang][ordered[nounIndex]] !== formOf(lang, ordered[nounIndex]);
+      if (nounIndex !== -1 && !(particles.attach && overridden)) {
+        const role = ordered.includes("HAVE") && particles.haveObject
+          ? "haveObject" : "object";
+        marks.push({ idx: nounIndex, role });
+      }
     }
-    insertions.sort((a, b) => b.idx - a.idx);
-    for (const ins of insertions) {
-      segments.splice(ins.idx, 0, { cid: null, text: ins.particle });
+    if (particles.attach) {
+      // Suffix onto the marked word's own segment («나» → «나는», «큰 책»
+      // → «큰 책을») so word tiles carry the particle with the word.
+      for (const mark of marks) {
+        const seg = segments[mark.idx];
+        if (seg && seg.text) {
+          seg.text += particleAllomorph(particles[mark.role], seg.text);
+        }
+      }
+    } else {
+      // Standalone particle segments after the marked word (ja).
+      // Insert in reverse index order so earlier splices don't shift
+      // later indices.
+      marks.sort((a, b) => b.idx - a.idx);
+      for (const mark of marks) {
+        segments.splice(mark.idx + 1, 0,
+          { cid: null, text: particleAllomorph(particles[mark.role], "") });
+      }
     }
   }
 
@@ -3324,6 +3540,14 @@ function sentenceTilesForTemplate(lang, tpl, sharedChoices = null) {
   }
   if (["copular_demonstrative", "yes_no_question_copular", "complex_clause"]
       .includes(tpl.structure?.type)) {
+    return tokenizedTiles(lang, tpl, sharedChoices);
+  }
+  // Suffixal-copula languages (ko): the copula lives INSIDE the sentence-
+  // final word («남자예요»), which only the finished sentence knows —
+  // per-concept segments would offer a bare «남자» tile that can never
+  // rebuild the sentence.
+  if (langRuleValue(lang, "copulaSuffix") && Array.isArray(tpl.concepts) &&
+      tpl.concepts.some((c) => isCopulaConcept(c))) {
     return tokenizedTiles(lang, tpl, sharedChoices);
   }
   return renderSegments(lang, tpl, null, sharedChoices);

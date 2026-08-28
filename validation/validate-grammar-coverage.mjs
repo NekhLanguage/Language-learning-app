@@ -66,8 +66,13 @@ const FEATURE_CHECKS = {
   indefiniteArticle: (row) => ({ ok: !!row.indefiniteArticle }),
   marksCaseOnDirectObjects: (row) => ({
     ok: !!row.caseMarking?.directObjectCase ||
-        row.caseMarking?.caseOn === 'determiner',
-    detail: 'needs caseMarking.directObjectCase (or a determiner-case strategy)',
+        row.caseMarking?.caseOn === 'determiner' ||
+        !!row.nominalParticles?.object,
+    detail: 'needs caseMarking.directObjectCase (or a determiner-case strategy, or an object particle)',
+  }),
+  topicParticle: (row) => ({
+    ok: !!row.nominalParticles?.topic,
+    detail: 'needs nominalParticles.topic',
   }),
   marksCaseAfterPrepositions: (row) => ({
     ok: Object.keys(row.caseMarking?.prepositions || {}).length > 0,
@@ -188,6 +193,12 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.numeralGenderAgreement],
   [(row) => !!row.possessiveEnclitic, 'possessivePlacement enclitic',
     (f) => f.possessivePlacement === 'enclitic'],
+  [(row) => !!row.nominalParticles?.topic, 'topicParticle',
+    (f) => !!f.topicParticle],
+  [(row) => !!row.nominalParticles?.object, 'marksCaseOnDirectObjects',
+    (f) => !!f.marksCaseOnDirectObjects],
+  [(row) => !!row.copulaSuffix, 'zeroPresentCopula',
+    (f) => !!f.zeroPresentCopula],
   [(row) => !!row.verbGenderParadigm, 'verbGenderParadigm',
     (f) => !!f.verbGenderParadigm],
 ];

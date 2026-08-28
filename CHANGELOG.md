@@ -8,6 +8,15 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-28
 
+### Korean now speaks Korean
+Korean was the worst-shape language in the product: the very first card read «나 음식 먹다» — a bare dictionary stack no Korean speaker would say. Three things were missing at once, and all three are now in. Verbs conjugate into the polite present a beginner should learn first: «먹어요», «마셔요», «읽어요», «봐요» — across the whole course, packs included. Particles mark who does what: the topic marker on the subject («저는», «그는», «그들은»), the object marker on the thing acted on («음식을», «책을», «물을»), each choosing its correct form by the sound of the word it follows. And "to be" works the way Korean actually does it — as an ending fused onto the word («저는 남자예요», «그는 소년이에요»), with adjectives conjugating as the verbs they really are («책은 빨개요», «가을은 오래됐어요»). Possession reads naturally too: «저는 셔츠가 있어요», not a word-for-word "I have shirt". The generated sentences now match the native-speaker reference corpus word-for-word across most of the core course, and the polite register (저/당신) is consistent throughout. Fill-in-the-blank and word-tile exercises carry the particles with the words, the way Korean is actually taught.
+
+### Arabic verbs agree with "she"
+Every sentence about «هي» (she) was using the masculine verb — «هي يرى هاتف» instead of «هي ترى هاتف». Feminine third-person forms are now in place for every verb in the app, core and packs alike, so "she sees", "she reads", "she cooks" all carry the ت- prefix Arabic requires. Everything already correct — أنا، أنت، هو، نحن، هم — stays exactly as it was.
+
+### Your saved progress got a third smaller
+The app was saving a bookkeeping row for every sentence pattern it had ever considered showing you — even the hundreds it never had. Those empty rows were most of the saved record and were pushing big accounts past the server's loading limit. The app now saves only rows that carry real progress and rebuilds the empty ones on demand; nothing about your progress changes, loading just gets faster and safer the longer you study.
+
 ### Greek possessives go where Greek puts them
 Every Greek possessive sentence was built backwards — «μου βιβλίο» instead of «το βιβλίο μου». Fixed structurally: the noun keeps its definite article and the possessive follows it, the way Greek actually works — «Αυτή διαβάζει το βιβλίο μου», «Εμείς έχουμε το τηγάνι του», «η παλάμη μου». Thai's same-shaped rule (possessor after the noun) now runs through the same declared machinery instead of a special case, with identical output. Also in this batch: Polish no longer writes «To myje warzywo» — an inanimate "it" can't be the subject of an ordinary Polish verb, so the pronoun is dropped the way a Pole would («Mży» for "it drizzles"), while personal pronouns stay explicit for learning; and "They are our girls" now agrees in both halves in Ukrainian («Вони наші дівчата»).
 

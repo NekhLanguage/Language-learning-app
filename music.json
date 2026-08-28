@@ -467,11 +467,11 @@
         "CHORD":      { "form": "코드" },
         "HARMONY":    { "form": "화음" },
 
-        "SING":       { "base": "노래하다" },
-        "STRUM":      { "base": "연주하다" },
-        "COMPOSE":    { "base": "작곡하다" },
-        "PERFORM":    { "base": "공연하다" },
-        "RECORD":     { "base": "녹음하다" },
+        "SING":       { "base": "노래하다", "present": "노래해요" },
+        "STRUM":      { "base": "연주하다", "present": "연주해요" },
+        "COMPOSE":    { "base": "작곡하다", "present": "작곡해요" },
+        "PERFORM":    { "base": "공연하다", "present": "공연해요" },
+        "RECORD":     { "base": "녹음하다", "present": "녹음해요" },
 
         "CONCERT":    { "form": "콘서트" },
         "STAGE":      { "form": "무대" },
@@ -497,11 +497,11 @@
         "REMIX":      { "form": "리믹스" },
         "SAMPLE":     { "form": "샘플" },
 
-        "REHEARSE":   { "base": "리허설하다" },
-        "TUNE":       { "base": "조율하다" },
-        "IMPROVISE":  { "base": "즉흥 연주하다" },
-        "AMPLIFY":    { "base": "증폭하다" },
-        "DROP":       { "base": "발매하다" },
+        "REHEARSE":   { "base": "리허설하다", "present": "리허설해요" },
+        "TUNE":       { "base": "조율하다", "present": "조율해요" },
+        "IMPROVISE":  { "base": "즉흥 연주하다", "present": "즉흥 연주해요" },
+        "AMPLIFY":    { "base": "증폭하다", "present": "증폭해요" },
+        "DROP":       { "base": "발매하다", "present": "발매해요" },
 
         "LOUD":       ["시끄러운"],
         "SOULFUL":    ["감성적인"],

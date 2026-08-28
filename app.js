@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.22";
+const APP_DATA_VERSION = "1.2.23";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -649,12 +649,12 @@ function loadUser() {
   USER = user;
   if (source === "backup") {
     console.warn("Primary user state was corrupt — restored from backup");
-    localStorage.setItem("zth_user", JSON.stringify(USER));
+    localStorage.setItem("zth_user", JSON.stringify(compactUserForPersist(USER)));
   }
 
   // Boot-time snapshot: the last known good state, used to recover if a
   // later write corrupts the primary blob.
-  localStorage.setItem("zth_user_backup", JSON.stringify(USER));
+  localStorage.setItem("zth_user_backup", JSON.stringify(compactUserForPersist(USER)));
 }
 
 async function saveUser() {
@@ -971,7 +971,7 @@ if (run.contentVersion !== CONTENT_VERSION) {
   }
 
   // ✅ ONLY save locally
-  localStorage.setItem("zth_user", JSON.stringify(USER));
+  localStorage.setItem("zth_user", JSON.stringify(compactUserForPersist(USER)));
 }
 
 function hasAccess() {

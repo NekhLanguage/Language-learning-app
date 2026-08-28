@@ -246,7 +246,7 @@
         "INTERCEPT": { "base": "يعترض",   "1_singular": "أعترض",   "2_singular": "تعترض","3_singular": "يعترض", "3_singular_feminine": "تعترض",   "1_plural": "نعترض",   "2_plural": "تعترضون",  "3_plural": "يعترضون" },
         "DEFEND": { "base": "يدافع",    "1_singular": "أدافع",   "2_singular": "تدافع","3_singular": "يدافع", "3_singular_feminine": "تدافع",   "1_plural": "ندافع",   "2_plural": "تدافعون",  "3_plural": "يدافعون" },
         "BLOCK": { "base": "يصد",      "1_singular": "أصد",     "2_singular": "تصد","3_singular": "يصد", "3_singular_feminine": "تصد",     "1_plural": "نصد",     "2_plural": "تصدون",    "3_plural": "يصدون" },
-        "COUNTER":    { "base": "يهجم مضاداً","1_singular": "أهجم مضاداً","2_singular": "تهجم مضاداً","3_singular": "يهجم مضاداً","1_plural": "نهجم مضاداً","2_plural": "تهجمون مضاداً","3_plural": "يهجمون مضاداً" },
+        "COUNTER":    { "base": "يهجم مضاداً","1_singular": "أهجم مضاداً","2_singular": "تهجم مضاداً","3_singular": "يهجم مضاداً", "3_singular_feminine": "تهجم مضاداً","1_plural": "نهجم مضاداً","2_plural": "تهجمون مضاداً","3_plural": "يهجمون مضاداً" },
         "DOMINATE": { "base": "يسيطر",   "1_singular": "أسيطر",   "2_singular": "تسيطر","3_singular": "يسيطر", "3_singular_feminine": "تسيطر",   "1_plural": "نسيطر",   "2_plural": "تسيطرون",  "3_plural": "يسيطرون" },
 
         "CHAMPION":   { "form": "بطل", "gender": "m" },
@@ -467,17 +467,17 @@
         "REFEREE":    { "form": "심판" },
         "COACH":      { "form": "코치" },
 
-        "KICK":       { "base": "차다" },
-        "PASS":       { "base": "패스하다" },
-        "SHOOT":      { "base": "슛하다" },
-        "DRIBBLE":    { "base": "드리블하다" },
-        "SCORE":      { "base": "득점하다" },
+        "KICK":       { "base": "차다", "present": "차요" },
+        "PASS":       { "base": "패스하다", "present": "패스해요" },
+        "SHOOT":      { "base": "슛하다", "present": "슛해요" },
+        "DRIBBLE":    { "base": "드리블하다", "present": "드리블해요" },
+        "SCORE":      { "base": "득점하다", "present": "득점해요" },
 
         "HEADER":     { "form": "헤딩" },
-        "TACKLE":     { "base": "태클하다" },
-        "CROSS":      { "base": "크로스하다" },
+        "TACKLE":     { "base": "태클하다", "present": "태클해요" },
+        "CROSS":      { "base": "크로스하다", "present": "크로스해요" },
         "VOLLEY":     { "form": "발리" },
-        "SPRINT":     { "base": "전력 질주하다" },
+        "SPRINT":     { "base": "전력 질주하다", "present": "전력 질주해요" },
 
         "FOUL":       { "form": "파울" },
         "PENALTY":    { "form": "페널티" },
@@ -503,15 +503,15 @@
         "DECISIVE":   ["결정적인"],
         "CLINICAL":   ["냉정한"],
 
-        "INTERCEPT":  { "base": "가로채다" },
-        "DEFEND":     { "base": "수비하다" },
-        "BLOCK":      { "base": "블록하다" },
-        "COUNTER":    { "base": "역습하다" },
-        "DOMINATE":   { "base": "지배하다" },
+        "INTERCEPT":  { "base": "가로채다", "present": "가로채요" },
+        "DEFEND":     { "base": "수비하다", "present": "수비해요" },
+        "BLOCK":      { "base": "블록하다", "present": "블록해요" },
+        "COUNTER":    { "base": "역습하다", "present": "역습해요" },
+        "DOMINATE":   { "base": "지배하다", "present": "지배해요" },
 
         "CHAMPION":   { "form": "챔피언" },
         "CROWD":      { "form": "관중" },
-        "CELEBRATE":  { "base": "축하하다" },
+        "CELEBRATE":  { "base": "축하하다", "present": "축하해요" },
         "FINAL":      { "form": "결승전" },
         "UNBEATABLE": ["무적의"]
       }
