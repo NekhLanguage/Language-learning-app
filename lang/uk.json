@@ -291,7 +291,8 @@
       "form": "книга",
       "instrumental": "книгою",
       "gender": "f",
-      "plural": "книги"
+      "plural": "книги",
+      "genitive_plural": "книг"
     },
     "THING": {
       "form": "річ",
@@ -434,7 +435,8 @@
       "form": "телефон",
       "instrumental": "телефоном",
       "gender": "m",
-      "plural": "телефони"
+      "plural": "телефони",
+      "genitive_plural": "телефонів"
     },
     "PANTS": {
       "gender": "m",

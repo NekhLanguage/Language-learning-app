@@ -800,11 +800,11 @@
       "label": "Українська",
       "forms": {
 
-        "AIRPORT": { "gender": "m", "form": "аеропорт", "plural": "аеропорти" },
-        "PASSPORT": { "gender": "m", "form": "паспорт" },
+        "AIRPORT": { "gender": "m", "form": "аеропорт", "plural": "аеропорти", "genitive_plural": "аеропортів" },
+        "PASSPORT": { "gender": "m", "form": "паспорт", "plural": "паспорти", "genitive_plural": "паспортів" },
         "FLIGHT": { "gender": "m", "form": "рейс", "plural": "рейси" },
         "LUGGAGE": { "gender": "m", "form": "багаж" },
-        "HOTEL": { "gender": "m", "form": "готель", "plural": "готелі" },
+        "HOTEL": { "gender": "m", "form": "готель", "plural": "готелі", "genitive_plural": "готелів" },
         "RESERVATION": { "gender": "n", "form": "бронювання", "plural": "бронювання" },
         "LOBBY": { "gender": "n", "form": "лобі", "plural": "лобі" },
         "CHECKOUT": { "gender": "m", "form": "виїзд", "plural": "виїзди" },

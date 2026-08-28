@@ -319,9 +319,10 @@ export const LANGUAGE_RULES = {
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
-      declinesAttributiveAdjectives: true,
+      declinesAttributiveAdjectives: true, numeralGovernment: true,
     },
     zeroPresentCopula: true,
+    numeralGenitivePlural: true,
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,
     caseMarking: {

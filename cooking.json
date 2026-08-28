@@ -517,7 +517,7 @@
     "WASH": { "base": "мити", "1_singular": "мию", "2_singular": "миєш", "3_singular": "миє", "1_plural": "миємо", "2_plural": "миєте", "3_plural": "миють" },
     "HEAT": { "base": "нагрівати", "1_singular": "нагріваю", "2_singular": "нагріваєш", "3_singular": "нагріває", "1_plural": "нагріваємо", "2_plural": "нагріваєте", "3_plural": "нагрівають" },
 
-    "PAN": { "gender": "f", "form": "сковорода", "plural": "сковороди" },
+    "PAN": { "gender": "f", "form": "сковорода", "plural": "сковороди", "genitive_plural": "сковорід" },
     "KNIFE": { "gender": "m", "form": "ніж", "plural": "ножі" },
     "FORK": { "gender": "f", "form": "виделка", "plural": "виделки" },
     "SPOON": { "gender": "f", "form": "ложка", "plural": "ложки" },

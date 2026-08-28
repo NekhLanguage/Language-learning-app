@@ -200,6 +200,48 @@ test("pl: numbers never land on virile nouns (special numeral forms)", () => {
   assert.equal(isModifierCompatible("pl", "FIVE", "BOOK"), true);
 });
 
+// ---------------------------------------------------------------------
+// uk: numerals five and above govern the genitive plural (Emi 2026-08-28-07)
+// «десять погані паспорт» → skipped when data is missing, or rendered
+// «сім книг» when the noun carries the field.
+// ---------------------------------------------------------------------
+
+test("uk: numeralGenitivePlural is declared and matches pl's memberships", () => {
+  assert.equal(langRule("uk", "numeralGenitivePlural"), true);
+  assert.deepEqual([...langsWith("numeralGenitivePlural")].sort(), ["pl", "uk"]);
+});
+
+test("uk: 5+ takes the genitive plural where the field is authored", () => {
+  // Emi's confirmed cases from run 5, verbatim:
+  //   «Він читає сім книги» → «сім книг»
+  const tpl = tplById("YOU_READ_BOOK");
+  assert.equal(buildSentence("uk", tpl, "FIVE", {}),
+    "Ти читаєш п’ять книг.");
+  assert.equal(buildSentence("uk", tpl, "SEVEN", {}),
+    "Ти читаєш сім книг.");
+});
+
+test("uk: 2–4 keeps the plural (nominative) — «два книги» stays a plural", () => {
+  const tpl = tplById("YOU_READ_BOOK");
+  assert.equal(buildSentence("uk", tpl, "FOUR", {}),
+    "Ти читаєш чотири книги.");
+});
+
+test("uk: 5+ number is dropped when genitive_plural data is missing", () => {
+  // Compat gate: uk nouns without the field skip the number rather than
+  // shipping «десять погані паспорт». BOOK carries the field so drops
+  // require a data-less noun.
+  const entry = vocab.languages.uk.forms.BOOK;
+  const saved = entry.genitive_plural;
+  delete entry.genitive_plural;
+  try {
+    assert.equal(isModifierCompatible("uk", "FIVE", "BOOK"), false);
+    assert.equal(isModifierCompatible("uk", "FOUR", "BOOK"), true);
+  } finally {
+    entry.genitive_plural = saved;
+  }
+});
+
 test("pl: virile nouns and adjectives carry the vp agreement data", () => {
   const forms = vocab.languages.pl.forms;
   const virile = Object.values(forms).filter((e) => e && e.virile);
