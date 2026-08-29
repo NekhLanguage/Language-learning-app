@@ -32,6 +32,15 @@
 //                            SPACELESS_JOIN_LANGS.
 //   spacelessTiles           L6 tiles cannot split on whitespace (ja/zh/th).
 //                            Drives SPACELESS_TILE_LANGS.
+//   classifiers              numerals and "a/an" count through a measure
+//                            word before the noun (zh «一本书», «两条裤子»).
+//                            { default, numeralOverrides } — per-noun
+//                            `classifier` field in the data.
+//   counters                 numeral + counter follow the counted noun
+//                            (ko «책 한 권»). { default, numeralModifiers }
+//                            — per-noun `counter` field in the data;
+//                            numeralModifiers maps citation numerals to
+//                            their determiner forms (하나 → 한).
 //   possessiveDefiniteArticle
 //                            possessed noun phrases take the definite
 //                            article («la mia mano», «il suo taxi») except
@@ -402,6 +411,9 @@ export const LANGUAGE_RULES = {
       // have-construction: «셔츠가 있어요»), 은/는 topics the subject —
       // Emi 2026-08-28-13: zero particles in 140 sentences.
       topicParticle: true, marksCaseOnDirectObjects: true,
+      // Numerals count through a counter that follows the noun:
+      // «책 한 권을 읽어요» — never «넷 나쁜 책» (Emi 2026-08-28-14).
+      classifiersOrCounters: true,
     },
     wordOrder: "SOV",
     zeroPresentCopula: true,
@@ -428,9 +440,31 @@ export const LANGUAGE_RULES = {
         "spatial_relation", "spatial_relation_complex", "complex_clause",
       ],
     },
+    // Numeral + counter FOLLOW the counted noun («책 한 권», «나쁜 책 네
+    // 권»); the attach-mode object particle then lands on the counter
+    // («책 한 권을»). Per-noun `counter` field in the data; 개 is the
+    // universal default. Native numerals take their determiner form
+    // before a counter — the replacements apply to the numeral's final
+    // syllable(s), so compounds inflect too (열넷 → 열네).
+    counters: {
+      default: "개",
+      numeralModifiers: { "하나": "한", "둘": "두", "셋": "세", "넷": "네" },
+    },
   },
   zh: {
-    features: { adjectivePosition: "pre" }, spacelessTiles: true },
+    features: {
+      adjectivePosition: "pre",
+      // Countable nouns are counted (and take English "a/an") through a
+      // measure word: «一本书», «两条裤子» — never bare «六工作»
+      // (Emi 2026-08-28-19 / run-9).
+      classifiersOrCounters: true,
+    },
+    spacelessTiles: true,
+    // Per-noun `classifier` field in the data; 个 is the universal default
+    // (never wrong, only sometimes less idiomatic). Before a classifier
+    // the counting numeral 两 replaces 二 (Emi 2026-08-29-41).
+    classifiers: { default: "个", numeralOverrides: { TWO: "两" } },
+  },
   no: {
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",

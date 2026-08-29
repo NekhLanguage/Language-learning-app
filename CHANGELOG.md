@@ -6,6 +6,17 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-08-29
+
+### Chinese counts the way Chinese counts
+Mandarin never emitted measure words: "He reads a book" came out «他读书» and "two pairs of pants" as «二紫裤子» — and worse, the free-writing grader marked the CORRECT sentence («他看一个博物馆») wrong because the reference lacked the classifier. Every countable noun in the core course and the packs now carries its measure word: «他读一本书», «我是一个男人», «两条裤子», «六份工作» — with 两 replacing 二 before a classifier, the way Chinese counts. Word-tile and fill-in-the-blank exercises carry the classifier with the phrase, and typing the classifier the way a Chinese speaker would is now graded as what it is: correct. Nouns that take no measure word (水, 早餐, 衣服 as a mass) stay bare, matching the native-speaker reference corpus.
+
+### Korean counts with counters
+Numbers in Korean stacked up English-style: «넷 나쁜 책» for "four bad books". Korean counts by putting the number and a counter after the noun, with the number in its counting form — the app now renders «나쁜 책 네 권을 읽어요», choosing the counter per noun (권 for books, 마리 for animals, 명 for people, 개 otherwise) and inflecting the numeral (하나→한, 둘→두, 셋→세, 넷→네, 열둘→열두). The object particle rides on the counter, exactly as Korean is taught.
+
+### Sentences without an "I" or "you" get their particles right
+Korean and Japanese sentences whose subject is a noun («포켓몬은 기술이 있어요») previously put the object particle on the SUBJECT. The subject now takes the topic marker and the actual object takes its particle, in generated sentences and in the word tiles alike.
+
 ## 2026-08-28
 
 ### Korean now speaks Korean

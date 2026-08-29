@@ -229,108 +229,145 @@
     "FOOD": [
       "食物"
     ],
-    "HOUSE": [
-      "房子"
-    ],
-    "HOME": [
-      "家"
-    ],
-    "BOOK": [
-      "书"
-    ],
-    "THING": [
-      "东西"
-    ],
-    "JOB": [
-      "工作"
-    ],
-    "ROOM": [
-      "房间"
-    ],
-    "BOY": [
-      "男孩"
-    ],
-    "GIRL": [
-      "女孩"
-    ],
-    "MAN": [
-      "男人"
-    ],
-    "WOMAN": [
-      "女人"
-    ],
+    "HOUSE": {
+      "form": "房子",
+      "classifier": "座"
+    },
+    "HOME": {
+      "form": "家",
+      "noArticle": true
+    },
+    "BOOK": {
+      "form": "书",
+      "classifier": "本"
+    },
+    "THING": {
+      "form": "东西",
+      "classifier": "个"
+    },
+    "JOB": {
+      "form": "工作",
+      "classifier": "份"
+    },
+    "ROOM": {
+      "form": "房间",
+      "classifier": "个"
+    },
+    "BOY": {
+      "form": "男孩",
+      "classifier": "个"
+    },
+    "GIRL": {
+      "form": "女孩",
+      "classifier": "个"
+    },
+    "MAN": {
+      "form": "男人",
+      "classifier": "个"
+    },
+    "WOMAN": {
+      "form": "女人",
+      "classifier": "个"
+    },
     "MOM": [
       "妈妈"
     ],
     "DAD": [
       "爸爸"
     ],
-    "SON": [
-      "儿子"
-    ],
-    "DAUGHTER": [
-      "女儿"
-    ],
-    "BROTHER": [
-      "兄弟"
-    ],
+    "SON": {
+      "form": "儿子",
+      "classifier": "个"
+    },
+    "DAUGHTER": {
+      "form": "女儿",
+      "classifier": "个"
+    },
+    "BROTHER": {
+      "form": "兄弟",
+      "classifier": "个"
+    },
     "SISTER": [
       "姐妹"
     ],
-    "HEAD": [
-      "头"
-    ],
-    "ARM": [
-      "手臂"
-    ],
-    "HAND": [
-      "手"
-    ],
-    "LEG": [
-      "腿"
-    ],
-    "FOOT": [
-      "脚"
-    ],
-    "FINGER": [
-      "手指"
-    ],
-    "EYE": [
-      "眼睛"
-    ],
-    "MOUTH": [
-      "嘴"
-    ],
-    "FACE": [
-      "脸"
-    ],
-    "BREAKFAST": [
-      "早餐"
-    ],
-    "LUNCH": [
-      "午餐"
-    ],
-    "DINNER": [
-      "晚餐"
-    ],
-    "CLOTHES": [
-      "衣服"
-    ],
-    "SHIRT": [
-      "衬衫"
-    ],
-    "SHOES": [
-      "鞋"
-    ],
-    "TABLE": [
-      "桌子"
-    ],
-    "PHONE": [
-      "电话"
-    ],
-    "PANTS": [
-      "裤子"
-    ],
+    "HEAD": {
+      "form": "头",
+      "classifier": "个"
+    },
+    "ARM": {
+      "form": "手臂",
+      "classifier": "条"
+    },
+    "HAND": {
+      "form": "手",
+      "classifier": "只"
+    },
+    "LEG": {
+      "form": "腿",
+      "classifier": "条"
+    },
+    "FOOT": {
+      "form": "脚",
+      "classifier": "只"
+    },
+    "FINGER": {
+      "form": "手指",
+      "classifier": "根"
+    },
+    "EYE": {
+      "form": "眼睛",
+      "classifier": "只"
+    },
+    "MOUTH": {
+      "form": "嘴",
+      "classifier": "张"
+    },
+    "FACE": {
+      "form": "脸",
+      "classifier": "张"
+    },
+    "BREAKFAST": {
+      "form": "早餐",
+      "classifier": "顿",
+      "noArticle": true
+    },
+    "LUNCH": {
+      "form": "午餐",
+      "classifier": "顿",
+      "noArticle": true
+    },
+    "DINNER": {
+      "form": "晚餐",
+      "classifier": "顿",
+      "noArticle": true
+    },
+    "CLOTHES": {
+      "form": "衣服",
+      "classifier": "件",
+      "noArticle": true
+    },
+    "SHIRT": {
+      "form": "衬衫",
+      "classifier": "件"
+    },
+    "SHOES": {
+      "form": "鞋",
+      "classifier": "只",
+      "noArticle": true
+    },
+    "TABLE": {
+      "form": "桌子",
+      "classifier": "张"
+    },
+    "PHONE": {
+      "form": "电话",
+      "classifier": "部"
+    },
+    "PANTS": {
+      "form": "裤子",
+      "classifier": "条",
+      "noArticle": true
+    },
     "ONE": [
       "一"
     ],

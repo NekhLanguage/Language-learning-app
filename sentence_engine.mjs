@@ -42,6 +42,7 @@ export const GRAMMAR_RULE_IDS = [
   "vso_word_order",          // ar leads with the verb
   "indefinite_article",      // a/an, um/uma, ein/eine, … chosen by gender/sound
   "ja_counter",              // ja numbers attach through a counter + の
+  "classifier",              // zh/ko count (and zh "a/an") through a measure word / counter
   "accusative_object",       // uk direct objects take the accusative ending
   "prepositional_case",      // uk prepositions govern the noun's case ending
   "definite_article",        // the/o/der/… for a described noun subject
@@ -1082,10 +1083,24 @@ function nounPhrase(lang, cid, opts = {}) {
   if (meta && meta.countable === false) return base;
 
   // Apply article logic when the concept is marked countable OR when the
-  // form itself carries article/gender data (covers resource-pack nouns that
-  // define articles without a countable flag on the concept).
-  const hasArticleInfo = meta?.countable || entry.article || entry.gender;
+  // form itself carries article/gender/classifier data (covers resource-pack
+  // nouns that define articles without a countable flag on the concept).
+  const hasArticleInfo = meta?.countable || entry.article || entry.gender ||
+    entry.classifier;
   if (!hasArticleInfo) return base;
+
+  // Classifier languages (language_rules `classifiers` — zh): English
+  // "a/an" surfaces as 一 + the noun's measure word («一本书», «一份工作»).
+  // Data-driven per noun; a countable noun without data takes the declared
+  // universal default (个 — never wrong, only sometimes less idiomatic).
+  // Mass nouns never reach here (no countable flag, no classifier field).
+  const clfSpec = langRuleValue(lang, "classifiers");
+  if (clfSpec) {
+    const clf = entry.classifier || clfSpec.default;
+    if (!clf) return base;
+    noteRule("classifier");
+    return "一" + clf + base;
+  }
 
   if (lang === "en") {
     const article = entry.article || englishIndefiniteArticle(base);
@@ -1576,7 +1591,10 @@ if (orderType === "SOV") {
     }
     const prepCase = caseMap(targetLang, ordered)[idx];
     if (prepCase) return { position: "prepObject", caseName: prepCase };
-    if (isDirectObjectPosition(ordered, idx)) {
+    // SOV-aware object detection (the render's particle attach uses the
+    // same helper) — the old first-noun render-alignment workaround for
+    // SOV retired with the -14/-19 work.
+    if (isDirectObjectPosition(ordered, idx, targetLang)) {
       // The possessed noun of an existential-possession template stays
       // nominative (fi «Minulla on paita») — tiles must not decline it.
       const exHave = langRuleValue(targetLang, "existentialPossession") &&
@@ -1584,17 +1602,6 @@ if (orderType === "SOV") {
       const doCase = exHave ? null :
         (langRuleValue(targetLang, "caseMarking")?.directObjectCase || null);
       return { position: "directObject", caseName: doCase };
-    }
-    // Render-alignment workaround for SOV: renderSegments' particle
-    // attach marks `ordered.findIndex(noun)` (which is the SUBJECT in a
-    // no-pronoun-subject template — a render-side gap tracked by Emi -14
-    // for Task 1). Until that render lands on the SOV-aware helpers,
-    // slotContextFor mirrors the render's marked position so tiles keep
-    // matching sentences («포켓몬이 …»). Retires with the -14/-19 work.
-    if (langRuleValue(targetLang, "wordOrder") === "SOV" && !isCopularTpl &&
-        vocab().concepts[targetConcept]?.type === "noun" &&
-        idx === ordered.findIndex(c => vocab().concepts[c]?.type === "noun")) {
-      return { position: "directObject", caseName: null };
     }
     return { position: idx === 0 ? "subject" : "other", caseName: null };
   }
@@ -1620,7 +1627,11 @@ if (orderType === "SOV") {
       if (slot?.position === "subject" &&
           (meta.type === "pronoun" ||
            (["noun", "time"].includes(meta.type) &&
-            ["copular", "time_description"].includes(tpl.structure?.type)))) {
+            (["copular", "time_description"].includes(tpl.structure?.type) ||
+             !(tpl.concepts || []).some((c) => isCopulaConcept(c)))))) {
+        // Mirrors renderSegments' topic mark exactly: pronoun subjects,
+        // X_IS_ADJ noun subjects, and plain-verb noun subjects
+        // («포켓몬은») — the same three cases the render marks.
         return surface + particleAllomorph(particles.topic, surface);
       }
     }
@@ -3463,6 +3474,48 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const clf = vocab().languages?.th?.forms?.[cid]?.classifier || "อัน";
       return joinWords(lang, [nounForm, adjectiveWord, numberWord, clf]);
     }
+    // Classifier languages (zh): the numeral counts through the noun's
+    // measure word — «两条裤子», «六份工作», never «六工作» (Emi -19).
+    // Before a classifier the language may substitute a counting numeral
+    // (zh 两 for 二 — Emi 2026-08-29-41), declared as numeralOverrides.
+    if (langRuleValue(lang, "classifiers")) {
+      const spec = langRuleValue(lang, "classifiers");
+      const clf = vocab().languages?.[lang]?.forms?.[cid]?.classifier ||
+        spec.default;
+      noteRule("classifier");
+      const num = spec.numeralOverrides?.[numberCid] || numberWord;
+      // A drilled number's L3 blank must hold the counting form actually
+      // rendered («两», not the citation «二») — overwrite the pre-branch
+      // capture, which recorded the citation form.
+      if (sharedChoices && numberCid === forcedConcept && num !== numberWord) {
+        sharedChoices["blankSurface_" + lang] = num;
+      }
+      return [num + clf, adjectiveWord, nounForm].filter(Boolean).join(" ");
+    }
+    // Counter languages (ko): the numeral + counter FOLLOW the noun, with
+    // the numeral in its determiner form — «나쁜 책 네 권», never
+    // «넷 나쁜 책» (Emi -14). The object particle later attaches to the
+    // end of this phrase, landing on the counter («책 한 권을»).
+    if (langRuleValue(lang, "counters")) {
+      const spec = langRuleValue(lang, "counters");
+      const ctr = vocab().languages?.[lang]?.forms?.[cid]?.counter ||
+        spec.default;
+      noteRule("classifier");
+      let num = numberWord;
+      for (const [full, mod] of Object.entries(spec.numeralModifiers || {})) {
+        if (num.endsWith(full)) {
+          num = num.slice(0, num.length - full.length) + mod;
+          break;
+        }
+      }
+      // A drilled number's L3 blank must hold the determiner form actually
+      // rendered («네», not the citation «넷») — overwrite the pre-branch
+      // capture, which recorded the citation form.
+      if (sharedChoices && numberCid === forcedConcept) {
+        sharedChoices["blankSurface_" + lang] = num;
+      }
+      return [adjectiveWord, nounForm, num + " " + ctr].filter(Boolean).join(" ");
+    }
     // Japanese requires a counter when a number quantifies a noun. Render as
     // "<number><counter>の<noun>" so "二 食べ物" becomes "二つの食べ物"
     // ("two foods"). Adjectives sit between の and the noun, matching the
@@ -3924,13 +3977,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (pronounIndex !== -1) {
       marks.push({ idx: pronounIndex, role: "topic" });
     } else if (subjectCid &&
-               ["copular", "time_description"].includes(tpl.structure?.type) &&
+               (["copular", "time_description"].includes(tpl.structure?.type) ||
+                !isCopularTemplate) &&
                ["noun", "time"].includes(vocab().concepts[subjectCid]?.type)) {
-      // Non-pronoun subject in an X_IS_ADJ copular sentence ("book is red",
-      // "autumn is old"): attach the topic marker after the subject —
-      // "本は赤いです。", «책은 빨개요.». Restricted to the two structure
-      // types that are structurally X_IS_ADJ (copular for BOOK_IS_RED etc.,
-      // time_description for SEASON/DAY_IS_ADJ) so spatial_relation /
+      // Non-pronoun subject: attach the topic marker after the subject —
+      // "本は赤いです。", «책은 빨개요.», and in plain-verb templates
+      // «포켓몬은 음식을 먹어요» (paired with the SOV-aware object mark
+      // below). Copular structures stay restricted to the two X_IS_ADJ
+      // types (copular, time_description) so spatial_relation /
       // copular_demonstrative / yes_no_question_copular (all currently
       // baselined and structurally broken) are left alone.
       const subjIdx = ordered.indexOf(subjectCid);
@@ -3942,8 +3996,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // direct-object noun; the ko have-construction is existential and its
     // "object" takes the subject particle instead («셔츠가 있어요»).
     if (!isCopularTemplate) {
-      const nounIndex = ordered.findIndex(c =>
-        vocab().concepts[c]?.type === "noun"
+      // The marked noun must be the actual direct object — SOV-aware, so a
+      // no-pronoun-subject template («포켓몬은 유형이 있어요») marks the
+      // object, not the first noun (the render-side gap slotContextFor
+      // used to mirror; both now share isDirectObjectPosition).
+      const nounIndex = ordered.findIndex((c, i) =>
+        vocab().concepts[c]?.type === "noun" &&
+        isDirectObjectPosition(ordered, i, lang)
       );
       // An authored surface override carries its own postposition/case
       // («집에» for HOME in "I go home") — marking it again would double
