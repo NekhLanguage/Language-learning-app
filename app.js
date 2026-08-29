@@ -1910,10 +1910,12 @@ async function runEnterLanguage(btn, langCode) {
       banner.classList.remove("hidden");
       banner.classList.add("is-error");
     }
-    btn.dataset.busy = "";
-    btn.removeAttribute("aria-busy");
   } finally {
     if (timer) clearTimeout(timer);
+    // Clear on every settle, success included: the picker DOM persists across
+    // quit → re-open, so a flag left set here makes the card eat all later clicks.
+    btn.dataset.busy = "";
+    btn.removeAttribute("aria-busy");
   }
 }
   async function loadAndMergeVocab() {
