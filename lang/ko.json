@@ -244,7 +244,8 @@
       "form": "집"
     },
     "BOOK": {
-      "form": "책"
+      "form": "책",
+      "counter": "권"
     },
     "THING": {
       "form": "것"
@@ -256,16 +257,20 @@
       "form": "방"
     },
     "BOY": {
-      "form": "소년"
+      "form": "소년",
+      "counter": "명"
     },
     "GIRL": {
-      "form": "소녀"
+      "form": "소녀",
+      "counter": "명"
     },
     "MAN": {
-      "form": "남자"
+      "form": "남자",
+      "counter": "명"
     },
     "WOMAN": {
-      "form": "여자"
+      "form": "여자",
+      "counter": "명"
     },
     "MOM": {
       "form": "엄마"
@@ -274,16 +279,20 @@
       "form": "아빠"
     },
     "SON": {
-      "form": "아들"
+      "form": "아들",
+      "counter": "명"
     },
     "DAUGHTER": {
-      "form": "딸"
+      "form": "딸",
+      "counter": "명"
     },
     "BROTHER": {
-      "form": "형제"
+      "form": "형제",
+      "counter": "명"
     },
     "SISTER": {
-      "form": "자매"
+      "form": "자매",
+      "counter": "명"
     },
     "HEAD": {
       "form": "머리"

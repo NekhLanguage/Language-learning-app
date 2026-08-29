@@ -736,6 +736,7 @@ test("every features key is a known, checkable feature id", () => {
     "negatorAgreement", "zeroPresentCopula", "definitenessAgreement",
     "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
     "possessivePlacement", "verbGenderParadigm", "topicParticle",
+    "classifiersOrCounters",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
@@ -1037,6 +1038,60 @@ test("engine: adjective insertion never slices a mismatched noun (run-7 -34)", (
   };
   assert.equal(buildSentence("en", tpl, "SMALL", {}), "We are my small dads.");
   assert.equal(buildSentence("fi", tpl, "SMALL", {}), "Me olemme minun pienet isät.");
+});
+
+// ---------------------------------------------------------------------
+// zh: classifiers (measure words) — Emi -19 / run-9
+// ---------------------------------------------------------------------
+
+test("zh: English 'a' renders as 一 + the noun's classifier", () => {
+  assert.equal(buildSentence("zh", tplById("HE_READ_BOOK")), "他读一本书。");
+  assert.equal(buildSentence("zh", tplById("I_AM_MAN")), "我是一个男人。");
+});
+
+test("zh: mass and noArticle nouns stay bare", () => {
+  assert.equal(nounPhrase("zh", "WATER"), "水");   // mass — no classifier data
+  assert.equal(nounPhrase("zh", "PANTS"), "裤子"); // authored bare (noArticle)
+});
+
+test("zh: numerals count through the classifier, 两 replaces 二", () => {
+  const tpl = tplById("YOU_READ_BOOK");
+  assert.equal(buildSentence("zh", tpl, "FOUR", {}), "你读四本书。");
+  assert.equal(buildSentence("zh", tpl, "TWO", {}), "你读两本书。");
+  // Compound numerals keep 二 (十二本, never 十两本).
+  assert.equal(buildSentence("zh", tpl, "TWELVE", {}), "你读十二本书。");
+});
+
+// ---------------------------------------------------------------------
+// ko: counters follow the noun, numerals take determiner forms — Emi -14
+// ---------------------------------------------------------------------
+
+test("ko: numeral + counter follow the noun, particle lands on the counter", () => {
+  const tpl = tplById("YOU_READ_BOOK");
+  assert.equal(buildSentence("ko", tpl, "FOUR", {}), "당신은 책 네 권을 읽어요.");
+  assert.equal(buildSentence("ko", tpl, "TWO", {}), "당신은 책 두 권을 읽어요.");
+  // Compounds inflect through the same ending replacement (열둘 → 열두).
+  assert.equal(buildSentence("ko", tpl, "TWELVE", {}), "당신은 책 열두 권을 읽어요.");
+  // 5+ native numerals are already their own determiner form.
+  assert.equal(buildSentence("ko", tpl, "FIVE", {}), "당신은 책 다섯 권을 읽어요.");
+});
+
+test("ko: indefinite 'a' takes no counter (authored: «책을 읽어요»)", () => {
+  assert.equal(buildSentence("ko", tplById("HE_READ_BOOK")), "그는 책을 읽어요.");
+});
+
+// ---------------------------------------------------------------------
+// SOV particle alignment: the first-noun workaround retired with -14/-19
+// ---------------------------------------------------------------------
+
+test("ko: no-pronoun template topics the subject and marks the object", () => {
+  const tpl = tplById("POKEMON_HAVE_MOVE");
+  assert.equal(buildSentence("ko", tpl), "포켓몬은 기술이 있어요.");
+  // Tiles mirror the render exactly: the object slot carries the
+  // existential 이/가, and slotContextFor finds the object SOV-aware.
+  const objSlot = slotContextFor(tpl, "ko", "MOVE");
+  assert.equal(objSlot.position, "directObject");
+  assert.equal(optionSurfaceFor("ko", tpl, "MOVE", objSlot, {}), "기술이");
 });
 
 test("fi: hidden in the registry until the gate passes", () => {

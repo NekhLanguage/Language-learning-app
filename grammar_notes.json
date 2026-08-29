@@ -772,6 +772,76 @@
         "body": "Japanissa numeron ja substantiivin väliin tulee laskusana ja の: 二つの本 — 'kaksi kappaletta kirjaa'."
       }
     },
+    "classifier": {
+      "en": {
+        "title": "Measure words and counters",
+        "body": "Chinese and Korean count nouns through a measure word: Chinese puts it between the number and the noun (两本书, 'two CL book'; 一本书 also covers English 'a'), Korean puts number + counter after the noun (책 두 권, 'book two CL')."
+      },
+      "pt": {
+        "title": "Palavras de medida e contadores",
+        "body": "Chinês e coreano contam substantivos com uma palavra de medida: o chinês a coloca entre o número e o substantivo (两本书, 'dois CL livro'; 一本书 também cobre o artigo 'um'), o coreano coloca número + contador depois do substantivo (책 두 권, 'livro dois CL')."
+      },
+      "fr": {
+        "title": "Mots de mesure et compteurs",
+        "body": "Le chinois et le coréen comptent les noms avec un mot de mesure : le chinois le place entre le nombre et le nom (两本书, « deux CL livre » ; 一本书 couvre aussi « un »), le coréen place nombre + compteur après le nom (책 두 권, « livre deux CL »)."
+      },
+      "de": {
+        "title": "Zähleinheitswörter",
+        "body": "Chinesisch und Koreanisch zählen Nomen über ein Zähleinheitswort: Chinesisch stellt es zwischen Zahl und Nomen (两本书, „zwei ZEW Buch“; 一本书 deckt auch „ein“ ab), Koreanisch stellt Zahl + Zähler hinter das Nomen (책 두 권, „Buch zwei ZEW“)."
+      },
+      "es": {
+        "title": "Palabras medidoras y contadores",
+        "body": "El chino y el coreano cuentan los sustantivos con una palabra medidora: el chino la pone entre el número y el sustantivo (两本书, «dos CL libro»; 一本书 también cubre «un»), el coreano pone número + contador después del sustantivo (책 두 권, «libro dos CL»)."
+      },
+      "it": {
+        "title": "Classificatori e contatori",
+        "body": "Cinese e coreano contano i nomi con un classificatore: il cinese lo mette tra numero e nome (两本书, «due CL libro»; 一本书 copre anche «un»), il coreano mette numero + contatore dopo il nome (책 두 권, «libro due CL»)."
+      },
+      "no": {
+        "title": "Målord og tellere",
+        "body": "Kinesisk og koreansk teller substantiv med et målord: kinesisk setter det mellom tallet og substantivet (两本书, «to MO bok»; 一本书 dekker også «en»), koreansk setter tall + teller etter substantivet (책 두 권, «bok to MO»)."
+      },
+      "pl": {
+        "title": "Słowa miary i klasyfikatory",
+        "body": "Chiński i koreański liczą rzeczowniki przez klasyfikator: chiński stawia go między liczebnikiem a rzeczownikiem (两本书, „dwie KL książki”; 一本书 oddaje też „jeden”), koreański stawia liczebnik + klasyfikator po rzeczowniku (책 두 권, „książka dwie KL”)."
+      },
+      "uk": {
+        "title": "Класифікатори та лічильні слова",
+        "body": "Китайська й корейська рахують іменники через класифікатор: у китайській він стоїть між числом та іменником (两本书, «дві КЛ книги»; 一本书 передає й «одна»), у корейській число + лічильне слово стоять після іменника (책 두 권, «книга дві КЛ»)."
+      },
+      "el": {
+        "title": "Μετρητικές λέξεις",
+        "body": "Τα κινεζικά και τα κορεατικά μετρούν τα ουσιαστικά με μετρητική λέξη: τα κινεζικά τη βάζουν ανάμεσα στον αριθμό και το ουσιαστικό (两本书, «δύο ΜΛ βιβλίο»· το 一本书 αποδίδει και το «ένα»), τα κορεατικά βάζουν αριθμό + μετρητή μετά το ουσιαστικό (책 두 권, «βιβλίο δύο ΜΛ»)."
+      },
+      "tr": {
+        "title": "Ölçü sözcükleri ve sayaçlar",
+        "body": "Çince ve Korece adları bir ölçü sözcüğüyle sayar: Çince onu sayı ile adın arasına koyar (两本书, «iki ÖS kitap»; 一本书 «bir» anlamını da verir), Korece sayı + sayacı adın arkasına koyar (책 두 권, «kitap iki ÖS»)."
+      },
+      "fi": {
+        "title": "Mittasanat ja laskusanat",
+        "body": "Kiina ja korea laskevat substantiiveja mittasanalla: kiina panee sen numeron ja substantiivin väliin (两本书, ”kaksi MS kirjaa”; 一本书 kattaa myös ”yksi”), korea panee numeron + laskusanan substantiivin jälkeen (책 두 권, ”kirja kaksi MS”)."
+      },
+      "ja": {
+        "title": "量詞と助数詞",
+        "body": "中国語と韓国語は名詞を量詞で数えます。中国語は数と名詞の間に置き（两本书、一本书は英語の「a」も表す）、韓国語は名詞の後に数＋助数詞を置きます（책 두 권）。"
+      },
+      "ko": {
+        "title": "분류사(단위 명사)",
+        "body": "중국어와 한국어는 명사를 단위 명사로 셉니다. 중국어는 수와 명사 사이에 놓고(两本书, 一本书는 영어의 'a'도 나타냄), 한국어는 명사 뒤에 수+단위 명사를 놓습니다(책 두 권)."
+      },
+      "zh": {
+        "title": "量词",
+        "body": "中文和韩语用量词数名词：中文把量词放在数词和名词之间（两本书；一本书也表示英语的 a），韩语把数词加量词放在名词后面（책 두 권）。"
+      },
+      "th": {
+        "title": "ลักษณนาม",
+        "body": "ภาษาจีนและภาษาเกาหลีนับคำนามด้วยลักษณนาม: ภาษาจีนวางไว้ระหว่างตัวเลขกับคำนาม (两本书; 一本书 ยังใช้แทน 'a' ในภาษาอังกฤษ) ส่วนภาษาเกาหลีวางตัวเลข + ลักษณนามไว้หลังคำนาม (책 두 권)"
+      },
+      "ar": {
+        "title": "كلمات العدّ (المصنِّفات)",
+        "body": "تَعُدّ الصينية والكورية الأسماء عبر كلمة عدّ: تضعها الصينية بين العدد والاسم (两本书؛ كما تعبّر 一本书 عن أداة التنكير a)، بينما تضع الكورية العدد + كلمة العدّ بعد الاسم (책 두 권)."
+      }
+    },
     "accusative_object": {
       "en": {
         "title": "The noun's ending shows its role",

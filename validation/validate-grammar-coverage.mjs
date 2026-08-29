@@ -154,6 +154,22 @@ const FEATURE_CHECKS = {
       typeof one.f === 'string';
     return { ok, detail: ok ? '' : 'ONE has no object entry with an f form' };
   },
+  classifiersOrCounters: (row, lang) => {
+    // zh-style classifiers (numeral+CL+noun, 一+CL for "a") or ko-style
+    // counters (noun + numeral + counter). Data half: at least one noun
+    // must carry the per-noun field, or the rule runs on the default only.
+    const field = row.classifiers ? 'classifier' :
+      row.counters ? 'counter' : null;
+    if (!field) {
+      return { ok: false,
+        detail: 'needs the classifiers (zh) or counters (ko) rule' };
+    }
+    const forms = vocab.languages?.[lang]?.forms || {};
+    const any = Object.values(forms).some((e) => e && !Array.isArray(e) &&
+      typeof e === 'object' && typeof e[field] === 'string');
+    return { ok: any,
+      detail: any ? '' : `rule declared but no noun carries a ${field} field` };
+  },
   articleCaseMarking: (row) => ({
     ok: row.caseMarking?.caseOn === 'determiner',
     detail: 'needs caseMarking.caseOn: "determiner"',
@@ -245,6 +261,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.zeroPresentCopula],
   [(row) => !!row.verbGenderParadigm, 'verbGenderParadigm',
     (f) => !!f.verbGenderParadigm],
+  [(row) => !!row.classifiers || !!row.counters, 'classifiersOrCounters',
+    (f) => !!f.classifiersOrCounters],
 ];
 
 const findings = [];

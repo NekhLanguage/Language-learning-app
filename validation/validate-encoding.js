@@ -267,6 +267,9 @@ const RULE_PREFIX_ALLOWED = {
   ja_: /[\u3000-\u303F\u3040-\u30FF\u31F0-\u31FF\u4E00-\u9FFF]/g,
   // CJK punctuation + CJK ideographs
   zh_: /[\u3000-\u303F\u4E00-\u9FFF]/g,
+  // classifier fires only when the TARGET is zh or ko \u2014 its notes quote
+  // both scripts (\u4E24\u672C\u4E66, \uCC45 \uB450 \uAD8C) in every support language.
+  classifier: /[\u3000-\u303F\u4E00-\u9FFF\uAC00-\uD7A3]/g,
 };
 
 function validateGrammarNotes() {

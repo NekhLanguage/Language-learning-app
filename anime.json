@@ -1209,7 +1209,7 @@
         "WARRIOR": {"form":"战士"},
         "RIVAL": {"form":"对手"},
         "BRAVE": ["勇敢"],
-        "SWORD": {"form":"刀"},
+        "SWORD": {"form":"刀","classifier":"把"},
         "ARMOR": {"form":"盔甲"},
         "SHIELD": {"form":"盾牌"},
         "ATTACK": {"base":"攻击"},
