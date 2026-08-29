@@ -84,6 +84,25 @@ const FEATURE_CHECKS = {
   }),
   declinesAttributiveAdjectives: (row, lang) => {
     if (row.adjectiveDeclension) return { ok: true };
+    // Genderless case agreement (caseMarking.adjectiveAgreesWithCase —
+    // fi): the data half is case fields on the core adjectives
+    // (partitive + genitive, the object cases the corpus reaches).
+    // Array-shaped entries (predicative-only words like «oikein») are
+    // exempt — the engine's compat gate refuses them as attributive
+    // modifiers, so they can never ship a bare nominative.
+    if (row.caseMarking?.adjectiveAgreesWithCase) {
+      const forms = vocab.languages?.[lang]?.forms || {};
+      const missing = CORE_ADJECTIVES.filter((cid) => {
+        const e = forms[cid];
+        if (!e || Array.isArray(e) || typeof e !== 'object') return false;
+        return typeof e.partitive !== 'string' || typeof e.genitive !== 'string';
+      });
+      return {
+        ok: missing.length === 0,
+        detail: missing.length ?
+          `adjectiveAgreesWithCase declared but ${missing.length} core adjective(s) lack partitive/genitive (${missing.slice(0, 5).join(', ')}…)` : '',
+      };
+    }
     const { ok, missing } = adjectiveAgreementData(lang);
     return {
       ok,
@@ -106,8 +125,12 @@ const FEATURE_CHECKS = {
   },
   apocope: (row) => ({ ok: !!row.apocope, detail: 'needs the apocope rule' }),
   possessiveSuffixes: (row) => ({
-    ok: !!row.possessiveSuffixes,
-    detail: 'needs the possessiveSuffixes rule (suffix generator + possessed-map overrides)',
+    // tr: the HAVE-construction suffix generator. fi: the 3rd-person
+    // reflexive suffix rule (possessed3 data + drill refusal) — the
+    // meaning-critical subset; 1st/2nd person keep the colloquial free
+    // pronoun by explicit pedagogy call (Nekh 2026-08-28).
+    ok: !!row.possessiveSuffixes || !!row.reflexivePossessiveSuffix,
+    detail: 'needs the possessiveSuffixes rule (suffix generator + possessed-map overrides) or reflexivePossessiveSuffix',
   }),
   copulaPersonAgreement: (row) => ({
     ok: !!row.copulaPersonSuffixes,
@@ -140,6 +163,17 @@ const FEATURE_CHECKS = {
     ok: !!row.numeralGenitivePlural || !!row.numeralPartitiveSingular,
     detail: 'needs numeralGenitivePlural (pl/uk 5+) or numeralPartitiveSingular (fi ≥2)' }),
   zeroPresentCopula: (row) => ({ ok: !!row.zeroPresentCopula }),
+  negatorAgreement: (row, lang) => {
+    if (!row.conjugatingNegator) {
+      return { ok: false, detail: 'needs the conjugatingNegator rule' };
+    }
+    // Data half: the NOT entry must carry a person paradigm, or the rule
+    // is declared over an invariant bare-array negator.
+    const not = vocab.languages?.[lang]?.forms?.NOT;
+    const ok = !!not && typeof not === 'object' && !Array.isArray(not) &&
+      typeof not['1_plural'] === 'string';
+    return { ok, detail: ok ? '' : 'NOT has no person-paradigm entry' };
+  },
   definitenessAgreement: () => ({
     ok: false, // no engine mechanism exists yet — always a declared gap
     detail: 'no definiteness-agreement rule exists in the engine yet',
@@ -190,6 +224,13 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.zeroPresentCopula],
   [(row) => !!row.possessiveSuffixes, 'possessiveSuffixes',
     (f) => !!f.possessiveSuffixes],
+  [(row) => !!row.reflexivePossessiveSuffix, 'possessiveSuffixes',
+    (f) => !!f.possessiveSuffixes],
+  [(row) => !!row.conjugatingNegator, 'negatorAgreement',
+    (f) => !!f.negatorAgreement],
+  [(row) => !!row.caseMarking?.adjectiveAgreesWithCase,
+    'declinesAttributiveAdjectives',
+    (f) => !!f.declinesAttributiveAdjectives],
   [(row) => !!row.copulaPersonSuffixes, 'copulaPersonAgreement',
     (f) => !!f.copulaPersonAgreement],
   [(row) => !!row.numeralGenderAgreement, 'numeralGenderAgreement',

@@ -428,7 +428,11 @@
       "plural": "huoneet",
       "partitive": "huonetta",
       "accusative": "huoneen",
-      "illative": "huoneeseen"
+      "illative": "huoneeseen",
+      "possessed3": {
+        "form": "huoneensa",
+        "illative": "huoneeseensa"
+      }
     },
     "BOY": {
       "form": "poika",
@@ -458,7 +462,12 @@
       "form": "äiti",
       "plural": "äidit",
       "partitive": "äitiä",
-      "accusative": "äidin"
+      "accusative": "äidin",
+      "genitive": "äidin",
+      "possessed3": {
+        "form": "äitinsä",
+        "genitive": "äitinsä"
+      }
     },
     "DAD": {
       "form": "isä",
@@ -476,7 +485,12 @@
       "form": "tytär",
       "plural": "tyttäret",
       "partitive": "tytärtä",
-      "accusative": "tyttären"
+      "accusative": "tyttären",
+      "genitive": "tyttären",
+      "possessed3": {
+        "form": "tyttärensä",
+        "genitive": "tyttärensä"
+      }
     },
     "BROTHER": {
       "form": "veli",
@@ -663,107 +677,159 @@
     ],
     "BIG": {
       "form": "iso",
-      "plural": "isot"
+      "plural": "isot",
+      "partitive": "isoa",
+      "genitive": "ison"
     },
     "SMALL": {
       "form": "pieni",
-      "plural": "pienet"
+      "plural": "pienet",
+      "partitive": "pientä",
+      "genitive": "pienen"
     },
     "GOOD": {
       "form": "hyvä",
-      "plural": "hyvät"
+      "plural": "hyvät",
+      "partitive": "hyvää",
+      "genitive": "hyvän"
     },
     "BAD": {
       "form": "huono",
-      "plural": "huonot"
+      "plural": "huonot",
+      "partitive": "huonoa",
+      "genitive": "huonon"
     },
     "NEW": {
       "form": "uusi",
-      "plural": "uudet"
+      "plural": "uudet",
+      "partitive": "uutta",
+      "genitive": "uuden"
     },
     "OLD": {
       "form": "vanha",
-      "plural": "vanhat"
+      "plural": "vanhat",
+      "partitive": "vanhaa",
+      "genitive": "vanhan"
     },
     "EASY": {
       "form": "helppo",
-      "plural": "helpot"
+      "plural": "helpot",
+      "partitive": "helppoa",
+      "genitive": "helpon"
     },
     "DIFFICULT": {
       "form": "vaikea",
-      "plural": "vaikeat"
+      "plural": "vaikeat",
+      "partitive": "vaikeaa",
+      "genitive": "vaikean"
     },
     "BLACK": {
       "form": "musta",
-      "plural": "mustat"
+      "plural": "mustat",
+      "partitive": "mustaa",
+      "genitive": "mustan"
     },
     "WHITE": {
       "form": "valkoinen",
-      "plural": "valkoiset"
+      "plural": "valkoiset",
+      "partitive": "valkoista",
+      "genitive": "valkoisen"
     },
     "RED": {
       "form": "punainen",
-      "plural": "punaiset"
+      "plural": "punaiset",
+      "partitive": "punaista",
+      "genitive": "punaisen"
     },
     "BLUE": {
       "form": "sininen",
-      "plural": "siniset"
+      "plural": "siniset",
+      "partitive": "sinistä",
+      "genitive": "sinisen"
     },
     "GREEN": {
       "form": "vihreä",
-      "plural": "vihreät"
+      "plural": "vihreät",
+      "partitive": "vihreää",
+      "genitive": "vihreän"
     },
     "YELLOW": {
       "form": "keltainen",
-      "plural": "keltaiset"
+      "plural": "keltaiset",
+      "partitive": "keltaista",
+      "genitive": "keltaisen"
     },
     "PURPLE": {
       "form": "violetti",
-      "plural": "violetit"
+      "plural": "violetit",
+      "partitive": "violettia",
+      "genitive": "violetin"
     },
     "ORANGE": {
       "form": "oranssi",
-      "plural": "oranssit"
+      "plural": "oranssit",
+      "partitive": "oranssia",
+      "genitive": "oranssin"
     },
     "FAST": {
       "form": "nopea",
-      "plural": "nopeat"
+      "plural": "nopeat",
+      "partitive": "nopeaa",
+      "genitive": "nopean"
     },
     "SLOW": {
       "form": "hidas",
-      "plural": "hitaat"
+      "plural": "hitaat",
+      "partitive": "hidasta",
+      "genitive": "hitaan"
     },
     "LONG": {
       "form": "pitkä",
-      "plural": "pitkät"
+      "plural": "pitkät",
+      "partitive": "pitkää",
+      "genitive": "pitkän"
     },
     "SHORT": {
       "form": "lyhyt",
-      "plural": "lyhyet"
+      "plural": "lyhyet",
+      "partitive": "lyhyttä",
+      "genitive": "lyhyen"
     },
     "HEAVY": {
       "form": "painava",
-      "plural": "painavat"
+      "plural": "painavat",
+      "partitive": "painavaa",
+      "genitive": "painavan"
     },
     "LIGHT": {
       "form": "kevyt",
-      "plural": "kevyet"
+      "plural": "kevyet",
+      "partitive": "kevyttä",
+      "genitive": "kevyen"
     },
     "DARK": {
       "form": "pimeä",
-      "plural": "pimeät"
+      "plural": "pimeät",
+      "partitive": "pimeää",
+      "genitive": "pimeän"
     },
     "YOUNG": {
       "form": "nuori",
-      "plural": "nuoret"
+      "plural": "nuoret",
+      "partitive": "nuorta",
+      "genitive": "nuoren"
     },
     "COLD": {
       "form": "kylmä",
-      "plural": "kylmät"
+      "plural": "kylmät",
+      "partitive": "kylmää",
+      "genitive": "kylmän"
     },
     "NICE": {
       "form": "mukava",
-      "plural": "mukavat"
+      "plural": "mukavat",
+      "partitive": "mukavaa",
+      "genitive": "mukavan"
     },
     "RIGHT": [
       "oikea"
@@ -798,9 +864,15 @@
     "AS": [
       "kuten"
     ],
-    "NOT": [
-      "ei"
-    ],
+    "NOT": {
+      "base": "ei",
+      "1_singular": "en",
+      "2_singular": "et",
+      "3_singular": "ei",
+      "1_plural": "emme",
+      "2_plural": "ette",
+      "3_plural": "eivät"
+    },
     "YES": [
       "kyllä"
     ],

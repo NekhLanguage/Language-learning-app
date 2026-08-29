@@ -97,6 +97,30 @@
 //   questionParticle         yes/no questions keep declarative order
 //                            behind this fronted particle («Czy to jest
 //                            twój telefon?»).
+//   questionClitic           yes/no questions front the verb and fuse a
+//                            clitic onto it, chosen by vowel harmony:
+//                            {back, front} — fi «Onko tuo sinun
+//                            puhelin?» («syökö», front-vowel verbs).
+//   conjugatingNegator       the negator is a verb and agrees with the
+//                            subject in person/number through the NOT
+//                            entry's own paradigm (fi en/et/ei/emme/
+//                            ette/eivät) — an invariant negator keeps
+//                            its array form.
+//   negatedObjectCase        the nominal after the negator takes this
+//                            case (fi partitive: «ei lounasta»),
+//                            assigned through the same caseMap pass as
+//                            prepositional case.
+//   reflexivePossessiveSuffix
+//                            when the clause subject owns the object
+//                            (3rd person), the possessive is a suffix on
+//                            the noun and the free pronoun disappears:
+//                            fi «tyttärensä kanssa», never «hänen tytär»
+//                            (that means someone ELSE's daughter).
+//                            Data-driven via the noun's `possessed3` map
+//                            keyed by case field ("form" for the
+//                            nominative); missing data REFUSES a drilled
+//                            3rd-person possessive rather than shipping
+//                            the wrong meaning.
 //   preNominalAdjectiveRoles adjective semantic_role values placed BEFORE
 //                            the noun in a postNominalAdjectives language
 //                            («un bon livre» while «un livre noir») — the
@@ -151,6 +175,9 @@
 //   articleCaseMarking         case is realized on the determiner (de/el)
 //   virilePlural               masculine-personal plural agreement
 //   numeralGovernment          numerals govern a noun case
+//   negatorAgreement           the negation word agrees with the subject
+//                              (fi «emme» — implemented by
+//                              conjugatingNegator + the NOT paradigm)
 //   zeroPresentCopula          present-tense "to be" is dropped/suffixed
 //   definitenessAgreement      adjectives agree in definiteness (ar)
 //
@@ -229,6 +256,17 @@ export const LANGUAGE_RULES = {
       marksCaseAfterPrepositions: true,
       // Every number ≥2 governs the partitive singular («kaksi kirjaa»).
       numeralGovernment: true,
+      // Attributive adjectives agree with their head noun in case and
+      // number («uutta kirjaa», «uuden puhelimen» — Emi run-7 -28:
+      // 0 inflected adjectives in 292 swept sentences).
+      declinesAttributiveAdjectives: true,
+      // The negation word is a conjugating verb (en/et/ei/emme/ette/
+      // eivät — Emi run-7 -31: «Me … mutta ei» needs «emme»).
+      negatorAgreement: true,
+      // 3rd-person reflexive possession REQUIRES the -nsA suffix —
+      // «hänen tytär» means someone else's daughter (Emi run-7 grading:
+      // a meaning change, not a register call).
+      possessiveSuffixes: true,
     },
     verbPersonParadigm: true, inflectsNounPlural: true,
     latinEncodingChecks: true,
@@ -237,8 +275,18 @@ export const LANGUAGE_RULES = {
     // «on» + possessed in the nominative («Minulla on kirja»). The HAVE
     // entry pins «on» via the uniform-present path.
     existentialPossession: "adessive",
+    conjugatingNegator: true,
+    negatedObjectCase: "partitive",
+    reflexivePossessiveSuffix: true,
+    questionClitic: { back: "ko", front: "kö" },
     caseMarking: {
       directObjectCase: "accusative",
+      // An attributive adjective mirrors the case field its head noun
+      // rendered («uutta kirjaa» partitive, «uuden puhelimen» genitive-
+      // accusative) — data-driven via the adjective's own case fields;
+      // an adjective missing them is refused as a modifier, never
+      // shipped nominative.
+      adjectiveAgreesWithCase: true,
       prepositions: {
         ON: { case: "adessive", suppressWord: true },
         IN: { case: "inessive", suppressWord: true },
@@ -250,6 +298,9 @@ export const LANGUAGE_RULES = {
         FRONT: { case: "genitive", postposed: true },
         NEXT_TO: { case: "genitive", postposed: true },
         BETWEEN: { case: "genitive", postposed: true },
+        // «kanssa» is a genitive postposition like the spatial ones
+        // («tyttärensä kanssa») — Emi run-7 -30.
+        WITH: { case: "genitive", postposed: true },
       },
     },
   },

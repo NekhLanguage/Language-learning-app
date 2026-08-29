@@ -435,6 +435,85 @@ function adjCaseStrategy(lang) {
   return ADJ_CASE_STRATEGIES[langRuleValue(lang, "caseMarking")?.femAccusativeStrategy] || null;
 }
 
+// Declared rule (caseMarking.adjectiveAgreesWithCase — Finnish): an
+// attributive adjective mirrors the case form its head noun actually took
+// («uutta kirjaa», «uuden puhelimen»). Genderless case languages have no
+// derivable suffix strategy — the agreement comes from case fields
+// authored on the adjective entry itself, read with caseFormFor.
+function adjectiveAgreesWithCase(lang) {
+  return !!langRuleValue(lang, "caseMarking")?.adjectiveAgreesWithCase;
+}
+
+// Which case FIELD produced the head noun's rendered object form. The fi
+// `accusative` field carries either the partitive or the genitive-
+// accusative surface per noun (the corpus decides), so the adjective must
+// mirror the underlying case, not the literal field name: a rendered form
+// equal to the entry's partitive agrees in the partitive; the genitive-
+// accusative (explicit `genitive` or an `accusative` matching neither)
+// agrees in the genitive; locative endings agree in their own case.
+const NOUN_CASE_FIELDS = [
+  "partitive", "genitive", "adessive", "inessive", "elative",
+  "illative", "allative", "ablative", "instrumental", "locative",
+];
+function caseFieldUsedByNoun(lang, nounCid, renderedForm) {
+  const entry = vocab().languages?.[lang]?.forms?.[nounCid];
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return null;
+  for (const field of NOUN_CASE_FIELDS) {
+    if (typeof entry[field] === "string" && entry[field] === renderedForm) {
+      return field;
+    }
+  }
+  if (typeof entry.accusative === "string" && entry.accusative === renderedForm) {
+    return "genitive"; // genitive-accusative: the adjective's genitive agrees
+  }
+  return null;
+}
+
+// The adjective form agreeing with the case its head noun rendered, or
+// null when the language doesn't declare the rule / the data is missing
+// (callers keep their existing form; the compat gate refuses injections
+// that would need a missing field, so nominative never ships silently).
+function agreedAdjectiveForm(lang, adjectiveCid, nounCid, renderedNounForm) {
+  if (!adjectiveAgreesWithCase(lang)) return null;
+  if (vocab().concepts[adjectiveCid]?.semantic_role === "possessive") return null;
+  const field = caseFieldUsedByNoun(lang, nounCid, renderedNounForm);
+  if (!field) return null;
+  return caseFormFor(lang, adjectiveCid, field);
+}
+
+// Declared rule (reflexivePossessiveSuffix — Finnish): the suffixed form
+// of a possessed noun when the clause subject owns it (3rd person):
+// «tyttärensä», «huoneeseensa». Data-driven via the entry's `possessed3`
+// map keyed by case field ("form" for the nominative); null when missing
+// — callers refuse the possessive rather than shipping «hänen tytär»,
+// which names someone ELSE's referent (a meaning change, not style).
+function possessed3Form(lang, nounCid, caseName) {
+  const entry = vocab().languages?.[lang]?.forms?.[nounCid];
+  const map = entry && typeof entry === "object" && !Array.isArray(entry)
+    ? entry.possessed3 : null;
+  if (!map || typeof map !== "object") return null;
+  const key = caseName || "form";
+  return typeof map[key] === "string" ? map[key] : null;
+}
+
+// Grammatical person of a subject/possessive concept — non-person
+// subjects (nouns, demonstratives, time words) behave as 3rd person,
+// mirroring getVerbForm's default.
+function conceptPerson(cid) {
+  return vocab().concepts?.[cid]?.person || 3;
+}
+
+// True when a 3rd-person possessive modifies a noun under a 3rd-person
+// subject — the reflexive reading the suffix rule owns. (The beginner
+// corpus reads 3rd-person possessives as coreferent with the subject:
+// «Hän näkee kouluttajansa».)
+function reflexivePossessiveApplies(lang, possessiveCid, subjectCid) {
+  if (!langRule(lang, "reflexivePossessiveSuffix")) return false;
+  if (vocab().concepts?.[possessiveCid]?.semantic_role !== "possessive") return false;
+  return conceptPerson(possessiveCid) === 3 && !!subjectCid &&
+    conceptPerson(subjectCid) === 3;
+}
+
 // --- Determiner-side case marking (German) ----------------------------------
 // German realizes case on the DETERMINER (ein → einen/einem, der → den/dem)
 // rather than as a noun suffix. Activated by caseMarking.caseOn:
@@ -758,9 +837,17 @@ function prepIsPostposed(lang, cid) {
 function caseMap(lang, ordered) {
   const preps = prepCaseTable(lang);
   if (!preps) return ordered.map(() => null);
+  // Declared rule (negatedObjectCase — Finnish partitive): the nominal
+  // after the negator takes this case («mutta ei lounasta»), assigned
+  // exactly like a preposition's case.
+  const negCase = langRuleValue(lang, "negatedObjectCase") || null;
   let pending = null;
   const map = ordered.map((cid) => {
     if (preps[cid]) { pending = preps[cid]; return null; }
+    if (negCase &&
+        vocab().concepts?.[cid]?.semantic_role === "logical_negation") {
+      pending = negCase; return null;
+    }
     const t = vocab().concepts?.[cid]?.type;
     if (t === "verb") { pending = null; return null; }
     if (t === "noun" || t === "pronoun") return pending;
@@ -1792,6 +1879,22 @@ function isModifierCompatible(lang, modifierCid, nounCid) {
     return false;
   }
 
+  // Declared genderless adjective-case agreement (adjectiveAgreesWithCase
+  // — Finnish): an adjective must carry the case fields the agreement
+  // reads (partitive + genitive at minimum) to modify a noun at all —
+  // an object or counted noun would otherwise ship the bare nominative
+  // («uusi kirjaa», Emi run-7 -28). Wrong gets filtered.
+  if (modMeta.type === "adjective" &&
+      modMeta.semantic_role !== "possessive" &&
+      adjectiveAgreesWithCase(lang)) {
+    const modEntry = vocab().languages?.[lang]?.forms?.[modifierCid];
+    if (!modEntry || Array.isArray(modEntry) ||
+        typeof modEntry.partitive !== "string" ||
+        typeof modEntry.genitive !== "string") {
+      return false;
+    }
+  }
+
   // Numeral government (language_rules: numeralGenitivePlural — Polish):
   // five and above govern the genitive plural («pięć książek»). A noun
   // without the genitive_plural field cannot take such a number — the
@@ -2097,8 +2200,17 @@ function possessiveArticleFor(lang, nounCid, plural = false) {
 
 // `caseName` (uk): render the possessed noun in the case its governing
 // preposition demands («з його мамою»), when the entry carries the data.
-function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null) {
+// `subjectCid` (fi): lets the reflexive-possessive rule see who owns —
+// clause builders pass their subject; callers without one are unchanged.
+function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subjectCid = null) {
   if (lang === "fr") return frenchPossessivePhrase(possessiveCid, nounCid);
+  // Declared rule (reflexivePossessiveSuffix — Finnish): the subject owns
+  // the noun, so the possessive is a suffix and the free pronoun
+  // disappears: «tyttärensä kanssa», never «hänen tytär».
+  if (reflexivePossessiveApplies(lang, possessiveCid, subjectCid)) {
+    const suffixed = possessed3Form(lang, nounCid, caseName);
+    if (suffixed) return suffixed;
+  }
   let noun = formOf(lang, nounCid);
   if (langRuleValue(lang, "caseMarking")) {
     const declined = caseFormFor(lang, nounCid, caseName);
@@ -2586,9 +2698,17 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   // telefon?»); the default fronts the copula ("Is this your phone?",
   // "Ist das dein Telefon?").
   const particle = langRuleValue(lang, "questionParticle");
+  // Declared rule (questionClitic — Finnish): the fronted verb carries a
+  // fused clitic chosen by vowel harmony: «Onko tuo sinun puhelin?»
+  // (back vowels a/o/u → -ko, otherwise -kö). L6 tiles tokenize the
+  // finished string, so «Onko» is one tile with no extra work.
+  const clitic = langRuleValue(lang, "questionClitic");
+  const beFronted = clitic && !particle && !langRule(lang, "statementOrderQuestion")
+    ? be + (/[aou]/i.test(be) ? clitic.back : clitic.front)
+    : be;
   const words = (particle || langRule(lang, "statementOrderQuestion"))
     ? [particle || "", subject, be, complement]
-    : [be, subject, complement];
+    : [beFronted, subject, complement];
   return capitalizeFirst(words.filter(Boolean).join(" ") + "?");
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
@@ -2607,6 +2727,21 @@ function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   return joinWords(lang, [subject, beWord, noun]);
 }
 
+// The "with his X" companion of a clause. The adposition's placement is
+// declared per preposition — a postposed genitive adposition follows its
+// phrase (fi «tyttärensä kanssa», Emi run-7 -30) while the default leads
+// («with his daughter», «z jego córką»); prepositional case reaches the
+// noun through the same declared table either way. `subjectCid` lets the
+// reflexive-possessive rule see who owns the companion.
+function companionPhrase(lang, withCid, possessiveCid, nounCid, subjectCid) {
+  const phrase = nounWithPossessive(lang, possessiveCid, nounCid,
+    prepCaseTable(lang)?.[withCid] || null, subjectCid);
+  const word = formOf(lang, withCid);
+  return prepIsPostposed(lang, withCid)
+    ? joinWords(lang, [phrase, word])
+    : joinWords(lang, [word, phrase]);
+}
+
 function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
   const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const verb = getVerbForm(verbCid, subjectCid, lang);
@@ -2621,8 +2756,7 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
   // Only build it when a companion noun is present, so undefined slots don't leak
   // into the sentence as the literal word "undefined".
   const companion = nounCid
-    ? joinWords(lang, [formOf(lang, withCid), nounWithPossessive(lang, possessiveCid, nounCid,
-        prepCaseTable(lang)?.[withCid] || null)])
+    ? companionPhrase(lang, withCid, possessiveCid, nounCid, subjectCid)
     : "";
 
   return joinWords(lang, [subject, verb, object, companion]);
@@ -2632,8 +2766,7 @@ function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid
   const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const verb = getVerbForm(verbCid, subjectCid, lang);
   const companion = nounCid
-    ? joinWords(lang, [formOf(lang, withCid), nounWithPossessive(lang, possessiveCid, nounCid,
-        prepCaseTable(lang)?.[withCid] || null)])
+    ? companionPhrase(lang, withCid, possessiveCid, nounCid, subjectCid)
     : "";
 
   return joinWords(lang, [subject, verb, companion]);
@@ -2806,6 +2939,21 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // Which case (if any) governs each position — uk prepositional case.
   const caseAt = caseMap(lang, ordered);
 
+  // The possessed3 case key for a reflexive-suffixed noun at ordered[i]:
+  // the governing case if one applies, else the object case derived from
+  // the noun's own rendered object form (fi genitive-accusative vs
+  // partitive), else "form" (nominative). Shared by the noun slot, the
+  // possessive slot, and the drilled-possessive gate so the three can
+  // never disagree.
+  const reflexiveSuffixKeyFor = (nounCid, i) => {
+    let key = caseAt[i];
+    if (!key && isDirectObjectPosition(ordered, i) && ukObjectCaseApplies(lang)) {
+      const objForm = accusativeNoun(lang, nounCid, formOf(lang, nounCid));
+      key = caseFieldUsedByNoun(lang, nounCid, objForm);
+    }
+    return key || null;
+  };
+
   // Existential possession (declared: existentialPossession = the
   // possessor's case — fi «Minulla on kirja», "at-me is book"): the
   // HAVE-subject renders in that case, HAVE itself conjugates through the
@@ -2856,6 +3004,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     }
 
     if (meta.type === "noun") {
+
+  // Declared rule (reflexivePossessiveSuffix — Finnish): the subject owns
+  // this noun, so it renders with the possessive suffix in the case its
+  // slot demands («Hän menee huoneeseensa») and the possessive's own slot
+  // renders empty. Data-driven via possessed3; missing data falls through
+  // to the ordinary rendering (the divergence ratchet shows it).
+  if (idx > 0 && reflexivePossessiveApplies(lang, ordered[idx - 1], subjectCid)) {
+    const suffixed = possessed3Form(lang, cid, reflexiveSuffixKeyFor(cid, idx));
+    if (suffixed) return suffixed;
+  }
 
   // A preposition-governed nominal renders in its declined case form when
   // the data provides one («перед книгою», «до будинку»). Case data is
@@ -2942,7 +3100,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // Copular-plural agreement reaches possessed predicates too: «Вони наші
   // дівчата» — both halves pluralize together (Emi 2026-08-28-09; the
   // possessive slot mirrors this with its own plural form).
-  if (pluralAgreement && precededByPossessive && !feminineReferent) {
+  const possessedPlural = pluralAgreement && precededByPossessive && !feminineReferent;
+  if (possessedPlural) {
     possessedForm = lang === "en"
       ? pluralize(possessedForm)
       : pluralFormOf(lang, cid);
@@ -2950,6 +3109,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   if (ukObjectCase && bareDetermined &&
       vocab().languages?.[lang]?.forms?.[cid]?.gender === "f") {
     const acc = femAccusativeShift(lang, possessedForm, "noun");
+    if (acc !== possessedForm) {
+      noteRule("accusative_object");
+      possessedForm = acc;
+    }
+  }
+  // Genderless case languages decline a modified/possessed object too —
+  // the explicit accusative field wins exactly as for bare objects
+  // («villin Pokémonin»); fi has no derivable strategy, so only authored
+  // data fires. Reflexive-suffixed nouns already returned above, and
+  // possessedPlural is mutually exclusive (ukObjectCase requires a
+  // non-plural-agreement slot).
+  if (ukObjectCase && bareDetermined && adjectiveAgreesWithCase(lang)) {
+    const acc = accusativeNoun(lang, cid, possessedForm);
     if (acc !== possessedForm) {
       noteRule("accusative_object");
       possessedForm = acc;
@@ -3012,10 +3184,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         // («zu einem Tisch») — noun-suffix languages consumed it above.
         caseName: caseAt[idx] || null,
       });
-  // When the noun was rendered as plural via copular agreement, the bare
-  // form used by the modifier branches below also needs to be plural so
-  // adjective insertion produces "small leaders" not "small leader".
-  let bareNoun = useCopularPlural
+  // When the noun was rendered as plural — via copular agreement OR as a
+  // possessed plural predicate — the bare form used by the modifier
+  // branches below must be plural too, or the article-slicing below cuts
+  // a fragment of the noun itself («minun i pieni isä», "my d small dad"
+  // — Emi run-7 -34: phrase «isät» minus bare «isä» left a stray «i»).
+  let bareNoun = (useCopularPlural || possessedPlural)
     ? (lang === "en" ? pluralize(formOf(lang, cid)) : pluralFormOf(lang, cid))
     : null;
 
@@ -3066,7 +3240,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // modifiers («quattro acqua», "old girl"). Possessives are exempt:
     // they are determiners, and "his water" / «il suo cibo» is fine.
     const forcedPossessive = forcedMeta.semantic_role === "possessive";
-    if (forcedPossessive || isModifierCompatible(lang, forcedConcept, cid)) {
+    // A drilled 3rd-person possessive under a 3rd-person subject is
+    // reflexive — without possessed3 data the only renderable output
+    // names someone ELSE's referent («hänen kouluttaja», Emi run-7
+    // grading: a meaning change). Refuse the drill; wrong gets filtered
+    // and MODIFIER_DROPPED is the visible backlog.
+    const reflexiveRefused = forcedPossessive &&
+      reflexivePossessiveApplies(lang, forcedConcept, subjectCid) &&
+      !possessed3Form(lang, cid, reflexiveSuffixKeyFor(cid, idx));
+    if ((forcedPossessive && !reflexiveRefused) ||
+        (!forcedPossessive && isModifierCompatible(lang, forcedConcept, cid))) {
       adjectiveCid = forcedConcept;
       adjectiveWord = genderedFormOf(lang, forcedConcept, cid, false, adjGenderOverride);
     }
@@ -3076,8 +3259,17 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // seeding), and re-gating here would desync the target/support pair —
     // the pair must render the same choice or bail together, and the
     // modifier-identity fence is what catches genuine asymmetries.
-    adjectiveCid = cachedAdj;
-    adjectiveWord = cachedAdj ? genderedFormOf(lang, cachedAdj, cid, false, adjGenderOverride) : null;
+    // The one exception is meaning safety: a cached 3rd-person possessive
+    // whose reflexive suffix data is missing in THIS language would render
+    // someone else's referent («hänen kouluttaja»), so it bails here the
+    // same way the forced gate refuses it (the parity fence reports the
+    // asymmetry, which is the honest outcome).
+    const cachedReflexiveRefused = cachedAdj &&
+      vocab().concepts[cachedAdj]?.semantic_role === "possessive" &&
+      reflexivePossessiveApplies(lang, cachedAdj, subjectCid) &&
+      !possessed3Form(lang, cid, reflexiveSuffixKeyFor(cid, idx));
+    adjectiveCid = cachedReflexiveRefused ? null : cachedAdj;
+    adjectiveWord = adjectiveCid ? genderedFormOf(lang, adjectiveCid, cid, false, adjGenderOverride) : null;
   } else {
     const adjectives = getReleased().filter(c => {
       const m = vocab().concepts[c];
@@ -3212,6 +3404,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       adjectiveWord = strat.animateAccusative(adjectiveWord);
     }
   }
+  // Declared genderless case agreement (adjectiveAgreesWithCase — fi):
+  // the injected adjective mirrors the case form the object noun
+  // rendered («uutta kirjaa», «uuden puhelimen» — Emi run-7 -28: zero
+  // inflected adjectives in 292 swept sentences). The compat gate
+  // guaranteed the adjective's case fields exist; possessives are
+  // excluded inside agreedAdjectiveForm.
+  if (adjectiveWord && adjectiveCid && ukObjectCase && !useCopularPlural) {
+    const agreed = agreedAdjectiveForm(lang, adjectiveCid, cid, bare);
+    if (agreed) adjectiveWord = agreed;
+  }
 
   if (numberWord) {
     // Numeral gender/case agreement with the head noun («дві сковороди»,
@@ -3272,7 +3474,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         : prefix + nounForm;
     }
     if (adjectiveWord) {
-      let adjForm = (isPlural && adjectiveCid && lang !== "en")
+      // Partitive-singular government (fi) keeps the adjective SINGULAR:
+      // the plural agreement below is for languages whose counted nouns
+      // pluralize — «kahdeksan valkoista kirjaa», never the nominative
+      // plural «valkoiset» (Emi run-7 -28: the adjective was agreeing
+      // with the English number, not the Finnish case).
+      const partitiveGoverned = numeralGoverned &&
+        langRule(lang, "numeralPartitiveSingular");
+      let adjForm = (isPlural && adjectiveCid && lang !== "en" && !partitiveGoverned)
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjectiveWord;
       // Numeral government carries the adjective along: «osiem dużych
@@ -3280,7 +3489,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // genitive_plural field on the adjective wins (soft stems the
       // derivation can't tell apart — «синіх»); else derived from the
       // plural form via the language's declared strategy family.
-      if (numeralGoverned) {
+      if (partitiveGoverned) {
+        const agreed = caseFormFor(lang, adjectiveCid, "partitive");
+        if (agreed) adjForm = agreed;
+      } else if (numeralGoverned) {
         const adjEntry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
         if (typeof adjEntry?.genitive_plural === "string") {
           adjForm = adjEntry.genitive_plural;
@@ -3303,8 +3515,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   if (adjectiveWord) {
     const adjectiveIsPossessive =
       vocab().concepts[adjectiveCid]?.semantic_role === "possessive";
-    // Non-English languages typically inflect the adjective for number too.
-    let adjForm = (useCopularPlural && lang !== "en" && !adjectiveIsPossessive)
+    // Non-English languages typically inflect the adjective for number too
+    // — including on a possessed plural predicate («minun pienet isät»,
+    // "my small dads"), whose head pluralized via possessedPlural above.
+    let adjForm = ((useCopularPlural || possessedPlural) && lang !== "en" &&
+        !adjectiveIsPossessive)
       ? genderedFormOf(lang, adjectiveCid, cid, true)
       : adjectiveWord;
     // German attributive endings key on the determiner class and the
@@ -3313,7 +3528,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // the adjective actually rendered; identity for every other language.
     if (!adjectiveIsPossessive && !useCopularPlural && adjForm &&
         langRuleValue(lang, "adjectiveDeclension")) {
-      const articleGuess = phrase !== bare
+      // The length-based article slice is only sound when the phrase
+      // literally ends with the bare form (same guard as the splice
+      // below — Emi run-7 -34's stray-token class).
+      const articleGuess = phrase !== bare && phrase.endsWith(bare)
         ? phrase.substring(0, phrase.length - bare.length).trimEnd()
         : null;
       adjForm = applyAdjectiveDeclension(lang, adjForm, articleGuess,
@@ -3338,6 +3556,22 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (!(k in sharedChoices)) sharedChoices[k] = adjForm;
     }
     if (adjectiveIsPossessive) {
+      // Reflexive possessive suffix (fi): the drilled 3rd-person
+      // possessive renders as the suffix, replacing the whole phrase
+      // («kouluttajansa», never «hänen kouluttaja» — someone else's
+      // trainer). The forced gate above refused the drill when this
+      // data is missing, so the fallthrough keeps its meaning.
+      if (reflexivePossessiveApplies(lang, adjectiveCid, subjectCid)) {
+        const suffixed = possessed3Form(lang, cid, reflexiveSuffixKeyFor(cid, idx));
+        if (suffixed) {
+          phrase = suffixed;
+          if (sharedChoices && adjectiveCid === forcedConcept) {
+            const k = "blankSurface_" + lang;
+            if (!(k in sharedChoices)) sharedChoices[k] = suffixed;
+          }
+          return phrase;
+        }
+      }
       // Possessives replace the indefinite article ("her wizard", not
       // "a her wizard") — but possessiveDefiniteArticle languages put the
       // definite article in front of the pair: «il suo cibo», «le sue
@@ -3359,8 +3593,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     } else if (adjectiveGoesPostNominal(lang, adjectiveCid)) {
       // Article + noun + adjective: "uma casa grande" (spaceless in th)
       phrase = joinWords(lang, [phrase, adjForm]);
-    } else if (phrase !== bare) {
-      // Has article — insert adjective between: "a big house"
+    } else if (phrase !== bare && phrase.endsWith(bare)) {
+      // Has article — insert adjective between: "a big house". The
+      // length-based slice is only sound when the phrase literally ends
+      // with the bare form; a mismatched pair previously sliced a
+      // fragment of the noun itself («minun i pieni isä», "my d small
+      // dad" — Emi run-7 -34), so anything else falls through to the
+      // no-article branch below.
       let article = phrase.substring(0, phrase.length - bare.length).trimEnd();
       // For English, recompute article against the adjective (next word after article).
       if (lang === "en" && /^an?$/i.test(article)) {
@@ -3551,6 +3790,17 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
         form = femAccusativeShift(lang, form, "adjective");
       }
+      // Declared genderless case agreement (adjectiveAgreesWithCase — fi):
+      // the template-slot attributive mirrors the case form its object
+      // noun takes, same rule as the injection path so the two can never
+      // disagree (the «suo taxi» class). The noun slot renders the same
+      // form via its own accusative branch.
+      if (adjectiveAgreesWithCase(lang) && ukObjectCaseApplies(lang) &&
+          isDirectObjectPosition(ordered, idx + 1) && !pluralAgreement) {
+        const objForm = accusativeNoun(lang, nextCid, formOf(lang, nextCid));
+        const agreed = agreedAdjectiveForm(lang, cid, nextCid, objForm);
+        if (agreed) form = agreed;
+      }
       // Thai postposes "another" with the classifier: หนังสืออีกเล่ม
       // ("book more CLF") — rendered inside the noun slot, so this one
       // stays empty.
@@ -3580,6 +3830,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // (th มือของฉัน, el «το βιβλίο μου») — this slot stays empty.
       if (langRule(lang, "possessiveEnclitic") &&
           vocab().concepts[nextCid]?.type === "noun") {
+        return "";
+      }
+      // Reflexive possessive suffix (fi): the noun slot rendered the
+      // suffixed form («huoneeseensa»), so the free possessive
+      // disappears — mirror of the noun-slot early return.
+      if (vocab().concepts[nextCid]?.type === "noun" &&
+          reflexivePossessiveApplies(lang, cid, subjectCid) &&
+          possessed3Form(lang, nextCid, reflexiveSuffixKeyFor(nextCid, idx + 1))) {
         return "";
       }
       if (vocab().concepts[nextCid]?.type === "noun") {
@@ -3635,6 +3893,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         }
         return form;
       }
+    }
+
+    // Declared rule (conjugatingNegator — Finnish): the negation word is
+    // a verb and agrees with the subject in person/number («Me … mutta
+    // emme», Emi run-7 -31). Data-driven: the NOT entry carries the same
+    // six-cell paradigm as any verb; an invariant negator (pl «nie»,
+    // tr «değil») keeps its array form and never reaches getVerbForm.
+    if (meta.semantic_role === "logical_negation" &&
+        langRule(lang, "conjugatingNegator")) {
+      return getVerbForm(cid, subjectCid, lang);
     }
 
     return surfaceForm(lang, cid);
