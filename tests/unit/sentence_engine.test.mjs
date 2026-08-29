@@ -29,6 +29,8 @@ import {
   capitalizeFirst,
   safeSurfaceForConcept,
   finalizeSentence,
+  isDirectObjectPosition,
+  isCopularPredicatePosition,
 } from "../../sentence_engine.mjs";
 
 let templates;
@@ -674,6 +676,66 @@ test("copular gender clash blocks mismatched subject/predicate pairs", () => {
   assert.equal(copularGenderClash("FIRST_PERSON_SINGULAR", "GIRL"), false);
   assert.equal(copularGenderClash("THIRD_PERSON_PLURAL", "GIRL"), false);
   assert.equal(copularGenderClash("HE", "FOOD"), false);
+});
+
+test("isDirectObjectPosition: SVO detects a preceding non-copular verb", () => {
+  // SVO: [subject, verb, object] — the noun's previous slot is the verb.
+  const ordered = ["FIRST_PERSON_SINGULAR", "EAT", "FOOD"];
+  assert.equal(isDirectObjectPosition(ordered, 2, "en"), true);
+  // A copular predicate («I am a man»: [SUBJ, BE, MAN]) is not an object.
+  const copular = ["FIRST_PERSON_SINGULAR", "BE", "MAN"];
+  assert.equal(isDirectObjectPosition(copular, 2, "en"), false);
+});
+
+test("isDirectObjectPosition: SOV languages find their verb after the object", () => {
+  // SOV: [subject, object, verb] — the verb trails the noun.
+  const ordered = ["FIRST_PERSON_SINGULAR", "FOOD", "EAT"];
+  for (const sov of ["tr", "ja", "ko"]) {
+    assert.equal(isDirectObjectPosition(ordered, 1, sov), true,
+      `${sov} treats the pre-verb noun as a direct object`);
+  }
+  // The same shape, read with no language declared, keeps the old SVO
+  // walk and returns false — the SOV fix only fires where it is declared.
+  assert.equal(isDirectObjectPosition(ordered, 1, null), false);
+  assert.equal(isDirectObjectPosition(ordered, 1, "en"), false);
+});
+
+test("isDirectObjectPosition: SOV skips modifiers between the noun and its verb", () => {
+  // [subject, adjective, object, verb] — «I good book read»
+  const ordered = ["FIRST_PERSON_SINGULAR", "OLD", "FOOD", "EAT"];
+  assert.equal(isDirectObjectPosition(ordered, 2, "tr"), true);
+  // [subject, object, adjective, verb] — modifier trailing before the verb
+  // should also be skipped
+  const trailing = ["FIRST_PERSON_SINGULAR", "FOOD", "OLD", "EAT"];
+  assert.equal(isDirectObjectPosition(trailing, 1, "tr"), true);
+});
+
+test("isDirectObjectPosition: SOV predicate noun before BE is not a direct object", () => {
+  // «Ben adamım» / «저는 남자예요» underlying shape: [SUBJ, PREDICATE_NOUN, BE]
+  const ordered = ["FIRST_PERSON_SINGULAR", "MAN", "BE"];
+  for (const sov of ["tr", "ja", "ko"]) {
+    assert.equal(isDirectObjectPosition(ordered, 1, sov), false,
+      `${sov} excludes copular predicates from the direct-object slot`);
+  }
+});
+
+test("isCopularPredicatePosition: SVO and SOV both find the copula", () => {
+  // SVO: [SUBJ, BE, PREDICATE] — predicate looks backward for BE.
+  const svo = ["FIRST_PERSON_SINGULAR", "BE", "MAN"];
+  assert.equal(isCopularPredicatePosition(svo, 2, "en"), true);
+  assert.equal(isCopularPredicatePosition(svo, 0, "en"), false);
+  // SOV: [SUBJ, PREDICATE, BE] — predicate looks forward for BE.
+  const sov = ["FIRST_PERSON_SINGULAR", "MAN", "BE"];
+  for (const lang of ["tr", "ja", "ko"]) {
+    assert.equal(isCopularPredicatePosition(sov, 1, lang), true,
+      `${lang} finds the trailing copula`);
+  }
+  // A non-copular verb in the same trailing slot is not a copula match.
+  const trans = ["FIRST_PERSON_SINGULAR", "FOOD", "EAT"];
+  for (const lang of ["tr", "ja", "ko"]) {
+    assert.equal(isCopularPredicatePosition(trans, 1, lang), false,
+      `${lang} does not treat a transitive verb as a copula`);
+  }
 });
 
 test("templateGenderClash flags a copular template after a bad subject swap", () => {
