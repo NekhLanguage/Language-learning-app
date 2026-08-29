@@ -155,8 +155,16 @@ function resolveNounBlank(sentence, tpl, targetLang, targetConcept) {
     // that, but trying the citation first would still lose the article-
     // free contract for declining languages). Article-language slots keep
     // trying the full articled phrase first so the article rides the tile.
+    // A slot whose base already carries suffixal decoration (ko particle
+    // «고수가», ko copula «남자예요») makes the bare phrase a SUBSTRING of
+    // the decorated base — trying the bare phrase first substring-matches
+    // and strands the suffix in the frame («클랜은 _____가 있어요»). Skip
+    // the phrase branch when the base has been WIDENED past the phrase;
+    // authored-surface overrides that swap the whole word (es HOME →
+    // «casa») still take the phrase branch, since the phrase carries the
+    // dictionary form the RENDER pipeline picked («Yo voy un hogar.»).
     const phrase = nounPhrase(targetLang, targetConcept);
-    if (!slot.caseName && phrase && phrase !== base) {
+    if (!slot.caseName && phrase && phrase !== base && phrase.length >= base.length) {
       const blanked = blankSentence(sentence, phrase, targetLang);
       if (blanked.includes("_____")) {
         return { blanked, surface: phrase, bareMode: false, slot };
@@ -698,21 +706,52 @@ function buildTrHavePossession(tpl) {
   return parts.join(" ") + ".";
 }
 
-// A noun at ordered[idx] is a direct object when the nearest preceding
-// concept — skipping the noun's own modifiers (possessive, adjective,
-// quantifier, number: «я маю мою книгу», «я читаю лише книгу») — is a
-// non-copular verb. Predicate nouns after BE («це книга») stay nominative.
+// A noun at ordered[idx] is a direct object when the nearest verb reachable
+// past its own modifiers (possessive, adjective, quantifier, number: «я маю
+// мою книгу», «я читаю лише книгу») is a non-copular verb. Predicate nouns
+// after BE («це книга») stay nominative.
+//
+// Direction is per-language: SVO/VSO look BACKWARD (verb before object),
+// SOV looks FORWARD (verb after object — «Ben kitabı okuyorum», «나는 책을
+// 봐요», «私は本を見ます»). The `lang` param drives the direction lookup;
+// omitting it falls back to SVO behavior for legacy callers that predate
+// the SOV work.
 const OBJECT_MODIFIER_TYPES = new Set(["adjective", "quantifier", "number"]);
+const MODIFIER_PASSTHROUGH_TYPES = new Set(["connector"]);
+
+function isNounSlotModifier(meta) {
+  return meta?.semantic_role === "possessive" ||
+    OBJECT_MODIFIER_TYPES.has(meta?.type);
+}
 
 // Concept metadata of the word directly before ordered[idx] (or null).
 function prevMetaEarly(ordered, idx) {
   return idx > 0 ? vocab().concepts?.[ordered[idx - 1]] ?? null : null;
 }
-function isDirectObjectPosition(ordered, idx) {
+
+function isDirectObjectPosition(ordered, idx, lang = null) {
+  if (langRuleValue(lang, "wordOrder") === "SOV") {
+    // Walk forward past this noun's trailing modifiers and connectors
+    // until the verb. Another nominal (noun / pronoun / time) reached
+    // before the verb IS the object — so THIS slot is the subject and
+    // the walk returns false. Reaching a non-verb non-modifier, or the
+    // end of the array, also returns false.
+    let j = idx + 1;
+    while (j < ordered.length) {
+      const m = vocab().concepts?.[ordered[j]];
+      if (m?.type === "verb") return !isCopulaConcept(ordered[j]);
+      if (isNounSlotModifier(m) || MODIFIER_PASSTHROUGH_TYPES.has(m?.type)) {
+        j++; continue;
+      }
+      return false;
+    }
+    return false;
+  }
+  // SVO / VSO / undeclared: nearest preceding non-modifier is the verb.
   let j = idx - 1;
   while (j >= 0) {
     const m = vocab().concepts?.[ordered[j]];
-    if (m?.semantic_role === "possessive" || OBJECT_MODIFIER_TYPES.has(m?.type)) { j--; continue; }
+    if (isNounSlotModifier(m)) { j--; continue; }
     break;
   }
   if (j < 0) return false;
@@ -720,15 +759,30 @@ function isDirectObjectPosition(ordered, idx) {
   return vocab().concepts?.[prev]?.type === "verb" && !isCopulaConcept(prev);
 }
 
-// The predicate-noun slot of a copular clause: the word before it (skipping
-// modifiers/possessives) is the copula («вона Є професорка», "she IS a
-// professor"). Mirrors isDirectObjectPosition, which deliberately excludes
-// copulas.
-function isCopularPredicatePosition(ordered, idx) {
+// The predicate-noun slot of a copular clause: reachable past this noun's
+// modifiers/possessives is the copula («вона Є професорка», "she IS a
+// professor"; SOV mirror: «Ben adamım» — the suffixal BE trails the
+// predicate). Mirrors isDirectObjectPosition and shares its per-language
+// direction lookup, so tr/ja/ko predicate nouns detect their copula
+// forward instead of failing silently.
+function isCopularPredicatePosition(ordered, idx, lang = null) {
+  if (langRuleValue(lang, "wordOrder") === "SOV") {
+    let j = idx + 1;
+    while (j < ordered.length) {
+      const m = vocab().concepts?.[ordered[j]];
+      if (m && isCopulaConcept(ordered[j])) return true;
+      if (m?.type === "verb") return false;
+      if (isNounSlotModifier(m) || MODIFIER_PASSTHROUGH_TYPES.has(m?.type)) {
+        j++; continue;
+      }
+      return false;
+    }
+    return false;
+  }
   let j = idx - 1;
   while (j >= 0) {
     const m = vocab().concepts?.[ordered[j]];
-    if (m?.semantic_role === "possessive" || OBJECT_MODIFIER_TYPES.has(m?.type)) { j--; continue; }
+    if (isNounSlotModifier(m)) { j--; continue; }
     break;
   }
   if (j < 0) return false;
@@ -835,7 +889,7 @@ function caseFormFor(lang, cid, caseName) {
 function predicateNounCaseFor(lang, ordered, idx, subjectCid, isCopularTemplate) {
   const predCase = langRuleValue(lang, "caseMarking")?.predicateNounCase;
   if (!predCase || !isCopularTemplate) return null;
-  if (!isCopularPredicatePosition(ordered, idx)) return null;
+  if (!isCopularPredicatePosition(ordered, idx, lang)) return null;
   if (vocab().concepts?.[subjectCid]?.semantic_role === "demonstrative") return null;
   return predCase;
 }
@@ -1431,7 +1485,7 @@ if (orderType === "SOV") {
       // except in an existential-possession template (fi «Minulla on
       // paita»), whose possessed noun stays nominative.
       if (langRuleValue(targetLang, "caseMarking")?.directObjectCase === "accusative" &&
-          idx !== -1 && isDirectObjectPosition(ordered, idx) &&
+          idx !== -1 && isDirectObjectPosition(ordered, idx, targetLang) &&
           !(langRuleValue(targetLang, "existentialPossession") && ordered.includes("HAVE"))) {
         return accusativeNoun(targetLang, targetConcept, formOf(targetLang, targetConcept));
       }
@@ -1445,7 +1499,7 @@ if (orderType === "SOV") {
           (tpl.concepts || []).includes("HAVE"))) {
       const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
       const idx = ordered.indexOf(targetConcept);
-      if (idx !== -1 && isDirectObjectPosition(ordered, idx)) {
+      if (idx !== -1 && isDirectObjectPosition(ordered, idx, targetLang)) {
         const objForm = caseFormFor(targetLang, targetConcept, "accusative");
         if (objForm) return objForm;
       }
@@ -1506,6 +1560,14 @@ if (orderType === "SOV") {
     const predCase = predicateNounCaseFor(
       targetLang, ordered, idx, subjectCid, isCopularTpl);
     if (predCase) return { position: "predicateNoun", caseName: predCase, feminineSubject };
+    // Predicate-position detection here stays lang-agnostic so tiles keep
+    // the sentence's shape today. The SOV-aware helper is technically
+    // correct («저는 남자» — «남자» IS the predicate), but the ko copula-
+    // suffix attaches to it in a post-render pass while tiles would
+    // decorate from the slot; the two paths land aligned only when the
+    // render pipeline itself is SOV-aware (Emi -14, Task 1). Passing null
+    // here preserves the shipped alignment; renderSegments-side callers
+    // pass `lang` and reap the fix.
     if (isCopularTpl && isCopularPredicatePosition(ordered, idx)) {
       // Predicate position in a language without predicateNounCase — no
       // case, but the feminitive rule still applies («Elle est une
@@ -1523,11 +1585,12 @@ if (orderType === "SOV") {
         (langRuleValue(targetLang, "caseMarking")?.directObjectCase || null);
       return { position: "directObject", caseName: doCase };
     }
-    // SOV languages put the direct object BEFORE the verb, so the shared
-    // prev-is-verb walk above never fires there. The first noun of a
-    // non-copular template is the object slot — the same rule the
-    // particle insertion in renderSegments uses, so blanks and tiles
-    // stay aligned with the rendered «음식을».
+    // Render-alignment workaround for SOV: renderSegments' particle
+    // attach marks `ordered.findIndex(noun)` (which is the SUBJECT in a
+    // no-pronoun-subject template — a render-side gap tracked by Emi -14
+    // for Task 1). Until that render lands on the SOV-aware helpers,
+    // slotContextFor mirrors the render's marked position so tiles keep
+    // matching sentences («포켓몬이 …»). Retires with the -14/-19 work.
     if (langRuleValue(targetLang, "wordOrder") === "SOV" && !isCopularTpl &&
         vocab().concepts[targetConcept]?.type === "noun" &&
         idx === ordered.findIndex(c => vocab().concepts[c]?.type === "noun")) {
@@ -3014,7 +3077,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // accusative). Possessed objects only shift for the regular feminine
   // rule — an explicit animate-masculine override would clash with the
   // possessive word, which has no accusative data of its own.
-  const isObject = isDirectObjectPosition(ordered, idx) && !existentialHave;
+  const isObject = isDirectObjectPosition(ordered, idx, lang) && !existentialHave;
   const ukObjectCase = langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
     isObject && !pluralAgreement;
   // Copular agreement: this noun is the predicate after a plural subject.
@@ -3031,7 +3094,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const feminineReferent = isCopularTemplate &&
     vocab().concepts[subjectCid]?.type === "pronoun" &&
     vocab().concepts[subjectCid]?.gender === "f" &&
-    isCopularPredicatePosition(ordered, idx) &&
+    isCopularPredicatePosition(ordered, idx, lang) &&
     typeof nounEntry?.feminine === "string";
   let possessedForm = feminineReferent ? nounEntry.feminine : formOf(lang, cid);
   // Copular-plural agreement reaches possessed predicates too: «Вони наші
@@ -3627,7 +3690,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // the data provides it (fi «Minä teen tämän»); languages whose
       // entries carry no accusative field are untouched.
       if (langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
-          !existentialHave && isDirectObjectPosition(ordered, idx)) {
+          !existentialHave && isDirectObjectPosition(ordered, idx, lang)) {
         const objForm = caseFormFor(lang, cid, "accusative");
         if (objForm) {
           noteRule("accusative_object");
@@ -3649,7 +3712,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
             return e.governed;
           }
           if (typeof e.objectForm === "string" &&
-              isDirectObjectPosition(ordered, idx)) {
+              isDirectObjectPosition(ordered, idx, lang)) {
             return e.objectForm;
           }
         }
@@ -3723,7 +3786,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const nextCid = ordered[idx + 1];
       let form = genderedFormOf(lang, cid, nextCid);
       if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
-          isDirectObjectPosition(ordered, idx + 1) && !pluralAgreement &&
+          isDirectObjectPosition(ordered, idx + 1, lang) && !pluralAgreement &&
           vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
         form = femAccusativeShift(lang, form, "adjective");
       }
@@ -3806,13 +3869,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         // feminine falls through to plain gender agreement, whose form IS
         // the accusative). uk/pl keep their strategy-shift path below.
         if (!possGoverned && determinerCaseMarking(lang) &&
-            isDirectObjectPosition(ordered, idx + 1)) {
+            isDirectObjectPosition(ordered, idx + 1, lang)) {
           const doCase = langRuleValue(lang, "caseMarking").directObjectCase;
           const declinedPoss = possessiveCaseForm(lang, cid, nextCid, doCase);
           if (declinedPoss) return declinedPoss;
         }
         if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
-            isDirectObjectPosition(ordered, idx + 1) && !pluralAgreement &&
+            isDirectObjectPosition(ordered, idx + 1, lang) && !pluralAgreement &&
             vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
           form = femAccusativeShift(lang, form, "adjective");
         }
@@ -4003,6 +4066,7 @@ export {
   optionSurfaceFor,
   modifierSurfaceFor,
   isDirectObjectPosition,
+  isCopularPredicatePosition,
   ukFeminineAccusative,
   ukAccusativeNoun,
   isModifierConcept,
