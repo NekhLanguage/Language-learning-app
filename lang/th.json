@@ -19,6 +19,7 @@
     "correct": "ถูกต้อง",
     "incorrect": "ไม่ถูกต้อง",
     "syncFailedLocalCopy": "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ — กำลังแสดงความคืบหน้าที่บันทึกไว้ในเครื่องนี้",
+    "syncFailedReloadNeeded": "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ — โหลดหน้านี้ใหม่เพื่อลองอีกครั้ง",
     "l7Placeholder": "พิมพ์คำแปลของคุณ",
     "level": "ระดับ",
     "blueprint": "Language Blueprint ของ Nekh",

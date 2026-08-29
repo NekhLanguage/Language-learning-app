@@ -15,6 +15,7 @@
     "correct": "Correct.",
     "incorrect": "Incorrect.",
     "syncFailedLocalCopy": "Impossible de joindre le serveur — progression enregistrée sur cet appareil affichée.",
+    "syncFailedReloadNeeded": "Impossible de joindre le serveur — rechargez la page pour réessayer.",
     "l7Placeholder": "Écris ta traduction",
     "level": "Niveau",
     "blueprint": "Plan de Langues de Nekh",

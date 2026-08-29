@@ -15,6 +15,7 @@
     "correct": "Riktig.",
     "incorrect": "Feil.",
     "syncFailedLocalCopy": "Fikk ikke kontakt med serveren — viser fremgangen som er lagret på denne enheten.",
+    "syncFailedReloadNeeded": "Fikk ikke kontakt med serveren — last inn siden på nytt for å prøve igjen.",
     "l7Placeholder": "Skriv oversettelsen din",
     "level": "Nivå",
     "blueprint": "Nekh's språkplan",

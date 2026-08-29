@@ -19,6 +19,7 @@
     "correct": "Correto.",
     "incorrect": "Incorreto.",
     "syncFailedLocalCopy": "Não foi possível conectar ao servidor — mostrando o progresso salvo neste dispositivo.",
+    "syncFailedReloadNeeded": "Não foi possível conectar ao servidor — recarregue a página para tentar novamente.",
     "l7Placeholder": "Digite sua tradução",
     "level": "Nível",
     "blueprint": "Plano de Idiomas do Nekh",

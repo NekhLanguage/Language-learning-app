@@ -19,6 +19,7 @@
     "correct": "Oikein.",
     "incorrect": "Väärin.",
     "syncFailedLocalCopy": "Palvelimeen ei saatu yhteyttä — näytetään tämän laitteen tallennettu edistyminen.",
+    "syncFailedReloadNeeded": "Palvelimeen ei saatu yhteyttä — lataa sivu uudelleen ja yritä uudelleen.",
     "l7Placeholder": "Kirjoita käännöksesi",
     "level": "Taso",
     "blueprint": "Nekh's Language Blueprint",

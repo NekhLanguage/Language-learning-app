@@ -19,6 +19,7 @@
     "correct": "Correct.",
     "incorrect": "Incorrect.",
     "syncFailedLocalCopy": "Couldn't reach the server — showing this device's saved progress.",
+    "syncFailedReloadNeeded": "Couldn't reach the server — reload the page to try again.",
     "l7Placeholder": "Type your translation",
     "level": "Level",
     "blueprint": "Nekh's Language Blueprint",

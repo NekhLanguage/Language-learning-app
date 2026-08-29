@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.29";
+const APP_DATA_VERSION = "1.2.30";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -1867,9 +1867,56 @@ function updateSupportUI(code) {
         <span class="lang-card-pct">${pct}%</span>
       </span>
     `;
-    btn.onclick = () => enterLanguage(lang.code);
+    btn.onclick = () => runEnterLanguage(btn, lang.code);
     languageButtonsContainer.appendChild(btn);
   });
+}
+
+// -23: picker cards were inert during sync failure — enterLanguage rejects or
+// stalls, the click handler is a bare fire-and-forget, and neither the button
+// nor the sync banner surfaces anything. This wrapper marks the card busy,
+// races the entry against a 10s timeout, and on failure/timeout puts a
+// localized "reload the page" line on the sync banner so the learner is not
+// stuck staring at a picker that eats clicks.
+async function runEnterLanguage(btn, langCode) {
+  if (btn.dataset.busy === "1") return;
+  btn.dataset.busy = "1";
+  btn.setAttribute("aria-busy", "true");
+  const TIMEOUT_MS = 10000;
+  let timedOut = false;
+  let timer = null;
+  const timeoutP = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      timedOut = true;
+      reject(new Error(`enterLanguage timed out after ${TIMEOUT_MS}ms`));
+    }, TIMEOUT_MS);
+  });
+  try {
+    await Promise.race([enterLanguage(langCode), timeoutP]);
+  } catch (err) {
+    console.warn("enterLanguage failed:", err);
+    try {
+      if (window.__zthBeacon) {
+        window.__zthBeacon("error", {
+          message: timedOut ? "picker_click_timeout" : "picker_click_failed",
+          source: "enterLanguage",
+          path: location.pathname + location.search
+        });
+      }
+    } catch (_) { /* never let the beacon throw */ }
+    const banner = document.getElementById("sync-status");
+    if (banner) {
+      banner.textContent = ui("syncFailedReloadNeeded");
+      banner.classList.remove("hidden");
+      banner.classList.add("is-error");
+    }
+  } finally {
+    if (timer) clearTimeout(timer);
+    // Clear on every settle, success included: the picker DOM persists across
+    // quit → re-open, so a flag left set here makes the card eat all later clicks.
+    btn.dataset.busy = "";
+    btn.removeAttribute("aria-busy");
+  }
 }
   async function loadAndMergeVocab() {
     window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
