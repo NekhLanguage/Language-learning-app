@@ -100,6 +100,7 @@
       "concept_id": "MY",
       "type": "adjective",
       "semantic_role": "possessive",
+      "person": 1,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -112,6 +113,7 @@
       "concept_id": "YOUR",
       "type": "adjective",
       "semantic_role": "possessive",
+      "person": 2,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -124,6 +126,7 @@
       "concept_id": "HIS",
       "type": "adjective",
       "semantic_role": "possessive",
+      "person": 3,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -136,6 +139,7 @@
       "concept_id": "HER",
       "type": "adjective",
       "semantic_role": "possessive",
+      "person": 3,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -148,6 +152,7 @@
       "concept_id": "OUR",
       "type": "adjective",
       "semantic_role": "possessive",
+      "person": 1,
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -160,6 +165,7 @@
       "concept_id": "THEIR",
       "type": "adjective",
       "semantic_role": "possessive",
+      "person": 3,
       "core": true,
       "interaction_profile": {
         "see_translate": true,

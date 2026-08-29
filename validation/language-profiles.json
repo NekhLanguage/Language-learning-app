@@ -58,7 +58,7 @@
     "definiteArticles": false, "indefiniteArticles": false,
     "nounCaseOnObjects": true, "prepositionalCase": true,
     "verbPersonConjugation": true, "verbGenderAgreement": false,
-    "grammaticalGender": false, "adjectiveAgreement": false,
+    "grammaticalGender": false, "adjectiveAgreement": true,
     "classifiersOrCounters": false, "topicOrCaseParticles": false,
     "zeroOrSuffixalCopula": false, "pluralInflection": true,
     "spacelessScript": false, "apocope": false,
