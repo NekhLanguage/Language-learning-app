@@ -59,101 +59,182 @@
       "forms": {
         "POKEMON": {
           "form": "Pokémon",
-          "invariantPlural": true
+          "invariantPlural": true,
+          "partitive": "Pokémonia",
+          "accusative": "Pokémonin",
+          "genitive": "Pokémonin"
         },
         "TRAINER": {
           "form": "kouluttaja",
-          "plural": "kouluttajat"
+          "plural": "kouluttajat",
+          "partitive": "kouluttajaa",
+          "accusative": "kouluttajan",
+          "genitive": "kouluttajan"
         },
         "GYM": {
-          "form": "sali", "illative": "salille",
-          "plural": "salit"
+          "form": "sali",
+          "illative": "salille",
+          "plural": "salit",
+          "partitive": "salia",
+          "accusative": "salin",
+          "genitive": "salin"
         },
         "LEAGUE": {
-          "form": "liiga", "illative": "liigaan",
-          "plural": "liigat"
+          "form": "liiga",
+          "illative": "liigaan",
+          "plural": "liigat",
+          "partitive": "liigaa",
+          "accusative": "liigan",
+          "genitive": "liigan"
         },
         "GYM_LEADER": {
           "form": "salijohtaja",
-          "plural": "salijohtajat"
+          "plural": "salijohtajat",
+          "partitive": "salijohtajaa",
+          "accusative": "salijohtajan",
+          "genitive": "salijohtajan"
         },
         "ELITE_FOUR": {
-          "form": "Elite Four"
+          "form": "Elite Four",
+          "partitive": "Elite Fouria",
+          "accusative": "Elite Fourin",
+          "genitive": "Elite Fourin"
         },
         "POKEMON_CENTER": {
-          "form": "Pokémon-keskus", "illative": "Pokémon-keskukseen",
-          "plural": "Pokémon-keskukset"
+          "form": "Pokémon-keskus",
+          "illative": "Pokémon-keskukseen",
+          "plural": "Pokémon-keskukset",
+          "partitive": "Pokémon-keskusta",
+          "accusative": "Pokémon-keskuksen",
+          "genitive": "Pokémon-keskuksen"
         },
         "FOREST": {
           "form": "metsä",
-          "plural": "metsät"
+          "plural": "metsät",
+          "partitive": "metsää",
+          "accusative": "metsän",
+          "genitive": "metsän"
         },
         "CAVE": {
           "form": "luola",
-          "plural": "luolat"
+          "plural": "luolat",
+          "partitive": "luolaa",
+          "accusative": "luolan",
+          "genitive": "luolan"
         },
         "TOWN": {
           "form": "kaupunki",
-          "plural": "kaupungit"
+          "plural": "kaupungit",
+          "partitive": "kaupunkia",
+          "accusative": "kaupungin",
+          "genitive": "kaupungin"
         },
         "BATTLE": {
           "form": "taistelu",
-          "plural": "taistelut"
+          "plural": "taistelut",
+          "partitive": "taistelua",
+          "accusative": "taistelun",
+          "genitive": "taistelun"
         },
         "MOVE": {
           "form": "liike",
-          "plural": "liikkeet"
+          "plural": "liikkeet",
+          "partitive": "liikettä",
+          "accusative": "liikkeen",
+          "genitive": "liikkeen"
         },
         "DAMAGE": {
-          "form": "vahinko"
+          "form": "vahinko",
+          "partitive": "vahinkoa",
+          "accusative": "vahinkoa",
+          "genitive": "vahingon"
         },
         "DEFENSE": {
-          "form": "puolustus"
+          "form": "puolustus",
+          "partitive": "puolustusta",
+          "accusative": "puolustusta",
+          "genitive": "puolustuksen"
         },
         "SPEED": {
-          "form": "nopeus"
+          "form": "nopeus",
+          "partitive": "nopeutta",
+          "accusative": "nopeutta",
+          "genitive": "nopeuden"
         },
         "STAT": {
           "form": "statsi",
-          "plural": "statsit"
+          "plural": "statsit",
+          "partitive": "statsia",
+          "accusative": "statsin",
+          "genitive": "statsin"
         },
         "ABILITY": {
           "form": "kyky",
-          "plural": "kyvyt"
+          "plural": "kyvyt",
+          "partitive": "kykyä",
+          "accusative": "kyvyn",
+          "genitive": "kyvyn"
         },
         "TYPE": {
           "form": "tyyppi",
-          "plural": "tyypit"
+          "plural": "tyypit",
+          "partitive": "tyyppiä",
+          "accusative": "tyypin",
+          "genitive": "tyypin"
         },
         "POTION": {
           "form": "taikajuoma",
-          "plural": "taikajuomat"
+          "plural": "taikajuomat",
+          "partitive": "taikajuomaa",
+          "accusative": "taikajuoman",
+          "genitive": "taikajuoman"
         },
         "REVIVE": {
           "form": "Revive",
-          "plural": "Revivet"
+          "plural": "Revivet",
+          "partitive": "Revivea",
+          "accusative": "Reviven",
+          "genitive": "Reviven"
         },
         "TECHNICAL_MACHINE": {
           "form": "tekninen kone",
-          "plural": "tekniset koneet"
+          "plural": "tekniset koneet",
+          "partitive": "teknistä konetta",
+          "accusative": "teknisen koneen",
+          "genitive": "teknisen koneen"
         },
         "BADGE": {
           "form": "merkki",
-          "plural": "merkit"
+          "plural": "merkit",
+          "partitive": "merkkiä",
+          "accusative": "merkin",
+          "genitive": "merkin"
         },
         "ITEM": {
           "form": "esine",
-          "plural": "esineet"
+          "plural": "esineet",
+          "partitive": "esinettä",
+          "accusative": "esineen",
+          "genitive": "esineen"
         },
         "LEVEL": {
           "form": "taso",
-          "plural": "tasot"
+          "plural": "tasot",
+          "partitive": "tasoa",
+          "accusative": "tason",
+          "genitive": "tason"
         },
         "EXPERIENCE": {
-          "form": "kokemus"
+          "form": "kokemus",
+          "partitive": "kokemusta",
+          "accusative": "kokemusta",
+          "genitive": "kokemuksen"
         },
         "HEALTH": {
-          "form": "terveys"
+          "form": "terveys",
+          "partitive": "terveyttä",
+          "accusative": "terveyttä",
+          "genitive": "terveyden"
         },
         "BURN": {
           "base": "polttaa",
@@ -174,7 +255,10 @@
           "3_plural": "myrkyttävät"
         },
         "SLEEP_STATUS": {
-          "form": "uni"
+          "form": "uni",
+          "partitive": "unta",
+          "accusative": "unta",
+          "genitive": "unen"
         },
         "PARALYZE": {
           "base": "halvaannuttaa",
@@ -187,11 +271,17 @@
         },
         "SEEN": {
           "form": "nähty",
-          "plural": "nähdyt"
+          "plural": "nähdyt",
+          "partitive": "nähtyä",
+          "accusative": "nähdyn",
+          "genitive": "nähdyn"
         },
         "CAPTURED": {
           "form": "napattu",
-          "plural": "napatut"
+          "plural": "napatut",
+          "partitive": "napattua",
+          "accusative": "napatun",
+          "genitive": "napatun"
         },
         "ATTACK": {
           "base": "hyökätä",
@@ -301,27 +391,48 @@
           "2_plural": "kehitytte",
           "3_plural": "kehittyvät"
         },
-        "WILD": [
-          "villi"
-        ],
-        "STRONG": [
-          "vahva"
-        ],
-        "EFFECTIVE": [
-          "tehokas"
-        ],
-        "SUPER_EFFECTIVE": [
-          "supertehokas"
-        ],
-        "VERY_EFFECTIVE": [
-          "erittäin tehokas"
-        ],
-        "LEGENDARY": [
-          "legendaarinen"
-        ],
-        "SHINY": [
-          "kiiltävä"
-        ]
+        "WILD": {
+          "form": "villi",
+          "plural": "villit",
+          "partitive": "villiä",
+          "genitive": "villin"
+        },
+        "STRONG": {
+          "form": "vahva",
+          "plural": "vahvat",
+          "partitive": "vahvaa",
+          "genitive": "vahvan"
+        },
+        "EFFECTIVE": {
+          "form": "tehokas",
+          "plural": "tehokkaat",
+          "partitive": "tehokasta",
+          "genitive": "tehokkaan"
+        },
+        "SUPER_EFFECTIVE": {
+          "form": "supertehokas",
+          "plural": "supertehokkaat",
+          "partitive": "supertehokasta",
+          "genitive": "supertehokkaan"
+        },
+        "VERY_EFFECTIVE": {
+          "form": "erittäin tehokas",
+          "plural": "erittäin tehokkaat",
+          "partitive": "erittäin tehokasta",
+          "genitive": "erittäin tehokkaan"
+        },
+        "LEGENDARY": {
+          "form": "legendaarinen",
+          "plural": "legendaariset",
+          "partitive": "legendaarista",
+          "genitive": "legendaarisen"
+        },
+        "SHINY": {
+          "form": "kiiltävä",
+          "plural": "kiiltävät",
+          "partitive": "kiiltävää",
+          "genitive": "kiiltävän"
+        }
       }
     },
     "en": {
