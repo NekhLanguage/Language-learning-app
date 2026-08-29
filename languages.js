@@ -8,6 +8,11 @@
 //   languages by scanning this file's text for rows whose first key is the
 //   code (and that scan also reads comments, so never write a row-shaped
 //   literal in one). A unit test pins that the scan matches the export.
+// ttsCode: the browser BCP-47 tag — it drives BOTH cloud TTS request URLs
+//   AND Web Speech recognition (app.js recognizeOnce), so it must stay a
+//   browser-valid tag. Google Cloud TTS wants different codes for Arabic
+//   (ar-XA) and Mandarin (cmn-CN); those aliases live in
+//   netlify/functions/tts.js, the only place that talks to Google.
 // Registry sorted alphabetically by English label.
 export const AVAILABLE_LANGUAGES = [
   { code: "ar", label: "Arabic",     nativeLabel: "العربية",     short: "AR", ttsCode: "ar-SA", isRTL: true,  beta: true  },
