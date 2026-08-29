@@ -1,5 +1,5 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
-import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap } from "./audioengine.js";
+import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap, getAudioFallbacks } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist } from "./storage.mjs";
 import {
@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.28";
+const APP_DATA_VERSION = "1.2.29";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -5170,6 +5170,10 @@ window.__app = {
   get run(){ return run; },
   get bundleIndex(){ return BUNDLE_INDEX; },
   get lastExercise(){ return LAST_EXERCISE; },
+  // Cloud-TTS fallback telemetry ({count, skipped, last}) — a nonzero
+  // count in the field means learners are hearing browser voices, the
+  // silently-degraded state the 2026-08 billing outage hid for months.
+  get audioFallbacks(){ return getAudioFallbacks(); },
   rerender(){ renderNext(languageState.target, languageState.support); },
   backfillReleasedBundles,
 };

@@ -4,12 +4,43 @@
 let ttsEnabled = false;
 let voices = [];
 
+// speechSynthesis only exists in the browser — the guard keeps this module
+// importable by the node unit suite (pickBrowserVoice is pure logic).
+const HAS_SPEECH = typeof speechSynthesis !== "undefined";
+
 function loadVoices() {
-  voices = speechSynthesis.getVoices();
+  if (HAS_SPEECH) voices = speechSynthesis.getVoices();
 }
 
 loadVoices();
-speechSynthesis.onvoiceschanged = loadVoices;
+if (HAS_SPEECH) speechSynthesis.onvoiceschanged = loadVoices;
+
+// --------------------
+// Fallback telemetry — the 2026-08 outage lesson: Google Cloud billing was
+// disabled, every request failed, and EVERY learner silently heard their
+// browser's default (American) voice for months because the fallback path
+// swallowed errors with bare catch{}. A degraded audio path must be LOUD:
+// each fallback logs one structured warning and increments a counter that
+// window.__app exposes for tests and field debugging.
+// --------------------
+
+const audioFallbacks = { count: 0, skipped: 0, last: null };
+
+export function getAudioFallbacks() {
+  return { ...audioFallbacks };
+}
+
+function noteFallback(context, lang, err) {
+  audioFallbacks.count += 1;
+  audioFallbacks.last = {
+    context, lang,
+    error: err && err.message ? String(err.message) : String(err || "unknown"),
+    at: Date.now(),
+  };
+  console.warn(
+    `TTS cloud playback failed (${context}, lang=${lang}) — ` +
+    `falling back to browser speech: ${audioFallbacks.last.error}`);
+}
 
 // Populated at startup by app.js via setVoiceMap()
 let voiceMap = {};
@@ -35,12 +66,19 @@ export function isTTSEnabled() {
 // HTTP cache and Netlify's CDN can serve repeat playback instantly.
 // --------------------
 
+// Bump when server-side voice selection changes (gender dropped + Google
+// language aliases, 2026-08-29): the URL is the cache key for a YEAR of
+// browser + CDN cache, so old clips synthesized under the previous voice
+// parameters would otherwise keep playing forever.
+const TTS_AUDIO_GENERATION = 2;
+
 function ttsUrl(text, lang) {
   return (
     "/.netlify/functions/tts?text=" +
     encodeURIComponent(text) +
     "&lang=" +
-    encodeURIComponent(lang)
+    encodeURIComponent(lang) +
+    "&gen=" + TTS_AUDIO_GENERATION
   );
 }
 
@@ -78,15 +116,50 @@ function playCloudTTS(text, lang) {
 // Browser fallback
 // --------------------
 
+// Pick a browser voice for the MAPPED BCP-47 code («fi» → «fi-FI»):
+// exact tag first, then any voice sharing the primary language subtag.
+// Returns null when the browser has no voice for the LANGUAGE — the old
+// fuzzy `.includes()` walk plus the default-voice fallthrough is how
+// Finnish got read by an American voice: a wrong-language voice actively
+// teaches wrong sounds, so "no match" must mean silence, never English.
+// Exported for the unit suite (pure function of its inputs).
+export function pickBrowserVoice(available, mappedLang) {
+  const mapped = String(mappedLang || "").toLowerCase();
+  if (!mapped) return null;
+  const primary = mapped.split("-")[0];
+  return available.find(v => v.lang.toLowerCase() === mapped) ||
+    available.find(v => v.lang.toLowerCase().split("-")[0] === primary) ||
+    null;
+}
+
 function speakBrowser(text, lang) {
+  if (!HAS_SPEECH) return null;
+  loadVoices(); // the async voiceschanged event may have fired since import
   speechSynthesis.cancel();
+  const mapped = voiceMap[lang] || lang;
+  const voice = pickBrowserVoice(voices, mapped);
+  if (!voice) {
+    if (voices.length > 0) {
+      // The browser demonstrably has no voice for this language — skip
+      // rather than read the text with its (English) default voice.
+      audioFallbacks.skipped += 1;
+      console.warn(
+        `No browser voice for ${mapped} — skipping utterance instead of ` +
+        "reading it with a wrong-language voice");
+      return null;
+    }
+    // Voice list not populated (some browsers load it async): hand the
+    // browser the BCP-47 tag and let it resolve — unverifiable, but the
+    // fallback warning has already fired for this utterance.
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = mapped;
+    utter.rate = 0.9;
+    utter.pitch = 1;
+    speechSynthesis.speak(utter);
+    return utter;
+  }
   const utter = new SpeechSynthesisUtterance(text);
-  const langLower = (lang || "").toLowerCase();
-  let voice = voices.find(v => v.lang.toLowerCase() === langLower);
-  if (!voice) voice = voices.find(v => v.lang.toLowerCase().startsWith(langLower));
-  if (!voice) voice = voices.find(v => v.lang.toLowerCase().includes(langLower));
-  if (voice) utter.voice = voice;
-  else utter.lang = voiceMap[lang] || lang;
+  utter.voice = voice;
   utter.rate = 0.9;
   utter.pitch = 1;
   speechSynthesis.speak(utter);
@@ -103,7 +176,7 @@ export async function speak(text, lang) {
     const { playPromise } = playCloudTTS(text, lang);
     await playPromise;
   } catch (err) {
-    console.warn("Cloud TTS failed, using browser fallback");
+    noteFallback("speak", lang, err);
     speakBrowser(text, lang);
   }
 }
@@ -114,7 +187,8 @@ export async function speakAlways(text, lang) {
   try {
     const { playPromise } = playCloudTTS(text, lang);
     await playPromise;
-  } catch {
+  } catch (err) {
+    noteFallback("speakAlways", lang, err);
     speakBrowser(text, lang);
   }
 }
@@ -216,7 +290,8 @@ export async function speakWithHighlight(text, lang, phraseSpan) {
     const { audio, playPromise } = playCloudTTS(text, lang);
     if (wordSpans.length > 0) runHighlight(audio, wordSpans, fractions);
     await playPromise;
-  } catch {
+  } catch (err) {
+    noteFallback("speakWithHighlight", lang, err);
     speakBrowser(text, lang);
   }
 }
@@ -250,7 +325,8 @@ export async function speakLetters(text, lang, charEl) {
     const { audio, playPromise } = playCloudTTS(text, lang);
     if (letterSpans.length > 0) runHighlight(audio, letterSpans, fractions, cleanupExtra);
     await playPromise;
-  } catch {
+  } catch (err) {
+    noteFallback("speakLetters", lang, err);
     if (cleanupExtra) cleanupExtra();
     speakBrowser(text, lang);
   }
