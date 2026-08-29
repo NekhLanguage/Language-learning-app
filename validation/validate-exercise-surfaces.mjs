@@ -38,7 +38,11 @@
 //      demanded case field. The engine falls back to the nominative with
 //      no warning — the «Я п'ю вода» failure mode, position by position.
 //      Uses the engine's own case map so the walk can never drift from
-//      render behaviour.
+//      render behaviour. Also walks DIRECT-OBJECT positions in languages
+//      whose object case is lexical (adjectiveAgreesWithCase — fi): a
+//      noun there with no accusative data ships the bare nominative
+//      («Hän näkee sali» — Emi run-7 -29: 0 of 52 pack objects correct,
+//      invisible because only preposition slots were walked).
 //
 //   Plus one HARD check (never baselined): HUBNAME_MISSING — every lang
 //   file's hubNames block must name every shipped language. No other
@@ -60,6 +64,7 @@ import {
   orderedConceptsForTemplate, caseMap, caseFormFor, formOf, surfaceForm,
   optionSurfaceFor, predicateNounCaseFor, isPluralPronoun,
   adjectiveSuitsNoun, isModifierCompatible,
+  accusativeNoun, isDirectObjectPosition,
 } from '../sentence_engine.mjs';
 import { langsWith, LANGUAGE_RULES } from '../language_rules.mjs';
 
@@ -323,6 +328,35 @@ for (const lang of langCodes) {
           `${caseName} demanded but no ${caseName} field — nominative ships`);
       }
     });
+    // Direct-object positions, lexical-object-case languages (fi): the
+    // gender-syncretism escape the Slavic languages rely on (masc/neut
+    // accusative == nominative; feminine derived by strategy) does not
+    // exist — a noun with no accusative data always ships the wrong
+    // form. Uses the engine's own accusativeNoun so the check can never
+    // drift from render behaviour.
+    // Existential possession (fi «Minulla on kirja»): the possessed noun
+    // deliberately stays nominative — mirror the engine's existentialHave
+    // guard so those slots are never flagged.
+    const existentialHaveTpl = !!LANGUAGE_RULES[lang].existentialPossession &&
+      ordered.includes('HAVE') &&
+      !ordered.some((c) => c === 'BE' || concepts[c]?.semantic_role === 'copula');
+    if (nounsDecline && !existentialHaveTpl &&
+        LANGUAGE_RULES[lang].caseMarking.directObjectCase === 'accusative' &&
+        LANGUAGE_RULES[lang].caseMarking.adjectiveAgreesWithCase) {
+      ordered.forEach((cid, idx) => {
+        if (concepts[cid]?.type !== 'noun') return;
+        if (caseAt[idx]) return; // governed slots handled above
+        if (!isDirectObjectPosition(ordered, idx)) return;
+        // An authored surface override IS this slot's rendering
+        // («kotiin») — the engine prefers it, so nothing falls back.
+        if (typeof tpl.surface?.[lang]?.[cid] === 'string') return;
+        const base = formOf(lang, cid);
+        if (accusativeNoun(lang, cid, base) === base) {
+          add(`CASE_FALLBACK|${lang}|${id}|${cid}|object`,
+            'direct object demanded but no accusative data — nominative ships');
+        }
+      });
+    }
     // Predicate-noun positions («On jest kelnerem») — the walk the engine
     // comment always claimed existed and didn't: predicateNounCase demands
     // a case the entry may lack, and the render path falls back to the
