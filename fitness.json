@@ -219,109 +219,193 @@
       "forms": {
         "WORKOUT": {
           "form": "treeni",
-          "plural": "treenit"
+          "plural": "treenit",
+          "partitive": "treeniä",
+          "accusative": "treenin",
+          "genitive": "treenin"
         },
         "MUSCLE": {
           "form": "lihas",
-          "plural": "lihakset"
+          "plural": "lihakset",
+          "partitive": "lihasta",
+          "accusative": "lihaksen",
+          "genitive": "lihaksen"
         },
         "DUMBBELL": {
           "form": "käsipaino",
-          "plural": "käsipainot"
+          "plural": "käsipainot",
+          "partitive": "käsipainoa",
+          "accusative": "käsipainon",
+          "genitive": "käsipainon"
         },
         "TREADMILL": {
           "form": "juoksumatto",
-          "plural": "juoksumatot"
+          "plural": "juoksumatot",
+          "partitive": "juoksumattoa",
+          "accusative": "juoksumaton",
+          "genitive": "juoksumaton"
         },
         "WEIGHT": {
           "form": "paino",
-          "plural": "painot"
+          "plural": "painot",
+          "partitive": "painoa",
+          "accusative": "painon",
+          "genitive": "painon"
         },
         "REPETITION": {
           "form": "toisto",
-          "plural": "toistot"
+          "plural": "toistot",
+          "partitive": "toistoa",
+          "accusative": "toiston",
+          "genitive": "toiston"
         },
         "SWEAT": {
-          "form": "hiki"
+          "form": "hiki",
+          "partitive": "hikeä",
+          "accusative": "hikeä",
+          "genitive": "hien"
         },
         "ENERGY": {
-          "form": "energia"
+          "form": "energia",
+          "partitive": "energiaa",
+          "accusative": "energiaa",
+          "genitive": "energian"
         },
         "PROTEIN": {
-          "form": "proteiini"
+          "form": "proteiini",
+          "partitive": "proteiinia",
+          "accusative": "proteiinia",
+          "genitive": "proteiinin"
         },
         "HABIT": {
           "form": "tapa",
-          "plural": "tavat"
+          "plural": "tavat",
+          "partitive": "tapaa",
+          "accusative": "tavan",
+          "genitive": "tavan"
         },
         "PROGRESS": {
-          "form": "edistys"
+          "form": "edistys",
+          "partitive": "edistystä",
+          "accusative": "edistystä",
+          "genitive": "edistyksen"
         },
         "TARGET": {
           "form": "tavoite",
-          "plural": "tavoitteet"
+          "plural": "tavoitteet",
+          "partitive": "tavoitetta",
+          "accusative": "tavoitteen",
+          "genitive": "tavoitteen"
         },
         "HEART": {
           "form": "sydän",
-          "plural": "sydämet"
+          "plural": "sydämet",
+          "partitive": "sydäntä",
+          "accusative": "sydämen",
+          "genitive": "sydämen"
         },
         "KNEE": {
           "form": "polvi",
-          "plural": "polvet"
+          "plural": "polvet",
+          "partitive": "polvea",
+          "accusative": "polven",
+          "genitive": "polven"
         },
         "SHOULDER": {
           "form": "olkapää",
-          "plural": "olkapäät"
+          "plural": "olkapäät",
+          "partitive": "olkapäätä",
+          "accusative": "olkapään",
+          "genitive": "olkapään"
         },
         "CALORIE": {
           "form": "kalori",
-          "plural": "kalorit"
+          "plural": "kalorit",
+          "partitive": "kaloria",
+          "accusative": "kalorin",
+          "genitive": "kalorin"
         },
         "RUNNER": {
           "form": "juoksija",
-          "plural": "juoksijat"
+          "plural": "juoksijat",
+          "partitive": "juoksijaa",
+          "accusative": "juoksijan",
+          "genitive": "juoksijan"
         },
         "RACE": {
           "form": "kilpailu",
-          "plural": "kilpailut"
+          "plural": "kilpailut",
+          "partitive": "kilpailua",
+          "accusative": "kilpailun",
+          "genitive": "kilpailun"
         },
         "MARATHON": {
           "form": "maraton",
-          "plural": "maratonit"
+          "plural": "maratonit",
+          "partitive": "maratonia",
+          "accusative": "maratonin",
+          "genitive": "maratonin"
         },
         "WARMUP": {
           "form": "lämmittely",
-          "plural": "lämmittelyt"
+          "plural": "lämmittelyt",
+          "partitive": "lämmittelyä",
+          "accusative": "lämmittelyn",
+          "genitive": "lämmittelyn"
         },
         "LOCKER_ROOM": {
           "form": "pukuhuone",
-          "plural": "pukuhuoneet"
+          "plural": "pukuhuoneet",
+          "partitive": "pukuhuonetta",
+          "accusative": "pukuhuoneen",
+          "genitive": "pukuhuoneen"
         },
         "TOWEL": {
           "form": "pyyhe",
-          "plural": "pyyhkeet"
+          "plural": "pyyhkeet",
+          "partitive": "pyyhettä",
+          "accusative": "pyyhkeen",
+          "genitive": "pyyhkeen"
         },
         "BOTTLE": {
           "form": "pullo",
-          "plural": "pullot"
+          "plural": "pullot",
+          "partitive": "pulloa",
+          "accusative": "pullon",
+          "genitive": "pullon"
         },
         "BICYCLE": {
           "form": "polkupyörä",
-          "plural": "polkupyörät"
+          "plural": "polkupyörät",
+          "partitive": "polkupyörää",
+          "accusative": "polkupyörän",
+          "genitive": "polkupyörän"
         },
         "POOL": {
           "form": "uima-allas",
-          "plural": "uima-altaat"
+          "plural": "uima-altaat",
+          "partitive": "uima-allasta",
+          "accusative": "uima-altaan",
+          "genitive": "uima-altaan"
         },
         "STRENGTH": {
-          "form": "voima"
+          "form": "voima",
+          "partitive": "voimaa",
+          "accusative": "voimaa",
+          "genitive": "voiman"
         },
         "INJURY": {
           "form": "vamma",
-          "plural": "vammat"
+          "plural": "vammat",
+          "partitive": "vammaa",
+          "accusative": "vamman",
+          "genitive": "vamman"
         },
         "REST": {
-          "form": "lepo"
+          "form": "lepo",
+          "partitive": "lepoa",
+          "accusative": "lepoa",
+          "genitive": "levon"
         },
         "LIFT": {
           "base": "nostaa",
@@ -431,36 +515,66 @@
           "2_plural": "toistatte",
           "3_plural": "toistavat"
         },
-        "HEALTHY": [
-          "terve"
-        ],
-        "ACTIVE": [
-          "aktiivinen"
-        ],
-        "SORE": [
-          "kipeä"
-        ],
-        "FLEXIBLE": [
-          "notkea"
-        ],
-        "INTENSE": [
-          "intensiivinen"
-        ],
-        "WEAK": [
-          "heikko"
-        ],
-        "MOTIVATED": [
-          "motivoitunut"
-        ],
-        "EXHAUSTED": [
-          "uupunut"
-        ],
-        "DAILY": [
-          "päivittäinen"
-        ],
-        "MUSCULAR": [
-          "lihaksikas"
-        ]
+        "HEALTHY": {
+          "form": "terve",
+          "plural": "terveet",
+          "partitive": "tervettä",
+          "genitive": "terveen"
+        },
+        "ACTIVE": {
+          "form": "aktiivinen",
+          "plural": "aktiiviset",
+          "partitive": "aktiivista",
+          "genitive": "aktiivisen"
+        },
+        "SORE": {
+          "form": "kipeä",
+          "plural": "kipeät",
+          "partitive": "kipeää",
+          "genitive": "kipeän"
+        },
+        "FLEXIBLE": {
+          "form": "notkea",
+          "plural": "notkeat",
+          "partitive": "notkeaa",
+          "genitive": "notkean"
+        },
+        "INTENSE": {
+          "form": "intensiivinen",
+          "plural": "intensiiviset",
+          "partitive": "intensiivistä",
+          "genitive": "intensiivisen"
+        },
+        "WEAK": {
+          "form": "heikko",
+          "plural": "heikot",
+          "partitive": "heikkoa",
+          "genitive": "heikon"
+        },
+        "MOTIVATED": {
+          "form": "motivoitunut",
+          "plural": "motivoituneet",
+          "partitive": "motivoitunutta",
+          "genitive": "motivoituneen"
+        },
+        "EXHAUSTED": {
+          "form": "uupunut",
+          "plural": "uupuneet",
+          "partitive": "uupunutta",
+          "genitive": "uupuneen"
+        },
+        "DAILY": {
+          "form": "päivittäinen",
+          "plural": "päivittäiset",
+          "partitive": "päivittäistä",
+          "genitive": "päivittäisen"
+        },
+        "MUSCULAR": {
+          "form": "lihaksikas",
+          "plural": "lihaksikkaat",
+          "partitive": "lihaksikasta",
+          "genitive": "lihaksikkaan"
+        }
       }
     },
   "en": {

@@ -63,142 +63,247 @@
       "forms": {
         "WAND": {
           "form": "taikasauva",
-          "plural": "taikasauvat"
+          "plural": "taikasauvat",
+          "partitive": "taikasauvaa",
+          "accusative": "taikasauvan",
+          "genitive": "taikasauvan"
         },
         "MAGIC": {
-          "form": "taikuus"
+          "form": "taikuus",
+          "partitive": "taikuutta",
+          "accusative": "taikuutta",
+          "genitive": "taikuuden"
         },
         "WIZARD": {
           "form": "velho",
-          "plural": "velhot"
+          "plural": "velhot",
+          "partitive": "velhoa",
+          "accusative": "velhon",
+          "genitive": "velhon"
         },
         "WITCH": {
           "form": "noita",
-          "plural": "noidat"
+          "plural": "noidat",
+          "partitive": "noitaa",
+          "accusative": "noidan",
+          "genitive": "noidan"
         },
         "SPELL": {
           "form": "loitsu",
-          "plural": "loitsut"
+          "plural": "loitsut",
+          "partitive": "loitsua",
+          "accusative": "loitsun",
+          "genitive": "loitsun"
         },
         "POTION": {
           "form": "taikajuoma",
-          "plural": "taikajuomat"
+          "plural": "taikajuomat",
+          "partitive": "taikajuomaa",
+          "accusative": "taikajuoman",
+          "genitive": "taikajuoman"
         },
         "SCHOOL": {
           "form": "koulu",
-          "plural": "koulut"
+          "plural": "koulut",
+          "partitive": "koulua",
+          "accusative": "koulun",
+          "genitive": "koulun"
         },
         "CAULDRON": {
           "form": "pata",
-          "plural": "padat"
+          "plural": "padat",
+          "partitive": "pataa",
+          "accusative": "padan",
+          "genitive": "padan"
         },
         "BROOM": {
           "form": "luuta",
-          "plural": "luudat"
+          "plural": "luudat",
+          "partitive": "luutaa",
+          "accusative": "luudan",
+          "genitive": "luudan"
         },
         "OWL": {
           "form": "pöllö",
-          "plural": "pöllöt"
+          "plural": "pöllöt",
+          "partitive": "pöllöä",
+          "accusative": "pöllön",
+          "genitive": "pöllön"
         },
         "CASTLE": {
           "form": "linna",
-          "plural": "linnat"
+          "plural": "linnat",
+          "partitive": "linnaa",
+          "accusative": "linnan",
+          "genitive": "linnan"
         },
         "PROFESSOR": {
           "form": "professori",
-          "plural": "professorit"
+          "plural": "professorit",
+          "partitive": "professoria",
+          "accusative": "professorin",
+          "genitive": "professorin"
         },
         "STUDENT": {
           "form": "oppilas",
-          "plural": "oppilaat"
+          "plural": "oppilaat",
+          "partitive": "oppilasta",
+          "accusative": "oppilaan",
+          "genitive": "oppilaan"
         },
         "ELF": {
           "form": "tonttu",
-          "plural": "tontut"
+          "plural": "tontut",
+          "partitive": "tonttua",
+          "accusative": "tontun",
+          "genitive": "tontun"
         },
         "UNICORN": {
           "form": "yksisarvinen",
-          "plural": "yksisarviset"
+          "plural": "yksisarviset",
+          "partitive": "yksisarvista",
+          "accusative": "yksisarvisen",
+          "genitive": "yksisarvisen"
         },
         "GIANT": {
           "form": "jättiläinen",
-          "plural": "jättiläiset"
+          "plural": "jättiläiset",
+          "partitive": "jättiläistä",
+          "accusative": "jättiläisen",
+          "genitive": "jättiläisen"
         },
         "TROLL": {
           "form": "peikko",
-          "plural": "peikot"
+          "plural": "peikot",
+          "partitive": "peikkoa",
+          "accusative": "peikon",
+          "genitive": "peikon"
         },
         "GHOST": {
           "form": "kummitus",
-          "plural": "kummitukset"
+          "plural": "kummitukset",
+          "partitive": "kummitusta",
+          "accusative": "kummituksen",
+          "genitive": "kummituksen"
         },
         "FOREST": {
           "form": "metsä",
-          "plural": "metsät"
+          "plural": "metsät",
+          "partitive": "metsää",
+          "accusative": "metsän",
+          "genitive": "metsän"
         },
         "SPIDER": {
           "form": "hämähäkki",
-          "plural": "hämähäkit"
+          "plural": "hämähäkit",
+          "partitive": "hämähäkkiä",
+          "accusative": "hämähäkin",
+          "genitive": "hämähäkin"
         },
         "LIBRARY": {
           "form": "kirjasto",
-          "plural": "kirjastot"
+          "plural": "kirjastot",
+          "partitive": "kirjastoa",
+          "accusative": "kirjaston",
+          "genitive": "kirjaston"
         },
         "CLASS": {
           "form": "luokka",
-          "plural": "luokat"
+          "plural": "luokat",
+          "partitive": "luokkaa",
+          "accusative": "luokan",
+          "genitive": "luokan"
         },
         "LESSON": {
           "form": "oppitunti",
-          "plural": "oppitunnit"
+          "plural": "oppitunnit",
+          "partitive": "oppituntia",
+          "accusative": "oppitunnin",
+          "genitive": "oppitunnin"
         },
         "HOMEWORK": {
           "form": "kotitehtävä",
-          "plural": "kotitehtävät"
+          "plural": "kotitehtävät",
+          "partitive": "kotitehtävää",
+          "accusative": "kotitehtävää",
+          "genitive": "kotitehtävän"
         },
         "EXAM": {
           "form": "koe",
-          "plural": "kokeet"
+          "plural": "kokeet",
+          "partitive": "koetta",
+          "accusative": "kokeen",
+          "genitive": "kokeen"
         },
         "QUESTION": {
           "form": "kysymys",
-          "plural": "kysymykset"
+          "plural": "kysymykset",
+          "partitive": "kysymystä",
+          "accusative": "kysymyksen",
+          "genitive": "kysymyksen"
         },
         "ANSWER": {
           "form": "vastaus",
-          "plural": "vastaukset"
+          "plural": "vastaukset",
+          "partitive": "vastausta",
+          "accusative": "vastauksen",
+          "genitive": "vastauksen"
         },
         "IDEA": {
           "form": "idea",
-          "plural": "ideat"
+          "plural": "ideat",
+          "partitive": "ideaa",
+          "accusative": "idean",
+          "genitive": "idean"
         },
         "CHANCE": {
           "form": "mahdollisuus",
-          "plural": "mahdollisuudet"
+          "plural": "mahdollisuudet",
+          "partitive": "mahdollisuutta",
+          "accusative": "mahdollisuuden",
+          "genitive": "mahdollisuuden"
         },
         "MYSTERY": {
           "form": "mysteeri",
-          "plural": "mysteerit"
+          "plural": "mysteerit",
+          "partitive": "mysteeriä",
+          "accusative": "mysteerin",
+          "genitive": "mysteerin"
         },
         "SECRET": {
           "form": "salaisuus",
-          "plural": "salaisuudet"
+          "plural": "salaisuudet",
+          "partitive": "salaisuutta",
+          "accusative": "salaisuuden",
+          "genitive": "salaisuuden"
         },
         "FRIEND": {
           "form": "ystävä",
-          "plural": "ystävät"
+          "plural": "ystävät",
+          "partitive": "ystävää",
+          "accusative": "ystävän",
+          "genitive": "ystävän"
         },
         "ENEMY": {
           "form": "vihollinen",
-          "plural": "viholliset"
+          "plural": "viholliset",
+          "partitive": "vihollista",
+          "accusative": "vihollisen",
+          "genitive": "vihollisen"
         },
         "CLOAK": {
           "form": "viitta",
-          "plural": "viitat"
+          "plural": "viitat",
+          "partitive": "viittaa",
+          "accusative": "viitan",
+          "genitive": "viitan"
         },
         "DOOR": {
           "form": "ovi",
-          "plural": "ovet"
+          "plural": "ovet",
+          "partitive": "ovea",
+          "accusative": "oven",
+          "genitive": "oven"
         },
         "CAST": {
           "base": "loitsia",
@@ -299,15 +404,24 @@
           "2_plural": "huudatte",
           "3_plural": "huutavat"
         },
-        "MAGICAL": [
-          "maaginen"
-        ],
-        "STRONG": [
-          "vahva"
-        ],
-        "BRAVE": [
-          "rohkea"
-        ]
+        "MAGICAL": {
+          "form": "maaginen",
+          "plural": "maagiset",
+          "partitive": "maagista",
+          "genitive": "maagisen"
+        },
+        "STRONG": {
+          "form": "vahva",
+          "plural": "vahvat",
+          "partitive": "vahvaa",
+          "genitive": "vahvan"
+        },
+        "BRAVE": {
+          "form": "rohkea",
+          "plural": "rohkeat",
+          "partitive": "rohkeaa",
+          "genitive": "rohkean"
+        }
       }
     },
 

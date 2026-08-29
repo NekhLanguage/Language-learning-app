@@ -58,116 +58,203 @@
       "forms": {
         "ALARM": {
           "form": "herätyskello",
-          "plural": "herätyskellot"
+          "plural": "herätyskellot",
+          "partitive": "herätyskelloa",
+          "accusative": "herätyskellon",
+          "genitive": "herätyskellon"
         },
         "SHOWER": {
           "form": "suihku",
-          "plural": "suihkut"
+          "plural": "suihkut",
+          "partitive": "suihkua",
+          "accusative": "suihkun",
+          "genitive": "suihkun"
         },
         "TOOTHBRUSH": {
           "form": "hammasharja",
-          "plural": "hammasharjat"
+          "plural": "hammasharjat",
+          "partitive": "hammasharjaa",
+          "accusative": "hammasharjan",
+          "genitive": "hammasharjan"
         },
         "APARTMENT": {
           "form": "asunto",
-          "plural": "asunnot"
+          "plural": "asunnot",
+          "partitive": "asuntoa",
+          "accusative": "asunnon",
+          "genitive": "asunnon"
         },
         "LIVING_ROOM": {
           "form": "olohuone",
-          "plural": "olohuoneet"
+          "plural": "olohuoneet",
+          "partitive": "olohuonetta",
+          "accusative": "olohuoneen",
+          "genitive": "olohuoneen"
         },
         "FURNITURE": {
-          "form": "huonekalut"
+          "form": "huonekalut",
+          "partitive": "huonekaluja",
+          "accusative": "huonekalut",
+          "genitive": "huonekalujen"
         },
         "NEIGHBOR": {
           "form": "naapuri",
-          "plural": "naapurit"
+          "plural": "naapurit",
+          "partitive": "naapuria",
+          "accusative": "naapurin",
+          "genitive": "naapurin"
         },
         "GROCERY": {
           "form": "ruokakauppa",
-          "plural": "ruokakaupat"
+          "plural": "ruokakaupat",
+          "partitive": "ruokakauppaa",
+          "accusative": "ruokakaupan",
+          "genitive": "ruokakaupan"
         },
         "PHARMACY": {
           "form": "apteekki",
-          "plural": "apteekit"
+          "plural": "apteekit",
+          "partitive": "apteekkia",
+          "accusative": "apteekin",
+          "genitive": "apteekin"
         },
         "OFFICE": {
           "form": "toimisto",
-          "plural": "toimistot"
+          "plural": "toimistot",
+          "partitive": "toimistoa",
+          "accusative": "toimiston",
+          "genitive": "toimiston"
         },
         "MEETING": {
           "form": "kokous",
-          "plural": "kokoukset"
+          "plural": "kokoukset",
+          "partitive": "kokousta",
+          "accusative": "kokouksen",
+          "genitive": "kokouksen"
         },
         "DEADLINE": {
           "form": "määräaika",
-          "plural": "määräajat"
+          "plural": "määräajat",
+          "partitive": "määräaikaa",
+          "accusative": "määräajan",
+          "genitive": "määräajan"
         },
         "STORM": {
           "form": "myrsky",
-          "plural": "myrskyt"
+          "plural": "myrskyt",
+          "partitive": "myrskyä",
+          "accusative": "myrskyn",
+          "genitive": "myrskyn"
         },
         "UMBRELLA": {
           "form": "sateenvarjo",
-          "plural": "sateenvarjot"
+          "plural": "sateenvarjot",
+          "partitive": "sateenvarjoa",
+          "accusative": "sateenvarjon",
+          "genitive": "sateenvarjon"
         },
         "FORECAST": {
           "form": "sääennuste",
-          "plural": "sääennusteet"
+          "plural": "sääennusteet",
+          "partitive": "sääennustetta",
+          "accusative": "sääennusteen",
+          "genitive": "sääennusteen"
         },
         "INVITATION": {
           "form": "kutsu",
-          "plural": "kutsut"
+          "plural": "kutsut",
+          "partitive": "kutsua",
+          "accusative": "kutsun",
+          "genitive": "kutsun"
         },
         "CONVERSATION": {
           "form": "keskustelu",
-          "plural": "keskustelut"
+          "plural": "keskustelut",
+          "partitive": "keskustelua",
+          "accusative": "keskustelun",
+          "genitive": "keskustelun"
         },
         "COMPLIMENT": {
           "form": "kohteliaisuus",
-          "plural": "kohteliaisuudet"
+          "plural": "kohteliaisuudet",
+          "partitive": "kohteliaisuutta",
+          "accusative": "kohteliaisuuden",
+          "genitive": "kohteliaisuuden"
         },
         "WALLET": {
           "form": "lompakko",
-          "plural": "lompakot"
+          "plural": "lompakot",
+          "partitive": "lompakkoa",
+          "accusative": "lompakon",
+          "genitive": "lompakon"
         },
         "BILL": {
           "form": "lasku",
-          "plural": "laskut"
+          "plural": "laskut",
+          "partitive": "laskua",
+          "accusative": "laskun",
+          "genitive": "laskun"
         },
         "BUDGET": {
           "form": "budjetti",
-          "plural": "budjetit"
+          "plural": "budjetit",
+          "partitive": "budjettia",
+          "accusative": "budjetin",
+          "genitive": "budjetin"
         },
         "HEADACHE": {
           "form": "päänsärky",
-          "plural": "päänsäryt"
+          "plural": "päänsäryt",
+          "partitive": "päänsärkyä",
+          "accusative": "päänsäryn",
+          "genitive": "päänsäryn"
         },
         "MEDICINE": {
           "form": "lääke",
-          "plural": "lääkkeet"
+          "plural": "lääkkeet",
+          "partitive": "lääkettä",
+          "accusative": "lääkkeen",
+          "genitive": "lääkkeen"
         },
         "APPOINTMENT": {
           "form": "vastaanottoaika",
-          "plural": "vastaanottoajat"
+          "plural": "vastaanottoajat",
+          "partitive": "vastaanottoaikaa",
+          "accusative": "vastaanottoajan",
+          "genitive": "vastaanottoajan"
         },
         "LAUNDRY": {
-          "form": "pyykki"
+          "form": "pyykki",
+          "partitive": "pyykkiä",
+          "accusative": "pyykkiä",
+          "genitive": "pyykin"
         },
         "DISHES": {
           "form": "astiat",
-          "plural": "astiat"
+          "plural": "astiat",
+          "partitive": "astioita",
+          "accusative": "astiat",
+          "genitive": "astioiden"
         },
         "GARBAGE": {
-          "form": "roskat"
+          "form": "roskat",
+          "partitive": "roskia",
+          "accusative": "roskat",
+          "genitive": "roskien"
         },
         "CANDLE": {
           "form": "kynttilä",
-          "plural": "kynttilät"
+          "plural": "kynttilät",
+          "partitive": "kynttilää",
+          "accusative": "kynttilän",
+          "genitive": "kynttilän"
         },
         "COUCH": {
           "form": "sohva",
-          "plural": "sohvat"
+          "plural": "sohvat",
+          "partitive": "sohvaa",
+          "accusative": "sohvan",
+          "genitive": "sohvan"
         },
         "COMMUTE": {
           "base": "kulkea töihin",
@@ -277,33 +364,60 @@
           "2_plural": "rentoudutte",
           "3_plural": "rentoutuvat"
         },
-        "COMFORTABLE": [
-          "mukava"
-        ],
-        "CONVENIENT": [
-          "kätevä"
-        ],
-        "BUSY": [
-          "kiireinen"
-        ],
-        "CLOUDY": [
-          "pilvinen"
-        ],
-        "FRIENDLY": [
-          "ystävällinen"
-        ],
-        "CHEAP": [
-          "halpa"
-        ],
-        "TIRED": [
-          "väsynyt"
-        ],
-        "MESSY": [
-          "sotkuinen"
-        ],
-        "COZY": [
-          "kodikas"
-        ]
+        "COMFORTABLE": {
+          "form": "mukava",
+          "plural": "mukavat",
+          "partitive": "mukavaa",
+          "genitive": "mukavan"
+        },
+        "CONVENIENT": {
+          "form": "kätevä",
+          "plural": "kätevät",
+          "partitive": "kätevää",
+          "genitive": "kätevän"
+        },
+        "BUSY": {
+          "form": "kiireinen",
+          "plural": "kiireiset",
+          "partitive": "kiireistä",
+          "genitive": "kiireisen"
+        },
+        "CLOUDY": {
+          "form": "pilvinen",
+          "plural": "pilviset",
+          "partitive": "pilvistä",
+          "genitive": "pilvisen"
+        },
+        "FRIENDLY": {
+          "form": "ystävällinen",
+          "plural": "ystävälliset",
+          "partitive": "ystävällistä",
+          "genitive": "ystävällisen"
+        },
+        "CHEAP": {
+          "form": "halpa",
+          "plural": "halvat",
+          "partitive": "halpaa",
+          "genitive": "halvan"
+        },
+        "TIRED": {
+          "form": "väsynyt",
+          "plural": "väsyneet",
+          "partitive": "väsynyttä",
+          "genitive": "väsyneen"
+        },
+        "MESSY": {
+          "form": "sotkuinen",
+          "plural": "sotkuiset",
+          "partitive": "sotkuista",
+          "genitive": "sotkuisen"
+        },
+        "COZY": {
+          "form": "kodikas",
+          "plural": "kodikkaat",
+          "partitive": "kodikasta",
+          "genitive": "kodikkaan"
+        }
       }
     },
     "en": {

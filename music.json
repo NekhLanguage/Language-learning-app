@@ -67,43 +67,73 @@
       "forms": {
         "GUITAR": {
           "form": "kitara",
-          "plural": "kitarat"
+          "plural": "kitarat",
+          "partitive": "kitaraa",
+          "accusative": "kitaran",
+          "genitive": "kitaran"
         },
         "DRUM": {
           "form": "rumpu",
-          "plural": "rummut"
+          "plural": "rummut",
+          "partitive": "rumpua",
+          "accusative": "rummun",
+          "genitive": "rummun"
         },
         "PIANO": {
           "form": "piano",
-          "plural": "pianot"
+          "plural": "pianot",
+          "partitive": "pianoa",
+          "accusative": "pianon",
+          "genitive": "pianon"
         },
         "VIOLIN": {
           "form": "viulu",
-          "plural": "viulut"
+          "plural": "viulut",
+          "partitive": "viulua",
+          "accusative": "viulun",
+          "genitive": "viulun"
         },
         "MICROPHONE": {
           "form": "mikrofoni",
-          "plural": "mikrofonit"
+          "plural": "mikrofonit",
+          "partitive": "mikrofonia",
+          "accusative": "mikrofonin",
+          "genitive": "mikrofonin"
         },
         "MELODY": {
           "form": "melodia",
-          "plural": "melodiat"
+          "plural": "melodiat",
+          "partitive": "melodiaa",
+          "accusative": "melodian",
+          "genitive": "melodian"
         },
         "RHYTHM": {
           "form": "rytmi",
-          "plural": "rytmit"
+          "plural": "rytmit",
+          "partitive": "rytmiä",
+          "accusative": "rytmin",
+          "genitive": "rytmin"
         },
         "BEAT": {
           "form": "biitti",
-          "plural": "biitit"
+          "plural": "biitit",
+          "partitive": "biittiä",
+          "accusative": "biitin",
+          "genitive": "biitin"
         },
         "CHORD": {
           "form": "sointu",
-          "plural": "soinnut"
+          "plural": "soinnut",
+          "partitive": "sointua",
+          "accusative": "soinnun",
+          "genitive": "soinnun"
         },
         "HARMONY": {
           "form": "harmonia",
-          "plural": "harmoniat"
+          "plural": "harmoniat",
+          "partitive": "harmoniaa",
+          "accusative": "harmonian",
+          "genitive": "harmonian"
         },
         "SING": {
           "base": "laulaa",
@@ -152,78 +182,138 @@
         },
         "CONCERT": {
           "form": "konsertti",
-          "plural": "konsertit"
+          "plural": "konsertit",
+          "partitive": "konserttia",
+          "accusative": "konsertin",
+          "genitive": "konsertin"
         },
         "STAGE": {
           "form": "lava",
-          "plural": "lavat"
+          "plural": "lavat",
+          "partitive": "lavaa",
+          "accusative": "lavan",
+          "genitive": "lavan"
         },
         "ENCORE": {
           "form": "ylimääräinen",
-          "plural": "ylimääräiset"
+          "plural": "ylimääräiset",
+          "partitive": "ylimääräistä",
+          "accusative": "ylimääräisen",
+          "genitive": "ylimääräisen"
         },
         "SPOTLIGHT": {
           "form": "kohdevalo",
-          "plural": "kohdevalot"
+          "plural": "kohdevalot",
+          "partitive": "kohdevaloa",
+          "accusative": "kohdevalon",
+          "genitive": "kohdevalon"
         },
         "TOUR": {
           "form": "kiertue",
-          "plural": "kiertueet"
+          "plural": "kiertueet",
+          "partitive": "kiertuetta",
+          "accusative": "kiertueen",
+          "genitive": "kiertueen"
         },
         "LYRIC": {
           "form": "sanoitus",
-          "plural": "sanoitukset"
+          "plural": "sanoitukset",
+          "partitive": "sanoitusta",
+          "accusative": "sanoituksen",
+          "genitive": "sanoituksen"
         },
         "CHORUS": {
           "form": "kertosäe",
-          "plural": "kertosäkeet"
+          "plural": "kertosäkeet",
+          "partitive": "kertosäettä",
+          "accusative": "kertosäkeen",
+          "genitive": "kertosäkeen"
         },
         "VERSE": {
           "form": "säkeistö",
-          "plural": "säkeistöt"
+          "plural": "säkeistöt",
+          "partitive": "säkeistöä",
+          "accusative": "säkeistön",
+          "genitive": "säkeistön"
         },
         "SOLO": {
           "form": "soolo",
-          "plural": "soolot"
+          "plural": "soolot",
+          "partitive": "sooloa",
+          "accusative": "soolon",
+          "genitive": "soolon"
         },
         "DUET": {
           "form": "duetto",
-          "plural": "duetot"
+          "plural": "duetot",
+          "partitive": "duettoa",
+          "accusative": "dueton",
+          "genitive": "dueton"
         },
         "ROCK": {
-          "form": "rock"
+          "form": "rock",
+          "partitive": "rockia",
+          "accusative": "rockia",
+          "genitive": "rockin"
         },
         "JAZZ": {
-          "form": "jazz"
+          "form": "jazz",
+          "partitive": "jazzia",
+          "accusative": "jazzia",
+          "genitive": "jazzin"
         },
-        "CLASSICAL": [
-          "klassinen"
-        ],
-        "ACOUSTIC": [
-          "akustinen"
-        ],
-        "ELECTRONIC": [
-          "elektroninen"
-        ],
+        "CLASSICAL": {
+          "form": "klassinen",
+          "plural": "klassiset",
+          "partitive": "klassista",
+          "genitive": "klassisen"
+        },
+        "ACOUSTIC": {
+          "form": "akustinen",
+          "plural": "akustiset",
+          "partitive": "akustista",
+          "genitive": "akustisen"
+        },
+        "ELECTRONIC": {
+          "form": "elektroninen",
+          "plural": "elektroniset",
+          "partitive": "elektronista",
+          "genitive": "elektronisen"
+        },
         "STUDIO": {
           "form": "studio",
-          "plural": "studiot"
+          "plural": "studiot",
+          "partitive": "studiota",
+          "accusative": "studion",
+          "genitive": "studion"
         },
         "TRACK": {
           "form": "kappale",
-          "plural": "kappaleet"
+          "plural": "kappaleet",
+          "partitive": "kappaletta",
+          "accusative": "kappaleen",
+          "genitive": "kappaleen"
         },
         "ALBUM": {
           "form": "albumi",
-          "plural": "albumit"
+          "plural": "albumit",
+          "partitive": "albumia",
+          "accusative": "albumin",
+          "genitive": "albumin"
         },
         "REMIX": {
           "form": "remix",
-          "plural": "remixit"
+          "plural": "remixit",
+          "partitive": "remixiä",
+          "accusative": "remixin",
+          "genitive": "remixin"
         },
         "SAMPLE": {
           "form": "sample",
-          "plural": "samplet"
+          "plural": "samplet",
+          "partitive": "samplea",
+          "accusative": "samplen",
+          "genitive": "samplen"
         },
         "REHEARSE": {
           "base": "harjoitella",
@@ -270,40 +360,70 @@
           "2_plural": "julkaisette",
           "3_plural": "julkaisevat"
         },
-        "LOUD": [
-          "äänekäs"
-        ],
-        "SOULFUL": [
-          "sielukas"
-        ],
-        "RHYTHMIC": [
-          "rytmikäs"
-        ],
-        "LIVE": [
-          "live"
-        ],
-        "VIRAL": [
-          "viraali"
-        ],
+        "LOUD": {
+          "form": "äänekäs",
+          "plural": "äänekkäät",
+          "partitive": "äänekästä",
+          "genitive": "äänekkään"
+        },
+        "SOULFUL": {
+          "form": "sielukas",
+          "plural": "sielukkaat",
+          "partitive": "sielukasta",
+          "genitive": "sielukkaan"
+        },
+        "RHYTHMIC": {
+          "form": "rytmikäs",
+          "plural": "rytmikkäät",
+          "partitive": "rytmikästä",
+          "genitive": "rytmikkään"
+        },
+        "LIVE": {
+          "form": "live",
+          "plural": "live",
+          "partitive": "live",
+          "genitive": "live"
+        },
+        "VIRAL": {
+          "form": "viraali",
+          "plural": "viraalit",
+          "partitive": "viraalia",
+          "genitive": "viraalin"
+        },
         "BAND": {
           "form": "yhtye",
-          "plural": "yhtyeet"
+          "plural": "yhtyeet",
+          "partitive": "yhtyettä",
+          "accusative": "yhtyeen",
+          "genitive": "yhtyeen"
         },
         "ANTHEM": {
           "form": "hymni",
-          "plural": "hymnit"
+          "plural": "hymnit",
+          "partitive": "hymniä",
+          "accusative": "hymnin",
+          "genitive": "hymnin"
         },
         "PLAYLIST": {
           "form": "soittolista",
-          "plural": "soittolistat"
+          "plural": "soittolistat",
+          "partitive": "soittolistaa",
+          "accusative": "soittolistan",
+          "genitive": "soittolistan"
         },
         "FESTIVAL": {
           "form": "festivaali",
-          "plural": "festivaalit"
+          "plural": "festivaalit",
+          "partitive": "festivaalia",
+          "accusative": "festivaalin",
+          "genitive": "festivaalin"
         },
         "FANBASE": {
           "form": "fanikunta",
-          "plural": "fanikunnat"
+          "plural": "fanikunnat",
+          "partitive": "fanikuntaa",
+          "accusative": "fanikunnan",
+          "genitive": "fanikunnan"
         }
       }
     },

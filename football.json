@@ -67,43 +67,73 @@
       "forms": {
         "PITCH": {
           "form": "kenttä",
-          "plural": "kentät"
+          "plural": "kentät",
+          "partitive": "kenttää",
+          "accusative": "kentän",
+          "genitive": "kentän"
         },
         "GOAL": {
           "form": "maali",
-          "plural": "maalit"
+          "plural": "maalit",
+          "partitive": "maalia",
+          "accusative": "maalin",
+          "genitive": "maalin"
         },
         "NET": {
           "form": "verkko",
-          "plural": "verkot"
+          "plural": "verkot",
+          "partitive": "verkkoa",
+          "accusative": "verkon",
+          "genitive": "verkon"
         },
         "STADIUM": {
           "form": "stadion",
-          "plural": "stadionit"
+          "plural": "stadionit",
+          "partitive": "stadionia",
+          "accusative": "stadionin",
+          "genitive": "stadionin"
         },
         "WHISTLE": {
           "form": "pilli",
-          "plural": "pillit"
+          "plural": "pillit",
+          "partitive": "pilliä",
+          "accusative": "pillin",
+          "genitive": "pillin"
         },
         "STRIKER": {
           "form": "hyökkääjä",
-          "plural": "hyökkääjät"
+          "plural": "hyökkääjät",
+          "partitive": "hyökkääjää",
+          "accusative": "hyökkääjän",
+          "genitive": "hyökkääjän"
         },
         "GOALKEEPER": {
           "form": "maalivahti",
-          "plural": "maalivahdit"
+          "plural": "maalivahdit",
+          "partitive": "maalivahtia",
+          "accusative": "maalivahdin",
+          "genitive": "maalivahdin"
         },
         "CAPTAIN": {
           "form": "kapteeni",
-          "plural": "kapteenit"
+          "plural": "kapteenit",
+          "partitive": "kapteenia",
+          "accusative": "kapteenin",
+          "genitive": "kapteenin"
         },
         "REFEREE": {
           "form": "erotuomari",
-          "plural": "erotuomarit"
+          "plural": "erotuomarit",
+          "partitive": "erotuomaria",
+          "accusative": "erotuomarin",
+          "genitive": "erotuomarin"
         },
         "COACH": {
           "form": "valmentaja",
-          "plural": "valmentajat"
+          "plural": "valmentajat",
+          "partitive": "valmentajaa",
+          "accusative": "valmentajan",
+          "genitive": "valmentajan"
         },
         "KICK": {
           "base": "potkaista",
@@ -152,7 +182,10 @@
         },
         "HEADER": {
           "form": "pusku",
-          "plural": "puskut"
+          "plural": "puskut",
+          "partitive": "puskua",
+          "accusative": "puskun",
+          "genitive": "puskun"
         },
         "TACKLE": {
           "base": "taklata",
@@ -174,7 +207,10 @@
         },
         "VOLLEY": {
           "form": "volley",
-          "plural": "volleyt"
+          "plural": "volleyt",
+          "partitive": "volleyta",
+          "accusative": "volleyn",
+          "genitive": "volleyn"
         },
         "SPRINT": {
           "base": "spurtata",
@@ -187,78 +223,138 @@
         },
         "FOUL": {
           "form": "rikkomus",
-          "plural": "rikkomukset"
+          "plural": "rikkomukset",
+          "partitive": "rikkomusta",
+          "accusative": "rikkomuksen",
+          "genitive": "rikkomuksen"
         },
         "PENALTY": {
           "form": "rangaistuspotku",
-          "plural": "rangaistuspotkut"
+          "plural": "rangaistuspotkut",
+          "partitive": "rangaistuspotkua",
+          "accusative": "rangaistuspotkun",
+          "genitive": "rangaistuspotkun"
         },
         "CORNER": {
           "form": "kulmapotku",
-          "plural": "kulmapotkut"
+          "plural": "kulmapotkut",
+          "partitive": "kulmapotkua",
+          "accusative": "kulmapotkun",
+          "genitive": "kulmapotkun"
         },
-        "OFFSIDE": [
-          "paitsiossa"
-        ],
+        "OFFSIDE": {
+          "form": "paitsiossa",
+          "plural": "paitsiossa",
+          "partitive": "paitsiossa",
+          "genitive": "paitsiossa"
+        },
         "HALFTIME": {
           "form": "puoliaika",
-          "plural": "puoliajat"
+          "plural": "puoliajat",
+          "partitive": "puoliaikaa",
+          "accusative": "puoliajan",
+          "genitive": "puoliajan"
         },
         "SQUAD": {
           "form": "kokoonpano",
-          "plural": "kokoonpanot"
+          "plural": "kokoonpanot",
+          "partitive": "kokoonpanoa",
+          "accusative": "kokoonpanon",
+          "genitive": "kokoonpanon"
         },
         "FORMATION": {
           "form": "ryhmitys",
-          "plural": "ryhmitykset"
+          "plural": "ryhmitykset",
+          "partitive": "ryhmitystä",
+          "accusative": "ryhmityksen",
+          "genitive": "ryhmityksen"
         },
         "LEAGUE": {
           "form": "liiga",
-          "plural": "liigat"
+          "plural": "liigat",
+          "partitive": "liigaa",
+          "accusative": "liigan",
+          "genitive": "liigan"
         },
         "SUBSTITUTE": {
           "form": "vaihtopelaaja",
-          "plural": "vaihtopelaajat"
+          "plural": "vaihtopelaajat",
+          "partitive": "vaihtopelaajaa",
+          "accusative": "vaihtopelaajan",
+          "genitive": "vaihtopelaajan"
         },
         "ASSIST": {
           "form": "maalisyöttö",
-          "plural": "maalisyötöt"
+          "plural": "maalisyötöt",
+          "partitive": "maalisyöttöä",
+          "accusative": "maalisyötön",
+          "genitive": "maalisyötön"
         },
         "MATCH": {
           "form": "ottelu",
-          "plural": "ottelut"
+          "plural": "ottelut",
+          "partitive": "ottelua",
+          "accusative": "ottelun",
+          "genitive": "ottelun"
         },
         "VICTORY": {
           "form": "voitto",
-          "plural": "voitot"
+          "plural": "voitot",
+          "partitive": "voittoa",
+          "accusative": "voiton",
+          "genitive": "voiton"
         },
         "DEFEAT": {
           "form": "tappio",
-          "plural": "tappiot"
+          "plural": "tappiot",
+          "partitive": "tappiota",
+          "accusative": "tappion",
+          "genitive": "tappion"
         },
         "DRAW": {
           "form": "tasapeli",
-          "plural": "tasapelit"
+          "plural": "tasapelit",
+          "partitive": "tasapeliä",
+          "accusative": "tasapelin",
+          "genitive": "tasapelin"
         },
         "TROPHY": {
           "form": "pokaali",
-          "plural": "pokaalit"
+          "plural": "pokaalit",
+          "partitive": "pokaalia",
+          "accusative": "pokaalin",
+          "genitive": "pokaalin"
         },
-        "SWIFT": [
-          "nopea"
-        ],
-        "SKILLED": [
-          "taitava"
-        ],
-        "AGGRESSIVE": [
-          "aggressiivinen"
-        ],
-        "DECISIVE": [
-          "päättäväinen"
-        ],
-        "CLINICAL": [
-          "tehokas"
-        ],
+        "SWIFT": {
+          "form": "nopea",
+          "plural": "nopeat",
+          "partitive": "nopeaa",
+          "genitive": "nopean"
+        },
+        "SKILLED": {
+          "form": "taitava",
+          "plural": "taitavat",
+          "partitive": "taitavaa",
+          "genitive": "taitavan"
+        },
+        "AGGRESSIVE": {
+          "form": "aggressiivinen",
+          "plural": "aggressiiviset",
+          "partitive": "aggressiivista",
+          "genitive": "aggressiivisen"
+        },
+        "DECISIVE": {
+          "form": "päättäväinen",
+          "plural": "päättäväiset",
+          "partitive": "päättäväistä",
+          "genitive": "päättäväisen"
+        },
+        "CLINICAL": {
+          "form": "tehokas",
+          "plural": "tehokkaat",
+          "partitive": "tehokasta",
+          "genitive": "tehokkaan"
+        },
         "INTERCEPT": {
           "base": "katkaista",
           "1_singular": "katkaisen",
@@ -306,11 +402,17 @@
         },
         "CHAMPION": {
           "form": "mestari",
-          "plural": "mestarit"
+          "plural": "mestarit",
+          "partitive": "mestaria",
+          "accusative": "mestarin",
+          "genitive": "mestarin"
         },
         "CROWD": {
           "form": "yleisö",
-          "plural": "yleisöt"
+          "plural": "yleisöt",
+          "partitive": "yleisöä",
+          "accusative": "yleisön",
+          "genitive": "yleisön"
         },
         "CELEBRATE": {
           "base": "juhlia",
@@ -323,11 +425,17 @@
         },
         "FINAL": {
           "form": "finaali",
-          "plural": "finaalit"
+          "plural": "finaalit",
+          "partitive": "finaalia",
+          "accusative": "finaalin",
+          "genitive": "finaalin"
         },
-        "UNBEATABLE": [
-          "lyömätön"
-        ]
+        "UNBEATABLE": {
+          "form": "lyömätön",
+          "plural": "lyömättömät",
+          "partitive": "lyömätöntä",
+          "genitive": "lyömättömän"
+        }
       }
     },
     "en": {

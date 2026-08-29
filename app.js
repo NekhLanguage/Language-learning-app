@@ -692,11 +692,22 @@ async function saveUser() {
     console.warn("Sync failed:", err);
   }
 }
+// Dev/QA hook: ?showHidden=1 lets a tester reach hidden (gate-pending)
+// languages on BOTH pickers — Emi's run-7 could not test Finnish as the
+// interface language because the hidden filter runs at module load.
+// Nothing persists it: a plain reload restores the hidden state, and no
+// learner-facing code ever sets it.
+const SHOW_HIDDEN_LANGUAGES = (() => {
+  try {
+    return new URLSearchParams(window.location.search).get("showHidden") === "1";
+  } catch { return false; }
+})();
+
 // Built from languages.js — no manual edits needed when adding a language.
 // hidden languages are registered for validation but not offered to
 // learners on either picker (see languages.js).
 const SUPPORT_LANGUAGES = Object.fromEntries(
-  AVAILABLE_LANGUAGES.filter(l => !l.hidden)
+  AVAILABLE_LANGUAGES.filter(l => !l.hidden || SHOW_HIDDEN_LANGUAGES)
     .map(l => [l.code, { short: l.short, label: l.nativeLabel }])
 );
 
@@ -1812,8 +1823,8 @@ function updateSupportUI(code) {
   const query = languageSearchQuery.trim().toLowerCase();
   const entries = AVAILABLE_LANGUAGES
     // hidden = registered for validators, invisible to learners until the
-    // language gate passes (languages.js).
-    .filter(lang => !lang.hidden && lang.code !== support)
+    // language gate passes (languages.js). ?showHidden=1 is the QA hook.
+    .filter(lang => (!lang.hidden || SHOW_HIDDEN_LANGUAGES) && lang.code !== support)
     .map(lang => {
       const runForLang = USER.runs[lang.code];
       const progress = runForLang ? calculateWeightedProgress(runForLang) : 0;
