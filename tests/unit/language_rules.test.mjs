@@ -733,7 +733,7 @@ test("every features key is a known, checkable feature id", () => {
     "marksCaseAfterPrepositions", "predicateNounCase",
     "declinesAttributiveAdjectives", "adjectivePosition", "apocope",
     "articleCaseMarking", "virilePlural", "numeralGovernment",
-    "zeroPresentCopula", "definitenessAgreement",
+    "negatorAgreement", "zeroPresentCopula", "definitenessAgreement",
     "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
     "possessivePlacement", "verbGenderParadigm", "topicParticle",
   ]);
@@ -953,6 +953,90 @@ test("fi: copulars and predicate plural agreement", () => {
   assert.equal(buildSentence("fi", tplById("WINTER_IS_COLD")), "Talvi on kylmä.");
   // Plural-only subject: plural copula + plural adjective.
   assert.equal(buildSentence("fi", tplById("PANTS_ARE_BLACK")), "Housut ovat mustat.");
+});
+
+test("fi: attributive adjectives agree with the object's case", () => {
+  // The adjective mirrors the case FIELD the head noun rendered —
+  // partitive «uutta kirjaa», genitive-accusative «uuden puhelimen»
+  // (Emi run-7 -28: zero inflected adjectives in 292 swept sentences).
+  assert.equal(buildSentence("fi", tplById("YOU_READ_BOOK"), "NEW", {}),
+    "Sinä luet uutta kirjaa.");
+  assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE"), "NEW", {}),
+    "Hän näkee uuden puhelimen.");
+});
+
+test("fi: numeral government reaches the adjective — partitive SINGULAR", () => {
+  // Never the nominative plural «valkoiset» (the old code agreed with
+  // the English number instead of the Finnish case).
+  assert.equal(buildSentence("fi", tplById("YOU_READ_BOOK"), "WHITE", { num_BOOK: "EIGHT" }),
+    "Sinä luet kahdeksan valkoista kirjaa.");
+});
+
+test("fi: an adjective without case data is refused as a modifier", () => {
+  const entry = vocab.languages.fi.forms.NEW;
+  const saved = entry.partitive;
+  delete entry.partitive;
+  try {
+    assert.equal(isModifierCompatible("fi", "NEW", "BOOK"), false);
+  } finally {
+    entry.partitive = saved;
+  }
+  // With the data present the gate passes.
+  assert.equal(isModifierCompatible("fi", "NEW", "BOOK"), true);
+});
+
+test("fi: the negation verb agrees in person and governs the partitive", () => {
+  assert.equal(buildSentence("fi", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")),
+    "Hän syö aamiaisen mutta ei lounasta.");
+  // 1pl subject: «emme», never the 3sg «ei» (Emi run-7 -31).
+  const swapped = structuredClone(tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH"));
+  swapped.concepts = swapped.concepts.map((c) => (c === "HE" ? "FIRST_PERSON_PLURAL" : c));
+  assert.equal(buildSentence("fi", swapped),
+    "Me syömme aamiaisen mutta emme lounasta.");
+});
+
+test("fi: «kanssa» is a postposed genitive adposition", () => {
+  // Also exercises the reflexive possessive: «tyttärensä», never «hänen
+  // tytär» — that names someone ELSE's daughter (Emi run-7 -30 + grading).
+  assert.equal(buildSentence("fi", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "Jos hän on kotona, hän syö tyttärensä kanssa.");
+  assert.equal(buildSentence("fi", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
+    "Hän syö illallisen äitinsä kanssa koska hän on kotona.");
+});
+
+test("fi: yes/no questions fuse the -ko/-kö clitic onto the fronted verb", () => {
+  assert.equal(buildSentence("fi", tplById("IS_THAT_YOUR_PHONE")),
+    "Onko tuo sinun puhelin?");
+});
+
+test("fi: 3rd-person reflexive possession is a suffix in the slot's case", () => {
+  assert.equal(buildSentence("fi", tplById("SHE_GO_TO_HER_ROOM")),
+    "Hän menee huoneeseensa.");
+  // Under a 3RD-person subject, a drilled 3rd-person possessive on a noun
+  // WITHOUT possessed3 data is refused — «Hän näkee hänen puhelimen»
+  // names someone else's phone, and wrong gets filtered (the modifier
+  // simply does not land).
+  assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE"), "HIS", {}),
+    "Hän näkee puhelimen.");
+  // Under a NON-3rd-person subject the same possessive is not reflexive
+  // and renders normally («Sinä luet hänen kirjaa» — someone else's book,
+  // which is exactly what it says).
+  assert.equal(buildSentence("fi", tplById("YOU_READ_BOOK"), "HIS", {}),
+    "Sinä luet hänen kirjaa.");
+});
+
+test("engine: adjective insertion never slices a mismatched noun (run-7 -34)", () => {
+  // Plural possessed predicate + drilled adjective: the phrase/bare pair
+  // previously mismatched («isät» vs «isä») and the length-based article
+  // slice emitted a fragment of the noun itself («minun i pieni isä»,
+  // "my d small dad").
+  const tpl = {
+    template_id: "X_WE_ARE_MY_DAD",
+    concepts: ["FIRST_PERSON_PLURAL", "BE", "MY", "DAD"],
+    render: { en: "We are my dads." },
+  };
+  assert.equal(buildSentence("en", tpl, "SMALL", {}), "We are my small dads.");
+  assert.equal(buildSentence("fi", tpl, "SMALL", {}), "Me olemme minun pienet isät.");
 });
 
 test("fi: hidden in the registry until the gate passes", () => {

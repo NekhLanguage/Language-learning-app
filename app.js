@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.25";
+const APP_DATA_VERSION = "1.2.26";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -3103,9 +3103,14 @@ if (!finalOptions.includes(targetConcept)) {
 
     let text = tileTexts.get(opt);
 
+    // A chip whose DICTIONARY form starts uppercase is a proper noun
+    // («Pokémon», «Elite Four») — the mid-sentence lowercase fold must
+    // not strip its capital (Emi run-7 -35: «pokémon», «elite Four»).
+    const dictCapitalized = /^\p{Lu}/u.test(formOf(targetLang, opt) || "");
     text = isSentenceStart
       ? text.charAt(0).toUpperCase() + text.slice(1)
-      : text.charAt(0).toLowerCase() + text.slice(1);
+      : (dictCapitalized ? text
+         : text.charAt(0).toLowerCase() + text.slice(1));
 
     const wrap = document.createElement("div");
     wrap.className = "word-bank-chip";

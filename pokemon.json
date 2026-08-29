@@ -333,7 +333,7 @@
         "GYM": { "form": "gym", "article": "a" },
         "LEAGUE": { "form": "league", "article": "a" },
         "GYM_LEADER": { "form": "gym leader", "article": "a" },
-        "ELITE_FOUR": { "form": "elite four" },
+        "ELITE_FOUR": { "form": "Elite Four" },
         "POKEMON_CENTER": { "form": "Pokémon Center", "article": "a" },
         "FOREST": { "form": "forest", "article": "a" },
         "CAVE": { "form": "cave", "article": "a" },
