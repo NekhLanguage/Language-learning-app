@@ -45,6 +45,22 @@ test("start screen leads to the language hub", async ({ page }) => {
   await page.click("#open-app");
   await expect(page.locator("#language-screen.active")).toBeVisible();
 
-  // 16 registered languages minus the support language (English).
+  // 17 registered languages minus the hidden one (fi, gate-pending) and
+  // the support language (English).
   await expect(page.locator("#language-buttons button")).toHaveCount(15);
+});
+
+test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async ({ page }) => {
+  // The QA hook Emi's run-7 needed: hidden languages are filtered at
+  // module load, so without this a sweeper can never test them as the
+  // interface language. A plain reload (no query) restores hiding.
+  await page.goto("/?showHidden=1");
+  await page.fill("#email-input", "showhidden-qa@example.com");
+  await page.click("#login-btn");
+  await expect(page.locator("#start-screen.active")).toBeVisible({ timeout: 10_000 });
+
+  await page.click("#open-app");
+  await expect(page.locator("#language-screen.active")).toBeVisible();
+  // 17 registered minus the support language — the hidden fi now shows.
+  await expect(page.locator("#language-buttons button")).toHaveCount(16);
 });

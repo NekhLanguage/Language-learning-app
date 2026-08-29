@@ -775,67 +775,67 @@
     "accusative_object": {
       "en": {
         "title": "The noun's ending shows its role",
-        "body": "{lang} has no word for 'a' or 'the' — the noun's ending does that work instead. A noun receiving the action changes its ending: книга (a book) becomes Я читаю книгу (I read a book)."
+        "body": "{lang} has no word for 'a' or 'the' — the noun's ending does that work instead. A noun receiving the action changes its ending, so watch the last letters of the word."
       },
       "pt": {
-        "title": "A terminação do substantivo mostra seu papel",
-        "body": "Em {lang} não existe palavra para 'um' ou 'o' — é a terminação do substantivo que faz esse trabalho. O substantivo que recebe a ação muda de terminação: книга (um livro) vira Я читаю книгу (eu leio um livro)."
+        "title": "A terminação do substantivo mostra o seu papel",
+        "body": "{lang} não tem palavra para 'um' ou 'o' — a terminação do substantivo faz esse trabalho. Um substantivo que recebe a ação muda de terminação; repare nas últimas letras da palavra."
       },
       "fr": {
         "title": "La terminaison du nom montre son rôle",
-        "body": "En {lang}, il n'y a pas de mot pour 'un' ou 'le' — c'est la terminaison du nom qui joue ce rôle. Le nom qui reçoit l'action change de terminaison : книга (un livre) devient Я читаю книгу (je lis un livre)."
+        "body": "Le {lang} n'a pas de mot pour « un » ou « le » — c'est la terminaison du nom qui fait ce travail. Un nom qui reçoit l'action change de terminaison : observez les dernières lettres du mot."
       },
       "de": {
-        "title": "Die Endung des Substantivs zeigt seine Rolle",
-        "body": "In {lang} gibt es kein Wort für 'ein' oder 'der' — diese Arbeit übernimmt die Endung des Substantivs. Ein Substantiv, das die Handlung empfängt, ändert seine Endung: книга (ein Buch) wird zu Я читаю книгу (ich lese ein Buch)."
+        "title": "Die Endung zeigt die Rolle des Wortes",
+        "body": "{lang} hat kein Wort für „ein“ oder „der“ — diese Arbeit übernimmt die Endung des Substantivs. Ein Substantiv, das die Handlung empfängt, ändert seine Endung: Achte auf die letzten Buchstaben."
       },
       "el": {
-        "title": "Η κατάληξη του ουσιαστικού δείχνει τον ρόλο του",
-        "body": "Στα {lang} δεν υπάρχει λέξη για το 'ένα' ή το 'το' — αυτή τη δουλειά την κάνει η κατάληξη του ουσιαστικού. Το ουσιαστικό που δέχεται την ενέργεια αλλάζει κατάληξη: το книга (ένα βιβλίο) γίνεται Я читаю книгу (διαβάζω ένα βιβλίο)."
+        "title": "Η κατάληξη δείχνει τον ρόλο της λέξης",
+        "body": "Η γλώσσα {lang} δεν έχει λέξη για το «ένας» ή «ο» — αυτή τη δουλειά την κάνει η κατάληξη του ουσιαστικού. Το ουσιαστικό που δέχεται την ενέργεια αλλάζει κατάληξη· πρόσεξε τα τελευταία γράμματα."
       },
       "es": {
         "title": "La terminación del sustantivo muestra su papel",
-        "body": "En {lang} no hay palabra para 'un' o 'el' — ese trabajo lo hace la terminación del sustantivo. El sustantivo que recibe la acción cambia su terminación: книга (un libro) se convierte en Я читаю книгу (leo un libro)."
+        "body": "{lang} no tiene palabra para 'un' o 'el' — ese trabajo lo hace la terminación del sustantivo. Un sustantivo que recibe la acción cambia su terminación; fíjate en las últimas letras."
       },
       "ja": {
         "title": "名詞の語尾が役割を示す",
-        "body": "{lang}には「a」や「the」にあたる言葉がなく、名詞の語尾がその役割を果たします。動作を受ける名詞は語尾が変わります：книга（本）は Я читаю книгу（私は本を読む）になります。日本語の「を」に似た働きです。"
+        "body": "{lang}には「a」や「the」にあたる語がなく、その働きは名詞の語尾が担います。動作を受ける名詞は語尾が変わるので、単語の最後の文字に注目しましょう。"
       },
       "ko": {
-        "title": "명사의 어미가 역할을 나타내요",
-        "body": "{lang}에는 'a'나 'the'에 해당하는 말이 없고, 명사의 어미가 그 역할을 해요. 동작을 받는 명사는 어미가 바뀌어요: книга(책)는 Я читаю книгу(나는 책을 읽어요)가 돼요. 한국어의 '을/를'과 비슷해요."
+        "title": "명사의 어미가 역할을 보여줍니다",
+        "body": "{lang}에는 'a'나 'the'에 해당하는 단어가 없습니다 — 그 역할은 명사의 어미가 합니다. 동작을 받는 명사는 어미가 바뀌므로 단어의 끝부분에 주목하세요."
       },
       "no": {
-        "title": "Endelsen på substantivet viser rollen",
-        "body": "{lang} har ikke noe ord for 'en' eller 'den' — den jobben gjør endelsen på substantivet. Et substantiv som mottar handlingen endrer endelse: книга (en bok) blir Я читаю книгу (jeg leser en bok)."
+        "title": "Endelsen viser ordets rolle",
+        "body": "{lang} har ikke noe ord for «en» eller «den» — den jobben gjør substantivets endelse. Et substantiv som mottar handlingen, endrer endelse; se på de siste bokstavene i ordet."
       },
       "tr": {
         "title": "İsmin eki rolünü gösterir",
-        "body": "{lang} dilinde 'bir' veya 'the' için ayrı bir kelime yoktur — bu işi ismin eki yapar. Eylemi alan isim ekini değiştirir: книга (kitap), Я читаю книгу (kitabı okuyorum) olur. Türkçedeki -ı/-i belirtme ekine benzer."
+        "body": "{lang} dilinde 'bir' ya da 'the' gibi bir sözcük yok — bu işi ismin eki yapar. Eylemi alan isim ekini değiştirir; sözcüğün son harflerine dikkat et."
       },
       "uk": {
         "title": "Закінчення іменника показує його роль",
-        "body": "В українській немає слів на кшталт 'a' чи 'the' — цю роботу виконує закінчення іменника. Іменник, на який спрямована дія, змінює закінчення: книга → Я читаю книгу."
+        "body": "У мові {lang} немає слів на кшталт 'a' чи 'the' — цю роботу виконує закінчення іменника. Іменник, на який спрямована дія, змінює закінчення: звертай увагу на останні літери слова."
       },
       "zh": {
         "title": "名词的词尾显示它的角色",
-        "body": "{lang}里没有'一个'或'这个'这样的冠词——这个工作由名词的词尾来完成。承受动作的名词会改变词尾：книга（书）变成 Я читаю книгу（我读书）。"
+        "body": "{lang}没有相当于“a”或“the”的词——这个工作由名词的词尾完成。承受动作的名词会改变词尾，请注意单词的最后几个字母。"
       },
       "ar": {
         "title": "نهاية الاسم تُظهر دوره",
-        "body": "لا توجد في {lang} كلمة تقابل 'a' أو 'the' — نهاية الاسم هي التي تقوم بهذا الدور. الاسم الذي يقع عليه الفعل تتغيّر نهايته: книга (كتاب) تصبح Я читаю книгу (أقرأ كتابًا)."
+        "body": "لا توجد في {lang} كلمة تقابل 'a' أو 'the' — نهاية الاسم تقوم بهذا الدور. الاسم الذي يقع عليه الفعل تتغير نهايته؛ انتبه إلى الأحرف الأخيرة من الكلمة."
       },
       "it": {
-        "title": "La desinenza del nome mostra il suo ruolo",
-        "body": "In {lang} non c'è una parola per «un» o «il» — quel lavoro lo fa la desinenza del nome. Il nome che riceve l'azione cambia desinenza: книга diventa Я читаю книгу (io leggo un libro)."
+        "title": "La desinenza del sostantivo mostra il suo ruolo",
+        "body": "{lang} non ha una parola per 'un' o 'il' — quel lavoro lo fa la desinenza del sostantivo. Un sostantivo che riceve l'azione cambia desinenza; osserva le ultime lettere della parola."
       },
       "th": {
-        "title": "ท้ายคำบอกหน้าที่ของคำ",
-        "body": "ใน{lang}ไม่มีคำนำหน้านาม — ท้ายคำทำหน้าที่นั้นแทน คำนามที่ถูกกระทำจะเปลี่ยนท้ายคำ: книга กลายเป็น Я читаю книгу (ฉันอ่านหนังสือ)"
+        "title": "ท้ายคำนามบอกบทบาทของคำ",
+        "body": "ภาษา{lang}ไม่มีคำที่ตรงกับ 'a' หรือ 'the' — หน้าที่นั้นอยู่ที่ท้ายคำนามแทน คำนามที่ถูกกระทำจะเปลี่ยนท้ายคำ สังเกตตัวอักษรท้ายคำให้ดี"
       },
       "pl": {
-        "title": "Końcówka pokazuje rolę wyrazu",
-        "body": "Język {lang} nie ma słów „a” ani „the” — tę pracę wykonuje końcówka rzeczownika. Rzeczownik, na który skierowana jest czynność, zmienia końcówkę: книга (książka) staje się Я читаю книгу (czytam książkę)."
+        "title": "Końcówka rzeczownika pokazuje jego rolę",
+        "body": "Język {lang} nie ma słowa 'a' ani 'the' — tę pracę wykonuje końcówka rzeczownika. Rzeczownik, na który skierowane jest działanie, zmienia końcówkę; zwracaj uwagę na ostatnie litery słowa."
       },
       "fi": {
         "title": "Objekti saa oman päätteensä",
@@ -845,67 +845,67 @@
     "prepositional_case": {
       "en": {
         "title": "Little words change the ending",
-        "body": "In {lang}, a preposition changes the ending of the word after it: на цьому (on this), перед книгою (in front of the book), до будинку (to the house). The ending tells you how the word relates to the rest."
+        "body": "In {lang}, a small position word changes the ending of the word after it — the ending tells you how that word relates to the rest of the sentence."
       },
       "pt": {
         "title": "Palavrinhas mudam a terminação",
-        "body": "Em {lang}, uma preposição muda a terminação da palavra seguinte: на цьому (sobre isto), перед книгою (na frente do livro), до будинку (para a casa). A terminação mostra a relação com o resto da frase."
+        "body": "Em {lang}, uma pequena palavra de posição muda a terminação da palavra seguinte — a terminação mostra como essa palavra se liga ao resto da frase."
       },
       "fr": {
         "title": "Les petits mots changent la terminaison",
-        "body": "En {lang}, une préposition change la terminaison du mot qui la suit : на цьому (sur ceci), перед книгою (devant le livre), до будинку (vers la maison). La terminaison indique la relation avec le reste."
+        "body": "En {lang}, un petit mot de position change la terminaison du mot qui le suit — la terminaison indique le lien de ce mot avec le reste de la phrase."
       },
       "de": {
         "title": "Kleine Wörter ändern die Endung",
-        "body": "In {lang} ändert eine Präposition die Endung des folgenden Wortes: на цьому (auf diesem), перед книгою (vor dem Buch), до будинку (zum Haus) — ähnlich wie die deutschen Fälle nach Präpositionen."
+        "body": "In {lang} ändert ein kleines Positionswort die Endung des folgenden Wortes — die Endung zeigt, wie das Wort mit dem Rest des Satzes zusammenhängt."
       },
       "el": {
         "title": "Οι μικρές λέξεις αλλάζουν την κατάληξη",
-        "body": "Στα {lang}, μια πρόθεση αλλάζει την κατάληξη της επόμενης λέξης: на цьому (πάνω σε αυτό), перед книгою (μπροστά από το βιβλίο), до будинку (προς το σπίτι). Η κατάληξη δείχνει τη σχέση με τα υπόλοιπα."
+        "body": "Στη γλώσσα {lang}, μια μικρή λέξη θέσης αλλάζει την κατάληξη της επόμενης λέξης — η κατάληξη δείχνει πώς συνδέεται η λέξη με την υπόλοιπη πρόταση."
       },
       "es": {
-        "title": "Las palabritas cambian la terminación",
-        "body": "En {lang}, una preposición cambia la terminación de la palabra siguiente: на цьому (sobre esto), перед книгою (delante del libro), до будинку (hacia la casa). La terminación muestra la relación con el resto."
+        "title": "Las palabras pequeñas cambian la terminación",
+        "body": "En {lang}, una pequeña palabra de posición cambia la terminación de la palabra siguiente — la terminación indica cómo se relaciona esa palabra con el resto de la frase."
       },
       "ja": {
-        "title": "前置詞が語尾を変える",
-        "body": "{lang}では、前置詞が次の言葉の語尾を変えます：на цьому（この上に）、перед книгою（本の前に）、до будинку（家へ）。日本語の「に・で・へ」のような働きを語尾がします。"
+        "title": "小さな語が語尾を変える",
+        "body": "{lang}では、位置を表す小さな語がその後ろの単語の語尾を変えます。語尾を見れば、その単語が文の他の部分とどう関係するかが分かります。"
       },
       "ko": {
-        "title": "전치사가 어미를 바꿔요",
-        "body": "{lang}에서는 전치사가 다음 단어의 어미를 바꿔요: на цьому(이것 위에), перед книгою(책 앞에), до будинку(집으로). 한국어의 '에/에서/으로' 같은 역할을 어미가 해요."
+        "title": "작은 단어가 어미를 바꿉니다",
+        "body": "{lang}에서는 위치를 나타내는 작은 단어가 뒤에 오는 단어의 어미를 바꿉니다 — 어미를 보면 그 단어가 문장의 나머지와 어떤 관계인지 알 수 있습니다."
       },
       "no": {
-        "title": "Småord endrer endelsen",
-        "body": "I {lang} endrer en preposisjon endelsen på ordet etter: на цьому (på denne), перед книгою (foran boken), до будинку (til huset). Endelsen viser forholdet til resten av setningen."
+        "title": "Små ord endrer endelsen",
+        "body": "I {lang} endrer et lite posisjonsord endelsen på ordet etter — endelsen forteller hvordan ordet henger sammen med resten av setningen."
       },
       "tr": {
-        "title": "Küçük kelimeler eki değiştirir",
-        "body": "{lang} dilinde bir edat, sonraki kelimenin ekini değiştirir: на цьому (bunun üstünde), перед книгою (kitabın önünde), до будинку (eve doğru). Türkçedeki -de/-e ekleri gibi çalışır."
+        "title": "Küçük sözcükler eki değiştirir",
+        "body": "{lang} dilinde konum bildiren küçük bir sözcük, ardından gelen sözcüğün ekini değiştirir — ek, o sözcüğün cümlenin geri kalanıyla ilişkisini gösterir."
       },
       "uk": {
         "title": "Прийменник керує відмінком",
-        "body": "В українській прийменник змінює закінчення наступного слова: на цьому, перед книгою, до будинку. Закінчення показує, як слово пов'язане з рештою речення."
+        "body": "У мові {lang} маленьке слово-прийменник змінює закінчення наступного слова — закінчення показує, як це слово пов'язане з рештою речення."
       },
       "zh": {
-        "title": "介词改变词尾",
-        "body": "在{lang}里，介词会改变后面词的词尾：на цьому（在这上面）、перед книгою（在书前面）、до будинку（到房子去）。词尾起到类似中文'在/到/向'的作用。"
+        "title": "小词改变词尾",
+        "body": "在{lang}中，表示位置的小词会改变后面单词的词尾——词尾告诉你这个词与句子其余部分的关系。"
       },
       "ar": {
-        "title": "الكلمات الصغيرة تغيّر النهاية",
-        "body": "في {lang}، يغيّر حرف الجر نهاية الكلمة التي تليه: на цьому (على هذا)، перед книгою (أمام الكتاب)، до будинку (إلى المنزل). النهاية تُظهر علاقة الكلمة ببقية الجملة — كما يعمل الجرّ في العربية."
+        "title": "كلمات صغيرة تغيّر النهاية",
+        "body": "في {lang}، تغيّر كلمة موضع صغيرة نهايةَ الكلمة التي تليها — والنهاية تبيّن علاقة تلك الكلمة ببقية الجملة."
       },
       "it": {
         "title": "Le paroline cambiano la desinenza",
-        "body": "In {lang} una preposizione cambia la desinenza della parola che la segue: на цьому (su questo), перед книгою (davanti al libro), до будинку (verso la casa)."
+        "body": "In {lang}, una piccola parola di posizione cambia la desinenza della parola che segue — la desinenza dice come quella parola si lega al resto della frase."
       },
       "th": {
-        "title": "คำบุพบทเปลี่ยนท้ายคำ",
-        "body": "ใน{lang} คำบุพบทจะเปลี่ยนท้ายคำที่ตามมา: на цьому (บนนี้), перед книгою (ข้างหน้าหนังสือ), до будинку (ไปที่บ้าน)"
+        "title": "คำเล็ก ๆ เปลี่ยนท้ายคำ",
+        "body": "ในภาษา{lang} คำบอกตำแหน่งเล็ก ๆ จะเปลี่ยนท้ายคำของคำที่ตามมา — ท้ายคำบอกว่าคำนั้นสัมพันธ์กับส่วนอื่นของประโยคอย่างไร"
       },
       "pl": {
-        "title": "Przyimek zmienia końcówkę",
-        "body": "W języku {lang} przyimek zmienia końcówkę następującego po nim wyrazu: на цьому (na tym), перед книгою (przed książką), до будинку (do domu). Końcówka mówi, jak wyraz łączy się z resztą zdania."
+        "title": "Małe słowa zmieniają końcówkę",
+        "body": "W języku {lang} małe słowo określające położenie zmienia końcówkę następnego wyrazu — końcówka pokazuje, jak ten wyraz łączy się z resztą zdania."
       },
       "fi": {
         "title": "Prepositio määrää sijamuodon",
@@ -1194,68 +1194,68 @@
     },
     "numeral_government": {
       "en": {
-        "title": "Five and up change the noun again",
-        "body": "In {lang}, the numbers five and above take yet another form of the noun — 'two books' and 'five books' end differently."
+        "title": "Numbers change the noun's form",
+        "body": "In {lang}, a noun after a number takes a different form than it does on its own — which form depends on the number. Watch how the ending shifts as the numbers change."
       },
       "pt": {
-        "title": "De cinco em diante o substantivo muda de novo",
-        "body": "Em {lang}, os números a partir de cinco pedem outra forma do substantivo — 'dois livros' e 'cinco livros' terminam de maneira diferente."
+        "title": "Os números mudam a forma do substantivo",
+        "body": "Em {lang}, um substantivo depois de um número toma uma forma diferente — qual forma, depende do número. Repare como a terminação muda com os números."
       },
       "es": {
-        "title": "A partir de cinco el sustantivo cambia otra vez",
-        "body": "En {lang}, los números a partir de cinco piden otra forma del sustantivo: 'dos libros' y 'cinco libros' terminan distinto."
+        "title": "Los números cambian la forma del sustantivo",
+        "body": "En {lang}, un sustantivo después de un número toma una forma distinta — cuál, depende del número. Fíjate en cómo cambia la terminación con los números."
       },
       "fr": {
-        "title": "À partir de cinq, le nom change encore",
-        "body": "En {lang}, les nombres à partir de cinq demandent une autre forme du nom — « deux livres » et « cinq livres » ne se terminent pas pareil."
+        "title": "Les nombres changent la forme du nom",
+        "body": "En {lang}, un nom placé après un nombre prend une forme différente — laquelle dépend du nombre. Observez comment la terminaison change avec les nombres."
       },
       "de": {
-        "title": "Ab fünf ändert sich das Substantiv erneut",
-        "body": "In {lang} verlangen die Zahlen ab fünf noch eine andere Form des Substantivs — 'zwei Bücher' und 'fünf Bücher' enden unterschiedlich."
+        "title": "Zahlen ändern die Form des Substantivs",
+        "body": "In {lang} nimmt ein Substantiv nach einer Zahl eine andere Form an — welche, hängt von der Zahl ab. Achte darauf, wie sich die Endung mit den Zahlen ändert."
       },
       "el": {
-        "title": "Από το πέντε και πάνω το ουσιαστικό αλλάζει ξανά",
-        "body": "Στα {lang}, οι αριθμοί από το πέντε και πάνω θέλουν άλλη μορφή του ουσιαστικού — το «δύο βιβλία» και το «πέντε βιβλία» τελειώνουν διαφορετικά."
+        "title": "Οι αριθμοί αλλάζουν τη μορφή του ουσιαστικού",
+        "body": "Στη γλώσσα {lang}, το ουσιαστικό μετά από αριθμό παίρνει διαφορετική μορφή — ποια μορφή, εξαρτάται από τον αριθμό. Πρόσεξε πώς αλλάζει η κατάληξη με τους αριθμούς."
       },
       "it": {
-        "title": "Da cinque in su il sostantivo cambia di nuovo",
-        "body": "In {lang}, i numeri da cinque in su richiedono un'altra forma del sostantivo: 'due libri' e 'cinque libri' finiscono in modo diverso."
+        "title": "I numeri cambiano la forma del sostantivo",
+        "body": "In {lang}, un sostantivo dopo un numero prende una forma diversa da quella che ha da solo — quale, dipende dal numero. Osserva come cambia la desinenza al variare dei numeri."
       },
       "no": {
-        "title": "Fra fem og oppover endrer substantivet seg igjen",
-        "body": "På {lang} krever tallene fra fem og oppover enda en form av substantivet — 'to bøker' og 'fem bøker' slutter ulikt."
+        "title": "Tall endrer substantivets form",
+        "body": "I {lang} får et substantiv etter et tall en annen form enn det har alene — hvilken form avhenger av tallet. Se hvordan endelsen skifter med tallene."
       },
       "uk": {
-        "title": "Від п'яти іменник знову змінюється",
-        "body": "У {lang} числа від п'яти вимагають ще однієї форми іменника — «дві книжки» і «п'ять книжок» закінчуються по-різному."
+        "title": "Числа змінюють форму іменника",
+        "body": "У мові {lang} іменник після числа має іншу форму, ніж сам по собі — яка саме, залежить від числа. Звертай увагу, як змінюється закінчення разом із числами."
       },
       "ar": {
-        "title": "من خمسة فصاعدًا يتغير الاسم مجددًا",
-        "body": "في {lang}، تتطلب الأعداد من خمسة فصاعدًا صيغة أخرى من الاسم — «كتابان» و«خمسة كتب» تنتهيان بشكل مختلف."
+        "title": "الأعداد تغيّر شكل الاسم",
+        "body": "في {lang}، يأخذ الاسم بعد العدد شكلاً مختلفاً عن شكله المنفرد — وأي شكل يعتمد على العدد. لاحظ كيف تتغير النهاية مع تغيّر الأعداد."
       },
       "tr": {
-        "title": "Beşten itibaren isim yine değişir",
-        "body": "{lang} dilinde beş ve üzeri sayılar ismin başka bir biçimini ister — 'iki kitap' ile 'beş kitap' farklı biter."
+        "title": "Sayılar ismin biçimini değiştirir",
+        "body": "{lang} dilinde sayıdan sonra gelen isim tek başına olduğundan farklı bir biçim alır — hangi biçim olduğu sayıya bağlıdır. Sayılar değiştikçe ekin nasıl değiştiğine dikkat et."
       },
       "ja": {
-        "title": "5以上で名詞の形がまた変わる",
-        "body": "{lang}では、5以上の数字は名詞のさらに別の形を取ります。「2冊の本」と「5冊の本」では語尾が異なります。"
+        "title": "数が名詞の形を変える",
+        "body": "{lang}では、数の後ろの名詞は単独のときと違う形になります。どの形になるかは数によって決まるので、数が変わると語尾がどう変わるかに注目しましょう。"
       },
       "ko": {
-        "title": "다섯부터는 명사가 또 바뀝니다",
-        "body": "{lang}에서는 다섯 이상의 숫자가 명사의 또 다른 형태를 요구합니다. '책 두 권'과 '책 다섯 권'의 어미가 다릅니다."
+        "title": "숫자가 명사의 형태를 바꿉니다",
+        "body": "{lang}에서는 숫자 뒤의 명사가 혼자 있을 때와 다른 형태를 취합니다 — 어떤 형태인지는 숫자에 따라 다릅니다. 숫자가 바뀔 때 어미가 어떻게 변하는지 살펴보세요."
       },
       "zh": {
-        "title": "五以上名词再次变化",
-        "body": "在{lang}中,五及以上的数字要求名词用另一种形式——'两本书'和'五本书'的词尾不同。"
+        "title": "数字会改变名词的形式",
+        "body": "在{lang}中，数字后面的名词与单独出现时形式不同——具体是哪种形式取决于数字。注意词尾随数字的变化。"
       },
       "th": {
-        "title": "ตั้งแต่ห้าขึ้นไปคำนามเปลี่ยนอีกครั้ง",
-        "body": "ใน{lang} ตัวเลขตั้งแต่ห้าขึ้นไปต้องใช้คำนามอีกรูปหนึ่ง — 'หนังสือสองเล่ม' กับ 'หนังสือห้าเล่ม' ลงท้ายต่างกัน"
+        "title": "ตัวเลขเปลี่ยนรูปของคำนาม",
+        "body": "ในภาษา{lang} คำนามที่อยู่หลังตัวเลขจะมีรูปต่างจากตอนอยู่เดี่ยว ๆ — รูปไหนขึ้นอยู่กับตัวเลข สังเกตว่าท้ายคำเปลี่ยนไปอย่างไรเมื่อตัวเลขเปลี่ยน"
       },
       "pl": {
-        "title": "Od pięciu w górę rzeczownik zmienia się znowu",
-        "body": "W języku {lang} liczby od pięciu wzwyż biorą jeszcze inną formę rzeczownika — „dwie książki”, ale „pięć książek”."
+        "title": "Liczby zmieniają formę rzeczownika",
+        "body": "W języku {lang} rzeczownik po liczebniku przyjmuje inną formę niż samodzielnie — która to forma, zależy od liczby. Zwróć uwagę, jak końcówka zmienia się wraz z liczbami."
       },
       "fi": {
         "title": "Numero määrää substantiivin muodon",

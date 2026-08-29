@@ -40,8 +40,35 @@ const SCRIPT_RULES = {
   },
 };
 
-// Languages exempt from script checking (Latin-script languages)
+// Latin-script languages (language_rules latinEncodingChecks — the unit
+// suite pins this set to the declarations). These run the INVERSE check:
+// any character from a non-Latin script inside their values is a
+// copy-paste leak from another language's data. Born from Emi run-7 -32:
+// a Finnish grammar note shipped with «книга → Я читаю книгу» in it, and
+// nothing ever looked.
 const LATIN_LANGS = new Set(['en', 'de', 'pt', 'no', 'tr', 'pl', 'fi']);
+
+// Any character of a script a Latin-language value must never contain:
+// Greek, Cyrillic, Arabic, Devanagari, Thai, Hangul (jamo + syllables),
+// kana, CJK. Whole script blocks on purpose — combining marks included,
+// since ANY character from these blocks is a leak in Latin data.
+/* eslint-disable no-misleading-character-class -- whole script blocks
+   on purpose: combining marks included, any char here is a leak */
+const FOREIGN_SCRIPT_RE = new RegExp(
+  '[\\u0370-\\u03FF\\u1F00-\\u1FFF' + // Greek + Greek Extended
+  '\\u0400-\\u052F' +                 // Cyrillic + Supplement
+  '\\u0600-\\u06FF\\u0750-\\u077F' + // Arabic
+  '\\u0900-\\u097F' +                 // Devanagari
+  '\\u0E00-\\u0E7F' +                 // Thai
+  '\\u1100-\\u11FF\\u3130-\\u318F' + // Hangul jamo
+  '\\u3040-\\u30FF\\u31F0-\\u31FF' + // kana
+  '\\u4E00-\\u9FFF' +                 // CJK ideographs
+  '\\uAC00-\\uD7A3]');                // Hangul syllables
+/* eslint-enable no-misleading-character-class */
+
+// Cyrillic specifically — never legitimate in grammar_notes.json outside
+// the uk support-language entries (the run-7 -32 class).
+const CYRILLIC_RE = /[\u0400-\u052F]/;
 
 // HTML entity patterns that should never appear in translated values
 const HTML_ENTITY_RE = /&(?:[a-zA-Z]{2,8}|#\d{1,6}|#x[\da-fA-F]{1,6});/;
@@ -113,6 +140,11 @@ function validateLang(lang, forms, englishMap) {
         errors.push(`HTML ENTITY in ${cid}: "${trimmed}"`);
       }
 
+      // 2-inverse. Latin languages: no foreign-script characters, ever.
+      if (LATIN_LANGS.has(lang) && FOREIGN_SCRIPT_RE.test(trimmed)) {
+        errors.push(`FOREIGN SCRIPT in ${cid}: "${trimmed}"`);
+      }
+
       // 2. Non-Latin script checks
       if (isNonLatin) {
         // 2a. Value contains zero characters from expected script
@@ -145,7 +177,17 @@ function validateUiStrings(lang, uiStrings, enUiStrings) {
   const rule   = SCRIPT_RULES[lang];
   const errors = [];
 
-  if (!rule) return errors; // Latin langs — skip script check on UI strings
+  // Latin languages: the inverse check covers UI strings too.
+  if (LATIN_LANGS.has(lang)) {
+    for (const [key, val] of Object.entries(uiStrings)) {
+      if (typeof val === 'string' && FOREIGN_SCRIPT_RE.test(val)) {
+        errors.push(`FOREIGN SCRIPT in uiStrings.${key}: "${val.trim()}"`);
+      }
+    }
+    return errors;
+  }
+
+  if (!rule) return errors; // other Latin-script langs without declarations
 
   for (const [key, val] of Object.entries(uiStrings)) {
     if (!val || !val.trim()) continue;
@@ -158,6 +200,94 @@ function validateUiStrings(lang, uiStrings, enUiStrings) {
     }
   }
 
+  return errors;
+}
+
+// ─── Wider coverage: packs, templates, grammar notes ─────────────────────────
+// The run-7 -32 leak lived OUTSIDE lang/ — grammar_notes.json — and this
+// validator never read it. These walks apply the Latin-language inverse
+// check to every place a Latin language's display text is authored.
+
+const PACK_FILES = [
+  'pokemon.json', 'harry_potter.json', 'cooking.json', 'anime.json',
+  'football.json', 'music.json', 'everyday_life.json', 'fashion_style.json',
+  'gaming.json', 'tourism.json', 'space_scifi.json', 'fitness.json',
+];
+
+function validatePacks() {
+  const errors = [];
+  for (const file of PACK_FILES) {
+    const data = JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'));
+    for (const [lang, block] of Object.entries(data.languages || {})) {
+      if (!LATIN_LANGS.has(lang)) continue;
+      for (const [cid, entry] of Object.entries(block.forms || {})) {
+        for (const str of extractStrings(entry)) {
+          if (FOREIGN_SCRIPT_RE.test(str)) {
+            errors.push(`FOREIGN SCRIPT in ${file} ${lang}.${cid}: "${str.trim()}"`);
+          }
+        }
+      }
+    }
+  }
+  return errors;
+}
+
+function validateTemplates() {
+  const errors = [];
+  const files = fs.readdirSync(ROOT)
+    .filter(f => /^sentence_templates.*\.json$/.test(f)).sort();
+  for (const file of files) {
+    const data = JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'));
+    const templates = Array.isArray(data) ? data : data.templates || [];
+    for (const tpl of templates) {
+      const id = tpl.template_id || '?';
+      for (const blockName of ['render', 'surface']) {
+        for (const [lang, val] of Object.entries(tpl[blockName] || {})) {
+          if (!LATIN_LANGS.has(lang)) continue;
+          const strs = typeof val === 'string' ? [val]
+            : Object.values(val || {}).filter(v => typeof v === 'string');
+          for (const str of strs) {
+            if (FOREIGN_SCRIPT_RE.test(str)) {
+              errors.push(`FOREIGN SCRIPT in ${file} ${id} ${blockName}.${lang}: "${str.trim()}"`);
+            }
+          }
+        }
+      }
+    }
+  }
+  return errors;
+}
+
+// A rule id prefixed with a language code (ja_counter,
+// zh_predicate_adjective) fires only when the TARGET is that language,
+// so its notes legitimately quote that language's script in every
+// support language — strip those characters before the foreign check.
+const RULE_PREFIX_ALLOWED = {
+  // CJK punctuation + kana (+ extensions) + CJK ideographs
+  ja_: /[\u3000-\u303F\u3040-\u30FF\u31F0-\u31FF\u4E00-\u9FFF]/g,
+  // CJK punctuation + CJK ideographs
+  zh_: /[\u3000-\u303F\u4E00-\u9FFF]/g,
+};
+
+function validateGrammarNotes() {
+  const errors = [];
+  const data = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'grammar_notes.json'), 'utf8'));
+  for (const [rule, byLang] of Object.entries(data.notes || {})) {
+    const allowed = Object.entries(RULE_PREFIX_ALLOWED)
+      .find(([prefix]) => rule.startsWith(prefix))?.[1];
+    for (const [lang, note] of Object.entries(byLang)) {
+      if (lang === 'uk') continue; // Ukrainian text is legitimate there
+      let text = `${note?.title || ''} ${note?.body || ''}`;
+      if (allowed) text = text.replace(allowed, '');
+      if (CYRILLIC_RE.test(text)) {
+        errors.push(`CYRILLIC in grammar_notes ${rule}.${lang}: "${text.trim().slice(0, 60)}…"`);
+      }
+      if (LATIN_LANGS.has(lang) && FOREIGN_SCRIPT_RE.test(text)) {
+        errors.push(`FOREIGN SCRIPT in grammar_notes ${rule}.${lang}: "${text.trim().slice(0, 60)}…"`);
+      }
+    }
+  }
   return errors;
 }
 
@@ -209,6 +339,23 @@ function main() {
       for (const e of allErrors) console.log(`         ERROR: ${e}`);
       summary.push({ lang, status: 'FAILED', errors: allErrors.length });
     }
+  }
+
+  // Packs, templates, grammar notes — the leak surface lang/ never covered.
+  for (const [label, fn] of [
+    ['packs', validatePacks],
+    ['templates', validateTemplates],
+    ['grammar notes', validateGrammarNotes],
+  ]) {
+    const errs = fn();
+    if (errs.length === 0) {
+      console.log(`[${label}] PASS`);
+    } else {
+      anyFailed = true;
+      console.log(`[${label}] FAILED  (${errs.length} error${errs.length !== 1 ? 's' : ''})`);
+      for (const e of errs) console.log(`         ERROR: ${e}`);
+    }
+    summary.push({ lang: label, status: errs.length ? 'FAILED' : 'PASS', errors: errs.length });
   }
 
   // Summary table
