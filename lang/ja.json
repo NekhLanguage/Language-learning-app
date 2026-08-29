@@ -15,6 +15,7 @@
     "correct": "正解。",
     "incorrect": "不正解。",
     "syncFailedLocalCopy": "サーバーに接続できません。この端末に保存された進捗を表示しています。",
+    "syncFailedReloadNeeded": "サーバーに接続できません。ページを再読み込みしてもう一度お試しください。",
     "l7Placeholder": "翻訳を入力",
     "level": "レベル",
     "blueprint": "Nekhの言語プラン",

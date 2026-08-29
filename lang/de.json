@@ -15,6 +15,7 @@
     "correct": "Richtig.",
     "incorrect": "Falsch.",
     "syncFailedLocalCopy": "Server nicht erreichbar — angezeigt wird der auf diesem Gerät gespeicherte Fortschritt.",
+    "syncFailedReloadNeeded": "Server nicht erreichbar — Seite neu laden, um es erneut zu versuchen.",
     "l7Placeholder": "Übersetzung eingeben",
     "level": "Stufe",
     "blueprint": "Nekhs Sprachplan",

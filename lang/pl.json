@@ -19,6 +19,7 @@
     "correct": "Dobrze.",
     "incorrect": "Źle.",
     "syncFailedLocalCopy": "Brak połączenia z serwerem — wyświetlamy postępy zapisane na tym urządzeniu.",
+    "syncFailedReloadNeeded": "Brak połączenia z serwerem — odśwież stronę, aby spróbować ponownie.",
     "l7Placeholder": "Wpisz swoje tłumaczenie",
     "level": "Poziom",
     "blueprint": "Nekh's Language Blueprint",

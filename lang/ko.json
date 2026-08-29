@@ -15,6 +15,7 @@
     "correct": "정답입니다.",
     "incorrect": "틀렸습니다.",
     "syncFailedLocalCopy": "서버에 연결할 수 없습니다. 이 기기에 저장된 진행 상황을 표시합니다.",
+    "syncFailedReloadNeeded": "서버에 연결할 수 없습니다. 페이지를 새로고침한 후 다시 시도하세요.",
     "l7Placeholder": "번역을 입력하세요",
     "level": "레벨",
     "blueprint": "Nekh의 언어 설계",
