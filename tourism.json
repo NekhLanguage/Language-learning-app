@@ -62,125 +62,219 @@
       "forms": {
         "AIRPORT": {
           "form": "lentokenttä",
-          "plural": "lentokentät"
+          "plural": "lentokentät",
+          "partitive": "lentokenttää",
+          "accusative": "lentokentän",
+          "genitive": "lentokentän"
         },
         "PASSPORT": {
           "form": "passi",
-          "plural": "passit"
+          "plural": "passit",
+          "partitive": "passia",
+          "accusative": "passin",
+          "genitive": "passin"
         },
         "FLIGHT": {
           "form": "lento",
-          "plural": "lennot"
+          "plural": "lennot",
+          "partitive": "lentoa",
+          "accusative": "lennon",
+          "genitive": "lennon"
         },
         "LUGGAGE": {
           "form": "matkatavarat",
           "plural": "matkatavarat",
-          "pluralOnly": true
+          "pluralOnly": true,
+          "partitive": "matkatavaroita",
+          "accusative": "matkatavarat",
+          "genitive": "matkatavaroiden"
         },
         "HOTEL": {
           "form": "hotelli",
-          "plural": "hotellit"
+          "plural": "hotellit",
+          "partitive": "hotellia",
+          "accusative": "hotellin",
+          "genitive": "hotellin"
         },
         "RESERVATION": {
           "form": "varaus",
-          "plural": "varaukset"
+          "plural": "varaukset",
+          "partitive": "varausta",
+          "accusative": "varauksen",
+          "genitive": "varauksen"
         },
         "LOBBY": {
           "form": "aula",
-          "plural": "aulat"
+          "plural": "aulat",
+          "partitive": "aulaa",
+          "accusative": "aulan",
+          "genitive": "aulan"
         },
         "CHECKOUT": {
-          "form": "uloskirjautuminen"
+          "form": "uloskirjautuminen",
+          "partitive": "uloskirjautumista",
+          "accusative": "uloskirjautumisen",
+          "genitive": "uloskirjautumisen"
         },
         "TAXI": {
           "form": "taksi",
-          "plural": "taksit"
+          "plural": "taksit",
+          "partitive": "taksia",
+          "accusative": "taksin",
+          "genitive": "taksin"
         },
         "STATION": {
           "form": "asema",
-          "plural": "asemat"
+          "plural": "asemat",
+          "partitive": "asemaa",
+          "accusative": "aseman",
+          "genitive": "aseman"
         },
         "TICKET": {
           "form": "lippu",
-          "plural": "liput"
+          "plural": "liput",
+          "partitive": "lippua",
+          "accusative": "lipun",
+          "genitive": "lipun"
         },
         "ROUTE": {
           "form": "reitti",
-          "plural": "reitit"
+          "plural": "reitit",
+          "partitive": "reittiä",
+          "accusative": "reitin",
+          "genitive": "reitin"
         },
         "LANDMARK": {
           "form": "maamerkki",
-          "plural": "maamerkit"
+          "plural": "maamerkit",
+          "partitive": "maamerkkiä",
+          "accusative": "maamerkin",
+          "genitive": "maamerkin"
         },
         "MUSEUM": {
           "form": "museo",
-          "plural": "museot"
+          "plural": "museot",
+          "partitive": "museota",
+          "accusative": "museon",
+          "genitive": "museon"
         },
         "MONUMENT": {
           "form": "muistomerkki",
-          "plural": "muistomerkit"
+          "plural": "muistomerkit",
+          "partitive": "muistomerkkiä",
+          "accusative": "muistomerkin",
+          "genitive": "muistomerkin"
         },
         "RESTAURANT": {
           "form": "ravintola",
-          "plural": "ravintolat"
+          "plural": "ravintolat",
+          "partitive": "ravintolaa",
+          "accusative": "ravintolan",
+          "genitive": "ravintolan"
         },
         "MENU": {
-          "form": "ruokalista", "elative": "menusta",
-          "plural": "ruokalistat"
+          "form": "ruokalista",
+          "elative": "menusta",
+          "plural": "ruokalistat",
+          "partitive": "ruokalistaa",
+          "accusative": "ruokalistan",
+          "genitive": "ruokalistan"
         },
         "WAITER": {
           "form": "tarjoilija",
-          "plural": "tarjoilijat"
+          "plural": "tarjoilijat",
+          "partitive": "tarjoilijaa",
+          "accusative": "tarjoilijan",
+          "genitive": "tarjoilijan"
         },
         "MARKET": {
           "form": "tori",
-          "plural": "torit"
+          "plural": "torit",
+          "partitive": "toria",
+          "accusative": "torin",
+          "genitive": "torin"
         },
         "SOUVENIR": {
           "form": "matkamuisto",
-          "plural": "matkamuistot"
+          "plural": "matkamuistot",
+          "partitive": "matkamuistoa",
+          "accusative": "matkamuiston",
+          "genitive": "matkamuiston"
         },
         "BARGAIN": {
           "form": "löytö",
-          "plural": "löydöt"
+          "plural": "löydöt",
+          "partitive": "löytöä",
+          "accusative": "löydön",
+          "genitive": "löydön"
         },
         "PHRASEBOOK": {
           "form": "fraasisanakirja",
-          "plural": "fraasisanakirjat"
+          "plural": "fraasisanakirjat",
+          "partitive": "fraasisanakirjaa",
+          "accusative": "fraasisanakirjan",
+          "genitive": "fraasisanakirjan"
         },
         "BEACH": {
           "form": "ranta",
-          "plural": "rannat"
+          "plural": "rannat",
+          "partitive": "rantaa",
+          "accusative": "rannan",
+          "genitive": "rannan"
         },
         "CATHEDRAL": {
           "form": "katedraali",
-          "plural": "katedraalit"
+          "plural": "katedraalit",
+          "partitive": "katedraalia",
+          "accusative": "katedraalin",
+          "genitive": "katedraalin"
         },
         "HARBOR": {
           "form": "satama",
-          "plural": "satamat"
+          "plural": "satamat",
+          "partitive": "satamaa",
+          "accusative": "sataman",
+          "genitive": "sataman"
         },
         "CURRENCY": {
-          "form": "valuutta"
+          "form": "valuutta",
+          "partitive": "valuuttaa",
+          "accusative": "valuuttaa",
+          "genitive": "valuutan"
         },
         "CUSTOMS": {
-          "form": "tulli"
+          "form": "tulli",
+          "partitive": "tullia",
+          "accusative": "tullin",
+          "genitive": "tullin"
         },
         "EMBASSY": {
           "form": "suurlähetystö",
-          "plural": "suurlähetystöt"
+          "plural": "suurlähetystöt",
+          "partitive": "suurlähetystöä",
+          "accusative": "suurlähetystön",
+          "genitive": "suurlähetystön"
         },
         "ADVENTURE": {
           "form": "seikkailu",
-          "plural": "seikkailut"
+          "plural": "seikkailut",
+          "partitive": "seikkailua",
+          "accusative": "seikkailun",
+          "genitive": "seikkailun"
         },
         "ITINERARY": {
           "form": "matkasuunnitelma",
-          "plural": "matkasuunnitelmat"
+          "plural": "matkasuunnitelmat",
+          "partitive": "matkasuunnitelmaa",
+          "accusative": "matkasuunnitelman",
+          "genitive": "matkasuunnitelman"
         },
         "GUIDE": {
           "form": "opas",
-          "plural": "oppaat"
+          "plural": "oppaat",
+          "partitive": "opasta",
+          "accusative": "oppaan",
+          "genitive": "oppaan"
         },
         "BOARD": {
           "base": "nousta kyytiin",
@@ -299,24 +393,42 @@
           "2_plural": "suosittelette",
           "3_plural": "suosittelevat"
         },
-        "SCENIC": [
-          "luonnonkaunis"
-        ],
-        "DELICIOUS": [
-          "herkullinen"
-        ],
-        "EXPENSIVE": [
-          "kallis"
-        ],
-        "FOREIGN": [
-          "ulkomainen"
-        ],
-        "HISTORIC": [
-          "historiallinen"
-        ],
-        "UNFORGETTABLE": [
-          "unohtumaton"
-        ]
+        "SCENIC": {
+          "form": "luonnonkaunis",
+          "plural": "luonnonkauniit",
+          "partitive": "luonnonkaunista",
+          "genitive": "luonnonkauniin"
+        },
+        "DELICIOUS": {
+          "form": "herkullinen",
+          "plural": "herkulliset",
+          "partitive": "herkullista",
+          "genitive": "herkullisen"
+        },
+        "EXPENSIVE": {
+          "form": "kallis",
+          "plural": "kalliit",
+          "partitive": "kallista",
+          "genitive": "kalliin"
+        },
+        "FOREIGN": {
+          "form": "ulkomainen",
+          "plural": "ulkomaiset",
+          "partitive": "ulkomaista",
+          "genitive": "ulkomaisen"
+        },
+        "HISTORIC": {
+          "form": "historiallinen",
+          "plural": "historialliset",
+          "partitive": "historiallista",
+          "genitive": "historiallisen"
+        },
+        "UNFORGETTABLE": {
+          "form": "unohtumaton",
+          "plural": "unohtumattomat",
+          "partitive": "unohtumatonta",
+          "genitive": "unohtumattoman"
+        }
       }
     },
     "en": {

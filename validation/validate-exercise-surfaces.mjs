@@ -350,10 +350,19 @@ for (const lang of langCodes) {
         // An authored surface override IS this slot's rendering
         // («kotiin») — the engine prefers it, so nothing falls back.
         if (typeof tpl.surface?.[lang]?.[cid] === 'string') return;
-        const base = formOf(lang, cid);
-        if (accusativeNoun(lang, cid, base) === base) {
-          add(`CASE_FALLBACK|${lang}|${id}|${cid}|object`,
-            'direct object demanded but no accusative data — nominative ships');
+        // A plurale tantum's accusative IS its nominative plural
+        // («kasvot», «huonekalut») — authored-syncretic data is not a
+        // fallback, so only the ABSENCE of data flags.
+        const entry = vocab.languages?.[lang]?.forms?.[cid];
+        const hasObjectData = entry && typeof entry === 'object' &&
+          !Array.isArray(entry) &&
+          (typeof entry.accusative === 'string' || entry.pluralOnly);
+        if (!hasObjectData) {
+          const base = formOf(lang, cid);
+          if (accusativeNoun(lang, cid, base) === base) {
+            add(`CASE_FALLBACK|${lang}|${id}|${cid}|object`,
+              'direct object demanded but no accusative data — nominative ships');
+          }
         }
       });
     }

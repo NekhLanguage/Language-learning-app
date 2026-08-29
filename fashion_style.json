@@ -57,119 +57,209 @@
       "forms": {
         "JACKET": {
           "form": "takki",
-          "plural": "takit"
+          "plural": "takit",
+          "partitive": "takkia",
+          "accusative": "takin",
+          "genitive": "takin"
         },
         "DRESS": {
           "form": "mekko",
-          "plural": "mekot"
+          "plural": "mekot",
+          "partitive": "mekkoa",
+          "accusative": "mekon",
+          "genitive": "mekon"
         },
         "SNEAKERS": {
           "form": "lenkkarit",
-          "plural": "lenkkarit"
+          "plural": "lenkkarit",
+          "partitive": "lenkkareita",
+          "accusative": "lenkkarit",
+          "genitive": "lenkkareiden"
         },
         "FABRIC": {
           "form": "kangas",
-          "plural": "kankaat"
+          "plural": "kankaat",
+          "partitive": "kangasta",
+          "accusative": "kankaan",
+          "genitive": "kankaan"
         },
         "LEATHER": {
-          "form": "nahka"
+          "form": "nahka",
+          "partitive": "nahkaa",
+          "accusative": "nahkaa",
+          "genitive": "nahan"
         },
         "SILK": {
-          "form": "silkki"
+          "form": "silkki",
+          "partitive": "silkkiä",
+          "accusative": "silkkiä",
+          "genitive": "silkin"
         },
         "PATTERN": {
           "form": "kuvio",
-          "plural": "kuviot"
+          "plural": "kuviot",
+          "partitive": "kuviota",
+          "accusative": "kuvion",
+          "genitive": "kuvion"
         },
         "STITCH": {
           "form": "tikki",
-          "plural": "tikit"
+          "plural": "tikit",
+          "partitive": "tikkiä",
+          "accusative": "tikin",
+          "genitive": "tikin"
         },
         "TAILOR": {
           "form": "räätäli",
-          "plural": "räätälit"
+          "plural": "räätälit",
+          "partitive": "räätäliä",
+          "accusative": "räätälin",
+          "genitive": "räätälin"
         },
         "RUNWAY": {
           "form": "catwalk",
-          "plural": "catwalkit"
+          "plural": "catwalkit",
+          "partitive": "catwalkia",
+          "accusative": "catwalkin",
+          "genitive": "catwalkin"
         },
         "MODEL": {
           "form": "malli",
-          "plural": "mallit"
+          "plural": "mallit",
+          "partitive": "mallia",
+          "accusative": "mallin",
+          "genitive": "mallin"
         },
         "COLLECTION": {
           "form": "mallisto",
-          "plural": "mallistot"
+          "plural": "mallistot",
+          "partitive": "mallistoa",
+          "accusative": "malliston",
+          "genitive": "malliston"
         },
         "BOUTIQUE": {
           "form": "putiikki",
-          "plural": "putiikit"
+          "plural": "putiikit",
+          "partitive": "putiikkia",
+          "accusative": "putiikin",
+          "genitive": "putiikin"
         },
         "WARDROBE": {
           "form": "vaatekaappi",
-          "plural": "vaatekaapit"
+          "plural": "vaatekaapit",
+          "partitive": "vaatekaappia",
+          "accusative": "vaatekaapin",
+          "genitive": "vaatekaapin"
         },
         "TREND": {
           "form": "trendi",
-          "plural": "trendit"
+          "plural": "trendit",
+          "partitive": "trendiä",
+          "accusative": "trendin",
+          "genitive": "trendin"
         },
         "NECKLACE": {
           "form": "kaulakoru",
-          "plural": "kaulakorut"
+          "plural": "kaulakorut",
+          "partitive": "kaulakorua",
+          "accusative": "kaulakorun",
+          "genitive": "kaulakorun"
         },
         "BRACELET": {
           "form": "rannekoru",
-          "plural": "rannekorut"
+          "plural": "rannekorut",
+          "partitive": "rannekorua",
+          "accusative": "rannekorun",
+          "genitive": "rannekorun"
         },
         "SUNGLASSES": {
           "form": "aurinkolasit",
-          "plural": "aurinkolasit"
+          "plural": "aurinkolasit",
+          "partitive": "aurinkolaseja",
+          "accusative": "aurinkolasit",
+          "genitive": "aurinkolasien"
         },
         "MAKEUP": {
-          "form": "meikki"
+          "form": "meikki",
+          "partitive": "meikkiä",
+          "accusative": "meikkiä",
+          "genitive": "meikin"
         },
         "LIPSTICK": {
           "form": "huulipuna",
-          "plural": "huulipunat"
+          "plural": "huulipunat",
+          "partitive": "huulipunaa",
+          "accusative": "huulipunan",
+          "genitive": "huulipunan"
         },
         "HAIRSTYLE": {
           "form": "kampaus",
-          "plural": "kampaukset"
+          "plural": "kampaukset",
+          "partitive": "kampausta",
+          "accusative": "kampauksen",
+          "genitive": "kampauksen"
         },
         "OUTFIT": {
           "form": "asu",
-          "plural": "asut"
+          "plural": "asut",
+          "partitive": "asua",
+          "accusative": "asun",
+          "genitive": "asun"
         },
         "LOOKBOOK": {
           "form": "lookbook",
-          "plural": "lookbookit"
+          "plural": "lookbookit",
+          "partitive": "lookbookia",
+          "accusative": "lookbookin",
+          "genitive": "lookbookin"
         },
         "AESTHETIC": {
           "form": "estetiikka",
-          "plural": "estetiikat"
+          "plural": "estetiikat",
+          "partitive": "estetiikkaa",
+          "accusative": "estetiikan",
+          "genitive": "estetiikan"
         },
         "DESIGNER": {
           "form": "suunnittelija",
-          "plural": "suunnittelijat"
+          "plural": "suunnittelijat",
+          "partitive": "suunnittelijaa",
+          "accusative": "suunnittelijan",
+          "genitive": "suunnittelijan"
         },
         "BRAND": {
           "form": "brändi",
-          "plural": "brändit"
+          "plural": "brändit",
+          "partitive": "brändiä",
+          "accusative": "brändin",
+          "genitive": "brändin"
         },
         "CAMPAIGN": {
           "form": "kampanja",
-          "plural": "kampanjat"
+          "plural": "kampanjat",
+          "partitive": "kampanjaa",
+          "accusative": "kampanjan",
+          "genitive": "kampanjan"
         },
         "INFLUENCER": {
           "form": "vaikuttaja",
-          "plural": "vaikuttajat"
+          "plural": "vaikuttajat",
+          "partitive": "vaikuttajaa",
+          "accusative": "vaikuttajan",
+          "genitive": "vaikuttajan"
         },
         "EDITORIAL": {
           "form": "editoriaali",
-          "plural": "editoriaalit"
+          "plural": "editoriaalit",
+          "partitive": "editoriaalia",
+          "accusative": "editoriaalin",
+          "genitive": "editoriaalin"
         },
         "COUTURE": {
-          "form": "haute couture"
+          "form": "haute couture",
+          "partitive": "haute couturea",
+          "accusative": "haute couturea",
+          "genitive": "haute couturen"
         },
         "EMBROIDER": {
           "base": "kirjoa",
@@ -261,36 +351,66 @@
           "2_plural": "esittelette",
           "3_plural": "esittelevät"
         },
-        "ELEGANT": [
-          "elegantti"
-        ],
-        "TEXTURED": [
-          "teksturoitu"
-        ],
-        "VINTAGE": [
-          "vintage"
-        ],
-        "GLAMOROUS": [
-          "hohdokas"
-        ],
-        "AFFORDABLE": [
-          "edullinen"
-        ],
-        "DAZZLING": [
-          "häikäisevä"
-        ],
-        "FLAWLESS": [
-          "virheetön"
-        ],
-        "CHIC": [
-          "tyylikäs"
-        ],
-        "EXCLUSIVE": [
-          "eksklusiivinen"
-        ],
-        "ICONIC": [
-          "ikoninen"
-        ]
+        "ELEGANT": {
+          "form": "elegantti",
+          "plural": "elegantit",
+          "partitive": "eleganttia",
+          "genitive": "elegantin"
+        },
+        "TEXTURED": {
+          "form": "teksturoitu",
+          "plural": "teksturoidut",
+          "partitive": "teksturoitua",
+          "genitive": "teksturoidun"
+        },
+        "VINTAGE": {
+          "form": "vintage",
+          "plural": "vintage",
+          "partitive": "vintage",
+          "genitive": "vintage"
+        },
+        "GLAMOROUS": {
+          "form": "hohdokas",
+          "plural": "hohdokkaat",
+          "partitive": "hohdokasta",
+          "genitive": "hohdokkaan"
+        },
+        "AFFORDABLE": {
+          "form": "edullinen",
+          "plural": "edulliset",
+          "partitive": "edullista",
+          "genitive": "edullisen"
+        },
+        "DAZZLING": {
+          "form": "häikäisevä",
+          "plural": "häikäisevät",
+          "partitive": "häikäisevää",
+          "genitive": "häikäisevän"
+        },
+        "FLAWLESS": {
+          "form": "virheetön",
+          "plural": "virheettömät",
+          "partitive": "virheetöntä",
+          "genitive": "virheettömän"
+        },
+        "CHIC": {
+          "form": "tyylikäs",
+          "plural": "tyylikkäät",
+          "partitive": "tyylikästä",
+          "genitive": "tyylikkään"
+        },
+        "EXCLUSIVE": {
+          "form": "eksklusiivinen",
+          "plural": "eksklusiiviset",
+          "partitive": "eksklusiivista",
+          "genitive": "eksklusiivisen"
+        },
+        "ICONIC": {
+          "form": "ikoninen",
+          "plural": "ikoniset",
+          "partitive": "ikonista",
+          "genitive": "ikonisen"
+        }
       }
     },
     "en": {

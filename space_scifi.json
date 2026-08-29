@@ -58,119 +58,206 @@
       "forms": {
         "PLANET": {
           "form": "planeetta",
-          "plural": "planeetat"
+          "plural": "planeetat",
+          "partitive": "planeettaa",
+          "accusative": "planeetan",
+          "genitive": "planeetan"
         },
         "STAR": {
           "form": "tähti",
-          "plural": "tähdet"
+          "plural": "tähdet",
+          "partitive": "tähteä",
+          "accusative": "tähden",
+          "genitive": "tähden"
         },
         "GALAXY": {
           "form": "galaksi",
-          "plural": "galaksit"
+          "plural": "galaksit",
+          "partitive": "galaksia",
+          "accusative": "galaksin",
+          "genitive": "galaksin"
         },
         "ASTEROID": {
           "form": "asteroidi",
-          "plural": "asteroidit"
+          "plural": "asteroidit",
+          "partitive": "asteroidia",
+          "accusative": "asteroidin",
+          "genitive": "asteroidin"
         },
         "ROCKET": {
           "form": "raketti",
-          "plural": "raketit"
+          "plural": "raketit",
+          "partitive": "rakettia",
+          "accusative": "raketin",
+          "genitive": "raketin"
         },
         "SPACECRAFT": {
           "form": "avaruusalus",
-          "plural": "avaruusalukset"
+          "plural": "avaruusalukset",
+          "partitive": "avaruusalusta",
+          "accusative": "avaruusaluksen",
+          "genitive": "avaruusaluksen"
         },
         "ASTRONAUT": {
           "form": "astronautti",
-          "plural": "astronautit"
+          "plural": "astronautit",
+          "partitive": "astronauttia",
+          "accusative": "astronautin",
+          "genitive": "astronautin"
         },
         "TELESCOPE": {
           "form": "teleskooppi",
-          "plural": "teleskoopit"
+          "plural": "teleskoopit",
+          "partitive": "teleskooppia",
+          "accusative": "teleskoopin",
+          "genitive": "teleskoopin"
         },
         "SATELLITE": {
           "form": "satelliitti",
-          "plural": "satelliitit"
+          "plural": "satelliitit",
+          "partitive": "satelliittia",
+          "accusative": "satelliitin",
+          "genitive": "satelliitin"
         },
         "PROBE": {
           "form": "luotain",
-          "plural": "luotaimet"
+          "plural": "luotaimet",
+          "partitive": "luotainta",
+          "accusative": "luotaimen",
+          "genitive": "luotaimen"
         },
         "ALIEN": {
           "form": "avaruusolento",
-          "plural": "avaruusolennot"
+          "plural": "avaruusolennot",
+          "partitive": "avaruusolentoa",
+          "accusative": "avaruusolennon",
+          "genitive": "avaruusolennon"
         },
         "CREATURE": {
           "form": "olento",
-          "plural": "olennot"
+          "plural": "olennot",
+          "partitive": "olentoa",
+          "accusative": "olennon",
+          "genitive": "olennon"
         },
         "SIGNAL": {
           "form": "signaali",
-          "plural": "signaalit"
+          "plural": "signaalit",
+          "partitive": "signaalia",
+          "accusative": "signaalin",
+          "genitive": "signaalin"
         },
         "LASER": {
           "form": "laser",
-          "plural": "laserit"
+          "plural": "laserit",
+          "partitive": "laseria",
+          "accusative": "laserin",
+          "genitive": "laserin"
         },
         "HOLOGRAM": {
           "form": "hologrammi",
-          "plural": "hologrammit"
+          "plural": "hologrammit",
+          "partitive": "hologrammia",
+          "accusative": "hologrammin",
+          "genitive": "hologrammin"
         },
         "ANDROID": {
           "form": "androidi",
-          "plural": "androidit"
+          "plural": "androidit",
+          "partitive": "androidia",
+          "accusative": "androidin",
+          "genitive": "androidin"
         },
         "COCKPIT": {
           "form": "ohjaamo",
-          "plural": "ohjaamot"
+          "plural": "ohjaamot",
+          "partitive": "ohjaamoa",
+          "accusative": "ohjaamon",
+          "genitive": "ohjaamon"
         },
         "AIRLOCK": {
           "form": "ilmalukko",
-          "plural": "ilmalukot"
+          "plural": "ilmalukot",
+          "partitive": "ilmalukkoa",
+          "accusative": "ilmalukon",
+          "genitive": "ilmalukon"
         },
         "HULL": {
           "form": "runko",
-          "plural": "rungot"
+          "plural": "rungot",
+          "partitive": "runkoa",
+          "accusative": "rungon",
+          "genitive": "rungon"
         },
         "NEBULA": {
           "form": "tähtisumu",
-          "plural": "tähtisumut"
+          "plural": "tähtisumut",
+          "partitive": "tähtisumua",
+          "accusative": "tähtisumun",
+          "genitive": "tähtisumun"
         },
         "WORMHOLE": {
           "form": "madonreikä",
-          "plural": "madonreiät"
+          "plural": "madonreiät",
+          "partitive": "madonreikää",
+          "accusative": "madonreiän",
+          "genitive": "madonreiän"
         },
         "SUPERNOVA": {
           "form": "supernova",
-          "plural": "supernovat"
+          "plural": "supernovat",
+          "partitive": "supernovaa",
+          "accusative": "supernovan",
+          "genitive": "supernovan"
         },
         "COLONY": {
           "form": "siirtokunta",
-          "plural": "siirtokunnat"
+          "plural": "siirtokunnat",
+          "partitive": "siirtokuntaa",
+          "accusative": "siirtokunnan",
+          "genitive": "siirtokunnan"
         },
         "HABITAT": {
           "form": "habitaatti",
-          "plural": "habitaatit"
+          "plural": "habitaatit",
+          "partitive": "habitaattia",
+          "accusative": "habitaatin",
+          "genitive": "habitaatin"
         },
         "INVASION": {
           "form": "invaasio",
-          "plural": "invaasiot"
+          "plural": "invaasiot",
+          "partitive": "invaasiota",
+          "accusative": "invaasion",
+          "genitive": "invaasion"
         },
         "FLEET": {
           "form": "laivasto",
-          "plural": "laivastot"
+          "plural": "laivastot",
+          "partitive": "laivastoa",
+          "accusative": "laivaston",
+          "genitive": "laivaston"
         },
         "BLASTER": {
           "form": "blaster",
-          "plural": "blasterit"
+          "plural": "blasterit",
+          "partitive": "blasteria",
+          "accusative": "blasterin",
+          "genitive": "blasterin"
         },
         "DIMENSION": {
           "form": "ulottuvuus",
-          "plural": "ulottuvuudet"
+          "plural": "ulottuvuudet",
+          "partitive": "ulottuvuutta",
+          "accusative": "ulottuvuuden",
+          "genitive": "ulottuvuuden"
         },
         "FRONTIER": {
           "form": "rajaseutu",
-          "plural": "rajaseudut"
+          "plural": "rajaseudut",
+          "partitive": "rajaseutua",
+          "accusative": "rajaseudun",
+          "genitive": "rajaseudun"
         },
         "LAUNCH": {
           "base": "laukaista",
@@ -271,36 +358,66 @@
           "2_plural": "kehitytte",
           "3_plural": "kehittyvät"
         },
-        "COSMIC": [
-          "kosminen"
-        ],
-        "ORBITAL": [
-          "orbitaalinen"
-        ],
-        "DISTANT": [
-          "kaukainen"
-        ],
-        "UNKNOWN": [
-          "tuntematon"
-        ],
-        "ADVANCED": [
-          "kehittynyt"
-        ],
-        "ARTIFICIAL": [
-          "keinotekoinen"
-        ],
-        "INFINITE": [
-          "ääretön"
-        ],
-        "SUSTAINABLE": [
-          "kestävä"
-        ],
-        "HOSTILE": [
-          "vihamielinen"
-        ],
-        "FUTURISTIC": [
-          "futuristinen"
-        ]
+        "COSMIC": {
+          "form": "kosminen",
+          "plural": "kosmiset",
+          "partitive": "kosmista",
+          "genitive": "kosmisen"
+        },
+        "ORBITAL": {
+          "form": "orbitaalinen",
+          "plural": "orbitaaliset",
+          "partitive": "orbitaalista",
+          "genitive": "orbitaalisen"
+        },
+        "DISTANT": {
+          "form": "kaukainen",
+          "plural": "kaukaiset",
+          "partitive": "kaukaista",
+          "genitive": "kaukaisen"
+        },
+        "UNKNOWN": {
+          "form": "tuntematon",
+          "plural": "tuntemattomat",
+          "partitive": "tuntematonta",
+          "genitive": "tuntemattoman"
+        },
+        "ADVANCED": {
+          "form": "kehittynyt",
+          "plural": "kehittyneet",
+          "partitive": "kehittynyttä",
+          "genitive": "kehittyneen"
+        },
+        "ARTIFICIAL": {
+          "form": "keinotekoinen",
+          "plural": "keinotekoiset",
+          "partitive": "keinotekoista",
+          "genitive": "keinotekoisen"
+        },
+        "INFINITE": {
+          "form": "ääretön",
+          "plural": "äärettömät",
+          "partitive": "ääretöntä",
+          "genitive": "äärettömän"
+        },
+        "SUSTAINABLE": {
+          "form": "kestävä",
+          "plural": "kestävät",
+          "partitive": "kestävää",
+          "genitive": "kestävän"
+        },
+        "HOSTILE": {
+          "form": "vihamielinen",
+          "plural": "vihamieliset",
+          "partitive": "vihamielistä",
+          "genitive": "vihamielisen"
+        },
+        "FUTURISTIC": {
+          "form": "futuristinen",
+          "plural": "futuristiset",
+          "partitive": "futuristista",
+          "genitive": "futuristisen"
+        }
       }
     },
     "en": {

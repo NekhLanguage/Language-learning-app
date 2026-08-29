@@ -67,34 +67,58 @@
       "forms": {
         "HERO": {
           "form": "sankari",
-          "plural": "sankarit"
+          "plural": "sankarit",
+          "partitive": "sankaria",
+          "accusative": "sankarin",
+          "genitive": "sankarin"
         },
         "VILLAIN": {
           "form": "konna",
-          "plural": "konnat"
+          "plural": "konnat",
+          "partitive": "konnaa",
+          "accusative": "konnan",
+          "genitive": "konnan"
         },
         "WARRIOR": {
           "form": "soturi",
-          "plural": "soturit"
+          "plural": "soturit",
+          "partitive": "soturia",
+          "accusative": "soturin",
+          "genitive": "soturin"
         },
         "RIVAL": {
           "form": "kilpailija",
-          "plural": "kilpailijat"
+          "plural": "kilpailijat",
+          "partitive": "kilpailijaa",
+          "accusative": "kilpailijan",
+          "genitive": "kilpailijan"
         },
-        "BRAVE": [
-          "rohkea"
-        ],
+        "BRAVE": {
+          "form": "rohkea",
+          "plural": "rohkeat",
+          "partitive": "rohkeaa",
+          "genitive": "rohkean"
+        },
         "SWORD": {
           "form": "miekka",
-          "plural": "miekat"
+          "plural": "miekat",
+          "partitive": "miekkaa",
+          "accusative": "miekan",
+          "genitive": "miekan"
         },
         "ARMOR": {
           "form": "haarniska",
-          "plural": "haarniskat"
+          "plural": "haarniskat",
+          "partitive": "haarniskaa",
+          "accusative": "haarniskan",
+          "genitive": "haarniskan"
         },
         "SHIELD": {
           "form": "kilpi",
-          "plural": "kilvet"
+          "plural": "kilvet",
+          "partitive": "kilpeä",
+          "accusative": "kilven",
+          "genitive": "kilven"
         },
         "ATTACK": {
           "base": "hyökätä",
@@ -116,15 +140,24 @@
         },
         "DRAGON": {
           "form": "lohikäärme",
-          "plural": "lohikäärmeet"
+          "plural": "lohikäärmeet",
+          "partitive": "lohikäärmettä",
+          "accusative": "lohikäärmeen",
+          "genitive": "lohikäärmeen"
         },
         "DEMON": {
           "form": "demoni",
-          "plural": "demonit"
+          "plural": "demonit",
+          "partitive": "demonia",
+          "accusative": "demonin",
+          "genitive": "demonin"
         },
         "SPIRIT": {
           "form": "henki",
-          "plural": "henget"
+          "plural": "henget",
+          "partitive": "henkeä",
+          "accusative": "hengen",
+          "genitive": "hengen"
         },
         "SUMMON": {
           "base": "kutsua",
@@ -135,24 +168,39 @@
           "2_plural": "kutsutte",
           "3_plural": "kutsuvat"
         },
-        "SINISTER": [
-          "pahaenteinen"
-        ],
+        "SINISTER": {
+          "form": "pahaenteinen",
+          "plural": "pahaenteiset",
+          "partitive": "pahaenteistä",
+          "genitive": "pahaenteisen"
+        },
         "NINJA": {
           "form": "ninja",
-          "plural": "ninjat"
+          "plural": "ninjat",
+          "partitive": "ninjaa",
+          "accusative": "ninjan",
+          "genitive": "ninjan"
         },
         "SAMURAI": {
           "form": "samurai",
-          "plural": "samurait"
+          "plural": "samurait",
+          "partitive": "samuraita",
+          "accusative": "samurain",
+          "genitive": "samurain"
         },
         "SENSEI": {
           "form": "sensei",
-          "plural": "senseit"
+          "plural": "senseit",
+          "partitive": "senseitä",
+          "accusative": "sensein",
+          "genitive": "sensein"
         },
         "SHADOW": {
           "form": "varjo",
-          "plural": "varjot"
+          "plural": "varjot",
+          "partitive": "varjoa",
+          "accusative": "varjon",
+          "genitive": "varjon"
         },
         "STRIKE": {
           "base": "iskeä",
@@ -174,7 +222,10 @@
         },
         "POWER": {
           "form": "voima",
-          "plural": "voimat"
+          "plural": "voimat",
+          "partitive": "voimaa",
+          "accusative": "voiman",
+          "genitive": "voiman"
         },
         "CHANNEL": {
           "base": "kanavoida",
@@ -194,30 +245,51 @@
           "2_plural": "vapautatte",
           "3_plural": "vapauttavat"
         },
-        "POWERFUL": [
-          "voimakas"
-        ],
+        "POWERFUL": {
+          "form": "voimakas",
+          "plural": "voimakkaat",
+          "partitive": "voimakasta",
+          "genitive": "voimakkaan"
+        },
         "QUEST": {
           "form": "tehtävä",
-          "plural": "tehtävät"
+          "plural": "tehtävät",
+          "partitive": "tehtävää",
+          "accusative": "tehtävän",
+          "genitive": "tehtävän"
         },
         "DESTINY": {
-          "form": "kohtalo"
+          "form": "kohtalo",
+          "partitive": "kohtaloa",
+          "accusative": "kohtalon",
+          "genitive": "kohtalon"
         },
         "KINGDOM": {
           "form": "kuningaskunta",
-          "plural": "kuningaskunnat"
+          "plural": "kuningaskunnat",
+          "partitive": "kuningaskuntaa",
+          "accusative": "kuningaskunnan",
+          "genitive": "kuningaskunnan"
         },
         "TEMPLE": {
           "form": "temppeli",
-          "plural": "temppelit"
+          "plural": "temppelit",
+          "partitive": "temppeliä",
+          "accusative": "temppelin",
+          "genitive": "temppelin"
         },
-        "ANCIENT": [
-          "muinainen"
-        ],
+        "ANCIENT": {
+          "form": "muinainen",
+          "plural": "muinaiset",
+          "partitive": "muinaista",
+          "genitive": "muinaisen"
+        },
         "BATTLE": {
           "form": "taistelu",
-          "plural": "taistelut"
+          "plural": "taistelut",
+          "partitive": "taistelua",
+          "accusative": "taistelun",
+          "genitive": "taistelun"
         },
         "DODGE": {
           "base": "väistää",
@@ -237,30 +309,51 @@
           "2_plural": "suojelette",
           "3_plural": "suojelevat"
         },
-        "FIERCE": [
-          "hurja"
-        ],
-        "MIGHTY": [
-          "mahtava"
-        ],
+        "FIERCE": {
+          "form": "hurja",
+          "plural": "hurjat",
+          "partitive": "hurjaa",
+          "genitive": "hurjan"
+        },
+        "MIGHTY": {
+          "form": "mahtava",
+          "plural": "mahtavat",
+          "partitive": "mahtavaa",
+          "genitive": "mahtavan"
+        },
         "CRYSTAL": {
           "form": "kristalli",
-          "plural": "kristallit"
+          "plural": "kristallit",
+          "partitive": "kristallia",
+          "accusative": "kristallin",
+          "genitive": "kristallin"
         },
         "SCROLL": {
           "form": "kirjakäärö",
-          "plural": "kirjakääröt"
+          "plural": "kirjakääröt",
+          "partitive": "kirjakääröä",
+          "accusative": "kirjakäärön",
+          "genitive": "kirjakäärön"
         },
         "PORTAL": {
           "form": "portaali",
-          "plural": "portaalit"
+          "plural": "portaalit",
+          "partitive": "portaalia",
+          "accusative": "portaalin",
+          "genitive": "portaalin"
         },
-        "CURSED": [
-          "kirottu"
-        ],
-        "SACRED": [
-          "pyhä"
-        ],
+        "CURSED": {
+          "form": "kirottu",
+          "plural": "kirotut",
+          "partitive": "kirottua",
+          "genitive": "kirotun"
+        },
+        "SACRED": {
+          "form": "pyhä",
+          "plural": "pyhät",
+          "partitive": "pyhää",
+          "genitive": "pyhän"
+        },
         "TRAIN": {
           "base": "harjoitella",
           "1_singular": "harjoittelen",
@@ -272,11 +365,17 @@
         },
         "MASTER": {
           "form": "mestari",
-          "plural": "mestarit"
+          "plural": "mestarit",
+          "partitive": "mestaria",
+          "accusative": "mestarin",
+          "genitive": "mestarin"
         },
         "CLAN": {
           "form": "klaani",
-          "plural": "klaanit"
+          "plural": "klaanit",
+          "partitive": "klaania",
+          "accusative": "klaanin",
+          "genitive": "klaanin"
         },
         "AWAKEN": {
           "base": "herättää",
@@ -287,16 +386,25 @@
           "2_plural": "herätätte",
           "3_plural": "herättävät"
         },
-        "LEGENDARY": [
-          "legendaarinen"
-        ],
+        "LEGENDARY": {
+          "form": "legendaarinen",
+          "plural": "legendaariset",
+          "partitive": "legendaarista",
+          "genitive": "legendaarisen"
+        },
         "MECHA": {
           "form": "mecha",
-          "plural": "mechat"
+          "plural": "mechat",
+          "partitive": "mechaa",
+          "accusative": "mechan",
+          "genitive": "mechan"
         },
         "ARENA": {
           "form": "areena",
-          "plural": "areenat"
+          "plural": "areenat",
+          "partitive": "areenaa",
+          "accusative": "areenan",
+          "genitive": "areenan"
         },
         "CONQUER": {
           "base": "valloittaa",
@@ -316,9 +424,12 @@
           "2_plural": "ylitätte",
           "3_plural": "ylittävät"
         },
-        "ETERNAL": [
-          "ikuinen"
-        ]
+        "ETERNAL": {
+          "form": "ikuinen",
+          "plural": "ikuiset",
+          "partitive": "ikuista",
+          "genitive": "ikuisen"
+        }
       }
     },
     "en": {

@@ -145,31 +145,52 @@
         },
         "PAN": {
           "form": "paistinpannu",
-          "plural": "paistinpannut"
+          "plural": "paistinpannut",
+          "partitive": "paistinpannua",
+          "accusative": "paistinpannun",
+          "genitive": "paistinpannun"
         },
         "KNIFE": {
           "form": "veitsi",
-          "plural": "veitset"
+          "plural": "veitset",
+          "partitive": "veistä",
+          "accusative": "veitsen",
+          "genitive": "veitsen"
         },
         "FORK": {
           "form": "haarukka",
-          "plural": "haarukat"
+          "plural": "haarukat",
+          "partitive": "haarukkaa",
+          "accusative": "haarukan",
+          "genitive": "haarukan"
         },
         "SPOON": {
           "form": "lusikka",
-          "plural": "lusikat"
+          "plural": "lusikat",
+          "partitive": "lusikkaa",
+          "accusative": "lusikan",
+          "genitive": "lusikan"
         },
         "SPATULA": {
           "form": "lasta",
-          "plural": "lastat"
+          "plural": "lastat",
+          "partitive": "lastaa",
+          "accusative": "lastan",
+          "genitive": "lastan"
         },
         "POT": {
           "form": "kattila",
-          "plural": "kattilat"
+          "plural": "kattilat",
+          "partitive": "kattilaa",
+          "accusative": "kattilan",
+          "genitive": "kattilan"
         },
         "GLASS": {
           "form": "lasi",
-          "plural": "lasit"
+          "plural": "lasit",
+          "partitive": "lasia",
+          "accusative": "lasin",
+          "genitive": "lasin"
         },
         "LITRE": {
           "form": "litra"
@@ -187,107 +208,191 @@
           "form": "kilogramma"
         },
         "MEAT": {
-          "form": "liha"
+          "form": "liha",
+          "partitive": "lihaa",
+          "accusative": "lihaa",
+          "genitive": "lihan"
         },
         "CHICKEN": {
           "form": "kana",
-          "plural": "kanat"
+          "plural": "kanat",
+          "partitive": "kanaa",
+          "accusative": "kanan",
+          "genitive": "kanan"
         },
         "FISH": {
           "form": "kala",
-          "plural": "kalat"
+          "plural": "kalat",
+          "partitive": "kalaa",
+          "accusative": "kalan",
+          "genitive": "kalan"
         },
         "VEGETABLE": {
           "form": "vihannes",
-          "plural": "vihannekset"
+          "plural": "vihannekset",
+          "partitive": "vihannesta",
+          "accusative": "vihanneksen",
+          "genitive": "vihanneksen"
         },
         "POTATO": {
           "form": "peruna",
-          "plural": "perunat"
+          "plural": "perunat",
+          "partitive": "perunaa",
+          "accusative": "perunan",
+          "genitive": "perunan"
         },
         "SALAD": {
           "form": "salaatti",
-          "plural": "salaatit"
+          "plural": "salaatit",
+          "partitive": "salaattia",
+          "accusative": "salaatin",
+          "genitive": "salaatin"
         },
         "FRUIT": {
           "form": "hedelmä",
-          "plural": "hedelmät"
+          "plural": "hedelmät",
+          "partitive": "hedelmää",
+          "accusative": "hedelmän",
+          "genitive": "hedelmän"
         },
         "BANANA": {
           "form": "banaani",
-          "plural": "banaanit"
+          "plural": "banaanit",
+          "partitive": "banaania",
+          "accusative": "banaanin",
+          "genitive": "banaanin"
         },
         "SOUP": {
           "form": "keitto",
-          "plural": "keitot"
+          "plural": "keitot",
+          "partitive": "keittoa",
+          "accusative": "keiton",
+          "genitive": "keiton"
         },
         "DOUGH": {
-          "form": "taikina"
+          "form": "taikina",
+          "partitive": "taikinaa",
+          "accusative": "taikinaa",
+          "genitive": "taikinan"
         },
         "SAUCE": {
           "form": "kastike",
-          "plural": "kastikkeet"
+          "plural": "kastikkeet",
+          "partitive": "kastiketta",
+          "accusative": "kastikkeen",
+          "genitive": "kastikkeen"
         },
         "INGREDIENT": {
           "form": "ainesosa",
-          "plural": "ainesosat"
+          "plural": "ainesosat",
+          "partitive": "ainesosaa",
+          "accusative": "ainesosan",
+          "genitive": "ainesosan"
         },
         "KITCHEN": {
           "form": "keittiö",
-          "plural": "keittiöt"
+          "plural": "keittiöt",
+          "partitive": "keittiötä",
+          "accusative": "keittiön",
+          "genitive": "keittiön"
         },
         "OVEN": {
           "form": "uuni",
-          "plural": "uunit"
+          "plural": "uunit",
+          "partitive": "uunia",
+          "accusative": "uunin",
+          "genitive": "uunin"
         },
         "STOVE": {
           "form": "liesi",
-          "plural": "liedet"
+          "plural": "liedet",
+          "partitive": "liettä",
+          "accusative": "lieden",
+          "genitive": "lieden"
         },
         "SINK": {
           "form": "tiskiallas",
-          "plural": "tiskialtaat"
+          "plural": "tiskialtaat",
+          "partitive": "tiskiallasta",
+          "accusative": "tiskialtaan",
+          "genitive": "tiskialtaan"
         },
         "FREEZER": {
           "form": "pakastin",
-          "plural": "pakastimet"
+          "plural": "pakastimet",
+          "partitive": "pakastinta",
+          "accusative": "pakastimen",
+          "genitive": "pakastimen"
         },
         "SALT": {
-          "form": "suola"
+          "form": "suola",
+          "partitive": "suolaa",
+          "accusative": "suolaa",
+          "genitive": "suolan"
         },
         "PEPPER": {
           "form": "pippuri",
-          "plural": "pippurit"
+          "plural": "pippurit",
+          "partitive": "pippuria",
+          "accusative": "pippurin",
+          "genitive": "pippurin"
         },
         "BUTTER": {
-          "form": "voi"
+          "form": "voi",
+          "partitive": "voita",
+          "accusative": "voita",
+          "genitive": "voin"
         },
         "SPICE": {
           "form": "mauste",
-          "plural": "mausteet"
+          "plural": "mausteet",
+          "partitive": "maustetta",
+          "accusative": "mausteen",
+          "genitive": "mausteen"
         },
         "RECIPE": {
           "form": "resepti",
-          "plural": "reseptit"
+          "plural": "reseptit",
+          "partitive": "reseptiä",
+          "accusative": "reseptin",
+          "genitive": "reseptin"
         },
-        "SWEET": [
-          "makea"
-        ],
-        "SALTY": [
-          "suolainen"
-        ],
-        "SOUR": [
-          "hapan"
-        ],
-        "FRESH": [
-          "tuore"
-        ],
-        "FROZEN": [
-          "pakastettu"
-        ],
-        "RAW": [
-          "raaka"
-        ]
+        "SWEET": {
+          "form": "makea",
+          "plural": "makeat",
+          "partitive": "makeaa",
+          "genitive": "makean"
+        },
+        "SALTY": {
+          "form": "suolainen",
+          "plural": "suolaiset",
+          "partitive": "suolaista",
+          "genitive": "suolaisen"
+        },
+        "SOUR": {
+          "form": "hapan",
+          "plural": "happamat",
+          "partitive": "hapanta",
+          "genitive": "happaman"
+        },
+        "FRESH": {
+          "form": "tuore",
+          "plural": "tuoreet",
+          "partitive": "tuoretta",
+          "genitive": "tuoreen"
+        },
+        "FROZEN": {
+          "form": "pakastettu",
+          "plural": "pakastetut",
+          "partitive": "pakastettua",
+          "genitive": "pakastetun"
+        },
+        "RAW": {
+          "form": "raaka",
+          "plural": "raa'at",
+          "partitive": "raakaa",
+          "genitive": "raa'an"
+        }
       }
     },
     "en": {

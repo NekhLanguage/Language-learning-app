@@ -57,121 +57,211 @@
       "forms": {
         "CONSOLE": {
           "form": "konsoli",
-          "plural": "konsolit"
+          "plural": "konsolit",
+          "partitive": "konsolia",
+          "accusative": "konsolin",
+          "genitive": "konsolin"
         },
         "CONTROLLER": {
           "form": "ohjain",
-          "plural": "ohjaimet"
+          "plural": "ohjaimet",
+          "partitive": "ohjainta",
+          "accusative": "ohjaimen",
+          "genitive": "ohjaimen"
         },
         "SCREEN": {
           "form": "näyttö",
-          "plural": "näytöt"
+          "plural": "näytöt",
+          "partitive": "näyttöä",
+          "accusative": "näytön",
+          "genitive": "näytön"
         },
         "TIER": {
           "form": "tier",
-          "plural": "tierit"
+          "plural": "tierit",
+          "partitive": "tieriä",
+          "accusative": "tierin",
+          "genitive": "tierin"
         },
         "PIXEL": {
           "form": "pikseli",
-          "plural": "pikselit"
+          "plural": "pikselit",
+          "partitive": "pikseliä",
+          "accusative": "pikselin",
+          "genitive": "pikselin"
         },
         "AVATAR": {
           "form": "avatar",
-          "plural": "avatarit"
+          "plural": "avatarit",
+          "partitive": "avataria",
+          "accusative": "avatarin",
+          "genitive": "avatarin"
         },
         "BOSS": {
           "form": "pomo",
-          "plural": "pomot"
+          "plural": "pomot",
+          "partitive": "pomoa",
+          "accusative": "pomon",
+          "genitive": "pomon"
         },
         "NPC": {
           "form": "NPC",
-          "plural": "NPC:t"
+          "plural": "NPC:t",
+          "partitive": "NPC:tä",
+          "accusative": "NPC:n",
+          "genitive": "NPC:n"
         },
         "COMPANION": {
           "form": "kumppani",
-          "plural": "kumppanit"
+          "plural": "kumppanit",
+          "partitive": "kumppania",
+          "accusative": "kumppanin",
+          "genitive": "kumppanin"
         },
         "COMBO": {
           "form": "kombo",
-          "plural": "kombot"
+          "plural": "kombot",
+          "partitive": "komboa",
+          "accusative": "kombon",
+          "genitive": "kombon"
         },
         "HARM": {
-          "form": "vahinko"
+          "form": "vahinko",
+          "partitive": "vahinkoa",
+          "accusative": "vahinkoa",
+          "genitive": "vahingon"
         },
         "VITALITY": {
-          "form": "elinvoima"
+          "form": "elinvoima",
+          "partitive": "elinvoimaa",
+          "accusative": "elinvoimaa",
+          "genitive": "elinvoiman"
         },
         "MISSION": {
           "form": "tehtävä",
-          "plural": "tehtävät"
+          "plural": "tehtävät",
+          "partitive": "tehtävää",
+          "accusative": "tehtävän",
+          "genitive": "tehtävän"
         },
         "ACHIEVEMENT": {
           "form": "saavutus",
-          "plural": "saavutukset"
+          "plural": "saavutukset",
+          "partitive": "saavutusta",
+          "accusative": "saavutuksen",
+          "genitive": "saavutuksen"
         },
         "UPGRADE": {
           "form": "päivitys",
-          "plural": "päivitykset"
+          "plural": "päivitykset",
+          "partitive": "päivitystä",
+          "accusative": "päivityksen",
+          "genitive": "päivityksen"
         },
         "DUNGEON": {
           "form": "luolasto",
-          "plural": "luolastot"
+          "plural": "luolastot",
+          "partitive": "luolastoa",
+          "accusative": "luolaston",
+          "genitive": "luolaston"
         },
         "SPAWN": {
           "form": "spawni",
-          "plural": "spawnit"
+          "plural": "spawnit",
+          "partitive": "spawnia",
+          "accusative": "spawnin",
+          "genitive": "spawnin"
         },
         "MAP": {
           "form": "kartta",
-          "plural": "kartat"
+          "plural": "kartat",
+          "partitive": "karttaa",
+          "accusative": "kartan",
+          "genitive": "kartan"
         },
         "PARTY": {
           "form": "ryhmä",
-          "plural": "ryhmät"
+          "plural": "ryhmät",
+          "partitive": "ryhmää",
+          "accusative": "ryhmän",
+          "genitive": "ryhmän"
         },
         "RAID": {
           "form": "raidi",
-          "plural": "raidit"
+          "plural": "raidit",
+          "partitive": "raidia",
+          "accusative": "raidin",
+          "genitive": "raidin"
         },
         "GUILD": {
           "form": "kilta",
-          "plural": "killat"
+          "plural": "killat",
+          "partitive": "kiltaa",
+          "accusative": "killan",
+          "genitive": "killan"
         },
         "INVENTORY": {
           "form": "inventaario",
-          "plural": "inventaariot"
+          "plural": "inventaariot",
+          "partitive": "inventaariota",
+          "accusative": "inventaarion",
+          "genitive": "inventaarion"
         },
         "VIAL": {
           "form": "ampulli",
-          "plural": "ampullit"
+          "plural": "ampullit",
+          "partitive": "ampullia",
+          "accusative": "ampullin",
+          "genitive": "ampullin"
         },
         "GEM": {
           "form": "jalokivi",
-          "plural": "jalokivet"
+          "plural": "jalokivet",
+          "partitive": "jalokiveä",
+          "accusative": "jalokiven",
+          "genitive": "jalokiven"
         },
         "LOADOUT": {
           "form": "varustus",
-          "plural": "varustukset"
+          "plural": "varustukset",
+          "partitive": "varustusta",
+          "accusative": "varustuksen",
+          "genitive": "varustuksen"
         },
         "COOLDOWN": {
           "form": "palautumisaika",
-          "plural": "palautumisajat"
+          "plural": "palautumisajat",
+          "partitive": "palautumisaikaa",
+          "accusative": "palautumisajan",
+          "genitive": "palautumisajan"
         },
         "STRATEGY": {
           "form": "strategia",
-          "plural": "strategiat"
+          "plural": "strategiat",
+          "partitive": "strategiaa",
+          "accusative": "strategian",
+          "genitive": "strategian"
         },
         "LEADERBOARD": {
           "form": "tulostaulukko",
-          "plural": "tulostaulukot"
+          "plural": "tulostaulukot",
+          "partitive": "tulostaulukkoa",
+          "accusative": "tulostaulukon",
+          "genitive": "tulostaulukon"
         },
         "RANK": {
           "form": "ranki",
-          "plural": "rankit"
+          "plural": "rankit",
+          "partitive": "rankia",
+          "accusative": "rankin",
+          "genitive": "rankin"
         },
         "SPEEDRUN": {
           "form": "speedrun",
-          "plural": "speedrunit"
+          "plural": "speedrunit",
+          "partitive": "speedrunia",
+          "accusative": "speedrunin",
+          "genitive": "speedrunin"
         },
         "RESPAWN": {
           "base": "respawnata",
@@ -281,30 +371,54 @@
           "2_plural": "pelastatte",
           "3_plural": "pelastavat"
         },
-        "ELITE": [
-          "eliitti"
-        ],
-        "CRITICAL": [
-          "kriittinen"
-        ],
-        "RARE": [
-          "harvinainen"
-        ],
-        "HIDDEN": [
-          "piilotettu"
-        ],
-        "COMPETITIVE": [
-          "kilpailullinen"
-        ],
-        "MYTHIC": [
-          "myyttinen"
-        ],
-        "TACTICAL": [
-          "taktinen"
-        ],
-        "OVERPOWERED": [
-          "ylivoimainen"
-        ]
+        "ELITE": {
+          "form": "eliitti",
+          "plural": "eliitit",
+          "partitive": "eliittiä",
+          "genitive": "eliitin"
+        },
+        "CRITICAL": {
+          "form": "kriittinen",
+          "plural": "kriittiset",
+          "partitive": "kriittistä",
+          "genitive": "kriittisen"
+        },
+        "RARE": {
+          "form": "harvinainen",
+          "plural": "harvinaiset",
+          "partitive": "harvinaista",
+          "genitive": "harvinaisen"
+        },
+        "HIDDEN": {
+          "form": "piilotettu",
+          "plural": "piilotetut",
+          "partitive": "piilotettua",
+          "genitive": "piilotetun"
+        },
+        "COMPETITIVE": {
+          "form": "kilpailullinen",
+          "plural": "kilpailulliset",
+          "partitive": "kilpailullista",
+          "genitive": "kilpailullisen"
+        },
+        "MYTHIC": {
+          "form": "myyttinen",
+          "plural": "myyttiset",
+          "partitive": "myyttistä",
+          "genitive": "myyttisen"
+        },
+        "TACTICAL": {
+          "form": "taktinen",
+          "plural": "taktiset",
+          "partitive": "taktista",
+          "genitive": "taktisen"
+        },
+        "OVERPOWERED": {
+          "form": "ylivoimainen",
+          "plural": "ylivoimaiset",
+          "partitive": "ylivoimaista",
+          "genitive": "ylivoimaisen"
+        }
       }
     },
     "en": {
