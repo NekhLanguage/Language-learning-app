@@ -192,6 +192,28 @@
 //                            particle + the verb entry's `negative` form
 //                            (ja «…食べますが、昼ご飯は食べません» — Emi
 //                            run-10 -50). Missing data falls through.
+//   possessiveSuffix         possessives are pronominal suffixes on the
+//                            possessed noun, declared as a map keyed by
+//                            possessive concept id (ar ي/ك/ه/ها/نا/هم:
+//                            «يدي», «غرفتها») — the free word the data
+//                            stores («لي») is the dative and means "to
+//                            me", not "my" (Emi run-6 -16). Ta marbuta
+//                            opens before the suffix (غرفة → غرفتها).
+//   demonstrativeGenderAgreement
+//                            a demonstrative subject agrees with its
+//                            predicate noun's gender via the entry's `f`
+//                            form («هذه يدي», «تلك ساقك») — the
+//                            masculine dictionary form beside a feminine
+//                            predicate contradicts the adjective
+//                            agreement already rendered (Emi run-11 -52).
+//   verbGovernedPrepositions the verb's own government decides the
+//                            preposition before its complement, via the
+//                            verb entry's `governedPreposition` field
+//                            («أحصل على كتاب», «تتوقف عن الأكل», «أذهب
+//                            إلى المنزل») — never the English source,
+//                            which marks none of these (Emi run-11 -53).
+//                            Skipped when the template carries an
+//                            explicit glue word for the relation.
 //   counterPrefix            numerals count through a per-noun counter
 //                            prefixed to the noun with a linker (ja
 //                            «二冊の本», «十七台の電話»). { kunCounter,
@@ -290,6 +312,13 @@ export const LANGUAGE_RULES = {
     // question bug (fi -ko / zh 吗 / ja か / ar هل). Wh-questions were
     // already localized; yes/no never was. finalize swaps in Arabic ؟/،.
     questionParticle: "هل",
+    // Possessives suffix onto the possessed noun («يدي», «رأسك»,
+    // «غرفتها») — Emi run-6 -16, run-11 blast radius 12% of sentences.
+    possessiveSuffix: {
+      MY: "ي", YOUR: "ك", HIS: "ه", HER: "ها", OUR: "نا", THEIR: "هم",
+    },
+    demonstrativeGenderAgreement: true,
+    verbGovernedPrepositions: true,
   },
   en: {
     features: {

@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-30
 
+### Arabic possessives, demonstratives, and verb prepositions are real Arabic
+Three constructions that read as word-for-word English are now the genuine article. "My hand" was rendering as the dative «لي يد» ("to me, a hand") — possessives now fuse onto the noun the way Arabic does it: «يدي», «رأسك», «غرفتها». Demonstratives finally agree with what they point at — «هذه يدي» for a feminine noun, not a masculine «هذا» everywhere. And verbs that govern their own preposition get it from the Arabic verb, not the English source: «أحصل على كتاب», «نتوقف عن الأكل», «أذهب إلى المنزل». These were three of the four constructions holding Arabic back in review; the fourth (the هل question) shipped earlier today.
+
 ### Japanese sentences read like Japanese now
 Japanese drills had been assembling sentences in English word order with dictionary-form verbs — "is" in the middle of the sentence, "he starts sleep", one verb meaning "hold" doing duty for every "have". Six structural fixes landed together: the copula now ends the sentence (これは私の手です), two-verb chains compound the way Japanese compounds them (寝始めます), "and" between verbs becomes the て-form (食べて飲みます), "have" splits correctly between owning things (持っています) and having meetings, deadlines or headaches (があります), going somewhere marks the destination with に instead of treating it like an object (家に帰ります), and "but not" builds the real contrastive clause (朝ご飯を食べますが、昼ご飯は食べません). Every verb in the course also now teaches the polite ます form — the form every Japanese course teaches first and the one our own reference translations always used — and counting uses the right counter word per noun (二冊の本 for books, 十七台の電話 for phones). Mandarin gets the same "but not" fix (但是不吃午餐).
 
