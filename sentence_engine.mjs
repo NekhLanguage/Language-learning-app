@@ -47,7 +47,7 @@ export const GRAMMAR_RULE_IDS = [
   "prepositional_case",      // uk prepositions govern the noun's case ending
   "definite_article",        // the/o/der/… for a described noun subject
   "genitive_possessor",      // tr possessor takes the genitive case (benim, bizim, onun)
-  "have_existential",        // tr HAVE = genitive-possessor + possessed-noun + var
+  "have_existential",        // tr genitive + var; ja flagged noun + が + あります
   "predicate_instrumental",  // pl predicate nouns after być take the instrumental
   "numeral_government",      // pl numbers five+ govern the genitive plural
   "apocope",                 // es/it pre-nominal masc-sg short forms (buen/buon)
@@ -1344,8 +1344,55 @@ const orderType = langRuleValue(lang, "wordOrder") || "SVO";
 let ordered;
 
 if (orderType === "SOV") {
-  if (verb && object) noteRule("sov_word_order");
-  ordered = [subject, object, verb];
+  // Verb-FINAL, not merely object-before-verb: the old [subject, object,
+  // verb] guess appended every remaining concept AFTER the verb, which is
+  // what put the ja copula mid-sentence («これは私のです小さい手» — Emi
+  // run-10 -45: the predicate noun trailed です). Subject leads, every
+  // other non-verb concept keeps its authored order, verbs close the
+  // clause. A control chain (two verbs adjacent in the authored concepts)
+  // reverses so the complement precedes its control verb («寝始めます» —
+  // SLEEP before START, Emi run-10 -46); verbs separated by a conjunction
+  // keep their authored order for the coordination rule to read.
+  // Multi-clause templates (repeated concept ids / two copulas) keep the
+  // legacy shape — clause chaining has no SOV mechanism yet and reordering
+  // them would only shuffle the breakage.
+  const verbs = concepts.filter(c => vocab().concepts[c]?.type === "verb");
+  const multiClause = new Set(concepts).size !== concepts.length ||
+    verbs.filter(c => isCopulaConcept(c)).length > 1;
+  if (multiClause) {
+    if (verb && object) noteRule("sov_word_order");
+    ordered = [subject, object, verb];
+  } else {
+    let verbTail = verbs;
+    if (verbs.length === 2 &&
+        concepts.indexOf(verbs[1]) === concepts.indexOf(verbs[0]) + 1) {
+      verbTail = [verbs[1], verbs[0]];
+    } else if (verbs.length === 2 &&
+        concepts.indexOf(verbs[1]) === concepts.indexOf(verbs[0]) + 2 &&
+        isConjunctionConcept(concepts[concepts.indexOf(verbs[0]) + 1])) {
+      // Coordinated verbs keep their authored [V1, conj, V2] cluster at the
+      // clause end so the coordination rule can read the shape.
+      verbTail = concepts.slice(
+        concepts.indexOf(verbs[0]), concepts.indexOf(verbs[1]) + 1);
+    }
+    const tailSet = new Set(verbTail);
+    const rest = concepts.filter(c => c !== subject &&
+      !verbs.includes(c) && !tailSet.has(c));
+    // Postposed adpositions (declared): a glue word directly before a
+    // nominal in the authored order follows it instead («家から», never
+    // «から家»).
+    if (langRule(lang, "postposedAdpositions")) {
+      for (let i = 0; i < rest.length - 1; i++) {
+        if (vocab().concepts[rest[i]]?.type === "glue" &&
+            ["noun", "pronoun", "time"].includes(vocab().concepts[rest[i + 1]]?.type)) {
+          [rest[i], rest[i + 1]] = [rest[i + 1], rest[i]];
+          i++;
+        }
+      }
+    }
+    if (verbs.length && rest.length) noteRule("sov_word_order");
+    ordered = [subject, ...rest, ...verbTail];
+  }
 } else if (orderType === "VSO") {
   if (verb && subject) noteRule("vso_word_order");
   ordered = [verb, subject, object];
@@ -2132,6 +2179,12 @@ function finalizeSentence(lang, sentence) {
   if (lang === "th") {
     return sentence.replace(/,\s*/g, " ").replace(/[.?]+$/, "").trim();
   }
+  // Arabic punctuation: the question mark is mirrored (؟) and the comma
+  // is ، — the generic paths emit Latin ? and , (Emi run-11 -54: wh
+  // questions were authored with ؟, generated yes/no questions leaked ?).
+  if (lang === "ar") {
+    return sentence.replace(/\?/g, "؟").replace(/,/g, "،");
+  }
   // CJK text takes no inter-word spaces and a full-width stop. The generic
   // assembly paths join words with spaces and end with "." — normalize both
   // (ja's particle path emits no terminal punctuation at all).
@@ -2320,6 +2373,14 @@ const ZERO_PRESENT_COPULA = langsWith("zeroPresentCopula");
 function isCopulaConcept(cid) {
   return cid === "BE" ||
     vocab().concepts?.[cid]?.semantic_role === "copula";
+}
+
+// A conjunction/glue concept that joins two clauses or phrases (AND, BUT).
+// Type varies across data files (glue/connector), so match on either.
+function isConjunctionConcept(cid) {
+  const m = vocab().concepts?.[cid];
+  return !!m && (m.type === "glue" || m.type === "connector") &&
+    ["AND", "BUT", "OR"].includes(cid);
 }
 
 function isAdjectiveConcept(cid) {
@@ -2649,10 +2710,17 @@ const JA_KUN_COUNTER_NUMBERS = new Set([
 // plus the linking particle の. ONE-NINE use the universal つ counter (二つ
 // の食べ物 = "two foods"); TEN-FIFTEEN use 個 (十個の食べ物). Renders the
 // "<number><counter>の" prefix to splice in front of the noun phrase.
-function jaQuantifierPrefix(numberCid, numberWord) {
+function jaQuantifierPrefix(lang, numberCid, numberWord, nounCid = null) {
   noteRule("ja_counter");
-  const counter = JA_KUN_COUNTER_NUMBERS.has(numberCid) ? "つ" : "個";
-  return numberWord + counter + "の";
+  const spec = langRuleValue(lang, "counterPrefix") || {};
+  const entry = nounCid ? vocab().languages?.[lang]?.forms?.[nounCid] : null;
+  const perNoun = entry && !Array.isArray(entry) &&
+    typeof entry.counter === "string" ? entry.counter : null;
+  const counter = perNoun ||
+    (JA_KUN_COUNTER_NUMBERS.has(numberCid)
+      ? (spec.kunCounter || "つ")
+      : (spec.default || "個"));
+  return numberWord + counter + (spec.linker || "の");
 }
 
 function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
@@ -2685,6 +2753,17 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
   }
   return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)} ${bare}`;
 }
+// Standalone-topic-particle languages (ja) mark the subject inline in the
+// dedicated clause builders — renderSegments inserts the particle as its
+// own segment for generic templates, but these builders assemble strings.
+// Attach-mode languages (ko) already went through attachParticle.
+function topicMarkedSubject(lang, subject) {
+  const nomSpec = langRuleValue(lang, "nominalParticles");
+  return nomSpec?.topic && !nomSpec.attach && typeof nomSpec.topic === "string"
+    ? subject + nomSpec.topic
+    : subject;
+}
+
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid);
@@ -2692,6 +2771,13 @@ function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCi
   const plural = isPluralPronoun(subjectCid);
   const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid, { plural });
   if (lang === "th") return joinWords(lang, [subject, be, complement]) + ".";
+  // An SOV language with a standalone copula closes the clause with it:
+  // «これは良い本です。», never «これです良い本» (Emi run-10 -45).
+  // Zero-copula SOV languages (ko/tr) render `be` empty and keep the
+  // legacy shape — their suffix machinery splices onto the final word.
+  if (langRuleValue(lang, "wordOrder") === "SOV" && be) {
+    return joinSentence([topicMarkedSubject(lang, subject), complement, be]);
+  }
   return joinSentence([subject, be, complement]);
 }
 
@@ -2712,10 +2798,7 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
     // ja's topic particle は is inserted inline here (renderSegments
     // handles it for other templates; this builder does not walk
     // segments). attachParticle already covers ko's suffix-mode case.
-    const nomSpec = langRuleValue(lang, "nominalParticles");
-    const subj = nomSpec?.topic && !nomSpec.attach && typeof nomSpec.topic === "string"
-      ? subject + nomSpec.topic
-      : subject;
+    const subj = topicMarkedSubject(lang, subject);
     // SOV languages (ja) push the copula to the end: «それはあなたの電話です»
     // (subject + complement + copula) — NOT «それはですあなたの電話».
     const words = langRuleValue(lang, "wordOrder") === "SOV"
@@ -2758,6 +2841,11 @@ function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
     nounPhrase(lang, nounCid, { plural: isPluralPronoun(subjectCid) });
   // Thai predicative forms carry their own verb (อยู่บ้าน) — no copula.
   const beWord = (lang === "th" && predicative) ? "" : be;
+  // SOV + standalone copula: copula last («…家です»), subject topic-marked
+  // (same shape as buildCopularDemonstrative — Emi run-10 -45).
+  if (langRuleValue(lang, "wordOrder") === "SOV" && beWord) {
+    return joinWords(lang, [topicMarkedSubject(lang, subject), noun, beWord]);
+  }
   return joinWords(lang, [subject, beWord, noun]);
 }
 
@@ -2934,7 +3022,72 @@ if (tpl.structure?.type === "complex_clause") {
 // as a dropped copula are filtered out). Keeping tiles on this exact code
 // path is what guarantees they always match the sentence the engine grades
 // against.
+// The "V O1 but not O2" shape for languages declaring contrastiveNegation.
+// Returns finished segments (renderSegments’ contract) so L6 tiles, blanks
+// and the sentence all stay aligned; null when the rule, shape, or data
+// doesn’t apply — the generic path then renders (and the divergence
+// ratchet keeps showing it).
+function contrastiveNegationSegments(lang, tpl) {
+  const spec = langRuleValue(lang, "contrastiveNegation");
+  if (!spec) return null;
+  const c = tpl?.concepts || [];
+  const bi = c.findIndex(x => vocab().concepts?.[x]?.semantic_role === "logical_contrast");
+  if (bi === -1) return null;
+  if (vocab().concepts?.[c[bi + 1]]?.semantic_role !== "logical_negation") return null;
+  const obj2 = c[bi + 2];
+  if (vocab().concepts?.[obj2]?.type !== "noun") return null;
+  const subject = c.find(x => vocab().concepts?.[x]?.type === "pronoun");
+  const verb = c.find(x => vocab().concepts?.[x]?.type === "verb" && !isCopulaConcept(x));
+  const obj1 = c.find((x, i) => i < bi && x !== subject &&
+    vocab().concepts?.[x]?.type === "noun");
+  if (!subject || !verb || !obj1) return null;
+
+  const finite = getVerbForm(verb, subject, lang);
+
+  // repeatVerb (zh): the verb comes back after the negator — 不 cannot
+  // negate a bare noun («他吃早餐，但是不吃午餐», Emi run-9 -37). The
+  // negator is the NOT entry’s own form; the comma rides on the
+  // conjunction and the CJK finalize pass closes the spacing.
+  if (spec.repeatVerb) {
+    return [
+      { cid: subject, text: formOf(lang, subject) },
+      { cid: verb, text: finite },
+      { cid: obj1, text: formOf(lang, obj1) },
+      { cid: c[bi], text: "，" + formOf(lang, c[bi]) },
+      { cid: c[bi + 1], text: formOf(lang, c[bi + 1]) },
+      { cid: null, text: finite },
+      { cid: obj2, text: formOf(lang, obj2) },
+    ];
+  }
+  // negatedVerbForm (ja): first clause closes with the conjunction, the
+  // negated object takes the topic particle, the verb’s `negative` data
+  // form ends the sentence — «彼は朝ご飯を食べますが、昼ご飯は食べません»
+  // (Emi run-10 -50). Missing negative data falls through.
+  if (spec.negatedVerbForm) {
+    const negative = vocab().languages?.[lang]?.forms?.[verb]?.negative;
+    if (typeof negative !== "string") return null;
+    const particles = langRuleValue(lang, "nominalParticles");
+    const standalone = particles && !particles.attach;
+    const topicP = standalone && typeof particles.topic === "string" ? particles.topic : "";
+    const objP = standalone && typeof particles.object === "string" ? particles.object : "";
+    return [
+      { cid: subject, text: formOf(lang, subject) },
+      ...(topicP ? [{ cid: null, text: topicP }] : []),
+      { cid: obj1, text: formOf(lang, obj1) },
+      ...(objP ? [{ cid: null, text: objP }] : []),
+      { cid: verb, text: finite },
+      { cid: c[bi], text: spec.conjunction || formOf(lang, c[bi]) },
+      { cid: obj2, text: formOf(lang, obj2) },
+      ...(topicP ? [{ cid: null, text: topicP }] : []),
+      { cid: null, text: negative },
+    ];
+  }
+  return null;
+}
+
 function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
+  const contrastive = contrastiveNegationSegments(lang, tpl);
+  if (contrastive) return contrastive;
   const ordered = orderedConceptsForTemplate(tpl, lang);
   if (!ordered || !ordered.length) return null;
 
@@ -3033,6 +3186,44 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (isCopulaConcept(cid)) {
         const override = copulaOverride(lang, cid, ordered[idx + 1], subjectCid);
         return override !== null ? override : copulaForm(lang, cid, subjectCid);
+      }
+      // Verb coordination (declared: verbCoordination "te" — ja): the
+      // first conjunct of V-AND-V renders in its te form and the finite
+      // verb closes the clause: «食べて飲みます», never «食べるそして飲む»
+      // (Emi run-10 -47). Missing te data falls through to the finite
+      // form; the divergence ratchet shows it.
+      if (langRuleValue(lang, "verbCoordination") === "te" &&
+          isConjunctionConcept(ordered[idx + 1]) &&
+          vocab().concepts[ordered[idx + 2]]?.type === "verb") {
+        const entry = vocab().languages?.[lang]?.forms?.[cid];
+        if (entry && typeof entry === "object" && typeof entry.te === "string") {
+          return entry.te;
+        }
+      }
+      // Existential possession by noun class (declared — ja): a flagged
+      // abstract noun is possessed existentially, so HAVE renders its
+      // `existential` data form («会議があります»), not the transitive
+      // verb («会議を持っています» is not Japanese — Emi run-10 -48).
+      if (cid === "HAVE" && langRule(lang, "existentialHaveByNoun")) {
+        const objCid = ordered.find((c, i) =>
+          vocab().concepts[c]?.type === "noun" &&
+          isDirectObjectPosition(ordered, i, lang));
+        const existential = vocab().languages?.[lang]?.forms?.HAVE?.existential;
+        if (objCid && typeof existential === "string" &&
+            vocab().languages?.[lang]?.forms?.[objCid]?.existentialHave) {
+          noteRule("have_existential");
+          return existential;
+        }
+      }
+      // The authored per-template surface of a MAIN verb is the correct
+      // finite form (declared: authoredVerbSurfaces — ja «帰ります»,
+      // «やめます»); the paradigm/base lookup was emitting the dictionary
+      // form the corpus never uses.
+      if (langRule(lang, "authoredVerbSurfaces")) {
+        const surfaceOverride = tpl.surface?.[lang]?.[cid];
+        if (typeof surfaceOverride === "string" && surfaceOverride) {
+          return surfaceOverride;
+        }
       }
       return getVerbForm(cid, subjectCid, lang);
     }
@@ -3539,12 +3730,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       }
       return [adjectiveWord, nounForm, num + " " + ctr].filter(Boolean).join(" ");
     }
-    // Japanese requires a counter when a number quantifies a noun. Render as
-    // "<number><counter>の<noun>" so "二 食べ物" becomes "二つの食べ物"
-    // ("two foods"). Adjectives sit between の and the noun, matching the
-    // natural JA order ("二つの新しい食べ物").
-    if (lang === "ja") {
-      const prefix = jaQuantifierPrefix(numberCid, numberWord);
+    // Counter-prefix languages (ja): "<number><counter>の<noun>" — the
+    // per-noun counter wins at any number («二冊の本», «十七台の電話»);
+    // ONE-NINE without one keep the universal つ («二つの食べ物»); the
+    // rest fall to the declared default (個). Adjectives sit between the
+    // linker and the noun («二冊の新しい本»).
+    if (langRuleValue(lang, "counterPrefix")) {
+      const prefix = jaQuantifierPrefix(lang, numberCid, numberWord, cid);
       return adjectiveWord
         ? prefix + adjectiveWord + nounForm
         : prefix + nounForm;
@@ -3981,6 +4173,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       return getVerbForm(cid, subjectCid, lang);
     }
 
+    // The conjunction the te-coordination rule consumed renders empty —
+    // the te form IS the "and" («食べて飲みます» carries no そして). Only
+    // when the first conjunct actually has te data; otherwise the word
+    // stays (the V1 fell through to its finite form).
+    if (langRuleValue(lang, "verbCoordination") === "te" &&
+        isConjunctionConcept(cid) &&
+        vocab().concepts[ordered[idx - 1]]?.type === "verb" &&
+        vocab().concepts[ordered[idx + 1]]?.type === "verb" &&
+        typeof vocab().languages?.[lang]?.forms?.[ordered[idx - 1]]?.te === "string") {
+      return "";
+    }
+
     return surfaceForm(lang, cid);
   });
 
@@ -4035,8 +4239,24 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         typeof tpl.surface?.[lang]?.[ordered[nounIndex]] === "string" &&
         tpl.surface[lang][ordered[nounIndex]] !== formOf(lang, ordered[nounIndex]);
       if (nounIndex !== -1 && !(particles.attach && overridden)) {
-        const role = ordered.includes("HAVE") && particles.haveObject
-          ? "haveObject" : "object";
+        // haveObject: every HAVE template in attach-mode languages (ko —
+        // possession is existential across the board), but only flagged
+        // existentialHave nouns where the split is per-noun (ja: «会議が
+        // あります» vs «シャツを持っています» — Emi run-10 -48).
+        const nounEntry = vocab().languages?.[lang]?.forms?.[ordered[nounIndex]];
+        const existentialObject = ordered.includes("HAVE") && particles.haveObject &&
+          (!langRule(lang, "existentialHaveByNoun") ||
+            (nounEntry && !Array.isArray(nounEntry) && nounEntry.existentialHave));
+        // destination: the bare object of a motion verb is a goal, not a
+        // patient — «家に帰ります», never «家を行く» (Emi run-10 -49).
+        // Only when no adposition already carries the relation (TO/FROM
+        // templates render their own postposition).
+        const motionDestination = !existentialObject && particles.destination &&
+          ordered.some(c => vocab().concepts[c]?.type === "verb" &&
+            vocab().concepts[c]?.semantic_role === "motion") &&
+          !ordered.some(c => vocab().concepts[c]?.type === "glue");
+        const role = existentialObject ? "haveObject"
+          : motionDestination ? "destination" : "object";
         marks.push({ idx: nounIndex, role });
       }
     }

@@ -31,6 +31,7 @@ import {
   finalizeSentence,
   optionSurfaceFor,
   slotContextFor,
+  jaQuantifierPrefix,
 } from "../../sentence_engine.mjs";
 
 let vocab, templates;
@@ -889,7 +890,7 @@ test("ko: L3 blank and option tiles carry the particle with the word", () => {
 test("ja: particle behaviour survives the nominalParticles generalization", () => {
   // ja declares the same rule the ko work introduced; renders must be
   // byte-identical to the old hardcoded branch.
-  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "私は食べ物を食べる。");
+  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "私は食べ物を食べます。");
 });
 
 // ---------------------------------------------------------------------
@@ -1119,4 +1120,62 @@ test("fi: hidden in the registry until the gate passes", () => {
   assert.ok(fi, "fi must be registered (validators see it)");
   assert.equal(fi.hidden, true);
   assert.equal(fi.beta, true);
+});
+
+// ---------------------------------------------------------------------
+// Emi run-10 Japanese structural fixes (-45…-50, counters, register).
+// ---------------------------------------------------------------------
+
+test("ja: copular clauses end on the copula, subject topic-marked (Emi run-10 -45)", () => {
+  assert.equal(buildSentence("ja", tplById("THIS_IS_MY_HAND")), "これは私の手です。");
+  assert.equal(buildSentence("ja", tplById("THIS_IS_A_GOOD_BOOK")), "これは良い本です。");
+  assert.equal(buildSentence("ja", tplById("THAT_IS_YOUR_LEG")), "それはあなたの脚です。");
+});
+
+test("ja: control-verb chains compound with the complement first (Emi run-10 -46)", () => {
+  assert.equal(buildSentence("ja", tplById("THEY_START_SLEEPING")), "彼らは寝始めます。");
+  assert.equal(buildSentence("ja", tplById("WE_STOP_EATING")), "私たちは食べるのをやめます。");
+});
+
+test("ja: V-AND-V coordinates through the te form, no そして (Emi run-10 -47)", () => {
+  assert.equal(buildSentence("ja", tplById("I_EAT_AND_DRINK")), "私は食べて飲みます。");
+});
+
+test("ja: HAVE splits by noun — transitive 持っています vs existential があります (Emi run-10 -48)", () => {
+  assert.equal(buildSentence("ja", tplById("SHE_HAS_SHOES")), "彼女は靴を持っています。");
+  assert.equal(buildSentence("ja", tplById("SHE_HAS_MEETING")), "彼女は会議があります。");
+});
+
+test("ja: bare motion goals take に and adpositions postpose (Emi run-10 -49)", () => {
+  assert.equal(buildSentence("ja", tplById("I_GO_HOME")), "私は家に帰ります。");
+  assert.equal(buildSentence("ja", tplById("I_GO_TO_TABLE")), "私はテーブルに行きます。");
+  assert.equal(buildSentence("ja", tplById("I_GO_FROM_HOME")), "私は家から行きます。");
+});
+
+test("ja/zh: 'but not' renders the contrastive negation (Emi run-10 -50 / run-9 -37)", () => {
+  assert.equal(buildSentence("ja", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")),
+    "彼は朝ご飯を食べますが、昼ご飯は食べません。");
+  assert.equal(buildSentence("zh", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")),
+    "他吃早餐，但是不吃午餐。");
+});
+
+test("ja: per-noun counters win over the generic 個/つ (Emi run-10 counter table)", () => {
+  assert.equal(jaQuantifierPrefix("ja", "TWO", "二", "BOOK"), "二冊の");
+  assert.equal(jaQuantifierPrefix("ja", "SEVENTEEN", "十七", "PHONE"), "十七台の");
+  // a noun with no counter field keeps the kun つ for 1-9 …
+  assert.equal(jaQuantifierPrefix("ja", "TWO", "二", "FOOD"), "二つの");
+  // … and the declared default above nine.
+  assert.equal(jaQuantifierPrefix("ja", "FIFTEEN", "十五", "FOOD"), "十五個の");
+});
+
+test("ja: generated verbs are polite ます, matching the authored corpus (Emi run-10 register)", () => {
+  assert.equal(buildSentence("ja", tplById("HE_READ_BOOK")), "彼は本を読みます。");
+  assert.equal(buildSentence("ja", tplById("SHE_HAS_SHOES")).endsWith("います。"), true);
+});
+
+test("ar: yes/no questions front هل and close with the Arabic ؟ (Emi run-11 -54)", () => {
+  const q = buildSentence("ar", tplById("IS_THAT_YOUR_PHONE"));
+  assert.equal(q.startsWith("هل "), true);
+  assert.equal(q.endsWith("؟"), true);
+  assert.equal(q.includes("?"), false);
 });

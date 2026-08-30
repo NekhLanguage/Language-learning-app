@@ -1983,40 +1983,40 @@
      "form": "休息"
     },
     "LIFT": {
-     "base": "持ち上げる"
+     "base": "持ち上げます"
     },
     "STRETCH": {
-     "base": "ストレッチする"
+     "base": "ストレッチします"
     },
     "BREATHE": {
-     "base": "呼吸する"
+     "base": "呼吸します"
     },
     "PEDAL": {
-     "base": "ペダルを漕ぐ"
+     "base": "ペダルを漕ぎます"
     },
     "PUSH": {
-     "base": "押す"
+     "base": "押します"
     },
     "PULL": {
-     "base": "引く"
+     "base": "引きます"
     },
     "MEASURE": {
-     "base": "測る"
+     "base": "測ります"
     },
     "IMPROVE": {
-     "base": "上達する"
+     "base": "上達します"
     },
     "RECOVER": {
-     "base": "回復する"
+     "base": "回復します"
     },
     "WEIGH": {
-     "base": "量る"
+     "base": "量ります"
     },
     "FINISH": {
-     "base": "終える"
+     "base": "終えます"
     },
     "REPEAT": {
-     "base": "繰り返す"
+     "base": "繰り返します"
     },
     "HEALTHY": [
      "健康な"

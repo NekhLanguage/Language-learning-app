@@ -159,10 +159,10 @@ const FEATURE_CHECKS = {
     // counters (noun + numeral + counter). Data half: at least one noun
     // must carry the per-noun field, or the rule runs on the default only.
     const field = row.classifiers ? 'classifier' :
-      row.counters ? 'counter' : null;
+      (row.counters || row.counterPrefix) ? 'counter' : null;
     if (!field) {
       return { ok: false,
-        detail: 'needs the classifiers (zh) or counters (ko) rule' };
+        detail: 'needs the classifiers (zh), counters (ko), or counterPrefix (ja) rule' };
     }
     const forms = vocab.languages?.[lang]?.forms || {};
     const any = Object.values(forms).some((e) => e && !Array.isArray(e) &&
@@ -261,7 +261,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.zeroPresentCopula],
   [(row) => !!row.verbGenderParadigm, 'verbGenderParadigm',
     (f) => !!f.verbGenderParadigm],
-  [(row) => !!row.classifiers || !!row.counters, 'classifiersOrCounters',
+  [(row) => !!row.classifiers || !!row.counters || !!row.counterPrefix,
+    'classifiersOrCounters',
     (f) => !!f.classifiersOrCounters],
 ];
 

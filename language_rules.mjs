@@ -163,6 +163,42 @@
 //                            use their data `predicative` form instead.
 //                            excludeStructures lists template structures
 //                            whose predicate can't take the suffix.
+//   authoredVerbSurfaces     a per-template surface override for a MAIN verb
+//                            (tpl.surface[lang][cid]) is the correct finite
+//                            form and wins over the paradigm/base lookup —
+//                            ja «帰ります» in "I go home", «やめます» in
+//                            "we stop eating". Complement verbs after a
+//                            control verb already read the override.
+//   postposedAdpositions     adpositions follow their noun phrase (ja
+//                            «家から行きます», «テーブルに行きます») — the
+//                            SOV ordering emits noun before glue.
+//   existentialHaveByNoun    HAVE splits by the possessed noun: nouns whose
+//                            entry carries `existentialHave: true` take the
+//                            existential construction (ja «会議があります» —
+//                            noun + haveObject particle + the HAVE entry's
+//                            `existential` form); other nouns keep the
+//                            transitive verb («シャツを持っています»).
+//   verbCoordination         "te": V1-AND-V2 renders V1 in its `te` data
+//                            form, drops the conjunction word, and leaves V2
+//                            finite — ja «食べて飲みます», never «食べる
+//                            そして飲む» (Emi run-10 -47). Missing te data
+//                            falls through to the generic path (ratcheted).
+//   contrastiveNegation      the "V O1 but not O2" template shape.
+//                            { repeatVerb: true } repeats the finite verb
+//                            after the negator (zh «他吃早餐，但是不吃
+//                            午餐» — Emi run-9 -37); { conjunction,
+//                            negatedVerbForm: true } closes the first clause
+//                            with the conjunction and renders O2 + topic
+//                            particle + the verb entry's `negative` form
+//                            (ja «…食べますが、昼ご飯は食べません» — Emi
+//                            run-10 -50). Missing data falls through.
+//   counterPrefix            numerals count through a per-noun counter
+//                            prefixed to the noun with a linker (ja
+//                            «二冊の本», «十七台の電話»). { kunCounter,
+//                            default, linker } — kunCounter (つ) covers
+//                            ONE-NINE when the noun declares no counter;
+//                            a per-noun `counter` field wins at any number
+//                            (Emi run-10: 個 was the only counter emitted).
 //
 // ── features: the grammar coverage matrix ────────────────────────────────
 // Each row also declares `features` — LINGUISTIC FACTS about the language
@@ -249,6 +285,11 @@ export const LANGUAGE_RULES = {
     inflectsNounPlural: true, fullNounGender: true,
     nounGenderForCountables: true, verbPersonParadigm: true,
     verbGenderParadigm: true,
+    // Yes/no questions front هل over the declarative clause («هل ذلك لك
+    // هاتف؟») — Emi run-11 -54: the fourth language on the shared
+    // question bug (fi -ko / zh 吗 / ja か / ar هل). Wh-questions were
+    // already localized; yes/no never was. finalize swaps in Arabic ؟/،.
+    questionParticle: "هل",
   },
   en: {
     features: {
@@ -404,15 +445,38 @@ export const LANGUAGE_RULES = {
       // declared rule ko uses (the insertion logic previously lived as a
       // ja-only branch in renderSegments).
       topicParticle: true, marksCaseOnDirectObjects: true,
+      // Numerals count through a per-noun counter («二冊の本», «十七台の
+      // 電話») — 個 is generic, not universal (Emi run-10: every counter
+      // in 380 sentences was 個).
+      classifiersOrCounters: true,
     },
     spacelessTiles: true, wordOrder: "SOV",
-    nominalParticles: { topic: "は", object: "を" },
+    nominalParticles: {
+      topic: "は", object: "を",
+      // Flagged abstract nouns possess existentially: «会議が» + あります
+      // (Emi run-10 -48: 持つ was a universal "have", 86 instances).
+      haveObject: "が",
+      // Bare destinations of a motion verb take に, never を: «家に
+      // 帰ります», not «家を行く» (Emi run-10 -49).
+      destination: "に",
+    },
     // Yes/no questions keep declarative order and append か at the end:
     // «それはあなたの電話ですか。» — never «ですそれあなたの電話？»
     // (Emi run-10 -51). か itself carries the question sense; finalize
     // adds the sentence-final 。.
     statementOrderQuestion: true,
     finalQuestionParticle: "か",
+    // The authored per-template verb surface is the correct finite form
+    // («帰ります», «やめます») — read it for main verbs, not only
+    // control-verb complements.
+    authoredVerbSurfaces: true,
+    // Postpositions follow their noun: «家から行きます», «テーブルに
+    // 行きます» — never «から家» (the SOV ordering emits noun first).
+    postposedAdpositions: true,
+    existentialHaveByNoun: true,
+    verbCoordination: "te",
+    contrastiveNegation: { conjunction: "が、", negatedVerbForm: true },
+    counterPrefix: { kunCounter: "つ", default: "個", linker: "の" },
   },
   ko: {
     features: {
@@ -483,6 +547,10 @@ export const LANGUAGE_RULES = {
     // spaces around CJK glyphs.
     statementOrderQuestion: true,
     finalQuestionParticle: "吗？",
+    // "V O1 but not O2" repeats the verb after the negator — 不 cannot
+    // negate a bare noun: «他吃早餐，但是不吃午餐», never «…但是不午餐»
+    // (Emi run-9 -37). The negator is the NOT entry's own form.
+    contrastiveNegation: { repeatVerb: true },
   },
   no: {
     features: {

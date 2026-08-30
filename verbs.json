@@ -6,7 +6,8 @@
     },
     {
       "concept_id": "GO",
-      "type": "verb"
+      "type": "verb",
+      "semantic_role": "motion"
     },
     {
       "concept_id": "EAT",
@@ -42,7 +43,8 @@
     },
     {
       "concept_id": "COME",
-      "type": "verb"
+      "type": "verb",
+      "semantic_role": "motion"
     },
     {
       "concept_id": "USE",

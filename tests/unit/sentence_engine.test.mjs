@@ -257,7 +257,7 @@ test("plural-only subjects get plural copula and adjective agreement", () => {
 
 test("CJK sentences join without spaces and end with a full-width stop", () => {
   assert.equal(buildSentence("zh", tplById("I_EAT_FOOD")), "我吃食物。");
-  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "私は食べ物を食べる。");
+  assert.equal(buildSentence("ja", tplById("I_EAT_FOOD")), "私は食べ物を食べます。");
 });
 
 test("Japanese noun-subject copular sentences take the topic marker は", () => {

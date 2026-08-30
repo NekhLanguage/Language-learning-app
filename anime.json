@@ -769,25 +769,25 @@
         "SWORD":     { "form": "刀" },
         "ARMOR":     { "form": "鎧" },
         "SHIELD":    { "form": "盾" },
-        "ATTACK":    { "base": "攻撃する" },
-        "DEFEND":    { "base": "守る" },
+        "ATTACK":    { "base": "攻撃します" },
+        "DEFEND":    { "base": "守ります" },
 
         "DRAGON":    { "form": "ドラゴン" },
         "DEMON":     { "form": "悪魔" },
         "SPIRIT":    { "form": "霊" },
-        "SUMMON":    { "base": "召喚する" },
+        "SUMMON":    { "base": "召喚します" },
         "SINISTER":  ["不吉な"],
 
         "NINJA":     { "form": "忍者" },
         "SAMURAI":   { "form": "侍" },
         "SENSEI":    { "form": "先生" },
         "SHADOW":    { "form": "影" },
-        "STRIKE":    { "base": "打つ" },
+        "STRIKE":    { "base": "打ちます" },
 
-        "TRANSFORM": { "base": "変身する" },
+        "TRANSFORM": { "base": "変身します" },
         "POWER":     { "form": "力" },
-        "CHANNEL":   { "base": "集中する" },
-        "UNLEASH":   { "base": "解き放つ" },
+        "CHANNEL":   { "base": "集中します" },
+        "UNLEASH":   { "base": "解き放ちます" },
         "POWERFUL":  ["強力な"],
 
         "QUEST":     { "form": "クエスト" },
@@ -797,8 +797,8 @@
         "ANCIENT":   ["古代の"],
 
         "BATTLE":    { "form": "バトル" },
-        "DODGE":     { "base": "かわす" },
-        "PROTECT":   { "base": "守る" },
+        "DODGE":     { "base": "かわします" },
+        "PROTECT":   { "base": "守ります" },
         "FIERCE":    ["激しい"],
         "MIGHTY":    ["強大な"],
 
@@ -808,16 +808,16 @@
         "CURSED":    ["呪われた"],
         "SACRED":    ["神聖な"],
 
-        "TRAIN":     { "base": "修行する" },
+        "TRAIN":     { "base": "修行します" },
         "MASTER":    { "form": "師匠" },
         "CLAN":      { "form": "一族" },
-        "AWAKEN":    { "base": "目覚める" },
+        "AWAKEN":    { "base": "目覚めます" },
         "LEGENDARY": ["伝説の"],
 
         "MECHA":     { "form": "メカ" },
         "ARENA":     { "form": "アリーナ" },
-        "CONQUER":   { "base": "征服する" },
-        "TRANSCEND": { "base": "超越する" },
+        "CONQUER":   { "base": "征服します" },
+        "TRANSCEND": { "base": "超越します" },
         "ETERNAL":   ["永遠の"]
       }
     },
