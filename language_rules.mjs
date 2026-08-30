@@ -658,12 +658,29 @@ export const LANGUAGE_RULES = {
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true,
+      // The indefinite article `bir` is invariant («bir kitap», «bir ev»,
+      // «bir adam») — no gender agreement, no allomorphy. Appears before
+      // singular countable nouns in indefinite contexts; predicate
+      // nominals and direct objects both take it. Emi 2026-08-29: 51/128
+      // of the tr divergence baseline was `bir` missing.
+      indefiniteArticle: true,
       // Possession is existential («Benim işim var») and the possessed noun
       // carries a person-agreeing suffix; predicate nominals take personal
       // copular endings («Ben adamım», «Sen kızsın») with -DIr only in 3sg.
       possessiveSuffixes: true, copulaPersonAgreement: true,
     },
     zeroPresentCopula: true, wordOrder: "SOV",
+    // `bir` is a fully separable free word (never fuses with the noun) AND
+    // Turkish frequently omits it in generic/definite contexts — the article
+    // is loose enough that authored surfaces which represent a bir-less
+    // rendering are the truth of the context, not a bug to guard against.
+    // The surface-override guards (sentence_engine ARTICLE_LANGS branches)
+    // gate on this: strict-article languages (de/en/es/fr/it/no/pt/el)
+    // reject a lexeme swap that would silently drop the article; tr does
+    // not, because dropping bir in a context that never needed it is not
+    // a bug (Ben eve giderim, Ben yemek yerim — both authored bir-less).
+    looseIndefiniteArticle: true,
+    indefiniteArticle: true,
     inflectsNounPlural: true, verbPersonParadigm: true,
     latinEncodingChecks: true,
     possessiveSuffixes: true, copulaPersonSuffixes: true,

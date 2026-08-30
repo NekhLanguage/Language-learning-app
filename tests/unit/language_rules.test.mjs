@@ -70,8 +70,11 @@ test("no LANGUAGE_RULES row for a language the app does not ship", () => {
 });
 
 test("derived sets keep their pre-consolidation memberships", () => {
+  // tr joined 2026-08-30: `bir` is invariant and always separated from the
+  // noun, but it still IS an indefinite article — Emi cycle-15 was 51/128
+  // tr divergences on this missing mechanism.
   assert.deepEqual([...langsWith("indefiniteArticle")].sort(),
-    ["de", "el", "en", "es", "fr", "it", "no", "pt"]);
+    ["de", "el", "en", "es", "fr", "it", "no", "pt", "tr"]);
   // fr/es joined 2026-08-27: post-nominal is their correct DEFAULT (the
   // missing flag shipped «un noir livre» — Emi -12); role-based
   // pre-nominal placement refines it per language.
@@ -544,10 +547,12 @@ test("tr: copular predicates agree in person and number", () => {
   assert.equal(turkishPersonalCopulaSuffix("küçük", 1, false), "küçüğüm");
   // Consonant-initial -sIn never softens.
   assert.equal(turkishPersonalCopulaSuffix("küçük", 2, false), "küçüksün");
-  // Full sentences, per Emi's list:
-  assert.equal(buildSentence("tr", tplById("I_AM_MAN")), "Ben adamım.");
-  assert.equal(buildSentence("tr", tplById("YOU_ARE_GIRL")), "Sen kızsın.");
-  assert.equal(buildSentence("tr", tplById("HE_IS_BOY")), "O oğlandır.");
+  // Full sentences, per Emi's list — tr's indefinite `bir` fronts each
+  // predicate noun after the 2026-08-30 declaration («Ben bir adamım»,
+  // authored per sentence_templates.json).
+  assert.equal(buildSentence("tr", tplById("I_AM_MAN")), "Ben bir adamım.");
+  assert.equal(buildSentence("tr", tplById("YOU_ARE_GIRL")), "Sen bir kızsın.");
+  assert.equal(buildSentence("tr", tplById("HE_IS_BOY")), "O bir oğlandır.");
 });
 
 test("wordOrder declarations preserve the historic WORD_ORDER map", () => {

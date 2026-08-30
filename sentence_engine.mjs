@@ -1014,6 +1014,14 @@ function definiteNounPhrase(lang, cid, opts = {}) {
 // Languages whose nounPhrase adds an indefinite article (the branches below).
 // Derived from language_rules.mjs — the declaration lives there.
 const ARTICLE_LANGS = langsWith("indefiniteArticle");
+// STRICT_ARTICLE_LANGS is the subset whose article is grammatically
+// obligatory on countable singulars (a lexeme swap via authored surface
+// would silently drop it). Turkish `bir` is loose (frequent omission in
+// generic/definite contexts, and always a free word) and opts out via
+// `looseIndefiniteArticle`.
+const STRICT_ARTICLE_LANGS = new Set(
+  [...ARTICLE_LANGS].filter((l) => !langRule(l, "looseIndefiniteArticle")),
+);
 
 // Italian article allomorphy is phonological: masculine takes lo/gli/uno
 // before s+consonant, z, gn, ps, pn, x, y («lo zaino», «gli gnocchi»,
@@ -1162,6 +1170,15 @@ function nounPhrase(lang, cid, opts = {}) {
       return IT_VOWEL_INITIAL.test(base) ? "un'" + base : "una " + base;
     }
     return (IT_LO_INITIAL.test(base) ? "uno " : "un ") + base;
+  }
+
+  if (lang === "tr") {
+    // Turkish `bir` is invariant — no gender, no allomorphy. Turkish nouns
+    // don't carry a gender field, so gate on countability alone (mass nouns
+    // already bailed above via `meta.countable === false`; per-form noArticle
+    // handles meal-name incorporation like «kahvaltı yapar» — no bir).
+    noteRule("indefinite_article");
+    return "bir " + base;
   }
 
   return base;
@@ -3480,7 +3497,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const surfaceOverride = tpl.surface?.[lang]?.[cid];
     if (typeof surfaceOverride === "string" &&
         surfaceOverride !== formOf(lang, cid) &&
-        (!ARTICLE_LANGS.has(lang) || surfaceOverride.includes(formOf(lang, cid))) &&
+        (!STRICT_ARTICLE_LANGS.has(lang) || surfaceOverride.includes(formOf(lang, cid))) &&
         surfaceOverride !== phrase) {
       // Returning before the modifier branches means no random modifier can
       // land on this noun — record that in sharedChoices (only where the
@@ -3624,7 +3641,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const authoredNounSurface = tpl.surface?.[lang]?.[cid];
     if (typeof authoredNounSurface === "string" &&
         authoredNounSurface !== formOf(lang, cid) &&
-        (!ARTICLE_LANGS.has(lang) || authoredNounSurface.includes(formOf(lang, cid)))) {
+        (!STRICT_ARTICLE_LANGS.has(lang) || authoredNounSurface.includes(formOf(lang, cid)))) {
       // Same cross-build guard as the surface-override return above: this
       // noun rendered without a modifier — pin that for the paired build.
       if (sharedChoices) {
