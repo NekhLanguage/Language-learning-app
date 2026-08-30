@@ -1010,6 +1010,26 @@ test("fi: yes/no questions fuse the -ko/-kö clitic onto the fronted verb", () =
     "Onko tuo sinun puhelin?");
 });
 
+test("zh/ja/th: yes/no questions keep declarative order and add a final particle (Emi run-10 -51)", () => {
+  const tpl = tplById("IS_THAT_YOUR_PHONE");
+  // zh appends 吗？ after the declarative clause — never fronts 是.
+  assert.equal(buildSentence("zh", tpl), "那是你的电话吗？");
+  // ja pushes the copula to the end (SOV), inserts the topic particle は
+  // inline, and closes with か. finalize adds the CJK sentence stop.
+  assert.equal(buildSentence("ja", tpl), "それはあなたの電話ですか。");
+  // th appends its tag particle ใช่ไหม with no terminal punctuation.
+  assert.equal(buildSentence("th", tpl), "นั่นคือโทรศัพท์ของคุณใช่ไหม");
+});
+
+test("zh: 是 stays before a possessive-headed noun predicate — 很 is adjectives only (Emi run-9 -36)", () => {
+  // Possessives are typed as adjectives with semantic_role: 'possessive';
+  // the zhCopulaOverride guard must fall through so «这是我的手» renders
+  // 是, not «这很我的手» (the buggy zh-adjective route).
+  assert.equal(buildSentence("zh", tplById("THIS_IS_MY_HAND")), "这是我的手。");
+  assert.equal(buildSentence("zh", tplById("HE_IS_MY_DAD")), "他是我的爸爸。");
+  assert.equal(buildSentence("zh", tplById("SHE_IS_MY_MOM")), "她是我的妈妈。");
+});
+
 test("fi: 3rd-person reflexive possession is a suffix in the slot's case", () => {
   assert.equal(buildSentence("fi", tplById("SHE_GO_TO_HER_ROOM")),
     "Hän menee huoneeseensa.");

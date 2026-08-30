@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-08-30
+
+### Chinese and Japanese ask yes/no questions the way they're actually asked
+"Is that your phone?" was rendering as «是那你的电话？» in Mandarin and «ですそれあなたの電話？» in Japanese — English inversion applied, question particle dropped. Both were the same underlying gap and both are now fixed. Mandarin keeps the declarative clause and closes with 吗？ («那是你的电话吗？»). Japanese keeps its own SOV order, marks the subject with は, ends on the copula, and closes with か. Thai's tag particle ใช่ไหม, which had been hardcoded in the engine, is now declared the same way so future languages that append a final question particle can inherit the rule instead of getting another one-off branch.
+
+### "This is my hand" in Mandarin says 是, not 很
+Chinese uses the degree adverb 很 in place of the copula before a predicate adjective («他很强») — but not before a possessive-headed noun predicate. The engine had been sending «这是我的手» down the adjective path because possessives are grammatically typed as adjectives, producing the ungrammatical «这很我的手». Predicate nouns keep 是 across the whole course now, mirroring the guard Thai already carries.
+
 ## 2026-08-29
 
 ### Chinese counts the way Chinese counts

@@ -2328,14 +2328,20 @@ function isAdjectiveConcept(cid) {
 
 // Chinese predicate adjectives take the degree adverb 很 instead of the copula
 // 是 ("他很强", not "他是强"). 是 is still correct before a predicate noun
-// ("他是学生"). Returns the surface to use in place of the copula for zh when
-// the complement is a bare adjective, or null to fall through to copulaForm.
+// ("他是学生") and before a possessive-headed noun predicate ("这是我的手",
+// not "这很我的手") — possessives are typed as adjectives but head a noun
+// phrase, so they fall through to 是 the same way Thai routes them past its
+// zero-copula adjective rule. Returns the surface to use in place of the
+// copula for zh when the complement is a bare adjective, or null to fall
+// through to copulaForm.
 function zhCopulaOverride(lang, beCid, complementCid) {
-  if (lang === "zh" && isCopulaConcept(beCid) && isAdjectiveConcept(complementCid)) {
-    noteRule("zh_predicate_adjective");
-    return "很";
+  if (lang !== "zh" || !isCopulaConcept(beCid) || !isAdjectiveConcept(complementCid)) {
+    return null;
   }
-  return null;
+  const compMeta = vocab().concepts?.[complementCid];
+  if (compMeta?.semantic_role === "possessive") return null;
+  noteRule("zh_predicate_adjective");
+  return "很";
 }
 
 // Thai splits the copula three ways: adjectives are stative verbs and take
@@ -2695,10 +2701,27 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const complement = nounWithPossessive(lang, possessiveCid, nounCid);
 
-  // Thai keeps declarative order and asks with the tag particle ใช่ไหม —
-  // no question mark (นั่นคือโทรศัพท์ของคุณใช่ไหม).
-  if (lang === "th") {
-    return joinWords(lang, [subject, be, complement]) + "ใช่ไหม";
+  // Some languages keep declarative order and add a sentence-final tag
+  // particle instead of fronting the copula — th «...ใช่ไหม», zh
+  // «...吗？», ja «...か。» (Emi run-10 -51 across fi/zh/ja was one
+  // shared bug — this closes the zh and ja legs; fi keeps its clitic).
+  // The particle carries any language-specific terminator (？); finalize
+  // adds 。 for CJK when none is present.
+  const finalParticle = langRuleValue(lang, "finalQuestionParticle");
+  if (finalParticle) {
+    // ja's topic particle は is inserted inline here (renderSegments
+    // handles it for other templates; this builder does not walk
+    // segments). attachParticle already covers ko's suffix-mode case.
+    const nomSpec = langRuleValue(lang, "nominalParticles");
+    const subj = nomSpec?.topic && !nomSpec.attach && typeof nomSpec.topic === "string"
+      ? subject + nomSpec.topic
+      : subject;
+    // SOV languages (ja) push the copula to the end: «それはあなたの電話です»
+    // (subject + complement + copula) — NOT «それはですあなたの電話».
+    const words = langRuleValue(lang, "wordOrder") === "SOV"
+      ? [subj, complement, be]
+      : [subj, be, complement];
+    return joinWords(lang, words) + finalParticle;
   }
   // Copula-dropping languages form the yes/no question without "to be"
   // («Це твій телефон?»); pt/es keep declarative order and mark the question
