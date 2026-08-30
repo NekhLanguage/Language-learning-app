@@ -1179,3 +1179,40 @@ test("ar: yes/no questions front هل and close with the Arabic ؟ (Emi run-11 -
   assert.equal(q.endsWith("؟"), true);
   assert.equal(q.includes("?"), false);
 });
+
+// ---------------------------------------------------------------------
+// Emi Arabic fixes: -16 possessive suffixes, -52 demonstrative gender,
+// -53 verb-governed prepositions.
+// ---------------------------------------------------------------------
+
+test("ar: possessives fuse as suffixes on the noun, dative word gone (Emi -16)", () => {
+  assert.equal(buildSentence("ar", tplById("THIS_IS_MY_HAND")), "هذه يدي.");
+  assert.equal(buildSentence("ar", tplById("SHE_IS_MY_MOM")), "هي أمي.");
+  assert.equal(buildSentence("ar", tplById("HE_IS_MY_DAD")), "هو أبي.");
+  // ta marbuta opens before the suffix: غرفة → غرفتها
+  assert.equal(buildSentence("ar", tplById("SHE_GO_TO_HER_ROOM")),
+    "هي تذهب إلى غرفتها.");
+  // the dedicated question builder reaches possession through
+  // nounWithPossessive — «هاتفك», matching the authored render exactly
+  assert.equal(buildSentence("ar", tplById("IS_THAT_YOUR_PHONE")),
+    "هل ذلك هاتفك؟");
+});
+
+test("ar: demonstratives agree with the predicate noun's gender (Emi run-11 -52)", () => {
+  // يد is feminine in the data → هذه; ذراع is masculine in the data → ذلك
+  assert.equal(buildSentence("ar", tplById("THIS_IS_MY_HAND")), "هذه يدي.");
+  assert.equal(buildSentence("ar", tplById("THAT_IS_MY_ARM")), "ذلك ذراعي.");
+  // ساق is feminine in the data → تلك (the authored render still carries
+  // ذلك — flagged to Emi as an authored-line inconsistency, data wins)
+  assert.equal(buildSentence("ar", tplById("THAT_IS_YOUR_LEG")), "تلك ساقك.");
+});
+
+test("ar: the verb's own government supplies the preposition (Emi run-11 -53)", () => {
+  assert.equal(buildSentence("ar", tplById("I_GET_BOOK")), "أنا أحصل على كتاب.");
+  assert.equal(buildSentence("ar", tplById("WE_STOP_EATING")), "نحن نتوقف عن الأكل.");
+  assert.equal(buildSentence("ar", tplById("I_GO_HOME")), "أنا أذهب إلى المنزل.");
+  // an explicit glue word already carries the relation — no doubling
+  assert.equal(buildSentence("ar", tplById("I_GO_TO_TABLE")), "أنا أذهب إلى طاولة.");
+  // a time complement is not verb-governed
+  assert.equal(buildSentence("ar", tplById("WE_GO_TOMORROW")), "نحن نذهب غداً.");
+});

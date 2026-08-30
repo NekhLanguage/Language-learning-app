@@ -474,12 +474,14 @@
     "THIRD_PERSON_PLURAL": [
       "هم"
     ],
-    "THIS": [
-      "هذا"
-    ],
-    "THAT": [
-      "ذلك"
-    ],
+    "THIS": {
+      "form": "هذا",
+      "f": "هذه"
+    },
+    "THAT": {
+      "form": "ذلك",
+      "f": "تلك"
+    },
     "ANY": [
       "أي"
     ],
@@ -601,6 +603,7 @@
       "3_plural": "يفعلون"
     },
     "GO": {
+      "governedPreposition": "إلى",
       "base": "ذهب",
       "1_singular": "أذهب",
       "2_singular": "تذهب",
@@ -621,6 +624,7 @@
       "3_plural": "يبدؤون"
     },
     "STOP": {
+      "governedPreposition": "عن",
       "base": "توقف",
       "1_singular": "أتوقف",
       "2_singular": "تتوقف",
@@ -661,6 +665,7 @@
       "3_plural": "يستخدمون"
     },
     "GET": {
+      "governedPreposition": "على",
       "base": "حصل",
       "1_singular": "أحصل",
       "2_singular": "تحصل",

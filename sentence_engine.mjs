@@ -2266,6 +2266,41 @@ function possessiveArticleFor(lang, nounCid, plural = false) {
 // preposition demands («з його мамою»), when the entry carries the data.
 // `subjectCid` (fi): lets the reflexive-possessive rule see who owns —
 // clause builders pass their subject; callers without one are unchanged.
+// Pronominal possessive suffix (declared: possessiveSuffix — a map keyed
+// by possessive concept id). The free word the data stores («لي») is the
+// dative and means "to me", not "my" (Emi run-6 -16) — the possessed noun
+// carries the suffix instead: «يدي», «رأسك». Ta marbuta opens before a
+// suffix (غرفة → غرفتها). Returns null when the rule or the mapping
+// doesn't cover this possessive, so callers fall through unchanged.
+function pronominalPossessedForm(lang, possessiveCid, nounForm) {
+  const spec = langRuleValue(lang, "possessiveSuffix");
+  const suffix = spec && typeof spec === "object" ? spec[possessiveCid] : null;
+  if (typeof suffix !== "string" || !nounForm) return null;
+  const stem = nounForm.endsWith("ة")
+    ? nounForm.slice(0, -1) + "ت"
+    : nounForm;
+  return stem + suffix;
+}
+
+// Demonstrative gender agreement (declared: demonstrativeGenderAgreement —
+// ar): a demonstrative agrees with the noun it points at through the
+// entry's `f` form («هذه يدي», «تلك ساقك») — Emi run-11 -52: the
+// masculine dictionary form beside a feminine predicate contradicts the
+// adjective agreement the app already renders. Falls back to the plain
+// form when the rule, the referent's gender, or the data is missing.
+function demonstrativeForm(lang, cid, referentNounCid) {
+  const base = formOf(lang, cid);
+  if (!langRule(lang, "demonstrativeGenderAgreement")) return base;
+  if (vocab().concepts?.[cid]?.semantic_role !== "demonstrative") return base;
+  const entry = vocab().languages?.[lang]?.forms?.[cid];
+  const f = entry && !Array.isArray(entry) ? entry.f : null;
+  if (typeof f !== "string") return base;
+  const gender = vocab().languages?.[lang]?.forms?.[referentNounCid]?.gender;
+  if (gender !== "f") return base;
+  noteRule("gender_agreement");
+  return f;
+}
+
 function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subjectCid = null) {
   if (lang === "fr") return frenchPossessivePhrase(possessiveCid, nounCid);
   // Declared rule (reflexivePossessiveSuffix — Finnish): the subject owns
@@ -2290,6 +2325,12 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subje
   if (caseName) {
     const declinedPoss = possessiveCaseForm(lang, possessiveCid, nounCid, caseName);
     if (declinedPoss) possessive = declinedPoss;
+  }
+  // Suffixal possessors fuse into the noun itself («هاتفك», never
+  // «لك هاتف») — the dedicated builders reach possession through here.
+  {
+    const suffixed = pronominalPossessedForm(lang, possessiveCid, noun);
+    if (suffixed) return suffixed;
   }
   // Enclitic possessors follow the noun (declared, not hardcoded): Thai
   // โทรศัพท์ของคุณ ("phone of-you", no article), Greek «το βιβλίο μου»
@@ -2765,7 +2806,8 @@ function topicMarkedSubject(lang, subject) {
 }
 
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
-  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
+  const subject = attachParticle(lang,
+    demonstrativeForm(lang, subjectCid, nounCid), "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid);
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const plural = isPluralPronoun(subjectCid);
@@ -2782,7 +2824,8 @@ function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCi
 }
 
 function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
-  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
+  const subject = attachParticle(lang,
+    demonstrativeForm(lang, subjectCid, nounCid), "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid);
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const complement = nounWithPossessive(lang, possessiveCid, nounCid);
@@ -3352,6 +3395,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       possessedForm = acc;
     }
   }
+  // Suffixal possessors (declared: possessiveSuffix — ar): the noun slot
+  // renders the fused form («يدي», «غرفتها») and the possessive slot
+  // renders empty, mirroring the enclitic split below.
+  if (precededByPossessive) {
+    const suffixed = pronominalPossessedForm(lang, ordered[idx - 1], possessedForm);
+    if (suffixed) return suffixed;
+  }
   // Enclitic possessors follow the noun — the possessive word attaches
   // after the possessed noun (its own ordered-walk slot renders empty):
   // th มือของฉัน ("hand of-me"), el «το βιβλίο μου» with the article.
@@ -3840,6 +3890,22 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           return phrase;
         }
       }
+      // Suffix languages fuse the drilled possessive into the noun the
+      // same way («هاتفك» as a drilled L2/L3 surface), and the blank
+      // captures the fused form — a bare «لك» tile in an adjective slot
+      // was Emi run-11's 25%-of-frames finding.
+      {
+        const suffixed = pronominalPossessedForm(lang, adjectiveCid, bareNoun || bare);
+        if (suffixed) {
+          // Overwrite the pre-branch capture (which recorded the free
+          // possessive word) — the L3 blank must hold the fused surface
+          // actually rendered, same overwrite the classifier branch does.
+          if (sharedChoices && adjectiveCid === forcedConcept) {
+            sharedChoices["blankSurface_" + lang] = suffixed;
+          }
+          return suffixed;
+        }
+      }
       // Possessives replace the indefinite article ("her wizard", not
       // "a her wizard") — but possessiveDefiniteArticle languages put the
       // definite article in front of the pair: «il suo cibo», «le sue
@@ -4100,6 +4166,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           vocab().concepts[nextCid]?.type === "noun") {
         return "";
       }
+      // Suffix languages fuse it into the noun («يدي») — same empty slot.
+      if (vocab().concepts[nextCid]?.type === "noun" &&
+          pronominalPossessedForm(lang, cid, formOf(lang, nextCid))) {
+        return "";
+      }
       // Reflexive possessive suffix (fi): the noun slot rendered the
       // suffixed form («huoneeseensa»), so the free possessive
       // disappears — mirror of the noun-slot early return.
@@ -4173,6 +4244,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       return getVerbForm(cid, subjectCid, lang);
     }
 
+    // Declared rule (demonstrativeGenderAgreement — ar): a demonstrative
+    // subject of a copular clause agrees with the predicate noun's gender
+    // («هذه يدي», «تلك ساقك» — Emi run-11 -52). The referent is the first
+    // noun after the demonstrative in the ordered walk.
+    if (meta.semantic_role === "demonstrative" && cid === subjectCid &&
+        isCopularTemplate &&
+        langRule(lang, "demonstrativeGenderAgreement")) {
+      const referent = ordered.find((c, i) =>
+        i > idx && vocab().concepts[c]?.type === "noun");
+      if (referent) return demonstrativeForm(lang, cid, referent);
+    }
+
     // The conjunction the te-coordination rule consumed renders empty —
     // the te form IS the "and" («食べて飲みます» carries no そして). Only
     // when the first conjunct actually has te data; otherwise the word
@@ -4189,6 +4272,28 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   });
 
   const segments = ordered.map((cid, idx) => ({ cid, text: words[idx] }));
+
+  // Declared rule (verbGovernedPrepositions — ar): the verb's own
+  // government, not the English source, decides the preposition before its
+  // complement — «أحصل على كتاب», «تتوقف عن الأكل», «أذهب إلى المنزل»
+  // (Emi run-11 -53: every emitted preposition mirrored an English one;
+  // every missing one was one English does not mark). Skipped when the
+  // template carries an explicit glue word (I_GO_TO_TABLE renders its own
+  // إلى) and when nothing verb-governable follows (time words, directions).
+  if (langRule(lang, "verbGovernedPrepositions") &&
+      !ordered.some(c => vocab().concepts[c]?.type === "glue")) {
+    const vIdx = ordered.findIndex(c => vocab().concepts[c]?.type === "verb" &&
+      typeof vocab().languages?.[lang]?.forms?.[c]?.governedPreposition === "string");
+    if (vIdx !== -1 && vIdx + 1 < ordered.length) {
+      const compType = vocab().concepts[ordered[vIdx + 1]]?.type;
+      if (compType === "noun" || compType === "verb") {
+        segments.splice(vIdx + 1, 0, {
+          cid: null,
+          text: vocab().languages[lang].forms[ordered[vIdx]].governedPreposition,
+        });
+      }
+    }
+  }
 
   // Topic/object particles (language_rules nominalParticles — ja は/を,
   // ko 은는/을를/이가). Previously a ja-only branch; ko inherits the exact
