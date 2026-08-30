@@ -110,6 +110,13 @@
 //                            clitic onto it, chosen by vowel harmony:
 //                            {back, front} — fi «Onko tuo sinun
 //                            puhelin?» («syökö», front-vowel verbs).
+//   finalQuestionParticle    yes/no questions keep declarative order and
+//                            append this particle at the end — zh «那是你
+//                            的手机吗？», ja «それはあなたの電話ですか。»,
+//                            th «นั่นคือโทรศัพท์ของคุณใช่ไหม». Emit any
+//                            language-specific terminator (？) with the
+//                            particle itself; finalizeSentence will add
+//                            the CJK stop (。) when none is present.
 //   conjugatingNegator       the negator is a verb and agrees with the
 //                            subject in person/number through the NOT
 //                            entry's own paradigm (fi en/et/ei/emme/
@@ -400,6 +407,12 @@ export const LANGUAGE_RULES = {
     },
     spacelessTiles: true, wordOrder: "SOV",
     nominalParticles: { topic: "は", object: "を" },
+    // Yes/no questions keep declarative order and append か at the end:
+    // «それはあなたの電話ですか。» — never «ですそれあなたの電話？»
+    // (Emi run-10 -51). か itself carries the question sense; finalize
+    // adds the sentence-final 。.
+    statementOrderQuestion: true,
+    finalQuestionParticle: "か",
   },
   ko: {
     features: {
@@ -464,6 +477,12 @@ export const LANGUAGE_RULES = {
     // (never wrong, only sometimes less idiomatic). Before a classifier
     // the counting numeral 两 replaces 二 (Emi 2026-08-29-41).
     classifiers: { default: "个", numeralOverrides: { TWO: "两" } },
+    // Yes/no questions keep declarative order and end with 吗？ — never a
+    // fronted copula («是那你的电话？» from Emi run-9/-38 was the bug).
+    // The full-width ？ ships with the particle; finalize collapses
+    // spaces around CJK glyphs.
+    statementOrderQuestion: true,
+    finalQuestionParticle: "吗？",
   },
   no: {
     features: {
@@ -532,7 +551,12 @@ export const LANGUAGE_RULES = {
   th: {
     features: { adjectivePosition: "post", possessivePlacement: "enclitic" },
     postNominalAdjectives: true, spacelessJoin: true, spacelessTiles: true,
-    possessiveEnclitic: true },
+    possessiveEnclitic: true,
+    // Yes/no questions keep declarative order and end with the tag particle
+    // ใช่ไหม — no terminal punctuation (Thai's finalize strips . and ?).
+    statementOrderQuestion: true,
+    finalQuestionParticle: "ใช่ไหม",
+  },
   tr: {
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
