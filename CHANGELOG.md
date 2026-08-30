@@ -8,6 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-08-30
 
+### Japanese sentences read like Japanese now
+Japanese drills had been assembling sentences in English word order with dictionary-form verbs — "is" in the middle of the sentence, "he starts sleep", one verb meaning "hold" doing duty for every "have". Six structural fixes landed together: the copula now ends the sentence (これは私の手です), two-verb chains compound the way Japanese compounds them (寝始めます), "and" between verbs becomes the て-form (食べて飲みます), "have" splits correctly between owning things (持っています) and having meetings, deadlines or headaches (があります), going somewhere marks the destination with に instead of treating it like an object (家に帰ります), and "but not" builds the real contrastive clause (朝ご飯を食べますが、昼ご飯は食べません). Every verb in the course also now teaches the polite ます form — the form every Japanese course teaches first and the one our own reference translations always used — and counting uses the right counter word per noun (二冊の本 for books, 十七台の電話 for phones). Mandarin gets the same "but not" fix (但是不吃午餐).
+
 ### Chinese and Japanese ask yes/no questions the way they're actually asked
 "Is that your phone?" was rendering as «是那你的电话？» in Mandarin and «ですそれあなたの電話？» in Japanese — English inversion applied, question particle dropped. Both were the same underlying gap and both are now fixed. Mandarin keeps the declarative clause and closes with 吗？ («那是你的电话吗？»). Japanese keeps its own SOV order, marks the subject with は, ends on the copula, and closes with か. Thai's tag particle ใช่ไหม, which had been hardcoded in the engine, is now declared the same way so future languages that append a final question particle can inherit the rule instead of getting another one-off branch.
 

@@ -778,17 +778,17 @@
         "REFEREE":    { "form": "レフェリー" },
         "COACH":      { "form": "コーチ" },
 
-        "KICK":       { "base": "蹴る" },
-        "PASS":       { "base": "パスする" },
-        "SHOOT":      { "base": "シュートする" },
-        "DRIBBLE":    { "base": "ドリブルする" },
-        "SCORE":      { "base": "得点する" },
+        "KICK":       { "base": "蹴ります" },
+        "PASS":       { "base": "パスします" },
+        "SHOOT":      { "base": "シュートします" },
+        "DRIBBLE":    { "base": "ドリブルします" },
+        "SCORE":      { "base": "得点します" },
 
         "HEADER":     { "form": "ヘディング" },
-        "TACKLE":     { "base": "タックルする" },
-        "CROSS":      { "base": "クロスする" },
+        "TACKLE":     { "base": "タックルします" },
+        "CROSS":      { "base": "クロスします" },
         "VOLLEY":     { "form": "ボレー" },
-        "SPRINT":     { "base": "ダッシュする" },
+        "SPRINT":     { "base": "ダッシュします" },
 
         "FOUL":       { "form": "ファウル" },
         "PENALTY":    { "form": "ペナルティ" },
@@ -814,15 +814,15 @@
         "DECISIVE":   ["決定的な"],
         "CLINICAL":   ["冷静な"],
 
-        "INTERCEPT":  { "base": "インターセプトする" },
-        "DEFEND":     { "base": "守る" },
-        "BLOCK":      { "base": "ブロックする" },
-        "COUNTER":    { "base": "カウンターをする" },
-        "DOMINATE":   { "base": "支配する" },
+        "INTERCEPT":  { "base": "インターセプトします" },
+        "DEFEND":     { "base": "守ります" },
+        "BLOCK":      { "base": "ブロックします" },
+        "COUNTER":    { "base": "カウンターをします" },
+        "DOMINATE":   { "base": "支配します" },
 
         "CHAMPION":   { "form": "チャンピオン" },
         "CROWD":      { "form": "観客" },
-        "CELEBRATE":  { "base": "祝う" },
+        "CELEBRATE":  { "base": "祝います" },
         "FINAL":      { "form": "決勝" },
         "UNBEATABLE": ["無敵の"]
       }

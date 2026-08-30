@@ -80,7 +80,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.32";
+const APP_DATA_VERSION = "1.2.33";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -3718,6 +3718,17 @@ const { sentence: supportSentence } = chooseSupportSentence(tpl, supportLang, {
 const tileSegments = sentenceTilesForTemplate(targetLang, tpl, sharedChoices);
 
 let correctWords;
+// Spaceless targets (ja/zh/th) get no tokenized tiles for the dedicated
+// clause builders (yes/no question, copular demonstrative, complex clause)
+// — and the per-concept fallback below cannot reproduce those builders'
+// output (question particles, final copula, topic marks), so its tile bank
+// would contradict the sentence L7 grades. Bail and let the caller pick
+// another template. Closes the L6 half of the zh/ja question-particle fix.
+if ((!tileSegments || !tileSegments.length) &&
+    ["yes_no_question_copular", "copular_demonstrative", "complex_clause"]
+      .includes(tpl.structure?.type)) {
+  return null;
+}
 if (tileSegments && tileSegments.length) {
   // The drilled modifier is spliced into its noun's segment («червону
   // книгу»); split that one segment on whitespace so the modifier is its

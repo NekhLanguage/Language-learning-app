@@ -212,7 +212,7 @@
       "から"
     ],
     "TO": [
-      "へ"
+      "に"
     ],
     "BY": [
       "で"
@@ -229,30 +229,37 @@
     "FOOD": [
       "食べ物"
     ],
-    "HOUSE": [
-      "家"
-    ],
-    "HOME": [
-      "家"
-    ],
-    "BOOK": [
-      "本"
-    ],
+    "HOUSE": {
+      "form": "家",
+      "counter": "軒"
+    },
+    "HOME": {
+      "form": "家",
+      "counter": "軒"
+    },
+    "BOOK": {
+      "form": "本",
+      "counter": "冊"
+    },
     "THING": [
       "物"
     ],
-    "JOB": [
-      "仕事"
-    ],
-    "ROOM": [
-      "部屋"
-    ],
-    "BOY": [
-      "男の子"
-    ],
-    "GIRL": [
-      "女の子"
-    ],
+    "JOB": {
+      "form": "仕事",
+      "counter": "件"
+    },
+    "ROOM": {
+      "form": "部屋",
+      "counter": "部屋"
+    },
+    "BOY": {
+      "form": "男の子",
+      "counter": "人"
+    },
+    "GIRL": {
+      "form": "女の子",
+      "counter": "人"
+    },
     "MAN": [
       "男"
     ],
@@ -304,33 +311,42 @@
     "FACE": [
       "顔"
     ],
-    "BREAKFAST": [
-      "朝ご飯"
-    ],
-    "LUNCH": [
-      "昼ご飯"
-    ],
-    "DINNER": [
-      "夕ご飯"
-    ],
-    "CLOTHES": [
-      "服"
-    ],
-    "SHIRT": [
-      "シャツ"
-    ],
-    "SHOES": [
-      "靴"
-    ],
-    "TABLE": [
-      "テーブル"
-    ],
-    "PHONE": [
-      "電話"
-    ],
-    "PANTS": [
-      "ズボン"
-    ],
+    "BREAKFAST": {
+      "form": "朝ご飯",
+      "counter": "食"
+    },
+    "LUNCH": {
+      "form": "昼ご飯",
+      "counter": "食"
+    },
+    "DINNER": {
+      "form": "夕ご飯",
+      "counter": "食"
+    },
+    "CLOTHES": {
+      "form": "服",
+      "counter": "着"
+    },
+    "SHIRT": {
+      "form": "シャツ",
+      "counter": "着"
+    },
+    "SHOES": {
+      "form": "靴",
+      "counter": "足"
+    },
+    "TABLE": {
+      "form": "テーブル",
+      "counter": "台"
+    },
+    "PHONE": {
+      "form": "電話",
+      "counter": "台"
+    },
+    "PANTS": {
+      "form": "ズボン",
+      "counter": "本"
+    },
     "ONE": [
       "一"
     ],
@@ -492,43 +508,46 @@
       "年"
     ],
     "EAT": {
-      "base": "食べる"
+      "base": "食べます",
+      "te": "食べて",
+      "negative": "食べません"
     },
     "DRINK": {
-      "base": "飲む"
+      "base": "飲みます"
     },
     "READ": {
-      "base": "読む"
+      "base": "読みます"
     },
     "SEE": {
-      "base": "見る"
+      "base": "見ます"
     },
     "SLEEP": {
-      "base": "寝る"
+      "base": "寝ます"
     },
     "HAVE": {
-      "base": "持つ"
+      "base": "持っています",
+      "existential": "あります"
     },
     "DO": {
-      "base": "する"
+      "base": "します"
     },
     "GO": {
-      "base": "行く"
+      "base": "行きます"
     },
     "START": {
-      "base": "始める"
+      "base": "始めます"
     },
     "STOP": {
-      "base": "止める"
+      "base": "やめます"
     },
     "COME": {
-      "base": "来る"
+      "base": "来ます"
     },
     "USE": {
-      "base": "使う"
+      "base": "使います"
     },
     "GET": {
-      "base": "得る"
+      "base": "得ます"
     },
     "BE": {
       "base": "だ",

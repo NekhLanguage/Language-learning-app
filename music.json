@@ -767,11 +767,11 @@
         "CHORD":      { "form": "コード" },
         "HARMONY":    { "form": "ハーモニー" },
 
-        "SING":       { "base": "歌う" },
-        "STRUM":      { "base": "弾く" },
-        "COMPOSE":    { "base": "作曲する" },
-        "PERFORM":    { "base": "演奏する" },
-        "RECORD":     { "base": "録音する" },
+        "SING":       { "base": "歌います" },
+        "STRUM":      { "base": "弾きます" },
+        "COMPOSE":    { "base": "作曲します" },
+        "PERFORM":    { "base": "演奏します" },
+        "RECORD":     { "base": "録音します" },
 
         "CONCERT":    { "form": "コンサート" },
         "STAGE":      { "form": "ステージ" },
@@ -797,11 +797,11 @@
         "REMIX":      { "form": "リミックス" },
         "SAMPLE":     { "form": "サンプル" },
 
-        "REHEARSE":   { "base": "リハーサルする" },
-        "TUNE":       { "base": "チューニングする" },
-        "IMPROVISE":  { "base": "即興演奏する" },
-        "AMPLIFY":    { "base": "増幅する" },
-        "DROP":       { "base": "リリースする" },
+        "REHEARSE":   { "base": "リハーサルします" },
+        "TUNE":       { "base": "チューニングします" },
+        "IMPROVISE":  { "base": "即興演奏します" },
+        "AMPLIFY":    { "base": "増幅します" },
+        "DROP":       { "base": "リリースします" },
 
         "LOUD":       ["大きい"],
         "SOULFUL":    ["魂のこもった"],
