@@ -221,6 +221,20 @@
 //                            ONE-NINE when the noun declares no counter;
 //                            a per-noun `counter` field wins at any number
 //                            (Emi run-10: 個 was the only counter emitted).
+//   locativeCopula           string surface for the copula BE when its
+//                            complement is a position glue (spatial_relation)
+//                            or a `place`-semantic noun ("he is home") —
+//                            zh «在» distinct from the identity 是, same
+//                            way Thai splits three ways via thCopulaOverride
+//                            (Emi run-9 -39).
+//   colorPredicateSuffix     string appended to the bare color root in
+//                            predicate position — zh «色的» making «这本书
+//                            是红色的», not «书很红» (Emi run-9/run-6 -20).
+//                            Attributive position is untouched.
+//   comitativeBeforeVerb     string linker inserted between a comitative
+//                            WITH-phrase and the verb when the phrase moves
+//                            before the verb (zh «一起»: 他和他的妈妈一起
+//                            吃晚餐 — Emi run-9 -40).
 //
 // ── features: the grammar coverage matrix ────────────────────────────────
 // Each row also declares `features` — LINGUISTIC FACTS about the language
@@ -254,6 +268,12 @@
 //                              conjugatingNegator + the NOT paradigm)
 //   zeroPresentCopula          present-tense "to be" is dropped/suffixed
 //   definitenessAgreement      adjectives agree in definiteness (ar)
+//   locativeCopula             a distinct copula surface is used before a
+//                              location (zh 在 vs 是; th อยู่ vs เป็น)
+//   predicateColorNominalizer  colour adjectives in predicate position are
+//                              nominalized (zh «红色的» not stative «很红»)
+//   comitativeBeforeVerb       the comitative WITH-phrase precedes the verb
+//                              (zh 他和他的妈妈一起吃晚餐)
 //
 // Validator-membership flags (single source for lists that used to be
 // hardcoded in validation/*.js — memberships preserved exactly):
@@ -478,6 +498,10 @@ export const LANGUAGE_RULES = {
       // 電話») — 個 is generic, not universal (Emi run-10: every counter
       // in 380 sentences was 個).
       classifiersOrCounters: true,
+      // Adpositions follow their noun phrase: «家から», «テーブルに» —
+      // the postposedAdpositions rule is what drives the SOV noun-before-
+      // glue emission and the spatial_relation reorder.
+      postposedAdpositions: true,
     },
     spacelessTiles: true, wordOrder: "SOV",
     nominalParticles: {
@@ -564,6 +588,20 @@ export const LANGUAGE_RULES = {
       // measure word: «一本书», «两条裤子» — never bare «六工作»
       // (Emi 2026-08-28-19 / run-9).
       classifiersOrCounters: true,
+      // Location predicates ("book is on table", "he is home") take the
+      // locative copula 在, not the identity copula 是 — Emi run-9 -39.
+      locativeCopula: true,
+      // Position words follow their reference noun («桌子上面», not «上面
+      // 桌子») — Emi run-9 -39, same shape as ja's postposedAdpositions.
+      postposedAdpositions: true,
+      // Predicate colour adjectives take the 是 X色的 declarative shape
+      // («这本书是红色的»), not the stative-verb 很 X pattern — Emi run-9
+      // /run-6 -20.
+      predicateColorNominalizer: true,
+      // "SUBJ + VERB + with X" restructures as "SUBJ + with X + 一起 +
+      // VERB" in Chinese; the comitative phrase precedes the verb and a
+      // 一起 linker joins the two — Emi run-9 -40.
+      comitativeBeforeVerb: true,
     },
     spacelessTiles: true,
     // Per-noun `classifier` field in the data; 个 is the universal default
@@ -580,6 +618,23 @@ export const LANGUAGE_RULES = {
     // negate a bare noun: «他吃早餐，但是不吃午餐», never «…但是不午餐»
     // (Emi run-9 -37). The negator is the NOT entry's own form.
     contrastiveNegation: { repeatVerb: true },
+    // -39: locative copula 在 replaces 是 when the predicate is a position
+    // glue (spatial_relation templates) or a `place` noun ("he is home" →
+    // 他在家). Fires from copulaOverride and also drives the
+    // spatial_relation reorder / position-word stripping.
+    locativeCopula: "在",
+    // -39: spatial_relation position words follow their ground noun ([BOOK,
+    // BE, ON, TABLE] renders as 书在桌子上面, not 书是在上面桌子). The
+    // reorder runs whenever the language declares postposedAdpositions.
+    postposedAdpositions: true,
+    // -20: colour adjectives in predicate position render as `<root>色的`
+    // ("red" → 红色的) after the 是 copula. The bare color stem stays
+    // correct in attributive position.
+    colorPredicateSuffix: "色的",
+    // -40: comitative WITH-phrase moves before the verb with a 一起 linker
+    // between phrase and verb. Applies to both object-carrying and
+    // objectless complex-clause main clauses.
+    comitativeBeforeVerb: "一起",
   },
   no: {
     features: {

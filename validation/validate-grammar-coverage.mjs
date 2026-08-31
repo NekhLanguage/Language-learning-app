@@ -194,6 +194,22 @@ const FEATURE_CHECKS = {
     ok: false, // no engine mechanism exists yet — always a declared gap
     detail: 'no definiteness-agreement rule exists in the engine yet',
   }),
+  locativeCopula: (row) => ({
+    ok: typeof row.locativeCopula === 'string' && row.locativeCopula.length > 0,
+    detail: 'needs the locativeCopula rule (string surface — zh «在», th «อยู่»)',
+  }),
+  postposedAdpositions: (row) => ({
+    ok: !!row.postposedAdpositions,
+    detail: 'needs the postposedAdpositions rule',
+  }),
+  predicateColorNominalizer: (row) => ({
+    ok: typeof row.colorPredicateSuffix === 'string' && row.colorPredicateSuffix.length > 0,
+    detail: 'needs the colorPredicateSuffix rule (string appended to color root in predicate position — zh «色的»)',
+  }),
+  comitativeBeforeVerb: (row) => ({
+    ok: typeof row.comitativeBeforeVerb === 'string' && row.comitativeBeforeVerb.length > 0,
+    detail: 'needs the comitativeBeforeVerb rule (linker string between comitative phrase and verb — zh «一起»)',
+  }),
   verbGenderParadigm: (row, lang) => {
     if (!row.verbGenderParadigm) {
       return { ok: false, detail: 'needs the verbGenderParadigm rule' };
@@ -264,6 +280,17 @@ const RULE_IMPLIES_FEATURE = [
   [(row) => !!row.classifiers || !!row.counters || !!row.counterPrefix,
     'classifiersOrCounters',
     (f) => !!f.classifiersOrCounters],
+  [(row) => typeof row.locativeCopula === 'string' && row.locativeCopula.length > 0,
+    'locativeCopula',
+    (f) => !!f.locativeCopula],
+  [(row) => !!row.postposedAdpositions, 'postposedAdpositions',
+    (f) => !!f.postposedAdpositions],
+  [(row) => typeof row.colorPredicateSuffix === 'string' && row.colorPredicateSuffix.length > 0,
+    'predicateColorNominalizer',
+    (f) => !!f.predicateColorNominalizer],
+  [(row) => typeof row.comitativeBeforeVerb === 'string' && row.comitativeBeforeVerb.length > 0,
+    'comitativeBeforeVerb',
+    (f) => !!f.comitativeBeforeVerb],
 ];
 
 const findings = [];

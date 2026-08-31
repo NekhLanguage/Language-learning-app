@@ -34,6 +34,8 @@ export const GRAMMAR_RULE_IDS = [
   "verb_agreement",          // verb conjugates for the subject's person/number
   "zero_copula",             // uk/ar/tr drop present-tense "to be"
   "zh_predicate_adjective",  // zh uses 很, not 是, before predicate adjectives
+  "zh_predicate_color",      // zh colour predicates take 是 X色的 («这本书是红色的»)
+  "zh_locative_copula",      // zh location predicates take 在, not 是 («他在家»)
   "post_nominal_adjective",  // pt/ar place the adjective after the noun
   "french_elision",          // je aime → j'aime, le eau → l'eau
   "french_possessive_agreement", // sa/son agrees with the possessed noun
@@ -1318,8 +1320,26 @@ function orderedConceptsForTemplate(tpl, lang) {
   if (Array.isArray(explicit) && explicit.length) return explicit;
 
   // 1b) Relational templates: keep the authored concept order (see above).
+  // Postposed-adposition languages (zh, ja) still need their position glue
+  // to follow its ground noun even in this authored ordering — «书在桌子
+  // 上面» flips ON+TABLE to TABLE+ON (Emi run-9 -39). The generic SOV path
+  // below applies the same swap for other templates.
   if (RELATIONAL_STRUCTURES.has(tpl.structure?.type) && Array.isArray(tpl.concepts)) {
-    return tpl.concepts.slice();
+    const ordered = tpl.concepts.slice();
+    if (langRule(lang, "postposedAdpositions")) {
+      for (let i = 0; i < ordered.length - 1; i++) {
+        const meta = vocab().concepts[ordered[i]];
+        const nextMeta = vocab().concepts[ordered[i + 1]];
+        const isPositionGlue = meta?.type === "position" ||
+          (meta?.type === "glue" && meta?.semantic_role === "spatial_relation");
+        if (isPositionGlue &&
+            ["noun", "pronoun", "time"].includes(nextMeta?.type)) {
+          [ordered[i], ordered[i + 1]] = [ordered[i + 1], ordered[i]];
+          i++;
+        }
+      }
+    }
+    return ordered;
   }
 
   // 1c) Fixed-form structures render from the authored string (see
@@ -2450,15 +2470,38 @@ function isAdjectiveConcept(cid) {
 // ("他是学生") and before a possessive-headed noun predicate ("这是我的手",
 // not "这很我的手") — possessives are typed as adjectives but head a noun
 // phrase, so they fall through to 是 the same way Thai routes them past its
-// zero-copula adjective rule. Returns the surface to use in place of the
-// copula for zh when the complement is a bare adjective, or null to fall
-// through to copulaForm.
-function zhCopulaOverride(lang, beCid, complementCid) {
-  if (lang !== "zh" || !isCopulaConcept(beCid) || !isAdjectiveConcept(complementCid)) {
-    return null;
+// zero-copula adjective rule. Colours are the third case: they nominalize
+// as 是 X色的 ("this book is a red one"), not stative «很红» — Emi run-9/
+// run-6 -20. Returns the surface to use in place of the copula for zh, or
+// null to fall through to copulaForm.
+function zhCopulaOverride(lang, beCid, complementCid, structType) {
+  if (lang !== "zh" || !isCopulaConcept(beCid)) return null;
+  // Locative copula 在: fires when the complement is a position glue
+  // (spatial_relation templates — «书在桌子上面») or a `place` noun
+  // ("he is home" → 他在家). Same override shape as thCopulaOverride's
+  // อยู่ split. -39 (Emi run-9).
+  const locative = langRuleValue(lang, "locativeCopula");
+  if (locative) {
+    const compMeta = vocab().concepts?.[complementCid];
+    const isSpatialTemplate = structType === "spatial_relation" ||
+      structType === "spatial_relation_complex";
+    if (isSpatialTemplate || compMeta?.type === "position" ||
+        compMeta?.semantic_role === "place") {
+      noteRule("zh_locative_copula");
+      return locative;
+    }
   }
+  if (!isAdjectiveConcept(complementCid)) return null;
   const compMeta = vocab().concepts?.[complementCid];
   if (compMeta?.semantic_role === "possessive") return null;
+  // Colours: 是 leads, the color root gets 色的 in the predicate slot
+  // (rendered where the adjective is emitted, so the copula only signals
+  // the switch away from 很). -20 (Emi run-9/run-6).
+  if (compMeta?.semantic_role === "property_color" &&
+      langRuleValue(lang, "colorPredicateSuffix")) {
+    noteRule("zh_predicate_color");
+    return "是";
+  }
   noteRule("zh_predicate_adjective");
   return "很";
 }
@@ -2491,11 +2534,13 @@ function thCopulaOverride(lang, beCid, complementCid, subjectCid) {
 }
 
 // Combined copula override for languages with special copula behavior;
-// null falls through to copulaForm.
-function copulaOverride(lang, beCid, complementCid, subjectCid) {
+// null falls through to copulaForm. structType (optional) is the enclosing
+// template's structure.type — used by zh's locativeCopula to distinguish a
+// spatial_relation predicate from an ordinary noun predicate.
+function copulaOverride(lang, beCid, complementCid, subjectCid, structType) {
   const th = thCopulaOverride(lang, beCid, complementCid, subjectCid);
   if (th !== null) return th;
-  return zhCopulaOverride(lang, beCid, complementCid);
+  return zhCopulaOverride(lang, beCid, complementCid, structType);
 }
 
 // Copula surface for a given language. Returns "" for languages that drop the
@@ -2825,7 +2870,8 @@ function topicMarkedSubject(lang, subject) {
 function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCid) {
   const subject = attachParticle(lang,
     demonstrativeForm(lang, subjectCid, nounCid), "topic");
-  const override = copulaOverride(lang, beCid, nounCid, subjectCid);
+  const override = copulaOverride(lang, beCid, nounCid, subjectCid,
+    "copular_demonstrative");
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const plural = isPluralPronoun(subjectCid);
   const complement = adjectiveNounPhrase(lang, adjectiveCid, nounCid, { plural });
@@ -2843,7 +2889,8 @@ function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCi
 function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
   const subject = attachParticle(lang,
     demonstrativeForm(lang, subjectCid, nounCid), "topic");
-  const override = copulaOverride(lang, beCid, nounCid, subjectCid);
+  const override = copulaOverride(lang, beCid, nounCid, subjectCid,
+    "yes_no_question_copular");
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   const complement = nounWithPossessive(lang, possessiveCid, nounCid);
 
@@ -2890,7 +2937,8 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
-  const override = copulaOverride(lang, beCid, nounCid, subjectCid);
+  const override = copulaOverride(lang, beCid, nounCid, subjectCid,
+    "complex_clause");
   const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
   // A predicate noun may carry a dedicated predicative form — uk HOME is
   // «удома» ("he is at home"), not the dictionary «дім» ("he is a house").
@@ -2941,6 +2989,14 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
     ? companionPhrase(lang, withCid, possessiveCid, nounCid, subjectCid)
     : "";
 
+  // Comitative before verb (declared: comitativeBeforeVerb — zh «一起»):
+  // the "with X" phrase precedes the verb with a linker between it and
+  // the verb, giving «他和他的妈妈一起吃晚餐» — Emi run-9 -40. English
+  // and every other language keep the trailing companion.
+  const linker = langRuleValue(lang, "comitativeBeforeVerb");
+  if (linker && companion) {
+    return joinWords(lang, [subject, companion, linker, verb, object]);
+  }
   return joinWords(lang, [subject, verb, object, companion]);
 }
 
@@ -2951,6 +3007,10 @@ function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid
     ? companionPhrase(lang, withCid, possessiveCid, nounCid, subjectCid)
     : "";
 
+  const linker = langRuleValue(lang, "comitativeBeforeVerb");
+  if (linker && companion) {
+    return joinWords(lang, [subject, companion, linker, verb]);
+  }
   return joinWords(lang, [subject, verb, companion]);
 }
 function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subordinateFirst = false) {
@@ -3242,9 +3302,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // Copula in a present-tense statement: dropped entirely in
       // copula-less languages (uk/ar), replaced by 很 before a Chinese
       // predicate adjective, split three ways in Thai (zero/อยู่/คือ),
-      // conjugated everywhere else.
+      // conjugated everywhere else. structType lets zh's locativeCopula
+      // recognize a spatial_relation template even after postposition
+      // reordering has swapped a noun into ordered[idx + 1].
       if (isCopulaConcept(cid)) {
-        const override = copulaOverride(lang, cid, ordered[idx + 1], subjectCid);
+        const override = copulaOverride(lang, cid, ordered[idx + 1],
+          subjectCid, tpl.structure?.type);
         return override !== null ? override : copulaForm(lang, cid, subjectCid);
       }
       // Verb coordination (declared: verbCoordination "te" — ja): the
@@ -3315,12 +3378,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // preposition — take the definite article ("The book is next to the
   // phone", «O livro está ao lado do telefone»); the indefinite reading is
   // wrong there in every article language. Predicate nouns after a personal
-  // pronoun stay indefinite ("she is A woman").
+  // pronoun stay indefinite ("she is A woman"). Postposed-adposition
+  // languages (zh) flip the adjacency: the position glue follows the
+  // landmark, so a following position also marks the noun as landmark —
+  // «书在桌子上面», bare 桌子, not «一张桌子» (Emi run-9 -39).
   const afterPosition = idx > 0 &&
     vocab().concepts[ordered[idx - 1]]?.type === "position";
+  const beforePosition = langRule(lang, "postposedAdpositions") &&
+    vocab().concepts[ordered[idx + 1]]?.type === "position";
   const subjectIsPersonal = !!vocab().concepts[subjectCid]?.person;
   if (DEFINITE_SUBJECT_STRUCTURES.has(effectiveStructureType(tpl)) &&
-      (afterPosition || (cid === subjectCid && !subjectIsPersonal))) {
+      (afterPosition || beforePosition ||
+        (cid === subjectCid && !subjectIsPersonal))) {
     // The governed case reaches the determiner in determiner-marking
     // languages («auf dem Tisch»); noun-suffix languages already returned
     // above via governedForm.
@@ -4115,6 +4184,17 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           vocab().concepts[ordered[idx + 1]]?.type !== "noun") {
         noteRule("verb_agreement");
         return adjEntry.predicative;
+      }
+      // Colour adjectives in predicate position nominalize with the
+      // declared suffix — zh «红» → «红色的» inside «这本书是红色的»
+      // (Emi run-9/run-6 -20). Attributive position (adjective directly
+      // before its noun) is untouched — the bare stem is still correct
+      // in phrases like «红衣服».
+      const colorSuffix = langRuleValue(lang, "colorPredicateSuffix");
+      if (colorSuffix && meta.semantic_role === "property_color" &&
+          vocab().concepts[ordered[idx + 1]]?.type !== "noun") {
+        noteRule("zh_predicate_color");
+        return formOf(lang, cid) + colorSuffix;
       }
       const subjMeta = vocab().concepts[subjectCid];
       if (["noun", "time"].includes(subjMeta?.type)) {
