@@ -238,7 +238,8 @@
       "form": "ev"
     },
     "HOME": {
-      "form": "yuva"
+      "form": "yuva",
+      "noArticle": true
     },
     "BOOK": {
       "form": "kitap"
@@ -261,7 +262,7 @@
       "form": "oda"
     },
     "BOY": {
-      "form": "erkek çocuk"
+      "form": "oğlan"
     },
     "GIRL": {
       "form": "kız"
@@ -318,13 +319,16 @@
       "form": "yüz"
     },
     "BREAKFAST": {
-      "form": "kahvaltı"
+      "form": "kahvaltı",
+      "noArticle": true
     },
     "LUNCH": {
-      "form": "öğle yemeği"
+      "form": "öğle yemeği",
+      "noArticle": true
     },
     "DINNER": {
-      "form": "akşam yemeği"
+      "form": "akşam yemeği",
+      "noArticle": true
     },
     "CLOTHES": {
       "form": "kıyafet",
