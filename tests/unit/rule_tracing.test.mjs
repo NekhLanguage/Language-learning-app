@@ -97,7 +97,9 @@ test("rule ids are stable and documented", () => {
       "verb_agreement",
       "vso_word_order",
       "zero_copula",
+      "zh_locative_copula",
       "zh_predicate_adjective",
+      "zh_predicate_color",
     ]
   );
 });

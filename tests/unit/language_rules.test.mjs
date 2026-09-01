@@ -743,6 +743,8 @@ test("every features key is a known, checkable feature id", () => {
     "possessiveSuffixes", "copulaPersonAgreement", "numeralGenderAgreement",
     "possessivePlacement", "verbGenderParadigm", "topicParticle",
     "classifiersOrCounters",
+    "locativeCopula", "postposedAdpositions",
+    "predicateColorNominalizer", "comitativeBeforeVerb",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
@@ -1086,6 +1088,69 @@ test("zh: numerals count through the classifier, 两 replaces 二", () => {
   assert.equal(buildSentence("zh", tpl, "TWO", {}), "你读两本书。");
   // Compound numerals keep 二 (十二本, never 十两本).
   assert.equal(buildSentence("zh", tpl, "TWELVE", {}), "你读十二本书。");
+});
+
+// ---------------------------------------------------------------------
+// zh: colour predicate (是 X色的, not 很 X) — Emi run-9/run-6 -20
+// ---------------------------------------------------------------------
+
+test("zh: predicate colours take 是 + root + 色的 (Emi run-9/run-6 -20)", () => {
+  // The nominalized-colour shape is what a native writes for "the X is
+  // <colour>" — 是, then the colour stem, then 色的. Bare «很红» reads as
+  // a stative "very red" and is the shipped bug the copula override
+  // replaces.
+  assert.equal(buildSentence("zh", tplById("BOOK_IS_RED")), "书是红色的。");
+  assert.equal(buildSentence("zh", tplById("PHONE_IS_BLUE")), "电话是蓝色的。");
+  assert.equal(buildSentence("zh", tplById("PANTS_ARE_BLACK")), "裤子是黑色的。");
+});
+
+test("zh: non-colour predicate adjectives keep 很 (LONG/HEAVY/EASY)", () => {
+  // Colour is the special case; the rest of the property_* adjectives
+  // stay on the stative 很 pattern authored throughout the corpus.
+  assert.equal(buildSentence("zh", tplById("BOOK_IS_LONG")), "书很长。");
+  assert.equal(buildSentence("zh", tplById("BOOK_IS_HEAVY")), "书很重。");
+  assert.equal(buildSentence("zh", tplById("BOOK_IS_EASY")), "书很容易。");
+});
+
+// ---------------------------------------------------------------------
+// zh: locative copula 在 + postposed position — Emi run-9 -39
+// ---------------------------------------------------------------------
+
+test("zh: spatial_relation uses 在 and postposes the position (Emi run-9 -39)", () => {
+  // The shipped bug rendered «书是在上面桌子» — 是 for 在, position glue
+  // before the ground noun, indefinite «一张桌子» for the definite
+  // landmark. All three retire in one PR: the copula becomes 在, the
+  // position glue lands after the noun (postposedAdpositions in
+  // RELATIONAL_STRUCTURES), and the landmark reads definite/bare.
+  assert.equal(buildSentence("zh", tplById("BOOK_ON_TABLE")), "书在桌子上面。");
+  assert.equal(buildSentence("zh", tplById("PHONE_UNDER_TABLE")), "电话在桌子下面。");
+  assert.equal(buildSentence("zh", tplById("BOOK_NEXT_TO_TABLE")), "书在桌子旁边。");
+  assert.equal(buildSentence("zh", tplById("PHONE_ON_THAT")), "电话在那上面。");
+});
+
+test("zh: 'he is home' subclause takes 在, not 是 (Emi run-9 -39)", () => {
+  // The place-semantic noun is what routes buildSubjectBeNounClause into
+  // the locative copula for the sub-clause of a complex_clause template.
+  const tpl = tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER");
+  const rendered = buildSentence("zh", tpl);
+  assert.ok(rendered.includes("他在家"), rendered);
+  assert.ok(!rendered.includes("他是家"), rendered);
+});
+
+// ---------------------------------------------------------------------
+// zh: comitative WITH-phrase precedes the verb with 一起 — Emi run-9 -40
+// ---------------------------------------------------------------------
+
+test("zh: 'with X' moves before the verb with 一起 (Emi run-9 -40)", () => {
+  // English «V O with X» ships to Chinese as «WITH X 一起 V O», the
+  // authored corpus's shape throughout. Both the object-carrying and
+  // objectless complex-clause main-clause builders take the reorder.
+  const withObject = buildSentence("zh",
+    tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME"));
+  assert.ok(withObject.includes("他和他的妈妈一起吃晚餐"), withObject);
+  const withoutObject = buildSentence("zh",
+    tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"));
+  assert.ok(withoutObject.includes("他和他的女儿一起吃"), withoutObject);
 });
 
 // ---------------------------------------------------------------------

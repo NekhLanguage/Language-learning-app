@@ -6,6 +6,13 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-08-31
+
+### Chinese colours, locations, and "with X" now read like Chinese
+Three shipped bugs held Mandarin back in the last review. Colour sentences were reading as bare statives — "书很红" for "the book is red" — instead of the natural 是 X色的 shape a native writes: «这本书是红色的» ("this book is a red one"). Now every «PHONE IS BLUE», «SHIRT IS GREEN», «PANTS ARE BLACK» card renders «X 是 Y色的». Locations were using 是 (identity) where Chinese uses 在 (location) and putting the position word before the ground noun in English order: «书是在上面桌子» read as "the book is at-on-the table". Both flip together — the copula becomes 在, the position glue lands after the noun, and the noun renders bare/definite: «书在桌子上面». Non-colour predicate adjectives (LONG, HEAVY, EASY) keep the 很 pattern they were already right about. And "he eats dinner with his mom" ships «他和他的妈妈一起吃晚餐» — the comitative phrase precedes the verb with 一起 linking them — instead of the English-order «他吃晚餐和他的妈妈».
+
+---
+
 ## 2026-08-30
 
 ### Arabic possessives, demonstratives, and verb prepositions are real Arabic

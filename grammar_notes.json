@@ -212,6 +212,146 @@
         "body": "Kiinassa predikaattiadjektiivin eteen tulee 很 (hěn), ei 是 (shì) — '他很强', ei '他是强'."
       }
     },
+    "zh_predicate_color": {
+      "en": {
+        "title": "Colours take 是 X色的",
+        "body": "Mandarin says the colour of a specific thing with 是 + colour + 色的: 这本书是红色的 ('this book is red'). The bare stative 很红 reads as 'very red' and does not name the colour of the object."
+      },
+      "pt": {
+        "title": "Cores usam 是 X色的",
+        "body": "Em mandarim, a cor de algo específico é dita com 是 + cor + 色的: 这本书是红色的 ('este livro é vermelho'). O 很红 solto significa 'muito vermelho' e não identifica a cor do objeto."
+      },
+      "fr": {
+        "title": "Les couleurs prennent 是 X色的",
+        "body": "Le mandarin exprime la couleur d'une chose précise avec 是 + couleur + 色的 : 这本书是红色的 ('ce livre est rouge'). Le stative 很红 signifie 'très rouge' et ne nomme pas la couleur."
+      },
+      "de": {
+        "title": "Farben nehmen 是 X色的",
+        "body": "Mandarin drückt die Farbe eines bestimmten Dings mit 是 + Farbe + 色的 aus: 这本书是红色的 ('dieses Buch ist rot'). Bloßes 很红 heißt 'sehr rot' und benennt nicht die Farbe."
+      },
+      "el": {
+        "title": "Τα χρώματα παίρνουν 是 X色的",
+        "body": "Στα μανδαρινικά το χρώμα ενός συγκεκριμένου αντικειμένου δηλώνεται με 是 + χρώμα + 色的: 这本书是红色的 ('αυτό το βιβλίο είναι κόκκινο'). Το σκέτο 很红 σημαίνει 'πολύ κόκκινο' και δεν ονομάζει το χρώμα."
+      },
+      "es": {
+        "title": "Los colores usan 是 X色的",
+        "body": "En mandarín el color de una cosa concreta se dice con 是 + color + 色的: 这本书是红色的 ('este libro es rojo'). El 很红 solo significa 'muy rojo' y no nombra el color del objeto."
+      },
+      "ja": {
+        "title": "色は「是 X色的」で言う",
+        "body": "中国語では、あるものの色を表すときに 是 + 色 + 色的 を使います。这本书是红色的 は「この本は赤い」の意味です。很红 とだけ言うと「とても赤い」という程度の話になり、色そのものを指しません。"
+      },
+      "ko": {
+        "title": "색깔은 是 X색的",
+        "body": "중국어에서는 특정한 것의 색을 말할 때 是 + 색 + 色的를 씁니다. 这本书是红色的 ('이 책은 빨갛다'). 很红만 쓰면 '아주 빨갛다'라는 정도의 뜻이 되어 색깔을 지목하지 못해요."
+      },
+      "no": {
+        "title": "Farger tar 是 X色的",
+        "body": "Mandarin uttrykker fargen på noe bestemt med 是 + farge + 色的: 这本书是红色的 ('denne boka er rød'). Bare 很红 betyr 'veldig rød' og navngir ikke selve fargen."
+      },
+      "tr": {
+        "title": "Renkler 是 X色的 alır",
+        "body": "Mandarin, belirli bir şeyin rengini 是 + renk + 色的 kalıbıyla söyler: 这本书是红色的 ('bu kitap kırmızıdır'). Sade 很红 'çok kırmızı' anlamına gelir ve nesnenin rengini adlandırmaz."
+      },
+      "uk": {
+        "title": "Кольори беруть 是 X色的",
+        "body": "У мандаринській колір конкретної речі виражають конструкцією 是 + колір + 色的: 这本书是红色的 ('ця книга червона'). Само 很红 означає 'дуже червоний' і не називає колір."
+      },
+      "zh": {
+        "title": "颜色用 '是 X 色的'",
+        "body": "汉语说某样东西的颜色时用 是 + 颜色 + 色的：这本书是红色的。单说 很红 只是'非常红'的程度描述，不是在说这本书是什么颜色。"
+      },
+      "ar": {
+        "title": "الألوان تأخذ 是 X色的",
+        "body": "الماندرين تصف لون شيء بعينه بصيغة 是 + اللون + 色的: 这本书是红色的 ('هذا الكتاب أحمر'). أما 很红 وحده فيعني 'أحمر جداً' ولا يُسمّي لون الشيء."
+      },
+      "it": {
+        "title": "I colori prendono 是 X色的",
+        "body": "In cinese, il colore di un oggetto preciso si dice con 是 + colore + 色的: 这本书是红色的 ('questo libro è rosso'). Il semplice 很红 significa «molto rosso» e non nomina il colore."
+      },
+      "th": {
+        "title": "สีใช้ 是 X色的",
+        "body": "ภาษาจีนบอกสีของสิ่งเจาะจงด้วย 是 + สี + 色的: 这本书是红色的 ('หนังสือเล่มนี้สีแดง') คำว่า 很红 เฉย ๆ แปลว่า 'แดงมาก' และไม่ได้ระบุสีของสิ่งของ"
+      },
+      "pl": {
+        "title": "Kolory biorą 是 X色的",
+        "body": "W chińskim kolor konkretnej rzeczy wyraża się przez 是 + kolor + 色的: 这本书是红色的 („ta książka jest czerwona”). Samo 很红 znaczy „bardzo czerwony” i nie nazywa koloru przedmiotu."
+      },
+      "fi": {
+        "title": "Värit ottavat 是 X色的",
+        "body": "Mandariinissa jonkin tietyn esineen väri ilmaistaan rakenteella 是 + väri + 色的: 这本书是红色的 ('tämä kirja on punainen'). Pelkkä 很红 tarkoittaa 'hyvin punainen' eikä nimeä esineen väriä."
+      }
+    },
+    "zh_locative_copula": {
+      "en": {
+        "title": "'Is at' uses 在, not 是",
+        "body": "Mandarin uses 在 (zài) for location and 是 (shì) for identity: 他在家 means 'he is at home' — never 他是家, which would say 'he is a home'. Position words then follow the noun: 书在桌子上面 ('the book is on the table')."
+      },
+      "pt": {
+        "title": "'Estar em' usa 在, não 是",
+        "body": "Em mandarim 在 (zài) é para localização e 是 (shì) é para identidade: 他在家 quer dizer 'ele está em casa' — nunca 他是家, que soaria 'ele é uma casa'. As posições vêm depois do substantivo: 书在桌子上面."
+      },
+      "fr": {
+        "title": "'Être à' se dit avec 在, pas 是",
+        "body": "Le mandarin distingue 在 (zài) pour la localisation et 是 (shì) pour l'identité : 他在家 signifie 'il est chez lui' — jamais 他是家, qui dirait 'il est une maison'. Les mots de position suivent le nom : 书在桌子上面."
+      },
+      "de": {
+        "title": "'Sich befinden' mit 在, nicht 是",
+        "body": "Mandarin trennt 在 (zài) für Ort und 是 (shì) für Identität: 他在家 heißt 'er ist zu Hause' — niemals 他是家, das hieße 'er ist ein Zuhause'. Positionswörter stehen nach dem Nomen: 书在桌子上面."
+      },
+      "el": {
+        "title": "Το 'είμαι σε' θέλει 在, όχι 是",
+        "body": "Στα μανδαρινικά το 在 (zài) δηλώνει τόπο και το 是 (shì) ταυτότητα: 他在家 σημαίνει 'είναι σπίτι' — ποτέ 他是家, που θα έλεγε 'είναι ένα σπίτι'. Οι θέσεις μπαίνουν μετά το ουσιαστικό: 书在桌子上面."
+      },
+      "es": {
+        "title": "'Estar en' usa 在, no 是",
+        "body": "El mandarín usa 在 (zài) para ubicación y 是 (shì) para identidad: 他在家 significa 'él está en casa' — nunca 他是家, que sería 'él es una casa'. Las palabras de posición van tras el sustantivo: 书在桌子上面."
+      },
+      "ja": {
+        "title": "「〜にいる」は「是」ではなく「在」",
+        "body": "中国語では場所には 在 (zài)、同定には 是 (shì) を使います。他在家 は「彼は家にいる」の意味で、他是家 とは決して言いません(それだと「彼は家である」)。位置詞は名詞の後: 书在桌子上面。"
+      },
+      "ko": {
+        "title": "'~에 있다'는 在, 是가 아니다",
+        "body": "중국어는 위치에 在 (zài), 정체 표현에 是 (shì)를 씁니다. 他在家는 '그는 집에 있다'라는 뜻이고, 他是家라고 하면 '그는 집이다'가 됩니다. 위치어는 명사 뒤에 옵니다: 书在桌子上面."
+      },
+      "no": {
+        "title": "'Er hjemme' bruker 在, ikke 是",
+        "body": "Mandarin skiller 在 (zài) for sted og 是 (shì) for identitet: 他在家 betyr 'han er hjemme' — aldri 他是家, som ville sagt 'han er et hjem'. Posisjonsord kommer etter substantivet: 书在桌子上面."
+      },
+      "tr": {
+        "title": "'Bir yerde olmak' 是 değil 在 ile",
+        "body": "Mandarin dilinde 在 (zài) yer bildirir, 是 (shì) ise özdeşlik: 他在家 'o evde' anlamındadır — asla 他是家 denmez, o 'o bir ev' olurdu. Yön/konum sözcükleri ismin ardından gelir: 书在桌子上面."
+      },
+      "uk": {
+        "title": "'Бути вдома' — 在, а не 是",
+        "body": "У мандаринській 在 (zài) — це місцезнаходження, а 是 (shì) — тотожність: 他在家 означає 'він удома', і ніколи 他是家 (це б означало 'він — дім'). Слова позиції йдуть після іменника: 书在桌子上面."
+      },
+      "zh": {
+        "title": "表示位置用 '在'，不用 '是'",
+        "body": "汉语用 在 (zài) 表示位置，用 是 (shì) 表示同一：他在家 是'他在家里'，绝不能说 他是家。方位词跟在名词后面：书在桌子上面。"
+      },
+      "ar": {
+        "title": "'يكون في' يستعمل 在 لا 是",
+        "body": "الماندرين تستعمل 在 (zài) للمكان و 是 (shì) للهوية: 他在家 تعني 'هو في البيت' — ولا يُقال 他是家 لأنها ستعني 'هو بيت'. وتأتي كلمات الاتجاه بعد الاسم: 书在桌子上面."
+      },
+      "it": {
+        "title": "'Trovarsi in' vuole 在, non 是",
+        "body": "In cinese 在 (zài) esprime luogo e 是 (shì) esprime identità: 他在家 significa «lui è a casa» — mai 他是家, che direbbe «lui è una casa». Le parole di posizione seguono il nome: 书在桌子上面."
+      },
+      "th": {
+        "title": "'อยู่ที่' ใช้ 在 ไม่ใช่ 是",
+        "body": "ภาษาจีนใช้ 在 (zài) บอกสถานที่ และใช้ 是 (shì) บอกความเป็นสิ่งใด: 他在家 แปลว่า 'เขาอยู่บ้าน' ไม่ใช่ 他是家 ซึ่งแปลว่า 'เขาเป็นบ้าน' คำบอกตำแหน่งตามหลังนาม: 书在桌子上面"
+      },
+      "pl": {
+        "title": "„Być w” to 在, nie 是",
+        "body": "Chiński używa 在 (zài) do miejsca i 是 (shì) do tożsamości: 他在家 znaczy „on jest w domu” — nigdy 他是家, co znaczyłoby „on jest domem”. Słowa pozycji stoją po rzeczowniku: 书在桌子上面."
+      },
+      "fi": {
+        "title": "'Olla jossain' on 在, ei 是",
+        "body": "Mandariinissa 在 (zài) ilmaisee paikkaa ja 是 (shì) identiteettiä: 他在家 tarkoittaa 'hän on kotona' — ei koskaan 他是家, mikä sanoisi 'hän on koti'. Sijaintisanat tulevat substantiivin jälkeen: 书在桌子上面."
+      }
+    },
     "post_nominal_adjective": {
       "en": {
         "title": "The adjective follows the noun",
