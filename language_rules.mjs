@@ -321,7 +321,7 @@ export const LANGUAGE_RULES = {
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,
-      verbGenderParadigm: true,
+      verbGenderParadigm: true, postposedNumerals: true,
     },
     postNominalAdjectives: true, zeroPresentCopula: true,
     inflectsNounPlural: true, fullNounGender: true,
@@ -339,6 +339,17 @@ export const LANGUAGE_RULES = {
     },
     demonstrativeGenderAgreement: true,
     verbGovernedPrepositions: true,
+    // 1 and 2 postpose as appositive adjectives («كتاب واحد», never
+    // «واحد كتاب» — Emi 2026-08-28-17); 3-10 prepose with reverse-gender
+    // polarity governing the genitive plural, an unimplemented mechanism
+    // that stays in the divergence baseline until numeral data carries
+    // gender + a genitive-plural noun field exists. Only allowlisted CIDs
+    // postpose so the un-shipped forms keep the pre-nominal placeholder
+    // Emi's report already knows to expect. Modern Standard Arabic also
+    // omits the numeral for 1 in most contexts («لدي كتاب» is idiomatic
+    // for "I have a/one book"), but the app teaches the explicit numeral,
+    // so we render it in the appositive slot rather than dropping it.
+    postposedNumerals: ["ONE"],
   },
   en: {
     features: {

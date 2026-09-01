@@ -80,6 +80,7 @@ test("rule ids are stable and documented", () => {
     [
       "accusative_object",
       "apocope",
+      "ar_numeral_placement",
       "classifier",
       "definite_article",
       "french_elision",

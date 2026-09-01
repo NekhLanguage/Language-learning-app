@@ -210,6 +210,10 @@ const FEATURE_CHECKS = {
     ok: typeof row.comitativeBeforeVerb === 'string' && row.comitativeBeforeVerb.length > 0,
     detail: 'needs the comitativeBeforeVerb rule (linker string between comitative phrase and verb — zh «一起»)',
   }),
+  postposedNumerals: (row) => ({
+    ok: Array.isArray(row.postposedNumerals) && row.postposedNumerals.length > 0,
+    detail: 'needs the postposedNumerals rule (array of numeric CIDs that follow the noun as appositive — ar ["ONE"])',
+  }),
   verbGenderParadigm: (row, lang) => {
     if (!row.verbGenderParadigm) {
       return { ok: false, detail: 'needs the verbGenderParadigm rule' };
@@ -291,6 +295,9 @@ const RULE_IMPLIES_FEATURE = [
   [(row) => typeof row.comitativeBeforeVerb === 'string' && row.comitativeBeforeVerb.length > 0,
     'comitativeBeforeVerb',
     (f) => !!f.comitativeBeforeVerb],
+  [(row) => Array.isArray(row.postposedNumerals) && row.postposedNumerals.length > 0,
+    'postposedNumerals',
+    (f) => !!f.postposedNumerals],
 ];
 
 const findings = [];
