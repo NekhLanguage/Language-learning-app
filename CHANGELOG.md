@@ -15,6 +15,9 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-02
 
+### Mandarin puts "from the menu" and "only" where Chinese puts them
+Chinese places prepositional phrases and adverbs like 只 before the verb; the app was placing them after it, in English order: «你点菜从菜单», «我读只一本书», «我做这由一只手». Those now read «你从菜单点菜», «我只读一本书», «我用手做这». The nominal inside such a phrase is bare («从菜单», never «从一个菜单»). Destinations («我去到…») and the earlier "with his mom … 一起" shape are unchanged.
+
 ### Greek objects finally take the accusative
 The most frequent Greek defect in the first review was that every direct object stayed in the nominative: «Εγώ χαιρετώ ένας παλιός σερβιτόρος», «Εγώ έχω ένας αδερφός», «Αυτός έχει η κατσαρόλα του». Greek marks the object on the article and, for masculine nouns, on the ending, and now the app does: «Εγώ χαιρετώ έναν παλιό σερβιτόρο», «Εγώ έχω έναν αδερφό», «Αυτός έχει την κατσαρόλα του», «Εμείς τρώμε τη σούπα μου», «δύο σερβιτόρους». The same case follows prepositions: «με τη μαμά του», «με την κόρη του». The article keeps its «ν» only where Greek does («την κόρη» but «τη μαμά»). Fill-in-the-blank tiles show the same form the sentence shows.
 

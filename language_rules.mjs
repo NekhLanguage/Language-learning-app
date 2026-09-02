@@ -163,6 +163,11 @@
 //                            («sobre esto», «Esto es mío»); it still
 //                            agrees with a possessed/modified predicate
 //                            noun («Esta es mi mano»).
+//   preverbalAdjuncts        { glueRoles, adverbRoles }: prepositional
+//                            adjuncts (glue of those roles + their
+//                            nominal, rendered bare) and adverb-like
+//                            quantifiers move before the main verb
+//                            (zh «我从菜单点菜», «我只读一本书»).
 //   encliticStress           a proparoxytone word before an enclitic
 //                            possessive takes a second accent on its
 //                            final syllable (el «τηλέφωνό σου»).
@@ -742,6 +747,13 @@ export const LANGUAGE_RULES = {
     // noun («容易的书», «黑暗的书»); monosyllabic ones attach bare («好书»,
     // «大手») — Emi run-13 -62. An entry's own `linker` still wins.
     attributiveLinker: { form: "的", minLength: 2 },
+    // Prepositional adjuncts (从/用/和/为了 + nominal, bare) and limiting
+    // adverbs (只) precede the verb — «你从菜单点菜», «我只读一本书»
+    // (Emi run-14 -72). Destinations (到) stay after the verb.
+    preverbalAdjuncts: {
+      glueRoles: ["relation_source", "relation_means", "relation_accompaniment", "relation_purpose"],
+      adverbRoles: ["quantity_limit"],
+    },
     // -39: locative copula 在 replaces 是 when the predicate is a position
     // glue (spatial_relation templates) or a `place` noun ("he is home" →
     // 他在家). Fires from copulaOverride and also drives the

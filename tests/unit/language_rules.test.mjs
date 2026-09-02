@@ -599,6 +599,24 @@ test("el: direct and governed objects take the accusative — derived, article-b
     { bareMode: blank.bareMode }), "σερβιτόρο");
 });
 
+test("zh: prepositional adjuncts and 只 precede the verb, adjunct nominals bare (-72)", () => {
+  assert.equal(buildSentence("zh", tplById("I_ORDER_MENU"), null, {}), "我从菜单点菜。");
+  assert.equal(buildSentence("zh", tplById("I_READ_ONLY_BOOK"), null, {}), "我只读一本书。");
+  assert.equal(buildSentence("zh", tplById("I_READ_ONLY_BOOK"), "BLACK", {}), "我只读一本黑书。");
+  // Explicit template order goes through the same hook.
+  assert.equal(buildSentence("zh", tplById("I_DO_THIS_BY_HAND"), null, {}), "我用手做这。");
+  // Destinations stay after the verb; the comitative builder keeps 一起.
+  assert.equal(buildSentence("zh", tplById("I_GO_TO_TABLE"), null, {}), "我去到一张桌子。");
+  assert.ok(buildSentence("zh", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME"), null, {})
+    .startsWith("他和他的妈妈一起吃晚餐"));
+  // Other languages are untouched.
+  assert.equal(buildSentence("en", tplById("I_ORDER_MENU"), null, {}), "I order from a menu.");
+  // The L3 blank follows the moved order.
+  const tpl = tplById("I_ORDER_MENU");
+  const s = buildSentence("zh", tpl, null, {});
+  assert.equal(resolveNounBlank(s, tpl, "zh", "MENU")?.blanked, "我从_____点菜。");
+});
+
 test("es: adjectives post-nominal; buen/mal apocopate before masc singulars", () => {
   assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "BLACK", {}),
     "Yo obtengo un libro negro.");
