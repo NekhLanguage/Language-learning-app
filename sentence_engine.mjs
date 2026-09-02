@@ -1912,7 +1912,10 @@ const ADJECTIVE_ROLE_COMPAT = {
 // (correctness -> substance) without enumerating every concrete noun role.
 const ADJECTIVE_ROLE_BLOCK = {
   property_youth:       new Set(["abstract", "substance", "meal"]),
-  property_correctness: new Set(["substance"]),
+  // CORRECT/WRONG never describe a body part — «一只正确眼睛» ("a correct
+  // eye", Emi run-13 -63) is nonsense in every language, and zh's RIGHT
+  // (右) already covers the directional reading.
+  property_correctness: new Set(["substance", "body_part"]),
   // Animacy filter (Dan ruling 2026-08-27): OLD/NEW never modify people —
   // 古い女の子 ("old girl" with the inanimate 古い) was Emi's Japanese
   // catch, and the class is wrong-not-odd across languages. YOUNG stays the
@@ -2536,10 +2539,26 @@ function isConjunctionConcept(cid) {
 // A per-entry linker between an attributive modifier and its noun — ja
 // noun-class colours take の («紫のシャツ», «緑の足») while い-adjectives
 // attach bare («青い家»). Data-driven; entries without it join as before.
+// Declared rule attributiveLinker ({ form, minLength } — zh): an
+// attributive adjective at or above the length takes the linker unless it
+// already ends in it — «容易的书», «黑暗的书», while monosyllabic 好书 /
+// 大手 / 黑脸 stay bare (Emi run-13 -62: the split was exact, 5 of 5
+// disyllabic missing 的, 25 of 25 monosyllabic correctly bare). Predicate
+// position never calls this («书很容易»).
 function adjectiveLinker(lang, adjectiveCid) {
   const entry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
-  return entry && !Array.isArray(entry) && typeof entry.linker === "string"
-    ? entry.linker : "";
+  if (entry && !Array.isArray(entry) && typeof entry.linker === "string") {
+    return entry.linker;
+  }
+  const spec = langRuleValue(lang, "attributiveLinker");
+  if (spec && typeof spec.form === "string") {
+    const form = formOf(lang, adjectiveCid);
+    if (typeof form === "string" && form.length >= (spec.minLength || 2) &&
+        !form.endsWith(spec.form)) {
+      return spec.form;
+    }
+  }
+  return "";
 }
 
 function isAdjectiveConcept(cid) {
@@ -2898,8 +2917,11 @@ function jaQuantifierPrefix(lang, numberCid, numberWord, nounCid = null) {
   noteRule("ja_counter");
   const spec = langRuleValue(lang, "counterPrefix") || {};
   const entry = nounCid ? vocab().languages?.[lang]?.forms?.[nounCid] : null;
+  // A counter that IS the noun (部屋) would double it («五部屋の部屋»,
+  // Emi run-13): fall back to the generic counters — «五つの部屋».
   const perNoun = entry && !Array.isArray(entry) &&
-    typeof entry.counter === "string" ? entry.counter : null;
+    typeof entry.counter === "string" && entry.counter !== entry.form
+    ? entry.counter : null;
   const counter = perNoun ||
     (JA_KUN_COUNTER_NUMBERS.has(numberCid)
       ? (spec.kunCounter || "つ")
@@ -2935,7 +2957,7 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
     }
     const declined = applyAdjectiveDeclension(
       lang, preAdjective, article, nounGender, opts.caseName);
-    return `${article} ${declined} ${bare}`;
+    return `${article} ${declined}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
   }
   return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
 }
@@ -4302,9 +4324,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           ? (IT_VOWEL_INITIAL.test(adjForm) ? "un'" : "una")
           : (IT_LO_INITIAL.test(adjForm) ? "uno" : "un");
       }
+      // The attributive linker rides here too — the classifier phrase
+      // («一本书») is this branch's "article" for zh: «一本容易的书».
+      const linked = adjForm + adjectiveLinker(lang, adjectiveCid);
       phrase = article.endsWith("'")
-        ? article + adjForm + " " + bare
-        : article + " " + adjForm + " " + bare;
+        ? article + linked + " " + bare
+        : article + " " + linked + " " + bare;
     } else {
       // No article: "big water" (German strong declension and apocope
       // already applied to adjForm above — «neues Wasser»)

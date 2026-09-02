@@ -601,7 +601,7 @@
 
     "MAGICAL": ["魔法の"],
     "STRONG": ["つよい"],
-    "BRAVE": ["勇敢な"]
+    "BRAVE": { "form": "勇敢な", "predicative": "勇敢" }
 
   }
 },
