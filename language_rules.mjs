@@ -146,6 +146,11 @@
 //   apocope                  pre-nominal masc-singular adjectives use the
 //                            entry's `apocope` short form («buen libro»,
 //                            «buon libro»).
+//   attributiveLinker        { form, minLength }: an attributive adjective
+//                            of at least minLength characters takes the
+//                            linker before its noun unless it already ends
+//                            in it (zh «容易的书» vs bare «好书»). A
+//                            per-entry `linker` field overrides it.
 //   prevocalicAdjectives     pre-nominal masc-singular adjectives before a
 //                            vowel/mute-h noun use the entry's
 //                            `prevocalic` form («un nouvel itinéraire»,
@@ -686,6 +691,10 @@ export const LANGUAGE_RULES = {
     // negate a bare noun: «他吃早餐，但是不吃午餐», never «…但是不午餐»
     // (Emi run-9 -37). The negator is the NOT entry's own form.
     contrastiveNegation: { repeatVerb: true },
+    // Attributive adjectives of two or more characters take 的 before the
+    // noun («容易的书», «黑暗的书»); monosyllabic ones attach bare («好书»,
+    // «大手») — Emi run-13 -62. An entry's own `linker` still wins.
+    attributiveLinker: { form: "的", minLength: 2 },
     // -39: locative copula 在 replaces 是 when the predicate is a position
     // glue (spatial_relation templates) or a `place` noun ("he is home" →
     // 他在家). Fires from copulaOverride and also drives the

@@ -731,16 +731,16 @@
         "COORDINATE": { "base": "コーディネートします" },
         "UNVEIL": { "base": "発表します" },
         "SHOWCASE": { "base": "披露します" },
-        "ELEGANT": ["エレガントな"],
+        "ELEGANT": { "form": "エレガントな", "predicative": "エレガント" },
         "TEXTURED": ["テクスチャのある"],
         "VINTAGE": ["ビンテージの"],
-        "GLAMOROUS": ["グラマラスな"],
+        "GLAMOROUS": { "form": "グラマラスな", "predicative": "グラマラス" },
         "AFFORDABLE": ["手頃な価格の"],
         "DAZZLING": ["まばゆい"],
-        "FLAWLESS": ["完璧な"],
-        "CHIC": ["シックな"],
-        "EXCLUSIVE": ["エクスクルーシブな"],
-        "ICONIC": ["象徴的な"]
+        "FLAWLESS": { "form": "完璧な", "predicative": "完璧" },
+        "CHIC": { "form": "シックな", "predicative": "シック" },
+        "EXCLUSIVE": { "form": "エクスクルーシブな", "predicative": "エクスクルーシブ" },
+        "ICONIC": { "form": "象徴的な", "predicative": "象徴的" }
       }
     },
     "ko": {

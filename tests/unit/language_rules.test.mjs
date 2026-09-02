@@ -331,6 +331,39 @@ test("fr: adjectives are post-nominal by default, BAGS roles pre-nominal", () =>
 });
 
 // ---------------------------------------------------------------------
+// zh/ja run-13 lexicon rows — Emi 2026-09-02-62 / -63 / ja leftovers
+// ---------------------------------------------------------------------
+
+test("zh: attributive adjectives of two+ characters take 的, monosyllabic stay bare (-62)", () => {
+  assert.equal(buildSentence("zh", tplById("I_GET_BOOK"), "EASY", {}),
+    "我得到一本容易的书。");
+  assert.equal(buildSentence("zh", tplById("I_HAVE_SHIRT"), "EASY", {}),
+    "我有一件容易的衬衫。");
+  assert.equal(buildSentence("zh", tplById("I_GET_BOOK"), "GOOD", {}),
+    "我得到一本好书。");
+  // Predicate position is untouched.
+  assert.equal(buildSentence("zh", tplById("BOOK_IS_EASY"), null, {}),
+    "书很容易。");
+});
+
+test("CORRECT/WRONG never modify a body part; directional RIGHT still does (-63)", () => {
+  assert.equal(isModifierCompatible("zh", "CORRECT", "EYE"), false);
+  assert.equal(isModifierCompatible("en", "WRONG", "FOOT"), false);
+  assert.equal(isModifierCompatible("zh", "RIGHT", "EYE"), true);
+});
+
+test("ja: な-adjectives keep な attributively and drop it before です; a counter equal to its noun falls back to つ", () => {
+  assert.equal(buildSentence("ja", tplById("I_GET_BOOK"), "EASY", {}),
+    "私は簡単な本を手に入れます。");
+  assert.equal(buildSentence("ja", tplById("BOOK_IS_EASY"), null, {}),
+    "本は簡単です。");
+  assert.equal(buildSentence("ja", tplById("SHE_SEES_ROOM"), "FIVE", {}),
+    "彼女は五つの部屋を見ます。");
+  assert.equal(buildSentence("ja", tplById("I_GET_BOOK"), "FIVE", {}),
+    "私は五冊の本を手に入れます。");
+});
+
+// ---------------------------------------------------------------------
 // French first sweep — Emi 2026-09-02-64 … -69
 // ---------------------------------------------------------------------
 

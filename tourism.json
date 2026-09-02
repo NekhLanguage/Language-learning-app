@@ -988,7 +988,7 @@
         "DELICIOUS": ["おいしい"],
         "EXPENSIVE": ["高い"],
         "FOREIGN": ["外国の"],
-        "HISTORIC": ["歴史的な"],
+        "HISTORIC": { "form": "歴史的な", "predicative": "歴史的" },
         "UNFORGETTABLE": ["忘れられない"]
 
       }

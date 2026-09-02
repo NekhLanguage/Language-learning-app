@@ -2018,36 +2018,26 @@
     "REPEAT": {
      "base": "繰り返します"
     },
-    "HEALTHY": [
-     "健康な"
-    ],
-    "ACTIVE": [
-     "活発な"
-    ],
+    "HEALTHY": { "form": "健康な", "predicative": "健康" },
+    "ACTIVE": { "form": "活発な", "predicative": "活発" },
     "SORE": [
      "痛い"
     ],
-    "FLEXIBLE": [
-     "柔軟な"
-    ],
+    "FLEXIBLE": { "form": "柔軟な", "predicative": "柔軟" },
     "INTENSE": [
      "激しい"
     ],
     "WEAK": [
      "弱い"
     ],
-    "MOTIVATED": [
-     "意欲的な"
-    ],
+    "MOTIVATED": { "form": "意欲的な", "predicative": "意欲的" },
     "EXHAUSTED": [
      "疲れ果てた"
     ],
     "DAILY": [
      "毎日の"
     ],
-    "MUSCULAR": [
-     "筋肉質な"
-    ]
+    "MUSCULAR": { "form": "筋肉質な", "predicative": "筋肉質" }
    }
   },
   "ko": {
