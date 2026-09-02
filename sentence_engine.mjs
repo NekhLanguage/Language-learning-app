@@ -179,6 +179,18 @@ function resolveNounBlank(sentence, tpl, targetLang, targetConcept) {
   if (blanked.includes("_____")) {
     return { blanked, surface: base, bareMode: meta?.type === "noun", slot };
   }
+  // Declared rule encliticStress (el): a possessed proparoxytone renders
+  // with its second accent («τη δύναμή μου»), so the blank must hold that
+  // surface or the concept loses every L3 frame it has.
+  if (langRule(targetLang, "encliticStress") && typeof base === "string") {
+    const stressed = greekAddEncliticAccent(base);
+    if (stressed) {
+      const b2 = blankSentence(sentence, stressed, targetLang);
+      if (b2.includes("_____")) {
+        return { blanked: b2, surface: stressed, bareMode: meta?.type === "noun", slot };
+      }
+    }
+  }
   return null;
 }
 
@@ -1805,6 +1817,19 @@ if (orderType === "SOV") {
       }
       return caseFormFor(targetLang, cid, slot.caseName);
     }
+    // Declared rule encliticStress (el): a tile in a possessed slot carries
+    // the second accent the enclitic possessive triggers («δύναμή» in
+    // «τη _____ μου»), matching the blank (resolveNounBlank).
+    if (langRule(targetLang, "encliticStress") &&
+        langRule(targetLang, "possessiveEnclitic")) {
+      const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+      const i = ordered.indexOf(cid);
+      if (i > 0 && vocab().concepts[ordered[i - 1]]?.semantic_role === "possessive") {
+        const bare = formOf(targetLang, cid);
+        const stressed = greekAddEncliticAccent(bare);
+        if (stressed) return stressed;
+      }
+    }
     // Particle / copular-suffix decoration (ko): every tile carries the
     // same decorated surface the blank holds («물을» / «책을» in an object
     // slot, «남자예요» / «여자예요» in a predicate slot).
@@ -2185,6 +2210,64 @@ function frenchElision(s) {
   return s;
 }
 
+// Greek σε + definite article fuses: «σε το τραπέζι» → «στο τραπέζι»,
+// «σε την» → «στην» (Emi run-15 (a): στο 0 of 2, and the compound
+// prepositions now carry their σε/από — «δίπλα σε το» → «δίπλα στο»).
+function greekArticleContraction(s) {
+  // No \b here: JavaScript's \b is ASCII-only and never sits next to a
+  // Greek letter — explicit boundaries instead.
+  return s.replace(/(^|\s)σε (το|τον|τη|την|τα|τους|τις)(?=[\s.,;?!]|$)/g,
+    (m, pre, art) => pre + "σ" + art);
+}
+
+// A proparoxytone noun followed by an enclitic possessive takes a second
+// accent on its final syllable: «το τηλέφωνό σου», «το δωμάτιό της» —
+// paroxytones («το κεφάλι σου») are untouched (Emi run-15 (e): 6/6
+// missing). Syllable nuclei: single vowels, with the standard diphthongs
+// (αι ει οι ου υι αυ ευ, unaccented) counting once.
+const EL_ACUTE = { "α": "ά", "ε": "έ", "η": "ή", "ι": "ί", "ο": "ό", "υ": "ύ", "ω": "ώ" };
+const EL_HAS_ACUTE = /[άέήίόύώΐΰ]/;
+// The doubly-accented form of a proparoxytone word («τηλέφωνο» →
+// «τηλέφωνό»), or null when the word is not proparoxytone. Shared by the
+// finalize pass and the L3 blank resolver, so the blank holds the surface
+// the sentence actually shows («τη δύναμή μου»).
+function greekAddEncliticAccent(word) {
+  const nuclei = [];
+  const chars = [...word];
+  for (let i = 0; i < chars.length; i++) {
+    const ch = chars[i].toLowerCase();
+    const isVowel = ch in EL_ACUTE || EL_HAS_ACUTE.test(ch);
+    if (!isVowel) continue;
+    const prev = nuclei.length ? nuclei[nuclei.length - 1] : null;
+    // Unaccented diphthong: second element joins the previous nucleus.
+    if (prev && prev.end === i - 1 && !EL_HAS_ACUTE.test(chars[prev.end]) &&
+        !EL_HAS_ACUTE.test(ch) &&
+        /^(αι|ει|οι|ου|υι|αυ|ευ)$/.test(chars[prev.end].toLowerCase() + ch)) {
+      prev.end = i;
+      continue;
+    }
+    nuclei.push({ start: i, end: i });
+  }
+  if (nuclei.length < 3) return null;
+  const accentedIdx = nuclei.findIndex(n =>
+    chars.slice(n.start, n.end + 1).some(c => EL_HAS_ACUTE.test(c)));
+  if (accentedIdx !== nuclei.length - 3) return null;
+  const target = nuclei[nuclei.length - 1].end;
+  const acute = EL_ACUTE[chars[target].toLowerCase()];
+  if (!acute) return null;
+  chars[target] = chars[target] === chars[target].toUpperCase()
+    ? acute.toUpperCase() : acute;
+  return chars.join("");
+}
+function greekEncliticStress(s) {
+  return s.replace(
+    /([\u0370-\u03FF\u1F00-\u1FFF]+) (μου|σου|του|της|μας|σας|τους)(?=[\s.,;?!]|$)/g,
+    (m, word, clitic) => {
+      const stressed = greekAddEncliticAccent(word);
+      return stressed ? stressed + " " + clitic : m;
+    });
+}
+
 // Single hook for per-language final passes on an assembled sentence.
 function finalizeSentence(lang, sentence) {
   if (lang === "fr") {
@@ -2199,8 +2282,20 @@ function finalizeSentence(lang, sentence) {
   // the generated yes/no question did not (Emi run-15 (e): sixth
   // language on the question template).
   if (lang === "es") {
-    return /\?$/.test(sentence) && !sentence.startsWith("¿")
-      ? "¿" + sentence : sentence;
+    // Preposition + article contractions: the compound prepositions carry
+    // their «de» («debajo de», «al lado de» — Emi run-15 (b)), so «de el»
+    // and «a el» fuse on the finished string like frenchElision's du/au.
+    const s = sentence
+      .replace(/\bde el\b/g, "del")
+      .replace(/(^|\s)a el\b/g, "$1al");
+    return /\?$/.test(s) && !s.startsWith("¿") ? "¿" + s : s;
+  }
+  if (lang === "el") {
+    // The Greek question mark is «;» — the generated yes/no question
+    // appended a Latin ? (the authored wh questions carry «;»).
+    const contracted = greekArticleContraction(sentence).replace(/\?$/, ";");
+    return langRule(lang, "encliticStress")
+      ? greekEncliticStress(contracted) : contracted;
   }
   // Ukrainian sets off its conjunctions with a comma: «сніданок, але не
   // обід», «..., тому що він удома» — and alternates в/у for euphony: «у»
@@ -2590,23 +2685,62 @@ function isAdjectiveConcept(cid) {
 // as 是 X色的 ("this book is a red one"), not stative «很红» — Emi run-9/
 // run-6 -20. Returns the surface to use in place of the copula for zh, or
 // null to fall through to copulaForm.
+// Person/number cell of a verb paradigm object for a subject — the same
+// derivation getVerbForm uses for a concept's own paradigm, for paradigms
+// nested inside an entry (BE.locative — es «estar»).
+function paradigmForm(paradigm, subjectCid, lang) {
+  const subject = vocab().concepts?.[subjectCid];
+  let person = subject?.person;
+  let number = subject?.number;
+  if (!person || !number) {
+    person = 3;
+    const subjEntry = vocab().languages?.[lang]?.forms?.[subjectCid];
+    const pluralOnlySubject = !!(subjEntry && typeof subjEntry === "object" &&
+      !Array.isArray(subjEntry) && subjEntry.pluralOnly);
+    number = (isPluralPronoun(subjectCid) || pluralOnlySubject) ? "plural" : "singular";
+  }
+  let key = `${person}_${number}`;
+  if (langRule(lang, "secondPersonAsThird")) {
+    if (subjectCid === "SECOND_PERSON") key = "3_singular";
+    if (subjectCid === "SECOND_PERSON_PLURAL") key = "3_plural";
+  }
+  return paradigm[key] || paradigm.base || null;
+}
+
+// Declared rule locativeCopula: a language that distinguishes location
+// from identity swaps the copula when the complement is a position glue
+// (spatial_relation templates) or a `place` noun ("he is home"). A string
+// value is the invariant locative (zh 在 — Emi run-9 -39); "paradigm"
+// conjugates the BE entry's nested `locative` paradigm (es estar: «El
+// libro está sobre la mesa», «está en casa» — Emi run-15 (a): 9/9 «es»).
+// Returns the surface or null to fall through.
+function locativeCopulaOverride(lang, beCid, complementCid, subjectCid, structType) {
+  const locative = langRuleValue(lang, "locativeCopula");
+  if (!locative || !isCopulaConcept(beCid)) return null;
+  const compMeta = vocab().concepts?.[complementCid];
+  const isSpatialTemplate = structType === "spatial_relation" ||
+    structType === "spatial_relation_complex";
+  if (!(isSpatialTemplate || compMeta?.type === "position" ||
+        compMeta?.semantic_role === "place")) {
+    return null;
+  }
+  if (typeof locative === "string" && locative !== "paradigm") {
+    if (lang === "zh") noteRule("zh_locative_copula");
+    return locative;
+  }
+  const paradigm = vocab().languages?.[lang]?.forms?.[beCid]?.locative;
+  if (paradigm && typeof paradigm === "object") {
+    return paradigmForm(paradigm, subjectCid, lang);
+  }
+  return null;
+}
+
 function zhCopulaOverride(lang, beCid, complementCid, structType) {
   if (lang !== "zh" || !isCopulaConcept(beCid)) return null;
-  // Locative copula 在: fires when the complement is a position glue
-  // (spatial_relation templates — «书在桌子上面») or a `place` noun
-  // ("he is home" → 他在家). Same override shape as thCopulaOverride's
-  // อยู่ split. -39 (Emi run-9).
-  const locative = langRuleValue(lang, "locativeCopula");
-  if (locative) {
-    const compMeta = vocab().concepts?.[complementCid];
-    const isSpatialTemplate = structType === "spatial_relation" ||
-      structType === "spatial_relation_complex";
-    if (isSpatialTemplate || compMeta?.type === "position" ||
-        compMeta?.semantic_role === "place") {
-      noteRule("zh_locative_copula");
-      return locative;
-    }
-  }
+  // Locative copula 在 — the shared declared rule (locativeCopulaOverride)
+  // owns the condition; -39 (Emi run-9).
+  const locative = locativeCopulaOverride(lang, beCid, complementCid, null, structType);
+  if (locative !== null) return locative;
   if (!isAdjectiveConcept(complementCid)) return null;
   const compMeta = vocab().concepts?.[complementCid];
   if (compMeta?.semantic_role === "possessive") return null;
@@ -2656,7 +2790,9 @@ function thCopulaOverride(lang, beCid, complementCid, subjectCid) {
 function copulaOverride(lang, beCid, complementCid, subjectCid, structType) {
   const th = thCopulaOverride(lang, beCid, complementCid, subjectCid);
   if (th !== null) return th;
-  return zhCopulaOverride(lang, beCid, complementCid, structType);
+  const zh = zhCopulaOverride(lang, beCid, complementCid, structType);
+  if (zh !== null) return zh;
+  return locativeCopulaOverride(lang, beCid, complementCid, subjectCid, structType);
 }
 
 // Copula surface for a given language. Returns "" for languages that drop the
@@ -4495,8 +4631,18 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // Data-driven: only fires when the demonstrative entry carries gendered
     // forms, so uk «це» / en "this" are untouched.
     if (idx === 0 && meta.type === "pronoun" && isCopularTemplate) {
-      const predNoun = ordered.find(c => vocab().concepts[c]?.type === "noun");
+      const predIdx = ordered.findIndex(c => vocab().concepts[c]?.type === "noun");
+      const predNoun = predIdx === -1 ? null : ordered[predIdx];
       const entry = vocab().languages?.[lang]?.forms?.[cid];
+      // Declared rule (standaloneDemonstrative — es): agreement needs a
+      // determined predicate («Esta es mi mano»); a bare generic
+      // predicate keeps the neuter pronoun («Esto es una cosa»).
+      if (predNoun && langRule(lang, "standaloneDemonstrative") &&
+          entry && !Array.isArray(entry) && typeof entry.standalone === "string" &&
+          !ordered.slice(idx + 1, predIdx)
+            .some(c => vocab().concepts[c]?.type === "adjective")) {
+        return entry.standalone;
+      }
       if (predNoun && entry && !Array.isArray(entry) &&
           typeof entry === "object" && (entry.f || entry.n)) {
         return genderedFormOf(lang, cid, predNoun);
@@ -4691,6 +4837,29 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (meta.semantic_role === "logical_negation" &&
         langRule(lang, "conjugatingNegator")) {
       return getVerbForm(cid, subjectCid, lang);
+    }
+
+    // Declared rule (standaloneDemonstrative — es): a demonstrative used
+    // as a pronoun takes the entry's neuter `standalone` form («sobre
+    // esto», «Esto es mío», «hago esto» — Emi run-15 (c): 8 wrong, 1
+    // right). It still agrees with a determined predicate noun («Esta es
+    // mi mano», «Este es un buen libro») — a possessive or adjective
+    // between the demonstrative and that noun is the tell.
+    if (meta.semantic_role === "demonstrative" &&
+        langRule(lang, "standaloneDemonstrative") &&
+        vocab().concepts[ordered[idx + 1]]?.type !== "noun") {
+      const entry = vocab().languages?.[lang]?.forms?.[cid];
+      const standalone = entry && !Array.isArray(entry) ? entry.standalone : null;
+      if (typeof standalone === "string") {
+        let determined = false;
+        if (cid === subjectCid && isCopularTemplate) {
+          const refIdx = ordered.findIndex((c, i) =>
+            i > idx && vocab().concepts[c]?.type === "noun");
+          determined = refIdx !== -1 && ordered.slice(idx + 1, refIdx)
+            .some(c => vocab().concepts[c]?.type === "adjective");
+        }
+        if (!determined) return standalone;
+      }
     }
 
     // Declared rule (demonstrativeGenderAgreement — ar): a demonstrative
