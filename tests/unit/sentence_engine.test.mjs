@@ -127,7 +127,8 @@ test("zero-copula languages are uk, ar, tr, ko", () => {
 test("surface forms resolve from vocab data", () => {
   assert.equal(surfaceForm("en", "HE"), "he");
   assert.equal(nounPhrase("en", "FOOD"), "food");
-  assert.equal(nounPhrase("fr", "WATER"), "eau");
+  // Mass nouns take the partitive in French (Emi run-13 -65): «de l'eau».
+  assert.equal(nounPhrase("fr", "WATER"), "de l'eau");
 });
 
 test("character-trait adjectives only pair with beings", () => {

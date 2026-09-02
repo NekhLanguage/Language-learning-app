@@ -330,6 +330,13 @@ function pluralFormOf(lang, cid) {
 function genderedFormOf(lang, modifierCid, nounCid, plural = false, genderOverride = null) {
   const mod = vocab().languages?.[lang]?.forms?.[modifierCid];
   if (!mod || typeof mod !== "object" || Array.isArray(mod)) {
+    // French possessives are ordered arrays ([mon, ma, mes]) and agree with
+    // the possessed noun — one selector for every path (Emi run-13 -64).
+    if (lang === "fr" && Array.isArray(mod) &&
+        vocab().concepts?.[modifierCid]?.semantic_role === "possessive") {
+      const poss = frenchPossessiveDeterminer(modifierCid, nounCid, plural);
+      if (poss !== null) return poss;
+    }
     return plural ? pluralFormOf(lang, modifierCid) : formOf(lang, modifierCid);
   }
   const noun = vocab().languages?.[lang]?.forms?.[nounCid];
@@ -1077,6 +1084,19 @@ function nounPhrase(lang, cid, opts = {}) {
   }
   if (lang === "it" && entry.definite) {
     return definiteNounPhrase(lang, cid);
+  }
+  // Declared rule partitiveArticle (fr): the mass/plural indefinite is an
+  // article too — «des bagages», «de l'eau», «de la nourriture» — where
+  // the generic path left the noun bare («Tu bois eau», Emi run-13 -65:
+  // 0 partitives in 506 sentences). pluralOnly nouns take «des»; mass
+  // nouns (countable: false) take du / de la / de l' by gender and
+  // initial. noArticle still wins («le petit-déjeuner» class).
+  if (langRule(lang, "partitiveArticle") && !entry.noArticle &&
+      (entry.pluralOnly || (meta && meta.countable === false && entry.gender))) {
+    noteRule("indefinite_article");
+    if (entry.pluralOnly) return "des " + base;
+    if (FR_VOWEL_H.includes((base[0] || "").toLowerCase())) return "de l'" + base;
+    return (entry.gender === "f" ? "de la " : "du ") + base;
   }
   if (entry.pluralOnly || entry.noArticle) return base;
 
@@ -2137,13 +2157,18 @@ function frenchElision(s) {
   const VOWEL_H = "aàâäeéèêëiîïoôöuùûüh";
   const W = "je|me|te|se|ne|de|ce|le|la|que";
   const Wcap = W.split("|").map(w => w[0].toUpperCase() + w.slice(1)).join("|");
+  // Anchored on the sentence start or a space, never on \b: without the
+  // u flag \b sits between «è» and «t», so «achète un» matched its final
+  // «te» and rendered «achèt'un» (Emi run-13 -67 — 3 of 3 «acheter»
+  // sentences). Only a whole word from the closed set elides.
   s = s.replace(
-    new RegExp("\\b(" + W + "|" + Wcap + ")(\\s+)(?=[" + VOWEL_H + "])", "g"),
-    (m, w) => matchCase(w, ELIDE[w.toLowerCase()])
+    new RegExp("(^|\\s)(" + W + "|" + Wcap + ")(\\s+)(?=[" + VOWEL_H + "])", "g"),
+    (m, pre, w) => pre + matchCase(w, ELIDE[w.toLowerCase()])
   );
 
   // «si» elides only before il / ils (never «si elle»).
-  s = s.replace(/\b(si|Si)\s+(ils?\b)/g, (m, w, after) => matchCase(w, "s'") + after);
+  s = s.replace(/(^|\s)(si|Si)\s+(ils?\b)/g,
+    (m, pre, w, after) => pre + matchCase(w, "s'") + after);
 
   return s;
 }
@@ -2153,7 +2178,10 @@ function finalizeSentence(lang, sentence) {
   if (lang === "fr") {
     const elided = frenchElision(sentence);
     if (elided !== sentence) noteRule("french_elision");
-    return elided;
+    // French typography sets a space before « ? » — the authored wh
+    // questions carry it («Pourquoi vas-tu ?»); the generated yes/no
+    // question appended a bare «?» (Emi run-13 -66).
+    return elided.replace(/\s*([?!])$/, " $1");
   }
   // Ukrainian sets off its conjunctions with a comma: «сніданок, але не
   // обід», «..., тому що він удома» — and alternates в/у for euphony: «у»
@@ -2263,19 +2291,35 @@ const FR_VOWEL_H = "aàâäeéèêëiîïoôöuùûüh";
 // only the 3-element determiners inflect for gender. Known minor edge (as in the
 // elision pass): a feminine *aspirated*-h noun (rare, e.g. «hache») is mis-agreed
 // to «son hache»; the mute-h words this helps («son amie», «son heure») dominate.
-function frenchPossessivePhrase(possessiveCid, nounCid) {
+// The determiner alone — THE one place the ma/ta/sa choice is made.
+// genderedFormOf routes every French possessive here (template slot,
+// drilled/forced modifier, pluralOnly agreement), so no render path can
+// fall back to the bare masculine («mon main» ×32 — Emi run-13 -64: the
+// adjective module read the noun's gender, the possessive selector never
+// did). A pluralOnly noun («mes bagages») and a plural-agreement slot
+// («nos filles») take the plural cell.
+function frenchPossessiveDeterminer(possessiveCid, nounCid, plural = false) {
   const forms = vocab().languages?.fr?.forms;
   const arr = forms?.[possessiveCid];
+  if (!Array.isArray(arr) || !arr.length) return null;
+  const nounEntry = forms?.[nounCid];
+  const isPlural = plural || !!(nounEntry && !Array.isArray(nounEntry) &&
+    nounEntry.pluralOnly);
+  if (isPlural) return arr[arr.length - 1];
+  if (arr.length < 3) return arr[0]; // gender-invariant notre/leur
+  noteRule("french_possessive_agreement");
+  if (nounEntry?.gender !== "f") return arr[0];
   const nounForm = formOf("fr", nounCid);
-  if (!Array.isArray(arr)) {
+  const vowelH = FR_VOWEL_H.includes((nounForm[0] || "").toLowerCase());
+  return vowelH ? arr[0] : arr[1];
+}
+
+function frenchPossessivePhrase(possessiveCid, nounCid) {
+  const nounForm = formOf("fr", nounCid);
+  const poss = frenchPossessiveDeterminer(possessiveCid, nounCid);
+  if (poss === null) {
     // Unexpected shape — defer to the generic gender-agreement path.
     return `${genderedFormOf("fr", possessiveCid, nounCid)} ${nounForm}`;
-  }
-  if (arr.length >= 3) noteRule("french_possessive_agreement");
-  let poss = arr[0]; // masculine, or the gender-invariant singular (notre/leur)
-  if (arr.length >= 3 && forms?.[nounCid]?.gender === "f") {
-    const vowelH = FR_VOWEL_H.includes((nounForm[0] || "").toLowerCase());
-    poss = vowelH ? arr[0] : arr[1];
   }
   return `${poss} ${nounForm}`;
 }
@@ -2437,16 +2481,33 @@ function adjectiveGoesPostNominal(lang, adjectiveCid) {
 // «buono» → «buon libro») — the entry's `apocope` field, applied only
 // where the language declares the rule and the adjective actually landed
 // pre-nominally before a masculine singular noun.
-function apocopeForm(lang, adjectiveCid, adjWord, nounGender, plural) {
-  if (!langRule(lang, "apocope") || plural || nounGender === "f" || !adjectiveCid) {
-    return adjWord;
-  }
+// Declared rule prevocalicAdjectives (fr) rides the same slot: a
+// masculine-singular adjective before a vowel/mute-h noun takes the
+// entry's `prevocalic` form («un nouvel itinéraire», «un vieil évier»
+// — Emi run-13 -68), which needs the noun's surface, so callers pass it.
+function apocopeForm(lang, adjectiveCid, adjWord, nounGender, plural, nounForm = null) {
+  if (plural || nounGender === "f" || !adjectiveCid) return adjWord;
   const entry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
-  if (entry && !Array.isArray(entry) && typeof entry.apocope === "string") {
+  if (!entry || Array.isArray(entry)) return adjWord;
+  if (langRule(lang, "prevocalicAdjectives") &&
+      typeof entry.prevocalic === "string" && typeof nounForm === "string" &&
+      FR_VOWEL_H.includes((nounForm[0] || "").toLowerCase())) {
+    return entry.prevocalic;
+  }
+  if (langRule(lang, "apocope") && typeof entry.apocope === "string") {
     noteRule("apocope");
     return entry.apocope;
   }
   return adjWord;
+}
+
+// Declared rule partitiveArticle (fr): the plural/mass indefinite («des
+// vêtements», «de l'eau») reduces to bare «de» when a pre-nominal
+// adjective follows («de mauvais vêtements», never «des mauvais
+// vêtements»). Identity for every other article.
+function partitiveBeforeAdjective(lang, article) {
+  if (!langRule(lang, "partitiveArticle")) return article;
+  return /^(des|du|de la|de l')$/i.test(article) ? "de" : article;
 }
 
 // Languages that omit the present-tense copula. Ukrainian (and Russian-style
@@ -2862,9 +2923,11 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
   }
   // Insert adjective between article and noun (pre-nominal placement —
   // apocope applies here and only here).
-  const preAdjective = apocopeForm(lang, adjectiveCid, adjective, nounGender, !!opts.plural);
+  const preAdjective = apocopeForm(lang, adjectiveCid, adjective, nounGender,
+    !!opts.plural, bare);
   if (withArticle !== bare) {
-    let article = withArticle.substring(0, withArticle.length - bare.length).trimEnd();
+    let article = partitiveBeforeAdjective(lang,
+      withArticle.substring(0, withArticle.length - bare.length).trimEnd());
     // For English, the article must agree with the adjective (now the next word),
     // not the noun — "an old spell" not "a old spell".
     if (lang === "en" && /^an?$/i.test(article)) {
@@ -3707,6 +3770,20 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     }
   }
 
+  // A predicate noun with a dedicated predicative form renders it bare:
+  // professions take no article in French («Il est serveur», never «Il
+  // est un serveur» — Emi run-13 -69); the same field the complex-clause
+  // builder already honours for HOME («à la maison», «удома»). Singular,
+  // unmodified predicate position only — a possessed or described
+  // predicate keeps the ordinary phrase, and a modifier that lands below
+  // («Il est un bon serveur») restores the article with it, so this is
+  // resolved at the final return, not here. A feminine referent keeps
+  // the bare predicative too («Elle est guide»).
+  const predicativeBare = isCopularTemplate && !bareDetermined &&
+      !useCopularPlural && typeof nounEntry?.predicative === "string" &&
+      isCopularPredicatePosition(ordered, idx, lang)
+    ? nounEntry.predicative : null;
+
   let phrase = bareDetermined
     ? possessedForm
     : nounPhrase(lang, cid, {
@@ -4100,7 +4177,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       return adjectiveGoesPostNominal(lang, adjectiveCid)
         ? numberWord + " " + nounForm + " " + adjForm
         : numberWord + " " +
-          apocopeForm(lang, adjectiveCid, adjForm, headEntry?.gender, isPlural) +
+          apocopeForm(lang, adjectiveCid, adjForm, headEntry?.gender, isPlural,
+            nounForm) +
           " " + nounForm;
     }
     return numberWord + " " + nounForm;
@@ -4139,7 +4217,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // match the «buen» actually rendered; identity everywhere else.
     if (!adjectiveIsPossessive && !adjectiveGoesPostNominal(lang, adjectiveCid)) {
       adjForm = apocopeForm(lang, adjectiveCid, adjForm,
-        headEntry?.gender, useCopularPlural);
+        headEntry?.gender, useCopularPlural, bareNoun || bare);
     }
     // Record the exact surface rendered for a forced modifier so the L3
     // "fill in the missing word" blank can match the inflected form actually
@@ -4210,7 +4288,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // fragment of the noun itself («minun i pieni isä», "my d small
       // dad" — Emi run-7 -34), so anything else falls through to the
       // no-article branch below.
-      let article = phrase.substring(0, phrase.length - bare.length).trimEnd();
+      let article = partitiveBeforeAdjective(lang,
+        phrase.substring(0, phrase.length - bare.length).trimEnd());
       // For English, recompute article against the adjective (next word after article).
       if (lang === "en" && /^an?$/i.test(article)) {
         article = englishIndefiniteArticle(adjForm);
@@ -4233,6 +4312,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     }
   }
 
+  if (predicativeBare && !adjectiveWord && !numberWord) return predicativeBare;
   return phrase;
 }
 
@@ -4439,13 +4519,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     }
 
     // A possessive directly before a noun agrees with that noun's gender
-    // («моя мама», "minha casa") — surfaceForm alone returns the base
-    // (masculine) form. French is excluded: its vowel-initial rule (mon amie)
-    // is handled by frenchPossessivePhrase, not by plain gender agreement.
-    // When the possessed noun is a feminine direct object in Ukrainian, the
-    // possessive shifts to the accusative with it («я маю мою книгу»).
-    if (meta.type === "adjective" && meta.semantic_role === "possessive" &&
-        lang !== "fr") {
+    // («моя мама», "minha casa", «ma main») — surfaceForm alone returns
+    // the base (masculine) form. French's vowel-initial rule («mon amie»)
+    // lives inside genderedFormOf → frenchPossessiveDeterminer, so this
+    // slot no longer excludes it (the exclusion shipped «mon main» ×32 —
+    // Emi run-13 -64). When the possessed noun is a feminine direct
+    // object in Ukrainian, the possessive shifts to the accusative with
+    // it («я маю мою книгу»).
+    if (meta.type === "adjective" && meta.semantic_role === "possessive") {
       const nextCid = ordered[idx + 1];
       // Enclitic languages render the possessor inside the noun slot
       // (th มือของฉัน, el «το βιβλίο μου») — this slot stays empty.

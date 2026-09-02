@@ -146,6 +146,15 @@
 //   apocope                  pre-nominal masc-singular adjectives use the
 //                            entry's `apocope` short form («buen libro»,
 //                            «buon libro»).
+//   prevocalicAdjectives     pre-nominal masc-singular adjectives before a
+//                            vowel/mute-h noun use the entry's
+//                            `prevocalic` form («un nouvel itinéraire»,
+//                            «un vieil évier»).
+//   partitiveArticle         mass and pluralOnly nouns take the partitive/
+//                            plural indefinite instead of going bare («de
+//                            l'eau», «des bagages»); it reduces to «de»
+//                            before a pre-nominal adjective («de mauvais
+//                            vêtements»).
 //   virilePlural             plural agreement splits virile/non-virile:
 //                            nouns flag `virile: true`, adjectives carry a
 //                            `vp` (virile plural) form («nowi» vs «nowe»).
@@ -462,6 +471,15 @@ export const LANGUAGE_RULES = {
     preNominalAdjectiveRoles: [
       "property_size", "property_quality", "property_time", "property_youth",
     ],
+    // Emi run-13 first sweep (17/20, 14/20): the mass/plural indefinite is
+    // an article («des bagages», «de l'eau»), masculine-singular
+    // adjectives take a prevocalic form before a vowel («un nouvel
+    // itinéraire»), and the yes/no question fronts «Est-ce que» over
+    // declarative order — the fifth language whose yes/no question the
+    // generic copula-fronting got wrong («Est cela ton téléphone?»).
+    partitiveArticle: true,
+    prevocalicAdjectives: true,
+    questionParticle: "Est-ce que",
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },

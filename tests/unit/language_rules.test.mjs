@@ -330,6 +330,86 @@ test("fr: adjectives are post-nominal by default, BAGS roles pre-nominal", () =>
   assert.ok(s.includes("un bon livre"), s);
 });
 
+// ---------------------------------------------------------------------
+// French first sweep — Emi 2026-09-02-64 … -69
+// ---------------------------------------------------------------------
+
+test("fr: possessive determiners agree with the possessed noun (-64)", () => {
+  // ma/ta/sa before a feminine noun; the masculine form before a vowel.
+  assert.equal(buildSentence("fr", tplById("THIS_IS_MY_HAND"), null, {}),
+    "C'est ma main.");
+  assert.equal(buildSentence("fr", tplById("THAT_IS_YOUR_LEG"), null, {}),
+    "Cela est ta jambe.");
+  assert.equal(buildSentence("fr", tplById("SHE_IS_MY_MOM"), null, {}),
+    "Elle est ma maman.");
+  // The determiner looks past an injected adjective to the noun.
+  assert.equal(buildSentence("fr", tplById("SHE_IS_MY_MOM"), "BIG", {}),
+    "Elle est ma grande maman.");
+  // Drilled possessive on a pluralOnly noun takes the plural cell.
+  assert.equal(buildSentence("fr", tplById("I_INSURE_LUGGAGE"), null, {}),
+    "J'assure mes bagages.");
+  // Vowel-initial feminine keeps the masculine form («mon eau», not «ma eau»).
+  assert.equal(formOf("fr", "WATER"), "eau");
+  assert.equal(nounPhrase("fr", "WATER"), "de l'eau");
+});
+
+test("fr: mass and plural objects take the partitive article (-65)", () => {
+  assert.equal(buildSentence("fr", tplById("I_DRINK_WATER"), null, {}),
+    "Je bois de l'eau.");
+  assert.equal(buildSentence("fr", tplById("WE_HAVE_LUGGAGE"), null, {}),
+    "Nous avons des bagages.");
+  assert.equal(buildSentence("fr", tplById("SHE_HAS_SHOES"), null, {}),
+    "Elle a des chaussures.");
+  // «des» reduces to «de» before a pre-nominal adjective; a post-nominal
+  // adjective keeps «des» and agrees in the feminine plural.
+  assert.equal(buildSentence("fr", tplById("WE_HAVE_CLOTHES"), "BAD", {}),
+    "Nous avons de mauvais vêtements.");
+  assert.equal(buildSentence("fr", tplById("SHE_HAS_SHOES"), "BLACK", {}),
+    "Elle a des chaussures noires.");
+  // A pluralOnly subject is plural throughout («Les chaussures sont …»).
+  assert.ok(buildSentence("fr", tplById("SHOES_UNDER_THIS"), null, {})
+    .startsWith("Les chaussures sont "));
+});
+
+test("fr: yes/no question fronts «Est-ce que» with French spacing (-66)", () => {
+  assert.equal(buildSentence("fr", tplById("IS_THAT_YOUR_PHONE"), null, {}),
+    "Est-ce que cela est ton téléphone ?");
+});
+
+test("fr: elision never fires inside a word (-67)", () => {
+  assert.equal(finalizeSentence("fr", "Je achète un souvenir."),
+    "J'achète un souvenir.");
+  assert.equal(finalizeSentence("fr", "Il ne aime pas le hôtel."),
+    "Il n'aime pas l'hôtel.");
+  assert.equal(buildSentence("fr", tplById("I_PURCHASE_SOUVENIR"), null, {}),
+    "J'achète un souvenir.");
+});
+
+test("fr: nouvel/vieil before a vowel-initial masculine singular (-68)", () => {
+  assert.equal(buildSentence("fr", tplById("SHE_HAS_ITINERARY"), "NEW", {}),
+    "Elle a un nouvel itinéraire.");
+  assert.equal(buildSentence("fr", tplById("I_SEE_SINK"), "OLD", {}),
+    "Je vois un vieil évier.");
+  // Consonant-initial and plural keep the ordinary forms.
+  assert.equal(buildSentence("fr", tplById("I_GET_BOOK"), "NEW", {}),
+    "J'obtiens un nouveau livre.");
+});
+
+test("fr: professions and HOME are bare predicates after être (-69)", () => {
+  assert.equal(buildSentence("fr", tplById("HE_IS_WAITER"), null, {}),
+    "Il est serveur.");
+  assert.equal(buildSentence("fr", tplById("SHE_IS_GUIDE"), null, {}),
+    "Elle est guide.");
+  // A modifier restores the article with it.
+  assert.equal(buildSentence("fr", tplById("HE_IS_WAITER"), "GOOD", {}),
+    "Il est un bon serveur.");
+  assert.equal(buildSentence("fr",
+    tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"), null, {}),
+    "S'il est à la maison, il mange avec sa fille.");
+  assert.equal(buildSentence("fr", tplById("I_GO_HOME"), null, {}),
+    "Je vais à la maison.");
+});
+
 test("es: adjectives post-nominal; buen/mal apocopate before masc singulars", () => {
   assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "BLACK", {}),
     "Yo obtengo un libro negro.");
