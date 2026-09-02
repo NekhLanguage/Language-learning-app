@@ -988,7 +988,7 @@
         "DELICIOUS": ["おいしい"],
         "EXPENSIVE": ["高い"],
         "FOREIGN": ["外国の"],
-        "HISTORIC": ["歴史的な"],
+        "HISTORIC": { "form": "歴史的な", "predicative": "歴史的" },
         "UNFORGETTABLE": ["忘れられない"]
 
       }
@@ -1398,7 +1398,7 @@
         "AIRPORT": {"form":"aéroport","gender":"m","plural":"aéroports"},
         "PASSPORT": {"form":"passeport","gender":"m","plural":"passeports"},
         "FLIGHT": {"form":"vol","gender":"m","plural":"vols"},
-        "LUGGAGE": {"form":"bagages","gender":"m","plural":"bagages"},
+        "LUGGAGE": {"form":"bagages","gender":"m","plural":"bagages", "pluralOnly": true},
         "HOTEL": {"form":"hôtel","gender":"m","plural":"hôtels"},
         "RESERVATION": {"form":"réservation","gender":"f","plural":"réservations"},
         "LOBBY": {"form":"hall","gender":"m","plural":"halls"},
@@ -1412,7 +1412,7 @@
         "MONUMENT": {"form":"monument","gender":"m","plural":"monuments"},
         "RESTAURANT": {"form":"restaurant","gender":"m","plural":"restaurants"},
         "MENU": {"form":"menu","gender":"m","plural":"menus"},
-        "WAITER": {"form":"serveur","gender":"m","plural":"serveurs"},
+        "WAITER": {"form":"serveur","gender":"m","plural":"serveurs", "predicative": "serveur"},
         "MARKET": {"form":"marché","gender":"m","plural":"marchés"},
         "SOUVENIR": {"form":"souvenir","gender":"m","plural":"souvenirs"},
         "BARGAIN": {"form":"bonne affaire","gender":"f","plural":"bonnes affaires"},
@@ -1425,7 +1425,7 @@
         "EMBASSY": {"form":"ambassade","gender":"f","plural":"ambassades"},
         "ADVENTURE": {"form":"aventure","gender":"f","plural":"aventures"},
         "ITINERARY": {"form":"itinéraire","gender":"m","plural":"itinéraires"},
-        "GUIDE": {"form":"guide","gender":"m","plural":"guides", "feminine": "guide" },
+        "GUIDE": {"form":"guide","gender":"m","plural":"guides", "feminine": "guide", "predicative": "guide" },
         "BOARD": {"base":"embarquer","1_singular":"embarque","2_singular":"embarques","3_singular":"embarque","1_plural":"embarquons","2_plural":"embarquez","3_plural":"embarquent"},
         "RESERVE": {"base":"réserver","1_singular":"réserve","2_singular":"réserves","3_singular":"réserve","1_plural":"réservons","2_plural":"réservez","3_plural":"réservent"},
         "NAVIGATE": {"base":"se repérer","1_singular":"me repère","2_singular":"te repères","3_singular":"se repère","1_plural":"nous repérons","2_plural":"vous repérez","3_plural":"se repèrent"},

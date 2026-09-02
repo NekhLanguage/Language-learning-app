@@ -766,11 +766,11 @@
         "DISTANT":    ["遠い"],
         "UNKNOWN":    ["未知の"],
         "ADVANCED":   ["高度な"],
-        "ARTIFICIAL": ["人工的な"],
+        "ARTIFICIAL": { "form": "人工的な", "predicative": "人工的" },
         "INFINITE":   ["無限の"],
         "SUSTAINABLE":["持続可能な"],
         "HOSTILE":    ["敵対的な"],
-        "FUTURISTIC": ["未来的な"]
+        "FUTURISTIC": { "form": "未来的な", "predicative": "未来的" }
 
       }
     },

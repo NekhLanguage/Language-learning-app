@@ -810,7 +810,7 @@
 
         "SWIFT":      ["素早い"],
         "SKILLED":    ["巧みな"],
-        "AGGRESSIVE": ["積極的な"],
+        "AGGRESSIVE": { "form": "積極的な", "predicative": "積極的" },
         "DECISIVE":   ["決定的な"],
         "CLINICAL":   ["冷静な"],
 

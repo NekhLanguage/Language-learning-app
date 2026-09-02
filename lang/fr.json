@@ -112,22 +112,28 @@
     "GOOD": {
       "form": "bon",
       "f": "bonne",
-      "plural": "bons"
+      "plural": "bons",
+      "fp": "bonnes"
     },
     "BAD": {
       "form": "mauvais",
       "f": "mauvaise",
-      "plural": "mauvais"
+      "plural": "mauvais",
+      "fp": "mauvaises"
     },
     "NEW": {
       "form": "nouveau",
       "f": "nouvelle",
-      "plural": "nouveaux"
+      "plural": "nouveaux",
+      "fp": "nouvelles",
+      "prevocalic": "nouvel"
     },
     "OLD": {
       "form": "vieux",
       "f": "vieille",
-      "plural": "vieux"
+      "plural": "vieux",
+      "fp": "vieilles",
+      "prevocalic": "vieil"
     },
     "EASY": {
       "form": "facile",
@@ -267,9 +273,10 @@
       "plural": "maisons"
     },
     "HOME": {
-      "form": "foyer",
-      "gender": "m",
-      "plural": "foyers"
+      "form": "maison",
+      "gender": "f",
+      "plural": "maisons",
+      "predicative": "à la maison"
     },
     "BOOK": {
       "form": "livre",
@@ -399,7 +406,9 @@
       "gender": "m"
     },
     "CLOTHES": {
-      "form": "vêtements"
+      "form": "vêtements",
+      "gender": "m",
+      "pluralOnly": true
     },
     "SHIRT": {
       "form": "chemise",
@@ -408,7 +417,8 @@
     },
     "SHOES": {
       "form": "chaussures",
-      "gender": "f"
+      "gender": "f",
+      "pluralOnly": true
     },
     "TABLE": {
       "form": "table",
@@ -723,11 +733,15 @@
     },
     "BLACK": {
       "form": "noir",
-      "f": "noire"
+      "f": "noire",
+      "plural": "noirs",
+      "fp": "noires"
     },
     "WHITE": {
       "form": "blanc",
-      "f": "blanche"
+      "f": "blanche",
+      "plural": "blancs",
+      "fp": "blanches"
     },
     "RED": {
       "form": "rouge",
@@ -737,11 +751,15 @@
     },
     "BLUE": {
       "form": "bleu",
-      "f": "bleue"
+      "f": "bleue",
+      "plural": "bleus",
+      "fp": "bleues"
     },
     "GREEN": {
       "form": "vert",
-      "f": "verte"
+      "f": "verte",
+      "plural": "verts",
+      "fp": "vertes"
     },
     "YELLOW": {
       "form": "jaune",
@@ -775,19 +793,27 @@
     },
     "LONG": {
       "form": "long",
-      "f": "longue"
+      "f": "longue",
+      "plural": "longs",
+      "fp": "longues"
     },
     "SHORT": {
       "form": "court",
-      "f": "courte"
+      "f": "courte",
+      "plural": "courts",
+      "fp": "courtes"
     },
     "HEAVY": {
       "form": "lourd",
-      "f": "lourde"
+      "f": "lourde",
+      "plural": "lourds",
+      "fp": "lourdes"
     },
     "LIGHT": {
       "form": "léger",
-      "f": "légère"
+      "f": "légère",
+      "plural": "légers",
+      "fp": "légères"
     },
     "DARK": {
       "form": "sombre",
@@ -828,7 +854,8 @@
     "COLD": {
       "form": "froid",
       "f": "froide",
-      "plural": "froids"
+      "plural": "froids",
+      "fp": "froides"
     },
     "NICE": {
       "form": "gentil",

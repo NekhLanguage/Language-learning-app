@@ -146,6 +146,20 @@
 //   apocope                  pre-nominal masc-singular adjectives use the
 //                            entry's `apocope` short form («buen libro»,
 //                            «buon libro»).
+//   attributiveLinker        { form, minLength }: an attributive adjective
+//                            of at least minLength characters takes the
+//                            linker before its noun unless it already ends
+//                            in it (zh «容易的书» vs bare «好书»). A
+//                            per-entry `linker` field overrides it.
+//   prevocalicAdjectives     pre-nominal masc-singular adjectives before a
+//                            vowel/mute-h noun use the entry's
+//                            `prevocalic` form («un nouvel itinéraire»,
+//                            «un vieil évier»).
+//   partitiveArticle         mass and pluralOnly nouns take the partitive/
+//                            plural indefinite instead of going bare («de
+//                            l'eau», «des bagages»); it reduces to «de»
+//                            before a pre-nominal adjective («de mauvais
+//                            vêtements»).
 //   virilePlural             plural agreement splits virile/non-virile:
 //                            nouns flag `virile: true`, adjectives carry a
 //                            `vp` (virile plural) form («nowi» vs «nowe»).
@@ -462,6 +476,15 @@ export const LANGUAGE_RULES = {
     preNominalAdjectiveRoles: [
       "property_size", "property_quality", "property_time", "property_youth",
     ],
+    // Emi run-13 first sweep (17/20, 14/20): the mass/plural indefinite is
+    // an article («des bagages», «de l'eau»), masculine-singular
+    // adjectives take a prevocalic form before a vowel («un nouvel
+    // itinéraire»), and the yes/no question fronts «Est-ce que» over
+    // declarative order — the fifth language whose yes/no question the
+    // generic copula-fronting got wrong («Est cela ton téléphone?»).
+    partitiveArticle: true,
+    prevocalicAdjectives: true,
+    questionParticle: "Est-ce que",
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
@@ -668,6 +691,10 @@ export const LANGUAGE_RULES = {
     // negate a bare noun: «他吃早餐，但是不吃午餐», never «…但是不午餐»
     // (Emi run-9 -37). The negator is the NOT entry's own form.
     contrastiveNegation: { repeatVerb: true },
+    // Attributive adjectives of two or more characters take 的 before the
+    // noun («容易的书», «黑暗的书»); monosyllabic ones attach bare («好书»,
+    // «大手») — Emi run-13 -62. An entry's own `linker` still wins.
+    attributiveLinker: { form: "的", minLength: 2 },
     // -39: locative copula 在 replaces 是 when the predicate is a position
     // glue (spatial_relation templates) or a `place` noun ("he is home" →
     // 他在家). Fires from copulaOverride and also drives the

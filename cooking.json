@@ -647,7 +647,7 @@
     "SWEET": ["甘い"],
     "SALTY": ["塩辛い"],
     "SOUR": ["酸っぱい"],
-    "FRESH": ["新鮮な"],
+    "FRESH": { "form": "新鮮な", "predicative": "新鮮" },
     "FROZEN": ["冷凍の"],
     "RAW": ["生の"]
 

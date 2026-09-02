@@ -115,9 +115,10 @@
     "OLD": [
       "古い"
     ],
-    "EASY": [
-      "簡単"
-    ],
+    "EASY": {
+      "form": "簡単な",
+      "predicative": "簡単"
+    },
     "DIFFICULT": [
       "難しい"
     ],

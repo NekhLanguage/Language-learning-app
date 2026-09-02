@@ -789,7 +789,7 @@
         "JAZZ":       { "form": "ジャズ" },
         "CLASSICAL":  ["クラシックな"],
         "ACOUSTIC":   ["アコースティックな"],
-        "ELECTRONIC": ["エレクトロニックな"],
+        "ELECTRONIC": { "form": "エレクトロニックな", "predicative": "エレクトロニック" },
 
         "STUDIO":     { "form": "スタジオ" },
         "TRACK":      { "form": "トラック" },

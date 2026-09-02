@@ -742,12 +742,12 @@
         "AMBUSH": { "base": "待ち伏せします" },
         "CLUTCH": { "base": "クラッチします" },
         "ELITE": ["エリートの"],
-        "CRITICAL": ["クリティカルな"],
-        "RARE": ["レアな"],
+        "CRITICAL": { "form": "クリティカルな", "predicative": "クリティカル" },
+        "RARE": { "form": "レアな", "predicative": "レア" },
         "HIDDEN": ["隠れた"],
-        "COMPETITIVE": ["競争的な"],
-        "MYTHIC": ["神話的な"],
-        "TACTICAL": ["戦術的な"],
+        "COMPETITIVE": { "form": "競争的な", "predicative": "競争的" },
+        "MYTHIC": { "form": "神話的な", "predicative": "神話的" },
+        "TACTICAL": { "form": "戦術的な", "predicative": "戦術的" },
         "OVERPOWERED": ["強すぎる"]
       }
     },
