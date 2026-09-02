@@ -267,3 +267,9 @@ test("adopt guard: a newer or equal server copy is adopted (post-save read-back,
   // A local copy that never stamped a change defers to the server.
   assert.equal(shouldAdoptServerUser({ runs: { pt: {} } }, withRuns(1)), true);
 });
+
+test("adopt guard: a null server copy never replaces local runs (Emi 2026-09-02-61)", () => {
+  assert.equal(shouldAdoptServerUser(withRuns(100), null), false);
+  // …but a device with nothing local may start fresh from it.
+  assert.equal(shouldAdoptServerUser({ runs: {} }, null), true);
+});

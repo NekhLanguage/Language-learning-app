@@ -81,7 +81,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.39";
+const APP_DATA_VERSION = "1.2.40";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -663,7 +663,12 @@ function loadUser() {
 // because saveUser (below) runs at boot for a fresh user.
 let serverSyncFailed = false;
 
-async function saveUser() {
+// `reload` (default true) reads the server copy back after a successful
+// save. loadUserFromServer passes false when IT called saveUser to push a
+// newer local copy up — that read-back was the unbounded saveUser →
+// loadUserFromServer → saveUser loop Emi tripped (run 13: 821 loadUser
+// POSTs in two minutes against a stale server). One push, no re-read.
+async function saveUser({ reload = true } = {}) {
 
   if (!USER || !USER.runs) return;
 
@@ -702,7 +707,7 @@ async function saveUser() {
     USER.lastSyncedAt = Date.now();
 
     // Read back the server copy; the adopt guard keeps local when newer.
-    await loadUserFromServer(email);
+    if (reload) await loadUserFromServer(email);
 
   } catch (err) {
     console.warn("Sync failed:", err);
@@ -978,9 +983,21 @@ email = email?.toLowerCase().trim();
   }
   const data = await res.json();
 
-  if (data.user && !force && !shouldAdoptServerUser(USER, data.user)) {
-    console.info("Local progress is newer than the server copy — keeping local and pushing it up");
-    await saveUser();
+  // The adopt guard decides for BOTH a stale copy and a null one: a 200
+  // with {user: null} is indistinguishable from a read miss on the client
+  // (lagging replica, a store that nulls on timeout), and the old
+  // short-circuit on `data.user &&` went straight to createEmptyUser —
+  // a 288 KB record became a 122-byte empty one on the spot, and the next
+  // save would have pushed the wipe upstream (Emi 2026-09-02-61). Local
+  // with runs always survives; only a device with nothing local starts
+  // fresh from a null server copy.
+  if (!force && !shouldAdoptServerUser(USER, data.user)) {
+    if (data.user) {
+      console.info("Local progress is newer than the server copy — keeping local and pushing it up");
+    } else {
+      console.warn("Server returned no user but local progress exists — keeping local and pushing it up");
+    }
+    await saveUser({ reload: false });
     return;
   }
 
@@ -1736,7 +1753,10 @@ function createTtsBtn(text, lang) {
     else speakAlways(text, lang);
   };
   // Prefetch on render so the audio is warm by the time the user clicks.
-  prefetchTTS(text, lang);
+  // Best-effort warm-up: a throw from the audio layer (a bad stub, a
+  // broken Response) must never abort the exercise render that called
+  // createTtsBtn inside its option loop (Emi run-13 incident 2).
+  try { prefetchTTS(text, lang); } catch (err) { console.warn("prefetchTTS failed:", err); }
   return btn;
 }
 
@@ -1753,7 +1773,7 @@ function wireTts() {
       if (btn._phrase) speakWithHighlight(text, lang, btn._phrase);
       else speakAlways(text, lang);
     };
-    prefetchTTS(btn.dataset.tts, btn.dataset.lang);
+    try { prefetchTTS(btn.dataset.tts, btn.dataset.lang); } catch (err) { console.warn("prefetchTTS failed:", err); }
   });
 }
 
@@ -4349,7 +4369,7 @@ function renderAlphabetOverlay(langCode) {
 
       const ttsText = letter.ttsText || letter.char;
       card.addEventListener("click", () => speakLetters(ttsText, langCode, charEl));
-      prefetchTTS(ttsText, langCode);
+      try { prefetchTTS(ttsText, langCode); } catch (err) { console.warn("prefetchTTS failed:", err); }
 
       grid.appendChild(card);
     }

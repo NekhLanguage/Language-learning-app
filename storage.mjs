@@ -136,15 +136,21 @@ export function recoverUser(raw, backupRaw) {
 // no warning (Emi 2026-09-02-55: two full runs of progress gone).
 // `lastLocalChange` is stamped on every saveUser and travels inside the
 // blob, so a server copy carries the timestamp of the save that produced
-// it. Rules: no server copy → keep local; nothing local yet (no runs) →
-// server wins (fresh device, first login); otherwise the newer timestamp
-// wins, ties to the server (a just-completed save reads back as equal).
+// it. Rules: nothing local yet (no runs) → the server answer wins, even a
+// null one (fresh device, first login); local has runs and the server has
+// no copy → keep local; otherwise the newer timestamp wins, ties to the
+// server (a just-completed save reads back as equal).
 export function shouldAdoptServerUser(local, server) {
-  if (!server || typeof server !== "object") return false;
+  // Nothing local yet (fresh device, first login, a wiped blob): whatever
+  // the server says — a copy or "no account" — is the starting point.
   if (!local || typeof local !== "object") return true;
   const localRuns = local.runs && typeof local.runs === "object"
     ? Object.keys(local.runs).length : 0;
   if (!localRuns) return true;
+  // Local has progress and the server has nothing (null user): a read
+  // miss is indistinguishable from "no account" — keep local (Emi
+  // 2026-09-02-61: the old caller went straight to createEmptyUser).
+  if (!server || typeof server !== "object") return false;
   const localChange = Number(local.lastLocalChange) || 0;
   const serverChange = Number(server.lastLocalChange) || 0;
   if (!localChange) return true;
