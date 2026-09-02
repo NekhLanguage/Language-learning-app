@@ -15,6 +15,9 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-02
 
+### Japanese: two-clause sentences finally hold together
+The last broken Japanese shape was any sentence with two clauses. "This is my hand and this is your head" was coming out as «これは私のです手そしてあなたの頭»; it now chains the way Japanese does, on the で form of the copula: «これは私の手で、これはあなたの頭です». "He eats dinner with his mom because he is home" and "If he is home, he eats with his daughter" were word salad; they now lead with the subordinate clause and its own linker («彼は家にいますので、彼の母と夕ご飯を食べます», «もし彼が家にいたら、彼の娘と食べます»), with "he is home" rendered as the existence sentence Japanese actually uses.
+
 ### Japanese: where things are, who you have, and purple shirts
 Four more Japanese constructions now read as Japanese. "The book is on the table" was coming out as «本ですテーブル上に» — it's now the real existence sentence «本はテーブルの上にあります», with the topic marker, the の link and あります all in place. Having a person uses the animate verb («息子がいます», never «息子を持っています»). Colours that are nouns in Japanese link with の («紫のシャツ»), while true adjectives stay bare («白いシャツ»). Going to someone's room keeps に after the whole phrase («彼女の部屋に行きます»). Clause commas are now the Japanese 、 and Chinese ，.
 

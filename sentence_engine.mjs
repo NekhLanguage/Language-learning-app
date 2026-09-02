@@ -3033,6 +3033,67 @@ function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid
   }
   return joinWords(lang, [subject, verb, companion]);
 }
+// complex_clause for languages declaring subordinateClauseFinal (ja):
+// [subordinate clause][linker]、[main clause]. The subordinate "X is at
+// PLACE" renders as locative existence (BE.locativeAnimate «います» for a
+// personal subject, else BE.locative) — the conditional form («いたら») when
+// the linker entry is flagged conditional, with the linker's declared
+// subject particle («が»); a linker flagged clauseInitial («もし») leads
+// instead of following (flags are booleans: the encoding validator rejects
+// Latin string values inside a language file). The main
+// clause is assembled SOV: subject+topic, companion (possessive noun +
+// postposed WITH), object+particle, verb. Null when data is missing so the
+// generic builder still renders (ratcheted).
+function buildSubordinateFinalComplexClause(lang, tpl) {
+  const sl = tpl.slots || {};
+  const forms = vocab().languages?.[lang]?.forms || {};
+  const particles = langRuleValue(lang, "nominalParticles") || {};
+  const topic = !particles.attach && typeof particles.topic === "string" ? particles.topic : "";
+  const objP = !particles.attach && typeof particles.object === "string" ? particles.object : "";
+  const linkerCid = tpl.structure?.linker;
+  const linker = forms[linkerCid];
+  if (!linker || Array.isArray(linker) || typeof linker.form !== "string") return null;
+
+  // Subordinate clause: subject + PLACE に + existence verb.
+  const subMeta = vocab().concepts?.[sl.sub_subject];
+  const be = forms[sl.sub_verb];
+  if (!be || Array.isArray(be)) return null;
+  const animate = subMeta?.type === "pronoun" && !!subMeta.person;
+  let verb = animate ? be.locativeAnimate : be.locative;
+  if (linker.conditional) {
+    verb = animate ? be.locativeAnimateConditional : be.locativeConditional;
+  }
+  if (typeof verb !== "string") return null;
+  const placeMeta = vocab().concepts?.[sl.sub_noun];
+  if (placeMeta?.semantic_role !== "place") return null;
+  const subParticle = typeof linker.subjectParticle === "string" ? linker.subjectParticle : topic;
+  const subClause = [formOf(lang, sl.sub_subject), subParticle,
+    formOf(lang, sl.sub_noun), typeof particles.destination === "string" ? particles.destination : "",
+    verb];
+
+  // Main clause, SOV.
+  const companion = sl.main_noun
+    ? nounWithPossessive(lang, sl.main_possessive, sl.main_noun, null, sl.main_subject) +
+      (sl.main_prep ? formOf(lang, sl.main_prep) : "")
+    : "";
+  const object = sl.main_object
+    ? nounPhrase(lang, sl.main_object, { directObject: true }) + objP
+    : "";
+  // A main-clause subject identical to the subordinate one is dropped —
+  // «彼は家にいますので、彼の母と夕ご飯を食べます», never «…ので、彼は…»
+  // (the authored corpus drops it too).
+  const sameSubject = sl.main_subject === sl.sub_subject;
+  const mainClause = [
+    sameSubject ? "" : formOf(lang, sl.main_subject), sameSubject ? "" : topic,
+    companion, object, getVerbForm(sl.main_verb, sl.main_subject, lang)];
+
+  const sep = langRuleValue(lang, "copulaCoordination")?.separator || ",";
+  const parts = linker.clauseInitial
+    ? [linker.form, ...subClause, sep, ...mainClause]
+    : [...subClause, linker.form, sep, ...mainClause];
+  return joinWords(lang, parts);
+}
+
 function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subordinateFirst = false) {
   const linker = formOf(lang, linkerCid);
 
@@ -3106,6 +3167,11 @@ if (tpl.structure?.type === "yes_no_question_copular") {
     s.possessive,
     s.noun
   );
+}
+if (tpl.structure?.type === "complex_clause" &&
+    langRule(lang, "subordinateClauseFinal")) {
+  const built = buildSubordinateFinalComplexClause(lang, tpl);
+  if (built) return built;
 }
 if (tpl.structure?.type === "complex_clause") {
   const s = tpl.slots;
@@ -3264,7 +3330,44 @@ function locativeExistentialSegments(lang, tpl) {
   return segs;
 }
 
+// "X is A and Y is B" for languages declaring copulaCoordination (ja): each
+// clause renders through renderSegments on its own, the first clause's
+// copula becomes the connective form (BE.connective — で), and the declared
+// separator joins them: «これは私の手で、これはあなたの頭です». Returned as
+// segments so L6 tiles and blanks share the shape. Null when the rule,
+// the shape, or the data is missing (the legacy multi-clause path then
+// renders, ratcheted).
+function copulaCoordinationSegments(lang, tpl, forcedConcept, sharedChoices) {
+  const spec = langRuleValue(lang, "copulaCoordination");
+  if (!spec) return null;
+  const structType = tpl?.structure?.type;
+  if (structType && (RELATIONAL_STRUCTURES.has(structType) ||
+      AUTHORED_ONLY_STRUCTURES.has(structType) || structType === "complex_clause")) {
+    return null;
+  }
+  const c = tpl?.concepts || [];
+  const andIdx = c.findIndex(x =>
+    vocab().concepts?.[x]?.semantic_role === "logical_conjunction");
+  if (andIdx <= 0 || andIdx === c.length - 1) return null;
+  const first = c.slice(0, andIdx);
+  const second = c.slice(andIdx + 1);
+  if (!first.some(isCopulaConcept) || !second.some(isCopulaConcept)) return null;
+  const beCid = first.find(isCopulaConcept);
+  const connective = vocab().languages?.[lang]?.forms?.[beCid]?.connective;
+  if (typeof connective !== "string") return null;
+  const sub = (concepts) => ({ ...tpl, concepts, structure: undefined });
+  const seg1 = renderSegments(lang, sub(first), forcedConcept, sharedChoices);
+  const seg2 = renderSegments(lang, sub(second), forcedConcept, sharedChoices);
+  if (!seg1 || !seg2) return null;
+  for (const seg of seg1) {
+    if (seg.cid === beCid) seg.text = connective;
+  }
+  return [...seg1, { cid: c[andIdx], text: spec.separator || "" }, ...seg2];
+}
+
 function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
+  const coordinated = copulaCoordinationSegments(lang, tpl, forcedConcept, sharedChoices);
+  if (coordinated) return coordinated;
   const contrastive = contrastiveNegationSegments(lang, tpl);
   if (contrastive) return contrastive;
   const locative = locativeExistentialSegments(lang, tpl);
