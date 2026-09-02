@@ -148,12 +148,16 @@
     "ALSO": [
       "も"
     ],
-    "BECAUSE": [
-      "から"
-    ],
-    "IF": [
-      "もし"
-    ],
+    "BECAUSE": {
+      "form": "ので",
+      "clauseFinal": true
+    },
+    "IF": {
+      "form": "もし",
+      "clauseInitial": true,
+      "conditional": true,
+      "subjectParticle": "が"
+    },
     "TOP": [
       "上"
     ],
@@ -573,7 +577,10 @@
     "BE": {
       "base": "だ",
       "present": "です",
-      "locative": "あります"
+      "locative": "あります",
+      "locativeAnimate": "います",
+      "locativeAnimateConditional": "いたら",
+      "connective": "で"
     },
     "BLACK": [
       "黒い"

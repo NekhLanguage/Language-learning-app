@@ -232,6 +232,19 @@
 //                            entry's `linker` is inserted between it and its
 //                            noun («紫のシャツ» — Emi run-12 -59: noun-class
 //                            colours need の, い-adjectives don't).
+//   copulaCoordination       "X is A and Y is B" chains the first clause on
+//                            the copula's connective form (BE.connective —
+//                            ja で) and a separator: «これは私の手で、これは
+//                            あなたの頭です» (Emi run-10/-12: the AND
+//                            templates garbled since run 10). { separator }
+//   subordinateClauseFinal   the subordinate clause leads and its linker
+//                            follows it (ja «…いますので、…»); the linker
+//                            entry carries clauseFinal / clauseInitial /
+//                            conditional flags + subjectParticle («もし…
+//                            いたら、»). A copula before a place noun
+//                            renders as locative existence (BE.locativeAnimate
+//                            for a personal subject: «家にいます»). The main
+//                            clause is assembled SOV with particles.
 //   counterPrefix            numerals count through a per-noun counter
 //                            prefixed to the noun with a linker (ja
 //                            «二冊の本», «十七台の電話»). { kunCounter,
@@ -562,6 +575,11 @@ export const LANGUAGE_RULES = {
     // Location is existence: «本はこれの上にあります», «本はこれとそれの
     // 間にあります» (Emi run-12 -57).
     locativeExistential: { linker: "の", conjunction: "と" },
+    // Two-clause templates (Emi run-10 → run-12 carry-over): «これは私の手
+    // で、これはあなたの頭です», «彼は家にいますので、彼の母と夕ご飯を
+    // 食べます», «もし彼が家にいたら、彼の娘と食べます».
+    copulaCoordination: { separator: "、" },
+    subordinateClauseFinal: true,
   },
   ko: {
     features: {

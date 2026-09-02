@@ -1360,3 +1360,22 @@ test("ar: pack verb government — على / بـ / في, past a possessive (Emi 
   assert.equal(buildSentence("ar", tplById("I_RECOMMEND_RESTAURANT")), "أنا أوصي بـ مطعم.");
   assert.equal(buildSentence("ar", tplById("I_NAVIGATE_ROUTE")), "أنا أتنقل في مسار.");
 });
+
+// ---------------------------------------------------------------------
+// ja two-clause templates (carried since Emi run 10; run-12 known-open).
+// ---------------------------------------------------------------------
+
+test("ja: 'X is A and Y is B' chains on the connective copula で (copulaCoordination)", () => {
+  assert.equal(buildSentence("ja", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")),
+    "これは私の手で、これはあなたの頭です。");
+  assert.equal(buildSentence("ja", tplById("SHE_IS_MY_MOM_AND_HE_IS_MY_DAD")),
+    "彼女は私の母で、彼は私の父です。");
+});
+
+test("ja: subordinate clause leads with a clause-final linker; locative existence; SOV main clause", () => {
+  assert.equal(buildSentence("ja", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
+    "彼は家にいますので、彼の母と夕ご飯を食べます。");
+  // IF: clause-initial もし, が on the subordinate subject, conditional いたら.
+  assert.equal(buildSentence("ja", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "もし彼が家にいたら、彼の娘と食べます。");
+});
