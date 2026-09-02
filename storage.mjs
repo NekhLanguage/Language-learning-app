@@ -128,3 +128,25 @@ export function recoverUser(raw, backupRaw) {
   }
   return { user: null, source: null };
 }
+
+// Which copy wins when the server answers a load. loadUserFromServer used
+// to adopt the server blob unconditionally, so a stale server copy — a save
+// that 504'd, a flaky connection, an older second device — silently rolled
+// the learner back to the last state that happened to reach Supabase, with
+// no warning (Emi 2026-09-02-55: two full runs of progress gone).
+// `lastLocalChange` is stamped on every saveUser and travels inside the
+// blob, so a server copy carries the timestamp of the save that produced
+// it. Rules: no server copy → keep local; nothing local yet (no runs) →
+// server wins (fresh device, first login); otherwise the newer timestamp
+// wins, ties to the server (a just-completed save reads back as equal).
+export function shouldAdoptServerUser(local, server) {
+  if (!server || typeof server !== "object") return false;
+  if (!local || typeof local !== "object") return true;
+  const localRuns = local.runs && typeof local.runs === "object"
+    ? Object.keys(local.runs).length : 0;
+  if (!localRuns) return true;
+  const localChange = Number(local.lastLocalChange) || 0;
+  const serverChange = Number(server.lastLocalChange) || 0;
+  if (!localChange) return true;
+  return serverChange >= localChange;
+}

@@ -104,3 +104,38 @@ test("a fresh device restores the account from the server", async ({ page }) => 
   await expect(page.locator("#learning-screen.active")).toBeVisible();
   expect(await page.evaluate(() => window.__app.run.released)).toEqual(released);
 });
+
+test("a stale server copy does not overwrite newer local progress on reload (Emi 2026-09-02-55)", async ({ page }) => {
+  const email = await startNewRun(page);
+
+  // What the app synced: setup complete, a released set.
+  const synced = (await (await page.request.get("/__devserver/users")).json())[email];
+  expect(synced.runs.pt.released.length).toBeGreaterThan(0);
+  const localBefore = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")));
+
+  // Plant an OLDER server copy — the state a save that 504'd would leave
+  // behind: an earlier lastLocalChange and no released progress.
+  const stale = JSON.parse(JSON.stringify(synced));
+  stale.lastLocalChange = (synced.lastLocalChange || Date.now()) - 60_000;
+  stale.runs.pt.released = [];
+  stale.runs.pt.setupComplete = false;
+  await page.request.post("/.netlify/functions/saveUser", { data: { email, user: stale } });
+
+  await page.reload();
+  await expect(page.locator("#start-screen.active")).toBeVisible();
+
+  // The boot sync must keep the newer local copy…
+  await expect.poll(async () => page.evaluate(() => {
+    const u = JSON.parse(localStorage.getItem("zth_user"));
+    return u.runs.pt?.released?.length || 0;
+  })).toBeGreaterThan(0);
+  const localAfter = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")));
+  expect(localAfter.runs.pt.setupComplete).toBe(true);
+  expect(localAfter.runs.pt.released).toEqual(localBefore.runs.pt.released);
+
+  // …and push it back up so the server catches up instead of staying stale.
+  await expect.poll(async () => {
+    const users = await (await page.request.get("/__devserver/users")).json();
+    return users[email]?.runs?.pt?.released?.length || 0;
+  }).toBeGreaterThan(0);
+});

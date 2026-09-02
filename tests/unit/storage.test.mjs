@@ -9,6 +9,7 @@ import {
   recoverUser,
   isDefaultTemplateProgress,
   compactUserForPersist,
+  shouldAdoptServerUser,
 } from "../../storage.mjs";
 
 const validUser = () => ({ id: "u1", supportLanguage: "en", runs: { pt: { released: [] } } });
@@ -237,4 +238,32 @@ test("compactUserForPersist is safe on empty / missing structures", () => {
   const runsNoTP = { id: "u", schemaVersion: 3, runs: { pt: { released: [] } } };
   const out = compactUserForPersist(runsNoTP);
   assert.deepEqual(out.runs.pt, { released: [] });
+});
+
+// ── shouldAdoptServerUser (Emi 2026-09-02-55) ────────────────────────────
+const withRuns = (lastLocalChange) => ({
+  id: "u1", lastLocalChange, runs: { pt: { released: ["EAT"] } },
+});
+
+test("adopt guard: no server copy keeps local", () => {
+  assert.equal(shouldAdoptServerUser(withRuns(200), null), false);
+  assert.equal(shouldAdoptServerUser(withRuns(200), undefined), false);
+});
+
+test("adopt guard: a fresh device (no local runs) takes the server copy", () => {
+  assert.equal(shouldAdoptServerUser({ id: "u0", runs: {} , lastLocalChange: 999 }, withRuns(100)), true);
+  assert.equal(shouldAdoptServerUser(null, withRuns(100)), true);
+});
+
+test("adopt guard: a newer local copy is kept over a stale server copy", () => {
+  // The run-12 scenario: server stuck at an old save, local has two runs
+  // of progress since — the old path adopted the server and lost them.
+  assert.equal(shouldAdoptServerUser(withRuns(200), withRuns(100)), false);
+});
+
+test("adopt guard: a newer or equal server copy is adopted (post-save read-back, second device)", () => {
+  assert.equal(shouldAdoptServerUser(withRuns(100), withRuns(100)), true);
+  assert.equal(shouldAdoptServerUser(withRuns(100), withRuns(300)), true);
+  // A local copy that never stamped a change defers to the server.
+  assert.equal(shouldAdoptServerUser({ runs: { pt: {} } }, withRuns(1)), true);
 });

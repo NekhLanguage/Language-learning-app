@@ -1,7 +1,7 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap, getAudioFallbacks } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
-import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist } from "./storage.mjs";
+import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist, shouldAdoptServerUser } from "./storage.mjs";
 import {
   baseCompletionRatio as computeBaseCompletionRatio,
   conceptSelectionWeight as pureConceptSelectionWeight,
@@ -657,6 +657,11 @@ function loadUser() {
   localStorage.setItem("zth_user_backup", JSON.stringify(compactUserForPersist(USER)));
 }
 
+// -07 / -55: a failed server load or save must not be silent — the learner
+// is looking at this device's local copy and should know it. Declared here
+// because saveUser (below) runs at boot for a fresh user.
+let serverSyncFailed = false;
+
 async function saveUser() {
 
   if (!USER || !USER.runs) return;
@@ -675,7 +680,7 @@ async function saveUser() {
   if (!email) return;
 
   try {
-    await fetch("/.netlify/functions/saveUser", {
+    const res = await fetch("/.netlify/functions/saveUser", {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -683,13 +688,24 @@ async function saveUser() {
       })
     });
 
+    // A save the server rejected (504 under load, 500) is NOT a sync. The
+    // old path stamped lastSyncedAt anyway and then re-loaded from the
+    // server — pulling whatever stale copy was there straight over the
+    // progress that had just failed to land (Emi 2026-09-02-55).
+    if (!res.ok) {
+      console.warn("saveUser failed:", res.status);
+      serverSyncFailed = true;
+      return;
+    }
+
     USER.lastSyncedAt = Date.now();
 
-    // 🔥 THIS IS THE KEY LINE
+    // Read back the server copy; the adopt guard keeps local when newer.
     await loadUserFromServer(email);
 
   } catch (err) {
     console.warn("Sync failed:", err);
+    serverSyncFailed = true;
   }
 }
 // Dev/QA hook: ?showHidden=1 lets a tester reach hidden (gate-pending)
@@ -881,7 +897,6 @@ languageState.support = USER.supportLanguage || "en";
 const langP = getLangFileData(languageState.support);
 // -07: a failed server load must not be silent — the learner is looking at
 // this device's local copy and should know it (Emi 2026-08-27-07).
-let serverSyncFailed = false;
 const serverSyncP = email
   ? loadUserFromServer(email).catch(err => {
       console.warn("Server sync failed:", err);
@@ -942,7 +957,13 @@ if (serverSyncP) {
     }
   });
 }
-async function loadUserFromServer(email) {
+// `force` adopts the server copy regardless of timestamps — only the login
+// flow passes it (the learner just asked for THAT account's progress).
+// Every other caller (boot sync, post-save read-back) goes through
+// shouldAdoptServerUser, so a stale server copy can no longer roll newer
+// local progress back (Emi 2026-09-02-55). When local is newer it is
+// pushed up once so the server catches up.
+async function loadUserFromServer(email, { force = false } = {}) {
 email = email?.toLowerCase().trim();
   const res = await fetch("/.netlify/functions/loadUser", {
     method: "POST",
@@ -955,6 +976,12 @@ email = email?.toLowerCase().trim();
     return;
   }
   const data = await res.json();
+
+  if (data.user && !force && !shouldAdoptServerUser(USER, data.user)) {
+    console.info("Local progress is newer than the server copy — keeping local and pushing it up");
+    await saveUser();
+    return;
+  }
 
   if (data.user) {
     USER = migrateUserState(data.user);
@@ -1062,8 +1089,9 @@ if (buyAccess) {
     if (data.allowed) {
       localStorage.setItem("zth_email", email.toLowerCase());
 
-      // 🔥 your sync logic
-      await loadUserFromServer(email);
+      // The learner just asked for this account: the server copy wins
+      // over whatever anonymous local state this device holds.
+      await loadUserFromServer(email, { force: true });
 
       location.reload();
     } else {

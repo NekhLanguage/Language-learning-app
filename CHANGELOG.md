@@ -13,6 +13,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ---
 
+## 2026-09-02
+
+### Your progress can no longer be rolled back by a stale sync
+If a save to the server failed silently (a slow connection, a timeout), the app used to read the server's older copy straight back and replace what you'd just done — so a reload on a flaky connection could quietly lose everything since your last good sync. Now the newer copy always wins: the app compares timestamps before adopting anything from the server, keeps your local progress when it's newer, and pushes it back up so the server catches up. A failed save is also treated as failed, not as synced.
+
 ## 2026-08-30
 
 ### Arabic possessives, demonstratives, and verb prepositions are real Arabic
