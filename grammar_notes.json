@@ -1472,6 +1472,76 @@
         "body": "Kielessä {lang} lukusanan jälkeinen substantiivi vaihtaa muotoa — kuten suomen 'kaksi kirjaa', ei 'kaksi kirjat'."
       }
     },
+    "ar_numeral_placement": {
+      "en": {
+        "title": "The numeral \"one\" follows the noun",
+        "body": "In {lang}, the numeral \"one\" (واحد) comes AFTER the noun it counts, like an adjective — «كتاب واحد» (\"a book one\"), not «واحد كتاب». Higher numbers behave differently."
+      },
+      "pt": {
+        "title": "O numeral \"um\" vem depois do substantivo",
+        "body": "Em {lang}, o numeral \"um\" (واحد) aparece DEPOIS do substantivo que conta, como um adjetivo — «كتاب واحد» (\"um livro um\"), e não «واحد كتاب». Os outros números seguem regras diferentes."
+      },
+      "es": {
+        "title": "El numeral \"uno\" sigue al sustantivo",
+        "body": "En {lang}, el numeral \"uno\" (واحد) aparece DESPUÉS del sustantivo, como un adjetivo — «كتاب واحد» (\"un libro uno\"), no «واحد كتاب». Los demás números se comportan de otro modo."
+      },
+      "fr": {
+        "title": "Le numéral « un » suit le nom",
+        "body": "En {lang}, le numéral « un » (واحد) se place APRÈS le nom qu'il compte, comme un adjectif : «كتاب واحد» (« un livre un »), et non «واحد كتاب». Les autres nombres suivent des règles différentes."
+      },
+      "de": {
+        "title": "Die Zahl „eins\" steht nach dem Substantiv",
+        "body": "In {lang} steht die Zahl „eins\" (واحد) NACH dem Substantiv, das sie zählt, wie ein Adjektiv — «كتاب واحد» („ein Buch eins\"), nicht «واحد كتاب». Höhere Zahlen folgen anderen Regeln."
+      },
+      "el": {
+        "title": "Το «ένα» ακολουθεί το ουσιαστικό",
+        "body": "Στα {lang}, ο αριθμός «ένα» (واحد) μπαίνει ΜΕΤΑ το ουσιαστικό που μετράει, σαν επίθετο — «كتاب واحد» («ένα βιβλίο ένα»), όχι «واحد كتاب». Οι μεγαλύτεροι αριθμοί ακολουθούν άλλους κανόνες."
+      },
+      "it": {
+        "title": "Il numerale «uno» segue il sostantivo",
+        "body": "In {lang}, il numerale «uno» (واحد) va DOPO il sostantivo che conta, come un aggettivo — «كتاب واحد» («un libro uno»), non «واحد كتاب». Gli altri numeri seguono regole diverse."
+      },
+      "no": {
+        "title": "Tallet «én» kommer etter substantivet",
+        "body": "På {lang} står tallet «én» (واحد) ETTER substantivet det teller, som et adjektiv — «كتاب واحد» («én bok én»), ikke «واحد كتاب». Høyere tall følger andre regler."
+      },
+      "uk": {
+        "title": "Числівник «один» стоїть після іменника",
+        "body": "У мові {lang} числівник «один» (واحد) стоїть ПІСЛЯ іменника, як прикметник — «كتاب واحد» («книга один»), а не «واحد كتاب». Інші числа поводяться інакше."
+      },
+      "ar": {
+        "title": "العدد «واحد» يتبع الاسم",
+        "body": "في {lang}، يأتي العدد «واحد» بعد الاسم الذي يعدّه، مثل الصفة — «كتاب واحد»، لا «واحد كتاب». والأعداد الأكبر لها قواعد مختلفة (3-10 تسبق الاسم وتخالفه في التذكير والتأنيث)."
+      },
+      "tr": {
+        "title": "«bir» sayısı isimden sonra gelir",
+        "body": "{lang} dilinde «bir» sayısı (واحد) saydığı ismin SONRASINA gelir, sıfat gibi — «كتاب واحد» («bir kitap bir»), «واحد كتاب» değil. Diğer sayılar farklı kurallara uyar."
+      },
+      "ja": {
+        "title": "「1」は名詞の後ろに来る",
+        "body": "{lang}では、「1」（واحد）は数える名詞のあとに来ます。形容詞のように後ろから修飾する形で、«كتاب واحد»（「本 1」）と並び、«واحد كتاب» とは言いません。2以上の数は別の規則に従います。"
+      },
+      "ko": {
+        "title": "숫자 '하나'는 명사 뒤에 옵니다",
+        "body": "{lang}에서는 숫자 '하나'(واحد)가 형용사처럼 명사 뒤에 옵니다 — «كتاب واحد»(\"책 하나\")이지 «واحد كتاب»가 아니에요. 다른 숫자는 다른 규칙을 따릅니다."
+      },
+      "zh": {
+        "title": "「一」放在名词后面",
+        "body": "在{lang}中，「一」（واحد）像形容词一样放在名词之后 — «كتاب واحد»（「书 一」），不是 «واحد كتاب»。其他数字遵循不同的规则。"
+      },
+      "pl": {
+        "title": "Liczebnik „jeden\" stoi po rzeczowniku",
+        "body": "W języku {lang} liczebnik „jeden\" (واحد) stoi PO rzeczowniku, jak przymiotnik — «كتاب واحد» („książka jeden\"), a nie «واحد كتاب». Wyższe liczby rządzą się innymi regułami."
+      },
+      "fi": {
+        "title": "Numero „yksi\" tulee substantiivin jälkeen",
+        "body": "Kielessä {lang} numero „yksi\" (واحد) tulee substantiivin JÄLKEEN, kuten adjektiivi — «كتاب واحد» („kirja yksi\"), ei «واحد كتاب». Suuremmilla luvuilla on omat säännönsä."
+      },
+      "th": {
+        "title": "จำนวน «หนึ่ง» อยู่หลังคำนาม",
+        "body": "ในภาษา {lang} จำนวน «หนึ่ง» (واحد) อยู่หลังคำนามที่นับ เหมือนคำคุณศัพท์ — «كتاب واحد» («หนังสือ หนึ่ง») ไม่ใช่ «واحد كتاب» ตัวเลขที่มากกว่านั้นมีกฎแตกต่างกัน"
+      }
+    },
     "apocope": {
       "en": {
         "title": "Short forms before the noun",

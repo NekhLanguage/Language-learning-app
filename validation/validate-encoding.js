@@ -267,6 +267,10 @@ const RULE_PREFIX_ALLOWED = {
   ja_: /[\u3000-\u303F\u3040-\u30FF\u31F0-\u31FF\u4E00-\u9FFF]/g,
   // CJK punctuation + CJK ideographs
   zh_: /[\u3000-\u303F\u4E00-\u9FFF]/g,
+  // Arabic block + presentation forms \u2014 an ar_ rule fires only when the
+  // target is Arabic, so its notes legitimately quote \u00AB\u0643\u062A\u0627\u0628 \u0648\u0627\u062D\u062F\u00BB in every
+  // support language.
+  ar_: /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/g,
   // classifier fires only when the TARGET is zh or ko \u2014 its notes quote
   // both scripts (\u4E24\u672C\u4E66, \uCC45 \uB450 \uAD8C) in every support language.
   classifier: /[\u3000-\u303F\u4E00-\u9FFF\uAC00-\uD7A3]/g,

@@ -745,6 +745,7 @@ test("every features key is a known, checkable feature id", () => {
     "classifiersOrCounters",
     "locativeCopula", "postposedAdpositions",
     "predicateColorNominalizer", "comitativeBeforeVerb",
+    "postposedNumerals",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
@@ -1275,6 +1276,31 @@ test("ar: demonstratives agree with the predicate noun's gender (Emi run-11 -52)
   // ساق is feminine in the data → تلك (the authored render still carries
   // ذلك — flagged to Emi as an authored-line inconsistency, data wins)
   assert.equal(buildSentence("ar", tplById("THAT_IS_YOUR_LEG")), "تلك ساقك.");
+});
+
+test("ar: the numeral 'one' postposes as an appositive (Emi 2026-08-28-17)", () => {
+  // «واحد كتاب» → «كتاب واحد»: 1 follows the noun like an adjective. Higher
+  // numerals stay pre-nominal (3-10 polarity is the queued mechanism; the
+  // divergence baseline still owns those rows).
+  assert.equal(
+    buildSentence("ar", tplById("SHE_SEES_PHONE"), null, { num_PHONE: "ONE" }),
+    "هي ترى هاتف واحد.",
+  );
+  // With an adjective the order is noun + adjective + numeral («هاتف أبيض
+  // واحد»): the appositive numeral sits after both modifiers, and the
+  // adjective still agrees in gender with the head noun.
+  assert.equal(
+    buildSentence("ar", tplById("SHE_SEES_PHONE"), null,
+      { num_PHONE: "ONE", adj_PHONE: "WHITE" }),
+    "هي ترى هاتف أبيض واحد.",
+  );
+  // Control: higher numerals are NOT postposed (the allowlist is ["ONE"]
+  // only — 3-10 reverse-gender polarity is the queued 2026-08-28-17
+  // coverage gap that keeps the baseline row).
+  assert.equal(
+    buildSentence("ar", tplById("SHE_SEES_PHONE"), null, { num_PHONE: "NINE" }),
+    "هي ترى تسعة هاتف.",
+  );
 });
 
 test("ar: the verb's own government supplies the preposition (Emi run-11 -53)", () => {

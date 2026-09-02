@@ -52,6 +52,7 @@ export const GRAMMAR_RULE_IDS = [
   "have_existential",        // tr genitive + var; ja flagged noun + が + あります
   "predicate_instrumental",  // pl predicate nouns after być take the instrumental
   "numeral_government",      // pl numbers five+ govern the genitive plural
+  "ar_numeral_placement",    // ar 1/2 postpose as appositive adjectives («كتاب واحد»)
   "apocope",                 // es/it pre-nominal masc-sg short forms (buen/buon)
 ];
 
@@ -3876,6 +3877,24 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       return adjectiveWord
         ? prefix + adjectiveWord + nounForm
         : prefix + nounForm;
+    }
+    // Postposed numerals (ar 1 and 2 as appositive adjectives — Emi
+    // 2026-08-28-17): «كتاب واحد», «هاتف واحد جيد» (adjective slots
+    // between the noun and the numeral). The rule is a per-language
+    // allowlist of numeric CIDs, not a blanket flag: Arabic's 3–10 rule
+    // is preposing with reverse-gender polarity, an unimplemented
+    // mechanism, so those CIDs skip this branch and keep the divergence
+    // baseline finding rather than shipping «كتاب ثلاثة».
+    const postposeSpec = langRuleValue(lang, "postposedNumerals");
+    if (Array.isArray(postposeSpec) && postposeSpec.includes(numberCid)) {
+      noteRule("ar_numeral_placement");
+      if (adjectiveWord) {
+        const adjForm = adjectiveCid && lang !== "en"
+          ? genderedFormOf(lang, adjectiveCid, cid, false)
+          : adjectiveWord;
+        return [nounForm, adjForm, numberWord].filter(Boolean).join(" ");
+      }
+      return nounForm + " " + numberWord;
     }
     if (adjectiveWord) {
       // Partitive-singular government (fi) keeps the adjective SINGULAR:
