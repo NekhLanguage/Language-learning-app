@@ -139,3 +139,21 @@ test("a stale server copy does not overwrite newer local progress on reload (Emi
     return users[email]?.runs?.pt?.released?.length || 0;
   }).toBeGreaterThan(0);
 });
+
+test("a {user: null} answer from the server does not wipe local progress (Emi 2026-09-02-61)", async ({ page }) => {
+  const email = await startNewRun(page);
+  const before = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")));
+  expect(before.runs.pt.released.length).toBeGreaterThan(0);
+
+  // Make the server answer 200 {user: null} — a read miss the client
+  // cannot tell from "no account".
+  await page.route("**/.netlify/functions/loadUser", route =>
+    route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ user: null }) }));
+  await page.reload();
+  await expect(page.locator("#start-screen.active")).toBeVisible();
+
+  const after = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")));
+  expect(after.id).toBe(before.id);
+  expect(after.runs.pt.released).toEqual(before.runs.pt.released);
+  await page.unroute("**/.netlify/functions/loadUser");
+});

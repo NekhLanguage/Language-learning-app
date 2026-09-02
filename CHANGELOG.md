@@ -15,6 +15,9 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-02
 
+### An empty answer from the server can no longer erase your progress
+If the server replied "no account" for someone who did have progress on this device (a momentary read miss, a lagging replica), the app started a blank record on the spot — and the next save would have pushed that blank copy up. Now a device with progress always keeps it and re-sends it; only a genuinely fresh device starts from nothing. The save-then-reload loop that could hammer the server when its copy lagged behind is also capped, and a failure in the audio warm-up can no longer blank an exercise.
+
 ### Japanese: two-clause sentences finally hold together
 The last broken Japanese shape was any sentence with two clauses. "This is my hand and this is your head" was coming out as «これは私のです手そしてあなたの頭»; it now chains the way Japanese does, on the で form of the copula: «これは私の手で、これはあなたの頭です». "He eats dinner with his mom because he is home" and "If he is home, he eats with his daughter" were word salad; they now lead with the subordinate clause and its own linker («彼は家にいますので、彼の母と夕ご飯を食べます», «もし彼が家にいたら、彼の娘と食べます»), with "he is home" rendered as the existence sentence Japanese actually uses.
 
