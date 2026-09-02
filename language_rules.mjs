@@ -146,6 +146,19 @@
 //   apocope                  pre-nominal masc-singular adjectives use the
 //                            entry's `apocope` short form («buen libro»,
 //                            «buon libro»).
+//   locativeCopula           the copula swaps before a position glue or a
+//                            `place` noun: a string is the invariant
+//                            locative (zh 在); "paradigm" conjugates the
+//                            BE entry's nested `locative` paradigm (es
+//                            estar).
+//   standaloneDemonstrative  a demonstrative not directly before a noun
+//                            takes the entry's neuter `standalone` form
+//                            («sobre esto», «Esto es mío»); it still
+//                            agrees with a possessed/modified predicate
+//                            noun («Esta es mi mano»).
+//   encliticStress           a proparoxytone word before an enclitic
+//                            possessive takes a second accent on its
+//                            final syllable (el «τηλέφωνό σου»).
 //   attributiveLinker        { form, minLength }: an attributive adjective
 //                            of at least minLength characters takes the
 //                            linker before its noun unless it already ends
@@ -542,6 +555,10 @@ export const LANGUAGE_RULES = {
     // "V O1 but not O2": «αλλά όχι μεσημεριανό», never «αλλά δεν ένα
     // μεσημεριανό» (Emi run-15 el (f)).
     contrastiveNegation: { objectNegator: "όχι" },
+    // A proparoxytone before an enclitic possessive takes a second accent
+    // («το τηλέφωνό σου», «τη δύναμή μου» — Emi run-15 (e): 6/6 missing);
+    // the L3 blank resolver reads the same rule.
+    encliticStress: true,
   },
   it: {
     features: {
@@ -775,7 +792,7 @@ export const LANGUAGE_RULES = {
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",
       declinesAttributiveAdjectives: true, apocope: true,
-      numeralGenderAgreement: true,
+      numeralGenderAgreement: true, locativeCopula: true,
     },
     indefiniteArticle: true, proDrop: true, statementOrderQuestion: true,
     postNominalAdjectives: true,
@@ -787,6 +804,12 @@ export const LANGUAGE_RULES = {
     // personal «a» on saludar («saludo a un camarero»).
     numeralGenderAgreement: true,
     verbGovernedPrepositions: true,
+    // ser/estar: location predicates conjugate the BE entry's nested
+    // `locative` paradigm («El libro está sobre la mesa», «está en casa»
+    // — Emi run-15 (a): 9/9 «es»). Pronominal demonstratives are neuter
+    // («sobre esto», «Esto es mío» — (c): 8 wrong / 1 right).
+    locativeCopula: "paradigm",
+    standaloneDemonstrative: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },

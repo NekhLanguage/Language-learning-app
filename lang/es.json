@@ -182,16 +182,16 @@
       "abajo"
     ],
     "UNDER": [
-      "debajo"
+      "debajo de"
     ],
     "NEXT_TO": [
-      "al lado"
+      "al lado de"
     ],
     "FRONT": [
-      "delante"
+      "delante de"
     ],
     "BEHIND": [
-      "detrás"
+      "detrás de"
     ],
     "IN": [
       "en"
@@ -200,7 +200,7 @@
       "sobre"
     ],
     "OFF": [
-      "fuera"
+      "lejos de"
     ],
     "BETWEEN": [
       "entre"
@@ -716,7 +716,16 @@
       "3_singular": "es",
       "1_plural": "somos",
       "2_plural": "sois",
-      "3_plural": "son"
+      "3_plural": "son",
+      "locative": {
+        "base": "estar",
+        "1_singular": "estoy",
+        "2_singular": "estás",
+        "3_singular": "está",
+        "1_plural": "estamos",
+        "2_plural": "estáis",
+        "3_plural": "están"
+      }
     },
     "BLACK": {
       "form": "negro",
@@ -842,11 +851,13 @@
     },
     "THIS": {
       "form": "este",
-      "f": "esta"
+      "f": "esta",
+      "standalone": "esto"
     },
     "THAT": {
       "form": "ese",
-      "f": "esa"
+      "f": "esa",
+      "standalone": "eso"
     },
     "IT": [
       "él"

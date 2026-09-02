@@ -479,7 +479,7 @@ test("es: meals definite, HOME «a casa» / «en casa», ¿ on yes/no, personal 
   assert.equal(buildSentence("es", tplById("WE_STOP_EATING"), null, {}),
     "Nosotros dejamos de comer.");
   assert.equal(buildSentence("es", tplById("I_DO_THIS_BY_HAND"), null, {}),
-    "Yo hago este a mano.");
+    "Yo hago esto a mano.");
   assert.equal(buildSentence("es", tplById("MORNING_IS_GOOD"), null, {}),
     "La mañana es buena.");
 });
@@ -508,6 +508,57 @@ test("ja: people count with 人 (-73); zh: 的 rides the counted phrase (-62 res
     "私は三冊の本を手に入れます。");
   assert.equal(buildSentence("zh", tplById("I_GET_BOOK"), "FOURTEEN", { adj_BOOK: "EASY" }),
     "我得到十四本容易的书。");
+});
+
+test("es: estar for location and home, compound prepositions with de/del (run-15 a+b)", () => {
+  assert.equal(buildSentence("es", tplById("BOOK_ON_TABLE"), null, {}),
+    "El libro está sobre la mesa.");
+  assert.equal(buildSentence("es", tplById("PHONE_UNDER_TABLE"), null, {}),
+    "El teléfono está debajo de la mesa.");
+  assert.equal(buildSentence("es", tplById("BOOK_NEXT_TO_PHONE"), null, {}),
+    "El libro está al lado del teléfono.");
+  assert.equal(buildSentence("es", tplById("SHOES_UNDER_THIS"), null, {}),
+    "Los zapatos están debajo de esto.");
+  assert.equal(buildSentence("es", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"), null, {}),
+    "Si él está en casa, él come con su hija.");
+  // Identity predicates keep ser.
+  assert.equal(buildSentence("es", tplById("THIS_IS_A_GOOD_BOOK"), null, {}),
+    "Este es un buen libro.");
+  // zh keeps its invariant 在 through the shared rule.
+  assert.equal(buildSentence("zh", tplById("BOOK_ON_TABLE"), null, {}),
+    "书在桌子上面。");
+});
+
+test("es: pronominal demonstratives are neuter, determined predicates agree (run-15 c)", () => {
+  assert.equal(buildSentence("es", tplById("THIS_IS_MINE"), null, {}), "Esto es mío.");
+  assert.equal(buildSentence("es", tplById("THIS_IS_THING"), null, {}), "Esto es una cosa.");
+  assert.equal(buildSentence("es", tplById("THIS_IS_CORRECT"), null, {}), "Esto es correcto.");
+  assert.equal(buildSentence("es", tplById("BOOK_BETWEEN_THIS_AND_THAT"), null, {}),
+    "El libro está entre esto y eso.");
+  assert.equal(buildSentence("es", tplById("THIS_IS_MY_HAND"), null, {}), "Esta es mi mano.");
+  assert.equal(buildSentence("es", tplById("THAT_IS_YOUR_LEG"), null, {}), "Esa es tu pierna.");
+});
+
+test("el: σε + article contracts, compound prepositions carry σε/από, enclitic stress, «;»", () => {
+  assert.equal(buildSentence("el", tplById("BOOK_ON_TABLE"), null, {}),
+    "Το βιβλίο είναι πάνω στο τραπέζι.");
+  assert.equal(buildSentence("el", tplById("BOOK_NEXT_TO_PHONE"), null, {}),
+    "Το βιβλίο είναι δίπλα στο τηλέφωνο.");
+  assert.equal(buildSentence("el", tplById("BOOK_BEHIND_PHONE"), null, {}),
+    "Το βιβλίο είναι πίσω από το τηλέφωνο.");
+  assert.equal(buildSentence("el", tplById("SHOES_IN_THIS"), null, {}),
+    "Τα παπούτσια είναι μέσα σε αυτό.");
+  assert.equal(buildSentence("el", tplById("SHE_GO_TO_HER_ROOM"), null, {}),
+    "Αυτή πηγαίνει στο δωμάτιό της.");
+  assert.equal(buildSentence("el", tplById("IS_THAT_YOUR_PHONE"), null, {}),
+    "Είναι εκείνο το τηλέφωνό σου;");
+  // Paroxytones stay unaccented; diphthongs count as one syllable.
+  assert.equal(finalizeSentence("el", "Αυτό είναι το κεφάλι σου."),
+    "Αυτό είναι το κεφάλι σου.");
+  assert.equal(finalizeSentence("el", "Εγώ έχω το δρομολόγιο μου."),
+    "Εγώ έχω το δρομολόγιό μου.");
+  assert.equal(finalizeSentence("el", "Το βιβλίο μου είναι εδώ."),
+    "Το βιβλίο μου είναι εδώ.");
 });
 
 test("es: adjectives post-nominal; buen/mal apocopate before masc singulars", () => {
