@@ -167,10 +167,10 @@
       "隣に"
     ],
     "FRONT": [
-      "前"
+      "前に"
     ],
     "BEHIND": [
-      "後ろ"
+      "後ろに"
     ],
     "IN": [
       "中に"
@@ -179,7 +179,7 @@
       "上に"
     ],
     "OFF": [
-      "外"
+      "外に"
     ],
     "BETWEEN": [
       "間に"
@@ -203,7 +203,7 @@
       "西"
     ],
     "FOR": [
-      "ために"
+      "のために"
     ],
     "WITH": [
       "と"
@@ -253,37 +253,57 @@
       "counter": "部屋"
     },
     "BOY": {
+      "existentialHave": true,
+      "animate": true,
       "form": "男の子",
       "counter": "人"
     },
     "GIRL": {
+      "existentialHave": true,
+      "animate": true,
       "form": "女の子",
       "counter": "人"
     },
-    "MAN": [
-      "男"
-    ],
-    "WOMAN": [
-      "女"
-    ],
-    "MOM": [
-      "母"
-    ],
-    "DAD": [
-      "父"
-    ],
-    "SON": [
-      "息子"
-    ],
-    "DAUGHTER": [
-      "娘"
-    ],
-    "BROTHER": [
-      "兄"
-    ],
-    "SISTER": [
-      "姉"
-    ],
+    "MAN": {
+      "form": "男",
+      "existentialHave": true,
+      "animate": true
+    },
+    "WOMAN": {
+      "form": "女",
+      "existentialHave": true,
+      "animate": true
+    },
+    "MOM": {
+      "form": "母",
+      "existentialHave": true,
+      "animate": true
+    },
+    "DAD": {
+      "form": "父",
+      "existentialHave": true,
+      "animate": true
+    },
+    "SON": {
+      "form": "息子",
+      "existentialHave": true,
+      "animate": true
+    },
+    "DAUGHTER": {
+      "form": "娘",
+      "existentialHave": true,
+      "animate": true
+    },
+    "BROTHER": {
+      "form": "兄",
+      "existentialHave": true,
+      "animate": true
+    },
+    "SISTER": {
+      "form": "姉",
+      "existentialHave": true,
+      "animate": true
+    },
     "HEAD": [
       "頭"
     ],
@@ -526,7 +546,8 @@
     },
     "HAVE": {
       "base": "持っています",
-      "existential": "あります"
+      "existential": "あります",
+      "existentialAnimate": "います"
     },
     "DO": {
       "base": "します"
@@ -551,7 +572,8 @@
     },
     "BE": {
       "base": "だ",
-      "present": "です"
+      "present": "です",
+      "locative": "あります"
     },
     "BLACK": [
       "黒い"
@@ -565,18 +587,21 @@
     "BLUE": [
       "青い"
     ],
-    "GREEN": [
-      "緑"
-    ],
+    "GREEN": {
+      "form": "緑",
+      "linker": "の"
+    },
     "YELLOW": [
       "黄色い"
     ],
-    "PURPLE": [
-      "紫"
-    ],
-    "ORANGE": [
-      "オレンジ"
-    ],
+    "PURPLE": {
+      "form": "紫",
+      "linker": "の"
+    },
+    "ORANGE": {
+      "form": "オレンジ",
+      "linker": "の"
+    },
     "FAST": [
       "速い"
     ],

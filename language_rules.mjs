@@ -214,6 +214,24 @@
 //                            which marks none of these (Emi run-11 -53).
 //                            Skipped when the template carries an
 //                            explicit glue word for the relation.
+//   locativeExistential      spatial-relation templates render as
+//                            [head + topic] [landmark(s) + linker]
+//                            [position] [BE.locative] — ja «本はテーブルの
+//                            上にあります» (Emi run-12 -57: «靴ですこれは
+//                            下に» fronted です and dropped は/の/あります).
+//                            { linker, conjunction } — the BE entry's
+//                            `locative` field supplies the existence verb;
+//                            conjunction joins multiple landmarks («これと
+//                            それの間に»).
+//                            Data notes for existentialHaveByNoun: a noun
+//                            entry flagged `existentialHave: true` renders
+//                            the HAVE entry's `existential` («会議があり
+//                            ます»); with `animate: true` beside it, the
+//                            `existentialAnimate` form instead (ja «息子が
+//                            います» — Emi run-12 -58). An adjective
+//                            entry's `linker` is inserted between it and its
+//                            noun («紫のシャツ» — Emi run-12 -59: noun-class
+//                            colours need の, い-adjectives don't).
 //   counterPrefix            numerals count through a per-noun counter
 //                            prefixed to the noun with a linker (ja
 //                            «二冊の本», «十七台の電話»). { kunCounter,
@@ -530,6 +548,9 @@ export const LANGUAGE_RULES = {
     verbCoordination: "te",
     contrastiveNegation: { conjunction: "が、", negatedVerbForm: true },
     counterPrefix: { kunCounter: "つ", default: "個", linker: "の" },
+    // Location is existence: «本はこれの上にあります», «本はこれとそれの
+    // 間にあります» (Emi run-12 -57).
+    locativeExistential: { linker: "の", conjunction: "と" },
   },
   ko: {
     features: {

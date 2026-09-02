@@ -1419,11 +1419,18 @@ if (orderType === "SOV") {
     // nominal in the authored order follows it instead («家から», never
     // «から家»).
     if (langRule(lang, "postposedAdpositions")) {
+      // The adposition follows the whole noun PHRASE — a possessive or
+      // adjective between glue and noun rides along («彼女の部屋に», never
+      // «に彼女の部屋を» — Emi run-12 -60).
       for (let i = 0; i < rest.length - 1; i++) {
-        if (vocab().concepts[rest[i]]?.type === "glue" &&
-            ["noun", "pronoun", "time"].includes(vocab().concepts[rest[i + 1]]?.type)) {
-          [rest[i], rest[i + 1]] = [rest[i + 1], rest[i]];
-          i++;
+        if (vocab().concepts[rest[i]]?.type !== "glue") continue;
+        let j = i + 1;
+        while (j < rest.length && isNounSlotModifier(vocab().concepts[rest[j]])) j++;
+        if (j < rest.length &&
+            ["noun", "pronoun", "time"].includes(vocab().concepts[rest[j]]?.type)) {
+          const glue = rest.splice(i, 1)[0];
+          rest.splice(j, 0, glue);
+          i = j;
         }
       }
     }
@@ -2226,7 +2233,10 @@ function finalizeSentence(lang, sentence) {
   // assembly paths join words with spaces and end with "." — normalize both
   // (ja's particle path emits no terminal punctuation at all).
   if (lang === "ja" || lang === "zh") {
-    let s = sentence.replace(
+    // Latin commas from clause builders become the script's own (Emi
+    // run-12: «もし彼は家です, …»).
+    let s = sentence.replace(/,\s*/g, lang === "ja" ? "、" : "，");
+    s = s.replace(
       /([⺀-鿿、-ヿ＀-￯])\s+(?=[⺀-鿿、-ヿ＀-￯])/g,
       "$1"
     );
@@ -2459,6 +2469,15 @@ function isConjunctionConcept(cid) {
   const m = vocab().concepts?.[cid];
   return !!m && (m.type === "glue" || m.type === "connector") &&
     ["AND", "BUT", "OR"].includes(cid);
+}
+
+// A per-entry linker between an attributive modifier and its noun — ja
+// noun-class colours take の («紫のシャツ», «緑の足») while い-adjectives
+// attach bare («青い家»). Data-driven; entries without it join as before.
+function adjectiveLinker(lang, adjectiveCid) {
+  const entry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
+  return entry && !Array.isArray(entry) && typeof entry.linker === "string"
+    ? entry.linker : "";
 }
 
 function isAdjectiveConcept(cid) {
@@ -2854,7 +2873,7 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
       lang, preAdjective, article, nounGender, opts.caseName);
     return `${article} ${declined} ${bare}`;
   }
-  return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)} ${bare}`;
+  return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
 }
 // Standalone-topic-particle languages (ja) mark the subject inline in the
 // dedicated clause builders — renderSegments inserts the particle as its
@@ -3205,9 +3224,50 @@ function contrastiveNegationSegments(lang, tpl) {
   return null;
 }
 
+// Spatial relations for languages declaring locativeExistential (ja):
+// [head + topic] [landmark(s) + linker] [position] [existence verb] —
+// «本はテーブルの上にあります». Returned as segments so L6 tiles and
+// blanks share the shape. Null when the rule, shape, or data is missing.
+function locativeExistentialSegments(lang, tpl) {
+  const spec = langRuleValue(lang, "locativeExistential");
+  if (!spec || !RELATIONAL_STRUCTURES.has(tpl?.structure?.type)) return null;
+  const c = tpl.concepts || [];
+  const head = c[0];
+  if (!["noun", "time"].includes(vocab().concepts?.[head]?.type)) return null;
+  const isPosition = (x) => {
+    const m = vocab().concepts?.[x];
+    return m?.type === "position" ||
+      (m?.type === "glue" && m?.semantic_role === "spatial_relation");
+  };
+  const posIdx = c.findIndex(isPosition);
+  if (posIdx === -1) return null;
+  const landmarks = c.slice(posIdx + 1).filter(x =>
+    ["noun", "pronoun", "time"].includes(vocab().concepts?.[x]?.type));
+  if (!landmarks.length) return null;
+  const be = c.find(x => isCopulaConcept(x));
+  const locVerb = vocab().languages?.[lang]?.forms?.[be]?.locative;
+  if (typeof locVerb !== "string") return null;
+  const particles = langRuleValue(lang, "nominalParticles");
+  const topic = particles && !particles.attach && typeof particles.topic === "string"
+    ? particles.topic : "";
+  const conjCid = c.find(x => isConjunctionConcept(x)) || null;
+  const segs = [{ cid: head, text: formOf(lang, head) }];
+  if (topic) segs.push({ cid: null, text: topic });
+  landmarks.forEach((lm, i) => {
+    if (i > 0) segs.push({ cid: conjCid, text: spec.conjunction || "" });
+    segs.push({ cid: lm, text: formOf(lang, lm) });
+  });
+  if (spec.linker) segs.push({ cid: null, text: spec.linker });
+  segs.push({ cid: c[posIdx], text: formOf(lang, c[posIdx]) });
+  segs.push({ cid: be || null, text: locVerb });
+  return segs;
+}
+
 function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const contrastive = contrastiveNegationSegments(lang, tpl);
   if (contrastive) return contrastive;
+  const locative = locativeExistentialSegments(lang, tpl);
+  if (locative) return locative;
   const ordered = orderedConceptsForTemplate(tpl, lang);
   if (!ordered || !ordered.length) return null;
 
@@ -3331,11 +3391,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         const objCid = ordered.find((c, i) =>
           vocab().concepts[c]?.type === "noun" &&
           isDirectObjectPosition(ordered, i, lang));
-        const existential = vocab().languages?.[lang]?.forms?.HAVE?.existential;
-        if (objCid && typeof existential === "string" &&
-            vocab().languages?.[lang]?.forms?.[objCid]?.existentialHave) {
+        const haveEntry = vocab().languages?.[lang]?.forms?.HAVE || {};
+        const objEntry = objCid ? vocab().languages?.[lang]?.forms?.[objCid] : null;
+        const flag = objEntry && !Array.isArray(objEntry) ? objEntry.existentialHave : null;
+        // People are "had" with the animate existence verb («息子がいます»,
+        // never «息子を持っています» — Emi run-12 -58): the noun entry
+        // carries `animate: true` beside its existentialHave flag.
+        if (flag && objEntry.animate && typeof haveEntry.existentialAnimate === "string") {
           noteRule("have_existential");
-          return existential;
+          return haveEntry.existentialAnimate;
+        }
+        if (flag && typeof haveEntry.existential === "string") {
+          noteRule("have_existential");
+          return haveEntry.existential;
         }
       }
       // The authored per-template surface of a MAIN verb is the correct
@@ -3874,7 +3942,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if (langRuleValue(lang, "counterPrefix")) {
       const prefix = jaQuantifierPrefix(lang, numberCid, numberWord, cid);
       return adjectiveWord
-        ? prefix + adjectiveWord + nounForm
+        ? prefix + adjectiveWord + adjectiveLinker(lang, adjectiveCid) + nounForm
         : prefix + nounForm;
     }
     if (adjectiveWord) {
@@ -4039,7 +4107,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     } else {
       // No article: "big water" (German strong declension and apocope
       // already applied to adjForm above — «neues Wasser»)
-      phrase = adjForm + " " + bare;
+      phrase = adjForm + adjectiveLinker(lang, adjectiveCid) + " " + bare;
     }
   }
 
@@ -4382,7 +4450,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const vIdx = ordered.findIndex(c => vocab().concepts[c]?.type === "verb" &&
       typeof vocab().languages?.[lang]?.forms?.[c]?.governedPreposition === "string");
     if (vIdx !== -1 && vIdx + 1 < ordered.length) {
-      const compType = vocab().concepts[ordered[vIdx + 1]]?.type;
+      // The complement may open with its own modifiers («أؤمن على
+      // أمتعتي» — possessive first); the preposition still sits right
+      // after the verb.
+      let k = vIdx + 1;
+      while (k < ordered.length && isNounSlotModifier(vocab().concepts[ordered[k]])) k++;
+      const compType = k < ordered.length ? vocab().concepts[ordered[k]]?.type : null;
       if (compType === "noun" || compType === "verb") {
         segments.splice(vIdx + 1, 0, {
           cid: null,

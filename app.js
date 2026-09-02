@@ -1,6 +1,7 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap, getAudioFallbacks } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
+import { langRuleValue } from "./language_rules.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist, shouldAdoptServerUser } from "./storage.mjs";
 import {
   baseCompletionRatio as computeBaseCompletionRatio,
@@ -80,7 +81,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.37";
+const APP_DATA_VERSION = "1.2.38";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -3278,6 +3279,12 @@ if (!finalOptions.includes(targetConcept)) {
 
         const m = window.GLOBAL_VOCAB.concepts[cid];
         if (!m || m.type !== meta.type) return false;
+        // Suffix-possessive targets (ar) never show the free possessive
+        // word, so it cannot be a distractor in an adjective slot — a
+        // learner would be offered a word they will never see used
+        // (Emi run-12: 23% of ar L3 frames offered له/لها/لك/لنا).
+        if (m.semantic_role === "possessive" &&
+            langRuleValue(targetLang, "possessiveSuffix")) return false;
 
         const otherSupport = formOf(supportLang, cid);
         if (otherSupport === promptSupport) return false; // prevents você/vocês together for "you"

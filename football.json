@@ -773,7 +773,7 @@
         "WHISTLE":    { "form": "笛" },
 
         "STRIKER":    { "form": "ストライカー" },
-        "GOALKEEPER": { "form": "ゴールキーパー" },
+        "GOALKEEPER": { "form": "ゴールキーパー", "existentialHave": true, "animate": true },
         "CAPTAIN":    { "form": "キャプテン" },
         "REFEREE":    { "form": "レフェリー" },
         "COACH":      { "form": "コーチ" },
