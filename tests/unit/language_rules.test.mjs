@@ -1312,3 +1312,51 @@ test("ar: the verb's own government supplies the preposition (Emi run-11 -53)", 
   // a time complement is not verb-governed
   assert.equal(buildSentence("ar", tplById("WE_GO_TOMORROW")), "نحن نذهب غداً.");
 });
+
+// ---------------------------------------------------------------------
+// Emi run-12: ja -57/-58/-59/-60 + comma, ar -53 residual / -56.
+// ---------------------------------------------------------------------
+
+test("ja: spatial relations render as existence — head は landmark の position あります (Emi run-12 -57)", () => {
+  assert.equal(buildSentence("ja", tplById("BOOK_ON_THIS")), "本はこれの上にあります。");
+  assert.equal(buildSentence("ja", tplById("BOOK_BEHIND_PHONE")), "本は電話の後ろにあります。");
+  assert.equal(buildSentence("ja", tplById("BOOK_BETWEEN_THIS_AND_THAT")),
+    "本はこれとそれの間にあります。");
+});
+
+test("ja: HAVE with a person takes the animate existence verb がいます (Emi run-12 -58)", () => {
+  assert.equal(buildSentence("ja", tplById("CX_HE_HAVE_SON")), "彼は息子がいます。");
+  assert.equal(buildSentence("ja", tplById("SHE_HAS_MEETING")), "彼女は会議があります。");
+  assert.equal(buildSentence("ja", tplById("SHE_HAS_SHOES")), "彼女は靴を持っています。");
+});
+
+test("ja: noun-class colours link with の, い-adjectives attach bare (Emi run-12 -59)", () => {
+  assert.equal(buildSentence("ja", tplById("HE_SEES_SHIRT"), null, { adj_SHIRT: "PURPLE" }),
+    "彼は紫のシャツを見ます。");
+  assert.equal(buildSentence("ja", tplById("HE_SEES_SHIRT"), null, { adj_SHIRT: "WHITE" }),
+    "彼は白いシャツを見ます。");
+});
+
+test("ja: a possessed destination keeps に after the whole phrase (Emi run-12 -60)", () => {
+  assert.equal(buildSentence("ja", tplById("SHE_GO_TO_HER_ROOM")), "彼女は彼女の部屋に行きます。");
+});
+
+test("ja/zh: clause commas are the script's own (Emi run-12)", () => {
+  const ja = buildSentence("ja", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"));
+  assert.equal(ja.includes("、"), true);
+  assert.equal(ja.includes(","), false);
+  const zh = buildSentence("zh", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"));
+  assert.equal(zh.includes("，"), true);
+  assert.equal(zh.includes(","), false);
+});
+
+test("ar: derived profession nouns take the feminine after a feminine subject (Emi run-12 -56)", () => {
+  assert.equal(buildSentence("ar", tplById("SHE_IS_GUIDE")), "هي مرشدة.");
+  assert.equal(buildSentence("ar", tplById("HE_IS_WAITER")), "هو نادل.");
+});
+
+test("ar: pack verb government — على / بـ / في, past a possessive (Emi run-12 -53 residual)", () => {
+  assert.equal(buildSentence("ar", tplById("I_INSURE_LUGGAGE")), "أنا أؤمن على أمتعتي.");
+  assert.equal(buildSentence("ar", tplById("I_RECOMMEND_RESTAURANT")), "أنا أوصي بـ مطعم.");
+  assert.equal(buildSentence("ar", tplById("I_NAVIGATE_ROUTE")), "أنا أتنقل في مسار.");
+});

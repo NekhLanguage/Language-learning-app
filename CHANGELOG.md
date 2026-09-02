@@ -15,6 +15,12 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-02
 
+### Japanese: where things are, who you have, and purple shirts
+Four more Japanese constructions now read as Japanese. "The book is on the table" was coming out as «本ですテーブル上に» — it's now the real existence sentence «本はテーブルの上にあります», with the topic marker, the の link and あります all in place. Having a person uses the animate verb («息子がいます», never «息子を持っています»). Colours that are nouns in Japanese link with の («紫のシャツ»), while true adjectives stay bare («白いシャツ»). Going to someone's room keeps に after the whole phrase («彼女の部屋に行きます»). Clause commas are now the Japanese 、 and Chinese ，.
+
+### Arabic: the last three named gaps
+Three tourism verbs pick up their own prepositions («أؤمن على أمتعتي», «أوصي بـ مطعم», «أتنقل في مسار»); "she is a guide" is «هي مرشدة», not the masculine; and the old dative possessive words (له / لها / لك) no longer appear as fill-in-the-blank distractors — a learner was being offered words that never occur in any sentence.
+
 ### Your progress can no longer be rolled back by a stale sync
 If a save to the server failed silently (a slow connection, a timeout), the app used to read the server's older copy straight back and replace what you'd just done — so a reload on a flaky connection could quietly lose everything since your last good sync. Now the newer copy always wins: the app compares timestamps before adopting anything from the server, keeps your local progress when it's newer, and pushes it back up so the server catches up. A failed save is also treated as failed, not as synced.
 

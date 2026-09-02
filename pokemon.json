@@ -904,10 +904,10 @@
   "forms": {
 
     "POKEMON": { "form": "ポケモン", "invariantPlural": true },
-    "TRAINER": { "form": "トレーナー" },
+    "TRAINER": { "form": "トレーナー", "existentialHave": true, "animate": true },
     "GYM": { "form": "ジム" },
     "LEAGUE": { "form": "リーグ" },
-    "GYM_LEADER": { "form": "ジムリーダー" },
+    "GYM_LEADER": { "form": "ジムリーダー", "existentialHave": true, "animate": true },
     "ELITE_FOUR": { "form": "四天王" },
     "POKEMON_CENTER": { "form": "ポケモンセンター" },
     "FOREST": { "form": "森" },
