@@ -561,6 +561,44 @@ test("el: σε + article contracts, compound prepositions carry σε/από, enc
     "Το βιβλίο μου είναι εδώ.");
 });
 
+test("el: direct and governed objects take the accusative — derived, article-borne (-77)", () => {
+  // Masculine singular drops -ς; the indefinite article is έναν.
+  assert.equal(buildSentence("el", tplById("I_GREET_WAITER"), null, {}),
+    "Εγώ χαιρετώ έναν σερβιτόρο.");
+  assert.equal(buildSentence("el", tplById("CX_HE_HAVE_BROTHER"), null, {}),
+    "Αυτός έχει έναν αδερφό.");
+  // The attributive adjective declines with it.
+  assert.equal(buildSentence("el", tplById("I_GREET_WAITER"), "OLD", {}),
+    "Εγώ χαιρετώ έναν παλιό σερβιτόρο.");
+  // Possessed objects: the article carries the case (τον / τη(ν)).
+  assert.equal(buildSentence("el", tplById("I_GREET_WAITER"), "MY", {}),
+    "Εγώ χαιρετώ τον σερβιτόρο μου.");
+  assert.equal(buildSentence("el", tplById("WE_EAT_SOUP"), "MY", {}),
+    "Εμείς τρώμε τη σούπα μου.");
+  assert.equal(buildSentence("el", tplById("HE_HAS_POT"), "HIS", {}),
+    "Αυτός έχει την κατσαρόλα του.");
+  // Counted masculine objects take the accusative plural.
+  assert.equal(buildSentence("el", tplById("I_GREET_WAITER"), "TWO", {}),
+    "Εγώ χαιρετώ δύο σερβιτόρους.");
+  // Prepositions govern the accusative — «με τη μαμά του», «με την κόρη του».
+  assert.ok(buildSentence("el", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME"), null, {})
+    .includes("με τη μαμά του"));
+  assert.ok(buildSentence("el", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"), null, {})
+    .includes("με την κόρη του"));
+  // Predicate nominatives stay nominative.
+  assert.equal(buildSentence("el", tplById("HE_IS_WAITER"), null, {}),
+    "Αυτός είναι ένας σερβιτόρος.");
+  assert.equal(buildSentence("el", tplById("SHE_IS_WOMAN"), null, {}),
+    "Αυτή είναι μια γυναίκα.");
+  // The L3 blank and its tile carry the accusative surface.
+  const tpl = tplById("I_GREET_WAITER");
+  const s = buildSentence("el", tpl, null, {});
+  const blank = resolveNounBlank(s, tpl, "el", "WAITER");
+  assert.equal(blank?.surface, "σερβιτόρο");
+  assert.equal(optionSurfaceFor("el", tpl, "WAITER", slotContextFor(tpl, "el", "WAITER"),
+    { bareMode: blank.bareMode }), "σερβιτόρο");
+});
+
 test("es: adjectives post-nominal; buen/mal apocopate before masc singulars", () => {
   assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "BLACK", {}),
     "Yo obtengo un libro negro.");

@@ -323,7 +323,12 @@ for (const lang of langCodes) {
       const type = concepts[cid]?.type;
       if (type !== 'noun' && type !== 'pronoun') return;
       if (type === 'noun' && !nounsDecline) return;
-      if (!caseFormFor(lang, cid, caseName)) {
+      // A declared accusativeStrategy derives the accusative for every
+      // noun (el: masculine drops -ς, feminine/neuter are syncretic and
+      // the article carries the case) — no field is missing there.
+      const derived = caseName === 'accusative' && type === 'noun' &&
+        !!LANGUAGE_RULES[lang].caseMarking.accusativeStrategy;
+      if (!derived && !caseFormFor(lang, cid, caseName)) {
         add(`CASE_FALLBACK|${lang}|${id}|${cid}|${caseName}`,
           `${caseName} demanded but no ${caseName} field — nominative ships`);
       }
