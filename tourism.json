@@ -1335,7 +1335,7 @@
           "3_singular": "saluda",
           "1_plural": "saludamos",
           "2_plural": "saludáis",
-          "3_plural": "saludan"
+          "3_plural": "saludan", "governedPreposition": "a"
         },
         "PRONOUNCE": {
           "base": "pronunciar",

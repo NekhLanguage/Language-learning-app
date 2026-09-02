@@ -15,6 +15,9 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-02
 
+### Spanish and Greek: the first review, and the quick fixes
+Both languages had their first full review today, and a handful of things were wrong in ways a reader notices at once. Spanish counted with «uno» before a noun («uno libro», «uno cena»); it now says «un libro», «una cena». Meals took an indefinite article where Spanish uses the definite: «como el desayuno», «pero no el almuerzo». "Home" was «un hogar»; it is «casa» now, «voy a casa». The generated yes/no question lacked its opening «¿». "I greet a waiter" gets the personal «a» («saludo a un camarero»), «dejamos de de comer» lost its doubled «de», "by hand" is «a mano», and «La mañana es buena» agrees. Greek meals and "home" no longer carry an article («τρώω πρωινό», «πηγαίνω σπίτι»), the indefinite article is the unaccented «μια», "but not lunch" is «αλλά όχι μεσημεριανό», "hand" is «χέρι» (it was «παλάμη», the palm) and "arm" is «μπράτσο», and «Το πρωί είναι καλό» agrees. French "but not lunch" was «mais n'un déjeuner»; it is «mais pas de déjeuner». Japanese counts people with 人 («三人の息子», never «三つ»), and Mandarin two-character adjectives take 的 inside counted phrases too («十四本容易的书»).
+
 ### Mandarin 的 on longer adjectives; Japanese な-adjectives and counters
 In Mandarin, adjectives of two or more characters now take 的 before their noun — «一本容易的书», «一本黑暗的书» — while one-character adjectives stay bare as before («好书», «大手»). "Correct" and "wrong" no longer get paired with body parts in any language («一只正确眼睛», "a correct eye"); the directional "right" («右眼») still does. In Japanese, な-adjectives now keep their な in front of a noun («簡単な本», «便利な薬局») and drop it before です («本は簡単です») — "easy" had been shipping without its な, and the pack adjectives were shipping «便利なです». Counting rooms no longer doubles the word: «五つの部屋», not «五部屋の部屋».
 

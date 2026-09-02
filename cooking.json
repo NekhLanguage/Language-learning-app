@@ -1122,7 +1122,7 @@
         "SOUR": ["acide"],
         "FRESH": ["frais"],
         "FROZEN": ["congelé"],
-        "RAW": ["cru"]
+        "RAW": { "form": "cru", "f": "crue", "plural": "crus", "fp": "crues" }
       }
     },
     "tr": {

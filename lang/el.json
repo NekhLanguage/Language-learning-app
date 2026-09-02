@@ -283,9 +283,11 @@
       "plural": "σπίτια"
     },
     "HOME": {
-      "form": "κατοικία",
-      "gender": "f",
-      "plural": "κατοικίες"
+      "form": "σπίτι",
+      "gender": "n",
+      "plural": "σπίτια",
+      "noArticle": true,
+      "predicative": "σπίτι"
     },
     "BOOK": {
       "form": "βιβλίο",
@@ -363,14 +365,14 @@
       "plural": "κεφάλια"
     },
     "ARM": {
+      "form": "μπράτσο",
+      "gender": "n",
+      "plural": "μπράτσα"
+    },
+    "HAND": {
       "form": "χέρι",
       "gender": "n",
       "plural": "χέρια"
-    },
-    "HAND": {
-      "form": "παλάμη",
-      "gender": "f",
-      "plural": "παλάμες"
     },
     "LEG": {
       "form": "πόδι",
@@ -405,17 +407,20 @@
     "BREAKFAST": {
       "form": "πρωινό",
       "gender": "n",
-      "plural": "πρωινά"
+      "plural": "πρωινά",
+      "noArticle": true
     },
     "LUNCH": {
       "form": "μεσημεριανό",
       "gender": "n",
-      "plural": "μεσημεριανά"
+      "plural": "μεσημεριανά",
+      "noArticle": true
     },
     "DINNER": {
       "form": "βραδινό",
       "gender": "n",
-      "plural": "βραδινά"
+      "plural": "βραδινά",
+      "noArticle": true
     },
     "CLOTHES": {
       "gender": "n",
@@ -607,9 +612,11 @@
     "TOMORROW": [
       "αύριο"
     ],
-    "MORNING": [
-      "πρωί"
-    ],
+    "MORNING": {
+      "form": "πρωί",
+      "gender": "n",
+      "plural": "πρωινά"
+    },
     "DAY": {
       "form": "μέρα",
       "gender": "f",

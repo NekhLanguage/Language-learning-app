@@ -1082,7 +1082,10 @@ function nounPhrase(lang, cid, opts = {}) {
     return (entry.gender === "f" ? "delle "
       : (IT_LO_INITIAL.test(base) || IT_VOWEL_INITIAL.test(base)) ? "degli " : "dei ") + base;
   }
-  if (lang === "it" && entry.definite) {
+  // A noun flagged `definite` always takes the definite article in this
+  // position («mangio la colazione», «como el desayuno» — es meals were
+  // 13/13 indefinite, Emi run-15 (d)). Was Italian-only.
+  if (entry.definite) {
     return definiteNounPhrase(lang, cid);
   }
   // Declared rule partitiveArticle (fr): the mass/plural indefinite is an
@@ -1170,7 +1173,9 @@ function nounPhrase(lang, cid, opts = {}) {
     if (!entry.gender) return base; // mass nouns / uncountable — no article
     noteRule("indefinite_article");
     if (entry.gender === "m") return "ένας " + base;
-    if (entry.gender === "f") return "μία " + base;
+    // The article is the unaccented μια; accented μία is the emphatic
+    // numeral (Emi run-15: 31/31 wrong, and the authored corpus says μια).
+    if (entry.gender === "f") return "μια " + base;
     return "ένα " + base; // neuter
   }
 
@@ -1980,6 +1985,10 @@ function numberAgreementForm(lang, numberCid, headCid, accusative) {
   }
   if (g === "m" && typeof entry.m === "string") return entry.m;
   if (g === "n" && typeof entry.n === "string") return entry.n;
+  // Pre-nominal apocope of the numeral (es «un libro», never «uno libro»
+  // — Emi run-15 -75; the article path already had it, the numeral path
+  // read the citation form). Feminine returned above («una cena»).
+  if (langRule(lang, "apocope") && typeof entry.apocope === "string") return entry.apocope;
   return word;
 }
 
@@ -2185,6 +2194,13 @@ function finalizeSentence(lang, sentence) {
     // questions carry it («Pourquoi vas-tu ?»); the generated yes/no
     // question appended a bare «?» (Emi run-13 -66).
     return elided.replace(/\s*([?!])$/, " $1");
+  }
+  // Spanish opens a question with ¿ — the authored wh questions carry it,
+  // the generated yes/no question did not (Emi run-15 (e): sixth
+  // language on the question template).
+  if (lang === "es") {
+    return /\?$/.test(sentence) && !sentence.startsWith("¿")
+      ? "¿" + sentence : sentence;
   }
   // Ukrainian sets off its conjunctions with a comma: «сніданок, але не
   // обід», «..., тому що він удома» — and alternates в/у for euphony: «у»
@@ -2922,7 +2938,11 @@ function jaQuantifierPrefix(lang, numberCid, numberWord, nounCid = null) {
   const perNoun = entry && !Array.isArray(entry) &&
     typeof entry.counter === "string" && entry.counter !== entry.form
     ? entry.counter : null;
-  const counter = perNoun ||
+  // People are counted with the declared animate counter (人) unless the
+  // noun names its own — «三人の息子», never «三つの息子» (Emi run-15 -73).
+  const animate = entry && !Array.isArray(entry) && entry.animate &&
+    typeof spec.animateCounter === "string" ? spec.animateCounter : null;
+  const counter = perNoun || animate ||
     (JA_KUN_COUNTER_NUMBERS.has(numberCid)
       ? (spec.kunCounter || "つ")
       : (spec.default || "個"));
@@ -3354,6 +3374,22 @@ function contrastiveNegationSegments(lang, tpl) {
   // negated object takes the topic particle, the verb’s `negative` data
   // form ends the sentence — «彼は朝ご飯を食べますが、昼ご飯は食べません»
   // (Emi run-10 -50). Missing negative data falls through.
+  // objectNegator (fr «pas de», el «όχι»): the verb is not repeated and
+  // the negated object stands bare behind a dedicated negator — «Il mange
+  // un petit-déjeuner mais pas de déjeuner», «τρώει πρωινό αλλά όχι
+  // μεσημεριανό». The generic path put the clausal negator before a bare
+  // article («mais n'un déjeuner», «αλλά δεν ένα μεσημεριανό» — Emi
+  // run-14 -70 / run-15 el (f)).
+  if (typeof spec.objectNegator === "string") {
+    return [
+      { cid: subject, text: formOf(lang, subject) },
+      { cid: verb, text: finite },
+      { cid: obj1, text: nounPhrase(lang, obj1, { directObject: true }) },
+      { cid: c[bi], text: formOf(lang, c[bi]) },
+      { cid: c[bi + 1], text: spec.objectNegator },
+      { cid: obj2, text: formOf(lang, obj2) },
+    ];
+  }
   if (spec.negatedVerbForm) {
     const negative = vocab().languages?.[lang]?.forms?.[verb]?.negative;
     if (typeof negative !== "string") return null;
@@ -3521,6 +3557,22 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const words = ordered.map((cid, idx) => {
     const meta = vocab().concepts[cid];
     if (!meta) return cid;
+
+    // An authored per-template surface for a glue/position word is the
+    // preposition this template actually takes («a mano», «με το χέρι»
+    // — the by-hand template read BY off the dictionary as por/από, Emi
+    // run-15). Nouns and verbs consume their surfaces in their own
+    // branches below.
+    // Only an authored deviation counts: a surface equal to the dictionary
+    // form is a no-op, so the declared drop/case rules (uk/pl bare
+    // instrumental, fi case adpositions) keep their say.
+    if (meta.type === "glue" || meta.type === "position") {
+      const glueSurface = tpl.surface?.[lang]?.[cid];
+      if (typeof glueSurface === "string" && glueSurface &&
+          glueSurface !== formOf(lang, cid)) {
+        return glueSurface;
+      }
+    }
 
     if (existentialHave && cid === subjectCid) {
       const possForm = caseFormFor(lang, cid,
@@ -4111,7 +4163,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (sharedChoices && numberCid === forcedConcept && num !== numberWord) {
         sharedChoices["blankSurface_" + lang] = num;
       }
-      return [num + clf, adjectiveWord, nounForm].filter(Boolean).join(" ");
+      // The attributive linker rides the counted phrase too («十四本容易
+      // 的书» — Emi run-14: -62 landed in the generic path, not here).
+      const linked = adjectiveWord
+        ? adjectiveWord + adjectiveLinker(lang, adjectiveCid) : null;
+      return [num + clf, linked, nounForm].filter(Boolean).join(" ");
     }
     // Counter languages (ko): the numeral + counter FOLLOW the noun, with
     // the numeral in its determiner form — «나쁜 책 네 권», never

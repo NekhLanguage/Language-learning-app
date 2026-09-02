@@ -258,9 +258,10 @@
       "plural": "casas"
     },
     "HOME": {
-      "form": "hogar",
-      "gender": "m",
-      "plural": "hogares"
+      "form": "casa",
+      "gender": "f",
+      "plural": "casas",
+      "predicative": "en casa"
     },
     "BOOK": {
       "form": "libro",
@@ -345,7 +346,8 @@
     "HAND": {
       "form": "mano",
       "gender": "f",
-      "plural": "manos"
+      "plural": "manos",
+      "noArticle": true
     },
     "LEG": {
       "form": "pierna",
@@ -379,15 +381,18 @@
     },
     "BREAKFAST": {
       "form": "desayuno",
-      "gender": "m"
+      "gender": "m",
+      "definite": true
     },
     "LUNCH": {
       "form": "almuerzo",
-      "gender": "m"
+      "gender": "m",
+      "definite": true
     },
     "DINNER": {
       "form": "cena",
-      "gender": "f"
+      "gender": "f",
+      "definite": true
     },
     "CLOTHES": {
       "form": "ropa"
@@ -417,9 +422,11 @@
       "gender": "m",
       "pluralOnly": true
     },
-    "ONE": [
-      "uno"
-    ],
+    "ONE": {
+      "form": "uno",
+      "f": "una",
+      "apocope": "un"
+    },
     "TWO": [
       "dos"
     ],
@@ -561,9 +568,10 @@
     "TOMORROW": [
       "mañana"
     ],
-    "MORNING": [
-      "mañana"
-    ],
+    "MORNING": {
+      "form": "mañana",
+      "gender": "f"
+    },
     "DAY": {
       "form": "día",
       "gender": "m"
@@ -648,13 +656,13 @@
       "3_plural": "empiezan"
     },
     "STOP": {
-      "base": "dejar de",
-      "1_singular": "dejo de",
-      "2_singular": "dejas de",
-      "3_singular": "deja de",
-      "1_plural": "dejamos de",
-      "2_plural": "dejáis de",
-      "3_plural": "dejan de"
+      "base": "dejar",
+      "1_singular": "dejo",
+      "2_singular": "dejas",
+      "3_singular": "deja",
+      "1_plural": "dejamos",
+      "2_plural": "dejáis",
+      "3_plural": "dejan"
     },
     "SLEEP": {
       "base": "dormir",

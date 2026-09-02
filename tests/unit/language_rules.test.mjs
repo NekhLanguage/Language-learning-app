@@ -443,6 +443,73 @@ test("fr: professions and HOME are bare predicates after être (-69)", () => {
     "Je vais à la maison.");
 });
 
+// ---------------------------------------------------------------------
+// Emi runs 14/15 small batch — fr -70, es -75 / (d) / (e) / personal a,
+// el (c) / (f) / μια, ja -73, zh -62 residual, by-hand surfaces
+// ---------------------------------------------------------------------
+
+test("but-not: objectNegator languages negate the bare object (fr -70, el)", () => {
+  assert.equal(buildSentence("fr", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH"), null, {}),
+    "Il mange un petit-déjeuner mais pas de déjeuner.");
+  assert.equal(buildSentence("el", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH"), null, {}),
+    "Αυτός τρώει πρωινό αλλά όχι μεσημεριανό.");
+  // Spanish keeps the generic shape; the meals are definite now.
+  assert.equal(buildSentence("es", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH"), null, {}),
+    "Él come el desayuno pero no el almuerzo.");
+});
+
+test("es: numeral ONE agrees and apocopates like the article (-75)", () => {
+  assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "ONE", {}),
+    "Yo obtengo un libro.");
+  assert.equal(buildSentence("es", tplById("THEY_EAT_DINNER"), "ONE", {}),
+    "Ellos comen una cena.");
+  assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "TWO", {}),
+    "Yo obtengo dos libros.");
+});
+
+test("es: meals definite, HOME «a casa» / «en casa», ¿ on yes/no, personal a, dejar de", () => {
+  assert.equal(buildSentence("es", tplById("I_EAT_BREAKFAST"), null, {}),
+    "Yo como el desayuno.");
+  assert.equal(buildSentence("es", tplById("I_GO_HOME"), null, {}),
+    "Yo voy a casa.");
+  assert.equal(buildSentence("es", tplById("IS_THAT_YOUR_PHONE"), null, {}),
+    "¿Ese es tu teléfono?");
+  assert.equal(buildSentence("es", tplById("I_GREET_WAITER"), null, {}),
+    "Yo saludo a un camarero.");
+  assert.equal(buildSentence("es", tplById("WE_STOP_EATING"), null, {}),
+    "Nosotros dejamos de comer.");
+  assert.equal(buildSentence("es", tplById("I_DO_THIS_BY_HAND"), null, {}),
+    "Yo hago este a mano.");
+  assert.equal(buildSentence("es", tplById("MORNING_IS_GOOD"), null, {}),
+    "La mañana es buena.");
+});
+
+test("el: meals and HOME bare, unaccented μια, by-hand «με το χέρι», MORNING neuter", () => {
+  assert.equal(buildSentence("el", tplById("I_EAT_BREAKFAST"), null, {}),
+    "Εγώ τρώω πρωινό.");
+  assert.equal(buildSentence("el", tplById("I_GO_HOME"), null, {}),
+    "Εγώ πηγαίνω σπίτι.");
+  assert.equal(buildSentence("el", tplById("WE_HAVE_JOB"), null, {}),
+    "Εμείς έχουμε μια δουλειά.");
+  assert.equal(buildSentence("el", tplById("I_DO_THIS_BY_HAND"), null, {}),
+    "Εγώ κάνω αυτό με το χέρι.");
+  assert.equal(buildSentence("el", tplById("MORNING_IS_GOOD"), null, {}),
+    "Το πρωί είναι καλό.");
+  // A glue surface equal to the dictionary form is a no-op: uk keeps its
+  // bare instrumental («рукою»), no «за допомогою» leaks in.
+  assert.equal(buildSentence("uk", tplById("I_DO_THIS_BY_HAND"), null, {}),
+    "Я роблю це рукою.");
+});
+
+test("ja: people count with 人 (-73); zh: 的 rides the counted phrase (-62 residual)", () => {
+  assert.equal(buildSentence("ja", tplById("CX_HE_HAVE_SON"), "THREE", {}),
+    "彼は三人の息子がいます。");
+  assert.equal(buildSentence("ja", tplById("I_GET_BOOK"), "THREE", {}),
+    "私は三冊の本を手に入れます。");
+  assert.equal(buildSentence("zh", tplById("I_GET_BOOK"), "FOURTEEN", { adj_BOOK: "EASY" }),
+    "我得到十四本容易的书。");
+});
+
 test("es: adjectives post-nominal; buen/mal apocopate before masc singulars", () => {
   assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "BLACK", {}),
     "Yo obtengo un libro negro.");
@@ -504,9 +571,10 @@ test("el: possessives are enclitic with the definite article", () => {
     "Εγώ τρώω το φαγητό του.");
   assert.equal(buildSentence("el", tplById("WE_HAVE_PAN"), "HIS", {}),
     "Εμείς έχουμε το τηγάνι του.");
-  // Template-slot path (authored possessive): «η παλάμη μου».
+  // Template-slot path (authored possessive): «το χέρι μου» (HAND is
+  // χέρι since Emi run-15 — παλάμη is the palm; ARM moved to μπράτσο).
   const s = buildSentence("el", tplById("THIS_IS_MY_HAND"));
-  assert.ok(s.includes("η παλάμη μου"), s);
+  assert.ok(s.includes("το χέρι μου"), s);
 });
 
 test("th possessives are untouched by the enclitic generalization", () => {

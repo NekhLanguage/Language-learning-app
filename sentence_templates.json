@@ -2924,7 +2924,7 @@
         "es": {
           "FIRST_PERSON_SINGULAR": "Yo",
           "GO": "voy",
-          "HOME": "casa"
+          "HOME": "a casa"
         },
         "fr": {
           "FIRST_PERSON_SINGULAR": "Je",
@@ -8406,6 +8406,76 @@
       ],
       "structure": {
         "type": "relation"
+      },
+      "surface": {
+        "en": {
+          "BY": "by",
+          "HAND": "hand"
+        },
+        "ar": {
+          "BY": "بواسطة",
+          "HAND": "يد"
+        },
+        "de": {
+          "BY": "von",
+          "HAND": "Hand"
+        },
+        "el": {
+          "BY": "με",
+          "HAND": "το χέρι"
+        },
+        "es": {
+          "BY": "a",
+          "HAND": "mano"
+        },
+        "fi": {
+          "BY": "avulla",
+          "HAND": "käsi"
+        },
+        "fr": {
+          "BY": "par",
+          "HAND": "main"
+        },
+        "it": {
+          "BY": "a",
+          "HAND": "mano"
+        },
+        "ja": {
+          "BY": "で",
+          "HAND": "手"
+        },
+        "ko": {
+          "BY": "에 의해",
+          "HAND": "손"
+        },
+        "no": {
+          "BY": "med",
+          "HAND": "hånd"
+        },
+        "pl": {
+          "BY": "za pomocą",
+          "HAND": "ręka"
+        },
+        "pt": {
+          "BY": "por",
+          "HAND": "mão"
+        },
+        "th": {
+          "BY": "ด้วย",
+          "HAND": "มือ"
+        },
+        "tr": {
+          "BY": "tarafından",
+          "HAND": "el"
+        },
+        "uk": {
+          "BY": "за допомогою",
+          "HAND": "рука"
+        },
+        "zh": {
+          "BY": "由",
+          "HAND": "手"
+        }
       },
       "render": {
         "en": "I do this by hand.",

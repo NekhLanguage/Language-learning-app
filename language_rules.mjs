@@ -485,6 +485,9 @@ export const LANGUAGE_RULES = {
     partitiveArticle: true,
     prevocalicAdjectives: true,
     questionParticle: "Est-ce que",
+    // "V O1 but not O2": the negated object stands bare behind «pas de»
+    // («mais pas de déjeuner», never «mais n'un déjeuner» — Emi run-14 -70).
+    contrastiveNegation: { objectNegator: "pas de" },
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
@@ -536,6 +539,9 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
     numeralGenderAgreement: true,
     possessiveEnclitic: true, possessiveDefiniteArticle: true,
+    // "V O1 but not O2": «αλλά όχι μεσημεριανό», never «αλλά δεν ένα
+    // μεσημεριανό» (Emi run-15 el (f)).
+    contrastiveNegation: { objectNegator: "όχι" },
   },
   it: {
     features: {
@@ -594,7 +600,7 @@ export const LANGUAGE_RULES = {
     existentialHaveByNoun: true,
     verbCoordination: "te",
     contrastiveNegation: { conjunction: "が、", negatedVerbForm: true },
-    counterPrefix: { kunCounter: "つ", default: "個", linker: "の" },
+    counterPrefix: { kunCounter: "つ", default: "個", linker: "の", animateCounter: "人" },
     // Location is existence: «本はこれの上にあります», «本はこれとそれの
     // 間にあります» (Emi run-12 -57).
     locativeExistential: { linker: "の", conjunction: "と" },
@@ -769,11 +775,18 @@ export const LANGUAGE_RULES = {
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",
       declinesAttributiveAdjectives: true, apocope: true,
+      numeralGenderAgreement: true,
     },
     indefiniteArticle: true, proDrop: true, statementOrderQuestion: true,
     postNominalAdjectives: true,
     preNominalAdjectiveRoles: ["property_quality"],
     apocope: true,
+    // The numeral ONE agrees and apocopates like the article («un libro»,
+    // «una cena» — Emi run-15 -75: 8/8 «uno libro»); the ONE entry carries
+    // f + apocope. Verbs may govern their complement's preposition — the
+    // personal «a» on saludar («saludo a un camarero»).
+    numeralGenderAgreement: true,
+    verbGovernedPrepositions: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
