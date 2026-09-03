@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-03
 
+### French and Japanese leave beta
+Both languages have now had two consecutive full reviews at 19 of 20 sentences grammatical, with every named fix verified live in drills, so the "beta" tag comes off in the language picker. Nothing changes in what they teach; the tag was a promise about quality, and it is kept.
+
+## 2026-09-03
+
 ### Turkish yes/no questions get their «mu»
 "Is that your phone?" was rendering as «Şu senin telefon?» in Turkish — grammatical enough to be understood, but missing the yes/no particle a native writer would put at the end: «Şu senin telefonun mu?». The particle harmonizes with the last vowel of the preceding word — mu after o/u, mü after ö/ü, mı after a/ı, mi after e/i — the same four-way lookup Turkish possessive suffixes already use. Declared preemptively across the eight untested question-particle rows (pt / tr / es / uk / no / pl / it / de) after Emi's cross-language sweep found the same shared default silently wrong in fi / zh / ja / ar / fr; only Turkish among the eight needed a new rule — the other seven were already covered by an existing declaration or by the default verb-fronting matching the authored form.
 
