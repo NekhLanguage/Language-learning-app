@@ -81,7 +81,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.48";
+const APP_DATA_VERSION = "1.2.49";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
@@ -1967,8 +1967,16 @@ async function runEnterLanguage(btn, langCode) {
     btn.removeAttribute("aria-busy");
   }
 }
+  // -78 (Emi run-16): the lexicon is built into a local object and swapped
+  // in only when every file has landed. The old version emptied
+  // window.GLOBAL_VOCAB first, so a fetch that failed (or a second click
+  // that superseded the first) left the app with NO lexicon: exercises
+  // rendered concept ids («HE _ una GOOD verdura»), roadmap labels showed
+  // ids, and renderNext, finding nothing renderable, ended a session on
+  // every Continue (553 clicks, 0 sessions). A failed load now leaves the
+  // previous lexicon in place and rejects; the caller decides.
   async function loadAndMergeVocab() {
-    window.GLOBAL_VOCAB = { concepts: {}, languages: {} };
+    const next = { concepts: {}, languages: {} };
 
     const targetLang = languageState.target;
 
@@ -1990,15 +1998,15 @@ async function runEnterLanguage(btn, langCode) {
         // nouns from the same pack, while core adjectives remain broadly
         // compatible. Without this, we get "I read a shiny book" type
         // mismatches.
-        window.GLOBAL_VOCAB.concepts[concept.concept_id] = { ...concept, source };
+        next.concepts[concept.concept_id] = { ...concept, source };
       }
       // Resource pack files (pokemon.json etc.) still carry their own
       // language sections — merge those as before.
       for (const [langCode, langData] of Object.entries(data.languages || {})) {
-        if (!window.GLOBAL_VOCAB.languages[langCode]) {
-          window.GLOBAL_VOCAB.languages[langCode] = { forms: {} };
+        if (!next.languages[langCode]) {
+          next.languages[langCode] = { forms: {} };
         }
-        Object.assign(window.GLOBAL_VOCAB.languages[langCode].forms, langData.forms || {});
+        Object.assign(next.languages[langCode].forms, langData.forms || {});
       }
     }
 
@@ -2010,11 +2018,51 @@ async function runEnterLanguage(btn, langCode) {
     for (let i = 0; i < langCodes.length; i++) {
       const code = langCodes[i];
       const langData = langResults[i];
-      if (!window.GLOBAL_VOCAB.languages[code]) {
-        window.GLOBAL_VOCAB.languages[code] = { forms: {} };
+      if (!next.languages[code]) {
+        next.languages[code] = { forms: {} };
       }
-      Object.assign(window.GLOBAL_VOCAB.languages[code].forms, langData.forms || {});
+      Object.assign(next.languages[code].forms, langData.forms || {});
     }
+    window.GLOBAL_VOCAB = next;
+    return next;
+  }
+
+  // True when the lexicon for the active target language is in memory.
+  function lexiconLoaded() {
+    const v = window.GLOBAL_VOCAB;
+    return !!(v && v.concepts && Object.keys(v.concepts).length &&
+      v.languages && v.languages[languageState.target] &&
+      v.languages[languageState.target].forms);
+  }
+
+  // -78: renderNext found no lexicon — reload it and come back, instead of
+  // ending the session. One recovery at a time; a failed reload leaves the
+  // screen as it is and the next Continue retries.
+  let lexiconRecovering = false;
+  async function recoverLexicon(targetLang, supportLang) {
+    if (lexiconRecovering) return;
+    lexiconRecovering = true;
+    console.warn("Lexicon not loaded — reloading it before rendering");
+    try {
+      if (window.__zthBeacon) {
+        window.__zthBeacon("error", {
+          message: "lexicon_missing_recover",
+          source: "renderNext",
+          path: location.pathname + location.search
+        });
+      }
+    } catch (_) { /* never let the beacon throw */ }
+    try {
+      await loadAndMergeVocab();
+      BUNDLE_INDEX = buildBundleIndex();
+      if (!TEMPLATE_CACHE) await loadTemplates(run?.selectedResourcePacks || []);
+    } catch (err) {
+      console.warn("Lexicon reload failed:", err);
+      return;
+    } finally {
+      lexiconRecovering = false;
+    }
+    renderNext(targetLang, supportLang);
   }
 
   let TEMPLATE_CACHE = null;
@@ -4378,7 +4426,15 @@ function renderAlphabetOverlay(langCode) {
   }
 }
 
+  // -78: a language entry that is superseded by a later click (the picker
+  // races entry against a 10 s timeout and lets the learner click again)
+  // must not finish: two entries interleaving left the second language's
+  // screens rendering with the first language's templates and half a
+  // lexicon. Each entry takes a generation; after every await it checks it
+  // is still the latest.
+  let enterGeneration = 0;
   async function enterLanguage(langCode) {
+  const gen = ++enterGeneration;
 
   languageState.target = langCode;
 
@@ -4391,12 +4447,14 @@ function renderAlphabetOverlay(langCode) {
   }
 
   await loadAndMergeVocab();
+  if (gen !== enterGeneration) return;
 
   BUNDLE_INDEX = buildBundleIndex();
 
   if (!USER.runs[langCode]) {
     run = createRunState();
     await loadTemplates([]);
+    if (gen !== enterGeneration) return;
     languageScreen.classList.remove("active");
     showReasonScreen();
 
@@ -4419,6 +4477,7 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
     saveUser();
   }
   await loadTemplates(run.selectedResourcePacks || []);
+  if (gen !== enterGeneration) return;
   languageScreen.classList.remove("active");
   learningScreen.classList.add("active");
   updateAlphabetButton(languageState.target);
@@ -4841,6 +4900,14 @@ if (bar) {
   bar.style.width = progress + "%";
 }
   if (!run) return;
+
+  // -78: an empty lexicon is never "nothing left to teach" — see
+  // recoverLexicon. Without this every concept fell through the render
+  // loop below and each Continue ended another session.
+  if (!lexiconLoaded()) {
+    recoverLexicon(targetLang, supportLang);
+    return;
+  }
 
   if (runIsExhausted(run)) {
     return renderRunComplete(targetLang, supportLang);

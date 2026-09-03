@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-03
 
+### A bad connection can no longer lock you out until you reload
+Emi found that one failed server call on a slow connection could leave the app in a state where tapping a language did nothing, "Continue" on the journey map ended a session instead of starting one, and if a session did start it showed raw word codes instead of words. The cause was the word list being emptied before a reload of it had finished. The list is now replaced only once it has fully loaded, a language tap that gets superseded by another tap stands down cleanly, and if the app ever finds itself without a word list it reloads it before showing you anything. Loading your progress is also faster: the server now sends it compressed, which is roughly a tenth of the size for a full account.
+
+## 2026-09-03
+
 ### French and Japanese leave beta
 Both languages have now had two consecutive full reviews at 19 of 20 sentences grammatical, with every named fix verified live in drills, so the "beta" tag comes off in the language picker. Nothing changes in what they teach; the tag was a promise about quality, and it is kept.
 
