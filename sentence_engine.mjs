@@ -424,14 +424,19 @@ const FEM_ACC_STRATEGIES = {
 const NOUN_ACC_STRATEGIES = {
   el: (form, gender, plural = false) => {
     const s = String(form);
-    if (gender !== "m" || s.includes(" ")) return s;
-    if (plural) {
-      // -οι → -ους («σερβιτόροι» → «σερβιτόρους», «αδερφοί» → «αδερφούς»)
-      if (/οί$/.test(s)) return s.slice(0, -2) + "ούς";
-      if (/οι$/.test(s)) return s.slice(0, -2) + "ους";
-      return s;
-    }
-    return /(ος|ός|ας|άς|ης|ής|ές|ούς)$/.test(s) ? s.slice(0, -1) : s;
+    if (gender !== "m") return s;
+    // A multi-word masculine (adjective + noun: «καθεδρικός ναός») declines
+    // every word — «καθεδρικό ναό», «καθεδρικούς ναούς» (Emi run-16 residual).
+    const word = (w) => {
+      if (plural) {
+        // -οι → -ους («σερβιτόροι» → «σερβιτόρους», «αδερφοί» → «αδερφούς»)
+        if (/οί$/.test(w)) return w.slice(0, -2) + "ούς";
+        if (/οι$/.test(w)) return w.slice(0, -2) + "ους";
+        return w;
+      }
+      return /(ος|ός|ας|άς|ης|ής|ές|ούς)$/.test(w) ? w.slice(0, -1) : w;
+    };
+    return s.split(" ").map(word).join(" ");
   },
 };
 function nounAccStrategy(lang) {
@@ -1477,6 +1482,19 @@ function orderedConceptsForTemplate(tpl, lang) {
     return t && t !== "pronoun" && t !== "verb";
   });
 
+  // Two-clause templates (a repeated concept id or two copulas: «This is
+  // my hand and this is your head», «She is my mom and he is my dad») keep
+  // their authored order in SVO languages — the [subject, verb, object]
+  // guess plus "append the rest" deduplicated the second clause's subject
+  // and copula, shipping «This is my hand and your head» / «She is my mom
+  // and he a dad» in every SVO language (Emi run-16, es/el; the ja #141
+  // class for SVO). SOV keeps its legacy multi-clause shape below.
+  const twoClause = new Set(concepts).size !== concepts.length ||
+    concepts.filter(c => isCopulaConcept(c)).length > 1;
+  if (twoClause && (langRuleValue(lang, "wordOrder") || "SVO") === "SVO") {
+    return preverbalAdjunctOrder(lang, concepts.slice());
+  }
+
   // Declared per language (language_rules.mjs `wordOrder`); SVO default.
   // MSA's canonical order is VSO, but SVO is equally standard in modern
   // usage and it is what the authored corpus uses throughout («أنا أشرب
@@ -1659,6 +1677,18 @@ function preverbalAdjunctOrder(lang, ordered) {
     }
 
     const authored = tpl.surface?.[targetLang]?.[targetConcept];
+    // A suffixal possessor (ar) fuses into the noun the render path emits
+    // («أبي»); an authored bare surface for that noun («أب») can never
+    // match it, so the fused form wins here as it does below.
+    if (authored && meta.type === "noun" && langRuleValue(targetLang, "possessiveSuffix")) {
+      const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+      const i = ordered.indexOf(targetConcept);
+      if (i > 0 && vocab().concepts[ordered[i - 1]]?.semantic_role === "possessive") {
+        const fused = pronominalPossessedForm(targetLang, ordered[i - 1],
+          formOf(targetLang, targetConcept));
+        if (fused) return fused;
+      }
+    }
     if (authored) {
       // An authored surface that IS the plain dictionary form still takes
       // the slot's particle decoration («음식» → «음식을») — the render
@@ -1701,6 +1731,15 @@ function preverbalAdjunctOrder(lang, ordered) {
       // missing case data falls through to the nominative, exactly like
       // the render path does.
       if (idx !== -1) {
+        // Suffixal possessor (declared possessiveSuffix — ar): the slot
+        // renders the fused form («أبي»), so the blank must hold it — the
+        // bare «أب» never matched and MOM/DAD had no L3 frame at all.
+        if (idx > 0 &&
+            vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive") {
+          const fused = pronominalPossessedForm(targetLang, ordered[idx - 1],
+            formOf(targetLang, targetConcept));
+          if (fused) return fused;
+        }
         const isCopularTpl = ordered.some(c =>
           c === "BE" || vocab().concepts[c]?.semantic_role === "copula");
         const predCase = predicateNounCaseFor(
@@ -1918,6 +1957,17 @@ function preverbalAdjunctOrder(lang, ordered) {
         return bareMode || !ARTICLE_LANGS.has(targetLang)
           ? entry.feminine
           : nounPhrase(targetLang, cid, { feminineReferent: true });
+      }
+    }
+    // Suffixal possessor (ar): every tile in a possessed slot carries the
+    // same fused suffix the blank holds («أبي» / «أمي» / «كتابي»).
+    if (langRuleValue(targetLang, "possessiveSuffix")) {
+      const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+      const i = ordered.indexOf(cid);
+      if (i > 0 && vocab().concepts[ordered[i - 1]]?.semantic_role === "possessive") {
+        const fused = pronominalPossessedForm(targetLang, ordered[i - 1],
+          formOf(targetLang, cid));
+        if (fused) return fused;
       }
     }
     // Declared rule encliticStress (el): a tile in a possessed slot carries
@@ -4169,6 +4219,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       !useCopularPlural && typeof nounEntry?.predicative === "string" &&
       isCopularPredicatePosition(ordered, idx, lang)
     ? nounEntry.predicative : null;
+  // Declared rule definiteDestination (es): a bare noun after the
+  // destination glue is definite — «voy a la mesa», never «a una mesa»
+  // (Emi run-16). A modifier that lands keeps the indefinite («voy a una
+  // casa nueva» — Emi: correct), so this too resolves at the final return.
+  const destinationDefinite = langRule(lang, "definiteDestination") &&
+      !bareDetermined && idx > 0 &&
+      vocab().concepts[ordered[idx - 1]]?.semantic_role === "relation_target" &&
+      !nounEntry?.noArticle && !nounEntry?.pluralOnly && nounEntry?.gender
+    ? definiteNounPhrase(lang, cid) : null;
 
   let phrase = bareDetermined
     ? possessedForm
@@ -4723,6 +4782,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   }
 
   if (predicativeBare && !adjectiveWord && !numberWord) return predicativeBare;
+  if (destinationDefinite && !adjectiveWord && !numberWord) return destinationDefinite;
   return phrase;
 }
 
@@ -4823,8 +4883,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // the language declines it («Esta es mi mano», «Este é um bom livro»).
     // Data-driven: only fires when the demonstrative entry carries gendered
     // forms, so uk «це» / en "this" are untouched.
-    if (idx === 0 && meta.type === "pronoun" && isCopularTemplate) {
-      const predIdx = ordered.findIndex(c => vocab().concepts[c]?.type === "noun");
+    // A clause-initial pronoun: the sentence subject, or the subject of a
+    // second clause after a conjunction («…y esta es tu cabeza» — the
+    // two-clause templates keep both clauses since Emi run-16). The
+    // predicate noun is the first noun AFTER it, never the first in the
+    // sentence.
+    const clauseStart = idx === 0 ||
+      (idx > 0 && isConjunctionConcept(ordered[idx - 1]));
+    if (clauseStart && meta.type === "pronoun" && isCopularTemplate) {
+      const predIdx = ordered.findIndex((c, i) =>
+        i > idx && vocab().concepts[c]?.type === "noun");
       const predNoun = predIdx === -1 ? null : ordered[predIdx];
       const entry = vocab().languages?.[lang]?.forms?.[cid];
       // Declared rule (standaloneDemonstrative — es): agreement needs a

@@ -1078,7 +1078,7 @@
         "CUT": {"base":"couper","1_singular":"coupe","2_singular":"coupes","3_singular":"coupe","1_plural":"coupons","2_plural":"coupez","3_plural":"coupent"},
         "BOIL": {"base":"bouillir","1_singular":"bous","2_singular":"bous","3_singular":"bout","1_plural":"bouillons","2_plural":"bouillez","3_plural":"bouillent"},
         "PEEL": {"base":"éplucher","1_singular":"épluche","2_singular":"épluches","3_singular":"épluche","1_plural":"épluchons","2_plural":"épluchez","3_plural":"épluchent"},
-        "FRY": {"base":"frire","1_singular":"fris","2_singular":"fris","3_singular":"frit","1_plural":"frisons","2_plural":"frisez","3_plural":"frient"},
+        "FRY": {"base":"frire","1_singular":"fris","2_singular":"fris","3_singular":"frit","1_plural":"faisons frire","2_plural":"faites frire","3_plural":"font frire"},
         "STIR": {"base":"remuer","1_singular":"remue","2_singular":"remues","3_singular":"remue","1_plural":"remuons","2_plural":"remuez","3_plural":"remuent"},
         "MIX": {"base":"mélanger","1_singular":"mélange","2_singular":"mélanges","3_singular":"mélange","1_plural":"mélangeons","2_plural":"mélangez","3_plural":"mélangent"},
         "WASH": {"base":"laver","1_singular":"lave","2_singular":"laves","3_singular":"lave","1_plural":"lavons","2_plural":"lavez","3_plural":"lavent"},

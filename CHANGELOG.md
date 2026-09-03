@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-03
 
+### Two-clause sentences keep both halves, in every language
+"This is my hand and this is your head" and "She is my mom and he is my dad" were losing their second subject and verb in every language except Japanese: «Esta es mi mano y tu cabeza», «She is my mom and he a dad». Both halves now render everywhere («Esta es mi mano y esta es tu cabeza», «Αυτή είναι η μαμά μου και αυτός είναι ο μπαμπάς μου»). Also in this batch: Spanish «voy a la mesa» (a bare destination is definite), Greek two-word nouns decline as a unit («έναν καθεδρικό ναό», «δύο καθεδρικούς ναούς»), the French «frire» uses «faire frire» in the plural, and Arabic fill-in-the-blank cards for "my mom" and "my dad" now exist: the blank holds the fused «أمي / أبي» the sentence shows.
+
+## 2026-09-03
+
 ### A bad connection can no longer lock you out until you reload
 Emi found that one failed server call on a slow connection could leave the app in a state where tapping a language did nothing, "Continue" on the journey map ended a session instead of starting one, and if a session did start it showed raw word codes instead of words. The cause was the word list being emptied before a reload of it had finished. The list is now replaced only once it has fully loaded, a language tap that gets superseded by another tap stands down cleanly, and if the app ever finds itself without a word list it reloads it before showing you anything. Loading your progress is also faster: the server now sends it compressed, which is roughly a tenth of the size for a full account.
 
