@@ -1420,7 +1420,9 @@ const RELATIONAL_STRUCTURES = new Set([
 function orderedConceptsForTemplate(tpl, lang) {
   // 1) Use explicit order if present
   const explicit = tpl.order?.[lang] || tpl.order?.default;
-  if (Array.isArray(explicit) && explicit.length) return explicit;
+  if (Array.isArray(explicit) && explicit.length) {
+    return preverbalAdjunctOrder(lang, explicit.slice());
+  }
 
   // 1b) Relational templates: keep the authored concept order (see above).
   // Postposed-adposition languages (zh, ja) still need their position glue
@@ -1551,7 +1553,51 @@ if (orderType === "SOV") {
   const used = new Set(ordered.filter(Boolean));
   concepts.forEach(c => { if (!used.has(c)) ordered.push(c); });
 
-  return ordered.filter(Boolean);
+  // Declared rule preverbalAdjuncts (zh): prepositional adjuncts (从/用/
+  // 和/为了 + their nominal) and limiting adverbs (只) precede the verb
+  // — «你从菜单点菜», «我只读一本书», «我用手做这» — never trail it in
+  // English order (Emi run-14 -72: 3/3 从-phrases and 2/2 只 post-verbal;
+  // #137's 一起 was the specific comitative case of this rule).
+  return preverbalAdjunctOrder(lang, ordered.filter(Boolean));
+}
+
+function preverbalAdjunctOrder(lang, ordered) {
+  const spec = langRuleValue(lang, "preverbalAdjuncts");
+  if (!spec) return ordered;
+  const glueRoles = new Set(spec.glueRoles || []);
+  const adverbRoles = new Set(spec.adverbRoles || []);
+  const vIdx = ordered.findIndex(c =>
+    vocab().concepts[c]?.type === "verb" && !isCopulaConcept(c));
+  if (vIdx === -1) return ordered;
+  const moved = [];
+  const keep = [];
+  for (let i = 0; i < ordered.length; i++) {
+    const c = ordered[i];
+    const m = vocab().concepts[c];
+    if (i > vIdx && m?.type === "glue" && glueRoles.has(m.semantic_role)) {
+      const cluster = [c];
+      let j = i + 1;
+      while (j < ordered.length && isNounSlotModifier(vocab().concepts[ordered[j]])) {
+        cluster.push(ordered[j++]);
+      }
+      if (j < ordered.length &&
+          ["noun", "pronoun", "time"].includes(vocab().concepts[ordered[j]]?.type)) {
+        cluster.push(ordered[j++]);
+      }
+      moved.push(...cluster);
+      i = j - 1;
+      continue;
+    }
+    if (i > vIdx && m?.type === "quantifier" && adverbRoles.has(m.semantic_role)) {
+      moved.push(c);
+      continue;
+    }
+    keep.push(c);
+  }
+  if (!moved.length) return ordered;
+  const v = keep.indexOf(ordered[vIdx]);
+  keep.splice(v, 0, ...moved);
+  return keep;
 }
   function blankSentence(sentence, surface, lang = null) {
     const str = String(sentence || "");
@@ -3975,7 +4021,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // Copular agreement: this noun is the predicate after a plural subject.
   // Possessed nouns (their/our + noun) follow the possessive's own number,
   // not the subject's, so skip them.
-  const bareDetermined = precededByPossessive || precededByModifier;
+  // Declared rule preverbalAdjuncts (zh): the nominal of a prepositional
+  // adjunct is bare — «从菜单», «用手», never «从一个菜单» — while an
+  // injected modifier still lands on it («从好菜单»).
+  const adjSpec = langRuleValue(lang, "preverbalAdjuncts");
+  const adjunctBare = !!adjSpec && prevMeta?.type === "glue" &&
+    (adjSpec.glueRoles || []).includes(prevMeta.semantic_role);
+  const bareDetermined = precededByPossessive || precededByModifier || adjunctBare;
   const useCopularPlural = pluralAgreement && !bareDetermined;
   // A predicate noun after a feminine-referent subject pronoun uses its
   // feminitive when the data provides one: «Вона професорка», "Ela é uma
