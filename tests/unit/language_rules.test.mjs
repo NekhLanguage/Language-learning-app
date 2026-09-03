@@ -617,6 +617,48 @@ test("zh: prepositional adjuncts and 只 precede the verb, adjunct nominals bare
   assert.equal(resolveNounBlank(s, tpl, "zh", "MENU")?.blanked, "我从_____点菜。");
 });
 
+test("two-clause templates keep both clauses in SVO languages (Emi run-16)", () => {
+  assert.equal(buildSentence("en", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), null, {}),
+    "This is my hand and this is your head.");
+  assert.equal(buildSentence("es", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), null, {}),
+    "Esta es mi mano y esta es tu cabeza.");
+  assert.equal(buildSentence("es", tplById("SHE_IS_MY_MOM_AND_HE_IS_MY_DAD"), null, {}),
+    "Ella es mi mamá y él es mi papá.");
+  assert.equal(buildSentence("el", tplById("SHE_IS_MY_MOM_AND_HE_IS_MY_DAD"), null, {}),
+    "Αυτή είναι η μαμά μου και αυτός είναι ο μπαμπάς μου.");
+  assert.equal(buildSentence("fr", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), null, {}),
+    "C'est ma main et c'est ta tête.");
+  assert.equal(buildSentence("uk", tplById("SHE_IS_MY_MOM_AND_HE_IS_MY_DAD"), null, {}),
+    "Вона моя мама і він мій тато.");
+  // ja keeps its で-coordination builder.
+  assert.equal(buildSentence("ja", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), null, {}),
+    "これは私の手で、これはあなたの頭です。");
+});
+
+test("ar: a suffixed possessive fuses into the L3 blank and its tiles", () => {
+  for (const id of ["HE_IS_MY_DAD", "SHE_IS_MY_MOM_AND_HE_IS_MY_DAD"]) {
+    const tpl = tplById(id);
+    const s = buildSentence("ar", tpl, null, {});
+    const blank = resolveNounBlank(s, tpl, "ar", "DAD");
+    assert.equal(blank?.surface, "أبي", id);
+    assert.equal(optionSurfaceFor("ar", tpl, "DAD", slotContextFor(tpl, "ar", "DAD"),
+      { bareMode: blank.bareMode }), "أبي", id);
+  }
+});
+
+test("el: a multi-word masculine object declines every word (run-16 residual)", () => {
+  assert.equal(buildSentence("el", tplById("SHE_SEES_CATHEDRAL"), null, {}),
+    "Αυτή βλέπει έναν καθεδρικό ναό.");
+  assert.equal(buildSentence("el", tplById("SHE_SEES_CATHEDRAL"), "TWO", {}),
+    "Αυτή βλέπει δύο καθεδρικούς ναούς.");
+});
+
+test("es: a bare destination is definite, a modified one indefinite (run-16)", () => {
+  assert.equal(buildSentence("es", tplById("I_GO_TO_TABLE"), null, {}), "Yo voy a la mesa.");
+  assert.equal(buildSentence("es", tplById("I_GO_TO_TABLE"), "NEW", {}), "Yo voy a una mesa nueva.");
+  assert.equal(buildSentence("es", tplById("I_GO_TO_HOUSE"), null, {}), "Yo voy a la casa.");
+});
+
 test("es: adjectives post-nominal; buen/mal apocopate before masc singulars", () => {
   assert.equal(buildSentence("es", tplById("I_GET_BOOK"), "BLACK", {}),
     "Yo obtengo un libro negro.");

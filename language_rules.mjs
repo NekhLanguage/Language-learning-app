@@ -164,6 +164,9 @@
 //                            locative (zh 在); "paradigm" conjugates the
 //                            BE entry's nested `locative` paradigm (es
 //                            estar).
+//   definiteDestination      a bare noun after the destination glue (TO)
+//                            takes the definite article («voy a la mesa»);
+//                            a modified noun keeps the indefinite.
 //   standaloneDemonstrative  a demonstrative not directly before a noun
 //                            takes the entry's neuter `standalone` form
 //                            («sobre esto», «Esto es mío»); it still
@@ -852,6 +855,9 @@ export const LANGUAGE_RULES = {
     // («sobre esto», «Esto es mío» — (c): 8 wrong / 1 right).
     locativeCopula: "paradigm",
     standaloneDemonstrative: true,
+    // A bare noun after the destination glue is definite («voy a la mesa»);
+    // a modified one keeps the indefinite («a una casa nueva») — Emi run-16.
+    definiteDestination: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
   },
