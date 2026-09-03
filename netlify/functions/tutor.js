@@ -5,7 +5,7 @@
 //         memory, messages:[{role,content}...]}
 //     -> {reply}
 //   POST {mode:"summary", ...same fields}
-//     -> {summary:{sessionSummary, wins, struggles, newWords, nextFocus}}
+//     -> {summary:{sessionSummary, wins, struggles, newWords, recycledWords, nextFocus}}
 // The summary powers the app-side session memory and personal-vocabulary
 // tracking; structured outputs guarantee it parses.
 //
@@ -233,6 +233,12 @@ const SUMMARY_SCHEMA = {
         additionalProperties: false,
       },
     },
+    recycledWords: {
+      type: "array",
+      description:
+        "Words from the PERSONAL VOCABULARY block that you actually used in this session's conversation, in any inflected form. Write each in its dictionary form exactly as it appears in that block. Only words you used — an empty array if none. This is how the app counts repeat exposure toward adding the word to the learner's vocabulary, so be accurate in both directions.",
+      items: { type: "string" },
+    },
     nextFocus: { type: "string", description: "The single most useful focus for the next session, one line." },
     newLearnerFacts: {
       type: "array",
@@ -255,7 +261,7 @@ const SUMMARY_SCHEMA = {
       },
     },
   },
-  required: ["sessionSummary", "wins", "struggles", "newWords", "nextFocus", "newLearnerFacts", "correctedLearnerFacts"],
+  required: ["sessionSummary", "wins", "struggles", "newWords", "recycledWords", "nextFocus", "newLearnerFacts", "correctedLearnerFacts"],
   additionalProperties: false,
 };
 

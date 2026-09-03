@@ -160,6 +160,10 @@ localStorage writes to `zth_user`.
      changed, bump `APP_DATA_VERSION` in app.js AND the matching
      `app.js?v=` in index.html (same version string) so browsers can't
      serve stale cached code or data across the deploy.
+   - `tutor.js?v=` in tutor.html carries the SAME string as
+     `APP_DATA_VERSION`, on every ship, whether or not tutor.js changed
+     (Nekh 2026-09-03). If tutor.js changed but nothing app-side did, set
+     it to the current `APP_DATA_VERSION` without bumping the app.
 2. Verify the change on the **Netlify Deploy Preview** for the PR (the
    `netlify/zerotoherolanguage` check on the PR) before merging — CI can't
    see the real Supabase/TTS backends; the preview can.
