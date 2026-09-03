@@ -1,8 +1,9 @@
 import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap, getAudioFallbacks } from "./audioengine.js";
-import { createProgress, passesSpacing, levelCapFor, applyAnswer } from "./progression.mjs";
+import { createProgress, passesSpacing, levelCapFor, applyAnswer, MAX_LEVEL } from "./progression.mjs";
 import { langRuleValue } from "./language_rules.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist, shouldAdoptServerUser } from "./storage.mjs";
+import { tutorProductionTask, tutorExampleTiles, gradeTyped, liftTutorLevel } from "./tutor_exercises.mjs";
 import {
   baseCompletionRatio as computeBaseCompletionRatio,
   conceptSelectionWeight as pureConceptSelectionWeight,
@@ -81,17 +82,15 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.50";
+const APP_DATA_VERSION = "1.2.51";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
-// Cap tutor-admitted concepts at L2 for now. The renderers past L2 all
-// read from templates and GLOBAL_VOCAB, neither of which knows about a
-// tutor-admitted cid, so advancing past L2 would re-open the dormancy the
-// MVP cap is here to close. Scope-spec Q5 is preserved: this cap lives in
-// app.js, not in progression.levelCapFor(), because it's a rendering-
-// capability limit rather than a per-type ceiling. Lift it to MAX_LEVEL
-// once tutor concepts get L3+ renderers (bounded-tutor-context work).
-const TUTOR_MVP_LEVEL_CAP = 2;
+// Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
+// words (scope-spec Q5): L1 intro card, L2 recognition MCQ, then L5
+// matching, L6 tile builder and L7 typed production seeded from the
+// example sentence Anna banked with the word. L3 and L4 are skipped — they
+// blank and option-build from a template the tutor cid does not have
+// (Nekh 2026-09-03: five, six and seven are the levels worth having).
 
 const CORE_BUNDLES = [
 
@@ -567,7 +566,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   // hand-maintained copy here sat at "v1.2.2" through four releases and
   // fed the start screen, beacon, and feedback payloads the wrong build.)
   const APP_VERSION = "v" + APP_DATA_VERSION;
-  const MAX_LEVEL = 7;
   // Debug/e2e hook: the most recent L6/L7 exercise's expected answer,
   // exposed via window.__app so tests can exercise the correct-answer path.
   let LAST_EXERCISE = null;
@@ -2245,6 +2243,10 @@ if (level === 2) {
   // ❌ spacing rule
   if (!passesSpacingRule(cid)) return false;
 
+  // Tutor-admitted concepts render L5–L7 from run.tutorVocab — no template
+  // to require. Fatigue and spacing above still apply.
+  if (isTutorConcept(cid)) return true;
+
   const meta = window.GLOBAL_VOCAB.concepts[cid];
 
   // modifiers always allowed
@@ -2266,12 +2268,24 @@ if (level === 2) {
   });
 }
 // A concept admitted by the tutor lives on `run.tutorVocab[cid]` — the
-// only place its base form / translation / note exist. GLOBAL_VOCAB and
-// the sentence templates know nothing about it, which is why exercise
-// selection at L2+ naturally skips it (no template references the cid).
-// The L1 intro card is the one surface that renders these concepts.
+// only place its base form / translation / note / example sentence exist.
+// GLOBAL_VOCAB and the sentence templates know nothing about it, so every
+// level that renders one reads that entry instead: L1 intro card, L2
+// recognition MCQ, L5 matching (via tutorAwareSurface), L6 builder and L7
+// production (via the banked example sentence).
 function isTutorConcept(cid) {
   return !!(run?.tutorVocab && run.tutorVocab[cid]);
+}
+
+// The engine's surfaceForm for pack concepts; for a tutor concept the word
+// itself in the target language and its translation on the support side,
+// so the L5 matching round can mix tutor words with pack peers.
+function tutorAwareSurface(lang, cid) {
+  const entry = run?.tutorVocab?.[cid];
+  if (!entry) return surfaceForm(lang, cid);
+  return lang === languageState.target
+    ? String(entry.word || "")
+    : String(entry.translation || "");
 }
 
 function canConceptBeIntroduced(cid) {
@@ -2352,11 +2366,10 @@ function backfillReleasedBundles(r) {
   run.sessionExerciseCount = (run.sessionExerciseCount || 0) + 1;
 
   // The streak/level state machine lives in progression.mjs. Tutor-
-  // admitted concepts ride a lower rendering-capability cap because L3+
-  // renderers need templates the tutor cid doesn't have (MVP; lift once
-  // tutor sentence generation lands).
+  // admitted concepts climb to MAX_LEVEL like any other word (scope-spec
+  // Q5); their L3/L4 gap is closed by liftTutorLevel below.
   const cap = isTutorConcept(cid)
-    ? TUTOR_MVP_LEVEL_CAP
+    ? MAX_LEVEL
     : levelCapFor({
         isRecognition: RECOGNITION_CONCEPTS.has(cid),
         isModifier: isModifierConcept(cid),
@@ -2370,6 +2383,9 @@ function backfillReleasedBundles(r) {
 
   if (outcome.leveledUp) {
     run.sessionLevelUps[cid] = (run.sessionLevelUps[cid] || 0) + 1;
+    // L2 → L5 for tutor words: no template to blank (L3) or to build
+    // recognition options from (L4).
+    if (isTutorConcept(cid)) liftTutorLevel(state);
   }
 
   // Preserves the original early-exit: a concept that already leveled up 3
@@ -2382,10 +2398,10 @@ function backfillReleasedBundles(r) {
   const s = ensureProgress(c);
   if (s.completed) return false;
 
-  // Tutor-admitted concepts render via run.tutorVocab at L1 (intro card)
-  // and L2 (recognition MCQ); count them as schedulable so the all-
-  // fatigued session-end check doesn't drop the session while the tutor
-  // pool still has gas.
+  // Tutor-admitted concepts render from run.tutorVocab at every level they
+  // reach (L1, L2, L5–L7); count them as schedulable so the all-fatigued
+  // session-end check doesn't drop the session while the tutor pool still
+  // has gas.
   if (isTutorConcept(c)) return true;
 
   // concept must be schedulable
@@ -2664,9 +2680,8 @@ return tpl;
   // templates know nothing about this cid, so we build the four options
   // ourselves: the correct translation from run.tutorVocab[cid], plus three
   // distractors sampled from released pack concepts of matching POS.
-  // Mastering it advances the concept toward the TUTOR_MVP_LEVEL_CAP; on
-  // completion the concept leaves the active pool exactly like a mastered
-  // pack concept, no dormant middle state.
+  // Mastering it jumps the concept to L5 (matching), then L6/L7 from the
+  // banked example sentence — the full ladder, like a pack concept.
   function renderTutorRecognition(targetLang, supportLang, targetConcept) {
     subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
@@ -2772,6 +2787,208 @@ return tpl;
 
       checkBtn.textContent = ui("continue");
       checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    };
+  }
+
+  // Shared header for the tutor sentence exercises: the "from Anna" badge
+  // and the support-language prompt (the banked example's translation, or
+  // in word mode the word's translation).
+  function tutorPromptHtml(task) {
+    return `
+    <div class="tutor-intro-badge" aria-label="Introduced by Anna">${ICON_SPARK} from Anna</div>
+    <div style="margin-bottom:20px;"><strong>${safe(task.prompt)}</strong></div>`;
+  }
+
+  // L6 for a tutor-admitted concept: the tile builder, seeded from the
+  // example sentence Anna used when she introduced the word (banked at
+  // capture as exampleSentence / exampleTranslation). The prompt is the
+  // support-language translation, the tiles are the sentence's words —
+  // Anna's sentence verbatim, no template, no engine render. Entries that
+  // cannot tile (no banked sentence, or a spaceless script where the
+  // sentence is one token) use typed production instead, so L6 is never
+  // dead for a tutor word.
+  function renderTutorSentenceBuilder(targetLang, supportLang, targetConcept) {
+    const entry = run.tutorVocab?.[targetConcept];
+    if (!entry) {
+      // Defensive: run.tutorVocab lost the entry (shouldn't happen).
+      applyResult(targetConcept, true);
+      setTimeout(() => renderNext(targetLang, supportLang), 0);
+      return;
+    }
+
+    const task = tutorProductionTask(entry);
+    const correctWords = task.mode === "sentence" ? tutorExampleTiles(task.answer) : [];
+    if (!correctWords.length) {
+      renderTutorProduction(targetLang, supportLang, targetConcept, 6);
+      return;
+    }
+
+    subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
+    LAST_EXERCISE = { type: "tutor_sentence_builder", cid: targetConcept, correctWords };
+
+    const assignments = new Map(); // slotIndex → word
+    let selectedWord = null;
+
+    content.innerHTML = `
+    ${tutorPromptHtml(task)}
+    <div id="slot-container" class="slot-container"></div>
+    <div id="word-bank" class="word-bank-container"></div>
+    <div style="text-align:center;">
+      <button id="check-l6">${ui("check")}</button>
+    </div>
+  `;
+
+    const slotContainer = document.getElementById("slot-container");
+    const bankContainer = document.getElementById("word-bank");
+
+    correctWords.forEach((_, index) => {
+      const slot = document.createElement("div");
+      slot.className = "sentence-slot";
+      slot.dataset.index = index;
+      slot.onclick = () => {
+        const i = Number(slot.dataset.index);
+        // A filled slot clicked without a selection returns its word.
+        if (assignments.has(i)) {
+          const returned = assignments.get(i);
+          assignments.delete(i);
+          slot.textContent = "";
+          createBankWord(returned);
+        }
+      };
+      slotContainer.appendChild(slot);
+    });
+
+    function createBankWord(word) {
+      const wrap = document.createElement("div");
+      wrap.className = "word-bank-chip";
+      const btn = document.createElement("button");
+      btn.textContent = word;
+      btn.onclick = () => {
+        if (selectedWord && selectedWord !== btn) selectedWord.classList.remove("selected");
+        selectedWord = btn;
+        btn.classList.add("selected");
+      };
+      wrap.appendChild(btn);
+      wrap.appendChild(createTtsBtn(word, targetLang));
+      bankContainer.appendChild(wrap);
+    }
+    shuffle([...correctWords]).forEach(createBankWord);
+
+    slotContainer.addEventListener("click", e => {
+      if (!selectedWord) return;
+      const slot = e.target.closest(".sentence-slot");
+      if (!slot) return;
+      const slotIndex = Number(slot.dataset.index);
+      const word = selectedWord.textContent;
+      if (assignments.has(slotIndex)) createBankWord(assignments.get(slotIndex));
+      assignments.set(slotIndex, word);
+      slot.textContent = word;
+      selectedWord.closest("div").remove();
+      selectedWord = null;
+    });
+
+    const checkBtn = document.getElementById("check-l6");
+    checkBtn.onclick = () => {
+      const built = correctWords.map((_, i) => assignments.get(i) || "");
+      const isCorrect = built.every((w, i) => w.toLowerCase() === correctWords[i]);
+
+      document.querySelectorAll(".sentence-slot").forEach(slot => {
+        slot.classList.add(isCorrect ? "correct" : "incorrect");
+      });
+      applyResult(targetConcept, isCorrect);
+
+      if (isCorrect) {
+        setTimeout(() => renderNext(targetLang, supportLang), 800);
+        return;
+      }
+      // The correct sentence isn't visible anywhere on screen — reveal it.
+      revealCorrectAnswerBanner(task.answer, targetLang);
+      checkBtn.disabled = false;
+      checkBtn.textContent = ui("continue");
+      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    };
+  }
+
+  // L7 for a tutor-admitted concept: typed production of Anna's example
+  // sentence from its support-language translation (the word itself when
+  // no sentence was banked). Grading follows the pack L7 ladder — exact,
+  // then accent-insensitive, then the on-device semantic grader where the
+  // language pair and browser support it — and reveals the expected answer
+  // on a miss. Also serves L6 (levelLabel 6) when the example cannot tile.
+  function renderTutorProduction(targetLang, supportLang, targetConcept, levelLabel = 7) {
+    const entry = run.tutorVocab?.[targetConcept];
+    if (!entry) {
+      // Defensive: run.tutorVocab lost the entry (shouldn't happen).
+      applyResult(targetConcept, true);
+      setTimeout(() => renderNext(targetLang, supportLang), 0);
+      return;
+    }
+
+    const task = tutorProductionTask(entry);
+    subtitle.textContent = ui("level") + " " + levelLabel;
+    LAST_EXERCISE = { type: "tutor_free_production", cid: targetConcept, mode: task.mode, answer: task.answer };
+
+    content.innerHTML = `
+    ${tutorPromptHtml(task)}
+    <div style="margin-bottom:20px;">
+      <input id="l7-input" type="text" class="free-input" placeholder="${safe(ui("l7Placeholder"))}" />
+    </div>
+    <div style="text-align:center;">
+      <button id="check-l7">${ui("check")}</button>
+    </div>
+    <div id="l7-feedback" style="margin-top:15px;text-align:center;"></div>
+  `;
+
+    const checkBtn = document.getElementById("check-l7");
+    const feedbackDiv = document.getElementById("l7-feedback");
+    const inputField = document.getElementById("l7-input");
+
+    checkBtn.onclick = async () => {
+      const userInput = inputField.value;
+      let resultType = gradeTyped(userInput, task.answer);
+      let semanticNote = "";
+
+      if (
+        resultType === "incorrect" &&
+        task.mode === "sentence" &&
+        userInput.trim() &&
+        isFeatureAvailable("semantic_grading", { target: targetLang, support: supportLang }) &&
+        promptApiAvailable()
+      ) {
+        checkBtn.disabled = true;
+        const verdict = await gradeSemantically({
+          userInput,
+          targetSentence: task.answer,
+          supportSentence: task.prompt,
+          langLabel: localizedTargetLabel(targetLang),
+        });
+        checkBtn.disabled = false;
+        if (verdict?.acceptable) {
+          resultType = "semantic";
+          semanticNote = verdict.feedback || "";
+        }
+      }
+
+      LAST_EXERCISE = { ...(LAST_EXERCISE || {}), lastResultType: resultType };
+      const correct = resultType !== "incorrect";
+      applyResult(targetConcept, correct);
+
+      inputField.disabled = true;
+      inputField.style.borderColor = correct ? "var(--success-text)" : "var(--danger-text)";
+      const expected = `<strong>${safe(task.answer)}</strong> ${ttsHtml(task.answer, targetLang)}`;
+      if (resultType === "perfect") {
+        feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}</div>`;
+      } else if (resultType === "accent") {
+        feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}<br/>Proper form: ${expected}</div>`;
+      } else if (resultType === "semantic") {
+        feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>Expected: ${expected}</div>`;
+      } else {
+        feedbackDiv.innerHTML = `<div style="color:var(--danger-text);">${ui("incorrect")}<br/>Correct answer: ${expected}</div>`;
+      }
+      wireTts();
+
+      checkBtn.textContent = ui("continue");
+      checkBtn.onclick = () => setTimeout(() => renderNext(targetLang, supportLang), 0);
     };
   }
 
@@ -3578,7 +3795,7 @@ function drawConnection(leftBtn, rightBtn) {
   function createButton(cid, side) {
   const btn = document.createElement("button");
   btn.textContent = side === "left"
-    ? surfaceForm(supportLang, cid)
+    ? tutorAwareSurface(supportLang, cid)
     : resolveTargetSurface(cid);
 
   btn.dataset.cid = cid;
@@ -3653,9 +3870,10 @@ activeSelection = null;
   // that lived here skipped entry.form and fell back to "first string value
   // in the entry", which rendered the gender field («f», «n») as the tile
   // for every el/uk/ar entry authored gender-first, and collapsed those
-  // pools in the dedupe above (Emi 2026-08-28-02).
+  // pools in the dedupe above (Emi 2026-08-28-02). Tutor-admitted words
+  // resolve to their run.tutorVocab entry so they can sit in the pool.
   function resolveTargetSurface(cid) {
-    return surfaceForm(targetLang, cid);
+    return tutorAwareSurface(targetLang, cid);
   }
 
   leftItems.forEach(cid => {
@@ -4971,14 +5189,19 @@ for (let attempts = 0; attempts < 25; attempts++) {
     return;
   }
 
-  const level = levelOf(targetConcept);
+  let level = levelOf(targetConcept);
+
+  // A tutor concept at L3/L4 (a blob written before the L2→L5 jump landed)
+  // has no exercise there — lift it to L5 before dispatching.
+  if (isTutorConcept(targetConcept) && liftTutorLevel(ensureProgress(targetConcept))) {
+    level = 5;
+  }
 
   // ✅ Level 1
   if (level === 1) {
     // Tutor-admitted concepts render their intro card from run.tutorVocab —
     // no template needed. After this L1 exposure they advance to L2 where
-    // renderTutorRecognition takes over, and TUTOR_MVP_LEVEL_CAP marks
-    // them completed once L2 is mastered.
+    // renderTutorRecognition takes over; L2 mastery jumps them to L5.
     if (isTutorConcept(targetConcept)) {
       renderTutorIntro(targetLang, supportLang, targetConcept);
       run.exerciseCounter++;
@@ -5145,7 +5368,9 @@ if (level === 2) {
     // Dedup by target-language surface form so matching never shows duplicates
     const seenForms = new Set();
     const uniqueL5 = eligibleL5.filter(cid => {
-      const form = formOf(targetLang, cid);
+      const form = isTutorConcept(cid)
+        ? tutorAwareSurface(targetLang, cid)
+        : formOf(targetLang, cid);
       if (seenForms.has(form)) return false;
       seenForms.add(form);
       return true;
@@ -5175,6 +5400,14 @@ if (level === 2) {
   // ---------- Level 6 ----------
   if (level === 6) {
 
+    // Tutor-admitted concepts: tile builder from Anna's banked example
+    // sentence (typed production when it cannot tile). No template.
+    if (isTutorConcept(targetConcept)) {
+      renderTutorSentenceBuilder(targetLang, supportLang, targetConcept);
+      run.exerciseCounter++;
+      return;
+    }
+
     const tpl = chooseTemplateForConcept(targetConcept);
     if (!tpl) {
       excluded.add(targetConcept);
@@ -5194,6 +5427,14 @@ if (level === 2) {
 
   // ---------- Level 7 ----------
   if (level === 7) {
+
+    // Tutor-admitted concepts: typed production of Anna's banked example
+    // sentence (or the word itself when none was banked). No template.
+    if (isTutorConcept(targetConcept)) {
+      renderTutorProduction(targetLang, supportLang, targetConcept);
+      run.exerciseCounter++;
+      return;
+    }
 
     const tpl = chooseTemplateForConcept(targetConcept);
     if (!tpl) {

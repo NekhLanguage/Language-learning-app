@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-03
 
+### Words Anna teaches you now run the whole ladder
+A word that Anna, the conversation tutor, has introduced across three separate sessions enters your app vocabulary with a "from Anna" card. Until now that word stopped after the level-2 recognition quiz. It now continues like any pack word: at level 5 it joins the matching round alongside your other words, at level 6 you rebuild the sentence Anna actually used when she taught it to you from word tiles, and at level 7 you type that sentence from its translation, with the same accent-forgiving grading as everywhere else. Levels 3 and 4 are skipped on purpose, since those exercises need the app's own sentence templates and Anna's words have her sentence instead. A word Anna introduced before the app started saving her example sentence is practised as a single word at levels 6 and 7.
+
+## 2026-09-03
+
 ### Two-clause sentences keep both halves, in every language
 "This is my hand and this is your head" and "She is my mom and he is my dad" were losing their second subject and verb in every language except Japanese: «Esta es mi mano y tu cabeza», «She is my mom and he a dad». Both halves now render everywhere («Esta es mi mano y esta es tu cabeza», «Αυτή είναι η μαμά μου και αυτός είναι ο μπαμπάς μου»). Also in this batch: Spanish «voy a la mesa» (a bare destination is definite), Greek two-word nouns decline as a unit («έναν καθεδρικό ναό», «δύο καθεδρικούς ναούς»), the French «frire» uses «faire frire» in the plural, and Arabic fill-in-the-blank cards for "my mom" and "my dad" now exist: the blank holds the fused «أمي / أبي» the sentence shows.
 
