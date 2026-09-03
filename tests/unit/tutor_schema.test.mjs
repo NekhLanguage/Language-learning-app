@@ -65,7 +65,7 @@ test("SUMMARY_SCHEMA uses only structured-outputs-supported keywords", () => {
 test("SUMMARY_SCHEMA still declares the fields the client consumes", () => {
   assert.equal(SUMMARY_SCHEMA.type, "object");
   for (const field of [
-    "sessionSummary", "wins", "struggles", "newWords", "nextFocus",
+    "sessionSummary", "wins", "struggles", "newWords", "recycledWords", "nextFocus",
     "newLearnerFacts", "correctedLearnerFacts",
   ]) {
     assert.ok(SUMMARY_SCHEMA.properties[field], `missing property: ${field}`);

@@ -70,9 +70,15 @@ function recordSighting(entry, today) {
 //                   rarely re-reports an already-captured one)
 //   today         — ISO date string (YYYY-MM-DD)
 //   isCidTaken    — (cid) => bool, collision guard against pack vocabulary
+//   recycledWords — this session's summary.recycledWords: held words the
+//                   tutor says it used, in dictionary form. The text scan
+//                   above only matches the exact dictionary form, so an
+//                   inflected reuse (uk «корисного» for «корисний») never
+//                   counted and adjectives/verbs stalled at one sighting
+//                   (Nekh 2026-09-03). The model knows the lemma; trust it.
 // Returns { admitted: [entry...], collided: [entry...] }. The caller applies
 // them via applyAdmissions() / logs collisions.
-export function processTutorSession(run, newWords, assistantText, today, isCidTaken) {
+export function processTutorSession(run, newWords, assistantText, today, isCidTaken, recycledWords = []) {
   if (!Array.isArray(run.personalVocab)) run.personalVocab = [];
   if (!Array.isArray(run.pendingAdmission)) run.pendingAdmission = [];
 
@@ -116,6 +122,13 @@ export function processTutorSession(run, newWords, assistantText, today, isCidTa
       if (entry.seenInSessions?.[entry.seenInSessions.length - 1] === today) continue;
       if (wordUsedInText(entry.word, assistantText)) recordSighting(entry, today);
     }
+  }
+
+  // 2b. Sightings the tutor reported itself (recycledWords): matched by
+  //     dictionary form against held entries; unknown words are ignored.
+  for (const w of Array.isArray(recycledWords) ? recycledWords : []) {
+    const entry = byWord.get(String(w || "").trim().toLowerCase());
+    if (entry) recordSighting(entry, today);
   }
 
   // 3. Promotion: two distinct-day sightings moves personalVocab → pendingAdmission.

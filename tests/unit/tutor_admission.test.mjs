@@ -106,6 +106,29 @@ test("tutor re-using a held word in its replies counts as a sighting", () => {
   assert.equal(run.pendingAdmission.length, 1);
 });
 
+test("recycledWords: the tutor's own report counts as a sighting (inflection-proof)", () => {
+  // The reply scan needs the exact dictionary form; «корисного» would never
+  // match «корисний». The summary's recycledWords carries the lemma.
+  const run = freshRun({ personalVocab: [entry("корисний", ["2026-08-15"], { pos: "adjective" })] });
+  processTutorSession(run, [], "Це дуже корисного слова.", "2026-08-17", () => false, ["корисний"]);
+  assert.equal(run.personalVocab.length, 0);
+  assert.deepEqual(run.pendingAdmission[0].seenInSessions, ["2026-08-15", "2026-08-17"]);
+});
+
+test("recycledWords: case-insensitive, same-day dedupe, unknown words ignored", () => {
+  const run = freshRun({ personalVocab: [entry("beurre", ["2026-08-17"])] });
+  processTutorSession(run, [], "", "2026-08-17", () => false, ["Beurre", "beurre", "inconnu"]);
+  assert.deepEqual(run.personalVocab[0].seenInSessions, ["2026-08-17"]);
+  assert.equal(run.personalVocab.length, 1); // "inconnu" captured nothing
+});
+
+test("recycledWords: three reported uses on three days admit", () => {
+  const run = freshRun({ pendingAdmission: [entry("вогонь", ["2026-09-01", "2026-09-05"])] });
+  const { admitted } = processTutorSession(run, [], "", "2026-09-08", () => false, ["вогонь"]);
+  assert.equal(admitted.length, 1);
+  assert.equal(admitted[0].word, "вогонь");
+});
+
 test("third distinct-day sighting admits", () => {
   const run = freshRun({ pendingAdmission: [entry("praia", ["2026-08-11", "2026-08-13"])] });
   const { admitted } = processTutorSession(run, [{ word: "praia" }], "", "2026-08-15", () => false);

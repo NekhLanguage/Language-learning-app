@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-03
 
+### Anna now counts the words she brings back in any form
+A word Anna introduces joins your app vocabulary once she has used it with you in three separate sessions. Until now a repeat only counted when she used the word in exactly its dictionary form, so in Ukrainian and other languages that change word endings, an adjective or a verb she recycled naturally could sit at one sighting forever. At the end of each session Anna now records which of her words she actually used, whatever form they took, and those count.
+
+## 2026-09-03
+
 ### Words Anna teaches you now run the whole ladder
 A word that Anna, the conversation tutor, has introduced across three separate sessions enters your app vocabulary with a "from Anna" card. Until now that word stopped after the level-2 recognition quiz. It now continues like any pack word: at level 5 it joins the matching round alongside your other words, at level 6 you rebuild the sentence Anna actually used when she taught it to you from word tiles, and at level 7 you type that sentence from its translation, with the same accent-forgiving grading as everywhere else. Levels 3 and 4 are skipped on purpose, since those exercises need the app's own sentence templates and Anna's words have her sentence instead. A word Anna introduced before the app started saving her example sentence is practised as a single word at levels 6 and 7.
 

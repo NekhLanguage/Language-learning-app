@@ -449,8 +449,9 @@ async function endSession() {
     if (state.vocabWriteback) {
       // Full admission pipeline: capture + repeat-sighting + promotion +
       // threshold-3 admission, capped at 10/session. Repeat sightings come
-      // from the summary AND from the tutor re-using a held word in its
-      // replies this session.
+      // from the summary (newWords re-reported, recycledWords the tutor
+      // says it used — inflection-proof) AND from the exact-form scan of
+      // the tutor's replies this session.
       const assistantText = state.messages
         .filter((m) => m.role === "assistant")
         .map((m) => m.content)
@@ -460,7 +461,8 @@ async function endSession() {
         ...(state.run.released || []),
       ]);
       const { admitted, collided } = processTutorSession(
-        state.run, summary.newWords, assistantText, today, (cid) => taken.has(cid)
+        state.run, summary.newWords, assistantText, today, (cid) => taken.has(cid),
+        summary.recycledWords
       );
       if (collided.length) {
         console.warn("tutor admission skipped (cid collision):", collided.map((c) => c.word));
