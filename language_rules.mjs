@@ -124,6 +124,12 @@
 //                            language-specific terminator (？) with the
 //                            particle itself; finalizeSentence will add
 //                            the CJK stop (。) when none is present.
+//                            Object shape { harmony, terminator }: the
+//                            particle harmonizes with the preceding word
+//                            and is space-separated (tr «...telefonun mu?»
+//                            / «...mü?» / «...mı?» / «...mi?»). Only
+//                            "trMI" is implemented today, keyed on the
+//                            existing tr 4-way vowel harmony.
 //   conjugatingNegator       the negator is a verb and agrees with the
 //                            subject in person/number through the NOT
 //                            entry's own paradigm (fi en/et/ei/emme/
@@ -874,6 +880,14 @@ export const LANGUAGE_RULES = {
       possessiveSuffixes: true, copulaPersonAgreement: true,
     },
     zeroPresentCopula: true, wordOrder: "SOV",
+    // Yes/no questions keep SOV declarative order and end with the mI
+    // particle, harmonized against the preceding word's last vowel:
+    // «Şu senin telefonun mu?» (u→mu), «Bu ev mi?» (e→mi), «O büyük mü?»
+    // (ü→mü), «Kız mı?» (ı→mı). The particle is a free word (space-
+    // separated), never fused. Declared preemptively (Dan cycle-26) as
+    // the sixth language on the run-13 shared-template pattern: fi/zh/ja/
+    // ar/fr all failed the default copula-fronting; tr would too.
+    finalQuestionParticle: { harmony: "trMI", terminator: "?" },
     // `bir` is a fully separable free word (never fuses with the noun) AND
     // Turkish frequently omits it in generic/definite contexts — the article
     // is loose enough that authored surfaces which represent a bir-less

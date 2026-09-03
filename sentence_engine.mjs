@@ -3311,6 +3311,23 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
     const words = langRuleValue(lang, "wordOrder") === "SOV"
       ? [subj, complement, be]
       : [subj, be, complement];
+    // Object shape { harmony: "trMI", terminator: "?" }: the particle is
+    // a standalone (space-separated) word whose vowel harmonizes with the
+    // preceding word — tr «Şu senin telefonun mu?» / «...mü?» / «...mı?»
+    // / «...mi?» keyed on the 4-way front/back × rounded/unrounded lookup
+    // that the possessive suffixes already use. Declared via a rule (not
+    // an `if (lang === "tr")` render branch) so any language with mI-style
+    // question harmony can adopt the same shape. Latin-scripted particle
+    // paths capitalize the first word; the CJK/spaceless paths carry
+    // their own script conventions and skip the capitalization pass.
+    if (typeof finalParticle === "object") {
+      const last = words.filter(Boolean).slice(-1)[0] || "";
+      if (finalParticle.harmony === "trMI") {
+        const v = trHarmonyVowel(last) || "i";
+        return capitalizeFirst(joinWords(lang, words)) +
+          " m" + v + (finalParticle.terminator || "");
+      }
+    }
     return joinWords(lang, words) + finalParticle;
   }
   // Copula-dropping languages form the yes/no question without "to be"

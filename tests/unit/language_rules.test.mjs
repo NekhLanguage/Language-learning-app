@@ -1318,6 +1318,16 @@ test("zh/ja/th: yes/no questions keep declarative order and add a final particle
   assert.equal(buildSentence("th", tpl), "นั่นคือโทรศัพท์ของคุณใช่ไหม");
 });
 
+test("tr: yes/no questions append the mI particle harmonized on the last vowel (Dan cycle-26 preemptive)", () => {
+  // SOV + zeroPresentCopula: subject + possessed noun + mI + ?. Turkish's
+  // 4-way vowel harmony (same lookup the possessive-suffix generator uses)
+  // picks mu/mü/mı/mi from the preceding word's last vowel — telefon ends
+  // in -o (back rounded) → mu. The particle is a free word, space-
+  // separated, never fused; capitalizeFirst keeps Ş uppercase.
+  assert.equal(buildSentence("tr", tplById("IS_THAT_YOUR_PHONE")),
+    "Şu senin telefon mu?");
+});
+
 test("zh: 是 stays before a possessive-headed noun predicate — 很 is adjectives only (Emi run-9 -36)", () => {
   // Possessives are typed as adjectives with semantic_role: 'possessive';
   // the zhCopulaOverride guard must fall through so «这是我的手» renders
