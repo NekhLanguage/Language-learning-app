@@ -3,7 +3,6 @@
   "COVERAGE_GAP|ar|definitenessAgreement",
   "COVERAGE_GAP|el|articleCaseMarking",
   "COVERAGE_GAP|el|declinesAttributiveAdjectives",
-  "COVERAGE_GAP|el|marksCaseOnDirectObjects",
   "COVERAGE_GAP|es|declinesAttributiveAdjectives",
   "COVERAGE_GAP|no|declinesAttributiveAdjectives",
   "COVERAGE_GAP|tr|marksCaseOnDirectObjects"

@@ -15,6 +15,9 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-02
 
+### Greek objects finally take the accusative
+The most frequent Greek defect in the first review was that every direct object stayed in the nominative: «Εγώ χαιρετώ ένας παλιός σερβιτόρος», «Εγώ έχω ένας αδερφός», «Αυτός έχει η κατσαρόλα του». Greek marks the object on the article and, for masculine nouns, on the ending, and now the app does: «Εγώ χαιρετώ έναν παλιό σερβιτόρο», «Εγώ έχω έναν αδερφό», «Αυτός έχει την κατσαρόλα του», «Εμείς τρώμε τη σούπα μου», «δύο σερβιτόρους». The same case follows prepositions: «με τη μαμά του», «με την κόρη του». The article keeps its «ν» only where Greek does («την κόρη» but «τη μαμά»). Fill-in-the-blank tiles show the same form the sentence shows.
+
 ### Spanish «está», neuter «esto», and «del»; Greek «στο» and «τηλέφωνό σου»
 Every Spanish location sentence used «ser»: «El libro es sobre la mesa», «Si él es un hogar». Spanish says where things are with «estar», and now the app does too: «El libro está sobre la mesa», «Los zapatos están debajo de esto», «Si él está en casa». The compound prepositions carry their «de» and fuse with the article: «debajo de la mesa», «al lado del teléfono», «detrás del teléfono». A demonstrative standing on its own is neuter, as in Spanish: «Esto es mío», «sobre esto», «entre esto y eso», while «Esta es mi mano» and «Este es un buen libro» still agree. In Greek, «σε» fuses with the article («στο τραπέζι», «στο δωμάτιό της»), the compound prepositions carry their «σε» or «από» («δίπλα στο τηλέφωνο», «πίσω από το τηλέφωνο», «μέσα σε αυτό»), a word stressed on its third-last syllable gets the second accent before «μου / σου / της» («το τηλέφωνό σου», «το δωμάτιό της»), and a generated question ends in the Greek «;».
 

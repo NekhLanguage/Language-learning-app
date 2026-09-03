@@ -74,6 +74,13 @@
 //                              prepositions:      { PREP_CONCEPT: caseName }
 //                                                 — case each preposition
 //                                                 governs
+//                              accusativeStrategy: named gender-aware
+//                                                 accusative derivation
+//                                                 for nouns without an
+//                                                 explicit field ("el":
+//                                                 masculine drops -ς;
+//                                                 f/n unchanged, the
+//                                                 article carries case)
 //                              femAccusativeStrategy: named engine fallback
 //                                                 for feminine accusatives
 //                                                 when the entry has no
@@ -537,6 +544,7 @@ export const LANGUAGE_RULES = {
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, articleCaseMarking: true,
+      marksCaseAfterPrepositions: true,
       declinesAttributiveAdjectives: true,
       // 1, 3, 4 (and their -teen compounds) inflect for gender:
       // «δεκατέσσερις κρατήσεις», never «δεκατέσσερα κρατήσεις»
@@ -552,6 +560,22 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
     numeralGenderAgreement: true,
     possessiveEnclitic: true, possessiveDefiniteArticle: true,
+    // Object case (Emi run-15 -77: 25 of 294 sentences, every masculine
+    // and feminine-definite object nominative). Derived, not authored:
+    // masculine singulars drop -ς, the article carries the rest (τον/την/
+    // έναν); feminine and neuter nouns keep their form. Prepositions
+    // govern the accusative too («με την κόρη του», run-15 (b)).
+    caseMarking: {
+      directObjectCase: "accusative",
+      accusativeStrategy: "el",
+      prepositions: {
+        WITH: "accusative", FROM: "accusative", TO: "accusative",
+        FOR: "accusative", BY: "accusative",
+        ON: "accusative", IN: "accusative", UNDER: "accusative",
+        BEHIND: "accusative", FRONT: "accusative", NEXT_TO: "accusative",
+        BETWEEN: "accusative", OFF: "accusative", AROUND: "accusative",
+      },
+    },
     // "V O1 but not O2": «αλλά όχι μεσημεριανό», never «αλλά δεν ένα
     // μεσημεριανό» (Emi run-15 el (f)).
     contrastiveNegation: { objectNegator: "όχι" },

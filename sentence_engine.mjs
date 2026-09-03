@@ -413,12 +413,55 @@ const FEM_ACC_STRATEGIES = {
   pl: { noun: plFeminineAccusativeNoun, adjective: plFeminineAccusativeAdjective },
 };
 
+// Gender-aware accusative strategies (caseMarking.accusativeStrategy) for
+// languages whose object case is regular enough to derive: Greek
+// masculine singulars drop the final -ς («σερβιτόρος» → «σερβιτόρο»,
+// «άντρας» → «άντρα», «μαθητής» → «μαθητή»); feminine and neuter nouns
+// keep their form — the article carries the case there (Emi run-15 -77:
+// 25 of 294 sentences, every masculine and feminine-definite object
+// nominative). Multi-word forms and explicit `accusative` fields are
+// left to the caller.
+const NOUN_ACC_STRATEGIES = {
+  el: (form, gender, plural = false) => {
+    const s = String(form);
+    if (gender !== "m" || s.includes(" ")) return s;
+    if (plural) {
+      // -οι → -ους («σερβιτόροι» → «σερβιτόρους», «αδερφοί» → «αδερφούς»)
+      if (/οί$/.test(s)) return s.slice(0, -2) + "ούς";
+      if (/οι$/.test(s)) return s.slice(0, -2) + "ους";
+      return s;
+    }
+    return /(ος|ός|ας|άς|ης|ής|ές|ούς)$/.test(s) ? s.slice(0, -1) : s;
+  },
+};
+function nounAccStrategy(lang) {
+  return NOUN_ACC_STRATEGIES[langRuleValue(lang, "caseMarking")?.accusativeStrategy] || null;
+}
+// The attributive adjective before a masculine accusative object shifts
+// the same way («έναν παλιό σερβιτόρο», never «έναν παλιός σερβιτόρο»).
+function masculineAccusativeAdjective(lang, form, plural = false) {
+  const strat = adjCaseStrategy(lang);
+  return strat?.masculineAccusative ? strat.masculineAccusative(form, plural) : form;
+}
+
 // Adjective case shifts derivable by regular suffix rule, keyed by the same
 // declared strategy id as FEM_ACC_STRATEGIES. Fired only where the head
 // noun actually took the corresponding case, so languages that declare no
 // strategy (or the "uk" strategy, which has no derivable entries here) are
 // untouched. Multi-word forms are left alone, like the fem strategies.
 const ADJ_CASE_STRATEGIES = {
+  el: {
+    // masc-singular accusative: «παλιός» → «παλιό», «καλός» → «καλό»
+    masculineAccusative: (w, plural = false) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (plural) {
+        if (/οί$/.test(s)) return s.slice(0, -2) + "ούς";
+        return /οι$/.test(s) ? s.slice(0, -2) + "ους" : s;
+      }
+      return /(ος|ός)$/.test(s) ? s.slice(0, -1) : s;
+    },
+  },
   pl: {
     // masc-animate accusative: «duży»→«dużego», «drogi»→«drogiego»
     animateAccusative: (w) => {
@@ -455,7 +498,9 @@ const ADJ_CASE_STRATEGIES = {
 };
 
 function adjCaseStrategy(lang) {
-  return ADJ_CASE_STRATEGIES[langRuleValue(lang, "caseMarking")?.femAccusativeStrategy] || null;
+  const cm = langRuleValue(lang, "caseMarking");
+  return ADJ_CASE_STRATEGIES[cm?.accusativeStrategy] ||
+    ADJ_CASE_STRATEGIES[cm?.femAccusativeStrategy] || null;
 }
 
 // Declared rule (caseMarking.adjectiveAgreesWithCase — Finnish): an
@@ -637,6 +682,8 @@ function accusativeNoun(lang, cid, base) {
   if (typeof entry.accusative === "string") return entry.accusative;
   const strat = femAccStrategy(lang);
   if (strat && entry.gender === "f") return strat.noun(base);
+  const gendered = nounAccStrategy(lang);
+  if (gendered) return gendered(base, entry.gender);
   return base;
 }
 // Back-compat alias (unit tests pin the uk behaviour through this name).
@@ -970,6 +1017,22 @@ function effectiveStructureType(tpl) {
 // languages keep the definite article («O inverno é frio»).
 const EN_BARE_SUBJECTS = new Set(["WINTER", "SUMMER", "SPRING", "AUTUMN"]);
 
+// Greek definite article by gender, number and case. The accusative
+// feminine keeps its ν before a vowel or a stop (την κόρη, τη μαμά); the
+// masculine keeps τον throughout (the school form, never ambiguous with
+// neuter το).
+function greekDefiniteArticle(gender, plural, caseName) {
+  const acc = caseName === "accusative";
+  if (plural) {
+    if (gender === "n") return "τα";
+    if (gender === "f") return acc ? "τις" : "οι";
+    return acc ? "τους" : "οι";
+  }
+  if (gender === "n") return "το";
+  if (gender === "f") return acc ? "την" : "η";
+  return acc ? "τον" : "ο";
+}
+
 function definiteNounPhrase(lang, cid, opts = {}) {
   const entry = vocab().languages?.[lang]?.forms?.[cid] || {};
   const base = entry.form || formOf(lang, cid);
@@ -1007,8 +1070,8 @@ function definiteNounPhrase(lang, cid, opts = {}) {
   if (lang === "el") {
     if (!g && !plural) return base;
     noteRule("definite_article");
-    if (plural) return (g === "n" ? "τα " : "οι ") + base;
-    return (g === "m" ? "ο " : g === "f" ? "η " : "το ") + base;
+    return greekDefiniteArticle(g, plural, opts.caseName) + " " +
+      (opts.caseName === "accusative" && !plural ? accusativeNoun(lang, cid, base) : base);
   }
   if (lang === "no") {
     // Definite suffix: plural +ene (sko → skoene), -e final +n (bukse →
@@ -1072,8 +1135,9 @@ function nounPhrase(lang, cid, opts = {}) {
   }
 
   let base = entry.form || formOf(lang, cid);
-  if (langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
-      opts.directObject && !opts.plural && !entry.pluralOnly) {
+  const accusativeSlot = langRuleValue(lang, "caseMarking")?.directObjectCase === "accusative" &&
+    (opts.directObject || opts.caseName === "accusative");
+  if (accusativeSlot && !opts.plural && !entry.pluralOnly) {
     const acc = accusativeNoun(lang, cid, base);
     if (acc !== base) {
       noteRule("accusative_object");
@@ -1184,7 +1248,8 @@ function nounPhrase(lang, cid, opts = {}) {
   if (lang === "el") {
     if (!entry.gender) return base; // mass nouns / uncountable — no article
     noteRule("indefinite_article");
-    if (entry.gender === "m") return "ένας " + base;
+    // The masculine article carries the object case («έναν σερβιτόρο»).
+    if (entry.gender === "m") return (accusativeSlot ? "έναν " : "ένας ") + base;
     // The article is the unaccented μια; accented μία is the emphatic
     // numeral (Emi run-15: 31/31 wrong, and the authored corpus says μια).
     if (entry.gender === "f") return "μια " + base;
@@ -1603,7 +1668,10 @@ if (orderType === "SOV") {
         // declined word, not the citation stem.
         const governed = caseMap(targetLang, ordered)[idx];
         if (governed) {
-          const declined = caseFormFor(targetLang, targetConcept, governed);
+          const declined = caseFormFor(targetLang, targetConcept, governed) ||
+            (governed === "accusative" && nounAccStrategy(targetLang)
+              ? accusativeNoun(targetLang, targetConcept, formOf(targetLang, targetConcept))
+              : null);
           if (declined) return declined;
         }
         // A template-carried numeral five+ governs the genitive plural
@@ -1644,7 +1712,10 @@ if (orderType === "SOV") {
       const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
       const idx = ordered.indexOf(targetConcept);
       if (idx !== -1 && isDirectObjectPosition(ordered, idx, targetLang)) {
-        const objForm = caseFormFor(targetLang, targetConcept, "accusative");
+        const objForm = caseFormFor(targetLang, targetConcept, "accusative") ||
+          (nounAccStrategy(targetLang)
+            ? accusativeNoun(targetLang, targetConcept, formOf(targetLang, targetConcept))
+            : null);
         if (objForm) return objForm;
       }
     }
@@ -1803,6 +1874,22 @@ if (orderType === "SOV") {
           : nounPhrase(targetLang, cid, { feminineReferent: true });
       }
     }
+    // Declared rule encliticStress (el): a tile in a possessed slot carries
+    // the second accent the enclitic possessive triggers («δύναμή» in
+    // «τη _____ μου»), matching the blank (resolveNounBlank) — on top of
+    // the slot's case form, so it must run before the case branch.
+    if (langRule(targetLang, "encliticStress") &&
+        langRule(targetLang, "possessiveEnclitic")) {
+      const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+      const i = ordered.indexOf(cid);
+      if (i > 0 && vocab().concepts[ordered[i - 1]]?.semantic_role === "possessive") {
+        const bare = slot?.caseName === "accusative"
+          ? accusativeNoun(targetLang, cid, formOf(targetLang, cid))
+          : formOf(targetLang, cid);
+        const stressed = greekAddEncliticAccent(bare);
+        if (stressed) return stressed;
+      }
+    }
     if (slot?.caseName) {
       // Determiner-marking languages (de) leave the NOUN unchanged — the
       // declined determiner lives in the frame, so tiles stay bare.
@@ -1815,20 +1902,10 @@ if (orderType === "SOV") {
         // for inanimates, so this never returns null.
         return accusativeNoun(targetLang, cid, formOf(targetLang, cid));
       }
-      return caseFormFor(targetLang, cid, slot.caseName);
-    }
-    // Declared rule encliticStress (el): a tile in a possessed slot carries
-    // the second accent the enclitic possessive triggers («δύναμή» in
-    // «τη _____ μου»), matching the blank (resolveNounBlank).
-    if (langRule(targetLang, "encliticStress") &&
-        langRule(targetLang, "possessiveEnclitic")) {
-      const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
-      const i = ordered.indexOf(cid);
-      if (i > 0 && vocab().concepts[ordered[i - 1]]?.semantic_role === "possessive") {
-        const bare = formOf(targetLang, cid);
-        const stressed = greekAddEncliticAccent(bare);
-        if (stressed) return stressed;
-      }
+      return caseFormFor(targetLang, cid, slot.caseName) ||
+        (slot.caseName === "accusative" && nounAccStrategy(targetLang)
+          ? accusativeNoun(targetLang, cid, formOf(targetLang, cid))
+          : null);
     }
     // Particle / copular-suffix decoration (ko): every tile carries the
     // same decorated surface the blank holds («물을» / «책을» in an object
@@ -2220,6 +2297,18 @@ function greekArticleContraction(s) {
     (m, pre, art) => pre + "σ" + art);
 }
 
+// The feminine accusative article keeps its ν only before a vowel or a
+// stop (κ π τ ξ ψ, γκ μπ ντ τσ τζ): «την κόρη», «τη μαμά», «τη σούπα».
+// τον and έναν keep theirs (the school form, unambiguous with neuter).
+function greekFinalNu(s) {
+  return s.replace(/(^|\s)(την|Την|στην|Στην) (?=(\S))/g, (m, pre, art, next) => {
+    const rest = s.slice(s.indexOf(m) + m.length);
+    const word = (next + rest).split(/\s/)[0].toLowerCase();
+    const keep = /^[αεηιουωάέήίόύώ]/.test(word) || /^(κ|π|τ|ξ|ψ|γκ|μπ|ντ)/.test(word);
+    return keep ? m : pre + art.slice(0, -1) + " ";
+  });
+}
+
 // A proparoxytone noun followed by an enclitic possessive takes a second
 // accent on its final syllable: «το τηλέφωνό σου», «το δωμάτιό της» —
 // paroxytones («το κεφάλι σου») are untouched (Emi run-15 (e): 6/6
@@ -2293,7 +2382,8 @@ function finalizeSentence(lang, sentence) {
   if (lang === "el") {
     // The Greek question mark is «;» — the generated yes/no question
     // appended a Latin ? (the authored wh questions carry «;»).
-    const contracted = greekArticleContraction(sentence).replace(/\?$/, ";");
+    const contracted = greekFinalNu(greekArticleContraction(sentence))
+      .replace(/\?$/, ";");
     return langRule(lang, "encliticStress")
       ? greekEncliticStress(contracted) : contracted;
   }
@@ -2448,7 +2538,7 @@ function frenchPossessivePhrase(possessiveCid, nounCid) {
 // must call it rather than re-deriving the article locally. That is what
 // keeps the rule from silently missing a path, which is exactly how the
 // Italian launch shipped «suo taxi».
-function possessiveArticleFor(lang, nounCid, plural = false) {
+function possessiveArticleFor(lang, nounCid, plural = false, caseName = null) {
   if (!langRule(lang, "possessiveDefiniteArticle")) return null;
   const entry = vocab().languages?.[lang]?.forms?.[nounCid];
   if (!entry || entry.noArticleWithPossessive) return null;
@@ -2459,11 +2549,12 @@ function possessiveArticleFor(lang, nounCid, plural = false) {
   }
   // Greek: the possessed noun keeps its definite article and the enclitic
   // possessive follows («το βιβλίο μου») — same table definiteNounPhrase
-  // uses (Emi 2026-08-28-01: 16/16 possessive sentences shipped without it).
+  // uses (Emi 2026-08-28-01: 16/16 possessive sentences shipped without
+  // it); the article carries the case («τη σούπα μου», «τον σερβιτόρο
+  // μου» — run-15 -77).
   if (lang === "el") {
-    const g = entry.gender;
-    if (plural || entry.pluralOnly) return g === "n" ? "τα" : "οι";
-    return g === "f" ? "η" : g === "n" ? "το" : "ο";
+    if (!entry.gender) return null;
+    return greekDefiniteArticle(entry.gender, plural || !!entry.pluralOnly, caseName);
   }
   return null;
 }
@@ -2518,7 +2609,9 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subje
   }
   let noun = formOf(lang, nounCid);
   if (langRuleValue(lang, "caseMarking")) {
-    const declined = caseFormFor(lang, nounCid, caseName);
+    const declined = caseFormFor(lang, nounCid, caseName) ||
+      (caseName === "accusative" && nounAccStrategy(lang)
+        ? accusativeNoun(lang, nounCid, noun) : null);
     if (declined) {
       noteRule("prepositional_case");
       noun = declined;
@@ -2542,7 +2635,7 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subje
   // โทรศัพท์ของคุณ ("phone of-you", no article), Greek «το βιβλίο μου»
   // (with the definite article from possessiveArticleFor).
   if (langRule(lang, "possessiveEnclitic")) {
-    const art = possessiveArticleFor(lang, nounCid);
+    const art = possessiveArticleFor(lang, nounCid, false, caseName);
     const tail = joinWords(lang, [noun, possessive]);
     return art ? `${art} ${tail}` : tail;
   }
@@ -3926,6 +4019,20 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       possessedForm = acc;
     }
   }
+  // Declared gendered strategy (accusativeStrategy — el): a possessed or
+  // modified object, direct or preposition-governed, declines the same
+  // way («τη σούπα μου», «με την κόρη του», «έναν παλιό σερβιτόρο»).
+  const governedAccusative = caseAt[idx] === "accusative";
+  if (bareDetermined && !possessedPlural && nounAccStrategy(lang) &&
+      (ukObjectCase || governedAccusative)) {
+    const acc = accusativeNoun(lang, cid, possessedForm);
+    if (acc !== possessedForm) {
+      noteRule("accusative_object");
+      possessedForm = acc;
+    }
+  }
+  const possessedCase = (ukObjectCase || governedAccusative) && !possessedPlural
+    ? "accusative" : (caseAt[idx] || null);
   // Suffixal possessors (declared: possessiveSuffix — ar): the noun slot
   // renders the fused form («يدي», «غرفتها») and the possessive slot
   // renders empty, mirroring the enclitic split below.
@@ -3939,7 +4046,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // "Another" postposes with the th classifier: หนังสืออีกเล่ม.
   if (langRule(lang, "possessiveEnclitic") && precededByPossessive) {
     const possWord = genderedFormOf(lang, ordered[idx - 1], cid);
-    const art = possessiveArticleFor(lang, cid);
+    const art = possessiveArticleFor(lang, cid, false, possessedCase);
     const tail = joinWords(lang, [possessedForm, possWord]);
     return art ? `${art} ${tail}` : tail;
   }
@@ -4224,6 +4331,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       adjectiveWord = strat.animateAccusative(adjectiveWord);
     }
   }
+  // Declared gendered strategy (el): every masculine accusative object,
+  // direct or governed, carries its adjective («έναν παλιό σερβιτόρο»).
+  if (adjectiveWord && !useCopularPlural && headEntry?.gender === "m" &&
+      (ukObjectCase || caseAt[idx] === "accusative")) {
+    adjectiveWord = masculineAccusativeAdjective(lang, adjectiveWord);
+  }
   // Declared genderless case agreement (adjectiveAgreesWithCase — fi):
   // the injected adjective mirrors the case form the object noun
   // rendered («uutta kirjaa», «uuden puhelimen» — Emi run-7 -28: zero
@@ -4274,6 +4387,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       numeralGoverned = true;
     } else {
       nounForm = pluralFormOf(lang, cid);
+      // Declared gendered strategy (el): a counted masculine object takes
+      // the accusative plural («δύο σερβιτόρους»).
+      const gendered = nounAccStrategy(lang);
+      if (gendered && (ukObjectCase || caseAt[idx] === "accusative")) {
+        nounForm = gendered(nounForm, headEntry?.gender, true);
+      }
     }
     // Thai counts with a classifier AFTER the number, and the whole
     // quantifier follows the noun: หนังสือสองเล่ม ("book two CLF").
@@ -4369,6 +4488,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       let adjForm = (isPlural && adjectiveCid && lang !== "en" && !partitiveGoverned)
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjectiveWord;
+      if (isPlural && headEntry?.gender === "m" &&
+          (ukObjectCase || caseAt[idx] === "accusative")) {
+        adjForm = masculineAccusativeAdjective(lang, adjForm, true);
+      }
       // Numeral government carries the adjective along: «osiem dużych
       // twarzy», never «osiem duże twarzy» (Emi 2026-08-27-04). An explicit
       // genitive_plural field on the adjective wins (soft stems the
@@ -4485,7 +4608,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const possForm = possPlural
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjForm;
-      const art = possessiveArticleFor(lang, cid, possPlural);
+      const art = possessiveArticleFor(lang, cid, possPlural,
+        possPlural ? null : possessedCase);
       // Enclitic languages postpose the possessive here too (the forced/
       // drilled path): th «มือของฉัน», el «το βιβλίο μου».
       const pair = langRule(lang, "possessiveEnclitic")
@@ -4717,6 +4841,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           isDirectObjectPosition(ordered, idx + 1, lang) && !pluralAgreement &&
           vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
         form = femAccusativeShift(lang, form, "adjective");
+      }
+      if (!pluralAgreement &&
+          vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "m" &&
+          ((ukObjectCaseApplies(lang) && isDirectObjectPosition(ordered, idx + 1, lang)) ||
+           caseAt[idx + 1] === "accusative")) {
+        form = masculineAccusativeAdjective(lang, form);
       }
       // Declared genderless case agreement (adjectiveAgreesWithCase — fi):
       // the template-slot attributive mirrors the case form its object
