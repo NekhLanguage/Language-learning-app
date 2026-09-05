@@ -82,7 +82,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.51";
+const APP_DATA_VERSION = "1.2.52";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1940,6 +1940,15 @@ async function runEnterLanguage(btn, langCode) {
   });
   try {
     await Promise.race([enterLanguage(langCode), timeoutP]);
+    // -80 LOW (Emi run-17): the sync-status banner set by a prior failed
+    // tap stays up after a successful second tap. Clear it on any
+    // successful entry so the learner isn't stuck reading a stale error.
+    const banner = document.getElementById("sync-status");
+    if (banner && !banner.classList.contains("hidden")) {
+      banner.classList.add("hidden");
+      banner.classList.remove("is-error");
+      banner.textContent = "";
+    }
   } catch (err) {
     console.warn("enterLanguage failed:", err);
     try {
@@ -4680,7 +4689,7 @@ function renderAlphabetOverlay(langCode) {
   }
 
   run = USER.runs[langCode];
-  
+
   // 🔥 CONTENT VERSION CHECK
 if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   console.warn("Content version mismatch → resetting run");
@@ -4690,6 +4699,28 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   USER.runs[langCode] = run;
   saveUser();
 }
+
+  // -80 (Emi run-17, all-langs): a half-built run — `setupComplete:false`,
+  // empty `releasePlan`, no `released` — stranded the language. The old path
+  // saw `USER.runs[lang]` and went straight to `showRoadmap`, which rendered
+  // 0 of 40 stops; Continue did nothing because there was no plan; only
+  // RESET PROGRESS (every language) cleared it. Timing-dependent writers
+  // (a stray endSession/applyResult from a previous language firing after
+  // the picker swapped module-scoped `run`) persist the fresh run under the
+  // new language's key. Defensive resume: onboarding at the right step
+  // regardless of the writer, and it rescues anyone already stranded.
+  if (!run.setupComplete) {
+    await loadTemplates(run.selectedResourcePacks || []);
+    if (gen !== enterGeneration) return;
+    languageScreen.classList.remove("active");
+    if (!run.reason) {
+      showReasonScreen();
+    } else {
+      document.getElementById("pack-screen").classList.add("active");
+      renderPackSelection();
+    }
+    return;
+  }
   if (backfillReleasedBundles(run)) {
     run.released.forEach(ensureProgress);
     saveUser();

@@ -2,7 +2,7 @@
 // backend (saveUser), and restore onto a fresh device (loadUser). The dev
 // server keeps saved users in memory and exposes them at /__devserver/users.
 
-import { test, expect, startNewRun } from "./fixtures.mjs";
+import { test, expect, startNewRun, loginAs } from "./fixtures.mjs";
 
 test("run state survives a page reload", async ({ page }) => {
   await startNewRun(page);
@@ -138,6 +138,64 @@ test("a stale server copy does not overwrite newer local progress on reload (Emi
     const users = await (await page.request.get("/__devserver/users")).json();
     return users[email]?.runs?.pt?.released?.length || 0;
   }).toBeGreaterThan(0);
+});
+
+async function plantHalfBuiltRun(page, email, { withReason }) {
+  const user = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")));
+  user.runs = user.runs || {};
+  user.runs.pt = {
+    selectedResourcePacks: [],
+    setupComplete: false,
+    releasePlan: [],
+    releasePlanIndex: 0,
+    releasedBundleIds: [],
+    released: [],
+    progress: {},
+    templateProgress: {},
+    exerciseCounter: 0,
+    recentTemplates: [],
+    sessionNumber: 1,
+    sessionLevelUps: {},
+    sessionAttempts: {},
+    sessionExerciseCount: 0,
+    sessionComplete: false,
+    milestonesShown: [],
+    // Match the app's CONTENT_VERSION so the content-version-reset
+    // branch doesn't wipe the planted run before the -80 branch runs.
+    contentVersion: 13,
+    ...(withReason ? { reason: { type: "travel", detail: "", savedAt: Date.now() } } : {}),
+  };
+  // Sync BOTH sides — a reload pulls from the server and would otherwise
+  // overwrite the local plant.
+  await page.evaluate((u) => localStorage.setItem("zth_user", JSON.stringify(u)), user);
+  await page.request.post("/.netlify/functions/saveUser", { data: { email, user } });
+}
+
+test("a half-built run with no reason resumes at the reason screen (Emi run-17 -80)", async ({ page }) => {
+  // The failure mode: ko/ar/de landed on a dead roadmap (0 of 40 stops) and
+  // Continue did nothing because releasePlan was empty. Defensive resume in
+  // enterLanguage must send a half-built run back to onboarding.
+  const email = `learner-${Math.random().toString(36).slice(2)}@example.com`;
+  await loginAs(page, email);
+  await plantHalfBuiltRun(page, email, { withReason: false });
+  await page.reload();
+  await expect(page.locator("#start-screen.active")).toBeVisible();
+  await page.click("#open-app");
+  await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
+  await expect(page.locator("#reason-screen.active")).toBeVisible();
+  await expect(page.locator("#roadmap-screen.active")).toHaveCount(0);
+});
+
+test("a half-built run with a reason resumes at the pack screen (Emi run-17 -80)", async ({ page }) => {
+  const email = `learner-${Math.random().toString(36).slice(2)}@example.com`;
+  await loginAs(page, email);
+  await plantHalfBuiltRun(page, email, { withReason: true });
+  await page.reload();
+  await expect(page.locator("#start-screen.active")).toBeVisible();
+  await page.click("#open-app");
+  await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
+  await expect(page.locator("#pack-screen.active")).toBeVisible();
+  await expect(page.locator("#roadmap-screen.active")).toHaveCount(0);
 });
 
 test("a {user: null} answer from the server does not wipe local progress (Emi 2026-09-02-61)", async ({ page }) => {
