@@ -82,7 +82,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.56";
+const APP_DATA_VERSION = "1.2.57";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -4088,12 +4088,16 @@ if (tileSegments && tileSegments.length) {
   // книгу»); split that one segment on whitespace so the modifier is its
   // own placeable tile. Other segments keep their existing one-tile shape,
   // and spaceless scripts are unaffected (nothing to split).
+  // An empty segment (a zero copula the builder still emits — tr «Kitap
+  // telefonun yanında» carries BE as '', the ko but-not carries BUT as '')
+  // must not become a slot and an invisible chip (Emi run-19 -97: the
+  // card was passable only by placing a blank tile).
   correctWords = tileSegments.flatMap(s => {
     const text = String(s.text).toLowerCase();
     return forcedModifier && s.cid === forcedModifier
       ? text.split(/\s+/).filter(Boolean)
       : [text];
-  });
+  }).filter(w => w && w.trim());
 } else {
   const ordered = orderedConceptsForTemplate(tpl, targetLang);
 

@@ -840,6 +840,17 @@ test("numbers on plural-less nouns are refused, not shipped as singular", () => 
 // Turkish possessive suffixes + copular person — Emi 2026-08-28-05 / -06
 // ---------------------------------------------------------------------
 
+test("tr: two copular clauses keep both possessives, zero copula on the first, ve between (Emi run-19 -98)", () => {
+  assert.equal(buildSentence("tr", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")),
+    "Bu benim elim ve bu senin kafandır.");
+  assert.equal(buildSentence("tr", tplById("SHE_IS_MY_MOM_AND_HE_IS_MY_DAD")),
+    "O benim annem ve o benim babamdır.");
+});
+
+test("tr: su takes the y buffer under a possessive (Emi run-19 -99)", () => {
+  assert.equal(buildSentence("tr", tplById("I_DRINK_WATER"), "HIS", {}), "Ben onun suyunu içerim.");
+});
+
 test("tr: possessive suffix generator covers Emi's exact wrong/right pairs", () => {
   // Every wrong sentence from the run-5 sweep, generated correctly:
   assert.equal(trPossessiveSuffix("yiyecek", "1s"), "yiyeceğim");

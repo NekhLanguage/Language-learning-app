@@ -4235,7 +4235,9 @@ function copulaCoordinationSegments(lang, tpl, forcedConcept, sharedChoices) {
       if (seg.cid === beCid) seg.text = connective;
     }
   }
-  return [...seg1, { cid: c[andIdx], text: spec.separator || "" }, ...seg2];
+  const separator = spec.separator ||
+    (spec.separatorWord ? formOf(lang, c[andIdx]) : "");
+  return [...seg1, { cid: c[andIdx], text: separator }, ...seg2];
 }
 
 function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
