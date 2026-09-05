@@ -901,13 +901,29 @@ export const LANGUAGE_RULES = {
   pt: {
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",
-      declinesAttributiveAdjectives: true,
+      declinesAttributiveAdjectives: true, locativeCopula: true,
     },
     indefiniteArticle: true, postNominalAdjectives: true, proDrop: true,
+    // «um bom livro» but «um livro ruim» — ruim carries postNominal on its
+    // own entry (Emi run-19 -103: 21 of 21 «ruim» before the noun).
     preNominalAdjectiveRoles: ["property_quality"],
     secondPersonAsThird: true, statementOrderQuestion: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true, latinEncodingChecks: true,
+    // ── Emi run-19 (-100 … -105), Portuguese's first read under the rule ──
+    // Third-person possessives are postposed with the definite article:
+    // «o aeroporto dela», «o livro dele» (-100: 16 of 16 «dela aeroporto»)
+    // — the HIS/HER/THEIR entries carry `postposed: true`.
+    // ser/estar: location conjugates the BE entry's nested `locative`
+    // paradigm («O livro está ao lado do telefone» — -101: 9 of 9 «é»);
+    // the compound positions carry their «de» and the finished string
+    // contracts de/em + article/demonstrative (do, da, deste, disto,
+    // no, na, neste, nisto). Pronominal demonstratives are neuter
+    // («embaixo disto», «Isto é meu»).
+    locativeCopula: "paradigm",
+    standaloneDemonstrative: true,
+    // «embarco em um voo» — embarcar governs «em» (-105).
+    verbGovernedPrepositions: true,
   },
   es: {
     features: {

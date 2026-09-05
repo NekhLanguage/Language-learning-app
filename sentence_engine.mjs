@@ -2622,6 +2622,21 @@ function finalizeSentence(lang, sentence) {
       .replace(/(^|\s)a el\b/g, "$1al");
     return /\?$/.test(s) && !s.startsWith("¿") ? "¿" + s : s;
   }
+  // Portuguese preposition + article / demonstrative contractions on the
+  // finished string (the compound positions carry their «de»; the
+  // standalone demonstratives are neuter): «de o» → do, «de isto» → disto,
+  // «em este» → neste, «a o» → ao (Emi run-19 -101: «ao lado o telefone»).
+  if (lang === "pt") {
+    const dem = "est[ea]s?|ess[ea]s?|aquel[ea]s?|isto|isso|aquilo";
+    return sentence
+      .replace(/\bde (o|a|os|as)\b/g, (_, a) => "d" + a)
+      .replace(new RegExp(`\\bde (${dem})\\b`, "g"), (_, d) => "d" + d)
+      .replace(/\bem (o|a|os|as)\b/g, (_, a) => "n" + a)
+      .replace(new RegExp(`\\bem (${dem})\\b`, "g"), (_, d) => "n" + d)
+      .replace(/\ba (o|os)\b/g, (_, a) => "a" + a)
+      .replace(/\ba a\b/g, "à")
+      .replace(/\ba as\b/g, "às");
+  }
   if (lang === "el") {
     // The Greek question mark is «;» — the generated yes/no question
     // appended a Latin ? (the authored wh questions carry «;»).
@@ -2841,6 +2856,25 @@ function demonstrativeForm(lang, cid, referentNounCid) {
   return f;
 }
 
+// A possessive that follows its noun: every possessive in a language
+// declaring possessiveEnclitic (th, el), or an entry flagged `postposed`
+// (pt «dele/dela/deles/delas» — first and second person stay preposed:
+// «meu braço», «o livro dele»; Emi run-19 -100).
+function possessivePostposed(lang, possessiveCid) {
+  if (langRule(lang, "possessiveEnclitic")) return true;
+  const e = vocab().languages?.[lang]?.forms?.[possessiveCid];
+  return !!(e && typeof e === "object" && !Array.isArray(e) && e.postposed === true);
+}
+
+// The definite article a postposed possessive needs when the language has
+// no possessiveDefiniteArticle rule («o aeroporto dela»): the article
+// definiteNounPhrase would put before the noun, or null when none.
+function postposedPossessiveArticle(lang, nounCid, noun) {
+  const phrase = definiteNounPhrase(lang, nounCid);
+  if (!phrase || phrase === noun || !phrase.endsWith(noun)) return null;
+  return phrase.slice(0, phrase.length - noun.length).trim() || null;
+}
+
 function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subjectCid = null) {
   if (lang === "fr") return frenchPossessivePhrase(possessiveCid, nounCid);
   // Declared rule (reflexivePossessiveSuffix — Finnish): the subject owns
@@ -2884,8 +2918,10 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subje
   // Enclitic possessors follow the noun (declared, not hardcoded): Thai
   // โทรศัพท์ของคุณ ("phone of-you", no article), Greek «το βιβλίο μου»
   // (with the definite article from possessiveArticleFor).
-  if (langRule(lang, "possessiveEnclitic")) {
-    const art = possessiveArticleFor(lang, nounCid, false, caseName);
+  if (possessivePostposed(lang, possessiveCid)) {
+    const art = possessiveArticleFor(lang, nounCid, false, caseName) ||
+      (!langRule(lang, "possessiveEnclitic")
+        ? postposedPossessiveArticle(lang, nounCid, noun) : null);
     const tail = joinWords(lang, [noun, possessive]);
     return art ? `${art} ${tail}` : tail;
   }
@@ -4603,9 +4639,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // after the possessed noun (its own ordered-walk slot renders empty):
   // th มือของฉัน ("hand of-me"), el «το βιβλίο μου» with the article.
   // "Another" postposes with the th classifier: หนังสืออีกเล่ม.
-  if (langRule(lang, "possessiveEnclitic") && precededByPossessive) {
+  if (precededByPossessive && possessivePostposed(lang, ordered[idx - 1])) {
     const possWord = genderedFormOf(lang, ordered[idx - 1], cid);
-    const art = possessiveArticleFor(lang, cid, false, possessedCase);
+    const art = possessiveArticleFor(lang, cid, false, possessedCase) ||
+      (!langRule(lang, "possessiveEnclitic")
+        ? postposedPossessiveArticle(lang, cid, possessedForm) : null);
     const tail = joinWords(lang, [possessedForm, possWord]);
     return art ? `${art} ${tail}` : tail;
   }
@@ -5176,11 +5214,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const possForm = possPlural
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjForm;
+      const postposed = possessivePostposed(lang, adjectiveCid);
       const art = possessiveArticleFor(lang, cid, possPlural,
-        possPlural ? null : possessedCase);
+        possPlural ? null : possessedCase) ||
+        (postposed && !langRule(lang, "possessiveEnclitic")
+          ? postposedPossessiveArticle(lang, cid, bare) : null);
       // Enclitic languages postpose the possessive here too (the forced/
-      // drilled path): th «มือของฉัน», el «το βιβλίο μου».
-      const pair = langRule(lang, "possessiveEnclitic")
+      // drilled path): th «มือของฉัน», el «το βιβλίο μου», pt «o livro dele».
+      const pair = postposed
         ? [bare, possForm]
         : [possForm, bare];
       phrase = joinWords(lang, art ? [art, ...pair] : pair);
@@ -5476,7 +5517,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const nextCid = ordered[idx + 1];
       // Enclitic languages render the possessor inside the noun slot
       // (th มือของฉัน, el «το βιβλίο μου») — this slot stays empty.
-      if (langRule(lang, "possessiveEnclitic") &&
+      if (possessivePostposed(lang, cid) &&
           vocab().concepts[nextCid]?.type === "noun") {
         return "";
       }

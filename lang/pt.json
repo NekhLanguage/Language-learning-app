@@ -123,7 +123,8 @@
       "form": "ruim",
       "f": "ruim",
       "plural": "ruins",
-      "fp": "ruins"
+      "fp": "ruins",
+      "postNominal": true
     },
     "NEW": {
       "form": "novo",
@@ -165,13 +166,15 @@
       "form": "dele",
       "f": "dele",
       "plural": "deles",
-      "fp": "delas"
+      "fp": "delas",
+      "postposed": true
     },
     "HER": {
       "form": "dela",
       "f": "dela",
       "plural": "deles",
-      "fp": "delas"
+      "fp": "delas",
+      "postposed": true
     },
     "OUR": {
       "form": "nosso",
@@ -183,7 +186,8 @@
       "form": "deles",
       "f": "delas",
       "plural": "deles",
-      "fp": "delas"
+      "fp": "delas",
+      "postposed": true
     },
     "AND": [
       "e"
@@ -207,22 +211,22 @@
       "baixo"
     ],
     "UNDER": [
-      "embaixo"
+      "embaixo de"
     ],
     "NEXT_TO": [
-      "ao lado"
+      "ao lado de"
     ],
     "FRONT": [
-      "frente"
+      "na frente de"
     ],
     "BEHIND": [
-      "atrás"
+      "atrás de"
     ],
     "IN": [
       "em"
     ],
     "ON": [
-      "em cima"
+      "em cima de"
     ],
     "OFF": [
       "fora"
@@ -273,7 +277,8 @@
       "form": "água"
     },
     "FOOD": {
-      "form": "comida"
+      "form": "comida",
+      "gender": "f"
     },
     "HOUSE": {
       "form": "casa",
@@ -281,9 +286,11 @@
       "plural": "casas"
     },
     "HOME": {
-      "form": "lar",
-      "gender": "m",
-      "plural": "lares"
+      "form": "casa",
+      "gender": "f",
+      "plural": "casas",
+      "noArticle": true,
+      "predicative": "em casa"
     },
     "BOOK": {
       "form": "livro",
@@ -559,11 +566,13 @@
     ],
     "THIS": {
       "form": "este",
-      "f": "esta"
+      "f": "esta",
+      "standalone": "isto"
     },
     "THAT": {
       "form": "esse",
-      "f": "essa"
+      "f": "essa",
+      "standalone": "isso"
     },
     "ANY": [
       "qualquer"
@@ -753,7 +762,16 @@
       "2_singular": "é",
       "3_singular": "é",
       "1_plural": "somos",
-      "3_plural": "são"
+      "3_plural": "são",
+      "locative": {
+        "base": "estar",
+        "1_singular": "estou",
+        "2_singular": "está",
+        "3_singular": "está",
+        "1_plural": "estamos",
+        "2_plural": "estão",
+        "3_plural": "estão"
+      }
     },
     "BLACK": {
       "form": "preto",

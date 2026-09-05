@@ -840,6 +840,39 @@ test("numbers on plural-less nouns are refused, not shipped as singular", () => 
 // Turkish possessive suffixes + copular person — Emi 2026-08-28-05 / -06
 // ---------------------------------------------------------------------
 
+// ---------------------------------------------------------------------
+// Emi run-19: pt -100 … -105, Portuguese's first read under the ranking rule.
+// ---------------------------------------------------------------------
+
+test("pt: third-person possessives follow the noun with the article (Emi run-19 -100)", () => {
+  assert.equal(buildSentence("pt", tplById("I_SEE_AIRPORT"), "HER", {}), "Eu vejo o aeroporto dela.");
+  assert.equal(buildSentence("pt", tplById("YOU_READ_BOOK"), "HIS", {}), "Você lê o livro dele.");
+  // First and second person stay preposed.
+  assert.equal(buildSentence("pt", tplById("I_COOK_FOOD"), "MY", {}), "Eu cozinho minha comida.");
+});
+
+test("pt: location takes estar, compound positions carry de, contractions fuse (Emi run-19 -101)", () => {
+  assert.equal(buildSentence("pt", tplById("BOOK_NEXT_TO_PHONE")), "O livro está ao lado do telefone.");
+  assert.equal(buildSentence("pt", tplById("PHONE_BEHIND_TABLE")), "O telefone está atrás da mesa.");
+  assert.equal(buildSentence("pt", tplById("SHOES_UNDER_THIS")), "Os sapatos estão embaixo disto.");
+  assert.equal(buildSentence("pt", tplById("SHOES_IN_THIS")), "Os sapatos estão nisto.");
+  assert.equal(buildSentence("pt", tplById("BOOK_BETWEEN_THIS_AND_THAT")), "O livro está entre isto e isso.");
+});
+
+test("pt: home is casa with para / de (Emi run-19 -102)", () => {
+  assert.equal(buildSentence("pt", tplById("I_GO_HOME")), "Eu vou para casa.");
+  assert.equal(buildSentence("pt", tplById("I_GO_FROM_HOME")), "Eu vou de casa.");
+});
+
+test("pt: ruim follows the noun while bom precedes it (Emi run-19 -103)", () => {
+  assert.equal(buildSentence("pt", tplById("YOU_READ_BOOK"), "BAD", {}), "Você lê um livro ruim.");
+  assert.equal(buildSentence("pt", tplById("YOU_READ_BOOK"), "GOOD", {}), "Você lê um bom livro.");
+});
+
+test("pt: embarcar governs em (Emi run-19 -105)", () => {
+  assert.equal(buildSentence("pt", tplById("I_BOARD_FLIGHT")), "Eu embarco em um voo.");
+});
+
 test("tr: two copular clauses keep both possessives, zero copula on the first, ve between (Emi run-19 -98)", () => {
   assert.equal(buildSentence("tr", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")),
     "Bu benim elim ve bu senin kafandır.");
