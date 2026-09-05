@@ -231,13 +231,31 @@
 //                            finite — ja «食べて飲みます», never «食べる
 //                            そして飲む» (Emi run-10 -47). Missing te data
 //                            falls through to the generic path (ratcheted).
+//                            { stemSuffix } derives V1 from its dictionary
+//                            stem instead (verbStem below): ko «먹고 마셔요»,
+//                            never «먹어요 그리고 마셔요» (Emi run-17 -84).
+//   verbStem                 { dictionaryEnding } — the dictionary form
+//                            minus this ending is the verb stem that
+//                            suffixal forms build on (ko 먹다 → 먹 → 먹고,
+//                            먹지만). Missing/unmatched data falls through.
+//   incorporatedObjectVerbs  a verb entry flagged `incorporatedObject: true`
+//                            already carries its own object («껍질을
+//                            벗기다», «사진을 찍다»); the template's direct
+//                            object stays bare beside it — ko «감자 껍질을
+//                            벗겨요», never «감자를 껍질을» (Emi run-17 -85).
 //   contrastiveNegation      the "V O1 but not O2" template shape.
 //                            { repeatVerb: true } repeats the finite verb
 //                            after the negator (zh «他吃早餐，但是不吃
 //                            午餐» — Emi run-9 -37); { conjunction,
 //                            negatedVerbForm: true } closes the first clause
 //                            with the conjunction and renders O2 + topic
-//                            particle + the verb entry's `negative` form
+//                            particle + the verb entry's `negative` form;
+//                            { conjunctionSuffix, negator } suffixes the
+//                            conjunction onto the verb stem (verbStem) and
+//                            negates with a preverbal negator + the finite
+//                            verb — ko «아침식사를 먹지만 점심식사는 안
+//                            먹어요» (Emi run-17 -81: the generic path
+//                            leaked the dictionary 아니다)
 //                            (ja «…食べますが、昼ご飯は食べません» — Emi
 //                            run-10 -50). Missing data falls through.
 //   possessiveSuffix         possessives are pronominal suffixes on the
@@ -270,7 +288,12 @@
 //                            { linker, conjunction } — the BE entry's
 //                            `locative` field supplies the existence verb;
 //                            conjunction joins multiple landmarks («これと
-//                            それの間に»).
+//                            それの間に»). Attach-mode particle languages
+//                            suffix the topic onto the head; a conjunction
+//                            given as a batchim allomorph pair suffixes onto
+//                            the first landmark — ko «책은 이것과 그것 사이에
+//                            있어요», «전화는 책 옆에 있어요» (Emi run-17 -82:
+//                            «책 옆에 전화.» had no particle and no verb).
 //                            Data notes for existentialHaveByNoun: a noun
 //                            entry flagged `existentialHave: true` renders
 //                            the HAVE entry's `existential` («会議があり
@@ -285,6 +308,11 @@
 //                            ja で) and a separator: «これは私の手で、これは
 //                            あなたの頭です» (Emi run-10/-12: the AND
 //                            templates garbled since run 10). { separator }
+//                            { connectiveSuffix: true } suffixes
+//                            BE.connective onto the first clause's last
+//                            nominal instead of replacing the (zero) copula
+//                            — ko «이것은 제 손이고 이것은 당신의 머리예요»
+//                            (Emi run-17 -84: «그리고» for every AND).
 //   subordinateClauseFinal   the subordinate clause leads and its linker
 //                            follows it (ja «…いますので、…»); the linker
 //                            entry carries clauseFinal / clauseInitial /
@@ -704,6 +732,26 @@ export const LANGUAGE_RULES = {
         "spatial_relation", "spatial_relation_complex", "complex_clause",
       ],
     },
+    // Emi run-17 (-81 … -85), the four templates left after the run-6
+    // repair held: the authored per-template verb surface is the finite
+    // polite form / nominalised complement («먹는 것을 멈춰요», «자기
+    // 시작해요» — the ja -46 twin), so read it for main verbs too.
+    authoredVerbSurfaces: true,
+    // Dictionary form minus 다 is the stem every suffixal form builds on.
+    verbStem: { dictionaryEnding: "다" },
+    // V-AND-V: «먹고 마셔요» (-84) — 고 on the first stem, no 그리고.
+    verbCoordination: { stemSuffix: "고" },
+    // Two copular clauses: «이것은 제 손이고 이것은 당신의 머리예요» (-84) —
+    // BE.connective 이고 suffixes the first predicate, no separator.
+    copulaCoordination: { separator: "", connectiveSuffix: true },
+    // "V O1 but not O2": «아침식사를 먹지만 점심식사는 안 먹어요» (-81).
+    contrastiveNegation: { conjunctionSuffix: "지만", negator: "안" },
+    // Location is existence: «전화는 책 옆에 있어요», «책은 이것과 그것
+    // 사이에 있어요» (-82, the ja -57 twin). No linker; the landmark
+    // conjunction is the 과/와 particle on the first landmark.
+    locativeExistential: { conjunction: { afterConsonant: "과", afterVowel: "와" } },
+    // «감자 껍질을 벗겨요», never «감자를 껍질을 벗겨요» (-85).
+    incorporatedObjectVerbs: true,
     // Numeral + counter FOLLOW the counted noun («책 한 권», «나쁜 책 네
     // 권»); the attach-mode object particle then lands on the counter
     // («책 한 권을»). Per-noun `counter` field in the data; 개 is the
