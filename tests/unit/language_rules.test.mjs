@@ -1898,3 +1898,70 @@ test("ja: subordinate clause leads with a clause-final linker; locative existenc
   assert.equal(buildSentence("ja", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
     "もし彼が家にいたら、彼の娘と食べます。");
 });
+
+// ---------------------------------------------------------------------
+// Emi run 20 — tr control chains and possessed compounds, pt plural
+// pronoun gender, no possessive / adjective agreement.
+// ---------------------------------------------------------------------
+
+test("tr: control chains read their authored surfaces; a rotated subject re-conjugates the main verb (Emi run-20 -110)", () => {
+  assert.equal(buildSentence("tr", tplById("WE_STOP_EATING")), "Biz yemeyi bırakırız.");
+  assert.equal(buildSentence("tr", tplById("THEY_START_SLEEPING")), "Onlar uyumaya başlarlar.");
+  const rotated = { ...tplById("THEY_START_SLEEPING"), concepts: ["HE", "START", "SLEEP"] };
+  assert.equal(buildSentence("tr", rotated), "O uyumaya başlar.");
+  // Person-invariant paradigms keep the authored surface on a rotated subject.
+  assert.equal(buildSentence("ko", { ...tplById("WE_STOP_EATING"), concepts: ["HE", "STOP", "EAT"] }),
+    "그는 먹는 것을 멈춰요.");
+  assert.equal(buildSentence("ja", { ...tplById("WE_STOP_EATING"), concepts: ["HE", "STOP", "EAT"] }),
+    "彼は食べるのをやめます。");
+});
+
+test("tr: a compound already carrying the 3sg possessive takes only the accusative (Emi run-20 -109)", () => {
+  assert.equal(buildSentence("tr", tplById("I_SEE_AIRPORT"), "HIS", {}), "Ben onun havalimanını görürüm.");
+  assert.equal(buildSentence("tr", tplById("I_SEE_AIRPORT"), "MY", {}), "Ben benim havalimanımı görürüm.");
+});
+
+test("pt/es/fr: a plural subject pronoun agrees with a feminine predicate (Emi run-20 -106)", () => {
+  const they = { ...tplById("YOU_ARE_GIRL"), concepts: ["THIRD_PERSON_PLURAL", "BE", "GIRL"] };
+  assert.equal(buildSentence("pt", they), "Elas são meninas.");
+  assert.equal(buildSentence("pt", they, "HER", {}), "Elas são as meninas dela.");
+  assert.equal(buildSentence("pt", they, "MY", {}), "Elas são minhas meninas.");
+  assert.equal(buildSentence("pt", tplById("THEY_ARE_CHAMPION")), "Eles são campeões.");
+  assert.equal(buildSentence("es", they), "Ellas son chicas.");
+  assert.ok(buildSentence("fr", they).startsWith("Elles sont "));
+  // The postposed possessives agree with the possessor, never the noun.
+  assert.equal(buildSentence("pt", tplById("I_SEE_AIRPORT"), "HER", {}), "Eu vejo o aeroporto dela.");
+});
+
+test("pt: the à-contraction respects word edges — «começa a dormir» (run-19 regression)", () => {
+  assert.equal(buildSentence("pt", { ...tplById("THEY_START_SLEEPING"), concepts: ["HE", "START", "SLEEP"] }),
+    "Ele começa a dormir.");
+  assert.equal(finalizeSentence("pt", "Eu vou a a casa."), "Eu vou à casa.");
+});
+
+test("no: possessives agree with neuter and plural nouns (Emi run-20 -113)", () => {
+  assert.equal(buildSentence("no", tplById("YOU_SEE_HOTEL"), "YOUR", {}), "Du ser ditt hotell.");
+  assert.equal(buildSentence("no", tplById("SHE_SEES_ROOM"), "MY", {}), "Hun ser mitt rom.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")),
+    "Dette er min hånd og dette er ditt hode.");
+  assert.equal(buildSentence("no", tplById("WE_HAVE_CLOTHES"), "MY", {}), "Vi har mine klær.");
+});
+
+test("no: an adjective after a possessive takes the definite form (Emi run-20 -112)", () => {
+  assert.equal(buildSentence("no", tplById("SHE_IS_MY_MOM"), "GOOD", {}), "Hun er min gode mamma.");
+  assert.equal(buildSentence("no", tplById("HE_IS_MY_DAD"), "SMALL", {}), "Han er min lille pappa.");
+  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "WHITE", {}), "Hun går til hennes hvite rom.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), "GOOD", {}),
+    "Dette er min gode hånd og dette er ditt gode hode.");
+});
+
+test("no: colour plurals, ting is masculine, ferskt, suvenir, begynner å, hjemmefra (Emi run-20 -114/-115/-117)", () => {
+  assert.equal(buildSentence("no", tplById("SHE_SEES_PHONE"), "EIGHT", { adj_PHONE: "BLACK" }), "Hun ser åtte svarte telefoner.");
+  assert.equal(buildSentence("no", tplById("SHE_SEES_PHONE"), "SEVEN", { adj_PHONE: "LONG" }), "Hun ser sju lange telefoner.");
+  assert.equal(buildSentence("no", tplById("WE_HAVE_CLOTHES"), "GREEN", {}), "Vi har grønne klær.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_THING"), "SMALL", {}), "Dette er en liten ting.");
+  assert.equal(buildSentence("no", tplById("I_SEE_KITCHEN"), "FRESH", {}), "Jeg ser et ferskt kjøkken.");
+  assert.equal(buildSentence("no", tplById("I_PURCHASE_SOUVENIR")), "Jeg kjøper en suvenir.");
+  assert.equal(buildSentence("no", tplById("THEY_START_SLEEPING")), "De begynner å sove.");
+  assert.equal(buildSentence("no", tplById("I_GO_FROM_HOME")), "Jeg går hjemmefra.");
+});

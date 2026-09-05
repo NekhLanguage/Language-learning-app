@@ -370,6 +370,36 @@ function genderedFormOf(lang, modifierCid, nounCid, plural = false, genderOverri
   return formOf(lang, modifierCid);
 }
 
+// Declared rule (definiteAdjectiveAfterPossessive — no): an attributive
+// adjective after a possessive takes the definite (weak) -e form, as after
+// den/det/de — «min gode mamma», «hennes hvite rom», «ditt hvite hode»
+// (Emi run-20 -112). The form coincides with the plural, so `plural` on
+// the entry serves; `definite` wins where the two differ (liten → lille,
+// plural små). An entry with neither keeps its bare form.
+function definiteAdjectiveForm(lang, adjectiveCid, form) {
+  if (!langRule(lang, "definiteAdjectiveAfterPossessive")) return form;
+  const entry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return form;
+  if (typeof entry.definite === "string") return entry.definite;
+  if (typeof entry.plural === "string") return entry.plural;
+  return form;
+}
+
+// Declared rule (fusedAdpositionForms — no): a noun entry's `fused` map
+// gives the one-word form that absorbs a preceding adposition — «hjemmefra»
+// for FROM + HOME (Emi run-20 -117: «Jeg går fra hjem»). The adposition's
+// slot renders empty and the fused word takes no article or modifier.
+// Keys are the adposition's concept id in lower case («from»): the
+// structure validator's duplicate-key scan is flat, so an upper-case key
+// would read as a second FROM entry.
+function fusedAdpositionForm(lang, nounCid, glueCid) {
+  if (!glueCid || !langRule(lang, "fusedAdpositionForms")) return null;
+  const entry = vocab().languages?.[lang]?.forms?.[nounCid];
+  const fused = entry && typeof entry === "object" && !Array.isArray(entry)
+    ? entry.fused?.[String(glueCid).toLowerCase()] : null;
+  return typeof fused === "string" && fused ? fused : null;
+}
+
 // Returns true when the concept's pronoun metadata declares plural number
 // (FIRST_PERSON_PLURAL, SECOND_PERSON_PLURAL, THIRD_PERSON_PLURAL).
 function isPluralPronoun(cid) {
@@ -1049,9 +1079,12 @@ function greekDefiniteArticle(gender, plural, caseName) {
 
 function definiteNounPhrase(lang, cid, opts = {}) {
   const entry = vocab().languages?.[lang]?.forms?.[cid] || {};
-  const base = entry.form || formOf(lang, cid);
+  // opts.plural asks for the plural definite phrase of a countable noun
+  // («as meninas») — the plural-only case keeps its own form.
+  const plural = !!entry.pluralOnly || !!opts.plural;
+  const base = plural && !entry.pluralOnly
+    ? pluralFormOf(lang, cid) : (entry.form || formOf(lang, cid));
   const g = entry.gender;
-  const plural = !!entry.pluralOnly;
 
   if (lang === "en") {
     // Seasons read as proper-ish nouns in English: "Winter is cold".
@@ -2626,16 +2659,22 @@ function finalizeSentence(lang, sentence) {
   // finished string (the compound positions carry their «de»; the
   // standalone demonstratives are neuter): «de o» → do, «de isto» → disto,
   // «em este» → neste, «a o» → ao (Emi run-19 -101: «ao lado o telefone»).
+  // Word edges are start/space and space/end-or-punctuation explicitly:
+  // JS \b is ASCII-only, so it sits between «ç» and «a» in «começa» and
+  // the à-contraction fused «começa a dormir» into «começà dormir».
   if (lang === "pt") {
     const dem = "est[ea]s?|ess[ea]s?|aquel[ea]s?|isto|isso|aquilo";
-    return sentence
-      .replace(/\bde (o|a|os|as)\b/g, (_, a) => "d" + a)
-      .replace(new RegExp(`\\bde (${dem})\\b`, "g"), (_, d) => "d" + d)
-      .replace(/\bem (o|a|os|as)\b/g, (_, a) => "n" + a)
-      .replace(new RegExp(`\\bem (${dem})\\b`, "g"), (_, d) => "n" + d)
-      .replace(/\ba (o|os)\b/g, (_, a) => "a" + a)
-      .replace(/\ba a\b/g, "à")
-      .replace(/\ba as\b/g, "às");
+    const L = "(?<![^\\s])", R = "(?![^\\s.,!?;:])";
+    const rule = (pat, fn) => [new RegExp(`${L}${pat}${R}`, "g"), fn];
+    return [
+      rule("de (o|a|os|as)", (_, a) => "d" + a),
+      rule(`de (${dem})`, (_, d) => "d" + d),
+      rule("em (o|a|os|as)", (_, a) => "n" + a),
+      rule(`em (${dem})`, (_, d) => "n" + d),
+      rule("a (o|os)", (_, a) => "a" + a),
+      rule("a a", () => "à"),
+      rule("a as", () => "às"),
+    ].reduce((s, [re, fn]) => s.replace(re, fn), sentence);
   }
   if (lang === "el") {
     // The Greek question mark is «;» — the generated yes/no question
@@ -2870,9 +2909,13 @@ function possessivePostposed(lang, possessiveCid) {
 // no possessiveDefiniteArticle rule («o aeroporto dela»): the article
 // definiteNounPhrase would put before the noun, or null when none.
 function postposedPossessiveArticle(lang, nounCid, noun) {
-  const phrase = definiteNounPhrase(lang, nounCid);
-  if (!phrase || phrase === noun || !phrase.endsWith(noun)) return null;
-  return phrase.slice(0, phrase.length - noun.length).trim() || null;
+  const articleOf = phrase =>
+    (!phrase || phrase === noun || !phrase.endsWith(noun))
+      ? null : (phrase.slice(0, phrase.length - noun.length).trim() || null);
+  // A pluralized predicate («Elas são as meninas dela», Emi run-20 -106)
+  // takes the plural article — the singular phrase no longer ends with it.
+  return articleOf(definiteNounPhrase(lang, nounCid)) ||
+    articleOf(definiteNounPhrase(lang, nounCid, { plural: true }));
 }
 
 function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subjectCid = null) {
@@ -4363,6 +4406,9 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           glueSurface !== formOf(lang, cid)) {
         return glueSurface;
       }
+      // Declared rule (fusedAdpositionForms — no): the noun absorbed this
+      // adposition («hjemmefra»), so its own slot renders empty.
+      if (fusedAdpositionForm(lang, ordered[idx + 1], cid)) return "";
     }
 
     if (existentialHave && cid === subjectCid) {
@@ -4380,8 +4426,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // the right gerund/infinitive plus any linking preposition); fall
       // back to the base/infinitive form so languages without an explicit
       // override still avoid the bug of conjugating the complement.
-      const prevIsVerb = idx > 0 &&
-        vocab().concepts[ordered[idx - 1]]?.type === "verb";
+      // "Preceded by a verb" is read off the TEMPLATE's order, not the
+      // rendered one: a verb-final language (tr «Biz yemeyi bırakırız»)
+      // renders the complement before its main verb, and reading the
+      // rendered order made the main verb the complement — it took the
+      // authored surface unconditionally while the real complement
+      // conjugated («Biz yeriz bırakırız», Emi run-20 -110).
+      const srcIdx = Array.isArray(tpl.concepts) ? tpl.concepts.indexOf(cid) : -1;
+      const prevIsVerb = srcIdx >= 0
+        ? (srcIdx > 0 && vocab().concepts[tpl.concepts[srcIdx - 1]]?.type === "verb")
+        : (idx > 0 && vocab().concepts[ordered[idx - 1]]?.type === "verb");
       if (prevIsVerb) {
         const surfaceOverride = tpl.surface?.[lang]?.[cid];
         if (surfaceOverride) return surfaceOverride;
@@ -4449,9 +4503,24 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // finite form (declared: authoredVerbSurfaces — ja «帰ります»,
       // «やめます»); the paradigm/base lookup was emitting the dictionary
       // form the corpus never uses.
+      // The authored surface belongs to the template's authored subject.
+      // When the app rotated the subject (maybeVarySubject), a verb with
+      // a person paradigm re-conjugates from it instead — «O uyumaya
+      // başlar», never the authored «başlarlar» (Emi run-20 -110). The
+      // authored block names its own subject, so a subject it does not
+      // name is a rotated one. Person-invariant paradigms (ja/ko) keep
+      // the surface: the paradigm form is the dictionary form there.
       if (langRule(lang, "authoredVerbSurfaces")) {
-        const surfaceOverride = tpl.surface?.[lang]?.[cid];
-        if (typeof surfaceOverride === "string" && surfaceOverride) {
+        const block = tpl.surface?.[lang];
+        const surfaceOverride = block?.[cid];
+        const entry = vocab().languages?.[lang]?.forms?.[cid];
+        const personInflected = !!entry && typeof entry === "object" &&
+          typeof entry["3_singular"] === "string";
+        const subjectRotated = !!block && personInflected &&
+          !(subjectCid in block) &&
+          Object.keys(block).some(k => vocab().concepts[k]?.type === "pronoun");
+        if (typeof surfaceOverride === "string" && surfaceOverride &&
+            !subjectRotated) {
           return surfaceOverride;
         }
       }
@@ -4734,6 +4803,23 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // modifier did not land. Surfaces the engine derives identically anyway
   // («книгу», the regular accusative) keep accepting modifiers. Article
   // languages store surfaces bare — same containment guard as below.
+  // A fused adposition form («hjemmefra») is the whole phrase: no
+  // article, no modifier — pinned for the paired build like the authored
+  // surface below.
+  {
+    const fused = idx > 0 ? fusedAdpositionForm(lang, cid, ordered[idx - 1]) : null;
+    if (fused) {
+      if (sharedChoices) {
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)) {
+          sharedChoices["adj_" + cid] = null;
+        }
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)) {
+          sharedChoices["num_" + cid] = null;
+        }
+      }
+      return fused;
+    }
+  }
   if (!useCopularPlural) {
     const surfaceOverride = tpl.surface?.[lang]?.[cid];
     if (typeof surfaceOverride === "string" &&
@@ -5162,6 +5248,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       adjForm = apocopeForm(lang, adjectiveCid, adjForm,
         headEntry?.gender, useCopularPlural, bareNoun || bare);
     }
+    // After the template's possessive the adjective is definite (declared:
+    // definiteAdjectiveAfterPossessive — no «min gode mamma»); before the
+    // blank capture so L3 blanks match the «gode» actually rendered.
+    if (!adjectiveIsPossessive && precededByPossessive) {
+      adjForm = definiteAdjectiveForm(lang, adjectiveCid, adjForm);
+    }
     // Record the exact surface rendered for a forced modifier so the L3
     // "fill in the missing word" blank can match the inflected form actually
     // shown (e.g. uk «темна»), not the base form returned by formOf. Keyed by
@@ -5209,8 +5301,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // scarpe». This is the forced-modifier path (drilled possessives at
       // L2/L3), which shipped «suo taxi» for Italian because the article
       // rule previously lived only on the template-slot path.
+      // A copular-plural predicate pluralizes its drilled possessive with
+      // the noun («Elas são minhas meninas», never «minha meninas»), the
+      // way the template-slot path already does for a carried possessive.
       const possNounEntry = vocab().languages?.[lang]?.forms?.[cid];
-      const possPlural = !!possNounEntry?.pluralOnly;
+      const possPlural = !!possNounEntry?.pluralOnly || useCopularPlural;
       const possForm = possPlural
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjForm;

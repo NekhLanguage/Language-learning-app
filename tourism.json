@@ -2377,9 +2377,9 @@
           "plural": "markeder"
         },
         "SOUVENIR": {
-          "form": "suvenír",
+          "form": "suvenir",
           "gender": "m",
-          "plural": "suvenierer"
+          "plural": "suvenirer"
         },
         "BARGAIN": {
           "form": "kupp",
@@ -2509,7 +2509,15 @@
       "label": "Türkçe",
       "forms": {
         "AIRPORT": {
-          "form": "havalimanı"
+          "form": "havalimanı",
+          "possessed": {
+            "1s": "havalimanım",
+            "2s": "havalimanın",
+            "3s": "havalimanı",
+            "1p": "havalimanımız",
+            "2p": "havalimanınız",
+            "3p": "havalimanları"
+          }
         },
         "PASSPORT": {
           "form": "pasaport"
