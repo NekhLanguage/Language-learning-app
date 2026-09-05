@@ -13,6 +13,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ---
 
+## 2026-09-05
+
+### A language can no longer get stuck at "0 of 40 stops"
+In rare cases, switching languages quickly could save a language before its setup had finished. That language then opened straight onto an empty roadmap, and Continue did nothing, forever. The app now takes you back to the step you had not finished, the pack choice or the "why this language" screen, and it no longer lets a leftover exercise from the previous language write over the new one. Anyone already stuck is rescued the next time they tap that language. The "reload the page" notice also now disappears once a second tap succeeds.
+
 ## 2026-09-03
 
 ### Anna now counts the words she brings back in any form
