@@ -82,7 +82,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.51";
+const APP_DATA_VERSION = "1.2.52";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1940,6 +1940,13 @@ async function runEnterLanguage(btn, langCode) {
   });
   try {
     await Promise.race([enterLanguage(langCode), timeoutP]);
+    const banner = document.getElementById("sync-status");
+    if (banner && banner.dataset.entryError) {
+      banner.classList.add("hidden");
+      banner.classList.remove("is-error");
+      banner.textContent = "";
+      delete banner.dataset.entryError;
+    }
   } catch (err) {
     console.warn("enterLanguage failed:", err);
     try {
@@ -1956,6 +1963,10 @@ async function runEnterLanguage(btn, langCode) {
       banner.textContent = ui("syncFailedReloadNeeded");
       banner.classList.remove("hidden");
       banner.classList.add("is-error");
+      // Marked so a later successful tap can clear THIS banner without
+      // touching the boot-time "showing local copy" notice that shares the
+      // element (Emi run-13 / run-17 leftover: it stayed up after entry).
+      banner.dataset.entryError = "1";
     }
   } finally {
     if (timer) clearTimeout(timer);
@@ -4690,6 +4701,25 @@ if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   USER.runs[langCode] = run;
   saveUser();
 }
+  // -80 (Emi run-17): a run persisted before the pack screen's START
+  // handler (setupComplete false, no release plan) used to fall through to
+  // the roadmap — «0 of 40 stops», Continue ending a session per click,
+  // forever, with RESET PROGRESS the only way out. Resume onboarding where
+  // it stopped instead: the pack screen when a reason is saved, the reason
+  // screen otherwise. Also rescues anyone already stranded.
+  if (!run.setupComplete) {
+    console.warn("Run for", langCode, "never finished setup — resuming onboarding");
+    await loadTemplates([]);
+    if (gen !== enterGeneration) return;
+    languageScreen.classList.remove("active");
+    if (run.reason && run.reason.type) {
+      document.getElementById("pack-screen").classList.add("active");
+      renderPackSelection();
+    } else {
+      showReasonScreen();
+    }
+    return;
+  }
   if (backfillReleasedBundles(run)) {
     run.released.forEach(ensureProgress);
     saveUser();
@@ -5118,6 +5148,17 @@ if (bar) {
   bar.style.width = progress + "%";
 }
   if (!run) return;
+
+  // -80 (Emi run-17): every renderer re-enters here through a timer
+  // (setTimeout(renderNext) after a correct L5/L6 answer, the 0 ms
+  // continue hops) and `run` is module-scoped — quit mid-session, pick
+  // another language, and a stale timer fires against the NEW language's
+  // fresh run: nothing renderable → endSession → the half-built run is
+  // persisted under the new language and stranded (see enterLanguage).
+  // A run that never finished setup, or a learning screen that is not the
+  // active one, is never rendered into.
+  if (!run.setupComplete) return;
+  if (learningScreen && !learningScreen.classList.contains("active")) return;
 
   // -78: an empty lexicon is never "nothing left to teach" — see
   // recoverLexicon. Without this every concept fell through the render
@@ -5589,6 +5630,8 @@ window.canConceptBeTested = canConceptBeTested;
 // simulating dozens of answers.
 window.__app = {
   get run(){ return run; },
+  // e2e seeding of cross-language state (-80 stranded-run tests).
+  get user(){ return USER; },
   get bundleIndex(){ return BUNDLE_INDEX; },
   get lastExercise(){ return LAST_EXERCISE; },
   // Cloud-TTS fallback telemetry ({count, skipped, last}) — a nonzero
