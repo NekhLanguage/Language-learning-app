@@ -1,63 +1,207 @@
 {
   "concepts": [
-
-    { "concept_id": "COOK", "type": "verb" },
-    { "concept_id": "CUT", "type": "verb" },
-    { "concept_id": "BOIL", "type": "verb" },
-    { "concept_id": "PEEL", "type": "verb" },
-    { "concept_id": "FRY", "type": "verb" },
-    { "concept_id": "STIR", "type": "verb" },
-    { "concept_id": "MIX", "type": "verb" },
-    { "concept_id": "WASH", "type": "verb" },
-    { "concept_id": "HEAT", "type": "verb" },
-
-    { "concept_id": "PAN", "type": "noun" },
-    { "concept_id": "KNIFE", "type": "noun" },
-    { "concept_id": "FORK", "type": "noun" },
-    { "concept_id": "SPOON", "type": "noun" },
-    { "concept_id": "SPATULA", "type": "noun" },
-    { "concept_id": "POT", "type": "noun" },
-    { "concept_id": "GLASS", "type": "noun" },
-
-    { "concept_id": "LITRE", "type": "measure" },
-    { "concept_id": "DECILITRE", "type": "measure" },
-    { "concept_id": "MILLILITRE", "type": "measure" },
-    { "concept_id": "GRAM", "type": "measure" },
-    { "concept_id": "KILOGRAM", "type": "measure" },
-
-    { "concept_id": "MEAT", "type": "noun", "countable": false },
-    { "concept_id": "CHICKEN", "type": "noun" },
-    { "concept_id": "FISH", "type": "noun" },
-    { "concept_id": "VEGETABLE", "type": "noun" },
-    { "concept_id": "POTATO", "type": "noun" },
-    { "concept_id": "SALAD", "type": "noun" },
-    { "concept_id": "FRUIT", "type": "noun" },
-    { "concept_id": "BANANA", "type": "noun" },
-    { "concept_id": "SOUP", "type": "noun" },
-    { "concept_id": "DOUGH", "type": "noun", "countable": false },
-    { "concept_id": "SAUCE", "type": "noun" },
-    { "concept_id": "INGREDIENT", "type": "noun" },
-
-    { "concept_id": "KITCHEN", "type": "noun" },
-    { "concept_id": "OVEN", "type": "noun" },
-    { "concept_id": "STOVE", "type": "noun" },
-    { "concept_id": "SINK", "type": "noun" },
-    { "concept_id": "FREEZER", "type": "noun" },
-
-    { "concept_id": "SALT", "type": "noun", "countable": false },
-    { "concept_id": "PEPPER", "type": "noun" },
-    { "concept_id": "BUTTER", "type": "noun", "countable": false },
-    { "concept_id": "SPICE", "type": "noun" },
-    { "concept_id": "RECIPE", "type": "noun", "semantic_role": "abstract" },
-
-    { "concept_id": "SWEET", "type": "adjective" },
-    { "concept_id": "SALTY", "type": "adjective" },
-    { "concept_id": "SOUR", "type": "adjective" },
-    { "concept_id": "FRESH", "type": "adjective" },
-    { "concept_id": "FROZEN", "type": "adjective" },
-    { "concept_id": "RAW", "type": "adjective" }
+    {
+      "concept_id": "COOK",
+      "type": "verb"
+    },
+    {
+      "concept_id": "CUT",
+      "type": "verb"
+    },
+    {
+      "concept_id": "BOIL",
+      "type": "verb"
+    },
+    {
+      "concept_id": "PEEL",
+      "type": "verb"
+    },
+    {
+      "concept_id": "FRY",
+      "type": "verb"
+    },
+    {
+      "concept_id": "STIR",
+      "type": "verb"
+    },
+    {
+      "concept_id": "MIX",
+      "type": "verb"
+    },
+    {
+      "concept_id": "WASH",
+      "type": "verb"
+    },
+    {
+      "concept_id": "HEAT",
+      "type": "verb"
+    },
+    {
+      "concept_id": "PAN",
+      "type": "noun"
+    },
+    {
+      "concept_id": "KNIFE",
+      "type": "noun"
+    },
+    {
+      "concept_id": "FORK",
+      "type": "noun"
+    },
+    {
+      "concept_id": "SPOON",
+      "type": "noun"
+    },
+    {
+      "concept_id": "SPATULA",
+      "type": "noun"
+    },
+    {
+      "concept_id": "POT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "GLASS",
+      "type": "noun"
+    },
+    {
+      "concept_id": "LITRE",
+      "type": "measure"
+    },
+    {
+      "concept_id": "DECILITRE",
+      "type": "measure"
+    },
+    {
+      "concept_id": "MILLILITRE",
+      "type": "measure"
+    },
+    {
+      "concept_id": "GRAM",
+      "type": "measure"
+    },
+    {
+      "concept_id": "KILOGRAM",
+      "type": "measure"
+    },
+    {
+      "concept_id": "MEAT",
+      "type": "noun",
+      "countable": false
+    },
+    {
+      "concept_id": "CHICKEN",
+      "type": "noun"
+    },
+    {
+      "concept_id": "FISH",
+      "type": "noun"
+    },
+    {
+      "concept_id": "VEGETABLE",
+      "type": "noun"
+    },
+    {
+      "concept_id": "POTATO",
+      "type": "noun"
+    },
+    {
+      "concept_id": "SALAD",
+      "type": "noun"
+    },
+    {
+      "concept_id": "FRUIT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "BANANA",
+      "type": "noun"
+    },
+    {
+      "concept_id": "SOUP",
+      "type": "noun"
+    },
+    {
+      "concept_id": "DOUGH",
+      "type": "noun",
+      "countable": false
+    },
+    {
+      "concept_id": "SAUCE",
+      "type": "noun"
+    },
+    {
+      "concept_id": "INGREDIENT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "KITCHEN",
+      "type": "noun"
+    },
+    {
+      "concept_id": "OVEN",
+      "type": "noun"
+    },
+    {
+      "concept_id": "STOVE",
+      "type": "noun"
+    },
+    {
+      "concept_id": "SINK",
+      "type": "noun"
+    },
+    {
+      "concept_id": "FREEZER",
+      "type": "noun"
+    },
+    {
+      "concept_id": "SALT",
+      "type": "noun",
+      "countable": false
+    },
+    {
+      "concept_id": "PEPPER",
+      "type": "noun"
+    },
+    {
+      "concept_id": "BUTTER",
+      "type": "noun",
+      "countable": false
+    },
+    {
+      "concept_id": "SPICE",
+      "type": "noun"
+    },
+    {
+      "concept_id": "RECIPE",
+      "type": "noun",
+      "semantic_role": "abstract"
+    },
+    {
+      "concept_id": "SWEET",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "SALTY",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "SOUR",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "FRESH",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "FROZEN",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "RAW",
+      "type": "adjective"
+    }
   ],
-
   "languages": {
     "fi": {
       "label": "Suomi",
@@ -398,1001 +542,3660 @@
     "en": {
       "label": "English",
       "forms": {
-
-        "COOK": { "base": "cook", "3_singular": "cooks" },
-        "CUT": { "base": "cut", "3_singular": "cuts" },
-        "BOIL": { "base": "boil", "3_singular": "boils" },
-        "PEEL": { "base": "peel", "3_singular": "peels" },
-        "FRY": { "base": "fry", "3_singular": "fries" },
-        "STIR": { "base": "stir", "3_singular": "stirs" },
-        "MIX": { "base": "mix", "3_singular": "mixes" },
-        "WASH": { "base": "wash", "3_singular": "washes" },
-        "HEAT": { "base": "heat", "3_singular": "heats" },
-
-        "PAN": { "form": "pan", "article": "a" },
-        "KNIFE": { "form": "knife", "article": "a", "plural": "knives" },
-        "FORK": { "form": "fork", "article": "a" },
-        "SPOON": { "form": "spoon", "article": "a" },
-        "SPATULA": { "form": "spatula", "article": "a" },
-        "POT": { "form": "pot", "article": "a" },
-        "GLASS": { "form": "glass", "article": "a" },
-
-        "LITRE": { "form": "litre" },
-        "DECILITRE": { "form": "decilitre" },
-        "MILLILITRE": { "form": "millilitre" },
-        "GRAM": { "form": "gram" },
-        "KILOGRAM": { "form": "kilogram" },
-
-        "MEAT": { "form": "meat" },
-        "CHICKEN": { "form": "chicken" },
-        "FISH": { "form": "fish" },
-        "VEGETABLE": { "form": "vegetable", "article": "a" },
-        "POTATO": { "form": "potato", "article": "a" },
-        "SALAD": { "form": "salad", "article": "a" },
-        "FRUIT": { "form": "fruit" },
-        "BANANA": { "form": "banana", "article": "a" },
-        "SOUP": { "form": "soup" },
-        "DOUGH": { "form": "dough" },
-        "SAUCE": { "form": "sauce" },
-        "INGREDIENT": { "form": "ingredient", "article": "an" },
-
-        "KITCHEN": { "form": "kitchen", "article": "a" },
-        "OVEN": { "form": "oven", "article": "an" },
-        "STOVE": { "form": "stove", "article": "a" },
-        "SINK": { "form": "sink", "article": "a" },
-        "FREEZER": { "form": "freezer", "article": "a" },
-
-        "SALT": { "form": "salt" },
-        "PEPPER": { "form": "pepper" },
-        "BUTTER": { "form": "butter" },
-        "SPICE": { "form": "spice", "article": "a" },
-        "RECIPE": { "form": "recipe", "article": "a" },
-
-        "SWEET": ["sweet"],
-        "SALTY": ["salty"],
-        "SOUR": ["sour"],
-        "FRESH": ["fresh"],
-        "FROZEN": ["frozen"],
-        "RAW": ["raw"]
-
+        "COOK": {
+          "base": "cook",
+          "3_singular": "cooks"
+        },
+        "CUT": {
+          "base": "cut",
+          "3_singular": "cuts"
+        },
+        "BOIL": {
+          "base": "boil",
+          "3_singular": "boils"
+        },
+        "PEEL": {
+          "base": "peel",
+          "3_singular": "peels"
+        },
+        "FRY": {
+          "base": "fry",
+          "3_singular": "fries"
+        },
+        "STIR": {
+          "base": "stir",
+          "3_singular": "stirs"
+        },
+        "MIX": {
+          "base": "mix",
+          "3_singular": "mixes"
+        },
+        "WASH": {
+          "base": "wash",
+          "3_singular": "washes"
+        },
+        "HEAT": {
+          "base": "heat",
+          "3_singular": "heats"
+        },
+        "PAN": {
+          "form": "pan",
+          "article": "a"
+        },
+        "KNIFE": {
+          "form": "knife",
+          "article": "a",
+          "plural": "knives"
+        },
+        "FORK": {
+          "form": "fork",
+          "article": "a"
+        },
+        "SPOON": {
+          "form": "spoon",
+          "article": "a"
+        },
+        "SPATULA": {
+          "form": "spatula",
+          "article": "a"
+        },
+        "POT": {
+          "form": "pot",
+          "article": "a"
+        },
+        "GLASS": {
+          "form": "glass",
+          "article": "a"
+        },
+        "LITRE": {
+          "form": "litre"
+        },
+        "DECILITRE": {
+          "form": "decilitre"
+        },
+        "MILLILITRE": {
+          "form": "millilitre"
+        },
+        "GRAM": {
+          "form": "gram"
+        },
+        "KILOGRAM": {
+          "form": "kilogram"
+        },
+        "MEAT": {
+          "form": "meat"
+        },
+        "CHICKEN": {
+          "form": "chicken"
+        },
+        "FISH": {
+          "form": "fish"
+        },
+        "VEGETABLE": {
+          "form": "vegetable",
+          "article": "a"
+        },
+        "POTATO": {
+          "form": "potato",
+          "article": "a"
+        },
+        "SALAD": {
+          "form": "salad",
+          "article": "a"
+        },
+        "FRUIT": {
+          "form": "fruit"
+        },
+        "BANANA": {
+          "form": "banana",
+          "article": "a"
+        },
+        "SOUP": {
+          "form": "soup"
+        },
+        "DOUGH": {
+          "form": "dough"
+        },
+        "SAUCE": {
+          "form": "sauce"
+        },
+        "INGREDIENT": {
+          "form": "ingredient",
+          "article": "an"
+        },
+        "KITCHEN": {
+          "form": "kitchen",
+          "article": "a"
+        },
+        "OVEN": {
+          "form": "oven",
+          "article": "an"
+        },
+        "STOVE": {
+          "form": "stove",
+          "article": "a"
+        },
+        "SINK": {
+          "form": "sink",
+          "article": "a"
+        },
+        "FREEZER": {
+          "form": "freezer",
+          "article": "a"
+        },
+        "SALT": {
+          "form": "salt"
+        },
+        "PEPPER": {
+          "form": "pepper"
+        },
+        "BUTTER": {
+          "form": "butter"
+        },
+        "SPICE": {
+          "form": "spice",
+          "article": "a"
+        },
+        "RECIPE": {
+          "form": "recipe",
+          "article": "a"
+        },
+        "SWEET": [
+          "sweet"
+        ],
+        "SALTY": [
+          "salty"
+        ],
+        "SOUR": [
+          "sour"
+        ],
+        "FRESH": [
+          "fresh"
+        ],
+        "FROZEN": [
+          "frozen"
+        ],
+        "RAW": [
+          "raw"
+        ]
       }
     },
     "pt": {
-  "label": "Portuguese",
-  "forms": {
-
-    "COOK": {
-      "base": "cozinhar",
-      "1_singular": "cozinho",
-      "2_singular": "cozinhas",
-      "3_singular": "cozinha",
-      "1_plural": "cozinhamos",
-      "2_plural": "cozinham",
-      "3_plural": "cozinham"
+      "label": "Portuguese",
+      "forms": {
+        "COOK": {
+          "base": "cozinhar",
+          "1_singular": "cozinho",
+          "2_singular": "cozinhas",
+          "3_singular": "cozinha",
+          "1_plural": "cozinhamos",
+          "2_plural": "cozinham",
+          "3_plural": "cozinham"
+        },
+        "CUT": {
+          "base": "cortar",
+          "1_singular": "corto",
+          "2_singular": "cortas",
+          "3_singular": "corta",
+          "1_plural": "cortamos",
+          "2_plural": "cortam",
+          "3_plural": "cortam"
+        },
+        "BOIL": {
+          "base": "ferver",
+          "1_singular": "fervo",
+          "2_singular": "ferves",
+          "3_singular": "ferve",
+          "1_plural": "fervemos",
+          "2_plural": "fervem",
+          "3_plural": "fervem"
+        },
+        "PEEL": {
+          "base": "descascar",
+          "1_singular": "descasco",
+          "2_singular": "descascas",
+          "3_singular": "descasca",
+          "1_plural": "descascamos",
+          "2_plural": "descascam",
+          "3_plural": "descascam"
+        },
+        "FRY": {
+          "base": "fritar",
+          "1_singular": "frito",
+          "2_singular": "fritas",
+          "3_singular": "frita",
+          "1_plural": "fritamos",
+          "2_plural": "fritam",
+          "3_plural": "fritam"
+        },
+        "STIR": {
+          "base": "mexer",
+          "1_singular": "mexo",
+          "2_singular": "mexes",
+          "3_singular": "mexe",
+          "1_plural": "mexemos",
+          "2_plural": "mexem",
+          "3_plural": "mexem"
+        },
+        "MIX": {
+          "base": "misturar",
+          "1_singular": "misturo",
+          "2_singular": "misturas",
+          "3_singular": "mistura",
+          "1_plural": "misturamos",
+          "2_plural": "misturam",
+          "3_plural": "misturam"
+        },
+        "WASH": {
+          "base": "lavar",
+          "1_singular": "lavo",
+          "2_singular": "lavas",
+          "3_singular": "lava",
+          "1_plural": "lavamos",
+          "2_plural": "lavam",
+          "3_plural": "lavam"
+        },
+        "HEAT": {
+          "base": "aquecer",
+          "1_singular": "aqueço",
+          "2_singular": "aqueces",
+          "3_singular": "aquece",
+          "1_plural": "aquecemos",
+          "2_plural": "aquecem",
+          "3_plural": "aquecem"
+        },
+        "PAN": {
+          "form": "frigideira",
+          "gender": "f",
+          "plural": "frigideiras"
+        },
+        "KNIFE": {
+          "form": "faca",
+          "gender": "f",
+          "plural": "facas"
+        },
+        "FORK": {
+          "form": "garfo",
+          "gender": "m",
+          "plural": "garfos"
+        },
+        "SPOON": {
+          "form": "colher",
+          "gender": "f",
+          "plural": "colheres"
+        },
+        "SPATULA": {
+          "form": "espátula",
+          "gender": "f",
+          "plural": "espátulas"
+        },
+        "POT": {
+          "form": "panela",
+          "gender": "f",
+          "plural": "panelas"
+        },
+        "GLASS": {
+          "form": "copo",
+          "gender": "m"
+        },
+        "LITRE": {
+          "form": "litro"
+        },
+        "DECILITRE": {
+          "form": "decilitro"
+        },
+        "MILLILITRE": {
+          "form": "mililitro"
+        },
+        "GRAM": {
+          "form": "grama"
+        },
+        "KILOGRAM": {
+          "form": "quilograma"
+        },
+        "MEAT": {
+          "form": "carne",
+          "gender": "f"
+        },
+        "CHICKEN": {
+          "form": "frango",
+          "gender": "m",
+          "plural": "frangos"
+        },
+        "FISH": {
+          "form": "peixe",
+          "gender": "m"
+        },
+        "VEGETABLE": {
+          "form": "vegetal",
+          "gender": "m",
+          "plural": "vegetais"
+        },
+        "POTATO": {
+          "form": "batata",
+          "gender": "f",
+          "plural": "batatas"
+        },
+        "SALAD": {
+          "form": "salada",
+          "gender": "f",
+          "plural": "saladas"
+        },
+        "FRUIT": {
+          "form": "fruta",
+          "gender": "f",
+          "plural": "frutas"
+        },
+        "BANANA": {
+          "form": "banana",
+          "gender": "f",
+          "plural": "bananas"
+        },
+        "SOUP": {
+          "form": "sopa",
+          "gender": "f",
+          "plural": "sopas"
+        },
+        "DOUGH": {
+          "form": "massa",
+          "gender": "f"
+        },
+        "SAUCE": {
+          "form": "molho",
+          "gender": "m",
+          "plural": "molhos"
+        },
+        "INGREDIENT": {
+          "form": "ingrediente",
+          "gender": "m",
+          "plural": "ingredientes"
+        },
+        "KITCHEN": {
+          "form": "cozinha",
+          "gender": "f"
+        },
+        "OVEN": {
+          "form": "forno",
+          "gender": "m",
+          "plural": "fornos"
+        },
+        "STOVE": {
+          "form": "fogão",
+          "gender": "m",
+          "plural": "fogões"
+        },
+        "SINK": {
+          "form": "pia",
+          "gender": "f",
+          "plural": "pias"
+        },
+        "FREEZER": {
+          "form": "congelador",
+          "gender": "m",
+          "plural": "congeladores"
+        },
+        "SALT": {
+          "form": "sal",
+          "gender": "m"
+        },
+        "PEPPER": {
+          "form": "pimenta",
+          "gender": "f"
+        },
+        "BUTTER": {
+          "form": "manteiga",
+          "gender": "f"
+        },
+        "SPICE": {
+          "form": "tempero",
+          "gender": "m"
+        },
+        "RECIPE": {
+          "form": "receita",
+          "gender": "f",
+          "plural": "receitas"
+        },
+        "SWEET": [
+          "doce"
+        ],
+        "SALTY": [
+          "salgado"
+        ],
+        "SOUR": [
+          "azedo"
+        ],
+        "FRESH": [
+          "fresco"
+        ],
+        "FROZEN": [
+          "congelado"
+        ],
+        "RAW": [
+          "cru"
+        ]
+      }
     },
-    "CUT": {
-      "base": "cortar",
-      "1_singular": "corto",
-      "2_singular": "cortas",
-      "3_singular": "corta",
-      "1_plural": "cortamos",
-      "2_plural": "cortam",
-      "3_plural": "cortam"
+    "ja": {
+      "label": "Japanese",
+      "forms": {
+        "COOK": {
+          "base": "料理します"
+        },
+        "CUT": {
+          "base": "切ります"
+        },
+        "BOIL": {
+          "base": "ゆでます"
+        },
+        "PEEL": {
+          "base": "皮をむきます"
+        },
+        "FRY": {
+          "base": "揚げます"
+        },
+        "STIR": {
+          "base": "かき混ぜます"
+        },
+        "MIX": {
+          "base": "混ぜます"
+        },
+        "WASH": {
+          "base": "洗います"
+        },
+        "HEAT": {
+          "base": "温めます"
+        },
+        "PAN": {
+          "form": "フライパン"
+        },
+        "KNIFE": {
+          "form": "ナイフ"
+        },
+        "FORK": {
+          "form": "フォーク"
+        },
+        "SPOON": {
+          "form": "スプーン"
+        },
+        "SPATULA": {
+          "form": "へら"
+        },
+        "POT": {
+          "form": "鍋"
+        },
+        "GLASS": {
+          "form": "コップ"
+        },
+        "LITRE": {
+          "form": "リットル"
+        },
+        "DECILITRE": {
+          "form": "デシリットル"
+        },
+        "MILLILITRE": {
+          "form": "ミリリットル"
+        },
+        "GRAM": {
+          "form": "グラム"
+        },
+        "KILOGRAM": {
+          "form": "キログラム"
+        },
+        "MEAT": {
+          "form": "肉"
+        },
+        "CHICKEN": {
+          "form": "鶏肉"
+        },
+        "FISH": {
+          "form": "魚"
+        },
+        "VEGETABLE": {
+          "form": "野菜"
+        },
+        "POTATO": {
+          "form": "じゃがいも"
+        },
+        "SALAD": {
+          "form": "サラダ"
+        },
+        "FRUIT": {
+          "form": "果物"
+        },
+        "BANANA": {
+          "form": "バナナ"
+        },
+        "SOUP": {
+          "form": "スープ"
+        },
+        "DOUGH": {
+          "form": "生地"
+        },
+        "SAUCE": {
+          "form": "ソース"
+        },
+        "INGREDIENT": {
+          "form": "材料"
+        },
+        "KITCHEN": {
+          "form": "台所"
+        },
+        "OVEN": {
+          "form": "オーブン"
+        },
+        "STOVE": {
+          "form": "コンロ"
+        },
+        "SINK": {
+          "form": "流し台"
+        },
+        "FREEZER": {
+          "form": "冷凍庫"
+        },
+        "SALT": {
+          "form": "塩"
+        },
+        "PEPPER": {
+          "form": "こしょう"
+        },
+        "BUTTER": {
+          "form": "バター"
+        },
+        "SPICE": {
+          "form": "香辛料"
+        },
+        "RECIPE": {
+          "form": "レシピ"
+        },
+        "SWEET": [
+          "甘い"
+        ],
+        "SALTY": [
+          "塩辛い"
+        ],
+        "SOUR": [
+          "酸っぱい"
+        ],
+        "FRESH": {
+          "form": "新鮮な",
+          "predicative": "新鮮"
+        },
+        "FROZEN": [
+          "冷凍の"
+        ],
+        "RAW": [
+          "生の"
+        ]
+      }
     },
-    "BOIL": {
-      "base": "ferver",
-      "1_singular": "fervo",
-      "2_singular": "ferves",
-      "3_singular": "ferve",
-      "1_plural": "fervemos",
-      "2_plural": "fervem",
-      "3_plural": "fervem"
+    "no": {
+      "label": "Norsk",
+      "forms": {
+        "COOK": {
+          "base": "lage",
+          "present": "lager"
+        },
+        "CUT": {
+          "base": "kutte",
+          "present": "kutter"
+        },
+        "BOIL": {
+          "base": "koke",
+          "present": "koker"
+        },
+        "PEEL": {
+          "base": "skrelle",
+          "present": "skreller"
+        },
+        "FRY": {
+          "base": "steke",
+          "present": "steker"
+        },
+        "STIR": {
+          "base": "røre",
+          "present": "rører"
+        },
+        "MIX": {
+          "base": "blande",
+          "present": "blander"
+        },
+        "WASH": {
+          "base": "vaske",
+          "present": "vasker"
+        },
+        "HEAT": {
+          "base": "varme",
+          "present": "varmer"
+        },
+        "PAN": {
+          "form": "panne",
+          "gender": "m",
+          "plural": "panner"
+        },
+        "KNIFE": {
+          "form": "kniv",
+          "gender": "m",
+          "plural": "kniver"
+        },
+        "FORK": {
+          "form": "gaffel",
+          "gender": "m",
+          "plural": "gafler"
+        },
+        "SPOON": {
+          "form": "skje",
+          "gender": "f",
+          "plural": "skjeer"
+        },
+        "SPATULA": {
+          "form": "stekespade",
+          "gender": "m",
+          "plural": "stekespader"
+        },
+        "POT": {
+          "form": "gryte",
+          "gender": "f",
+          "plural": "gryter"
+        },
+        "GLASS": {
+          "form": "glass",
+          "gender": "n"
+        },
+        "LITRE": {
+          "form": "liter"
+        },
+        "DECILITRE": {
+          "form": "desiliter"
+        },
+        "MILLILITRE": {
+          "form": "milliliter"
+        },
+        "GRAM": {
+          "form": "gram"
+        },
+        "KILOGRAM": {
+          "form": "kilogram"
+        },
+        "MEAT": {
+          "form": "kjøtt",
+          "gender": "n"
+        },
+        "CHICKEN": {
+          "form": "kylling",
+          "gender": "m",
+          "plural": "kyllinger"
+        },
+        "FISH": {
+          "form": "fisk",
+          "gender": "m"
+        },
+        "VEGETABLE": {
+          "form": "grønnsak",
+          "gender": "m",
+          "plural": "grønnsaker"
+        },
+        "POTATO": {
+          "form": "potet",
+          "gender": "m",
+          "plural": "poteter"
+        },
+        "SALAD": {
+          "form": "salat",
+          "gender": "m",
+          "plural": "salater"
+        },
+        "FRUIT": {
+          "form": "frukt",
+          "gender": "f",
+          "plural": "frukter"
+        },
+        "BANANA": {
+          "form": "banan",
+          "gender": "m",
+          "plural": "bananer"
+        },
+        "SOUP": {
+          "form": "suppe",
+          "gender": "f",
+          "plural": "supper"
+        },
+        "DOUGH": {
+          "form": "deig",
+          "gender": "m"
+        },
+        "SAUCE": {
+          "form": "saus",
+          "gender": "m",
+          "plural": "sauser"
+        },
+        "INGREDIENT": {
+          "form": "ingrediens",
+          "gender": "m",
+          "plural": "ingredienser"
+        },
+        "KITCHEN": {
+          "form": "kjøkken",
+          "gender": "n"
+        },
+        "OVEN": {
+          "form": "ovn",
+          "gender": "m",
+          "plural": "ovner"
+        },
+        "STOVE": {
+          "form": "komfyr",
+          "gender": "m",
+          "plural": "komfyrer"
+        },
+        "SINK": {
+          "form": "vask",
+          "gender": "m",
+          "plural": "vasker"
+        },
+        "FREEZER": {
+          "form": "fryser",
+          "gender": "m",
+          "plural": "frysere"
+        },
+        "SALT": {
+          "form": "salt",
+          "gender": "n"
+        },
+        "PEPPER": {
+          "form": "pepper",
+          "gender": "n"
+        },
+        "BUTTER": {
+          "form": "smør",
+          "gender": "n"
+        },
+        "SPICE": {
+          "form": "krydder",
+          "gender": "n"
+        },
+        "RECIPE": {
+          "form": "oppskrift",
+          "gender": "f",
+          "plural": "oppskrifter"
+        },
+        "SWEET": [
+          "søt"
+        ],
+        "SALTY": [
+          "salt"
+        ],
+        "SOUR": [
+          "sur"
+        ],
+        "FRESH": [
+          "fersk"
+        ],
+        "FROZEN": [
+          "frossen"
+        ],
+        "RAW": [
+          "rå"
+        ]
+      }
     },
-    "PEEL": {
-      "base": "descascar",
-      "1_singular": "descasco",
-      "2_singular": "descascas",
-      "3_singular": "descasca",
-      "1_plural": "descascamos",
-      "2_plural": "descascam",
-      "3_plural": "descascam"
+    "ar": {
+      "label": "العربية",
+      "forms": {
+        "COOK": {
+          "base": "يطبخ",
+          "1_singular": "أطبخ",
+          "2_singular": "تطبخ",
+          "3_singular": "يطبخ",
+          "3_singular_feminine": "تطبخ",
+          "1_plural": "نطبخ",
+          "2_plural": "تطبخون",
+          "3_plural": "يطبخون"
+        },
+        "CUT": {
+          "base": "يقطع",
+          "1_singular": "أقطع",
+          "2_singular": "تقطع",
+          "3_singular": "يقطع",
+          "3_singular_feminine": "تقطع",
+          "1_plural": "نقطع",
+          "2_plural": "تقطعون",
+          "3_plural": "يقطعون"
+        },
+        "BOIL": {
+          "base": "يغلي",
+          "1_singular": "أغلي",
+          "2_singular": "تغلي",
+          "3_singular": "يغلي",
+          "3_singular_feminine": "تغلي",
+          "1_plural": "نغلي",
+          "2_plural": "تغلون",
+          "3_plural": "يغلون"
+        },
+        "PEEL": {
+          "base": "يقشر",
+          "1_singular": "أقشر",
+          "2_singular": "تقشر",
+          "3_singular": "يقشر",
+          "3_singular_feminine": "تقشر",
+          "1_plural": "نقشر",
+          "2_plural": "تقشرون",
+          "3_plural": "يقشرون"
+        },
+        "FRY": {
+          "base": "يقلي",
+          "1_singular": "أقلي",
+          "2_singular": "تقلي",
+          "3_singular": "يقلي",
+          "3_singular_feminine": "تقلي",
+          "1_plural": "نقلي",
+          "2_plural": "تقلون",
+          "3_plural": "يقلون"
+        },
+        "STIR": {
+          "base": "يحرك",
+          "1_singular": "أحرك",
+          "2_singular": "تحرك",
+          "3_singular": "يحرك",
+          "3_singular_feminine": "تحرك",
+          "1_plural": "نحرك",
+          "2_plural": "تحركون",
+          "3_plural": "يحركون"
+        },
+        "MIX": {
+          "base": "يخلط",
+          "1_singular": "أخلط",
+          "2_singular": "تخلط",
+          "3_singular": "يخلط",
+          "3_singular_feminine": "تخلط",
+          "1_plural": "نخلط",
+          "2_plural": "تخلطون",
+          "3_plural": "يخلطون"
+        },
+        "WASH": {
+          "base": "يغسل",
+          "1_singular": "أغسل",
+          "2_singular": "تغسل",
+          "3_singular": "يغسل",
+          "3_singular_feminine": "تغسل",
+          "1_plural": "نغسل",
+          "2_plural": "تغسلون",
+          "3_plural": "يغسلون"
+        },
+        "HEAT": {
+          "base": "يسخن",
+          "1_singular": "أسخن",
+          "2_singular": "تسخن",
+          "3_singular": "يسخن",
+          "3_singular_feminine": "تسخن",
+          "1_plural": "نسخن",
+          "2_plural": "تسخنون",
+          "3_plural": "يسخنون"
+        },
+        "PAN": {
+          "gender": "f",
+          "form": "مقلاة"
+        },
+        "KNIFE": {
+          "gender": "m",
+          "form": "سكين"
+        },
+        "FORK": {
+          "gender": "f",
+          "form": "شوكة"
+        },
+        "SPOON": {
+          "gender": "f",
+          "form": "ملعقة"
+        },
+        "SPATULA": {
+          "gender": "f",
+          "form": "ملعقة تقليب"
+        },
+        "POT": {
+          "gender": "m",
+          "form": "قدر"
+        },
+        "GLASS": {
+          "gender": "m",
+          "form": "كوب"
+        },
+        "LITRE": {
+          "form": "لتر"
+        },
+        "DECILITRE": {
+          "form": "ديسيلتر"
+        },
+        "MILLILITRE": {
+          "form": "ملليلتر"
+        },
+        "GRAM": {
+          "form": "غرام"
+        },
+        "KILOGRAM": {
+          "form": "كيلوغرام"
+        },
+        "MEAT": {
+          "gender": "m",
+          "form": "لحم"
+        },
+        "CHICKEN": {
+          "gender": "m",
+          "form": "دجاج"
+        },
+        "FISH": {
+          "gender": "m",
+          "form": "سمك"
+        },
+        "VEGETABLE": {
+          "gender": "m",
+          "form": "خضار"
+        },
+        "POTATO": {
+          "gender": "f",
+          "form": "بطاطا"
+        },
+        "SALAD": {
+          "gender": "f",
+          "form": "سلطة"
+        },
+        "FRUIT": {
+          "gender": "f",
+          "form": "فاكهة"
+        },
+        "BANANA": {
+          "gender": "m",
+          "form": "موز"
+        },
+        "SOUP": {
+          "gender": "m",
+          "form": "حساء"
+        },
+        "DOUGH": {
+          "gender": "m",
+          "form": "عجين"
+        },
+        "SAUCE": {
+          "gender": "f",
+          "form": "صلصة"
+        },
+        "INGREDIENT": {
+          "gender": "m",
+          "form": "مكون"
+        },
+        "KITCHEN": {
+          "gender": "m",
+          "form": "مطبخ"
+        },
+        "OVEN": {
+          "gender": "m",
+          "form": "فرن"
+        },
+        "STOVE": {
+          "gender": "m",
+          "form": "موقد"
+        },
+        "SINK": {
+          "gender": "m",
+          "form": "حوض"
+        },
+        "FREEZER": {
+          "gender": "m",
+          "form": "مجمد"
+        },
+        "SALT": {
+          "gender": "m",
+          "form": "ملح"
+        },
+        "PEPPER": {
+          "gender": "m",
+          "form": "فلفل"
+        },
+        "BUTTER": {
+          "gender": "f",
+          "form": "زبدة"
+        },
+        "SPICE": {
+          "gender": "m",
+          "form": "بهار"
+        },
+        "RECIPE": {
+          "gender": "f",
+          "form": "وصفة"
+        },
+        "SWEET": {
+          "form": "حلو",
+          "f": "حلوة"
+        },
+        "SALTY": {
+          "form": "مالح",
+          "f": "مالحة"
+        },
+        "SOUR": {
+          "form": "حامض",
+          "f": "حامضة"
+        },
+        "FRESH": {
+          "form": "طازج",
+          "f": "طازجة"
+        },
+        "FROZEN": {
+          "form": "مجمد",
+          "f": "مجمدة"
+        },
+        "RAW": {
+          "form": "نيء",
+          "f": "نيئة"
+        }
+      }
     },
-    "FRY": {
-      "base": "fritar",
-      "1_singular": "frito",
-      "2_singular": "fritas",
-      "3_singular": "frita",
-      "1_plural": "fritamos",
-      "2_plural": "fritam",
-      "3_plural": "fritam"
+    "ko": {
+      "label": "한국어",
+      "forms": {
+        "COOK": {
+          "base": "요리하다",
+          "present": "요리해요"
+        },
+        "CUT": {
+          "base": "자르다",
+          "present": "잘라요"
+        },
+        "BOIL": {
+          "base": "끓이다",
+          "present": "끓여요"
+        },
+        "PEEL": {
+          "base": "껍질을 벗기다",
+          "present": "껍질을 벗겨요",
+          "incorporatedObject": true
+        },
+        "FRY": {
+          "base": "튀기다",
+          "present": "튀겨요"
+        },
+        "STIR": {
+          "base": "젓다",
+          "present": "저어요"
+        },
+        "MIX": {
+          "base": "섞다",
+          "present": "섞어요"
+        },
+        "WASH": {
+          "base": "씻다",
+          "present": "씻어요"
+        },
+        "HEAT": {
+          "base": "데우다",
+          "present": "데워요"
+        },
+        "PAN": {
+          "form": "팬"
+        },
+        "KNIFE": {
+          "form": "칼"
+        },
+        "FORK": {
+          "form": "포크"
+        },
+        "SPOON": {
+          "form": "숟가락"
+        },
+        "SPATULA": {
+          "form": "주걱"
+        },
+        "POT": {
+          "form": "냄비"
+        },
+        "GLASS": {
+          "form": "컵"
+        },
+        "LITRE": {
+          "form": "리터"
+        },
+        "DECILITRE": {
+          "form": "데시리터"
+        },
+        "MILLILITRE": {
+          "form": "밀리리터"
+        },
+        "GRAM": {
+          "form": "그램"
+        },
+        "KILOGRAM": {
+          "form": "킬로그램"
+        },
+        "MEAT": {
+          "form": "고기"
+        },
+        "CHICKEN": {
+          "form": "닭고기"
+        },
+        "FISH": {
+          "form": "생선"
+        },
+        "VEGETABLE": {
+          "form": "채소"
+        },
+        "POTATO": {
+          "form": "감자"
+        },
+        "SALAD": {
+          "form": "샐러드"
+        },
+        "FRUIT": {
+          "form": "과일"
+        },
+        "BANANA": {
+          "form": "바나나"
+        },
+        "SOUP": {
+          "form": "수프"
+        },
+        "DOUGH": {
+          "form": "반죽"
+        },
+        "SAUCE": {
+          "form": "소스"
+        },
+        "INGREDIENT": {
+          "form": "재료"
+        },
+        "KITCHEN": {
+          "form": "부엌"
+        },
+        "OVEN": {
+          "form": "오븐"
+        },
+        "STOVE": {
+          "form": "가스레인지"
+        },
+        "SINK": {
+          "form": "싱크대"
+        },
+        "FREEZER": {
+          "form": "냉동고"
+        },
+        "SALT": {
+          "form": "소금"
+        },
+        "PEPPER": {
+          "form": "후추"
+        },
+        "BUTTER": {
+          "form": "버터"
+        },
+        "SPICE": {
+          "form": "향신료"
+        },
+        "RECIPE": {
+          "form": "레시피"
+        },
+        "SWEET": [
+          "달콤한"
+        ],
+        "SALTY": [
+          "짠"
+        ],
+        "SOUR": [
+          "신"
+        ],
+        "FRESH": [
+          "신선한"
+        ],
+        "FROZEN": [
+          "냉동된"
+        ],
+        "RAW": [
+          "생"
+        ]
+      }
     },
-    "STIR": {
-      "base": "mexer",
-      "1_singular": "mexo",
-      "2_singular": "mexes",
-      "3_singular": "mexe",
-      "1_plural": "mexemos",
-      "2_plural": "mexem",
-      "3_plural": "mexem"
+    "uk": {
+      "label": "Українська",
+      "forms": {
+        "COOK": {
+          "base": "готувати",
+          "1_singular": "готую",
+          "2_singular": "готуєш",
+          "3_singular": "готує",
+          "1_plural": "готуємо",
+          "2_plural": "готуєте",
+          "3_plural": "готують"
+        },
+        "CUT": {
+          "base": "різати",
+          "1_singular": "ріжу",
+          "2_singular": "ріжеш",
+          "3_singular": "ріже",
+          "1_plural": "ріжемо",
+          "2_plural": "ріжете",
+          "3_plural": "ріжуть"
+        },
+        "BOIL": {
+          "base": "варити",
+          "1_singular": "варю",
+          "2_singular": "вариш",
+          "3_singular": "варить",
+          "1_plural": "варимо",
+          "2_plural": "варите",
+          "3_plural": "варять"
+        },
+        "PEEL": {
+          "base": "чистити",
+          "1_singular": "чищу",
+          "2_singular": "чистиш",
+          "3_singular": "чистить",
+          "1_plural": "чистимо",
+          "2_plural": "чистите",
+          "3_plural": "чистять"
+        },
+        "FRY": {
+          "base": "смажити",
+          "1_singular": "смажу",
+          "2_singular": "смажиш",
+          "3_singular": "смажить",
+          "1_plural": "смажимо",
+          "2_plural": "смажите",
+          "3_plural": "смажать"
+        },
+        "STIR": {
+          "base": "мішати",
+          "1_singular": "мішаю",
+          "2_singular": "мішаєш",
+          "3_singular": "мішає",
+          "1_plural": "мішаємо",
+          "2_plural": "мішаєте",
+          "3_plural": "мішають"
+        },
+        "MIX": {
+          "base": "змішувати",
+          "1_singular": "змішую",
+          "2_singular": "змішуєш",
+          "3_singular": "змішує",
+          "1_plural": "змішуємо",
+          "2_plural": "змішуєте",
+          "3_plural": "змішують"
+        },
+        "WASH": {
+          "base": "мити",
+          "1_singular": "мию",
+          "2_singular": "миєш",
+          "3_singular": "миє",
+          "1_plural": "миємо",
+          "2_plural": "миєте",
+          "3_plural": "миють"
+        },
+        "HEAT": {
+          "base": "нагрівати",
+          "1_singular": "нагріваю",
+          "2_singular": "нагріваєш",
+          "3_singular": "нагріває",
+          "1_plural": "нагріваємо",
+          "2_plural": "нагріваєте",
+          "3_plural": "нагрівають"
+        },
+        "PAN": {
+          "gender": "f",
+          "form": "сковорода",
+          "plural": "сковороди",
+          "genitive_plural": "сковорід"
+        },
+        "KNIFE": {
+          "gender": "m",
+          "form": "ніж",
+          "plural": "ножі",
+          "genitive_plural": "ножів"
+        },
+        "FORK": {
+          "gender": "f",
+          "form": "виделка",
+          "plural": "виделки",
+          "genitive_plural": "виделок"
+        },
+        "SPOON": {
+          "gender": "f",
+          "form": "ложка",
+          "plural": "ложки",
+          "genitive_plural": "ложок"
+        },
+        "SPATULA": {
+          "gender": "f",
+          "form": "лопатка",
+          "plural": "лопатки",
+          "genitive_plural": "лопаток"
+        },
+        "POT": {
+          "gender": "f",
+          "form": "каструля",
+          "plural": "каструлі",
+          "genitive_plural": "каструль"
+        },
+        "GLASS": {
+          "gender": "f",
+          "form": "склянка",
+          "plural": "склянки",
+          "genitive_plural": "склянок"
+        },
+        "LITRE": {
+          "form": "літр"
+        },
+        "DECILITRE": {
+          "form": "децилітр"
+        },
+        "MILLILITRE": {
+          "form": "мілілітр"
+        },
+        "GRAM": {
+          "form": "грам"
+        },
+        "KILOGRAM": {
+          "form": "кілограм"
+        },
+        "MEAT": {
+          "gender": "n",
+          "form": "м’ясо"
+        },
+        "CHICKEN": {
+          "gender": "f",
+          "form": "курка",
+          "plural": "курки",
+          "genitive_plural": "курок"
+        },
+        "FISH": {
+          "gender": "f",
+          "form": "риба"
+        },
+        "VEGETABLE": {
+          "gender": "m",
+          "form": "овоч",
+          "plural": "овочі",
+          "genitive_plural": "овочів"
+        },
+        "POTATO": {
+          "gender": "f",
+          "form": "картопля",
+          "plural": "картоплі"
+        },
+        "SALAD": {
+          "gender": "m",
+          "form": "салат",
+          "plural": "салати",
+          "genitive_plural": "салатів"
+        },
+        "FRUIT": {
+          "gender": "m",
+          "form": "фрукт",
+          "plural": "фрукти",
+          "genitive_plural": "фруктів"
+        },
+        "BANANA": {
+          "gender": "m",
+          "form": "банан",
+          "plural": "банани",
+          "genitive_plural": "бананів"
+        },
+        "SOUP": {
+          "gender": "m",
+          "form": "суп",
+          "plural": "супи",
+          "genitive_plural": "супів"
+        },
+        "DOUGH": {
+          "gender": "n",
+          "form": "тісто"
+        },
+        "SAUCE": {
+          "gender": "m",
+          "form": "соус",
+          "plural": "соуси",
+          "genitive_plural": "соусів"
+        },
+        "INGREDIENT": {
+          "gender": "m",
+          "form": "інгредієнт",
+          "plural": "інгредієнти",
+          "genitive_plural": "інгредієнтів"
+        },
+        "KITCHEN": {
+          "gender": "f",
+          "form": "кухня",
+          "plural": "кухні",
+          "genitive_plural": "кухонь"
+        },
+        "OVEN": {
+          "gender": "f",
+          "form": "духовка",
+          "plural": "духовки",
+          "genitive_plural": "духовок"
+        },
+        "STOVE": {
+          "gender": "f",
+          "form": "плита",
+          "plural": "плити",
+          "genitive_plural": "плит"
+        },
+        "SINK": {
+          "gender": "f",
+          "form": "раковина",
+          "plural": "раковини",
+          "genitive_plural": "раковин"
+        },
+        "FREEZER": {
+          "gender": "m",
+          "form": "морозильник",
+          "plural": "морозильники",
+          "genitive_plural": "морозильників"
+        },
+        "SALT": {
+          "gender": "f",
+          "form": "сіль"
+        },
+        "PEPPER": {
+          "gender": "m",
+          "form": "перець"
+        },
+        "BUTTER": {
+          "gender": "n",
+          "form": "масло"
+        },
+        "SPICE": {
+          "gender": "f",
+          "form": "спеція",
+          "plural": "спеції",
+          "genitive_plural": "спецій"
+        },
+        "RECIPE": {
+          "gender": "m",
+          "form": "рецепт",
+          "plural": "рецепти",
+          "genitive_plural": "рецептів"
+        },
+        "SWEET": [
+          "солодкий"
+        ],
+        "SALTY": [
+          "солоний"
+        ],
+        "SOUR": [
+          "кислий"
+        ],
+        "FRESH": [
+          "свіжий"
+        ],
+        "FROZEN": [
+          "заморожений"
+        ],
+        "RAW": [
+          "сирий"
+        ]
+      }
     },
-    "MIX": {
-      "base": "misturar",
-      "1_singular": "misturo",
-      "2_singular": "misturas",
-      "3_singular": "mistura",
-      "1_plural": "misturamos",
-      "2_plural": "misturam",
-      "3_plural": "misturam"
+    "es": {
+      "label": "Español",
+      "forms": {
+        "COOK": {
+          "base": "cocinar",
+          "1_singular": "cocino",
+          "2_singular": "cocinas",
+          "3_singular": "cocina",
+          "1_plural": "cocinamos",
+          "2_plural": "cocináis",
+          "3_plural": "cocinan"
+        },
+        "CUT": {
+          "base": "cortar",
+          "1_singular": "corto",
+          "2_singular": "cortas",
+          "3_singular": "corta",
+          "1_plural": "cortamos",
+          "2_plural": "cortáis",
+          "3_plural": "cortan"
+        },
+        "BOIL": {
+          "base": "hervir",
+          "1_singular": "hiervo",
+          "2_singular": "hierves",
+          "3_singular": "hierve",
+          "1_plural": "hervimos",
+          "2_plural": "hervís",
+          "3_plural": "hierven"
+        },
+        "PEEL": {
+          "base": "pelar",
+          "1_singular": "pelo",
+          "2_singular": "pelas",
+          "3_singular": "pela",
+          "1_plural": "pelamos",
+          "2_plural": "peláis",
+          "3_plural": "pelan"
+        },
+        "FRY": {
+          "base": "freír",
+          "1_singular": "frío",
+          "2_singular": "fríes",
+          "3_singular": "fríe",
+          "1_plural": "freímos",
+          "2_plural": "freís",
+          "3_plural": "fríen"
+        },
+        "STIR": {
+          "base": "remover",
+          "1_singular": "remuevo",
+          "2_singular": "remueves",
+          "3_singular": "remueve",
+          "1_plural": "removemos",
+          "2_plural": "removéis",
+          "3_plural": "remueven"
+        },
+        "MIX": {
+          "base": "mezclar",
+          "1_singular": "mezclo",
+          "2_singular": "mezclas",
+          "3_singular": "mezcla",
+          "1_plural": "mezclamos",
+          "2_plural": "mezcláis",
+          "3_plural": "mezclan"
+        },
+        "WASH": {
+          "base": "lavar",
+          "1_singular": "lavo",
+          "2_singular": "lavas",
+          "3_singular": "lava",
+          "1_plural": "lavamos",
+          "2_plural": "laváis",
+          "3_plural": "lavan"
+        },
+        "HEAT": {
+          "base": "calentar",
+          "1_singular": "caliento",
+          "2_singular": "calientas",
+          "3_singular": "calienta",
+          "1_plural": "calentamos",
+          "2_plural": "calentáis",
+          "3_plural": "calientan"
+        },
+        "PAN": {
+          "form": "sartén",
+          "gender": "f",
+          "plural": "sartenes"
+        },
+        "KNIFE": {
+          "form": "cuchillo",
+          "gender": "m",
+          "plural": "cuchillos"
+        },
+        "FORK": {
+          "form": "tenedor",
+          "gender": "m",
+          "plural": "tenedores"
+        },
+        "SPOON": {
+          "form": "cuchara",
+          "gender": "f",
+          "plural": "cucharas"
+        },
+        "SPATULA": {
+          "form": "espátula",
+          "gender": "f",
+          "plural": "espátulas"
+        },
+        "POT": {
+          "form": "olla",
+          "gender": "f",
+          "plural": "ollas"
+        },
+        "GLASS": {
+          "form": "vaso",
+          "gender": "m"
+        },
+        "LITRE": {
+          "form": "litro"
+        },
+        "DECILITRE": {
+          "form": "decilitro"
+        },
+        "MILLILITRE": {
+          "form": "mililitro"
+        },
+        "GRAM": {
+          "form": "gramo"
+        },
+        "KILOGRAM": {
+          "form": "kilogramo"
+        },
+        "MEAT": {
+          "form": "carne",
+          "gender": "f"
+        },
+        "CHICKEN": {
+          "form": "pollo",
+          "gender": "m",
+          "plural": "pollos"
+        },
+        "FISH": {
+          "form": "pescado",
+          "gender": "m"
+        },
+        "VEGETABLE": {
+          "form": "verdura",
+          "gender": "f",
+          "plural": "verduras"
+        },
+        "POTATO": {
+          "form": "patata",
+          "gender": "f",
+          "plural": "patatas"
+        },
+        "SALAD": {
+          "form": "ensalada",
+          "gender": "f",
+          "plural": "ensaladas"
+        },
+        "FRUIT": {
+          "form": "fruta",
+          "gender": "f",
+          "plural": "frutas"
+        },
+        "BANANA": {
+          "form": "plátano",
+          "gender": "m",
+          "plural": "plátanos"
+        },
+        "SOUP": {
+          "form": "sopa",
+          "gender": "f",
+          "plural": "sopas"
+        },
+        "DOUGH": {
+          "form": "masa",
+          "gender": "f"
+        },
+        "SAUCE": {
+          "form": "salsa",
+          "gender": "f",
+          "plural": "salsas"
+        },
+        "INGREDIENT": {
+          "form": "ingrediente",
+          "gender": "m",
+          "plural": "ingredientes"
+        },
+        "KITCHEN": {
+          "form": "cocina",
+          "gender": "f"
+        },
+        "OVEN": {
+          "form": "horno",
+          "gender": "m",
+          "plural": "hornos"
+        },
+        "STOVE": {
+          "form": "fogón",
+          "gender": "m",
+          "plural": "fogones"
+        },
+        "SINK": {
+          "form": "fregadero",
+          "gender": "m",
+          "plural": "fregaderos"
+        },
+        "FREEZER": {
+          "form": "congelador",
+          "gender": "m",
+          "plural": "congeladores"
+        },
+        "SALT": {
+          "form": "sal",
+          "gender": "f"
+        },
+        "PEPPER": {
+          "form": "pimienta",
+          "gender": "f"
+        },
+        "BUTTER": {
+          "form": "mantequilla",
+          "gender": "f"
+        },
+        "SPICE": {
+          "form": "especia",
+          "gender": "f"
+        },
+        "RECIPE": {
+          "form": "receta",
+          "gender": "f",
+          "plural": "recetas"
+        },
+        "SWEET": [
+          "dulce"
+        ],
+        "SALTY": [
+          "salado"
+        ],
+        "SOUR": [
+          "ácido"
+        ],
+        "FRESH": [
+          "fresco"
+        ],
+        "FROZEN": [
+          "congelado"
+        ],
+        "RAW": [
+          "crudo"
+        ]
+      }
     },
-    "WASH": {
-      "base": "lavar",
-      "1_singular": "lavo",
-      "2_singular": "lavas",
-      "3_singular": "lava",
-      "1_plural": "lavamos",
-      "2_plural": "lavam",
-      "3_plural": "lavam"
-    },
-    "HEAT": {
-      "base": "aquecer",
-      "1_singular": "aqueço",
-      "2_singular": "aqueces",
-      "3_singular": "aquece",
-      "1_plural": "aquecemos",
-      "2_plural": "aquecem",
-      "3_plural": "aquecem"
-    },
-
-    "PAN": { "form": "frigideira", "gender": "f", "plural": "frigideiras" },
-    "KNIFE": { "form": "faca", "gender": "f", "plural": "facas" },
-    "FORK": { "form": "garfo", "gender": "m", "plural": "garfos" },
-    "SPOON": { "form": "colher", "gender": "f", "plural": "colheres" },
-    "SPATULA": { "form": "espátula", "gender": "f", "plural": "espátulas" },
-    "POT": { "form": "panela", "gender": "f", "plural": "panelas" },
-    "GLASS": { "form": "copo", "gender": "m" },
-
-    "LITRE": { "form": "litro" },
-    "DECILITRE": { "form": "decilitro" },
-    "MILLILITRE": { "form": "mililitro" },
-    "GRAM": { "form": "grama" },
-    "KILOGRAM": { "form": "quilograma" },
-
-    "MEAT": { "form": "carne", "gender": "f" },
-    "CHICKEN": { "form": "frango", "gender": "m", "plural": "frangos" },
-    "FISH": { "form": "peixe", "gender": "m" },
-    "VEGETABLE": { "form": "vegetal", "gender": "m", "plural": "vegetais" },
-    "POTATO": { "form": "batata", "gender": "f", "plural": "batatas" },
-    "SALAD": { "form": "salada", "gender": "f", "plural": "saladas" },
-    "FRUIT": { "form": "fruta", "gender": "f", "plural": "frutas" },
-    "BANANA": { "form": "banana", "gender": "f", "plural": "bananas" },
-    "SOUP": { "form": "sopa", "gender": "f", "plural": "sopas" },
-    "DOUGH": { "form": "massa", "gender": "f" },
-    "SAUCE": { "form": "molho", "gender": "m", "plural": "molhos" },
-    "INGREDIENT": { "form": "ingrediente", "gender": "m", "plural": "ingredientes" },
-
-    "KITCHEN": { "form": "cozinha", "gender": "f" },
-    "OVEN": { "form": "forno", "gender": "m", "plural": "fornos" },
-    "STOVE": { "form": "fogão", "gender": "m", "plural": "fogões" },
-    "SINK": { "form": "pia", "gender": "f", "plural": "pias" },
-    "FREEZER": { "form": "congelador", "gender": "m", "plural": "congeladores" },
-
-    "SALT": { "form": "sal", "gender": "m" },
-    "PEPPER": { "form": "pimenta", "gender": "f" },
-    "BUTTER": { "form": "manteiga", "gender": "f" },
-    "SPICE": { "form": "tempero", "gender": "m" },
-    "RECIPE": { "form": "receita", "gender": "f", "plural": "receitas" },
-
-    "SWEET": ["doce"],
-    "SALTY": ["salgado"],
-    "SOUR": ["azedo"],
-    "FRESH": ["fresco"],
-    "FROZEN": ["congelado"],
-    "RAW": ["cru"]
-
-  }
-},
-"ja": {
-  "label": "Japanese",
-  "forms": {
-
-    "COOK": { "base": "料理します" },
-    "CUT": { "base": "切ります" },
-    "BOIL": { "base": "ゆでます" },
-    "PEEL": { "base": "皮をむきます" },
-    "FRY": { "base": "揚げます" },
-    "STIR": { "base": "かき混ぜます" },
-    "MIX": { "base": "混ぜます" },
-    "WASH": { "base": "洗います" },
-    "HEAT": { "base": "温めます" },
-
-    "PAN": { "form": "フライパン" },
-    "KNIFE": { "form": "ナイフ" },
-    "FORK": { "form": "フォーク" },
-    "SPOON": { "form": "スプーン" },
-    "SPATULA": { "form": "へら" },
-    "POT": { "form": "鍋" },
-    "GLASS": { "form": "コップ" },
-
-    "LITRE": { "form": "リットル" },
-    "DECILITRE": { "form": "デシリットル" },
-    "MILLILITRE": { "form": "ミリリットル" },
-    "GRAM": { "form": "グラム" },
-    "KILOGRAM": { "form": "キログラム" },
-
-    "MEAT": { "form": "肉" },
-    "CHICKEN": { "form": "鶏肉" },
-    "FISH": { "form": "魚" },
-    "VEGETABLE": { "form": "野菜" },
-    "POTATO": { "form": "じゃがいも" },
-    "SALAD": { "form": "サラダ" },
-    "FRUIT": { "form": "果物" },
-    "BANANA": { "form": "バナナ" },
-    "SOUP": { "form": "スープ" },
-    "DOUGH": { "form": "生地" },
-    "SAUCE": { "form": "ソース" },
-    "INGREDIENT": { "form": "材料" },
-
-    "KITCHEN": { "form": "台所" },
-    "OVEN": { "form": "オーブン" },
-    "STOVE": { "form": "コンロ" },
-    "SINK": { "form": "流し台" },
-    "FREEZER": { "form": "冷凍庫" },
-
-    "SALT": { "form": "塩" },
-    "PEPPER": { "form": "こしょう" },
-    "BUTTER": { "form": "バター" },
-    "SPICE": { "form": "香辛料" },
-    "RECIPE": { "form": "レシピ" },
-
-    "SWEET": ["甘い"],
-    "SALTY": ["塩辛い"],
-    "SOUR": ["酸っぱい"],
-    "FRESH": { "form": "新鮮な", "predicative": "新鮮" },
-    "FROZEN": ["冷凍の"],
-    "RAW": ["生の"]
-
-  }
-},
-"no": {
-  "label": "Norsk",
-  "forms": {
-
-    "COOK": { "base": "lage", "present": "lager" },
-    "CUT": { "base": "kutte", "present": "kutter" },
-    "BOIL": { "base": "koke", "present": "koker" },
-    "PEEL": { "base": "skrelle", "present": "skreller" },
-    "FRY": { "base": "steke", "present": "steker" },
-    "STIR": { "base": "røre", "present": "rører" },
-    "MIX": { "base": "blande", "present": "blander" },
-    "WASH": { "base": "vaske", "present": "vasker" },
-    "HEAT": { "base": "varme", "present": "varmer" },
-
-    "PAN": { "form": "panne", "gender": "m", "plural": "panner" },
-    "KNIFE": { "form": "kniv", "gender": "m", "plural": "kniver" },
-    "FORK": { "form": "gaffel", "gender": "m", "plural": "gafler" },
-    "SPOON": { "form": "skje", "gender": "f", "plural": "skjeer" },
-    "SPATULA": { "form": "stekespade", "gender": "m", "plural": "stekespader" },
-    "POT": { "form": "gryte", "gender": "f", "plural": "gryter" },
-    "GLASS": { "form": "glass", "gender": "n" },
-
-    "LITRE": { "form": "liter" },
-    "DECILITRE": { "form": "desiliter" },
-    "MILLILITRE": { "form": "milliliter" },
-    "GRAM": { "form": "gram" },
-    "KILOGRAM": { "form": "kilogram" },
-
-    "MEAT": { "form": "kjøtt", "gender": "n" },
-    "CHICKEN": { "form": "kylling", "gender": "m", "plural": "kyllinger" },
-    "FISH": { "form": "fisk", "gender": "m" },
-    "VEGETABLE": { "form": "grønnsak", "gender": "m", "plural": "grønnsaker" },
-    "POTATO": { "form": "potet", "gender": "m", "plural": "poteter" },
-    "SALAD": { "form": "salat", "gender": "m", "plural": "salater" },
-    "FRUIT": { "form": "frukt", "gender": "f", "plural": "frukter" },
-    "BANANA": { "form": "banan", "gender": "m", "plural": "bananer" },
-    "SOUP": { "form": "suppe", "gender": "f", "plural": "supper" },
-    "DOUGH": { "form": "deig", "gender": "m" },
-    "SAUCE": { "form": "saus", "gender": "m", "plural": "sauser" },
-    "INGREDIENT": { "form": "ingrediens", "gender": "m", "plural": "ingredienser" },
-
-    "KITCHEN": { "form": "kjøkken", "gender": "n" },
-    "OVEN": { "form": "ovn", "gender": "m", "plural": "ovner" },
-    "STOVE": { "form": "komfyr", "gender": "m", "plural": "komfyrer" },
-    "SINK": { "form": "vask", "gender": "m", "plural": "vasker" },
-    "FREEZER": { "form": "fryser", "gender": "m", "plural": "frysere" },
-
-    "SALT": { "form": "salt", "gender": "n" },
-    "PEPPER": { "form": "pepper", "gender": "n" },
-    "BUTTER": { "form": "smør", "gender": "n" },
-    "SPICE": { "form": "krydder", "gender": "n" },
-    "RECIPE": { "form": "oppskrift", "gender": "f", "plural": "oppskrifter" },
-
-    "SWEET": ["søt"],
-    "SALTY": ["salt"],
-    "SOUR": ["sur"],
-    "FRESH": ["fersk"],
-    "FROZEN": ["frossen"],
-    "RAW": ["rå"]
-
-  }
-},
-"ar": {
-  "label": "العربية",
-  "forms": {
-
-    "COOK": { "base": "يطبخ", "1_singular": "أطبخ", "2_singular": "تطبخ", "3_singular": "يطبخ", "3_singular_feminine": "تطبخ", "1_plural": "نطبخ", "2_plural": "تطبخون", "3_plural": "يطبخون" },
-    "CUT": { "base": "يقطع", "1_singular": "أقطع", "2_singular": "تقطع", "3_singular": "يقطع", "3_singular_feminine": "تقطع", "1_plural": "نقطع", "2_plural": "تقطعون", "3_plural": "يقطعون" },
-    "BOIL": { "base": "يغلي", "1_singular": "أغلي", "2_singular": "تغلي", "3_singular": "يغلي", "3_singular_feminine": "تغلي", "1_plural": "نغلي", "2_plural": "تغلون", "3_plural": "يغلون" },
-    "PEEL": { "base": "يقشر", "1_singular": "أقشر", "2_singular": "تقشر", "3_singular": "يقشر", "3_singular_feminine": "تقشر", "1_plural": "نقشر", "2_plural": "تقشرون", "3_plural": "يقشرون" },
-    "FRY": { "base": "يقلي", "1_singular": "أقلي", "2_singular": "تقلي", "3_singular": "يقلي", "3_singular_feminine": "تقلي", "1_plural": "نقلي", "2_plural": "تقلون", "3_plural": "يقلون" },
-    "STIR": { "base": "يحرك", "1_singular": "أحرك", "2_singular": "تحرك", "3_singular": "يحرك", "3_singular_feminine": "تحرك", "1_plural": "نحرك", "2_plural": "تحركون", "3_plural": "يحركون" },
-    "MIX": { "base": "يخلط", "1_singular": "أخلط", "2_singular": "تخلط", "3_singular": "يخلط", "3_singular_feminine": "تخلط", "1_plural": "نخلط", "2_plural": "تخلطون", "3_plural": "يخلطون" },
-    "WASH": { "base": "يغسل", "1_singular": "أغسل", "2_singular": "تغسل", "3_singular": "يغسل", "3_singular_feminine": "تغسل", "1_plural": "نغسل", "2_plural": "تغسلون", "3_plural": "يغسلون" },
-    "HEAT": { "base": "يسخن", "1_singular": "أسخن", "2_singular": "تسخن", "3_singular": "يسخن", "3_singular_feminine": "تسخن", "1_plural": "نسخن", "2_plural": "تسخنون", "3_plural": "يسخنون" },
-
-    "PAN": { "gender": "f", "form": "مقلاة" },
-    "KNIFE": { "gender": "m", "form": "سكين" },
-    "FORK": { "gender": "f", "form": "شوكة" },
-    "SPOON": { "gender": "f", "form": "ملعقة" },
-    "SPATULA": { "gender": "f", "form": "ملعقة تقليب" },
-    "POT": { "gender": "m", "form": "قدر" },
-    "GLASS": { "gender": "m", "form": "كوب" },
-
-    "LITRE": { "form": "لتر" },
-    "DECILITRE": { "form": "ديسيلتر" },
-    "MILLILITRE": { "form": "ملليلتر" },
-    "GRAM": { "form": "غرام" },
-    "KILOGRAM": { "form": "كيلوغرام" },
-
-    "MEAT": { "gender": "m", "form": "لحم" },
-    "CHICKEN": { "gender": "m", "form": "دجاج" },
-    "FISH": { "gender": "m", "form": "سمك" },
-    "VEGETABLE": { "gender": "m", "form": "خضار" },
-    "POTATO": { "gender": "f", "form": "بطاطا" },
-    "SALAD": { "gender": "f", "form": "سلطة" },
-    "FRUIT": { "gender": "f", "form": "فاكهة" },
-    "BANANA": { "gender": "m", "form": "موز" },
-    "SOUP": { "gender": "m", "form": "حساء" },
-    "DOUGH": { "gender": "m", "form": "عجين" },
-    "SAUCE": { "gender": "f", "form": "صلصة" },
-    "INGREDIENT": { "gender": "m", "form": "مكون" },
-
-    "KITCHEN": { "gender": "m", "form": "مطبخ" },
-    "OVEN": { "gender": "m", "form": "فرن" },
-    "STOVE": { "gender": "m", "form": "موقد" },
-    "SINK": { "gender": "m", "form": "حوض" },
-    "FREEZER": { "gender": "m", "form": "مجمد" },
-
-    "SALT": { "gender": "m", "form": "ملح" },
-    "PEPPER": { "gender": "m", "form": "فلفل" },
-    "BUTTER": { "gender": "f", "form": "زبدة" },
-    "SPICE": { "gender": "m", "form": "بهار" },
-    "RECIPE": { "gender": "f", "form": "وصفة" },
-
-    "SWEET": { "form": "حلو", "f": "حلوة" },
-    "SALTY": { "form": "مالح", "f": "مالحة" },
-    "SOUR": { "form": "حامض", "f": "حامضة" },
-    "FRESH": { "form": "طازج", "f": "طازجة" },
-    "FROZEN": { "form": "مجمد", "f": "مجمدة" },
-    "RAW": { "form": "نيء", "f": "نيئة" }
-
-  }
-},
-"ko": {
-  "label": "한국어",
-  "forms": {
-
-    "COOK": { "base": "요리하다", "present": "요리해요" },
-    "CUT": { "base": "자르다", "present": "잘라요" },
-    "BOIL": { "base": "끓이다", "present": "끓여요" },
-    "PEEL": { "base": "껍질을 벗기다", "present": "껍질을 벗겨요" },
-    "FRY": { "base": "튀기다", "present": "튀겨요" },
-    "STIR": { "base": "젓다", "present": "저어요" },
-    "MIX": { "base": "섞다", "present": "섞어요" },
-    "WASH": { "base": "씻다", "present": "씻어요" },
-    "HEAT": { "base": "데우다", "present": "데워요" },
-
-    "PAN": { "form": "팬" },
-    "KNIFE": { "form": "칼" },
-    "FORK": { "form": "포크" },
-    "SPOON": { "form": "숟가락" },
-    "SPATULA": { "form": "주걱" },
-    "POT": { "form": "냄비" },
-    "GLASS": { "form": "컵" },
-
-    "LITRE": { "form": "리터" },
-    "DECILITRE": { "form": "데시리터" },
-    "MILLILITRE": { "form": "밀리리터" },
-    "GRAM": { "form": "그램" },
-    "KILOGRAM": { "form": "킬로그램" },
-
-    "MEAT": { "form": "고기" },
-    "CHICKEN": { "form": "닭고기" },
-    "FISH": { "form": "생선" },
-    "VEGETABLE": { "form": "채소" },
-    "POTATO": { "form": "감자" },
-    "SALAD": { "form": "샐러드" },
-    "FRUIT": { "form": "과일" },
-    "BANANA": { "form": "바나나" },
-    "SOUP": { "form": "수프" },
-    "DOUGH": { "form": "반죽" },
-    "SAUCE": { "form": "소스" },
-    "INGREDIENT": { "form": "재료" },
-
-    "KITCHEN": { "form": "부엌" },
-    "OVEN": { "form": "오븐" },
-    "STOVE": { "form": "가스레인지" },
-    "SINK": { "form": "싱크대" },
-    "FREEZER": { "form": "냉동고" },
-
-    "SALT": { "form": "소금" },
-    "PEPPER": { "form": "후추" },
-    "BUTTER": { "form": "버터" },
-    "SPICE": { "form": "향신료" },
-    "RECIPE": { "form": "레시피" },
-
-    "SWEET": ["달콤한"],
-    "SALTY": ["짠"],
-    "SOUR": ["신"],
-    "FRESH": ["신선한"],
-    "FROZEN": ["냉동된"],
-    "RAW": ["생"]
-
-  }
-},
-"uk": {
-  "label": "Українська",
-  "forms": {
-
-    "COOK": { "base": "готувати", "1_singular": "готую", "2_singular": "готуєш", "3_singular": "готує", "1_plural": "готуємо", "2_plural": "готуєте", "3_plural": "готують" },
-    "CUT": { "base": "різати", "1_singular": "ріжу", "2_singular": "ріжеш", "3_singular": "ріже", "1_plural": "ріжемо", "2_plural": "ріжете", "3_plural": "ріжуть" },
-    "BOIL": { "base": "варити", "1_singular": "варю", "2_singular": "вариш", "3_singular": "варить", "1_plural": "варимо", "2_plural": "варите", "3_plural": "варять" },
-    "PEEL": { "base": "чистити", "1_singular": "чищу", "2_singular": "чистиш", "3_singular": "чистить", "1_plural": "чистимо", "2_plural": "чистите", "3_plural": "чистять" },
-    "FRY": { "base": "смажити", "1_singular": "смажу", "2_singular": "смажиш", "3_singular": "смажить", "1_plural": "смажимо", "2_plural": "смажите", "3_plural": "смажать" },
-    "STIR": { "base": "мішати", "1_singular": "мішаю", "2_singular": "мішаєш", "3_singular": "мішає", "1_plural": "мішаємо", "2_plural": "мішаєте", "3_plural": "мішають" },
-    "MIX": { "base": "змішувати", "1_singular": "змішую", "2_singular": "змішуєш", "3_singular": "змішує", "1_plural": "змішуємо", "2_plural": "змішуєте", "3_plural": "змішують" },
-    "WASH": { "base": "мити", "1_singular": "мию", "2_singular": "миєш", "3_singular": "миє", "1_plural": "миємо", "2_plural": "миєте", "3_plural": "миють" },
-    "HEAT": { "base": "нагрівати", "1_singular": "нагріваю", "2_singular": "нагріваєш", "3_singular": "нагріває", "1_plural": "нагріваємо", "2_plural": "нагріваєте", "3_plural": "нагрівають" },
-
-    "PAN": { "gender": "f", "form": "сковорода", "plural": "сковороди", "genitive_plural": "сковорід" },
-    "KNIFE": { "gender": "m", "form": "ніж", "plural": "ножі", "genitive_plural": "ножів" },
-    "FORK": { "gender": "f", "form": "виделка", "plural": "виделки", "genitive_plural": "виделок" },
-    "SPOON": { "gender": "f", "form": "ложка", "plural": "ложки", "genitive_plural": "ложок" },
-    "SPATULA": { "gender": "f", "form": "лопатка", "plural": "лопатки", "genitive_plural": "лопаток" },
-    "POT": { "gender": "f", "form": "каструля", "plural": "каструлі", "genitive_plural": "каструль" },
-    "GLASS": { "gender": "f", "form": "склянка", "plural": "склянки", "genitive_plural": "склянок" },
-
-    "LITRE": { "form": "літр" },
-    "DECILITRE": { "form": "децилітр" },
-    "MILLILITRE": { "form": "мілілітр" },
-    "GRAM": { "form": "грам" },
-    "KILOGRAM": { "form": "кілограм" },
-
-    "MEAT": { "gender": "n", "form": "м’ясо" },
-    "CHICKEN": { "gender": "f", "form": "курка", "plural": "курки", "genitive_plural": "курок" },
-    "FISH": { "gender": "f", "form": "риба" },
-    "VEGETABLE": { "gender": "m", "form": "овоч", "plural": "овочі", "genitive_plural": "овочів" },
-    "POTATO": { "gender": "f", "form": "картопля", "plural": "картоплі" },
-    "SALAD": { "gender": "m", "form": "салат", "plural": "салати", "genitive_plural": "салатів" },
-    "FRUIT": { "gender": "m", "form": "фрукт", "plural": "фрукти", "genitive_plural": "фруктів" },
-    "BANANA": { "gender": "m", "form": "банан", "plural": "банани", "genitive_plural": "бананів" },
-    "SOUP": { "gender": "m", "form": "суп", "plural": "супи", "genitive_plural": "супів" },
-    "DOUGH": { "gender": "n", "form": "тісто" },
-    "SAUCE": { "gender": "m", "form": "соус", "plural": "соуси", "genitive_plural": "соусів" },
-    "INGREDIENT": { "gender": "m", "form": "інгредієнт", "plural": "інгредієнти", "genitive_plural": "інгредієнтів" },
-
-    "KITCHEN": { "gender": "f", "form": "кухня", "plural": "кухні", "genitive_plural": "кухонь" },
-    "OVEN": { "gender": "f", "form": "духовка", "plural": "духовки", "genitive_plural": "духовок" },
-    "STOVE": { "gender": "f", "form": "плита", "plural": "плити", "genitive_plural": "плит" },
-    "SINK": { "gender": "f", "form": "раковина", "plural": "раковини", "genitive_plural": "раковин" },
-    "FREEZER": { "gender": "m", "form": "морозильник", "plural": "морозильники", "genitive_plural": "морозильників" },
-
-    "SALT": { "gender": "f", "form": "сіль" },
-    "PEPPER": { "gender": "m", "form": "перець" },
-    "BUTTER": { "gender": "n", "form": "масло" },
-    "SPICE": { "gender": "f", "form": "спеція", "plural": "спеції", "genitive_plural": "спецій" },
-    "RECIPE": { "gender": "m", "form": "рецепт", "plural": "рецепти", "genitive_plural": "рецептів" },
-
-    "SWEET": ["солодкий"],
-    "SALTY": ["солоний"],
-    "SOUR": ["кислий"],
-    "FRESH": ["свіжий"],
-    "FROZEN": ["заморожений"],
-    "RAW": ["сирий"]
-
-  }
-},
-"es": {
-  "label": "Español",
-  "forms": {
-
-    "COOK": { "base": "cocinar", "1_singular": "cocino", "2_singular": "cocinas", "3_singular": "cocina", "1_plural": "cocinamos", "2_plural": "cocináis", "3_plural": "cocinan" },
-    "CUT": { "base": "cortar", "1_singular": "corto", "2_singular": "cortas", "3_singular": "corta", "1_plural": "cortamos", "2_plural": "cortáis", "3_plural": "cortan" },
-    "BOIL": { "base": "hervir", "1_singular": "hiervo", "2_singular": "hierves", "3_singular": "hierve", "1_plural": "hervimos", "2_plural": "hervís", "3_plural": "hierven" },
-    "PEEL": { "base": "pelar", "1_singular": "pelo", "2_singular": "pelas", "3_singular": "pela", "1_plural": "pelamos", "2_plural": "peláis", "3_plural": "pelan" },
-    "FRY": { "base": "freír", "1_singular": "frío", "2_singular": "fríes", "3_singular": "fríe", "1_plural": "freímos", "2_plural": "freís", "3_plural": "fríen" },
-    "STIR": { "base": "remover", "1_singular": "remuevo", "2_singular": "remueves", "3_singular": "remueve", "1_plural": "removemos", "2_plural": "removéis", "3_plural": "remueven" },
-    "MIX": { "base": "mezclar", "1_singular": "mezclo", "2_singular": "mezclas", "3_singular": "mezcla", "1_plural": "mezclamos", "2_plural": "mezcláis", "3_plural": "mezclan" },
-    "WASH": { "base": "lavar", "1_singular": "lavo", "2_singular": "lavas", "3_singular": "lava", "1_plural": "lavamos", "2_plural": "laváis", "3_plural": "lavan" },
-    "HEAT": { "base": "calentar", "1_singular": "caliento", "2_singular": "calientas", "3_singular": "calienta", "1_plural": "calentamos", "2_plural": "calentáis", "3_plural": "calientan" },
-
-    "PAN": { "form": "sartén", "gender": "f", "plural": "sartenes" },
-    "KNIFE": { "form": "cuchillo", "gender": "m", "plural": "cuchillos" },
-    "FORK": { "form": "tenedor", "gender": "m", "plural": "tenedores" },
-    "SPOON": { "form": "cuchara", "gender": "f", "plural": "cucharas" },
-    "SPATULA": { "form": "espátula", "gender": "f", "plural": "espátulas" },
-    "POT": { "form": "olla", "gender": "f", "plural": "ollas" },
-    "GLASS": { "form": "vaso", "gender": "m" },
-
-    "LITRE": { "form": "litro" },
-    "DECILITRE": { "form": "decilitro" },
-    "MILLILITRE": { "form": "mililitro" },
-    "GRAM": { "form": "gramo" },
-    "KILOGRAM": { "form": "kilogramo" },
-
-    "MEAT": { "form": "carne", "gender": "f" },
-    "CHICKEN": { "form": "pollo", "gender": "m", "plural": "pollos" },
-    "FISH": { "form": "pescado", "gender": "m" },
-    "VEGETABLE": { "form": "verdura", "gender": "f", "plural": "verduras" },
-    "POTATO": { "form": "patata", "gender": "f", "plural": "patatas" },
-    "SALAD": { "form": "ensalada", "gender": "f", "plural": "ensaladas" },
-    "FRUIT": { "form": "fruta", "gender": "f", "plural": "frutas" },
-    "BANANA": { "form": "plátano", "gender": "m", "plural": "plátanos" },
-    "SOUP": { "form": "sopa", "gender": "f", "plural": "sopas" },
-    "DOUGH": { "form": "masa", "gender": "f" },
-    "SAUCE": { "form": "salsa", "gender": "f", "plural": "salsas" },
-    "INGREDIENT": { "form": "ingrediente", "gender": "m", "plural": "ingredientes" },
-
-    "KITCHEN": { "form": "cocina", "gender": "f" },
-    "OVEN": { "form": "horno", "gender": "m", "plural": "hornos" },
-    "STOVE": { "form": "fogón", "gender": "m", "plural": "fogones" },
-    "SINK": { "form": "fregadero", "gender": "m", "plural": "fregaderos" },
-    "FREEZER": { "form": "congelador", "gender": "m", "plural": "congeladores" },
-
-    "SALT": { "form": "sal", "gender": "f" },
-    "PEPPER": { "form": "pimienta", "gender": "f" },
-    "BUTTER": { "form": "mantequilla", "gender": "f" },
-    "SPICE": { "form": "especia", "gender": "f" },
-    "RECIPE": { "form": "receta", "gender": "f", "plural": "recetas" },
-
-    "SWEET": ["dulce"],
-    "SALTY": ["salado"],
-    "SOUR": ["ácido"],
-    "FRESH": ["fresco"],
-    "FROZEN": ["congelado"],
-    "RAW": ["crudo"]
-
-  }
-},
     "de": {
       "label": "German",
       "forms": {
-        "COOK": {"base":"kochen","1_singular":"koche","2_singular":"kochst","3_singular":"kocht","1_plural":"kochen","2_plural":"kocht","3_plural":"kochen"},
-        "CUT": {"base":"schneiden","1_singular":"schneide","2_singular":"schneidest","3_singular":"schneidet","1_plural":"schneiden","2_plural":"schneidet","3_plural":"schneiden"},
-        "BOIL": {"base":"kochen","1_singular":"koche","2_singular":"kochst","3_singular":"kocht","1_plural":"kochen","2_plural":"kocht","3_plural":"kochen"},
-        "PEEL": {"base":"schälen","1_singular":"schäle","2_singular":"schälst","3_singular":"schält","1_plural":"schälen","2_plural":"schält","3_plural":"schälen"},
-        "FRY": {"base":"braten","1_singular":"brate","2_singular":"brätst","3_singular":"brät","1_plural":"braten","2_plural":"bratet","3_plural":"braten"},
-        "STIR": {"base":"rühren","1_singular":"rühre","2_singular":"rührst","3_singular":"rührt","1_plural":"rühren","2_plural":"rührt","3_plural":"rühren"},
-        "MIX": {"base":"mischen","1_singular":"mische","2_singular":"mischst","3_singular":"mischt","1_plural":"mischen","2_plural":"mischt","3_plural":"mischen"},
-        "WASH": {"base":"waschen","1_singular":"wasche","2_singular":"wäschst","3_singular":"wäscht","1_plural":"waschen","2_plural":"wascht","3_plural":"waschen"},
-        "HEAT": {"base":"erhitzen","1_singular":"erhitze","2_singular":"erhitzt","3_singular":"erhitzt","1_plural":"erhitzen","2_plural":"erhitzt","3_plural":"erhitzen"},
-        "PAN": {"form":"Pfanne","gender":"f","plural":"Pfannen"},
-        "KNIFE": {"form":"Messer","gender":"n","plural":"Messer"},
-        "FORK": {"form":"Gabel","gender":"f","plural":"Gabeln"},
-        "SPOON": {"form":"Löffel","gender":"m","plural":"Löffel"},
-        "SPATULA": {"form":"Pfannenwender","gender":"m","plural":"Pfannenwender"},
-        "POT": {"form":"Topf","gender":"m","plural":"Töpfe"},
-        "GLASS": {"form":"Glas","gender":"n","plural":"Gläser"},
-        "LITRE": {"form":"Liter"},
-        "DECILITRE": {"form":"Deziliter"},
-        "MILLILITRE": {"form":"Milliliter"},
-        "GRAM": {"form":"Gramm"},
-        "KILOGRAM": {"form":"Kilogramm"},
-        "MEAT": {"form":"Fleisch","gender":"n","plural":"Fleischsorten"},
-        "CHICKEN": {"form":"Hähnchen","gender":"n","plural":"Hähnchen"},
-        "FISH": {"form":"Fisch","gender":"m","plural":"Fische"},
-        "VEGETABLE": {"form":"Gemüse","gender":"n","plural":"Gemüse"},
-        "POTATO": {"form":"Kartoffel","gender":"f","plural":"Kartoffeln"},
-        "SALAD": {"form":"Salat","gender":"m","plural":"Salate"},
-        "FRUIT": {"form":"Obst","gender":"n","plural":"Obstsorten"},
-        "BANANA": {"form":"Banane","gender":"f","plural":"Bananen"},
-        "SOUP": {"form":"Suppe","gender":"f","plural":"Suppen"},
-        "DOUGH": {"form":"Teig","gender":"m","plural":"Teige"},
-        "SAUCE": {"form":"Soße","gender":"f","plural":"Soßen"},
-        "INGREDIENT": {"form":"Zutat","gender":"f","plural":"Zutaten"},
-        "KITCHEN": {"form":"Küche","gender":"f","plural":"Küchen"},
-        "OVEN": {"form":"Ofen","gender":"m","plural":"Öfen"},
-        "STOVE": {"form":"Herd","gender":"m","plural":"Herde"},
-        "SINK": {"form":"Spüle","gender":"f","plural":"Spülen"},
-        "FREEZER": {"form":"Gefrierschrank","gender":"m","plural":"Gefrierschränke"},
-        "SALT": {"form":"Salz","gender":"n","plural":"Salze"},
-        "PEPPER": {"form":"Pfeffer","gender":"m","plural":"Pfeffer"},
-        "BUTTER": {"form":"Butter","gender":"f","plural":"Buttersorten"},
-        "SPICE": {"form":"Gewürz","gender":"n","plural":"Gewürze"},
-        "RECIPE": {"form":"Rezept","gender":"n","plural":"Rezepte"},
-        "SWEET": ["süß"],
-        "SALTY": ["salzig"],
-        "SOUR": ["sauer"],
-        "FRESH": ["frisch"],
-        "FROZEN": ["gefroren"],
-        "RAW": ["roh"]
+        "COOK": {
+          "base": "kochen",
+          "1_singular": "koche",
+          "2_singular": "kochst",
+          "3_singular": "kocht",
+          "1_plural": "kochen",
+          "2_plural": "kocht",
+          "3_plural": "kochen"
+        },
+        "CUT": {
+          "base": "schneiden",
+          "1_singular": "schneide",
+          "2_singular": "schneidest",
+          "3_singular": "schneidet",
+          "1_plural": "schneiden",
+          "2_plural": "schneidet",
+          "3_plural": "schneiden"
+        },
+        "BOIL": {
+          "base": "kochen",
+          "1_singular": "koche",
+          "2_singular": "kochst",
+          "3_singular": "kocht",
+          "1_plural": "kochen",
+          "2_plural": "kocht",
+          "3_plural": "kochen"
+        },
+        "PEEL": {
+          "base": "schälen",
+          "1_singular": "schäle",
+          "2_singular": "schälst",
+          "3_singular": "schält",
+          "1_plural": "schälen",
+          "2_plural": "schält",
+          "3_plural": "schälen"
+        },
+        "FRY": {
+          "base": "braten",
+          "1_singular": "brate",
+          "2_singular": "brätst",
+          "3_singular": "brät",
+          "1_plural": "braten",
+          "2_plural": "bratet",
+          "3_plural": "braten"
+        },
+        "STIR": {
+          "base": "rühren",
+          "1_singular": "rühre",
+          "2_singular": "rührst",
+          "3_singular": "rührt",
+          "1_plural": "rühren",
+          "2_plural": "rührt",
+          "3_plural": "rühren"
+        },
+        "MIX": {
+          "base": "mischen",
+          "1_singular": "mische",
+          "2_singular": "mischst",
+          "3_singular": "mischt",
+          "1_plural": "mischen",
+          "2_plural": "mischt",
+          "3_plural": "mischen"
+        },
+        "WASH": {
+          "base": "waschen",
+          "1_singular": "wasche",
+          "2_singular": "wäschst",
+          "3_singular": "wäscht",
+          "1_plural": "waschen",
+          "2_plural": "wascht",
+          "3_plural": "waschen"
+        },
+        "HEAT": {
+          "base": "erhitzen",
+          "1_singular": "erhitze",
+          "2_singular": "erhitzt",
+          "3_singular": "erhitzt",
+          "1_plural": "erhitzen",
+          "2_plural": "erhitzt",
+          "3_plural": "erhitzen"
+        },
+        "PAN": {
+          "form": "Pfanne",
+          "gender": "f",
+          "plural": "Pfannen"
+        },
+        "KNIFE": {
+          "form": "Messer",
+          "gender": "n",
+          "plural": "Messer"
+        },
+        "FORK": {
+          "form": "Gabel",
+          "gender": "f",
+          "plural": "Gabeln"
+        },
+        "SPOON": {
+          "form": "Löffel",
+          "gender": "m",
+          "plural": "Löffel"
+        },
+        "SPATULA": {
+          "form": "Pfannenwender",
+          "gender": "m",
+          "plural": "Pfannenwender"
+        },
+        "POT": {
+          "form": "Topf",
+          "gender": "m",
+          "plural": "Töpfe"
+        },
+        "GLASS": {
+          "form": "Glas",
+          "gender": "n",
+          "plural": "Gläser"
+        },
+        "LITRE": {
+          "form": "Liter"
+        },
+        "DECILITRE": {
+          "form": "Deziliter"
+        },
+        "MILLILITRE": {
+          "form": "Milliliter"
+        },
+        "GRAM": {
+          "form": "Gramm"
+        },
+        "KILOGRAM": {
+          "form": "Kilogramm"
+        },
+        "MEAT": {
+          "form": "Fleisch",
+          "gender": "n",
+          "plural": "Fleischsorten"
+        },
+        "CHICKEN": {
+          "form": "Hähnchen",
+          "gender": "n",
+          "plural": "Hähnchen"
+        },
+        "FISH": {
+          "form": "Fisch",
+          "gender": "m",
+          "plural": "Fische"
+        },
+        "VEGETABLE": {
+          "form": "Gemüse",
+          "gender": "n",
+          "plural": "Gemüse"
+        },
+        "POTATO": {
+          "form": "Kartoffel",
+          "gender": "f",
+          "plural": "Kartoffeln"
+        },
+        "SALAD": {
+          "form": "Salat",
+          "gender": "m",
+          "plural": "Salate"
+        },
+        "FRUIT": {
+          "form": "Obst",
+          "gender": "n",
+          "plural": "Obstsorten"
+        },
+        "BANANA": {
+          "form": "Banane",
+          "gender": "f",
+          "plural": "Bananen"
+        },
+        "SOUP": {
+          "form": "Suppe",
+          "gender": "f",
+          "plural": "Suppen"
+        },
+        "DOUGH": {
+          "form": "Teig",
+          "gender": "m",
+          "plural": "Teige"
+        },
+        "SAUCE": {
+          "form": "Soße",
+          "gender": "f",
+          "plural": "Soßen"
+        },
+        "INGREDIENT": {
+          "form": "Zutat",
+          "gender": "f",
+          "plural": "Zutaten"
+        },
+        "KITCHEN": {
+          "form": "Küche",
+          "gender": "f",
+          "plural": "Küchen"
+        },
+        "OVEN": {
+          "form": "Ofen",
+          "gender": "m",
+          "plural": "Öfen"
+        },
+        "STOVE": {
+          "form": "Herd",
+          "gender": "m",
+          "plural": "Herde"
+        },
+        "SINK": {
+          "form": "Spüle",
+          "gender": "f",
+          "plural": "Spülen"
+        },
+        "FREEZER": {
+          "form": "Gefrierschrank",
+          "gender": "m",
+          "plural": "Gefrierschränke"
+        },
+        "SALT": {
+          "form": "Salz",
+          "gender": "n",
+          "plural": "Salze"
+        },
+        "PEPPER": {
+          "form": "Pfeffer",
+          "gender": "m",
+          "plural": "Pfeffer"
+        },
+        "BUTTER": {
+          "form": "Butter",
+          "gender": "f",
+          "plural": "Buttersorten"
+        },
+        "SPICE": {
+          "form": "Gewürz",
+          "gender": "n",
+          "plural": "Gewürze"
+        },
+        "RECIPE": {
+          "form": "Rezept",
+          "gender": "n",
+          "plural": "Rezepte"
+        },
+        "SWEET": [
+          "süß"
+        ],
+        "SALTY": [
+          "salzig"
+        ],
+        "SOUR": [
+          "sauer"
+        ],
+        "FRESH": [
+          "frisch"
+        ],
+        "FROZEN": [
+          "gefroren"
+        ],
+        "RAW": [
+          "roh"
+        ]
       }
     },
     "el": {
       "label": "Greek",
       "forms": {
-        "COOK": {"base":"μαγειρεύω","1_singular":"μαγειρεύω","2_singular":"μαγειρεύεις","3_singular":"μαγειρεύει","1_plural":"μαγειρεύουμε","2_plural":"μαγειρεύετε","3_plural":"μαγειρεύουν"},
-        "CUT": {"base":"κόβω","1_singular":"κόβω","2_singular":"κόβεις","3_singular":"κόβει","1_plural":"κόβουμε","2_plural":"κόβετε","3_plural":"κόβουν"},
-        "BOIL": {"base":"βράζω","1_singular":"βράζω","2_singular":"βράζεις","3_singular":"βράζει","1_plural":"βράζουμε","2_plural":"βράζετε","3_plural":"βράζουν"},
-        "PEEL": {"base":"ξεφλουδίζω","1_singular":"ξεφλουδίζω","2_singular":"ξεφλουδίζεις","3_singular":"ξεφλουδίζει","1_plural":"ξεφλουδίζουμε","2_plural":"ξεφλουδίζετε","3_plural":"ξεφλουδίζουν"},
-        "FRY": {"base":"τηγανίζω","1_singular":"τηγανίζω","2_singular":"τηγανίζεις","3_singular":"τηγανίζει","1_plural":"τηγανίζουμε","2_plural":"τηγανίζετε","3_plural":"τηγανίζουν"},
-        "STIR": {"base":"ανακατεύω","1_singular":"ανακατεύω","2_singular":"ανακατεύεις","3_singular":"ανακατεύει","1_plural":"ανακατεύουμε","2_plural":"ανακατεύετε","3_plural":"ανακατεύουν"},
-        "MIX": {"base":"αναμειγνύω","1_singular":"αναμειγνύω","2_singular":"αναμειγνύεις","3_singular":"αναμειγνύει","1_plural":"αναμειγνύουμε","2_plural":"αναμειγνύετε","3_plural":"αναμειγνύουν"},
-        "WASH": {"base":"πλένω","1_singular":"πλένω","2_singular":"πλένεις","3_singular":"πλένει","1_plural":"πλένουμε","2_plural":"πλένετε","3_plural":"πλένουν"},
-        "HEAT": {"base":"ζεσταίνω","1_singular":"ζεσταίνω","2_singular":"ζεσταίνεις","3_singular":"ζεσταίνει","1_plural":"ζεσταίνουμε","2_plural":"ζεσταίνετε","3_plural":"ζεσταίνουν"},
-        "PAN": {"form":"τηγάνι","gender":"n","plural":"τηγάνια"},
-        "KNIFE": {"form":"μαχαίρι","gender":"n","plural":"μαχαίρια"},
-        "FORK": {"form":"πιρούνι","gender":"n","plural":"πιρούνια"},
-        "SPOON": {"form":"κουτάλι","gender":"n","plural":"κουτάλια"},
-        "SPATULA": {"form":"σπάτουλα","gender":"f","plural":"σπάτουλες"},
-        "POT": {"form":"κατσαρόλα","gender":"f","plural":"κατσαρόλες"},
-        "GLASS": {"form":"ποτήρι","gender":"n","plural":"ποτήρια"},
-        "LITRE": {"form":"λίτρο"},
-        "DECILITRE": {"form":"δεκατόλιτρο"},
-        "MILLILITRE": {"form":"χιλιοστόλιτρο"},
-        "GRAM": {"form":"γραμμάριο"},
-        "KILOGRAM": {"form":"κιλό"},
-        "MEAT": {"form":"κρέας","gender":"n","plural":"κρέατα"},
-        "CHICKEN": {"form":"κοτόπουλο","gender":"n","plural":"κοτόπουλα"},
-        "FISH": {"form":"ψάρι","gender":"n","plural":"ψάρια"},
-        "VEGETABLE": {"form":"λαχανικό","gender":"n","plural":"λαχανικά"},
-        "POTATO": {"form":"πατάτα","gender":"f","plural":"πατάτες"},
-        "SALAD": {"form":"σαλάτα","gender":"f","plural":"σαλάτες"},
-        "FRUIT": {"form":"φρούτο","gender":"n","plural":"φρούτα"},
-        "BANANA": {"form":"μπανάνα","gender":"f","plural":"μπανάνες"},
-        "SOUP": {"form":"σούπα","gender":"f","plural":"σούπες"},
-        "DOUGH": {"form":"ζύμη","gender":"f","plural":"ζύμες"},
-        "SAUCE": {"form":"σάλτσα","gender":"f","plural":"σάλτσες"},
-        "INGREDIENT": {"form":"συστατικό","gender":"n","plural":"συστατικά"},
-        "KITCHEN": {"form":"κουζίνα","gender":"f","plural":"κουζίνες"},
-        "OVEN": {"form":"φούρνος","gender":"m","plural":"φούρνοι"},
-        "STOVE": {"form":"μάτι","gender":"n","plural":"μάτια"},
-        "SINK": {"form":"νεροχύτης","gender":"m","plural":"νεροχύτες"},
-        "FREEZER": {"form":"καταψύκτης","gender":"m","plural":"καταψύκτες"},
-        "SALT": {"form":"αλάτι","gender":"n","plural":"αλάτια"},
-        "PEPPER": {"form":"πιπέρι","gender":"n","plural":"πιπέρια"},
-        "BUTTER": {"form":"βούτυρο","gender":"n","plural":"βούτυρα"},
-        "SPICE": {"form":"μπαχαρικό","gender":"n","plural":"μπαχαρικά"},
-        "RECIPE": {"form":"συνταγή","gender":"f","plural":"συνταγές"},
-        "SWEET": { "form": "γλυκός", "f": "γλυκή", "n": "γλυκό" },
-        "SALTY": { "form": "αλμυρός", "f": "αλμυρή", "n": "αλμυρό" },
-        "SOUR": { "form": "ξινός", "f": "ξινή", "n": "ξινό" },
-        "FRESH": { "form": "φρέσκος", "f": "φρέσκη", "n": "φρέσκο" },
-        "FROZEN": { "form": "κατεψυγμένος", "f": "κατεψυγμένη", "n": "κατεψυγμένο" },
-        "RAW": { "form": "ωμός", "f": "ωμή", "n": "ωμό" }
+        "COOK": {
+          "base": "μαγειρεύω",
+          "1_singular": "μαγειρεύω",
+          "2_singular": "μαγειρεύεις",
+          "3_singular": "μαγειρεύει",
+          "1_plural": "μαγειρεύουμε",
+          "2_plural": "μαγειρεύετε",
+          "3_plural": "μαγειρεύουν"
+        },
+        "CUT": {
+          "base": "κόβω",
+          "1_singular": "κόβω",
+          "2_singular": "κόβεις",
+          "3_singular": "κόβει",
+          "1_plural": "κόβουμε",
+          "2_plural": "κόβετε",
+          "3_plural": "κόβουν"
+        },
+        "BOIL": {
+          "base": "βράζω",
+          "1_singular": "βράζω",
+          "2_singular": "βράζεις",
+          "3_singular": "βράζει",
+          "1_plural": "βράζουμε",
+          "2_plural": "βράζετε",
+          "3_plural": "βράζουν"
+        },
+        "PEEL": {
+          "base": "ξεφλουδίζω",
+          "1_singular": "ξεφλουδίζω",
+          "2_singular": "ξεφλουδίζεις",
+          "3_singular": "ξεφλουδίζει",
+          "1_plural": "ξεφλουδίζουμε",
+          "2_plural": "ξεφλουδίζετε",
+          "3_plural": "ξεφλουδίζουν"
+        },
+        "FRY": {
+          "base": "τηγανίζω",
+          "1_singular": "τηγανίζω",
+          "2_singular": "τηγανίζεις",
+          "3_singular": "τηγανίζει",
+          "1_plural": "τηγανίζουμε",
+          "2_plural": "τηγανίζετε",
+          "3_plural": "τηγανίζουν"
+        },
+        "STIR": {
+          "base": "ανακατεύω",
+          "1_singular": "ανακατεύω",
+          "2_singular": "ανακατεύεις",
+          "3_singular": "ανακατεύει",
+          "1_plural": "ανακατεύουμε",
+          "2_plural": "ανακατεύετε",
+          "3_plural": "ανακατεύουν"
+        },
+        "MIX": {
+          "base": "αναμειγνύω",
+          "1_singular": "αναμειγνύω",
+          "2_singular": "αναμειγνύεις",
+          "3_singular": "αναμειγνύει",
+          "1_plural": "αναμειγνύουμε",
+          "2_plural": "αναμειγνύετε",
+          "3_plural": "αναμειγνύουν"
+        },
+        "WASH": {
+          "base": "πλένω",
+          "1_singular": "πλένω",
+          "2_singular": "πλένεις",
+          "3_singular": "πλένει",
+          "1_plural": "πλένουμε",
+          "2_plural": "πλένετε",
+          "3_plural": "πλένουν"
+        },
+        "HEAT": {
+          "base": "ζεσταίνω",
+          "1_singular": "ζεσταίνω",
+          "2_singular": "ζεσταίνεις",
+          "3_singular": "ζεσταίνει",
+          "1_plural": "ζεσταίνουμε",
+          "2_plural": "ζεσταίνετε",
+          "3_plural": "ζεσταίνουν"
+        },
+        "PAN": {
+          "form": "τηγάνι",
+          "gender": "n",
+          "plural": "τηγάνια"
+        },
+        "KNIFE": {
+          "form": "μαχαίρι",
+          "gender": "n",
+          "plural": "μαχαίρια"
+        },
+        "FORK": {
+          "form": "πιρούνι",
+          "gender": "n",
+          "plural": "πιρούνια"
+        },
+        "SPOON": {
+          "form": "κουτάλι",
+          "gender": "n",
+          "plural": "κουτάλια"
+        },
+        "SPATULA": {
+          "form": "σπάτουλα",
+          "gender": "f",
+          "plural": "σπάτουλες"
+        },
+        "POT": {
+          "form": "κατσαρόλα",
+          "gender": "f",
+          "plural": "κατσαρόλες"
+        },
+        "GLASS": {
+          "form": "ποτήρι",
+          "gender": "n",
+          "plural": "ποτήρια"
+        },
+        "LITRE": {
+          "form": "λίτρο"
+        },
+        "DECILITRE": {
+          "form": "δεκατόλιτρο"
+        },
+        "MILLILITRE": {
+          "form": "χιλιοστόλιτρο"
+        },
+        "GRAM": {
+          "form": "γραμμάριο"
+        },
+        "KILOGRAM": {
+          "form": "κιλό"
+        },
+        "MEAT": {
+          "form": "κρέας",
+          "gender": "n",
+          "plural": "κρέατα"
+        },
+        "CHICKEN": {
+          "form": "κοτόπουλο",
+          "gender": "n",
+          "plural": "κοτόπουλα"
+        },
+        "FISH": {
+          "form": "ψάρι",
+          "gender": "n",
+          "plural": "ψάρια"
+        },
+        "VEGETABLE": {
+          "form": "λαχανικό",
+          "gender": "n",
+          "plural": "λαχανικά"
+        },
+        "POTATO": {
+          "form": "πατάτα",
+          "gender": "f",
+          "plural": "πατάτες"
+        },
+        "SALAD": {
+          "form": "σαλάτα",
+          "gender": "f",
+          "plural": "σαλάτες"
+        },
+        "FRUIT": {
+          "form": "φρούτο",
+          "gender": "n",
+          "plural": "φρούτα"
+        },
+        "BANANA": {
+          "form": "μπανάνα",
+          "gender": "f",
+          "plural": "μπανάνες"
+        },
+        "SOUP": {
+          "form": "σούπα",
+          "gender": "f",
+          "plural": "σούπες"
+        },
+        "DOUGH": {
+          "form": "ζύμη",
+          "gender": "f",
+          "plural": "ζύμες"
+        },
+        "SAUCE": {
+          "form": "σάλτσα",
+          "gender": "f",
+          "plural": "σάλτσες"
+        },
+        "INGREDIENT": {
+          "form": "συστατικό",
+          "gender": "n",
+          "plural": "συστατικά"
+        },
+        "KITCHEN": {
+          "form": "κουζίνα",
+          "gender": "f",
+          "plural": "κουζίνες"
+        },
+        "OVEN": {
+          "form": "φούρνος",
+          "gender": "m",
+          "plural": "φούρνοι"
+        },
+        "STOVE": {
+          "form": "μάτι",
+          "gender": "n",
+          "plural": "μάτια"
+        },
+        "SINK": {
+          "form": "νεροχύτης",
+          "gender": "m",
+          "plural": "νεροχύτες"
+        },
+        "FREEZER": {
+          "form": "καταψύκτης",
+          "gender": "m",
+          "plural": "καταψύκτες"
+        },
+        "SALT": {
+          "form": "αλάτι",
+          "gender": "n",
+          "plural": "αλάτια"
+        },
+        "PEPPER": {
+          "form": "πιπέρι",
+          "gender": "n",
+          "plural": "πιπέρια"
+        },
+        "BUTTER": {
+          "form": "βούτυρο",
+          "gender": "n",
+          "plural": "βούτυρα"
+        },
+        "SPICE": {
+          "form": "μπαχαρικό",
+          "gender": "n",
+          "plural": "μπαχαρικά"
+        },
+        "RECIPE": {
+          "form": "συνταγή",
+          "gender": "f",
+          "plural": "συνταγές"
+        },
+        "SWEET": {
+          "form": "γλυκός",
+          "f": "γλυκή",
+          "n": "γλυκό"
+        },
+        "SALTY": {
+          "form": "αλμυρός",
+          "f": "αλμυρή",
+          "n": "αλμυρό"
+        },
+        "SOUR": {
+          "form": "ξινός",
+          "f": "ξινή",
+          "n": "ξινό"
+        },
+        "FRESH": {
+          "form": "φρέσκος",
+          "f": "φρέσκη",
+          "n": "φρέσκο"
+        },
+        "FROZEN": {
+          "form": "κατεψυγμένος",
+          "f": "κατεψυγμένη",
+          "n": "κατεψυγμένο"
+        },
+        "RAW": {
+          "form": "ωμός",
+          "f": "ωμή",
+          "n": "ωμό"
+        }
       }
     },
     "fr": {
       "label": "French",
       "forms": {
-        "COOK": {"base":"cuisiner","1_singular":"cuisine","2_singular":"cuisines","3_singular":"cuisine","1_plural":"cuisinons","2_plural":"cuisinez","3_plural":"cuisinent"},
-        "CUT": {"base":"couper","1_singular":"coupe","2_singular":"coupes","3_singular":"coupe","1_plural":"coupons","2_plural":"coupez","3_plural":"coupent"},
-        "BOIL": {"base":"bouillir","1_singular":"bous","2_singular":"bous","3_singular":"bout","1_plural":"bouillons","2_plural":"bouillez","3_plural":"bouillent"},
-        "PEEL": {"base":"éplucher","1_singular":"épluche","2_singular":"épluches","3_singular":"épluche","1_plural":"épluchons","2_plural":"épluchez","3_plural":"épluchent"},
-        "FRY": {"base":"frire","1_singular":"fris","2_singular":"fris","3_singular":"frit","1_plural":"faisons frire","2_plural":"faites frire","3_plural":"font frire"},
-        "STIR": {"base":"remuer","1_singular":"remue","2_singular":"remues","3_singular":"remue","1_plural":"remuons","2_plural":"remuez","3_plural":"remuent"},
-        "MIX": {"base":"mélanger","1_singular":"mélange","2_singular":"mélanges","3_singular":"mélange","1_plural":"mélangeons","2_plural":"mélangez","3_plural":"mélangent"},
-        "WASH": {"base":"laver","1_singular":"lave","2_singular":"laves","3_singular":"lave","1_plural":"lavons","2_plural":"lavez","3_plural":"lavent"},
-        "HEAT": {"base":"chauffer","1_singular":"chauffe","2_singular":"chauffes","3_singular":"chauffe","1_plural":"chauffons","2_plural":"chauffez","3_plural":"chauffent"},
-        "PAN": {"form":"poêle","gender":"f","plural":"poêles"},
-        "KNIFE": {"form":"couteau","gender":"m","plural":"couteaux"},
-        "FORK": {"form":"fourchette","gender":"f","plural":"fourchettes"},
-        "SPOON": {"form":"cuillère","gender":"f","plural":"cuillères"},
-        "SPATULA": {"form":"spatule","gender":"f","plural":"spatules"},
-        "POT": {"form":"casserole","gender":"f","plural":"casseroles"},
-        "GLASS": {"form":"verre","gender":"m","plural":"verres"},
-        "LITRE": {"form":"litre"},
-        "DECILITRE": {"form":"décilitre"},
-        "MILLILITRE": {"form":"millilitre"},
-        "GRAM": {"form":"gramme"},
-        "KILOGRAM": {"form":"kilogramme"},
-        "MEAT": {"form":"viande","gender":"f","plural":"viandes"},
-        "CHICKEN": {"form":"poulet","gender":"m","plural":"poulets"},
-        "FISH": {"form":"poisson","gender":"m","plural":"poissons"},
-        "VEGETABLE": {"form":"légume","gender":"m","plural":"légumes"},
-        "POTATO": {"form":"pomme de terre","gender":"f","plural":"pommes de terre"},
-        "SALAD": {"form":"salade","gender":"f","plural":"salades"},
-        "FRUIT": {"form":"fruit","gender":"m","plural":"fruits"},
-        "BANANA": {"form":"banane","gender":"f","plural":"bananes"},
-        "SOUP": {"form":"soupe","gender":"f","plural":"soupes"},
-        "DOUGH": {"form":"pâte","gender":"f","plural":"pâtes"},
-        "SAUCE": {"form":"sauce","gender":"f","plural":"sauces"},
-        "INGREDIENT": {"form":"ingrédient","gender":"m","plural":"ingrédients"},
-        "KITCHEN": {"form":"cuisine","gender":"f","plural":"cuisines"},
-        "OVEN": {"form":"four","gender":"m","plural":"fours"},
-        "STOVE": {"form":"cuisinière","gender":"f","plural":"cuisinières"},
-        "SINK": {"form":"évier","gender":"m","plural":"éviers"},
-        "FREEZER": {"form":"congélateur","gender":"m","plural":"congélateurs"},
-        "SALT": {"form":"sel","gender":"m","plural":"sels"},
-        "PEPPER": {"form":"poivre","gender":"m","plural":"poivres"},
-        "BUTTER": {"form":"beurre","gender":"m","plural":"beurres"},
-        "SPICE": {"form":"épice","gender":"f","plural":"épices"},
-        "RECIPE": {"form":"recette","gender":"f","plural":"recettes"},
-        "SWEET": ["sucré"],
-        "SALTY": ["salé"],
-        "SOUR": ["acide"],
-        "FRESH": ["frais"],
-        "FROZEN": ["congelé"],
-        "RAW": { "form": "cru", "f": "crue", "plural": "crus", "fp": "crues" }
+        "COOK": {
+          "base": "cuisiner",
+          "1_singular": "cuisine",
+          "2_singular": "cuisines",
+          "3_singular": "cuisine",
+          "1_plural": "cuisinons",
+          "2_plural": "cuisinez",
+          "3_plural": "cuisinent"
+        },
+        "CUT": {
+          "base": "couper",
+          "1_singular": "coupe",
+          "2_singular": "coupes",
+          "3_singular": "coupe",
+          "1_plural": "coupons",
+          "2_plural": "coupez",
+          "3_plural": "coupent"
+        },
+        "BOIL": {
+          "base": "bouillir",
+          "1_singular": "bous",
+          "2_singular": "bous",
+          "3_singular": "bout",
+          "1_plural": "bouillons",
+          "2_plural": "bouillez",
+          "3_plural": "bouillent"
+        },
+        "PEEL": {
+          "base": "éplucher",
+          "1_singular": "épluche",
+          "2_singular": "épluches",
+          "3_singular": "épluche",
+          "1_plural": "épluchons",
+          "2_plural": "épluchez",
+          "3_plural": "épluchent"
+        },
+        "FRY": {
+          "base": "frire",
+          "1_singular": "fris",
+          "2_singular": "fris",
+          "3_singular": "frit",
+          "1_plural": "faisons frire",
+          "2_plural": "faites frire",
+          "3_plural": "font frire"
+        },
+        "STIR": {
+          "base": "remuer",
+          "1_singular": "remue",
+          "2_singular": "remues",
+          "3_singular": "remue",
+          "1_plural": "remuons",
+          "2_plural": "remuez",
+          "3_plural": "remuent"
+        },
+        "MIX": {
+          "base": "mélanger",
+          "1_singular": "mélange",
+          "2_singular": "mélanges",
+          "3_singular": "mélange",
+          "1_plural": "mélangeons",
+          "2_plural": "mélangez",
+          "3_plural": "mélangent"
+        },
+        "WASH": {
+          "base": "laver",
+          "1_singular": "lave",
+          "2_singular": "laves",
+          "3_singular": "lave",
+          "1_plural": "lavons",
+          "2_plural": "lavez",
+          "3_plural": "lavent"
+        },
+        "HEAT": {
+          "base": "chauffer",
+          "1_singular": "chauffe",
+          "2_singular": "chauffes",
+          "3_singular": "chauffe",
+          "1_plural": "chauffons",
+          "2_plural": "chauffez",
+          "3_plural": "chauffent"
+        },
+        "PAN": {
+          "form": "poêle",
+          "gender": "f",
+          "plural": "poêles"
+        },
+        "KNIFE": {
+          "form": "couteau",
+          "gender": "m",
+          "plural": "couteaux"
+        },
+        "FORK": {
+          "form": "fourchette",
+          "gender": "f",
+          "plural": "fourchettes"
+        },
+        "SPOON": {
+          "form": "cuillère",
+          "gender": "f",
+          "plural": "cuillères"
+        },
+        "SPATULA": {
+          "form": "spatule",
+          "gender": "f",
+          "plural": "spatules"
+        },
+        "POT": {
+          "form": "casserole",
+          "gender": "f",
+          "plural": "casseroles"
+        },
+        "GLASS": {
+          "form": "verre",
+          "gender": "m",
+          "plural": "verres"
+        },
+        "LITRE": {
+          "form": "litre"
+        },
+        "DECILITRE": {
+          "form": "décilitre"
+        },
+        "MILLILITRE": {
+          "form": "millilitre"
+        },
+        "GRAM": {
+          "form": "gramme"
+        },
+        "KILOGRAM": {
+          "form": "kilogramme"
+        },
+        "MEAT": {
+          "form": "viande",
+          "gender": "f",
+          "plural": "viandes"
+        },
+        "CHICKEN": {
+          "form": "poulet",
+          "gender": "m",
+          "plural": "poulets"
+        },
+        "FISH": {
+          "form": "poisson",
+          "gender": "m",
+          "plural": "poissons"
+        },
+        "VEGETABLE": {
+          "form": "légume",
+          "gender": "m",
+          "plural": "légumes"
+        },
+        "POTATO": {
+          "form": "pomme de terre",
+          "gender": "f",
+          "plural": "pommes de terre"
+        },
+        "SALAD": {
+          "form": "salade",
+          "gender": "f",
+          "plural": "salades"
+        },
+        "FRUIT": {
+          "form": "fruit",
+          "gender": "m",
+          "plural": "fruits"
+        },
+        "BANANA": {
+          "form": "banane",
+          "gender": "f",
+          "plural": "bananes"
+        },
+        "SOUP": {
+          "form": "soupe",
+          "gender": "f",
+          "plural": "soupes"
+        },
+        "DOUGH": {
+          "form": "pâte",
+          "gender": "f",
+          "plural": "pâtes"
+        },
+        "SAUCE": {
+          "form": "sauce",
+          "gender": "f",
+          "plural": "sauces"
+        },
+        "INGREDIENT": {
+          "form": "ingrédient",
+          "gender": "m",
+          "plural": "ingrédients"
+        },
+        "KITCHEN": {
+          "form": "cuisine",
+          "gender": "f",
+          "plural": "cuisines"
+        },
+        "OVEN": {
+          "form": "four",
+          "gender": "m",
+          "plural": "fours"
+        },
+        "STOVE": {
+          "form": "cuisinière",
+          "gender": "f",
+          "plural": "cuisinières"
+        },
+        "SINK": {
+          "form": "évier",
+          "gender": "m",
+          "plural": "éviers"
+        },
+        "FREEZER": {
+          "form": "congélateur",
+          "gender": "m",
+          "plural": "congélateurs"
+        },
+        "SALT": {
+          "form": "sel",
+          "gender": "m",
+          "plural": "sels"
+        },
+        "PEPPER": {
+          "form": "poivre",
+          "gender": "m",
+          "plural": "poivres"
+        },
+        "BUTTER": {
+          "form": "beurre",
+          "gender": "m",
+          "plural": "beurres"
+        },
+        "SPICE": {
+          "form": "épice",
+          "gender": "f",
+          "plural": "épices"
+        },
+        "RECIPE": {
+          "form": "recette",
+          "gender": "f",
+          "plural": "recettes"
+        },
+        "SWEET": [
+          "sucré"
+        ],
+        "SALTY": [
+          "salé"
+        ],
+        "SOUR": [
+          "acide"
+        ],
+        "FRESH": [
+          "frais"
+        ],
+        "FROZEN": [
+          "congelé"
+        ],
+        "RAW": {
+          "form": "cru",
+          "f": "crue",
+          "plural": "crus",
+          "fp": "crues"
+        }
       }
     },
     "tr": {
       "label": "Turkish",
       "forms": {
-        "COOK": { "base": "pişirmek", "1_singular": "pişiriyorum", "2_singular": "pişiriyorsun", "3_singular": "pişiriyor", "1_plural": "pişiriyoruz", "2_plural": "pişiriyorsunuz", "3_plural": "pişiriyorlar" },
-        "CUT": { "base": "kesmek", "1_singular": "kesiyorum", "2_singular": "kesiyorsun", "3_singular": "kesiyor", "1_plural": "kesiyoruz", "2_plural": "kesiyorsunuz", "3_plural": "kesiyorlar" },
-        "BOIL": { "base": "kaynatmak", "1_singular": "kaynatıyorum", "2_singular": "kaynatıyorsun", "3_singular": "kaynatıyor", "1_plural": "kaynatıyoruz", "2_plural": "kaynatıyorsunuz", "3_plural": "kaynatıyorlar" },
-        "PEEL": { "base": "soymak", "1_singular": "soyuyorum", "2_singular": "soyuyorsun", "3_singular": "soyuyor", "1_plural": "soyuyoruz", "2_plural": "soyuyorsunuz", "3_plural": "soyuyorlar" },
-        "FRY": { "base": "kızartmak", "1_singular": "kızartıyorum", "2_singular": "kızartıyorsun", "3_singular": "kızartıyor", "1_plural": "kızartıyoruz", "2_plural": "kızartıyorsunuz", "3_plural": "kızartıyorlar" },
-        "STIR": { "base": "karıştırmak", "1_singular": "karıştırıyorum", "2_singular": "karıştırıyorsun", "3_singular": "karıştırıyor", "1_plural": "karıştırıyoruz", "2_plural": "karıştırıyorsunuz", "3_plural": "karıştırıyorlar" },
-        "MIX": { "base": "karıştırmak", "1_singular": "karıştırıyorum", "2_singular": "karıştırıyorsun", "3_singular": "karıştırıyor", "1_plural": "karıştırıyoruz", "2_plural": "karıştırıyorsunuz", "3_plural": "karıştırıyorlar" },
-        "WASH": { "base": "yıkamak", "1_singular": "yıkıyorum", "2_singular": "yıkıyorsun", "3_singular": "yıkıyor", "1_plural": "yıkıyoruz", "2_plural": "yıkıyorsunuz", "3_plural": "yıkıyorlar" },
-        "HEAT": { "base": "ısıtmak", "1_singular": "ısıtıyorum", "2_singular": "ısıtıyorsun", "3_singular": "ısıtıyor", "1_plural": "ısıtıyoruz", "2_plural": "ısıtıyorsunuz", "3_plural": "ısıtıyorlar" },
-        "PAN": {"form":"tava","plural":"tavalar"},
-        "KNIFE": {"form":"bıçak","plural":"bıçaklar"},
-        "FORK": {"form":"çatal","plural":"çatallar"},
-        "SPOON": {"form":"kaşık","plural":"kaşıklar"},
-        "SPATULA": {"form":"spatula","plural":"spatulalar"},
-        "POT": {"form":"tencere","plural":"tencereler"},
-        "GLASS": {"form":"bardak","plural":"bardaklar"},
-        "LITRE": {"form":"litre"},
-        "DECILITRE": {"form":"desilitre"},
-        "MILLILITRE": {"form":"mililitre"},
-        "GRAM": {"form":"gram"},
-        "KILOGRAM": {"form":"kilogram"},
-        "MEAT": {"form":"et","plural":"etler"},
-        "CHICKEN": {"form":"tavuk","plural":"tavuklar"},
-        "FISH": {"form":"balık","plural":"balıklar"},
-        "VEGETABLE": {"form":"sebze","plural":"sebzeler"},
-        "POTATO": {"form":"patates","plural":"patatesler"},
-        "SALAD": {"form":"salata","plural":"salatalar"},
-        "FRUIT": {"form":"meyve","plural":"meyveler"},
-        "BANANA": {"form":"muz","plural":"muzlar"},
-        "SOUP": {"form":"çorba","plural":"çorbalar"},
-        "DOUGH": {"form":"hamur","plural":"hamurlar"},
-        "SAUCE": {"form":"sos","plural":"soslar"},
-        "INGREDIENT": {"form":"malzeme","plural":"malzemeler"},
-        "KITCHEN": {"form":"mutfak","plural":"mutfaklar"},
-        "OVEN": {"form":"fırın","plural":"fırınlar"},
-        "STOVE": {"form":"ocak","plural":"ocaklar"},
-        "SINK": {"form":"evye","plural":"evyeler"},
-        "FREEZER": {"form":"dondurucu","plural":"dondurucular"},
-        "SALT": {"form":"tuz","plural":"tuzlar"},
-        "PEPPER": {"form":"karabiber","plural":"karabiberler"},
-        "BUTTER": {"form":"tereyağı","plural":"tereyağları"},
-        "SPICE": {"form":"baharat","plural":"baharatlar"},
-        "RECIPE": {"form":"tarif","plural":"tarifler"},
-        "SWEET": ["tatlı"],
-        "SALTY": ["tuzlu"],
-        "SOUR": ["ekşi"],
-        "FRESH": ["taze"],
-        "FROZEN": ["dondurulmuş"],
-        "RAW": ["çiğ"]
+        "COOK": {
+          "base": "pişirmek",
+          "1_singular": "pişiriyorum",
+          "2_singular": "pişiriyorsun",
+          "3_singular": "pişiriyor",
+          "1_plural": "pişiriyoruz",
+          "2_plural": "pişiriyorsunuz",
+          "3_plural": "pişiriyorlar"
+        },
+        "CUT": {
+          "base": "kesmek",
+          "1_singular": "kesiyorum",
+          "2_singular": "kesiyorsun",
+          "3_singular": "kesiyor",
+          "1_plural": "kesiyoruz",
+          "2_plural": "kesiyorsunuz",
+          "3_plural": "kesiyorlar"
+        },
+        "BOIL": {
+          "base": "kaynatmak",
+          "1_singular": "kaynatıyorum",
+          "2_singular": "kaynatıyorsun",
+          "3_singular": "kaynatıyor",
+          "1_plural": "kaynatıyoruz",
+          "2_plural": "kaynatıyorsunuz",
+          "3_plural": "kaynatıyorlar"
+        },
+        "PEEL": {
+          "base": "soymak",
+          "1_singular": "soyuyorum",
+          "2_singular": "soyuyorsun",
+          "3_singular": "soyuyor",
+          "1_plural": "soyuyoruz",
+          "2_plural": "soyuyorsunuz",
+          "3_plural": "soyuyorlar"
+        },
+        "FRY": {
+          "base": "kızartmak",
+          "1_singular": "kızartıyorum",
+          "2_singular": "kızartıyorsun",
+          "3_singular": "kızartıyor",
+          "1_plural": "kızartıyoruz",
+          "2_plural": "kızartıyorsunuz",
+          "3_plural": "kızartıyorlar"
+        },
+        "STIR": {
+          "base": "karıştırmak",
+          "1_singular": "karıştırıyorum",
+          "2_singular": "karıştırıyorsun",
+          "3_singular": "karıştırıyor",
+          "1_plural": "karıştırıyoruz",
+          "2_plural": "karıştırıyorsunuz",
+          "3_plural": "karıştırıyorlar"
+        },
+        "MIX": {
+          "base": "karıştırmak",
+          "1_singular": "karıştırıyorum",
+          "2_singular": "karıştırıyorsun",
+          "3_singular": "karıştırıyor",
+          "1_plural": "karıştırıyoruz",
+          "2_plural": "karıştırıyorsunuz",
+          "3_plural": "karıştırıyorlar"
+        },
+        "WASH": {
+          "base": "yıkamak",
+          "1_singular": "yıkıyorum",
+          "2_singular": "yıkıyorsun",
+          "3_singular": "yıkıyor",
+          "1_plural": "yıkıyoruz",
+          "2_plural": "yıkıyorsunuz",
+          "3_plural": "yıkıyorlar"
+        },
+        "HEAT": {
+          "base": "ısıtmak",
+          "1_singular": "ısıtıyorum",
+          "2_singular": "ısıtıyorsun",
+          "3_singular": "ısıtıyor",
+          "1_plural": "ısıtıyoruz",
+          "2_plural": "ısıtıyorsunuz",
+          "3_plural": "ısıtıyorlar"
+        },
+        "PAN": {
+          "form": "tava",
+          "plural": "tavalar"
+        },
+        "KNIFE": {
+          "form": "bıçak",
+          "plural": "bıçaklar"
+        },
+        "FORK": {
+          "form": "çatal",
+          "plural": "çatallar"
+        },
+        "SPOON": {
+          "form": "kaşık",
+          "plural": "kaşıklar"
+        },
+        "SPATULA": {
+          "form": "spatula",
+          "plural": "spatulalar"
+        },
+        "POT": {
+          "form": "tencere",
+          "plural": "tencereler"
+        },
+        "GLASS": {
+          "form": "bardak",
+          "plural": "bardaklar"
+        },
+        "LITRE": {
+          "form": "litre"
+        },
+        "DECILITRE": {
+          "form": "desilitre"
+        },
+        "MILLILITRE": {
+          "form": "mililitre"
+        },
+        "GRAM": {
+          "form": "gram"
+        },
+        "KILOGRAM": {
+          "form": "kilogram"
+        },
+        "MEAT": {
+          "form": "et",
+          "plural": "etler"
+        },
+        "CHICKEN": {
+          "form": "tavuk",
+          "plural": "tavuklar"
+        },
+        "FISH": {
+          "form": "balık",
+          "plural": "balıklar"
+        },
+        "VEGETABLE": {
+          "form": "sebze",
+          "plural": "sebzeler"
+        },
+        "POTATO": {
+          "form": "patates",
+          "plural": "patatesler"
+        },
+        "SALAD": {
+          "form": "salata",
+          "plural": "salatalar"
+        },
+        "FRUIT": {
+          "form": "meyve",
+          "plural": "meyveler"
+        },
+        "BANANA": {
+          "form": "muz",
+          "plural": "muzlar"
+        },
+        "SOUP": {
+          "form": "çorba",
+          "plural": "çorbalar"
+        },
+        "DOUGH": {
+          "form": "hamur",
+          "plural": "hamurlar"
+        },
+        "SAUCE": {
+          "form": "sos",
+          "plural": "soslar"
+        },
+        "INGREDIENT": {
+          "form": "malzeme",
+          "plural": "malzemeler"
+        },
+        "KITCHEN": {
+          "form": "mutfak",
+          "plural": "mutfaklar"
+        },
+        "OVEN": {
+          "form": "fırın",
+          "plural": "fırınlar"
+        },
+        "STOVE": {
+          "form": "ocak",
+          "plural": "ocaklar"
+        },
+        "SINK": {
+          "form": "evye",
+          "plural": "evyeler"
+        },
+        "FREEZER": {
+          "form": "dondurucu",
+          "plural": "dondurucular"
+        },
+        "SALT": {
+          "form": "tuz",
+          "plural": "tuzlar"
+        },
+        "PEPPER": {
+          "form": "karabiber",
+          "plural": "karabiberler"
+        },
+        "BUTTER": {
+          "form": "tereyağı",
+          "plural": "tereyağları"
+        },
+        "SPICE": {
+          "form": "baharat",
+          "plural": "baharatlar"
+        },
+        "RECIPE": {
+          "form": "tarif",
+          "plural": "tarifler"
+        },
+        "SWEET": [
+          "tatlı"
+        ],
+        "SALTY": [
+          "tuzlu"
+        ],
+        "SOUR": [
+          "ekşi"
+        ],
+        "FRESH": [
+          "taze"
+        ],
+        "FROZEN": [
+          "dondurulmuş"
+        ],
+        "RAW": [
+          "çiğ"
+        ]
       }
     },
     "zh": {
       "label": "Chinese",
       "forms": {
-        "COOK": {"base":"烹饪"},
-        "CUT": {"base":"切"},
-        "BOIL": {"base":"煮"},
-        "PEEL": {"base":"削皮"},
-        "FRY": {"base":"炸"},
-        "STIR": {"base":"搅拌"},
-        "MIX": {"base":"混合"},
-        "WASH": {"base":"洗"},
-        "HEAT": {"base":"加热"},
-        "PAN": {"form":"平底锅","classifier":"个"},
-        "KNIFE": {"form":"刀","classifier":"把"},
-        "FORK": {"form":"叉子"},
-        "SPOON": {"form":"勺子"},
-        "SPATULA": {"form":"铲子"},
-        "POT": {"form":"锅","classifier":"口"},
-        "GLASS": {"form":"杯子"},
-        "LITRE": {"form":"升"},
-        "DECILITRE": {"form":"分升"},
-        "MILLILITRE": {"form":"毫升"},
-        "GRAM": {"form":"克"},
-        "KILOGRAM": {"form":"千克"},
-        "MEAT": {"form":"肉"},
-        "CHICKEN": {"form":"鸡肉"},
-        "FISH": {"form":"鱼"},
-        "VEGETABLE": {"form":"蔬菜"},
-        "POTATO": {"form":"土豆"},
-        "SALAD": {"form":"沙拉"},
-        "FRUIT": {"form":"水果"},
-        "BANANA": {"form":"香蕉"},
-        "SOUP": {"form":"汤"},
-        "DOUGH": {"form":"面团"},
-        "SAUCE": {"form":"酱"},
-        "INGREDIENT": {"form":"食材"},
-        "KITCHEN": {"form":"厨房"},
-        "OVEN": {"form":"烤箱"},
-        "STOVE": {"form":"炉灶"},
-        "SINK": {"form":"水槽"},
-        "FREEZER": {"form":"冰柜"},
-        "SALT": {"form":"盐"},
-        "PEPPER": {"form":"胡椒"},
-        "BUTTER": {"form":"黄油"},
-        "SPICE": {"form":"香料"},
-        "RECIPE": {"form":"食谱"},
-        "SWEET": ["甜"],
-        "SALTY": ["咸"],
-        "SOUR": ["酸"],
-        "FRESH": ["新鲜"],
-        "FROZEN": ["冷冻"],
-        "RAW": ["生"]
+        "COOK": {
+          "base": "烹饪"
+        },
+        "CUT": {
+          "base": "切"
+        },
+        "BOIL": {
+          "base": "煮"
+        },
+        "PEEL": {
+          "base": "削皮"
+        },
+        "FRY": {
+          "base": "炸"
+        },
+        "STIR": {
+          "base": "搅拌"
+        },
+        "MIX": {
+          "base": "混合"
+        },
+        "WASH": {
+          "base": "洗"
+        },
+        "HEAT": {
+          "base": "加热"
+        },
+        "PAN": {
+          "form": "平底锅",
+          "classifier": "个"
+        },
+        "KNIFE": {
+          "form": "刀",
+          "classifier": "把"
+        },
+        "FORK": {
+          "form": "叉子"
+        },
+        "SPOON": {
+          "form": "勺子"
+        },
+        "SPATULA": {
+          "form": "铲子"
+        },
+        "POT": {
+          "form": "锅",
+          "classifier": "口"
+        },
+        "GLASS": {
+          "form": "杯子"
+        },
+        "LITRE": {
+          "form": "升"
+        },
+        "DECILITRE": {
+          "form": "分升"
+        },
+        "MILLILITRE": {
+          "form": "毫升"
+        },
+        "GRAM": {
+          "form": "克"
+        },
+        "KILOGRAM": {
+          "form": "千克"
+        },
+        "MEAT": {
+          "form": "肉"
+        },
+        "CHICKEN": {
+          "form": "鸡肉"
+        },
+        "FISH": {
+          "form": "鱼"
+        },
+        "VEGETABLE": {
+          "form": "蔬菜"
+        },
+        "POTATO": {
+          "form": "土豆"
+        },
+        "SALAD": {
+          "form": "沙拉"
+        },
+        "FRUIT": {
+          "form": "水果"
+        },
+        "BANANA": {
+          "form": "香蕉"
+        },
+        "SOUP": {
+          "form": "汤"
+        },
+        "DOUGH": {
+          "form": "面团"
+        },
+        "SAUCE": {
+          "form": "酱"
+        },
+        "INGREDIENT": {
+          "form": "食材"
+        },
+        "KITCHEN": {
+          "form": "厨房"
+        },
+        "OVEN": {
+          "form": "烤箱"
+        },
+        "STOVE": {
+          "form": "炉灶"
+        },
+        "SINK": {
+          "form": "水槽"
+        },
+        "FREEZER": {
+          "form": "冰柜"
+        },
+        "SALT": {
+          "form": "盐"
+        },
+        "PEPPER": {
+          "form": "胡椒"
+        },
+        "BUTTER": {
+          "form": "黄油"
+        },
+        "SPICE": {
+          "form": "香料"
+        },
+        "RECIPE": {
+          "form": "食谱"
+        },
+        "SWEET": [
+          "甜"
+        ],
+        "SALTY": [
+          "咸"
+        ],
+        "SOUR": [
+          "酸"
+        ],
+        "FRESH": [
+          "新鲜"
+        ],
+        "FROZEN": [
+          "冷冻"
+        ],
+        "RAW": [
+          "生"
+        ]
       }
     },
     "it": {
       "label": "Italian",
       "forms": {
-        "COOK": {"base":"cucinare","1_singular":"cucino","2_singular":"cucini","3_singular":"cucina","1_plural":"cuciniamo","2_plural":"cucinate","3_plural":"cucinano"},
-        "CUT": {"base":"tagliare","1_singular":"taglio","2_singular":"tagli","3_singular":"taglia","1_plural":"tagliamo","2_plural":"tagliate","3_plural":"tagliano"},
-        "BOIL": {"base":"bollire","1_singular":"bollo","2_singular":"bolli","3_singular":"bolle","1_plural":"bolliamo","2_plural":"bollite","3_plural":"bollono"},
-        "PEEL": {"base":"sbucciare","1_singular":"sbuccio","2_singular":"sbucci","3_singular":"sbuccia","1_plural":"sbucciamo","2_plural":"sbucciate","3_plural":"sbucciano"},
-        "FRY": {"base":"friggere","1_singular":"friggo","2_singular":"friggi","3_singular":"frigge","1_plural":"friggiamo","2_plural":"friggete","3_plural":"friggono"},
-        "STIR": {"base":"mescolare","1_singular":"mescolo","2_singular":"mescoli","3_singular":"mescola","1_plural":"mescoliamo","2_plural":"mescolate","3_plural":"mescolano"},
-        "MIX": {"base":"mischiare","1_singular":"mischio","2_singular":"mischi","3_singular":"mischia","1_plural":"mischiamo","2_plural":"mischiate","3_plural":"mischiano"},
-        "WASH": {"base":"lavare","1_singular":"lavo","2_singular":"lavi","3_singular":"lava","1_plural":"laviamo","2_plural":"lavate","3_plural":"lavano"},
-        "HEAT": {"base":"riscaldare","1_singular":"riscaldo","2_singular":"riscaldi","3_singular":"riscalda","1_plural":"riscaldiamo","2_plural":"riscaldate","3_plural":"riscaldano"},
-        "PAN": {"form":"padella","gender":"f","plural":"padelle"},
-        "KNIFE": {"form":"coltello","gender":"m","plural":"coltelli"},
-        "FORK": {"form":"forchetta","gender":"f","plural":"forchette"},
-        "SPOON": {"form":"cucchiaio","gender":"m","plural":"cucchiai"},
-        "SPATULA": {"form":"spatola","gender":"f","plural":"spatole"},
-        "POT": {"form":"pentola","gender":"f","plural":"pentole"},
-        "GLASS": {"form":"bicchiere","gender":"m","plural":"bicchieri"},
-        "LITRE": {"form":"litro"},
-        "DECILITRE": {"form":"decilitro"},
-        "MILLILITRE": {"form":"millilitro"},
-        "GRAM": {"form":"grammo"},
-        "KILOGRAM": {"form":"chilogrammo"},
-        "MEAT": {"form":"carne","gender":"f","plural":"carni"},
-        "CHICKEN": {"form":"pollo","gender":"m","plural":"polli"},
-        "FISH": {"form":"pesce","gender":"m","plural":"pesci"},
-        "VEGETABLE": {"form":"verdura","gender":"f","plural":"verdure"},
-        "POTATO": {"form":"patata","gender":"f","plural":"patate"},
-        "SALAD": {"form":"insalata","gender":"f","plural":"insalate"},
-        "FRUIT": {"form":"frutto","gender":"m","plural":"frutti"},
-        "BANANA": {"form":"banana","gender":"f","plural":"banane"},
-        "SOUP": {"form":"zuppa","gender":"f","plural":"zuppe"},
-        "DOUGH": {"form":"impasto","gender":"m","plural":"impasti"},
-        "SAUCE": {"form":"salsa","gender":"f","plural":"salse"},
-        "INGREDIENT": {"form":"ingrediente","gender":"m","plural":"ingredienti"},
-        "KITCHEN": {"form":"cucina","gender":"f","plural":"cucine"},
-        "OVEN": {"form":"forno","gender":"m","plural":"forni"},
-        "STOVE": {"form":"fornello","gender":"m","plural":"fornelli"},
-        "SINK": {"form":"lavandino","gender":"m","plural":"lavandini"},
-        "FREEZER": {"form":"congelatore","gender":"m","plural":"congelatori"},
-        "SALT": {"form":"sale","gender":"m","plural":"sali"},
-        "PEPPER": {"form":"pepe","gender":"m","plural":"pepi"},
-        "BUTTER": {"form":"burro","gender":"m","plural":"burri"},
-        "SPICE": {"form":"spezia","gender":"f","plural":"spezie"},
-        "RECIPE": {"form":"ricetta","gender":"f","plural":"ricette"},
-        "SWEET": ["dolce"],
-        "SALTY": ["salato"],
-        "SOUR": ["aspro"],
-        "FRESH": ["fresco"],
-        "FROZEN": ["congelato"],
-        "RAW": ["crudo"]
+        "COOK": {
+          "base": "cucinare",
+          "1_singular": "cucino",
+          "2_singular": "cucini",
+          "3_singular": "cucina",
+          "1_plural": "cuciniamo",
+          "2_plural": "cucinate",
+          "3_plural": "cucinano"
+        },
+        "CUT": {
+          "base": "tagliare",
+          "1_singular": "taglio",
+          "2_singular": "tagli",
+          "3_singular": "taglia",
+          "1_plural": "tagliamo",
+          "2_plural": "tagliate",
+          "3_plural": "tagliano"
+        },
+        "BOIL": {
+          "base": "bollire",
+          "1_singular": "bollo",
+          "2_singular": "bolli",
+          "3_singular": "bolle",
+          "1_plural": "bolliamo",
+          "2_plural": "bollite",
+          "3_plural": "bollono"
+        },
+        "PEEL": {
+          "base": "sbucciare",
+          "1_singular": "sbuccio",
+          "2_singular": "sbucci",
+          "3_singular": "sbuccia",
+          "1_plural": "sbucciamo",
+          "2_plural": "sbucciate",
+          "3_plural": "sbucciano"
+        },
+        "FRY": {
+          "base": "friggere",
+          "1_singular": "friggo",
+          "2_singular": "friggi",
+          "3_singular": "frigge",
+          "1_plural": "friggiamo",
+          "2_plural": "friggete",
+          "3_plural": "friggono"
+        },
+        "STIR": {
+          "base": "mescolare",
+          "1_singular": "mescolo",
+          "2_singular": "mescoli",
+          "3_singular": "mescola",
+          "1_plural": "mescoliamo",
+          "2_plural": "mescolate",
+          "3_plural": "mescolano"
+        },
+        "MIX": {
+          "base": "mischiare",
+          "1_singular": "mischio",
+          "2_singular": "mischi",
+          "3_singular": "mischia",
+          "1_plural": "mischiamo",
+          "2_plural": "mischiate",
+          "3_plural": "mischiano"
+        },
+        "WASH": {
+          "base": "lavare",
+          "1_singular": "lavo",
+          "2_singular": "lavi",
+          "3_singular": "lava",
+          "1_plural": "laviamo",
+          "2_plural": "lavate",
+          "3_plural": "lavano"
+        },
+        "HEAT": {
+          "base": "riscaldare",
+          "1_singular": "riscaldo",
+          "2_singular": "riscaldi",
+          "3_singular": "riscalda",
+          "1_plural": "riscaldiamo",
+          "2_plural": "riscaldate",
+          "3_plural": "riscaldano"
+        },
+        "PAN": {
+          "form": "padella",
+          "gender": "f",
+          "plural": "padelle"
+        },
+        "KNIFE": {
+          "form": "coltello",
+          "gender": "m",
+          "plural": "coltelli"
+        },
+        "FORK": {
+          "form": "forchetta",
+          "gender": "f",
+          "plural": "forchette"
+        },
+        "SPOON": {
+          "form": "cucchiaio",
+          "gender": "m",
+          "plural": "cucchiai"
+        },
+        "SPATULA": {
+          "form": "spatola",
+          "gender": "f",
+          "plural": "spatole"
+        },
+        "POT": {
+          "form": "pentola",
+          "gender": "f",
+          "plural": "pentole"
+        },
+        "GLASS": {
+          "form": "bicchiere",
+          "gender": "m",
+          "plural": "bicchieri"
+        },
+        "LITRE": {
+          "form": "litro"
+        },
+        "DECILITRE": {
+          "form": "decilitro"
+        },
+        "MILLILITRE": {
+          "form": "millilitro"
+        },
+        "GRAM": {
+          "form": "grammo"
+        },
+        "KILOGRAM": {
+          "form": "chilogrammo"
+        },
+        "MEAT": {
+          "form": "carne",
+          "gender": "f",
+          "plural": "carni"
+        },
+        "CHICKEN": {
+          "form": "pollo",
+          "gender": "m",
+          "plural": "polli"
+        },
+        "FISH": {
+          "form": "pesce",
+          "gender": "m",
+          "plural": "pesci"
+        },
+        "VEGETABLE": {
+          "form": "verdura",
+          "gender": "f",
+          "plural": "verdure"
+        },
+        "POTATO": {
+          "form": "patata",
+          "gender": "f",
+          "plural": "patate"
+        },
+        "SALAD": {
+          "form": "insalata",
+          "gender": "f",
+          "plural": "insalate"
+        },
+        "FRUIT": {
+          "form": "frutto",
+          "gender": "m",
+          "plural": "frutti"
+        },
+        "BANANA": {
+          "form": "banana",
+          "gender": "f",
+          "plural": "banane"
+        },
+        "SOUP": {
+          "form": "zuppa",
+          "gender": "f",
+          "plural": "zuppe"
+        },
+        "DOUGH": {
+          "form": "impasto",
+          "gender": "m",
+          "plural": "impasti"
+        },
+        "SAUCE": {
+          "form": "salsa",
+          "gender": "f",
+          "plural": "salse"
+        },
+        "INGREDIENT": {
+          "form": "ingrediente",
+          "gender": "m",
+          "plural": "ingredienti"
+        },
+        "KITCHEN": {
+          "form": "cucina",
+          "gender": "f",
+          "plural": "cucine"
+        },
+        "OVEN": {
+          "form": "forno",
+          "gender": "m",
+          "plural": "forni"
+        },
+        "STOVE": {
+          "form": "fornello",
+          "gender": "m",
+          "plural": "fornelli"
+        },
+        "SINK": {
+          "form": "lavandino",
+          "gender": "m",
+          "plural": "lavandini"
+        },
+        "FREEZER": {
+          "form": "congelatore",
+          "gender": "m",
+          "plural": "congelatori"
+        },
+        "SALT": {
+          "form": "sale",
+          "gender": "m",
+          "plural": "sali"
+        },
+        "PEPPER": {
+          "form": "pepe",
+          "gender": "m",
+          "plural": "pepi"
+        },
+        "BUTTER": {
+          "form": "burro",
+          "gender": "m",
+          "plural": "burri"
+        },
+        "SPICE": {
+          "form": "spezia",
+          "gender": "f",
+          "plural": "spezie"
+        },
+        "RECIPE": {
+          "form": "ricetta",
+          "gender": "f",
+          "plural": "ricette"
+        },
+        "SWEET": [
+          "dolce"
+        ],
+        "SALTY": [
+          "salato"
+        ],
+        "SOUR": [
+          "aspro"
+        ],
+        "FRESH": [
+          "fresco"
+        ],
+        "FROZEN": [
+          "congelato"
+        ],
+        "RAW": [
+          "crudo"
+        ]
       }
     },
     "th": {
       "label": "Thai",
       "forms": {
-        "COOK": {"base":"ทำอาหาร"},
-        "CUT": {"base":"หั่น"},
-        "BOIL": {"base":"ต้ม"},
-        "PEEL": {"base":"ปอกเปลือก"},
-        "FRY": {"base":"ทอด"},
-        "STIR": {"base":"คน"},
-        "MIX": {"base":"ผสม"},
-        "WASH": {"base":"ล้าง"},
-        "HEAT": {"base":"อุ่น"},
-        "PAN": {"form":"กระทะ","classifier":"ใบ"},
-        "KNIFE": {"form":"มีด","classifier":"เล่ม"},
-        "FORK": {"form":"ส้อม","classifier":"คัน"},
-        "SPOON": {"form":"ช้อน","classifier":"คัน"},
-        "SPATULA": {"form":"ตะหลิว","classifier":"อัน"},
-        "POT": {"form":"หม้อ","classifier":"ใบ"},
-        "GLASS": {"form":"แก้ว","classifier":"ใบ"},
-        "LITRE": {"form":"ลิตร"},
-        "DECILITRE": {"form":"เดซิลิตร"},
-        "MILLILITRE": {"form":"มิลลิลิตร"},
-        "GRAM": {"form":"กรัม"},
-        "KILOGRAM": {"form":"กิโลกรัม"},
-        "MEAT": {"form":"เนื้อสัตว์"},
-        "CHICKEN": {"form":"เนื้อไก่"},
-        "FISH": {"form":"ปลา","classifier":"ตัว"},
-        "VEGETABLE": {"form":"ผัก"},
-        "POTATO": {"form":"มันฝรั่ง","classifier":"หัว"},
-        "SALAD": {"form":"สลัด"},
-        "FRUIT": {"form":"ผลไม้"},
-        "BANANA": {"form":"กล้วย","classifier":"ลูก"},
-        "SOUP": {"form":"ซุป"},
-        "DOUGH": {"form":"แป้งโดว์"},
-        "SAUCE": {"form":"ซอส"},
-        "INGREDIENT": {"form":"ส่วนผสม"},
-        "KITCHEN": {"form":"ห้องครัว","classifier":"ห้อง"},
-        "OVEN": {"form":"เตาอบ","classifier":"เครื่อง"},
-        "STOVE": {"form":"เตา"},
-        "SINK": {"form":"อ่างล้างจาน","classifier":"ใบ"},
-        "FREEZER": {"form":"ตู้แช่แข็ง","classifier":"เครื่อง"},
-        "SALT": {"form":"เกลือ"},
-        "PEPPER": {"form":"พริกไทย"},
-        "BUTTER": {"form":"เนย"},
-        "SPICE": {"form":"เครื่องเทศ"},
-        "RECIPE": {"form":"สูตรอาหาร"},
-        "SWEET": ["หวาน"],
-        "SALTY": ["เค็ม"],
-        "SOUR": ["เปรี้ยว"],
-        "FRESH": ["สด"],
-        "FROZEN": ["แช่แข็ง"],
-        "RAW": ["ดิบ"]
+        "COOK": {
+          "base": "ทำอาหาร"
+        },
+        "CUT": {
+          "base": "หั่น"
+        },
+        "BOIL": {
+          "base": "ต้ม"
+        },
+        "PEEL": {
+          "base": "ปอกเปลือก"
+        },
+        "FRY": {
+          "base": "ทอด"
+        },
+        "STIR": {
+          "base": "คน"
+        },
+        "MIX": {
+          "base": "ผสม"
+        },
+        "WASH": {
+          "base": "ล้าง"
+        },
+        "HEAT": {
+          "base": "อุ่น"
+        },
+        "PAN": {
+          "form": "กระทะ",
+          "classifier": "ใบ"
+        },
+        "KNIFE": {
+          "form": "มีด",
+          "classifier": "เล่ม"
+        },
+        "FORK": {
+          "form": "ส้อม",
+          "classifier": "คัน"
+        },
+        "SPOON": {
+          "form": "ช้อน",
+          "classifier": "คัน"
+        },
+        "SPATULA": {
+          "form": "ตะหลิว",
+          "classifier": "อัน"
+        },
+        "POT": {
+          "form": "หม้อ",
+          "classifier": "ใบ"
+        },
+        "GLASS": {
+          "form": "แก้ว",
+          "classifier": "ใบ"
+        },
+        "LITRE": {
+          "form": "ลิตร"
+        },
+        "DECILITRE": {
+          "form": "เดซิลิตร"
+        },
+        "MILLILITRE": {
+          "form": "มิลลิลิตร"
+        },
+        "GRAM": {
+          "form": "กรัม"
+        },
+        "KILOGRAM": {
+          "form": "กิโลกรัม"
+        },
+        "MEAT": {
+          "form": "เนื้อสัตว์"
+        },
+        "CHICKEN": {
+          "form": "เนื้อไก่"
+        },
+        "FISH": {
+          "form": "ปลา",
+          "classifier": "ตัว"
+        },
+        "VEGETABLE": {
+          "form": "ผัก"
+        },
+        "POTATO": {
+          "form": "มันฝรั่ง",
+          "classifier": "หัว"
+        },
+        "SALAD": {
+          "form": "สลัด"
+        },
+        "FRUIT": {
+          "form": "ผลไม้"
+        },
+        "BANANA": {
+          "form": "กล้วย",
+          "classifier": "ลูก"
+        },
+        "SOUP": {
+          "form": "ซุป"
+        },
+        "DOUGH": {
+          "form": "แป้งโดว์"
+        },
+        "SAUCE": {
+          "form": "ซอส"
+        },
+        "INGREDIENT": {
+          "form": "ส่วนผสม"
+        },
+        "KITCHEN": {
+          "form": "ห้องครัว",
+          "classifier": "ห้อง"
+        },
+        "OVEN": {
+          "form": "เตาอบ",
+          "classifier": "เครื่อง"
+        },
+        "STOVE": {
+          "form": "เตา"
+        },
+        "SINK": {
+          "form": "อ่างล้างจาน",
+          "classifier": "ใบ"
+        },
+        "FREEZER": {
+          "form": "ตู้แช่แข็ง",
+          "classifier": "เครื่อง"
+        },
+        "SALT": {
+          "form": "เกลือ"
+        },
+        "PEPPER": {
+          "form": "พริกไทย"
+        },
+        "BUTTER": {
+          "form": "เนย"
+        },
+        "SPICE": {
+          "form": "เครื่องเทศ"
+        },
+        "RECIPE": {
+          "form": "สูตรอาหาร"
+        },
+        "SWEET": [
+          "หวาน"
+        ],
+        "SALTY": [
+          "เค็ม"
+        ],
+        "SOUR": [
+          "เปรี้ยว"
+        ],
+        "FRESH": [
+          "สด"
+        ],
+        "FROZEN": [
+          "แช่แข็ง"
+        ],
+        "RAW": [
+          "ดิบ"
+        ]
       }
     },
     "pl": {
       "label": "Polish",
       "forms": {
-        "COOK": {"base":"gotować","1_singular":"gotuję","2_singular":"gotujesz","3_singular":"gotuje","1_plural":"gotujemy","2_plural":"gotujecie","3_plural":"gotują"},
-        "CUT": {"base":"kroić","1_singular":"kroję","2_singular":"kroisz","3_singular":"kroi","1_plural":"kroimy","2_plural":"kroicie","3_plural":"kroją"},
-        "BOIL": {"base":"zagotowywać","1_singular":"zagotowuję","2_singular":"zagotowujesz","3_singular":"zagotowuje","1_plural":"zagotowujemy","2_plural":"zagotowujecie","3_plural":"zagotowują"},
-        "PEEL": {"base":"obierać","1_singular":"obieram","2_singular":"obierasz","3_singular":"obiera","1_plural":"obieramy","2_plural":"obieracie","3_plural":"obierają"},
-        "FRY": {"base":"smażyć","1_singular":"smażę","2_singular":"smażysz","3_singular":"smaży","1_plural":"smażymy","2_plural":"smażycie","3_plural":"smażą"},
-        "STIR": {"base":"mieszać","1_singular":"mieszam","2_singular":"mieszasz","3_singular":"miesza","1_plural":"mieszamy","2_plural":"mieszacie","3_plural":"mieszają"},
-        "MIX": {"base":"miksować","1_singular":"miksuję","2_singular":"miksujesz","3_singular":"miksuje","1_plural":"miksujemy","2_plural":"miksujecie","3_plural":"miksują"},
-        "WASH": {"base":"myć","1_singular":"myję","2_singular":"myjesz","3_singular":"myje","1_plural":"myjemy","2_plural":"myjecie","3_plural":"myją"},
-        "HEAT": {"base":"podgrzewać","1_singular":"podgrzewam","2_singular":"podgrzewasz","3_singular":"podgrzewa","1_plural":"podgrzewamy","2_plural":"podgrzewacie","3_plural":"podgrzewają"},
-        "PAN": {"form":"patelnia","gender":"f","plural":"patelnie","genitive_plural":"patelni"},
-        "KNIFE": {"form":"nóż","gender":"m","plural":"noże","genitive_plural":"noży"},
-        "FORK": {"form":"widelec","gender":"m","plural":"widelce","genitive_plural":"widelców"},
-        "SPOON": {"form":"łyżka","gender":"f","plural":"łyżki","genitive_plural":"łyżek"},
-        "SPATULA": {"form":"łopatka","gender":"f","plural":"łopatki","genitive_plural":"łopatek"},
-        "POT": {"form":"garnek","gender":"m","plural":"garnki","genitive_plural":"garnków"},
-        "GLASS": {"form":"szklanka","gender":"f","plural":"szklanki","genitive_plural":"szklanek"},
-        "LITRE": {"form":"litr"},
-        "DECILITRE": {"form":"decylitr"},
-        "MILLILITRE": {"form":"mililitr"},
-        "GRAM": {"form":"gram"},
-        "KILOGRAM": {"form":"kilogram"},
-        "MEAT": {"form":"mięso","gender":"n"},
-        "CHICKEN": {"form":"kurczak","gender":"m","plural":"kurczaki","genitive_plural":"kurczaków","accusative":"kurczaka"},
-        "FISH": {"form":"ryba","gender":"f","plural":"ryby","genitive_plural":"ryb"},
-        "VEGETABLE": {"form":"warzywo","gender":"n","plural":"warzywa","genitive_plural":"warzyw"},
-        "POTATO": {"form":"ziemniak","gender":"m","plural":"ziemniaki","genitive_plural":"ziemniaków"},
-        "SALAD": {"form":"sałatka","gender":"f","plural":"sałatki","genitive_plural":"sałatek"},
-        "FRUIT": {"form":"owoc","gender":"m","plural":"owoce","genitive_plural":"owoców"},
-        "BANANA": {"form":"banan","gender":"m","plural":"banany","genitive_plural":"bananów"},
-        "SOUP": {"form":"zupa","gender":"f","plural":"zupy","genitive_plural":"zup"},
-        "DOUGH": {"form":"ciasto","gender":"n"},
-        "SAUCE": {"form":"sos","gender":"m","plural":"sosy","genitive_plural":"sosów"},
-        "INGREDIENT": {"form":"składnik","gender":"m","plural":"składniki","genitive_plural":"składników"},
-        "KITCHEN": {"form":"kuchnia","gender":"f","plural":"kuchnie","genitive_plural":"kuchni"},
-        "OVEN": {"form":"piekarnik","gender":"m","plural":"piekarniki","genitive_plural":"piekarników"},
-        "STOVE": {"form":"kuchenka","gender":"f","plural":"kuchenki","genitive_plural":"kuchenek"},
-        "SINK": {"form":"zlew","gender":"m","plural":"zlewy","genitive_plural":"zlewów"},
-        "FREEZER": {"form":"zamrażarka","gender":"f","plural":"zamrażarki","genitive_plural":"zamrażarek"},
-        "SALT": {"form":"sól","gender":"f"},
-        "PEPPER": {"form":"pieprz","gender":"m","plural":"pieprze","genitive_plural":"pieprzy"},
-        "BUTTER": {"form":"masło","gender":"n"},
-        "SPICE": {"form":"przyprawa","gender":"f","plural":"przyprawy","genitive_plural":"przypraw"},
-        "RECIPE": {"form":"przepis","gender":"m","plural":"przepisy","genitive_plural":"przepisów"},
-        "SWEET": ["słodki"],
-        "SALTY": ["słony"],
-        "SOUR": ["kwaśny"],
-        "FRESH": ["świeży"],
-        "FROZEN": ["mrożony"],
-        "RAW": ["surowy"]
+        "COOK": {
+          "base": "gotować",
+          "1_singular": "gotuję",
+          "2_singular": "gotujesz",
+          "3_singular": "gotuje",
+          "1_plural": "gotujemy",
+          "2_plural": "gotujecie",
+          "3_plural": "gotują"
+        },
+        "CUT": {
+          "base": "kroić",
+          "1_singular": "kroję",
+          "2_singular": "kroisz",
+          "3_singular": "kroi",
+          "1_plural": "kroimy",
+          "2_plural": "kroicie",
+          "3_plural": "kroją"
+        },
+        "BOIL": {
+          "base": "zagotowywać",
+          "1_singular": "zagotowuję",
+          "2_singular": "zagotowujesz",
+          "3_singular": "zagotowuje",
+          "1_plural": "zagotowujemy",
+          "2_plural": "zagotowujecie",
+          "3_plural": "zagotowują"
+        },
+        "PEEL": {
+          "base": "obierać",
+          "1_singular": "obieram",
+          "2_singular": "obierasz",
+          "3_singular": "obiera",
+          "1_plural": "obieramy",
+          "2_plural": "obieracie",
+          "3_plural": "obierają"
+        },
+        "FRY": {
+          "base": "smażyć",
+          "1_singular": "smażę",
+          "2_singular": "smażysz",
+          "3_singular": "smaży",
+          "1_plural": "smażymy",
+          "2_plural": "smażycie",
+          "3_plural": "smażą"
+        },
+        "STIR": {
+          "base": "mieszać",
+          "1_singular": "mieszam",
+          "2_singular": "mieszasz",
+          "3_singular": "miesza",
+          "1_plural": "mieszamy",
+          "2_plural": "mieszacie",
+          "3_plural": "mieszają"
+        },
+        "MIX": {
+          "base": "miksować",
+          "1_singular": "miksuję",
+          "2_singular": "miksujesz",
+          "3_singular": "miksuje",
+          "1_plural": "miksujemy",
+          "2_plural": "miksujecie",
+          "3_plural": "miksują"
+        },
+        "WASH": {
+          "base": "myć",
+          "1_singular": "myję",
+          "2_singular": "myjesz",
+          "3_singular": "myje",
+          "1_plural": "myjemy",
+          "2_plural": "myjecie",
+          "3_plural": "myją"
+        },
+        "HEAT": {
+          "base": "podgrzewać",
+          "1_singular": "podgrzewam",
+          "2_singular": "podgrzewasz",
+          "3_singular": "podgrzewa",
+          "1_plural": "podgrzewamy",
+          "2_plural": "podgrzewacie",
+          "3_plural": "podgrzewają"
+        },
+        "PAN": {
+          "form": "patelnia",
+          "gender": "f",
+          "plural": "patelnie",
+          "genitive_plural": "patelni"
+        },
+        "KNIFE": {
+          "form": "nóż",
+          "gender": "m",
+          "plural": "noże",
+          "genitive_plural": "noży"
+        },
+        "FORK": {
+          "form": "widelec",
+          "gender": "m",
+          "plural": "widelce",
+          "genitive_plural": "widelców"
+        },
+        "SPOON": {
+          "form": "łyżka",
+          "gender": "f",
+          "plural": "łyżki",
+          "genitive_plural": "łyżek"
+        },
+        "SPATULA": {
+          "form": "łopatka",
+          "gender": "f",
+          "plural": "łopatki",
+          "genitive_plural": "łopatek"
+        },
+        "POT": {
+          "form": "garnek",
+          "gender": "m",
+          "plural": "garnki",
+          "genitive_plural": "garnków"
+        },
+        "GLASS": {
+          "form": "szklanka",
+          "gender": "f",
+          "plural": "szklanki",
+          "genitive_plural": "szklanek"
+        },
+        "LITRE": {
+          "form": "litr"
+        },
+        "DECILITRE": {
+          "form": "decylitr"
+        },
+        "MILLILITRE": {
+          "form": "mililitr"
+        },
+        "GRAM": {
+          "form": "gram"
+        },
+        "KILOGRAM": {
+          "form": "kilogram"
+        },
+        "MEAT": {
+          "form": "mięso",
+          "gender": "n"
+        },
+        "CHICKEN": {
+          "form": "kurczak",
+          "gender": "m",
+          "plural": "kurczaki",
+          "genitive_plural": "kurczaków",
+          "accusative": "kurczaka"
+        },
+        "FISH": {
+          "form": "ryba",
+          "gender": "f",
+          "plural": "ryby",
+          "genitive_plural": "ryb"
+        },
+        "VEGETABLE": {
+          "form": "warzywo",
+          "gender": "n",
+          "plural": "warzywa",
+          "genitive_plural": "warzyw"
+        },
+        "POTATO": {
+          "form": "ziemniak",
+          "gender": "m",
+          "plural": "ziemniaki",
+          "genitive_plural": "ziemniaków"
+        },
+        "SALAD": {
+          "form": "sałatka",
+          "gender": "f",
+          "plural": "sałatki",
+          "genitive_plural": "sałatek"
+        },
+        "FRUIT": {
+          "form": "owoc",
+          "gender": "m",
+          "plural": "owoce",
+          "genitive_plural": "owoców"
+        },
+        "BANANA": {
+          "form": "banan",
+          "gender": "m",
+          "plural": "banany",
+          "genitive_plural": "bananów"
+        },
+        "SOUP": {
+          "form": "zupa",
+          "gender": "f",
+          "plural": "zupy",
+          "genitive_plural": "zup"
+        },
+        "DOUGH": {
+          "form": "ciasto",
+          "gender": "n"
+        },
+        "SAUCE": {
+          "form": "sos",
+          "gender": "m",
+          "plural": "sosy",
+          "genitive_plural": "sosów"
+        },
+        "INGREDIENT": {
+          "form": "składnik",
+          "gender": "m",
+          "plural": "składniki",
+          "genitive_plural": "składników"
+        },
+        "KITCHEN": {
+          "form": "kuchnia",
+          "gender": "f",
+          "plural": "kuchnie",
+          "genitive_plural": "kuchni"
+        },
+        "OVEN": {
+          "form": "piekarnik",
+          "gender": "m",
+          "plural": "piekarniki",
+          "genitive_plural": "piekarników"
+        },
+        "STOVE": {
+          "form": "kuchenka",
+          "gender": "f",
+          "plural": "kuchenki",
+          "genitive_plural": "kuchenek"
+        },
+        "SINK": {
+          "form": "zlew",
+          "gender": "m",
+          "plural": "zlewy",
+          "genitive_plural": "zlewów"
+        },
+        "FREEZER": {
+          "form": "zamrażarka",
+          "gender": "f",
+          "plural": "zamrażarki",
+          "genitive_plural": "zamrażarek"
+        },
+        "SALT": {
+          "form": "sól",
+          "gender": "f"
+        },
+        "PEPPER": {
+          "form": "pieprz",
+          "gender": "m",
+          "plural": "pieprze",
+          "genitive_plural": "pieprzy"
+        },
+        "BUTTER": {
+          "form": "masło",
+          "gender": "n"
+        },
+        "SPICE": {
+          "form": "przyprawa",
+          "gender": "f",
+          "plural": "przyprawy",
+          "genitive_plural": "przypraw"
+        },
+        "RECIPE": {
+          "form": "przepis",
+          "gender": "m",
+          "plural": "przepisy",
+          "genitive_plural": "przepisów"
+        },
+        "SWEET": [
+          "słodki"
+        ],
+        "SALTY": [
+          "słony"
+        ],
+        "SOUR": [
+          "kwaśny"
+        ],
+        "FRESH": [
+          "świeży"
+        ],
+        "FROZEN": [
+          "mrożony"
+        ],
+        "RAW": [
+          "surowy"
+        ]
       }
     }
   }

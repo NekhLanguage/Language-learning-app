@@ -1,61 +1,208 @@
 {
   "concepts": [
-
-    { "concept_id": "AIRPORT", "type": "noun" },
-    { "concept_id": "PASSPORT", "type": "noun" },
-    { "concept_id": "FLIGHT", "type": "noun" },
-    { "concept_id": "LUGGAGE", "type": "noun", "countable": false },
-    { "concept_id": "HOTEL", "type": "noun" },
-    { "concept_id": "RESERVATION", "type": "noun" },
-    { "concept_id": "LOBBY", "type": "noun" },
-    { "concept_id": "CHECKOUT", "type": "noun" },
-    { "concept_id": "TAXI", "type": "noun" },
-    { "concept_id": "STATION", "type": "noun" },
-    { "concept_id": "TICKET", "type": "noun" },
-    { "concept_id": "ROUTE", "type": "noun" },
-    { "concept_id": "LANDMARK", "type": "noun" },
-    { "concept_id": "MUSEUM", "type": "noun" },
-    { "concept_id": "MONUMENT", "type": "noun" },
-    { "concept_id": "RESTAURANT", "type": "noun" },
-    { "concept_id": "MENU", "type": "noun" },
-    { "concept_id": "WAITER", "type": "noun" },
-    { "concept_id": "MARKET", "type": "noun" },
-    { "concept_id": "SOUVENIR", "type": "noun" },
-    { "concept_id": "BARGAIN", "type": "noun" },
-    { "concept_id": "PHRASEBOOK", "type": "noun" },
-    { "concept_id": "BEACH", "type": "noun" },
-    { "concept_id": "CATHEDRAL", "type": "noun" },
-    { "concept_id": "HARBOR", "type": "noun" },
-    { "concept_id": "CURRENCY", "type": "noun" },
-    { "concept_id": "CUSTOMS", "type": "noun" },
-    { "concept_id": "EMBASSY", "type": "noun" },
-    { "concept_id": "ADVENTURE", "type": "noun", "semantic_role": "abstract" },
-    { "concept_id": "ITINERARY", "type": "noun" },
-    { "concept_id": "GUIDE", "type": "noun" },
-
-    { "concept_id": "BOARD", "type": "verb" },
-    { "concept_id": "RESERVE", "type": "verb" },
-    { "concept_id": "NAVIGATE", "type": "verb" },
-    { "concept_id": "PHOTOGRAPH", "type": "verb" },
-    { "concept_id": "ORDER", "type": "verb" },
-    { "concept_id": "PURCHASE", "type": "verb" },
-    { "concept_id": "TRANSLATE", "type": "verb" },
-    { "concept_id": "GREET", "type": "verb" },
-    { "concept_id": "PRONOUNCE", "type": "verb" },
-    { "concept_id": "EXPLORE", "type": "verb" },
-    { "concept_id": "EXCHANGE", "type": "verb" },
-    { "concept_id": "INSURE", "type": "verb" },
-    { "concept_id": "RECOMMEND", "type": "verb" },
-
-    { "concept_id": "SCENIC", "type": "adjective" },
-    { "concept_id": "DELICIOUS", "type": "adjective" },
-    { "concept_id": "EXPENSIVE", "type": "adjective" },
-    { "concept_id": "FOREIGN", "type": "adjective" },
-    { "concept_id": "HISTORIC", "type": "adjective" },
-    { "concept_id": "UNFORGETTABLE", "type": "adjective" }
-
+    {
+      "concept_id": "AIRPORT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "PASSPORT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "FLIGHT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "LUGGAGE",
+      "type": "noun",
+      "countable": false
+    },
+    {
+      "concept_id": "HOTEL",
+      "type": "noun"
+    },
+    {
+      "concept_id": "RESERVATION",
+      "type": "noun"
+    },
+    {
+      "concept_id": "LOBBY",
+      "type": "noun"
+    },
+    {
+      "concept_id": "CHECKOUT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "TAXI",
+      "type": "noun"
+    },
+    {
+      "concept_id": "STATION",
+      "type": "noun"
+    },
+    {
+      "concept_id": "TICKET",
+      "type": "noun"
+    },
+    {
+      "concept_id": "ROUTE",
+      "type": "noun"
+    },
+    {
+      "concept_id": "LANDMARK",
+      "type": "noun"
+    },
+    {
+      "concept_id": "MUSEUM",
+      "type": "noun"
+    },
+    {
+      "concept_id": "MONUMENT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "RESTAURANT",
+      "type": "noun"
+    },
+    {
+      "concept_id": "MENU",
+      "type": "noun"
+    },
+    {
+      "concept_id": "WAITER",
+      "type": "noun"
+    },
+    {
+      "concept_id": "MARKET",
+      "type": "noun"
+    },
+    {
+      "concept_id": "SOUVENIR",
+      "type": "noun"
+    },
+    {
+      "concept_id": "BARGAIN",
+      "type": "noun"
+    },
+    {
+      "concept_id": "PHRASEBOOK",
+      "type": "noun"
+    },
+    {
+      "concept_id": "BEACH",
+      "type": "noun"
+    },
+    {
+      "concept_id": "CATHEDRAL",
+      "type": "noun"
+    },
+    {
+      "concept_id": "HARBOR",
+      "type": "noun"
+    },
+    {
+      "concept_id": "CURRENCY",
+      "type": "noun"
+    },
+    {
+      "concept_id": "CUSTOMS",
+      "type": "noun"
+    },
+    {
+      "concept_id": "EMBASSY",
+      "type": "noun"
+    },
+    {
+      "concept_id": "ADVENTURE",
+      "type": "noun",
+      "semantic_role": "abstract"
+    },
+    {
+      "concept_id": "ITINERARY",
+      "type": "noun"
+    },
+    {
+      "concept_id": "GUIDE",
+      "type": "noun"
+    },
+    {
+      "concept_id": "BOARD",
+      "type": "verb"
+    },
+    {
+      "concept_id": "RESERVE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "NAVIGATE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "PHOTOGRAPH",
+      "type": "verb"
+    },
+    {
+      "concept_id": "ORDER",
+      "type": "verb"
+    },
+    {
+      "concept_id": "PURCHASE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "TRANSLATE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "GREET",
+      "type": "verb"
+    },
+    {
+      "concept_id": "PRONOUNCE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "EXPLORE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "EXCHANGE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "INSURE",
+      "type": "verb"
+    },
+    {
+      "concept_id": "RECOMMEND",
+      "type": "verb"
+    },
+    {
+      "concept_id": "SCENIC",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "DELICIOUS",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "EXPENSIVE",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "FOREIGN",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "HISTORIC",
+      "type": "adjective"
+    },
+    {
+      "concept_id": "UNFORGETTABLE",
+      "type": "adjective"
+    }
   ],
-
   "languages": {
     "fi": {
       "label": "Suomi",
@@ -434,98 +581,352 @@
     "en": {
       "label": "English",
       "forms": {
-
-        "AIRPORT": { "form": "airport", "article": "an" },
-        "PASSPORT": { "form": "passport", "article": "a" },
-        "FLIGHT": { "form": "flight", "article": "a" },
-        "LUGGAGE": { "form": "luggage" },
-        "HOTEL": { "form": "hotel", "article": "a" },
-        "RESERVATION": { "form": "reservation", "article": "a" },
-        "LOBBY": { "form": "lobby", "article": "a" },
-        "CHECKOUT": { "form": "checkout" },
-        "TAXI": { "form": "taxi", "article": "a" },
-        "STATION": { "form": "station", "article": "a" },
-        "TICKET": { "form": "ticket", "article": "a" },
-        "ROUTE": { "form": "route", "article": "a" },
-        "LANDMARK": { "form": "landmark", "article": "a" },
-        "MUSEUM": { "form": "museum", "article": "a" },
-        "MONUMENT": { "form": "monument", "article": "a" },
-        "RESTAURANT": { "form": "restaurant", "article": "a" },
-        "MENU": { "form": "menu", "article": "a" },
-        "WAITER": { "form": "waiter", "article": "a" },
-        "MARKET": { "form": "market", "article": "a" },
-        "SOUVENIR": { "form": "souvenir", "article": "a" },
-        "BARGAIN": { "form": "bargain", "article": "a" },
-        "PHRASEBOOK": { "form": "phrasebook", "article": "a" },
-        "BEACH": { "form": "beach", "article": "a" },
-        "CATHEDRAL": { "form": "cathedral", "article": "a" },
-        "HARBOR": { "form": "harbor", "article": "a" },
-        "CURRENCY": { "form": "currency" },
-        "CUSTOMS": { "form": "customs" },
-        "EMBASSY": { "form": "embassy", "article": "an" },
-        "ADVENTURE": { "form": "adventure", "article": "an" },
-        "ITINERARY": { "form": "itinerary", "article": "an" },
-        "GUIDE": { "form": "guide", "article": "a" },
-
-        "BOARD": { "base": "board", "3_singular": "boards" },
-        "RESERVE": { "base": "reserve", "3_singular": "reserves" },
-        "NAVIGATE": { "base": "navigate", "3_singular": "navigates" },
-        "PHOTOGRAPH": { "base": "photograph", "3_singular": "photographs" },
-        "ORDER": { "base": "order", "3_singular": "orders" },
-        "PURCHASE": { "base": "purchase", "3_singular": "purchases" },
-        "TRANSLATE": { "base": "translate", "3_singular": "translates" },
-        "GREET": { "base": "greet", "3_singular": "greets" },
-        "PRONOUNCE": { "base": "pronounce", "3_singular": "pronounces" },
-        "EXPLORE": { "base": "explore", "3_singular": "explores" },
-        "EXCHANGE": { "base": "exchange", "3_singular": "exchanges" },
-        "INSURE": { "base": "insure", "3_singular": "insures" },
-        "RECOMMEND": { "base": "recommend", "3_singular": "recommends" },
-
-        "SCENIC": ["scenic"],
-        "DELICIOUS": ["delicious"],
-        "EXPENSIVE": ["expensive"],
-        "FOREIGN": ["foreign"],
-        "HISTORIC": ["historic"],
-        "UNFORGETTABLE": ["unforgettable"]
-
+        "AIRPORT": {
+          "form": "airport",
+          "article": "an"
+        },
+        "PASSPORT": {
+          "form": "passport",
+          "article": "a"
+        },
+        "FLIGHT": {
+          "form": "flight",
+          "article": "a"
+        },
+        "LUGGAGE": {
+          "form": "luggage"
+        },
+        "HOTEL": {
+          "form": "hotel",
+          "article": "a"
+        },
+        "RESERVATION": {
+          "form": "reservation",
+          "article": "a"
+        },
+        "LOBBY": {
+          "form": "lobby",
+          "article": "a"
+        },
+        "CHECKOUT": {
+          "form": "checkout"
+        },
+        "TAXI": {
+          "form": "taxi",
+          "article": "a"
+        },
+        "STATION": {
+          "form": "station",
+          "article": "a"
+        },
+        "TICKET": {
+          "form": "ticket",
+          "article": "a"
+        },
+        "ROUTE": {
+          "form": "route",
+          "article": "a"
+        },
+        "LANDMARK": {
+          "form": "landmark",
+          "article": "a"
+        },
+        "MUSEUM": {
+          "form": "museum",
+          "article": "a"
+        },
+        "MONUMENT": {
+          "form": "monument",
+          "article": "a"
+        },
+        "RESTAURANT": {
+          "form": "restaurant",
+          "article": "a"
+        },
+        "MENU": {
+          "form": "menu",
+          "article": "a"
+        },
+        "WAITER": {
+          "form": "waiter",
+          "article": "a"
+        },
+        "MARKET": {
+          "form": "market",
+          "article": "a"
+        },
+        "SOUVENIR": {
+          "form": "souvenir",
+          "article": "a"
+        },
+        "BARGAIN": {
+          "form": "bargain",
+          "article": "a"
+        },
+        "PHRASEBOOK": {
+          "form": "phrasebook",
+          "article": "a"
+        },
+        "BEACH": {
+          "form": "beach",
+          "article": "a"
+        },
+        "CATHEDRAL": {
+          "form": "cathedral",
+          "article": "a"
+        },
+        "HARBOR": {
+          "form": "harbor",
+          "article": "a"
+        },
+        "CURRENCY": {
+          "form": "currency"
+        },
+        "CUSTOMS": {
+          "form": "customs"
+        },
+        "EMBASSY": {
+          "form": "embassy",
+          "article": "an"
+        },
+        "ADVENTURE": {
+          "form": "adventure",
+          "article": "an"
+        },
+        "ITINERARY": {
+          "form": "itinerary",
+          "article": "an"
+        },
+        "GUIDE": {
+          "form": "guide",
+          "article": "a"
+        },
+        "BOARD": {
+          "base": "board",
+          "3_singular": "boards"
+        },
+        "RESERVE": {
+          "base": "reserve",
+          "3_singular": "reserves"
+        },
+        "NAVIGATE": {
+          "base": "navigate",
+          "3_singular": "navigates"
+        },
+        "PHOTOGRAPH": {
+          "base": "photograph",
+          "3_singular": "photographs"
+        },
+        "ORDER": {
+          "base": "order",
+          "3_singular": "orders"
+        },
+        "PURCHASE": {
+          "base": "purchase",
+          "3_singular": "purchases"
+        },
+        "TRANSLATE": {
+          "base": "translate",
+          "3_singular": "translates"
+        },
+        "GREET": {
+          "base": "greet",
+          "3_singular": "greets"
+        },
+        "PRONOUNCE": {
+          "base": "pronounce",
+          "3_singular": "pronounces"
+        },
+        "EXPLORE": {
+          "base": "explore",
+          "3_singular": "explores"
+        },
+        "EXCHANGE": {
+          "base": "exchange",
+          "3_singular": "exchanges"
+        },
+        "INSURE": {
+          "base": "insure",
+          "3_singular": "insures"
+        },
+        "RECOMMEND": {
+          "base": "recommend",
+          "3_singular": "recommends"
+        },
+        "SCENIC": [
+          "scenic"
+        ],
+        "DELICIOUS": [
+          "delicious"
+        ],
+        "EXPENSIVE": [
+          "expensive"
+        ],
+        "FOREIGN": [
+          "foreign"
+        ],
+        "HISTORIC": [
+          "historic"
+        ],
+        "UNFORGETTABLE": [
+          "unforgettable"
+        ]
       }
     },
     "pt": {
       "label": "Português",
       "forms": {
-
-        "AIRPORT": { "form": "aeroporto", "gender": "m", "plural": "aeroportos" },
-        "PASSPORT": { "form": "passaporte", "gender": "m" },
-        "FLIGHT": { "form": "voo", "gender": "m", "plural": "voos" },
-        "LUGGAGE": { "form": "bagagem", "gender": "f" },
-        "HOTEL": { "form": "hotel", "gender": "m", "plural": "hotéis" },
-        "RESERVATION": { "form": "reserva", "gender": "f", "plural": "reservas" },
-        "LOBBY": { "form": "saguão", "gender": "m", "plural": "saguões" },
-        "CHECKOUT": { "form": "saída", "gender": "f", "plural": "saídas" },
-        "TAXI": { "form": "táxi", "gender": "m", "plural": "táxis" },
-        "STATION": { "form": "estação", "gender": "f", "plural": "estações" },
-        "TICKET": { "form": "bilhete", "gender": "m", "plural": "bilhetes" },
-        "ROUTE": { "form": "rota", "gender": "f", "plural": "rotas" },
-        "LANDMARK": { "form": "ponto turístico", "gender": "m", "plural": "pontos turísticos" },
-        "MUSEUM": { "form": "museu", "gender": "m", "plural": "museus" },
-        "MONUMENT": { "form": "monumento", "gender": "m", "plural": "monumentos" },
-        "RESTAURANT": { "form": "restaurante", "gender": "m", "plural": "restaurantes" },
-        "MENU": { "form": "cardápio", "gender": "m", "plural": "cardápios" },
-        "WAITER": { "form": "garçom", "gender": "m", "plural": "garçons" },
-        "MARKET": { "form": "mercado", "gender": "m", "plural": "mercados" },
-        "SOUVENIR": { "form": "souvenir", "gender": "m", "plural": "souvenirs" },
-        "BARGAIN": { "form": "pechincha", "gender": "f" },
-        "PHRASEBOOK": { "form": "guia de conversação", "gender": "m", "plural": "guias de conversação" },
-        "BEACH": { "form": "praia", "gender": "f", "plural": "praias" },
-        "CATHEDRAL": { "form": "catedral", "gender": "f", "plural": "catedrais" },
-        "HARBOR": { "form": "porto", "gender": "m", "plural": "portos" },
-        "CURRENCY": { "form": "moeda", "gender": "f", "plural": "moedas" },
-        "CUSTOMS": { "form": "alfândega", "gender": "f" },
-        "EMBASSY": { "form": "embaixada", "gender": "f", "plural": "embaixadas" },
-        "ADVENTURE": { "form": "aventura", "gender": "f" },
-        "ITINERARY": { "form": "itinerário", "gender": "m", "plural": "itinerários" },
-        "GUIDE": { "form": "guia", "gender": "m", "plural": "guias", "feminine": "guia" },
-
+        "AIRPORT": {
+          "form": "aeroporto",
+          "gender": "m",
+          "plural": "aeroportos"
+        },
+        "PASSPORT": {
+          "form": "passaporte",
+          "gender": "m"
+        },
+        "FLIGHT": {
+          "form": "voo",
+          "gender": "m",
+          "plural": "voos"
+        },
+        "LUGGAGE": {
+          "form": "bagagem",
+          "gender": "f"
+        },
+        "HOTEL": {
+          "form": "hotel",
+          "gender": "m",
+          "plural": "hotéis"
+        },
+        "RESERVATION": {
+          "form": "reserva",
+          "gender": "f",
+          "plural": "reservas"
+        },
+        "LOBBY": {
+          "form": "saguão",
+          "gender": "m",
+          "plural": "saguões"
+        },
+        "CHECKOUT": {
+          "form": "saída",
+          "gender": "f",
+          "plural": "saídas"
+        },
+        "TAXI": {
+          "form": "táxi",
+          "gender": "m",
+          "plural": "táxis"
+        },
+        "STATION": {
+          "form": "estação",
+          "gender": "f",
+          "plural": "estações"
+        },
+        "TICKET": {
+          "form": "bilhete",
+          "gender": "m",
+          "plural": "bilhetes"
+        },
+        "ROUTE": {
+          "form": "rota",
+          "gender": "f",
+          "plural": "rotas"
+        },
+        "LANDMARK": {
+          "form": "ponto turístico",
+          "gender": "m",
+          "plural": "pontos turísticos"
+        },
+        "MUSEUM": {
+          "form": "museu",
+          "gender": "m",
+          "plural": "museus"
+        },
+        "MONUMENT": {
+          "form": "monumento",
+          "gender": "m",
+          "plural": "monumentos"
+        },
+        "RESTAURANT": {
+          "form": "restaurante",
+          "gender": "m",
+          "plural": "restaurantes"
+        },
+        "MENU": {
+          "form": "cardápio",
+          "gender": "m",
+          "plural": "cardápios"
+        },
+        "WAITER": {
+          "form": "garçom",
+          "gender": "m",
+          "plural": "garçons"
+        },
+        "MARKET": {
+          "form": "mercado",
+          "gender": "m",
+          "plural": "mercados"
+        },
+        "SOUVENIR": {
+          "form": "souvenir",
+          "gender": "m",
+          "plural": "souvenirs"
+        },
+        "BARGAIN": {
+          "form": "pechincha",
+          "gender": "f"
+        },
+        "PHRASEBOOK": {
+          "form": "guia de conversação",
+          "gender": "m",
+          "plural": "guias de conversação"
+        },
+        "BEACH": {
+          "form": "praia",
+          "gender": "f",
+          "plural": "praias"
+        },
+        "CATHEDRAL": {
+          "form": "catedral",
+          "gender": "f",
+          "plural": "catedrais"
+        },
+        "HARBOR": {
+          "form": "porto",
+          "gender": "m",
+          "plural": "portos"
+        },
+        "CURRENCY": {
+          "form": "moeda",
+          "gender": "f",
+          "plural": "moedas"
+        },
+        "CUSTOMS": {
+          "form": "alfândega",
+          "gender": "f"
+        },
+        "EMBASSY": {
+          "form": "embaixada",
+          "gender": "f",
+          "plural": "embaixadas"
+        },
+        "ADVENTURE": {
+          "form": "aventura",
+          "gender": "f"
+        },
+        "ITINERARY": {
+          "form": "itinerário",
+          "gender": "m",
+          "plural": "itinerários"
+        },
+        "GUIDE": {
+          "form": "guia",
+          "gender": "m",
+          "plural": "guias",
+          "feminine": "guia"
+        },
         "BOARD": {
           "base": "embarcar",
           "1_singular": "embarco",
@@ -643,111 +1044,467 @@
           "2_plural": "recomendam",
           "3_plural": "recomendam"
         },
-
-        "SCENIC": ["pitoresco"],
-        "DELICIOUS": ["delicioso"],
-        "EXPENSIVE": ["caro"],
-        "FOREIGN": ["estrangeiro"],
-        "HISTORIC": ["histórico"],
-        "UNFORGETTABLE": ["inesquecível"]
-
+        "SCENIC": [
+          "pitoresco"
+        ],
+        "DELICIOUS": [
+          "delicioso"
+        ],
+        "EXPENSIVE": [
+          "caro"
+        ],
+        "FOREIGN": [
+          "estrangeiro"
+        ],
+        "HISTORIC": [
+          "histórico"
+        ],
+        "UNFORGETTABLE": [
+          "inesquecível"
+        ]
       }
     },
     "ar": {
       "label": "العربية",
       "forms": {
-
-        "AIRPORT": { "gender": "m", "form": "مطار" },
-        "PASSPORT": { "gender": "m", "form": "جواز سفر" },
-        "FLIGHT": { "gender": "f", "form": "رحلة" },
-        "LUGGAGE": { "gender": "f", "form": "أمتعة" },
-        "HOTEL": { "gender": "m", "form": "فندق" },
-        "RESERVATION": { "gender": "m", "form": "حجز" },
-        "LOBBY": { "gender": "f", "form": "ردهة" },
-        "CHECKOUT": { "gender": "f", "form": "مغادرة" },
-        "TAXI": { "gender": "f", "form": "سيارة أجرة" },
-        "STATION": { "gender": "f", "form": "محطة" },
-        "TICKET": { "gender": "f", "form": "تذكرة" },
-        "ROUTE": { "gender": "m", "form": "مسار" },
-        "LANDMARK": { "gender": "m", "form": "معلم" },
-        "MUSEUM": { "gender": "m", "form": "متحف" },
-        "MONUMENT": { "gender": "m", "form": "نصب" },
-        "RESTAURANT": { "gender": "m", "form": "مطعم" },
-        "MENU": { "gender": "f", "form": "قائمة طعام" },
-        "WAITER": { "gender": "m", "form": "نادل", "feminine": "نادلة" },
-        "MARKET": { "gender": "m", "form": "سوق" },
-        "SOUVENIR": { "gender": "m", "form": "تذكار" },
-        "BARGAIN": { "gender": "f", "form": "صفقة" },
-        "PHRASEBOOK": { "gender": "m", "form": "كتاب العبارات" },
-        "BEACH": { "gender": "m", "form": "شاطئ" },
-        "CATHEDRAL": { "gender": "f", "form": "كاتدرائية" },
-        "HARBOR": { "gender": "m", "form": "ميناء" },
-        "CURRENCY": { "gender": "f", "form": "عملة" },
-        "CUSTOMS": { "gender": "f", "form": "جمارك" },
-        "EMBASSY": { "gender": "f", "form": "سفارة" },
-        "ADVENTURE": { "gender": "f", "form": "مغامرة" },
-        "ITINERARY": { "gender": "f", "form": "خطة سفر" },
-        "GUIDE": { "gender": "m", "form": "مرشد", "feminine": "مرشدة" },
-
-        "BOARD": { "base": "يصعد", "1_singular": "أصعد", "2_singular": "تصعد","3_singular": "يصعد", "3_singular_feminine": "تصعد", "1_plural": "نصعد", "2_plural": "تصعدون", "3_plural": "يصعدون" },
-        "RESERVE": { "base": "يحجز", "1_singular": "أحجز", "2_singular": "تحجز","3_singular": "يحجز", "3_singular_feminine": "تحجز", "1_plural": "نحجز", "2_plural": "تحجزون", "3_plural": "يحجزون" },
-        "NAVIGATE": { "governedPreposition": "في", "base": "يتجول", "1_singular": "أتجول", "2_singular": "تتجول","3_singular": "يتجول", "3_singular_feminine": "تتجول", "1_plural": "نتجول", "2_plural": "تتجولون", "3_plural": "يتجولون" },
-        "PHOTOGRAPH": { "base": "يصور", "1_singular": "أصور", "2_singular": "تصور","3_singular": "يصور", "3_singular_feminine": "تصور", "1_plural": "نصور", "2_plural": "تصورون", "3_plural": "يصورون" },
-        "ORDER": { "base": "يطلب", "1_singular": "أطلب", "2_singular": "تطلب","3_singular": "يطلب", "3_singular_feminine": "تطلب", "1_plural": "نطلب", "2_plural": "تطلبون", "3_plural": "يطلبون" },
-        "PURCHASE": { "base": "يشتري", "1_singular": "أشتري", "2_singular": "تشتري","3_singular": "يشتري", "3_singular_feminine": "تشتري", "1_plural": "نشتري", "2_plural": "تشترون", "3_plural": "يشترون" },
-        "TRANSLATE": { "base": "يترجم", "1_singular": "أترجم", "2_singular": "تترجم","3_singular": "يترجم", "3_singular_feminine": "تترجم", "1_plural": "نترجم", "2_plural": "تترجمون", "3_plural": "يترجمون" },
-        "GREET": { "base": "يحيي", "1_singular": "أحيي", "2_singular": "تحيي","3_singular": "يحيي", "3_singular_feminine": "تحيي", "1_plural": "نحيي", "2_plural": "تحيون", "3_plural": "يحيون" },
-        "PRONOUNCE": { "base": "ينطق", "1_singular": "أنطق", "2_singular": "تنطق","3_singular": "ينطق", "3_singular_feminine": "تنطق", "1_plural": "ننطق", "2_plural": "تنطقون", "3_plural": "ينطقون" },
-        "EXPLORE": { "base": "يستكشف", "1_singular": "أستكشف", "2_singular": "تستكشف","3_singular": "يستكشف", "3_singular_feminine": "تستكشف", "1_plural": "نستكشف", "2_plural": "تستكشفون", "3_plural": "يستكشفون" },
-        "EXCHANGE": { "base": "يصرف", "1_singular": "أصرف", "2_singular": "تصرف","3_singular": "يصرف", "3_singular_feminine": "تصرف", "1_plural": "نصرف", "2_plural": "تصرفون", "3_plural": "يصرفون" },
-        "INSURE": { "governedPreposition": "على", "base": "يؤمن", "1_singular": "أؤمن", "2_singular": "تؤمن","3_singular": "يؤمن", "3_singular_feminine": "تؤمن", "1_plural": "نؤمن", "2_plural": "تؤمنون", "3_plural": "يؤمنون" },
-        "RECOMMEND": { "governedPreposition": "بـ", "base": "يوصي", "1_singular": "أوصي", "2_singular": "توصي","3_singular": "يوصي", "3_singular_feminine": "توصي", "1_plural": "نوصي", "2_plural": "توصون", "3_plural": "يوصون" },
-
-        "SCENIC": { "form": "خلاب", "f": "خلابة" },
-        "DELICIOUS": { "form": "لذيذ", "f": "لذيذة" },
-        "EXPENSIVE": { "form": "غالي", "f": "غالية" },
-        "FOREIGN": { "form": "أجنبي", "f": "أجنبية" },
-        "HISTORIC": { "form": "تاريخي", "f": "تاريخية" },
-        "UNFORGETTABLE": ["لا يُنسى"]
-
+        "AIRPORT": {
+          "gender": "m",
+          "form": "مطار"
+        },
+        "PASSPORT": {
+          "gender": "m",
+          "form": "جواز سفر"
+        },
+        "FLIGHT": {
+          "gender": "f",
+          "form": "رحلة"
+        },
+        "LUGGAGE": {
+          "gender": "f",
+          "form": "أمتعة"
+        },
+        "HOTEL": {
+          "gender": "m",
+          "form": "فندق"
+        },
+        "RESERVATION": {
+          "gender": "m",
+          "form": "حجز"
+        },
+        "LOBBY": {
+          "gender": "f",
+          "form": "ردهة"
+        },
+        "CHECKOUT": {
+          "gender": "f",
+          "form": "مغادرة"
+        },
+        "TAXI": {
+          "gender": "f",
+          "form": "سيارة أجرة"
+        },
+        "STATION": {
+          "gender": "f",
+          "form": "محطة"
+        },
+        "TICKET": {
+          "gender": "f",
+          "form": "تذكرة"
+        },
+        "ROUTE": {
+          "gender": "m",
+          "form": "مسار"
+        },
+        "LANDMARK": {
+          "gender": "m",
+          "form": "معلم"
+        },
+        "MUSEUM": {
+          "gender": "m",
+          "form": "متحف"
+        },
+        "MONUMENT": {
+          "gender": "m",
+          "form": "نصب"
+        },
+        "RESTAURANT": {
+          "gender": "m",
+          "form": "مطعم"
+        },
+        "MENU": {
+          "gender": "f",
+          "form": "قائمة طعام"
+        },
+        "WAITER": {
+          "gender": "m",
+          "form": "نادل",
+          "feminine": "نادلة"
+        },
+        "MARKET": {
+          "gender": "m",
+          "form": "سوق"
+        },
+        "SOUVENIR": {
+          "gender": "m",
+          "form": "تذكار"
+        },
+        "BARGAIN": {
+          "gender": "f",
+          "form": "صفقة"
+        },
+        "PHRASEBOOK": {
+          "gender": "m",
+          "form": "كتاب العبارات"
+        },
+        "BEACH": {
+          "gender": "m",
+          "form": "شاطئ"
+        },
+        "CATHEDRAL": {
+          "gender": "f",
+          "form": "كاتدرائية"
+        },
+        "HARBOR": {
+          "gender": "m",
+          "form": "ميناء"
+        },
+        "CURRENCY": {
+          "gender": "f",
+          "form": "عملة"
+        },
+        "CUSTOMS": {
+          "gender": "f",
+          "form": "جمارك"
+        },
+        "EMBASSY": {
+          "gender": "f",
+          "form": "سفارة"
+        },
+        "ADVENTURE": {
+          "gender": "f",
+          "form": "مغامرة"
+        },
+        "ITINERARY": {
+          "gender": "f",
+          "form": "خطة سفر"
+        },
+        "GUIDE": {
+          "gender": "m",
+          "form": "مرشد",
+          "feminine": "مرشدة"
+        },
+        "BOARD": {
+          "base": "يصعد",
+          "1_singular": "أصعد",
+          "2_singular": "تصعد",
+          "3_singular": "يصعد",
+          "3_singular_feminine": "تصعد",
+          "1_plural": "نصعد",
+          "2_plural": "تصعدون",
+          "3_plural": "يصعدون"
+        },
+        "RESERVE": {
+          "base": "يحجز",
+          "1_singular": "أحجز",
+          "2_singular": "تحجز",
+          "3_singular": "يحجز",
+          "3_singular_feminine": "تحجز",
+          "1_plural": "نحجز",
+          "2_plural": "تحجزون",
+          "3_plural": "يحجزون"
+        },
+        "NAVIGATE": {
+          "governedPreposition": "في",
+          "base": "يتجول",
+          "1_singular": "أتجول",
+          "2_singular": "تتجول",
+          "3_singular": "يتجول",
+          "3_singular_feminine": "تتجول",
+          "1_plural": "نتجول",
+          "2_plural": "تتجولون",
+          "3_plural": "يتجولون"
+        },
+        "PHOTOGRAPH": {
+          "base": "يصور",
+          "1_singular": "أصور",
+          "2_singular": "تصور",
+          "3_singular": "يصور",
+          "3_singular_feminine": "تصور",
+          "1_plural": "نصور",
+          "2_plural": "تصورون",
+          "3_plural": "يصورون"
+        },
+        "ORDER": {
+          "base": "يطلب",
+          "1_singular": "أطلب",
+          "2_singular": "تطلب",
+          "3_singular": "يطلب",
+          "3_singular_feminine": "تطلب",
+          "1_plural": "نطلب",
+          "2_plural": "تطلبون",
+          "3_plural": "يطلبون"
+        },
+        "PURCHASE": {
+          "base": "يشتري",
+          "1_singular": "أشتري",
+          "2_singular": "تشتري",
+          "3_singular": "يشتري",
+          "3_singular_feminine": "تشتري",
+          "1_plural": "نشتري",
+          "2_plural": "تشترون",
+          "3_plural": "يشترون"
+        },
+        "TRANSLATE": {
+          "base": "يترجم",
+          "1_singular": "أترجم",
+          "2_singular": "تترجم",
+          "3_singular": "يترجم",
+          "3_singular_feminine": "تترجم",
+          "1_plural": "نترجم",
+          "2_plural": "تترجمون",
+          "3_plural": "يترجمون"
+        },
+        "GREET": {
+          "base": "يحيي",
+          "1_singular": "أحيي",
+          "2_singular": "تحيي",
+          "3_singular": "يحيي",
+          "3_singular_feminine": "تحيي",
+          "1_plural": "نحيي",
+          "2_plural": "تحيون",
+          "3_plural": "يحيون"
+        },
+        "PRONOUNCE": {
+          "base": "ينطق",
+          "1_singular": "أنطق",
+          "2_singular": "تنطق",
+          "3_singular": "ينطق",
+          "3_singular_feminine": "تنطق",
+          "1_plural": "ننطق",
+          "2_plural": "تنطقون",
+          "3_plural": "ينطقون"
+        },
+        "EXPLORE": {
+          "base": "يستكشف",
+          "1_singular": "أستكشف",
+          "2_singular": "تستكشف",
+          "3_singular": "يستكشف",
+          "3_singular_feminine": "تستكشف",
+          "1_plural": "نستكشف",
+          "2_plural": "تستكشفون",
+          "3_plural": "يستكشفون"
+        },
+        "EXCHANGE": {
+          "base": "يصرف",
+          "1_singular": "أصرف",
+          "2_singular": "تصرف",
+          "3_singular": "يصرف",
+          "3_singular_feminine": "تصرف",
+          "1_plural": "نصرف",
+          "2_plural": "تصرفون",
+          "3_plural": "يصرفون"
+        },
+        "INSURE": {
+          "governedPreposition": "على",
+          "base": "يؤمن",
+          "1_singular": "أؤمن",
+          "2_singular": "تؤمن",
+          "3_singular": "يؤمن",
+          "3_singular_feminine": "تؤمن",
+          "1_plural": "نؤمن",
+          "2_plural": "تؤمنون",
+          "3_plural": "يؤمنون"
+        },
+        "RECOMMEND": {
+          "governedPreposition": "بـ",
+          "base": "يوصي",
+          "1_singular": "أوصي",
+          "2_singular": "توصي",
+          "3_singular": "يوصي",
+          "3_singular_feminine": "توصي",
+          "1_plural": "نوصي",
+          "2_plural": "توصون",
+          "3_plural": "يوصون"
+        },
+        "SCENIC": {
+          "form": "خلاب",
+          "f": "خلابة"
+        },
+        "DELICIOUS": {
+          "form": "لذيذ",
+          "f": "لذيذة"
+        },
+        "EXPENSIVE": {
+          "form": "غالي",
+          "f": "غالية"
+        },
+        "FOREIGN": {
+          "form": "أجنبي",
+          "f": "أجنبية"
+        },
+        "HISTORIC": {
+          "form": "تاريخي",
+          "f": "تاريخية"
+        },
+        "UNFORGETTABLE": [
+          "لا يُنسى"
+        ]
       }
     },
     "de": {
       "label": "Deutsch",
       "forms": {
-
-        "AIRPORT": { "form": "Flughafen", "gender": "m", "plural": "Flughäfen" },
-        "PASSPORT": { "form": "Reisepass", "gender": "m" },
-        "FLIGHT": { "form": "Flug", "gender": "m", "plural": "Flüge" },
-        "LUGGAGE": { "form": "Gepäck", "gender": "n" },
-        "HOTEL": { "form": "Hotel", "gender": "n", "plural": "Hotels" },
-        "RESERVATION": { "form": "Reservierung", "gender": "f", "plural": "Reservierungen" },
-        "LOBBY": { "form": "Lobby", "gender": "f", "plural": "Lobbys" },
-        "CHECKOUT": { "form": "Abreise", "gender": "f", "plural": "Abreisen" },
-        "TAXI": { "form": "Taxi", "gender": "n", "plural": "Taxis" },
-        "STATION": { "form": "Bahnhof", "gender": "m", "plural": "Bahnhöfe" },
-        "TICKET": { "form": "Fahrkarte", "gender": "f", "plural": "Fahrkarten" },
-        "ROUTE": { "form": "Route", "gender": "f", "plural": "Routen" },
-        "LANDMARK": { "form": "Wahrzeichen", "gender": "n", "plural": "Wahrzeichen" },
-        "MUSEUM": { "form": "Museum", "gender": "n", "plural": "Museen" },
-        "MONUMENT": { "form": "Denkmal", "gender": "n", "plural": "Denkmäler" },
-        "RESTAURANT": { "form": "Restaurant", "gender": "n", "plural": "Restaurants" },
-        "MENU": { "form": "Speisekarte", "gender": "f", "plural": "Speisekarten" },
-        "WAITER": { "form": "Kellner", "gender": "m", "plural": "Kellner" },
-        "MARKET": { "form": "Markt", "gender": "m", "plural": "Märkte" },
-        "SOUVENIR": { "form": "Souvenir", "gender": "n", "plural": "Souvenirs" },
-        "BARGAIN": { "form": "Schnäppchen", "gender": "n" },
-        "PHRASEBOOK": { "form": "Sprachführer", "gender": "m", "plural": "Sprachführer" },
-        "BEACH": { "form": "Strand", "gender": "m", "plural": "Strände" },
-        "CATHEDRAL": { "form": "Kathedrale", "gender": "f", "plural": "Kathedralen" },
-        "HARBOR": { "form": "Hafen", "gender": "m", "plural": "Häfen" },
-        "CURRENCY": { "form": "Währung", "gender": "f", "plural": "Währungen" },
-        "CUSTOMS": { "form": "Zoll", "gender": "m" },
-        "EMBASSY": { "form": "Botschaft", "gender": "f", "plural": "Botschaften" },
-        "ADVENTURE": { "form": "Abenteuer", "gender": "n" },
-        "ITINERARY": { "form": "Reiseplan", "gender": "m", "plural": "Reisepläne" },
-        "GUIDE": { "form": "Reiseführer", "gender": "m", "plural": "Reiseführer", "feminine": "Reiseführerin" },
-
+        "AIRPORT": {
+          "form": "Flughafen",
+          "gender": "m",
+          "plural": "Flughäfen"
+        },
+        "PASSPORT": {
+          "form": "Reisepass",
+          "gender": "m"
+        },
+        "FLIGHT": {
+          "form": "Flug",
+          "gender": "m",
+          "plural": "Flüge"
+        },
+        "LUGGAGE": {
+          "form": "Gepäck",
+          "gender": "n"
+        },
+        "HOTEL": {
+          "form": "Hotel",
+          "gender": "n",
+          "plural": "Hotels"
+        },
+        "RESERVATION": {
+          "form": "Reservierung",
+          "gender": "f",
+          "plural": "Reservierungen"
+        },
+        "LOBBY": {
+          "form": "Lobby",
+          "gender": "f",
+          "plural": "Lobbys"
+        },
+        "CHECKOUT": {
+          "form": "Abreise",
+          "gender": "f",
+          "plural": "Abreisen"
+        },
+        "TAXI": {
+          "form": "Taxi",
+          "gender": "n",
+          "plural": "Taxis"
+        },
+        "STATION": {
+          "form": "Bahnhof",
+          "gender": "m",
+          "plural": "Bahnhöfe"
+        },
+        "TICKET": {
+          "form": "Fahrkarte",
+          "gender": "f",
+          "plural": "Fahrkarten"
+        },
+        "ROUTE": {
+          "form": "Route",
+          "gender": "f",
+          "plural": "Routen"
+        },
+        "LANDMARK": {
+          "form": "Wahrzeichen",
+          "gender": "n",
+          "plural": "Wahrzeichen"
+        },
+        "MUSEUM": {
+          "form": "Museum",
+          "gender": "n",
+          "plural": "Museen"
+        },
+        "MONUMENT": {
+          "form": "Denkmal",
+          "gender": "n",
+          "plural": "Denkmäler"
+        },
+        "RESTAURANT": {
+          "form": "Restaurant",
+          "gender": "n",
+          "plural": "Restaurants"
+        },
+        "MENU": {
+          "form": "Speisekarte",
+          "gender": "f",
+          "plural": "Speisekarten"
+        },
+        "WAITER": {
+          "form": "Kellner",
+          "gender": "m",
+          "plural": "Kellner"
+        },
+        "MARKET": {
+          "form": "Markt",
+          "gender": "m",
+          "plural": "Märkte"
+        },
+        "SOUVENIR": {
+          "form": "Souvenir",
+          "gender": "n",
+          "plural": "Souvenirs"
+        },
+        "BARGAIN": {
+          "form": "Schnäppchen",
+          "gender": "n"
+        },
+        "PHRASEBOOK": {
+          "form": "Sprachführer",
+          "gender": "m",
+          "plural": "Sprachführer"
+        },
+        "BEACH": {
+          "form": "Strand",
+          "gender": "m",
+          "plural": "Strände"
+        },
+        "CATHEDRAL": {
+          "form": "Kathedrale",
+          "gender": "f",
+          "plural": "Kathedralen"
+        },
+        "HARBOR": {
+          "form": "Hafen",
+          "gender": "m",
+          "plural": "Häfen"
+        },
+        "CURRENCY": {
+          "form": "Währung",
+          "gender": "f",
+          "plural": "Währungen"
+        },
+        "CUSTOMS": {
+          "form": "Zoll",
+          "gender": "m"
+        },
+        "EMBASSY": {
+          "form": "Botschaft",
+          "gender": "f",
+          "plural": "Botschaften"
+        },
+        "ADVENTURE": {
+          "form": "Abenteuer",
+          "gender": "n"
+        },
+        "ITINERARY": {
+          "form": "Reiseplan",
+          "gender": "m",
+          "plural": "Reisepläne"
+        },
+        "GUIDE": {
+          "form": "Reiseführer",
+          "gender": "m",
+          "plural": "Reiseführer",
+          "feminine": "Reiseführerin"
+        },
         "BOARD": {
           "base": "einsteigen",
           "1_singular": "steige ein",
@@ -865,406 +1622,1596 @@
           "2_plural": "empfehlt",
           "3_plural": "empfehlen"
         },
-
-        "SCENIC": ["malerisch"],
-        "DELICIOUS": ["köstlich"],
-        "EXPENSIVE": ["teuer"],
-        "FOREIGN": ["ausländisch"],
-        "HISTORIC": ["historisch"],
-        "UNFORGETTABLE": ["unvergesslich"]
-
+        "SCENIC": [
+          "malerisch"
+        ],
+        "DELICIOUS": [
+          "köstlich"
+        ],
+        "EXPENSIVE": [
+          "teuer"
+        ],
+        "FOREIGN": [
+          "ausländisch"
+        ],
+        "HISTORIC": [
+          "historisch"
+        ],
+        "UNFORGETTABLE": [
+          "unvergesslich"
+        ]
       }
     },
     "el": {
       "label": "Ελληνικά",
       "forms": {
-
-        "AIRPORT": { "gender": "n", "form": "αεροδρόμιο", "plural": "αεροδρόμια" },
-        "PASSPORT": { "gender": "n", "form": "διαβατήριο", "plural": "διαβατήρια" },
-        "FLIGHT": { "gender": "f", "form": "πτήση", "plural": "πτήσεις" },
-        "LUGGAGE": { "gender": "f", "form": "αποσκευές", "pluralOnly": true },
-        "HOTEL": { "gender": "n", "form": "ξενοδοχείο", "plural": "ξενοδοχεία" },
-        "RESERVATION": { "gender": "f", "form": "κράτηση", "plural": "κρατήσεις" },
-        "LOBBY": { "gender": "n", "form": "λόμπι", "plural": "λόμπι" },
-        "CHECKOUT": { "gender": "f", "form": "αναχώρηση", "plural": "αναχωρήσεις" },
-        "TAXI": { "gender": "n", "form": "ταξί", "plural": "ταξί" },
-        "STATION": { "gender": "m", "form": "σταθμός", "plural": "σταθμοί" },
-        "TICKET": { "gender": "n", "form": "εισιτήριο", "plural": "εισιτήρια" },
-        "ROUTE": { "gender": "f", "form": "διαδρομή", "plural": "διαδρομές" },
-        "LANDMARK": { "gender": "n", "form": "αξιοθέατο", "plural": "αξιοθέατα" },
-        "MUSEUM": { "gender": "n", "form": "μουσείο", "plural": "μουσεία" },
-        "MONUMENT": { "gender": "n", "form": "μνημείο", "plural": "μνημεία" },
-        "RESTAURANT": { "gender": "n", "form": "εστιατόριο", "plural": "εστιατόρια" },
-        "MENU": { "gender": "n", "form": "μενού", "plural": "μενού" },
-        "WAITER": { "gender": "m", "form": "σερβιτόρος", "plural": "σερβιτόροι" },
-        "MARKET": { "gender": "f", "form": "αγορά", "plural": "αγορές" },
-        "SOUVENIR": { "gender": "n", "form": "αναμνηστικό", "plural": "αναμνηστικά" },
-        "BARGAIN": { "gender": "f", "form": "ευκαιρία", "plural": "ευκαιρίες" },
-        "PHRASEBOOK": { "gender": "n", "form": "φρασολόγιο", "plural": "φρασολόγια" },
-        "BEACH": { "gender": "f", "form": "παραλία", "plural": "παραλίες" },
-        "CATHEDRAL": { "gender": "m", "form": "καθεδρικός ναός", "plural": "καθεδρικοί ναοί" },
-        "HARBOR": { "gender": "n", "form": "λιμάνι", "plural": "λιμάνια" },
-        "CURRENCY": { "gender": "n", "form": "νόμισμα", "plural": "νομίσματα" },
-        "CUSTOMS": { "gender": "n", "form": "τελωνείο", "plural": "τελωνεία" },
-        "EMBASSY": { "gender": "f", "form": "πρεσβεία", "plural": "πρεσβείες" },
-        "ADVENTURE": { "gender": "f", "form": "περιπέτεια", "plural": "περιπέτειες" },
-        "ITINERARY": { "gender": "n", "form": "δρομολόγιο", "plural": "δρομολόγια" },
-        "GUIDE": { "gender": "m", "form": "ξεναγός", "plural": "ξεναγοί" },
-
-        "BOARD": { "base": "επιβιβάζομαι", "1_singular": "επιβιβάζομαι", "2_singular": "επιβιβάζεσαι", "3_singular": "επιβιβάζεται", "1_plural": "επιβιβαζόμαστε", "2_plural": "επιβιβάζεστε", "3_plural": "επιβιβάζονται" },
-        "RESERVE": { "base": "κρατώ", "1_singular": "κρατώ", "2_singular": "κρατάς", "3_singular": "κρατά", "1_plural": "κρατάμε", "2_plural": "κρατάτε", "3_plural": "κρατούν" },
-        "NAVIGATE": { "base": "πλοηγούμαι", "1_singular": "πλοηγούμαι", "2_singular": "πλοηγείσαι", "3_singular": "πλοηγείται", "1_plural": "πλοηγούμαστε", "2_plural": "πλοηγείστε", "3_plural": "πλοηγούνται" },
-        "PHOTOGRAPH": { "base": "φωτογραφίζω", "1_singular": "φωτογραφίζω", "2_singular": "φωτογραφίζεις", "3_singular": "φωτογραφίζει", "1_plural": "φωτογραφίζουμε", "2_plural": "φωτογραφίζετε", "3_plural": "φωτογραφίζουν" },
-        "ORDER": { "base": "παραγγέλνω", "1_singular": "παραγγέλνω", "2_singular": "παραγγέλνεις", "3_singular": "παραγγέλνει", "1_plural": "παραγγέλνουμε", "2_plural": "παραγγέλνετε", "3_plural": "παραγγέλνουν" },
-        "PURCHASE": { "base": "αγοράζω", "1_singular": "αγοράζω", "2_singular": "αγοράζεις", "3_singular": "αγοράζει", "1_plural": "αγοράζουμε", "2_plural": "αγοράζετε", "3_plural": "αγοράζουν" },
-        "TRANSLATE": { "base": "μεταφράζω", "1_singular": "μεταφράζω", "2_singular": "μεταφράζεις", "3_singular": "μεταφράζει", "1_plural": "μεταφράζουμε", "2_plural": "μεταφράζετε", "3_plural": "μεταφράζουν" },
-        "GREET": { "base": "χαιρετώ", "1_singular": "χαιρετώ", "2_singular": "χαιρετάς", "3_singular": "χαιρετά", "1_plural": "χαιρετάμε", "2_plural": "χαιρετάτε", "3_plural": "χαιρετούν" },
-        "PRONOUNCE": { "base": "προφέρω", "1_singular": "προφέρω", "2_singular": "προφέρεις", "3_singular": "προφέρει", "1_plural": "προφέρουμε", "2_plural": "προφέρετε", "3_plural": "προφέρουν" },
-        "EXPLORE": { "base": "εξερευνώ", "1_singular": "εξερευνώ", "2_singular": "εξερευνάς", "3_singular": "εξερευνά", "1_plural": "εξερευνούμε", "2_plural": "εξερευνάτε", "3_plural": "εξερευνούν" },
-        "EXCHANGE": { "base": "ανταλλάσσω", "1_singular": "ανταλλάσσω", "2_singular": "ανταλλάσσεις", "3_singular": "ανταλλάσσει", "1_plural": "ανταλλάσσουμε", "2_plural": "ανταλλάσσετε", "3_plural": "ανταλλάσσουν" },
-        "INSURE": { "base": "ασφαλίζω", "1_singular": "ασφαλίζω", "2_singular": "ασφαλίζεις", "3_singular": "ασφαλίζει", "1_plural": "ασφαλίζουμε", "2_plural": "ασφαλίζετε", "3_plural": "ασφαλίζουν" },
-        "RECOMMEND": { "base": "προτείνω", "1_singular": "προτείνω", "2_singular": "προτείνεις", "3_singular": "προτείνει", "1_plural": "προτείνουμε", "2_plural": "προτείνετε", "3_plural": "προτείνουν" },
-
-        "SCENIC": { "form": "γραφικός", "f": "γραφική", "n": "γραφικό" },
-        "DELICIOUS": { "form": "νόστιμος", "f": "νόστιμη", "n": "νόστιμο" },
-        "EXPENSIVE": { "form": "ακριβός", "f": "ακριβή", "n": "ακριβό" },
-        "FOREIGN": { "form": "ξένος", "f": "ξένη", "n": "ξένο" },
-        "HISTORIC": { "form": "ιστορικός", "f": "ιστορική", "n": "ιστορικό" },
-        "UNFORGETTABLE": { "form": "αξέχαστος", "f": "αξέχαστη", "n": "αξέχαστο" }
-
+        "AIRPORT": {
+          "gender": "n",
+          "form": "αεροδρόμιο",
+          "plural": "αεροδρόμια"
+        },
+        "PASSPORT": {
+          "gender": "n",
+          "form": "διαβατήριο",
+          "plural": "διαβατήρια"
+        },
+        "FLIGHT": {
+          "gender": "f",
+          "form": "πτήση",
+          "plural": "πτήσεις"
+        },
+        "LUGGAGE": {
+          "gender": "f",
+          "form": "αποσκευές",
+          "pluralOnly": true
+        },
+        "HOTEL": {
+          "gender": "n",
+          "form": "ξενοδοχείο",
+          "plural": "ξενοδοχεία"
+        },
+        "RESERVATION": {
+          "gender": "f",
+          "form": "κράτηση",
+          "plural": "κρατήσεις"
+        },
+        "LOBBY": {
+          "gender": "n",
+          "form": "λόμπι",
+          "plural": "λόμπι"
+        },
+        "CHECKOUT": {
+          "gender": "f",
+          "form": "αναχώρηση",
+          "plural": "αναχωρήσεις"
+        },
+        "TAXI": {
+          "gender": "n",
+          "form": "ταξί",
+          "plural": "ταξί"
+        },
+        "STATION": {
+          "gender": "m",
+          "form": "σταθμός",
+          "plural": "σταθμοί"
+        },
+        "TICKET": {
+          "gender": "n",
+          "form": "εισιτήριο",
+          "plural": "εισιτήρια"
+        },
+        "ROUTE": {
+          "gender": "f",
+          "form": "διαδρομή",
+          "plural": "διαδρομές"
+        },
+        "LANDMARK": {
+          "gender": "n",
+          "form": "αξιοθέατο",
+          "plural": "αξιοθέατα"
+        },
+        "MUSEUM": {
+          "gender": "n",
+          "form": "μουσείο",
+          "plural": "μουσεία"
+        },
+        "MONUMENT": {
+          "gender": "n",
+          "form": "μνημείο",
+          "plural": "μνημεία"
+        },
+        "RESTAURANT": {
+          "gender": "n",
+          "form": "εστιατόριο",
+          "plural": "εστιατόρια"
+        },
+        "MENU": {
+          "gender": "n",
+          "form": "μενού",
+          "plural": "μενού"
+        },
+        "WAITER": {
+          "gender": "m",
+          "form": "σερβιτόρος",
+          "plural": "σερβιτόροι"
+        },
+        "MARKET": {
+          "gender": "f",
+          "form": "αγορά",
+          "plural": "αγορές"
+        },
+        "SOUVENIR": {
+          "gender": "n",
+          "form": "αναμνηστικό",
+          "plural": "αναμνηστικά"
+        },
+        "BARGAIN": {
+          "gender": "f",
+          "form": "ευκαιρία",
+          "plural": "ευκαιρίες"
+        },
+        "PHRASEBOOK": {
+          "gender": "n",
+          "form": "φρασολόγιο",
+          "plural": "φρασολόγια"
+        },
+        "BEACH": {
+          "gender": "f",
+          "form": "παραλία",
+          "plural": "παραλίες"
+        },
+        "CATHEDRAL": {
+          "gender": "m",
+          "form": "καθεδρικός ναός",
+          "plural": "καθεδρικοί ναοί"
+        },
+        "HARBOR": {
+          "gender": "n",
+          "form": "λιμάνι",
+          "plural": "λιμάνια"
+        },
+        "CURRENCY": {
+          "gender": "n",
+          "form": "νόμισμα",
+          "plural": "νομίσματα"
+        },
+        "CUSTOMS": {
+          "gender": "n",
+          "form": "τελωνείο",
+          "plural": "τελωνεία"
+        },
+        "EMBASSY": {
+          "gender": "f",
+          "form": "πρεσβεία",
+          "plural": "πρεσβείες"
+        },
+        "ADVENTURE": {
+          "gender": "f",
+          "form": "περιπέτεια",
+          "plural": "περιπέτειες"
+        },
+        "ITINERARY": {
+          "gender": "n",
+          "form": "δρομολόγιο",
+          "plural": "δρομολόγια"
+        },
+        "GUIDE": {
+          "gender": "m",
+          "form": "ξεναγός",
+          "plural": "ξεναγοί"
+        },
+        "BOARD": {
+          "base": "επιβιβάζομαι",
+          "1_singular": "επιβιβάζομαι",
+          "2_singular": "επιβιβάζεσαι",
+          "3_singular": "επιβιβάζεται",
+          "1_plural": "επιβιβαζόμαστε",
+          "2_plural": "επιβιβάζεστε",
+          "3_plural": "επιβιβάζονται"
+        },
+        "RESERVE": {
+          "base": "κρατώ",
+          "1_singular": "κρατώ",
+          "2_singular": "κρατάς",
+          "3_singular": "κρατά",
+          "1_plural": "κρατάμε",
+          "2_plural": "κρατάτε",
+          "3_plural": "κρατούν"
+        },
+        "NAVIGATE": {
+          "base": "πλοηγούμαι",
+          "1_singular": "πλοηγούμαι",
+          "2_singular": "πλοηγείσαι",
+          "3_singular": "πλοηγείται",
+          "1_plural": "πλοηγούμαστε",
+          "2_plural": "πλοηγείστε",
+          "3_plural": "πλοηγούνται"
+        },
+        "PHOTOGRAPH": {
+          "base": "φωτογραφίζω",
+          "1_singular": "φωτογραφίζω",
+          "2_singular": "φωτογραφίζεις",
+          "3_singular": "φωτογραφίζει",
+          "1_plural": "φωτογραφίζουμε",
+          "2_plural": "φωτογραφίζετε",
+          "3_plural": "φωτογραφίζουν"
+        },
+        "ORDER": {
+          "base": "παραγγέλνω",
+          "1_singular": "παραγγέλνω",
+          "2_singular": "παραγγέλνεις",
+          "3_singular": "παραγγέλνει",
+          "1_plural": "παραγγέλνουμε",
+          "2_plural": "παραγγέλνετε",
+          "3_plural": "παραγγέλνουν"
+        },
+        "PURCHASE": {
+          "base": "αγοράζω",
+          "1_singular": "αγοράζω",
+          "2_singular": "αγοράζεις",
+          "3_singular": "αγοράζει",
+          "1_plural": "αγοράζουμε",
+          "2_plural": "αγοράζετε",
+          "3_plural": "αγοράζουν"
+        },
+        "TRANSLATE": {
+          "base": "μεταφράζω",
+          "1_singular": "μεταφράζω",
+          "2_singular": "μεταφράζεις",
+          "3_singular": "μεταφράζει",
+          "1_plural": "μεταφράζουμε",
+          "2_plural": "μεταφράζετε",
+          "3_plural": "μεταφράζουν"
+        },
+        "GREET": {
+          "base": "χαιρετώ",
+          "1_singular": "χαιρετώ",
+          "2_singular": "χαιρετάς",
+          "3_singular": "χαιρετά",
+          "1_plural": "χαιρετάμε",
+          "2_plural": "χαιρετάτε",
+          "3_plural": "χαιρετούν"
+        },
+        "PRONOUNCE": {
+          "base": "προφέρω",
+          "1_singular": "προφέρω",
+          "2_singular": "προφέρεις",
+          "3_singular": "προφέρει",
+          "1_plural": "προφέρουμε",
+          "2_plural": "προφέρετε",
+          "3_plural": "προφέρουν"
+        },
+        "EXPLORE": {
+          "base": "εξερευνώ",
+          "1_singular": "εξερευνώ",
+          "2_singular": "εξερευνάς",
+          "3_singular": "εξερευνά",
+          "1_plural": "εξερευνούμε",
+          "2_plural": "εξερευνάτε",
+          "3_plural": "εξερευνούν"
+        },
+        "EXCHANGE": {
+          "base": "ανταλλάσσω",
+          "1_singular": "ανταλλάσσω",
+          "2_singular": "ανταλλάσσεις",
+          "3_singular": "ανταλλάσσει",
+          "1_plural": "ανταλλάσσουμε",
+          "2_plural": "ανταλλάσσετε",
+          "3_plural": "ανταλλάσσουν"
+        },
+        "INSURE": {
+          "base": "ασφαλίζω",
+          "1_singular": "ασφαλίζω",
+          "2_singular": "ασφαλίζεις",
+          "3_singular": "ασφαλίζει",
+          "1_plural": "ασφαλίζουμε",
+          "2_plural": "ασφαλίζετε",
+          "3_plural": "ασφαλίζουν"
+        },
+        "RECOMMEND": {
+          "base": "προτείνω",
+          "1_singular": "προτείνω",
+          "2_singular": "προτείνεις",
+          "3_singular": "προτείνει",
+          "1_plural": "προτείνουμε",
+          "2_plural": "προτείνετε",
+          "3_plural": "προτείνουν"
+        },
+        "SCENIC": {
+          "form": "γραφικός",
+          "f": "γραφική",
+          "n": "γραφικό"
+        },
+        "DELICIOUS": {
+          "form": "νόστιμος",
+          "f": "νόστιμη",
+          "n": "νόστιμο"
+        },
+        "EXPENSIVE": {
+          "form": "ακριβός",
+          "f": "ακριβή",
+          "n": "ακριβό"
+        },
+        "FOREIGN": {
+          "form": "ξένος",
+          "f": "ξένη",
+          "n": "ξένο"
+        },
+        "HISTORIC": {
+          "form": "ιστορικός",
+          "f": "ιστορική",
+          "n": "ιστορικό"
+        },
+        "UNFORGETTABLE": {
+          "form": "αξέχαστος",
+          "f": "αξέχαστη",
+          "n": "αξέχαστο"
+        }
       }
     },
     "ja": {
       "label": "日本語",
       "forms": {
-
-        "AIRPORT": { "form": "空港" },
-        "PASSPORT": { "form": "パスポート" },
-        "FLIGHT": { "form": "フライト" },
-        "LUGGAGE": { "form": "荷物" },
-        "HOTEL": { "form": "ホテル" },
-        "RESERVATION": { "form": "予約", "existentialHave": true },
-        "LOBBY": { "form": "ロビー" },
-        "CHECKOUT": { "form": "チェックアウト" },
-        "TAXI": { "form": "タクシー" },
-        "STATION": { "form": "駅" },
-        "TICKET": { "form": "チケット" },
-        "ROUTE": { "form": "ルート" },
-        "LANDMARK": { "form": "ランドマーク" },
-        "MUSEUM": { "form": "博物館" },
-        "MONUMENT": { "form": "記念碑" },
-        "RESTAURANT": { "form": "レストラン" },
-        "MENU": { "form": "メニュー" },
-        "WAITER": { "form": "ウェイター", "existentialHave": true, "animate": true },
-        "MARKET": { "form": "市場" },
-        "SOUVENIR": { "form": "お土産" },
-        "BARGAIN": { "form": "掘り出し物" },
-        "PHRASEBOOK": { "form": "会話集" },
-        "BEACH": { "form": "ビーチ" },
-        "CATHEDRAL": { "form": "大聖堂" },
-        "HARBOR": { "form": "港" },
-        "CURRENCY": { "form": "通貨" },
-        "CUSTOMS": { "form": "税関" },
-        "EMBASSY": { "form": "大使館" },
-        "ADVENTURE": { "form": "冒険" },
-        "ITINERARY": { "form": "旅程" },
-        "GUIDE": { "form": "ガイド", "existentialHave": true, "animate": true },
-
-        "BOARD": { "base": "搭乗します" },
-        "RESERVE": { "base": "予約します" },
-        "NAVIGATE": { "base": "ナビします" },
-        "PHOTOGRAPH": { "base": "写真を撮ります" },
-        "ORDER": { "base": "注文します" },
-        "PURCHASE": { "base": "購入します" },
-        "TRANSLATE": { "base": "翻訳します" },
-        "GREET": { "base": "挨拶します" },
-        "PRONOUNCE": { "base": "発音します" },
-        "EXPLORE": { "base": "探索します" },
-        "EXCHANGE": { "base": "両替します" },
-        "INSURE": { "base": "保険をかけます" },
-        "RECOMMEND": { "base": "おすすめします" },
-
-        "SCENIC": ["景観のよい"],
-        "DELICIOUS": ["おいしい"],
-        "EXPENSIVE": ["高い"],
-        "FOREIGN": ["外国の"],
-        "HISTORIC": { "form": "歴史的な", "predicative": "歴史的" },
-        "UNFORGETTABLE": ["忘れられない"]
-
+        "AIRPORT": {
+          "form": "空港"
+        },
+        "PASSPORT": {
+          "form": "パスポート"
+        },
+        "FLIGHT": {
+          "form": "フライト"
+        },
+        "LUGGAGE": {
+          "form": "荷物"
+        },
+        "HOTEL": {
+          "form": "ホテル"
+        },
+        "RESERVATION": {
+          "form": "予約",
+          "existentialHave": true
+        },
+        "LOBBY": {
+          "form": "ロビー"
+        },
+        "CHECKOUT": {
+          "form": "チェックアウト"
+        },
+        "TAXI": {
+          "form": "タクシー"
+        },
+        "STATION": {
+          "form": "駅"
+        },
+        "TICKET": {
+          "form": "チケット"
+        },
+        "ROUTE": {
+          "form": "ルート"
+        },
+        "LANDMARK": {
+          "form": "ランドマーク"
+        },
+        "MUSEUM": {
+          "form": "博物館"
+        },
+        "MONUMENT": {
+          "form": "記念碑"
+        },
+        "RESTAURANT": {
+          "form": "レストラン"
+        },
+        "MENU": {
+          "form": "メニュー"
+        },
+        "WAITER": {
+          "form": "ウェイター",
+          "existentialHave": true,
+          "animate": true
+        },
+        "MARKET": {
+          "form": "市場"
+        },
+        "SOUVENIR": {
+          "form": "お土産"
+        },
+        "BARGAIN": {
+          "form": "掘り出し物"
+        },
+        "PHRASEBOOK": {
+          "form": "会話集"
+        },
+        "BEACH": {
+          "form": "ビーチ"
+        },
+        "CATHEDRAL": {
+          "form": "大聖堂"
+        },
+        "HARBOR": {
+          "form": "港"
+        },
+        "CURRENCY": {
+          "form": "通貨"
+        },
+        "CUSTOMS": {
+          "form": "税関"
+        },
+        "EMBASSY": {
+          "form": "大使館"
+        },
+        "ADVENTURE": {
+          "form": "冒険"
+        },
+        "ITINERARY": {
+          "form": "旅程"
+        },
+        "GUIDE": {
+          "form": "ガイド",
+          "existentialHave": true,
+          "animate": true
+        },
+        "BOARD": {
+          "base": "搭乗します"
+        },
+        "RESERVE": {
+          "base": "予約します"
+        },
+        "NAVIGATE": {
+          "base": "ナビします"
+        },
+        "PHOTOGRAPH": {
+          "base": "写真を撮ります"
+        },
+        "ORDER": {
+          "base": "注文します"
+        },
+        "PURCHASE": {
+          "base": "購入します"
+        },
+        "TRANSLATE": {
+          "base": "翻訳します"
+        },
+        "GREET": {
+          "base": "挨拶します"
+        },
+        "PRONOUNCE": {
+          "base": "発音します"
+        },
+        "EXPLORE": {
+          "base": "探索します"
+        },
+        "EXCHANGE": {
+          "base": "両替します"
+        },
+        "INSURE": {
+          "base": "保険をかけます"
+        },
+        "RECOMMEND": {
+          "base": "おすすめします"
+        },
+        "SCENIC": [
+          "景観のよい"
+        ],
+        "DELICIOUS": [
+          "おいしい"
+        ],
+        "EXPENSIVE": [
+          "高い"
+        ],
+        "FOREIGN": [
+          "外国の"
+        ],
+        "HISTORIC": {
+          "form": "歴史的な",
+          "predicative": "歴史的"
+        },
+        "UNFORGETTABLE": [
+          "忘れられない"
+        ]
       }
     },
     "ko": {
       "label": "한국어",
       "forms": {
-
-        "AIRPORT": { "form": "공항" },
-        "PASSPORT": { "form": "여권" },
-        "FLIGHT": { "form": "비행" },
-        "LUGGAGE": { "form": "수하물" },
-        "HOTEL": { "form": "호텔" },
-        "RESERVATION": { "form": "예약" },
-        "LOBBY": { "form": "로비" },
-        "CHECKOUT": { "form": "체크아웃" },
-        "TAXI": { "form": "택시" },
-        "STATION": { "form": "역" },
-        "TICKET": { "form": "티켓" },
-        "ROUTE": { "form": "경로" },
-        "LANDMARK": { "form": "명소" },
-        "MUSEUM": { "form": "박물관" },
-        "MONUMENT": { "form": "기념비" },
-        "RESTAURANT": { "form": "식당" },
-        "MENU": { "form": "메뉴" },
-        "WAITER": { "form": "웨이터" },
-        "MARKET": { "form": "시장" },
-        "SOUVENIR": { "form": "기념품" },
-        "BARGAIN": { "form": "흥정" },
-        "PHRASEBOOK": { "form": "회화책" },
-        "BEACH": { "form": "해변" },
-        "CATHEDRAL": { "form": "대성당" },
-        "HARBOR": { "form": "항구" },
-        "CURRENCY": { "form": "화폐" },
-        "CUSTOMS": { "form": "세관" },
-        "EMBASSY": { "form": "대사관" },
-        "ADVENTURE": { "form": "모험" },
-        "ITINERARY": { "form": "여행 일정" },
-        "GUIDE": { "form": "가이드" },
-
-        "BOARD": { "base": "탑승하다", "present": "탑승해요" },
-        "RESERVE": { "base": "예약하다", "present": "예약해요" },
-        "NAVIGATE": { "base": "길을 찾다", "present": "길을 찾아요" },
-        "PHOTOGRAPH": { "base": "사진을 찍다", "present": "사진을 찍어요" },
-        "ORDER": { "base": "주문하다", "present": "주문해요" },
-        "PURCHASE": { "base": "구매하다", "present": "구매해요" },
-        "TRANSLATE": { "base": "번역하다", "present": "번역해요" },
-        "GREET": { "base": "인사하다", "present": "인사해요" },
-        "PRONOUNCE": { "base": "발음하다", "present": "발음해요" },
-        "EXPLORE": { "base": "탐험하다", "present": "탐험해요" },
-        "EXCHANGE": { "base": "환전하다", "present": "환전해요" },
-        "INSURE": { "base": "보험에 가입하다", "present": "보험에 가입해요" },
-        "RECOMMEND": { "base": "추천하다", "present": "추천해요" },
-
-        "SCENIC": ["경치 좋은"],
-        "DELICIOUS": ["맛있는"],
-        "EXPENSIVE": ["비싼"],
-        "FOREIGN": ["외국의"],
-        "HISTORIC": ["역사적인"],
-        "UNFORGETTABLE": ["잊을 수 없는"]
-
+        "AIRPORT": {
+          "form": "공항"
+        },
+        "PASSPORT": {
+          "form": "여권"
+        },
+        "FLIGHT": {
+          "form": "비행"
+        },
+        "LUGGAGE": {
+          "form": "수하물"
+        },
+        "HOTEL": {
+          "form": "호텔"
+        },
+        "RESERVATION": {
+          "form": "예약"
+        },
+        "LOBBY": {
+          "form": "로비"
+        },
+        "CHECKOUT": {
+          "form": "체크아웃"
+        },
+        "TAXI": {
+          "form": "택시"
+        },
+        "STATION": {
+          "form": "역"
+        },
+        "TICKET": {
+          "form": "티켓"
+        },
+        "ROUTE": {
+          "form": "경로"
+        },
+        "LANDMARK": {
+          "form": "명소"
+        },
+        "MUSEUM": {
+          "form": "박물관"
+        },
+        "MONUMENT": {
+          "form": "기념비"
+        },
+        "RESTAURANT": {
+          "form": "식당"
+        },
+        "MENU": {
+          "form": "메뉴"
+        },
+        "WAITER": {
+          "form": "웨이터"
+        },
+        "MARKET": {
+          "form": "시장"
+        },
+        "SOUVENIR": {
+          "form": "기념품"
+        },
+        "BARGAIN": {
+          "form": "흥정"
+        },
+        "PHRASEBOOK": {
+          "form": "회화책"
+        },
+        "BEACH": {
+          "form": "해변"
+        },
+        "CATHEDRAL": {
+          "form": "대성당"
+        },
+        "HARBOR": {
+          "form": "항구"
+        },
+        "CURRENCY": {
+          "form": "화폐"
+        },
+        "CUSTOMS": {
+          "form": "세관"
+        },
+        "EMBASSY": {
+          "form": "대사관"
+        },
+        "ADVENTURE": {
+          "form": "모험"
+        },
+        "ITINERARY": {
+          "form": "여행 일정"
+        },
+        "GUIDE": {
+          "form": "가이드"
+        },
+        "BOARD": {
+          "base": "탑승하다",
+          "present": "탑승해요"
+        },
+        "RESERVE": {
+          "base": "예약하다",
+          "present": "예약해요"
+        },
+        "NAVIGATE": {
+          "base": "길을 찾다",
+          "present": "길을 찾아요"
+        },
+        "PHOTOGRAPH": {
+          "base": "사진을 찍다",
+          "present": "사진을 찍어요",
+          "incorporatedObject": true
+        },
+        "ORDER": {
+          "base": "주문하다",
+          "present": "주문해요"
+        },
+        "PURCHASE": {
+          "base": "구매하다",
+          "present": "구매해요"
+        },
+        "TRANSLATE": {
+          "base": "번역하다",
+          "present": "번역해요"
+        },
+        "GREET": {
+          "base": "인사하다",
+          "present": "인사해요"
+        },
+        "PRONOUNCE": {
+          "base": "발음하다",
+          "present": "발음해요"
+        },
+        "EXPLORE": {
+          "base": "탐험하다",
+          "present": "탐험해요"
+        },
+        "EXCHANGE": {
+          "base": "환전하다",
+          "present": "환전해요"
+        },
+        "INSURE": {
+          "base": "보험에 가입하다",
+          "present": "보험에 가입해요"
+        },
+        "RECOMMEND": {
+          "base": "추천하다",
+          "present": "추천해요"
+        },
+        "SCENIC": [
+          "경치 좋은"
+        ],
+        "DELICIOUS": [
+          "맛있는"
+        ],
+        "EXPENSIVE": [
+          "비싼"
+        ],
+        "FOREIGN": [
+          "외국의"
+        ],
+        "HISTORIC": [
+          "역사적인"
+        ],
+        "UNFORGETTABLE": [
+          "잊을 수 없는"
+        ]
       }
     },
     "no": {
       "label": "Norsk",
       "forms": {
-
-        "AIRPORT": { "form": "flyplass", "gender": "m", "plural": "flyplasser" },
-        "PASSPORT": { "form": "pass", "gender": "n" },
-        "FLIGHT": { "form": "flyvning", "gender": "f", "plural": "flyvninger" },
-        "LUGGAGE": { "form": "bagasje", "gender": "m" },
-        "HOTEL": { "form": "hotell", "gender": "n", "plural": "hoteller" },
-        "RESERVATION": { "form": "reservasjon", "gender": "m", "plural": "reservasjoner" },
-        "LOBBY": { "form": "lobby", "gender": "m", "plural": "lobbyer" },
-        "CHECKOUT": { "form": "utsjekk", "gender": "m", "plural": "utsjekkinger" },
-        "TAXI": { "form": "taxi", "gender": "m", "plural": "taxier" },
-        "STATION": { "form": "stasjon", "gender": "m", "plural": "stasjoner" },
-        "TICKET": { "form": "billett", "gender": "m", "plural": "billetter" },
-        "ROUTE": { "form": "rute", "gender": "f", "plural": "ruter" },
-        "LANDMARK": { "form": "landemerke", "gender": "n", "plural": "landemerker" },
-        "MUSEUM": { "form": "museum", "gender": "n", "plural": "museer" },
-        "MONUMENT": { "form": "monument", "gender": "n", "plural": "monumenter" },
-        "RESTAURANT": { "form": "restaurant", "gender": "n", "plural": "restauranter" },
-        "MENU": { "form": "meny", "gender": "m", "plural": "menyer" },
-        "WAITER": { "form": "servitør", "gender": "m", "plural": "servitører" },
-        "MARKET": { "form": "marked", "gender": "n", "plural": "markeder" },
-        "SOUVENIR": { "form": "suvenír", "gender": "m", "plural": "suvenierer" },
-        "BARGAIN": { "form": "kupp", "gender": "n" },
-        "PHRASEBOOK": { "form": "reiseguide", "gender": "m", "plural": "reiseguider" },
-        "BEACH": { "form": "strand", "gender": "m", "plural": "strender" },
-        "CATHEDRAL": { "form": "katedral", "gender": "m", "plural": "katedraler" },
-        "HARBOR": { "form": "havn", "gender": "f", "plural": "havner" },
-        "CURRENCY": { "form": "valuta", "gender": "f", "plural": "valutaer" },
-        "CUSTOMS": { "form": "toll", "gender": "m" },
-        "EMBASSY": { "form": "ambassade", "gender": "f", "plural": "ambassader" },
-        "ADVENTURE": { "form": "eventyr", "gender": "n" },
-        "ITINERARY": { "form": "reiserute", "gender": "f", "plural": "reiseruter" },
-        "GUIDE": { "form": "guide", "gender": "m", "plural": "guider" },
-
-        "BOARD": { "base": "gå ombord", "present": "går ombord" },
-        "RESERVE": { "base": "reservere", "present": "reserverer" },
-        "NAVIGATE": { "base": "navigere", "present": "navigerer" },
-        "PHOTOGRAPH": { "base": "fotografere", "present": "fotograferer" },
-        "ORDER": { "base": "bestille", "present": "bestiller" },
-        "PURCHASE": { "base": "kjøpe", "present": "kjøper" },
-        "TRANSLATE": { "base": "oversette", "present": "oversetter" },
-        "GREET": { "base": "hilse", "present": "hilser" },
-        "PRONOUNCE": { "base": "uttale", "present": "uttaler" },
-        "EXPLORE": { "base": "utforske", "present": "utforsker" },
-        "EXCHANGE": { "base": "veksle", "present": "veksler" },
-        "INSURE": { "base": "forsikre", "present": "forsikrer" },
-        "RECOMMEND": { "base": "anbefale", "present": "anbefaler" },
-
-        "SCENIC": ["naturskjønn"],
-        "DELICIOUS": ["deilig"],
-        "EXPENSIVE": ["dyr"],
-        "FOREIGN": ["utenlandsk"],
-        "HISTORIC": ["historisk"],
-        "UNFORGETTABLE": ["uforglemmelig"]
-
+        "AIRPORT": {
+          "form": "flyplass",
+          "gender": "m",
+          "plural": "flyplasser"
+        },
+        "PASSPORT": {
+          "form": "pass",
+          "gender": "n"
+        },
+        "FLIGHT": {
+          "form": "flyvning",
+          "gender": "f",
+          "plural": "flyvninger"
+        },
+        "LUGGAGE": {
+          "form": "bagasje",
+          "gender": "m"
+        },
+        "HOTEL": {
+          "form": "hotell",
+          "gender": "n",
+          "plural": "hoteller"
+        },
+        "RESERVATION": {
+          "form": "reservasjon",
+          "gender": "m",
+          "plural": "reservasjoner"
+        },
+        "LOBBY": {
+          "form": "lobby",
+          "gender": "m",
+          "plural": "lobbyer"
+        },
+        "CHECKOUT": {
+          "form": "utsjekk",
+          "gender": "m",
+          "plural": "utsjekkinger"
+        },
+        "TAXI": {
+          "form": "taxi",
+          "gender": "m",
+          "plural": "taxier"
+        },
+        "STATION": {
+          "form": "stasjon",
+          "gender": "m",
+          "plural": "stasjoner"
+        },
+        "TICKET": {
+          "form": "billett",
+          "gender": "m",
+          "plural": "billetter"
+        },
+        "ROUTE": {
+          "form": "rute",
+          "gender": "f",
+          "plural": "ruter"
+        },
+        "LANDMARK": {
+          "form": "landemerke",
+          "gender": "n",
+          "plural": "landemerker"
+        },
+        "MUSEUM": {
+          "form": "museum",
+          "gender": "n",
+          "plural": "museer"
+        },
+        "MONUMENT": {
+          "form": "monument",
+          "gender": "n",
+          "plural": "monumenter"
+        },
+        "RESTAURANT": {
+          "form": "restaurant",
+          "gender": "n",
+          "plural": "restauranter"
+        },
+        "MENU": {
+          "form": "meny",
+          "gender": "m",
+          "plural": "menyer"
+        },
+        "WAITER": {
+          "form": "servitør",
+          "gender": "m",
+          "plural": "servitører"
+        },
+        "MARKET": {
+          "form": "marked",
+          "gender": "n",
+          "plural": "markeder"
+        },
+        "SOUVENIR": {
+          "form": "suvenír",
+          "gender": "m",
+          "plural": "suvenierer"
+        },
+        "BARGAIN": {
+          "form": "kupp",
+          "gender": "n"
+        },
+        "PHRASEBOOK": {
+          "form": "reiseguide",
+          "gender": "m",
+          "plural": "reiseguider"
+        },
+        "BEACH": {
+          "form": "strand",
+          "gender": "m",
+          "plural": "strender"
+        },
+        "CATHEDRAL": {
+          "form": "katedral",
+          "gender": "m",
+          "plural": "katedraler"
+        },
+        "HARBOR": {
+          "form": "havn",
+          "gender": "f",
+          "plural": "havner"
+        },
+        "CURRENCY": {
+          "form": "valuta",
+          "gender": "f",
+          "plural": "valutaer"
+        },
+        "CUSTOMS": {
+          "form": "toll",
+          "gender": "m"
+        },
+        "EMBASSY": {
+          "form": "ambassade",
+          "gender": "f",
+          "plural": "ambassader"
+        },
+        "ADVENTURE": {
+          "form": "eventyr",
+          "gender": "n"
+        },
+        "ITINERARY": {
+          "form": "reiserute",
+          "gender": "f",
+          "plural": "reiseruter"
+        },
+        "GUIDE": {
+          "form": "guide",
+          "gender": "m",
+          "plural": "guider"
+        },
+        "BOARD": {
+          "base": "gå ombord",
+          "present": "går ombord"
+        },
+        "RESERVE": {
+          "base": "reservere",
+          "present": "reserverer"
+        },
+        "NAVIGATE": {
+          "base": "navigere",
+          "present": "navigerer"
+        },
+        "PHOTOGRAPH": {
+          "base": "fotografere",
+          "present": "fotograferer"
+        },
+        "ORDER": {
+          "base": "bestille",
+          "present": "bestiller"
+        },
+        "PURCHASE": {
+          "base": "kjøpe",
+          "present": "kjøper"
+        },
+        "TRANSLATE": {
+          "base": "oversette",
+          "present": "oversetter"
+        },
+        "GREET": {
+          "base": "hilse",
+          "present": "hilser"
+        },
+        "PRONOUNCE": {
+          "base": "uttale",
+          "present": "uttaler"
+        },
+        "EXPLORE": {
+          "base": "utforske",
+          "present": "utforsker"
+        },
+        "EXCHANGE": {
+          "base": "veksle",
+          "present": "veksler"
+        },
+        "INSURE": {
+          "base": "forsikre",
+          "present": "forsikrer"
+        },
+        "RECOMMEND": {
+          "base": "anbefale",
+          "present": "anbefaler"
+        },
+        "SCENIC": [
+          "naturskjønn"
+        ],
+        "DELICIOUS": [
+          "deilig"
+        ],
+        "EXPENSIVE": [
+          "dyr"
+        ],
+        "FOREIGN": [
+          "utenlandsk"
+        ],
+        "HISTORIC": [
+          "historisk"
+        ],
+        "UNFORGETTABLE": [
+          "uforglemmelig"
+        ]
       }
     },
     "tr": {
       "label": "Türkçe",
       "forms": {
-
-        "AIRPORT": { "form": "havalimanı" },
-        "PASSPORT": { "form": "pasaport" },
-        "FLIGHT": { "form": "uçuş" },
-        "LUGGAGE": { "form": "bagaj" },
-        "HOTEL": { "form": "otel" },
-        "RESERVATION": { "form": "rezervasyon" },
-        "LOBBY": { "form": "lobi" },
-        "CHECKOUT": { "form": "çıkış" },
-        "TAXI": { "form": "taksi" },
-        "STATION": { "form": "istasyon" },
-        "TICKET": { "form": "bilet" },
-        "ROUTE": { "form": "rota" },
-        "LANDMARK": { "form": "simge yapı" },
-        "MUSEUM": { "form": "müze" },
-        "MONUMENT": { "form": "anıt" },
-        "RESTAURANT": { "form": "restoran" },
-        "MENU": { "form": "menü" },
-        "WAITER": { "form": "garson" },
-        "MARKET": { "form": "pazar" },
-        "SOUVENIR": { "form": "hediyelik eşya" },
-        "BARGAIN": { "form": "pazarlık" },
-        "PHRASEBOOK": { "form": "konuşma kılavuzu" },
-        "BEACH": { "form": "plaj" },
-        "CATHEDRAL": { "form": "katedral" },
-        "HARBOR": { "form": "liman" },
-        "CURRENCY": { "form": "para birimi" },
-        "CUSTOMS": { "form": "gümrük" },
-        "EMBASSY": { "form": "büyükelçilik" },
-        "ADVENTURE": { "form": "macera" },
-        "ITINERARY": { "form": "seyahat planı" },
-        "GUIDE": { "form": "rehber" },
-
-        "BOARD": { "base": "binmek", "1_singular": "biniyorum", "2_singular": "biniyorsun", "3_singular": "biniyor", "1_plural": "biniyoruz", "2_plural": "biniyorsunuz", "3_plural": "biniyorlar" },
-        "RESERVE": { "base": "rezerve etmek", "1_singular": "rezerve ediyorum", "2_singular": "rezerve ediyorsun", "3_singular": "rezerve ediyor", "1_plural": "rezerve ediyoruz", "2_plural": "rezerve ediyorsunuz", "3_plural": "rezerve ediyorlar" },
-        "NAVIGATE": { "base": "yol bulmak", "1_singular": "yol buluyorum", "2_singular": "yol buluyorsun", "3_singular": "yol buluyor", "1_plural": "yol buluyoruz", "2_plural": "yol buluyorsunuz", "3_plural": "yol buluyorlar" },
-        "PHOTOGRAPH": { "base": "fotoğraflamak", "1_singular": "fotoğraflıyorum", "2_singular": "fotoğraflıyorsun", "3_singular": "fotoğraflıyor", "1_plural": "fotoğraflıyoruz", "2_plural": "fotoğraflıyorsunuz", "3_plural": "fotoğraflıyorlar" },
-        "ORDER": { "base": "sipariş etmek", "1_singular": "sipariş ediyorum", "2_singular": "sipariş ediyorsun", "3_singular": "sipariş ediyor", "1_plural": "sipariş ediyoruz", "2_plural": "sipariş ediyorsunuz", "3_plural": "sipariş ediyorlar" },
-        "PURCHASE": { "base": "satın almak", "1_singular": "satın alıyorum", "2_singular": "satın alıyorsun", "3_singular": "satın alıyor", "1_plural": "satın alıyoruz", "2_plural": "satın alıyorsunuz", "3_plural": "satın alıyorlar" },
-        "TRANSLATE": { "base": "çevirmek", "1_singular": "çeviriyorum", "2_singular": "çeviriyorsun", "3_singular": "çeviriyor", "1_plural": "çeviriyoruz", "2_plural": "çeviriyorsunuz", "3_plural": "çeviriyorlar" },
-        "GREET": { "base": "selamlamak", "1_singular": "selamlıyorum", "2_singular": "selamlıyorsun", "3_singular": "selamlıyor", "1_plural": "selamlıyoruz", "2_plural": "selamlıyorsunuz", "3_plural": "selamlıyorlar" },
-        "PRONOUNCE": { "base": "telaffuz etmek", "1_singular": "telaffuz ediyorum", "2_singular": "telaffuz ediyorsun", "3_singular": "telaffuz ediyor", "1_plural": "telaffuz ediyoruz", "2_plural": "telaffuz ediyorsunuz", "3_plural": "telaffuz ediyorlar" },
-        "EXPLORE": { "base": "keşfetmek", "1_singular": "keşfediyorum", "2_singular": "keşfediyorsun", "3_singular": "keşfediyor", "1_plural": "keşfediyoruz", "2_plural": "keşfediyorsunuz", "3_plural": "keşfediyorlar" },
-        "EXCHANGE": { "base": "değiştirmek", "1_singular": "değiştiriyorum", "2_singular": "değiştiriyorsun", "3_singular": "değiştiriyor", "1_plural": "değiştiriyoruz", "2_plural": "değiştiriyorsunuz", "3_plural": "değiştiriyorlar" },
-        "INSURE": { "base": "sigortalamak", "1_singular": "sigortalıyorum", "2_singular": "sigortalıyorsun", "3_singular": "sigortalıyor", "1_plural": "sigortalıyoruz", "2_plural": "sigortalıyorsunuz", "3_plural": "sigortalıyorlar" },
-        "RECOMMEND": { "base": "tavsiye etmek", "1_singular": "tavsiye ediyorum", "2_singular": "tavsiye ediyorsun", "3_singular": "tavsiye ediyor", "1_plural": "tavsiye ediyoruz", "2_plural": "tavsiye ediyorsunuz", "3_plural": "tavsiye ediyorlar" },
-
-        "SCENIC": ["manzaralı"],
-        "DELICIOUS": ["lezzetli"],
-        "EXPENSIVE": ["pahalı"],
-        "FOREIGN": ["yabancı"],
-        "HISTORIC": ["tarihi"],
-        "UNFORGETTABLE": ["unutulmaz"]
-
+        "AIRPORT": {
+          "form": "havalimanı"
+        },
+        "PASSPORT": {
+          "form": "pasaport"
+        },
+        "FLIGHT": {
+          "form": "uçuş"
+        },
+        "LUGGAGE": {
+          "form": "bagaj"
+        },
+        "HOTEL": {
+          "form": "otel"
+        },
+        "RESERVATION": {
+          "form": "rezervasyon"
+        },
+        "LOBBY": {
+          "form": "lobi"
+        },
+        "CHECKOUT": {
+          "form": "çıkış"
+        },
+        "TAXI": {
+          "form": "taksi"
+        },
+        "STATION": {
+          "form": "istasyon"
+        },
+        "TICKET": {
+          "form": "bilet"
+        },
+        "ROUTE": {
+          "form": "rota"
+        },
+        "LANDMARK": {
+          "form": "simge yapı"
+        },
+        "MUSEUM": {
+          "form": "müze"
+        },
+        "MONUMENT": {
+          "form": "anıt"
+        },
+        "RESTAURANT": {
+          "form": "restoran"
+        },
+        "MENU": {
+          "form": "menü"
+        },
+        "WAITER": {
+          "form": "garson"
+        },
+        "MARKET": {
+          "form": "pazar"
+        },
+        "SOUVENIR": {
+          "form": "hediyelik eşya"
+        },
+        "BARGAIN": {
+          "form": "pazarlık"
+        },
+        "PHRASEBOOK": {
+          "form": "konuşma kılavuzu"
+        },
+        "BEACH": {
+          "form": "plaj"
+        },
+        "CATHEDRAL": {
+          "form": "katedral"
+        },
+        "HARBOR": {
+          "form": "liman"
+        },
+        "CURRENCY": {
+          "form": "para birimi"
+        },
+        "CUSTOMS": {
+          "form": "gümrük"
+        },
+        "EMBASSY": {
+          "form": "büyükelçilik"
+        },
+        "ADVENTURE": {
+          "form": "macera"
+        },
+        "ITINERARY": {
+          "form": "seyahat planı"
+        },
+        "GUIDE": {
+          "form": "rehber"
+        },
+        "BOARD": {
+          "base": "binmek",
+          "1_singular": "biniyorum",
+          "2_singular": "biniyorsun",
+          "3_singular": "biniyor",
+          "1_plural": "biniyoruz",
+          "2_plural": "biniyorsunuz",
+          "3_plural": "biniyorlar"
+        },
+        "RESERVE": {
+          "base": "rezerve etmek",
+          "1_singular": "rezerve ediyorum",
+          "2_singular": "rezerve ediyorsun",
+          "3_singular": "rezerve ediyor",
+          "1_plural": "rezerve ediyoruz",
+          "2_plural": "rezerve ediyorsunuz",
+          "3_plural": "rezerve ediyorlar"
+        },
+        "NAVIGATE": {
+          "base": "yol bulmak",
+          "1_singular": "yol buluyorum",
+          "2_singular": "yol buluyorsun",
+          "3_singular": "yol buluyor",
+          "1_plural": "yol buluyoruz",
+          "2_plural": "yol buluyorsunuz",
+          "3_plural": "yol buluyorlar"
+        },
+        "PHOTOGRAPH": {
+          "base": "fotoğraflamak",
+          "1_singular": "fotoğraflıyorum",
+          "2_singular": "fotoğraflıyorsun",
+          "3_singular": "fotoğraflıyor",
+          "1_plural": "fotoğraflıyoruz",
+          "2_plural": "fotoğraflıyorsunuz",
+          "3_plural": "fotoğraflıyorlar"
+        },
+        "ORDER": {
+          "base": "sipariş etmek",
+          "1_singular": "sipariş ediyorum",
+          "2_singular": "sipariş ediyorsun",
+          "3_singular": "sipariş ediyor",
+          "1_plural": "sipariş ediyoruz",
+          "2_plural": "sipariş ediyorsunuz",
+          "3_plural": "sipariş ediyorlar"
+        },
+        "PURCHASE": {
+          "base": "satın almak",
+          "1_singular": "satın alıyorum",
+          "2_singular": "satın alıyorsun",
+          "3_singular": "satın alıyor",
+          "1_plural": "satın alıyoruz",
+          "2_plural": "satın alıyorsunuz",
+          "3_plural": "satın alıyorlar"
+        },
+        "TRANSLATE": {
+          "base": "çevirmek",
+          "1_singular": "çeviriyorum",
+          "2_singular": "çeviriyorsun",
+          "3_singular": "çeviriyor",
+          "1_plural": "çeviriyoruz",
+          "2_plural": "çeviriyorsunuz",
+          "3_plural": "çeviriyorlar"
+        },
+        "GREET": {
+          "base": "selamlamak",
+          "1_singular": "selamlıyorum",
+          "2_singular": "selamlıyorsun",
+          "3_singular": "selamlıyor",
+          "1_plural": "selamlıyoruz",
+          "2_plural": "selamlıyorsunuz",
+          "3_plural": "selamlıyorlar"
+        },
+        "PRONOUNCE": {
+          "base": "telaffuz etmek",
+          "1_singular": "telaffuz ediyorum",
+          "2_singular": "telaffuz ediyorsun",
+          "3_singular": "telaffuz ediyor",
+          "1_plural": "telaffuz ediyoruz",
+          "2_plural": "telaffuz ediyorsunuz",
+          "3_plural": "telaffuz ediyorlar"
+        },
+        "EXPLORE": {
+          "base": "keşfetmek",
+          "1_singular": "keşfediyorum",
+          "2_singular": "keşfediyorsun",
+          "3_singular": "keşfediyor",
+          "1_plural": "keşfediyoruz",
+          "2_plural": "keşfediyorsunuz",
+          "3_plural": "keşfediyorlar"
+        },
+        "EXCHANGE": {
+          "base": "değiştirmek",
+          "1_singular": "değiştiriyorum",
+          "2_singular": "değiştiriyorsun",
+          "3_singular": "değiştiriyor",
+          "1_plural": "değiştiriyoruz",
+          "2_plural": "değiştiriyorsunuz",
+          "3_plural": "değiştiriyorlar"
+        },
+        "INSURE": {
+          "base": "sigortalamak",
+          "1_singular": "sigortalıyorum",
+          "2_singular": "sigortalıyorsun",
+          "3_singular": "sigortalıyor",
+          "1_plural": "sigortalıyoruz",
+          "2_plural": "sigortalıyorsunuz",
+          "3_plural": "sigortalıyorlar"
+        },
+        "RECOMMEND": {
+          "base": "tavsiye etmek",
+          "1_singular": "tavsiye ediyorum",
+          "2_singular": "tavsiye ediyorsun",
+          "3_singular": "tavsiye ediyor",
+          "1_plural": "tavsiye ediyoruz",
+          "2_plural": "tavsiye ediyorsunuz",
+          "3_plural": "tavsiye ediyorlar"
+        },
+        "SCENIC": [
+          "manzaralı"
+        ],
+        "DELICIOUS": [
+          "lezzetli"
+        ],
+        "EXPENSIVE": [
+          "pahalı"
+        ],
+        "FOREIGN": [
+          "yabancı"
+        ],
+        "HISTORIC": [
+          "tarihi"
+        ],
+        "UNFORGETTABLE": [
+          "unutulmaz"
+        ]
       }
     },
     "uk": {
       "label": "Українська",
       "forms": {
-
-        "AIRPORT": { "gender": "m", "form": "аеропорт", "plural": "аеропорти", "genitive_plural": "аеропортів" },
-        "PASSPORT": { "gender": "m", "form": "паспорт", "plural": "паспорти", "genitive_plural": "паспортів" },
-        "FLIGHT": { "gender": "m", "form": "рейс", "plural": "рейси", "genitive_plural": "рейсів" },
-        "LUGGAGE": { "gender": "m", "form": "багаж" },
-        "HOTEL": { "gender": "m", "form": "готель", "plural": "готелі", "genitive_plural": "готелів" },
-        "RESERVATION": { "gender": "n", "form": "бронювання", "plural": "бронювання", "genitive_plural": "бронювань" },
-        "LOBBY": { "gender": "n", "form": "лобі", "plural": "лобі", "genitive_plural": "лобі" },
-        "CHECKOUT": { "gender": "m", "form": "виїзд", "plural": "виїзди", "genitive_plural": "виїздів" },
-        "TAXI": { "gender": "n", "form": "таксі", "plural": "таксі", "genitive_plural": "таксі" },
-        "STATION": { "gender": "f", "form": "станція", "plural": "станції", "genitive_plural": "станцій" },
-        "TICKET": { "gender": "m", "form": "квиток", "plural": "квитки", "genitive_plural": "квитків" },
-        "ROUTE": { "gender": "m", "form": "маршрут", "plural": "маршрути", "genitive_plural": "маршрутів" },
-        "LANDMARK": { "gender": "f", "form": "пам'ятка", "plural": "пам'ятки", "genitive_plural": "пам'яток" },
-        "MUSEUM": { "gender": "m", "form": "музей", "plural": "музеї", "genitive_plural": "музеїв" },
-        "MONUMENT": { "gender": "m", "form": "пам'ятник", "plural": "пам'ятники", "genitive_plural": "пам'ятників" },
-        "RESTAURANT": { "gender": "m", "form": "ресторан", "plural": "ресторани", "genitive_plural": "ресторанів" },
-        "MENU": { "gender": "n", "form": "меню", "plural": "меню", "genitive_plural": "меню" },
-        "WAITER": { "gender": "m", "form": "офіціант", "accusative": "офіціанта", "plural": "офіціанти", "genitive_plural": "офіціантів" },
-        "MARKET": { "gender": "m", "form": "ринок", "plural": "ринки", "genitive_plural": "ринків" },
-        "SOUVENIR": { "gender": "m", "form": "сувенір", "plural": "сувеніри", "genitive_plural": "сувенірів" },
-        "BARGAIN": { "gender": "f", "form": "вигідна угода" },
-        "PHRASEBOOK": { "gender": "m", "form": "розмовник", "plural": "розмовники", "genitive_plural": "розмовників" },
-        "BEACH": { "gender": "m", "form": "пляж", "plural": "пляжі", "genitive_plural": "пляжів" },
-        "CATHEDRAL": { "gender": "m", "form": "собор", "plural": "собори", "genitive_plural": "соборів" },
-        "HARBOR": { "gender": "f", "form": "гавань", "plural": "гавані", "genitive_plural": "гаваней" },
-        "CURRENCY": { "gender": "f", "form": "валюта", "plural": "валюти", "genitive_plural": "валют" },
-        "CUSTOMS": { "gender": "f", "form": "митниця" },
-        "EMBASSY": { "gender": "n", "form": "посольство", "plural": "посольства", "genitive_plural": "посольств" },
-        "ADVENTURE": { "gender": "f", "form": "пригода", "plural": "пригоди", "genitive_plural": "пригод" },
-        "ITINERARY": { "gender": "m", "form": "маршрут подорожі", "plural": "маршрути подорожі" },
-        "GUIDE": { "gender": "m", "form": "гід", "accusative": "гіда", "plural": "гіди", "genitive_plural": "гідів" },
-
-        "BOARD": { "base": "сідати", "1_singular": "сідаю", "2_singular": "сідаєш", "3_singular": "сідає", "1_plural": "сідаємо", "2_plural": "сідаєте", "3_plural": "сідають" },
-        "RESERVE": { "base": "бронювати", "1_singular": "бронюю", "2_singular": "бронюєш", "3_singular": "бронює", "1_plural": "бронюємо", "2_plural": "бронюєте", "3_plural": "бронюють" },
-        "NAVIGATE": { "base": "орієнтуватися", "1_singular": "орієнтуюся", "2_singular": "орієнтуєшся", "3_singular": "орієнтується", "1_plural": "орієнтуємося", "2_plural": "орієнтуєтеся", "3_plural": "орієнтуються" },
-        "PHOTOGRAPH": { "base": "фотографувати", "1_singular": "фотографую", "2_singular": "фотографуєш", "3_singular": "фотографує", "1_plural": "фотографуємо", "2_plural": "фотографуєте", "3_plural": "фотографують" },
-        "ORDER": { "base": "замовляти", "1_singular": "замовляю", "2_singular": "замовляєш", "3_singular": "замовляє", "1_plural": "замовляємо", "2_plural": "замовляєте", "3_plural": "замовляють" },
-        "PURCHASE": { "base": "купувати", "1_singular": "купую", "2_singular": "купуєш", "3_singular": "купує", "1_plural": "купуємо", "2_plural": "купуєте", "3_plural": "купують" },
-        "TRANSLATE": { "base": "перекладати", "1_singular": "перекладаю", "2_singular": "перекладаєш", "3_singular": "перекладає", "1_plural": "перекладаємо", "2_plural": "перекладаєте", "3_plural": "перекладають" },
-        "GREET": { "base": "вітати", "1_singular": "вітаю", "2_singular": "вітаєш", "3_singular": "вітає", "1_plural": "вітаємо", "2_plural": "вітаєте", "3_plural": "вітають" },
-        "PRONOUNCE": { "base": "вимовляти", "1_singular": "вимовляю", "2_singular": "вимовляєш", "3_singular": "вимовляє", "1_plural": "вимовляємо", "2_plural": "вимовляєте", "3_plural": "вимовляють" },
-        "EXPLORE": { "base": "досліджувати", "1_singular": "досліджую", "2_singular": "досліджуєш", "3_singular": "досліджує", "1_plural": "досліджуємо", "2_plural": "досліджуєте", "3_plural": "досліджують" },
-        "EXCHANGE": { "base": "обмінювати", "1_singular": "обмінюю", "2_singular": "обмінюєш", "3_singular": "обмінює", "1_plural": "обмінюємо", "2_plural": "обмінюєте", "3_plural": "обмінюють" },
-        "INSURE": { "base": "страхувати", "1_singular": "страхую", "2_singular": "страхуєш", "3_singular": "страхує", "1_plural": "страхуємо", "2_plural": "страхуєте", "3_plural": "страхують" },
-        "RECOMMEND": { "base": "рекомендувати", "1_singular": "рекомендую", "2_singular": "рекомендуєш", "3_singular": "рекомендує", "1_plural": "рекомендуємо", "2_plural": "рекомендуєте", "3_plural": "рекомендують" },
-
-        "SCENIC": ["мальовничий"],
-        "DELICIOUS": ["смачний"],
-        "EXPENSIVE": ["дорогий"],
-        "FOREIGN": ["іноземний"],
-        "HISTORIC": ["історичний"],
-        "UNFORGETTABLE": ["незабутній"]
-
+        "AIRPORT": {
+          "gender": "m",
+          "form": "аеропорт",
+          "plural": "аеропорти",
+          "genitive_plural": "аеропортів"
+        },
+        "PASSPORT": {
+          "gender": "m",
+          "form": "паспорт",
+          "plural": "паспорти",
+          "genitive_plural": "паспортів"
+        },
+        "FLIGHT": {
+          "gender": "m",
+          "form": "рейс",
+          "plural": "рейси",
+          "genitive_plural": "рейсів"
+        },
+        "LUGGAGE": {
+          "gender": "m",
+          "form": "багаж"
+        },
+        "HOTEL": {
+          "gender": "m",
+          "form": "готель",
+          "plural": "готелі",
+          "genitive_plural": "готелів"
+        },
+        "RESERVATION": {
+          "gender": "n",
+          "form": "бронювання",
+          "plural": "бронювання",
+          "genitive_plural": "бронювань"
+        },
+        "LOBBY": {
+          "gender": "n",
+          "form": "лобі",
+          "plural": "лобі",
+          "genitive_plural": "лобі"
+        },
+        "CHECKOUT": {
+          "gender": "m",
+          "form": "виїзд",
+          "plural": "виїзди",
+          "genitive_plural": "виїздів"
+        },
+        "TAXI": {
+          "gender": "n",
+          "form": "таксі",
+          "plural": "таксі",
+          "genitive_plural": "таксі"
+        },
+        "STATION": {
+          "gender": "f",
+          "form": "станція",
+          "plural": "станції",
+          "genitive_plural": "станцій"
+        },
+        "TICKET": {
+          "gender": "m",
+          "form": "квиток",
+          "plural": "квитки",
+          "genitive_plural": "квитків"
+        },
+        "ROUTE": {
+          "gender": "m",
+          "form": "маршрут",
+          "plural": "маршрути",
+          "genitive_plural": "маршрутів"
+        },
+        "LANDMARK": {
+          "gender": "f",
+          "form": "пам'ятка",
+          "plural": "пам'ятки",
+          "genitive_plural": "пам'яток"
+        },
+        "MUSEUM": {
+          "gender": "m",
+          "form": "музей",
+          "plural": "музеї",
+          "genitive_plural": "музеїв"
+        },
+        "MONUMENT": {
+          "gender": "m",
+          "form": "пам'ятник",
+          "plural": "пам'ятники",
+          "genitive_plural": "пам'ятників"
+        },
+        "RESTAURANT": {
+          "gender": "m",
+          "form": "ресторан",
+          "plural": "ресторани",
+          "genitive_plural": "ресторанів"
+        },
+        "MENU": {
+          "gender": "n",
+          "form": "меню",
+          "plural": "меню",
+          "genitive_plural": "меню"
+        },
+        "WAITER": {
+          "gender": "m",
+          "form": "офіціант",
+          "accusative": "офіціанта",
+          "plural": "офіціанти",
+          "genitive_plural": "офіціантів"
+        },
+        "MARKET": {
+          "gender": "m",
+          "form": "ринок",
+          "plural": "ринки",
+          "genitive_plural": "ринків"
+        },
+        "SOUVENIR": {
+          "gender": "m",
+          "form": "сувенір",
+          "plural": "сувеніри",
+          "genitive_plural": "сувенірів"
+        },
+        "BARGAIN": {
+          "gender": "f",
+          "form": "вигідна угода"
+        },
+        "PHRASEBOOK": {
+          "gender": "m",
+          "form": "розмовник",
+          "plural": "розмовники",
+          "genitive_plural": "розмовників"
+        },
+        "BEACH": {
+          "gender": "m",
+          "form": "пляж",
+          "plural": "пляжі",
+          "genitive_plural": "пляжів"
+        },
+        "CATHEDRAL": {
+          "gender": "m",
+          "form": "собор",
+          "plural": "собори",
+          "genitive_plural": "соборів"
+        },
+        "HARBOR": {
+          "gender": "f",
+          "form": "гавань",
+          "plural": "гавані",
+          "genitive_plural": "гаваней"
+        },
+        "CURRENCY": {
+          "gender": "f",
+          "form": "валюта",
+          "plural": "валюти",
+          "genitive_plural": "валют"
+        },
+        "CUSTOMS": {
+          "gender": "f",
+          "form": "митниця"
+        },
+        "EMBASSY": {
+          "gender": "n",
+          "form": "посольство",
+          "plural": "посольства",
+          "genitive_plural": "посольств"
+        },
+        "ADVENTURE": {
+          "gender": "f",
+          "form": "пригода",
+          "plural": "пригоди",
+          "genitive_plural": "пригод"
+        },
+        "ITINERARY": {
+          "gender": "m",
+          "form": "маршрут подорожі",
+          "plural": "маршрути подорожі"
+        },
+        "GUIDE": {
+          "gender": "m",
+          "form": "гід",
+          "accusative": "гіда",
+          "plural": "гіди",
+          "genitive_plural": "гідів"
+        },
+        "BOARD": {
+          "base": "сідати",
+          "1_singular": "сідаю",
+          "2_singular": "сідаєш",
+          "3_singular": "сідає",
+          "1_plural": "сідаємо",
+          "2_plural": "сідаєте",
+          "3_plural": "сідають"
+        },
+        "RESERVE": {
+          "base": "бронювати",
+          "1_singular": "бронюю",
+          "2_singular": "бронюєш",
+          "3_singular": "бронює",
+          "1_plural": "бронюємо",
+          "2_plural": "бронюєте",
+          "3_plural": "бронюють"
+        },
+        "NAVIGATE": {
+          "base": "орієнтуватися",
+          "1_singular": "орієнтуюся",
+          "2_singular": "орієнтуєшся",
+          "3_singular": "орієнтується",
+          "1_plural": "орієнтуємося",
+          "2_plural": "орієнтуєтеся",
+          "3_plural": "орієнтуються"
+        },
+        "PHOTOGRAPH": {
+          "base": "фотографувати",
+          "1_singular": "фотографую",
+          "2_singular": "фотографуєш",
+          "3_singular": "фотографує",
+          "1_plural": "фотографуємо",
+          "2_plural": "фотографуєте",
+          "3_plural": "фотографують"
+        },
+        "ORDER": {
+          "base": "замовляти",
+          "1_singular": "замовляю",
+          "2_singular": "замовляєш",
+          "3_singular": "замовляє",
+          "1_plural": "замовляємо",
+          "2_plural": "замовляєте",
+          "3_plural": "замовляють"
+        },
+        "PURCHASE": {
+          "base": "купувати",
+          "1_singular": "купую",
+          "2_singular": "купуєш",
+          "3_singular": "купує",
+          "1_plural": "купуємо",
+          "2_plural": "купуєте",
+          "3_plural": "купують"
+        },
+        "TRANSLATE": {
+          "base": "перекладати",
+          "1_singular": "перекладаю",
+          "2_singular": "перекладаєш",
+          "3_singular": "перекладає",
+          "1_plural": "перекладаємо",
+          "2_plural": "перекладаєте",
+          "3_plural": "перекладають"
+        },
+        "GREET": {
+          "base": "вітати",
+          "1_singular": "вітаю",
+          "2_singular": "вітаєш",
+          "3_singular": "вітає",
+          "1_plural": "вітаємо",
+          "2_plural": "вітаєте",
+          "3_plural": "вітають"
+        },
+        "PRONOUNCE": {
+          "base": "вимовляти",
+          "1_singular": "вимовляю",
+          "2_singular": "вимовляєш",
+          "3_singular": "вимовляє",
+          "1_plural": "вимовляємо",
+          "2_plural": "вимовляєте",
+          "3_plural": "вимовляють"
+        },
+        "EXPLORE": {
+          "base": "досліджувати",
+          "1_singular": "досліджую",
+          "2_singular": "досліджуєш",
+          "3_singular": "досліджує",
+          "1_plural": "досліджуємо",
+          "2_plural": "досліджуєте",
+          "3_plural": "досліджують"
+        },
+        "EXCHANGE": {
+          "base": "обмінювати",
+          "1_singular": "обмінюю",
+          "2_singular": "обмінюєш",
+          "3_singular": "обмінює",
+          "1_plural": "обмінюємо",
+          "2_plural": "обмінюєте",
+          "3_plural": "обмінюють"
+        },
+        "INSURE": {
+          "base": "страхувати",
+          "1_singular": "страхую",
+          "2_singular": "страхуєш",
+          "3_singular": "страхує",
+          "1_plural": "страхуємо",
+          "2_plural": "страхуєте",
+          "3_plural": "страхують"
+        },
+        "RECOMMEND": {
+          "base": "рекомендувати",
+          "1_singular": "рекомендую",
+          "2_singular": "рекомендуєш",
+          "3_singular": "рекомендує",
+          "1_plural": "рекомендуємо",
+          "2_plural": "рекомендуєте",
+          "3_plural": "рекомендують"
+        },
+        "SCENIC": [
+          "мальовничий"
+        ],
+        "DELICIOUS": [
+          "смачний"
+        ],
+        "EXPENSIVE": [
+          "дорогий"
+        ],
+        "FOREIGN": [
+          "іноземний"
+        ],
+        "HISTORIC": [
+          "історичний"
+        ],
+        "UNFORGETTABLE": [
+          "незабутній"
+        ]
       }
     },
     "es": {
       "label": "Español",
       "forms": {
-
-        "AIRPORT": { "form": "aeropuerto", "gender": "m", "plural": "aeropuertos" },
-        "PASSPORT": { "form": "pasaporte", "gender": "m" },
-        "FLIGHT": { "form": "vuelo", "gender": "m", "plural": "vuelos" },
-        "LUGGAGE": { "form": "equipaje", "gender": "m" },
-        "HOTEL": { "form": "hotel", "gender": "m", "plural": "hoteles" },
-        "RESERVATION": { "form": "reserva", "gender": "f", "plural": "reservas" },
-        "LOBBY": { "form": "vestíbulo", "gender": "m", "plural": "vestíbulos" },
-        "CHECKOUT": { "form": "salida", "gender": "f", "plural": "salidas" },
-        "TAXI": { "form": "taxi", "gender": "m", "plural": "taxis" },
-        "STATION": { "form": "estación", "gender": "f", "plural": "estaciones" },
-        "TICKET": { "form": "billete", "gender": "m", "plural": "billetes" },
-        "ROUTE": { "form": "ruta", "gender": "f", "plural": "rutas" },
-        "LANDMARK": { "form": "monumento", "gender": "m", "plural": "monumentos" },
-        "MUSEUM": { "form": "museo", "gender": "m", "plural": "museos" },
-        "MONUMENT": { "form": "monumento", "gender": "m", "plural": "monumentos" },
-        "RESTAURANT": { "form": "restaurante", "gender": "m", "plural": "restaurantes" },
-        "MENU": { "form": "menú", "gender": "m", "plural": "menús" },
-        "WAITER": { "form": "camarero", "gender": "m", "plural": "camareros" },
-        "MARKET": { "form": "mercado", "gender": "m", "plural": "mercados" },
-        "SOUVENIR": { "form": "recuerdo", "gender": "m", "plural": "recuerdos" },
-        "BARGAIN": { "form": "ganga", "gender": "f" },
-        "PHRASEBOOK": { "form": "guía de conversación", "gender": "f", "plural": "guías de conversación" },
-        "BEACH": { "form": "playa", "gender": "f", "plural": "playas" },
-        "CATHEDRAL": { "form": "catedral", "gender": "f", "plural": "catedrales" },
-        "HARBOR": { "form": "puerto", "gender": "m", "plural": "puertos" },
-        "CURRENCY": { "form": "moneda", "gender": "f", "plural": "monedas" },
-        "CUSTOMS": { "form": "aduana", "gender": "f" },
-        "EMBASSY": { "form": "embajada", "gender": "f", "plural": "embajadas" },
-        "ADVENTURE": { "form": "aventura", "gender": "f" },
-        "ITINERARY": { "form": "itinerario", "gender": "m", "plural": "itinerarios" },
-        "GUIDE": { "form": "guía", "gender": "m", "plural": "guías", "feminine": "guía" },
-
+        "AIRPORT": {
+          "form": "aeropuerto",
+          "gender": "m",
+          "plural": "aeropuertos"
+        },
+        "PASSPORT": {
+          "form": "pasaporte",
+          "gender": "m"
+        },
+        "FLIGHT": {
+          "form": "vuelo",
+          "gender": "m",
+          "plural": "vuelos"
+        },
+        "LUGGAGE": {
+          "form": "equipaje",
+          "gender": "m"
+        },
+        "HOTEL": {
+          "form": "hotel",
+          "gender": "m",
+          "plural": "hoteles"
+        },
+        "RESERVATION": {
+          "form": "reserva",
+          "gender": "f",
+          "plural": "reservas"
+        },
+        "LOBBY": {
+          "form": "vestíbulo",
+          "gender": "m",
+          "plural": "vestíbulos"
+        },
+        "CHECKOUT": {
+          "form": "salida",
+          "gender": "f",
+          "plural": "salidas"
+        },
+        "TAXI": {
+          "form": "taxi",
+          "gender": "m",
+          "plural": "taxis"
+        },
+        "STATION": {
+          "form": "estación",
+          "gender": "f",
+          "plural": "estaciones"
+        },
+        "TICKET": {
+          "form": "billete",
+          "gender": "m",
+          "plural": "billetes"
+        },
+        "ROUTE": {
+          "form": "ruta",
+          "gender": "f",
+          "plural": "rutas"
+        },
+        "LANDMARK": {
+          "form": "monumento",
+          "gender": "m",
+          "plural": "monumentos"
+        },
+        "MUSEUM": {
+          "form": "museo",
+          "gender": "m",
+          "plural": "museos"
+        },
+        "MONUMENT": {
+          "form": "monumento",
+          "gender": "m",
+          "plural": "monumentos"
+        },
+        "RESTAURANT": {
+          "form": "restaurante",
+          "gender": "m",
+          "plural": "restaurantes"
+        },
+        "MENU": {
+          "form": "menú",
+          "gender": "m",
+          "plural": "menús"
+        },
+        "WAITER": {
+          "form": "camarero",
+          "gender": "m",
+          "plural": "camareros"
+        },
+        "MARKET": {
+          "form": "mercado",
+          "gender": "m",
+          "plural": "mercados"
+        },
+        "SOUVENIR": {
+          "form": "recuerdo",
+          "gender": "m",
+          "plural": "recuerdos"
+        },
+        "BARGAIN": {
+          "form": "ganga",
+          "gender": "f"
+        },
+        "PHRASEBOOK": {
+          "form": "guía de conversación",
+          "gender": "f",
+          "plural": "guías de conversación"
+        },
+        "BEACH": {
+          "form": "playa",
+          "gender": "f",
+          "plural": "playas"
+        },
+        "CATHEDRAL": {
+          "form": "catedral",
+          "gender": "f",
+          "plural": "catedrales"
+        },
+        "HARBOR": {
+          "form": "puerto",
+          "gender": "m",
+          "plural": "puertos"
+        },
+        "CURRENCY": {
+          "form": "moneda",
+          "gender": "f",
+          "plural": "monedas"
+        },
+        "CUSTOMS": {
+          "form": "aduana",
+          "gender": "f"
+        },
+        "EMBASSY": {
+          "form": "embajada",
+          "gender": "f",
+          "plural": "embajadas"
+        },
+        "ADVENTURE": {
+          "form": "aventura",
+          "gender": "f"
+        },
+        "ITINERARY": {
+          "form": "itinerario",
+          "gender": "m",
+          "plural": "itinerarios"
+        },
+        "GUIDE": {
+          "form": "guía",
+          "gender": "m",
+          "plural": "guías",
+          "feminine": "guía"
+        },
         "BOARD": {
           "base": "abordar",
           "1_singular": "abordo",
@@ -1335,7 +3282,8 @@
           "3_singular": "saluda",
           "1_plural": "saludamos",
           "2_plural": "saludáis",
-          "3_plural": "saludan", "governedPreposition": "a"
+          "3_plural": "saludan",
+          "governedPreposition": "a"
         },
         "PRONOUNCE": {
           "base": "pronunciar",
@@ -1382,289 +3330,1293 @@
           "2_plural": "recomendáis",
           "3_plural": "recomiendan"
         },
-
-        "SCENIC": ["pintoresco"],
-        "DELICIOUS": ["delicioso"],
-        "EXPENSIVE": ["caro"],
-        "FOREIGN": ["extranjero"],
-        "HISTORIC": ["histórico"],
-        "UNFORGETTABLE": ["inolvidable"]
-
+        "SCENIC": [
+          "pintoresco"
+        ],
+        "DELICIOUS": [
+          "delicioso"
+        ],
+        "EXPENSIVE": [
+          "caro"
+        ],
+        "FOREIGN": [
+          "extranjero"
+        ],
+        "HISTORIC": [
+          "histórico"
+        ],
+        "UNFORGETTABLE": [
+          "inolvidable"
+        ]
       }
     },
     "fr": {
       "label": "French",
       "forms": {
-        "AIRPORT": {"form":"aéroport","gender":"m","plural":"aéroports"},
-        "PASSPORT": {"form":"passeport","gender":"m","plural":"passeports"},
-        "FLIGHT": {"form":"vol","gender":"m","plural":"vols"},
-        "LUGGAGE": {"form":"bagages","gender":"m","plural":"bagages", "pluralOnly": true},
-        "HOTEL": {"form":"hôtel","gender":"m","plural":"hôtels"},
-        "RESERVATION": {"form":"réservation","gender":"f","plural":"réservations"},
-        "LOBBY": {"form":"hall","gender":"m","plural":"halls"},
-        "CHECKOUT": {"form":"départ","gender":"m","plural":"départs"},
-        "TAXI": {"form":"taxi","gender":"m","plural":"taxis"},
-        "STATION": {"form":"gare","gender":"f","plural":"gares"},
-        "TICKET": {"form":"billet","gender":"m","plural":"billets"},
-        "ROUTE": {"form":"itinéraire","gender":"m","plural":"itinéraires"},
-        "LANDMARK": {"form":"monument","gender":"m","plural":"monuments"},
-        "MUSEUM": {"form":"musée","gender":"m","plural":"musées"},
-        "MONUMENT": {"form":"monument","gender":"m","plural":"monuments"},
-        "RESTAURANT": {"form":"restaurant","gender":"m","plural":"restaurants"},
-        "MENU": {"form":"menu","gender":"m","plural":"menus"},
-        "WAITER": {"form":"serveur","gender":"m","plural":"serveurs", "predicative": "serveur"},
-        "MARKET": {"form":"marché","gender":"m","plural":"marchés"},
-        "SOUVENIR": {"form":"souvenir","gender":"m","plural":"souvenirs"},
-        "BARGAIN": {"form":"bonne affaire","gender":"f","plural":"bonnes affaires"},
-        "PHRASEBOOK": {"form":"guide de conversation","gender":"m","plural":"guides de conversation"},
-        "BEACH": {"form":"plage","gender":"f","plural":"plages"},
-        "CATHEDRAL": {"form":"cathédrale","gender":"f","plural":"cathédrales"},
-        "HARBOR": {"form":"port","gender":"m","plural":"ports"},
-        "CURRENCY": {"form":"monnaie","gender":"f","plural":"monnaies"},
-        "CUSTOMS": {"form":"douane","gender":"f","plural":"douanes"},
-        "EMBASSY": {"form":"ambassade","gender":"f","plural":"ambassades"},
-        "ADVENTURE": {"form":"aventure","gender":"f","plural":"aventures"},
-        "ITINERARY": {"form":"itinéraire","gender":"m","plural":"itinéraires"},
-        "GUIDE": {"form":"guide","gender":"m","plural":"guides", "feminine": "guide", "predicative": "guide" },
-        "BOARD": {"base":"embarquer","1_singular":"embarque","2_singular":"embarques","3_singular":"embarque","1_plural":"embarquons","2_plural":"embarquez","3_plural":"embarquent"},
-        "RESERVE": {"base":"réserver","1_singular":"réserve","2_singular":"réserves","3_singular":"réserve","1_plural":"réservons","2_plural":"réservez","3_plural":"réservent"},
-        "NAVIGATE": {"base":"se repérer","1_singular":"me repère","2_singular":"te repères","3_singular":"se repère","1_plural":"nous repérons","2_plural":"vous repérez","3_plural":"se repèrent"},
-        "PHOTOGRAPH": {"base":"photographier","1_singular":"photographie","2_singular":"photographies","3_singular":"photographie","1_plural":"photographions","2_plural":"photographiez","3_plural":"photographient"},
-        "ORDER": {"base":"commander","1_singular":"commande","2_singular":"commandes","3_singular":"commande","1_plural":"commandons","2_plural":"commandez","3_plural":"commandent"},
-        "PURCHASE": {"base":"acheter","1_singular":"achète","2_singular":"achètes","3_singular":"achète","1_plural":"achetons","2_plural":"achetez","3_plural":"achètent"},
-        "TRANSLATE": {"base":"traduire","1_singular":"traduis","2_singular":"traduis","3_singular":"traduit","1_plural":"traduisons","2_plural":"traduisez","3_plural":"traduisent"},
-        "GREET": {"base":"saluer","1_singular":"salue","2_singular":"salues","3_singular":"salue","1_plural":"saluons","2_plural":"saluez","3_plural":"saluent"},
-        "PRONOUNCE": {"base":"prononcer","1_singular":"prononce","2_singular":"prononces","3_singular":"prononce","1_plural":"prononçons","2_plural":"prononcez","3_plural":"prononcent"},
-        "EXPLORE": {"base":"explorer","1_singular":"explore","2_singular":"explores","3_singular":"explore","1_plural":"explorons","2_plural":"explorez","3_plural":"explorent"},
-        "EXCHANGE": {"base":"changer","1_singular":"change","2_singular":"changes","3_singular":"change","1_plural":"changeons","2_plural":"changez","3_plural":"changent"},
-        "INSURE": {"base":"assurer","1_singular":"assure","2_singular":"assures","3_singular":"assure","1_plural":"assurons","2_plural":"assurez","3_plural":"assurent"},
-        "RECOMMEND": {"base":"recommander","1_singular":"recommande","2_singular":"recommandes","3_singular":"recommande","1_plural":"recommandons","2_plural":"recommandez","3_plural":"recommandent"},
-        "SCENIC": ["pittoresque"],
-        "DELICIOUS": ["délicieux"],
-        "EXPENSIVE": ["cher"],
-        "FOREIGN": ["étranger"],
-        "HISTORIC": ["historique"],
-        "UNFORGETTABLE": ["inoubliable"]
+        "AIRPORT": {
+          "form": "aéroport",
+          "gender": "m",
+          "plural": "aéroports"
+        },
+        "PASSPORT": {
+          "form": "passeport",
+          "gender": "m",
+          "plural": "passeports"
+        },
+        "FLIGHT": {
+          "form": "vol",
+          "gender": "m",
+          "plural": "vols"
+        },
+        "LUGGAGE": {
+          "form": "bagages",
+          "gender": "m",
+          "plural": "bagages",
+          "pluralOnly": true
+        },
+        "HOTEL": {
+          "form": "hôtel",
+          "gender": "m",
+          "plural": "hôtels"
+        },
+        "RESERVATION": {
+          "form": "réservation",
+          "gender": "f",
+          "plural": "réservations"
+        },
+        "LOBBY": {
+          "form": "hall",
+          "gender": "m",
+          "plural": "halls"
+        },
+        "CHECKOUT": {
+          "form": "départ",
+          "gender": "m",
+          "plural": "départs"
+        },
+        "TAXI": {
+          "form": "taxi",
+          "gender": "m",
+          "plural": "taxis"
+        },
+        "STATION": {
+          "form": "gare",
+          "gender": "f",
+          "plural": "gares"
+        },
+        "TICKET": {
+          "form": "billet",
+          "gender": "m",
+          "plural": "billets"
+        },
+        "ROUTE": {
+          "form": "itinéraire",
+          "gender": "m",
+          "plural": "itinéraires"
+        },
+        "LANDMARK": {
+          "form": "monument",
+          "gender": "m",
+          "plural": "monuments"
+        },
+        "MUSEUM": {
+          "form": "musée",
+          "gender": "m",
+          "plural": "musées"
+        },
+        "MONUMENT": {
+          "form": "monument",
+          "gender": "m",
+          "plural": "monuments"
+        },
+        "RESTAURANT": {
+          "form": "restaurant",
+          "gender": "m",
+          "plural": "restaurants"
+        },
+        "MENU": {
+          "form": "menu",
+          "gender": "m",
+          "plural": "menus"
+        },
+        "WAITER": {
+          "form": "serveur",
+          "gender": "m",
+          "plural": "serveurs",
+          "predicative": "serveur"
+        },
+        "MARKET": {
+          "form": "marché",
+          "gender": "m",
+          "plural": "marchés"
+        },
+        "SOUVENIR": {
+          "form": "souvenir",
+          "gender": "m",
+          "plural": "souvenirs"
+        },
+        "BARGAIN": {
+          "form": "bonne affaire",
+          "gender": "f",
+          "plural": "bonnes affaires"
+        },
+        "PHRASEBOOK": {
+          "form": "guide de conversation",
+          "gender": "m",
+          "plural": "guides de conversation"
+        },
+        "BEACH": {
+          "form": "plage",
+          "gender": "f",
+          "plural": "plages"
+        },
+        "CATHEDRAL": {
+          "form": "cathédrale",
+          "gender": "f",
+          "plural": "cathédrales"
+        },
+        "HARBOR": {
+          "form": "port",
+          "gender": "m",
+          "plural": "ports"
+        },
+        "CURRENCY": {
+          "form": "monnaie",
+          "gender": "f",
+          "plural": "monnaies"
+        },
+        "CUSTOMS": {
+          "form": "douane",
+          "gender": "f",
+          "plural": "douanes"
+        },
+        "EMBASSY": {
+          "form": "ambassade",
+          "gender": "f",
+          "plural": "ambassades"
+        },
+        "ADVENTURE": {
+          "form": "aventure",
+          "gender": "f",
+          "plural": "aventures"
+        },
+        "ITINERARY": {
+          "form": "itinéraire",
+          "gender": "m",
+          "plural": "itinéraires"
+        },
+        "GUIDE": {
+          "form": "guide",
+          "gender": "m",
+          "plural": "guides",
+          "feminine": "guide",
+          "predicative": "guide"
+        },
+        "BOARD": {
+          "base": "embarquer",
+          "1_singular": "embarque",
+          "2_singular": "embarques",
+          "3_singular": "embarque",
+          "1_plural": "embarquons",
+          "2_plural": "embarquez",
+          "3_plural": "embarquent"
+        },
+        "RESERVE": {
+          "base": "réserver",
+          "1_singular": "réserve",
+          "2_singular": "réserves",
+          "3_singular": "réserve",
+          "1_plural": "réservons",
+          "2_plural": "réservez",
+          "3_plural": "réservent"
+        },
+        "NAVIGATE": {
+          "base": "se repérer",
+          "1_singular": "me repère",
+          "2_singular": "te repères",
+          "3_singular": "se repère",
+          "1_plural": "nous repérons",
+          "2_plural": "vous repérez",
+          "3_plural": "se repèrent"
+        },
+        "PHOTOGRAPH": {
+          "base": "photographier",
+          "1_singular": "photographie",
+          "2_singular": "photographies",
+          "3_singular": "photographie",
+          "1_plural": "photographions",
+          "2_plural": "photographiez",
+          "3_plural": "photographient"
+        },
+        "ORDER": {
+          "base": "commander",
+          "1_singular": "commande",
+          "2_singular": "commandes",
+          "3_singular": "commande",
+          "1_plural": "commandons",
+          "2_plural": "commandez",
+          "3_plural": "commandent"
+        },
+        "PURCHASE": {
+          "base": "acheter",
+          "1_singular": "achète",
+          "2_singular": "achètes",
+          "3_singular": "achète",
+          "1_plural": "achetons",
+          "2_plural": "achetez",
+          "3_plural": "achètent"
+        },
+        "TRANSLATE": {
+          "base": "traduire",
+          "1_singular": "traduis",
+          "2_singular": "traduis",
+          "3_singular": "traduit",
+          "1_plural": "traduisons",
+          "2_plural": "traduisez",
+          "3_plural": "traduisent"
+        },
+        "GREET": {
+          "base": "saluer",
+          "1_singular": "salue",
+          "2_singular": "salues",
+          "3_singular": "salue",
+          "1_plural": "saluons",
+          "2_plural": "saluez",
+          "3_plural": "saluent"
+        },
+        "PRONOUNCE": {
+          "base": "prononcer",
+          "1_singular": "prononce",
+          "2_singular": "prononces",
+          "3_singular": "prononce",
+          "1_plural": "prononçons",
+          "2_plural": "prononcez",
+          "3_plural": "prononcent"
+        },
+        "EXPLORE": {
+          "base": "explorer",
+          "1_singular": "explore",
+          "2_singular": "explores",
+          "3_singular": "explore",
+          "1_plural": "explorons",
+          "2_plural": "explorez",
+          "3_plural": "explorent"
+        },
+        "EXCHANGE": {
+          "base": "changer",
+          "1_singular": "change",
+          "2_singular": "changes",
+          "3_singular": "change",
+          "1_plural": "changeons",
+          "2_plural": "changez",
+          "3_plural": "changent"
+        },
+        "INSURE": {
+          "base": "assurer",
+          "1_singular": "assure",
+          "2_singular": "assures",
+          "3_singular": "assure",
+          "1_plural": "assurons",
+          "2_plural": "assurez",
+          "3_plural": "assurent"
+        },
+        "RECOMMEND": {
+          "base": "recommander",
+          "1_singular": "recommande",
+          "2_singular": "recommandes",
+          "3_singular": "recommande",
+          "1_plural": "recommandons",
+          "2_plural": "recommandez",
+          "3_plural": "recommandent"
+        },
+        "SCENIC": [
+          "pittoresque"
+        ],
+        "DELICIOUS": [
+          "délicieux"
+        ],
+        "EXPENSIVE": [
+          "cher"
+        ],
+        "FOREIGN": [
+          "étranger"
+        ],
+        "HISTORIC": [
+          "historique"
+        ],
+        "UNFORGETTABLE": [
+          "inoubliable"
+        ]
       }
     },
     "zh": {
       "label": "Chinese",
       "forms": {
-        "AIRPORT": {"form":"机场","classifier":"个"},
-        "PASSPORT": {"form":"护照","classifier":"本"},
-        "FLIGHT": {"form":"航班"},
-        "LUGGAGE": {"form":"行李","classifier":"件"},
-        "HOTEL": {"form":"酒店","classifier":"家"},
-        "RESERVATION": {"form":"预订","classifier":"个"},
-        "LOBBY": {"form":"大堂"},
-        "CHECKOUT": {"form":"退房"},
-        "TAXI": {"form":"出租车","classifier":"辆"},
-        "STATION": {"form":"车站","classifier":"个"},
-        "TICKET": {"form":"车票","classifier":"张"},
-        "ROUTE": {"form":"路线"},
-        "LANDMARK": {"form":"地标"},
-        "MUSEUM": {"form":"博物馆","classifier":"座"},
-        "MONUMENT": {"form":"纪念碑"},
-        "RESTAURANT": {"form":"餐厅"},
-        "MENU": {"form":"菜单"},
-        "WAITER": {"form":"服务员","classifier":"个"},
-        "MARKET": {"form":"市场"},
-        "SOUVENIR": {"form":"纪念品"},
-        "BARGAIN": {"form":"便宜货"},
-        "PHRASEBOOK": {"form":"会话手册"},
-        "BEACH": {"form":"海滩"},
-        "CATHEDRAL": {"form":"大教堂"},
-        "HARBOR": {"form":"港口"},
-        "CURRENCY": {"form":"货币"},
-        "CUSTOMS": {"form":"海关"},
-        "EMBASSY": {"form":"大使馆"},
-        "ADVENTURE": {"form":"冒险"},
-        "ITINERARY": {"form":"行程"},
-        "GUIDE": {"form":"导游"},
-        "BOARD": {"base":"登机"},
-        "RESERVE": {"base":"预订"},
-        "NAVIGATE": {"base":"导航"},
-        "PHOTOGRAPH": {"base":"拍照"},
-        "ORDER": {"base":"点菜"},
-        "PURCHASE": {"base":"购买"},
-        "TRANSLATE": {"base":"翻译"},
-        "GREET": {"base":"问候"},
-        "PRONOUNCE": {"base":"发音"},
-        "EXPLORE": {"base":"探索"},
-        "EXCHANGE": {"base":"兑换"},
-        "INSURE": {"base":"投保"},
-        "RECOMMEND": {"base":"推荐"},
-        "SCENIC": ["风景优美的"],
-        "DELICIOUS": ["美味的"],
-        "EXPENSIVE": ["昂贵的"],
-        "FOREIGN": ["外国的"],
-        "HISTORIC": ["历史性的"],
-        "UNFORGETTABLE": ["难忘的"]
+        "AIRPORT": {
+          "form": "机场",
+          "classifier": "个"
+        },
+        "PASSPORT": {
+          "form": "护照",
+          "classifier": "本"
+        },
+        "FLIGHT": {
+          "form": "航班"
+        },
+        "LUGGAGE": {
+          "form": "行李",
+          "classifier": "件"
+        },
+        "HOTEL": {
+          "form": "酒店",
+          "classifier": "家"
+        },
+        "RESERVATION": {
+          "form": "预订",
+          "classifier": "个"
+        },
+        "LOBBY": {
+          "form": "大堂"
+        },
+        "CHECKOUT": {
+          "form": "退房"
+        },
+        "TAXI": {
+          "form": "出租车",
+          "classifier": "辆"
+        },
+        "STATION": {
+          "form": "车站",
+          "classifier": "个"
+        },
+        "TICKET": {
+          "form": "车票",
+          "classifier": "张"
+        },
+        "ROUTE": {
+          "form": "路线"
+        },
+        "LANDMARK": {
+          "form": "地标"
+        },
+        "MUSEUM": {
+          "form": "博物馆",
+          "classifier": "座"
+        },
+        "MONUMENT": {
+          "form": "纪念碑"
+        },
+        "RESTAURANT": {
+          "form": "餐厅"
+        },
+        "MENU": {
+          "form": "菜单"
+        },
+        "WAITER": {
+          "form": "服务员",
+          "classifier": "个"
+        },
+        "MARKET": {
+          "form": "市场"
+        },
+        "SOUVENIR": {
+          "form": "纪念品"
+        },
+        "BARGAIN": {
+          "form": "便宜货"
+        },
+        "PHRASEBOOK": {
+          "form": "会话手册"
+        },
+        "BEACH": {
+          "form": "海滩"
+        },
+        "CATHEDRAL": {
+          "form": "大教堂"
+        },
+        "HARBOR": {
+          "form": "港口"
+        },
+        "CURRENCY": {
+          "form": "货币"
+        },
+        "CUSTOMS": {
+          "form": "海关"
+        },
+        "EMBASSY": {
+          "form": "大使馆"
+        },
+        "ADVENTURE": {
+          "form": "冒险"
+        },
+        "ITINERARY": {
+          "form": "行程"
+        },
+        "GUIDE": {
+          "form": "导游"
+        },
+        "BOARD": {
+          "base": "登机"
+        },
+        "RESERVE": {
+          "base": "预订"
+        },
+        "NAVIGATE": {
+          "base": "导航"
+        },
+        "PHOTOGRAPH": {
+          "base": "拍照"
+        },
+        "ORDER": {
+          "base": "点菜"
+        },
+        "PURCHASE": {
+          "base": "购买"
+        },
+        "TRANSLATE": {
+          "base": "翻译"
+        },
+        "GREET": {
+          "base": "问候"
+        },
+        "PRONOUNCE": {
+          "base": "发音"
+        },
+        "EXPLORE": {
+          "base": "探索"
+        },
+        "EXCHANGE": {
+          "base": "兑换"
+        },
+        "INSURE": {
+          "base": "投保"
+        },
+        "RECOMMEND": {
+          "base": "推荐"
+        },
+        "SCENIC": [
+          "风景优美的"
+        ],
+        "DELICIOUS": [
+          "美味的"
+        ],
+        "EXPENSIVE": [
+          "昂贵的"
+        ],
+        "FOREIGN": [
+          "外国的"
+        ],
+        "HISTORIC": [
+          "历史性的"
+        ],
+        "UNFORGETTABLE": [
+          "难忘的"
+        ]
       }
     },
     "it": {
       "label": "Italian",
       "forms": {
-        "AIRPORT": {"form":"aeroporto","gender":"m","plural":"aeroporti"},
-        "PASSPORT": {"form":"passaporto","gender":"m","plural":"passaporti"},
-        "FLIGHT": {"form":"volo","gender":"m","plural":"voli"},
-        "LUGGAGE": {"form":"bagaglio","gender":"m","plural":"bagagli"},
-        "HOTEL": {"form":"hotel","gender":"m","plural":"hotel"},
-        "RESERVATION": {"form":"prenotazione","gender":"f","plural":"prenotazioni"},
-        "LOBBY": {"form":"hall","gender":"f","plural":"hall"},
-        "CHECKOUT": {"form":"check-out","gender":"m","plural":"check-out"},
-        "TAXI": {"form":"taxi","gender":"m","plural":"taxi"},
-        "STATION": {"form":"stazione","gender":"f","plural":"stazioni"},
-        "TICKET": {"form":"biglietto","gender":"m","plural":"biglietti"},
-        "ROUTE": {"form":"percorso","gender":"m","plural":"percorsi"},
-        "LANDMARK": {"form":"monumento","gender":"m","plural":"monumenti"},
-        "MUSEUM": {"form":"museo","gender":"m","plural":"musei"},
-        "MONUMENT": {"form":"monumento","gender":"m","plural":"monumenti"},
-        "RESTAURANT": {"form":"ristorante","gender":"m","plural":"ristoranti"},
-        "MENU": {"form":"menù","gender":"m","plural":"menù"},
-        "WAITER": {"form":"cameriere","gender":"m","plural":"camerieri"},
-        "MARKET": {"form":"mercato","gender":"m","plural":"mercati"},
-        "SOUVENIR": {"form":"souvenir","gender":"m","plural":"souvenir"},
-        "BARGAIN": {"form":"affare","gender":"m","plural":"affari"},
-        "PHRASEBOOK": {"form":"frasario","gender":"m","plural":"frasari"},
-        "BEACH": {"form":"spiaggia","gender":"f","plural":"spiagge"},
-        "CATHEDRAL": {"form":"cattedrale","gender":"f","plural":"cattedrali"},
-        "HARBOR": {"form":"porto","gender":"m","plural":"porti"},
-        "CURRENCY": {"form":"valuta","gender":"f","plural":"valute"},
-        "CUSTOMS": {"form":"dogana","gender":"f","plural":"dogane"},
-        "EMBASSY": {"form":"ambasciata","gender":"f","plural":"ambasciate"},
-        "ADVENTURE": {"form":"avventura","gender":"f","plural":"avventure"},
-        "ITINERARY": {"form":"itinerario","gender":"m","plural":"itinerari"},
-        "GUIDE": {"form":"guida","gender":"f","plural":"guide"},
-        "BOARD": {"base":"imbarcarsi","1_singular":"mi imbarco","2_singular":"ti imbarchi","3_singular":"si imbarca","1_plural":"ci imbarchiamo","2_plural":"vi imbarcate","3_plural":"si imbarcano"},
-        "RESERVE": {"base":"prenotare","1_singular":"prenoto","2_singular":"prenoti","3_singular":"prenota","1_plural":"prenotiamo","2_plural":"prenotate","3_plural":"prenotano"},
-        "NAVIGATE": {"base":"orientarsi","1_singular":"mi oriento","2_singular":"ti orienti","3_singular":"si orienta","1_plural":"ci orientiamo","2_plural":"vi orientate","3_plural":"si orientano"},
-        "PHOTOGRAPH": {"base":"fotografare","1_singular":"fotografo","2_singular":"fotografi","3_singular":"fotografa","1_plural":"fotografiamo","2_plural":"fotografate","3_plural":"fotografano"},
-        "ORDER": {"base":"ordinare","1_singular":"ordino","2_singular":"ordini","3_singular":"ordina","1_plural":"ordiniamo","2_plural":"ordinate","3_plural":"ordinano"},
-        "PURCHASE": {"base":"comprare","1_singular":"compro","2_singular":"compri","3_singular":"compra","1_plural":"compriamo","2_plural":"comprate","3_plural":"comprano"},
-        "TRANSLATE": {"base":"tradurre","1_singular":"traduco","2_singular":"traduci","3_singular":"traduce","1_plural":"traduciamo","2_plural":"traducete","3_plural":"traducono"},
-        "GREET": {"base":"salutare","1_singular":"saluto","2_singular":"saluti","3_singular":"saluta","1_plural":"salutiamo","2_plural":"salutate","3_plural":"salutano"},
-        "PRONOUNCE": {"base":"pronunciare","1_singular":"pronuncio","2_singular":"pronunci","3_singular":"pronuncia","1_plural":"pronunciamo","2_plural":"pronunciate","3_plural":"pronunciano"},
-        "EXPLORE": {"base":"esplorare","1_singular":"esploro","2_singular":"esplori","3_singular":"esplora","1_plural":"esploriamo","2_plural":"esplorate","3_plural":"esplorano"},
-        "EXCHANGE": {"base":"cambiare","1_singular":"cambio","2_singular":"cambi","3_singular":"cambia","1_plural":"cambiamo","2_plural":"cambiate","3_plural":"cambiano"},
-        "INSURE": {"base":"assicurare","1_singular":"assicuro","2_singular":"assicuri","3_singular":"assicura","1_plural":"assicuriamo","2_plural":"assicurate","3_plural":"assicurano"},
-        "RECOMMEND": {"base":"consigliare","1_singular":"consiglio","2_singular":"consigli","3_singular":"consiglia","1_plural":"consigliamo","2_plural":"consigliate","3_plural":"consigliano"},
-        "SCENIC": ["pittoresco"],
-        "DELICIOUS": ["delizioso"],
-        "EXPENSIVE": ["caro"],
-        "FOREIGN": ["straniero"],
-        "HISTORIC": ["storico"],
-        "UNFORGETTABLE": ["indimenticabile"]
+        "AIRPORT": {
+          "form": "aeroporto",
+          "gender": "m",
+          "plural": "aeroporti"
+        },
+        "PASSPORT": {
+          "form": "passaporto",
+          "gender": "m",
+          "plural": "passaporti"
+        },
+        "FLIGHT": {
+          "form": "volo",
+          "gender": "m",
+          "plural": "voli"
+        },
+        "LUGGAGE": {
+          "form": "bagaglio",
+          "gender": "m",
+          "plural": "bagagli"
+        },
+        "HOTEL": {
+          "form": "hotel",
+          "gender": "m",
+          "plural": "hotel"
+        },
+        "RESERVATION": {
+          "form": "prenotazione",
+          "gender": "f",
+          "plural": "prenotazioni"
+        },
+        "LOBBY": {
+          "form": "hall",
+          "gender": "f",
+          "plural": "hall"
+        },
+        "CHECKOUT": {
+          "form": "check-out",
+          "gender": "m",
+          "plural": "check-out"
+        },
+        "TAXI": {
+          "form": "taxi",
+          "gender": "m",
+          "plural": "taxi"
+        },
+        "STATION": {
+          "form": "stazione",
+          "gender": "f",
+          "plural": "stazioni"
+        },
+        "TICKET": {
+          "form": "biglietto",
+          "gender": "m",
+          "plural": "biglietti"
+        },
+        "ROUTE": {
+          "form": "percorso",
+          "gender": "m",
+          "plural": "percorsi"
+        },
+        "LANDMARK": {
+          "form": "monumento",
+          "gender": "m",
+          "plural": "monumenti"
+        },
+        "MUSEUM": {
+          "form": "museo",
+          "gender": "m",
+          "plural": "musei"
+        },
+        "MONUMENT": {
+          "form": "monumento",
+          "gender": "m",
+          "plural": "monumenti"
+        },
+        "RESTAURANT": {
+          "form": "ristorante",
+          "gender": "m",
+          "plural": "ristoranti"
+        },
+        "MENU": {
+          "form": "menù",
+          "gender": "m",
+          "plural": "menù"
+        },
+        "WAITER": {
+          "form": "cameriere",
+          "gender": "m",
+          "plural": "camerieri"
+        },
+        "MARKET": {
+          "form": "mercato",
+          "gender": "m",
+          "plural": "mercati"
+        },
+        "SOUVENIR": {
+          "form": "souvenir",
+          "gender": "m",
+          "plural": "souvenir"
+        },
+        "BARGAIN": {
+          "form": "affare",
+          "gender": "m",
+          "plural": "affari"
+        },
+        "PHRASEBOOK": {
+          "form": "frasario",
+          "gender": "m",
+          "plural": "frasari"
+        },
+        "BEACH": {
+          "form": "spiaggia",
+          "gender": "f",
+          "plural": "spiagge"
+        },
+        "CATHEDRAL": {
+          "form": "cattedrale",
+          "gender": "f",
+          "plural": "cattedrali"
+        },
+        "HARBOR": {
+          "form": "porto",
+          "gender": "m",
+          "plural": "porti"
+        },
+        "CURRENCY": {
+          "form": "valuta",
+          "gender": "f",
+          "plural": "valute"
+        },
+        "CUSTOMS": {
+          "form": "dogana",
+          "gender": "f",
+          "plural": "dogane"
+        },
+        "EMBASSY": {
+          "form": "ambasciata",
+          "gender": "f",
+          "plural": "ambasciate"
+        },
+        "ADVENTURE": {
+          "form": "avventura",
+          "gender": "f",
+          "plural": "avventure"
+        },
+        "ITINERARY": {
+          "form": "itinerario",
+          "gender": "m",
+          "plural": "itinerari"
+        },
+        "GUIDE": {
+          "form": "guida",
+          "gender": "f",
+          "plural": "guide"
+        },
+        "BOARD": {
+          "base": "imbarcarsi",
+          "1_singular": "mi imbarco",
+          "2_singular": "ti imbarchi",
+          "3_singular": "si imbarca",
+          "1_plural": "ci imbarchiamo",
+          "2_plural": "vi imbarcate",
+          "3_plural": "si imbarcano"
+        },
+        "RESERVE": {
+          "base": "prenotare",
+          "1_singular": "prenoto",
+          "2_singular": "prenoti",
+          "3_singular": "prenota",
+          "1_plural": "prenotiamo",
+          "2_plural": "prenotate",
+          "3_plural": "prenotano"
+        },
+        "NAVIGATE": {
+          "base": "orientarsi",
+          "1_singular": "mi oriento",
+          "2_singular": "ti orienti",
+          "3_singular": "si orienta",
+          "1_plural": "ci orientiamo",
+          "2_plural": "vi orientate",
+          "3_plural": "si orientano"
+        },
+        "PHOTOGRAPH": {
+          "base": "fotografare",
+          "1_singular": "fotografo",
+          "2_singular": "fotografi",
+          "3_singular": "fotografa",
+          "1_plural": "fotografiamo",
+          "2_plural": "fotografate",
+          "3_plural": "fotografano"
+        },
+        "ORDER": {
+          "base": "ordinare",
+          "1_singular": "ordino",
+          "2_singular": "ordini",
+          "3_singular": "ordina",
+          "1_plural": "ordiniamo",
+          "2_plural": "ordinate",
+          "3_plural": "ordinano"
+        },
+        "PURCHASE": {
+          "base": "comprare",
+          "1_singular": "compro",
+          "2_singular": "compri",
+          "3_singular": "compra",
+          "1_plural": "compriamo",
+          "2_plural": "comprate",
+          "3_plural": "comprano"
+        },
+        "TRANSLATE": {
+          "base": "tradurre",
+          "1_singular": "traduco",
+          "2_singular": "traduci",
+          "3_singular": "traduce",
+          "1_plural": "traduciamo",
+          "2_plural": "traducete",
+          "3_plural": "traducono"
+        },
+        "GREET": {
+          "base": "salutare",
+          "1_singular": "saluto",
+          "2_singular": "saluti",
+          "3_singular": "saluta",
+          "1_plural": "salutiamo",
+          "2_plural": "salutate",
+          "3_plural": "salutano"
+        },
+        "PRONOUNCE": {
+          "base": "pronunciare",
+          "1_singular": "pronuncio",
+          "2_singular": "pronunci",
+          "3_singular": "pronuncia",
+          "1_plural": "pronunciamo",
+          "2_plural": "pronunciate",
+          "3_plural": "pronunciano"
+        },
+        "EXPLORE": {
+          "base": "esplorare",
+          "1_singular": "esploro",
+          "2_singular": "esplori",
+          "3_singular": "esplora",
+          "1_plural": "esploriamo",
+          "2_plural": "esplorate",
+          "3_plural": "esplorano"
+        },
+        "EXCHANGE": {
+          "base": "cambiare",
+          "1_singular": "cambio",
+          "2_singular": "cambi",
+          "3_singular": "cambia",
+          "1_plural": "cambiamo",
+          "2_plural": "cambiate",
+          "3_plural": "cambiano"
+        },
+        "INSURE": {
+          "base": "assicurare",
+          "1_singular": "assicuro",
+          "2_singular": "assicuri",
+          "3_singular": "assicura",
+          "1_plural": "assicuriamo",
+          "2_plural": "assicurate",
+          "3_plural": "assicurano"
+        },
+        "RECOMMEND": {
+          "base": "consigliare",
+          "1_singular": "consiglio",
+          "2_singular": "consigli",
+          "3_singular": "consiglia",
+          "1_plural": "consigliamo",
+          "2_plural": "consigliate",
+          "3_plural": "consigliano"
+        },
+        "SCENIC": [
+          "pittoresco"
+        ],
+        "DELICIOUS": [
+          "delizioso"
+        ],
+        "EXPENSIVE": [
+          "caro"
+        ],
+        "FOREIGN": [
+          "straniero"
+        ],
+        "HISTORIC": [
+          "storico"
+        ],
+        "UNFORGETTABLE": [
+          "indimenticabile"
+        ]
       }
     },
     "th": {
       "label": "Thai",
       "forms": {
-        "AIRPORT": {"form":"สนามบิน","classifier":"แห่ง"},
-        "PASSPORT": {"form":"พาสปอร์ต","classifier":"เล่ม"},
-        "FLIGHT": {"form":"เที่ยวบิน","classifier":"เที่ยว"},
-        "LUGGAGE": {"form":"กระเป๋าเดินทาง","classifier":"ใบ"},
-        "HOTEL": {"form":"โรงแรม","classifier":"แห่ง"},
-        "RESERVATION": {"form":"การจอง"},
-        "LOBBY": {"form":"ล็อบบี้"},
-        "CHECKOUT": {"form":"เช็คเอาท์"},
-        "TAXI": {"form":"แท็กซี่","classifier":"คัน"},
-        "STATION": {"form":"สถานี","classifier":"แห่ง"},
-        "TICKET": {"form":"ตั๋ว","classifier":"ใบ"},
-        "ROUTE": {"form":"เส้นทาง","classifier":"สาย"},
-        "LANDMARK": {"form":"สถานที่สำคัญ","classifier":"แห่ง"},
-        "MUSEUM": {"form":"พิพิธภัณฑ์","classifier":"แห่ง"},
-        "MONUMENT": {"form":"อนุสาวรีย์","classifier":"แห่ง"},
-        "RESTAURANT": {"form":"ร้านอาหาร","classifier":"ร้าน"},
-        "MENU": {"form":"เมนู"},
-        "WAITER": {"form":"พนักงานเสิร์ฟ","classifier":"คน"},
-        "MARKET": {"form":"ตลาด","classifier":"แห่ง"},
-        "SOUVENIR": {"form":"ของที่ระลึก","classifier":"ชิ้น"},
-        "BARGAIN": {"form":"ของถูก","classifier":"ชิ้น"},
-        "PHRASEBOOK": {"form":"คู่มือสนทนา","classifier":"เล่ม"},
-        "BEACH": {"form":"ชายหาด","classifier":"แห่ง"},
-        "CATHEDRAL": {"form":"มหาวิหาร","classifier":"แห่ง"},
-        "HARBOR": {"form":"ท่าเรือ","classifier":"แห่ง"},
-        "CURRENCY": {"form":"สกุลเงิน"},
-        "CUSTOMS": {"form":"ศุลกากร"},
-        "EMBASSY": {"form":"สถานทูต","classifier":"แห่ง"},
-        "ADVENTURE": {"form":"การผจญภัย"},
-        "ITINERARY": {"form":"แผนการเดินทาง"},
-        "GUIDE": {"form":"ไกด์","classifier":"คน"},
-        "BOARD": {"base":"ขึ้นเครื่อง"},
-        "RESERVE": {"base":"จอง"},
-        "NAVIGATE": {"base":"นำทาง"},
-        "PHOTOGRAPH": {"base":"ถ่ายรูป"},
-        "ORDER": {"base":"สั่งอาหาร"},
-        "PURCHASE": {"base":"ซื้อ"},
-        "TRANSLATE": {"base":"แปล"},
-        "GREET": {"base":"ทักทาย"},
-        "PRONOUNCE": {"base":"ออกเสียง"},
-        "EXPLORE": {"base":"สำรวจ"},
-        "EXCHANGE": {"base":"แลกเงิน"},
-        "INSURE": {"base":"ทำประกัน"},
-        "RECOMMEND": {"base":"แนะนำ"},
-        "SCENIC": ["ทิวทัศน์สวยงาม"],
-        "DELICIOUS": ["อร่อย"],
-        "EXPENSIVE": ["แพง"],
-        "FOREIGN": ["ต่างประเทศ"],
-        "HISTORIC": ["ทางประวัติศาสตร์"],
-        "UNFORGETTABLE": ["น่าจดจำ"]
+        "AIRPORT": {
+          "form": "สนามบิน",
+          "classifier": "แห่ง"
+        },
+        "PASSPORT": {
+          "form": "พาสปอร์ต",
+          "classifier": "เล่ม"
+        },
+        "FLIGHT": {
+          "form": "เที่ยวบิน",
+          "classifier": "เที่ยว"
+        },
+        "LUGGAGE": {
+          "form": "กระเป๋าเดินทาง",
+          "classifier": "ใบ"
+        },
+        "HOTEL": {
+          "form": "โรงแรม",
+          "classifier": "แห่ง"
+        },
+        "RESERVATION": {
+          "form": "การจอง"
+        },
+        "LOBBY": {
+          "form": "ล็อบบี้"
+        },
+        "CHECKOUT": {
+          "form": "เช็คเอาท์"
+        },
+        "TAXI": {
+          "form": "แท็กซี่",
+          "classifier": "คัน"
+        },
+        "STATION": {
+          "form": "สถานี",
+          "classifier": "แห่ง"
+        },
+        "TICKET": {
+          "form": "ตั๋ว",
+          "classifier": "ใบ"
+        },
+        "ROUTE": {
+          "form": "เส้นทาง",
+          "classifier": "สาย"
+        },
+        "LANDMARK": {
+          "form": "สถานที่สำคัญ",
+          "classifier": "แห่ง"
+        },
+        "MUSEUM": {
+          "form": "พิพิธภัณฑ์",
+          "classifier": "แห่ง"
+        },
+        "MONUMENT": {
+          "form": "อนุสาวรีย์",
+          "classifier": "แห่ง"
+        },
+        "RESTAURANT": {
+          "form": "ร้านอาหาร",
+          "classifier": "ร้าน"
+        },
+        "MENU": {
+          "form": "เมนู"
+        },
+        "WAITER": {
+          "form": "พนักงานเสิร์ฟ",
+          "classifier": "คน"
+        },
+        "MARKET": {
+          "form": "ตลาด",
+          "classifier": "แห่ง"
+        },
+        "SOUVENIR": {
+          "form": "ของที่ระลึก",
+          "classifier": "ชิ้น"
+        },
+        "BARGAIN": {
+          "form": "ของถูก",
+          "classifier": "ชิ้น"
+        },
+        "PHRASEBOOK": {
+          "form": "คู่มือสนทนา",
+          "classifier": "เล่ม"
+        },
+        "BEACH": {
+          "form": "ชายหาด",
+          "classifier": "แห่ง"
+        },
+        "CATHEDRAL": {
+          "form": "มหาวิหาร",
+          "classifier": "แห่ง"
+        },
+        "HARBOR": {
+          "form": "ท่าเรือ",
+          "classifier": "แห่ง"
+        },
+        "CURRENCY": {
+          "form": "สกุลเงิน"
+        },
+        "CUSTOMS": {
+          "form": "ศุลกากร"
+        },
+        "EMBASSY": {
+          "form": "สถานทูต",
+          "classifier": "แห่ง"
+        },
+        "ADVENTURE": {
+          "form": "การผจญภัย"
+        },
+        "ITINERARY": {
+          "form": "แผนการเดินทาง"
+        },
+        "GUIDE": {
+          "form": "ไกด์",
+          "classifier": "คน"
+        },
+        "BOARD": {
+          "base": "ขึ้นเครื่อง"
+        },
+        "RESERVE": {
+          "base": "จอง"
+        },
+        "NAVIGATE": {
+          "base": "นำทาง"
+        },
+        "PHOTOGRAPH": {
+          "base": "ถ่ายรูป"
+        },
+        "ORDER": {
+          "base": "สั่งอาหาร"
+        },
+        "PURCHASE": {
+          "base": "ซื้อ"
+        },
+        "TRANSLATE": {
+          "base": "แปล"
+        },
+        "GREET": {
+          "base": "ทักทาย"
+        },
+        "PRONOUNCE": {
+          "base": "ออกเสียง"
+        },
+        "EXPLORE": {
+          "base": "สำรวจ"
+        },
+        "EXCHANGE": {
+          "base": "แลกเงิน"
+        },
+        "INSURE": {
+          "base": "ทำประกัน"
+        },
+        "RECOMMEND": {
+          "base": "แนะนำ"
+        },
+        "SCENIC": [
+          "ทิวทัศน์สวยงาม"
+        ],
+        "DELICIOUS": [
+          "อร่อย"
+        ],
+        "EXPENSIVE": [
+          "แพง"
+        ],
+        "FOREIGN": [
+          "ต่างประเทศ"
+        ],
+        "HISTORIC": [
+          "ทางประวัติศาสตร์"
+        ],
+        "UNFORGETTABLE": [
+          "น่าจดจำ"
+        ]
       }
     },
     "pl": {
       "label": "Polish",
       "forms": {
-        "AIRPORT": {"form":"lotnisko","gender":"n","plural":"lotniska","genitive_plural":"lotnisk"},
-        "PASSPORT": {"form":"paszport","gender":"m","plural":"paszporty","genitive_plural":"paszportów"},
-        "FLIGHT": {"form":"lot","gender":"m","plural":"loty","genitive_plural":"lotów"},
-        "LUGGAGE": {"form":"bagaż","gender":"m"},
-        "HOTEL": {"form":"hotel","gender":"m","plural":"hotele","genitive_plural":"hoteli"},
-        "RESERVATION": {"form":"rezerwacja","gender":"f","plural":"rezerwacje","genitive_plural":"rezerwacji"},
-        "LOBBY": {"form":"hol","gender":"m","plural":"hole","genitive_plural":"holi"},
-        "CHECKOUT": {"form":"wymeldowanie","gender":"n","plural":"wymeldowania","genitive_plural":"wymeldowań"},
-        "TAXI": {"form":"taksówka","gender":"f","plural":"taksówki","genitive_plural":"taksówek"},
-        "STATION": {"form":"dworzec","gender":"m","plural":"dworce","genitive_plural":"dworców"},
-        "TICKET": {"form":"bilet","gender":"m","plural":"bilety","genitive_plural":"biletów"},
-        "ROUTE": {"form":"trasa","gender":"f","plural":"trasy","genitive_plural":"tras"},
-        "LANDMARK": {"form":"zabytek","gender":"m","plural":"zabytki","genitive_plural":"zabytków"},
-        "MUSEUM": {"form":"muzeum","gender":"n","plural":"muzea","genitive_plural":"muzeów"},
-        "MONUMENT": {"form":"pomnik","gender":"m","plural":"pomniki","genitive_plural":"pomników"},
-        "RESTAURANT": {"form":"restauracja","gender":"f","plural":"restauracje","genitive_plural":"restauracji"},
-        "MENU": {"form":"menu","gender":"n","plural":"menu", "invariantPlural": true, "genitive": "menu"},
-        "WAITER": {"form":"kelner","gender":"m","plural":"kelnerzy","genitive_plural":"kelnerów","accusative":"kelnera","virile":true, "instrumental": "kelnerem"},
-        "MARKET": {"form":"targ","gender":"m","plural":"targi","genitive_plural":"targów"},
-        "SOUVENIR": {"form":"pamiątka","gender":"f","plural":"pamiątki","genitive_plural":"pamiątek"},
-        "BARGAIN": {"form":"okazja","gender":"f","plural":"okazje","genitive_plural":"okazji"},
-        "PHRASEBOOK": {"form":"rozmówki","gender":"f","plural":"rozmówki","genitive_plural":"rozmówek", "pluralOnly": true},
-        "BEACH": {"form":"plaża","gender":"f","plural":"plaże","genitive_plural":"plaż"},
-        "CATHEDRAL": {"form":"katedra","gender":"f","plural":"katedry","genitive_plural":"katedr"},
-        "HARBOR": {"form":"port","gender":"m","plural":"porty","genitive_plural":"portów"},
-        "CURRENCY": {"form":"waluta","gender":"f","plural":"waluty","genitive_plural":"walut"},
-        "CUSTOMS": {"form":"odprawa celna","gender":"f","plural":"odprawy celne","genitive_plural":"odpraw celnych"},
-        "EMBASSY": {"form":"ambasada","gender":"f","plural":"ambasady","genitive_plural":"ambasad"},
-        "ADVENTURE": {"form":"przygoda","gender":"f","plural":"przygody","genitive_plural":"przygód"},
-        "ITINERARY": {"form":"plan podróży","gender":"m","plural":"plany podróży","genitive_plural":"planów podróży"},
-        "GUIDE": {"form":"przewodnik","gender":"m","plural":"przewodnicy","genitive_plural":"przewodników","accusative":"przewodnika","virile":true, "instrumental": "przewodnikiem"},
-        "BOARD": {"base":"wsiadać","1_singular":"wsiadam","2_singular":"wsiadasz","3_singular":"wsiada","1_plural":"wsiadamy","2_plural":"wsiadacie","3_plural":"wsiadają"},
-        "RESERVE": {"base":"rezerwować","1_singular":"rezerwuję","2_singular":"rezerwujesz","3_singular":"rezerwuje","1_plural":"rezerwujemy","2_plural":"rezerwujecie","3_plural":"rezerwują"},
-        "NAVIGATE": {"base":"nawigować","1_singular":"nawiguję","2_singular":"nawigujesz","3_singular":"nawiguje","1_plural":"nawigujemy","2_plural":"nawigujecie","3_plural":"nawigują"},
-        "PHOTOGRAPH": {"base":"fotografować","1_singular":"fotografuję","2_singular":"fotografujesz","3_singular":"fotografuje","1_plural":"fotografujemy","2_plural":"fotografujecie","3_plural":"fotografują"},
-        "ORDER": {"base":"zamawiać","1_singular":"zamawiam","2_singular":"zamawiasz","3_singular":"zamawia","1_plural":"zamawiamy","2_plural":"zamawiacie","3_plural":"zamawiają"},
-        "PURCHASE": {"base":"kupować","1_singular":"kupuję","2_singular":"kupujesz","3_singular":"kupuje","1_plural":"kupujemy","2_plural":"kupujecie","3_plural":"kupują"},
-        "TRANSLATE": {"base":"tłumaczyć","1_singular":"tłumaczę","2_singular":"tłumaczysz","3_singular":"tłumaczy","1_plural":"tłumaczymy","2_plural":"tłumaczycie","3_plural":"tłumaczą"},
-        "GREET": {"base":"witać","1_singular":"witam","2_singular":"witasz","3_singular":"wita","1_plural":"witamy","2_plural":"witacie","3_plural":"witają"},
-        "PRONOUNCE": {"base":"wymawiać","1_singular":"wymawiam","2_singular":"wymawiasz","3_singular":"wymawia","1_plural":"wymawiamy","2_plural":"wymawiacie","3_plural":"wymawiają"},
-        "EXPLORE": {"base":"zwiedzać","1_singular":"zwiedzam","2_singular":"zwiedzasz","3_singular":"zwiedza","1_plural":"zwiedzamy","2_plural":"zwiedzacie","3_plural":"zwiedzają"},
-        "EXCHANGE": {"base":"wymieniać","1_singular":"wymieniam","2_singular":"wymieniasz","3_singular":"wymienia","1_plural":"wymieniamy","2_plural":"wymieniacie","3_plural":"wymieniają"},
-        "INSURE": {"base":"ubezpieczać","1_singular":"ubezpieczam","2_singular":"ubezpieczasz","3_singular":"ubezpiecza","1_plural":"ubezpieczamy","2_plural":"ubezpieczacie","3_plural":"ubezpieczają"},
-        "RECOMMEND": {"base":"polecać","1_singular":"polecam","2_singular":"polecasz","3_singular":"poleca","1_plural":"polecamy","2_plural":"polecacie","3_plural":"polecają"},
-        "SCENIC": ["malowniczy"],
-        "DELICIOUS": ["pyszny"],
-        "EXPENSIVE": ["drogi"],
-        "FOREIGN": ["zagraniczny"],
-        "HISTORIC": ["zabytkowy"],
-        "UNFORGETTABLE": ["niezapomniany"]
+        "AIRPORT": {
+          "form": "lotnisko",
+          "gender": "n",
+          "plural": "lotniska",
+          "genitive_plural": "lotnisk"
+        },
+        "PASSPORT": {
+          "form": "paszport",
+          "gender": "m",
+          "plural": "paszporty",
+          "genitive_plural": "paszportów"
+        },
+        "FLIGHT": {
+          "form": "lot",
+          "gender": "m",
+          "plural": "loty",
+          "genitive_plural": "lotów"
+        },
+        "LUGGAGE": {
+          "form": "bagaż",
+          "gender": "m"
+        },
+        "HOTEL": {
+          "form": "hotel",
+          "gender": "m",
+          "plural": "hotele",
+          "genitive_plural": "hoteli"
+        },
+        "RESERVATION": {
+          "form": "rezerwacja",
+          "gender": "f",
+          "plural": "rezerwacje",
+          "genitive_plural": "rezerwacji"
+        },
+        "LOBBY": {
+          "form": "hol",
+          "gender": "m",
+          "plural": "hole",
+          "genitive_plural": "holi"
+        },
+        "CHECKOUT": {
+          "form": "wymeldowanie",
+          "gender": "n",
+          "plural": "wymeldowania",
+          "genitive_plural": "wymeldowań"
+        },
+        "TAXI": {
+          "form": "taksówka",
+          "gender": "f",
+          "plural": "taksówki",
+          "genitive_plural": "taksówek"
+        },
+        "STATION": {
+          "form": "dworzec",
+          "gender": "m",
+          "plural": "dworce",
+          "genitive_plural": "dworców"
+        },
+        "TICKET": {
+          "form": "bilet",
+          "gender": "m",
+          "plural": "bilety",
+          "genitive_plural": "biletów"
+        },
+        "ROUTE": {
+          "form": "trasa",
+          "gender": "f",
+          "plural": "trasy",
+          "genitive_plural": "tras"
+        },
+        "LANDMARK": {
+          "form": "zabytek",
+          "gender": "m",
+          "plural": "zabytki",
+          "genitive_plural": "zabytków"
+        },
+        "MUSEUM": {
+          "form": "muzeum",
+          "gender": "n",
+          "plural": "muzea",
+          "genitive_plural": "muzeów"
+        },
+        "MONUMENT": {
+          "form": "pomnik",
+          "gender": "m",
+          "plural": "pomniki",
+          "genitive_plural": "pomników"
+        },
+        "RESTAURANT": {
+          "form": "restauracja",
+          "gender": "f",
+          "plural": "restauracje",
+          "genitive_plural": "restauracji"
+        },
+        "MENU": {
+          "form": "menu",
+          "gender": "n",
+          "plural": "menu",
+          "invariantPlural": true,
+          "genitive": "menu"
+        },
+        "WAITER": {
+          "form": "kelner",
+          "gender": "m",
+          "plural": "kelnerzy",
+          "genitive_plural": "kelnerów",
+          "accusative": "kelnera",
+          "virile": true,
+          "instrumental": "kelnerem"
+        },
+        "MARKET": {
+          "form": "targ",
+          "gender": "m",
+          "plural": "targi",
+          "genitive_plural": "targów"
+        },
+        "SOUVENIR": {
+          "form": "pamiątka",
+          "gender": "f",
+          "plural": "pamiątki",
+          "genitive_plural": "pamiątek"
+        },
+        "BARGAIN": {
+          "form": "okazja",
+          "gender": "f",
+          "plural": "okazje",
+          "genitive_plural": "okazji"
+        },
+        "PHRASEBOOK": {
+          "form": "rozmówki",
+          "gender": "f",
+          "plural": "rozmówki",
+          "genitive_plural": "rozmówek",
+          "pluralOnly": true
+        },
+        "BEACH": {
+          "form": "plaża",
+          "gender": "f",
+          "plural": "plaże",
+          "genitive_plural": "plaż"
+        },
+        "CATHEDRAL": {
+          "form": "katedra",
+          "gender": "f",
+          "plural": "katedry",
+          "genitive_plural": "katedr"
+        },
+        "HARBOR": {
+          "form": "port",
+          "gender": "m",
+          "plural": "porty",
+          "genitive_plural": "portów"
+        },
+        "CURRENCY": {
+          "form": "waluta",
+          "gender": "f",
+          "plural": "waluty",
+          "genitive_plural": "walut"
+        },
+        "CUSTOMS": {
+          "form": "odprawa celna",
+          "gender": "f",
+          "plural": "odprawy celne",
+          "genitive_plural": "odpraw celnych"
+        },
+        "EMBASSY": {
+          "form": "ambasada",
+          "gender": "f",
+          "plural": "ambasady",
+          "genitive_plural": "ambasad"
+        },
+        "ADVENTURE": {
+          "form": "przygoda",
+          "gender": "f",
+          "plural": "przygody",
+          "genitive_plural": "przygód"
+        },
+        "ITINERARY": {
+          "form": "plan podróży",
+          "gender": "m",
+          "plural": "plany podróży",
+          "genitive_plural": "planów podróży"
+        },
+        "GUIDE": {
+          "form": "przewodnik",
+          "gender": "m",
+          "plural": "przewodnicy",
+          "genitive_plural": "przewodników",
+          "accusative": "przewodnika",
+          "virile": true,
+          "instrumental": "przewodnikiem"
+        },
+        "BOARD": {
+          "base": "wsiadać",
+          "1_singular": "wsiadam",
+          "2_singular": "wsiadasz",
+          "3_singular": "wsiada",
+          "1_plural": "wsiadamy",
+          "2_plural": "wsiadacie",
+          "3_plural": "wsiadają"
+        },
+        "RESERVE": {
+          "base": "rezerwować",
+          "1_singular": "rezerwuję",
+          "2_singular": "rezerwujesz",
+          "3_singular": "rezerwuje",
+          "1_plural": "rezerwujemy",
+          "2_plural": "rezerwujecie",
+          "3_plural": "rezerwują"
+        },
+        "NAVIGATE": {
+          "base": "nawigować",
+          "1_singular": "nawiguję",
+          "2_singular": "nawigujesz",
+          "3_singular": "nawiguje",
+          "1_plural": "nawigujemy",
+          "2_plural": "nawigujecie",
+          "3_plural": "nawigują"
+        },
+        "PHOTOGRAPH": {
+          "base": "fotografować",
+          "1_singular": "fotografuję",
+          "2_singular": "fotografujesz",
+          "3_singular": "fotografuje",
+          "1_plural": "fotografujemy",
+          "2_plural": "fotografujecie",
+          "3_plural": "fotografują"
+        },
+        "ORDER": {
+          "base": "zamawiać",
+          "1_singular": "zamawiam",
+          "2_singular": "zamawiasz",
+          "3_singular": "zamawia",
+          "1_plural": "zamawiamy",
+          "2_plural": "zamawiacie",
+          "3_plural": "zamawiają"
+        },
+        "PURCHASE": {
+          "base": "kupować",
+          "1_singular": "kupuję",
+          "2_singular": "kupujesz",
+          "3_singular": "kupuje",
+          "1_plural": "kupujemy",
+          "2_plural": "kupujecie",
+          "3_plural": "kupują"
+        },
+        "TRANSLATE": {
+          "base": "tłumaczyć",
+          "1_singular": "tłumaczę",
+          "2_singular": "tłumaczysz",
+          "3_singular": "tłumaczy",
+          "1_plural": "tłumaczymy",
+          "2_plural": "tłumaczycie",
+          "3_plural": "tłumaczą"
+        },
+        "GREET": {
+          "base": "witać",
+          "1_singular": "witam",
+          "2_singular": "witasz",
+          "3_singular": "wita",
+          "1_plural": "witamy",
+          "2_plural": "witacie",
+          "3_plural": "witają"
+        },
+        "PRONOUNCE": {
+          "base": "wymawiać",
+          "1_singular": "wymawiam",
+          "2_singular": "wymawiasz",
+          "3_singular": "wymawia",
+          "1_plural": "wymawiamy",
+          "2_plural": "wymawiacie",
+          "3_plural": "wymawiają"
+        },
+        "EXPLORE": {
+          "base": "zwiedzać",
+          "1_singular": "zwiedzam",
+          "2_singular": "zwiedzasz",
+          "3_singular": "zwiedza",
+          "1_plural": "zwiedzamy",
+          "2_plural": "zwiedzacie",
+          "3_plural": "zwiedzają"
+        },
+        "EXCHANGE": {
+          "base": "wymieniać",
+          "1_singular": "wymieniam",
+          "2_singular": "wymieniasz",
+          "3_singular": "wymienia",
+          "1_plural": "wymieniamy",
+          "2_plural": "wymieniacie",
+          "3_plural": "wymieniają"
+        },
+        "INSURE": {
+          "base": "ubezpieczać",
+          "1_singular": "ubezpieczam",
+          "2_singular": "ubezpieczasz",
+          "3_singular": "ubezpiecza",
+          "1_plural": "ubezpieczamy",
+          "2_plural": "ubezpieczacie",
+          "3_plural": "ubezpieczają"
+        },
+        "RECOMMEND": {
+          "base": "polecać",
+          "1_singular": "polecam",
+          "2_singular": "polecasz",
+          "3_singular": "poleca",
+          "1_plural": "polecamy",
+          "2_plural": "polecacie",
+          "3_plural": "polecają"
+        },
+        "SCENIC": [
+          "malowniczy"
+        ],
+        "DELICIOUS": [
+          "pyszny"
+        ],
+        "EXPENSIVE": [
+          "drogi"
+        ],
+        "FOREIGN": [
+          "zagraniczny"
+        ],
+        "HISTORIC": [
+          "zabytkowy"
+        ],
+        "UNFORGETTABLE": [
+          "niezapomniany"
+        ]
       }
     }
   }

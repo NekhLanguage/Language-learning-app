@@ -1834,7 +1834,14 @@ function preverbalAdjunctOrder(lang, ordered) {
   // The slot a concept occupies in a template, as the case machinery sees
   // it — the shared context that keeps the L3 blank and its option tiles
   // rendering through identical rules (Emi 2026-08-27-02).
+  // The slot's own concept rides along so slot-keyed decoration (the ko
+  // coordination connective) can tell the predicate slot from a distractor.
   function slotContextFor(tpl, targetLang, targetConcept) {
+    const slot = slotContextForBase(tpl, targetLang, targetConcept);
+    return slot ? { ...slot, concept: targetConcept } : slot;
+  }
+
+  function slotContextForBase(tpl, targetLang, targetConcept) {
     // The tr have-construction bypasses the ordered walk entirely — its
     // noun slot carries the possessor's person suffix («Benim yiyeceğim
     // var»), so blanks and tiles must render possessed forms.
@@ -1903,8 +1910,16 @@ function preverbalAdjunctOrder(lang, ordered) {
     const meta = vocab().concepts[cid];
     const particles = langRuleValue(targetLang, "nominalParticles");
     if (particles?.attach && meta) {
+      // The dedicated clause builders mark their own slots — mirror them:
+      // the contrastive "V O1 but not O2" (O1 object, O2 topic) and the
+      // locative existence shape (head topic, first landmark + 과/와).
+      const builderRole = builderSlotRole(targetLang, tpl, slot);
+      if (builderRole) return surface + particleAllomorph(builderRole, surface);
       if (slot?.position === "directObject" && !slot?.caseName &&
           meta.type === "noun") {
+        // Mirrors renderSegments: no object particle beside a verb that
+        // incorporates its own object («감자 껍질을 벗겨요»).
+        if (objectIncorporated(targetLang, tpl.concepts)) return surface;
         const role = (tpl.concepts || []).includes("HAVE") && particles.haveObject
           ? "haveObject" : "object";
         return surface + particleAllomorph(particles[role], surface);
@@ -1926,8 +1941,67 @@ function preverbalAdjunctOrder(lang, ordered) {
     if (!["subject", "directObject", "prepObject"].includes(slot?.position)) {
       const cop = copulaSuffixSlot(targetLang, tpl, cid);
       if (cop) return surface + particleAllomorph(cop, surface);
+      // Mirrors copulaCoordinationSegments' connective suffix: the first
+      // clause's predicate slot carries 이고 in the sentence («손이고»), so
+      // its blank and tiles carry it too.
+      const connective = coordinationConnectiveSlot(targetLang, tpl, slot);
+      if (connective) return surface + connective;
     }
     return surface;
+  }
+
+  // The particle spec the ko clause builders put on `slot`'s concept, or
+  // null when the template is not one of those shapes / the slot is not a
+  // marked one. contrastiveNegation { conjunctionSuffix }: O1 takes the
+  // object particle, O2 the topic. locativeExistential with an allomorph
+  // conjunction: the head takes the topic, the first landmark the 과/와.
+  function builderSlotRole(targetLang, tpl, slot) {
+    const particles = langRuleValue(targetLang, "nominalParticles");
+    if (!particles?.attach || !slot?.concept) return null;
+    const c = tpl?.concepts || [];
+    const conceptTable = vocab().concepts || {};
+    const contrastive = langRuleValue(targetLang, "contrastiveNegation");
+    if (contrastive && typeof contrastive.conjunctionSuffix === "string") {
+      const bi = c.findIndex((x) => conceptTable[x]?.semantic_role === "logical_contrast");
+      if (bi !== -1 && conceptTable[c[bi + 1]]?.semantic_role === "logical_negation" &&
+          conceptTable[c[bi + 2]]?.type === "noun") {
+        const subject = c.find((x) => conceptTable[x]?.type === "pronoun");
+        const obj1 = c.find((x, i) => i < bi && x !== subject && conceptTable[x]?.type === "noun");
+        if (slot.concept === obj1) return particles.object;
+        if (slot.concept === c[bi + 2]) return particles.topic;
+      }
+    }
+    const locative = langRuleValue(targetLang, "locativeExistential");
+    if (locative && RELATIONAL_STRUCTURES.has(tpl?.structure?.type)) {
+      if (slot.concept === c[0]) return particles.topic;
+      if (locative.conjunction && typeof locative.conjunction === "object") {
+        const andIdx = c.findIndex((x) => conceptTable[x]?.semantic_role === "logical_conjunction");
+        if (andIdx > 0 && slot.concept === c[andIdx - 1]) return locative.conjunction;
+      }
+    }
+    return null;
+  }
+
+  // BE.connective when `slot` is the first clause's predicate of a two-
+  // copula template under { connectiveSuffix } coordination; null otherwise.
+  // Keyed on the slot (the concept it holds in the template), so distractor
+  // tiles decorate like the blank.
+  function coordinationConnectiveSlot(targetLang, tpl, slot) {
+    const spec = langRuleValue(targetLang, "copulaCoordination");
+    if (!spec?.connectiveSuffix) return null;
+    const c = tpl?.concepts || [];
+    const andIdx = c.findIndex((x) => vocab().concepts?.[x]?.semantic_role === "logical_conjunction");
+    if (andIdx <= 0) return null;
+    const first = c.slice(0, andIdx);
+    const second = c.slice(andIdx + 1);
+    if (!first.some(isCopulaConcept) || !second.some(isCopulaConcept)) return null;
+    const conceptTable = vocab().concepts || {};
+    const nominals = first.filter((x) => ["noun", "pronoun", "time"].includes(conceptTable[x]?.type));
+    const predicate = nominals[nominals.length - 1];
+    if (!predicate || slot?.concept !== predicate) return null;
+    const beCid = first.find(isCopulaConcept);
+    const connective = vocab().languages?.[targetLang]?.forms?.[beCid]?.connective;
+    return typeof connective === "string" ? connective : null;
   }
 
   // Render `cid` as it would surface in the given slot — the ONE function
@@ -2285,8 +2359,13 @@ function buildSameTypeOptions(targetConcept, desiredTotal = 4, targetLang = null
   const meta = vocab().concepts[targetConcept];
   if (!meta) return null;
 
+  // A zero-copula language never surfaces BE as a word (ko renders the
+  // 이에요/예요 suffix), so its dictionary «이다» is an orphan tile in any
+  // verb slot — Emi run-17 (LOW), the ar -16 shape.
+  const orphanCopula = (cid) => targetLang && ZERO_PRESENT_COPULA.has(targetLang) && isCopulaConcept(cid);
   const pool = getReleased().filter(cid => {
     if (cid === targetConcept) return false;
+    if (orphanCopula(cid)) return false;
     const st = ensureProgress(cid);
     if (st.completed) return false;
     return vocab().concepts[cid]?.type === meta.type;
@@ -3126,6 +3205,39 @@ function particleAllomorph(spec, word) {
   return hangulHasBatchim(word) ? spec.afterConsonant : spec.afterVowel;
 }
 
+// The verb stem suffixal forms build on (declared: verbStem — ko: the
+// dictionary form minus 다). Null when undeclared or the base does not end
+// in the declared ending, so callers fall through to the finite form.
+function verbStem(lang, base) {
+  const spec = langRuleValue(lang, "verbStem");
+  if (!spec || typeof spec.dictionaryEnding !== "string") return null;
+  if (typeof base !== "string" || !base.endsWith(spec.dictionaryEnding)) return null;
+  const stem = base.slice(0, -spec.dictionaryEnding.length);
+  return stem || null;
+}
+
+// The first conjunct of V-AND-V under { stemSuffix } coordination (ko «먹고»);
+// null when the rule, the shape, or the stem is missing.
+function stemCoordinatedForm(lang, cid) {
+  const vc = langRuleValue(lang, "verbCoordination");
+  if (!vc || typeof vc !== "object" || typeof vc.stemSuffix !== "string") return null;
+  const stem = verbStem(lang, vocab().languages?.[lang]?.forms?.[cid]?.base);
+  return stem ? stem + vc.stemSuffix : null;
+}
+
+// True when the template's main verb entry incorporates its own object
+// (declared: incorporatedObjectVerbs; data: `incorporatedObject: true`) —
+// the direct object then takes no object particle («감자 껍질을 벗겨요»).
+function objectIncorporated(lang, concepts) {
+  if (!langRule(lang, "incorporatedObjectVerbs")) return false;
+  return (concepts || []).some((c) => {
+    const meta = vocab().concepts?.[c];
+    if (meta?.type !== "verb" || isCopulaConcept(c)) return false;
+    const entry = vocab().languages?.[lang]?.forms?.[c];
+    return !!(entry && !Array.isArray(entry) && entry.incorporatedObject);
+  });
+}
+
 // Suffix the declared particle for `role` onto a rendered surface — the
 // shared helper every build path uses, so a particle can never fire on one
 // render path but not the others. No-op for languages without attach-mode
@@ -3732,6 +3844,27 @@ function contrastiveNegationSegments(lang, tpl) {
       { cid: obj2, text: formOf(lang, obj2) },
     ];
   }
+  // conjunctionSuffix (ko): 지만 on the verb stem closes the first clause,
+  // O2 takes the topic particle, a preverbal negator and the finite verb end
+  // the sentence — «그는 아침식사를 먹지만 점심식사는 안 먹어요» (Emi run-17
+  // -81: the generic path emitted «하지만 아니다», the only dictionary form
+  // in 480 sentences). The conjunction word itself renders empty, like the
+  // te-coordination's そして. Missing stem data falls through.
+  if (typeof spec.conjunctionSuffix === "string") {
+    const stem = verbStem(lang, vocab().languages?.[lang]?.forms?.[verb]?.base);
+    if (!stem) return null;
+    const particles = langRuleValue(lang, "nominalParticles");
+    const mark = (text, role) => particles?.attach ? attachParticle(lang, text, role) : text;
+    return [
+      { cid: subject, text: mark(formOf(lang, subject), "topic") },
+      { cid: obj1, text: mark(formOf(lang, obj1), "object") },
+      { cid: verb, text: stem + spec.conjunctionSuffix },
+      { cid: c[bi], text: "" },
+      { cid: obj2, text: mark(formOf(lang, obj2), "topic") },
+      { cid: c[bi + 1], text: spec.negator || formOf(lang, c[bi + 1]) },
+      { cid: null, text: finite },
+    ];
+  }
   if (spec.negatedVerbForm) {
     const negative = vocab().languages?.[lang]?.forms?.[verb]?.negative;
     if (typeof negative !== "string") return null;
@@ -3781,10 +3914,24 @@ function locativeExistentialSegments(lang, tpl) {
   const topic = particles && !particles.attach && typeof particles.topic === "string"
     ? particles.topic : "";
   const conjCid = c.find(x => isConjunctionConcept(x)) || null;
-  const segs = [{ cid: head, text: formOf(lang, head) }];
+  // Attach-mode languages (ko) suffix the topic onto the head («전화는»).
+  const headText = particles?.attach
+    ? attachParticle(lang, formOf(lang, head), "topic")
+    : formOf(lang, head);
+  const segs = [{ cid: head, text: headText }];
   if (topic) segs.push({ cid: null, text: topic });
   landmarks.forEach((lm, i) => {
-    if (i > 0) segs.push({ cid: conjCid, text: spec.conjunction || "" });
+    if (i > 0) {
+      if (spec.conjunction && typeof spec.conjunction === "object") {
+        // A batchim allomorph pair is a particle on the previous landmark
+        // («이것과 그것»); the conjunction word itself renders empty.
+        const prev = segs[segs.length - 1];
+        prev.text = prev.text + particleAllomorph(spec.conjunction, prev.text);
+        segs.push({ cid: conjCid, text: "" });
+      } else {
+        segs.push({ cid: conjCid, text: spec.conjunction || "" });
+      }
+    }
     segs.push({ cid: lm, text: formOf(lang, lm) });
   });
   if (spec.linker) segs.push({ cid: null, text: spec.linker });
@@ -3822,8 +3969,17 @@ function copulaCoordinationSegments(lang, tpl, forcedConcept, sharedChoices) {
   const seg1 = renderSegments(lang, sub(first), forcedConcept, sharedChoices);
   const seg2 = renderSegments(lang, sub(second), forcedConcept, sharedChoices);
   if (!seg1 || !seg2) return null;
-  for (const seg of seg1) {
-    if (seg.cid === beCid) seg.text = connective;
+  if (spec.connectiveSuffix) {
+    // The copula is a suffix language (ko): the connective rides the first
+    // clause's last nominal («손이고»), the zero copula segment stays empty.
+    const nominal = [...seg1].reverse().find((seg) => seg.cid &&
+      ["noun", "pronoun", "time"].includes(vocab().concepts?.[seg.cid]?.type));
+    if (!nominal) return null;
+    nominal.text = nominal.text + connective;
+  } else {
+    for (const seg of seg1) {
+      if (seg.cid === beCid) seg.text = connective;
+    }
   }
   return [...seg1, { cid: c[andIdx], text: spec.separator || "" }, ...seg2];
 }
@@ -3965,6 +4121,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         if (entry && typeof entry === "object" && typeof entry.te === "string") {
           return entry.te;
         }
+      }
+      // { stemSuffix } coordination (ko): the first conjunct is stem + 고
+      // («먹고 마셔요» — Emi run-17 -84). Missing stem data falls through.
+      if (isConjunctionConcept(ordered[idx + 1]) &&
+          vocab().concepts[ordered[idx + 2]]?.type === "verb") {
+        const coordinated = stemCoordinatedForm(lang, cid);
+        if (coordinated) return coordinated;
       }
       // Existential possession by noun class (declared — ja): a flagged
       // abstract noun is possessed existentially, so HAVE renders its
@@ -5145,11 +5308,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // the te form IS the "and" («食べて飲みます» carries no そして). Only
     // when the first conjunct actually has te data; otherwise the word
     // stays (the V1 fell through to its finite form).
-    if (langRuleValue(lang, "verbCoordination") === "te" &&
-        isConjunctionConcept(cid) &&
+    if (isConjunctionConcept(cid) &&
         vocab().concepts[ordered[idx - 1]]?.type === "verb" &&
         vocab().concepts[ordered[idx + 1]]?.type === "verb" &&
-        typeof vocab().languages?.[lang]?.forms?.[ordered[idx - 1]]?.te === "string") {
+        ((langRuleValue(lang, "verbCoordination") === "te" &&
+          typeof vocab().languages?.[lang]?.forms?.[ordered[idx - 1]]?.te === "string") ||
+         stemCoordinatedForm(lang, ordered[idx - 1]))) {
       return "";
     }
 
@@ -5233,7 +5397,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const overridden = nounIndex !== -1 &&
         typeof tpl.surface?.[lang]?.[ordered[nounIndex]] === "string" &&
         tpl.surface[lang][ordered[nounIndex]] !== formOf(lang, ordered[nounIndex]);
-      if (nounIndex !== -1 && !(particles.attach && overridden)) {
+      // A verb that incorporates its own object («껍질을 벗겨요») leaves the
+      // template's object bare beside it (declared: incorporatedObjectVerbs
+      // — Emi run-17 -85: «감자를 껍질을 벗겨요»).
+      const incorporated = nounIndex !== -1 && objectIncorporated(lang, ordered);
+      if (nounIndex !== -1 && !(particles.attach && overridden) && !incorporated) {
         // haveObject: every HAVE template in attach-mode languages (ko —
         // possession is existential across the board), but only flagged
         // existentialHave nouns where the split is per-noun (ja: «会議が

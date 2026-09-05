@@ -32,6 +32,7 @@ import {
   optionSurfaceFor,
   slotContextFor,
   jaQuantifierPrefix,
+  safeSurfaceForConcept,
 } from "../../sentence_engine.mjs";
 
 let vocab, templates;
@@ -1497,6 +1498,49 @@ test("zh: 'with X' moves before the verb with 一起 (Emi run-9 -40)", () => {
 // ---------------------------------------------------------------------
 // ko: counters follow the noun, numerals take determiner forms — Emi -14
 // ---------------------------------------------------------------------
+
+// ---------------------------------------------------------------------
+// Emi run-17: ko -81 … -85 (the four templates left after the run-6 repair).
+// ---------------------------------------------------------------------
+
+test("ko: control-verb chains read the authored complement + finite verb (Emi run-17 -83)", () => {
+  assert.equal(buildSentence("ko", tplById("WE_STOP_EATING")), "우리는 먹는 것을 멈춰요.");
+  assert.equal(buildSentence("ko", tplById("THEY_START_SLEEPING")), "그들은 자기 시작해요.");
+});
+
+test("ko: V-AND-V coordinates on the -고 stem, no 그리고 (Emi run-17 -84)", () => {
+  assert.equal(buildSentence("ko", tplById("I_EAT_AND_DRINK")), "저는 먹고 마셔요.");
+});
+
+test("ko: two copular clauses chain on 이고, suffix copula on the last predicate (Emi run-17 -84)", () => {
+  assert.equal(buildSentence("ko", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")),
+    "이것은 제 손이고 이것은 당신의 머리예요.");
+  assert.equal(buildSentence("ko", tplById("SHE_IS_MY_MOM_AND_HE_IS_MY_DAD")),
+    "그녀는 제 엄마이고 그는 제 아빠예요.");
+  // The first clause's predicate blank/tile carries the connective too.
+  assert.equal(safeSurfaceForConcept(tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), "ko", "HAND"), "손이고");
+});
+
+test("ko: 'but not' — 지만 on the stem, topic on O2, 안 + finite verb (Emi run-17 -81)", () => {
+  const tpl = tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH");
+  assert.equal(buildSentence("ko", tpl), "그는 아침식사를 먹지만 점심식사는 안 먹어요.");
+  assert.equal(safeSurfaceForConcept(tpl, "ko", "BREAKFAST"), "아침식사를");
+  assert.equal(safeSurfaceForConcept(tpl, "ko", "LUNCH"), "점심식사는");
+});
+
+test("ko: spatial relations render as existence — head 은/는, landmark 에, 있어요 (Emi run-17 -82)", () => {
+  assert.equal(buildSentence("ko", tplById("BOOK_NEXT_TO_PHONE")), "책은 전화 옆에 있어요.");
+  assert.equal(buildSentence("ko", tplById("BOOK_BEHIND_PHONE")), "책은 전화 뒤에 있어요.");
+  assert.equal(buildSentence("ko", tplById("BOOK_BETWEEN_THIS_AND_THAT")), "책은 이것과 그것 사이에 있어요.");
+  assert.equal(safeSurfaceForConcept(tplById("BOOK_BETWEEN_THIS_AND_THAT"), "ko", "BOOK"), "책은");
+  assert.equal(safeSurfaceForConcept(tplById("BOOK_BETWEEN_THIS_AND_THAT"), "ko", "THIS"), "이것과");
+});
+
+test("ko: a verb that incorporates its object leaves the noun bare (Emi run-17 -85)", () => {
+  assert.equal(buildSentence("ko", tplById("I_PEEL_POTATO")), "저는 감자 껍질을 벗겨요.");
+  assert.equal(safeSurfaceForConcept(tplById("I_PEEL_POTATO"), "ko", "POTATO"), "감자");
+  assert.equal(buildSentence("ko", tplById("I_PHOTOGRAPH_MONUMENT")), "저는 기념비 사진을 찍어요.");
+});
 
 test("ko: numeral + counter follow the noun, particle lands on the counter", () => {
   const tpl = tplById("YOU_READ_BOOK");

@@ -82,7 +82,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.52";
+const APP_DATA_VERSION = "1.2.53";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -3221,9 +3221,16 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions, target
     return true;
   };
 
+  // A zero-copula language never surfaces BE as a word (ko renders the
+  // 이에요/예요 suffix), so its dictionary «이다» is an orphan tile in any
+  // verb slot — Emi run-17 (LOW), the ar -16 shape.
+  const orphanCopula = cid =>
+    ZERO_PRESENT_COPULA.has(languageState.target) && isCopulaConcept(cid);
+
   // Strict pool
   const strictPool = run.released.filter(cid => {
     if (cid === targetConcept) return false;
+    if (orphanCopula(cid)) return false;
 
     const st = ensureProgress(cid);
     
@@ -3238,6 +3245,7 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions, target
   // Relaxed pool
   const relaxedPool = run.released.filter(cid => {
     if (cid === targetConcept) return false;
+    if (orphanCopula(cid)) return false;
 
     const m = window.GLOBAL_VOCAB.concepts[cid];
     return m && m.type === meta.type;
