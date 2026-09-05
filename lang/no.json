@@ -103,6 +103,7 @@
     },
     "SMALL": {
       "form": "liten",
+      "definite": "lille",
       "plural": "små"
     },
     "GOOD": {
@@ -132,21 +133,27 @@
       "form": "vanskelig",
       "plural": "vanskelige"
     },
-    "MY": [
-      "min"
-    ],
-    "YOUR": [
-      "din"
-    ],
+    "MY": {
+      "form": "min",
+      "n": "mitt",
+      "plural": "mine"
+    },
+    "YOUR": {
+      "form": "din",
+      "n": "ditt",
+      "plural": "dine"
+    },
     "HIS": [
       "hans"
     ],
     "HER": [
       "hennes"
     ],
-    "OUR": [
-      "vår"
-    ],
+    "OUR": {
+      "form": "vår",
+      "n": "vårt",
+      "plural": "våre"
+    },
     "THEIR": [
       "deres"
     ],
@@ -248,7 +255,10 @@
     "HOME": {
       "form": "hjem",
       "gender": "n",
-      "noArticle": true
+      "noArticle": true,
+      "fused": {
+        "from": "hjemmefra"
+      }
     },
     "BOOK": {
       "form": "bok",
@@ -257,7 +267,7 @@
     },
     "THING": {
       "form": "ting",
-      "gender": "n"
+      "gender": "m"
     },
     "JOB": {
       "form": "jobb",
@@ -618,8 +628,8 @@
       "present": "ser"
     },
     "START": {
-      "base": "starte",
-      "present": "starter"
+      "base": "begynne",
+      "present": "begynner"
     },
     "STOP": {
       "base": "slutte",
@@ -649,16 +659,19 @@
       "base": "være",
       "present": "er"
     },
-    "BLACK": [
-      "svart"
-    ],
+    "BLACK": {
+      "form": "svart",
+      "plural": "svarte"
+    },
     "WHITE": {
       "form": "hvit",
-      "n": "hvitt"
+      "n": "hvitt",
+      "plural": "hvite"
     },
     "RED": {
       "form": "rød",
-      "n": "rødt"
+      "n": "rødt",
+      "plural": "røde"
     },
     "BLUE": {
       "form": "blå",
@@ -666,44 +679,56 @@
     },
     "GREEN": {
       "form": "grønn",
-      "n": "grønt"
+      "n": "grønt",
+      "plural": "grønne"
     },
-    "YELLOW": [
-      "gul"
-    ],
+    "YELLOW": {
+      "form": "gul",
+      "n": "gult",
+      "plural": "gule"
+    },
     "PURPLE": [
       "lilla"
     ],
     "ORANGE": [
       "oransje"
     ],
-    "FAST": [
-      "rask"
-    ],
+    "FAST": {
+      "form": "rask",
+      "n": "raskt",
+      "plural": "raske"
+    },
     "SLOW": [
       "sakte"
     ],
     "LONG": {
       "form": "lang",
-      "n": "langt"
+      "n": "langt",
+      "plural": "lange"
     },
-    "SHORT": [
-      "kort"
-    ],
+    "SHORT": {
+      "form": "kort",
+      "plural": "korte"
+    },
     "HEAVY": {
       "form": "tung",
-      "n": "tungt"
+      "n": "tungt",
+      "plural": "tunge"
     },
-    "LIGHT": [
-      "lett"
-    ],
+    "LIGHT": {
+      "form": "lett",
+      "plural": "lette"
+    },
     "DARK": {
       "form": "mørk",
-      "n": "mørkt"
+      "n": "mørkt",
+      "plural": "mørke"
     },
-    "YOUNG": [
-      "ung"
-    ],
+    "YOUNG": {
+      "form": "ung",
+      "n": "ungt",
+      "plural": "unge"
+    },
     "RIGHT": [
       "høyre"
     ],
@@ -721,9 +746,10 @@
       "n": "kaldt",
       "plural": "kalde"
     },
-    "NICE": [
-      "hyggelig"
-    ],
+    "NICE": {
+      "form": "hyggelig",
+      "plural": "hyggelige"
+    },
     "THIS": [
       "dette"
     ],

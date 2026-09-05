@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-05
 
+### Norwegian: possessives and adjectives agree; Turkish and Portuguese follow-ups
+Norwegian possessives now match their noun: «ditt hotell», «mitt rom», «mine klær», not «din hotell». An adjective after a possessive takes its definite form the way it does after "the" — «min gode mamma», «min lille pappa», «hennes hvite rom». Colours and sizes pluralise with counted nouns («åtte svarte telefoner», «grønne klær»), "a thing" is «en ting», a fresh kitchen is «et ferskt kjøkken», souvenirs lose their stray accent («suvenir»), "they start sleeping" is «De begynner å sove», and "I go from home" is the one word «hjemmefra». Turkish "we stop eating" and "they start sleeping" read as a Turk says them — «Biz yemeyi bırakırız», «Onlar uyumaya başlarlar» — and "his airport" is «havalimanını», not a double possessive. Portuguese "they" turns feminine before a feminine predicate («Elas são meninas», «Elas são as meninas dela»; Spanish and French do the same), and "he starts sleeping" no longer fuses into «começà».
+
+## 2026-09-05
+
 ### Turkish: seven grammar fixes from its first full read
 "A white book" is now «beyaz bir kitap», with the article between adjective and noun, across every sentence. Possessed objects carry their suffixes: «onun tavasını görürüm», «senin kitabını okursun», and "Is that your phone?" is «Şu senin telefonun mu?». "The book is next to the phone" reads «Kitap telefonun yanında», and "between this and that" «bununla şunun arasında». "He eats breakfast but not lunch" negates the verb properly: «ama öğle yemeği yemez». "From" and "to" are suffixes now («evden», «masaya», «menüden»), "home" is «ev», and sons and mouths drop their vowel when possessed («oğlum»). Words starting with i capitalise as İ.
 

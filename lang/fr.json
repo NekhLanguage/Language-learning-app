@@ -532,10 +532,10 @@
     "FIRST_PERSON_PLURAL": [
       "nous"
     ],
-    "THIRD_PERSON_PLURAL": [
-      "ils",
-      "elles"
-    ],
+    "THIRD_PERSON_PLURAL": {
+      "form": "ils",
+      "f": "elles"
+    },
     "ANY": [
       "n'importe quel"
     ],

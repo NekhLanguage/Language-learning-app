@@ -20,15 +20,11 @@
     "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
   },
   "no": {
-    "maxRate": 0.196,
+    "maxRate": 0.172,
     "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
   },
   "pt": {
     "maxRate": 0.157,
-    "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
-  },
-  "tr": {
-    "maxRate": 0.172,
     "note": "grandfathered 2026-08-28 at launch of the gate (Nekh: fix worst-first, bar rises 85→90)"
   }
 }

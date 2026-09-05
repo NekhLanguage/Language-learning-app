@@ -1327,9 +1327,11 @@
         "SOUR": [
           "sur"
         ],
-        "FRESH": [
-          "fersk"
-        ],
+        "FRESH": {
+          "form": "fersk",
+          "n": "ferskt",
+          "plural": "ferske"
+        },
         "FROZEN": [
           "frossen"
         ],
