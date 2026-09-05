@@ -229,7 +229,15 @@
       "olarak"
     ],
     "WATER": {
-      "form": "su"
+      "form": "su",
+      "possessed": {
+        "1s": "suyum",
+        "2s": "suyun",
+        "3s": "suyu",
+        "1p": "suyumuz",
+        "2p": "suyunuz",
+        "3p": "suları"
+      }
     },
     "FOOD": {
       "form": "yiyecek"
@@ -704,7 +712,8 @@
       "3_singular": "olur",
       "1_plural": "oluruz",
       "2_plural": "olursunuz",
-      "3_plural": "olurlar"
+      "3_plural": "olurlar",
+      "connective": ""
     },
     "BLACK": [
       "siyah"

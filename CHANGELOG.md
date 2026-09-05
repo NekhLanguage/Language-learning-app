@@ -20,6 +20,17 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-05
 
+### No more invisible tiles in the sentence builder
+A few sentence-building exercises, notably the Turkish "the book is on this" and "between this and that", showed an empty slot and an invisible tile that could only be placed by luck. Those empty pieces are gone.
+
+### Turkish: "this is my hand and that is your head"
+The two-clause sentence now keeps both possessives («Bu benim elim ve bu senin kafandır») instead of dropping the first one and adding a stray «bir». "Water" takes its proper form after a possessive («suyunu»).
+
+### Korean: "thing"
+"This is a thing" now says «물건» rather than the bound word «것» on its own.
+
+## 2026-09-05
+
 ### Korean: positions, counters, and two adverbs
 "In front of" and "inside" now carry their 에 («책 앞에», «이것 안에»), so "the shoes are inside this" no longer reads like "the shoes are not here". Houses, shoes, clothes and phones count with their own counters («집 여덟 채», «신발 열아홉 켤레», «셔츠 스무 벌», «전화 열두 대»), and twenty drops to 스무 before a counter. "I go around" and "I eat first" read «주변에 가요» and «먼저 먹어요».
 

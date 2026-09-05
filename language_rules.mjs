@@ -337,6 +337,8 @@
 //                            nominal instead of replacing the (zero) copula
 //                            — ko «이것은 제 손이고 이것은 당신의 머리예요»
 //                            (Emi run-17 -84: «그리고» for every AND).
+//                            { separatorWord: true } renders the AND word
+//                            itself between the clauses (tr «ve»).
 //   subordinateClauseFinal   the subordinate clause leads and its linker
 //                            follows it (ja «…いますので、…»); the linker
 //                            entry carries clauseFinal / clauseInitial /
@@ -1013,6 +1015,11 @@ export const LANGUAGE_RULES = {
     negativeAorist: true,
     // Sentence-initial i capitalises to İ, never I (-94: «Içmek», «Iki»).
     localeUppercase: "tr",
+    // Two copular clauses: «Bu benim elim ve bu senin kafandır» — the first
+    // clause's copula is zero (BE.connective ""), the conjunction word
+    // stays, only the last predicate takes -DIr (Emi run-19 -98: «Bu benim
+    // küçük bir el ve senin kafandır»).
+    copulaCoordination: { separatorWord: true },
   },
   uk: {
     features: {

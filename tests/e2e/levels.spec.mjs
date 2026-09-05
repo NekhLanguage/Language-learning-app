@@ -491,3 +491,19 @@ test("a concept added to an already-released bundle is backfilled", async ({ pag
   expect(result.hasTable).toBe(true);
   expect(result.again).toBe(false);
 });
+
+test("L6 sentence builder never renders a blank tile (Emi run-19 -97, Turkish locatives)", async ({ page }) => {
+  await startNewRun(page, { language: "Turkish" });
+  await seedAllConceptsAt(page, 6, { restrictTypes: ["pronoun", "verb", "noun"] });
+  // Walk a handful of builders: every chip must carry text and the slot
+  // count must equal the chip count (an empty segment used to add a slot
+  // and an invisible chip).
+  for (let i = 0; i < 6; i++) {
+    await expect(page.locator("#word-bank")).toBeVisible();
+    const chips = await page.locator("#word-bank .word-bank-chip button:not(.tts-inline)").allTextContents();
+    expect(chips.length).toBeGreaterThan(1);
+    for (const c of chips) expect(c.trim()).not.toBe("");
+    await expect(page.locator("#slot-container .sentence-slot")).toHaveCount(chips.length);
+    await page.evaluate(() => window.__app.rerender());
+  }
+});
