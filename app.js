@@ -82,7 +82,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.54";
+const APP_DATA_VERSION = "1.2.55";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1628,12 +1628,16 @@ function calculateWeightedProgress(run) {
   const allConcepts = getAllConceptsForRun(run);
   if (!allConcepts.length) return 0;
 
+  // A malformed run (no `released`) must not throw here — this runs inside
+  // the picker's map, and one bad record blanked every card (Emi run-18 -89).
+  const released = Array.isArray(run.released) ? run.released : [];
+
   let totalValue = 0;
 
   allConcepts.forEach(cid => {
 
     // Not released → 0
-    if (!run.released.includes(cid)) return;
+    if (!released.includes(cid)) return;
 
     const st = run.progress?.[cid];
 
@@ -1874,7 +1878,15 @@ function updateSupportUI(code) {
     .filter(lang => (!lang.hidden || SHOW_HIDDEN_LANGUAGES) && lang.code !== support)
     .map(lang => {
       const runForLang = USER.runs[lang.code];
-      const progress = runForLang ? calculateWeightedProgress(runForLang) : 0;
+      // One language's broken record must never take the other fourteen
+      // cards down with it (Emi run-18 -89): a throwing progress read
+      // renders that card at 0 and logs, instead of an empty picker.
+      let progress = 0;
+      try {
+        progress = runForLang ? calculateWeightedProgress(runForLang) : 0;
+      } catch (err) {
+        console.warn(`Progress unreadable for ${lang.code}:`, err);
+      }
       const name = names[lang.code] || lang.label;
       return { lang, progress, name };
     })
@@ -2193,6 +2205,7 @@ function ui(key) {
   return key;
 }
   function ensureProgress(cid) {
+  if (!run.progress || typeof run.progress !== "object") run.progress = {};
   if (!run.progress[cid]) {
     run.progress[cid] = createProgress();
   }
@@ -4699,12 +4712,23 @@ function renderAlphabetOverlay(langCode) {
   }
 
   run = USER.runs[langCode];
+  // Normalise a malformed record before anything reads it (Emi run-18
+  // -89: a run without `released` / `progress` crashed the pack START
+  // handler and the picker). The app's own writer never produces these
+  // shapes; a hand-edited or partially-written blob can.
+  if (!Array.isArray(run.released)) run.released = [];
+  if (!run.progress || typeof run.progress !== "object") run.progress = {};
   
   // 🔥 CONTENT VERSION CHECK
 if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {
   console.warn("Content version mismatch → resetting run");
 
+  // The learner's declared reason is theirs, not the content's — carry it
+  // across the reset so a re-onboarded run (or a half-built one, Emi
+  // run-18) resumes at the pack screen instead of asking "why?" again.
+  const keptReason = run.reason;
   run = createRunState();
+  if (keptReason && typeof keptReason === "object") run.reason = keptReason;
 
   USER.runs[langCode] = run;
   saveUser();

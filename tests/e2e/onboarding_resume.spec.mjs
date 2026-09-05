@@ -94,3 +94,29 @@ test("a stale render after quitting never ends a session or touches the run", as
   });
   expect(after).toEqual(before);
 });
+
+test("a malformed run (no released/progress) neither blanks the picker nor crashes START (Emi run-18 -89)", async ({ page }) => {
+  await loginAs(page);
+  await page.click("#open-app");
+  await page.evaluate(() => {
+    const user = window.__app.user;
+    user.runs = user.runs || {};
+    // Exactly the shape Emi planted: half-built, a reason, nothing else.
+    user.runs.pt = { setupComplete: false, reason: { type: "travel", detail: "", savedAt: Date.now() } };
+  });
+  // Re-render the picker with the bad record in place: every card must survive.
+  await page.fill("#language-search", "Port");
+  await expect(page.locator("#language-buttons button", { hasText: "Portuguese" })).toBeVisible();
+  await page.fill("#language-search", "");
+  const cards = await page.locator("#language-buttons button").count();
+  expect(cards).toBeGreaterThan(10);
+
+  await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
+  await expect(page.locator("#pack-screen.active")).toBeVisible();
+  await page.locator('#pack-buttons button[data-pack="everyday_life"]').click();
+  await page.click("#start-run");
+  await expect(page.locator("#roadmap-screen.active")).toBeVisible();
+  await page.click("#roadmap-continue");
+  await expect(page.locator("#learning-screen.active")).toBeVisible();
+  await expect(page.locator("#content h2")).toBeVisible();
+});

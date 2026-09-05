@@ -175,13 +175,13 @@
       "옆에"
     ],
     "FRONT": [
-      "앞"
+      "앞에"
     ],
     "BEHIND": [
       "뒤에"
     ],
     "IN": [
-      "안"
+      "안에"
     ],
     "ON": [
       "위에"
@@ -238,7 +238,8 @@
       "form": "음식"
     },
     "HOUSE": {
-      "form": "집"
+      "form": "집",
+      "counter": "채"
     },
     "HOME": {
       "form": "집"
@@ -331,22 +332,27 @@
       "form": "저녁식사"
     },
     "CLOTHES": {
-      "form": "옷"
+      "form": "옷",
+      "counter": "벌"
     },
     "SHIRT": {
-      "form": "셔츠"
+      "form": "셔츠",
+      "counter": "벌"
     },
     "SHOES": {
-      "form": "신발"
+      "form": "신발",
+      "counter": "켤레"
     },
     "TABLE": {
       "form": "테이블"
     },
     "PHONE": {
-      "form": "전화"
+      "form": "전화",
+      "counter": "대"
     },
     "PANTS": {
-      "form": "바지"
+      "form": "바지",
+      "counter": "벌"
     },
     "ONE": [
       "하나"
@@ -694,7 +700,7 @@
       "지금"
     ],
     "BEFORE": [
-      "전"
+      "먼저"
     ],
     "AFTER": [
       "후"
@@ -721,7 +727,7 @@
       "모두"
     ],
     "AROUND": [
-      "주변"
+      "주변에"
     ],
     "THANKS": [
       "감사합니다"

@@ -15,6 +15,14 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-05
 
+### Korean: positions, counters, and two adverbs
+"In front of" and "inside" now carry their 에 («책 앞에», «이것 안에»), so "the shoes are inside this" no longer reads like "the shoes are not here". Houses, shoes, clothes and phones count with their own counters («집 여덟 채», «신발 열아홉 켤레», «셔츠 스무 벌», «전화 열두 대»), and twenty drops to 스무 before a counter. "I go around" and "I eat first" read «주변에 가요» and «먼저 먹어요».
+
+### A damaged language record no longer hides every language
+If one language's saved record is malformed, the language picker used to come up empty and the start button could fail. Now that language still shows, opens onto its setup screens, and rebuilds itself, while the other languages are untouched. Your saved "why this language" answer also survives a content reset.
+
+## 2026-09-05
+
 ### Greek and Spanish leave beta
 Both languages have now been read end to end on fresh accounts with every reported issue verified fixed in the live exercises, so the BETA tag comes off their picker cards. Nothing else changes.
 
