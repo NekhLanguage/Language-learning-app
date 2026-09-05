@@ -758,9 +758,11 @@ export const LANGUAGE_RULES = {
     // universal default. Native numerals take their determiner form
     // before a counter — the replacements apply to the numeral's final
     // syllable(s), so compounds inflect too (열넷 → 열네).
+    // 스물 apocopates too («스무 개», never «스물 개» — Emi run-18 -87);
+    // it is listed after 하나…넷 so 스물하나 still resolves to 스물한.
     counters: {
       default: "개",
-      numeralModifiers: { "하나": "한", "둘": "두", "셋": "세", "넷": "네" },
+      numeralModifiers: { "하나": "한", "둘": "두", "셋": "세", "넷": "네", "스물": "스무" },
     },
   },
   zh: {

@@ -1542,6 +1542,27 @@ test("ko: a verb that incorporates its object leaves the noun bare (Emi run-17 -
   assert.equal(buildSentence("ko", tplById("I_PHOTOGRAPH_MONUMENT")), "저는 기념비 사진을 찍어요.");
 });
 
+// ---------------------------------------------------------------------
+// Emi run-18: ko -86 / -87 / -88 residuals after the run-17 batch.
+// ---------------------------------------------------------------------
+
+test("ko: 앞 and 안 carry 에 like every other position (Emi run-18 -86)", () => {
+  assert.equal(buildSentence("ko", tplById("PHONE_IN_FRONT_OF_BOOK")), "전화는 책 앞에 있어요.");
+  assert.equal(buildSentence("ko", tplById("SHOES_IN_THIS")), "신발은 이것 안에 있어요.");
+});
+
+test("ko: per-noun counters for houses, shoes, clothes, phones; 스물 → 스무 (Emi run-18 -87)", () => {
+  assert.equal(buildSentence("ko", tplById("I_SEE_HOUSE"), "EIGHT", {}), "저는 집 여덟 채를 봐요.");
+  assert.equal(buildSentence("ko", tplById("SHE_HAS_SHOES"), "NINETEEN", {}), "그녀는 신발 열아홉 켤레가 있어요.");
+  assert.equal(buildSentence("ko", tplById("I_HAVE_SHIRT"), "TWENTY", {}), "저는 셔츠 스무 벌이 있어요.");
+  assert.equal(buildSentence("ko", tplById("I_USE_PHONE"), "TWELVE", {}), "저는 전화 열두 대를 사용해요.");
+});
+
+test("ko: adverbial glue — 주변에 가요, 먼저 먹어요 (Emi run-18 -88)", () => {
+  assert.equal(buildSentence("ko", tplById("I_GO_AROUND")), "저는 주변에 가요.");
+  assert.equal(buildSentence("ko", tplById("I_EAT_BEFORE")), "저는 먼저 먹어요.");
+});
+
 test("ko: numeral + counter follow the noun, particle lands on the counter", () => {
   const tpl = tplById("YOU_READ_BOOK");
   assert.equal(buildSentence("ko", tpl, "FOUR", {}), "당신은 책 네 권을 읽어요.");
