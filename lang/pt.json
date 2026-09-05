@@ -164,16 +164,10 @@
     },
     "HIS": {
       "form": "dele",
-      "f": "dele",
-      "plural": "deles",
-      "fp": "delas",
       "postposed": true
     },
     "HER": {
       "form": "dela",
-      "f": "dela",
-      "plural": "deles",
-      "fp": "delas",
       "postposed": true
     },
     "OUR": {
@@ -184,9 +178,6 @@
     },
     "THEIR": {
       "form": "deles",
-      "f": "delas",
-      "plural": "deles",
-      "fp": "delas",
       "postposed": true
     },
     "AND": [
@@ -558,12 +549,10 @@
       "nosso",
       "nossa"
     ],
-    "THIRD_PERSON_PLURAL": [
-      "eles",
-      "elas",
-      "deles",
-      "delas"
-    ],
+    "THIRD_PERSON_PLURAL": {
+      "form": "eles",
+      "f": "elas"
+    },
     "THIS": {
       "form": "este",
       "f": "esta",

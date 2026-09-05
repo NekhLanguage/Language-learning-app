@@ -215,8 +215,21 @@
 //                            (tpl.surface[lang][cid]) is the correct finite
 //                            form and wins over the paradigm/base lookup —
 //                            ja «帰ります» in "I go home", «やめます» in
-//                            "we stop eating". Complement verbs after a
-//                            control verb already read the override.
+//                            "we stop eating", tr «bırakırız». Complement
+//                            verbs after a control verb already read the
+//                            override. A person-inflected paradigm (tr)
+//                            falls back to it when the app rotated the
+//                            subject away from the authored one.
+//   definiteAdjectiveAfterPossessive
+//                            an attributive adjective after a possessive
+//                            takes its definite (weak) form — the entry's
+//                            `definite` field, else its `plural` (no «min
+//                            gode mamma», «min lille pappa»).
+//   fusedAdpositionForms     a noun entry's `fused: { <glue id, lower
+//                            case>: form }` gives the one word that absorbs
+//                            a preceding adposition (no HOME fused.from
+//                            «hjemmefra»); the adposition's slot renders
+//                            empty.
 //   postposedAdpositions     adpositions follow their noun phrase (ja
 //                            «家から行きます», «テーブルに行きます») — the
 //                            SOV ordering emits noun before glue.
@@ -864,6 +877,18 @@ export const LANGUAGE_RULES = {
     },
     indefiniteArticle: true,
     inflectsNounPlural: true, latinEncodingChecks: true,
+    // ── Emi run-20 (-112 … -117), Norwegian's first read ──
+    // An attributive adjective after a possessive takes the definite -e
+    // (the weak form, as after den/det/de): «min gode mamma», «hennes
+    // hvite rom», «ditt hvite hode» — never «min god mamma» (-112: 12 of
+    // 12). The form coincides with the plural; `definite` on the entry
+    // wins where they differ (liten → lille / små). Possessive and
+    // adjective gender/number agreement (-113/-114/-115) is data:
+    // min/mitt/mine, din/ditt/dine, vår/vårt/våre; svarte, hvite …
+    definiteAdjectiveAfterPossessive: true,
+    // A noun's `fused` map absorbs a preceding adposition into one word:
+    // «Jeg går hjemmefra», never «fra hjem» (-117).
+    fusedAdpositionForms: true,
   },
   pl: {
     features: {
@@ -1013,6 +1038,15 @@ export const LANGUAGE_RULES = {
     // A possessed direct object carries the possessive suffix AND the
     // accusative: «onun tavasını görürüm», «senin kitabını okursun» (-91).
     possessedObjectCase: "accusative",
+    // ── Emi run-20 ──
+    // Control chains read their authored surfaces: the complement is a
+    // verbal noun in the case the main verb governs («yemeyi», «uyumaya»)
+    // and the main verb is the authored aorist («Biz yemeyi bırakırız»,
+    // «Onlar uyumaya başlarlar») — the paradigm lookup was conjugating
+    // both («Biz yeriz bırakırız», -110). The main verb re-conjugates from
+    // its paradigm when the app rotates the subject (the surface belongs
+    // to the authored subject: «O uyumaya başlar», never «başlarlar»).
+    authoredVerbSurfaces: true,
     // FROM / TO are case endings, not words: «evden giderim», «masaya
     // giderim» (-95: «Ben dan menü sipariş ediyorum»).
     caseMarking: {

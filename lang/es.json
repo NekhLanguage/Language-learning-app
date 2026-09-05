@@ -521,10 +521,10 @@
     "FIRST_PERSON_PLURAL": [
       "nosotros"
     ],
-    "THIRD_PERSON_PLURAL": [
-      "ellos",
-      "ellas"
-    ],
+    "THIRD_PERSON_PLURAL": {
+      "form": "ellos",
+      "f": "ellas"
+    },
     "ANY": [
       "cualquier"
     ],
