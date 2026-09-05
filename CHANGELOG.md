@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-05
 
+### Greek and Spanish leave beta
+Both languages have now been read end to end on fresh accounts with every reported issue verified fixed in the live exercises, so the BETA tag comes off their picker cards. Nothing else changes.
+
+## 2026-09-05
+
 ### Korean: four sentence patterns now read like Korean
 "He eats breakfast but not lunch" now comes out as «그는 아침식사를 먹지만 점심식사는 안 먹어요», with the connector on the verb and a proper negation, instead of a raw dictionary word in the middle of the sentence. "The book is next to the phone" is now «책은 전화 옆에 있어요», with the particle and the verb the old version dropped. "We stop eating" and "they start sleeping" use the right nominalised form («먹는 것을 멈춰요», «자기 시작해요»). "I eat and drink" joins the verbs with -고 («먹고 마셔요»), and "this is my hand and this is your head" joins the clauses with 이고. Verbs that carry their own object, like peeling and photographing, no longer double up the object particle («감자 껍질을 벗겨요»). The dictionary copula no longer appears as a wrong-answer tile.
 
