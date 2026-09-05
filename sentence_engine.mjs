@@ -765,7 +765,11 @@ function buildTrHavePossession(tpl) {
   const concepts = tpl?.concepts || [];
   const subjectCid = concepts.find(c => TR_POSSESSOR_KEY[c]);
   const objectCid = concepts.find(c =>
-    vocab().concepts?.[c]?.type === "noun"
+    vocab().concepts?.[c]?.type === "noun" ||
+    // «Benim bir şeyim var» — the indefinite quantifier possesses like a
+    // noun (Emi run-18 LOW: «Ben bir şey sahip olurum»).
+    (vocab().concepts?.[c]?.type === "quantifier" &&
+      vocab().concepts?.[c]?.semantic_role === "entity_indefinite")
   );
   if (!subjectCid || !objectCid) return null;
 
@@ -775,7 +779,7 @@ function buildTrHavePossession(tpl) {
   const insertBir = tpl?.tr?.insertBir === true;
 
   noteRule("have_existential");
-  const parts = [capitalizeFirst(possessor)];
+  const parts = [capitalizeFirst(possessor, "tr")];
   if (insertBir) parts.push("bir");
   parts.push(possessed, "var");
   return parts.join(" ") + ".";
@@ -952,6 +956,11 @@ function caseFormFor(lang, cid, caseName) {
   if (entry && !Array.isArray(entry) && typeof entry === "object" &&
       typeof entry[caseName] === "string") {
     return entry[caseName];
+  }
+  // Declared derivation (derivedCases "tr"): the suffix paradigm builds
+  // the case from the citation form when no field is authored.
+  if (langRuleValue(lang, "derivedCases") === "tr") {
+    return trCaseSuffix(formOf(lang, cid), caseName);
   }
   return null;
 }
@@ -1740,6 +1749,23 @@ function preverbalAdjunctOrder(lang, ordered) {
             formOf(targetLang, targetConcept));
           if (fused) return fused;
         }
+        // Suffixal possession (tr): the blank holds the possessed (and, as
+        // an object, accusative) form the sentence renders.
+        if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive") {
+          // A governing adposition's case wins over object position
+          // («onun odasına», not «odasını»), as in the render path.
+          const governedCase = caseMap(targetLang, ordered)[idx] || null;
+          const isObj = !governedCase && isDirectObjectPosition(ordered, idx, targetLang);
+          const suffixed = trPossessedNoun(targetLang, ordered[idx - 1], targetConcept,
+            governedCase || (isObj ? (langRuleValue(targetLang, "possessedObjectCase") || null) : null));
+          if (suffixed) return suffixed;
+        }
+        // A locativeGenitive landmark carries its case (tr «telefonun»).
+        {
+          const lmCase = locativeLandmarkCase(targetLang, tpl, targetConcept);
+          const declined = lmCase ? caseFormFor(targetLang, targetConcept, lmCase) : null;
+          if (declined) return declined;
+        }
         const isCopularTpl = ordered.some(c =>
           c === "BE" || vocab().concepts[c]?.semantic_role === "copula");
         const predCase = predicateNounCaseFor(
@@ -1788,6 +1814,13 @@ function preverbalAdjunctOrder(lang, ordered) {
       }
     }
 
+    // A locativeGenitive landmark pronoun carries its case (tr «bununla»,
+    // «şunun») — mirror of locativeGenitiveSegments.
+    if (meta.type === "pronoun") {
+      const lmCase = locativeLandmarkCase(targetLang, tpl, targetConcept);
+      const declined = lmCase ? caseFormFor(targetLang, targetConcept, lmCase) : null;
+      if (declined) return declined;
+    }
     // A direct-object pronoun/demonstrative blank holds the object-case
     // form the sentence renders (fi «tämän») — mirror of the render path.
     if (meta.type === "pronoun" &&
@@ -1881,6 +1914,25 @@ function preverbalAdjunctOrder(lang, ordered) {
       // guerrière», "Sie ist eine Kriegerin").
       return { position: "predicateNoun", caseName: null, feminineSubject };
     }
+    // Suffixal possession (tr): tiles carry the possessor's person suffix
+    // (+ accusative in object position), like the blank.
+    if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive" &&
+        langRule(targetLang, "possessiveSuffixes") &&
+        langRuleValue(targetLang, "derivedCases") === "tr") {
+      const key = TR_POSSESSIVE_KEY[ordered[idx - 1]];
+      if (key) {
+        const governedCase = caseMap(targetLang, ordered)[idx] || null;
+        const isObj = !governedCase && isDirectObjectPosition(ordered, idx, targetLang);
+        return {
+          position: governedCase ? "prepObject" : (isObj ? "directObject" : "other"),
+          caseName: governedCase ||
+            (isObj ? (langRuleValue(targetLang, "possessedObjectCase") || null) : null),
+          possessorKey: key,
+        };
+      }
+    }
+    const lmCase = locativeLandmarkCase(targetLang, tpl, targetConcept);
+    if (lmCase) return { position: "prepObject", caseName: lmCase };
     const prepCase = caseMap(targetLang, ordered)[idx];
     if (prepCase) return { position: "prepObject", caseName: prepCase };
     // SOV-aware object detection (the render's particle attach uses the
@@ -2021,6 +2073,15 @@ function preverbalAdjunctOrder(lang, ordered) {
     // same form the blank holds.
     if (slot?.position === "possessedExistential" && slot.possessorKey) {
       return trPossessedForm(cid, slot.possessorKey);
+    }
+    // A possessed slot (tr): every tile carries the person suffix, and the
+    // accusative in object position («tavasını» / «kitabını»).
+    if (slot?.possessorKey && langRuleValue(targetLang, "derivedCases") === "tr") {
+      const possessed = trPossessedForm(cid, slot.possessorKey);
+      if (!possessed) return null;
+      return slot.caseName
+        ? trCaseSuffix(possessed, slot.caseName, { afterPossessive: slot.possessorKey })
+        : possessed;
     }
     // Feminitive predicate after a feminine subject — the same rule
     // safeSurfaceForConcept applies to the blank («guerrière», never the
@@ -2400,8 +2461,15 @@ function buildSameTypeOptions(targetConcept, desiredTotal = 4, targetLang = null
 
   return shuffle([targetConcept, ...shuffle(pool).slice(0, desiredTotal - 1)]);
 }
-function capitalizeFirst(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+// Locale-aware where declared (localeUppercase — tr i → İ, Emi run-18
+// -94); the plain toUpperCase everywhere else.
+function capitalizeFirst(str, lang = null) {
+  if (!str) return str;
+  const locale = lang ? langRuleValue(lang, "localeUppercase") : null;
+  const first = locale
+    ? str.charAt(0).toLocaleUpperCase(locale)
+    : str.charAt(0).toUpperCase();
+  return first + str.slice(1);
 }
 
 // Thai writes without spaces between words — joins are spaceless there.
@@ -2410,8 +2478,8 @@ function joinWords(lang, words) {
   return words.filter(Boolean).join(SPACELESS_JOIN_LANGS.has(lang) ? "" : " ");
 }
 
-function joinSentence(words, punctuation = ".") {
-  return capitalizeFirst(words.filter(Boolean).join(" ")) + punctuation;
+function joinSentence(words, punctuation = ".", lang = null) {
+  return capitalizeFirst(words.filter(Boolean).join(" "), lang) + punctuation;
 }
 
 // French obligatory elision/contraction, applied as a final pass to an assembled
@@ -2781,6 +2849,13 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subje
   if (reflexivePossessiveApplies(lang, possessiveCid, subjectCid)) {
     const suffixed = possessed3Form(lang, nounCid, caseName);
     if (suffixed) return suffixed;
+  }
+  // Suffixal possession with a derived case paradigm (tr): «senin
+  // telefonun», «onun tavasını» — the possessive word stays, the noun
+  // carries person and case (Emi run-18 -91).
+  {
+    const suffixed = trPossessedNoun(lang, possessiveCid, nounCid, caseName);
+    if (suffixed) return `${formOf(lang, possessiveCid)} ${suffixed}`;
   }
   let noun = formOf(lang, nounCid);
   if (langRuleValue(lang, "caseMarking")) {
@@ -3181,6 +3256,115 @@ function turkishPersonalCopulaSuffix(word, person, plural) {
   return plural ? word + "s" + I + "n" + I + "z" : word + "s" + I + "n";
 }
 
+// ── Turkish case suffixes (declared: derivedCases "tr" — Emi run-18) ──────
+// The demonstratives take an -n stem before every suffix: bu → bunu /
+// bunun / buna / bundan / bununla.
+const TR_DEMONSTRATIVE_STEMS = { bu: "bun", "şu": "şun", o: "on" };
+
+// One case suffix on a citation form (or, with opts.afterPossessive, on an
+// already-possessed form: 3s/3p take the -n buffer — «tavasını»; the other
+// persons end in a consonant — «kitabımı»). Four-way harmony from the
+// word's last vowel, two-way (a/e) for the dative/ablative/locative/
+// instrumental vowel, final-stop softening before a vowel-initial suffix,
+// -t after a voiceless final («kitaptan»). Null when there is no vowel to
+// harmonise with or the case is unknown, so callers fall through.
+function trCaseSuffix(word, caseName, opts = {}) {
+  if (!word || typeof word !== "string") return null;
+  const I = trHarmonyVowel(word);
+  if (!I) return null;
+  const A = (I === "i" || I === "ü") ? "e" : "a";
+  const lower = word.toLowerCase();
+  const last = lower[lower.length - 1];
+  const poss = opts.afterPossessive || null;
+  if (poss) {
+    const base = (poss === "3s" || poss === "3p") ? word + "n" : word;
+    switch (caseName) {
+      case "accusative": return base + I;
+      case "genitive": return base + I + "n";
+      case "dative": return base + A;
+      case "ablative": return base + "d" + A + "n";
+      case "locative": return base + "d" + A;
+      default: return null;
+    }
+  }
+  // A multi-word noun ending in a vowel is an izafet compound whose last
+  // word already carries the 3s suffix («spor salonu», «öğle yemeği») —
+  // case attaches with the n buffer: «spor salonuna», «öğle yemeğine».
+  if (lower.includes(" ") && "ıiuü".includes(last)) {
+    return trCaseSuffix(word, caseName, { afterPossessive: "3s" });
+  }
+  const stem = TR_DEMONSTRATIVE_STEMS[lower] || null;
+  const vowelFinal = TR_VOWELS.has(last);
+  const voiceless = TR_VOICELESS_CONSONANTS.has(last);
+  switch (caseName) {
+    case "accusative":
+      if (stem) return stem + I;
+      return vowelFinal ? word + "y" + I : trSoftenFinal(word) + I;
+    case "genitive":
+      if (stem) return stem + I + "n";
+      return vowelFinal ? word + "n" + I + "n" : trSoftenFinal(word) + I + "n";
+    case "dative":
+      if (stem) return stem + A;
+      return vowelFinal ? word + "y" + A : trSoftenFinal(word) + A;
+    case "ablative":
+      if (stem) return stem + "d" + A + "n";
+      return word + (voiceless ? "t" : "d") + A + "n";
+    case "locative":
+      if (stem) return stem + "d" + A;
+      return word + (voiceless ? "t" : "d") + A;
+    case "instrumental":
+      if (stem) return stem + I + "nl" + A;
+      return vowelFinal ? word + "yl" + A : word + "l" + A;
+    default:
+      return null;
+  }
+}
+
+// Possessive concept → possessive-suffix person key (MY «benim» → 1s …).
+const TR_POSSESSIVE_KEY = {
+  MY: "1s", YOUR: "2s", HIS: "3s", HER: "3s", ITS: "3s",
+  OUR: "1p", YOUR_PLURAL: "2p", THEIR: "3p",
+};
+
+// A possessed noun in a language whose possessives are suffixes with a
+// derived case paradigm (tr): «tavası», and with caseName «tavasını» /
+// «evime». Null outside that language shape so every other path is
+// untouched. Emi run-18 -91: «Ben onun tava görürüm», 16 of 16 bare.
+function trPossessedNoun(lang, possessiveCid, nounCid, caseName = null) {
+  if (!langRule(lang, "possessiveSuffixes") ||
+      langRuleValue(lang, "derivedCases") !== "tr") return null;
+  const key = TR_POSSESSIVE_KEY[possessiveCid];
+  if (!key) return null;
+  const possessed = trPossessedForm(nounCid, key);
+  if (!possessed) return null;
+  if (!caseName) return possessed;
+  return trCaseSuffix(possessed, caseName, { afterPossessive: key });
+}
+
+// The aorist negative for a subject (declared: negativeAorist — tr):
+// yemek → yemem / yemezsin / yemez / yemeyiz / yemezsiniz / yemezler;
+// okumak → okumam / … / okumaz. Null when the base is not a -mek/-mak
+// infinitive.
+function trNegativeAorist(base, subjectCid) {
+  if (typeof base !== "string") return null;
+  const m = base.match(/^(.*?)(mek|mak)$/);
+  if (!m) return null;
+  const stem = m[1];
+  const V = trHarmonyVowel(stem);
+  if (!V) return null;
+  const front = V === "i" || V === "ü";
+  const e = front ? "e" : "a";
+  const I = front ? "i" : "ı";
+  switch (TR_POSSESSOR_KEY[subjectCid] || "3s") {
+    case "1s": return stem + "m" + e + "m";
+    case "2s": return stem + "m" + e + "zs" + I + "n";
+    case "1p": return stem + "m" + e + "y" + I + "z";
+    case "2p": return stem + "m" + e + "zs" + I + "n" + I + "z";
+    case "3p": return stem + "m" + e + "zl" + e + "r";
+    default: return stem + "m" + e + "z";
+  }
+}
+
 // ── Nominal particles + suffixal copula (language_rules nominalParticles /
 // copulaSuffix — ko, with ja's は/を insertion generalized onto the same
 // declaration) ─────────────────────────────────────────────────────────────
@@ -3414,6 +3598,10 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
     }
     const declined = applyAdjectiveDeclension(
       lang, preAdjective, article, nounGender, opts.caseName);
+    // Declared articleAfterAdjective (tr): «beyaz bir kitap».
+    if (langRule(lang, "articleAfterAdjective")) {
+      return `${declined}${adjectiveLinker(lang, adjectiveCid)} ${article} ${bare}`;
+    }
     return `${article} ${declined}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
   }
   return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
@@ -3443,9 +3631,9 @@ function buildCopularDemonstrative(lang, subjectCid, beCid, adjectiveCid, nounCi
   // Zero-copula SOV languages (ko/tr) render `be` empty and keep the
   // legacy shape — their suffix machinery splices onto the final word.
   if (langRuleValue(lang, "wordOrder") === "SOV" && be) {
-    return joinSentence([topicMarkedSubject(lang, subject), complement, be]);
+    return joinSentence([topicMarkedSubject(lang, subject), complement, be], ".", lang);
   }
-  return joinSentence([subject, be, complement]);
+  return joinSentence([subject, be, complement], ".", lang);
 }
 
 function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounCid) {
@@ -3486,7 +3674,7 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
       const last = words.filter(Boolean).slice(-1)[0] || "";
       if (finalParticle.harmony === "trMI") {
         const v = trHarmonyVowel(last) || "i";
-        return capitalizeFirst(joinWords(lang, words)) +
+        return capitalizeFirst(joinWords(lang, words), lang) +
           " m" + v + (finalParticle.terminator || "");
       }
     }
@@ -3512,7 +3700,7 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
   const words = (particle || langRule(lang, "statementOrderQuestion"))
     ? [particle || "", subject, be, complement]
     : [beFronted, subject, complement];
-  return capitalizeFirst(words.filter(Boolean).join(" ") + "?");
+  return capitalizeFirst(words.filter(Boolean).join(" ") + "?", lang);
 }
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
   const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
@@ -3665,12 +3853,12 @@ function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subo
   }
 
   if (subordinateFirst) {
-    return capitalizeFirst(`${linker} ${subClause}, ${mainClause}.`);
+    return capitalizeFirst(`${linker} ${subClause}, ${mainClause}.`, lang);
   }
 
   // Trailing subordinate clause: the MAIN clause leads ("He eats dinner
   // with his mom because he is home"), the linker + subordinate follow.
-  return capitalizeFirst(`${mainClause} ${linker} ${subClause}.`);
+  return capitalizeFirst(`${mainClause} ${linker} ${subClause}.`, lang);
 }
 // `sharedChoices` (optional) is a per-noun cache of randomly-injected
 // modifiers, keyed by noun cid. When two languages render the same template
@@ -3777,7 +3965,7 @@ if (tpl.structure?.type === "complex_clause") {
   if (!segments) return "";
   if (lang === "ja") return segments.map(s => s.text).join("");
   let sentence = joinWords(lang, segments.map(s => s.text));
-  sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1);
+  sentence = capitalizeFirst(sentence, lang);
   return sentence + ".";
 }
 
@@ -3866,7 +4054,13 @@ function contrastiveNegationSegments(lang, tpl) {
     ];
   }
   if (spec.negatedVerbForm) {
-    const negative = vocab().languages?.[lang]?.forms?.[verb]?.negative;
+    const verbEntry = vocab().languages?.[lang]?.forms?.[verb];
+    // A declared negativeAorist (tr) derives the person-marked negative
+    // from the dictionary form when the entry carries none.
+    const negative = typeof verbEntry?.negative === "string"
+      ? verbEntry.negative
+      : (langRule(lang, "negativeAorist")
+          ? trNegativeAorist(verbEntry?.base, subject) : null);
     if (typeof negative !== "string") return null;
     const particles = langRuleValue(lang, "nominalParticles");
     const standalone = particles && !particles.attach;
@@ -3940,6 +4134,66 @@ function locativeExistentialSegments(lang, tpl) {
   return segs;
 }
 
+// Spatial relations for languages declaring locativeGenitive (tr):
+// [head] [landmark-GEN] [possessed postposition], two landmarks as
+// instrumental + genitive — «Kitap telefonun yanında», «Kitap bununla şunun
+// arasında» (Emi run-18 -92: «Telefon önünde kitap.», 8 of 8). Zero copula.
+// Null when the rule, the shape, or a case form is missing.
+function locativeGenitiveSegments(lang, tpl) {
+  if (!langRule(lang, "locativeGenitive") ||
+      !RELATIONAL_STRUCTURES.has(tpl?.structure?.type)) return null;
+  const c = tpl.concepts || [];
+  const head = c[0];
+  if (!["noun", "time", "pronoun"].includes(vocab().concepts?.[head]?.type)) return null;
+  const isPosition = (x) => {
+    const m = vocab().concepts?.[x];
+    return m?.type === "position" ||
+      (m?.type === "glue" && m?.semantic_role === "spatial_relation");
+  };
+  const posIdx = c.findIndex(isPosition);
+  if (posIdx === -1) return null;
+  const landmarks = c.slice(posIdx + 1).filter(x =>
+    ["noun", "pronoun", "time"].includes(vocab().concepts?.[x]?.type));
+  if (!landmarks.length) return null;
+  const segs = [{ cid: head, text: formOf(lang, head) }];
+  const conjCid = c.find(x => isConjunctionConcept(x)) || null;
+  if (landmarks.length === 1) {
+    const gen = caseFormFor(lang, landmarks[0], "genitive");
+    if (!gen) return null;
+    segs.push({ cid: landmarks[0], text: gen });
+  } else {
+    const ins = caseFormFor(lang, landmarks[0], "instrumental");
+    const gen = caseFormFor(lang, landmarks[1], "genitive");
+    if (!ins || !gen) return null;
+    segs.push({ cid: landmarks[0], text: ins });
+    if (conjCid) segs.push({ cid: conjCid, text: "" });
+    segs.push({ cid: landmarks[1], text: gen });
+  }
+  segs.push({ cid: c[posIdx], text: formOf(lang, c[posIdx]) });
+  const be = c.find(x => isCopulaConcept(x));
+  if (be) segs.push({ cid: be, text: "" });
+  return segs;
+}
+
+// The case a landmark carries in a locativeGenitive template (mirror for
+// blanks and tiles): genitive, or instrumental for the first of two.
+function locativeLandmarkCase(lang, tpl, cid) {
+  if (!langRule(lang, "locativeGenitive") ||
+      !RELATIONAL_STRUCTURES.has(tpl?.structure?.type)) return null;
+  const c = tpl.concepts || [];
+  const posIdx = c.findIndex((x) => {
+    const m = vocab().concepts?.[x];
+    return m?.type === "position" ||
+      (m?.type === "glue" && m?.semantic_role === "spatial_relation");
+  });
+  if (posIdx === -1) return null;
+  const landmarks = c.slice(posIdx + 1).filter(x =>
+    ["noun", "pronoun", "time"].includes(vocab().concepts?.[x]?.type));
+  const i = landmarks.indexOf(cid);
+  if (i === -1) return null;
+  return landmarks.length > 1 && i === 0 ? "instrumental" : "genitive";
+}
+
 // "X is A and Y is B" for languages declaring copulaCoordination (ja): each
 // clause renders through renderSegments on its own, the first clause's
 // copula becomes the connective form (BE.connective — で), and the declared
@@ -3989,7 +4243,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   if (coordinated) return coordinated;
   const contrastive = contrastiveNegationSegments(lang, tpl);
   if (contrastive) return contrastive;
-  const locative = locativeExistentialSegments(lang, tpl);
+  const locative = locativeExistentialSegments(lang, tpl) ||
+    locativeGenitiveSegments(lang, tpl);
   if (locative) return locative;
   const ordered = orderedConceptsForTemplate(tpl, lang);
   if (!ordered || !ordered.length) return null;
@@ -4185,6 +4440,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const governedForm = caseFormFor(lang, cid, caseAt[idx]);
   if (governedForm) {
     noteRule("prepositional_case");
+    // A possessed governed noun keeps its person suffix under the case
+    // (tr «onun odasına», never «onun odaya» — run-18 -91/-95).
+    if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive") {
+      const suffixed = trPossessedNoun(lang, ordered[idx - 1], cid, caseAt[idx]);
+      if (suffixed) return suffixed;
+    }
     return governedForm;
   }
 
@@ -4315,6 +4576,20 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   }
   const possessedCase = (ukObjectCase || governedAccusative) && !possessedPlural
     ? "accusative" : (caseAt[idx] || null);
+  // Suffixal possession with a derived case paradigm (tr): the possessed
+  // noun carries person, and as a direct object the accusative — «senin
+  // kitabını okursun», «benim elimdir» (Emi run-18 -91). The possessive
+  // word renders in its own slot.
+  if (precededByPossessive && !possessedPlural) {
+    // An authored per-template surface («başın») still wins below.
+    const authored = tpl.surface?.[lang]?.[cid];
+    const authoredDiffers = typeof authored === "string" && authored !== formOf(lang, cid);
+    const objCase = isObject
+      ? (langRuleValue(lang, "possessedObjectCase") || null)
+      : (caseAt[idx] || null);
+    const suffixed = authoredDiffers ? null : trPossessedNoun(lang, ordered[idx - 1], cid, objCase);
+    if (suffixed) return suffixed;
+  }
   // Suffixal possessors (declared: possessiveSuffix — ar): the noun slot
   // renders the fused form («يدي», «غرفتها») and the possessive slot
   // renders empty, mirroring the enclitic split below.
@@ -4934,13 +5209,25 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // The attributive linker rides here too — the classifier phrase
       // («一本书») is this branch's "article" for zh: «一本容易的书».
       const linked = adjForm + adjectiveLinker(lang, adjectiveCid);
-      phrase = article.endsWith("'")
-        ? article + linked + " " + bare
-        : article + " " + linked + " " + bare;
+      phrase = langRule(lang, "articleAfterAdjective")
+        // «beyaz bir kitap» (tr, Emi run-18 -90): the article follows.
+        ? linked + " " + article + " " + bare
+        : article.endsWith("'")
+          ? article + linked + " " + bare
+          : article + " " + linked + " " + bare;
     } else {
       // No article: "big water" (German strong declension and apocope
       // already applied to adjForm above — «neues Wasser»)
       phrase = adjForm + adjectiveLinker(lang, adjectiveCid) + " " + bare;
+    }
+    // An injected possessive on a tr noun: «onun tavasını görürüm» — the
+    // same suffix + case a template-carried possessive gets (run-18 -91).
+    if (adjectiveIsPossessive) {
+      const objCase = isObject
+        ? (langRuleValue(lang, "possessedObjectCase") || null)
+        : (caseAt[idx] || null);
+      const suffixed = trPossessedNoun(lang, adjectiveCid, cid, objCase);
+      if (suffixed) phrase = `${adjForm} ${suffixed}`;
     }
   }
 
@@ -5506,6 +5793,8 @@ export {
   PLURAL_EXCEPTIONS,
   pluralize,
   trPossessiveSuffix,
+  trCaseSuffix,
+  trNegativeAorist,
   turkishPersonalCopulaSuffix,
   copularGenderClash,
   templateGenderClash,

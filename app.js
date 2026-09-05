@@ -82,7 +82,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.55";
+const APP_DATA_VERSION = "1.2.56";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -2615,10 +2615,11 @@ return tpl;
     isFeatureAvailable("speech_practice", { target: targetLang, support: supportLang }) &&
     speechRecognitionAvailable();
 
-  const headword = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+  // Locale-aware for the target word (tr «İçmek», never «Içmek» — Emi run-18 -94).
+  const headword = (s, lang) => s ? capitalizeFirst(s, lang) : s;
   content.innerHTML = `
-    <h2>${safe(headword(formOf(targetLang, targetConcept)))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
-    <p>${safe(headword(formOf(supportLang, targetConcept)))}</p>
+    <h2>${safe(headword(formOf(targetLang, targetConcept), targetLang))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
+    <p>${safe(headword(formOf(supportLang, targetConcept), supportLang))}</p>
     ${wordNote ? `<p class="word-note">${ICON_SPARK} ${safe(wordNote)}</p>` : ""}
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
@@ -4263,7 +4264,7 @@ if (tileSegments && tileSegments.length) {
       // sentence rather than re-joining lowercased tiles.
       const correctSentence = tileSegments && tileSegments.length
         ? safe(buildSentence(targetLang, tpl, null, sharedChoices))
-        : capitalizeFirst(correctWords.join(" ")) + ".";
+        : capitalizeFirst(correctWords.join(" "), targetLang) + ".";
       revealCorrectAnswerBanner(correctSentence, targetLang);
 
       checkL6Btn.disabled = false;
