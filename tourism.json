@@ -934,7 +934,8 @@
           "3_singular": "embarca",
           "1_plural": "embarcamos",
           "2_plural": "embarcam",
-          "3_plural": "embarcam"
+          "3_plural": "embarcam",
+          "governedPreposition": "em"
         },
         "RESERVE": {
           "base": "reservar",

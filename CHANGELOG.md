@@ -20,6 +20,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-05
 
+### Portuguese: possessives, locations, home, and "ruim"
+"His" and "her" now follow the noun the way Portuguese says it («o aeroporto dela», «o livro dele»), while "my", "your" and "our" stay in front. Where something is uses «estar» and joins up properly («O livro está ao lado do telefone», «Os sapatos estão embaixo disto», «atrás da mesa»). Home is «casa» with «para» and «de» («Eu vou para casa», «Eu vou de casa»), "bad" sits after the noun («um livro ruim»), "food" takes its feminine possessive («minha comida»), and you board «em um voo».
+
+## 2026-09-05
+
 ### No more invisible tiles in the sentence builder
 A few sentence-building exercises, notably the Turkish "the book is on this" and "between this and that", showed an empty slot and an invisible tile that could only be placed by luck. Those empty pieces are gone.
 
