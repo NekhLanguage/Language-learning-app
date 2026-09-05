@@ -593,6 +593,9 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   de: {
+    // «Ich gehe von zu Hause weg»: HOME's `fused.from` absorbs FROM
+    // (Emi run-21 -124, same mechanism as no «hjemmefra»).
+    fusedAdpositionForms: true,
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
@@ -889,6 +892,10 @@ export const LANGUAGE_RULES = {
     // A noun's `fused` map absorbs a preceding adposition into one word:
     // «Jeg går hjemmefra», never «fra hjem» (-117).
     fusedAdpositionForms: true,
+    // ── Emi run-21 ──
+    // A verb's own government supplies its preposition: «hilser på en
+    // servitør» (-119) — data-driven via governedPreposition on the verb.
+    verbGovernedPrepositions: true,
   },
   pl: {
     features: {
@@ -990,7 +997,7 @@ export const LANGUAGE_RULES = {
   tr: {
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
-      marksCaseOnDirectObjects: true,
+      marksCaseOnDirectObjects: true, postposedAdpositions: true,
       // The indefinite article `bir` is invariant («bir kitap», «bir ev»,
       // «bir adam») — no gender agreement, no allomorphy. Appears before
       // singular countable nouns in indefinite contexts; predicate
@@ -1038,6 +1045,10 @@ export const LANGUAGE_RULES = {
     // A possessed direct object carries the possessive suffix AND the
     // accusative: «onun tavasını görürüm», «senin kitabını okursun» (-91).
     possessedObjectCase: "accusative",
+    // Free adpositions follow their noun phrase: «yiyecek için giderim»,
+    // never «için yiyecek» (run-21 -122). The case suffixes (evden, masaya)
+    // render inside the noun and are unaffected.
+    postposedAdpositions: true,
     // ── Emi run-20 ──
     // Control chains read their authored surfaces: the complement is a
     // verbal noun in the case the main verb governs («yemeyi», «uyumaya»)

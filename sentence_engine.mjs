@@ -678,8 +678,16 @@ function germanDefArticle(gender, caseName, plural) {
 // only for languages declaring adjectiveDeclension: "german"; identity
 // everywhere else. Plural attributive forms come from the entry's own
 // `plural` field, so plural slots skip the appender.
-function applyAdjectiveDeclension(lang, adjWord, article, gender, caseName) {
+function applyAdjectiveDeclension(lang, adjWord, article, gender, caseName,
+                                  adjectiveCid = null) {
   if (langRuleValue(lang, "adjectiveDeclension") !== "german" || !adjWord) {
+    return adjWord;
+  }
+  // Colour loans stay undeclined («orange Schuhe», «ein lila Gesicht» —
+  // Emi run-21 -126): the entry declares `indeclinable`.
+  const adjEntry = adjectiveCid ? vocab().languages?.[lang]?.forms?.[adjectiveCid] : null;
+  if (adjEntry && typeof adjEntry === "object" && !Array.isArray(adjEntry) &&
+      adjEntry.indeclinable) {
     return adjWord;
   }
   const art = String(article || "").trim().toLowerCase();
@@ -1589,6 +1597,10 @@ if (orderType === "SOV") {
       // «に彼女の部屋を» — Emi run-12 -60).
       for (let i = 0; i < rest.length - 1; i++) {
         if (vocab().concepts[rest[i]]?.type !== "glue") continue;
+        // A case-only adposition (tr «evden», «masaya») is a suffix the
+        // noun renders from the glue BEFORE it — it is not a word to
+        // move; only free postpositions («yiyecek için») follow the noun.
+        if (prepSuppressesWord(lang, rest[i])) continue;
         let j = i + 1;
         while (j < rest.length && isNounSlotModifier(vocab().concepts[rest[j]])) j++;
         if (j < rest.length &&
@@ -3676,14 +3688,14 @@ function adjectiveNounPhrase(lang, adjectiveCid, nounCid, opts = {}) {
       article = englishIndefiniteArticle(preAdjective);
     }
     const declined = applyAdjectiveDeclension(
-      lang, preAdjective, article, nounGender, opts.caseName);
+      lang, preAdjective, article, nounGender, opts.caseName, adjectiveCid);
     // Declared articleAfterAdjective (tr): «beyaz bir kitap».
     if (langRule(lang, "articleAfterAdjective")) {
       return `${declined}${adjectiveLinker(lang, adjectiveCid)} ${article} ${bare}`;
     }
     return `${article} ${declined}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
   }
-  return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName)}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
+  return `${applyAdjectiveDeclension(lang, preAdjective, null, nounGender, opts.caseName, adjectiveCid)}${adjectiveLinker(lang, adjectiveCid)} ${bare}`;
 }
 // Standalone-topic-particle languages (ja) mark the subject inline in the
 // dedicated clause builders — renderSegments inserts the particle as its
@@ -4822,9 +4834,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   }
   if (!useCopularPlural) {
     const surfaceOverride = tpl.surface?.[lang]?.[cid];
+    // (An article-less noun — noArticle — has no article to lose, so its
+    // authored surface may swap the lexeme: de «nach Hause» for Zuhause.)
     if (typeof surfaceOverride === "string" &&
         surfaceOverride !== formOf(lang, cid) &&
-        (!STRICT_ARTICLE_LANGS.has(lang) || surfaceOverride.includes(formOf(lang, cid))) &&
+        (!STRICT_ARTICLE_LANGS.has(lang) || nounEntry?.noArticle ||
+          surfaceOverride.includes(formOf(lang, cid))) &&
         surfaceOverride !== phrase) {
       // Returning before the modifier branches means no random modifier can
       // land on this noun — record that in sharedChoices (only where the
@@ -4968,7 +4983,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const authoredNounSurface = tpl.surface?.[lang]?.[cid];
     if (typeof authoredNounSurface === "string" &&
         authoredNounSurface !== formOf(lang, cid) &&
-        (!STRICT_ARTICLE_LANGS.has(lang) || authoredNounSurface.includes(formOf(lang, cid)))) {
+        (!STRICT_ARTICLE_LANGS.has(lang) || nounEntry?.noArticle ||
+          authoredNounSurface.includes(formOf(lang, cid)))) {
       // Same cross-build guard as the surface-override return above: this
       // noun rendered without a modifier — pin that for the paired build.
       if (sharedChoices) {
@@ -5203,6 +5219,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           }
         }
       }
+      // A possessive precedes the numeral («våre sju føtter», "our seven
+      // feet", «unsere sieben Füße») — never stacked after it («sju våre
+      // føtter», Emi run-21 -120). Postposed possessors keep their place.
+      if (vocab().concepts[adjectiveCid]?.semantic_role === "possessive" &&
+          !possessivePostposed(lang, adjectiveCid)) {
+        return adjForm + " " + numberWord + " " + nounForm;
+      }
       return adjectiveGoesPostNominal(lang, adjectiveCid)
         ? numberWord + " " + nounForm + " " + adjForm
         : numberWord + " " +
@@ -5232,14 +5255,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // The length-based article slice is only sound when the phrase
       // literally ends with the bare form (same guard as the splice
       // below — Emi run-7 -34's stray-token class).
+      // A template possessive is the determiner («zu ihrem großen
+      // Zimmer» — mixed class, weak -en in the dative; Emi run-21 -125):
+      // the possessed phrase carries no article to slice, so pass the
+      // possessive word itself.
       const articleGuess = phrase !== bare && phrase.endsWith(bare)
         ? phrase.substring(0, phrase.length - bare.length).trimEnd()
-        : null;
+        : (precededByPossessive ? formOf(lang, ordered[idx - 1]) : null);
       adjForm = applyAdjectiveDeclension(lang, adjForm, articleGuess,
         headEntry?.gender,
         caseAt[idx] || (isObject && determinerCaseMarking(lang)
           ? langRuleValue(lang, "caseMarking").directObjectCase
-          : null));
+          : null),
+        adjectiveCid);
     }
     // Apocope fires only pre-nominally («un buen libro» but «un libro
     // bueno») — applied before the blank-surface capture below so L3 blanks
@@ -5306,9 +5334,26 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // way the template-slot path already does for a carried possessive.
       const possNounEntry = vocab().languages?.[lang]?.forms?.[cid];
       const possPlural = !!possNounEntry?.pluralOnly || useCopularPlural;
-      const possForm = possPlural
+      let possForm = possPlural
         ? genderedFormOf(lang, adjectiveCid, cid, true)
         : adjForm;
+      // A drilled possessive declines with its slot in determiner-marking
+      // languages («Sie hat meinen Job», «zu ihrem Zimmer» — Emi run-21
+      // -125), the way the template-slot path already does. Data-driven
+      // via the same <case>/f_<case> fields; the L3 blank follows.
+      if (!possPlural) {
+        const injectedCase = caseAt[idx] ||
+          (isObject && determinerCaseMarking(lang)
+            ? langRuleValue(lang, "caseMarking").directObjectCase : null);
+        const declined = injectedCase
+          ? possessiveCaseForm(lang, adjectiveCid, cid, injectedCase) : null;
+        if (declined) {
+          possForm = declined;
+          if (sharedChoices && adjectiveCid === forcedConcept) {
+            sharedChoices["blankSurface_" + lang] = declined;
+          }
+        }
+      }
       const postposed = possessivePostposed(lang, adjectiveCid);
       const art = possessiveArticleFor(lang, cid, possPlural,
         possPlural ? null : possessedCase) ||

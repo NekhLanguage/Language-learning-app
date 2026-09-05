@@ -1965,3 +1965,59 @@ test("no: colour plurals, ting is masculine, ferskt, suvenir, begynner å, hjemm
   assert.equal(buildSentence("no", tplById("THEY_START_SLEEPING")), "De begynner å sove.");
   assert.equal(buildSentence("no", tplById("I_GO_FROM_HOME")), "Jeg går hjemmefra.");
 });
+
+// ---------------------------------------------------------------------
+// Emi run 21 — German first read (-124 … -127), Norwegian/Turkish/Spanish
+// single rows.
+// ---------------------------------------------------------------------
+
+test("de: home is «nach Hause» / «von zu Hause weg» / «zu Hause» (Emi run-21 -124)", () => {
+  assert.equal(buildSentence("de", tplById("I_GO_HOME")), "Ich gehe nach Hause.");
+  assert.equal(buildSentence("de", tplById("I_GO_FROM_HOME")), "Ich gehe von zu Hause weg.");
+  assert.ok(buildSentence("de", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")).endsWith("zu Hause."));
+});
+
+test("de: a drilled possessive takes the slot's case; the adjective after a possessive is weak (Emi run-21 -125)", () => {
+  assert.equal(buildSentence("de", tplById("WE_HAVE_JOB"), "MY", {}), "Wir haben meinen Job.");
+  assert.equal(buildSentence("de", tplById("SHE_SEES_STATION"), "MY", {}), "Sie sieht meinen Bahnhof.");
+  assert.equal(buildSentence("de", tplById("SHE_GO_TO_HER_ROOM"), "BIG", {}), "Sie geht zu ihrem großen Zimmer.");
+  // The L3 blank follows the declined form.
+  const shared = {};
+  buildSentence("de", tplById("WE_HAVE_JOB"), "MY", shared);
+  assert.equal(shared.blankSurface_de, "meinen");
+});
+
+test("de: orange/lila stay undeclined; a feminine subject takes the feminine profession (Emi run-21 -126/-127)", () => {
+  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FACE"), "ORANGE", {}), "Ich sehe ein orange Gesicht.");
+  assert.equal(buildSentence("de", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), "ORANGE", {}),
+    "Das ist meine orange Hand und das ist dein orange Kopf.");
+  const she = { ...tplById("HE_IS_WAITER"), concepts: ["SHE", "BE", "WAITER"] };
+  assert.equal(buildSentence("de", she), "Sie ist eine Kellnerin.");
+  assert.equal(buildSentence("de", tplById("HE_IS_WAITER")), "Er ist ein Kellner.");
+});
+
+test("no: pepper is masculine, hilse takes på, a possessive precedes the numeral (Emi run-21 -118/-119/-120)", () => {
+  assert.equal(buildSentence("no", tplById("SHE_HAS_PEPPER")), "Hun har en pepper.");
+  assert.equal(buildSentence("no", tplById("I_GREET_WAITER")), "Jeg hilser på en servitør.");
+  assert.equal(buildSentence("no", tplById("WE_GREET")), "Vi hilser.");
+  assert.equal(buildSentence("no", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FOOT"), "OUR", { num_FOOT: "SEVEN" }), "Jeg ser våre sju føtter.");
+  assert.equal(buildSentence("en", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FOOT"), "OUR", { num_FOOT: "SEVEN" }), "I see our seven feet.");
+  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FOOT"), "OUR", { num_FOOT: "SEVEN" }), "Ich sehe unsere sieben Füße.");
+});
+
+test("tr: STOP is bırakmak under every subject; için follows its noun; case suffixes stay (Emi run-21 -121/-122)", () => {
+  assert.equal(buildSentence("tr", { ...tplById("WE_STOP_EATING"), concepts: ["HE", "STOP", "EAT"] }), "O yemeyi bırakır.");
+  assert.equal(buildSentence("tr", tplById("WE_STOP_EATING")), "Biz yemeyi bırakırız.");
+  assert.equal(buildSentence("tr", tplById("I_GO_FOR_FOOD")), "Ben yiyecek için giderim.");
+  assert.equal(buildSentence("tr", tplById("I_GO_TO_TABLE")), "Ben masaya giderim.");
+  assert.equal(buildSentence("tr", tplById("I_GO_FROM_HOME")), "Ben evden giderim.");
+});
+
+test("es: possessives pluralise and agree with ropa (Emi run-21 -123)", () => {
+  const we = { ...tplById("YOU_ARE_GIRL"), concepts: ["FIRST_PERSON_PLURAL", "BE", "GIRL"] };
+  assert.equal(buildSentence("es", we, "MY", {}), "Nosotros somos mis chicas.");
+  assert.equal(buildSentence("es", we, "HIS", {}), "Nosotros somos sus chicas.");
+  assert.equal(buildSentence("es", tplById("WE_HAVE_CLOTHES"), "OUR", {}), "Nosotros tenemos nuestra ropa.");
+  assert.equal(buildSentence("es", tplById("WE_HAVE_CLOTHES")), "Nosotros tenemos ropa.");
+  assert.equal(buildSentence("es", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")), "Esta es mi mano y esta es tu cabeza.");
+});

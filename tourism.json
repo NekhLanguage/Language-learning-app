@@ -862,7 +862,8 @@
         "WAITER": {
           "form": "garçom",
           "gender": "m",
-          "plural": "garçons"
+          "plural": "garçons",
+          "feminine": "garçonete"
         },
         "MARKET": {
           "form": "mercado",
@@ -1441,7 +1442,8 @@
         "WAITER": {
           "form": "Kellner",
           "gender": "m",
-          "plural": "Kellner"
+          "plural": "Kellner",
+          "feminine": "Kellnerin"
         },
         "MARKET": {
           "form": "Markt",
@@ -2463,7 +2465,8 @@
         },
         "GREET": {
           "base": "hilse",
-          "present": "hilser"
+          "present": "hilser",
+          "governedPreposition": "på"
         },
         "PRONOUNCE": {
           "base": "uttale",
