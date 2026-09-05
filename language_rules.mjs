@@ -303,6 +303,30 @@
 //                            entry's `linker` is inserted between it and its
 //                            noun («紫のシャツ» — Emi run-12 -59: noun-class
 //                            colours need の, い-adjectives don't).
+//   articleAfterAdjective    the indefinite article follows a pre-nominal
+//                            adjective: tr «beyaz bir kitap» (Emi run-18 -90).
+//   derivedCases             "tr": caseFormFor derives accusative / genitive /
+//                            dative / ablative / locative / instrumental from
+//                            the citation form by vowel harmony, final-stop
+//                            softening and -t/-d devoicing when the entry
+//                            carries no such field (data always wins).
+//   possessedObjectCase      a possessed direct object takes this case on top
+//                            of its possessive suffix: tr «onun tavasını»
+//                            (Emi run-18 -91). The possessed predicate and
+//                            question noun take the suffix alone («benim
+//                            elimdir», «senin telefonun mu?»).
+//   locativeGenitive         spatial-relation templates render [head]
+//                            [landmark-GEN] [possessed postposition]; two
+//                            landmarks take instrumental + genitive — tr
+//                            «Kitap telefonun yanında», «Kitap bununla
+//                            şunun arasında» (Emi run-18 -92).
+//   negativeAorist           contrastiveNegation's negatedVerbForm may derive
+//                            the negative from the dictionary form when the
+//                            entry has no `negative`: tr yemek → yemem /
+//                            yemezsin / yemez / yemeyiz / yemezsiniz /
+//                            yemezler (Emi run-18 -93).
+//   localeUppercase          locale for sentence-initial capitalisation —
+//                            tr i → İ (Emi run-18 -94).
 //   copulaCoordination       "X is A and Y is B" chains the first clause on
 //                            the copula's connective form (BE.connective —
 //                            ja で) and a separator: «これは私の手で、これは
@@ -934,6 +958,8 @@ export const LANGUAGE_RULES = {
       // carries a person-agreeing suffix; predicate nominals take personal
       // copular endings («Ben adamım», «Sen kızsın») with -DIr only in 3sg.
       possessiveSuffixes: true, copulaPersonAgreement: true,
+      // FROM / TO govern the ablative / dative (run-18 -95).
+      marksCaseAfterPrepositions: true,
     },
     zeroPresentCopula: true, wordOrder: "SOV",
     // Yes/no questions keep SOV declarative order and end with the mI
@@ -958,6 +984,35 @@ export const LANGUAGE_RULES = {
     inflectsNounPlural: true, verbPersonParadigm: true,
     latinEncodingChecks: true,
     possessiveSuffixes: true, copulaPersonSuffixes: true,
+    // ── Emi run-18 (-90 … -96), Turkish's first read under the ranking rule ──
+    // The indefinite sits between adjective and noun: «beyaz bir kitap»,
+    // never «bir beyaz kitap» (-90: 97 of 97).
+    articleAfterAdjective: true,
+    // Case is a harmonising suffix derived from the citation form (data
+    // fields still win): kitap → kitabı / kitabın / kitaba / kitaptan /
+    // kitapla; bu → bunu / bunun / buna / bundan / bununla.
+    derivedCases: "tr",
+    // A possessed direct object carries the possessive suffix AND the
+    // accusative: «onun tavasını görürüm», «senin kitabını okursun» (-91).
+    possessedObjectCase: "accusative",
+    // FROM / TO are case endings, not words: «evden giderim», «masaya
+    // giderim» (-95: «Ben dan menü sipariş ediyorum»).
+    caseMarking: {
+      prepositions: {
+        FROM: { case: "ablative", suppressWord: true },
+        TO: { case: "dative", suppressWord: true },
+      },
+    },
+    // Spatial relations: subject, landmark in the genitive, possessed
+    // postposition — «Kitap telefonun yanında», «Kitap bununla şunun
+    // arasında» (-92: «Telefon önünde kitap.», the ko -82 / ja -57 twin).
+    locativeGenitive: true,
+    // "V O1 but not O2": «O kahvaltı yer ama öğle yemeği yemez» — the verb
+    // negates with -mA + the aorist person ending, never «değil» (-93).
+    contrastiveNegation: { conjunction: "ama", negatedVerbForm: true },
+    negativeAorist: true,
+    // Sentence-initial i capitalises to İ, never I (-94: «Içmek», «Iki»).
+    localeUppercase: "tr",
   },
   uk: {
     features: {

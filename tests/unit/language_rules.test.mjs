@@ -20,6 +20,9 @@ import {
   buildSentence,
   buildSentenceWithRules,
   trPossessiveSuffix,
+  trCaseSuffix,
+  trNegativeAorist,
+  capitalizeFirst,
   turkishPersonalCopulaSuffix,
   possessiveArticleFor,
   acceptedAnswerVariants,
@@ -1367,8 +1370,75 @@ test("tr: yes/no questions append the mI particle harmonized on the last vowel (
   // picks mu/mü/mı/mi from the preceding word's last vowel — telefon ends
   // in -o (back rounded) → mu. The particle is a free word, space-
   // separated, never fused; capitalizeFirst keeps Ş uppercase.
+  // The possessed noun carries its suffix since run-18 -91 («telefonun»).
   assert.equal(buildSentence("tr", tplById("IS_THAT_YOUR_PHONE")),
-    "Şu senin telefon mu?");
+    "Şu senin telefonun mu?");
+});
+
+// ---------------------------------------------------------------------
+// Emi run-18: tr -90 … -96, Turkish's first read under the ranking rule.
+// ---------------------------------------------------------------------
+
+test("tr: case suffixes derive from the citation form with harmony, softening, devoicing and the bu/şu/o stems", () => {
+  assert.deepEqual(["accusative", "genitive", "dative", "ablative", "instrumental"].map(c => trCaseSuffix("kitap", c)),
+    ["kitabı", "kitabın", "kitaba", "kitaptan", "kitapla"]);
+  assert.deepEqual(["accusative", "genitive", "dative", "ablative", "instrumental"].map(c => trCaseSuffix("masa", c)),
+    ["masayı", "masanın", "masaya", "masadan", "masayla"]);
+  assert.deepEqual(["accusative", "genitive", "dative", "ablative", "instrumental"].map(c => trCaseSuffix("bu", c)),
+    ["bunu", "bunun", "buna", "bundan", "bununla"]);
+  assert.equal(trCaseSuffix("menü", "ablative"), "menüden");
+  assert.equal(trCaseSuffix("ev", "dative"), "eve");
+  // After a possessive: 3s takes the n buffer, the other persons end in a consonant.
+  assert.equal(trCaseSuffix("tavası", "accusative", { afterPossessive: "3s" }), "tavasını");
+  assert.equal(trCaseSuffix("kitabım", "accusative", { afterPossessive: "1s" }), "kitabımı");
+  assert.equal(trCaseSuffix("kitapları", "accusative", { afterPossessive: "3p" }), "kitaplarını");
+});
+
+test("tr: the indefinite sits between adjective and noun — «beyaz bir kitap» (Emi run-18 -90)", () => {
+  assert.equal(buildSentence("tr", tplById("YOU_READ_BOOK"), "WHITE", {}), "Sen beyaz bir kitap okursun.");
+});
+
+test("tr: possessed objects take the possessive suffix and the accusative (Emi run-18 -91)", () => {
+  assert.equal(buildSentence("tr", tplById("YOU_READ_BOOK"), "YOUR", {}), "Sen senin kitabını okursun.");
+  assert.equal(buildSentence("tr", tplById("I_SEE_PAN"), "HIS", {}), "Ben onun tavasını görürüm.");
+  // Predicate and question nouns take the suffix alone; an authored surface («başın») still wins.
+  assert.equal(buildSentence("tr", tplById("THIS_IS_MY_HAND")), "Bu benim elimdir.");
+  assert.equal(buildSentence("tr", tplById("THIS_IS_YOUR_HEAD")), "Bu senin başındır.");
+  assert.equal(safeSurfaceForConcept(tplById("IS_THAT_YOUR_PHONE"), "tr", "PHONE"), "telefonun");
+});
+
+test("tr: spatial relations — landmark genitive + possessed postposition, zero copula (Emi run-18 -92)", () => {
+  assert.equal(buildSentence("tr", tplById("BOOK_NEXT_TO_PHONE")), "Kitap telefonun yanında.");
+  assert.equal(buildSentence("tr", tplById("PHONE_IN_FRONT_OF_BOOK")), "Telefon kitabın önünde.");
+  assert.equal(buildSentence("tr", tplById("BOOK_BETWEEN_THIS_AND_THAT")), "Kitap bununla şunun arasında.");
+  assert.equal(safeSurfaceForConcept(tplById("BOOK_NEXT_TO_PHONE"), "tr", "PHONE"), "telefonun");
+  assert.equal(safeSurfaceForConcept(tplById("BOOK_BETWEEN_THIS_AND_THAT"), "tr", "THIS"), "bununla");
+});
+
+test("tr: 'but not' negates the verb with the aorist negative, never değil (Emi run-18 -93)", () => {
+  assert.equal(buildSentence("tr", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")), "O kahvaltı yer ama öğle yemeği yemez.");
+  assert.deepEqual(["FIRST_PERSON_SINGULAR", "SECOND_PERSON", "HE", "FIRST_PERSON_PLURAL", "SECOND_PERSON_PLURAL", "THIRD_PERSON_PLURAL"].map(s => trNegativeAorist("yemek", s)),
+    ["yemem", "yemezsin", "yemez", "yemeyiz", "yemezsiniz", "yemezler"]);
+  assert.equal(trNegativeAorist("okumak", "HE"), "okumaz");
+});
+
+test("tr: sentence-initial i capitalises to İ (Emi run-18 -94)", () => {
+  assert.equal(capitalizeFirst("içmek", "tr"), "İçmek");
+  assert.equal(capitalizeFirst("iki kitap", "tr"), "İki kitap");
+  assert.equal(capitalizeFirst("il libro", "it"), "Il libro");
+  assert.equal(capitalizeFirst("içmek"), "Içmek");
+});
+
+test("tr: FROM / TO are the ablative / dative suffix, no free-standing word (Emi run-18 -95)", () => {
+  assert.equal(buildSentence("tr", tplById("I_GO_FROM_HOME")), "Ben evden giderim.");
+  assert.equal(buildSentence("tr", tplById("I_GO_TO_TABLE")), "Ben masaya giderim.");
+  assert.equal(buildSentence("tr", tplById("I_ORDER_MENU")), "Ben menüden sipariş ediyorum.");
+  assert.equal(safeSurfaceForConcept(tplById("I_GO_FROM_HOME"), "tr", "HOME"), "evden");
+});
+
+test("tr: vowel-drop nouns and the indefinite quantifier possess correctly (Emi run-18 -96 + LOW)", () => {
+  assert.equal(buildSentence("tr", tplById("CX_HE_HAVE_SON")), "Onun oğlu var.");
+  assert.equal(buildSentence("tr", tplById("I_HAVE_SOMETHING")), "Benim bir şeyim var.");
 });
 
 test("zh: 是 stays before a possessive-headed noun predicate — 很 is adjectives only (Emi run-9 -36)", () => {

@@ -238,7 +238,7 @@
       "form": "ev"
     },
     "HOME": {
-      "form": "yuva",
+      "form": "ev",
       "noArticle": true
     },
     "BOOK": {
@@ -280,7 +280,15 @@
       "form": "baba"
     },
     "SON": {
-      "form": "oğul"
+      "form": "oğul",
+      "possessed": {
+        "1s": "oğlum",
+        "2s": "oğlun",
+        "3s": "oğlu",
+        "1p": "oğlumuz",
+        "2p": "oğlunuz",
+        "3p": "oğulları"
+      }
     },
     "DAUGHTER": {
       "form": "kız evlat"
@@ -313,7 +321,15 @@
       "form": "göz"
     },
     "MOUTH": {
-      "form": "ağız"
+      "form": "ağız",
+      "possessed": {
+        "1s": "ağzım",
+        "2s": "ağzın",
+        "3s": "ağzı",
+        "1p": "ağzımız",
+        "2p": "ağzınız",
+        "3p": "ağızları"
+      }
     },
     "FACE": {
       "form": "yüz"
@@ -324,11 +340,27 @@
     },
     "LUNCH": {
       "form": "öğle yemeği",
-      "noArticle": true
+      "noArticle": true,
+      "possessed": {
+        "1s": "öğle yemeğim",
+        "2s": "öğle yemeğin",
+        "3s": "öğle yemeği",
+        "1p": "öğle yemeğimiz",
+        "2p": "öğle yemeğiniz",
+        "3p": "öğle yemekleri"
+      }
     },
     "DINNER": {
       "form": "akşam yemeği",
-      "noArticle": true
+      "noArticle": true,
+      "possessed": {
+        "1s": "akşam yemeğim",
+        "2s": "akşam yemeğin",
+        "3s": "akşam yemeği",
+        "1p": "akşam yemeğimiz",
+        "2p": "akşam yemeğiniz",
+        "3p": "akşam yemekleri"
+      }
     },
     "CLOTHES": {
       "form": "kıyafet",

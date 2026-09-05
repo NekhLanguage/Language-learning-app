@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-05
 
+### Turkish: seven grammar fixes from its first full read
+"A white book" is now «beyaz bir kitap», with the article between adjective and noun, across every sentence. Possessed objects carry their suffixes: «onun tavasını görürüm», «senin kitabını okursun», and "Is that your phone?" is «Şu senin telefonun mu?». "The book is next to the phone" reads «Kitap telefonun yanında», and "between this and that" «bununla şunun arasında». "He eats breakfast but not lunch" negates the verb properly: «ama öğle yemeği yemez». "From" and "to" are suffixes now («evden», «masaya», «menüden»), "home" is «ev», and sons and mouths drop their vowel when possessed («oğlum»). Words starting with i capitalise as İ.
+
+## 2026-09-05
+
 ### Korean: positions, counters, and two adverbs
 "In front of" and "inside" now carry their 에 («책 앞에», «이것 안에»), so "the shoes are inside this" no longer reads like "the shoes are not here". Houses, shoes, clothes and phones count with their own counters («집 여덟 채», «신발 열아홉 켤레», «셔츠 스무 벌», «전화 열두 대»), and twenty drops to 스무 before a counter. "I go around" and "I eat first" read «주변에 가요» and «먼저 먹어요».
 
