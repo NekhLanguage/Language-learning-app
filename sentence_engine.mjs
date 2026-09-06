@@ -690,6 +690,13 @@ function applyAdjectiveDeclension(lang, adjWord, article, gender, caseName,
       adjEntry.indeclinable) {
     return adjWord;
   }
+  // The attributive stem may differ from the citation form: «rechts» /
+  // «links» are adverbs, the adjective is recht- / link- («einen rechten
+  // Finger», Emi run-22 -131). Only when the word IS the citation form.
+  if (adjEntry && typeof adjEntry === "object" && !Array.isArray(adjEntry) &&
+      typeof adjEntry.stem === "string" && adjWord === adjEntry.form) {
+    adjWord = adjEntry.stem;
+  }
   const art = String(article || "").trim().toLowerCase();
   const detClass = !art ? "strong"
     : /^(der|die|das|dem|den)$/.test(art) ? "weak"
@@ -1025,6 +1032,17 @@ function possessiveCaseForm(lang, possessiveCid, nounCid, caseName) {
   const mod = vocab().languages?.[lang]?.forms?.[possessiveCid];
   if (!mod || typeof mod !== "object" || Array.isArray(mod)) return null;
   const g = vocab().languages?.[lang]?.forms?.[nounCid]?.gender;
+  // The bare `accusative` field is the MASCULINE form («meinen Job»); a
+  // neuter accusative equals the nominative («mein Hotel», «ihr Wasser»)
+  // unless the entry authors n_accusative — Emi run-22 -130, the mirror
+  // of -125. Other cases (dative «meinem») are shared by m and n.
+  if (g === "n" && caseName === "accusative") {
+    return typeof mod.n_accusative === "string" ? mod.n_accusative : null;
+  }
+  // No gender on the noun entry: the masculine accusative cannot be
+  // assumed («ihren Wasser», «deinen Essen» — the same -130 shape), so
+  // the possessive stays nominative until the entry carries a gender.
+  if (!g && caseName === "accusative") return null;
   const key = g === "f" ? `f_${caseName}` : caseName;
   return typeof mod[key] === "string" ? mod[key] : null;
 }
@@ -2350,8 +2368,28 @@ const NUMBER_VALUES = {
 // uk «дві» (TWO.f), «одну роботу» (ONE.f_accusative), el «μία» / «τρεις» /
 // «δεκατέσσερις» (ONE.f / THREE.f / FOURTEEN.f, m for «ένας»). Bare-array
 // number entries and languages without the flag render exactly as before.
-function numberAgreementForm(lang, numberCid, headCid, accusative) {
+// Declared rule (oneAsIndefiniteArticle — it/de): the numeral ONE in a
+// drilled slot is the noun's indefinite article, taken from the noun
+// phrase itself so allomorphy («uno zaino», «un'attrazione») and the
+// slot's case («einen Job») come from the one place that knows them
+// (Emi run-22 -135; the de «ein Job» stray).
+function oneAsArticle(lang, headCid, caseName) {
+  if (!langRule(lang, "oneAsIndefiniteArticle")) return null;
+  const bare = formOf(lang, headCid);
+  const phrase = nounPhrase(lang, headCid, { caseName });
+  if (!phrase || phrase === bare || !phrase.endsWith(bare)) return null;
+  const art = phrase.slice(0, phrase.length - bare.length).trim();
+  // Elided articles («un'») attach to the noun; the caller joins with a
+  // space, so hand back the space-less form only when it stands alone.
+  return art || null;
+}
+
+function numberAgreementForm(lang, numberCid, headCid, accusative, caseName = null) {
   const word = formOf(lang, numberCid);
+  if (numberCid === "ONE") {
+    const art = oneAsArticle(lang, headCid, caseName);
+    if (art) return art;
+  }
   if (!langRule(lang, "numeralGenderAgreement")) return word;
   const entry = vocab().languages?.[lang]?.forms?.[numberCid];
   if (!entry || typeof entry !== "object" || Array.isArray(entry)) return word;
@@ -2850,7 +2888,9 @@ function frenchPossessivePhrase(possessiveCid, nounCid) {
 function possessiveArticleFor(lang, nounCid, plural = false, caseName = null) {
   if (!langRule(lang, "possessiveDefiniteArticle")) return null;
   const entry = vocab().languages?.[lang]?.forms?.[nounCid];
-  if (!entry || entry.noArticleWithPossessive) return null;
+  // Singular family members drop the article («sua figlia»); their
+  // plurals take it back («i suoi fratelli», Emi run-22 -136).
+  if (!entry || (entry.noArticleWithPossessive && !plural)) return null;
   if (lang === "it") {
     const f = entry.gender === "f";
     if (plural || entry.pluralOnly) return f ? "le" : "i";
@@ -5061,7 +5101,9 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // «Я маю одну роботу», «δεκατέσσερις κρατήσεις») — applied BEFORE the
     // blank-surface capture so L3 blanks hold the agreed form
     // (Emi 2026-08-28-07/-08 uk, -03 el).
-    numberWord = numberAgreementForm(lang, numberCid, cid, ukObjectCase);
+    numberWord = numberAgreementForm(lang, numberCid, cid, ukObjectCase,
+      caseAt[idx] || (isObject && determinerCaseMarking(lang)
+        ? langRuleValue(lang, "caseMarking").directObjectCase : null));
     // Same surface capture for a forced number modifier (see adjective note).
     if (sharedChoices && numberCid === forcedConcept) {
       const k = "blankSurface_" + lang;
@@ -5224,7 +5266,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // føtter», Emi run-21 -120). Postposed possessors keep their place.
       if (vocab().concepts[adjectiveCid]?.semantic_role === "possessive" &&
           !possessivePostposed(lang, adjectiveCid)) {
-        return adjForm + " " + numberWord + " " + nounForm;
+        // possessiveDefiniteArticle languages keep their article in front
+        // («i suoi dodici cucchiai», Emi run-22 -136).
+        const possArt = possessiveArticleFor(lang, cid, true);
+        return [possArt, adjForm, numberWord, nounForm].filter(Boolean).join(" ");
       }
       return adjectiveGoesPostNominal(lang, adjectiveCid)
         ? numberWord + " " + nounForm + " " + adjForm
@@ -5272,9 +5317,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // Apocope fires only pre-nominally («un buen libro» but «un libro
     // bueno») — applied before the blank-surface capture below so L3 blanks
     // match the «buen» actually rendered; identity everywhere else.
+    // A plural-only head («pantalones») is plural for apocope too: «malos
+    // pantalones», never «mal pantalones» (Emi run-22 -132).
     if (!adjectiveIsPossessive && !adjectiveGoesPostNominal(lang, adjectiveCid)) {
       adjForm = apocopeForm(lang, adjectiveCid, adjForm,
-        headEntry?.gender, useCopularPlural, bareNoun || bare);
+        headEntry?.gender, useCopularPlural || !!headEntry?.pluralOnly,
+        bareNoun || bare);
     }
     // After the template's possessive the adjective is definite (declared:
     // definiteAdjectiveAfterPossessive — no «min gode mamma»); before the

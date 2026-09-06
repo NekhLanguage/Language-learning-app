@@ -225,6 +225,10 @@
 //                            takes its definite (weak) form — the entry's
 //                            `definite` field, else its `plural` (no «min
 //                            gode mamma», «min lille pappa»).
+//   oneAsIndefiniteArticle   the numeral ONE in a drilled slot renders as
+//                            the noun's indefinite article, with the slot's
+//                            case and the article's allomorphy («einen
+//                            Job», «un'attrazione», «uno zaino»).
 //   fusedAdpositionForms     a noun entry's `fused: { <glue id, lower
 //                            case>: form }` gives the one word that absorbs
 //                            a preceding adposition (no HOME fused.from
@@ -596,6 +600,9 @@ export const LANGUAGE_RULES = {
     // «Ich gehe von zu Hause weg»: HOME's `fused.from` absorbs FROM
     // (Emi run-21 -124, same mechanism as no «hjemmefra»).
     fusedAdpositionForms: true,
+    // The drilled numeral ONE is the indefinite article in this slot —
+    // «Ich habe einen Job», never the citation «ein» (Emi run-22).
+    oneAsIndefiniteArticle: true,
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
@@ -669,6 +676,9 @@ export const LANGUAGE_RULES = {
     encliticStress: true,
   },
   it: {
+    // The drilled numeral ONE takes the article's allomorphy — «un hotel»,
+    // «una padella», «uno zaino», «un'attrazione» (Emi run-22 -135).
+    oneAsIndefiniteArticle: true,
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",
       declinesAttributiveAdjectives: true, apocope: true,
