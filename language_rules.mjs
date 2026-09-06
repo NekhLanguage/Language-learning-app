@@ -1018,6 +1018,15 @@ export const LANGUAGE_RULES = {
     // ใช่ไหม — no terminal punctuation (Thai's finalize strips . and ?).
     statementOrderQuestion: true,
     finalQuestionParticle: "ใช่ไหม",
+    // ── Emi run-24, Thai's first read ──
+    // «but not lunch» negates the verb, so the verb comes back after ไม่:
+    // «เขากินอาหารเช้าแต่ไม่กินอาหารกลางวัน» (-152) — zh's shape, no comma.
+    contrastiveNegation: { repeatVerb: true, comma: false },
+    // ทำอาหาร already contains อาหาร: COOK + FOOD renders the verb alone
+    // («คุณทำอาหาร», -151); an enclitic possessive on the dropped noun
+    // stays («ทำอาหารของเธอ»). ko's boolean form keeps the noun and drops
+    // only its particle.
+    incorporatedObjectVerbs: { dropNoun: true },
   },
   tr: {
     features: {

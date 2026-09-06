@@ -45,9 +45,9 @@ test("start screen leads to the language hub", async ({ page }) => {
   await page.click("#open-app");
   await expect(page.locator("#language-screen.active")).toBeVisible();
 
-  // 17 registered languages minus the hidden one (fi, gate-pending) and
-  // the support language (English).
-  await expect(page.locator("#language-buttons button")).toHaveCount(15);
+  // 17 registered languages minus the support language (English). Finnish
+  // was unhidden 2026-09-06, so nothing is filtered any more.
+  await expect(page.locator("#language-buttons button")).toHaveCount(16);
 });
 
 test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async ({ page }) => {
@@ -61,6 +61,8 @@ test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async (
 
   await page.click("#open-app");
   await expect(page.locator("#language-screen.active")).toBeVisible();
-  // 17 registered minus the support language — the hidden fi now shows.
+  // 17 registered minus the support language — with no hidden language
+  // left the count matches the plain picker; the hook stays for the next
+  // language that lives behind the gate.
   await expect(page.locator("#language-buttons button")).toHaveCount(16);
 });

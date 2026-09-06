@@ -616,9 +616,11 @@
       "adessive": "puhelimella",
       "inessive": "puhelimessa"
     },
-    "ONE": [
-      "yksi"
-    ],
+    "ONE": {
+      "form": "yksi",
+      "accusative": "yhden",
+      "partitive": "yhtä"
+    },
     "TWO": [
       "kaksi"
     ],

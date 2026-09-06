@@ -102,10 +102,12 @@
   },
   "forms": {
     "WATER": {
-      "form": "น้ำ"
+      "form": "น้ำ",
+      "classifier": "แก้ว"
     },
     "FOOD": {
-      "form": "อาหาร"
+      "form": "อาหาร",
+      "classifier": "มื้อ"
     },
     "HOUSE": {
       "form": "บ้าน",
@@ -124,7 +126,8 @@
       "classifier": "อย่าง"
     },
     "JOB": {
-      "form": "งาน"
+      "form": "งาน",
+      "classifier": "งาน"
     },
     "ROOM": {
       "form": "ห้อง",
@@ -171,43 +174,56 @@
       "classifier": "คน"
     },
     "HEAD": {
-      "form": "หัว"
+      "form": "หัว",
+      "classifier": "หัว"
     },
     "ARM": {
-      "form": "แขน"
+      "form": "แขน",
+      "classifier": "ข้าง"
     },
     "HAND": {
-      "form": "มือ"
+      "form": "มือ",
+      "classifier": "ข้าง"
     },
     "LEG": {
-      "form": "ขา"
+      "form": "ขา",
+      "classifier": "ข้าง"
     },
     "FOOT": {
-      "form": "เท้า"
+      "form": "เท้า",
+      "classifier": "ข้าง"
     },
     "FINGER": {
-      "form": "นิ้ว"
+      "form": "นิ้ว",
+      "classifier": "นิ้ว"
     },
     "EYE": {
-      "form": "ตา"
+      "form": "ตา",
+      "classifier": "ข้าง"
     },
     "MOUTH": {
-      "form": "ปาก"
+      "form": "ปาก",
+      "classifier": "ปาก"
     },
     "FACE": {
-      "form": "ใบหน้า"
+      "form": "ใบหน้า",
+      "classifier": "หน้า"
     },
     "BREAKFAST": {
-      "form": "อาหารเช้า"
+      "form": "อาหารเช้า",
+      "classifier": "มื้อ"
     },
     "LUNCH": {
-      "form": "อาหารกลางวัน"
+      "form": "อาหารกลางวัน",
+      "classifier": "มื้อ"
     },
     "DINNER": {
-      "form": "อาหารเย็น"
+      "form": "อาหารเย็น",
+      "classifier": "มื้อ"
     },
     "CLOTHES": {
-      "form": "เสื้อผ้า"
+      "form": "เสื้อผ้า",
+      "classifier": "ชุด"
     },
     "SHIRT": {
       "form": "เสื้อ",

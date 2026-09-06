@@ -382,7 +382,9 @@ function definiteAdjectiveForm(lang, adjectiveCid, form) {
   if (!entry || typeof entry !== "object" || Array.isArray(entry)) return form;
   if (typeof entry.definite === "string") return entry.definite;
   if (typeof entry.plural === "string") return entry.plural;
-  return form;
+  // No definite data: the base form, never the neuter -t that gender
+  // agreement picked («hennes blå rom», not «blått» — Emi run-24 -149).
+  return typeof entry.form === "string" ? entry.form : form;
 }
 
 // Declared rule (fusedAdpositionForms — no): a noun entry's `fused` map
@@ -522,11 +524,19 @@ const ADJ_CASE_STRATEGIES = {
     // Hard-stem -і→-их covers the shipped adjective inventory; a soft-stem
     // adjective («сині»→«синіх») must carry an explicit genitive_plural
     // field, which wins over the derivation at the call sites.
-    // No animateAccusative on purpose — not observed in uk output.
     genitivePluralFromPlural: (w) => {
       const s = String(w);
       if (s.includes(" ")) return s;
       if (s.endsWith("і")) return s.slice(0, -1) + "их";
+      return s;
+    },
+    // masc-animate accusative (= genitive): «добрий»→«доброго»,
+    // «синій»→«синього» — «Я вітаю доброго офіціанта» (Emi run-24 -145).
+    animateAccusative: (w) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (s.endsWith("ій")) return s.slice(0, -2) + "ього";
+      if (s.endsWith("ий")) return s.slice(0, -2) + "ого";
       return s;
     },
   },
@@ -2416,8 +2426,16 @@ function numberAgreementForm(lang, numberCid, headCid, accusative, caseName = nu
     const art = oneAsArticle(lang, headCid, caseName);
     if (art) return art;
   }
-  if (!langRule(lang, "numeralGenderAgreement")) return word;
   const entry = vocab().languages?.[lang]?.forms?.[numberCid];
+  // A total object declines its numeral with the noun in genderless case
+  // languages («Hän näkee yhden puhelimen» — fi, Emi run-24 -156): the
+  // numeral entry's own accusative field, data-driven.
+  if (accusative && adjectiveAgreesWithCase(lang) && entry &&
+      typeof entry === "object" && !Array.isArray(entry) &&
+      typeof entry.accusative === "string") {
+    return entry.accusative;
+  }
+  if (!langRule(lang, "numeralGenderAgreement")) return word;
   if (!entry || typeof entry !== "object" || Array.isArray(entry)) return word;
   const g = vocab().languages?.[lang]?.forms?.[headCid]?.gender;
   if (g === "f") {
@@ -4165,12 +4183,14 @@ function contrastiveNegationSegments(lang, tpl) {
   // negate a bare noun («他吃早餐，但是不吃午餐», Emi run-9 -37). The
   // negator is the NOT entry’s own form; the comma rides on the
   // conjunction and the CJK finalize pass closes the spacing.
+  // th declares comma: false — «แต่ไม่กินอาหารกลางวัน» runs on with no
+  // punctuation (Emi run-24 -152).
   if (spec.repeatVerb) {
     return [
       { cid: subject, text: formOf(lang, subject) },
       { cid: verb, text: finite },
       { cid: obj1, text: formOf(lang, obj1) },
-      { cid: c[bi], text: "，" + formOf(lang, c[bi]) },
+      { cid: c[bi], text: (spec.comma === false ? "" : "，") + formOf(lang, c[bi]) },
       { cid: c[bi + 1], text: formOf(lang, c[bi + 1]) },
       { cid: null, text: finite },
       { cid: obj2, text: formOf(lang, obj2) },
@@ -4913,8 +4933,47 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const surfaceOverride = tpl.surface?.[lang]?.[cid];
     // (An article-less noun — noArticle — has no article to lose, so its
     // authored surface may swap the lexeme: de «nach Hause» for Zuhause.)
+  // Declared incorporatedObjectVerbs { dropNoun } (th): the verb already
+  // contains its object («ทำอาหาร» = make-food), so the object noun
+  // renders empty — «คุณทำอาหาร», never «ทำอาหารอาหาร» (Emi run-24
+  // -151). An enclitic possessive on it survives alone («ทำอาหารของเธอ»).
+  // ko keeps the noun and drops only its particle (the boolean form).
+  {
+    const incSpec = langRuleValue(lang, "incorporatedObjectVerbs");
+    if (incSpec && typeof incSpec === "object" && incSpec.dropNoun &&
+        isDirectObjectPosition(ordered, idx, lang) && objectIncorporated(lang, ordered)) {
+      // A drilled or cached possessive on the dropped noun renders alone
+      // («ทำอาหารของเธอ»); the L3 blank holds that word.
+      const cached = sharedChoices ? sharedChoices["adj_" + cid] : undefined;
+      const injected = vocab().concepts[forcedConcept]?.semantic_role === "possessive"
+        ? forcedConcept
+        : (vocab().concepts[cached]?.semantic_role === "possessive" ? cached : null);
+      if (sharedChoices) {
+        sharedChoices["adj_" + cid] = injected;
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)) sharedChoices["num_" + cid] = null;
+      }
+      if (injected) {
+        const w = genderedFormOf(lang, injected, cid);
+        if (sharedChoices && injected === forcedConcept) sharedChoices["blankSurface_" + lang] = w;
+        noteModifier(cid, injected, null);
+        return w;
+      }
+      if (precededByPossessive && possessivePostposed(lang, ordered[idx - 1])) {
+        return genderedFormOf(lang, ordered[idx - 1], cid);
+      }
+      return "";
+    }
+  }
+    // A possessed slot skips a surface that is the noun's DEFINITE form:
+    // the authored render used the postposed possessive with the definite
+    // noun («hånden min»), and pasting that after the engine's preposed
+    // possessive gave «min hånden» (Emi run-24 -148).
+    const surfaceIsPossessedDefinite = precededByPossessive &&
+      typeof surfaceOverride === "string" &&
+      surfaceOverride === definiteNounPhrase(lang, cid);
     if (typeof surfaceOverride === "string" &&
         surfaceOverride !== formOf(lang, cid) &&
+        !surfaceIsPossessedDefinite &&
         (!STRICT_ARTICLE_LANGS.has(lang) || nounEntry?.noArticle ||
           surfaceOverride.includes(formOf(lang, cid))) &&
         surfaceOverride !== phrase) {
@@ -5063,8 +5122,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // dictionary form («a casa» ⊃ «casa») are safe to prefer there.
   if (!adjectiveWord && !numberWord && !useCopularPlural) {
     const authoredNounSurface = tpl.surface?.[lang]?.[cid];
+    // Same possessed-definite guard as the override above («min hånden»).
+    const authoredIsPossessedDefinite = precededByPossessive &&
+      typeof authoredNounSurface === "string" &&
+      authoredNounSurface === definiteNounPhrase(lang, cid);
     if (typeof authoredNounSurface === "string" &&
         authoredNounSurface !== formOf(lang, cid) &&
+        !authoredIsPossessedDefinite &&
         (!STRICT_ARTICLE_LANGS.has(lang) || nounEntry?.noArticle ||
           authoredNounSurface.includes(formOf(lang, cid)))) {
       // Same cross-build guard as the surface-override return above: this

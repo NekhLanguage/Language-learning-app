@@ -680,7 +680,8 @@
     },
     "BLUE": {
       "form": "blå",
-      "n": "blått"
+      "n": "blått",
+      "plural": "blå"
     },
     "GREEN": {
       "form": "grønn",

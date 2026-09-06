@@ -1705,10 +1705,10 @@ test("ko: no-pronoun template topics the subject and marks the object", () => {
   assert.equal(optionSurfaceFor("ko", tpl, "MOVE", objSlot, {}), "기술이");
 });
 
-test("fi: hidden in the registry until the gate passes", () => {
+test("fi: registered and visible since Nekh's unhide (2026-09-06, Emi's GO in runs 8 and 24), still BETA", () => {
   const fi = AVAILABLE_LANGUAGES.find((l) => l.code === "fi");
   assert.ok(fi, "fi must be registered (validators see it)");
-  assert.equal(fi.hidden, true);
+  assert.equal(fi.hidden, undefined);
   assert.equal(fi.beta, true);
 });
 
@@ -2101,4 +2101,49 @@ test("de: START is beginnen; pl: a female guide is przewodniczką (Emi run-23 -1
   assert.equal(buildSentence("de", { ...tplById("THEY_START_SLEEPING"), concepts: ["FIRST_PERSON_SINGULAR", "START", "SLEEP"] }), "Ich beginne zu schlafen.");
   assert.equal(buildSentence("pl", tplById("SHE_IS_GUIDE")), "Ona jest przewodniczką.");
   assert.equal(buildSentence("pl", { ...tplById("SHE_IS_GUIDE"), concepts: ["HE", "BE", "GUIDE"] }), "On jest przewodnikiem.");
+});
+
+// ---------------------------------------------------------------------
+// Emi run 24 — picker flips (fi unhidden; it/pl/uk out of BETA), no -148
+// (possessed predicate surface), th first read, uk animate accusative
+// adjectives, pl feminine THEY, fi drilled ONE.
+// ---------------------------------------------------------------------
+
+test("picker: Finnish is visible with its BETA tag; Italian, Polish and Ukrainian are out of BETA (Nekh 2026-09-06, on Emi's runs 22–24)", () => {
+  const fi = AVAILABLE_LANGUAGES.find(l => l.code === "fi");
+  assert.equal(fi?.hidden, undefined);
+  assert.equal(fi?.beta, true);
+  for (const code of ["it", "pl", "uk"]) {
+    assert.equal(AVAILABLE_LANGUAGES.find(l => l.code === code)?.beta, false, code);
+  }
+  // Thai keeps its tag until its three templates land (Emi run 24).
+  assert.equal(AVAILABLE_LANGUAGES.find(l => l.code === "th")?.beta, true);
+});
+
+test("no: a possessed predicate ignores the authored definite surface; blå stays invariant; restaurant is masculine (Emi run-24 -148/-149/-150)", () => {
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er min hånd.");
+  assert.equal(buildSentence("no", tplById("THAT_IS_MY_ARM")), "Det er min arm.");
+  assert.equal(buildSentence("no", tplById("THAT_IS_YOUR_LEG")), "Det er ditt bein.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND"), "WHITE", {}), "Dette er min hvite hånd.");
+  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "BLUE", {}), "Hun går til sitt blå rom.");
+  assert.equal(buildSentence("no", tplById("I_RECOMMEND_RESTAURANT")), "Jeg anbefaler en restaurant.");
+});
+
+test("th: COOK incorporates FOOD, but-not repeats the verb, classifiers come from the table (Emi run-24 -151/-152/-153)", () => {
+  assert.equal(buildSentence("th", tplById("YOU_COOK_FOOD")), "คุณทำอาหาร");
+  assert.equal(buildSentence("th", tplById("I_COOK_FOOD"), "HER", {}), "ฉันทำอาหารของเธอ");
+  assert.equal(buildSentence("th", tplById("I_EAT_FOOD")), "ฉันกินอาหาร");
+  assert.equal(buildSentence("th", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")), "เขากินอาหารเช้าแต่ไม่กินอาหารกลางวัน");
+  assert.equal(buildSentence("th", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FOOT"), "SIX", {}), "ฉันเห็นเท้าหกข้าง");
+  assert.equal(buildSentence("th", tplById("SHE_SEES_PHONE"), "SIX", {}), "เธอเห็นโทรศัพท์หกเครื่อง");
+  assert.equal(buildSentence("th", tplById("CX_FIRST_PERSON_SINGULAR_SEE_MOUTH"), "SIX", {}), "ฉันเห็นปากหกปาก");
+});
+
+test("uk/pl/fi: animate-accusative adjectives, feminine «One», drilled «yhden» (Emi run-24 -145/-147/-156)", () => {
+  assert.equal(buildSentence("uk", tplById("CX_FIRST_PERSON_SINGULAR_HAVE_BROTHER"), "GOOD", {}), "Я маю доброго брата.");
+  assert.equal(buildSentence("uk", tplById("I_GREET_WAITER"), "GOOD", {}), "Я вітаю доброго офіціанта.");
+  assert.equal(buildSentence("uk", tplById("I_GREET_WAITER")), "Я вітаю офіціанта.");
+  assert.equal(buildSentence("pl", { ...tplById("YOU_ARE_GIRL"), concepts: ["THIRD_PERSON_PLURAL", "BE", "GIRL"] }), "One są dziewczynami.");
+  assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE"), "ONE", {}), "Hän näkee yhden puhelimen.");
+  assert.equal(buildSentence("fi", tplById("WE_HAVE_JOB"), "ONE", {}), "Meillä on yksi työ.");
 });

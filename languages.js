@@ -2,7 +2,9 @@
 // beta: true = not yet owner-verified. Verified: Portuguese, Norwegian, English,
 // French and Japanese (Nekh 2026-09-03, on Emi's 19/19 reads of both), Greek
 // and Spanish (Nekh 2026-09-05, on Emi's 20/20 fresh traversals), Korean,
-// Turkish and German (Nekh 2026-09-06, on Emi's runs 19, 21 and 22).
+// Turkish and German (Nekh 2026-09-06, on Emi's runs 19, 21 and 22), Italian,
+// Polish and Ukrainian (Nekh 2026-09-06, on Emi's runs 22–24). Finnish was
+// unhidden 2026-09-06 (Emi's GO in runs 8 and 24) and keeps the BETA tag.
 // hidden: true = registered for every validator (the language gate, coverage
 //   matrix, divergence ratchet, …) but invisible to learners in both the
 //   target and support pickers. This is the "being built" state a new
@@ -20,19 +22,19 @@
 export const AVAILABLE_LANGUAGES = [
   { code: "ar", label: "Arabic",     nativeLabel: "العربية",     short: "AR", ttsCode: "ar-SA", isRTL: true,  beta: true  },
   { code: "en", label: "English",    nativeLabel: "English",     short: "EN", ttsCode: "en-US", isRTL: false, beta: false },
-  { code: "fi", label: "Finnish",    nativeLabel: "Suomi",       short: "FI", ttsCode: "fi-FI", isRTL: false, beta: true, hidden: true },
+  { code: "fi", label: "Finnish",    nativeLabel: "Suomi",       short: "FI", ttsCode: "fi-FI", isRTL: false, beta: true  },
   { code: "fr", label: "French",     nativeLabel: "Français",    short: "FR", ttsCode: "fr-FR", isRTL: false, beta: false },
   { code: "de", label: "German",     nativeLabel: "Deutsch",     short: "DE", ttsCode: "de-DE", isRTL: false, beta: false  },
   { code: "el", label: "Greek",      nativeLabel: "Ελληνικά",    short: "EL", ttsCode: "el-GR", isRTL: false, beta: false },
-  { code: "it", label: "Italian",    nativeLabel: "Italiano",    short: "IT", ttsCode: "it-IT", isRTL: false, beta: true  },
+  { code: "it", label: "Italian",    nativeLabel: "Italiano",    short: "IT", ttsCode: "it-IT", isRTL: false, beta: false  },
   { code: "ja", label: "Japanese",   nativeLabel: "日本語",       short: "JA", ttsCode: "ja-JP", isRTL: false, beta: false },
   { code: "ko", label: "Korean",     nativeLabel: "한국어",        short: "KO", ttsCode: "ko-KR", isRTL: false, beta: false  },
   { code: "zh", label: "Mandarin",   nativeLabel: "中文",         short: "ZH", ttsCode: "zh-CN", isRTL: false, beta: true  },
   { code: "no", label: "Norwegian",  nativeLabel: "Norsk",       short: "NO", ttsCode: "nb-NO", isRTL: false, beta: false },
-  { code: "pl", label: "Polish",     nativeLabel: "Polski",      short: "PL", ttsCode: "pl-PL", isRTL: false, beta: true  },
+  { code: "pl", label: "Polish",     nativeLabel: "Polski",      short: "PL", ttsCode: "pl-PL", isRTL: false, beta: false  },
   { code: "pt", label: "Portuguese", nativeLabel: "Português",   short: "PT", ttsCode: "pt-BR", isRTL: false, beta: false },
   { code: "es", label: "Spanish",    nativeLabel: "Español",     short: "ES", ttsCode: "es-ES", isRTL: false, beta: false },
   { code: "th", label: "Thai",       nativeLabel: "ไทย",         short: "TH", ttsCode: "th-TH", isRTL: false, beta: true  },
   { code: "tr", label: "Turkish",    nativeLabel: "Türkçe",      short: "TR", ttsCode: "tr-TR", isRTL: false, beta: false  },
-  { code: "uk", label: "Ukrainian",  nativeLabel: "Українська",  short: "UK", ttsCode: "uk-UA", isRTL: false, beta: true  }
+  { code: "uk", label: "Ukrainian",  nativeLabel: "Українська",  short: "UK", ttsCode: "uk-UA", isRTL: false, beta: false  }
 ];
