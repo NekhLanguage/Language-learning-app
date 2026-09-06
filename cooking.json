@@ -2273,9 +2273,12 @@
         "SALTY": [
           "salado"
         ],
-        "SOUR": [
-          "ácido"
-        ],
+        "SOUR": {
+          "form": "ácido",
+          "f": "ácida",
+          "plural": "ácidos",
+          "fp": "ácidas"
+        },
         "FRESH": [
           "fresco"
         ],
@@ -2454,7 +2457,8 @@
         "FRUIT": {
           "form": "Obst",
           "gender": "n",
-          "plural": "Obstsorten"
+          "plural": "Obstsorten",
+          "noArticle": true
         },
         "BANANA": {
           "form": "Banane",

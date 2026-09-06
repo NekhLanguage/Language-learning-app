@@ -2021,3 +2021,48 @@ test("es: possessives pluralise and agree with ropa (Emi run-21 -123)", () => {
   assert.equal(buildSentence("es", tplById("WE_HAVE_CLOTHES")), "Nosotros tenemos ropa.");
   assert.equal(buildSentence("es", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")), "Esta es mi mano y esta es tu cabeza.");
 });
+
+// ---------------------------------------------------------------------
+// Emi run 22 — German neuter possessives (regression from run 21), rechts/
+// links, the drilled ONE slot, Spanish plural-only apocope, Italian article
+// before possessive + numeral.
+// ---------------------------------------------------------------------
+
+test("de: a drilled possessive on a neuter or genderless object stays bare; masculine keeps -en (Emi run-22 -130)", () => {
+  assert.equal(buildSentence("de", tplById("YOU_SEE_HOTEL"), "MY", {}), "Du siehst mein Hotel.");
+  assert.equal(buildSentence("de", tplById("I_DRINK_WATER"), "HER", {}), "Ich trinke ihr Wasser.");
+  assert.equal(buildSentence("de", tplById("I_HAVE_FOOD"), "YOUR", {}), "Ich habe dein Essen.");
+  assert.equal(buildSentence("de", tplById("WE_HAVE_JOB"), "MY", {}), "Wir haben meinen Job.");
+  assert.equal(buildSentence("de", tplById("I_HAVE_SOUP"), "MY", {}), "Ich habe meine Suppe.");
+});
+
+test("de: rechts/links decline from their adjective stem; ONE is the article with its case; Obst is bare (Emi run-22 -131)", () => {
+  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FINGER"), "RIGHT", {}), "Ich sehe einen rechten Finger.");
+  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_MOUTH"), "LEFT", {}), "Ich sehe einen linken Mund.");
+  assert.equal(buildSentence("de", tplById("WE_HAVE_JOB"), "ONE", {}), "Wir haben einen Job.");
+  assert.equal(buildSentence("de", tplById("SHE_EAT_FRUIT")), "Sie isst Obst.");
+  assert.equal(buildSentence("de", tplById("SHE_EAT_FRUIT"), "GOOD", {}), "Sie isst gutes Obst.");
+});
+
+test("it: the drilled ONE takes the article's allomorphy; a possessive before a numeral keeps its article (Emi run-22 -135/-136)", () => {
+  assert.equal(buildSentence("it", tplById("YOU_SEE_HOTEL"), "ONE", {}), "Tu vedi un hotel.");
+  assert.equal(buildSentence("it", tplById("I_SEE_HOUSE"), "ONE", {}), "Io vedo una casa.");
+  assert.equal(buildSentence("it", tplById("HE_HEAT_PAN"), "ONE", {}), "Lui riscalda una padella.");
+  assert.equal(buildSentence("it", tplById("I_HAVE_SPOON"), "HIS", { num_SPOON: "TWELVE" }), "Io ho i suoi dodici cucchiai.");
+  assert.equal(buildSentence("it", tplById("CX_FIRST_PERSON_SINGULAR_HAVE_BROTHER"), "HIS", { num_BROTHER: "NINETEEN" }), "Io ho i suoi diciannove fratelli.");
+  assert.equal(buildSentence("it", tplById("SHE_IS_MY_MOM")), "Lei è la mia mamma.");
+});
+
+test("es: apocope respects a plural-only head; ácida agrees (Emi run-22 -132/-133)", () => {
+  assert.equal(buildSentence("es", tplById("THEY_HAVE_PANTS"), "BAD", {}), "Ellos tienen malos pantalones.");
+  assert.equal(buildSentence("es", tplById("THEY_HAVE_PANTS"), "GOOD", {}), "Ellos tienen buenos pantalones.");
+  assert.equal(buildSentence("es", tplById("SHE_EAT_FRUIT"), "SOUR", {}), "Ella come una fruta ácida.");
+  assert.equal(buildSentence("es", tplById("HE_READ_BOOK"), "ONE", {}), "Él lee un libro.");
+});
+
+test("picker: Korean, Turkish and German are out of BETA (Nekh 2026-09-06, on Emi's runs 19/21/22)", () => {
+  for (const code of ["ko", "tr", "de"]) {
+    const row = AVAILABLE_LANGUAGES.find(l => l.code === code);
+    assert.equal(row?.beta, false, code);
+  }
+});

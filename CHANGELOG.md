@@ -13,6 +13,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ---
 
+## 2026-09-06
+
+### Korean, Turkish and German leave beta; German neuter possessives; Italian "one"
+Korean, Turkish and German have passed their language reviews and lose the BETA tag on the picker. German possessives on a neuter object are back to the bare form («Du siehst mein Hotel», «Ich trinke ihr Wasser») while masculine objects keep their ending («Wir haben meinen Job»); "right" and "left" decline as adjectives («einen rechten Finger»); a drilled "one" is the article with its case («Wir haben einen Job»); and fruit is «Obst» without an article. Italian "one" now follows the article («un hotel», «una padella», «uno zaino»), and a possessive before a number keeps its article («i suoi dodici cucchiai», «le sue tre sorelle»). Spanish "bad" pluralises before trousers («malos pantalones») and sour fruit is «ácida».
+
 ## 2026-09-05
 
 ### German home, cases and colours; Norwegian, Turkish and Spanish rows
