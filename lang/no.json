@@ -133,6 +133,11 @@
       "form": "vanskelig",
       "plural": "vanskelige"
     },
+    "OWN": {
+      "form": "sin",
+      "n": "sitt",
+      "plural": "sine"
+    },
     "MY": {
       "form": "min",
       "n": "mitt",

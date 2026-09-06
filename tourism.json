@@ -4491,6 +4491,8 @@
           "plural": "przewodnicy",
           "genitive_plural": "przewodników",
           "accusative": "przewodnika",
+          "feminine": "przewodniczka",
+          "feminine_instrumental": "przewodniczką",
           "virile": true,
           "instrumental": "przewodnikiem"
         },

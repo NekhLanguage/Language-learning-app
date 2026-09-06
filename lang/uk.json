@@ -149,6 +149,20 @@
       "n": "важке",
       "plural": "важкі"
     },
+    "OWN": {
+      "form": "свій",
+      "f": "своя",
+      "n": "своє",
+      "plural": "свої",
+      "genitive": "свого",
+      "f_genitive": "своєї",
+      "dative": "своєму",
+      "f_dative": "своїй",
+      "instrumental": "своїм",
+      "f_instrumental": "своєю",
+      "locative": "своєму",
+      "f_locative": "своїй"
+    },
     "MY": {
       "form": "мій",
       "f": "моя",

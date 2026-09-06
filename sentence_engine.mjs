@@ -617,6 +617,32 @@ function reflexivePossessiveApplies(lang, possessiveCid, subjectCid) {
     conceptPerson(subjectCid) === 3;
 }
 
+// Declared rule (reflexivePossessive — uk/pl/no): a 3rd-person possessive
+// whose possessor IS the subject renders as the reflexive possessive
+// («до своєї кімнати», «ze swoją mamą», «sitt rom»); the plain his/her
+// there means someone ELSE's (Emi run-23 -142). The reflexive's forms
+// live in the language's OWN entry, shaped like any possessive (form / f /
+// n / plural + <case> / f_<case>), so every agreement path reads it
+// through the ordinary lookups — this returns the cid to look up. The
+// possessor matches by pronoun pair, or by gender for a noun subject.
+// Callers skip copular predicates («she is her mom» is not reflexive).
+const REFLEXIVE_POSSESSOR = {
+  HE: "HIS", SHE: "HER", IT: "ITS", THIRD_PERSON_PLURAL: "THEIR",
+};
+function reflexivePossessiveCid(lang, possessiveCid, subjectCid) {
+  if (!subjectCid || !langRule(lang, "reflexivePossessive")) return possessiveCid;
+  if (vocab().concepts?.[possessiveCid]?.semantic_role !== "possessive" ||
+      conceptPerson(possessiveCid) !== 3) return possessiveCid;
+  if (!vocab().languages?.[lang]?.forms?.OWN) return possessiveCid;
+  let owns = REFLEXIVE_POSSESSOR[subjectCid] === possessiveCid;
+  if (!owns && vocab().concepts?.[subjectCid]?.type === "noun") {
+    const g = vocab().languages?.[lang]?.forms?.[subjectCid]?.gender;
+    owns = (g === "f" && possessiveCid === "HER") ||
+      (g === "m" && possessiveCid === "HIS");
+  }
+  return owns ? "OWN" : possessiveCid;
+}
+
 // --- Determiner-side case marking (German) ----------------------------------
 // German realizes case on the DETERMINER (ein → einen/einem, der → den/dem)
 // rather than as a noun suffix. Activated by caseMarking.caseOn:
@@ -2743,6 +2769,10 @@ function finalizeSentence(lang, sentence) {
     const C = "бвгґджзйклмнпрстфхцчшщщьБВГҐДЖЗЙКЛМНПРСТФХЦЧШЩ";
     s = s.replace(new RegExp(`([${C}])\\s+в\\s+(?=[${C}])`, "g"), "$1 у ");
     s = s.replace(new RegExp(`^В\\s+(?=[${C}])`), "У ");
+    // «зі» before an s/z/sh-initial cluster («зі своєю мамою», «зі
+    // школи»); «з» elsewhere.
+    s = s.replace(/(^|\s)([зЗ])\s+(?=(?:с[вптк]|з[вбд]|ш[кп]))/g,
+      (m, pre, z) => pre + (z === "З" ? "Зі " : "зі "));
     return s;
   }
   // German preposition + dative-article contractions, applied to the
@@ -2979,6 +3009,9 @@ function nounWithPossessive(lang, possessiveCid, nounCid, caseName = null, subje
     const suffixed = possessed3Form(lang, nounCid, caseName);
     if (suffixed) return suffixed;
   }
+  // Free reflexive possessive (uk/pl/no): «зі своєю мамою», «ze swoją
+  // córką», «med sin datter» — the companion builders pass the subject.
+  possessiveCid = reflexivePossessiveCid(lang, possessiveCid, subjectCid);
   // Suffixal possession with a derived case paradigm (tr): «senin
   // telefonun», «onun tavasını» — the possessive word stays, the noun
   // carries person and case (Emi run-18 -91).
@@ -4783,7 +4816,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // to the nominative phrase, which validate-exercise-surfaces ratchets.
   const predNounCase = predicateNounCaseFor(lang, ordered, idx, subjectCid, isCopularTemplate);
   if (predNounCase) {
-    const declined = caseFormFor(lang, cid,
+    // A feminine referent declines its feminitive («Ona jest
+    // przewodniczką», Emi run-23 -144): the entry's feminine_<case>.
+    const femDeclined = feminineReferent && !useCopularPlural
+      ? nounEntry?.[`feminine_${predNounCase}`] : null;
+    const declined = typeof femDeclined === "string" ? femDeclined : caseFormFor(lang, cid,
       useCopularPlural ? predNounCase + "_plural" : predNounCase);
     if (declined && (!precededByPossessive ||
         possessiveCaseForm(lang, ordered[idx - 1], cid, predNounCase))) {
@@ -4908,6 +4945,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     ? sharedChoices["adj_" + cid]
     : undefined;
   const adjGenderOverride = feminineReferent ? "f" : null;
+  // The possessive entry to read for a drilled/cached possessive: the
+  // reflexive OWN entry when the subject owns this noun («Він бачить
+  // свої три таксі»), never on a copular predicate.
+  const possLookupCid = c => (isCopularTemplate && isCopularPredicatePosition(ordered, idx, lang))
+    ? c : reflexivePossessiveCid(lang, c, subjectCid);
   if (forcedMeta?.type === "adjective") {
     // The forced path must respect the same compatibility rule as random
     // injection — this is the mass-noun/animacy filter for drilled
@@ -4925,7 +4967,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     if ((forcedPossessive && !reflexiveRefused) ||
         (!forcedPossessive && isModifierCompatible(lang, forcedConcept, cid))) {
       adjectiveCid = forcedConcept;
-      adjectiveWord = genderedFormOf(lang, forcedConcept, cid, false, adjGenderOverride);
+      adjectiveWord = genderedFormOf(lang, possLookupCid(forcedConcept), cid, false, adjGenderOverride);
     }
   } else if (cachedAdj !== undefined) {
     // Cached choices render unchecked BY DESIGN: the choice already passed
@@ -4943,7 +4985,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       reflexivePossessiveApplies(lang, cachedAdj, subjectCid) &&
       !possessed3Form(lang, cid, reflexiveSuffixKeyFor(cid, idx));
     adjectiveCid = cachedReflexiveRefused ? null : cachedAdj;
-    adjectiveWord = adjectiveCid ? genderedFormOf(lang, adjectiveCid, cid, false, adjGenderOverride) : null;
+    adjectiveWord = adjectiveCid ? genderedFormOf(lang, possLookupCid(adjectiveCid), cid, false, adjGenderOverride) : null;
   } else {
     const adjectives = getReleased().filter(c => {
       const m = vocab().concepts[c];
@@ -5056,7 +5098,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // «dei pantaloni grandi», never «dei pantaloni grande» (Emi 2026-08-27-04's
   // Italian half).
   if (adjectiveWord && adjectiveCid && lang !== "en" && headEntry?.pluralOnly) {
-    adjectiveWord = genderedFormOf(lang, adjectiveCid, cid, true, adjGenderOverride);
+    adjectiveWord = genderedFormOf(lang, possLookupCid(adjectiveCid), cid, true, adjGenderOverride);
   }
   // An adjective on a feminine accusative object agrees in case too:
   // «я п'ю холодну воду», not «холодна воду». Ukrainian feminine adjectives
@@ -5221,7 +5263,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       noteRule("ar_numeral_placement");
       if (adjectiveWord) {
         const adjForm = adjectiveCid && lang !== "en"
-          ? genderedFormOf(lang, adjectiveCid, cid, false)
+          ? genderedFormOf(lang, possLookupCid(adjectiveCid), cid, false)
           : adjectiveWord;
         return [nounForm, adjForm, numberWord].filter(Boolean).join(" ");
       }
@@ -5236,7 +5278,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const partitiveGoverned = numeralGoverned &&
         langRule(lang, "numeralPartitiveSingular");
       let adjForm = (isPlural && adjectiveCid && lang !== "en" && !partitiveGoverned)
-        ? genderedFormOf(lang, adjectiveCid, cid, true)
+        ? genderedFormOf(lang, possLookupCid(adjectiveCid), cid, true)
         : adjectiveWord;
       if (isPlural && headEntry?.gender === "m" &&
           (ukObjectCase || caseAt[idx] === "accusative")) {
@@ -5289,7 +5331,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // "my small dads"), whose head pluralized via possessedPlural above.
     let adjForm = ((useCopularPlural || possessedPlural) && lang !== "en" &&
         !adjectiveIsPossessive)
-      ? genderedFormOf(lang, adjectiveCid, cid, true)
+      ? genderedFormOf(lang, possLookupCid(adjectiveCid), cid, true)
       : adjectiveWord;
     // German attributive endings key on the determiner class and the
     // slot's case («ein neues Buch», «einen neuen Job», «neues Wasser»).
@@ -5383,7 +5425,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const possNounEntry = vocab().languages?.[lang]?.forms?.[cid];
       const possPlural = !!possNounEntry?.pluralOnly || useCopularPlural;
       let possForm = possPlural
-        ? genderedFormOf(lang, adjectiveCid, cid, true)
+        ? genderedFormOf(lang, possLookupCid(adjectiveCid), cid, true)
         : adjForm;
       // A drilled possessive declines with its slot in determiner-marking
       // languages («Sie hat meinen Job», «zu ihrem Zimmer» — Emi run-21
@@ -5394,7 +5436,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           (isObject && determinerCaseMarking(lang)
             ? langRuleValue(lang, "caseMarking").directObjectCase : null);
         const declined = injectedCase
-          ? possessiveCaseForm(lang, adjectiveCid, cid, injectedCase) : null;
+          ? possessiveCaseForm(lang, possLookupCid(adjectiveCid), cid, injectedCase) : null;
         if (declined) {
           possForm = declined;
           if (sharedChoices && adjectiveCid === forcedConcept) {
@@ -5703,6 +5745,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // it («я маю мою книгу»).
     if (meta.type === "adjective" && meta.semantic_role === "possessive") {
       const nextCid = ordered[idx + 1];
+      // The form to look up: the reflexive OWN entry when the subject
+      // owns the noun («до своєї кімнати»), never on a copular predicate.
+      const pcid = isCopularTemplate && isCopularPredicatePosition(ordered, idx + 1, lang)
+        ? cid : reflexivePossessiveCid(lang, cid, subjectCid);
       // Enclitic languages render the possessor inside the noun slot
       // (th มือของฉัน, el «το βιβλίο μου») — this slot stays empty.
       if (possessivePostposed(lang, cid) &&
@@ -5727,14 +5773,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         // дівчата», never «Вони наша дівчата» (Emi 2026-08-28-09) — the
         // predicate noun pluralizes with a plural subject, so its
         // possessive takes the plural form when the entry has one.
-        let form = genderedFormOf(lang, cid, nextCid, pluralAgreement);
+        let form = genderedFormOf(lang, pcid, nextCid, pluralAgreement);
         // Mirror of the predicate-case check in the noun slot: when the
         // possessed predicate noun declines, the possessive declines with
         // it («moją mamą») — and when either half lacks data, both stay
         // nominative together.
         const possPredCase = predicateNounCaseFor(lang, ordered, idx + 1, subjectCid, isCopularTemplate);
         if (possPredCase && caseFormFor(lang, nextCid, possPredCase)) {
-          const declinedPoss = possessiveCaseForm(lang, cid, nextCid, possPredCase);
+          const declinedPoss = possessiveCaseForm(lang, pcid, nextCid, possPredCase);
           if (declinedPoss) return declinedPoss;
         }
         // Mirror for preposition-governed possessed nouns («mit seiner
@@ -5743,7 +5789,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         // language whose possessives carry no case fields is untouched.
         const possGoverned = caseAt[idx + 1];
         if (possGoverned) {
-          const declinedPoss = possessiveCaseForm(lang, cid, nextCid, possGoverned);
+          const declinedPoss = possessiveCaseForm(lang, pcid, nextCid, possGoverned);
           if (declinedPoss) return declinedPoss;
         }
         // Determiner-marking languages decline the possessive of a direct
@@ -5753,7 +5799,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         if (!possGoverned && determinerCaseMarking(lang) &&
             isDirectObjectPosition(ordered, idx + 1, lang)) {
           const doCase = langRuleValue(lang, "caseMarking").directObjectCase;
-          const declinedPoss = possessiveCaseForm(lang, cid, nextCid, doCase);
+          const declinedPoss = possessiveCaseForm(lang, pcid, nextCid, doCase);
           if (declinedPoss) return declinedPoss;
         }
         if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
@@ -5769,7 +5815,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           const art = possessiveArticleFor(lang, nextCid);
           if (art) {
             form = nounEntry?.pluralOnly
-              ? art + " " + genderedFormOf(lang, cid, nextCid, true)
+              ? art + " " + genderedFormOf(lang, pcid, nextCid, true)
               : art + " " + form;
           }
         }

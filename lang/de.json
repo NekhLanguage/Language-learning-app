@@ -658,13 +658,13 @@
       "3_plural": "sehen"
     },
     "START": {
-      "base": "starten",
-      "1_singular": "starte",
-      "2_singular": "startest",
-      "3_singular": "startet",
-      "1_plural": "starten",
-      "2_plural": "startet",
-      "3_plural": "starten"
+      "base": "beginnen",
+      "1_singular": "beginne",
+      "2_singular": "beginnst",
+      "3_singular": "beginnt",
+      "1_plural": "beginnen",
+      "2_plural": "beginnt",
+      "3_plural": "beginnen"
     },
     "STOP": {
       "base": "aufhören",

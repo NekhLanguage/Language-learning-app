@@ -225,6 +225,13 @@
 //                            takes its definite (weak) form — the entry's
 //                            `definite` field, else its `plural` (no «min
 //                            gode mamma», «min lille pappa»).
+//   reflexivePossessive      a 3rd-person possessive whose possessor is the
+//                            clause subject (HE↔HIS, SHE↔HER, THEY↔THEIR,
+//                            or a noun subject of matching gender) renders
+//                            from the language's OWN entry — «свій»,
+//                            «swój», «sin» — with the same gender/number/
+//                            case fields as any possessive. Never on a
+//                            copular predicate («she is her mom»).
 //   oneAsIndefiniteArticle   the numeral ONE in a drilled slot renders as
 //                            the noun's indefinite article, with the slot's
 //                            case and the article's allomorphy («einen
@@ -884,6 +891,10 @@ export const LANGUAGE_RULES = {
     comitativeBeforeVerb: "一起",
   },
   no: {
+    // A 3rd-person possessive whose possessor is the subject is the
+    // reflexive «OWN» entry (свій / swój / sin), never his/her — which
+    // means someone else's here (Emi run-23 -142).
+    reflexivePossessive: true,
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",
       declinesAttributiveAdjectives: true,
@@ -908,6 +919,10 @@ export const LANGUAGE_RULES = {
     verbGovernedPrepositions: true,
   },
   pl: {
+    // A 3rd-person possessive whose possessor is the subject is the
+    // reflexive «OWN» entry (свій / swój / sin), never his/her — which
+    // means someone else's here (Emi run-23 -142).
+    reflexivePossessive: true,
     features: {
       adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
@@ -1093,6 +1108,10 @@ export const LANGUAGE_RULES = {
     copulaCoordination: { separatorWord: true },
   },
   uk: {
+    // A 3rd-person possessive whose possessor is the subject is the
+    // reflexive «OWN» entry (свій / swój / sin), never his/her — which
+    // means someone else's here (Emi run-23 -142).
+    reflexivePossessive: true,
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
