@@ -652,13 +652,13 @@
       "3_plural": "başlarlar"
     },
     "STOP": {
-      "base": "durmak",
-      "1_singular": "dururum",
-      "2_singular": "durursun",
-      "3_singular": "durur",
-      "1_plural": "dururuz",
-      "2_plural": "durursunuz",
-      "3_plural": "dururlar"
+      "base": "bırakmak",
+      "1_singular": "bırakırım",
+      "2_singular": "bırakırsın",
+      "3_singular": "bırakır",
+      "1_plural": "bırakırız",
+      "2_plural": "bırakırsınız",
+      "3_plural": "bırakırlar"
     },
     "SLEEP": {
       "base": "uyumak",

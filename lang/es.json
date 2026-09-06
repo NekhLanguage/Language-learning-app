@@ -141,25 +141,32 @@
       "form": "difícil",
       "plural": "difíciles"
     },
-    "MY": [
-      "mi"
-    ],
-    "YOUR": [
-      "tu"
-    ],
-    "HIS": [
-      "su"
-    ],
-    "HER": [
-      "su"
-    ],
-    "OUR": [
-      "nuestro"
-    ],
-    "THEIR": [
-      "su",
-      "sus"
-    ],
+    "MY": {
+      "form": "mi",
+      "plural": "mis"
+    },
+    "YOUR": {
+      "form": "tu",
+      "plural": "tus"
+    },
+    "HIS": {
+      "form": "su",
+      "plural": "sus"
+    },
+    "HER": {
+      "form": "su",
+      "plural": "sus"
+    },
+    "OUR": {
+      "form": "nuestro",
+      "f": "nuestra",
+      "plural": "nuestros",
+      "fp": "nuestras"
+    },
+    "THEIR": {
+      "form": "su",
+      "plural": "sus"
+    },
     "AND": [
       "y"
     ],
@@ -395,7 +402,9 @@
       "definite": true
     },
     "CLOTHES": {
-      "form": "ropa"
+      "form": "ropa",
+      "gender": "f",
+      "noArticle": true
     },
     "SHIRT": {
       "form": "camisa",

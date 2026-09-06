@@ -277,7 +277,12 @@
     },
     "HOME": {
       "form": "Zuhause",
-      "gender": "n"
+      "gender": "n",
+      "noArticle": true,
+      "predicative": "zu Hause",
+      "fused": {
+        "from": "von zu Hause weg"
+      }
     },
     "BOOK": {
       "form": "Buch",
@@ -740,12 +745,14 @@
     "YELLOW": [
       "gelb"
     ],
-    "PURPLE": [
-      "lila"
-    ],
-    "ORANGE": [
-      "orange"
-    ],
+    "PURPLE": {
+      "form": "lila",
+      "indeclinable": true
+    },
+    "ORANGE": {
+      "form": "orange",
+      "indeclinable": true
+    },
     "FAST": [
       "schnell"
     ],

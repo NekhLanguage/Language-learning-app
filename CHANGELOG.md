@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-05
 
+### German home, cases and colours; Norwegian, Turkish and Spanish rows
+German "I go home" is «Ich gehe nach Hause», "from home" is «von zu Hause weg», and "he is home" reads «zu Hause». A drilled "my" or "her" on an object now takes the accusative («Sie hat meinen Job», «Sie sieht meinen Bahnhof»), an adjective after a possessive gets its weak ending («zu ihrem großen Zimmer»), the colour loans orange and lila stay undeclined («ein orange Gesicht»), and "she is a waiter" is «Sie ist eine Kellnerin». Norwegian pepper is masculine («en pepper»), greeting someone takes «på» («Jeg hilser på en servitør»), and a possessive now sits before a number in every language («våre sju føtter», "our seven feet"). Turkish "he stops eating" is «O yemeyi bırakır» and "I go for food" is «Ben yiyecek için giderim». Spanish possessives pluralise («mis mamás», «sus chicas») and agree with «ropa» («nuestra ropa»).
+
+## 2026-09-05
+
 ### Norwegian: possessives and adjectives agree; Turkish and Portuguese follow-ups
 Norwegian possessives now match their noun: «ditt hotell», «mitt rom», «mine klær», not «din hotell». An adjective after a possessive takes its definite form the way it does after "the" — «min gode mamma», «min lille pappa», «hennes hvite rom». Colours and sizes pluralise with counted nouns («åtte svarte telefoner», «grønne klær»), "a thing" is «en ting», a fresh kitchen is «et ferskt kjøkken», souvenirs lose their stray accent («suvenir»), "they start sleeping" is «De begynner å sove», and "I go from home" is the one word «hjemmefra». Turkish "we stop eating" and "they start sleeping" read as a Turk says them — «Biz yemeyi bırakırız», «Onlar uyumaya başlarlar» — and "his airport" is «havalimanını», not a double possessive. Portuguese "they" turns feminine before a feminine predicate («Elas são meninas», «Elas são as meninas dela»; Spanish and French do the same), and "he starts sleeping" no longer fuses into «começà».
 
