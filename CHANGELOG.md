@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-06
 
+### "Her own room": the reflexive possessive in Ukrainian, Polish and Norwegian
+When someone does something with their own things, Ukrainian, Polish and Norwegian use a special word for "own" instead of his or her, and using his or her there means somebody else's. The app now does the same: «Вона йде до своєї кімнати», «Він їсть вечерю зі своєю мамою», «Він бачить свої три музеї»; «Ona idzie do swojego pokoju», «On je kolację ze swoją mamą»; «Hun går til sitt rom», «Han spiser med sin datter». Plain his and her stay where they belong («Він бачить її музей», «Вона її мама»). Also: German "start" is «beginnen» («Sie beginnen zu schlafen»), and a female guide in Polish is «Ona jest przewodniczką».
+
+## 2026-09-06
+
 ### Korean, Turkish and German leave beta; German neuter possessives; Italian "one"
 Korean, Turkish and German have passed their language reviews and lose the BETA tag on the picker. German possessives on a neuter object are back to the bare form («Du siehst mein Hotel», «Ich trinke ihr Wasser») while masculine objects keep their ending («Wir haben meinen Job»); "right" and "left" decline as adjectives («einen rechten Finger»); a drilled "one" is the article with its case («Wir haben einen Job»); and fruit is «Obst» without an article. Italian "one" now follows the article («un hotel», «una padella», «uno zaino»), and a possessive before a number keeps its article («i suoi dodici cucchiai», «le sue tre sorelle»). Spanish "bad" pluralises before trousers («malos pantalones») and sour fruit is «ácida».
 

@@ -895,6 +895,22 @@
       "fp": "zimne",
       "vp": "zimni"
     },
+    "OWN": {
+      "form": "swój",
+      "f": "swoja",
+      "n": "swoje",
+      "plural": "swoje",
+      "fp": "swoje",
+      "vp": "swoi",
+      "genitive": "swojego",
+      "f_genitive": "swojej",
+      "dative": "swojemu",
+      "f_dative": "swojej",
+      "instrumental": "swoim",
+      "f_instrumental": "swoją",
+      "locative": "swoim",
+      "f_locative": "swojej"
+    },
     "MY": {
       "form": "mój",
       "f": "moja",

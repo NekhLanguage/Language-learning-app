@@ -1950,7 +1950,8 @@ test("no: possessives agree with neuter and plural nouns (Emi run-20 -113)", () 
 test("no: an adjective after a possessive takes the definite form (Emi run-20 -112)", () => {
   assert.equal(buildSentence("no", tplById("SHE_IS_MY_MOM"), "GOOD", {}), "Hun er min gode mamma.");
   assert.equal(buildSentence("no", tplById("HE_IS_MY_DAD"), "SMALL", {}), "Han er min lille pappa.");
-  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "WHITE", {}), "Hun går til hennes hvite rom.");
+  // «sitt» since run 23: the subject owns the room (reflexivePossessive).
+  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "WHITE", {}), "Hun går til sitt hvite rom.");
   assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), "GOOD", {}),
     "Dette er min gode hånd og dette er ditt gode hode.");
 });
@@ -2065,4 +2066,39 @@ test("picker: Korean, Turkish and German are out of BETA (Nekh 2026-09-06, on Em
     const row = AVAILABLE_LANGUAGES.find(l => l.code === code);
     assert.equal(row?.beta, false, code);
   }
+});
+
+// ---------------------------------------------------------------------
+// Emi run 23 — reflexive possessive (uk/pl/no), de beginnen, pl feminine
+// instrumental.
+// ---------------------------------------------------------------------
+
+test("uk/pl/no: a 3rd-person possessive owned by the subject is the reflexive (Emi run-23 -142)", () => {
+  assert.equal(buildSentence("uk", tplById("SHE_GO_TO_HER_ROOM")), "Вона йде до своєї кімнати.");
+  assert.equal(buildSentence("uk", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")), "Він їсть вечерю зі своєю мамою, тому що він удома.");
+  assert.equal(buildSentence("uk", tplById("HE_SEES_MUSEUM"), "HIS", { num_MUSEUM: "THREE" }), "Він бачить свої три музеї.");
+  assert.equal(buildSentence("pl", tplById("SHE_GO_TO_HER_ROOM")), "Ona idzie do swojego pokoju.");
+  assert.equal(buildSentence("pl", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")), "Jeśli on jest w domu, on je ze swoją córką.");
+  assert.equal(buildSentence("pl", tplById("HE_SEES_MUSEUM"), "HIS", {}), "On widzi swoje muzeum.");
+  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM")), "Hun går til sitt rom.");
+  assert.equal(buildSentence("no", tplById("HE_SEES_MUSEUM"), "HIS", { num_MUSEUM: "THREE" }), "Han ser sine tre museer.");
+});
+
+test("uk/pl/no: his/her stay plain when the possessor is someone else or on a copular predicate", () => {
+  const sheIsHerMom = { ...tplById("SHE_IS_MY_MOM"), concepts: ["SHE", "BE", "HER", "MOM"] };
+  assert.equal(buildSentence("uk", tplById("HE_SEES_MUSEUM"), "HER", {}), "Він бачить її музей.");
+  assert.equal(buildSentence("uk", sheIsHerMom), "Вона її мама.");
+  assert.equal(buildSentence("uk", tplById("YOU_SEE_HOTEL"), "HIS", { num_HOTEL: "THREE" }), "Ти бачиш його три готелі.");
+  assert.equal(buildSentence("pl", sheIsHerMom), "Ona jest jej mamą.");
+  assert.equal(buildSentence("no", tplById("HE_SEES_MUSEUM"), "HER", {}), "Han ser hennes museum.");
+  // Finnish keeps its suffix mechanism; German has no reflexive.
+  assert.equal(buildSentence("fi", tplById("SHE_GO_TO_HER_ROOM")), "Hän menee huoneeseensa.");
+  assert.equal(buildSentence("de", tplById("SHE_GO_TO_HER_ROOM")), "Sie geht zu ihrem Zimmer.");
+});
+
+test("de: START is beginnen; pl: a female guide is przewodniczką (Emi run-23 -138/-144)", () => {
+  assert.equal(buildSentence("de", tplById("THEY_START_SLEEPING")), "Sie beginnen zu schlafen.");
+  assert.equal(buildSentence("de", { ...tplById("THEY_START_SLEEPING"), concepts: ["FIRST_PERSON_SINGULAR", "START", "SLEEP"] }), "Ich beginne zu schlafen.");
+  assert.equal(buildSentence("pl", tplById("SHE_IS_GUIDE")), "Ona jest przewodniczką.");
+  assert.equal(buildSentence("pl", { ...tplById("SHE_IS_GUIDE"), concepts: ["HE", "BE", "GUIDE"] }), "On jest przewodnikiem.");
 });
