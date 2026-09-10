@@ -3756,7 +3756,8 @@
       "label": "Thai",
       "forms": {
         "COOK": {
-          "base": "ทำอาหาร"
+          "base": "ทำอาหาร",
+          "incorporatedObject": true
         },
         "CUT": {
           "base": "หั่น"

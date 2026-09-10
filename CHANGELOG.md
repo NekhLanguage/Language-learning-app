@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-06
 
+### Finnish is on the picker; Italian, Polish and Ukrainian leave beta; Thai counts properly
+Finnish is now visible on the language picker, with a BETA tag while its review continues. Italian, Polish and Ukrainian have passed their reviews and lose the tag. Thai counts with the right classifier word for eyes, feet, hands, meals, jobs and more («เท้าหกข้าง», «งานสองงาน»), "you cook food" is «คุณทำอาหาร» without saying food twice, and "but not lunch" negates the verb («แต่ไม่กินอาหารกลางวัน»). Norwegian "This is my hand" is «Dette er min hånd» again (a definite ending had slipped in), «hennes blå rom» keeps blå unchanged, and a restaurant is «en restaurant». Ukrainian adjectives now follow an animate object into the accusative («доброго брата», «доброго офіціанта»), Polish "they" is «One» before a feminine predicate, and Finnish "one" declines with its object («yhden puhelimen»).
+
+## 2026-09-06
+
 ### "Her own room": the reflexive possessive in Ukrainian, Polish and Norwegian
 When someone does something with their own things, Ukrainian, Polish and Norwegian use a special word for "own" instead of his or her, and using his or her there means somebody else's. The app now does the same: «Вона йде до своєї кімнати», «Він їсть вечерю зі своєю мамою», «Він бачить свої три музеї»; «Ona idzie do swojego pokoju», «On je kolację ze swoją mamą»; «Hun går til sitt rom», «Han spiser med sin datter». Plain his and her stay where they belong («Він бачить її музей», «Вона її мама»). Also: German "start" is «beginnen» («Sie beginnen zu schlafen»), and a female guide in Polish is «Ona jest przewodniczką».
 

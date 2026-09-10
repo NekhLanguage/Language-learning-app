@@ -993,10 +993,10 @@
       "my",
       "nasz"
     ],
-    "THIRD_PERSON_PLURAL": [
-      "oni",
-      "ich"
-    ],
+    "THIRD_PERSON_PLURAL": {
+      "form": "oni",
+      "f": "one"
+    },
     "THIS": {
       "form": "to",
       "locative": "tym",

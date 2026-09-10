@@ -4927,7 +4927,7 @@
           "THIS": "Dette",
           "BE": "er",
           "MY": "min",
-          "HAND": "hånden"
+          "HAND": "hånd"
         },
         "tr": {
           "THIS": "Bu",
@@ -5058,7 +5058,7 @@
           "THIS": "Dette",
           "BE": "er",
           "YOUR": "ditt",
-          "HEAD": "hodet"
+          "HEAD": "hode"
         },
         "tr": {
           "THIS": "Bu",
@@ -5189,7 +5189,7 @@
           "THAT": "Det",
           "BE": "er",
           "MY": "min",
-          "ARM": "armen"
+          "ARM": "arm"
         },
         "tr": {
           "THAT": "Şu",
@@ -5320,7 +5320,7 @@
           "THAT": "Det",
           "BE": "er",
           "YOUR": "ditt",
-          "LEG": "beinet"
+          "LEG": "bein"
         },
         "tr": {
           "THAT": "Şu",
@@ -5451,7 +5451,7 @@
           "SHE": "Hun",
           "BE": "er",
           "MY": "min",
-          "MOM": "moren"
+          "MOM": "mamma"
         },
         "tr": {
           "SHE": "O",
@@ -5582,7 +5582,7 @@
           "HE": "Han",
           "BE": "er",
           "MY": "min",
-          "DAD": "faren"
+          "DAD": "pappa"
         },
         "tr": {
           "HE": "O",

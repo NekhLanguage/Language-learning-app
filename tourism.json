@@ -2360,7 +2360,7 @@
         },
         "RESTAURANT": {
           "form": "restaurant",
-          "gender": "n",
+          "gender": "m",
           "plural": "restauranter"
         },
         "MENU": {
