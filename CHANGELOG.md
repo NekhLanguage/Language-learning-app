@@ -13,7 +13,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ---
 
-## 2026-09-06
+## 2026-09-10
+
+### Norwegian, Ukrainian, Finnish and Thai: six small grammar fixes from the latest review
+Norwegian "if" sentences now put the verb second the way Norwegian does — «Hvis han er hjemme, spiser han med sin datter», not «…, han spiser» — and "he is home" reads «er hjemme» (the state) instead of «er hjem» (the direction). «liten» gained its neuter form, so it is «et lite hus», never «et liten hus». German picked up the same verb-second inversion after a fronted «Wenn» clause. Ukrainian "board a flight" now carries its preposition («сідаю на рейс») and "ten blue phones" declines the soft-stem adjective correctly («синіх»). Finnish numerals follow the object's case: «luen yhtä kirjaa» for a partial object, «näen yhden puhelimen» for a whole one. Thai "exchange currency" no longer says "money" twice («แลกเงิน», not «แลกเงินสกุลเงิน»).
+
 
 ### Finnish is on the picker; Italian, Polish and Ukrainian leave beta; Thai counts properly
 Finnish is now visible on the language picker, with a BETA tag while its review continues. Italian, Polish and Ukrainian have passed their reviews and lose the tag. Thai counts with the right classifier word for eyes, feet, hands, meals, jobs and more («เท้าหกข้าง», «งานสองงาน»), "you cook food" is «คุณทำอาหาร» without saying food twice, and "but not lunch" negates the verb («แต่ไม่กินอาหารกลางวัน»). Norwegian "This is my hand" is «Dette er min hånd» again (a definite ending had slipped in), «hennes blå rom» keeps blå unchanged, and a restaurant is «en restaurant». Ukrainian adjectives now follow an animate object into the accusative («доброго брата», «доброго офіціанта»), Polish "they" is «One» before a feminine predicate, and Finnish "one" declines with its object («yhden puhelimen»).

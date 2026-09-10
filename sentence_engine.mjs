@@ -2427,12 +2427,23 @@ function numberAgreementForm(lang, numberCid, headCid, accusative, caseName = nu
     if (art) return art;
   }
   const entry = vocab().languages?.[lang]?.forms?.[numberCid];
-  // A total object declines its numeral with the noun in genderless case
+  // An object declines its numeral with the noun in genderless case
   // languages («Hän näkee yhden puhelimen» — fi, Emi run-24 -156): the
-  // numeral entry's own accusative field, data-driven.
+  // numeral entry's own case field, data-driven. The noun's rendered
+  // object form decides WHICH case — a partial object («luen kirjaa»)
+  // takes the numeral's partitive («yhtä kirjaa»), never the total
+  // «yhden kirjaa» (Emi run-25 -165).
   if (accusative && adjectiveAgreesWithCase(lang) && entry &&
       typeof entry === "object" && !Array.isArray(entry) &&
       typeof entry.accusative === "string") {
+    const headEntry = vocab().languages?.[lang]?.forms?.[headCid];
+    const objectForm = headEntry && typeof headEntry === "object" &&
+      !Array.isArray(headEntry) && typeof headEntry.accusative === "string"
+      ? headEntry.accusative : null;
+    if (objectForm && typeof entry.partitive === "string" &&
+        caseFieldUsedByNoun(lang, headCid, objectForm) === "partitive") {
+      return entry.partitive;
+    }
     return entry.accusative;
   }
   if (!langRule(lang, "numeralGenderAgreement")) return word;
@@ -3921,7 +3932,11 @@ function companionPhrase(lang, withCid, possessiveCid, nounCid, subjectCid) {
     : joinWords(lang, [word, phrase]);
 }
 
-function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid) {
+// `verbFirst` puts the finite verb before the subject — the main clause
+// after a fronted subordinate clause in V2 languages (declared:
+// verbSecondAfterFrontedClause — no «Hvis han er hjemme, spiser han med
+// datteren sin», de «…, isst er mit seiner Tochter»; Emi run-25 -162).
+function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, objectCid, withCid, possessiveCid, nounCid, { verbFirst = false } = {}) {
   const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const verb = getVerbForm(verbCid, subjectCid, lang);
   // Use nounPhrase (not bare formOf) so a direct object gets its indefinite
@@ -3946,10 +3961,11 @@ function buildSubjectVerbObjectWithPossessiveClause(lang, subjectCid, verbCid, o
   if (linker && companion) {
     return joinWords(lang, [subject, companion, linker, verb, object]);
   }
+  if (verbFirst) return joinWords(lang, [verb, subject, object, companion]);
   return joinWords(lang, [subject, verb, object, companion]);
 }
 
-function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid, possessiveCid, nounCid) {
+function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid, possessiveCid, nounCid, { verbFirst = false } = {}) {
   const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
   const verb = getVerbForm(verbCid, subjectCid, lang);
   const companion = nounCid
@@ -3960,6 +3976,7 @@ function buildSubjectVerbWithPossessiveClause(lang, subjectCid, verbCid, withCid
   if (linker && companion) {
     return joinWords(lang, [subject, companion, linker, verb]);
   }
+  if (verbFirst) return joinWords(lang, [verb, subject, companion]);
   return joinWords(lang, [subject, verb, companion]);
 }
 // complex_clause for languages declaring subordinateClauseFinal (ja):
@@ -4113,6 +4130,13 @@ if (tpl.structure?.type === "complex_clause") {
   );
 
   let mainClause;
+  // A fronted subordinate clause fills the first position, so a V2
+  // language inverts the main clause's subject and verb (declared:
+  // verbSecondAfterFrontedClause).
+  const clauseOpts = {
+    verbFirst: !!tpl.structure.subordinate_first &&
+      langRule(lang, "verbSecondAfterFrontedClause"),
+  };
 
   if (s.main_object) {
     mainClause = buildSubjectVerbObjectWithPossessiveClause(
@@ -4122,7 +4146,8 @@ if (tpl.structure?.type === "complex_clause") {
       s.main_object,
       s.main_prep,
       s.main_possessive,
-      s.main_noun
+      s.main_noun,
+      clauseOpts
     );
   } else {
     mainClause = buildSubjectVerbWithPossessiveClause(
@@ -4131,7 +4156,8 @@ if (tpl.structure?.type === "complex_clause") {
       s.main_verb,
       s.main_prep,
       s.main_possessive,
-      s.main_noun
+      s.main_noun,
+      clauseOpts
     );
   }
 

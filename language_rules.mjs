@@ -296,6 +296,13 @@
 //                            masculine dictionary form beside a feminine
 //                            predicate contradicts the adjective
 //                            agreement already rendered (Emi run-11 -52).
+//   verbSecondAfterFrontedClause
+//                            a fronted subordinate clause takes first
+//                            position, so the main clause inverts to
+//                            verb–subject (no «Hvis han er hjemme, spiser
+//                            han …», de «Wenn …, isst er …» — Emi run-25
+//                            -162). Fires only in the complex_clause
+//                            builder, the one path with a fronted clause.
 //   verbGovernedPrepositions the verb's own government decides the
 //                            preposition before its complement, via the
 //                            verb entry's `governedPreposition` field
@@ -431,6 +438,10 @@
 //                              nominalized (zh «红色的» not stative «很红»)
 //   comitativeBeforeVerb       the comitative WITH-phrase precedes the verb
 //                              (zh 他和他的妈妈一起吃晚餐)
+//   verbSecond                 the finite verb holds second position in a
+//                              main clause, so a fronted clause inverts
+//                              subject and verb (no/de) — implemented by
+//                              verbSecondAfterFrontedClause
 //
 // Validator-membership flags (single source for lists that used to be
 // hardcoded in validation/*.js — memberships preserved exactly):
@@ -614,8 +625,14 @@ export const LANGUAGE_RULES = {
       indefiniteArticle: true, adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
       articleCaseMarking: true, declinesAttributiveAdjectives: true,
+      verbSecond: true,
     },
     indefiniteArticle: true,
+    // «Wenn er zu Hause ist, isst er mit seiner Tochter» — same V2
+    // inversion after a fronted clause as no (Emi run-25 -162). The
+    // subordinate clause's own verb-final order is NOT implemented yet
+    // («weil er ist zu Hause» still ships; divergence-baselined).
+    verbSecondAfterFrontedClause: true,
     // German marks case on the DETERMINER (ein→einen/einem, der→den/dem),
     // not as a noun suffix — caseOn: "determiner" routes the case
     // machinery to the article emitters instead of noun fields. Attributive
@@ -897,10 +914,14 @@ export const LANGUAGE_RULES = {
     reflexivePossessive: true,
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",
-      declinesAttributiveAdjectives: true,
+      declinesAttributiveAdjectives: true, verbSecond: true,
     },
     indefiniteArticle: true,
     inflectsNounPlural: true, latinEncodingChecks: true,
+    // ── Emi run-25 ──
+    // «Hvis han er hjemme, spiser han med datteren sin» — the fronted
+    // clause holds first position, the main clause inverts (-162).
+    verbSecondAfterFrontedClause: true,
     // ── Emi run-20 (-112 … -117), Norwegian's first read ──
     // An attributive adjective after a possessive takes the definite -e
     // (the weak form, as after den/det/de): «min gode mamma», «hennes
@@ -1121,6 +1142,10 @@ export const LANGUAGE_RULES = {
     // reflexive «OWN» entry (свій / swój / sin), never his/her — which
     // means someone else's here (Emi run-23 -142).
     reflexivePossessive: true,
+    // A verb's own government supplies its preposition: «сідаю на рейс»,
+    // never «сідаю рейс» (Emi run-25 -163) — governedPreposition on the
+    // verb entry, the same data field as ar/no.
+    verbGovernedPrepositions: true,
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,

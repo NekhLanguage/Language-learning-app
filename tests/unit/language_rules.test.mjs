@@ -1123,7 +1123,7 @@ test("every features key is a known, checkable feature id", () => {
     "classifiersOrCounters",
     "locativeCopula", "postposedAdpositions",
     "predicateColorNominalizer", "comitativeBeforeVerb",
-    "postposedNumerals",
+    "postposedNumerals", "verbSecond",
   ]);
   for (const [code, row] of Object.entries(LANGUAGE_RULES)) {
     for (const key of Object.keys(row.features || {})) {
@@ -2146,4 +2146,44 @@ test("uk/pl/fi: animate-accusative adjectives, feminine «One», drilled «yhden
   assert.equal(buildSentence("pl", { ...tplById("YOU_ARE_GIRL"), concepts: ["THIRD_PERSON_PLURAL", "BE", "GIRL"] }), "One są dziewczynami.");
   assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE"), "ONE", {}), "Hän näkee yhden puhelimen.");
   assert.equal(buildSentence("fi", tplById("WE_HAVE_JOB"), "ONE", {}), "Meillä on yksi työ.");
+});
+
+test("no/de: V2 after a fronted clause, «hjemme», neuter «lite» (Emi run-25 -161/-162)", () => {
+  // The fronted «hvis» clause holds first position: the main clause inverts.
+  assert.equal(buildSentence("no", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "Hvis han er hjemme, spiser han med sin datter.");
+  assert.equal(buildSentence("no", tplById("IF_HE_IS_WIZARD_HE_CAST_SPELL")),
+    "Hvis han er en trollmann, kaster han en trylleformel.");
+  // A trailing subordinate clause keeps subject–verb order; HOME's
+  // predicative «hjemme» is the state, «hjem» the direction.
+  assert.equal(buildSentence("no", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
+    "Han spiser en middag med sin mamma fordi han er hjemme.");
+  assert.equal(buildSentence("no", tplById("I_GO_HOME")), "Jeg går hjem.");
+  // German declares the same rule; its subordinate verb-final order is a
+  // separate, still-open gap (baselined).
+  assert.equal(buildSentence("de", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "Wenn er ist zu Hause, isst er mit seiner Tochter.");
+  // Ukrainian has no V2: the rule is undeclared, order unchanged.
+  assert.equal(buildSentence("uk", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "Якщо він удома, він їсть зі своєю дочкою.");
+  assert.ok(!langRule("uk", "verbSecondAfterFrontedClause"));
+  // «liten» has all four cells now: et lite hus / en liten … / lille / små.
+  assert.equal(buildSentence("no", tplById("I_SEE_HOUSE"), "SMALL", {}), "Jeg ser et lite hus.");
+  assert.equal(buildSentence("no", tplById("SHE_SEES_ROOM"), "SMALL", {}), "Hun ser et lite rom.");
+});
+
+test("uk/fi/th: BOARD «на», soft-stem «синіх», partial-object «yhtä», EXCHANGE drops its object (Emi run-25 -160/-163/-164/-165)", () => {
+  assert.equal(buildSentence("uk", tplById("I_BOARD_FLIGHT")), "Я сідаю на рейс.");
+  assert.equal(buildSentence("uk", tplById("I_BOARD_FLIGHT"), "BAD", {}), "Я сідаю на поганий рейс.");
+  // Explicit genitive_plural on the soft-stem adjective wins over the
+  // hard-stem -і→-их derivation.
+  assert.equal(vocab.languages.uk.forms.BLUE.genitive_plural, "синіх");
+  // READ takes a partial object («kirjaa»): the numeral follows it into the
+  // partitive; SEE's total object keeps «yhden» (run-24 -156).
+  assert.equal(buildSentence("fi", tplById("YOU_READ_BOOK"), "ONE", {}), "Sinä luet yhtä kirjaa.");
+  assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE"), "ONE", {}), "Hän näkee yhden puhelimen.");
+  // «แลกเงิน» already contains "money": the object renders empty, a
+  // drilled possessive survives alone — the -151 COOK+FOOD shape.
+  assert.equal(buildSentence("th", tplById("I_EXCHANGE_CURRENCY")), "ฉันแลกเงิน");
+  assert.equal(buildSentence("th", tplById("I_EXCHANGE_CURRENCY"), "HIS", {}), "ฉันแลกเงินของเขา");
 });

@@ -103,6 +103,7 @@
     },
     "SMALL": {
       "form": "liten",
+      "n": "lite",
       "definite": "lille",
       "plural": "små"
     },
@@ -259,6 +260,7 @@
     },
     "HOME": {
       "form": "hjem",
+      "predicative": "hjemme",
       "gender": "n",
       "noArticle": true,
       "fused": {

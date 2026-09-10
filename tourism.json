@@ -2935,6 +2935,7 @@
         },
         "BOARD": {
           "base": "сідати",
+          "governedPreposition": "на",
           "1_singular": "сідаю",
           "2_singular": "сідаєш",
           "3_singular": "сідає",
@@ -4271,7 +4272,8 @@
           "base": "สำรวจ"
         },
         "EXCHANGE": {
-          "base": "แลกเงิน"
+          "base": "แลกเงิน",
+          "incorporatedObject": true
         },
         "INSURE": {
           "base": "ทำประกัน"
