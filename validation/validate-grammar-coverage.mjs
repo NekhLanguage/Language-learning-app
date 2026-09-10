@@ -198,6 +198,10 @@ const FEATURE_CHECKS = {
     ok: typeof row.locativeCopula === 'string' && row.locativeCopula.length > 0,
     detail: 'needs the locativeCopula rule (string surface — zh «在», th «อยู่»)',
   }),
+  verbSecond: (row) => ({
+    ok: !!row.verbSecondAfterFrontedClause,
+    detail: 'needs the verbSecondAfterFrontedClause rule',
+  }),
   postposedAdpositions: (row) => ({
     ok: !!row.postposedAdpositions,
     detail: 'needs the postposedAdpositions rule',
@@ -289,6 +293,8 @@ const RULE_IMPLIES_FEATURE = [
     (f) => !!f.locativeCopula],
   [(row) => !!row.postposedAdpositions, 'postposedAdpositions',
     (f) => !!f.postposedAdpositions],
+  [(row) => !!row.verbSecondAfterFrontedClause, 'verbSecond',
+    (f) => !!f.verbSecond],
   [(row) => typeof row.colorPredicateSuffix === 'string' && row.colorPredicateSuffix.length > 0,
     'predicateColorNominalizer',
     (f) => !!f.predicateColorNominalizer],
