@@ -15,6 +15,11 @@ Three shipped bugs held Mandarin back in the last review. Colour sentences were 
 
 ## 2026-09-10
 
+### Thai leaves beta; German plural adjectives; Ukrainian "afterwards"
+Thai has been read end to end twice on fresh accounts (19/20 and 20/20, then 20/20 and 20/20) with every reported issue verified fixed in the live exercises, so the BETA tag comes off its picker card. German adjectives before a bare plural now take the plural ending on the stem — «Sie hat neue Schuhe», «falsche Schuhe» — instead of stacking a singular ending onto the plural («neueen Schuhe»); counted plurals get the same treatment, so «zwölf falsche Schuhe» works for adjectives that never had an authored plural. Ukrainian "we go after" is «Ми йдемо потім» (the adverb), not «після» (a preposition with nothing after it).
+
+## 2026-09-10
+
 ### Norwegian, Ukrainian, Finnish and Thai: six small grammar fixes from the latest review
 Norwegian "if" sentences now put the verb second the way Norwegian does — «Hvis han er hjemme, spiser han med sin datter», not «…, han spiser» — and "he is home" reads «er hjemme» (the state) instead of «er hjem» (the direction). «liten» gained its neuter form, so it is «et lite hus», never «et liten hus». German picked up the same verb-second inversion after a fronted «Wenn» clause. Ukrainian "board a flight" now carries its preposition («сідаю на рейс») and "ten blue phones" declines the soft-stem adjective correctly («синіх»). Finnish numerals follow the object's case: «luen yhtä kirjaa» for a partial object, «näen yhden puhelimen» for a whole one. Thai "exchange currency" no longer says "money" twice («แลกเงิน», not «แลกเงินสกุลเงิน»).
 

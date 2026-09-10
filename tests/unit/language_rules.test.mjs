@@ -2116,8 +2116,8 @@ test("picker: Finnish is visible with its BETA tag; Italian, Polish and Ukrainia
   for (const code of ["it", "pl", "uk"]) {
     assert.equal(AVAILABLE_LANGUAGES.find(l => l.code === code)?.beta, false, code);
   }
-  // Thai keeps its tag until its three templates land (Emi run 24).
-  assert.equal(AVAILABLE_LANGUAGES.find(l => l.code === "th")?.beta, true);
+  // Thai left BETA 2026-09-10 (Nekh, on Emi's run-25/26 reads: 19+20, 20+20).
+  assert.equal(AVAILABLE_LANGUAGES.find(l => l.code === "th")?.beta, false);
 });
 
 test("no: a possessed predicate ignores the authored definite surface; blå stays invariant; restaurant is masculine (Emi run-24 -148/-149/-150)", () => {
@@ -2186,4 +2186,20 @@ test("uk/fi/th: BOARD «на», soft-stem «синіх», partial-object «yhtä
   // drilled possessive survives alone — the -151 COOK+FOOD shape.
   assert.equal(buildSentence("th", tplById("I_EXCHANGE_CURRENCY")), "ฉันแลกเงิน");
   assert.equal(buildSentence("th", tplById("I_EXCHANGE_CURRENCY"), "HIS", {}), "ฉันแลกเงินของเขา");
+});
+
+test("de: plural attributive ending on the stem, no numeral and counted; uk «потім» (Emi run-26 -167/-166)", () => {
+  // Bare plural object, no determiner → strong plural -e on the stem, never
+  // the singular accusative -en stacked on the plural form («neueen»).
+  assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "NEW", {}), "Sie hat neue Schuhe.");
+  assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "GOOD", {}), "Sie hat gute Schuhe.");
+  // WRONG is a stem-only entry (no authored plural): the ending builds it.
+  assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "WRONG", {}), "Sie hat falsche Schuhe.");
+  assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "TWELVE", { adj_SHOES: "WRONG" }), "Sie hat zwölf falsche Schuhe.");
+  assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "TWELVE", { adj_SHOES: "NEW" }), "Sie hat zwölf neue Schuhe.");
+  // Singular paths untouched.
+  assert.equal(buildSentence("de", tplById("SHE_SEES_PHONE"), "NEW", {}), "Sie sieht ein neues Telefon.");
+  assert.equal(buildSentence("de", tplById("SHE_SEES_PHONE"), "TWELVE", { adj_PHONE: "NEW" }), "Sie sieht zwölf neue Telefone.");
+  // «після» is a preposition; the bare adverb is «потім».
+  assert.equal(buildSentence("uk", tplById("WE_GO_AFTER")), "Ми йдемо потім.");
 });
