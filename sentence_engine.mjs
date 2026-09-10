@@ -675,21 +675,25 @@ const GERMAN_EIN_ENDINGS = {
 // and possessives («ein neues Buch», «meine neue Pfanne»), strong with no
 // determiner («neues Wasser»). de adjective entries stay stem-only
 // ({form, plural}); the ending is appended here, never authored.
+// The `pl` column is the plural ending on the STEM («neue Schuhe» with no
+// determiner, «die neuen Schuhe», «meine neuen Schuhe») — a plural slot
+// never keys on gender, and never appends to an already-plural form
+// («neueen», Emi run-26 -167).
 const GERMAN_ADJ_ENDINGS = {
   weak: {
-    nominative: { m: "e", f: "e", n: "e" },
-    accusative: { m: "en", f: "e", n: "e" },
-    dative: { m: "en", f: "en", n: "en" },
+    nominative: { m: "e", f: "e", n: "e", pl: "en" },
+    accusative: { m: "en", f: "e", n: "e", pl: "en" },
+    dative: { m: "en", f: "en", n: "en", pl: "en" },
   },
   mixed: {
-    nominative: { m: "er", f: "e", n: "es" },
-    accusative: { m: "en", f: "e", n: "es" },
-    dative: { m: "en", f: "en", n: "en" },
+    nominative: { m: "er", f: "e", n: "es", pl: "en" },
+    accusative: { m: "en", f: "e", n: "es", pl: "en" },
+    dative: { m: "en", f: "en", n: "en", pl: "en" },
   },
   strong: {
-    nominative: { m: "er", f: "e", n: "es" },
-    accusative: { m: "en", f: "e", n: "es" },
-    dative: { m: "em", f: "er", n: "em" },
+    nominative: { m: "er", f: "e", n: "es", pl: "e" },
+    accusative: { m: "en", f: "e", n: "es", pl: "e" },
+    dative: { m: "em", f: "er", n: "em", pl: "en" },
   },
 };
 
@@ -712,10 +716,12 @@ function germanDefArticle(gender, caseName, plural) {
 // Append the attributive ending to a German adjective stem, choosing the
 // declension class from the determiner that precedes the phrase. Fires
 // only for languages declaring adjectiveDeclension: "german"; identity
-// everywhere else. Plural attributive forms come from the entry's own
-// `plural` field, so plural slots skip the appender.
+// everywhere else. A plural slot (`plural`) rebuilds the form from the
+// stem + the class's plural ending instead of the entry's `plural` field
+// (which is the bare strong form and would otherwise get a singular
+// ending stacked on it — «neueen Schuhe», Emi run-26 -167).
 function applyAdjectiveDeclension(lang, adjWord, article, gender, caseName,
-                                  adjectiveCid = null) {
+                                  adjectiveCid = null, plural = false) {
   if (langRuleValue(lang, "adjectiveDeclension") !== "german" || !adjWord) {
     return adjWord;
   }
@@ -737,6 +743,13 @@ function applyAdjectiveDeclension(lang, adjWord, article, gender, caseName,
   const detClass = !art ? "strong"
     : /^(der|die|das|dem|den)$/.test(art) ? "weak"
     : "mixed"; // ein-words including possessives (mein/dein/sein/ihr/unser)
+  if (plural) {
+    const stem = adjEntry && typeof adjEntry === "object" && !Array.isArray(adjEntry)
+      ? (adjEntry.stem || adjEntry.form || adjWord)
+      : (adjectiveCid ? formOf(lang, adjectiveCid) : adjWord);
+    const plEnding = GERMAN_ADJ_ENDINGS[detClass][caseName || "nominative"]?.pl ?? "";
+    return stem + plEnding;
+  }
   const g = gender === "f" ? "f" : gender === "n" ? "n" : "m";
   const ending = GERMAN_ADJ_ENDINGS[detClass][caseName || "nominative"]?.[g] ?? "";
   return adjWord + ending;
@@ -5393,6 +5406,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           }
         }
       }
+      // A counted German adjective takes the plural ending on its stem
+      // («zwölf neue Schuhe», «zwölf falsche Schuhe» — WRONG has no
+      // authored plural; Emi run-26 -167's numeral half).
+      if (isPlural && langRuleValue(lang, "adjectiveDeclension") &&
+          vocab().concepts[adjectiveCid]?.semantic_role !== "possessive") {
+        adjForm = applyAdjectiveDeclension(lang, adjForm,
+          precededByPossessive ? formOf(lang, ordered[idx - 1]) : null,
+          headEntry?.gender,
+          caseAt[idx] || (isObject && determinerCaseMarking(lang)
+            ? langRuleValue(lang, "caseMarking").directObjectCase
+            : null),
+          adjectiveCid, true);
+      }
       // A possessive precedes the numeral («våre sju føtter», "our seven
       // feet", «unsere sieben Füße») — never stacked after it («sju våre
       // føtter», Emi run-21 -120). Postposed possessors keep their place.
@@ -5444,7 +5470,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         caseAt[idx] || (isObject && determinerCaseMarking(lang)
           ? langRuleValue(lang, "caseMarking").directObjectCase
           : null),
-        adjectiveCid);
+        adjectiveCid, !!headEntry?.pluralOnly || possessedPlural);
     }
     // Apocope fires only pre-nominally («un buen libro» but «un libro
     // bueno») — applied before the blank-surface capture below so L3 blanks
