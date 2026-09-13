@@ -182,9 +182,13 @@
 //                            possessed noun carries the person suffix on
 //                            its strong stem (fi «minun käteni»); acceptBare
 //                            lets the grader take the colloquial bare form.
-//   possessivePlacementVariant "post": the grader also accepts the possessive
-//                            after its definite noun (no «hånden min»); the
-//                            app keeps teaching the preposed form.
+//   possessivePlacement      "post": the possessive follows its DEFINITE noun
+//                            (no «hånden min», «den hvite hånden min»);
+//                            counted nouns keep the preposed possessive.
+//   possessivePlacementVariant "pre" | "post": the grader also accepts the
+//                            other placement (no accepts «min hånd»).
+//   freeDefiniteArticle      { default, n, plural }: the article before a
+//                            weak adjective in a double-definite phrase.
 //   preverbalAdjuncts        { glueRoles, adverbRoles }: prepositional
 //                            adjuncts (glue of those roles + their
 //                            nominal, rendered bare) and adverb-like
@@ -983,10 +987,16 @@ export const LANGUAGE_RULES = {
     // A verb's own government supplies its preposition: «hilser på en
     // servitør» (-119) — data-driven via governedPreposition on the verb.
     verbGovernedPrepositions: true,
-    // ── Nekh 2026-09-13: «min hånd» and «hånden min» are both standard.
-    // The app teaches the preposed form; the grader also accepts the
-    // postposed one with the definite noun («hånden min», «rommet sitt»).
-    possessivePlacementVariant: "post",
+    // ── Nekh 2026-09-13: «min hånd» and «hånden min» are both standard;
+    // "hånden min seems better to teach". The app teaches the postposed
+    // form with the definite noun («hånden min», «rommet sitt», with an
+    // adjective the double-definite «den hvite hånden min»; counted nouns
+    // stay preposed, «våre sju føtter») and the grader also accepts the
+    // preposed «min hånd».
+    possessivePlacement: "post",
+    possessivePlacementVariant: "pre",
+    // The free definite article before a weak adjective (den/det/de).
+    freeDefiniteArticle: { default: "den", n: "det", plural: "de" },
     // «go for food» = «gå for å hente»: «Jeg går for å hente mat».
     motionPurpose: { form: "for å hente", position: "pre" },
   },

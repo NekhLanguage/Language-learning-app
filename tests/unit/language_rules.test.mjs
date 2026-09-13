@@ -1942,20 +1942,20 @@ test("pt: the à-contraction respects word edges — «começa a dormir» (run-1
 });
 
 test("no: possessives agree with neuter and plural nouns (Emi run-20 -113)", () => {
-  assert.equal(buildSentence("no", tplById("YOU_SEE_HOTEL"), "YOUR", {}), "Du ser ditt hotell.");
-  assert.equal(buildSentence("no", tplById("SHE_SEES_ROOM"), "MY", {}), "Hun ser mitt rom.");
+  assert.equal(buildSentence("no", tplById("YOU_SEE_HOTEL"), "YOUR", {}), "Du ser hotellet ditt.");
+  assert.equal(buildSentence("no", tplById("SHE_SEES_ROOM"), "MY", {}), "Hun ser rommet mitt.");
   assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD")),
-    "Dette er min hånd og dette er ditt hode.");
-  assert.equal(buildSentence("no", tplById("WE_HAVE_CLOTHES"), "MY", {}), "Vi har mine klær.");
+    "Dette er hånden min og dette er hodet ditt.");
+  assert.equal(buildSentence("no", tplById("WE_HAVE_CLOTHES"), "MY", {}), "Vi har klærne mine.");
 });
 
 test("no: an adjective after a possessive takes the definite form (Emi run-20 -112)", () => {
-  assert.equal(buildSentence("no", tplById("SHE_IS_MY_MOM"), "GOOD", {}), "Hun er min gode mamma.");
-  assert.equal(buildSentence("no", tplById("HE_IS_MY_DAD"), "SMALL", {}), "Han er min lille pappa.");
+  assert.equal(buildSentence("no", tplById("SHE_IS_MY_MOM"), "GOOD", {}), "Hun er den gode mammaen min.");
+  assert.equal(buildSentence("no", tplById("HE_IS_MY_DAD"), "SMALL", {}), "Han er den lille pappaen min.");
   // «sitt» since run 23: the subject owns the room (reflexivePossessive).
-  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "WHITE", {}), "Hun går til sitt hvite rom.");
+  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "WHITE", {}), "Hun går til det hvite rommet sitt.");
   assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), "GOOD", {}),
-    "Dette er min gode hånd og dette er ditt gode hode.");
+    "Dette er den gode hånden min og dette er det gode hodet ditt.");
 });
 
 test("no: colour plurals, ting is masculine, ferskt, suvenir, begynner å, hjemmefra (Emi run-20 -114/-115/-117)", () => {
@@ -2082,7 +2082,7 @@ test("uk/pl/no: a 3rd-person possessive owned by the subject is the reflexive (E
   assert.equal(buildSentence("pl", tplById("SHE_GO_TO_HER_ROOM")), "Ona idzie do swojego pokoju.");
   assert.equal(buildSentence("pl", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")), "Jeśli on jest w domu, on je ze swoją córką.");
   assert.equal(buildSentence("pl", tplById("HE_SEES_MUSEUM"), "HIS", {}), "On widzi swoje muzeum.");
-  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM")), "Hun går til sitt rom.");
+  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM")), "Hun går til rommet sitt.");
   assert.equal(buildSentence("no", tplById("HE_SEES_MUSEUM"), "HIS", { num_MUSEUM: "THREE" }), "Han ser sine tre museer.");
 });
 
@@ -2092,7 +2092,7 @@ test("uk/pl/no: his/her stay plain when the possessor is someone else or on a co
   assert.equal(buildSentence("uk", sheIsHerMom), "Вона її мама.");
   assert.equal(buildSentence("uk", tplById("YOU_SEE_HOTEL"), "HIS", { num_HOTEL: "THREE" }), "Ти бачиш його три готелі.");
   assert.equal(buildSentence("pl", sheIsHerMom), "Ona jest jej mamą.");
-  assert.equal(buildSentence("no", tplById("HE_SEES_MUSEUM"), "HER", {}), "Han ser hennes museum.");
+  assert.equal(buildSentence("no", tplById("HE_SEES_MUSEUM"), "HER", {}), "Han ser museet hennes.");
   // Finnish keeps its suffix mechanism; German has no reflexive.
   assert.equal(buildSentence("fi", tplById("SHE_GO_TO_HER_ROOM")), "Hän menee huoneeseensa.");
   assert.equal(buildSentence("de", tplById("SHE_GO_TO_HER_ROOM")), "Sie geht zu ihrem Zimmer.");
@@ -2123,11 +2123,11 @@ test("picker: Finnish is visible with its BETA tag; Italian, Polish and Ukrainia
 });
 
 test("no: a possessed predicate ignores the authored definite surface; blå stays invariant; restaurant is masculine (Emi run-24 -148/-149/-150)", () => {
-  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er min hånd.");
-  assert.equal(buildSentence("no", tplById("THAT_IS_MY_ARM")), "Det er min arm.");
-  assert.equal(buildSentence("no", tplById("THAT_IS_YOUR_LEG")), "Det er ditt bein.");
-  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND"), "WHITE", {}), "Dette er min hvite hånd.");
-  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "BLUE", {}), "Hun går til sitt blå rom.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er hånden min.");
+  assert.equal(buildSentence("no", tplById("THAT_IS_MY_ARM")), "Det er armen min.");
+  assert.equal(buildSentence("no", tplById("THAT_IS_YOUR_LEG")), "Det er beinet ditt.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND"), "WHITE", {}), "Dette er den hvite hånden min.");
+  assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "BLUE", {}), "Hun går til det blå rommet sitt.");
   assert.equal(buildSentence("no", tplById("I_RECOMMEND_RESTAURANT")), "Jeg anbefaler en restaurant.");
 });
 
@@ -2153,13 +2153,13 @@ test("uk/pl/fi: animate-accusative adjectives, feminine «One», drilled «yhden
 test("no/de: V2 after a fronted clause, «hjemme», neuter «lite» (Emi run-25 -161/-162)", () => {
   // The fronted «hvis» clause holds first position: the main clause inverts.
   assert.equal(buildSentence("no", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
-    "Hvis han er hjemme, spiser han med sin datter.");
+    "Hvis han er hjemme, spiser han med datteren sin.");
   assert.equal(buildSentence("no", tplById("IF_HE_IS_WIZARD_HE_CAST_SPELL")),
     "Hvis han er en trollmann, kaster han en trylleformel.");
   // A trailing subordinate clause keeps subject–verb order; HOME's
   // predicative «hjemme» is the state, «hjem» the direction.
   assert.equal(buildSentence("no", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
-    "Han spiser en middag med sin mamma fordi han er hjemme.");
+    "Han spiser en middag med mammaen sin fordi han er hjemme.");
   assert.equal(buildSentence("no", tplById("I_GO_HOME")), "Jeg går hjem.");
   // German declares the same rule; its subordinate verb-final order is a
   // separate, still-open gap (baselined).
@@ -2212,27 +2212,30 @@ test("de: plural attributive ending on the stem, no numeral and counted; uk «п
 // «go for X» is the motion-purpose construction.
 // ---------------------------------------------------------------------
 
-test("no: «min hånd» is taught and «hånden min» is accepted (Nekh 2026-09-13: do both)", () => {
-  const variantsOf = (id) => {
-    const sc = {};
+test("no: «hånden min» is taught and «min hånd» is accepted (Nekh 2026-09-13: do both; then \"hånden min seems better to teach\")", () => {
+  const variantsOf = (id, sc = {}) => {
     const s = buildSentence("no", tplById(id), null, sc);
     return acceptedAnswerVariants("no", tplById(id), s, sc);
   };
-  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er min hånd.");
-  assert.deepEqual(variantsOf("THIS_IS_MY_HAND"), ["Dette er min hånd.", "Dette er hånden min."]);
-  assert.deepEqual(variantsOf("THAT_IS_YOUR_LEG"), ["Det er ditt bein.", "Det er beinet ditt."]);
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er hånden min.");
+  assert.deepEqual(variantsOf("THIS_IS_MY_HAND"), ["Dette er hånden min.", "Dette er min hånd."]);
+  assert.deepEqual(variantsOf("THAT_IS_YOUR_LEG"), ["Det er beinet ditt.", "Det er ditt bein."]);
   // The reflexive stays reflexive after the noun, and «rom» doubles its m.
-  assert.deepEqual(variantsOf("SHE_GO_TO_HER_ROOM"), ["Hun går til sitt rom.", "Hun går til rommet sitt."]);
-  assert.deepEqual(variantsOf("IS_THAT_YOUR_PHONE"), ["Er det din telefon?", "Er det telefonen din?"]);
+  assert.deepEqual(variantsOf("SHE_GO_TO_HER_ROOM"), ["Hun går til rommet sitt.", "Hun går til sitt rom."]);
+  assert.deepEqual(variantsOf("IS_THAT_YOUR_PHONE"), ["Er det telefonen din?", "Er det din telefon?"]);
   // A copular predicate is not reflexive («mammaen hennes» would be a
   // different sentence): SHE_IS_MY_MOM keeps «min».
-  assert.deepEqual(variantsOf("SHE_IS_MY_MOM"), ["Hun er min mamma.", "Hun er mammaen min."]);
-  // With an injected adjective the postposed variant is not offered (it
-  // would need «den hvite hånden min»).
-  const sc = { adj_HAND: "WHITE", num_HAND: null };
-  const s = buildSentence("no", tplById("THIS_IS_MY_HAND"), null, sc);
-  assert.equal(s, "Dette er min hvite hånd.");
-  assert.deepEqual(acceptedAnswerVariants("no", tplById("THIS_IS_MY_HAND"), s, sc), [s]);
+  assert.deepEqual(variantsOf("SHE_IS_MY_MOM"), ["Hun er mammaen min.", "Hun er min mamma."]);
+  // With an adjective the taught phrase is double-definite and the
+  // preposed variant is still accepted.
+  assert.deepEqual(variantsOf("THIS_IS_MY_HAND", { adj_HAND: "WHITE", num_HAND: null }),
+    ["Dette er den hvite hånden min.", "Dette er min hvite hånd."]);
+  // Counted nouns keep the preposed possessive in either mode.
+  assert.deepEqual(variantsOf("THIS_IS_MY_HAND", { adj_HAND: null, num_HAND: "TWO" }), ["Dette er mine to hender."]);
+  // Plural-only and -er plurals take the right definite ending; «museum» is authored.
+  assert.equal(buildSentence("no", tplById("WE_HAVE_CLOTHES"), "MY", {}), "Vi har klærne mine.");
+  assert.equal(buildSentence("no", tplById("SHE_HAS_SHOES"), "MY", {}), "Hun har skoene mine.");
+  assert.equal(buildSentence("no", tplById("HE_SEES_MUSEUM"), "MY", {}), "Han ser museet mitt.");
 });
 
 test("fi: every possessed noun carries the person suffix on its strong stem; the bare colloquial form is accepted", () => {

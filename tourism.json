@@ -2351,7 +2351,8 @@
         "MUSEUM": {
           "form": "museum",
           "gender": "n",
-          "plural": "museer"
+          "plural": "museer",
+          "definiteForm": "museet"
         },
         "MONUMENT": {
           "form": "monument",
