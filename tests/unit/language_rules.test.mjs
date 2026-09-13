@@ -1393,8 +1393,9 @@ test("fi: «kanssa» is a postposed genitive adposition", () => {
 });
 
 test("fi: yes/no questions fuse the -ko/-kö clitic onto the fronted verb", () => {
+  // «puhelimesi»: the possessed noun carries the person suffix (run 25).
   assert.equal(buildSentence("fi", tplById("IS_THAT_YOUR_PHONE")),
-    "Onko tuo sinun puhelin?");
+    "Onko tuo sinun puhelimesi?");
 });
 
 test("zh/ja/th: yes/no questions keep declarative order and add a final particle (Emi run-10 -51)", () => {
@@ -1498,16 +1499,17 @@ test("fi: 3rd-person reflexive possession is a suffix in the slot's case", () =>
   assert.equal(buildSentence("fi", tplById("SHE_GO_TO_HER_ROOM")),
     "Hän menee huoneeseensa.");
   // Under a 3RD-person subject, a drilled 3rd-person possessive on a noun
-  // WITHOUT possessed3 data is refused — «Hän näkee hänen puhelimen»
-  // names someone else's phone, and wrong gets filtered (the modifier
-  // simply does not land).
+  // WITHOUT possessed3 data used to be refused («Hän näkee hänen
+  // puhelimen» names someone else's phone). Since run 25 the suffix is
+  // derived from the genitive stem, so the reflexive lands: «puhelimensa».
   assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE"), "HIS", {}),
-    "Hän näkee puhelimen.");
-  // Under a NON-3rd-person subject the same possessive is not reflexive
-  // and renders normally («Sinä luet hänen kirjaa» — someone else's book,
-  // which is exactly what it says).
+    "Hän näkee puhelimensa.");
+  // Under a NON-3rd-person subject the same possessive is not reflexive:
+  // the free pronoun stays and the noun still takes the 3rd-person suffix
+  // («Sinä luet hänen kirjaansa» — someone else's book, which is exactly
+  // what it says; standard Finnish suffixes after «hänen» too).
   assert.equal(buildSentence("fi", tplById("YOU_READ_BOOK"), "HIS", {}),
-    "Sinä luet hänen kirjaa.");
+    "Sinä luet hänen kirjaansa.");
 });
 
 test("engine: adjective insertion never slices a mismatched noun (run-7 -34)", () => {
@@ -2202,4 +2204,81 @@ test("de: plural attributive ending on the stem, no numeral and counted; uk «п
   assert.equal(buildSentence("de", tplById("SHE_SEES_PHONE"), "TWELVE", { adj_PHONE: "NEW" }), "Sie sieht zwölf neue Telefone.");
   // «після» is a preposition; the bare adverb is «потім».
   assert.equal(buildSentence("uk", tplById("WE_GO_AFTER")), "Ми йдемо потім.");
+});
+
+// ---------------------------------------------------------------------
+// Run 25 (Nekh 2026-09-13 + Emi run-24 leftovers): Norwegian accepts both
+// possessive placements, Finnish possessed nouns carry the person suffix,
+// «go for X» is the motion-purpose construction.
+// ---------------------------------------------------------------------
+
+test("no: «min hånd» is taught and «hånden min» is accepted (Nekh 2026-09-13: do both)", () => {
+  const variantsOf = (id) => {
+    const sc = {};
+    const s = buildSentence("no", tplById(id), null, sc);
+    return acceptedAnswerVariants("no", tplById(id), s, sc);
+  };
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er min hånd.");
+  assert.deepEqual(variantsOf("THIS_IS_MY_HAND"), ["Dette er min hånd.", "Dette er hånden min."]);
+  assert.deepEqual(variantsOf("THAT_IS_YOUR_LEG"), ["Det er ditt bein.", "Det er beinet ditt."]);
+  // The reflexive stays reflexive after the noun, and «rom» doubles its m.
+  assert.deepEqual(variantsOf("SHE_GO_TO_HER_ROOM"), ["Hun går til sitt rom.", "Hun går til rommet sitt."]);
+  assert.deepEqual(variantsOf("IS_THAT_YOUR_PHONE"), ["Er det din telefon?", "Er det telefonen din?"]);
+  // A copular predicate is not reflexive («mammaen hennes» would be a
+  // different sentence): SHE_IS_MY_MOM keeps «min».
+  assert.deepEqual(variantsOf("SHE_IS_MY_MOM"), ["Hun er min mamma.", "Hun er mammaen min."]);
+  // With an injected adjective the postposed variant is not offered (it
+  // would need «den hvite hånden min»).
+  const sc = { adj_HAND: "WHITE", num_HAND: null };
+  const s = buildSentence("no", tplById("THIS_IS_MY_HAND"), null, sc);
+  assert.equal(s, "Dette er min hvite hånd.");
+  assert.deepEqual(acceptedAnswerVariants("no", tplById("THIS_IS_MY_HAND"), s, sc), [s]);
+});
+
+test("fi: every possessed noun carries the person suffix on its strong stem; the bare colloquial form is accepted", () => {
+  assert.equal(buildSentence("fi", tplById("THIS_IS_MY_HAND")), "Tämä on minun käteni.");
+  assert.equal(buildSentence("fi", tplById("THIS_IS_YOUR_HEAD")), "Tämä on sinun pääsi.");
+  assert.equal(buildSentence("fi", tplById("THAT_IS_MY_ARM")), "Tuo on minun käsivarteni.");
+  assert.equal(buildSentence("fi", tplById("THAT_IS_YOUR_LEG")), "Tuo on sinun jalkasi.");
+  assert.equal(buildSentence("fi", tplById("SHE_IS_MY_MOM")), "Hän on minun äitini.");
+  assert.equal(buildSentence("fi", tplById("I_CHANNEL_POWER")), "Minä kanavoin minun voimani.");
+  assert.equal(buildSentence("fi", tplById("I_INSURE_LUGGAGE")), "Minä vakuutan minun matkatavarani.");
+  // Drilled possessives: object case rides the suffix («ruokaani» partitive).
+  assert.equal(buildSentence("fi", tplById("SHE_SEES_PHONE"), "MY", {}), "Hän näkee minun puhelimeni.");
+  assert.equal(buildSentence("fi", tplById("YOU_SEE_HOTEL"), "OUR", {}), "Sinä näet meidän hotellimme.");
+  assert.equal(buildSentence("fi", tplById("I_EAT_FOOD"), "MY", {}), "Minä syön minun ruokaani.");
+  // The 3rd-person reflexive derives where possessed3 data is missing.
+  assert.equal(buildSentence("fi", tplById("HE_UNLEASHES")), "Hän vapauttaa voimansa.");
+  // Authored possessed3 data still wins, unchanged.
+  assert.equal(buildSentence("fi", tplById("SHE_GO_TO_HER_ROOM")), "Hän menee huoneeseensa.");
+  assert.equal(buildSentence("fi", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")), "Jos hän on kotona, hän syö tyttärensä kanssa.");
+  // Grader: the colloquial bare form is accepted, the reflexive never drops.
+  const sc = {};
+  const s = buildSentence("fi", tplById("THIS_IS_MY_HAND"), null, sc);
+  assert.deepEqual(acceptedAnswerVariants("fi", tplById("THIS_IS_MY_HAND"), s, sc), ["Tämä on minun käteni.", "Tämä on minun käsi."]);
+  const sc2 = {};
+  const s2 = buildSentence("fi", tplById("SHE_GO_TO_HER_ROOM"), null, sc2);
+  assert.deepEqual(acceptedAnswerVariants("fi", tplById("SHE_GO_TO_HER_ROOM"), s2, sc2), ["Hän menee huoneeseensa."]);
+});
+
+test("motionPurpose: «go for food» is the purpose construction after a motion verb (run-24 GO FOR X row)", () => {
+  const t = tplById("I_GO_FOR_FOOD");
+  assert.equal(buildSentence("fi", t), "Minä menen hakemaan ruokaa.");
+  assert.equal(buildSentence("no", t), "Jeg går for å hente mat.");
+  assert.equal(buildSentence("de", t), "Ich gehe Essen holen.");
+  assert.equal(buildSentence("uk", t), "Я йду по їжу.");
+  assert.equal(buildSentence("pl", t), "Ja idę po jedzenie.");
+  assert.equal(buildSentence("es", t), "Yo voy a por comida.");
+  assert.equal(buildSentence("pt", t), "Eu vou buscar comida.");
+  assert.equal(buildSentence("fr", t), "Je vais chercher de la nourriture.");
+  assert.equal(buildSentence("it", t), "Io vado a prendere il cibo.");
+  assert.equal(buildSentence("th", t), "ฉันไปเอาอาหาร");
+  assert.equal(buildSentence("zh", t), "我去拿食物。");
+  assert.equal(buildSentence("ja", t), "私は食べ物を取りに行きます。");
+  assert.equal(buildSentence("ko", t), "저는 음식을 가지러 가요.");
+  // Languages without the rule keep the dictionary preposition.
+  assert.equal(buildSentence("el", t), "Εγώ πηγαίνω για φαγητό.");
+  assert.equal(buildSentence("en", t), "I go for food.");
+  // The rule only fires after a MOTION verb: a plain «for» elsewhere is untouched.
+  assert.equal(buildSentence("uk", { ...t, template_id: "X", concepts: ["FIRST_PERSON_SINGULAR", "COOK", "FOR", "FOOD"] }), "Я готую для їжі.");
 });

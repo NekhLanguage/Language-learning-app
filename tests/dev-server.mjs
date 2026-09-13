@@ -58,6 +58,8 @@ const SILENT_MP3 = Buffer.concat([
 
 // email -> user blob, mirroring the Supabase `users.data` column.
 const userStore = new Map();
+// Chat texts carrying __FAIL_ONCE__ that have already failed once (tutor stub).
+const tutorFailedOnce = new Set();
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -121,6 +123,23 @@ async function handleFunction(name, req, res, url) {
       if (body.mode === "admissions") {
         return sendJson(res, 200, { ok: true, count: (body.admissions || []).length });
       }
+      // Failure injection for the retry e2e tests. Markers in the learner's
+      // text: __FAIL_ONCE__ fails the first chat request carrying it and
+      // succeeds on the retry; __FAIL_ALWAYS__ fails every chat request;
+      // __SUMMARY_FAIL__ anywhere in the transcript fails the summary.
+      const transcript = (Array.isArray(body.messages) ? body.messages : [])
+        .map((m) => String(m?.content || ""));
+      const lastText = transcript.length ? transcript[transcript.length - 1] : "";
+      if (body.mode === "summary" && transcript.some((t) => t.includes("__SUMMARY_FAIL__"))) {
+        return sendJson(res, 502, { error: "injected summary failure" });
+      }
+      if (body.mode !== "summary" && lastText.includes("__FAIL_ALWAYS__")) {
+        return sendJson(res, 502, { error: "injected chat failure" });
+      }
+      if (body.mode !== "summary" && lastText.includes("__FAIL_ONCE__") && !tutorFailedOnce.has(lastText)) {
+        tutorFailedOnce.add(lastText);
+        return sendJson(res, 502, { error: "injected chat failure (once)" });
+      }
       if (body.mode === "summary") {
         return sendJson(res, 200, {
           summary: {
@@ -145,10 +164,8 @@ async function handleFunction(name, req, res, url) {
           },
         });
       }
-      const msgs = Array.isArray(body.messages) ? body.messages : [];
-      const last = msgs.length ? String(msgs[msgs.length - 1].content || "") : "";
       return sendJson(res, 200, {
-        reply: `Olá! (dev stub tutor in ${body.targetLang || "?"}) You said: ${last}`,
+        reply: `Olá! (dev stub tutor in ${body.targetLang || "?"}) You said: ${lastText}`,
       });
     }
     case "tts": {

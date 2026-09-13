@@ -172,6 +172,19 @@
 //                            («sobre esto», «Esto es mío»); it still
 //                            agrees with a possessed/modified predicate
 //                            noun («Esta es mi mano»).
+//   motionPurpose            { form, position: "pre"|"post", case? }: the
+//                            purpose relation after a MOTION verb («go for
+//                            food») renders as this construction instead
+//                            of the dictionary FOR — uk «йду по їжу»
+//                            (accusative), fi «menen hakemaan ruokaa»
+//                            (partitive), de «gehe Essen holen» (post).
+//   possessiveSuffixOnNoun   { suffixes: {cid: suffix}, acceptBare }: every
+//                            possessed noun carries the person suffix on
+//                            its strong stem (fi «minun käteni»); acceptBare
+//                            lets the grader take the colloquial bare form.
+//   possessivePlacementVariant "post": the grader also accepts the possessive
+//                            after its definite noun (no «hånden min»); the
+//                            app keeps teaching the preposed form.
 //   preverbalAdjuncts        { glueRoles, adverbRoles }: prepositional
 //                            adjuncts (glue of those roles + their
 //                            nominal, rendered bare) and adverb-like
@@ -486,6 +499,9 @@
 
 export const LANGUAGE_RULES = {
   ar: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "من أجل", position: "pre" },
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,
@@ -564,6 +580,17 @@ export const LANGUAGE_RULES = {
     negatedObjectCase: "partitive",
     reflexivePossessiveSuffix: true,
     questionClitic: { back: "ko", front: "kö" },
+    // Every possessed noun carries the person suffix, not only the
+    // reflexive 3rd person: «minun käteni», «sinun pääsi», «meidän
+    // äitimme» (Emi run-24 read; the free genitive pronoun alone is the
+    // colloquial register, which the grader accepts via acceptBare).
+    possessiveSuffixOnNoun: {
+      suffixes: { MY: "ni", YOUR: "si", HIS: "nsA", HER: "nsA", OUR: "mme", THEIR: "nsA" },
+      acceptBare: true,
+    },
+    // «go for food» = «mennä hakemaan» + partitive: «Minä menen hakemaan
+    // ruokaa» — never «varten ruoka» (run-24 GO FOR X row).
+    motionPurpose: { form: "hakemaan", position: "pre", case: "partitive" },
     caseMarking: {
       directObjectCase: "accusative",
       // An attributive adjective mirrors the case field its head noun
@@ -590,6 +617,9 @@ export const LANGUAGE_RULES = {
     },
   },
   fr: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "chercher", position: "pre" },
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",
       declinesAttributiveAdjectives: true,
@@ -615,6 +645,9 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   de: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "holen", position: "post" },
     // «Ich gehe von zu Hause weg»: HOME's `fused.from` absorbs FROM
     // (Emi run-21 -124, same mechanism as no «hjemmefra»).
     fusedAdpositionForms: true,
@@ -700,6 +733,9 @@ export const LANGUAGE_RULES = {
     encliticStress: true,
   },
   it: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "a prendere", position: "pre" },
     // The drilled numeral ONE takes the article's allomorphy — «un hotel»,
     // «una padella», «uno zaino», «un'attrazione» (Emi run-22 -135).
     oneAsIndefiniteArticle: true,
@@ -718,6 +754,9 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   ja: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "取りに", position: "post" },
     features: {
       adjectivePosition: "pre",
       // は topics the subject, を marks the direct object — the same
@@ -770,6 +809,9 @@ export const LANGUAGE_RULES = {
     subordinateClauseFinal: true,
   },
   ko: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "가지러", position: "post" },
     features: {
       adjectivePosition: "pre",
       // The present copula is never a standalone word — it suffixes onto
@@ -842,6 +884,9 @@ export const LANGUAGE_RULES = {
     },
   },
   zh: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "拿", position: "pre" },
     features: {
       adjectivePosition: "pre",
       // Countable nouns are counted (and take English "a/an") through a
@@ -938,8 +983,17 @@ export const LANGUAGE_RULES = {
     // A verb's own government supplies its preposition: «hilser på en
     // servitør» (-119) — data-driven via governedPreposition on the verb.
     verbGovernedPrepositions: true,
+    // ── Nekh 2026-09-13: «min hånd» and «hånden min» are both standard.
+    // The app teaches the preposed form; the grader also accepts the
+    // postposed one with the definite noun («hånden min», «rommet sitt»).
+    possessivePlacementVariant: "post",
+    // «go for food» = «gå for å hente»: «Jeg går for å hente mat».
+    motionPurpose: { form: "for å hente", position: "pre" },
   },
   pl: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "po", position: "pre", case: "accusative" },
     // A 3rd-person possessive whose possessor is the subject is the
     // reflexive «OWN» entry (свій / swój / sin), never his/her — which
     // means someone else's here (Emi run-23 -142).
@@ -977,6 +1031,9 @@ export const LANGUAGE_RULES = {
     },
   },
   pt: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "buscar", position: "pre" },
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",
       declinesAttributiveAdjectives: true, locativeCopula: true,
@@ -1004,6 +1061,9 @@ export const LANGUAGE_RULES = {
     verbGovernedPrepositions: true,
   },
   es: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "a por", position: "pre" },
     features: {
       indefiniteArticle: true, adjectivePosition: "roleBased",
       declinesAttributiveAdjectives: true, apocope: true,
@@ -1032,6 +1092,9 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   th: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "เอา", position: "pre" },
     features: { adjectivePosition: "post", possessivePlacement: "enclitic" },
     postNominalAdjectives: true, spacelessJoin: true, spacelessTiles: true,
     possessiveEnclitic: true,
@@ -1138,6 +1201,9 @@ export const LANGUAGE_RULES = {
     copulaCoordination: { separatorWord: true },
   },
   uk: {
+    // «go for X» after a motion verb is the purpose construction, not the
+    // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
+    motionPurpose: { form: "по", position: "pre", case: "accusative" },
     // A 3rd-person possessive whose possessor is the subject is the
     // reflexive «OWN» entry (свій / swój / sin), never his/her — which
     // means someone else's here (Emi run-23 -142).

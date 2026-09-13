@@ -3,7 +3,7 @@
 // for the persisted `zth_user` blob. Pure functions — app.js owns the actual
 // localStorage reads/writes, unit tests exercise the logic directly.
 
-export const CURRENT_SCHEMA_VERSION = 3;
+export const CURRENT_SCHEMA_VERSION = 4;
 
 export const USER_KEY = "zth_user";
 export const USER_BACKUP_KEY = "zth_user_backup";
@@ -106,6 +106,21 @@ export function migrateUserState(user) {
     // fills it. See `learner_facts.mjs` for the policy.
     if (!Array.isArray(user.learnerFacts)) user.learnerFacts = [];
     user.schemaVersion = 3;
+  }
+
+  if (user.schemaVersion < 4) {
+    // v3 → v4: tutor preferences + session memory move into the synced
+    // user record. Before v4 they lived only in device-local localStorage
+    // (zth_tutor_prefs_<lang> / zth_tutor_<lang>), so a new device — or a
+    // cleared browser — lost Anna's instructions and the session history.
+    // `tutor.prefs[lang]` holds the coaching dials plus the learner's
+    // free-text instructions; `tutor.memory[lang].sessions` holds the
+    // bounded session summaries. tutor.js migrates the legacy localStorage
+    // copies in on first load.
+    if (!user.tutor || typeof user.tutor !== "object") user.tutor = {};
+    if (!user.tutor.prefs || typeof user.tutor.prefs !== "object") user.tutor.prefs = {};
+    if (!user.tutor.memory || typeof user.tutor.memory !== "object") user.tutor.memory = {};
+    user.schemaVersion = 4;
   }
 
   return user;
