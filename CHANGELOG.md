@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-13 (later)
+
+### Norwegian now teaches «hånden min»
+
+Norwegian possessives are taught the way most Norwegians say them: after the noun, with the noun in its definite form — «hånden min», «rommet sitt», «klærne mine», and with an adjective the double-definite «den hvite hånden min». Counted nouns keep the possessive in front («våre sju føtter»). Typed translations still accept «min hånd». Exercise blanks and word tiles follow the new form.
+
 ## 2026-09-13
 
 ### Anna follows your settings and never loses a message

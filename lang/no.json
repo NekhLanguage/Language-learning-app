@@ -397,7 +397,8 @@
     },
     "CLOTHES": {
       "form": "klær",
-      "pluralOnly": true
+      "pluralOnly": true,
+      "definiteForm": "klærne"
     },
     "SHIRT": {
       "form": "skjorte",

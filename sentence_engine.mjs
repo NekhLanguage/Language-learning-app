@@ -146,9 +146,18 @@ function acceptedAnswerVariants(lang, tpl, targetSentence, sharedChoices = null)
   // when a modifier was injected: «den hvite hånden min» needs the
   // definite article + weak adjective, which the postposed path does not
   // build yet.
-  if (langRuleValue(lang, "possessivePlacementVariant") === "post" && sharedChoices &&
-      sentenceHasPossessive(tpl, sharedChoices) && !sentenceHasInjectedModifier(sharedChoices)) {
-    _possessivePlacementOverride = "post";
+  // Since 2026-09-13 (Nekh: "hånden min seems better to teach") Norwegian
+  // teaches the postposed form and the grader accepts the preposed one
+  // (variant "pre"); a "post" variant would do the reverse. The "post"
+  // variant is skipped when a number was injected (counted nouns keep
+  // the preposed possessive in either mode — «våre sju føtter»).
+  // A counted noun is preposed in both modes already, so neither variant
+  // applies there («mine to hender» stays the single accepted form).
+  const placementVariant = langRuleValue(lang, "possessivePlacementVariant");
+  if ((placementVariant === "pre" || placementVariant === "post") && sharedChoices &&
+      sentenceHasPossessive(tpl, sharedChoices) && !sentenceHasInjectedNumber(sharedChoices) &&
+      (placementVariant === "pre" || !sentenceHasInjectedModifier(sharedChoices))) {
+    _possessivePlacementOverride = placementVariant;
     try {
       const v = variantBuild();
       if (v) variants.add(v);
@@ -185,6 +194,11 @@ function sentenceHasPossessive(tpl, sharedChoices) {
   const isPoss = (c) => vocab().concepts?.[c]?.semantic_role === "possessive";
   if ((tpl?.concepts || []).some(isPoss)) return true;
   return Object.entries(sharedChoices || {}).some(([k, v]) => k.startsWith("adj_") && isPoss(v));
+}
+
+// Whether the build injected a number on any noun.
+function sentenceHasInjectedNumber(sharedChoices) {
+  return Object.entries(sharedChoices || {}).some(([k, v]) => k.startsWith("num_") && !!v);
 }
 
 // Whether the build injected a non-possessive modifier (adjective or number).
@@ -1267,8 +1281,11 @@ function definiteNounPhrase(lang, cid, opts = {}) {
     // authored `definiteForm` wins where the suffix changes the stem
     // (rom → rommet). (`definite` is the article-policy flag, not a form.)
     noteRule("definite_article");
-    if (!plural && typeof entry.definiteForm === "string") return entry.definiteForm;
-    if (plural) return base + "ene";
+    if (typeof entry.definiteForm === "string" && (!plural || entry.pluralOnly)) return entry.definiteForm;
+    // -er plurals swap the ending («hender» → «hendene», «bøker» →
+    // «bøkene»); vowel-final and irregular plurals append («skoene»,
+    // «mennene»); «klær» → «klærne» is authored (definiteForm).
+    if (plural) return base.endsWith("er") ? base.slice(0, -2) + "ene" : base + "ene";
     if (g === "n") return base + (base.endsWith("e") ? "t" : "et");
     if (base.endsWith("e")) return base + "n";
     return base + "en";
@@ -2101,7 +2118,8 @@ function preverbalAdjunctOrder(lang, ordered) {
     // Before the predicate checks: a possessed copular predicate is a
     // possessed slot first.
     if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive" &&
-        langRuleValue(targetLang, "possessiveSuffixOnNoun")) {
+        (langRuleValue(targetLang, "possessiveSuffixOnNoun") ||
+         langRuleValue(targetLang, "possessivePlacement") === "post")) {
       const governedCase = caseMap(targetLang, ordered)[idx] || null;
       const isObj = !governedCase && isDirectObjectPosition(ordered, idx, targetLang);
       return {
@@ -2299,6 +2317,12 @@ function preverbalAdjunctOrder(lang, ordered) {
     // A possessed slot (fi): every tile carries the person suffix in the
     // slot's case — the object field is per noun (partitive «ruokaani»
     // beside genitive-accusative «puhelimeni»), as in the render path.
+    // A possessed slot under a taught postposed possessive (no): every
+    // tile is the definite noun the blank holds («hånden» / «hodet» in
+    // «Dette er _____ min»).
+    if (slot?.possessiveCid && langRuleValue(targetLang, "possessivePlacement") === "post") {
+      return definiteNounPhrase(targetLang, cid);
+    }
     if (slot?.possessiveCid && langRuleValue(targetLang, "possessiveSuffixOnNoun")) {
       let key = slot.caseName || null;
       if (!key && slot.position === "directObject" && ukObjectCaseApplies(targetLang)) {
@@ -3118,8 +3142,10 @@ function pronominalPossessedForm(lang, possessiveCid, nounForm) {
 // takes the DEFINITE noun («hånden min», «rommet sitt», «hendene mine»);
 // outside the override the noun is returned unchanged.
 function postposedPossessedNoun(lang, nounCid, noun, plural = false) {
-  if (_possessivePlacementOverride !== "post" ||
-      langRuleValue(lang, "possessivePlacementVariant") !== "post") return noun;
+  const teachesPost = langRuleValue(lang, "possessivePlacement") === "post";
+  const variantPost = _possessivePlacementOverride === "post" &&
+    langRuleValue(lang, "possessivePlacementVariant") === "post";
+  if (!teachesPost && !variantPost) return noun;
   const bare = plural ? pluralFormOf(lang, nounCid) : formOf(lang, nounCid);
   if (noun !== bare) return noun; // already decorated (case, feminine …) — leave it
   return definiteNounPhrase(lang, nounCid, { plural });
@@ -3218,10 +3244,14 @@ function reflexiveSuffixedForm(lang, possessiveCid, nounCid, caseName) {
 // «puhelimeni»), else the nominative. Null outside the rule or when the
 // noun is not directly possessed. Shared by the L3 blank and the tiles.
 function possessedSlotSuffixedForm(tpl, targetLang, targetConcept) {
-  if (!langRuleValue(targetLang, "possessiveSuffixOnNoun")) return null;
+  const suffixRule = langRuleValue(targetLang, "possessiveSuffixOnNoun");
+  const postposedRule = langRuleValue(targetLang, "possessivePlacement") === "post";
+  if (!suffixRule && !postposedRule) return null;
   const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
   const idx = ordered.indexOf(targetConcept);
   if (idx <= 0 || vocab().concepts[ordered[idx - 1]]?.semantic_role !== "possessive") return null;
+  // Taught postposed possessive (no): the slot holds the definite noun.
+  if (!suffixRule) return definiteNounPhrase(targetLang, targetConcept);
   const poss = ordered[idx - 1];
   let key = caseMap(targetLang, ordered)[idx] || null;
   if (!key && isDirectObjectPosition(ordered, idx, targetLang) && ukObjectCaseApplies(targetLang)) {
@@ -3301,8 +3331,12 @@ function demonstrativeForm(lang, cid, referentNounCid) {
 // «meu braço», «o livro dele»; Emi run-19 -100).
 function possessivePostposed(lang, possessiveCid) {
   if (langRule(lang, "possessiveEnclitic")) return true;
-  if (_possessivePlacementOverride === "post" &&
-      langRuleValue(lang, "possessivePlacementVariant") === "post") return true;
+  // Declared possessivePlacement "post" (no): the taught form is «hånden
+  // min»; the grader's "pre" variant build switches it off («min hånd»).
+  const variant = langRuleValue(lang, "possessivePlacementVariant");
+  if (langRuleValue(lang, "possessivePlacement") === "post" &&
+      !(_possessivePlacementOverride === "pre" && variant === "pre")) return true;
+  if (_possessivePlacementOverride === "post" && variant === "post") return true;
   const e = vocab().languages?.[lang]?.forms?.[possessiveCid];
   return !!(e && typeof e === "object" && !Array.isArray(e) && e.postposed === true);
 }
@@ -5121,6 +5155,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   }
   const possessedCase = (ukObjectCase || governedAccusative) && !possessedPlural
     ? "accusative" : (caseAt[idx] || null);
+  // The possessed noun's fixed surface for the modifier branches (fi
+  // suffixed «käteni», no definite «hånden») and, for a taught postposed
+  // possessive, the word to append after the phrase.
+  let possessedSuffixed = null;
+  let postposedPossessive = null;
   // Suffixal possession with a derived case paradigm (tr): the possessed
   // noun carries person, and as a direct object the accusative — «senin
   // kitabını okursun», «benim elimdir» (Emi run-18 -91). The possessive
@@ -5141,8 +5180,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // Not an early return: an injected adjective or number still lands
   // («minun hyvä käteni», «minun kaksi kättäni») through the modifier
   // branches below, which read the suffixed form as the bare noun.
-  let possessedSuffixed = null;
-  if (precededByPossessive && !possessedPlural) {
+  if (precededByPossessive && !possessedPlural && !postposedPossessive) {
     possessedSuffixed = suffixedPossessedNoun(lang, ordered[idx - 1], cid, reflexiveSuffixKeyFor(cid, idx));
     if (possessedSuffixed) possessedForm = possessedSuffixed;
   }
@@ -5165,11 +5203,20 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       ? ordered[idx - 1] : reflexivePossessiveCid(lang, ordered[idx - 1], subjectCid);
     const possWord = genderedFormOf(lang, possCid, cid, possessedPlural);
     possessedForm = postposedPossessedNoun(lang, cid, possessedForm, possessedPlural);
-    const art = possessiveArticleFor(lang, cid, false, possessedCase) ||
-      (!langRule(lang, "possessiveEnclitic")
-        ? postposedPossessiveArticle(lang, cid, possessedForm) : null);
-    const tail = joinWords(lang, [possessedForm, possWord]);
-    return art ? `${art} ${tail}` : tail;
+    // Declared possessivePlacement "post" (no): the noun phrase keeps
+    // going so an injected adjective («den hvite hånden min») or number
+    // («våre sju føtter», preposed) can land — assembled at the end of
+    // this slot. Enclitic / entry-postposed languages return here.
+    if (langRuleValue(lang, "possessivePlacement") === "post") {
+      postposedPossessive = { cid: possCid, word: possWord };
+      possessedSuffixed = possessedForm;
+    } else {
+      const art = possessiveArticleFor(lang, cid, false, possessedCase) ||
+        (!langRule(lang, "possessiveEnclitic")
+          ? postposedPossessiveArticle(lang, cid, possessedForm) : null);
+      const tail = joinWords(lang, [possessedForm, possWord]);
+      return art ? `${art} ${tail}` : tail;
+    }
   }
   if (lang === "th" && precededByModifier &&
       prevMeta?.semantic_role === "quantity_additional") {
@@ -5501,7 +5548,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   if (adjectiveWord || numberWord) noteModifier(cid, adjectiveCid, numberCid);
   // The bare form must match the case actually rendered in `phrase`, or the
   // article/adjective splicing below misassembles the noun phrase.
-  const bare = bareNoun || possessedSuffixed ||
+  const bare = possessedSuffixed || bareNoun ||
     (ukObjectCase && !bareDetermined ? accusativeNoun(lang, cid, formOf(lang, cid)) :
      ukObjectCase ? possessedForm :
      feminineReferent ? possessedForm :
@@ -5600,9 +5647,20 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         nounForm = gendered(nounForm, headEntry?.gender, true);
       }
     }
+    // A counted noun under a taught postposed possessive keeps the
+    // PREPOSED possessive («våre sju føtter» — the double-definite «de
+    // sju føttene våre» is not built), with the plural possessive form
+    // and the bare counted noun.
+    if (postposedPossessive) {
+      const possPl = genderedFormOf(lang, postposedPossessive.cid, cid, isPlural);
+      const adj = adjectiveWord && isPlural && adjectiveCid
+        ? genderedFormOf(lang, possLookupCid(adjectiveCid), cid, true) : adjectiveWord;
+      return [possPl, adj, numberWord, isPlural ? nounForm : formOf(lang, cid)]
+        .filter(Boolean).join(" ");
+    }
     // A counted possessed noun keeps its person suffix on the governed
     // form (fi «minun kaksi kättäni»; declared possessiveSuffixOnNoun).
-    if (possessedSuffixed) {
+    if (possessedSuffixed && !postposedPossessive) {
       const counted = suffixedPossessedNoun(lang, ordered[idx - 1], cid,
         numeralGoverned && langRule(lang, "numeralPartitiveSingular") ? "partitive" : reflexiveSuffixKeyFor(cid, idx));
       if (counted) nounForm = counted;
@@ -5741,7 +5799,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // feet", «unsere sieben Füße») — never stacked after it («sju våre
       // føtter», Emi run-21 -120). Postposed possessors keep their place.
       if (vocab().concepts[adjectiveCid]?.semantic_role === "possessive" &&
-          !possessivePostposed(lang, adjectiveCid)) {
+          (!possessivePostposed(lang, adjectiveCid) ||
+           langRuleValue(lang, "possessivePlacement") === "post")) {
         // possessiveDefiniteArticle languages keep their article in front
         // («i suoi dodici cucchiai», Emi run-22 -136).
         const possArt = possessiveArticleFor(lang, cid, true);
@@ -5947,6 +6006,19 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     }
   }
 
+  // Taught postposed possessive (declared possessivePlacement "post"):
+  // «hånden min»; with an adjective the phrase is double-definite — the
+  // free article from freeDefiniteArticle, the weak adjective, the
+  // definite noun, then the possessive: «den hvite hånden min».
+  if (postposedPossessive) {
+    if (adjectiveWord) {
+      const spec = langRuleValue(lang, "freeDefiniteArticle") || {};
+      const plural = possessedPlural || !!nounEntry?.pluralOnly;
+      const art = plural ? spec.plural : (spec[nounEntry?.gender] || spec.default);
+      return joinWords(lang, [art, phrase, postposedPossessive.word].filter(Boolean));
+    }
+    return joinWords(lang, [phrase, postposedPossessive.word]);
+  }
   if (predicativeBare && !adjectiveWord && !numberWord) return predicativeBare;
   if (destinationDefinite && !adjectiveWord && !numberWord) return destinationDefinite;
   return phrase;
