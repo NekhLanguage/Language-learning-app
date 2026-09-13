@@ -4867,7 +4867,7 @@
         "it": "Questa è la mia mano.",
         "th": "นี่คือมือของฉัน",
         "pl": "To jest moja ręka.",
-        "fi": "Tämä on minun käsi."
+        "fi": "Tämä on minun käteni."
       },
       "surface": {
         "en": {
@@ -4998,7 +4998,7 @@
         "it": "Questa è la tua testa.",
         "th": "นี่คือหัวของคุณ",
         "pl": "To jest twoja głowa.",
-        "fi": "Tämä on sinun pää."
+        "fi": "Tämä on sinun pääsi."
       },
       "surface": {
         "en": {
@@ -5129,7 +5129,7 @@
         "it": "Quello è il mio braccio.",
         "th": "นั่นคือแขนของฉัน",
         "pl": "Tamto jest moje ramię.",
-        "fi": "Tuo on minun käsivarsi."
+        "fi": "Tuo on minun käsivarteni."
       },
       "surface": {
         "en": {
@@ -5260,7 +5260,7 @@
         "it": "Quella è la tua gamba.",
         "th": "นั่นคือขาของคุณ",
         "pl": "Tamto jest twoja noga.",
-        "fi": "Tuo on sinun jalka."
+        "fi": "Tuo on sinun jalkasi."
       },
       "surface": {
         "en": {
@@ -5391,7 +5391,7 @@
         "it": "Lei è la mia mamma.",
         "th": "เธอเป็นแม่ของฉัน",
         "pl": "Ona jest moją mamą.",
-        "fi": "Hän on minun äiti."
+        "fi": "Hän on minun äitini."
       },
       "surface": {
         "en": {
@@ -5522,7 +5522,7 @@
         "it": "Lui è il mio papà.",
         "th": "เขาเป็นพ่อของฉัน",
         "pl": "On jest moim tatą.",
-        "fi": "Hän on minun isä."
+        "fi": "Hän on minun isäni."
       },
       "surface": {
         "en": {
@@ -5658,7 +5658,7 @@
         "it": "Questa è la mia mano e questa è la tua testa.",
         "th": "นี่คือมือของฉันและนี่คือหัวของคุณ",
         "pl": "To jest moja ręka i to jest twoja głowa.",
-        "fi": "Tämä on minun käsi ja tämä on sinun pää."
+        "fi": "Tämä on minun käteni ja tämä on sinun pääsi."
       }
     },
     {
@@ -5691,7 +5691,7 @@
         "it": "Lei è la mia mamma e lui è il mio papà.",
         "th": "เธอเป็นแม่ของฉันและเขาเป็นพ่อของฉัน",
         "pl": "Ona jest moją mamą i on jest moim tatą.",
-        "fi": "Hän on minun äiti ja hän on minun isä."
+        "fi": "Hän on minun äitini ja hän on minun isäni."
       }
     },
     {
@@ -5852,7 +5852,7 @@
         "it": "È quello il tuo telefono?",
         "th": "นั่นคือโทรศัพท์ของคุณใช่ไหม",
         "pl": "Czy to twój telefon?",
-        "fi": "Onko tuo sinun puhelin?"
+        "fi": "Onko tuo sinun puhelimesi?"
       }
     },
     {

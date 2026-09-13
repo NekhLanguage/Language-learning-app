@@ -283,7 +283,8 @@
     },
     "ROOM": {
       "form": "rom",
-      "gender": "n"
+      "gender": "n",
+      "definiteForm": "rommet"
     },
     "BOY": {
       "form": "gutt",

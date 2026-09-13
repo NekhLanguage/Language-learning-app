@@ -126,7 +126,7 @@ test("v2 → v3 seeds an empty user-level learnerFacts array", () => {
     runs: { pt: { released: [], personalVocab: [], pendingAdmission: [] } },
   };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 3);
+  assert.equal(migrated.schemaVersion, 4);
   assert.deepEqual(migrated.learnerFacts, []);
   // Existing run-level state is untouched.
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
@@ -140,17 +140,39 @@ test("v2 → v3 preserves an already-populated learnerFacts", () => {
     learnerFacts: [{ text: "learner is Norwegian", source: "tutor", addedAt: "2026-08-16" }],
   };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 3);
+  assert.equal(migrated.schemaVersion, 4);
   assert.equal(migrated.learnerFacts.length, 1);
   assert.equal(migrated.learnerFacts[0].text, "learner is Norwegian");
 });
 
-test("full migration path v0 → v3 stamps every field once", () => {
+test("full migration path v0 → v4 stamps every field once", () => {
   const user = validUser();
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 3);
+  assert.equal(migrated.schemaVersion, 4);
   assert.deepEqual(migrated.learnerFacts, []);
+  assert.deepEqual(migrated.tutor, { prefs: {}, memory: {} });
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
+});
+
+test("v3 → v4 seeds the synced tutor store without touching existing prefs", () => {
+  const fresh = migrateUserState({ id: "u1", schemaVersion: 3, runs: {}, learnerFacts: [] });
+  assert.equal(fresh.schemaVersion, 4);
+  assert.deepEqual(fresh.tutor, { prefs: {}, memory: {} });
+
+  // A blob written by a newer client that already carries tutor prefs keeps them.
+  const kept = migrateUserState({
+    id: "u2",
+    schemaVersion: 3,
+    runs: {},
+    learnerFacts: [],
+    tutor: { prefs: { no: { challenge: "push", note: "be strict" } } },
+  });
+  assert.equal(kept.tutor.prefs.no.note, "be strict");
+  assert.deepEqual(kept.tutor.memory, {});
+
+  // Running the migration twice is a no-op.
+  const again = migrateUserState(JSON.parse(JSON.stringify(kept)));
+  assert.deepEqual(again, kept);
 });
 
 // Emi 2026-08-28-22: 690 of 794 templateProgress rows across 10 languages

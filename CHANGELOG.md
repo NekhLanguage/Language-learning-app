@@ -6,6 +6,17 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-13
+
+### Anna follows your settings and never loses a message
+
+Anna's coaching dials and the new free-text "Instructions for Anna" box (up to 1000 characters) now steer every reply: they sit at the top of what Anna reads, spelled out as rules, and are restated to her on every turn so they hold through a long conversation. Your settings live in your synced account record, so a new version of the app, a cleared browser or another device no longer forgets them. Sending a message and ending a session are now retried automatically; a message Anna could not receive stays in the box with a Retry button instead of asking you to type it again, an unfinished conversation comes back after a reload, and End session always saves — if Anna's notes could not be written she finishes them the next time you open the tutor.
+
+### Norwegian accepts both possessive placements; Finnish possessed nouns carry their suffix
+
+Norwegian keeps teaching «min hånd» and now also accepts «hånden min» (and «rommet sitt», «telefonen din») as a correct translation. Finnish possessed nouns take the person suffix for every person — «minun käteni», «sinun pääsi», «meidän hotellimme», with «hänen kirjansa»-type forms derived where no data existed — while the colloquial «minun käsi» is still accepted. "I go for food" renders as each language's real construction («menen hakemaan ruokaa», «йду по їжу», «gehe Essen holen», «음식을 가지러 가요») instead of the dictionary "for".
+
+
 ## 2026-08-31
 
 ### Chinese colours, locations, and "with X" now read like Chinese

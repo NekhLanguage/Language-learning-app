@@ -46,8 +46,9 @@
             <option value="support">Explain freely</option>
           </select>
         </label>
-        <label>Anything else Anna should know
-          <input type="text" id="tutor-note" placeholder="e.g. I'm learning for a trip in June" />
+        <label>Instructions for Anna
+          <textarea id="tutor-note" rows="4" maxlength="1000" placeholder="e.g. Push me hard on verb endings and don't let mistakes slide. Stay in Portuguese unless I ask. I'm learning for a trip in June — keep it about travel and food."></textarea>
+          <span class="tutor-note-meta"><span>Anna reads these before every reply, on any device. They outrank the dials above.</span><span id="tutor-note-count">0/1000</span></span>
         </label>
         <p class="tutor-settings-hint" id="tutor-settings-hint">You can change these anytime with the ⚙️ button.</p>
         <button class="tutor-btn" id="tutor-settings-save" type="button">Start talking</button>
@@ -74,6 +75,6 @@
     </div>
   </div>
 
-  <script type="module" src="tutor.js?v=1.2.65"></script>
+  <script type="module" src="tutor.js?v=1.2.66"></script>
 </body>
 </html>

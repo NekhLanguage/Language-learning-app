@@ -11,7 +11,7 @@
 //
 // Access is gated by the same Supabase `users` allowlist as checkAccess.js.
 // Requires ANTHROPIC_API_KEY in the function environment; TUTOR_MODEL
-// optionally overrides the model.
+// optionally overrides the model (TUTOR_SUMMARY_MODEL: the summary call only).
 
 const Anthropic = require("@anthropic-ai/sdk");
 const fs = require("fs");
@@ -21,6 +21,11 @@ const SUPABASE_URL = "https://miprvzsfunbmjippzrxf.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHJ2enNmdW5ibWppcHB6cnhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODA1NjMsImV4cCI6MjA4OTY1NjU2M30.78ONiXxrznbsAw-bEX_haMmrbRoV5t6vkfxzzwIw0lc";
 
 const MODEL = process.env.TUTOR_MODEL || "claude-sonnet-5";
+// The end-of-session record is a structured-output call with a 2048-token
+// budget on top of the full transcript, so it is the slowest request the
+// tutor makes. TUTOR_SUMMARY_MODEL lets it run on a faster model than the
+// conversation without touching chat quality.
+const SUMMARY_MODEL = process.env.TUTOR_SUMMARY_MODEL || MODEL;
 
 // --- Cost telemetry (public.tutor_sessions) -------------------------------
 // One row per messages.create() call so per-user variable cost is measurable
@@ -88,6 +93,9 @@ const MAX_MEMORY_CHARS = 8000;
 // 20-entry hard cap; the byte cap here is a belt-and-braces guard against
 // a client-side bug that would otherwise flood the system prompt.
 const MAX_LEARNER_FACTS_CHARS = 6000;
+// The learner's free-text instructions for Anna (tutor.html settings panel;
+// the client caps at the same length).
+const MAX_NOTE_CHARS = 1000;
 
 let cachedClient = null;
 function getClient() {
@@ -167,6 +175,12 @@ async function hasAccess(email) {
 // "Pokémon is a video-game franchise, not real animals") never has to
 // compete with 500 words of vocabulary or a rolling session summary for
 // the model's attention. See `learner_facts.mjs`.
+//
+// PREFERENCES and the learner's own INSTRUCTIONS come right after the facts
+// and BEFORE the profile: they used to trail a 20k-character vocabulary
+// dump as one line of raw JSON, and Anna treated them as background noise.
+// Rendered as explicit rules, in prose, and repeated per turn (see
+// `steeringTrailer`) so they hold across a long conversation.
 function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts }) {
   return [
     `TARGET LANGUAGE: ${targetLang}`,
@@ -175,15 +189,82 @@ function contextBlock({ targetLang, supportLang, profile, preferences, memory, l
     "=== LEARNER FACTS (persistent ground truth — take these as given, do not challenge or forget) ===",
     learnerFacts || "(no facts on file yet)",
     "",
+    renderPreferences(preferences),
+    "",
     "=== LEARNER PROFILE (from app exercise data — ground truth) ===",
     profile || "(no profile data — treat as a brand-new learner)",
-    "",
-    "=== PREFERENCES ===",
-    JSON.stringify(preferences || {}),
     "",
     "=== MEMORY (previous sessions, most recent first) ===",
     memory || "(empty — this is the first session)",
   ].join("\n");
+}
+
+// The three coaching dials, spelled out as the concrete behaviour each
+// value demands (the instructions file defines them too; restating the
+// chosen value here means the model never has to look it up).
+const DIAL_TEXT = {
+  correctionDepth: {
+    light: "recast the learner's sentence correctly inside your natural reply and move on — no meta-commentary",
+    medium: "one brief inline note per mistake — what was wrong and the fix, one line — then continue the conversation",
+    deep: "for every mistake name the rule, why it was wrong, the correct pattern and one related example, then return to the conversation",
+  },
+  challenge: {
+    comfort: "stay well inside known vocabulary, shorter sentences, yes/no and either/or questions welcome, generous encouragement",
+    stretch: "i+1 — mostly open questions, one small step beyond what the learner just showed",
+    push: "longer sentences, open-ended questions only, new words at the top of the allowed range, ask for opinions and reasons, do not simplify at the first sign of struggle",
+  },
+  languageMix: {
+    immersion: "target language only, corrections and explanations included; switch to the support language only if the learner explicitly asks or is clearly lost after two attempts",
+    balanced: "scales with the learner's tier — beginners get up to half of each message in the support language with glosses; stronger learners get target-language conversation with support-language corrections only",
+    support: "converse in the target language but explain freely in the support language",
+  },
+};
+
+function normalizePrefs(preferences) {
+  const p = preferences && typeof preferences === "object" ? preferences : {};
+  const pick = (key, dflt) => (DIAL_TEXT[key][p[key]] ? p[key] : dflt);
+  return {
+    correctionDepth: pick("correctionDepth", "medium"),
+    challenge: pick("challenge", "stretch"),
+    languageMix: pick("languageMix", "balanced"),
+    note: String(p.note || "").trim().slice(0, MAX_NOTE_CHARS),
+  };
+}
+
+function renderPreferences(preferences) {
+  const p = normalizePrefs(preferences);
+  const lines = [
+    "=== PREFERENCES (the learner chose these — binding for every reply, not suggestions) ===",
+    `- Corrections: ${p.correctionDepth} — ${DIAL_TEXT.correctionDepth[p.correctionDepth]}.`,
+    `- Challenge: ${p.challenge} — ${DIAL_TEXT.challenge[p.challenge]}.`,
+    `- Language mix: ${p.languageMix} — ${DIAL_TEXT.languageMix[p.languageMix]}.`,
+    "",
+    "=== LEARNER'S OWN INSTRUCTIONS (written by the learner for you; follow them in every reply — they outrank the dials above and your default habits, but never the vocabulary contract or the honesty rules) ===",
+  ];
+  if (p.note) {
+    lines.push('"""', p.note, '"""');
+  } else {
+    lines.push("(none given)");
+  }
+  return lines.join("\n");
+}
+
+// Appended by the server to the learner's latest chat message. Instructions
+// that live only in the system prompt fade over a long conversation; a
+// short per-turn restatement next to the text being answered keeps them
+// live. The client never sees or stores this text.
+function steeringTrailer(preferences) {
+  const p = normalizePrefs(preferences);
+  const parts = [
+    `corrections=${p.correctionDepth}`,
+    `challenge=${p.challenge}`,
+    `language mix=${p.languageMix}`,
+  ];
+  let text =
+    "\n\n[App reminder — not written by the learner; never quote, mention or acknowledge it. " +
+    `Reply within the learner's settings: ${parts.join(", ")}.`;
+  if (p.note) text += ` The learner's own instructions to you: "${p.note}"`;
+  return text + "]";
 }
 
 // This schema is sent raw to the structured-outputs API, which supports only
@@ -331,8 +412,6 @@ exports.handler = async (event) => {
       return json(503, { error: "Tutor not configured (missing API key)" });
     }
 
-    const mode = body.mode === "summary" ? "summary" : "chat";
-
     if (!tutorEnabled(body.email)) {
       return json(403, { error: "The AI tutor is invite-only for now." });
     }
@@ -354,6 +433,12 @@ exports.handler = async (event) => {
     }));
     // The API requires the first message to be a user turn.
     if (messages[0].role !== "user") messages.unshift({ role: "user", content: "(session start)" });
+    const mode = body.mode === "summary" ? "summary" : "chat";
+    // Per-turn steering (chat only — the summary has its own closing turn).
+    if (mode === "chat") {
+      const last = messages[messages.length - 1];
+      if (last.role === "user") last.content += steeringTrailer(body.preferences);
+    }
 
     const system = [
       {
@@ -430,7 +515,7 @@ exports.handler = async (event) => {
         "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile.)",
     });
     const response = await client.messages.create({
-      model: MODEL,
+      model: SUMMARY_MODEL,
       max_tokens: 2048,
       system,
       messages,
@@ -439,12 +524,12 @@ exports.handler = async (event) => {
     logTutorSession({
       user_email: String(body.email || "").toLowerCase().trim(),
       mode: "summary",
-      model: MODEL,
+      model: SUMMARY_MODEL,
       tokens_in: response.usage?.input_tokens || 0,
       tokens_out: response.usage?.output_tokens || 0,
       cache_read_tokens: response.usage?.cache_read_input_tokens || 0,
       cache_write_tokens: response.usage?.cache_creation_input_tokens || 0,
-      cost_est_cents: costCents(MODEL, response.usage),
+      cost_est_cents: costCents(SUMMARY_MODEL, response.usage),
       // Wall-clock session length isn't computable inside a single function
       // invocation; plumb a client-side session_start_ts later if Dan wants it.
       session_len_sec: null,
@@ -481,5 +566,8 @@ function json(statusCode, obj) {
   };
 }
 
-// For tests only (tests/unit/tutor_schema.test.mjs).
+// For tests only (tests/unit/tutor_schema.test.mjs, tutor_prefs.test.mjs).
 exports.SUMMARY_SCHEMA = SUMMARY_SCHEMA;
+exports.contextBlock = contextBlock;
+exports.renderPreferences = renderPreferences;
+exports.steeringTrailer = steeringTrailer;

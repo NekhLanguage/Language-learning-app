@@ -2027,7 +2027,8 @@ a.secondary.locked {
   text-align: left;
 }
 
-.tutor-settings-panel input[type="text"] {
+.tutor-settings-panel input[type="text"],
+.tutor-settings-panel textarea {
   font: inherit;
   padding: 0.65rem 0.85rem;
   border-radius: var(--r-md);
@@ -2037,12 +2038,28 @@ a.secondary.locked {
   outline: none;
 }
 
-.tutor-settings-panel input[type="text"]:focus {
+.tutor-settings-panel textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+  line-height: 1.4;
+}
+
+.tutor-settings-panel input[type="text"]:focus,
+.tutor-settings-panel textarea:focus {
   border-color: rgba(255, 255, 255, 0.55);
 }
 
-.tutor-settings-panel input[type="text"]::placeholder {
+.tutor-settings-panel input[type="text"]::placeholder,
+.tutor-settings-panel textarea::placeholder {
   color: rgba(255, 255, 255, 0.45);
+}
+
+.tutor-note-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  opacity: 0.7;
 }
 
 .tutor-settings-hint,
@@ -2179,6 +2196,43 @@ a.secondary.locked {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   opacity: 0.7;
+}
+
+/* A learner message Anna never received: dimmed, with an inline Retry. The
+   text is also still in the input, so nothing is ever retyped. */
+.tutor-msg.user.undelivered {
+  opacity: 0.75;
+  outline: 1px dashed rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+.tutor-msg-failed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  white-space: normal;
+}
+
+.tutor-retry {
+  flex-shrink: 0;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+}
+
+.tutor-retry:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 #tutor-input-row {
