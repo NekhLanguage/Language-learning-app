@@ -5,8 +5,15 @@
 # person") until a webhook-based automation is in place.
 #
 # Usage:
-#   scripts/grant-access.sh jane@example.com
-#   scripts/grant-access.sh "  Jane@Example.COM "   # whitespace + case OK
+#   scripts/grant-access.sh jane@example.com            # app access only
+#   scripts/grant-access.sh jane@example.com 4          # + Anna for 4 months
+#   scripts/grant-access.sh jane@example.com forever    # + Anna, permanent
+#   scripts/grant-access.sh "  Jane@Example.COM "       # whitespace + case OK
+#
+# The second argument sets users.access_until (the Anna subscription window,
+# see migrations/users_access_until.sql). Without it an existing row keeps
+# its window and a new row gets none (Anna greyed out). The learner then
+# signs in with a password or Google; the row is what grants access.
 #
 # Reads SUPABASE_URL from netlify/functions/supabase.js and the key from $SUPABASE_PUBLISHABLE_KEY
 # (same anon key the rest of the app already uses — no new secrets needed).
@@ -15,9 +22,20 @@
 
 set -euo pipefail
 
-if [ $# -ne 1 ] || [ -z "${1// /}" ]; then
-  echo "Usage: $0 <email>" >&2
+if [ $# -lt 1 ] || [ $# -gt 2 ] || [ -z "${1// /}" ]; then
+  echo "Usage: $0 <email> [months|forever]" >&2
   exit 2
+fi
+
+# Anna subscription window → JSON fragment for the access_until column.
+access_json=""
+if [ $# -eq 2 ]; then
+  case "$2" in
+    forever) access_json=',"access_until":"infinity"' ;;
+    ''|*[!0-9]*) echo "Refusing: second argument must be a number of months or 'forever'" >&2; exit 2 ;;
+    *) until_ts="$(date -u -d "+$2 months" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -v+"$2"m +%Y-%m-%dT%H:%M:%SZ)"
+       access_json=",\"access_until\":\"$until_ts\"" ;;
+  esac
 fi
 
 # Normalise: lowercase + trim. Supabase already enforces uniqueness on email,
@@ -47,7 +65,7 @@ response=$(curl -sS -o /tmp/grant-access.body -w '%{http_code}' \
   -H "Authorization: Bearer $SUPABASE_KEY" \
   -H "Content-Type: application/json" \
   -H "Prefer: resolution=merge-duplicates" \
-  --data "{\"email\":\"$email\",\"data\":null}")
+  --data "{\"email\":\"$email\"$access_json}")
 
 if [ "$response" != "201" ] && [ "$response" != "200" ]; then
   echo "Failed (HTTP $response):" >&2
@@ -56,4 +74,4 @@ if [ "$response" != "201" ] && [ "$response" != "200" ]; then
   exit 1
 fi
 
-echo "Granted access: $email"
+echo "Granted access: $email${access_json:+ (Anna window set)}"

@@ -15,6 +15,7 @@ export default [
       "scripts/_pack_data/",
       "scripts/_template_data/",
       "scripts/_verb_data/",
+      "vendor/",
     ],
   },
   js.configs.recommended,
@@ -34,7 +35,7 @@ export default [
       "app.js", "audioengine.js", "languages.js", "user_state.js",
       "sentence_engine.mjs", "progression.mjs", "storage.mjs",
       "capabilities.mjs", "coaching.mjs", "display.mjs", "grading.mjs",
-      "speech.mjs", "tutor.js", "tutor_profile.mjs",
+      "speech.mjs", "tutor.js", "tutor_profile.mjs", "auth.mjs",
     ],
     languageOptions: {
       ecmaVersion: 2023,

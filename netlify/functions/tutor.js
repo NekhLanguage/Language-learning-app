@@ -9,7 +9,9 @@
 // The summary powers the app-side session memory and personal-vocabulary
 // tracking; structured outputs guarantee it parses.
 //
-// Access is gated by the same Supabase `users` allowlist as checkAccess.js.
+// Identity comes from the Supabase session token (Authorization: Bearer),
+// never from the body; Anna additionally needs an active subscription
+// (users.access_until) and the TUTOR_ALLOWED_EMAILS allowlist.
 // Requires ANTHROPIC_API_KEY in the function environment; TUTOR_MODEL
 // optionally overrides the model (TUTOR_SUMMARY_MODEL: the summary call only).
 
@@ -18,6 +20,7 @@ const fs = require("fs");
 const path = require("path");
 
 const { SUPABASE_URL, publishableKey, secretKey, restHeaders } = require("./supabase");
+const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive } = require("./auth");
 
 const MODEL = process.env.TUTOR_MODEL || "claude-sonnet-5";
 // The end-of-session record is a structured-output call with a 2048-token
@@ -150,6 +153,9 @@ function writebackEnabled(email) {
   return allowlist.includes(normalized);
 }
 
+// Anna needs an active subscription (users.access_until — see
+// migrations/users_access_until.sql), not just a `users` row: a learner
+// whose window has lapsed keeps the app and sees Anna greyed out.
 async function hasAccess(email) {
   const normalized = String(email || "").toLowerCase().trim();
   if (!normalized) return false;
@@ -158,16 +164,14 @@ async function hasAccess(email) {
     console.error("tutor: SUPABASE_PUBLISHABLE_KEY unset — treating every account as no-access");
     return false;
   }
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(normalized)}&select=email`,
-    { headers: restHeaders(key) }
-  );
-  if (!res.ok) {
-    console.error("Supabase error:", res.status, await res.text());
+  let row;
+  try {
+    row = await fetchAccessRow(normalized, key);
+  } catch (err) {
+    console.error("Supabase error:", err);
     return false;
   }
-  const data = await res.json();
-  return Array.isArray(data) && data.length > 0;
+  return !!row && subscriptionActive(row.access_until);
 }
 
 // The per-learner context block. Rendered after the (cached) instructions so
@@ -355,13 +359,22 @@ exports.handler = async (event) => {
 
     const body = JSON.parse(event.body || "{}");
 
-    // Access probe for the app's start-screen button. Always 200 (a 403 here
-    // would trip the e2e harness's failed-request detector), never calls the
-    // model, and doesn't require the API key to be configured.
+    // Who is asking: the verified Supabase session (Authorization header).
+    // The body's `email` field is never trusted. The identity is stamped
+    // onto `body.email` so the rest of the handler keeps reading one place.
+    const session = await verifySession(event);
+    body.email = session ? session.email : "";
+
+    // Access probe for the app's start-screen button. Always 200 (a 403 or
+    // 401 here would trip the e2e harness's failed-request detector), never
+    // calls the model, and doesn't require the API key to be configured.
     if (body.mode === "ping") {
+      if (!session) return json(200, { allowed: false, vocabWriteback: false, reason: "unauthenticated" });
       const allowed = tutorEnabled(body.email) && (await hasAccess(body.email));
       return json(200, { allowed, vocabWriteback: allowed && writebackEnabled(body.email) });
     }
+
+    if (!session) return unauthorizedResponse();
 
     // Append admissions to the public.vocab_admissions retention ledger.
     // Client fires this after applying admissions locally; the ledger is
@@ -417,7 +430,7 @@ exports.handler = async (event) => {
       return json(403, { error: "The AI tutor is invite-only for now." });
     }
     if (!(await hasAccess(body.email))) {
-      return json(403, { error: "No access" });
+      return json(403, { error: "Anna needs an active subscription." });
     }
 
     const targetLang = String(body.targetLang || "").slice(0, 40);

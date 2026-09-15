@@ -11,13 +11,21 @@
 //   PORT=3000 node tests/dev-server.mjs
 //
 // Stub behavior (kept faithful to the real functions' response shapes):
-//   POST /.netlify/functions/checkAccess  {email} -> {allowed}
-//        allowed=false when the email contains "noaccess" (lets tests cover
-//        the rejection path); true otherwise.
-//   POST /.netlify/functions/loadUser     {email} -> {user} from the
-//        in-memory store (null when unknown, like a fresh account).
-//   POST /.netlify/functions/saveUser     {email, user} -> {ok:true}; stores
-//        the blob in memory so a later loadUser round-trips it.
+//   GET  /.netlify/functions/authConfig   -> {stub:true}: auth.mjs keeps a
+//        fake session in localStorage (any email + any password signs in,
+//        a password containing "wrongpassword" is rejected) and sends
+//        `Authorization: Bearer stub-token:<email>`; the stubs below read
+//        the caller's email from that header, like the real functions read
+//        it from the verified Supabase session.
+//   POST /.netlify/functions/authProvision {email} -> {ok:true}.
+//   POST /.netlify/functions/checkAccess  -> {allowed, email, subscribed}
+//        401 without a token; allowed=false when the email contains
+//        "noaccess" (lets tests cover the rejection path); subscribed=false
+//        when it contains "nosub"; true otherwise.
+//   POST /.netlify/functions/loadUser     -> {user} for the token's email
+//        from the in-memory store (null when unknown, like a fresh account).
+//   POST /.netlify/functions/saveUser     {user} -> {ok:true}; stores the
+//        blob under the token's email so a later loadUser round-trips it.
 //   POST /.netlify/functions/beacon       -> 204 (analytics sink).
 //   POST /.netlify/functions/submitBug    -> {ok:true}.
 //   GET  /.netlify/functions/tts          -> a tiny silent MP3 (audio/mpeg),
@@ -70,6 +78,14 @@ function readBody(req) {
   });
 }
 
+// The email behind a stub bearer token (`stub-token:<email>`), or "" when
+// the request carries none — mirrors netlify/functions/auth.js verifySession.
+function sessionEmail(req) {
+  const raw = String(req.headers.authorization || "");
+  const m = /^Bearer\s+stub-token:(.+)$/i.exec(raw.trim());
+  return m ? m[1].toLowerCase().trim() : "";
+}
+
 function sendJson(res, status, obj) {
   const body = JSON.stringify(obj);
   res.writeHead(status, {
@@ -89,18 +105,30 @@ async function handleFunction(name, req, res, url) {
     return sendJson(res, 400, { error: "Invalid JSON" });
   }
 
+  const email = sessionEmail(req);
+
   switch (name) {
+    case "authConfig": {
+      return sendJson(res, 200, { stub: true });
+    }
+    case "authProvision": {
+      return sendJson(res, 200, { ok: true });
+    }
     case "checkAccess": {
-      const email = String(body.email || "").toLowerCase();
-      return sendJson(res, 200, { allowed: !!email && !email.includes("noaccess") });
+      if (!email) return sendJson(res, 401, { allowed: false, error: "Sign in required", code: "unauthenticated" });
+      return sendJson(res, 200, {
+        allowed: !email.includes("noaccess"),
+        email,
+        subscribed: !email.includes("noaccess") && !email.includes("nosub"),
+      });
     }
     case "loadUser": {
-      const email = String(body.email || "").toLowerCase().trim();
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
       return sendJson(res, 200, { user: userStore.get(email) ?? null });
     }
     case "saveUser": {
-      const email = String(body.email || "").toLowerCase().trim();
-      if (email && body.user) userStore.set(email, body.user);
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
+      if (body.user) userStore.set(email, body.user);
       return sendJson(res, 200, { ok: true });
     }
     case "beacon": {
@@ -115,11 +143,12 @@ async function handleFunction(name, req, res, url) {
       // allowlist shape; chat mode echoes; summary mode returns one fake new
       // word so the personal-vocab path is exercised.
       if (body.mode === "ping") {
-        const email = String(body.email || "").toLowerCase();
-        const allowed = !!email && !email.includes("noaccess");
+        if (!email) return sendJson(res, 200, { allowed: false, vocabWriteback: false, reason: "unauthenticated" });
+        const subscribed = !email.includes("noaccess") && !email.includes("nosub");
         // vocabWriteback mirrors production's ships-OFF default.
-        return sendJson(res, 200, { allowed, vocabWriteback: false });
+        return sendJson(res, 200, { allowed: subscribed, vocabWriteback: false, subscribed });
       }
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
       if (body.mode === "admissions") {
         return sendJson(res, 200, { ok: true, count: (body.admissions || []).length });
       }
