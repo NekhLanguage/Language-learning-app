@@ -8,9 +8,9 @@
 //
 // Set ADMIN_TOKEN in Netlify env vars (any random string). Without it, the
 // function returns 503 — events stay readable from Supabase directly.
+// Also needs SUPABASE_SECRET_KEY (sb_secret_…): see supabase.js.
 
-const SUPABASE_URL = "https://miprvzsfunbmjippzrxf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHJ2enNmdW5ibWppcHB6cnhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODA1NjMsImV4cCI6MjA4OTY1NjU2M30.78ONiXxrznbsAw-bEX_haMmrbRoV5t6vkfxzzwIw0lc";
+const { SUPABASE_URL, secretKey, restHeaders } = require("./supabase");
 
 exports.handler = async (event) => {
   const expected = process.env.ADMIN_TOKEN;
@@ -32,10 +32,16 @@ exports.handler = async (event) => {
   if (q.email) params.set("email", `eq.${q.email.toLowerCase().trim()}`);
   if (q.type) params.set("type", `eq.${q.type}`);
 
-  const readKey = process.env.SUPABASE_SERVICE_KEY || SUPABASE_KEY;
+  // `events` has an anon INSERT policy and no SELECT policy: this admin
+  // read needs the RLS-bypassing secret key. Without it the endpoint says
+  // so instead of returning an empty list on the publishable key.
+  const readKey = secretKey();
+  if (!readKey) {
+    return { statusCode: 503, body: JSON.stringify({ error: "SUPABASE_SECRET_KEY not configured" }) };
+  }
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/events?${params.toString()}`, {
-      headers: { "apikey": readKey, "Authorization": `Bearer ${readKey}` }
+      headers: restHeaders(readKey)
     });
     if (!res.ok) {
       return { statusCode: 500, body: JSON.stringify({ error: await res.text() }) };

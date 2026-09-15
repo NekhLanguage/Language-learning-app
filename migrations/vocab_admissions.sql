@@ -4,7 +4,7 @@
 -- SQL Editor.
 --
 -- Writer: the tutor→app vocabulary write-back admission path (via
--- SUPABASE_SERVICE_ROLE_KEY — never the anon key). Reader: the team from the
+-- SUPABASE_SECRET_KEY, an sb_secret_ key — never the publishable key). Reader: the team from the
 -- Supabase dashboard, which bypasses RLS. There are deliberately NO anon
 -- policies: an anon INSERT would let anyone spoof admission rows and poison
 -- the retention queries, and an anon SELECT would leak learner emails.

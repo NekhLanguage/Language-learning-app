@@ -13,8 +13,7 @@
 // View events: `netlify functions:log beacon --live` (or Netlify UI → Logs),
 // or query the Supabase `events` table directly.
 
-const SUPABASE_URL = "https://miprvzsfunbmjippzrxf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHJ2enNmdW5ibWppcHB6cnhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODA1NjMsImV4cCI6MjA4OTY1NjU2M30.78ONiXxrznbsAw-bEX_haMmrbRoV5t6vkfxzzwIw0lc";
+const { SUPABASE_URL, publishableKey, restHeaders } = require("./supabase");
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
@@ -45,25 +44,28 @@ exports.handler = async (event) => {
   const record = { at, type, payload, ua, ip };
   console.log("BEACON " + JSON.stringify(record));
 
-  // Persist to Supabase. Prefer service role key (set SUPABASE_SERVICE_KEY in
-  // Netlify env) so RLS doesn't need an anon-insert policy; fall back to anon.
-  const writeKey = process.env.SUPABASE_SERVICE_KEY || SUPABASE_KEY;
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/events`, {
-      method: "POST",
-      headers: {
-        "apikey": writeKey,
-        "Authorization": `Bearer ${writeKey}`,
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal"
-      },
-      body: JSON.stringify({ at, type, email: email || null, payload, ua, ip })
-    });
-    if (!res.ok) {
-      console.error("BEACON supabase insert failed:", res.status, (await res.text()).slice(0, 200));
+  // Persist to Supabase on the publishable key — the `events` table has an
+  // anon INSERT policy, so no elevated key is needed. A beacon must never
+  // break the app: a missing key is logged and the request still 204s.
+  const writeKey = publishableKey();
+  if (!writeKey) {
+    console.error("BEACON supabase insert skipped: SUPABASE_PUBLISHABLE_KEY unset");
+  } else {
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/events`, {
+        method: "POST",
+        headers: restHeaders(writeKey, {
+          "Content-Type": "application/json",
+          "Prefer": "return=minimal"
+        }),
+        body: JSON.stringify({ at, type, email: email || null, payload, ua, ip })
+      });
+      if (!res.ok) {
+        console.error("BEACON supabase insert failed:", res.status, (await res.text()).slice(0, 200));
+      }
+    } catch (err) {
+      console.error("BEACON supabase insert error:", err && err.message);
     }
-  } catch (err) {
-    console.error("BEACON supabase insert error:", err && err.message);
   }
 
   const webhook = process.env.BEACON_SLACK_WEBHOOK;
