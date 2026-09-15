@@ -17,8 +17,7 @@ const Anthropic = require("@anthropic-ai/sdk");
 const fs = require("fs");
 const path = require("path");
 
-const SUPABASE_URL = "https://miprvzsfunbmjippzrxf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHJ2enNmdW5ibWppcHB6cnhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODA1NjMsImV4cCI6MjA4OTY1NjU2M30.78ONiXxrznbsAw-bEX_haMmrbRoV5t6vkfxzzwIw0lc";
+const { SUPABASE_URL, publishableKey, secretKey, restHeaders } = require("./supabase");
 
 const MODEL = process.env.TUTOR_MODEL || "claude-sonnet-5";
 // The end-of-session record is a structured-output call with a 2048-token
@@ -62,20 +61,19 @@ function costCents(model, usage) {
 }
 
 async function logTutorSession(row) {
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // tutor_sessions has no anon policy: needs the sb_secret_ key.
+  const key = secretKey();
   if (!key) {
-    console.warn("tutor_sessions log skipped: SUPABASE_SERVICE_ROLE_KEY unset");
+    console.warn("tutor_sessions log skipped: SUPABASE_SECRET_KEY unset");
     return;
   }
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/tutor_sessions`, {
       method: "POST",
-      headers: {
-        apikey: key,
-        Authorization: `Bearer ${key}`,
+      headers: restHeaders(key, {
         "Content-Type": "application/json",
         Prefer: "return=minimal",
-      },
+      }),
       body: JSON.stringify(row),
     });
     if (!res.ok) console.warn("tutor_sessions insert failed:", res.status, await res.text());
@@ -155,9 +153,14 @@ function writebackEnabled(email) {
 async function hasAccess(email) {
   const normalized = String(email || "").toLowerCase().trim();
   if (!normalized) return false;
+  const key = publishableKey();
+  if (!key) {
+    console.error("tutor: SUPABASE_PUBLISHABLE_KEY unset — treating every account as no-access");
+    return false;
+  }
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(normalized)}&select=email`,
-    { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    { headers: restHeaders(key) }
   );
   if (!res.ok) {
     console.error("Supabase error:", res.status, await res.text());
@@ -372,10 +375,10 @@ exports.handler = async (event) => {
       if (!(await hasAccess(body.email))) {
         return json(403, { error: "No access" });
       }
-      const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+      const serviceKey = secretKey();
       if (!serviceKey) {
-        console.warn("vocab_admissions log skipped: SUPABASE_SERVICE_ROLE_KEY unset");
-        return json(200, { ok: false, skipped: "service key unset" });
+        console.warn("vocab_admissions log skipped: SUPABASE_SECRET_KEY unset");
+        return json(200, { ok: false, skipped: "secret key unset" });
       }
       const rows = (Array.isArray(body.admissions) ? body.admissions : [])
         .slice(0, 20)
@@ -393,12 +396,10 @@ exports.handler = async (event) => {
       if (!rows.length) return json(400, { error: "No admissions" });
       const res = await fetch(`${SUPABASE_URL}/rest/v1/vocab_admissions`, {
         method: "POST",
-        headers: {
-          apikey: serviceKey,
-          Authorization: `Bearer ${serviceKey}`,
+        headers: restHeaders(serviceKey, {
           "Content-Type": "application/json",
           Prefer: "return=minimal",
-        },
+        }),
         body: JSON.stringify(rows),
       });
       if (!res.ok) {

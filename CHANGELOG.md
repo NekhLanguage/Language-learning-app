@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-15
+
+### Under the hood: the app's database key now lives only in the server configuration
+
+Every server function that reads or writes learner accounts, the tutor's access list, or the usage beacon now takes its Supabase key from the hosting environment instead of a value baked into the code. Nothing changes for learners, but it lets the old keys be switched off for good. If the key is ever missing, the functions say so plainly instead of quietly running on a stale credential.
+
 ## 2026-09-13 (later)
 
 ### Norwegian now teaches «hånden min»

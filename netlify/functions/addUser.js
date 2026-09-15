@@ -1,5 +1,4 @@
-const SUPABASE_URL = "https://miprvzsfunbmjippzrxf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHJ2enNmdW5ibWppcHB6cnhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODA1NjMsImV4cCI6MjA4OTY1NjU2M30.78ONiXxrznbsAw-bEX_haMmrbRoV5t6vkfxzzwIw0lc";
+const { SUPABASE_URL, publishableKey, restHeaders, missingKeyResponse } = require("./supabase");
 
 // To call this endpoint, POST:
 //   { "email": "buyer@example.com" }
@@ -34,15 +33,16 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: "Missing email" }) };
     }
 
+    const key = publishableKey();
+    if (!key) return missingKeyResponse();
+
     // Upsert into Supabase users table — grants access on next login
     const res = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
       method: "POST",
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": `Bearer ${SUPABASE_KEY}`,
+      headers: restHeaders(key, {
         "Content-Type": "application/json",
         "Prefer": "resolution=merge-duplicates"
-      },
+      }),
       body: JSON.stringify({ email: normalized, data: null })
     });
 
