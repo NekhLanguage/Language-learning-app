@@ -10,7 +10,7 @@
 // function returns 503 — events stay readable from Supabase directly.
 
 const SUPABASE_URL = "https://miprvzsfunbmjippzrxf.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHJ2enNmdW5ibWppcHB6cnhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODA1NjMsImV4cCI6MjA4OTY1NjU2M30.78ONiXxrznbsAw-bEX_haMmrbRoV5t6vkfxzzwIw0lc";
+const SUPABASE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY;
 
 exports.handler = async (event) => {
   const expected = process.env.ADMIN_TOKEN;

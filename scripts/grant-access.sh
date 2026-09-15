@@ -8,10 +8,13 @@
 #   scripts/grant-access.sh jane@example.com
 #   scripts/grant-access.sh "  Jane@Example.COM "   # whitespace + case OK
 #
-# Reads SUPABASE_URL and SUPABASE_KEY from netlify/functions/checkAccess.js
-# (same anon key the rest of the app already uses — no new secrets needed).
-# The same key has insert permission on the users table, since saveUser.js
-# already writes to it on every session save.
+# Reads SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY from the shell environment.
+# The publishable key has insert permission on the users table via RLS, since
+# saveUser.js already writes to it on every session save.
+#
+# Export before running:
+#   export SUPABASE_URL=https://<project-ref>.supabase.co
+#   export SUPABASE_PUBLISHABLE_KEY=sb_publishable_default_...
 
 set -euo pipefail
 
@@ -30,12 +33,10 @@ if ! [[ "$email" =~ ^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$ ]]; then
   exit 2
 fi
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SUPABASE_URL="$(grep -oE 'https://[a-z0-9]+\.supabase\.co' "$ROOT/netlify/functions/checkAccess.js" | head -n1)"
-SUPABASE_KEY="$(grep -oE '"eyJ[^"]+"' "$ROOT/netlify/functions/checkAccess.js" | head -n1 | tr -d '"')"
+SUPABASE_KEY="${SUPABASE_PUBLISHABLE_KEY:-}"
 
-if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then
-  echo "Could not extract Supabase credentials from netlify/functions/checkAccess.js" >&2
+if [ -z "${SUPABASE_URL:-}" ] || [ -z "$SUPABASE_KEY" ]; then
+  echo "Set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY in your shell environment before running." >&2
   exit 1
 fi
 
