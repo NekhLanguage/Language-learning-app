@@ -1,50 +1,42 @@
-const { SUPABASE_URL, publishableKey, restHeaders, missingKeyResponse } = require("./supabase");
+const { publishableKey, missingKeyResponse } = require("./supabase");
+const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive } = require("./auth");
 
-// To grant access to a new user: add a row to the Supabase `users` table
-// with their email (data column can be null). No code change or deploy needed.
+// Who may use the app: the signed-in learner (Supabase Auth session token in
+// the Authorization header — the request body is ignored) whose email has a
+// row in the Supabase `users` table.
+//
+// To grant access to a new user: scripts/grant-access.sh <email> [months]
+// (adds the row; `months` also opens Anna). No code change or deploy needed.
 // To revoke access: delete their row from the `users` table.
+//
+// Response: { allowed, email, subscribed } — `subscribed` is the Anna
+// (AI tutor) subscription window from users.access_until; the app greys
+// Anna out when it is false.
+
+function json(statusCode, body) {
+  return {
+    statusCode,
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+    body: JSON.stringify(body),
+  };
+}
 
 exports.handler = async (event) => {
   try {
-    const { email } = JSON.parse(event.body || "{}");
-    const normalized = email?.toLowerCase().trim();
-
-    if (!normalized) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ allowed: false })
-      };
-    }
-
     const key = publishableKey();
     if (!key) return missingKeyResponse({ allowed: false });
 
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(normalized)}&select=email`,
-      { headers: restHeaders(key) }
-    );
+    const session = await verifySession(event);
+    if (!session) return unauthorizedResponse({ allowed: false });
 
-    if (!res.ok) {
-      console.error("Supabase error:", res.status, await res.text());
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ allowed: false })
-      };
-    }
-
-    const data = await res.json();
-    const allowed = Array.isArray(data) && data.length > 0;
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ allowed })
-    };
-
+    const row = await fetchAccessRow(session.email, key);
+    return json(200, {
+      allowed: !!row,
+      email: session.email,
+      subscribed: !!row && subscriptionActive(row.access_until),
+    });
   } catch (err) {
     console.error("checkAccess error:", err);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ allowed: false })
-    };
+    return json(500, { allowed: false });
   }
 };

@@ -1,22 +1,18 @@
 const zlib = require("zlib");
 const { SUPABASE_URL, publishableKey, restHeaders, missingKeyResponse } = require("./supabase");
+const { verifySession, unauthorizedResponse } = require("./auth");
 
+// Returns the signed-in learner's own record. The email comes from the
+// verified Supabase session token (Authorization header), never from the
+// request body, so one account can no longer read another's progress.
 exports.handler = async (event) => {
   try {
-    const { email } = JSON.parse(event.body || "{}");
-
-    // 🔥 Normalize email (CRITICAL FIX)
-    const normalized = email?.toLowerCase().trim();
-
-    if (!normalized) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: "Missing email" })
-      };
-    }
-
     const key = publishableKey();
     if (!key) return missingKeyResponse();
+
+    const session = await verifySession(event);
+    if (!session) return unauthorizedResponse();
+    const normalized = session.email;
 
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(normalized)}`,

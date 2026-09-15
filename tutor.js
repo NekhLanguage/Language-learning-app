@@ -14,6 +14,7 @@
 // the unsent draft and the live transcript of the current conversation.
 
 import { recoverUser, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
+import { getSession as getAuthSession, authFetch } from "./auth.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
 import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab, wordCountLabel } from "./tutor_profile.mjs";
 import { processTutorSession, applyAdmissions } from "./tutor_admission.mjs";
@@ -247,9 +248,11 @@ async function persistUser() {
   const email = state.email.toLowerCase();
   if (!email) return;
   try {
-    await fetch("/.netlify/functions/saveUser", {
+    // The session token names the row; the server ignores a body email.
+    await authFetch("/.netlify/functions/saveUser", {
       method: "POST",
-      body: JSON.stringify({ email, user }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user }),
     });
     user.lastSyncedAt = Date.now();
   } catch (err) {
@@ -266,10 +269,10 @@ async function resolveWritebackFlag() {
   if (override === "on") return true;
   if (override === "off") return false;
   try {
-    const res = await fetch("/.netlify/functions/tutor", {
+    const res = await authFetch("/.netlify/functions/tutor", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mode: "ping", email: state.email }),
+      body: JSON.stringify({ mode: "ping" }),
     });
     if (!res.ok) return false;
     const data = await res.json();
@@ -571,7 +574,7 @@ async function callTutor(mode, messages) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), TUTOR_TIMEOUT_MS[mode] || TUTOR_TIMEOUT_MS.chat);
     try {
-      const res = await fetch("/.netlify/functions/tutor", {
+      const res = await authFetch("/.netlify/functions/tutor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body,
@@ -738,12 +741,11 @@ async function applySummary(summary, messages, when) {
     // Fire-and-forget append to the public.vocab_admissions retention
     // ledger (server-side, service-role writer). Losing a row on a network
     // blip costs analytics, never learner state.
-    fetch("/.netlify/functions/tutor", {
+    authFetch("/.netlify/functions/tutor", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         mode: "admissions",
-        email: state.email,
         lang: state.targetLang,
         admissions,
       }),
@@ -872,7 +874,12 @@ function showBuildVersion() {
 
 async function init() {
   showBuildVersion();
-  state.email = (localStorage.getItem("zth_email") || "").trim();
+  // The signed-in learner comes from the Supabase session; `zth_email` is
+  // only the app's shim and must agree with it, otherwise the tutor could
+  // run on one account's local progress and save under another.
+  const session = await getAuthSession();
+  const storedEmail = (localStorage.getItem("zth_email") || "").trim().toLowerCase();
+  state.email = session && session.email === storedEmail ? session.email : "";
   const { user } = recoverUser(
     localStorage.getItem(USER_KEY),
     localStorage.getItem(USER_BACKUP_KEY)

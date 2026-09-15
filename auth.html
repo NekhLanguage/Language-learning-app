@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Zero to Hero — set your password</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="gate-screen">
+    <h1 class="title">ZERO TO HERO</h1>
+    <h2 class="gate-heading" id="auth-heading">Choose your password</h2>
+
+    <form id="password-form" class="gate-form" novalidate>
+      <input
+        id="new-password"
+        class="gate-input"
+        type="password"
+        placeholder="New password (8+ characters)"
+        autocomplete="new-password"
+        minlength="8"
+        aria-label="New password"
+      />
+      <input
+        id="new-password-repeat"
+        class="gate-input"
+        type="password"
+        placeholder="Repeat the password"
+        autocomplete="new-password"
+        aria-label="Repeat the password"
+      />
+      <button id="save-password" class="gate-btn" type="submit">Save password</button>
+    </form>
+
+    <p id="auth-message" class="gate-message" role="status" aria-live="polite"></p>
+
+    <div class="gate-note">
+      This page opens from the "Set or reset your password" email.
+      If the link has expired, go back to the app and request a new one.
+    </div>
+
+    <a class="gate-link" href="index.html">Back to the app</a>
+  </div>
+
+  <script src="vendor/supabase-js-2.116.0.umd.js"></script>
+  <script type="module">
+    import { getSession, updatePassword, cleanAuthUrl, describeAuthError } from "./auth.mjs?v=1.2.69";
+
+    const form = document.getElementById("password-form");
+    const pw = document.getElementById("new-password");
+    const pw2 = document.getElementById("new-password-repeat");
+    const btn = document.getElementById("save-password");
+    const msg = document.getElementById("auth-message");
+    const heading = document.getElementById("auth-heading");
+
+    const say = (text, kind = "error") => {
+      msg.textContent = text || "";
+      msg.classList.toggle("is-ok", kind === "ok");
+      msg.classList.toggle("is-error", kind === "error" && !!text);
+    };
+    const busy = (on) => { for (const el of [pw, pw2, btn]) el.disabled = on; };
+
+    // The recovery link signs the learner in (session in the URL hash,
+    // consumed by supabase-js). Without a session there is nothing to update.
+    const session = await getSession();
+    cleanAuthUrl();
+    if (!session) {
+      heading.textContent = "This link has expired";
+      say("Open the app, enter your email and tap “Set or reset your password” to get a fresh link.");
+      busy(true);
+    } else {
+      say(`Setting the password for ${session.email}.`, "ok");
+    }
+
+    form.onsubmit = async (ev) => {
+      ev.preventDefault();
+      if (!session) return;
+      if (pw.value.length < 8) { say("Passwords need at least 8 characters."); pw.focus(); return; }
+      if (pw.value !== pw2.value) { say("The two passwords don't match."); pw2.focus(); return; }
+      busy(true);
+      try {
+        await updatePassword(pw.value);
+      } catch (err) {
+        say(describeAuthError(err));
+        busy(false);
+        return;
+      }
+      // The recovery link already signed the learner in; the app's boot
+      // adopts this session (checkAccess → server copy) on arrival.
+      say("Password saved. Opening the app…", "ok");
+      setTimeout(() => location.assign("index.html"), 900);
+    };
+  </script>
+</body>
+</html>

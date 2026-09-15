@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-15 (later)
+
+### Sign in with a password or with Google
+
+The app now has real accounts. Instead of typing an email, you sign in with your email and a password, or with "Continue with Google" if that is the address you bought access with. Everyone signs in once more after this update; your progress is waiting on the server and comes back the moment you do. First time here, or bought access before passwords existed? Tap "Set or reset your password" on the sign-in screen and follow the email. Your progress is now saved only to your own account, and Anna (the AI tutor) shows as greyed out on the start screen unless your subscription is active.
+
 ## 2026-09-15
 
 ### Under the hood: the app's database key now lives only in the server configuration
