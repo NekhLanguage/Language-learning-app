@@ -744,6 +744,21 @@ button.wrong {
   width: min(300px, 100%);
 }
 
+/* Start screen: "Manage subscription" text link under the buttons */
+.manage-subscription{
+  grid-column: 1 / -1;
+  justify-self: center;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  text-decoration: underline;
+  color: inherit;
+  padding: 0.25rem 0.5rem;
+}
+
+.manage-subscription[hidden]{
+  display: none;
+}
+
 /* Sign-in form (email + password), Google button, status line */
 .gate-form{
   display: flex;

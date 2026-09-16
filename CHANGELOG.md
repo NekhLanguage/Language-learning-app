@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-16 (later)
+
+### Manage your subscription from the start screen
+
+Subscribers now see a "Manage subscription" link under the start-screen buttons. It opens your Stripe page, where you can cancel, change your card or see past invoices; it asks for the email you paid with. Cancelling keeps the app and lets Anna run to the end of the paid month.
+
 ## 2026-09-16
 
 ### $19 gets you the app and your first month with Anna

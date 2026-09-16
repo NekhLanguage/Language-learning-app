@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.70";
+const APP_DATA_VERSION = "1.2.71";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -5857,6 +5857,11 @@ window.__app = {
 // subscription and is on the invite allowlist — mode:"ping" is a pure
 // access check, no model call. Everyone else keeps seeing the greyed-out
 // teaser (Nekh 2026-09-15), and the real gate stays server-side.
+// Stripe customer portal (cancel at period end, card, invoices; asks for
+// the checkout email). Module scope: this block runs outside the boot
+// handler that owns EXTERNAL_LINKS.
+const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgIahS2Gs9sk00";
+
 (async function initTutorEntry() {
   const btn = document.getElementById("link-tutor");
   if (!btn) return;
@@ -5870,6 +5875,12 @@ window.__app = {
     });
     if (!res.ok) return;
     const data = await res.json();
+    // Subscribers get the portal link (cancel any time, keep the app).
+    const manage = document.getElementById("link-manage-subscription");
+    if (manage && data && data.subscribed === true) {
+      manage.href = MANAGE_SUBSCRIPTION_URL;
+      manage.hidden = false;
+    }
     if (data && data.allowed) {
       btn.classList.remove("locked");
       btn.removeAttribute("aria-disabled");
