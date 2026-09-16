@@ -30,6 +30,7 @@
     "enterEmail": "Syötä sähköpostisi",
     "buyAccess": "Ei tunnusta? Hanki pääsy",
     "noAccess": "Tälle sähköpostille ei löytynyt pääsyä",
+    "tutorIntro": "Anna on henkilökohtainen tutorisi. Hän käyttää sanastoa, jonka olet osoittanut osaavasi, ja sitä, mitä hän tietää sinun harjoitelleen sovelluksessa, ohjatakseen oppitunteja. Se, mitä harjoittelet keskusteluissa Annan kanssa, lisätään myös sovellukseen, jotta kokemus on entistä henkilökohtaisempi.",
     "resourcePacks": "AIHEPAKETIT",
     "choosePacks": "Valitse enintään 2 pakettia",
     "start": "ALOITA",

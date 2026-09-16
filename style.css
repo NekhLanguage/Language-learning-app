@@ -2080,6 +2080,13 @@ a.secondary.locked {
   padding-right: 2.5rem;
 }
 
+.tutor-intro {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.92;
+}
+
 .tutor-settings-panel label {
   display: flex;
   flex-direction: column;

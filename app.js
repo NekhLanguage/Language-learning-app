@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.69";
+const APP_DATA_VERSION = "1.2.70";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -747,7 +747,7 @@ const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
   offer: "https://cal.com/fredrik-johansen-bw1mgs/discovery-call",
-  buyAccess: "https://buy.stripe.com/bJe00ibcwdgIahS2Gs9sk00"
+  buyAccess: "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05"
 };
 
 // Launch-spike observability. Keep this tiny and self-contained: one global
@@ -1179,7 +1179,7 @@ if (!hasAccess()) {
   const buyAccess = document.getElementById("link-buy-access");
 
 if (buyAccess) {
-  buyAccess.textContent = "Get access to the app";
+  buyAccess.textContent = "Get the app — $19, first month of Anna included";
 
   buyAccess.onclick = () => {
   window.open(EXTERNAL_LINKS.buyAccess, "_blank");
@@ -5876,7 +5876,7 @@ window.__app = {
       btn.href = "tutor.html";
       btn.textContent = "Anna — AI Tutor";
     } else if (data && data.subscribed === false) {
-      btn.title = "Anna needs an active subscription";
+      btn.title = "Anna needs an active subscription — renew at nekhslanguageblueprint.com/zero-to-hero";
     }
   } catch (_) {
     // Network failure: button simply stays locked.
