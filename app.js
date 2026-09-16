@@ -747,10 +747,7 @@ const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
   offer: "https://cal.com/fredrik-johansen-bw1mgs/discovery-call",
-  buyAccess: "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05",
-  // Stripe customer portal: cancel, change card, see invoices. Asks for the
-  // email used at checkout.
-  manageSubscription: "https://billing.stripe.com/p/login/bJe00ibcwdgIahS2Gs9sk00"
+  buyAccess: "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05"
 };
 
 // Launch-spike observability. Keep this tiny and self-contained: one global
@@ -5860,6 +5857,11 @@ window.__app = {
 // subscription and is on the invite allowlist — mode:"ping" is a pure
 // access check, no model call. Everyone else keeps seeing the greyed-out
 // teaser (Nekh 2026-09-15), and the real gate stays server-side.
+// Stripe customer portal (cancel at period end, card, invoices; asks for
+// the checkout email). Module scope: this block runs outside the boot
+// handler that owns EXTERNAL_LINKS.
+const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgIahS2Gs9sk00";
+
 (async function initTutorEntry() {
   const btn = document.getElementById("link-tutor");
   if (!btn) return;
@@ -5876,7 +5878,7 @@ window.__app = {
     // Subscribers get the portal link (cancel any time, keep the app).
     const manage = document.getElementById("link-manage-subscription");
     if (manage && data && data.subscribed === true) {
-      manage.href = EXTERNAL_LINKS.manageSubscription;
+      manage.href = MANAGE_SUBSCRIPTION_URL;
       manage.hidden = false;
     }
     if (data && data.allowed) {
