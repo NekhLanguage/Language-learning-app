@@ -171,3 +171,28 @@ test("pre-v4 device-local prefs and sessions migrate into the synced record", as
   expect(tutor.prefs.pt.note).toBe("legacy note");
   expect(tutor.memory.pt.sessions[0].sessionSummary).toBe("Old device session.");
 });
+
+test("first visit shows who Anna is, in the learner's support language", async ({ page }) => {
+  await startNewRun(page);
+  await openTutor(page);
+  // Setup mode (no saved prefs yet) carries the intro, in English by default…
+  await expect(page.locator("#tutor-intro")).toBeVisible();
+  await expect(page.locator("#tutor-intro")).toContainText("Anna is your personal tutor");
+  await page.click("#tutor-settings-save");
+  // …and the ⚙️ settings panel later does not repeat it.
+  await page.click("#tutor-settings-btn");
+  await expect(page.locator("#tutor-intro")).toBeHidden();
+  await page.click("#tutor-settings-close");
+
+  // A fresh learner whose support language is Portuguese gets the
+  // Portuguese text.
+  await startNewRun(page);
+  await page.evaluate(() => {
+    const u = JSON.parse(localStorage.getItem("zth_user"));
+    u.supportLanguage = "pt";
+    localStorage.setItem("zth_user", JSON.stringify(u));
+  });
+  await openTutor(page);
+  await expect(page.locator("#tutor-intro")).toBeVisible();
+  await expect(page.locator("#tutor-intro")).toContainText("A Anna é sua tutora pessoal");
+});

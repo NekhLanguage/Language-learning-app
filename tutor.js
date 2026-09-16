@@ -67,6 +67,7 @@ const els = {
   settings: document.getElementById("tutor-settings"),
   settingsBtn: document.getElementById("tutor-settings-btn"),
   settingsTitle: document.getElementById("tutor-settings-title"),
+  intro: document.getElementById("tutor-intro"),
   settingsSave: document.getElementById("tutor-settings-save"),
   settingsClose: document.getElementById("tutor-settings-close"),
   settingsHint: document.getElementById("tutor-settings-hint"),
@@ -335,10 +336,17 @@ function hasSavedPrefs() {
   return savedPrefs() !== null;
 }
 
+const TUTOR_INTRO_EN = "Anna is your personal tutor. She uses the vocabulary you've shown you know, and what she knows you've practiced in the app, to guide the lessons. What you practice in your conversations with Anna is also added to the app, for an even more personal experience.";
+
 // One panel, two modes: "setup" (first visit, blocking, no close) and
 // "settings" (later edits via the ⚙️ button, closable without saving).
 function openSettings(mode) {
   els.settingsTitle.textContent = mode === "setup" ? "Set up Anna" : "Settings";
+  // First visit only: who Anna is and what she does with your progress,
+  // in the support language (lang/<code>.json uiStrings.tutorIntro;
+  // Nekh 2026-09-16).
+  els.intro.textContent = (state.uiStrings && state.uiStrings.tutorIntro) || TUTOR_INTRO_EN;
+  els.intro.hidden = mode !== "setup";
   els.settingsSave.textContent = mode === "setup" ? "Start talking" : "Save";
   els.settingsClose.hidden = mode === "setup";
   els.settingsHint.hidden = mode !== "setup";
@@ -516,6 +524,8 @@ async function loadForms() {
     langs.map((code) => fetchJson(`lang/${code}.json`).catch(() => ({ forms: {} })))
   );
   langs.forEach((code, i) => Object.assign(state.forms[code], langResults[i].forms || {}));
+  // UI strings in the learner's support language (the first-visit intro).
+  state.uiStrings = langResults[langs.indexOf(state.supportLang)]?.uiStrings || {};
 
   const packResults = await Promise.all(
     VOCAB_FILES.map((f) => fetchJson(f).catch(() => ({})))
