@@ -8,9 +8,9 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-09-16
 
-### One plan: $19 a month, Anna included
+### $19 gets you the app and your first month with Anna
 
-Zero to Hero is now sold as a single monthly subscription that includes Anna, the AI tutor, from the first day. The "Get the app" button on the sign-in screen goes to the new checkout. If a subscription ends, the app stays yours and Anna is greyed out on the start screen until you renew; every word Anna taught you stays in your vocabulary.
+Zero to Hero now costs $19, and that includes your first month with Anna, the AI tutor. Keeping Anna is $19/month. The "Get the app" button on the sign-in screen goes to the new checkout. If the subscription ends, the app stays yours and Anna is greyed out on the start screen until you renew; every word Anna taught you stays in your vocabulary.
 
 ## 2026-09-15 (later)
 

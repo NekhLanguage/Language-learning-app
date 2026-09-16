@@ -1179,7 +1179,7 @@ if (!hasAccess()) {
   const buyAccess = document.getElementById("link-buy-access");
 
 if (buyAccess) {
-  buyAccess.textContent = "Get the app — $19/month, Anna included";
+  buyAccess.textContent = "Get the app — $19, first month of Anna included";
 
   buyAccess.onclick = () => {
   window.open(EXTERNAL_LINKS.buyAccess, "_blank");
