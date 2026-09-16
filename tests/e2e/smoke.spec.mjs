@@ -98,11 +98,20 @@ test("Anna stays greyed out without an active subscription", async ({ page }) =>
   await expect(anna).toHaveAttribute("title", /active subscription/);
 });
 
-test("Anna unlocks for a subscribed learner", async ({ page }) => {
+test("Anna unlocks for a subscribed learner, who also gets the Manage subscription link", async ({ page }) => {
   await loginAs(page, "subscribed-learner@example.com");
   const anna = page.locator("#link-tutor");
   await expect(anna).not.toHaveClass(/locked/, { timeout: 10_000 });
   await expect(anna).toHaveAttribute("href", "tutor.html");
+  const manage = page.locator("#link-manage-subscription");
+  await expect(manage).toBeVisible();
+  await expect(manage).toHaveAttribute("href", /billing\.stripe\.com/);
+});
+
+test("no Manage subscription link without an active subscription", async ({ page }) => {
+  await loginAs(page, "nosub-learner@example.com");
+  await expect(page.locator("#link-tutor")).toHaveClass(/locked/);
+  await expect(page.locator("#link-manage-subscription")).toBeHidden();
 });
 
 test("login lands on the start screen", async ({ page }) => {

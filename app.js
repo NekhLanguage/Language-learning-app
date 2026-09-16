@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.70";
+const APP_DATA_VERSION = "1.2.71";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -747,7 +747,10 @@ const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
   offer: "https://cal.com/fredrik-johansen-bw1mgs/discovery-call",
-  buyAccess: "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05"
+  buyAccess: "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05",
+  // Stripe customer portal: cancel, change card, see invoices. Asks for the
+  // email used at checkout.
+  manageSubscription: "https://billing.stripe.com/p/login/bJe00ibcwdgIahS2Gs9sk00"
 };
 
 // Launch-spike observability. Keep this tiny and self-contained: one global
@@ -5870,6 +5873,12 @@ window.__app = {
     });
     if (!res.ok) return;
     const data = await res.json();
+    // Subscribers get the portal link (cancel any time, keep the app).
+    const manage = document.getElementById("link-manage-subscription");
+    if (manage && data && data.subscribed === true) {
+      manage.href = EXTERNAL_LINKS.manageSubscription;
+      manage.hidden = false;
+    }
     if (data && data.allowed) {
       btn.classList.remove("locked");
       btn.removeAttribute("aria-disabled");
