@@ -185,7 +185,9 @@ test("first visit shows who Anna is, in the learner's support language", async (
   await page.click("#tutor-settings-close");
 
   // A fresh learner whose support language is Portuguese gets the
-  // Portuguese text.
+  // Portuguese text. (Sign the first learner out first: the sign-in
+  // screen only appears without a session.)
+  await page.evaluate(() => localStorage.clear());
   await startNewRun(page);
   await page.evaluate(() => {
     const u = JSON.parse(localStorage.getItem("zth_user"));
