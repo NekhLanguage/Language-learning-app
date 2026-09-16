@@ -11,7 +11,8 @@
 //
 // Identity comes from the Supabase session token (Authorization: Bearer),
 // never from the body; Anna additionally needs an active subscription
-// (users.access_until) and the TUTOR_ALLOWED_EMAILS allowlist.
+// (users.access_until). TUTOR_ALLOWED_EMAILS is an optional test-time
+// restriction, off by default.
 // Requires ANTHROPIC_API_KEY in the function environment; TUTOR_MODEL
 // optionally overrides the model (TUTOR_SUMMARY_MODEL: the summary call only).
 
@@ -122,17 +123,19 @@ function getInstructions() {
   throw new Error("tutor-instructions.md not found in function bundle");
 }
 
-// The tutor is invite-only while in testing, independent of general app
-// access. TUTOR_ALLOWED_EMAILS (Netlify env var) is a comma-separated email
-// allowlist; unset/empty means NOBODY has access, "*" opens it to every
-// app user. Changing it needs no deploy — just edit the env var.
+// Anna is open to every learner with an active subscription window (see
+// hasAccess). TUTOR_ALLOWED_EMAILS (Netlify env var) is an optional
+// comma-separated restriction for testing: unset, empty or "*" means no
+// restriction (Nekh 2026-09-16: a permanent setup with no upkeep — until
+// then an unset list meant NOBODY, which is how Emi and Brody ended up
+// locked out). A list of emails limits Anna to those learners.
 function tutorEnabled(email) {
   const normalized = String(email || "").toLowerCase().trim();
   const allowlist = (process.env.TUTOR_ALLOWED_EMAILS || "")
     .split(",")
     .map((e) => e.toLowerCase().trim())
     .filter(Boolean);
-  if (!allowlist.length) return false;
+  if (!allowlist.length) return true;
   if (allowlist.includes("*")) return true;
   return allowlist.includes(normalized);
 }
@@ -585,3 +588,4 @@ exports.SUMMARY_SCHEMA = SUMMARY_SCHEMA;
 exports.contextBlock = contextBlock;
 exports.renderPreferences = renderPreferences;
 exports.steeringTrailer = steeringTrailer;
+exports.tutorEnabled = tutorEnabled;

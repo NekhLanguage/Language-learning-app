@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-16 (evening)
+
+### Anna is open to every subscriber
+
+Anna no longer sits behind an invite list. Everyone with an active subscription window sees her unlocked on the start screen, automatically, the moment their payment lands. Nothing to switch on per person.
+
 ## 2026-09-16 (later)
 
 ### Manage your subscription from the start screen
