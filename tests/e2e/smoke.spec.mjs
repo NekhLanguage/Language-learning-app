@@ -2,31 +2,107 @@
 // language hub — all with zero console/page/network errors (enforced by the
 // pageErrors fixture in fixtures.mjs).
 
-import { test, expect, loginAs } from "./fixtures.mjs";
+import { test, expect, loginAs, TEST_PASSWORD } from "./fixtures.mjs";
 
-test("logged-out visit shows the access gate", async ({ page }) => {
+test("logged-out visit shows the sign-in screen", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator("#email-input")).toBeVisible();
+  await expect(page.locator("#password-input")).toBeVisible();
   await expect(page.locator("#login-btn")).toBeVisible();
+  await expect(page.locator("#google-btn")).toBeVisible();
+  await expect(page.locator("#link-set-password")).toBeVisible();
   await expect(page.locator("#link-buy-access")).toBeVisible();
 });
 
-test("unknown email is rejected with a notice", async ({ page }) => {
+test("a signed-in email without access is rejected with a notice and signed out", async ({ page }) => {
   await page.goto("/");
 
-  const dialogMessage = new Promise((resolve) => page.once("dialog", (d) => {
-    const msg = d.message();
-    d.dismiss().catch(() => {});
-    resolve(msg);
-  }));
-
   await page.fill("#email-input", "noaccess@example.com");
+  await page.fill("#password-input", TEST_PASSWORD);
   await page.click("#login-btn");
 
-  expect(await dialogMessage).toContain("No access");
-  // Still gated.
+  await expect(page.locator("#gate-message")).toContainText("No access");
+  // Still gated, and no session left behind.
   await expect(page.locator("#email-input")).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("zth_auth_stub_session"))).toBeNull();
+  expect(await page.evaluate(() => localStorage.getItem("zth_email"))).toBeNull();
+});
+
+test("a wrong password never reaches the access check", async ({ page }) => {
+  await page.goto("/");
+
+  await page.fill("#email-input", "test@example.com");
+  await page.fill("#password-input", "wrongpassword");
+  await page.click("#login-btn");
+
+  await expect(page.locator("#gate-message")).toContainText("Wrong email or password");
+  await expect(page.locator("#email-input")).toBeVisible();
+});
+
+test("set-or-reset password asks for the email first, then confirms", async ({ page }) => {
+  await page.goto("/");
+
+  await page.click("#link-set-password");
+  await expect(page.locator("#gate-message")).toContainText("Enter your email above first");
+
+  await page.fill("#email-input", "test@example.com");
+  await page.click("#link-set-password");
+  await expect(page.locator("#gate-message")).toContainText("link to set your password");
+  await expect(page.locator("#gate-message")).toHaveClass(/is-ok/);
+});
+
+test("Continue with Google returns signed in and lands on the start screen", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => localStorage.setItem("zth_auth_stub_google_email", "Google.Learner@example.com"));
+
+  await page.click("#google-btn");
+  // The stub adapter signs in and returns to "/"; boot sees a session for
+  // an address this device never used, confirms access, adopts it and
+  // reloads. (#start-screen is in the static HTML, so wait for the shim
+  // to be written before reading the booted page.)
+  // Two navigations happen in a row (return to "/", then the boot reload),
+  // so an evaluate can land mid-navigation: treat that as "not yet".
+  await expect.poll(
+    () => page.evaluate(() => localStorage.getItem("zth_email")).catch(() => null),
+    { timeout: 10_000 }
+  ).toBe("google.learner@example.com");
+  await expect(page.locator("#start-screen.active")).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator("#open-app")).toBeVisible();
+});
+
+test("a signed-out session forces the sign-in screen even with local progress", async ({ page }) => {
+  await loginAs(page);
+  // The hub buttons render only once the versioned lang-file fetch has
+  // landed; reloading before that aborts it into a console error.
+  await expect(page.locator("#language-buttons button")).toHaveCount(16);
+
+  // Simulate the cutover: the old email shim and local data are present but
+  // there is no Supabase session behind them.
+  await page.evaluate(() => localStorage.removeItem("zth_auth_stub_session"));
+  await page.reload();
+
+  await expect(page.locator("#email-input")).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("zth_email"))).toBeNull();
+  // Local progress is kept for when the learner signs back in.
+  expect(await page.evaluate(() => localStorage.getItem("zth_user"))).not.toBeNull();
+  // The gate paints before the lang-file fetch lands; let it finish so
+  // closing the page doesn't abort it into a console error.
+  await page.waitForLoadState("networkidle");
+});
+
+test("Anna stays greyed out without an active subscription", async ({ page }) => {
+  await loginAs(page, "nosub-learner@example.com");
+  const anna = page.locator("#link-tutor");
+  await expect(anna).toHaveClass(/locked/);
+  await expect(anna).toHaveAttribute("title", /active subscription/);
+});
+
+test("Anna unlocks for a subscribed learner", async ({ page }) => {
+  await loginAs(page, "subscribed-learner@example.com");
+  const anna = page.locator("#link-tutor");
+  await expect(anna).not.toHaveClass(/locked/, { timeout: 10_000 });
+  await expect(anna).toHaveAttribute("href", "tutor.html");
 });
 
 test("login lands on the start screen", async ({ page }) => {
@@ -56,6 +132,7 @@ test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async (
   // interface language. A plain reload (no query) restores hiding.
   await page.goto("/?showHidden=1");
   await page.fill("#email-input", "showhidden-qa@example.com");
+  await page.fill("#password-input", TEST_PASSWORD);
   await page.click("#login-btn");
   await expect(page.locator("#start-screen.active")).toBeVisible({ timeout: 10_000 });
 

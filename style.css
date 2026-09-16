@@ -744,6 +744,66 @@ button.wrong {
   width: min(300px, 100%);
 }
 
+/* Sign-in form (email + password), Google button, status line */
+.gate-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.gate-message{
+  min-height: 1.4em;
+  max-width: 360px;
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.gate-message.is-error{
+  color: #ffd9d9;
+}
+
+.gate-message.is-ok{
+  color: #d8ffe0;
+}
+
+.gate-divider{
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.gate-google{
+  margin-top: 0;
+}
+
+.gate-link{
+  background: none;
+  border: none;
+  color: inherit;
+  text-decoration: underline;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  opacity: 0.9;
+}
+
+.gate-link:disabled,
+.gate-btn:disabled{
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* auth.html — set / reset password */
+.gate-screen .gate-form .gate-input + .gate-input{
+  margin-top: 0;
+}
+
 /* =========================
    Feedback button + modal
    ========================= */

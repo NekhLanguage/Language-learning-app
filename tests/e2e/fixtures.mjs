@@ -34,14 +34,24 @@ export const test = base.extend({
 
 export { expect };
 
-// Completes the email access gate and waits for the app to boot.
-// The dev-server stub allows any email that doesn't contain "noaccess".
-export async function loginAs(page, email = "test@example.com") {
+// Signs in through the access gate (email + password) and waits for the app
+// to boot. The dev server's stub auth accepts any password, and checkAccess
+// allows any email that doesn't contain "noaccess".
+export const TEST_PASSWORD = "correct horse battery";
+
+export async function loginAs(page, email = "test@example.com", password = TEST_PASSWORD) {
   await page.goto("/");
   await page.fill("#email-input", email);
+  await page.fill("#password-input", password);
   await page.click("#login-btn");
-  // checkAccess → loadUser → location.reload() → start screen.
+  // signInWithPassword → checkAccess → loadUser → location.reload() → start screen.
   await expect(page.locator("#start-screen.active")).toBeVisible({ timeout: 10_000 });
+}
+
+// Headers a test needs to call a function stub directly on a learner's
+// behalf (the stubs read the email from the bearer token, never the body).
+export function authHeadersFor(email) {
+  return { Authorization: `Bearer stub-token:${String(email).toLowerCase().trim()}` };
 }
 
 // Drives a fresh account through setup (language → reason → pack → roadmap)

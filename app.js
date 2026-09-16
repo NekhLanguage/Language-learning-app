@@ -10,6 +10,16 @@ import {
   weightedPickFrom,
 } from "./selection.mjs";
 import { isFeatureAvailable } from "./capabilities.mjs";
+import {
+  getSession as getAuthSession,
+  authFetch,
+  signInWithPassword,
+  signInWithGoogle,
+  sendPasswordEmail,
+  signOut as authSignOut,
+  cleanAuthUrl,
+  describeAuthError,
+} from "./auth.mjs";
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import { chooseSupportSentence } from "./display.mjs";
 import { promptApiAvailable, gradeSemantically } from "./grading.mjs";
@@ -82,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.68";
+const APP_DATA_VERSION = "1.2.69";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -684,12 +694,12 @@ async function saveUser({ reload = true } = {}) {
   if (!email) return;
 
   try {
-    const res = await fetch("/.netlify/functions/saveUser", {
+    // The session token (Authorization header) names the row; the server
+    // ignores any email in the body.
+    const res = await authFetch("/.netlify/functions/saveUser", {
       method: "POST",
-      body: JSON.stringify({
-        email,
-        user: payload
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user: payload })
     });
 
     // A save the server rejected (504 under load, 500) is NOT a sync. The
@@ -886,6 +896,33 @@ async function getLangFileData(code) {
 const supportShort = document.getElementById("support-short");
 const supportLabel = document.getElementById("support-label");
 const supportDropdown = document.getElementById("support-dropdown");
+
+// --- Who is signed in (Supabase Auth) --------------------------------------
+// `zth_email` is only a shim for the rest of this file: it is set from a
+// verified session here and cleared when there is none, so the old
+// "type any email" access is gone and every learner signs in once more
+// (Nekh 2026-09-15). A session for a different address than the one this
+// device last used means a sign-in just completed (Google return, or a
+// password sign-in on a device that held another account): confirm access,
+// adopt that account's server copy, and boot again clean.
+const authSession = await getAuthSession();
+cleanAuthUrl();
+let gateNotice = null;
+if (!authSession) {
+  localStorage.removeItem("zth_email");
+} else if (authSession.email !== (localStorage.getItem("zth_email") || "").toLowerCase()) {
+  const verdict = await checkAccessForSession();
+  if (verdict.allowed) {
+    localStorage.setItem("zth_email", authSession.email);
+    await loadUserFromServer(authSession.email, { force: true });
+    location.reload();
+    return;
+  }
+  gateNotice = verdict.reason;
+  await authSignOut();
+  localStorage.removeItem("zth_email");
+}
+
 const email = localStorage.getItem("zth_email")?.toLowerCase();
 
 // Hydrate USER synchronously from localStorage so first paint doesn't wait on a
@@ -961,19 +998,53 @@ if (serverSyncP) {
     }
   });
 }
+// Ask the server whether the signed-in session may use the app. Never
+// throws: { allowed, subscribed, email, reason } where reason is "noaccess"
+// (signed in, but the email has no `users` row), "unauthenticated" (no
+// live session) or "server" (anything else).
+async function checkAccessForSession() {
+  try {
+    const res = await authFetch("/.netlify/functions/checkAccess", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({})
+    });
+    if (res.status === 401) return { allowed: false, reason: "unauthenticated" };
+    if (!res.ok) return { allowed: false, reason: "server" };
+    const data = await res.json();
+    if (!data || !data.allowed) return { allowed: false, reason: "noaccess" };
+    return { allowed: true, subscribed: !!data.subscribed, email: data.email || null };
+  } catch (err) {
+    console.warn("checkAccess failed:", err);
+    return { allowed: false, reason: "server" };
+  }
+}
+
 // `force` adopts the server copy regardless of timestamps — only the login
 // flow passes it (the learner just asked for THAT account's progress).
 // Every other caller (boot sync, post-save read-back) goes through
 // shouldAdoptServerUser, so a stale server copy can no longer roll newer
 // local progress back (Emi 2026-09-02-55). When local is newer it is
 // pushed up once so the server catches up.
+// `email` is informational only: the row is chosen server-side by the
+// session token, so nothing here sends it.
 async function loadUserFromServer(email, { force = false } = {}) {
-email = email?.toLowerCase().trim();
-  const res = await fetch("/.netlify/functions/loadUser", {
+  const res = await authFetch("/.netlify/functions/loadUser", {
     method: "POST",
-    body: JSON.stringify({ email })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({})
   });
 
+  if (res.status === 401) {
+    // The session behind the stored email is gone (revoked, expired beyond
+    // refresh): back to the sign-in screen instead of running on a copy
+    // the server will refuse to save.
+    console.warn("loadUser: session rejected — signing in again");
+    await authSignOut();
+    localStorage.removeItem("zth_email");
+    location.reload();
+    return;
+  }
   if (!res.ok) {
     console.error("loadUser failed:", res.status);
     serverSyncFailed = true;
@@ -1051,23 +1122,49 @@ if (!hasAccess()) {
       noAccess: "No access found for this email"
     };
   }
+  const t = (key, fallback) => strings[key] || fallback;
 
+  // Sign-in screen: email + password, Google, and the "set or reset your
+  // password" path that also serves as first-time setup for learners who
+  // bought access before the app had passwords.
   document.body.innerHTML = `
     <div class="gate-screen">
       <h1 class="title">ZERO TO HERO</h1>
 
-      <h2 class="gate-heading">${strings.enterEmail || "Enter your email"}</h2>
+      <h2 class="gate-heading">${t("signIn", "Sign in")}</h2>
 
-      <input
-        id="email-input"
-        class="gate-input"
-        type="email"
-        placeholder="your@email.com"
-        autocomplete="email"
-      />
+      <form id="login-form" class="gate-form" novalidate>
+        <input
+          id="email-input"
+          class="gate-input"
+          type="email"
+          placeholder="your@email.com"
+          autocomplete="email"
+          aria-label="${t("enterEmail", "Enter your email")}"
+        />
+        <input
+          id="password-input"
+          class="gate-input"
+          type="password"
+          placeholder="${t("password", "Password")}"
+          autocomplete="current-password"
+          aria-label="${t("password", "Password")}"
+        />
+        <button id="login-btn" class="gate-btn" type="submit">
+          ${t("continue", "Continue")}
+        </button>
+      </form>
 
-      <button id="login-btn" class="gate-btn" type="button">
-        ${strings.continue}
+      <p id="gate-message" class="gate-message" role="status" aria-live="polite"></p>
+
+      <div class="gate-divider" aria-hidden="true">${t("or", "or")}</div>
+
+      <button id="google-btn" class="gate-btn gate-google" type="button">
+        ${t("continueWithGoogle", "Continue with Google")}
+      </button>
+
+      <button id="link-set-password" class="gate-link" type="button">
+        ${t("setPassword", "Set or reset your password")}
       </button>
 
       <div class="gate-note">
@@ -1089,30 +1186,102 @@ if (buyAccess) {
 };
 }
 
-  // 🔐 LOGIN LOGIC (unchanged, just slightly cleaned)
-  document.getElementById("login-btn").onclick = async () => {
+  const emailInput = document.getElementById("email-input");
+  const passwordInput = document.getElementById("password-input");
+  const loginBtn = document.getElementById("login-btn");
+  const googleBtn = document.getElementById("google-btn");
+  const setPasswordBtn = document.getElementById("link-set-password");
+  const messageEl = document.getElementById("gate-message");
 
-    const email = document.getElementById("email-input").value.trim().toLowerCase();
+  const setMessage = (text, kind = "error") => {
+    messageEl.textContent = text || "";
+    messageEl.classList.toggle("is-ok", kind === "ok");
+    messageEl.classList.toggle("is-error", kind === "error" && !!text);
+  };
+  const setBusy = (busy) => {
+    for (const el of [loginBtn, googleBtn, setPasswordBtn, emailInput, passwordInput]) el.disabled = busy;
+  };
+  const noticeFor = (reason) => {
+    if (reason === "noaccess") return t("noAccess", "No access found for this email");
+    if (reason === "server") return t("serverError", "Server error — please try again.");
+    return "";
+  };
+  if (gateNotice) setMessage(noticeFor(gateNotice));
 
-    const res = await fetch("/.netlify/functions/checkAccess", {
-      method: "POST",
-      body: JSON.stringify({ email })
-    });
-
-    if (!res.ok) { alert("Server error — please try again."); return; }
-    const data = await res.json();
-
-    if (data.allowed) {
-      localStorage.setItem("zth_email", email.toLowerCase());
-
-      // The learner just asked for this account: the server copy wins
-      // over whatever anonymous local state this device holds.
-      await loadUserFromServer(email, { force: true });
-
-      location.reload();
-    } else {
-      alert(strings.noAccess || "No access found for this email");
+  // Signed in (any provider) → confirm the email has access → adopt that
+  // account's server copy → boot again. Same shape for password and for the
+  // Google return handled at boot above.
+  const finishSignIn = async (fallbackEmail) => {
+    const verdict = await checkAccessForSession();
+    if (!verdict.allowed) {
+      await authSignOut();
+      setMessage(noticeFor(verdict.reason) || noticeFor("server"));
+      setBusy(false);
+      return;
     }
+    const signedInAs = (verdict.email || fallbackEmail || "").toLowerCase();
+    localStorage.setItem("zth_email", signedInAs);
+
+    // The learner just asked for this account: the server copy wins
+    // over whatever anonymous local state this device holds.
+    await loadUserFromServer(signedInAs, { force: true });
+
+    location.reload();
+  };
+
+  // 🔐 Email + password
+  document.getElementById("login-form").onsubmit = async (ev) => {
+    ev.preventDefault();
+    const email = emailInput.value.trim().toLowerCase();
+    const password = passwordInput.value;
+    if (!email || !password) {
+      setMessage(t("enterEmailAndPassword", "Enter your email and password."));
+      (email ? passwordInput : emailInput).focus();
+      return;
+    }
+    setMessage("");
+    setBusy(true);
+    try {
+      await signInWithPassword(email, password);
+    } catch (err) {
+      setMessage(describeAuthError(err));
+      setBusy(false);
+      return;
+    }
+    await finishSignIn(email);
+  };
+
+  // 🔐 Google (identity scopes only — see auth.mjs). The browser leaves
+  // for Google and comes back to "/" with a session; boot handles the rest.
+  googleBtn.onclick = async () => {
+    setMessage("");
+    setBusy(true);
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      setMessage(describeAuthError(err));
+      setBusy(false);
+    }
+  };
+
+  // ✉️ Set or reset your password: also the first-time setup for a learner
+  // who bought access before passwords existed. The email lands on
+  // auth.html, which asks for the new password.
+  setPasswordBtn.onclick = async () => {
+    const email = emailInput.value.trim().toLowerCase();
+    if (!email) {
+      setMessage(t("enterEmailForPassword", "Enter your email above first, then tap this again."));
+      emailInput.focus();
+      return;
+    }
+    setBusy(true);
+    try {
+      await sendPasswordEmail(email);
+      setMessage(t("passwordEmailSent", "If that email has access, a link to set your password is on its way — check your inbox (and spam)."), "ok");
+    } catch (err) {
+      setMessage(describeAuthError(err));
+    }
+    setBusy(false);
   };
 
   return;
@@ -5629,12 +5798,10 @@ if (resetBtn) {
 
     // 🔥 Sync to server (IMPORTANT)
     if (email) {
-      await fetch("/.netlify/functions/saveUser", {
+      await authFetch("/.netlify/functions/saveUser", {
         method: "POST",
-        body: JSON.stringify({
-          email,
-          user: USER
-        })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: USER })
       });
     }
 
@@ -5642,10 +5809,14 @@ if (resetBtn) {
   };
 }
 if (logoutBtn) {
-  logoutBtn.onclick = () => {
+  logoutBtn.onclick = async () => {
 
     const confirmed = confirm("Log out and reset local data?");
     if (!confirmed) return;
+
+    // End the Supabase session first so a reload lands on the sign-in
+    // screen instead of silently adopting the same account again.
+    await authSignOut();
 
     // 🔥 Clear auth + user — INCLUDING the boot-time backup. "Reset local
     // data" must mean all of it: the backup holds the full profile and
@@ -5682,19 +5853,20 @@ window.__app = {
 
 // --- Anna (AI tutor) start-screen entry ----------------------------------
 // The tutor button ships locked (visible but unclickable). It only unlocks
-// when the tutor function confirms this email is on the invite allowlist —
-// mode:"ping" is a pure access check, no model call. Everyone else keeps
-// seeing the locked teaser, and the real gate stays server-side.
+// when the tutor function confirms the signed-in learner has an active
+// subscription and is on the invite allowlist — mode:"ping" is a pure
+// access check, no model call. Everyone else keeps seeing the greyed-out
+// teaser (Nekh 2026-09-15), and the real gate stays server-side.
 (async function initTutorEntry() {
   const btn = document.getElementById("link-tutor");
   if (!btn) return;
   const email = (localStorage.getItem("zth_email") || "").trim();
   if (!email) return;
   try {
-    const res = await fetch("/.netlify/functions/tutor", {
+    const res = await authFetch("/.netlify/functions/tutor", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mode: "ping", email }),
+      body: JSON.stringify({ mode: "ping" }),
     });
     if (!res.ok) return;
     const data = await res.json();
@@ -5703,6 +5875,8 @@ window.__app = {
       btn.removeAttribute("aria-disabled");
       btn.href = "tutor.html";
       btn.textContent = "Anna — AI Tutor";
+    } else if (data && data.subscribed === false) {
+      btn.title = "Anna needs an active subscription";
     }
   } catch (_) {
     // Network failure: button simply stays locked.

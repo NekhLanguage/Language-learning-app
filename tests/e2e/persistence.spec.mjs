@@ -2,7 +2,7 @@
 // backend (saveUser), and restore onto a fresh device (loadUser). The dev
 // server keeps saved users in memory and exposes them at /__devserver/users.
 
-import { test, expect, startNewRun } from "./fixtures.mjs";
+import { test, expect, startNewRun, authHeadersFor, TEST_PASSWORD } from "./fixtures.mjs";
 
 test("run state survives a page reload", async ({ page }) => {
   await startNewRun(page);
@@ -92,8 +92,9 @@ test("a fresh device restores the account from the server", async ({ page }) => 
   await page.reload();
   await expect(page.locator("#email-input")).toBeVisible();
 
-  // Logging in again must pull the account back from the server.
+  // Signing in again must pull the account back from the server.
   await page.fill("#email-input", email);
+  await page.fill("#password-input", TEST_PASSWORD);
   await page.click("#login-btn");
   await expect(page.locator("#start-screen.active")).toBeVisible({ timeout: 10_000 });
 
@@ -119,7 +120,7 @@ test("a stale server copy does not overwrite newer local progress on reload (Emi
   stale.lastLocalChange = (synced.lastLocalChange || Date.now()) - 60_000;
   stale.runs.pt.released = [];
   stale.runs.pt.setupComplete = false;
-  await page.request.post("/.netlify/functions/saveUser", { data: { email, user: stale } });
+  await page.request.post("/.netlify/functions/saveUser", { data: { user: stale }, headers: authHeadersFor(email) });
 
   await page.reload();
   await expect(page.locator("#start-screen.active")).toBeVisible();
