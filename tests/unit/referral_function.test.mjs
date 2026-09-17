@@ -33,7 +33,7 @@ async function withFetch(fetchImpl, fn) {
 }
 
 // Fake Supabase: auth by token; tables in memory.
-function fakeSupabase({ tokens = {}, users = {}, codes = {}, referrals = [], commissions = [], takenCodes = [] } = {}) {
+function fakeSupabase({ tokens = {}, users = {}, codes = {}, referrals = [], commissions = [], payouts = [], takenCodes = [] } = {}) {
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     const u = String(url);
@@ -68,6 +68,10 @@ function fakeSupabase({ tokens = {}, users = {}, codes = {}, referrals = [], com
     }
     if (u.includes("/rest/v1/commissions?")) {
       const mine = commissions.filter((c) => c.referrer_email === decodeURIComponent((/referrer_email=eq\.([^&]+)/.exec(u) || [])[1] || ""));
+      return new Response(JSON.stringify(mine), { status: 200 });
+    }
+    if (u.includes("/rest/v1/payouts?")) {
+      const mine = payouts.filter((p) => p.referrer_email === decodeURIComponent((/referrer_email=eq\.([^&]+)/.exec(u) || [])[1] || "") && p.kind === "discount");
       return new Response(JSON.stringify(mine), { status: 200 });
     }
     throw new Error(`unexpected fetch ${u}`);
@@ -141,7 +145,8 @@ test("POST accept creates the code for a subscriber, skipping taken codes; not f
   }));
 });
 
-test("GET with a code sums the stats by status", async () => {
+test("GET with a code sums the stats by status and reports the config", async () => {
+  const thisYear = new Date().getUTCFullYear();
   const { fetchImpl } = fakeSupabase({
     tokens: { alice: ALICE },
     users: { "alice.smith@example.com": { access_until: "infinity" } },
@@ -152,17 +157,21 @@ test("GET with a code sums the stats by status", async () => {
       { referrer_email: "alice.smith@example.com", status: "ended" },
     ],
     commissions: [
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "pending" },
       { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "available" },
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "credited" },
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "paid" },
+      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "applied" },
+      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "applied" },
       { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "reversed" },
       { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "forfeited" },
     ],
+    payouts: [
+      { referrer_email: "alice.smith@example.com", kind: "discount", amount_cents: 380, created_at: `${thisYear}-02-01T06:00:00Z` },
+      { referrer_email: "alice.smith@example.com", kind: "discount", amount_cents: 380, created_at: `${thisYear - 1}-12-01T06:00:00Z` },
+    ],
   });
-  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+  await withEnv({ ...ENV, REFERRAL_RATE_BPS: undefined, REFERRAL_CAP_CENTS: undefined }, () => withFetch(fetchImpl, async () => {
     const body = JSON.parse((await referral.handler(req("alice"))).body);
     assert.equal(body.code, "ZTH-ALICESMI");
-    assert.deepEqual(body.stats, { activeReferrals: 2, pendingCents: 380, availableCents: 380, creditedCents: 380, paidCents: 380, lifetimeCents: 1520 });
+    assert.deepEqual(body.stats, { activeReferrals: 2, availableCents: 380, appliedCents: 760, appliedThisYearCents: 380, lifetimeCents: 1140 });
+    assert.deepEqual(body.config, { rateBps: 2000, capCents: 19000, monthlyPriceCents: 1900 });
   }));
 });

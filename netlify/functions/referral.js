@@ -1,10 +1,12 @@
-// Referral program (Nekh 2026-09-17): the learner's own referral code, link
-// and earnings. 20% of every payment a referred subscriber makes goes to
-// the referrer while both stay subscribed; the website's Stripe webhook
-// writes the attribution and commission rows, this function only reads
-// them and creates the code.
+// Referral program (Angus's v1 spec, Nekh 2026-09-17): the learner's own
+// referral code, link and earnings. A share of every payment a referred
+// subscriber makes (REFERRAL_RATE_BPS, 20% by default) comes off the
+// referrer's own subscription while both stay subscribed; the website's
+// Stripe webhook writes the attribution and commission rows, the monthly
+// discount run applies them, this function only reads them and creates
+// the code.
 //
-//   GET  → { code, link, eligible, acceptedTermsAt, stats }
+//   GET  → { code, link, eligible, acceptedTermsAt, stats, config }
 //          code/link are null until the learner has accepted the terms.
 //   POST { accept: true } → creates the code (active subscribers only) and
 //          returns the same shape.
@@ -14,6 +16,7 @@
 
 const { SUPABASE_URL, secretKey } = require("./supabase");
 const { verifySession, unauthorizedResponse, subscriptionActive } = require("./auth");
+const { config, appliedInYear } = require("./referral_discount");
 
 const PAYMENT_LINK = "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05";
 const MAX_CODE_ATTEMPTS = 20;
@@ -50,27 +53,31 @@ async function getRows(key, path) {
 }
 
 async function loadState(key, email) {
+  const cfg = config();
   const [users, codes] = await Promise.all([
     getRows(key, `users?email=eq.${encodeURIComponent(email)}&select=access_until`),
     getRows(key, `referral_codes?email=eq.${encodeURIComponent(email)}&select=code,accepted_terms_at`),
   ]);
   const eligible = !!users[0] && subscriptionActive(users[0].access_until);
   const row = codes[0] || null;
-  const stats = { activeReferrals: 0, pendingCents: 0, availableCents: 0, creditedCents: 0, paidCents: 0, lifetimeCents: 0 };
+  // availableCents: earned, waiting for the next monthly run.
+  // appliedCents: taken off invoices, lifetime. appliedThisYearCents counts
+  // against the yearly cap. lifetimeCents = available + applied.
+  const stats = { activeReferrals: 0, availableCents: 0, appliedCents: 0, appliedThisYearCents: 0, lifetimeCents: 0 };
   if (row) {
-    const [referrals, commissions] = await Promise.all([
+    const [referrals, commissions, payouts] = await Promise.all([
       getRows(key, `referrals?referrer_email=eq.${encodeURIComponent(email)}&status=eq.active&select=id`),
       getRows(key, `commissions?referrer_email=eq.${encodeURIComponent(email)}&select=amount_cents,status`),
+      getRows(key, `payouts?referrer_email=eq.${encodeURIComponent(email)}&kind=eq.discount&select=amount_cents,kind,created_at`),
     ]);
     stats.activeReferrals = referrals.length;
     for (const c of commissions) {
       const cents = Number(c.amount_cents) || 0;
-      if (c.status === "pending") stats.pendingCents += cents;
-      else if (c.status === "available") stats.availableCents += cents;
-      else if (c.status === "credited") stats.creditedCents += cents;
-      else if (c.status === "paid") stats.paidCents += cents;
-      if (["pending", "available", "credited", "paid"].includes(c.status)) stats.lifetimeCents += cents;
+      if (c.status === "available") stats.availableCents += cents;
+      else if (c.status === "applied") stats.appliedCents += cents;
     }
+    stats.lifetimeCents = stats.availableCents + stats.appliedCents;
+    stats.appliedThisYearCents = appliedInYear(payouts);
   }
   return {
     code: row ? row.code : null,
@@ -78,6 +85,7 @@ async function loadState(key, email) {
     eligible,
     acceptedTermsAt: row ? row.accepted_terms_at : null,
     stats,
+    config: cfg,
   };
 }
 

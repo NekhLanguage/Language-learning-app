@@ -125,7 +125,8 @@ async function handleFunction(name, req, res, url) {
       // POST {accept:true}; stats are zeros in the stub.
       if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
       const eligible = !email.includes("noaccess") && !email.includes("nosub");
-      const stats = { activeReferrals: 0, pendingCents: 0, availableCents: 0, creditedCents: 0, paidCents: 0, lifetimeCents: 0 };
+      const stats = { activeReferrals: 0, availableCents: 0, appliedCents: 0, appliedThisYearCents: 0, lifetimeCents: 0 };
+      const config = { rateBps: 2000, capCents: 19000, monthlyPriceCents: 1900 };
       const state = () => {
         const code = referralCodes.get(email) || null;
         return {
@@ -134,6 +135,7 @@ async function handleFunction(name, req, res, url) {
           eligible,
           acceptedTermsAt: code ? new Date().toISOString() : null,
           stats,
+          config,
         };
       };
       if (req.method === "GET") return sendJson(res, 200, state());
