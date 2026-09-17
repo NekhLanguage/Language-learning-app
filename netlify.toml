@@ -18,3 +18,7 @@
   for = "/*.mjs"
   [headers.values]
     Content-Type = "text/javascript"
+
+# Referral credit run: 06:00 UTC on the 1st of every month (see the function).
+[functions.referralCreditRun]
+  schedule = "0 6 1 * *"

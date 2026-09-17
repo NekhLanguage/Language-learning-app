@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-17 (later)
+
+### Refer a friend, earn 20%
+
+Subscribers now have a "Refer a friend" button on the start screen. Accept the referral terms once and you get a personal code and link. A friend who subscribes with it earns you 20% of every payment they make, $3.80 a month at today's price, for as long as you both subscribe. Earnings show up in the same card: pending, available, credited to your own subscription, paid out. On the 1st of each month your available earnings pay down your subscription, up to a full month; five referrals make it free.
+
 ## 2026-09-17
 
 ### Under the hood: groundwork for the referral program

@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.73";
+const APP_DATA_VERSION = "1.2.74";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -5875,12 +5875,15 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
     });
     if (!res.ok) return;
     const data = await res.json();
-    // Subscribers get the portal link (cancel any time, keep the app).
+    // Subscribers get the portal link (cancel any time, keep the app)
+    // and the referral card (Nekh 2026-09-17: active subscribers only).
     const manage = document.getElementById("link-manage-subscription");
     if (manage && data && data.subscribed === true) {
       manage.href = MANAGE_SUBSCRIPTION_URL;
       manage.hidden = false;
     }
+    const refer = document.getElementById("link-refer");
+    if (refer && data && data.subscribed === true) refer.hidden = false;
     if (data && data.allowed) {
       btn.classList.remove("locked");
       btn.removeAttribute("aria-disabled");
@@ -5892,4 +5895,120 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
   } catch (_) {
     // Network failure: button simply stays locked.
   }
+})();
+
+// --- Refer a friend (start screen, subscribers) ---------------------------
+// The card lives behind the "Refer a friend" button that the tutor ping
+// reveals for active subscribers. First open: the terms checkbox and "Get
+// my code" (POST {accept:true} → /.netlify/functions/referral). After
+// that: the code, the referral link with a copy button, and the earnings
+// summary. The server does all the arithmetic; this only renders it.
+const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
+
+(function initReferral() {
+  const openBtn = document.getElementById("link-refer");
+  const modal = document.getElementById("referral-modal");
+  const closeBtn = document.getElementById("referral-close");
+  const body = document.getElementById("referral-body");
+  if (!openBtn || !modal || !closeBtn || !body) return;
+
+  const money = (cents) => `$${(Math.max(0, Number(cents) || 0) / 100).toFixed(2)}`;
+
+  const esc = (str) => String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+
+  function renderError(text) {
+    body.innerHTML = `<p class="referral-error">${esc(text)}</p>`;
+  }
+
+  function renderAccept(state) {
+    body.innerHTML = `
+      <ul class="referral-points">
+        <li>Your friend pays $19/month for the app with Anna, same as you.</li>
+        <li>You earn 20% of every payment they make — $3.80 a month per friend — while you both subscribe.</li>
+        <li>Earnings pay down your own subscription first; anything above that is paid out to you.</li>
+      </ul>
+      <label class="referral-terms">
+        <input id="referral-accept" type="checkbox" />
+        <span>I accept the <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">referral terms</a>.</span>
+      </label>
+      <button id="referral-get-code" class="primary" type="button" disabled>Get my code</button>
+      ${state.eligible ? "" : '<p class="referral-note">Referral codes are for active subscribers.</p>'}
+    `;
+    const accept = document.getElementById("referral-accept");
+    const get = document.getElementById("referral-get-code");
+    accept.onchange = () => { get.disabled = !(accept.checked && state.eligible); };
+    get.onclick = async () => {
+      get.disabled = true;
+      get.textContent = "One moment…";
+      try {
+        const res = await authFetch("/.netlify/functions/referral", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ accept: true }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || `Could not create your code (${res.status})`);
+        renderCode(data);
+      } catch (err) {
+        renderError(err.message || "Something went wrong — please try again.");
+      }
+    };
+  }
+
+  function renderCode(state) {
+    const st = state.stats || {};
+    body.innerHTML = `
+      <div class="referral-code" id="referral-code">${esc(state.code)}</div>
+      <div class="referral-link-row">
+        <input id="referral-link" class="referral-link" type="text" readonly value="${esc(state.link)}" aria-label="Your referral link" />
+        <button id="referral-copy" class="primary referral-copy" type="button">Copy link</button>
+      </div>
+      <p class="referral-note">Your friend opens the link, or types the code into “Referral code” at checkout.</p>
+      <dl class="referral-stats">
+        <dt>Active referrals</dt><dd id="referral-active">${Number(st.activeReferrals) || 0}</dd>
+        <dt>Pending (30-day hold)</dt><dd>${money(st.pendingCents)}</dd>
+        <dt>Available</dt><dd>${money(st.availableCents)}</dd>
+        <dt>Credited to your subscription</dt><dd>${money(st.creditedCents)}</dd>
+        <dt>Paid out</dt><dd>${money(st.paidCents)}</dd>
+        <dt>Earned in total</dt><dd>${money(st.lifetimeCents)}</dd>
+      </dl>
+      <p class="referral-note">Credits are applied to your subscription on the 1st of each month, up to one month's price. Anything above that accrues for payout. <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">Terms</a>.</p>
+    `;
+    const input = document.getElementById("referral-link");
+    const copy = document.getElementById("referral-copy");
+    copy.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(state.link);
+      } catch (_) {
+        input.select();
+        document.execCommand && document.execCommand("copy");
+      }
+      copy.textContent = "Copied";
+      setTimeout(() => { copy.textContent = "Copy link"; }, 1500);
+    };
+  }
+
+  async function load() {
+    body.innerHTML = '<p class="referral-loading">Loading…</p>';
+    try {
+      const res = await authFetch("/.netlify/functions/referral");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Could not load your referral details (${res.status})`);
+      if (data.code) renderCode(data);
+      else renderAccept(data);
+    } catch (err) {
+      renderError(err.message || "Something went wrong — please try again.");
+    }
+  }
+
+  openBtn.onclick = (ev) => {
+    ev.preventDefault();
+    modal.classList.remove("hidden");
+    load();
+  };
+  closeBtn.onclick = () => modal.classList.add("hidden");
+  modal.addEventListener("click", (ev) => { if (ev.target === modal) modal.classList.add("hidden"); });
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape" && !modal.classList.contains("hidden")) modal.classList.add("hidden");
+  });
 })();
