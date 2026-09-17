@@ -18,6 +18,9 @@
 //        the caller's email from that header, like the real functions read
 //        it from the verified Supabase session.
 //   POST /.netlify/functions/authProvision {email} -> {ok:true}.
+//   GET/POST /.netlify/functions/referral -> the learner's referral code,
+//        link and (zero) stats; POST {accept:true} creates the code for a
+//        subscriber (email without "nosub"/"noaccess").
 //   POST /.netlify/functions/checkAccess  -> {allowed, email, subscribed}
 //        401 without a token; allowed=false when the email contains
 //        "noaccess" (lets tests cover the rejection path); subscribed=false
@@ -66,6 +69,8 @@ const SILENT_MP3 = Buffer.concat([
 
 // email -> user blob, mirroring the Supabase `users.data` column.
 const userStore = new Map();
+// email -> referral code (referral stub).
+const referralCodes = new Map();
 // Chat texts carrying __FAIL_ONCE__ that have already failed once (tutor stub).
 const tutorFailedOnce = new Set();
 
@@ -113,6 +118,31 @@ async function handleFunction(name, req, res, url) {
     }
     case "authProvision": {
       return sendJson(res, 200, { ok: true });
+    }
+    case "referral": {
+      // Referral code + stats for the signed-in learner. Subscribers
+      // (no "nosub"/"noaccess" in the email) may create a code with
+      // POST {accept:true}; stats are zeros in the stub.
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
+      const eligible = !email.includes("noaccess") && !email.includes("nosub");
+      const stats = { activeReferrals: 0, pendingCents: 0, availableCents: 0, creditedCents: 0, paidCents: 0, lifetimeCents: 0 };
+      const state = () => {
+        const code = referralCodes.get(email) || null;
+        return {
+          code,
+          link: code ? `https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05?client_reference_id=${code}` : null,
+          eligible,
+          acceptedTermsAt: code ? new Date().toISOString() : null,
+          stats,
+        };
+      };
+      if (req.method === "GET") return sendJson(res, 200, state());
+      if (body.accept !== true) return sendJson(res, 400, { error: "Accept the referral terms to get a code" });
+      if (!eligible && !referralCodes.has(email)) return sendJson(res, 403, { error: "Referral codes are for active subscribers", ...state() });
+      if (!referralCodes.has(email)) {
+        referralCodes.set(email, "ZTH-" + email.split("@")[0].replace(/[^a-z0-9]/gi, "").toUpperCase().slice(0, 8));
+      }
+      return sendJson(res, 200, state());
     }
     case "checkAccess": {
       if (!email) return sendJson(res, 401, { allowed: false, error: "Sign in required", code: "unauthenticated" });

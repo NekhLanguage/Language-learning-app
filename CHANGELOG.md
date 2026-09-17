@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-17
+
+### Under the hood: groundwork for the referral program
+
+Nothing to see yet. The app can now hand a subscriber a personal referral code and keep track of who joined through it and what that earns; the checkout page has an optional "Referral code" field and the referral link fills it in automatically. The "Refer a friend" card, the terms and the payouts follow in the next updates.
+
 ## 2026-09-16 (evening)
 
 ### Anna is open to every subscriber
