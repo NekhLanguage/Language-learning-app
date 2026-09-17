@@ -167,6 +167,9 @@ test("a subscriber can accept the referral terms and get a code with a copyable 
   await expect(page.locator("#referral-code")).toHaveText("ZTH-SUBSCRIB");
   await expect(page.locator("#referral-link")).toHaveValue(/client_reference_id=ZTH-SUBSCRIB$/);
   await expect(page.locator("#referral-active")).toHaveText("0");
+  await expect(page.locator("#referral-ytd")).toHaveText("$0.00 of $190.00");
+  // Discount-only programme: the card never promises money.
+  await expect(page.locator("#referral-body")).not.toContainText(/paid out|cash|get paid|payout/i);
   // Reopening shows the code straight away.
   await page.click("#referral-close");
   await refer.click();

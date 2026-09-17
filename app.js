@@ -5902,7 +5902,9 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
 // reveals for active subscribers. First open: the terms checkbox and "Get
 // my code" (POST {accept:true} → /.netlify/functions/referral). After
 // that: the code, the referral link with a copy button, and the earnings
-// summary. The server does all the arithmetic; this only renders it.
+// summary. Discount-only (Angus's v1 spec, 2026-09-17): earnings come off
+// the referrer's own invoice, never out as cash. The server does all the
+// arithmetic; this only renders it.
 const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
 
 (function initReferral() {
@@ -5920,12 +5922,21 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
     body.innerHTML = `<p class="referral-error">${esc(text)}</p>`;
   }
 
+  // Money and percentages come from the server's config so the card never
+  // disagrees with the ledger (rate and yearly cap are settings, not
+  // constants). Discount-only: the copy never says "paid" or "cash".
+  const cfgOf = (state) => Object.assign({ rateBps: 2000, capCents: 19000, monthlyPriceCents: 1900 }, state.config || {});
+  const pct = (bps) => `${(bps / 100).toFixed(bps % 100 ? 1 : 0)}%`;
+  const perFriend = (cfg) => Math.round(cfg.monthlyPriceCents * cfg.rateBps / 10000);
+  const friendsForFree = (cfg) => Math.ceil(cfg.monthlyPriceCents / Math.max(1, perFriend(cfg)));
+
   function renderAccept(state) {
+    const cfg = cfgOf(state);
     body.innerHTML = `
       <ul class="referral-points">
-        <li>Your friend pays $19/month for the app with Anna, same as you.</li>
-        <li>You earn 20% of every payment they make — $3.80 a month per friend — while you both subscribe.</li>
-        <li>Earnings pay down your own subscription first; anything above that is paid out to you.</li>
+        <li>Your friend pays ${money(cfg.monthlyPriceCents)}/month for the app with Anna, same as you.</li>
+        <li>${pct(cfg.rateBps)} of every payment they make comes off your own subscription — ${money(perFriend(cfg))} a month per friend — while you both subscribe.</li>
+        <li>${friendsForFree(cfg)} friends and your subscription costs nothing. The discount is capped at ${money(cfg.capCents)} per calendar year.</li>
       </ul>
       <label class="referral-terms">
         <input id="referral-accept" type="checkbox" />
@@ -5957,6 +5968,7 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
 
   function renderCode(state) {
     const st = state.stats || {};
+    const cfg = cfgOf(state);
     body.innerHTML = `
       <div class="referral-code" id="referral-code">${esc(state.code)}</div>
       <div class="referral-link-row">
@@ -5966,13 +5978,11 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
       <p class="referral-note">Your friend opens the link, or types the code into “Referral code” at checkout.</p>
       <dl class="referral-stats">
         <dt>Active referrals</dt><dd id="referral-active">${Number(st.activeReferrals) || 0}</dd>
-        <dt>Pending (30-day hold)</dt><dd>${money(st.pendingCents)}</dd>
-        <dt>Available</dt><dd>${money(st.availableCents)}</dd>
-        <dt>Credited to your subscription</dt><dd>${money(st.creditedCents)}</dd>
-        <dt>Paid out</dt><dd>${money(st.paidCents)}</dd>
-        <dt>Earned in total</dt><dd>${money(st.lifetimeCents)}</dd>
+        <dt>Earned, waiting for your next invoice</dt><dd>${money(st.availableCents)}</dd>
+        <dt>Taken off your subscription so far</dt><dd>${money(st.appliedCents)}</dd>
+        <dt>This year</dt><dd id="referral-ytd">${money(st.appliedThisYearCents)} of ${money(cfg.capCents)}</dd>
       </dl>
-      <p class="referral-note">Credits are applied to your subscription on the 1st of each month, up to one month's price. Anything above that accrues for payout. <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">Terms</a>.</p>
+      <p class="referral-note">On the 1st of each month your earnings become a discount line on your next invoice, up to the price of one month; the rest waits for a later month. Earnings are only ever a discount on your own subscription. <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">Terms</a>.</p>
     `;
     const input = document.getElementById("referral-link");
     const copy = document.getElementById("referral-copy");
