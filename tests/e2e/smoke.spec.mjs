@@ -152,3 +152,32 @@ test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async (
   // language that lives behind the gate.
   await expect(page.locator("#language-buttons button")).toHaveCount(16);
 });
+
+
+test("a subscriber can accept the referral terms and get a code with a copyable link", async ({ page }) => {
+  await loginAs(page, "subscribed-learner@example.com");
+  const refer = page.locator("#link-refer");
+  await expect(refer).toBeVisible({ timeout: 10_000 });
+  await refer.click();
+  await expect(page.locator("#referral-modal")).toBeVisible();
+  // First open: terms first, button disabled until accepted.
+  await expect(page.locator("#referral-get-code")).toBeDisabled();
+  await page.check("#referral-accept");
+  await page.click("#referral-get-code");
+  await expect(page.locator("#referral-code")).toHaveText("ZTH-SUBSCRIB");
+  await expect(page.locator("#referral-link")).toHaveValue(/client_reference_id=ZTH-SUBSCRIB$/);
+  await expect(page.locator("#referral-active")).toHaveText("0");
+  await expect(page.locator("#referral-ytd")).toHaveText("$0.00 of $190.00");
+  // Discount-only programme: the card never promises money.
+  await expect(page.locator("#referral-body")).not.toContainText(/paid out|cash|get paid|payout/i);
+  // Reopening shows the code straight away.
+  await page.click("#referral-close");
+  await refer.click();
+  await expect(page.locator("#referral-code")).toHaveText("ZTH-SUBSCRIB");
+});
+
+test("no referral button without an active subscription", async ({ page }) => {
+  await loginAs(page, "nosub-learner@example.com");
+  await expect(page.locator("#link-tutor")).toHaveClass(/locked/);
+  await expect(page.locator("#link-refer")).toBeHidden();
+});
