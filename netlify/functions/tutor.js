@@ -36,16 +36,19 @@ const SUMMARY_MODEL = process.env.TUTOR_SUMMARY_MODEL || MODEL;
 // never slow or break the learner's chat.
 
 // Per-1M-token prices in US cents. UPDATE ON ANY MODEL SWAP or Anthropic
-// price change (verified against the current price list 2026-08-15; the
-// telemetry spec's opus/fable rows were stale and are corrected here).
-// claude-sonnet-5 has an intro rate ($2/$10 per MTok) through 2026-08-31;
-// the sticker rate below slightly overstates cost until then, which is the
-// conservative direction for a pricing-floor decision.
+// price change. Verified against the published price list on 2026-09-17:
+// claude-sonnet-5's $2/$10 launch price was made permanent (the $3/$15
+// increase scheduled for 2026-09-01 did not happen). Cache read = 0.1x
+// input, cache write (5 min) = 1.25x input; Fable 5.1 reads at 0.025x.
+// These rows feed the per-user cost distribution (tutor_cost_percentiles
+// in Supabase) that decides Anna's pricing floor, so keep them exact.
 const MODEL_PRICES_CENTS_PER_MTOK = {
-  "claude-sonnet-5":           { input: 300,  output: 1500, cache_read: 30,  cache_write: 375  },
+  "claude-sonnet-5":           { input: 200,  output: 1000, cache_read: 20,  cache_write: 250  },
   "claude-opus-5":             { input: 500,  output: 2500, cache_read: 50,  cache_write: 625  },
   "claude-haiku-4-5-20251001": { input: 100,  output: 500,  cache_read: 10,  cache_write: 125  },
+  "claude-haiku-4-5":          { input: 100,  output: 500,  cache_read: 10,  cache_write: 125  },
   "claude-fable-5":            { input: 1000, output: 5000, cache_read: 100, cache_write: 1250 },
+  "claude-fable-5-1":          { input: 1000, output: 5000, cache_read: 25,  cache_write: 1250 },
 };
 
 function costCents(model, usage) {

@@ -70,6 +70,8 @@
 
 <a class="secondary" id="link-skool" target="_blank" rel="noopener noreferrer"></a>
 
+        <a class="secondary" id="link-refer" href="#" hidden>Refer a friend — earn 20%</a>
+
         <a class="manage-subscription" id="link-manage-subscription" target="_blank" rel="noopener noreferrer" hidden>Manage subscription</a>
 
 <a class="secondary" id="link-offer" target="_blank" rel="noopener noreferrer"></a>
@@ -193,6 +195,18 @@
       <div id="feedback-context" class="feedback-context"></div>
       <button id="feedback-submit" class="primary feedback-submit-btn" type="button">Send report</button>
       <p id="feedback-status" class="feedback-status hidden"></p>
+    </div>
+  </div>
+
+  <!-- Refer a friend (subscribers) -->
+  <div id="referral-modal" class="feedback-modal hidden" role="dialog" aria-modal="true" aria-labelledby="referral-modal-title">
+    <div class="feedback-panel referral-panel">
+      <button id="referral-close" class="alphabet-close" type="button" aria-label="Close">✕</button>
+      <h2 class="feedback-modal-title" id="referral-modal-title">Refer a friend</h2>
+      <p class="feedback-modal-subtitle">Earn 20% of every payment from the friends you bring in, for as long as you both subscribe.</p>
+      <div id="referral-body" class="referral-body" aria-live="polite">
+        <p class="referral-loading">Loading…</p>
+      </div>
     </div>
   </div>
 

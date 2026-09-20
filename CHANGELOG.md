@@ -6,11 +6,17 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
-## 2026-09-17 (later)
+## 2026-09-17 (evening)
 
 ### Anna's first-visit intro: register fixes in six languages
 
 The intro the setup panel opens with now matches the register the rest of each language's UI already uses: Ukrainian and Turkish were on the informal you where every other string in the file is formal (now ви / siz); Korean was on 합쇼체 with «당신» where the file is 해요체 without a pronoun (now the file's own register). Polish drops a mid-sentence capital on «Twoją»; French swaps «montré connaître» for «montré maîtriser» and matches the file's «l'app»; Japanese drops two of the three «あなた» a Japanese UI would omit. Emi's review, six languages.
+
+## 2026-09-17 (later)
+
+### Refer a friend, and your subscription gets cheaper
+
+Subscribers now have a "Refer a friend" button on the start screen. Accept the referral terms once and you get a personal code and link. When a friend subscribes with it, 20% of every payment they make comes off your own subscription, $3.80 a month per friend at today's price, for as long as you both subscribe. Five friends and your month costs nothing. On the 1st of each month the earnings become a discount line on your next invoice, up to the price of one month; what does not fit waits for a later month, and the discount is capped at $190 per calendar year. The card shows your active referrals, what is waiting, what has already come off, and this year's total. It is only ever a discount on your subscription.
 
 ## 2026-09-17
 
