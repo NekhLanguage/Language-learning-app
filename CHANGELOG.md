@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-17 (evening)
+
+### Anna's first-visit intro: register fixes in six languages
+
+The intro the setup panel opens with now matches the register the rest of each language's UI already uses: Ukrainian and Turkish were on the informal you where every other string in the file is formal (now ви / siz); Korean was on 합쇼체 with «당신» where the file is 해요체 without a pronoun (now the file's own register). Polish drops a mid-sentence capital on «Twoją»; French swaps «montré connaître» for «montré maîtriser» and matches the file's «l'app»; Japanese drops two of the three «あなた» a Japanese UI would omit. Emi's review, six languages.
+
 ## 2026-09-17 (later)
 
 ### Refer a friend, and your subscription gets cheaper
