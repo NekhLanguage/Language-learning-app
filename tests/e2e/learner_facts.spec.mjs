@@ -109,7 +109,9 @@ test("tutor session summary writes newLearnerFacts back into USER blob", async (
   await expect(page.locator(".tutor-msg.assistant")).toHaveCount(2);
 
   await page.click("#tutor-end");
-  await expect(page.locator(".tutor-msg.status", { hasText: "Session saved." })).toBeVisible();
+  // End session saves at once and writes Anna's notes in the background;
+  // the facts land with the notes, so wait for that line, not the save.
+  await expect(page.locator(".tutor-msg.status", { hasText: "Your tutor will remember this next time" })).toBeVisible({ timeout: 10_000 });
 
   const facts = await page.evaluate(() => {
     const u = JSON.parse(localStorage.getItem("zth_user") || "{}");
