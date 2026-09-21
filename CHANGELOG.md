@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-21
+
+### Anna answers as she types, and End session no longer makes you wait
+
+Anna's replies now appear word by word, with a typing indicator while she starts, instead of landing all at once after a pause. And pressing End session saves your conversation at once and hands the screen back: Anna writes her notes for next time in the background, and the "Next focus" and new-word lines appear when they're ready. If you close the tab before that, she finishes the notes the next time you open the tutor, as before. The notes themselves are also written faster.
+
 ## 2026-09-17 (evening)
 
 ### Anna's first-visit intro: register fixes in six languages
