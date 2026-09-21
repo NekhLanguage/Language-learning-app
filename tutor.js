@@ -612,6 +612,93 @@ async function callTutor(mode, messages) {
   throw lastErr || new Error("Tutor request failed");
 }
 
+// --- Streamed replies ------------------------------------------------------
+// Anna's reply arrives as newline-delimited JSON from
+// /.netlify/functions/tutorStream ({t:"…"} pieces, then {done:true}); see
+// that file for the format. onText is called with each piece as it lands.
+// Throws with `err.fallback = true` when nothing at all was received (the
+// endpoint is missing, refused the request, or died before the first
+// piece) — the caller then uses the classic one-shot call, so a streaming
+// outage never costs the learner a reply.
+const STREAM_IDLE_MS = 45_000;
+
+async function streamTutor(onText) {
+  const body = JSON.stringify(buildRequestBody("chat"));
+  const ctrl = new AbortController();
+  let timer = null;
+  const arm = () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => ctrl.abort(), STREAM_IDLE_MS);
+  };
+  const fallback = (message) => {
+    const err = new Error(message);
+    err.fallback = true;
+    return err;
+  };
+  arm();
+  let reply = "";
+  try {
+    let res;
+    try {
+      res = await authFetch("/.netlify/functions/tutorStream", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body,
+        signal: ctrl.signal,
+      });
+    } catch (err) {
+      throw fallback(err.name === "AbortError" ? "no answer in time" : err.message);
+    }
+    if (!res.ok) {
+      const payload = await res.json().catch(() => ({}));
+      // A definite refusal (no access, bad input) is the same answer the
+      // classic call would give; don't ask it again.
+      const err = new Error(payload.error || `Tutor request failed (${res.status})`);
+      err.fallback = res.status === 404 || res.status === 405 || res.status === 408 || res.status === 429 || res.status >= 500;
+      throw err;
+    }
+    if (!res.body || !res.body.getReader) throw fallback("streaming not supported");
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let done = false;
+    let refused = false;
+    while (!done) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      arm();
+      buffer += decoder.decode(chunk.value, { stream: true });
+      let nl;
+      while ((nl = buffer.indexOf("\n")) >= 0) {
+        const line = buffer.slice(0, nl).trim();
+        buffer = buffer.slice(nl + 1);
+        if (!line) continue;
+        let evt;
+        try { evt = JSON.parse(line); } catch { continue; }
+        if (evt.error) throw reply ? new Error(evt.error) : fallback(evt.error);
+        if (typeof evt.t === "string" && evt.t) {
+          reply += evt.t;
+          onText(evt.t, reply);
+        }
+        if (evt.done) { done = true; refused = !!evt.refused; break; }
+      }
+    }
+    if (!done) throw reply ? new Error("the reply was cut off") : fallback("no answer came back");
+    return { reply: refused ? "" : reply, refused };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function addTypingIndicator() {
+  const div = addMessage("status", "");
+  div.classList.add("typing");
+  div.setAttribute("aria-label", "Anna is typing");
+  for (let i = 0; i < 3; i++) div.appendChild(document.createElement("span"));
+  return div;
+}
+
 async function sendMessage() {
   const text = els.input.value.trim();
   if (!text || state.busy) return;
@@ -631,24 +718,49 @@ async function sendMessage() {
   saveLiveTranscript();
   // The input keeps the text until Anna has it; a failure costs no retyping.
 
-  const thinking = addMessage("status", "…");
+  let thinking = addTypingIndicator();
+  let live = null; // the assistant bubble while the reply is streaming in
   setBusy(true);
   try {
-    const data = await callTutor("chat");
+    let data;
+    try {
+      data = await streamTutor((piece, soFar) => {
+        if (!live) {
+          thinking.remove();
+          live = addMessage("assistant", "");
+          live.classList.add("streaming");
+        }
+        live.textContent = soFar;
+        els.chat.scrollTop = els.chat.scrollHeight;
+      });
+    } catch (err) {
+      if (!err.fallback) throw err;
+      // Nothing arrived from the streaming endpoint: one-shot call instead.
+      console.warn("tutor stream unavailable, falling back:", err.message);
+      if (!thinking.isConnected) thinking = addTypingIndicator();
+      data = await callTutor("chat");
+    }
     thinking.remove();
     state.pending = null;
     els.input.value = "";
     clearDraft();
     if (data.refused || !data.reply) {
+      if (live) live.remove();
       addMessage("status", "The tutor couldn't answer that one — try rephrasing.");
       return;
     }
     state.messages.push({ role: "assistant", content: data.reply });
     saveLiveTranscript();
-    addMessage("assistant", data.reply);
+    if (live) {
+      live.textContent = data.reply;
+      live.classList.remove("streaming");
+    } else {
+      addMessage("assistant", data.reply);
+    }
   } catch (err) {
     console.warn("tutor chat failed:", err);
     thinking.remove();
+    if (live) live.remove();
     markUndelivered(bubble, err.message);
   } finally {
     setBusy(false);
@@ -783,10 +895,45 @@ async function endSession() {
     return;
   }
 
-  const saving = addMessage("status", "Wrapping up your session…");
+  // The learner is done the moment they press End: the transcript is saved
+  // locally and synced right away, the screen clears, and Anna's notes
+  // (the slow structured record) are written in the background. If the
+  // tab closes first, the record stays marked pending and
+  // retryPendingSummaries finishes it on the next visit (Nekh 2026-09-21:
+  // nobody should watch a minute of saving).
   setBusy(true);
   const when = todayStamp();
   const messages = state.messages.slice();
+  const record = fallbackSessionRecord(messages, when);
+  let saved;
+  try {
+    pushSessionRecord(record);
+    state.messages = [];
+    state.pending = null;
+    clearLiveTranscript();
+    els.chat.innerHTML = "";
+    await persistUser();
+    saved = addMessage("status", "Session saved. Anna is writing her notes…");
+  } catch (err) {
+    // Only a local bug can land here. Keep the conversation on screen so
+    // nothing is lost.
+    console.error("tutor: end session failed locally:", err);
+    const mem = tutorMemory();
+    mem.sessions = mem.sessions.filter((r) => r !== record);
+    state.messages = messages;
+    addMessage("status", `Couldn't save the session (${err.message}). The conversation is still here — try End session again.`);
+    setBusy(false);
+    return;
+  }
+  setBusy(false);
+  els.input.focus();
+
+  writeSessionNotes(record, messages, when, saved).catch((err) => console.warn("tutor: session notes:", err));
+}
+
+// Background half of End session: ask Anna for the structured record,
+// swap it into the saved session, apply the vocabulary and facts, sync.
+async function writeSessionNotes(record, messages, when, savedLine) {
   let summary = null;
   let failure = "";
   try {
@@ -797,48 +944,41 @@ async function endSession() {
     console.warn("tutor summary failed:", err);
     failure = err.message;
   }
-  saving.remove();
-
+  // The record may have been completed by a retry in another tab meanwhile.
+  const stillPending = tutorMemory().sessions.includes(record) && record.pending;
+  const say = (text) => {
+    if (savedLine && savedLine.isConnected) {
+      savedLine.textContent = text;
+      savedLine = null;
+      return;
+    }
+    addMessage("status", text);
+  };
+  if (!summary) {
+    say(`Session saved. Anna couldn't write her notes just now (${failure}) — she'll finish them next time you open the tutor.`);
+    return;
+  }
+  if (!stillPending) return;
+  let admissions;
   try {
-    let admissions = [];
-    if (summary) {
-      pushSessionRecord(sessionRecordFromSummary(summary, when));
-      ({ admissions } = await applySummary(summary, messages, when));
-    } else {
-      pushSessionRecord(fallbackSessionRecord(messages, when));
-    }
-    // The session is saved locally before the sync — whatever the network
-    // does next, the conversation is no longer at risk.
-    state.messages = [];
-    state.pending = null;
-    clearLiveTranscript();
-    els.chat.innerHTML = "";
+    Object.assign(record, sessionRecordFromSummary(summary, when));
+    delete record.pending;
+    ({ admissions } = await applySummary(summary, messages, when));
     await persistUser();
-
-    if (summary) {
-      addMessage("status", "Session saved. Your tutor will remember this next time.");
-      if (summary.nextFocus) addMessage("status", `Next focus: ${summary.nextFocus}`);
-      const added = (summary.newWords || []).length;
-      if (added) addMessage("status", `New words added to your personal vocabulary: ${added}.`);
-      if (admissions.length) {
-        addMessage(
-          "status",
-          `Added to your app vocabulary (seen in 3 sessions): ${admissions.map((a) => a.word).join(", ")}.`
-        );
-      }
-    } else {
-      addMessage(
-        "status",
-        `Session saved. Anna couldn't write her notes just now (${failure}) — she'll finish them next time you open the tutor.`
-      );
-    }
   } catch (err) {
-    // Only a local bug can land here (the network is already out of the
-    // way). Keep the conversation on screen so nothing is lost.
-    console.error("tutor: end session failed locally:", err);
-    addMessage("status", `Couldn't save the session (${err.message}). The conversation is still here — try End session again.`);
-  } finally {
-    setBusy(false);
+    console.error("tutor: applying session notes failed:", err);
+    say(`Session saved. Anna's notes couldn't be applied (${err.message}).`);
+    return;
+  }
+  say("Session saved. Your tutor will remember this next time.");
+  if (summary.nextFocus) addMessage("status", `Next focus: ${summary.nextFocus}`);
+  const added = (summary.newWords || []).length;
+  if (added) addMessage("status", `New words added to your personal vocabulary: ${added}.`);
+  if (admissions.length) {
+    addMessage(
+      "status",
+      `Added to your app vocabulary (seen in 3 sessions): ${admissions.map((a) => a.word).join(", ")}.`
+    );
   }
 }
 

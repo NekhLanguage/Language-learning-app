@@ -13,7 +13,7 @@ import { test, expect, startNewRun } from "./fixtures.mjs";
 function dropInjected(pageErrors) {
   for (let i = pageErrors.length - 1; i >= 0; i--) {
     const e = pageErrors[i];
-    if (/^http 502: .*\/tutor$/.test(e) || /^console: Failed to load resource: .*502/.test(e)) {
+    if (/^http 502: .*\/tutor(Stream)?$/.test(e) || /^console: Failed to load resource: .*502/.test(e)) {
       pageErrors.splice(i, 1);
     }
   }
@@ -197,4 +197,56 @@ test("first visit shows who Anna is, in the learner's support language", async (
   await openTutor(page);
   await expect(page.locator("#tutor-intro")).toBeVisible();
   await expect(page.locator("#tutor-intro")).toContainText("A Anna é sua tutora pessoal");
+});
+
+test("Anna's reply streams in through the streaming endpoint, with a typing indicator first", async ({ page }) => {
+  await startNewRun(page);
+  await openTutor(page);
+  await page.click("#tutor-settings-save");
+
+  await page.fill("#tutor-input", "olá streaming");
+  const streamed = page.waitForResponse((r) => r.url().includes("/.netlify/functions/tutorStream") && r.status() === 200);
+  await page.click("#tutor-send");
+  await streamed;
+  await expect(page.locator(".tutor-msg.assistant")).toHaveCount(1, { timeout: 15_000 });
+  await expect(page.locator(".tutor-msg.assistant")).toHaveText(/You said: olá streaming$/);
+  await expect(page.locator(".tutor-msg.assistant.streaming")).toHaveCount(0);
+  await expect(page.locator(".tutor-msg.status.typing")).toHaveCount(0);
+  await expect(page.locator("#tutor-input")).toHaveValue("");
+});
+
+test("a reply cut off mid-stream is treated as undelivered, not shown half-finished", async ({ page, pageErrors }) => {
+  await startNewRun(page);
+  await openTutor(page);
+  await page.click("#tutor-settings-save");
+
+  await page.fill("#tutor-input", "hei __STREAM_CUT__");
+  await page.click("#tutor-send");
+  await expect(page.locator(".tutor-msg.user.undelivered")).toHaveCount(1, { timeout: 15_000 });
+  await expect(page.locator(".tutor-msg.assistant")).toHaveCount(0);
+  await expect(page.locator("#tutor-input")).toHaveValue("hei __STREAM_CUT__");
+  pageErrors.length = 0;
+});
+
+test("End session hands the screen back at once and Anna's notes arrive afterwards", async ({ page }) => {
+  await startNewRun(page);
+  await openTutor(page);
+  await page.click("#tutor-settings-save");
+
+  await page.fill("#tutor-input", "olá");
+  await page.click("#tutor-send");
+  await expect(page.locator(".tutor-msg.assistant")).toHaveCount(1, { timeout: 15_000 });
+
+  await page.click("#tutor-end");
+  // Saved and usable before the (stub-delayed) notes come back.
+  await expect(page.locator(".tutor-msg.status", { hasText: "Session saved. Anna is writing her notes" })).toBeVisible({ timeout: 2_000 });
+  await expect(page.locator("#tutor-input")).toBeEnabled();
+  await expect(page.locator(".tutor-msg.user")).toHaveCount(0);
+  // Then the notes land in place.
+  await expect(page.locator(".tutor-msg.status", { hasText: "Your tutor will remember this next time" })).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator(".tutor-msg.status", { hasText: "Next focus:" })).toBeVisible();
+  const mem = await page.evaluate(() => JSON.parse(localStorage.getItem("zth_user")).tutor.memory.pt);
+  expect(mem.sessions).toHaveLength(1);
+  expect(mem.sessions[0].pending).toBeUndefined();
+  expect(mem.sessions[0].nextFocus).toBe("Keep practicing verb endings.");
 });

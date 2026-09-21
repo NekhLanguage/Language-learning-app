@@ -202,6 +202,9 @@ async function handleFunction(name, req, res, url) {
         return sendJson(res, 502, { error: "injected chat failure (once)" });
       }
       if (body.mode === "summary") {
+        // Real notes take 10-30 s; a short stub delay keeps End session's
+        // save-first-notes-later order observable in the e2e tests.
+        await new Promise((r) => setTimeout(r, 700));
         return sendJson(res, 200, {
           summary: {
             sessionSummary: "Dev-stub session: practiced greetings.",
@@ -228,6 +231,33 @@ async function handleFunction(name, req, res, url) {
       return sendJson(res, 200, {
         reply: `Olá! (dev stub tutor in ${body.targetLang || "?"}) You said: ${lastText}`,
       });
+    }
+    case "tutorStream": {
+      // Streaming twin of the tutor stub: the same reply, sent as
+      // newline-delimited JSON pieces with small gaps so the client's
+      // streaming path (typing indicator → growing bubble) is exercised.
+      // Honours the same failure markers as the classic stub so the
+      // fallback path is exercised too: __FAIL_ALWAYS__ / __FAIL_ONCE__
+      // fail before the stream opens; __STREAM_CUT__ dies mid-reply.
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
+      const transcript = (Array.isArray(body.messages) ? body.messages : []).map((m) => String(m?.content || ""));
+      const lastText = transcript.length ? transcript[transcript.length - 1] : "";
+      if (lastText.includes("__FAIL_ALWAYS__")) return sendJson(res, 502, { error: "injected stream failure" });
+      if (lastText.includes("__FAIL_ONCE__") && !tutorFailedOnce.has(lastText)) {
+        tutorFailedOnce.add(lastText);
+        return sendJson(res, 502, { error: "injected stream failure (once)" });
+      }
+      const reply = `Olá! (dev stub tutor in ${body.targetLang || "?"}) You said: ${lastText}`;
+      res.writeHead(200, { "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-store" });
+      const pieces = reply.match(/\S+\s*/g) || [reply];
+      const cut = lastText.includes("__STREAM_CUT__") ? Math.max(1, Math.floor(pieces.length / 2)) : pieces.length;
+      for (let i = 0; i < cut; i++) {
+        res.write(`${JSON.stringify({ t: pieces[i] })}\n`);
+        await new Promise((r) => setTimeout(r, 40));
+      }
+      if (cut < pieces.length) res.write(`${JSON.stringify({ error: "injected mid-stream failure" })}\n`);
+      else res.write(`${JSON.stringify({ done: true })}\n`);
+      return res.end();
     }
     case "tts": {
       const text = url.searchParams.get("text") || body.text || "";

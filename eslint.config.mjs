@@ -45,7 +45,7 @@ export default [
   },
   {
     // Node scripts: serverless functions, validators, tooling, tests.
-    files: ["netlify/**/*.js", "validation/**/*.{js,mjs}", "scripts/**/*.{js,mjs}", "tests/**/*.mjs", "playwright.config.mjs", "eslint.config.mjs", "generatelanguageskeleton.js"],
+    files: ["netlify/**/*.{js,mjs}", "validation/**/*.{js,mjs}", "scripts/**/*.{js,mjs}", "tests/**/*.mjs", "playwright.config.mjs", "eslint.config.mjs", "generatelanguageskeleton.js"],
     languageOptions: {
       ecmaVersion: 2023,
       sourceType: "module",
@@ -63,6 +63,12 @@ export default [
     // legitimate there.
     files: ["tests/e2e/**/*.mjs", "scripts/diagnose-progression.mjs"],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
+  },
+  {
+    // Modern-format Netlify functions (Request → Response) use the web
+    // platform globals the runtime provides.
+    files: ["netlify/functions/**/*.mjs"],
+    languageOptions: { globals: { ...globals.node, Response: "readonly", Request: "readonly", ReadableStream: "readonly", TextEncoder: "readonly" } },
   },
   {
     // The encoding validator scans for control characters on purpose.

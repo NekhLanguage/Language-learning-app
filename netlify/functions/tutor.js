@@ -359,6 +359,57 @@ const SUMMARY_SCHEMA = {
   additionalProperties: false,
 };
 
+// Everything a model call needs, or the error to send instead. Shared by
+// the classic handler below and the streaming function (tutorStream.mjs).
+// `body.email` must already be the verified session identity.
+async function buildConversation(body, mode) {
+  const fail = (status, error) => ({ error: { status, body: { error } } });
+  if (!process.env.ANTHROPIC_API_KEY) return fail(503, "Tutor not configured (missing API key)");
+  if (!tutorEnabled(body.email)) return fail(403, "The AI tutor is invite-only for now.");
+  if (!(await hasAccess(body.email))) return fail(403, "Anna needs an active subscription.");
+
+  const targetLang = String(body.targetLang || "").slice(0, 40);
+  const supportLang = String(body.supportLang || "").slice(0, 40);
+  if (!targetLang || !supportLang) return fail(400, "Missing languages");
+
+  const rawMessages = Array.isArray(body.messages) ? body.messages : [];
+  if (!rawMessages.length) return fail(400, "Missing messages");
+  if (rawMessages.length > MAX_MESSAGES) return fail(400, "Conversation too long");
+
+  const messages = rawMessages.map((m) => ({
+    role: m.role === "assistant" ? "assistant" : "user",
+    content: String(m.content || "").slice(0, MAX_MESSAGE_CHARS),
+  }));
+  // The API requires the first message to be a user turn.
+  if (messages[0].role !== "user") messages.unshift({ role: "user", content: "(session start)" });
+  // Per-turn steering (chat only — the summary has its own closing turn).
+  if (mode === "chat") {
+    const last = messages[messages.length - 1];
+    if (last.role === "user") last.content += steeringTrailer(body.preferences);
+  }
+
+  const system = [
+    {
+      type: "text",
+      text: getInstructions(),
+      cache_control: { type: "ephemeral" },
+    },
+    {
+      type: "text",
+      text: contextBlock({
+        targetLang,
+        supportLang,
+        profile: String(body.profile || "").slice(0, MAX_PROFILE_CHARS),
+        preferences: body.preferences,
+        memory: String(body.memory || "").slice(0, MAX_MEMORY_CHARS),
+        learnerFacts: String(body.learnerFacts || "").slice(0, MAX_LEARNER_FACTS_CHARS),
+      }),
+      cache_control: { type: "ephemeral" },
+    },
+  ];
+  return { system, messages, targetLang, supportLang };
+}
+
 exports.handler = async (event) => {
   try {
     if (event.httpMethod !== "POST") return { statusCode: 405, body: "" };
@@ -428,57 +479,10 @@ exports.handler = async (event) => {
       return json(200, { ok: true, count: rows.length });
     }
 
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return json(503, { error: "Tutor not configured (missing API key)" });
-    }
-
-    if (!tutorEnabled(body.email)) {
-      return json(403, { error: "The AI tutor is invite-only for now." });
-    }
-    if (!(await hasAccess(body.email))) {
-      return json(403, { error: "Anna needs an active subscription." });
-    }
-
-    const targetLang = String(body.targetLang || "").slice(0, 40);
-    const supportLang = String(body.supportLang || "").slice(0, 40);
-    if (!targetLang || !supportLang) return json(400, { error: "Missing languages" });
-
-    const rawMessages = Array.isArray(body.messages) ? body.messages : [];
-    if (!rawMessages.length) return json(400, { error: "Missing messages" });
-    if (rawMessages.length > MAX_MESSAGES) return json(400, { error: "Conversation too long" });
-
-    const messages = rawMessages.map((m) => ({
-      role: m.role === "assistant" ? "assistant" : "user",
-      content: String(m.content || "").slice(0, MAX_MESSAGE_CHARS),
-    }));
-    // The API requires the first message to be a user turn.
-    if (messages[0].role !== "user") messages.unshift({ role: "user", content: "(session start)" });
     const mode = body.mode === "summary" ? "summary" : "chat";
-    // Per-turn steering (chat only — the summary has its own closing turn).
-    if (mode === "chat") {
-      const last = messages[messages.length - 1];
-      if (last.role === "user") last.content += steeringTrailer(body.preferences);
-    }
-
-    const system = [
-      {
-        type: "text",
-        text: getInstructions(),
-        cache_control: { type: "ephemeral" },
-      },
-      {
-        type: "text",
-        text: contextBlock({
-          targetLang,
-          supportLang,
-          profile: String(body.profile || "").slice(0, MAX_PROFILE_CHARS),
-          preferences: body.preferences,
-          memory: String(body.memory || "").slice(0, MAX_MEMORY_CHARS),
-          learnerFacts: String(body.learnerFacts || "").slice(0, MAX_LEARNER_FACTS_CHARS),
-        }),
-        cache_control: { type: "ephemeral" },
-      },
-    ];
+    const built = await buildConversation(body, mode);
+    if (built.error) return json(built.error.status, built.error.body);
+    const { system, messages, targetLang, supportLang } = built;
 
     const client = getClient();
 
@@ -534,9 +538,15 @@ exports.handler = async (event) => {
         "(The session is over. Produce the end-of-session record as JSON. " +
         "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile.)",
     });
+    // No thinking pass on the record: it is extraction from a transcript
+    // the model already has, and the pass was most of the 20-40 s the
+    // learner used to wait at End session (Nekh 2026-09-21). Sonnet 5
+    // accepts an explicit disabled here; the JSON schema still constrains
+    // the output.
     const response = await client.messages.create({
       model: SUMMARY_MODEL,
       max_tokens: 2048,
+      thinking: { type: "disabled" },
       system,
       messages,
       output_config: { format: { type: "json_schema", schema: SUMMARY_SCHEMA } },
@@ -588,6 +598,12 @@ function json(statusCode, obj) {
 
 // For tests only (tests/unit/tutor_schema.test.mjs, tutor_prefs.test.mjs).
 exports.SUMMARY_SCHEMA = SUMMARY_SCHEMA;
+// For tutorStream.mjs (the streaming chat path shares every gate and prompt).
+exports.buildConversation = buildConversation;
+exports.getClient = getClient;
+exports.logTutorSession = logTutorSession;
+exports.costCents = costCents;
+exports.MODEL = MODEL;
 exports.contextBlock = contextBlock;
 exports.renderPreferences = renderPreferences;
 exports.steeringTrailer = steeringTrailer;
