@@ -227,8 +227,12 @@ async function hasAccess(email) {
 // dump as one line of raw JSON, and Anna treated them as background noise.
 // Rendered as explicit rules, in prose, and repeated per turn (see
 // `steeringTrailer`) so they hold across a long conversation.
-function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts, topics }) {
+function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts, topics, today }) {
   const lines = [
+    // Today's date, so the dated memory entries mean something: Anna can
+    // tell a five-day gap from yesterday and not quiz the learner on
+    // details they have since forgotten (Nekh 2026-09-24).
+    `TODAY: ${today || new Date().toISOString().slice(0, 10)}`,
     `TARGET LANGUAGE: ${targetLang}`,
     `SUPPORT LANGUAGE: ${supportLang}`,
     "",
@@ -342,7 +346,7 @@ const SUMMARY_SCHEMA = {
   properties: {
     sessionSummary: {
       type: "string",
-      description: "2-3 sentences: what was practiced, how it went.",
+      description: "2-3 sentences: what was practiced, how it went. Begin with the opener you used, e.g. 'Opened by asking about X — learner answered / did not remember / changed subject.' An opener recorded here is used up: it must not be repeated in a later session.",
     },
     wins: { type: "array", items: { type: "string" }, description: "Things the learner did well (max 3)." },
     struggles: {
@@ -383,7 +387,10 @@ const SUMMARY_SCHEMA = {
         "Words from the PERSONAL VOCABULARY block that you actually used in this session's conversation, in any inflected form. Write each in its dictionary form exactly as it appears in that block. Only words you used — an empty array if none. This is how the app counts repeat exposure toward adding the word to the learner's vocabulary, so be accurate in both directions.",
       items: { type: "string" },
     },
-    nextFocus: { type: "string", description: "The single most useful focus for the next session, one line." },
+    nextFocus: {
+      type: "string",
+      description: "The single most useful SKILL to work on next session, one line (a grammar point, a word family, a conversational move). Never a specific question to ask or a plot/content detail to revisit — those belong in sessionSummary. If this session's next focus was not taken up by the learner, choose a different one rather than carrying it over.",
+    },
     newLearnerFacts: {
       type: "array",
       description:

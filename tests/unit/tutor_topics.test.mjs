@@ -191,3 +191,18 @@ test("the topics summary schema extends the base schema", () => {
   // The base schema is untouched (non-beta learners get exactly what they had).
   assert.equal(tutorFn.SUMMARY_SCHEMA.properties.topic, undefined);
 });
+
+// --- Repeated-opener fix (Nekh 2026-09-24) -----------------------------------
+
+test("the context block starts with today's date so dated memory entries are meaningful", () => {
+  const base = { targetLang: "Portuguese", supportLang: "English", profile: "", preferences: {}, memory: "", learnerFacts: "" };
+  assert.match(tutorFn.contextBlock({ ...base, today: "2026-09-24" }), /^TODAY: 2026-09-24\n/);
+  assert.match(tutorFn.contextBlock(base), /^TODAY: \d{4}-\d{2}-\d{2}\n/);
+});
+
+test("the summary schema records the opener and keeps nextFocus a skill, not a question", () => {
+  const p = tutorFn.SUMMARY_SCHEMA.properties;
+  assert.match(p.sessionSummary.description, /opener/i);
+  assert.match(p.nextFocus.description, /SKILL/);
+  assert.match(p.nextFocus.description, /Never a specific question/);
+});
