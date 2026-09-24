@@ -54,6 +54,11 @@ test("buildConversation: 503 without the API key; otherwise normalised messages,
     assert.equal(out.messages[0].role, "user"); // API needs a user turn first
     assert.match(out.messages.at(-1).content, /^oi/);
     assert.ok(out.messages.at(-1).content.length > 2, "steering trailer appended on chat");
+    // History breakpoint: on the last assistant turn, never on a user turn
+    // (the steering trailer would break the prefix there).
+    const lastAssistant = out.messages.filter((m) => m.role === "assistant").at(-1);
+    assert.deepEqual(lastAssistant.content, [{ type: "text", text: "Olá", cache_control: { type: "ephemeral" } }]);
+    assert.ok(out.messages.every((m) => m.role !== "user" || typeof m.content === "string"));
     assert.equal(out.system.length, 2);
     assert.deepEqual(out.system[0].cache_control, { type: "ephemeral" });
     assert.match(out.system[1].text, /TARGET LANGUAGE: Portuguese/);
@@ -63,6 +68,19 @@ test("buildConversation: 503 without the API key; otherwise normalised messages,
       messages: [{ role: "user", content: "oi" }],
     }, "summary");
     assert.equal(summary.messages.at(-1).content, "oi", "no steering trailer on the summary");
+    assert.ok(summary.messages.every((m) => typeof m.content === "string"), "no assistant turn → no history marker");
+
+    // Only the LAST assistant turn carries the marker.
+    const long = await tutor.buildConversation({
+      email: "a@x.com", targetLang: "Portuguese", supportLang: "English",
+      messages: [
+        { role: "user", content: "oi" }, { role: "assistant", content: "Olá!" },
+        { role: "user", content: "tudo bem?" }, { role: "assistant", content: "Tudo." },
+        { role: "user", content: "ótimo" },
+      ],
+    }, "chat");
+    assert.equal(typeof long.messages[1].content, "string");
+    assert.equal(long.messages[3].content[0].cache_control.type, "ephemeral");
   } finally {
     globalThis.fetch = realFetch;
     if (saved.key === undefined) delete process.env.ANTHROPIC_API_KEY; else process.env.ANTHROPIC_API_KEY = saved.key;

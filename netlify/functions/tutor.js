@@ -494,6 +494,23 @@ async function buildConversation(body, mode) {
     const last = messages[messages.length - 1];
     if (last.role === "user") last.content += steeringTrailer(body.preferences);
   }
+  // Cache the conversation history too. The system blocks below are
+  // cached, but without a breakpoint in `messages` every turn re-bills the
+  // whole transcript at full input price. The marker goes on the LAST
+  // ASSISTANT turn, not the last user turn: the steering trailer above is
+  // appended server-side and never stored by the client, so the latest
+  // user message is resent without it next turn — a marker there would
+  // miss every time. Everything up to the last assistant turn is
+  // byte-identical across turns (and between the chat and the summary
+  // call), so it reads from cache at a tenth of the price.
+  for (let i = messages.length - 1; i >= 0; i--) {
+    if (messages[i].role !== "assistant") continue;
+    messages[i] = {
+      role: "assistant",
+      content: [{ type: "text", text: messages[i].content, cache_control: { type: "ephemeral" } }],
+    };
+    break;
+  }
 
   // Beta fields are honoured only for beta testers — a client that sends
   // them anyway gets the standard prompt and schema.
