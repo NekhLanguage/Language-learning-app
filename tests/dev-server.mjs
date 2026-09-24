@@ -175,10 +175,13 @@ async function handleFunction(name, req, res, url) {
       // allowlist shape; chat mode echoes; summary mode returns one fake new
       // word so the personal-vocab path is exercised.
       if (body.mode === "ping") {
-        if (!email) return sendJson(res, 200, { allowed: false, vocabWriteback: false, reason: "unauthenticated" });
+        if (!email) return sendJson(res, 200, { allowed: false, vocabWriteback: false, beta: {}, reason: "unauthenticated" });
         const subscribed = !email.includes("noaccess") && !email.includes("nosub");
-        // vocabWriteback mirrors production's ships-OFF default.
-        return sendJson(res, 200, { allowed: subscribed, vocabWriteback: false, subscribed });
+        // vocabWriteback mirrors production's ships-OFF default. Beta
+        // features (production: BETA_EMAILS) are on for emails containing
+        // "beta", e.g. beta@example.com.
+        const beta = { topics: subscribed && email.includes("beta") };
+        return sendJson(res, 200, { allowed: subscribed, vocabWriteback: false, subscribed, beta });
       }
       if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
       if (body.mode === "admissions") {
@@ -225,6 +228,26 @@ async function handleFunction(name, req, res, url) {
             // path is exercised offline.
             newLearnerFacts: ["Dev-stub learner facts write-path is wired."],
             correctedLearnerFacts: [],
+            // Topics beta: the real function adds these only when the
+            // request carries `topics`. The stub keeps the active topic
+            // (ACTIVE TOPIC id in the block), or starts "Dev stub topic"
+            // for a free conversation, and proposes one parent topic.
+            ...(typeof body.topics === "string" ? (() => {
+              const active = /ACTIVE TOPIC: "[^"]*" \(id ([^)]+)\)/.exec(body.topics)?.[1] || "";
+              const ids = [...body.topics.matchAll(/^\s*- (t_\S+) — /gm)].map((m) => m[1]);
+              return {
+                topic: {
+                  assignedTopicId: active,
+                  newTopicName: active ? "" : "Dev stub topic",
+                  topicNotes: "Dev-stub topic notes: talked about chapter 1.",
+                },
+                proposedTopics: [{
+                  name: "Books in general",
+                  question: "Should I group these under a broader topic, Books in general?",
+                  groupsTopicIds: ids,
+                }],
+              };
+            })() : {}),
           },
         });
       }

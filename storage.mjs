@@ -3,7 +3,7 @@
 // for the persisted `zth_user` blob. Pure functions — app.js owns the actual
 // localStorage reads/writes, unit tests exercise the logic directly.
 
-export const CURRENT_SCHEMA_VERSION = 4;
+export const CURRENT_SCHEMA_VERSION = 5;
 
 export const USER_KEY = "zth_user";
 export const USER_BACKUP_KEY = "zth_user_backup";
@@ -121,6 +121,19 @@ export function migrateUserState(user) {
     if (!user.tutor.prefs || typeof user.tutor.prefs !== "object") user.tutor.prefs = {};
     if (!user.tutor.memory || typeof user.tutor.memory !== "object") user.tutor.memory = {};
     user.schemaVersion = 4;
+  }
+
+  if (user.schemaVersion < 5) {
+    // v4 → v5: conversation topics for Anna (beta). User-level, like
+    // learnerFacts — a subject is the same subject in every language.
+    // `tutor.topics` holds the topic list (see tutor_topics.mjs);
+    // `tutor.topicProposals` the broader topics Anna suggested that the
+    // learner hasn't answered yet. Session records gain an optional
+    // `topicId`; older records simply have none.
+    if (!user.tutor || typeof user.tutor !== "object") user.tutor = {};
+    if (!Array.isArray(user.tutor.topics)) user.tutor.topics = [];
+    if (!Array.isArray(user.tutor.topicProposals)) user.tutor.topicProposals = [];
+    user.schemaVersion = 5;
   }
 
   return user;
