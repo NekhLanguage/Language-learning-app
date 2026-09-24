@@ -2516,6 +2516,86 @@ a.secondary.locked {
   color: #fff;
 }
 
+/* Conversation topics (beta): the picker shown before a conversation and
+   Anna's yes/no topic proposals. */
+.tutor-topics {
+  align-self: stretch;
+  background: var(--glass-bg-strong);
+  border-radius: var(--r-sm);
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.tutor-topics-title {
+  margin: 0;
+  font-weight: 700;
+}
+
+.tutor-topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tutor-topic-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tutor-topic {
+  flex: 1;
+  text-align: start;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.tutor-topic-remove {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 4px 8px;
+  box-shadow: none;
+}
+
+.tutor-topic-remove:hover {
+  color: #fb7185;
+  transform: none;
+  box-shadow: none;
+}
+
+.tutor-topic-new {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tutor-topic-new input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--r-sm);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  font: inherit;
+}
+
+.tutor-topic-new input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.tutor-topic-proposal p {
+  margin: 0 0 0.6rem;
+}
+
+.tutor-topic-proposal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .tutor-lang-choices {
   display: flex;
   flex-direction: column;

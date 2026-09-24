@@ -9,6 +9,11 @@
 // The summary powers the app-side session memory and personal-vocabulary
 // tracking; structured outputs guarantee it parses.
 //
+// Beta features (BETA_EMAILS, see betaFeatures) add fields on top: chat and
+// summary take `topics` (the learner's conversation topics, rendered by
+// tutor_topics.mjs) and the summary then also files the session under a
+// topic and may propose new ones.
+//
 // Identity comes from the Supabase session token (Authorization: Bearer),
 // never from the body; Anna additionally needs an active subscription
 // (users.access_until). TUTOR_ALLOWED_EMAILS is an optional test-time
@@ -101,6 +106,8 @@ const MAX_LEARNER_FACTS_CHARS = 6000;
 // The learner's free-text instructions for Anna (tutor.html settings panel;
 // the client caps at the same length).
 const MAX_NOTE_CHARS = 1000;
+// The conversation-topics block (beta). Client-rendered; bounded there too.
+const MAX_TOPICS_CHARS = 6000;
 
 let cachedClient = null;
 function getClient() {
@@ -159,6 +166,32 @@ function writebackEnabled(email) {
   return allowlist.includes(normalized);
 }
 
+// Beta testers (BETA_EMAILS, Netlify env var): a comma-separated list of
+// learners who get every feature still in beta. Unset or empty means
+// NOBODY — a beta feature ships dark. "*" opens beta to every tutor user;
+// adding a tester needs no deploy. One list for all beta features, so a
+// new feature is one more key here, not one more env var. The client
+// reads the result via ping and the server re-checks it on every request
+// that uses a beta field, so the flag is never just a hidden button.
+const BETA_FEATURE_KEYS = ["topics"];
+
+function betaTester(email) {
+  const normalized = String(email || "").toLowerCase().trim();
+  if (!normalized) return false;
+  const allowlist = (process.env.BETA_EMAILS || "")
+    .split(",")
+    .map((e) => e.toLowerCase().trim())
+    .filter(Boolean);
+  if (!allowlist.length) return false;
+  if (allowlist.includes("*")) return true;
+  return allowlist.includes(normalized);
+}
+
+function betaFeatures(email) {
+  const on = betaTester(email);
+  return Object.fromEntries(BETA_FEATURE_KEYS.map((k) => [k, on]));
+}
+
 // Anna needs an active subscription (users.access_until — see
 // migrations/users_access_until.sql), not just a `users` row: a learner
 // whose window has lapsed keeps the app and sees Anna greyed out.
@@ -194,8 +227,8 @@ async function hasAccess(email) {
 // dump as one line of raw JSON, and Anna treated them as background noise.
 // Rendered as explicit rules, in prose, and repeated per turn (see
 // `steeringTrailer`) so they hold across a long conversation.
-function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts }) {
-  return [
+function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts, topics }) {
+  const lines = [
     `TARGET LANGUAGE: ${targetLang}`,
     `SUPPORT LANGUAGE: ${supportLang}`,
     "",
@@ -209,6 +242,23 @@ function contextBlock({ targetLang, supportLang, profile, preferences, memory, l
     "",
     "=== MEMORY (previous sessions, most recent first) ===",
     memory || "(empty — this is the first session)",
+  ];
+  if (topics) lines.push("", renderTopicsBlock(topics));
+  return lines.join("\n");
+}
+
+// Conversation topics (beta). Only rendered for beta testers, so every
+// other learner's prompt is byte-identical to before the feature.
+function renderTopicsBlock(topics) {
+  return [
+    "=== CONVERSATION TOPICS (the learner groups conversations into topics) ===",
+    topics,
+    "",
+    "How to use topics:",
+    "- With an active topic, this conversation continues it: use your notes and the recent sessions to pick up where you left off (what was read or watched, opinions given, what you promised to come back to) and keep the conversation on that subject unless the learner steers away.",
+    "- With no active topic, talk about whatever the learner brings; the session is filed at the end.",
+    "- You may ask the learner ONE short question about organising topics when it genuinely helps — e.g. the conversation has moved to a subject that deserves its own topic, or several topics share a broader theme (several specific manga -> \"Books and reading\"). Ask at a natural pause, in the support language, at most once per session, and never interrupt a correction to do it.",
+    "- You cannot create, rename or move topics mid-conversation. Never claim you have. Changes happen through the end-of-session record, and a new broader topic is only created once the learner says yes.",
   ].join("\n");
 }
 
@@ -359,6 +409,56 @@ const SUMMARY_SCHEMA = {
   additionalProperties: false,
 };
 
+// Summary schema for beta testers with topics on: the base record plus
+// where to file the session and any broader topics to propose. Same
+// structured-outputs subset rules as SUMMARY_SCHEMA.
+const TOPIC_SUMMARY_FIELDS = {
+  topic: {
+    type: "object",
+    description: "Where this session is filed in the learner's CONVERSATION TOPICS.",
+    properties: {
+      assignedTopicId: {
+        type: "string",
+        description: "The id (from ALL TOPICS) of the topic this conversation was about. Normally the ACTIVE TOPIC; a different existing id only if the conversation clearly moved to that subject. Empty string if no existing topic fits.",
+      },
+      newTopicName: {
+        type: "string",
+        description: "Only when assignedTopicId is empty AND the conversation had one clear subject worth returning to: a short name for a new topic (1-4 words, e.g. \"One Piece\", \"Cooking\"). Otherwise empty string. Small talk is not a topic.",
+      },
+      topicNotes: {
+        type: "string",
+        description: "Your updated running notes for the assigned or new topic, replacing the old notes: keep what still matters from the old notes and add what was learned this session (titles, chapters, characters, the learner's opinions, what to come back to). Plain prose, max ~150 words. Empty string if the session is not filed under a topic.",
+      },
+    },
+    required: ["assignedTopicId", "newTopicName", "topicNotes"],
+    additionalProperties: false,
+  },
+  proposedTopics: {
+    type: "array",
+    description: "New topics to ask the learner about — usually a broader topic grouping several existing ones (e.g. \"Books and reading\" over two specific manga), or a subject that came up but deserves its own topic. The app asks the learner each question; nothing is created unless they say yes. Empty array when nothing is worth proposing — most sessions. At most 2.",
+    items: {
+      type: "object",
+      properties: {
+        name: { type: "string", description: "Short topic name, 1-4 words." },
+        question: { type: "string", description: "The yes/no question the app shows the learner, in the support language, one sentence." },
+        groupsTopicIds: {
+          type: "array",
+          items: { type: "string" },
+          description: "Ids of existing topics that would sit under this new one. Empty array if none.",
+        },
+      },
+      required: ["name", "question", "groupsTopicIds"],
+      additionalProperties: false,
+    },
+  },
+};
+
+const SUMMARY_SCHEMA_WITH_TOPICS = {
+  ...SUMMARY_SCHEMA,
+  properties: { ...SUMMARY_SCHEMA.properties, ...TOPIC_SUMMARY_FIELDS },
+  required: [...SUMMARY_SCHEMA.required, "topic", "proposedTopics"],
+};
+
 // Everything a model call needs, or the error to send instead. Shared by
 // the classic handler below and the streaming function (tutorStream.mjs).
 // `body.email` must already be the verified session identity.
@@ -388,6 +488,12 @@ async function buildConversation(body, mode) {
     if (last.role === "user") last.content += steeringTrailer(body.preferences);
   }
 
+  // Beta fields are honoured only for beta testers — a client that sends
+  // them anyway gets the standard prompt and schema.
+  const topics = betaFeatures(body.email).topics && typeof body.topics === "string"
+    ? body.topics.trim().slice(0, MAX_TOPICS_CHARS)
+    : "";
+
   const system = [
     {
       type: "text",
@@ -403,11 +509,12 @@ async function buildConversation(body, mode) {
         preferences: body.preferences,
         memory: String(body.memory || "").slice(0, MAX_MEMORY_CHARS),
         learnerFacts: String(body.learnerFacts || "").slice(0, MAX_LEARNER_FACTS_CHARS),
+        topics,
       }),
       cache_control: { type: "ephemeral" },
     },
   ];
-  return { system, messages, targetLang, supportLang };
+  return { system, messages, targetLang, supportLang, topicsOn: !!topics };
 }
 
 exports.handler = async (event) => {
@@ -426,9 +533,11 @@ exports.handler = async (event) => {
     // 401 here would trip the e2e harness's failed-request detector), never
     // calls the model, and doesn't require the API key to be configured.
     if (body.mode === "ping") {
-      if (!session) return json(200, { allowed: false, vocabWriteback: false, reason: "unauthenticated" });
+      if (!session) return json(200, { allowed: false, vocabWriteback: false, beta: {}, reason: "unauthenticated" });
       const allowed = tutorEnabled(body.email) && (await hasAccess(body.email));
-      return json(200, { allowed, vocabWriteback: allowed && writebackEnabled(body.email) });
+      const beta = betaFeatures(body.email);
+      if (!allowed) for (const k of Object.keys(beta)) beta[k] = false;
+      return json(200, { allowed, vocabWriteback: allowed && writebackEnabled(body.email), beta });
     }
 
     if (!session) return unauthorizedResponse();
@@ -482,7 +591,7 @@ exports.handler = async (event) => {
     const mode = body.mode === "summary" ? "summary" : "chat";
     const built = await buildConversation(body, mode);
     if (built.error) return json(built.error.status, built.error.body);
-    const { system, messages, targetLang, supportLang } = built;
+    const { system, messages, targetLang, supportLang, topicsOn } = built;
 
     const client = getClient();
 
@@ -536,7 +645,9 @@ exports.handler = async (event) => {
       role: "user",
       content:
         "(The session is over. Produce the end-of-session record as JSON. " +
-        "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile.)",
+        "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile." +
+        (topicsOn ? " File the session under the learner's CONVERSATION TOPICS and propose new topics only if genuinely useful." : "") +
+        ")",
     });
     // No thinking pass on the record: it is extraction from a transcript
     // the model already has, and the pass was most of the 20-40 s the
@@ -549,7 +660,7 @@ exports.handler = async (event) => {
       thinking: { type: "disabled" },
       system,
       messages,
-      output_config: { format: { type: "json_schema", schema: SUMMARY_SCHEMA } },
+      output_config: { format: { type: "json_schema", schema: topicsOn ? SUMMARY_SCHEMA_WITH_TOPICS : SUMMARY_SCHEMA } },
     });
     logTutorSession({
       user_email: String(body.email || "").toLowerCase().trim(),
@@ -598,6 +709,7 @@ function json(statusCode, obj) {
 
 // For tests only (tests/unit/tutor_schema.test.mjs, tutor_prefs.test.mjs).
 exports.SUMMARY_SCHEMA = SUMMARY_SCHEMA;
+exports.SUMMARY_SCHEMA_WITH_TOPICS = SUMMARY_SCHEMA_WITH_TOPICS;
 // For tutorStream.mjs (the streaming chat path shares every gate and prompt).
 exports.buildConversation = buildConversation;
 exports.getClient = getClient;
@@ -608,3 +720,4 @@ exports.contextBlock = contextBlock;
 exports.renderPreferences = renderPreferences;
 exports.steeringTrailer = steeringTrailer;
 exports.tutorEnabled = tutorEnabled;
+exports.betaFeatures = betaFeatures;

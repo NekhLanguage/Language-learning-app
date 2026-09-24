@@ -7,6 +7,8 @@
 //   USER.tutor.memory[lang]   — bounded end-of-session records
 //   USER.runs[lang].personalVocab / pendingAdmission — tutor vocabulary
 //   USER.learnerFacts         — cross-language identity facts
+//   USER.tutor.topics         — conversation topics (beta, schema v5;
+//                               see tutor_topics.mjs)
 // All of it rides the same localStorage + Supabase persist path as app.js, so
 // a deploy, a cleared cache or a new device never loses Anna's instructions.
 // Device-local keys are kept only as (a) a one-time migration source for
@@ -24,6 +26,18 @@ import {
   applyTutorLearnerFacts,
   removeLearnerFact,
 } from "./learner_facts.mjs";
+import {
+  orderedTopics,
+  findTopic,
+  createTopic,
+  removeTopic,
+  renderTopicsText,
+  applyTopicSummary,
+  queueTopicProposals,
+  getTopicProposals,
+  acceptTopicProposal,
+  dismissTopicProposal,
+} from "./tutor_topics.mjs";
 
 const VOCAB_FILES = [
   "adjectives.json", "connectors.json", "directions_positions.json",
@@ -94,6 +108,11 @@ const state = {
   // Vocabulary write-back cohort flag. Plumbing only for now — resolved at
   // session start, gates nothing until the admission logic ships.
   vocabWriteback: false,
+  // Beta features this learner is in (server BETA_EMAILS, via ping).
+  beta: { topics: false },
+  // The conversation topic picked for the current conversation (beta).
+  topicId: null,
+  topicPicker: null, // the picker element while it is on screen
 };
 
 // --- Device-local keys ------------------------------------------------------
@@ -265,22 +284,23 @@ async function persistUser() {
 // Server-side allowlist (TUTOR_VOCAB_WRITEBACK_EMAILS, same pattern as
 // tutor access itself) so Nekh can add beta users without a deploy; the
 // localStorage override exists for local iteration only.
-async function resolveWritebackFlag() {
+// The same ping also returns the beta features this learner is in
+// (BETA_EMAILS); the server re-checks them on every request.
+async function resolveFlags() {
   const override = localStorage.getItem("zth_tutor_writeback_override");
-  if (override === "on") return true;
-  if (override === "off") return false;
+  let data = {};
   try {
     const res = await authFetch("/.netlify/functions/tutor", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ mode: "ping" }),
     });
-    if (!res.ok) return false;
-    const data = await res.json();
-    return data.vocabWriteback === true;
+    if (res.ok) data = await res.json();
   } catch {
-    return false;
+    // offline or unreachable: no write-back, no beta
   }
+  const vocabWriteback = override === "on" ? true : override === "off" ? false : data.vocabWriteback === true;
+  return { vocabWriteback, beta: { topics: data.beta?.topics === true } };
 }
 
 // --- Preferences ------------------------------------------------------------
@@ -434,7 +454,10 @@ function addMessage(role, text) {
   div.className = `tutor-msg ${role}`;
   div.dir = "auto";
   div.textContent = text;
-  els.chat.appendChild(div);
+  // The topic picker (beta) stays the last thing in the chat while it is
+  // open; status lines that land meanwhile go above it.
+  if (state.topicPicker?.isConnected) els.chat.insertBefore(div, state.topicPicker);
+  else els.chat.appendChild(div);
   els.chat.scrollTop = els.chat.scrollHeight;
   return div;
 }
@@ -464,7 +487,7 @@ function clearDraft() {
 }
 
 function saveLiveTranscript() {
-  writeJson(liveKey(), state.messages.length ? { at: Date.now(), messages: state.messages } : null);
+  writeJson(liveKey(), state.messages.length ? { at: Date.now(), messages: state.messages, topicId: state.topicId } : null);
 }
 
 function clearLiveTranscript() {
@@ -545,8 +568,8 @@ async function loadForms() {
 
 // --- Tutor requests ---------------------------------------------------------
 
-function buildRequestBody(mode, messages = state.messages) {
-  return {
+function buildRequestBody(mode, messages = state.messages, { topicId = state.topicId } = {}) {
+  const body = {
     mode,
     email: state.email,
     targetLang: state.targetLabel,
@@ -570,14 +593,18 @@ function buildRequestBody(mode, messages = state.messages) {
     learnerFacts: renderLearnerFactsText(getLearnerFacts(state.user)),
     messages,
   };
+  // Beta: the learner's conversation topics and the one this conversation
+  // is about. The server ignores the field for non-beta accounts.
+  if (state.beta.topics) body.topics = renderTopicsText(state.user, topicId, tutorMemory().sessions);
+  return body;
 }
 
 // Calls the tutor function with retries. Network errors, timeouts and
 // server-side failures (5xx, 429) are retried with a short backoff; a
 // definite rejection (bad request, no access, missing API key) is not.
 // Callers never see a transient failure unless every attempt failed.
-async function callTutor(mode, messages) {
-  const body = JSON.stringify(buildRequestBody(mode, messages));
+async function callTutor(mode, messages, opts) {
+  const body = JSON.stringify(buildRequestBody(mode, messages, opts));
   let lastErr = null;
   for (let attempt = 0; attempt < TUTOR_ATTEMPTS; attempt++) {
     if (attempt) await sleep(TUTOR_BACKOFF_MS[attempt - 1] ?? TUTOR_BACKOFF_MS.at(-1));
@@ -702,6 +729,8 @@ function addTypingIndicator() {
 async function sendMessage() {
   const text = els.input.value.trim();
   if (!text || state.busy) return;
+  // Typing without picking a topic is a free conversation.
+  closeTopicPicker();
 
   let bubble;
   if (state.pending) {
@@ -891,7 +920,9 @@ async function endSession() {
     state.pending = null;
     clearLiveTranscript();
     els.chat.innerHTML = "";
+    state.topicPicker = null;
     addMessage("status", "Session cleared.");
+    showTopicPicker();
     return;
   }
 
@@ -905,6 +936,7 @@ async function endSession() {
   const when = todayStamp();
   const messages = state.messages.slice();
   const record = fallbackSessionRecord(messages, when);
+  if (state.beta.topics) record.topicId = findTopic(state.user, state.topicId) ? state.topicId : null;
   let saved;
   try {
     pushSessionRecord(record);
@@ -912,6 +944,7 @@ async function endSession() {
     state.pending = null;
     clearLiveTranscript();
     els.chat.innerHTML = "";
+    state.topicPicker = null;
     await persistUser();
     saved = addMessage("status", "Session saved. Anna is writing her notes…");
   } catch (err) {
@@ -928,16 +961,19 @@ async function endSession() {
   setBusy(false);
   els.input.focus();
 
-  writeSessionNotes(record, messages, when, saved).catch((err) => console.warn("tutor: session notes:", err));
+  const topicId = record.topicId || null;
+  // Next conversation: pick again (beta; no-op otherwise).
+  showTopicPicker();
+  writeSessionNotes(record, messages, when, saved, topicId).catch((err) => console.warn("tutor: session notes:", err));
 }
 
 // Background half of End session: ask Anna for the structured record,
 // swap it into the saved session, apply the vocabulary and facts, sync.
-async function writeSessionNotes(record, messages, when, savedLine) {
+async function writeSessionNotes(record, messages, when, savedLine, topicId = null) {
   let summary = null;
   let failure = "";
   try {
-    const data = await callTutor("summary", messages);
+    const data = await callTutor("summary", messages, { topicId });
     summary = data.summary || null;
     if (!summary) failure = data.truncated ? "notes came back cut off" : data.refused ? "notes were declined" : "no notes came back";
   } catch (err) {
@@ -960,10 +996,12 @@ async function writeSessionNotes(record, messages, when, savedLine) {
   }
   if (!stillPending) return;
   let admissions;
+  let topicNote;
   try {
     Object.assign(record, sessionRecordFromSummary(summary, when));
     delete record.pending;
     ({ admissions } = await applySummary(summary, messages, when));
+    topicNote = applyTopics(record, summary, topicId, when);
     await persistUser();
   } catch (err) {
     console.error("tutor: applying session notes failed:", err);
@@ -971,6 +1009,7 @@ async function writeSessionNotes(record, messages, when, savedLine) {
     return;
   }
   say("Session saved. Your tutor will remember this next time.");
+  if (topicNote) addMessage("status", topicNote);
   if (summary.nextFocus) addMessage("status", `Next focus: ${summary.nextFocus}`);
   const added = (summary.newWords || []).length;
   if (added) addMessage("status", `New words added to your personal vocabulary: ${added}.`);
@@ -980,6 +1019,18 @@ async function writeSessionNotes(record, messages, when, savedLine) {
       `Added to your app vocabulary (seen in 3 sessions): ${admissions.map((a) => a.word).join(", ")}.`
     );
   }
+  renderTopicProposals();
+}
+
+// Beta: file the session under a topic and queue Anna's proposals. Returns
+// the line to show the learner ("" when topics are off or nothing filed).
+function applyTopics(record, summary, chosenId, when) {
+  if (!state.beta.topics || !summary.topic) return "";
+  const { topicId, created } = applyTopicSummary(state.user, record, summary.topic, chosenId, when);
+  queueTopicProposals(state.user, summary.proposedTopics, when);
+  if (created) return `Anna started a new topic for this conversation: ${created.name}.`;
+  const topic = findTopic(state.user, topicId);
+  return topic ? `Filed under your topic: ${topic.name}.` : "";
 }
 
 // Sessions saved without Anna's notes (see fallbackSessionRecord) get their
@@ -994,10 +1045,11 @@ async function retryPendingSummaries() {
     record.pending.attempts = (record.pending.attempts || 0) + 1;
     changed = true;
     try {
-      const data = await callTutor("summary", record.pending.messages);
+      const data = await callTutor("summary", record.pending.messages, { topicId: record.topicId || null });
       if (!data.summary) throw new Error("no summary");
       Object.assign(record, sessionRecordFromSummary(data.summary, record.when));
       await applySummary(data.summary, record.pending.messages, record.when);
+      applyTopics(record, data.summary, record.topicId || null, record.when);
       delete record.pending;
       addMessage("status", `Anna finished her notes from ${record.when}.`);
     } catch (err) {
@@ -1009,6 +1061,155 @@ async function retryPendingSummaries() {
     }
   }
   if (changed) await persistUser();
+  if (changed) renderTopicProposals();
+}
+
+// --- Conversation topics (beta) ---------------------------------------------
+// Before a conversation starts the learner picks what it is about: one of
+// their topics, a new one, or a free conversation. Anna files the session
+// at the end and may propose broader topics, which are asked here as
+// yes/no questions.
+
+function topicLabel() {
+  const topic = findTopic(state.user, state.topicId);
+  els.langLabel.textContent = `· ${state.targetLabel}${topic ? ` · ${topic.name}` : ""}`;
+}
+
+function closeTopicPicker() {
+  if (state.topicPicker) state.topicPicker.remove();
+  state.topicPicker = null;
+}
+
+function pickTopic(topic) {
+  closeTopicPicker();
+  state.topicId = topic ? topic.id : null;
+  topicLabel();
+  if (topic) {
+    addMessage("status", topic.notes
+      ? `Topic: ${topic.name}. Anna will pick up where you left off — say hi to start.`
+      : `Topic: ${topic.name}. Say hi to start.`);
+  } else {
+    addMessage("status", `Free conversation. Say hi to start — Anna files it under a topic at the end if it has one.`);
+  }
+  els.input.focus();
+}
+
+function showTopicPicker() {
+  if (!state.beta.topics || state.messages.length) return;
+  closeTopicPicker();
+  state.topicId = null;
+  topicLabel();
+  const box = document.createElement("div");
+  box.className = "tutor-topics";
+  box.id = "tutor-topics";
+  const h = document.createElement("p");
+  h.className = "tutor-topics-title";
+  h.innerHTML = 'What do you want to talk about? <span class="beta-badge">BETA</span>';
+  box.appendChild(h);
+
+  const list = document.createElement("div");
+  list.className = "tutor-topics-list";
+  for (const { topic, depth } of orderedTopics(state.user)) {
+    const row = document.createElement("div");
+    row.className = "tutor-topic-row";
+    row.style.marginInlineStart = `${Math.min(depth, 3) * 1.25}rem`;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "tutor-btn secondary tutor-topic";
+    b.dataset.topicId = topic.id;
+    b.textContent = topic.sessions ? `${topic.name} · ${topic.sessions}` : topic.name;
+    b.title = topic.notes || "No conversations yet";
+    b.addEventListener("click", () => pickTopic(topic));
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "tutor-topic-remove";
+    del.textContent = "✕";
+    del.setAttribute("aria-label", `Delete topic: ${topic.name}`);
+    del.addEventListener("click", () => {
+      if (!confirm(`Delete the topic "${topic.name}"? Anna forgets her notes on it. Your saved sessions stay.`)) return;
+      removeTopic(state.user, topic.id);
+      persistUser();
+      showTopicPicker();
+    });
+    row.append(b, del);
+    list.appendChild(row);
+  }
+  box.appendChild(list);
+
+  const free = document.createElement("button");
+  free.type = "button";
+  free.className = "tutor-btn secondary tutor-topic-free";
+  free.textContent = "Just chat (no topic)";
+  free.addEventListener("click", () => pickTopic(null));
+  box.appendChild(free);
+
+  const form = document.createElement("form");
+  form.className = "tutor-topic-new";
+  const input = document.createElement("input");
+  input.type = "text";
+  input.maxLength = 60;
+  input.placeholder = "New topic, e.g. One Piece";
+  input.setAttribute("aria-label", "New topic name");
+  const add = document.createElement("button");
+  add.type = "submit";
+  add.className = "tutor-btn";
+  add.textContent = "Start topic";
+  form.append(input, add);
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const topic = createTopic(state.user, input.value, { when: todayStamp() });
+    if (!topic) {
+      input.focus();
+      return;
+    }
+    persistUser();
+    pickTopic(topic);
+  });
+  box.appendChild(form);
+
+  els.chat.appendChild(box);
+  state.topicPicker = box;
+  els.chat.scrollTop = els.chat.scrollHeight;
+}
+
+// Anna's proposed topics, asked one question at a time.
+function renderTopicProposals() {
+  if (!state.beta.topics) return;
+  document.getElementById("tutor-topic-proposal")?.remove();
+  const proposals = getTopicProposals(state.user);
+  if (!proposals.length) return;
+  const p = proposals[0];
+  const box = document.createElement("div");
+  box.className = "tutor-msg assistant tutor-topic-proposal";
+  box.id = "tutor-topic-proposal";
+  box.dir = "auto";
+  const q = document.createElement("p");
+  q.textContent = p.question;
+  const yes = document.createElement("button");
+  yes.type = "button";
+  yes.className = "tutor-btn";
+  yes.textContent = `Yes, add "${p.name}"`;
+  const no = document.createElement("button");
+  no.type = "button";
+  no.className = "tutor-btn secondary";
+  no.textContent = "No thanks";
+  const answer = (accept) => {
+    const topic = accept ? acceptTopicProposal(state.user, 0, todayStamp()) : (dismissTopicProposal(state.user, 0), null);
+    box.remove();
+    if (topic) addMessage("status", `New topic: ${topic.name}.`);
+    persistUser();
+    if (state.topicPicker) showTopicPicker();
+    renderTopicProposals();
+  };
+  yes.addEventListener("click", () => answer(true));
+  no.addEventListener("click", () => answer(false));
+  const actions = document.createElement("div");
+  actions.className = "tutor-topic-proposal-actions";
+  actions.append(yes, no);
+  box.append(q, actions);
+  if (state.topicPicker) els.chat.insertBefore(box, state.topicPicker);
+  else els.chat.appendChild(box);
+  els.chat.scrollTop = els.chat.scrollHeight;
 }
 
 // Standing rule: the build version is visible on every surface. The tutor
@@ -1126,9 +1327,13 @@ async function startWithRun(targetLang, run) {
   if (merged.added) needsPersist = true;
   if (needsPersist) persistUser();
 
-  // Plumbing only: the flag is resolved and stored, but nothing gates on it
-  // until the admission logic ships.
-  resolveWritebackFlag().then((on) => { state.vocabWriteback = on; });
+  // Write-back cohort + beta features. Non-blocking: the chat is usable
+  // at once; the topic picker appears when the answer lands (and only if
+  // the conversation hasn't started by then).
+  const flagsReady = resolveFlags().then((flags) => {
+    state.vocabWriteback = flags.vocabWriteback;
+    state.beta = flags.beta;
+  });
 
   const mem = tutorMemory();
   if (mem.sessions.length && mem.sessions[0].nextFocus) {
@@ -1140,6 +1345,7 @@ async function startWithRun(targetLang, run) {
   const live = readJson(liveKey(), null);
   if (Array.isArray(live?.messages) && live.messages.length) {
     state.messages = live.messages.filter((m) => m && typeof m.content === "string");
+    state.topicId = typeof live.topicId === "string" ? live.topicId : null;
     renderTranscript(state.messages);
     const when = live.at ? new Date(live.at).toLocaleDateString() : "earlier";
     addMessage("status", `Picked up your unfinished conversation from ${when}. Keep going, or press End session to save it.`);
@@ -1178,8 +1384,19 @@ async function startWithRun(targetLang, run) {
   els.memoryClose.addEventListener("click", closeMemory);
   els.input.focus();
 
+  flagsReady.then(() => {
+    if (!state.beta.topics) return;
+    topicLabel();
+    renderTopicProposals();
+    // First visit: the setup panel is open; the picker waits behind it.
+    showTopicPicker();
+  });
+
   // Background: finish any session records Anna could not write earlier.
-  retryPendingSummaries().catch((err) => console.warn("tutor: pending summaries:", err));
+  // After the flags, so a retried record is filed under its topic.
+  flagsReady
+    .then(() => retryPendingSummaries())
+    .catch((err) => console.warn("tutor: pending summaries:", err));
 }
 
 init();

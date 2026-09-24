@@ -126,7 +126,7 @@ test("v2 → v3 seeds an empty user-level learnerFacts array", () => {
     runs: { pt: { released: [], personalVocab: [], pendingAdmission: [] } },
   };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 4);
+  assert.equal(migrated.schemaVersion, 5);
   assert.deepEqual(migrated.learnerFacts, []);
   // Existing run-level state is untouched.
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
@@ -140,24 +140,24 @@ test("v2 → v3 preserves an already-populated learnerFacts", () => {
     learnerFacts: [{ text: "learner is Norwegian", source: "tutor", addedAt: "2026-08-16" }],
   };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 4);
+  assert.equal(migrated.schemaVersion, 5);
   assert.equal(migrated.learnerFacts.length, 1);
   assert.equal(migrated.learnerFacts[0].text, "learner is Norwegian");
 });
 
-test("full migration path v0 → v4 stamps every field once", () => {
+test("full migration path v0 → v5 stamps every field once", () => {
   const user = validUser();
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 4);
+  assert.equal(migrated.schemaVersion, 5);
   assert.deepEqual(migrated.learnerFacts, []);
-  assert.deepEqual(migrated.tutor, { prefs: {}, memory: {} });
+  assert.deepEqual(migrated.tutor, { prefs: {}, memory: {}, topics: [], topicProposals: [] });
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
 });
 
 test("v3 → v4 seeds the synced tutor store without touching existing prefs", () => {
   const fresh = migrateUserState({ id: "u1", schemaVersion: 3, runs: {}, learnerFacts: [] });
-  assert.equal(fresh.schemaVersion, 4);
-  assert.deepEqual(fresh.tutor, { prefs: {}, memory: {} });
+  assert.equal(fresh.schemaVersion, 5);
+  assert.deepEqual(fresh.tutor, { prefs: {}, memory: {}, topics: [], topicProposals: [] });
 
   // A blob written by a newer client that already carries tutor prefs keeps them.
   const kept = migrateUserState({
@@ -173,6 +173,29 @@ test("v3 → v4 seeds the synced tutor store without touching existing prefs", (
   // Running the migration twice is a no-op.
   const again = migrateUserState(JSON.parse(JSON.stringify(kept)));
   assert.deepEqual(again, kept);
+});
+
+test("v4 → v5 seeds the topics store and keeps existing tutor state", () => {
+  const fresh = migrateUserState({ id: "u1", schemaVersion: 4, runs: {}, learnerFacts: [], tutor: { prefs: {}, memory: {} } });
+  assert.equal(fresh.schemaVersion, 5);
+  assert.deepEqual(fresh.tutor.topics, []);
+  assert.deepEqual(fresh.tutor.topicProposals, []);
+
+  // A v4 blob with no tutor field at all still gets one.
+  const bare = migrateUserState({ id: "u2", schemaVersion: 4, runs: {}, learnerFacts: [] });
+  assert.deepEqual(bare.tutor.topics, []);
+
+  // Topics already written (a newer client) survive, and a rerun is a no-op.
+  const kept = migrateUserState({
+    id: "u3",
+    schemaVersion: 4,
+    runs: {},
+    learnerFacts: [],
+    tutor: { prefs: { no: { note: "x" } }, memory: {}, topics: [{ id: "t_1", name: "One Piece" }] },
+  });
+  assert.equal(kept.tutor.topics[0].name, "One Piece");
+  assert.equal(kept.tutor.prefs.no.note, "x");
+  assert.deepEqual(migrateUserState(JSON.parse(JSON.stringify(kept))), kept);
 });
 
 // Emi 2026-08-28-22: 690 of 794 templateProgress rows across 10 languages

@@ -16,7 +16,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { SUMMARY_SCHEMA } = require("../../netlify/functions/tutor.js");
+const { SUMMARY_SCHEMA, SUMMARY_SCHEMA_WITH_TOPICS } = require("../../netlify/functions/tutor.js");
 
 // JSON Schema keywords the structured-outputs API rejects when the schema is
 // passed raw (per the Anthropic structured-outputs docs: no numeric, string,
@@ -60,6 +60,12 @@ test("SUMMARY_SCHEMA uses only structured-outputs-supported keywords", () => {
     [],
     `Unsupported JSON Schema keywords found (these 400 the summary call in production):\n  ${offenders.join("\n  ")}`
   );
+});
+
+test("SUMMARY_SCHEMA_WITH_TOPICS (beta) uses only supported keywords", () => {
+  const offenders = [];
+  walk(SUMMARY_SCHEMA_WITH_TOPICS, "SUMMARY_SCHEMA_WITH_TOPICS", offenders);
+  assert.deepEqual(offenders, [], `Unsupported keywords:\n  ${offenders.join("\n  ")}`);
 });
 
 test("SUMMARY_SCHEMA still declares the fields the client consumes", () => {
