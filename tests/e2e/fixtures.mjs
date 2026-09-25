@@ -46,6 +46,14 @@ export async function loginAs(page, email = "test@example.com", password = TEST_
   await page.click("#login-btn");
   // signInWithPassword → checkAccess → loadUser → location.reload() → start screen.
   await expect(page.locator("#start-screen.active")).toBeVisible({ timeout: 10_000 });
+  // `#start-screen.active` is baked into the static HTML — its visibility says
+  // the shell painted, not that app.js finished booting. app.js's
+  // DOMContentLoaded handler has an `await getAuthSession()` (auth-config
+  // fetch) before it attaches the #open-app click handler; under parallel
+  // dev-server contention that fetch queues, and a click fired here would
+  // land as a no-op with no error to catch. window.__app is assigned at the
+  // very end of that handler, so its presence is the boot-complete signal.
+  await page.waitForFunction(() => !!window.__app, null, { timeout: 15_000 });
 }
 
 // Headers a test needs to call a function stub directly on a learner's
