@@ -15,7 +15,7 @@
 // state written before v4 and (b) crash-safety copies of in-flight text:
 // the unsent draft and the live transcript of the current conversation.
 
-import { recoverUser, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
+import { recoverUser, mergeUserStates, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
 import { getSession as getAuthSession, authFetch } from "./auth.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
 import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab, wordCountLabel } from "./tutor_profile.mjs";
@@ -231,7 +231,10 @@ async function persistUser() {
   // graft would copy stored values back onto themselves and this session's
   // writes would be lost.
   const tutorLearnerFacts = Array.isArray(user.learnerFacts) ? user.learnerFacts : null;
-  const tutorState = user.tutor && typeof user.tutor === "object" ? user.tutor : null;
+  // Stamp Anna's state so the app's boot merge (storage.mjs
+  // mergeUserStates) can tell which device talked to her last.
+  tutorRoot().updatedAt = Date.now();
+  const tutorState = user.tutor;
   const { user: stored } = recoverUser(localStorage.getItem(USER_KEY), null);
   if (stored && stored.runs) {
     const target = stored.runs[state.targetLang];
@@ -1231,10 +1234,14 @@ async function init() {
   const session = await getAuthSession();
   const storedEmail = (localStorage.getItem("zth_email") || "").trim().toLowerCase();
   state.email = session && session.email === storedEmail ? session.email : "";
-  const { user } = recoverUser(
+  let { user } = recoverUser(
     localStorage.getItem(USER_KEY),
     localStorage.getItem(USER_BACKUP_KEY)
   );
+  // This page used to read only the device's copy, so a topic made on the
+  // computer showed up on the phone only after the APP had booted there
+  // (Nekh 2026-09-26). Pull the server copy and merge before starting.
+  if (state.email) user = await pullServerUser(user);
 
   if (!state.email || !user) {
     showGate(
@@ -1289,6 +1296,28 @@ async function init() {
     "<p>No active language found. Pick a language and do a few exercises in the app, then come back.</p>" +
     '<p><a href="index.html">Go to the app</a></p>'
   );
+}
+
+// Fetches the server copy and merges it with the device's (same rule as
+// the app's boot: newest whole record, Anna's fields by their own clock).
+// Any failure keeps the device copy — the tutor still works offline.
+async function pullServerUser(local) {
+  try {
+    const res = await authFetch("/.netlify/functions/loadUser", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    });
+    if (!res.ok) return local;
+    const data = await res.json();
+    const { user, grafted } = mergeUserStates(local, data && data.user);
+    if (!user) return local;
+    if (user !== local || grafted) localStorage.setItem(USER_KEY, JSON.stringify(user));
+    return user;
+  } catch (err) {
+    console.warn("tutor: server load failed, using this device's copy:", err);
+    return local;
+  }
 }
 
 async function startWithRun(targetLang, run) {

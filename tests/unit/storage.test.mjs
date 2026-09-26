@@ -318,3 +318,78 @@ test("adopt guard: a null server copy never replaces local runs (Emi 2026-09-02-
   // …but a device with nothing local may start fresh from it.
   assert.equal(shouldAdoptServerUser({ runs: {} }, null), true);
 });
+
+// Field-level merge for Anna's state (Nekh 2026-09-26): the whole record
+// follows the newest save, the tutor-owned fields follow tutor.updatedAt.
+import { mergeUserStates, graftTutorState, tutorStamp } from "../../storage.mjs";
+
+function device({ change, tutorAt, topics = [], vocab = [], released = [], facts = [] }) {
+  return {
+    id: "u1", schemaVersion: 5, supportLanguage: "en", lastLocalChange: change,
+    runs: { pt: { released, progress: {}, personalVocab: vocab, pendingAdmission: [] } },
+    learnerFacts: facts,
+    tutor: { prefs: {}, memory: {}, topics, topicProposals: [], ...(tutorAt ? { updatedAt: tutorAt } : {}) },
+  };
+}
+
+test("mergeUserStates: a newer lesson on this device no longer erases a topic made on another", () => {
+  // Computer: topic session at t=100 (tutor stamped), synced to the server.
+  const server = device({ change: 100, tutorAt: 100, topics: [{ id: "t_1", name: "Rave Master" }], vocab: [{ word: "navio" }], released: ["TUTOR_NAVIO"], facts: [{ text: "reads manga" }] });
+  server.runs.pt.progress.TUTOR_NAVIO = { level: 1 };
+  // Phone: did a lesson at t=200, never talked to Anna (no stamp, no topic).
+  const phone = device({ change: 200, released: ["WATER"] });
+  const { user, pushUp, grafted } = mergeUserStates(phone, server);
+  assert.equal(user, phone, "the phone's newer run progress is the base");
+  assert.equal(grafted, "server-tutor");
+  assert.equal(pushUp, true);
+  assert.deepEqual(user.tutor.topics, [{ id: "t_1", name: "Rave Master" }]);
+  assert.equal(user.tutor.updatedAt, 100);
+  assert.deepEqual(user.learnerFacts, [{ text: "reads manga" }]);
+  assert.deepEqual(user.runs.pt.personalVocab, [{ word: "navio" }]);
+  assert.deepEqual(user.runs.pt.released, ["WATER", "TUTOR_NAVIO"], "tutor-admitted concept joins the phone's ladder");
+  assert.deepEqual(user.runs.pt.progress.TUTOR_NAVIO, { level: 1 });
+});
+
+test("mergeUserStates: server base keeps this device's newer Anna state and pushes it up", () => {
+  // Server: phone's lesson at t=300. Local: computer talked to Anna at
+  // t=250 but that save never reached the server (sync failed).
+  const server = device({ change: 300 });
+  const local = device({ change: 250, tutorAt: 250, topics: [{ id: "t_2", name: "Cooking" }] });
+  const { user, pushUp, grafted } = mergeUserStates(local, server);
+  assert.notEqual(user, local);
+  assert.equal(user.lastLocalChange, 300);
+  assert.equal(grafted, "local-tutor");
+  assert.equal(pushUp, true);
+  assert.deepEqual(user.tutor.topics, [{ id: "t_2", name: "Cooking" }]);
+});
+
+test("mergeUserStates: with no tutor stamps the whole-record rule decides, unchanged", () => {
+  const server = device({ change: 100, topics: [{ id: "t_1", name: "old" }] });
+  const local = device({ change: 200 });
+  const a = mergeUserStates(local, server);
+  assert.equal(a.user, local); assert.equal(a.grafted, null); assert.deepEqual(a.user.tutor.topics, []);
+  const b = mergeUserStates(device({ change: 50 }), server);
+  assert.equal(b.user.lastLocalChange, 100); assert.equal(b.grafted, null); assert.equal(b.pushUp, false);
+  // Nothing anywhere.
+  assert.deepEqual(mergeUserStates(null, null), { user: null, pushUp: false, grafted: null });
+  // Local has runs, server has nothing: keep local (unchanged rule).
+  assert.equal(mergeUserStates(local, null).user, local);
+});
+
+test("mergeUserStates: an older device without the stamp never beats a stamped copy", () => {
+  const stamped = device({ change: 100, tutorAt: 100, topics: [{ id: "t_1", name: "Rave Master" }] });
+  const unstamped = device({ change: 999 });
+  assert.equal(tutorStamp(unstamped), 0);
+  assert.deepEqual(mergeUserStates(unstamped, stamped).user.tutor.topics, [{ id: "t_1", name: "Rave Master" }]);
+  assert.deepEqual(mergeUserStates(stamped, unstamped).user.tutor.topics, [{ id: "t_1", name: "Rave Master" }]);
+});
+
+test("graftTutorState copies, never aliases, and skips runs the target lacks", () => {
+  const src = device({ change: 1, tutorAt: 1, topics: [{ id: "t", name: "x" }] });
+  src.runs.uk = { released: ["TUTOR_A"], progress: {}, personalVocab: [{ word: "a" }], pendingAdmission: [] };
+  const tgt = device({ change: 2 });
+  graftTutorState(tgt, src);
+  assert.notEqual(tgt.tutor, src.tutor);
+  assert.deepEqual(tgt.tutor.topics, src.tutor.topics);
+  assert.equal(tgt.runs.uk, undefined);
+});

@@ -8,6 +8,9 @@ async function seedLearnerFacts(page, facts) {
   await page.evaluate((facts) => {
     const u = JSON.parse(localStorage.getItem("zth_user") || "{}");
     u.learnerFacts = facts;
+    u.lastLocalChange = Date.now();
+    u.tutor = u.tutor || {};
+    u.tutor.updatedAt = Date.now();
     localStorage.setItem("zth_user", JSON.stringify(u));
   }, facts);
 }

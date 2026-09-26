@@ -109,6 +109,9 @@ test("End session still saves when Anna's notes cannot be written, and finishes 
   await page.evaluate(() => {
     const u = JSON.parse(localStorage.getItem("zth_user"));
     for (const m of u.tutor.memory.pt.sessions[0].pending.messages) m.content = m.content.replace("__SUMMARY_FAIL__", "");
+    u.lastLocalChange = Date.now();
+    u.tutor = u.tutor || {};
+    u.tutor.updatedAt = Date.now();
     localStorage.setItem("zth_user", JSON.stringify(u));
   });
   await page.reload();
@@ -192,6 +195,9 @@ test("first visit shows who Anna is, in the learner's support language", async (
   await page.evaluate(() => {
     const u = JSON.parse(localStorage.getItem("zth_user"));
     u.supportLanguage = "pt";
+    u.lastLocalChange = Date.now();
+    u.tutor = u.tutor || {};
+    u.tutor.updatedAt = Date.now();
     localStorage.setItem("zth_user", JSON.stringify(u));
   });
   await openTutor(page);
