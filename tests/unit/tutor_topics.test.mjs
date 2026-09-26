@@ -174,12 +174,11 @@ test("BETA_EMAILS: unset means nobody, a list means just those, * means all", ()
   withEnv("BETA_EMAILS", "*", () => assert.equal(tutorFn.betaFeatures("x@y.z").topics, true));
 });
 
-test("the topics block renders only when passed, after the memory", () => {
+test("the topics block renders only when passed", () => {
   const base = { targetLang: "Portuguese", supportLang: "English", profile: "", preferences: {}, memory: "", learnerFacts: "" };
   assert.doesNotMatch(tutorFn.contextBlock(base), /CONVERSATION TOPICS/);
   const withTopics = tutorFn.contextBlock({ ...base, topics: 'ACTIVE TOPIC: "One Piece" (id t_1)' });
   assert.match(withTopics, /CONVERSATION TOPICS/);
-  assert.ok(withTopics.indexOf("=== MEMORY") < withTopics.indexOf("CONVERSATION TOPICS"));
 });
 
 test("the topics summary schema extends the base schema", () => {
@@ -205,4 +204,32 @@ test("the summary schema records the opener and keeps nextFocus a skill, not a q
   assert.match(p.sessionSummary.description, /opener/i);
   assert.match(p.nextFocus.description, /SKILL/);
   assert.match(p.nextFocus.description, /Never a specific question/);
+});
+
+// --- Topic precedence (Nekh 2026-09-26) --------------------------------------
+// A standing note ("help me read Rave Master") plus ten Rave Master
+// sessions in memory beat the topic picked for this conversation. The
+// topic block now sits under the instructions, above memory, states its
+// precedence, and the per-turn trailer restates the active topic.
+
+test("the topics block renders under the instructions and above memory", () => {
+  const base = { targetLang: "Portuguese", supportLang: "English", profile: "P", preferences: { note: "help me read Rave Master" }, memory: "M", learnerFacts: "" };
+  const text = tutorFn.contextBlock({ ...base, topics: 'ACTIVE TOPIC: "Cooking" (id t_1)' });
+  const i = (s) => text.indexOf(s);
+  assert.ok(i("LEARNER'S OWN INSTRUCTIONS") < i("CONVERSATION TOPICS"));
+  assert.ok(i("CONVERSATION TOPICS") < i("LEARNER PROFILE"));
+  assert.ok(i("CONVERSATION TOPICS") < i("=== MEMORY"));
+  assert.match(text, /outranks everything else you have been given/);
+  // Non-beta prompt unchanged: no topics section at all.
+  assert.doesNotMatch(tutorFn.contextBlock(base), /CONVERSATION TOPICS/);
+});
+
+test("the per-turn trailer names the active topic, and only then", () => {
+  const prefs = { note: "help me read Rave Master" };
+  const plain = tutorFn.steeringTrailer(prefs);
+  assert.match(plain, /Rave Master/);
+  assert.doesNotMatch(plain, /topic the learner chose/);
+  const withTopic = tutorFn.steeringTrailer(prefs, "Useful verbs and small words");
+  assert.match(withTopic, /THIS conversation: "Useful verbs and small words"/);
+  assert.ok(withTopic.indexOf("Rave Master") < withTopic.indexOf("Useful verbs"), "the topic comes after the note it overrides");
 });

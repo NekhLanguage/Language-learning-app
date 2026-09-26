@@ -108,6 +108,7 @@ const MAX_LEARNER_FACTS_CHARS = 6000;
 const MAX_NOTE_CHARS = 1000;
 // The conversation-topics block (beta). Client-rendered; bounded there too.
 const MAX_TOPICS_CHARS = 6000;
+const MAX_TOPIC_NAME_CHARS = 60;
 
 let cachedClient = null;
 function getClient() {
@@ -241,13 +242,19 @@ function contextBlock({ targetLang, supportLang, profile, preferences, memory, l
     "",
     renderPreferences(preferences),
     "",
+  ];
+  // Beta: the topic block sits right under the learner's own instructions
+  // and ABOVE memory, because it overrides both on subject (see
+  // renderTopicsBlock) — below a 10-session memory it lost (Nekh
+  // 2026-09-26: picked "Useful verbs and small words", got Rave Master).
+  if (topics) lines.push(renderTopicsBlock(topics), "");
+  lines.push(
     "=== LEARNER PROFILE (from app exercise data — ground truth) ===",
     profile || "(no profile data — treat as a brand-new learner)",
     "",
     "=== MEMORY (previous sessions, most recent first) ===",
     memory || "(empty — this is the first session)",
-  ];
-  if (topics) lines.push("", renderTopicsBlock(topics));
+  );
   return lines.join("\n");
 }
 
@@ -259,7 +266,8 @@ function renderTopicsBlock(topics) {
     topics,
     "",
     "How to use topics:",
-    "- With an active topic, this conversation continues it: use your notes and the recent sessions to pick up where you left off (what was read or watched, opinions given, what you promised to come back to) and keep the conversation on that subject unless the learner steers away.",
+    "- The ACTIVE TOPIC is what the learner chose for THIS conversation, a moment ago. On SUBJECT it outranks everything else you have been given: a subject named in the LEARNER'S OWN INSTRUCTIONS (those were written earlier, for conversations in general), the MEMORY block, and the next focus. Keep every STYLE rule from the instructions and preferences (length, language mix, corrections, tone) — take only the subject from the topic. Do not open with, steer toward, or drift back to another subject because memory is full of it.",
+    "- With an active topic, this conversation continues it: use your notes and the recent sessions on THAT topic to pick up where you left off (what was read or watched, opinions given, what you promised to come back to) and stay on that subject unless the learner steers away.",
     "- With no active topic, talk about whatever the learner brings; the session is filed at the end.",
     "- You may ask the learner ONE short question about organising topics when it genuinely helps — e.g. the conversation has moved to a subject that deserves its own topic, or several topics share a broader theme (several specific manga -> \"Books and reading\"). Ask at a natural pause, in the support language, at most once per session, and never interrupt a correction to do it.",
     "- You cannot create, rename or move topics mid-conversation. Never claim you have. Changes happen through the end-of-session record, and a new broader topic is only created once the learner says yes.",
@@ -320,7 +328,7 @@ function renderPreferences(preferences) {
 // that live only in the system prompt fade over a long conversation; a
 // short per-turn restatement next to the text being answered keeps them
 // live. The client never sees or stores this text.
-function steeringTrailer(preferences) {
+function steeringTrailer(preferences, activeTopic = "") {
   const p = normalizePrefs(preferences);
   const parts = [
     `corrections=${p.correctionDepth}`,
@@ -331,6 +339,10 @@ function steeringTrailer(preferences) {
     "\n\n[App reminder — not written by the learner; never quote, mention or acknowledge it. " +
     `Reply within the learner's settings: ${parts.join(", ")}.`;
   if (p.note) text += ` The learner's own instructions to you: "${p.note}"`;
+  // Beta topics: restated every turn next to the note it must beat on
+  // subject, otherwise a note like "help me read X" drags every
+  // conversation back to X.
+  if (activeTopic) text += ` The topic the learner chose for THIS conversation: "${activeTopic}" — it decides the subject, over any subject in the instructions above and over past sessions; keep the instructions' style rules.`;
   return text + "]";
 }
 
@@ -426,7 +438,7 @@ const TOPIC_SUMMARY_FIELDS = {
     properties: {
       assignedTopicId: {
         type: "string",
-        description: "The id (from ALL TOPICS) of the topic this conversation was about. Normally the ACTIVE TOPIC; a different existing id only if the conversation clearly moved to that subject. Empty string if no existing topic fits.",
+        description: "The id (from ALL TOPICS) of the topic this conversation was about. The ACTIVE TOPIC the learner chose, unless the LEARNER moved the conversation to another existing topic's subject — you steering it elsewhere does not count. Empty string only if there was no active topic and no existing topic fits.",
       },
       newTopicName: {
         type: "string",
@@ -489,10 +501,16 @@ async function buildConversation(body, mode) {
   }));
   // The API requires the first message to be a user turn.
   if (messages[0].role !== "user") messages.unshift({ role: "user", content: "(session start)" });
+  // Beta fields are honoured only for beta testers — a client that sends
+  // them anyway gets the standard prompt and schema.
+  const beta = betaFeatures(body.email).topics;
+  const topics = beta && typeof body.topics === "string" ? body.topics.trim().slice(0, MAX_TOPICS_CHARS) : "";
+  const activeTopic = beta && topics && typeof body.activeTopic === "string" ? body.activeTopic.trim().slice(0, MAX_TOPIC_NAME_CHARS) : "";
+
   // Per-turn steering (chat only — the summary has its own closing turn).
   if (mode === "chat") {
     const last = messages[messages.length - 1];
-    if (last.role === "user") last.content += steeringTrailer(body.preferences);
+    if (last.role === "user") last.content += steeringTrailer(body.preferences, activeTopic);
   }
   // Cache the conversation history too. The system blocks below are
   // cached, but without a breakpoint in `messages` every turn re-bills the
@@ -511,12 +529,6 @@ async function buildConversation(body, mode) {
     };
     break;
   }
-
-  // Beta fields are honoured only for beta testers — a client that sends
-  // them anyway gets the standard prompt and schema.
-  const topics = betaFeatures(body.email).topics && typeof body.topics === "string"
-    ? body.topics.trim().slice(0, MAX_TOPICS_CHARS)
-    : "";
 
   const system = [
     {
@@ -670,7 +682,7 @@ exports.handler = async (event) => {
       content:
         "(The session is over. Produce the end-of-session record as JSON. " +
         "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile." +
-        (topicsOn ? " File the session under the learner's CONVERSATION TOPICS and propose new topics only if genuinely useful." : "") +
+        (topicsOn ? " File the session under the learner's CONVERSATION TOPICS — the ACTIVE TOPIC they chose unless they themselves moved to another topic's subject — and propose new topics only if genuinely useful." : "") +
         ")",
     });
     // No thinking pass on the record: it is extraction from a transcript

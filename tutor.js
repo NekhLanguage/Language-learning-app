@@ -598,7 +598,11 @@ function buildRequestBody(mode, messages = state.messages, { topicId = state.top
   };
   // Beta: the learner's conversation topics and the one this conversation
   // is about. The server ignores the field for non-beta accounts.
-  if (state.beta.topics) body.topics = renderTopicsText(state.user, topicId, tutorMemory().sessions);
+  if (state.beta.topics) {
+    body.topics = renderTopicsText(state.user, topicId, tutorMemory().sessions);
+    // Restated by the server on every turn next to the learner's note.
+    body.activeTopic = findTopic(state.user, topicId)?.name || "";
+  }
   return body;
 }
 
