@@ -226,6 +226,8 @@ async function handleFunction(name, req, res, url) {
             // real function's summary schema requires these; the stub
             // returns one canonical fact so the client's applyTutorLearnerFacts
             // path is exercised offline.
+            // The learner's own out-of-profile words (Nekh 2026-09-26).
+            learnerWords: [],
             newLearnerFacts: ["Dev-stub learner facts write-path is wired."],
             correctedLearnerFacts: [],
             // Topics beta: the real function adds these only when the

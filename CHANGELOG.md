@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-26 (evening)
+
+### Anna now counts the words you use, not just the ones she teaches
+
+A word joins your app vocabulary after it has come up in three different conversations with Anna. Until now only the words *she* introduced were tracked, and only *her* replies were checked for repeats, so a word you produced yourself never counted, and the words one conversation away from joining sat there because nothing told her which ones they were. Now: words you use that are outside your profile are captured just like hers; your own messages count toward the three; Anna sees how far along each word is and reaches for the ones one use from joining when they fit; and she'll bring in a new word when the conversation actually needs one, even on the comfort setting, instead of steering around it. Nothing is forced into a short chat.
+
 ## 2026-09-26 (later)
 
 ### Anna no longer re-teaches words you already know

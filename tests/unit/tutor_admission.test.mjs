@@ -200,3 +200,49 @@ test("capture respects the 200-entry personalVocab cap", () => {
   processTutorSession(run, [{ word: "overflow" }], "", "2026-08-15", () => false);
   assert.equal(run.personalVocab.some((e) => e.word === "overflow"), false);
 });
+
+// --- The learner's own words count (Nekh 2026-09-26) -------------------------
+
+test("learnerWords: a word the learner produced is captured with source learner", () => {
+  const run = freshRun();
+  processTutorSession(run, [], "", "2026-09-26", () => false, [], [
+    { word: "прибирати", translation: "to clean", pos: "verb", exampleSentence: "Я прибираю кімнату.", exampleTranslation: "I am cleaning the room." },
+  ]);
+  assert.equal(run.personalVocab.length, 1);
+  assert.equal(run.personalVocab[0].source, "learner");
+  assert.deepEqual(run.personalVocab[0].seenInSessions, ["2026-09-26"]);
+  assert.equal(run.personalVocab[0].exampleSentence, "Я прибираю кімнату.");
+});
+
+test("Anna's new words carry no source field (unchanged shape)", () => {
+  const run = freshRun();
+  processTutorSession(run, [{ word: "praia", translation: "beach" }], "", "2026-09-26", () => false);
+  assert.equal("source" in run.personalVocab[0], false);
+});
+
+test("the learner reusing a held word in their own messages is a sighting", () => {
+  const run = freshRun({ personalVocab: [entry("меч", ["2026-09-20"])] });
+  processTutorSession(run, [], "Так, цікаво!", "2026-09-22", () => false, [], [], "Мій улюблений меч у цій главі.");
+  assert.equal(run.pendingAdmission.length, 1);
+  assert.deepEqual(run.pendingAdmission[0].seenInSessions, ["2026-09-20", "2026-09-22"]);
+});
+
+test("Anna and the learner both using a word on one day is one sighting", () => {
+  const run = freshRun({ personalVocab: [entry("меч", ["2026-09-20"])] });
+  processTutorSession(run, [], "Який меч?", "2026-09-22", () => false, [], [], "Меч Хару.");
+  assert.deepEqual(run.pendingAdmission[0].seenInSessions, ["2026-09-20", "2026-09-22"]);
+});
+
+test("a learner-produced word admits at the same threshold and is tagged for the ledger", () => {
+  const run = freshRun({ pendingAdmission: [entry("прибирати", ["2026-09-20", "2026-09-22"], { source: "learner", translation: "to clean", pos: "verb" })] });
+  const { admitted } = processTutorSession(run, [], "", "2026-09-26", () => false, [], [], "Сьогодні я прибирати.");
+  assert.equal(admitted.length, 1);
+  const applied = applyAdmissions(run, admitted, "2026-09-26");
+  assert.equal(applied[0].source, "learner");
+  assert.equal(run.tutorVocab.TUTOR_ПРИБИРАТИ.source, "learner");
+  assert.equal(run.progress.TUTOR_ПРИБИРАТИ.provenance, "tutor", "ladder provenance is unchanged");
+  // Anna-introduced admissions report source tutor.
+  const run2 = freshRun({ pendingAdmission: [entry("praia", ["2026-09-20", "2026-09-22"])] });
+  const r2 = processTutorSession(run2, [], "Praia!", "2026-09-26", () => false);
+  assert.equal(applyAdmissions(run2, r2.admitted, "2026-09-26")[0].source, "tutor");
+});

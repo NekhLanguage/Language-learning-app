@@ -9,6 +9,8 @@
 //   practicing  — level 3–5: recognized and used in guided exercises.
 //   seen        — level 1–2 or released without progress: exposure only.
 
+import { ADMISSION_THRESHOLD } from "./tutor_admission.mjs";
+
 const PRODUCTION_MIN_LEVEL = 6;
 const PRACTICING_MIN_LEVEL = 3;
 
@@ -60,12 +62,29 @@ function latestPersonalSighting(entry) {
   return "";
 }
 
+function sightings(entry) {
+  return Array.isArray(entry?.seenInSessions) ? entry.seenInSessions.length : 0;
+}
+
+// Closest to admission first (a 2/3 word is one use from joining the app
+// — the tutor should reach for it), then most recently seen.
 function boundedPersonalVocab(personal, cap) {
-  if (personal.length <= cap) return { shown: personal, trimmed: 0 };
   const sorted = [...personal].sort((a, b) =>
+    (sightings(b) - sightings(a)) ||
     latestPersonalSighting(b).localeCompare(latestPersonalSighting(a))
   );
+  if (personal.length <= cap) return { shown: sorted, trimmed: 0 };
   return { shown: sorted.slice(0, cap), trimmed: personal.length - cap };
+}
+
+// "план = plan (2/3 — one more use adds it to the app)". The count is what
+// lets the tutor steer: without it every personal word looked the same and
+// the ones one sighting from admission sat there for weeks (Nekh
+// 2026-09-26: five at 2/3, twelve at 1/3 since August).
+export function personalVocabEntry(entry) {
+  const n = Math.min(sightings(entry), ADMISSION_THRESHOLD);
+  const tag = n === ADMISSION_THRESHOLD - 1 ? `${n}/${ADMISSION_THRESHOLD} — one more use adds it to the app` : `${n}/${ADMISSION_THRESHOLD}`;
+  return `${entry.word} = ${entry.translation} (${tag})`;
 }
 
 function tierHeader(label, total, shownCount, cap) {
@@ -170,7 +189,7 @@ export function buildProfileText(opts) {
 
   const personal = Array.isArray(opts.personalVocab) ? opts.personalVocab : [];
   const per = boundedPersonalVocab(personal, PERSONAL_VOCAB_CAP);
-  const personalLine = per.shown.map((w) => `${w.word} = ${w.translation}`).join(", ") || "(none yet)";
+  const personalLine = per.shown.map(personalVocabEntry).join(", ") || "(none yet)";
 
   // Render with the tier caps, then shrink the least useful tiers (JUST
   // SEEN, then PRACTICING) if the whole thing would overrun the server's
@@ -201,7 +220,7 @@ export function buildProfileText(opts) {
 
     out.push("");
     out.push(
-      `${tierHeader("PERSONAL VOCABULARY", personal.length, per.shown.length, PERSONAL_VOCAB_CAP)} introduced in past tutor conversations — recycle deliberately):`
+      `${tierHeader("PERSONAL VOCABULARY", personal.length, per.shown.length, PERSONAL_VOCAB_CAP)} from past conversations — yours or the learner's own; a word joins the app after being used in ${ADMISSION_THRESHOLD} different sessions, so when a ${ADMISSION_THRESHOLD - 1}/${ADMISSION_THRESHOLD} word fits a sentence, use it rather than a synonym):`
     );
     out.push(per.trimmed ? `${personalLine} (and ${per.trimmed} more not shown)` : personalLine);
     return out.join("\n");

@@ -90,3 +90,16 @@ test("the no-gloss rule for profile words is in the instructions, the dials and 
   assert.match(prefs, /never for translating words the profile says the learner knows/);
   assert.match(steeringTrailer({}), /No glosses or translations on words in the learner's PRODUCTION or PRACTICING profile/);
 });
+
+// Nekh 2026-09-26: vocabulary growth is steered per turn, never per session.
+test("the per-turn trailer carries the exchange number and the recycle nudge; the instructions carry the three growth rules", () => {
+  const here = dirname(fileURLToPath(import.meta.url));
+  const instructions = readFileSync(join(here, "../../netlify/functions/tutor-instructions.md"), "utf8");
+  assert.match(instructions, /New words come from need, and need is allowed/);
+  assert.match(instructions, /Recycling is opportunistic, every turn/);
+  assert.match(instructions, /The learner's own words count/);
+  assert.doesNotMatch(instructions, /at most \*\*1–2 new words per session\*\*/);
+  assert.match(steeringTrailer({}, "", 5), /Exchange 5\. Use a personal-vocabulary word marked one use from admission when one fits\./);
+  assert.doesNotMatch(steeringTrailer({}), /Exchange/);
+  assert.match(renderPreferences({ challenge: "comfort" }), /not the one or two new words a conversation naturally needs/);
+});

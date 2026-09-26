@@ -15,6 +15,11 @@
 //     (bounded-context draining rule: enumerating them twice is waste).
 //   - CID collision with pack vocabulary skips the admission entirely —
 //     the pack word will teach it better.
+//   - The LEARNER's own words count (Nekh 2026-09-26): a word the learner
+//     produces that is outside the profile is captured like one Anna
+//     introduced (entry.source = "learner"), and the learner's messages
+//     are scanned for repeat sightings of held words exactly like Anna's
+//     replies. Same threshold, same weight.
 
 import { createProgress } from "./progression.mjs";
 
@@ -78,7 +83,7 @@ function recordSighting(entry, today) {
 //                   (Nekh 2026-09-03). The model knows the lemma; trust it.
 // Returns { admitted: [entry...], collided: [entry...] }. The caller applies
 // them via applyAdmissions() / logs collisions.
-export function processTutorSession(run, newWords, assistantText, today, isCidTaken, recycledWords = []) {
+export function processTutorSession(run, newWords, assistantText, today, isCidTaken, recycledWords = [], learnerWords = [], learnerText = "") {
   if (!Array.isArray(run.personalVocab)) run.personalVocab = [];
   if (!Array.isArray(run.pendingAdmission)) run.pendingAdmission = [];
 
@@ -89,38 +94,48 @@ export function processTutorSession(run, newWords, assistantText, today, isCidTa
 
   // 1. Sightings from this session's summary. A word we already hold gets a
   //    repeat sighting; a genuinely new one is captured to personalVocab.
-  for (const w of Array.isArray(newWords) ? newWords : []) {
-    if (!w || !w.word) continue;
-    const key = String(w.word).toLowerCase();
-    const existing = byWord.get(key);
-    if (existing) {
-      recordSighting(existing, today);
-    } else if (run.personalVocab.length < 200) {
-      const entry = {
-        word: w.word,
-        translation: w.translation || "",
-        note: w.note || "",
-        pos: w.pos || "noun",
-        // Banked at first-sighting so the sentence the tutor actually used
-        // to introduce the word travels with it into admission. Words
-        // captured before this field existed have empty strings —
-        // provenance-ledger, they simply won't seed sentence-based
-        // exercises later. Missing example is not a rejection reason.
-        exampleSentence: w.exampleSentence || "",
-        exampleTranslation: w.exampleTranslation || "",
-        seenInSessions: [today],
-        admittedAt: null,
-      };
-      run.personalVocab.push(entry);
-      byWord.set(key, entry);
+  //    Anna's new words first, then the learner's own (tagged so the
+  //    ledger can tell them apart; the pipeline treats them the same).
+  const capture = (list, source) => {
+    for (const w of Array.isArray(list) ? list : []) {
+      if (!w || !w.word) continue;
+      const key = String(w.word).toLowerCase();
+      const existing = byWord.get(key);
+      if (existing) {
+        recordSighting(existing, today);
+      } else if (run.personalVocab.length < 200) {
+        const entry = {
+          word: w.word,
+          translation: w.translation || "",
+          note: w.note || "",
+          pos: w.pos || "noun",
+          // Banked at first-sighting so the sentence actually used with
+          // the word travels with it into admission (Anna's, or the
+          // learner's own). Words captured before this field existed have
+          // empty strings — provenance-ledger, they simply won't seed
+          // sentence-based exercises later. Missing example is not a
+          // rejection reason.
+          exampleSentence: w.exampleSentence || "",
+          exampleTranslation: w.exampleTranslation || "",
+          seenInSessions: [today],
+          admittedAt: null,
+          ...(source === "learner" ? { source: "learner" } : {}),
+        };
+        run.personalVocab.push(entry);
+        byWord.set(key, entry);
+      }
     }
-  }
+  };
+  capture(newWords, "tutor");
+  capture(learnerWords, "learner");
 
-  // 2. Sightings from the conversation itself: the tutor re-used a held word.
-  if (assistantText) {
+  // 2. Sightings from the conversation itself: a held word re-used by the
+  //    tutor OR by the learner (one sighting per day either way).
+  const conversationText = [assistantText, learnerText].filter(Boolean).join("\n");
+  if (conversationText) {
     for (const entry of byWord.values()) {
       if (entry.seenInSessions?.[entry.seenInSessions.length - 1] === today) continue;
-      if (wordUsedInText(entry.word, assistantText)) recordSighting(entry, today);
+      if (wordUsedInText(entry.word, conversationText)) recordSighting(entry, today);
     }
   }
 
@@ -192,6 +207,7 @@ export function applyAdmissions(run, admitted, today) {
       // existed — that's the provenance ledger, not a bug.
       exampleSentence: entry.exampleSentence || "",
       exampleTranslation: entry.exampleTranslation || "",
+      ...(entry.source === "learner" ? { source: "learner" } : {}),
     };
     entry.admittedAt = today;
     applied.push({
@@ -200,6 +216,8 @@ export function applyAdmissions(run, admitted, today) {
       translation: entry.translation || "",
       pos: entry.pos || "noun",
       sessionsSeen: entry.seenInSessions?.length || ADMISSION_THRESHOLD,
+      // Who first produced it: "learner" or "tutor" (the ledger keeps both).
+      source: entry.source === "learner" ? "learner" : "tutor",
     });
   }
   return applied;

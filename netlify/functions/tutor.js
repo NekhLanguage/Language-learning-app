@@ -284,7 +284,7 @@ const DIAL_TEXT = {
     deep: "for every mistake name the rule, why it was wrong, the correct pattern and one related example, then return to the conversation",
   },
   challenge: {
-    comfort: "stay well inside known vocabulary, shorter sentences, yes/no and either/or questions welcome, generous encouragement",
+    comfort: "stay well inside known vocabulary, shorter sentences, yes/no and either/or questions welcome, generous encouragement — comfort limits sentence length and difficulty, not the one or two new words a conversation naturally needs",
     stretch: "i+1 — mostly open questions, one small step beyond what the learner just showed",
     push: "longer sentences, open-ended questions only, new words at the top of the allowed range, ask for opinions and reasons, do not simplify at the first sign of struggle",
   },
@@ -328,7 +328,7 @@ function renderPreferences(preferences) {
 // that live only in the system prompt fade over a long conversation; a
 // short per-turn restatement next to the text being answered keeps them
 // live. The client never sees or stores this text.
-function steeringTrailer(preferences, activeTopic = "") {
+function steeringTrailer(preferences, activeTopic = "", exchange = 0) {
   const p = normalizePrefs(preferences);
   const parts = [
     `corrections=${p.correctionDepth}`,
@@ -343,6 +343,11 @@ function steeringTrailer(preferences, activeTopic = "") {
   // subject, otherwise a note like "help me read X" drags every
   // conversation back to X.
   if (activeTopic) text += ` The topic the learner chose for THIS conversation: "${activeTopic}" — it decides the subject, over any subject in the instructions above and over past sessions; keep the instructions' style rules.`;
+  // Sessions have no fixed length, so vocabulary growth is steered per
+  // turn, not per session: the exchange number gives the "by about
+  // exchange 5" rule a clock, and the recycle nudge sits next to the
+  // length cap it has to coexist with.
+  if (exchange > 0) text += ` Exchange ${exchange}. Use a personal-vocabulary word marked one use from admission when one fits.`;
   return text + "]";
 }
 
@@ -353,6 +358,32 @@ function steeringTrailer(preferences, activeTopic = "") {
 // limits in the field descriptions instead, and enforce hard caps client-side
 // (see learner_facts.mjs / tutor_admission.mjs). tests/unit/tutor_schema.test.mjs
 // lints the schema for unsupported keywords.
+// One vocabulary item, shared by newWords (Anna introduced it) and
+// learnerWords (the learner produced it).
+const VOCAB_ITEM_SCHEMA = {
+  type: "object",
+  properties: {
+    word: { type: "string" },
+    translation: { type: "string" },
+    note: { type: "string", description: "One short usage note, may be empty." },
+    pos: {
+      type: "string",
+      enum: ["noun", "verb", "adjective", "other"],
+      description: "Part of speech of the base form. Load-bearing: mastery-level caps are derived from it.",
+    },
+    exampleSentence: {
+      type: "string",
+      description: "One short natural target-language sentence using this word — the actual sentence you used in conversation this session when possible, otherwise a fresh one at the learner's level. Empty string only if you truly cannot produce one.",
+    },
+    exampleTranslation: {
+      type: "string",
+      description: "Support-language translation of exampleSentence. Empty string if exampleSentence is empty.",
+    },
+  },
+  required: ["word", "translation", "note", "pos", "exampleSentence", "exampleTranslation"],
+  additionalProperties: false,
+};
+
 const SUMMARY_SCHEMA = {
   type: "object",
   properties: {
@@ -368,30 +399,14 @@ const SUMMARY_SCHEMA = {
     },
     newWords: {
       type: "array",
-      description: "Target-language words introduced this session that are NOT part of the app's taught vocabulary. Dictionary/base form only.",
-      items: {
-        type: "object",
-        properties: {
-          word: { type: "string" },
-          translation: { type: "string" },
-          note: { type: "string", description: "One short usage note, may be empty." },
-          pos: {
-            type: "string",
-            enum: ["noun", "verb", "adjective", "other"],
-            description: "Part of speech of the base form. Load-bearing: mastery-level caps are derived from it.",
-          },
-          exampleSentence: {
-            type: "string",
-            description: "One short natural target-language sentence using this word — the actual sentence you used in conversation this session when possible, otherwise a fresh one at the learner's level. Empty string only if you truly cannot produce one.",
-          },
-          exampleTranslation: {
-            type: "string",
-            description: "Support-language translation of exampleSentence. Empty string if exampleSentence is empty.",
-          },
-        },
-        required: ["word", "translation", "note", "pos", "exampleSentence", "exampleTranslation"],
-        additionalProperties: false,
-      },
+      description: "Target-language words YOU introduced this session that are NOT part of the app's taught vocabulary (the profile). Dictionary/base form only. Words the learner produced go in learnerWords, not here.",
+      items: VOCAB_ITEM_SCHEMA,
+    },
+    learnerWords: {
+      type: "array",
+      description:
+        "Target-language words the LEARNER used correctly this session that are outside the app's profile (not in PRODUCTION, PRACTICING or JUST SEEN) and not in PERSONAL VOCABULARY. Dictionary/base form; exampleSentence is the learner's own sentence, lightly corrected if needed. Not words you introduced (those go in newWords). Empty array if none. At most 8.",
+      items: VOCAB_ITEM_SCHEMA,
     },
     recycledWords: {
       type: "array",
@@ -424,7 +439,7 @@ const SUMMARY_SCHEMA = {
       },
     },
   },
-  required: ["sessionSummary", "wins", "struggles", "newWords", "recycledWords", "nextFocus", "newLearnerFacts", "correctedLearnerFacts"],
+  required: ["sessionSummary", "wins", "struggles", "newWords", "learnerWords", "recycledWords", "nextFocus", "newLearnerFacts", "correctedLearnerFacts"],
   additionalProperties: false,
 };
 
@@ -510,7 +525,7 @@ async function buildConversation(body, mode) {
   // Per-turn steering (chat only — the summary has its own closing turn).
   if (mode === "chat") {
     const last = messages[messages.length - 1];
-    if (last.role === "user") last.content += steeringTrailer(body.preferences, activeTopic);
+    if (last.role === "user") last.content += steeringTrailer(body.preferences, activeTopic, Math.floor(messages.length / 2) + 1);
   }
   // Cache the conversation history too. The system blocks below are
   // cached, but without a breakpoint in `messages` every turn re-bills the
@@ -605,7 +620,7 @@ exports.handler = async (event) => {
           word: String(a.word).slice(0, 80),
           translation: String(a.translation || "").slice(0, 200),
           pos: String(a.pos || "noun").slice(0, 20),
-          admitted_from: "tutor",
+          admitted_from: a.source === "learner" ? "learner" : "tutor",
           sessions_seen: Number.isInteger(a.sessionsSeen) ? a.sessionsSeen : 3,
         }));
       if (!rows.length) return json(400, { error: "No admissions" });
@@ -681,7 +696,7 @@ exports.handler = async (event) => {
       role: "user",
       content:
         "(The session is over. Produce the end-of-session record as JSON. " +
-        "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile." +
+        "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile, and in learnerWords the words the learner produced that are outside it." +
         (topicsOn ? " File the session under the learner's CONVERSATION TOPICS — the ACTIVE TOPIC they chose unless they themselves moved to another topic's subject — and propose new topics only if genuinely useful." : "") +
         ")",
     });
@@ -698,7 +713,13 @@ exports.handler = async (event) => {
       messages,
       output_config: { format: { type: "json_schema", schema: topicsOn ? SUMMARY_SCHEMA_WITH_TOPICS : SUMMARY_SCHEMA } },
     });
-    logTutorSession({
+    // Awaited, unlike the chat row: the summary runs in the background
+    // after End session (v1.2.76), so nobody waits on it, and a
+    // fire-and-forget insert here was being frozen with the container
+    // before it landed — no summary rows on 2026-09-24/26 although the
+    // summaries ran. Chat keeps fire-and-forget: the stream holds the
+    // container open anyway and the learner IS waiting there.
+    await logTutorSession({
       user_email: String(body.email || "").toLowerCase().trim(),
       mode: "summary",
       model: SUMMARY_MODEL,
