@@ -79,6 +79,13 @@ test("SUMMARY_SCHEMA still declares the fields the client consumes", () => {
   }
 });
 
+test("learnerWords shares newWords' item schema and is required", () => {
+  assert.equal(SUMMARY_SCHEMA.properties.learnerWords.type, "array");
+  assert.equal(SUMMARY_SCHEMA.properties.learnerWords.items, SUMMARY_SCHEMA.properties.newWords.items, "same object, no $ref");
+  assert.ok(SUMMARY_SCHEMA.required.includes("learnerWords"));
+  assert.match(SUMMARY_SCHEMA.properties.learnerWords.description, /LEARNER used/);
+});
+
 test("newWords items declare exampleSentence + exampleTranslation as required strings", () => {
   const item = SUMMARY_SCHEMA.properties.newWords.items;
   for (const field of ["word", "translation", "note", "pos", "exampleSentence", "exampleTranslation"]) {

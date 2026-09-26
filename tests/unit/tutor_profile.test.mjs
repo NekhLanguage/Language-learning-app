@@ -107,7 +107,7 @@ test("buildProfileText renders production as target-only and the other tiers as 
   assert.match(text, /JUST SEEN \(2 words/);
   assert.match(text, /teléfono = phone/);
   assert.match(text, /PERSONAL VOCABULARY \(1 words?/);
-  assert.match(text, /mercado = market/);
+  assert.match(text, /mercado = market \(0\/3\)/);
 });
 
 test("buildProfileText bounds tiers by recency once they exceed the cap", () => {
@@ -156,8 +156,8 @@ test("buildProfileText bounds personal vocab by latest sighting once past cap", 
   });
   assert.match(text, /PERSONAL VOCABULARY \(70 words, showing 60 most-recent/);
   assert.match(text, /\(and 10 more not shown\)/);
-  assert.match(text, /w69 = t69/); // newest survives
-  assert.equal(text.includes("w0 = t0"), false); // oldest trimmed
+  assert.match(text, /w69 = t69 \(1\/3\)/); // newest survives
+  assert.equal(text.includes("w0 = t0 "), false); // oldest trimmed
 });
 
 test("buildProfileText leaves under-cap tiers unlabelled as truncated", () => {
@@ -376,4 +376,24 @@ test("an oversize profile shrinks JUST SEEN, then PRACTICING, and never exceeds 
   assert.match(text, /PRACTICING \(250 words, showing \d+ most-recent/);
   assert.match(text, /PRODUCTION VOCABULARY \(250 words —/, "production is never shrunk");
   assert.match(text, /not shown\)\n/, "trailers survive — no mid-word cut");
+});
+
+// Nekh 2026-09-26: five words sat at 2/3 for weeks because Anna could not
+// tell them from the rest. The block now carries counts, the near-admission
+// marker, and orders those first.
+test("personal vocabulary shows sighting counts, marks 2/3 words and lists them first", () => {
+  const text = buildProfileText({
+    run: { released: [], progress: {} },
+    targetForms: {}, supportForms: {},
+    targetLabel: "Ukrainian", supportLabel: "English",
+    personalVocab: [
+      { word: "раз", translation: "time", seenInSessions: ["2026-09-21"] },
+      { word: "план", translation: "plan", seenInSessions: ["2026-09-17", "2026-09-26"] },
+      { word: "полювання", translation: "hunting", seenInSessions: [] },
+      { word: "проти", translation: "against", seenInSessions: ["2026-09-21", "2026-09-22"], source: "learner" },
+    ],
+  });
+  const line = text.split("\n").find((l) => l.startsWith("план") || l.startsWith("проти"));
+  assert.match(line, /^(план|проти) = \w+ \(2\/3 — one more use adds it to the app\), (план|проти) = \w+ \(2\/3 — one more use adds it to the app\), раз = time \(1\/3\), полювання = hunting \(0\/3\)$/);
+  assert.match(text, /PERSONAL VOCABULARY \(4 words from past conversations — yours or the learner's own; a word joins the app after being used in 3 different sessions/);
 });

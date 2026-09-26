@@ -862,13 +862,19 @@ async function applySummary(summary, messages, when) {
       .filter((m) => m.role === "assistant")
       .map((m) => m.content)
       .join("\n");
+    // The learner's own messages count too (Nekh 2026-09-26): a held word
+    // they reuse unprompted is a sighting like any other.
+    const learnerText = messages
+      .filter((m) => m.role === "user")
+      .map((m) => m.content)
+      .join("\n");
     const taken = new Set([
       ...Object.keys(state.forms[state.targetLang] || {}),
       ...(state.run.released || []),
     ]);
     const { admitted, collided } = processTutorSession(
       state.run, summary.newWords, assistantText, when, (cid) => taken.has(cid),
-      summary.recycledWords
+      summary.recycledWords, summary.learnerWords, learnerText
     );
     if (collided.length) {
       console.warn("tutor admission skipped (cid collision):", collided.map((c) => c.word));
@@ -878,21 +884,26 @@ async function applySummary(summary, messages, when) {
     // Flag off: capture-only, the pre-write-back behavior.
     const vocab = runPersonalVocab();
     const known = new Set(vocab.map((w) => w.word.toLowerCase()));
-    for (const w of Array.isArray(summary.newWords) ? summary.newWords : []) {
-      if (w && w.word && !known.has(w.word.toLowerCase()) && vocab.length < MAX_PERSONAL_VOCAB) {
-        vocab.push({
-          word: w.word,
-          translation: w.translation || "",
-          note: w.note || "",
-          pos: w.pos || "noun",
-          exampleSentence: w.exampleSentence || "",
-          exampleTranslation: w.exampleTranslation || "",
-          seenInSessions: [when],
-          admittedAt: null,
-        });
-        known.add(w.word.toLowerCase());
+    const captureOnly = (list, source) => {
+      for (const w of Array.isArray(list) ? list : []) {
+        if (w && w.word && !known.has(w.word.toLowerCase()) && vocab.length < MAX_PERSONAL_VOCAB) {
+          vocab.push({
+            word: w.word,
+            translation: w.translation || "",
+            note: w.note || "",
+            pos: w.pos || "noun",
+            exampleSentence: w.exampleSentence || "",
+            exampleTranslation: w.exampleTranslation || "",
+            seenInSessions: [when],
+            admittedAt: null,
+            ...(source === "learner" ? { source: "learner" } : {}),
+          });
+          known.add(w.word.toLowerCase());
+        }
       }
-    }
+    };
+    captureOnly(summary.newWords, "tutor");
+    captureOnly(summary.learnerWords, "learner");
   }
 
   if (admissions.length) {
@@ -1018,7 +1029,7 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
   say("Session saved. Your tutor will remember this next time.");
   if (topicNote) addMessage("status", topicNote);
   if (summary.nextFocus) addMessage("status", `Next focus: ${summary.nextFocus}`);
-  const added = (summary.newWords || []).length;
+  const added = (summary.newWords || []).length + (summary.learnerWords || []).length;
   if (added) addMessage("status", `New words added to your personal vocabulary: ${added}.`);
   if (admissions.length) {
     addMessage(
