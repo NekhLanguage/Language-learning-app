@@ -70,3 +70,23 @@ test("steeringTrailer restates dials and instructions and is marked as app-autho
   assert.ok(!/own instructions/.test(bare));
   assert.match(bare, /challenge=stretch/);
 });
+
+// Nekh 2026-09-26: Anna glossed «зараз» for a learner who had it in the
+// app. The rule that profile words are never glossed lives in three
+// places — the instructions file, the language-mix dial text, and the
+// per-turn trailer — and this pins all three so none is edited away.
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+test("the no-gloss rule for profile words is in the instructions, the dials and the trailer", () => {
+  const here = dirname(fileURLToPath(import.meta.url));
+  const instructions = readFileSync(join(here, "../../netlify/functions/tutor-instructions.md"), "utf8");
+  assert.match(instructions, /Glossing is for words OUTSIDE the profile/);
+  assert.match(instructions, /Never translate, gloss, "teach" or explain a PRODUCTION word/);
+  assert.doesNotMatch(instructions, /«Я читаю \(I read\)/, "the balanced example must not gloss a profile word");
+  assert.doesNotMatch(instructions, /Як ти\? \(How are you\?\)/, "the greeting example must not gloss basic glue");
+  const prefs = renderPreferences({ languageMix: "support" });
+  assert.match(prefs, /never for translating words the profile says the learner knows/);
+  assert.match(steeringTrailer({}), /No glosses or translations on words in the learner's PRODUCTION or PRACTICING profile/);
+});

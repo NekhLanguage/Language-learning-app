@@ -4,6 +4,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  MAX_PROFILE_CHARS,
   baseForm,
   tierConcepts,
   levelTier,
@@ -87,7 +88,7 @@ test("buildProfileText leads with the computed level tier", () => {
   assert.match(text, /^LEVEL TIER \(computed by the app — do not re-estimate\): ABSOLUTE BEGINNER \(3 production\+practicing words\)/);
 });
 
-test("buildProfileText renders tiers with target = support pairs", () => {
+test("buildProfileText renders production as target-only and the other tiers as target = support pairs", () => {
   const text = buildProfileText({
     run: fakeRun(),
     targetForms: TARGET_FORMS,
@@ -98,8 +99,9 @@ test("buildProfileText renders tiers with target = support pairs", () => {
   });
   assert.match(text, /Learning Spanish \(support language: English\)/);
   assert.match(text, /PRODUCTION VOCABULARY \(2 words/);
-  assert.match(text, /agua = water/);
-  assert.match(text, /beber = drink/);
+  assert.match(text, /NEVER gloss, translate or explain them\):\nagua, beber\n/);
+  assert.doesNotMatch(text, /agua = water/);
+  assert.doesNotMatch(text, /beber = drink/);
   assert.match(text, /PRACTICING \(1 words?/);
   assert.match(text, /livro = book/);
   assert.match(text, /JUST SEEN \(2 words/);
@@ -109,13 +111,13 @@ test("buildProfileText renders tiers with target = support pairs", () => {
 });
 
 test("buildProfileText bounds tiers by recency once they exceed the cap", () => {
-  // 100 practicing concepts; cap for practicing is 80. Concept N carries
-  // lastShownAt = N so the top-80 are p20..p99 (in that order).
+  // 300 practicing concepts; cap for practicing is 250. Concept N carries
+  // lastShownAt = N so the top-250 are p50..p299 (in that order).
   const released = [];
   const progress = {};
   const targetForms = {};
   const supportForms = {};
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 300; i++) {
     const cid = `PRAC${i}`;
     released.push(cid);
     progress[cid] = { level: 4, completed: false, lastShownAt: i };
@@ -128,22 +130,23 @@ test("buildProfileText bounds tiers by recency once they exceed the cap", () => 
     targetLabel: "Spanish", supportLabel: "English",
     personalVocab: [],
   });
-  assert.match(text, /PRACTICING \(100 words, showing 80 most-recent/);
-  assert.match(text, /\(and 20 more not shown\)/);
-  // Newest (PRAC99) is shown, oldest (PRAC0) is trimmed.
-  assert.match(text, /t99 = s99/);
-  assert.equal(text.includes("t0 = s0"), false);
+  assert.match(text, /PRACTICING \(300 words, showing 250 most-recent/);
+  assert.match(text, /\(and 50 more not shown\)/);
+  // Newest (PRAC299) is shown, oldest (PRAC0) is trimmed.
+  assert.match(text, /t299 = s299/);
+  assert.equal(text.includes("t0 = s0,"), false);
   // Under-cap tiers keep the plain header shape.
   assert.match(text, /PRODUCTION VOCABULARY \(0 words —/);
 });
 
 test("buildProfileText bounds personal vocab by latest sighting once past cap", () => {
-  // 50 personal entries; cap is 40. Entry N carries a session date encoding N
-  // so the top-40 are the higher-N entries.
+  // 70 personal entries; cap is 60. Entry N carries a session date encoding N
+  // so the top-60 are the higher-N entries.
   const personalVocab = [];
-  for (let i = 0; i < 50; i++) {
-    const dd = String(i + 1).padStart(2, "0");
-    personalVocab.push({ word: `w${i}`, translation: `t${i}`, seenInSessions: [`2026-08-${dd}`] });
+  for (let i = 0; i < 70; i++) {
+    const dd = String((i % 28) + 1).padStart(2, "0");
+    const mm = i < 28 ? "06" : i < 56 ? "07" : "08";
+    personalVocab.push({ word: `w${i}`, translation: `t${i}`, seenInSessions: [`2026-${mm}-${dd}`] });
   }
   const text = buildProfileText({
     run: { released: [], progress: {} },
@@ -151,9 +154,9 @@ test("buildProfileText bounds personal vocab by latest sighting once past cap", 
     targetLabel: "Spanish", supportLabel: "English",
     personalVocab,
   });
-  assert.match(text, /PERSONAL VOCABULARY \(50 words, showing 40 most-recent/);
+  assert.match(text, /PERSONAL VOCABULARY \(70 words, showing 60 most-recent/);
   assert.match(text, /\(and 10 more not shown\)/);
-  assert.match(text, /w49 = t49/); // newest survives
+  assert.match(text, /w69 = t69/); // newest survives
   assert.equal(text.includes("w0 = t0"), false); // oldest trimmed
 });
 
@@ -313,4 +316,64 @@ test("wordCountLabel counts captured and pending words on the tutor side", () =>
   run.released.push("TUTOR_FAROL");
   run.progress.TUTOR_FAROL = { provenance: "tutor" };
   assert.equal(wordCountLabel(run), "2 + 3");
+});
+
+// Nekh 2026-09-26: 100 of his 240 known words were hidden by the old
+// 60/80 caps and Anna re-taught «зараз». A 250-word language must fit whole.
+test("a full 250-word method vocabulary is shown in full, with no truncation trailer", () => {
+  const released = [];
+  const progress = {};
+  const targetForms = {};
+  const supportForms = {};
+  for (let i = 0; i < 240; i++) {
+    const cid = `W${i}`;
+    released.push(cid);
+    progress[cid] = { level: i < 81 ? 7 : 3, completed: i < 81, lastShownAt: i };
+    targetForms[cid] = { form: `слово${i}` };
+    supportForms[cid] = { form: `word${i}` };
+  }
+  const text = buildProfileText({ run: { released, progress }, targetForms, supportForms, targetLabel: "Ukrainian", supportLabel: "English", personalVocab: [] });
+  assert.match(text, /PRODUCTION VOCABULARY \(81 words —/);
+  assert.match(text, /PRACTICING \(159 words —/);
+  assert.doesNotMatch(text, /not shown/);
+  assert.match(text, /слово0,/, "the oldest production word is still there");
+  assert.match(text, /слово81 = word81/, "the oldest practicing word is still there");
+});
+
+test("tutor-admitted concepts render as the word Anna taught, not the TUTOR_ id", () => {
+  const run = {
+    released: ["TUTOR_МЕЧ", "TUTOR_NOFORM"],
+    progress: { "TUTOR_МЕЧ": { level: 1 }, "TUTOR_NOFORM": { level: 1 } },
+    tutorVocab: { "TUTOR_МЕЧ": { word: "меч", translation: "sword", pos: "noun" } },
+  };
+  const text = buildProfileText({ run, targetForms: {}, supportForms: {}, targetLabel: "Ukrainian", supportLabel: "English", personalVocab: [] });
+  assert.match(text, /меч = sword/);
+  assert.doesNotMatch(text, /TUTOR_МЕЧ/);
+  // No entry → the id still shows rather than crashing.
+  assert.match(text, /TUTOR_NOFORM/);
+});
+
+test("an oversize profile shrinks JUST SEEN, then PRACTICING, and never exceeds the server's slice", () => {
+  const released = [];
+  const progress = {};
+  const targetForms = {};
+  const supportForms = {};
+  const long = "x".repeat(120);
+  for (let i = 0; i < 250; i++) {
+    for (const [tier, level] of [["P", 7], ["R", 3], ["S", 1]]) {
+      const cid = `${tier}${i}`;
+      released.push(cid);
+      progress[cid] = { level, completed: level === 7, lastShownAt: i };
+      // Production words are normal length (they are never shrunk); the
+      // two shrinkable tiers carry the bulk.
+      targetForms[cid] = { form: tier === "P" ? `${tier}${i}` : `${tier}${i}${long}` };
+      supportForms[cid] = { form: `s${i}` };
+    }
+  }
+  const text = buildProfileText({ run: { released, progress }, targetForms, supportForms, targetLabel: "Ukrainian", supportLabel: "English", personalVocab: [] });
+  assert.ok(text.length <= MAX_PROFILE_CHARS, `profile is ${text.length} chars`);
+  assert.match(text, /JUST SEEN \(250 words, showing 10 most-recent/, "seen shrinks first, down to its floor");
+  assert.match(text, /PRACTICING \(250 words, showing \d+ most-recent/);
+  assert.match(text, /PRODUCTION VOCABULARY \(250 words —/, "production is never shrunk");
+  assert.match(text, /not shown\)\n/, "trailers survive — no mid-word cut");
 });

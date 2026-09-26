@@ -12,30 +12,30 @@
 const PRODUCTION_MIN_LEVEL = 6;
 const PRACTICING_MIN_LEVEL = 3;
 
-// Bounded vocabulary context. Once a learner accumulates hundreds of released
-// concepts, the raw profile becomes prompt bloat that dilutes attention from
-// identity/subject facts (which is why learner-facts moved above it) and
-// silently grows API cost. Cap each tier at the size a working conversation
-// can actually draw on, picked by RECENCY — the words the learner has most
-// recently touched are what the tutor should build sentences from now, and a
-// truncated tail is annotated "(and N more not shown)" so the model knows the
-// slice is not the whole picture.
+// Bounded vocabulary context — bounded generously. The caps used to be
+// 60 / 80 / 40, on the theory that a conversation never draws on more than
+// ~140 words and anything past that was prompt bloat. The theory was
+// wrong in the direction that matters: a known word the tutor cannot see
+// is an UNKNOWN word to her, and she glosses and "teaches" it (Nekh
+// 2026-09-26: 100 of his 240 known Ukrainian words were hidden, «зараз»
+// among them, and Anna taught him "now"). The whole profile sits in the
+// prompt-cached system block, so its per-turn cost is a cache read; a
+// 250-word language at these caps is ~6–8k characters against the 20k
+// budget (MAX_PROFILE_CHARS). Once a tier does overflow, the N
+// most-recently-touched words are shown by RECENCY and the tail is
+// annotated "(and N more not shown)" so the model knows the slice is not
+// the whole picture.
 //
 // LEVEL TIER (see levelTier) counts the FULL production+practicing set so
 // truncation never re-tiers the learner. The bound is on what the tutor
 // sees, not on what the learner has.
-//
-// Caps chosen against the 250-word method target with room to grow:
-//   - PRODUCTION 60 / PRACTICING 80: ~140 known words is more than any single
-//     conversation draws on; beyond this, the model is over-optioned, not
-//     under-optioned.
-//   - SEEN 40: exposure-only tier, "use sparingly and re-gloss on first use"
-//     already implies the tutor should not pull from it as inventory — 40 is
-//     enough to inform recognition avoidance.
-//   - PERSONAL 40: enough to keep recently-introduced tutor words in
-//     recycling range without pinning archived pieces from long ago.
-const PROFILE_TIER_CAP = { production: 60, practicing: 80, seen: 40 };
-const PERSONAL_VOCAB_CAP = 40;
+const PROFILE_TIER_CAP = { production: 250, practicing: 250, seen: 60 };
+const PERSONAL_VOCAB_CAP = 60;
+// Mirrors MAX_PROFILE_CHARS in netlify/functions/tutor.js, which slices the
+// profile blindly (mid-word) past this length. buildProfileText trims the
+// JUST SEEN tier first, then PRACTICING, so an oversize profile loses its
+// least useful words rather than its tail.
+export const MAX_PROFILE_CHARS = 20000;
 
 // Sort CIDs by lastShownAt desc (missing progress / no lastShownAt sort last),
 // then take the top `cap`. Returns { shown, trimmed } — trimmed is the count
@@ -106,14 +106,33 @@ export function levelTier(tiers) {
   return { key: "DEVELOPING", known, rule: "normal i+1 conversation" };
 }
 
-function wordList(cids, targetForms, supportForms) {
+// PRODUCTION words are rendered as the target form ONLY. The learner types
+// these from memory, so the tutor needs no meaning to use them — and
+// "зараз = now" is exactly the gloss shape she would otherwise copy into
+// the chat. PRACTICING / JUST SEEN keep "target = support".
+function wordList(cids, targetForms, supportForms, { translations = true } = {}) {
   return cids
     .map((cid) => {
       const t = baseForm(targetForms?.[cid], cid);
+      if (!translations) return t;
       const s = baseForm(supportForms?.[cid], cid);
       return t === s ? t : `${t} = ${s}`;
     })
     .join(", ");
+}
+
+// Forms for tutor-admitted concepts (TUTOR_* cids). They live in
+// run.tutorVocab, not in the lang/pack files, so without this overlay the
+// profile shows the raw id ("TUTOR_МЕЧ") instead of «меч = sword».
+export function tutorVocabForms(run) {
+  const target = {};
+  const support = {};
+  for (const [cid, entry] of Object.entries(run?.tutorVocab || {})) {
+    if (!entry || typeof entry !== "object") continue;
+    if (entry.word) target[cid] = String(entry.word);
+    if (entry.translation) support[cid] = String(entry.translation);
+  }
+  return { target, support };
 }
 
 // The full profile text block. `opts`:
@@ -129,7 +148,10 @@ function wordList(cids, targetForms, supportForms) {
 // FULL production+practicing set — bounding is a prompt-cost / attention
 // control, not a re-tiering.
 export function buildProfileText(opts) {
-  const { run, targetForms, supportForms, targetLabel, supportLabel } = opts;
+  const { run, targetLabel, supportLabel } = opts;
+  const tv = tutorVocabForms(run);
+  const targetForms = { ...(opts.targetForms || {}), ...tv.target };
+  const supportForms = { ...(opts.supportForms || {}), ...tv.support };
   const tiers = tierConcepts(run);
   const tier = levelTier(tiers);
   const progress = run?.progress || {};
@@ -146,40 +168,57 @@ export function buildProfileText(opts) {
   );
   lines.push("");
 
-  const prod = boundedTierCids(tiers.production, progress, PROFILE_TIER_CAP.production);
-  lines.push(
-    `${tierHeader("PRODUCTION VOCABULARY", tiers.production.length, prod.shown.length, PROFILE_TIER_CAP.production)} — the learner types these from memory; build conversation on them):`
-  );
-  lines.push(renderCidList(prod, targetForms, supportForms));
-  lines.push("");
-
-  const prac = boundedTierCids(tiers.practicing, progress, PROFILE_TIER_CAP.practicing);
-  lines.push(
-    `${tierHeader("PRACTICING", tiers.practicing.length, prac.shown.length, PROFILE_TIER_CAP.practicing)} — recognized, used in guided exercises; recycle these often):`
-  );
-  lines.push(renderCidList(prac, targetForms, supportForms));
-  lines.push("");
-
-  const seen = boundedTierCids(tiers.seen, progress, PROFILE_TIER_CAP.seen);
-  lines.push(
-    `${tierHeader("JUST SEEN", tiers.seen.length, seen.shown.length, PROFILE_TIER_CAP.seen)} — exposure only; use sparingly and re-gloss on first use):`
-  );
-  lines.push(renderCidList(seen, targetForms, supportForms));
-
   const personal = Array.isArray(opts.personalVocab) ? opts.personalVocab : [];
   const per = boundedPersonalVocab(personal, PERSONAL_VOCAB_CAP);
-  lines.push("");
-  lines.push(
-    `${tierHeader("PERSONAL VOCABULARY", personal.length, per.shown.length, PERSONAL_VOCAB_CAP)} introduced in past tutor conversations — recycle deliberately):`
-  );
   const personalLine = per.shown.map((w) => `${w.word} = ${w.translation}`).join(", ") || "(none yet)";
-  lines.push(per.trimmed ? `${personalLine} (and ${per.trimmed} more not shown)` : personalLine);
 
-  return lines.join("\n");
+  // Render with the tier caps, then shrink the least useful tiers (JUST
+  // SEEN, then PRACTICING) if the whole thing would overrun the server's
+  // hard slice — a blind cut lands mid-word in the tail, which is exactly
+  // where the practicing words the tutor should not re-teach sit.
+  const caps = { ...PROFILE_TIER_CAP };
+  const render = () => {
+    const out = [...lines];
+    const prod = boundedTierCids(tiers.production, progress, caps.production);
+    out.push(
+      `${tierHeader("PRODUCTION VOCABULARY", tiers.production.length, prod.shown.length, caps.production)} — the learner types these from memory: build conversation on them, and NEVER gloss, translate or explain them):`
+    );
+    out.push(renderCidList(prod, targetForms, supportForms, { translations: false }));
+    out.push("");
+
+    const prac = boundedTierCids(tiers.practicing, progress, caps.practicing);
+    out.push(
+      `${tierHeader("PRACTICING", tiers.practicing.length, prac.shown.length, caps.practicing)} — recognized, used in guided exercises; recycle these often, used plainly with no gloss — a translation next to one tells the learner you think they don't know it):`
+    );
+    out.push(renderCidList(prac, targetForms, supportForms));
+    out.push("");
+
+    const seen = boundedTierCids(tiers.seen, progress, caps.seen);
+    out.push(
+      `${tierHeader("JUST SEEN", tiers.seen.length, seen.shown.length, caps.seen)} — exposure only; use sparingly and gloss once on first use):`
+    );
+    out.push(renderCidList(seen, targetForms, supportForms));
+
+    out.push("");
+    out.push(
+      `${tierHeader("PERSONAL VOCABULARY", personal.length, per.shown.length, PERSONAL_VOCAB_CAP)} introduced in past tutor conversations — recycle deliberately):`
+    );
+    out.push(per.trimmed ? `${personalLine} (and ${per.trimmed} more not shown)` : personalLine);
+    return out.join("\n");
+  };
+
+  let text = render();
+  for (const tier of ["seen", "practicing"]) {
+    while (text.length > MAX_PROFILE_CHARS && caps[tier] > 10) {
+      caps[tier] = Math.max(10, Math.floor(caps[tier] / 2));
+      text = render();
+    }
+  }
+  return text;
 }
 
-function renderCidList({ shown, trimmed }, targetForms, supportForms) {
-  const body = wordList(shown, targetForms, supportForms) || "(none yet)";
+function renderCidList({ shown, trimmed }, targetForms, supportForms, listOpts) {
+  const body = wordList(shown, targetForms, supportForms, listOpts) || "(none yet)";
   return trimmed ? `${body} (and ${trimmed} more not shown)` : body;
 }
 

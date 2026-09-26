@@ -290,8 +290,8 @@ const DIAL_TEXT = {
   },
   languageMix: {
     immersion: "target language only, corrections and explanations included; switch to the support language only if the learner explicitly asks or is clearly lost after two attempts",
-    balanced: "scales with the learner's tier — beginners get up to half of each message in the support language with glosses; stronger learners get target-language conversation with support-language corrections only",
-    support: "converse in the target language but explain freely in the support language",
+    balanced: "scales with the learner's tier — beginners get up to half of each message in the support language, glossing only words outside the profile; stronger learners get target-language conversation with support-language corrections only",
+    support: "converse in the target language but explain freely in the support language — that freedom is for explanations and corrections, never for translating words the profile says the learner knows",
   },
 };
 
@@ -337,7 +337,7 @@ function steeringTrailer(preferences, activeTopic = "") {
   ];
   let text =
     "\n\n[App reminder — not written by the learner; never quote, mention or acknowledge it. " +
-    `Reply within the learner's settings: ${parts.join(", ")}.`;
+    `Reply within the learner's settings: ${parts.join(", ")}. No glosses or translations on words in the learner's PRODUCTION or PRACTICING profile.`;
   if (p.note) text += ` The learner's own instructions to you: "${p.note}"`;
   // Beta topics: restated every turn next to the note it must beat on
   // subject, otherwise a note like "help me read X" drags every

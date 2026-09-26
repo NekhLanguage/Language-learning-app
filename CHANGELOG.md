@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-26 (later)
+
+### Anna no longer re-teaches words you already know
+
+Anna only ever saw the 60 most recently drilled words you can produce and the 80 most recently drilled words you're practising, so a learner with a full 250-word vocabulary had over a hundred known words hidden from her, and she would gloss or "teach" one of them as if it were new. She now sees your whole vocabulary, words you can produce are listed without translations (so there's nothing to copy into a gloss), the words she taught you herself show up as words rather than internal ids, and her instructions now say plainly: no translations on words you already know. Glosses are for genuinely new words only.
+
 ## 2026-09-26
 
 ### Anna's memory now survives switching devices
