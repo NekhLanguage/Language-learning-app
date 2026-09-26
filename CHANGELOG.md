@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-26
+
+### Anna's memory now survives switching devices
+
+Anna's settings, session memory, learner facts, tutor vocabulary and topics used to travel with the whole progress record, and the record from whichever device saved last won outright. Do a lesson on your phone after talking to Anna on your computer, and the phone's older copy of Anna's state quietly replaced the newer one everywhere. Anna's state now carries its own clock and merges by it, so a lesson on one device can no longer erase a conversation on another. Anna's page also pulls the latest copy from the server when it opens, instead of waiting for the app to do it.
+
 ## 2026-09-21
 
 ### Anna answers as she types, and End session no longer makes you wait

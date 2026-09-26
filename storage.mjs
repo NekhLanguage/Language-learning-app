@@ -184,3 +184,78 @@ export function shouldAdoptServerUser(local, server) {
   if (!localChange) return true;
   return serverChange >= localChange;
 }
+
+// --- Field-level merge for the tutor-owned part of the record ---------------
+//
+// shouldAdoptServerUser picks ONE whole copy. That is right for run
+// progress (the app is its only writer, and a run has no per-field clock),
+// but Anna's state — tutor.prefs/memory/topics/topicProposals, learnerFacts,
+// and the per-run tutor vocabulary — is written only by tutor.html, on
+// whichever device the learner talked to Anna on. A lesson on the phone
+// AFTER a topic session on the computer made the phone's copy "newer",
+// the app kept it and pushed it up, and the topic (or Anna's new memory,
+// or a corrected fact) was gone from every device (Nekh 2026-09-26).
+//
+// tutor.js stamps `tutor.updatedAt` (ms) on every save. Whichever copy has
+// the newer stamp supplies the tutor-owned fields, whatever the whole-record
+// rule decided. A copy with no stamp (written before this shipped) counts
+// as 0, so a stamped copy always wins over it and two unstamped copies
+// fall back to the whole-record rule.
+
+export function tutorStamp(user) {
+  return Number(user?.tutor?.updatedAt) || 0;
+}
+
+const clone = (v) => JSON.parse(JSON.stringify(v));
+
+// Copies the tutor-owned fields of `source` onto `target` (in place).
+// Mirrors the graft tutor.js does when it saves.
+export function graftTutorState(target, source) {
+  if (!target || !source || typeof target !== "object" || typeof source !== "object") return target;
+  if (source.tutor && typeof source.tutor === "object") target.tutor = clone(source.tutor);
+  if (Array.isArray(source.learnerFacts)) target.learnerFacts = clone(source.learnerFacts);
+  for (const [lang, srcRun] of Object.entries(source.runs || {})) {
+    const run = target.runs?.[lang];
+    if (!run || typeof run !== "object" || !srcRun || typeof srcRun !== "object") continue;
+    run.personalVocab = clone(srcRun.personalVocab || []);
+    run.pendingAdmission = clone(srcRun.pendingAdmission || []);
+    if (srcRun.tutorVocab) run.tutorVocab = clone(srcRun.tutorVocab);
+    // Tutor-admitted concepts join the ladder; app-earned progress on
+    // them is never rolled back (only missing entries are filled).
+    for (const cid of srcRun.released || []) {
+      if (typeof cid !== "string" || !cid.startsWith("TUTOR_")) continue;
+      if (!Array.isArray(run.released)) run.released = [];
+      if (!run.released.includes(cid)) run.released.push(cid);
+      if (srcRun.progress?.[cid]) {
+        if (!run.progress || typeof run.progress !== "object") run.progress = {};
+        if (!run.progress[cid]) run.progress[cid] = clone(srcRun.progress[cid]);
+      }
+    }
+  }
+  return target;
+}
+
+// The merge a device runs when the server answers a load. Returns the
+// record to use (`user`, null when neither side has one) and whether it
+// differs from the server copy and should be pushed up (`pushUp`).
+// Whole record: shouldAdoptServerUser. Tutor-owned fields: newer
+// tutor.updatedAt wins, grafted onto whichever base was chosen.
+export function mergeUserStates(local, server) {
+  if (shouldAdoptServerUser(local, server)) {
+    if (!server || typeof server !== "object") return { user: null, pushUp: false, grafted: null };
+    const user = migrateUserState(server);
+    if (local && typeof local === "object" && tutorStamp(local) > tutorStamp(user)) {
+      graftTutorState(user, local);
+      return { user, pushUp: true, grafted: "local-tutor" };
+    }
+    return { user, pushUp: false, grafted: null };
+  }
+  let grafted = null;
+  if (server && typeof server === "object" && tutorStamp(server) > tutorStamp(local)) {
+    graftTutorState(local, migrateUserState(server));
+    grafted = "server-tutor";
+  }
+  // Local is the newer whole record: it goes up (as before), now carrying
+  // the newer tutor state either way.
+  return { user: local, pushUp: true, grafted };
+}

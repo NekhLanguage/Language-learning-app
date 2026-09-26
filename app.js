@@ -2,7 +2,7 @@ import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap, getAudioFallbacks } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer, MAX_LEVEL } from "./progression.mjs";
 import { langRuleValue } from "./language_rules.mjs";
-import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist, shouldAdoptServerUser } from "./storage.mjs";
+import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist, mergeUserStates } from "./storage.mjs";
 import { tutorProductionTask, tutorExampleTiles, gradeTyped, liftTutorLevel } from "./tutor_exercises.mjs";
 import {
   baseCompletionRatio as computeBaseCompletionRatio,
@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.77";
+const APP_DATA_VERSION = "1.2.78";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1060,7 +1060,14 @@ async function loadUserFromServer(email, { force = false } = {}) {
   // save would have pushed the wipe upstream (Emi 2026-09-02-61). Local
   // with runs always survives; only a device with nothing local starts
   // fresh from a null server copy.
-  if (!force && !shouldAdoptServerUser(USER, data.user)) {
+  // Field-level: the whole record follows the newest save, but Anna's
+  // state (topics, prefs, memory, facts, tutor vocabulary) follows its own
+  // clock, so a lesson on this device can't erase a tutor session on
+  // another (Nekh 2026-09-26). `force` (just signed in) adopts the server
+  // copy outright — the local copy may belong to a different account.
+  const merged = force ? { user: data.user, pushUp: false, grafted: null } : mergeUserStates(USER, data.user);
+  if (merged.grafted) console.info(`Merged Anna's newer state from the ${merged.grafted === "server-tutor" ? "server" : "local"} copy`);
+  if (!force && merged.user === USER) {
     if (data.user) {
       console.info("Local progress is newer than the server copy — keeping local and pushing it up");
     } else {
@@ -1070,8 +1077,8 @@ async function loadUserFromServer(email, { force = false } = {}) {
     return;
   }
 
-  if (data.user) {
-    USER = migrateUserState(data.user);
+  if (merged.user) {
+    USER = migrateUserState(merged.user);
 
     // 🔥 version migration only
     Object.keys(USER.runs || {}).forEach(lang => {
@@ -1098,8 +1105,10 @@ if (run.contentVersion !== CONTENT_VERSION) {
     USER = createEmptyUser();
   }
 
-  // ✅ ONLY save locally
+  // ✅ ONLY save locally — unless the merge took Anna's newer state from
+  // this device, which the server doesn't have yet: one push, no re-read.
   localStorage.setItem("zth_user", JSON.stringify(compactUserForPersist(USER)));
+  if (merged.pushUp) await saveUser({ reload: false });
 }
 
 function hasAccess() {
