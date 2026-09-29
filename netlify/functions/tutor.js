@@ -28,7 +28,10 @@ const path = require("path");
 const { SUPABASE_URL, publishableKey, secretKey, restHeaders } = require("./supabase");
 const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive } = require("./auth");
 
-const MODEL = process.env.TUTOR_MODEL || "claude-sonnet-5";
+// Sonnet 5.5 (Nekh 2026-09-29): same per-token prices as Sonnet 5, newer
+// model. TUTOR_MODEL=claude-sonnet-5 on Netlify flips back without a
+// deploy — every request shape below is valid on both.
+const MODEL = process.env.TUTOR_MODEL || "claude-sonnet-5-5";
 // The end-of-session record is a structured-output call with a 2048-token
 // budget on top of the full transcript, so it is the slowest request the
 // tutor makes. TUTOR_SUMMARY_MODEL lets it run on a faster model than the
@@ -48,6 +51,7 @@ const SUMMARY_MODEL = process.env.TUTOR_SUMMARY_MODEL || MODEL;
 // These rows feed the per-user cost distribution (tutor_cost_percentiles
 // in Supabase) that decides Anna's pricing floor, so keep them exact.
 const MODEL_PRICES_CENTS_PER_MTOK = {
+  "claude-sonnet-5-5":         { input: 200,  output: 1000, cache_read: 20,  cache_write: 250  },
   "claude-sonnet-5":           { input: 200,  output: 1000, cache_read: 20,  cache_write: 250  },
   "claude-opus-5":             { input: 500,  output: 2500, cache_read: 50,  cache_write: 625  },
   "claude-haiku-4-5-20251001": { input: 100,  output: 500,  cache_read: 10,  cache_write: 125  },
@@ -109,6 +113,27 @@ const MAX_NOTE_CHARS = 1000;
 // The conversation-topics block (beta). Client-rendered; bounded there too.
 const MAX_TOPICS_CHARS = 6000;
 const MAX_TOPIC_NAME_CHARS = 60;
+
+// Anna's replies are short (98 output tokens on average over the last two
+// weeks) and a chat turn is latency-bound, so thinking is kept minimal.
+// Effort is set explicitly because Sonnet 5.5 recalibrated the levels and
+// its default (high) thinks briefly before almost every reply.
+const CHAT_OUTPUT_CONFIG = { effort: "low" };
+
+// The end-of-session record is extraction from a transcript the model
+// already has; the thinking pass was most of the 20–40 s learners used to
+// wait at End session (Nekh 2026-09-21). How "no thinking" is spelled
+// differs by model: Sonnet 5.5 rejects `disabled` and offers
+// `between_tools`; Sonnet 5 accepts `disabled` and rejects
+// `between_tools`; Opus 5.5 rejects both, so it runs adaptive at low
+// effort. Keyed on the model so a TUTOR_SUMMARY_MODEL flip never 400s.
+function summaryThinking(model) {
+  const m = String(model || "");
+  if (m.startsWith("claude-sonnet-5-5")) return { type: "between_tools" };
+  if (m.startsWith("claude-sonnet-5") || m.startsWith("claude-opus-4")) return { type: "disabled" };
+  return null; // adaptive, bounded by effort
+}
+const SUMMARY_OUTPUT_CONFIG = { effort: "low" };
 
 let cachedClient = null;
 function getClient() {
@@ -650,6 +675,7 @@ exports.handler = async (event) => {
       const response = await client.messages.create({
         model: MODEL,
         max_tokens: 1024,
+        output_config: CHAT_OUTPUT_CONFIG,
         system,
         messages,
       });
@@ -700,18 +726,16 @@ exports.handler = async (event) => {
         (topicsOn ? " File the session under the learner's CONVERSATION TOPICS — the ACTIVE TOPIC they chose unless they themselves moved to another topic's subject — and propose new topics only if genuinely useful." : "") +
         ")",
     });
-    // No thinking pass on the record: it is extraction from a transcript
-    // the model already has, and the pass was most of the 20-40 s the
-    // learner used to wait at End session (Nekh 2026-09-21). Sonnet 5
-    // accepts an explicit disabled here; the JSON schema still constrains
-    // the output.
+    // No thinking pass on the record (see summaryThinking); the JSON
+    // schema still constrains the output.
+    const thinking = summaryThinking(SUMMARY_MODEL);
     const response = await client.messages.create({
       model: SUMMARY_MODEL,
       max_tokens: 2048,
-      thinking: { type: "disabled" },
+      ...(thinking ? { thinking } : {}),
       system,
       messages,
-      output_config: { format: { type: "json_schema", schema: topicsOn ? SUMMARY_SCHEMA_WITH_TOPICS : SUMMARY_SCHEMA } },
+      output_config: { ...SUMMARY_OUTPUT_CONFIG, format: { type: "json_schema", schema: topicsOn ? SUMMARY_SCHEMA_WITH_TOPICS : SUMMARY_SCHEMA } },
     });
     // Awaited, unlike the chat row: the summary runs in the background
     // after End session (v1.2.76), so nobody waits on it, and a
@@ -773,6 +797,9 @@ exports.getClient = getClient;
 exports.logTutorSession = logTutorSession;
 exports.costCents = costCents;
 exports.MODEL = MODEL;
+exports.CHAT_OUTPUT_CONFIG = CHAT_OUTPUT_CONFIG;
+exports.summaryThinking = summaryThinking;
+exports.MODEL_PRICES_CENTS_PER_MTOK = MODEL_PRICES_CENTS_PER_MTOK;
 exports.contextBlock = contextBlock;
 exports.renderPreferences = renderPreferences;
 exports.steeringTrailer = steeringTrailer;
