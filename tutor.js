@@ -571,7 +571,15 @@ async function loadForms() {
 
 // --- Tutor requests ---------------------------------------------------------
 
-function buildRequestBody(mode, messages = state.messages, { topicId = state.topicId } = {}) {
+// `excludeRecord`: the session record being summarised. End session saves
+// it (as a placeholder) BEFORE asking Anna for the notes, so without this
+// the MEMORY block — and the topic's recent sessions — differ from the
+// chat turns' and the summary call rewrote the whole cached prefix (12k
+// cache-write tokens per summary, 3 of its 4.7 cents; tutor_sessions,
+// 2026-09-29). Leaving it out keeps the summary's system prompt
+// byte-identical to the conversation's.
+function buildRequestBody(mode, messages = state.messages, { topicId = state.topicId, excludeRecord = null } = {}) {
+  const sessions = tutorMemory().sessions.filter((s) => s !== excludeRecord);
   const body = {
     mode,
     email: state.email,
@@ -589,7 +597,7 @@ function buildRequestBody(mode, messages = state.messages, { topicId = state.top
       personalVocab: [...runPersonalVocab(), ...(state.run.pendingAdmission || [])],
     }),
     preferences: effectivePreferences(),
-    memory: buildMemoryText(tutorMemory()),
+    memory: buildMemoryText({ sessions }),
     // Bounded (20-entry hard cap on the client), user-level, cross-language.
     // The function renders them at the top of the system prompt above the
     // vocab profile — see learner_facts.mjs and netlify/functions/tutor.js.
@@ -599,7 +607,7 @@ function buildRequestBody(mode, messages = state.messages, { topicId = state.top
   // Beta: the learner's conversation topics and the one this conversation
   // is about. The server ignores the field for non-beta accounts.
   if (state.beta.topics) {
-    body.topics = renderTopicsText(state.user, topicId, tutorMemory().sessions);
+    body.topics = renderTopicsText(state.user, topicId, sessions);
     // Restated by the server on every turn next to the learner's note.
     body.activeTopic = findTopic(state.user, topicId)?.name || "";
   }
@@ -991,7 +999,7 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
   let summary = null;
   let failure = "";
   try {
-    const data = await callTutor("summary", messages, { topicId });
+    const data = await callTutor("summary", messages, { topicId, excludeRecord: record });
     summary = data.summary || null;
     if (!summary) failure = data.truncated ? "notes came back cut off" : data.refused ? "notes were declined" : "no notes came back";
   } catch (err) {
@@ -1063,7 +1071,7 @@ async function retryPendingSummaries() {
     record.pending.attempts = (record.pending.attempts || 0) + 1;
     changed = true;
     try {
-      const data = await callTutor("summary", record.pending.messages, { topicId: record.topicId || null });
+      const data = await callTutor("summary", record.pending.messages, { topicId: record.topicId || null, excludeRecord: record });
       if (!data.summary) throw new Error("no summary");
       Object.assign(record, sessionRecordFromSummary(data.summary, record.when));
       await applySummary(data.summary, record.pending.messages, record.when);

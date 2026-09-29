@@ -68,6 +68,7 @@ export default async (req) => {
         const run = client.messages.stream({
           model: tutor.MODEL,
           max_tokens: MAX_TOKENS,
+          output_config: tutor.CHAT_OUTPUT_CONFIG,
           system,
           messages,
         });
