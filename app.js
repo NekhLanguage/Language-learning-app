@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.78";
+const APP_DATA_VERSION = "1.2.79";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -102,11 +102,14 @@ const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 // blank and option-build from a template the tutor cid does not have
 // (Nekh 2026-09-03: five, six and seven are the levels worth having).
 
+// Lesson 1 is ten words, not five (Nekh 2026-09-30): five words make one
+// sentence ("I eat food") and lesson 1 is the first free lesson, so it has
+// to show words-in-sentences. The five added words are the old lesson 2 —
+// the only words that already have forms in every language AND sentences
+// with the lesson-1 words. Every later lesson keeps its word list.
 const CORE_BUNDLES = [
 
-  { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK"] },
-
-  { id: "core_02", concepts: ["WATER","HE","READ","BOOK","SHE"] },
+  { id: "core_01", concepts: ["FIRST_PERSON_SINGULAR","EAT","FOOD","SECOND_PERSON","DRINK","WATER","HE","READ","BOOK","SHE"] },
 
   { id: "core_03", concepts: ["SEE","PHONE","FIRST_PERSON_PLURAL","HAVE","JOB"] },
 
@@ -183,6 +186,14 @@ const CORE_BUNDLES = [
 { id: "core_39", concepts: ["YES","NO","IT","ITS","MINE"] },
 
 { id: "core_40", concepts: ["YOURS","HERS","OURS","THEIRS"] }
+];
+// Bundles no longer in the release plan but still named by release plans
+// saved before they were retired. releaseNextBundle stops at an id it can't
+// resolve, so these stay in BUNDLE_INDEX forever: a learner whose saved plan
+// still lists core_02 releases it (nothing new — its words are in core_01
+// now) and moves on instead of stalling.
+const RETIRED_BUNDLES = [
+  { id: "core_02", concepts: ["WATER","HE","READ","BOOK","SHE"] }
 ];
 const RESOURCE_PACKS = {
   pokemon: {
@@ -938,6 +949,9 @@ languageState.support = USER.supportLanguage || "en";
 const langP = getLangFileData(languageState.support);
 // -07: a failed server load must not be silent — the learner is looking at
 // this device's local copy and should know it (Emi 2026-08-27-07).
+// Refresh the free-tier flag from the server on every signed-in boot, so a
+// payment made elsewhere (Stripe tab, another device) unlocks lesson 4 here.
+if (email) checkAccessForSession().catch(() => { /* cached tier stands */ });
 const serverSyncP = email
   ? loadUserFromServer(email).catch(err => {
       console.warn("Server sync failed:", err);
@@ -1013,11 +1027,115 @@ async function checkAccessForSession() {
     if (!res.ok) return { allowed: false, reason: "server" };
     const data = await res.json();
     if (!data || !data.allowed) return { allowed: false, reason: "noaccess" };
-    return { allowed: true, subscribed: !!data.subscribed, email: data.email || null };
+    rememberAccessTier(data);
+    return { allowed: true, subscribed: !!data.subscribed, email: data.email || null, tier: data.tier || "paid" };
   } catch (err) {
     console.warn("checkAccess failed:", err);
     return { allowed: false, reason: "server" };
   }
+}
+
+// --- Free tier (Nekh 2026-09-30) -------------------------------------------
+// Lessons 1-3 free behind an email account, paywall at lesson 4, Anna fully
+// paywalled. A "lesson" is one session / one release-plan bundle. The tier
+// comes from checkAccess (server truth) and is cached here only so first
+// paint knows it; nothing that costs money is decided client-side —
+// tutor.js refuses Anna and saveUser refuses a trial blob past lesson 3.
+// Locked, not hidden: free learners see lesson 4+ and Anna, both locked.
+const ACCESS_TIER_KEY = "zth_access_tier";
+const TRIAL_ANNA_SEEN_KEY = "zth_trial_anna_seen";
+let FREE_LESSONS = 3;
+
+function rememberAccessTier(data) {
+  try {
+    if (Number.isInteger(data?.freeLessons) && data.freeLessons > 0) FREE_LESSONS = data.freeLessons;
+    localStorage.setItem(ACCESS_TIER_KEY, data?.tier === "trial" ? "trial" : "paid");
+  } catch (_) { /* storage blocked: the server still gates */ }
+}
+
+function isTrialAccount() {
+  try { return localStorage.getItem(ACCESS_TIER_KEY) === "trial"; } catch (_) { return false; }
+}
+
+// A free run has finished its free lessons: the next lesson is behind the
+// paywall. sessionNumber is 1-indexed and points at the current session.
+function trialLocked(r) {
+  return !!r && isTrialAccount() && (r.sessionNumber || 1) > FREE_LESSONS;
+}
+
+// A run held at the paywall that has since been paid for: session 4+ with
+// only the free lessons released (a paying run releases one per finished
+// session, so this shape only comes from the hold). Release the lesson the
+// paywall held back.
+function releaseHeldLesson(r) {
+  if (!r || isTrialAccount()) return false;
+  const released = (r.releasedBundleIds || []).length;
+  if (released === FREE_LESSONS && (r.sessionNumber || 1) > FREE_LESSONS &&
+      r.releasePlan && r.releasePlanIndex < r.releasePlan.length) {
+    releaseNextBundle(r);
+    return true;
+  }
+  return false;
+}
+
+function trialEvent(type, extra = {}) {
+  if (!isTrialAccount()) return;
+  authFetch("/.netlify/functions/trialEvent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type, lang: languageState.target || "", ...extra })
+  }).catch(() => { /* analytics never blocks a learner */ });
+}
+
+function checkoutUrl() {
+  const email = (localStorage.getItem("zth_email") || "").trim();
+  const base = EXTERNAL_LINKS.buyAccess;
+  // The webhook upgrades the account whose email pays, so prefill it.
+  return email ? `${base}?prefilled_email=${encodeURIComponent(email)}` : base;
+}
+
+function showOnly(screenEl) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  screenEl.classList.add("active");
+}
+
+// Screen A (Millie v2): shown once, when a free learner finishes lesson 3.
+function showTrialAnnaIntro(onContinue) {
+  const screen = document.getElementById("trial-anna-screen");
+  if (!screen) return onContinue();
+  showOnly(screen);
+  trialEvent("trial_anna_intro_seen");
+  try { localStorage.setItem(TRIAL_ANNA_SEEN_KEY, "1"); } catch (_) { /* fine */ }
+  document.getElementById("trial-anna-continue").onclick = onContinue;
+}
+
+// Screen B (Millie v2): the lesson-4 paywall.
+function showPaywall(targetLang, supportLang) {
+  const screen = document.getElementById("paywall-screen");
+  if (!screen) return;
+  showOnly(screen);
+  trialEvent("paywall_hit");
+  const buy = document.getElementById("paywall-buy");
+  buy.href = checkoutUrl();
+  const status = document.getElementById("paywall-status");
+  status.textContent = "";
+  document.getElementById("paywall-back").onclick = () => {
+    showOnly(document.getElementById("start-screen"));
+  };
+  // Back from Stripe in this tab or another: ask the server again.
+  document.getElementById("paywall-refresh").onclick = async () => {
+    status.textContent = "Checking…";
+    const verdict = await checkAccessForSession();
+    if (verdict.allowed && verdict.tier !== "trial") {
+      releaseHeldLesson(run);
+      USER.runs[languageState.target] = run;
+      saveUser();
+      showOnly(learningScreen);
+      renderNext(targetLang, supportLang);
+      return;
+    }
+    status.textContent = "No payment on this account yet. If you just paid, give it a minute and try again — use the same email you signed in with.";
+  };
 }
 
 // `force` adopts the server copy regardless of timestamps — only the login
@@ -1139,6 +1257,27 @@ if (!hasAccess()) {
   document.body.innerHTML = `
     <div class="gate-screen">
       <h1 class="title">ZERO TO HERO</h1>
+
+      <section id="gate-start-free" class="gate-start-free" aria-labelledby="gate-start-free-heading">
+        <h2 id="gate-start-free-heading" class="gate-heading">${t("startFreeHeading", "Try the first three lessons free")}</h2>
+        <p class="gate-note">${t("startFreeNote", "Just an email. No card.")}</p>
+        <form id="start-free-form" class="gate-form" novalidate>
+          <input
+            id="start-free-email"
+            class="gate-input"
+            type="email"
+            placeholder="your@email.com"
+            autocomplete="email"
+            aria-label="${t("enterEmail", "Enter your email")}"
+          />
+          <button id="start-free-btn" class="gate-btn" type="submit">
+            ${t("startFree", "Start free")}
+          </button>
+        </form>
+        <p id="start-free-message" class="gate-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <div class="gate-divider" aria-hidden="true">${t("alreadyHaveAccount", "Already have an account?")}</div>
 
       <h2 class="gate-heading">${t("signIn", "Sign in")}</h2>
 
@@ -1273,6 +1412,38 @@ if (buyAccess) {
     }
   };
 
+  // 🆓 Free tier (Nekh 2026-09-30): the gate is an account with an email.
+  // authProvision makes sure the account exists; Supabase emails the
+  // set-password link; the free-tier row is created on that first sign-in
+  // (checkAccess). Google sign-in reaches the same place in one step.
+  const startFreeForm = document.getElementById("start-free-form");
+  const startFreeEmail = document.getElementById("start-free-email");
+  const startFreeBtn = document.getElementById("start-free-btn");
+  const startFreeMsg = document.getElementById("start-free-message");
+  const startFreeSay = (text, kind = "error") => {
+    startFreeMsg.textContent = text || "";
+    startFreeMsg.classList.toggle("is-ok", kind === "ok");
+    startFreeMsg.classList.toggle("is-error", kind === "error" && !!text);
+  };
+  startFreeForm.onsubmit = async (ev) => {
+    ev.preventDefault();
+    const email = startFreeEmail.value.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      startFreeSay(t("enterEmail", "Enter your email"));
+      startFreeEmail.focus();
+      return;
+    }
+    startFreeBtn.disabled = true;
+    try {
+      await sendPasswordEmail(email);
+      startFreeSay(t("startFreeSent", "Check your inbox (and spam) for a link to set your password. Then you're in."), "ok");
+    } catch (err) {
+      startFreeSay(describeAuthError(err));
+    }
+    startFreeBtn.disabled = false;
+  };
+  if (new URLSearchParams(location.search).get("start") === "free") startFreeEmail.focus();
+
   // ✉️ Set or reset your password: also the first-time setup for a learner
   // who bought access before passwords existed. The email lands on
   // auth.html, which asks for the new password.
@@ -1286,7 +1457,7 @@ if (buyAccess) {
     setBusy(true);
     try {
       await sendPasswordEmail(email);
-      setMessage(t("passwordEmailSent", "If that email has access, a link to set your password is on its way — check your inbox (and spam)."), "ok");
+      setMessage(t("passwordEmailSent", "A link to set your password is on its way — check your inbox (and spam)."), "ok");
     } catch (err) {
       setMessage(describeAuthError(err));
     }
@@ -1664,14 +1835,18 @@ function showRoadmap(opts) {
     pathEl.appendChild(li);
   }
 
+  const trialAccount = isTrialAccount();
   windowed.forEach(stop => {
     const li = document.createElement("li");
     li.className = "roadmap-stop " + stop.state;
     li.dataset.bundleId = stop.bundleId;
+    // Free tier: lesson 4 onward is visible but marked as the full app's.
+    const paywalled = trialAccount && stop.state === "locked" && stop.index >= FREE_LESSONS;
+    if (paywalled) li.classList.add("paywalled");
 
     const dot = document.createElement("span");
     dot.className = "roadmap-stop-dot";
-    dot.textContent = stop.state === "done" ? "✓" : String(stop.index + 1);
+    dot.textContent = stop.state === "done" ? "✓" : paywalled ? "🔒" : String(stop.index + 1);
     li.appendChild(dot);
 
     const body = document.createElement("div");
@@ -1681,6 +1856,7 @@ function showRoadmap(opts) {
     meta.className = "roadmap-stop-meta";
     const { track, num } = prettyTrackName(stop.bundleId);
     meta.textContent = num ? `${track} · ${num}` : track;
+    if (paywalled) meta.textContent += " · Full app";
     body.appendChild(meta);
 
     if (stop.state !== "locked") {
@@ -1770,6 +1946,7 @@ function buildBundleIndex() {
 
   const allBundles = [
     ...CORE_BUNDLES,
+    ...RETIRED_BUNDLES,
     ...Object.values(RESOURCE_PACKS).flatMap(pack => pack.bundles)
   ];
 
@@ -4969,7 +5146,16 @@ function endSession(targetLang, supportLang) {
 
   run.sessionNumber++;
 
- releaseNextBundle(run);
+  // Free tier: the lesson after the free ones is behind the paywall, so it
+  // is never released here (saveUser would refuse the blob anyway).
+  const finishedLesson = run.sessionNumber - 1;
+  const trialAccount = isTrialAccount();
+  if (!(trialAccount && run.releasedBundleIds.length >= FREE_LESSONS)) {
+    releaseNextBundle(run);
+  }
+  if (trialAccount && finishedLesson <= FREE_LESSONS) {
+    trialEvent("trial_lesson_complete", { lesson: finishedLesson });
+  }
 
   run.sessionComplete = false;
   run.sessionAttempts = {};
@@ -5004,9 +5190,18 @@ function endSession(targetLang, supportLang) {
     milestone,
     onContinue: () => {
       setTimeout(() => {
-        document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-        learningScreen.classList.add("active");
-        renderNext(targetLang, supportLang);
+        const resume = () => {
+          document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+          learningScreen.classList.add("active");
+          renderNext(targetLang, supportLang);
+        };
+        let annaSeen = false;
+        try { annaSeen = localStorage.getItem(TRIAL_ANNA_SEEN_KEY) === "1"; } catch (_) { /* fine */ }
+        if (trialLocked(run) && finishedSession === FREE_LESSONS && !annaSeen) {
+          showTrialAnnaIntro(resume);
+        } else {
+          resume();
+        }
       }, 0);
     }
   });
@@ -5374,6 +5569,14 @@ if (bar) {
   // active one, is never rendered into.
   if (!run.setupComplete) return;
   if (learningScreen && !learningScreen.classList.contains("active")) return;
+
+  // Free tier: lesson 4 onward shows the paywall instead of exercises. A
+  // run held there that has since been paid for gets its lesson released.
+  if (trialLocked(run)) return showPaywall(targetLang, supportLang);
+  if (releaseHeldLesson(run)) {
+    USER.runs[languageState.target] = run;
+    saveUser();
+  }
 
   // -78: an empty lexicon is never "nothing left to teach" — see
   // recoverLexicon. Without this every concept fell through the render
@@ -5898,6 +6101,9 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
       btn.removeAttribute("aria-disabled");
       btn.href = "tutor.html";
       btn.textContent = "Anna — AI Tutor";
+    } else if (localStorage.getItem("zth_access_tier") === "trial") {
+      // Free tier: Anna is visible and locked (Nekh 2026-09-30), never hidden.
+      btn.title = "Anna comes with the full app, from lesson 4";
     } else if (data && data.subscribed === false) {
       btn.title = "Anna needs an active subscription — renew at nekhslanguageblueprint.com/zero-to-hero";
     }

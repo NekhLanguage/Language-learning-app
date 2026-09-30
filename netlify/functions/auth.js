@@ -55,11 +55,11 @@ function subscriptionActive(accessUntil, now = Date.now()) {
   return Number.isFinite(t) && t > now;
 }
 
-// The learner's `users` row (email + access_until) or null when the email
-// has no row, read with the publishable key. Throws on a Supabase error.
+// The learner's `users` row (email, access_until, access_tier) or null when
+// the email has no row. Throws on a Supabase error.
 async function fetchAccessRow(email, key) {
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(email)}&select=email,access_until`,
+    `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(email)}&select=email,access_until,access_tier`,
     { headers: restHeaders(key) }
   );
   if (!res.ok) throw new Error(`users lookup returned ${res.status}: ${await res.text()}`);

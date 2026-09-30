@@ -6,6 +6,16 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-09-30
+
+### Try the first three lessons free
+
+You can now start the app with just an email, no card. Enter your email, set a password from the link we send (or continue with Google), and the first three lessons are yours. Lesson four onward and Anna, the AI tutor, stay visible so you can see what's ahead; they open with the full app, and your first $19 includes your first month with Anna. Everything you learned in the free lessons carries straight on.
+
+### Lesson one teaches ten words, not five
+
+Five words made exactly one sentence. Lesson one now brings in ten (I, you, he, she, eat, drink, read, food, water, book), so from the very first lesson you practise them in sentences, the way every later lesson works. The rest of the course is unchanged, one lesson shorter. If you were already partway through, nothing resets.
+
 ## 2026-09-26 (evening)
 
 ### Anna now counts the words you use, not just the ones she teaches

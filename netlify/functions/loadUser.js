@@ -1,5 +1,5 @@
 const zlib = require("zlib");
-const { SUPABASE_URL, publishableKey, restHeaders, missingKeyResponse } = require("./supabase");
+const { SUPABASE_URL, usersKey, restHeaders, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse } = require("./auth");
 
 // Returns the signed-in learner's own record. The email comes from the
@@ -7,7 +7,7 @@ const { verifySession, unauthorizedResponse } = require("./auth");
 // request body, so one account can no longer read another's progress.
 exports.handler = async (event) => {
   try {
-    const key = publishableKey();
+    const key = usersKey();
     if (!key) return missingKeyResponse();
 
     const session = await verifySession(event);

@@ -53,12 +53,25 @@ function fakeSupabase({ tokens = {}, rows = {}, admin = null } = {}) {
       return new Response(JSON.stringify(outcome.body), { status: outcome.status });
     }
     if (u.includes("/rest/v1/users")) {
+      if (init.method === "POST") {
+        // Free-tier provisioning: insert with ignore-duplicates.
+        const body = JSON.parse(init.body);
+        if (rows[body.email]) return new Response("[]", { status: 201 });
+        rows[body.email] = { access_until: null, ...body };
+        return new Response(JSON.stringify([rows[body.email]]), { status: 201 });
+      }
       const email = decodeURIComponent(/email=eq\.([^&]+)/.exec(u)[1]);
       if (init.method === "PATCH") {
         return new Response(null, { status: 204 });
       }
       const row = rows[email];
       return new Response(JSON.stringify(row ? [row] : []), { status: 200 });
+    }
+    if (u.includes("/rest/v1/site_events")) {
+      return new Response(null, { status: 201 });
+    }
+    if (u.includes("/api/subscribe")) {
+      return new Response(JSON.stringify({ ok: true }), { status: 200 });
     }
     throw new Error(`unexpected fetch ${u}`);
   };
@@ -134,13 +147,39 @@ test("checkAccess: 401 without a session, ignores a body email, reports the subs
 
     const alice = await checkAccess.handler(req("alice", { email: "someone-else@example.com" }));
     assert.equal(alice.statusCode, 200);
-    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", subscribed: true });
+    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", tier: "paid", freeLessons: 3, subscribed: true });
 
     const bob = await checkAccess.handler(req("bob"));
-    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", subscribed: false });
+    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", tier: "paid", freeLessons: 3, subscribed: false });
+  }));
+});
 
+test("checkAccess: a verified email with no row becomes a free-tier account, once, and existing rows are never written", async () => {
+  const rows = {
+    "alice@example.com": { email: "alice@example.com", access_until: "infinity", access_tier: null },
+  };
+  const { fetchImpl, calls } = fakeSupabase({ tokens: { alice: ALICE, carol: { id: "u3", email: "carol@example.com" } }, rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     const carol = await checkAccess.handler(req("carol"));
-    assert.deepEqual(JSON.parse(carol.body), { allowed: false, email: "carol@example.com", subscribed: false });
+    assert.deepEqual(JSON.parse(carol.body), { allowed: true, email: "carol@example.com", tier: "trial", freeLessons: 3, subscribed: false });
+    const insert = calls.find((c) => c.url.includes("/rest/v1/users") && c.init.method === "POST");
+    assert.equal(insert.init.headers.apikey, SEC, "users writes use the secret key");
+    assert.match(insert.init.headers.Prefer, /ignore-duplicates/, "an existing row can never be overwritten");
+    assert.equal(JSON.parse(insert.init.body).access_tier, "trial");
+    const events = calls.filter((c) => c.url.includes("/rest/v1/site_events")).map((c) => JSON.parse(c.init.body));
+    assert.deepEqual(events.map((e) => e.event_type), ["trial_start"]);
+    assert.ok(!events[0].session_id_hash.includes("carol"), "the funnel id is not the email");
+    const sub = calls.find((c) => c.url.includes("/api/subscribe"));
+    assert.equal(JSON.parse(sub.init.body).source, "app-trial");
+
+    calls.length = 0;
+    const again = await checkAccess.handler(req("carol"));
+    assert.equal(JSON.parse(again.body).tier, "trial");
+    assert.ok(!calls.some((c) => c.url.includes("site_events")), "trial_start fires once");
+
+    calls.length = 0;
+    await checkAccess.handler(req("alice"));
+    assert.ok(!calls.some((c) => c.init.method === "POST" || c.init.method === "PATCH"), "a paying row is only read");
   }));
 });
 
@@ -184,11 +223,29 @@ test("saveUser PATCHes the session's own row and ignores a body email", async ()
     assert.ok(patch, "saves go through PATCH, never an upsert that could create a row");
     assert.match(patch.url, /email=eq\.alice%40example\.com/);
     assert.deepEqual(JSON.parse(patch.init.body), { data: { id: "x", runs: {} } });
-    assert.equal(patch.init.headers.apikey, PUB);
+    assert.equal(patch.init.headers.apikey, SEC, "users writes use the secret key (the table is locked to it)");
   }));
 });
 
-test("authProvision creates the auth account only for emails with a users row, same answer either way", async () => {
+test("saveUser: a free-tier account cannot store a run past lesson 3; paying rows are not gated", async () => {
+  const blob = (n) => ({ runs: { pt: { releasedBundleIds: Array.from({ length: n }, (_, i) => `core_${i}`) } } });
+  const rows = {
+    "alice@example.com": { email: "alice@example.com", access_tier: null },
+    "tina@example.com": { email: "tina@example.com", access_tier: "trial" },
+  };
+  const { fetchImpl, calls } = fakeSupabase({ tokens: { alice: ALICE, tina: { id: "t", email: "tina@example.com" } }, rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    assert.equal((await saveUser.handler(req("tina", { user: blob(3) }))).statusCode, 200);
+    calls.length = 0;
+    const over = await saveUser.handler(req("tina", { user: blob(4) }));
+    assert.equal(over.statusCode, 403);
+    assert.equal(JSON.parse(over.body).code, "paywall");
+    assert.ok(!calls.some((c) => c.init.method === "PATCH"), "the over-limit blob is never written");
+    assert.equal((await saveUser.handler(req("alice", { user: blob(12) }))).statusCode, 200);
+  }));
+});
+
+test("authProvision creates the auth account for any valid email, same answer for every address", async () => {
   const rows = { "alice@example.com": { email: "alice@example.com", access_until: null } };
   const { fetchImpl, calls } = fakeSupabase({ rows, admin: { status: 200, body: { id: "new" } } });
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
@@ -204,7 +261,8 @@ test("authProvision creates the auth account only for emails with a users row, s
     const unknown = await authProvision.handler(req(null, { email: "nobody@example.com" }));
     assert.equal(unknown.statusCode, 200);
     assert.deepEqual(JSON.parse(unknown.body), { ok: true });
-    assert.ok(!calls.some((c) => c.url.includes("/auth/v1/admin")), "unknown email → no account created");
+    assert.ok(calls.some((c) => c.url.includes("/auth/v1/admin")), "free tier: a new email gets an account");
+    assert.ok(!calls.some((c) => c.url.includes("/rest/v1/users")), "no users row until the inbox owner signs in");
 
     const bad = await authProvision.handler(req(null, { email: "not-an-email" }));
     assert.equal(bad.statusCode, 400);

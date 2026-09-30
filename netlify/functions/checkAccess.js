@@ -1,17 +1,23 @@
-const { publishableKey, missingKeyResponse } = require("./supabase");
+const { usersKey, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive } = require("./auth");
+const { FREE_LESSONS, provisionTrial, tierOf, isTrialRow } = require("./entitlement");
 
 // Who may use the app: the signed-in learner (Supabase Auth session token in
-// the Authorization header — the request body is ignored) whose email has a
-// row in the Supabase `users` table.
+// the Authorization header — the request body is ignored).
 //
-// To grant access to a new user: scripts/grant-access.sh <email> [months]
-// (adds the row; `months` also opens Anna). No code change or deploy needed.
-// To revoke access: delete their row from the `users` table.
+// Free tier (Nekh 2026-09-30): a verified account with no `users` row gets
+// a free-tier row here, on its first sign-in (see entitlement.js). The row
+// is created only for a verified session, so typing someone else's email
+// on the sign-up form creates nothing but an unconfirmed auth account.
+// Existing rows are never touched.
 //
-// Response: { allowed, email, subscribed } — `subscribed` is the Anna
-// (AI tutor) subscription window from users.access_until; the app greys
-// Anna out when it is false.
+// To grant full access by hand: scripts/grant-access.sh <email> [months]
+// (sets access_tier = 'paid'; `months` also opens Anna).
+//
+// Response: { allowed, email, tier, freeLessons, subscribed } — `tier` is
+// "trial" or "paid"; `subscribed` is the Anna window and is always false
+// for a trial account. The client uses these to lock lessons and Anna;
+// the server re-checks both (saveUser, tutor.js).
 
 function json(statusCode, body) {
   return {
@@ -23,17 +29,23 @@ function json(statusCode, body) {
 
 exports.handler = async (event) => {
   try {
-    const key = publishableKey();
+    const key = usersKey();
     if (!key) return missingKeyResponse({ allowed: false });
 
     const session = await verifySession(event);
     if (!session) return unauthorizedResponse({ allowed: false });
 
-    const row = await fetchAccessRow(session.email, key);
+    let row = await fetchAccessRow(session.email, key);
+    if (!row) {
+      await provisionTrial(session.email);
+      row = await fetchAccessRow(session.email, key);
+    }
     return json(200, {
       allowed: !!row,
       email: session.email,
-      subscribed: !!row && subscriptionActive(row.access_until),
+      tier: tierOf(row),
+      freeLessons: FREE_LESSONS,
+      subscribed: !!row && !isTrialRow(row) && subscriptionActive(row.access_until),
     });
   } catch (err) {
     console.error("checkAccess error:", err);

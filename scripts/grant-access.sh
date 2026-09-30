@@ -15,10 +15,13 @@
 # its window and a new row gets none (Anna greyed out). The learner then
 # signs in with a password or Google; the row is what grants access.
 #
-# Reads SUPABASE_URL from netlify/functions/supabase.js and the key from $SUPABASE_PUBLISHABLE_KEY
-# (same anon key the rest of the app already uses — no new secrets needed).
-# The same key has insert permission on the users table, since saveUser.js
-# already writes to it on every session save.
+# A grant is full (paid-tier) access: a free-tier row (access_tier 'trial')
+# becomes 'paid' and keeps its progress.
+#
+# Reads SUPABASE_URL from netlify/functions/supabase.js and the key from
+# $SUPABASE_SECRET_KEY. public.users is locked to the secret key
+# (migrations/users_lockdown.sql); $SUPABASE_PUBLISHABLE_KEY still works only
+# on a database where the lock-down has not run yet.
 
 set -euo pipefail
 
@@ -50,22 +53,22 @@ fi
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SUPABASE_URL="$(grep -oE 'https://[a-z0-9]+\.supabase\.co' "$ROOT/netlify/functions/supabase.js" | head -n1)"
-# The key is never in the repo: export SUPABASE_PUBLISHABLE_KEY (the
-# sb_publishable_ key from Supabase → Settings → API Keys) before running.
-SUPABASE_KEY="${SUPABASE_PUBLISHABLE_KEY:-}"
+# The key is never in the repo: export SUPABASE_SECRET_KEY (the sb_secret_
+# key from Supabase → Settings → API Keys) before running.
+SUPABASE_KEY="${SUPABASE_SECRET_KEY:-${SUPABASE_PUBLISHABLE_KEY:-}}"
 
 if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then
-  echo "Set SUPABASE_PUBLISHABLE_KEY in your environment (and keep netlify/functions/supabase.js's URL intact)" >&2
+  echo "Set SUPABASE_SECRET_KEY in your environment (and keep netlify/functions/supabase.js's URL intact)" >&2
   exit 1
 fi
 
 response=$(curl -sS -o /tmp/grant-access.body -w '%{http_code}' \
-  -X POST "$SUPABASE_URL/rest/v1/users" \
+  -X POST "$SUPABASE_URL/rest/v1/users?on_conflict=email" \
   -H "apikey: $SUPABASE_KEY" \
   -H "Authorization: Bearer $SUPABASE_KEY" \
   -H "Content-Type: application/json" \
   -H "Prefer: resolution=merge-duplicates" \
-  --data "{\"email\":\"$email\"$access_json}")
+  --data "{\"email\":\"$email\",\"access_tier\":\"paid\"$access_json}")
 
 if [ "$response" != "201" ] && [ "$response" != "200" ]; then
   echo "Failed (HTTP $response):" >&2

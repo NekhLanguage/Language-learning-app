@@ -35,6 +35,15 @@
 //        so <audio> playback resolves without hitting Google Cloud.
 //   GET  /__devserver/users               -> the in-memory user store, so
 //        tests can assert on what the app synced.
+//
+// Free tier (2026-09-30): an email containing "trial" is a free-tier
+// account (checkAccess tier "trial", Anna refused, saveUser refuses a blob
+// past lesson 3 with 403 like the real function). trial_start is recorded
+// on its first checkAccess.
+//   POST /.netlify/functions/trialEvent  {type, lesson?} -> 204; recorded.
+//   GET  /__devserver/events               -> recorded funnel events.
+//   POST /__devserver/convert?email=…      -> simulate the Stripe webhook:
+//        the account becomes paid (trial_convert recorded).
 
 import http from "node:http";
 import { promises as fs } from "node:fs";
@@ -69,6 +78,14 @@ const SILENT_MP3 = Buffer.concat([
 
 // email -> user blob, mirroring the Supabase `users.data` column.
 const userStore = new Map();
+// Free-tier stub state: converted emails, provisioned trials, funnel rows.
+const convertedEmails = new Set();
+const trialStarted = new Set();
+const funnelEvents = [];
+const FREE_LESSONS = 3;
+const isTrialEmail = (email) => !!email && email.includes("trial") && !convertedEmails.has(email);
+const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.runs) || {})
+  .map((r) => (Array.isArray(r && r.releasedBundleIds) ? r.releasedBundleIds.length : 0)));
 // email -> referral code (referral stub).
 const referralCodes = new Map();
 // Chat texts carrying __FAIL_ONCE__ that have already failed once (tutor stub).
@@ -148,10 +165,17 @@ async function handleFunction(name, req, res, url) {
     }
     case "checkAccess": {
       if (!email) return sendJson(res, 401, { allowed: false, error: "Sign in required", code: "unauthenticated" });
+      const trial = isTrialEmail(email);
+      if (trial && !trialStarted.has(email)) {
+        trialStarted.add(email);
+        funnelEvents.push({ event_type: "trial_start", email, props: null });
+      }
       return sendJson(res, 200, {
         allowed: !email.includes("noaccess"),
         email,
-        subscribed: !email.includes("noaccess") && !email.includes("nosub"),
+        tier: trial ? "trial" : "paid",
+        freeLessons: FREE_LESSONS,
+        subscribed: !trial && !email.includes("noaccess") && !email.includes("nosub"),
       });
     }
     case "loadUser": {
@@ -160,8 +184,20 @@ async function handleFunction(name, req, res, url) {
     }
     case "saveUser": {
       if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
+      if (isTrialEmail(email) && maxReleasedLessons(body.user) > FREE_LESSONS) {
+        return sendJson(res, 403, { error: "Lesson 4 onward needs the full app.", code: "paywall" });
+      }
       if (body.user) userStore.set(email, body.user);
       return sendJson(res, 200, { ok: true });
+    }
+    case "trialEvent": {
+      const allowedTypes = ["trial_lesson_complete", "paywall_hit", "trial_anna_intro_seen"];
+      if (!allowedTypes.includes(body.type)) return sendJson(res, 400, { error: "Unknown event" });
+      if (isTrialEmail(email)) {
+        funnelEvents.push({ event_type: body.type, email, props: body.lesson ? { lesson: body.lesson } : null });
+      }
+      res.writeHead(204);
+      return res.end();
     }
     case "beacon": {
       res.writeHead(204);
@@ -176,7 +212,7 @@ async function handleFunction(name, req, res, url) {
       // word so the personal-vocab path is exercised.
       if (body.mode === "ping") {
         if (!email) return sendJson(res, 200, { allowed: false, vocabWriteback: false, beta: {}, reason: "unauthenticated" });
-        const subscribed = !email.includes("noaccess") && !email.includes("nosub");
+        const subscribed = !isTrialEmail(email) && !email.includes("noaccess") && !email.includes("nosub");
         // vocabWriteback mirrors production's ships-OFF default. Beta
         // features (production: BETA_EMAILS) are on for emails containing
         // "beta", e.g. beta@example.com.
@@ -332,6 +368,15 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/__devserver/users") {
       return sendJson(res, 200, Object.fromEntries(userStore));
+    }
+    if (url.pathname === "/__devserver/events") {
+      return sendJson(res, 200, funnelEvents);
+    }
+    if (url.pathname === "/__devserver/convert" && req.method === "POST") {
+      const who = String(url.searchParams.get("email") || "").toLowerCase();
+      if (isTrialEmail(who)) funnelEvents.push({ event_type: "trial_convert", email: who, props: null });
+      convertedEmails.add(who);
+      return sendJson(res, 200, { ok: true });
     }
 
     // The repo ships no favicon; answer the browser's automatic request

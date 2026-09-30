@@ -1,4 +1,4 @@
-const { SUPABASE_URL, publishableKey, restHeaders, missingKeyResponse } = require("./supabase");
+const { SUPABASE_URL, usersKey, restHeaders, missingKeyResponse } = require("./supabase");
 
 // To call this endpoint, POST:
 //   { "email": "buyer@example.com" }
@@ -33,17 +33,19 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: "Missing email" }) };
     }
 
-    const key = publishableKey();
+    const key = usersKey();
     if (!key) return missingKeyResponse();
 
-    // Upsert into Supabase users table — grants access on next login
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
+    // Upsert into Supabase users table — grants full access on next login.
+    // A free-tier row becomes paid; its progress (`data`) is left alone
+    // (this used to send data:null, which wiped an existing row's progress).
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/users?on_conflict=email`, {
       method: "POST",
       headers: restHeaders(key, {
         "Content-Type": "application/json",
         "Prefer": "resolution=merge-duplicates"
       }),
-      body: JSON.stringify({ email: normalized, data: null })
+      body: JSON.stringify({ email: normalized, access_tier: "paid" })
     });
 
     if (!res.ok) {
