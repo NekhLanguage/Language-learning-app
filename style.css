@@ -2663,9 +2663,8 @@ a.primary.paywall-buy{
   padding: 0.9rem 1.6rem;
   border-radius: var(--r-md);
 }
-.paywall-fine{
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+.paywall-renewal{
+  font-size: 0.9rem;
   opacity: 0.9;
   max-width: 30rem;
 }
