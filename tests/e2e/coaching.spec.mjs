@@ -7,25 +7,16 @@ import { test, expect, startNewRun } from "./fixtures.mjs";
 test("completing a session shows a coaching line on the roadmap", async ({ page }) => {
   await startNewRun(page);
 
-  // The short first session ends after a handful of exposures. The
-  // roadmap transition happens on a setTimeout(0) after the last continue,
-  // so each iteration must WAIT for either the next exposure or the roadmap
-  // rather than checking-then-clicking (that race flaked in CI). The click
-  // itself is bounded and non-fatal for the same reason: the roadmap can
-  // appear between the visibility check and the click, hiding the button
-  // for good — the loop then re-evaluates and takes the roadmap branch.
-  for (let i = 0; i < 12; i++) {
-    await page
-      .locator("#roadmap-screen.active #roadmap-message, #learning-screen.active #continue-btn")
-      .first()
-      .waitFor({ state: "visible" });
-    if (await page.locator("#roadmap-screen.active").isVisible()) break;
-    try {
-      await page.locator("#learning-screen.active #continue-btn").click({ timeout: 5_000 });
-    } catch {
-      // Button vanished mid-click (session ended) — loop and re-check.
-    }
-  }
+  // End the lesson through the app's own end-of-session path (the same flag
+  // the session budget sets), so the roadmap shows the finished-session line.
+  // This used to click Continue until the first session ran out, which only
+  // worked while lesson 1 was five intro cards; since 2026-09-30 lesson 1 has
+  // ten words and reaches Level 2 quizzes, which Continue can't answer.
+  await expect(page.locator("#learning-screen.active #continue-btn")).toBeVisible();
+  await page.evaluate(() => {
+    window.__app.run.sessionComplete = true;
+    window.__app.rerender();
+  });
 
   await expect(page.locator("#roadmap-screen.active")).toBeVisible();
   const message = page.locator("#roadmap-message");

@@ -26,6 +26,15 @@ function secretKey() {
   return readEnv("SUPABASE_SECRET_KEY");
 }
 
+// The key for public.users. The table is locked to the secret key (see
+// migrations/users_lockdown.sql — the publishable key ships in the browser,
+// so an anon policy on users let anyone grant themselves access). Falls
+// back to the publishable key only so this code can deploy BEFORE the
+// lock-down runs; once it has run, the fallback reads nothing.
+function usersKey() {
+  return secretKey() || publishableKey();
+}
+
 // PostgREST headers for a key. Never log the returned object.
 function restHeaders(key, extra = {}) {
   return { apikey: key, Authorization: `Bearer ${key}`, ...extra };
@@ -42,4 +51,4 @@ function missingKeyResponse(extraBody = {}) {
   };
 }
 
-module.exports = { SUPABASE_URL, publishableKey, secretKey, restHeaders, missingKeyResponse };
+module.exports = { SUPABASE_URL, publishableKey, secretKey, usersKey, restHeaders, missingKeyResponse };

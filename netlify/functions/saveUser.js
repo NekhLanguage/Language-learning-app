@@ -1,5 +1,6 @@
-const { SUPABASE_URL, publishableKey, restHeaders, missingKeyResponse } = require("./supabase");
-const { verifySession, unauthorizedResponse } = require("./auth");
+const { SUPABASE_URL, usersKey, restHeaders, missingKeyResponse } = require("./supabase");
+const { verifySession, unauthorizedResponse, fetchAccessRow } = require("./auth");
+const { isTrialRow, trialBlobViolation } = require("./entitlement");
 
 // Saves the signed-in learner's own record. The row is chosen by the
 // verified Supabase session token (Authorization header); an `email` in the
@@ -15,12 +16,27 @@ exports.handler = async (event) => {
       };
     }
 
-    const key = publishableKey();
+    const key = usersKey();
     if (!key) return missingKeyResponse();
 
     const session = await verifySession(event);
     if (!session) return unauthorizedResponse();
     const normalized = session.email;
+
+    // Free-tier progression gate (Nekh 2026-09-30). The client stops a
+    // free account at the lesson-4 paywall; this is the server half, so a
+    // devtools edit that releases lesson 4 can't be stored and synced back.
+    const row = await fetchAccessRow(normalized, key);
+    if (isTrialRow(row)) {
+      const violation = trialBlobViolation(user);
+      if (violation) {
+        return {
+          statusCode: 403,
+          headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+          body: JSON.stringify({ error: "Lesson 4 onward needs the full app.", ...violation }),
+        };
+      }
+    }
 
     // Update the existing row only (every account with access has one —
     // addUser / grant-access.sh create it). A revoked account, whose row

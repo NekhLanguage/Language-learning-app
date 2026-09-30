@@ -25,7 +25,8 @@ const Anthropic = require("@anthropic-ai/sdk");
 const fs = require("fs");
 const path = require("path");
 
-const { SUPABASE_URL, publishableKey, secretKey, restHeaders } = require("./supabase");
+const { SUPABASE_URL, secretKey, usersKey, restHeaders } = require("./supabase");
+const { isTrialRow } = require("./entitlement");
 const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive } = require("./auth");
 
 // Sonnet 5.5 (Nekh 2026-09-29): same per-token prices as Sonnet 5, newer
@@ -221,12 +222,15 @@ function betaFeatures(email) {
 // Anna needs an active subscription (users.access_until — see
 // migrations/users_access_until.sql), not just a `users` row: a learner
 // whose window has lapsed keeps the app and sees Anna greyed out.
+// A free-tier account never reaches her, whatever its window says (Nekh
+// 2026-09-30: Anna is fully paywalled, no capped free Anna). This is the
+// gate that costs money, so it is decided here, never in the client.
 async function hasAccess(email) {
   const normalized = String(email || "").toLowerCase().trim();
   if (!normalized) return false;
-  const key = publishableKey();
+  const key = usersKey();
   if (!key) {
-    console.error("tutor: SUPABASE_PUBLISHABLE_KEY unset — treating every account as no-access");
+    console.error("tutor: no Supabase key for users — treating every account as no-access");
     return false;
   }
   let row;
@@ -236,7 +240,7 @@ async function hasAccess(email) {
     console.error("Supabase error:", err);
     return false;
   }
-  return !!row && subscriptionActive(row.access_until);
+  return !!row && !isTrialRow(row) && subscriptionActive(row.access_until);
 }
 
 // The per-learner context block. Rendered after the (cached) instructions so

@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
-  <link rel="modulepreload" href="app.js?v=1.2.78" />
+  <link rel="modulepreload" href="app.js?v=1.2.79" />
   <link rel="modulepreload" href="languages.js?v=0.9.99.14" />
   <link rel="modulepreload" href="audioengine.js" />
   <link rel="stylesheet" href="style.css" />
@@ -165,6 +165,27 @@
   <button id="start-run" class="primary">START</button>
 </section>
 
+  <!-- FREE TIER, Screen A (Millie copy v2, 2026-09-30): once, when a free
+       learner finishes lesson 3. No price here on purpose. -->
+  <section id="trial-anna-screen" class="screen trial-screen" aria-label="Three lessons done">
+    <h1 class="title small">THREE LESSONS DONE</h1>
+    <p class="subtitle trial-line">From lesson 4 on, you also get Anna, a tutor who adds the words you actually use to your own list.</p>
+    <p class="subtitle trial-line">Your first month with her is included.</p>
+    <button id="trial-anna-continue" class="primary" type="button">Keep going</button>
+  </section>
+
+  <!-- FREE TIER, Screen B (Millie copy v2): the lesson-4 paywall. -->
+  <section id="paywall-screen" class="screen trial-screen" aria-label="Unlock lesson 4">
+    <button id="paywall-back" class="quit-button" type="button">← BACK</button>
+    <h1 class="title small">KEEP GOING</h1>
+    <p class="subtitle trial-line">Your first $19 unlocks every lesson from here on, and they stay yours for good.</p>
+    <p class="subtitle trial-line">Lesson 4 picks up exactly where you left off.</p>
+    <a id="paywall-buy" class="primary paywall-buy" href="https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05" target="_blank" rel="noopener">Unlock lesson 4 · $19</a>
+    <p class="paywall-fine">Then $19 a month for Anna. Cancel anytime and the lessons stay yours.</p>
+    <button id="paywall-refresh" class="gate-link" type="button">Already paid? Continue</button>
+    <p id="paywall-status" class="gate-message" role="status" aria-live="polite"></p>
+  </section>
+
   <section id="run-complete-screen" class="screen" aria-label="Run complete">
     <h1 class="title"></h1>
     <p class="subtitle" id="run-complete-body"></p>
@@ -213,6 +234,6 @@
   <!-- User + run persistence (non-module) -->
 <script src="vendor/supabase-js-2.116.0.umd.js"></script>
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=1.2.78"></script>
+<script type="module" src="app.js?v=1.2.79"></script>
 </body>
 </html>

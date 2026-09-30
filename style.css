@@ -2622,3 +2622,53 @@ a.secondary.locked {
     flex-basis: 100%;
   }
 }
+
+/* =========================
+   Free tier (Nekh 2026-09-30): start-free block on the sign-in screen,
+   the end-of-lesson-3 Anna screen and the lesson-4 paywall. App tokens
+   only; rose accent for contrast on the purple gradient.
+   ========================= */
+.gate-start-free{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: min(360px, 100%);
+}
+.gate-start-free .gate-note{
+  margin-top: 0;
+}
+.trial-screen{
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+.trial-screen.active{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.trial-line{
+  max-width: 34rem;
+  line-height: 1.5;
+}
+a.primary.paywall-buy{
+  display: inline-block;
+  text-decoration: none;
+  color: var(--btnInk);
+  background: #fff;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.9rem 1.6rem;
+  border-radius: var(--r-md);
+}
+.paywall-fine{
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  opacity: 0.9;
+  max-width: 30rem;
+}
+.roadmap-stop.paywalled .roadmap-stop-dot{
+  border-color: #fb7185;
+}

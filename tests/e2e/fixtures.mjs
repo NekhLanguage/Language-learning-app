@@ -88,7 +88,10 @@ export async function startNewRun(page, { language = "Portuguese", packId = "eve
 // first `bundles` entries of the release plan for realistic distractor pools,
 // then re-renders. For L6/L7 pass restrictTypes to keep modifier/recognition
 // concepts (whose level caps are lower) out of the exercise pool.
-export async function seedAllConceptsAt(page, level, { bundles = 4, restrictTypes = null, restrictRoles = null } = {}) {
+// The default is 3: lesson 1 absorbed the old lesson 2 (2026-09-30), so the
+// first 3 plan entries hold exactly the words the first 4 held before —
+// the pool these tests were written against.
+export async function seedAllConceptsAt(page, level, { bundles = 3, restrictTypes = null, restrictRoles = null } = {}) {
   await page.evaluate(({ level, bundles, restrictTypes, restrictRoles }) => {
     const app = window.__app;
     const run = app.run;
