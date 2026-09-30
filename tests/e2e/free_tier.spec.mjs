@@ -85,11 +85,11 @@ test("free path: three lessons, Anna screen, lesson-4 paywall, pay, lesson 4 ope
   await expect(page.locator("#trial-anna-screen")).toContainText("Anna");
   await page.click("#trial-anna-continue");
 
-  // Screen B: the paywall, with the $19 button and Anna named in the terms.
+  // Screen B: the paywall, one line naming the app, Anna and the price.
   await expect(page.locator("#paywall-screen.active")).toBeVisible();
-  await expect(page.locator("#paywall-buy")).toHaveText("Unlock lesson 4 · $19");
+  await expect(page.locator("#paywall-buy")).toHaveText("Get the app + 1 month of Anna for $19");
+  await expect(page.locator("#paywall-screen .paywall-renewal")).toContainText("$19 a month");
   await expect(page.locator("#paywall-buy")).toHaveAttribute("href", new RegExp(`prefilled_email=${encodeURIComponent(email)}`));
-  await expect(page.locator("#paywall-screen .paywall-fine")).toContainText("Anna");
 
   // The server never stored a blob past lesson 3.
   const stored = (await (await request.get("/__devserver/users")).json())[email];
