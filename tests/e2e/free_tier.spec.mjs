@@ -131,3 +131,49 @@ test("the free account's Anna ping is refused by the server stub", async ({ page
   expect((await res.json()).allowed).toBe(false);
   await expect(page.locator("#link-tutor")).toHaveClass(/locked/);
 });
+
+// Emi Run 28 Finding #181: trialEvent was fire-once, so a 503 during a burst
+// lost the funnel row. The client now queues in localStorage and drains the
+// queue on the next successful send. Two 503s then a success should land all
+// three rows in order.
+test("trialEvent 503s are queued and replayed on the next successful call", async ({ page, request, pageErrors }) => {
+  const email = `trial-${uniq()}@example.com`;
+  await startNewRun(page, { email });
+
+  // Arm the next two trialEvent POSTs to 503. The client should enqueue
+  // lesson 1 and lesson 2, then drain both when lesson 3's send succeeds.
+  await request.post("/__devserver/trialEventFailNext?n=2");
+
+  await finishLesson(page); // lesson 1 → 503, queued
+  await expect(page.locator("#learning-screen.active")).toBeVisible();
+  await finishLesson(page); // lesson 2 → 503, queued
+  await expect(page.locator("#learning-screen.active")).toBeVisible();
+
+  // Lesson 3 completes and the queue drains oldest-first before we move on.
+  await page.evaluate(() => {
+    window.__app.run.sessionComplete = true;
+    window.__app.rerender();
+  });
+  await expect(page.locator("#roadmap-screen.active")).toBeVisible();
+
+  // The queue is a chain of promises started off the render tick; wait for
+  // the localStorage queue to empty and the three rows to reach the server.
+  await page.waitForFunction(() => !localStorage.getItem("zth_trial_event_queue"), null, { timeout: 5000 });
+  await expect.poll(async () => {
+    const rows = await (await request.get("/__devserver/events")).json();
+    return rows
+      .filter((e) => e.email === email && e.event_type === "trial_lesson_complete")
+      .map((e) => e.props?.lesson);
+  }).toEqual([1, 2, 3]);
+
+  // Two injected 503s are expected noise from this test; drop the two
+  // response-listener entries plus the two browser "Failed to load" console
+  // lines they raise so the pageErrors fixture's clean-slate assertion holds.
+  for (let i = pageErrors.length - 1; i >= 0; i--) {
+    const line = pageErrors[i];
+    if (/http 503: .*\/trialEvent$/.test(line)) { pageErrors.splice(i, 1); continue; }
+    if (/console: Failed to load resource: the server responded with a status of 503/.test(line)) {
+      pageErrors.splice(i, 1);
+    }
+  }
+});
