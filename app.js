@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.79";
+const APP_DATA_VERSION = "1.2.80";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -951,7 +951,11 @@ const langP = getLangFileData(languageState.support);
 // this device's local copy and should know it (Emi 2026-08-27-07).
 // Refresh the free-tier flag from the server on every signed-in boot, so a
 // payment made elsewhere (Stripe tab, another device) unlocks lesson 4 here.
-if (email) checkAccessForSession().catch(() => { /* cached tier stands */ });
+if (email) {
+  checkAccessForSession()
+    .then(() => flushTrialEvents())
+    .catch(() => { /* cached tier stands */ });
+}
 const serverSyncP = email
   ? loadUserFromServer(email).catch(err => {
       console.warn("Server sync failed:", err);
@@ -1078,13 +1082,46 @@ function releaseHeldLesson(r) {
   return false;
 }
 
-function trialEvent(type, extra = {}) {
-  if (!isTrialAccount()) return;
-  authFetch("/.netlify/functions/trialEvent", {
+// Funnel events must not be lost to one bad request (Emi run 28 -181: a
+// cold start / 503 dropped four for good). A failed send is retried once
+// after a short wait, then parked in localStorage and flushed on the next
+// boot. Analytics still never blocks a learner: nothing here is awaited.
+// (Key is a literal, not a const: the boot code above can flush before a
+// const declared down here has initialised.)
+function sendTrialEvent(body) {
+  return authFetch("/.netlify/functions/trialEvent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ type, lang: languageState.target || "", ...extra })
-  }).catch(() => { /* analytics never blocks a learner */ });
+    body: JSON.stringify(body)
+  }).then(res => {
+    // 400 = an event the server will never accept: drop it, don't retry.
+    if (!res.ok && res.status !== 400) throw new Error(`trialEvent ${res.status}`);
+  });
+}
+
+function parkTrialEvent(body) {
+  try {
+    const queue = JSON.parse(localStorage.getItem("zth_trial_event_queue") || "[]");
+    queue.push(body);
+    localStorage.setItem("zth_trial_event_queue", JSON.stringify(queue.slice(-20)));
+  } catch (_) { /* storage blocked: the event is lost, the learner is not */ }
+}
+
+function flushTrialEvents() {
+  let queue;
+  try {
+    queue = JSON.parse(localStorage.getItem("zth_trial_event_queue") || "[]");
+    localStorage.removeItem("zth_trial_event_queue");
+  } catch (_) { return; }
+  for (const body of queue) sendTrialEvent(body).catch(() => parkTrialEvent(body));
+}
+
+function trialEvent(type, extra = {}) {
+  if (!isTrialAccount()) return;
+  const body = { type, lang: languageState.target || "", ...extra };
+  sendTrialEvent(body).catch(() => {
+    setTimeout(() => sendTrialEvent(body).catch(() => parkTrialEvent(body)), 2000);
+  });
 }
 
 function checkoutUrl() {
@@ -1821,7 +1858,11 @@ function showRoadmap(opts) {
   const WINDOW_BEFORE = 1;
   const WINDOW_AFTER = 2;
   const start = Math.max(0, focusIdx - WINDOW_BEFORE);
-  const end = Math.min(stops.length, focusIdx + WINDOW_AFTER + 1);
+  let end = Math.min(stops.length, focusIdx + WINDOW_AFTER + 1);
+  // Free tier, locked not hidden (Emi run 28 -182): keep the first locked
+  // "Full app" lesson in view from lesson 1 on, so a free learner always
+  // sees that lesson 4 exists and what it takes.
+  if (isTrialAccount()) end = Math.min(stops.length, Math.max(end, FREE_LESSONS + 1));
   const hiddenBefore = start;
   const hiddenAfter = stops.length - end;
   const windowed = stops.slice(start, end);

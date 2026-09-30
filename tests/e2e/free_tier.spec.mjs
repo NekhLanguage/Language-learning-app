@@ -131,3 +131,22 @@ test("the free account's Anna ping is refused by the server stub", async ({ page
   expect((await res.json()).allowed).toBe(false);
   await expect(page.locator("#link-tutor")).toHaveClass(/locked/);
 });
+
+test("the lesson-4 'Full app' lock is visible from the first roadmap (Emi -182)", async ({ page }) => {
+  await startNewRun(page, { email: `trial-${uniq()}@example.com` });
+  await page.click("#journey-btn");
+  await expect(page.locator("#roadmap-screen.active")).toBeVisible();
+  await expect(page.locator("#roadmap-path li.paywalled").first()).toContainText("Full app");
+});
+
+test("a funnel event survives one failed send (Emi -181)", async ({ page, request, pageErrors }) => {
+  const email = `trial-flaky-${uniq()}@example.com`;
+  await startNewRun(page, { email });
+  await finishLesson(page); // lesson 1 → first send gets a 503, the retry lands
+  await expect.poll(async () => (await events(request, email))
+    .filter((e) => e.event_type === "trial_lesson_complete").length, { timeout: 8_000 }).toBe(1);
+  // The one injected 503 (and its console line) is the point of this test.
+  for (let i = pageErrors.length - 1; i >= 0; i--) {
+    if (/503/.test(pageErrors[i]) && /trialEvent|status of 503/.test(pageErrors[i])) pageErrors.splice(i, 1);
+  }
+});

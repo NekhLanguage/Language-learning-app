@@ -82,6 +82,7 @@ const userStore = new Map();
 const convertedEmails = new Set();
 const trialStarted = new Set();
 const funnelEvents = [];
+const trialEventFailedOnce = new Set();
 const FREE_LESSONS = 3;
 const isTrialEmail = (email) => !!email && email.includes("trial") && !convertedEmails.has(email);
 const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.runs) || {})
@@ -191,6 +192,12 @@ async function handleFunction(name, req, res, url) {
       return sendJson(res, 200, { ok: true });
     }
     case "trialEvent": {
+      // Failure injection (Emi run 28 -181): an email containing "flaky"
+      // gets one 503 before events succeed, to prove the client retries.
+      if (email && email.includes("flaky") && !trialEventFailedOnce.has(email)) {
+        trialEventFailedOnce.add(email);
+        return sendJson(res, 503, { error: "injected failure" });
+      }
       const allowedTypes = ["trial_lesson_complete", "paywall_hit", "trial_anna_intro_seen"];
       if (!allowedTypes.includes(body.type)) return sendJson(res, 400, { error: "Unknown event" });
       if (isTrialEmail(email)) {
