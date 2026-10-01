@@ -44,6 +44,8 @@
 //   GET  /__devserver/events               -> recorded funnel events.
 //   POST /__devserver/convert?email=…      -> simulate the Stripe webhook:
 //        the account becomes paid (trial_convert recorded).
+//   POST /__devserver/trialEventFailNext?n=N -> the next N trialEvent POSTs
+//        return 503, so the client's localStorage-queue retry can be tested.
 
 import http from "node:http";
 import { promises as fs } from "node:fs";
@@ -90,6 +92,10 @@ const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.
 const referralCodes = new Map();
 // Chat texts carrying __FAIL_ONCE__ that have already failed once (tutor stub).
 const tutorFailedOnce = new Set();
+// How many of the next trialEvent POSTs to answer with a 503, set via
+// POST /__devserver/trialEventFailNext?n=N. Decrements per failed request.
+// Exists so the e2e can exercise the localStorage-queue retry path.
+let trialEventFailNext = 0;
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -193,6 +199,12 @@ async function handleFunction(name, req, res, url) {
     case "trialEvent": {
       const allowedTypes = ["trial_lesson_complete", "paywall_hit", "trial_anna_intro_seen"];
       if (!allowedTypes.includes(body.type)) return sendJson(res, 400, { error: "Unknown event" });
+      // Failure injection for the retry e2e: the real function returned 503
+      // during Emi's Run 28 burst and lost the row. The queue must recover.
+      if (trialEventFailNext > 0) {
+        trialEventFailNext -= 1;
+        return sendJson(res, 503, { error: "injected 503" });
+      }
       if (isTrialEmail(email)) {
         funnelEvents.push({ event_type: body.type, email, props: body.lesson ? { lesson: body.lesson } : null });
       }
@@ -377,6 +389,13 @@ const server = http.createServer(async (req, res) => {
       if (isTrialEmail(who)) funnelEvents.push({ event_type: "trial_convert", email: who, props: null });
       convertedEmails.add(who);
       return sendJson(res, 200, { ok: true });
+    }
+    // Arm the next N trialEvent POSTs to return 503; the client should
+    // enqueue and replay them after the next successful send.
+    if (url.pathname === "/__devserver/trialEventFailNext" && req.method === "POST") {
+      const n = Math.max(0, Number(url.searchParams.get("n")) || 0);
+      trialEventFailNext = n;
+      return sendJson(res, 200, { ok: true, failNext: n });
     }
 
     // The repo ships no favicon; answer the browser's automatic request

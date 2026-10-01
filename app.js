@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.79";
+const APP_DATA_VERSION = "1.2.80";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1078,13 +1078,79 @@ function releaseHeldLesson(r) {
   return false;
 }
 
+// trialEvent used to fire-once and drop on failure (Emi Run 28 Finding #181):
+// a 503 during a burst lost the row for good. Queue on failure, drain oldest-
+// first after any successful send. Cap at 20 to bound worst-case; drop oldest
+// on overflow. Survives a reload because it lives in localStorage.
+const TRIAL_EVENT_QUEUE_KEY = "zth_trial_event_queue";
+const TRIAL_EVENT_QUEUE_MAX = 20;
+
+function readTrialEventQueue() {
+  try {
+    const raw = localStorage.getItem(TRIAL_EVENT_QUEUE_KEY);
+    if (!raw) return [];
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  } catch (_) { return []; }
+}
+
+function writeTrialEventQueue(items) {
+  try {
+    if (!items.length) localStorage.removeItem(TRIAL_EVENT_QUEUE_KEY);
+    else localStorage.setItem(TRIAL_EVENT_QUEUE_KEY, JSON.stringify(items));
+  } catch (_) { /* storage blocked: the live fire still races on the wire */ }
+}
+
+function enqueueTrialEvent(body) {
+  const q = readTrialEventQueue();
+  q.push(body);
+  while (q.length > TRIAL_EVENT_QUEUE_MAX) q.shift();
+  writeTrialEventQueue(q);
+}
+
+async function sendTrialEventBody(body) {
+  try {
+    const res = await authFetch("/.netlify/functions/trialEvent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    return !!(res && res.ok);
+  } catch (_) {
+    return false;
+  }
+}
+
+// Drain the queue oldest-first, stopping on the first failure so the server
+// receives events in the same order the client saw them.
+let trialQueueDraining = false;
+async function drainTrialEventQueue() {
+  if (trialQueueDraining) return;
+  trialQueueDraining = true;
+  try {
+    let q = readTrialEventQueue();
+    while (q.length) {
+      const next = q[0];
+      const ok = await sendTrialEventBody(next);
+      if (!ok) break;
+      q = readTrialEventQueue();
+      q.shift();
+      writeTrialEventQueue(q);
+    }
+  } finally {
+    trialQueueDraining = false;
+  }
+}
+
 function trialEvent(type, extra = {}) {
   if (!isTrialAccount()) return;
-  authFetch("/.netlify/functions/trialEvent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ type, lang: languageState.target || "", ...extra })
-  }).catch(() => { /* analytics never blocks a learner */ });
+  const body = { type, lang: languageState.target || "", ...extra };
+  // Always route through the queue so the server sees events in the order
+  // the client saw them, even after a prior failure. drainTrialEventQueue
+  // is self-serialising, so overlapping trialEvent() calls all draining the
+  // same queue never double-send a row.
+  enqueueTrialEvent(body);
+  drainTrialEventQueue().catch(() => { /* analytics never blocks a learner */ });
 }
 
 function checkoutUrl() {
