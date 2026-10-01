@@ -121,20 +121,30 @@ const MAX_TOPIC_NAME_CHARS = 60;
 // its default (high) thinks briefly before almost every reply.
 const CHAT_OUTPUT_CONFIG = { effort: "low" };
 
-// The end-of-session record is extraction from a transcript the model
-// already has; the thinking pass was most of the 20–40 s learners used to
-// wait at End session (Nekh 2026-09-21). How "no thinking" is spelled
-// differs by model: Sonnet 5.5 rejects `disabled` and offers
-// `between_tools`; Sonnet 5 accepts `disabled` and rejects
-// `between_tools`; Opus 5.5 rejects both, so it runs adaptive at low
-// effort. Keyed on the model so a TUTOR_SUMMARY_MODEL flip never 400s.
+// The end-of-session record runs in the background after End session
+// (v1.2.76), so nobody waits on it and it needs no special "no thinking"
+// mode: it uses the same thinking configuration as the chat turns
+// (adaptive, bounded by the same low effort). Two reasons, both from
+// production data (Nekh 2026-10-01):
+// - Sonnet 5.5 with thinking off (`between_tools`) hit the 2048 output
+//   cap on four of eight summaries, two of them for four-turn sessions
+//   whose eventual record was under 700 characters — runaway output
+//   with no thinking, not long records. Thinking on, same as chat, is
+//   the configuration Sonnet 5 ran the record on without that failure.
+// - A thinking configuration that differs from the chat turns'
+//   invalidates the prompt cache for the whole message history, so the
+//   summary rewrote ~18k cached tokens every session. Same config, same
+//   cache.
+// Sonnet 5 and Opus 4.x keep `disabled` (their chat turns ran without
+// thinking too); anything else sends no `thinking` field, like chat.
 function summaryThinking(model) {
   const m = String(model || "");
-  if (m.startsWith("claude-sonnet-5-5")) return { type: "between_tools" };
+  if (m.startsWith("claude-sonnet-5-5")) return null;
   if (m.startsWith("claude-sonnet-5") || m.startsWith("claude-opus-4")) return { type: "disabled" };
-  return null; // adaptive, bounded by effort
+  return null;
 }
 const SUMMARY_OUTPUT_CONFIG = { effort: "low" };
+const SUMMARY_MAX_TOKENS = 4096;
 
 let cachedClient = null;
 function getClient() {
@@ -376,7 +386,7 @@ function steeringTrailer(preferences, activeTopic = "", exchange = 0) {
   // turn, not per session: the exchange number gives the "by about
   // exchange 5" rule a clock, and the recycle nudge sits next to the
   // length cap it has to coexist with.
-  if (exchange > 0) text += ` Exchange ${exchange}. Use a personal-vocabulary word marked one use from admission when one fits.`;
+  if (exchange > 0) text += ` Exchange ${exchange}. Use a personal-vocabulary word marked one use from admission when one fits — silently: the counts and how the app adds words are never mentioned to the learner.`;
   return text + "]";
 }
 
@@ -730,12 +740,13 @@ exports.handler = async (event) => {
         (topicsOn ? " File the session under the learner's CONVERSATION TOPICS — the ACTIVE TOPIC they chose unless they themselves moved to another topic's subject — and propose new topics only if genuinely useful." : "") +
         ")",
     });
-    // No thinking pass on the record (see summaryThinking); the JSON
-    // schema still constrains the output.
+    // Thinking as on the chat turns (see summaryThinking); the JSON schema
+    // constrains the output. The ceiling only bounds runaway output — a
+    // real record is a few hundred tokens — and max_tokens itself is free.
     const thinking = summaryThinking(SUMMARY_MODEL);
     const response = await client.messages.create({
       model: SUMMARY_MODEL,
-      max_tokens: 2048,
+      max_tokens: SUMMARY_MAX_TOKENS,
       ...(thinking ? { thinking } : {}),
       system,
       messages,
@@ -770,7 +781,12 @@ exports.handler = async (event) => {
     if (response.stop_reason === "max_tokens") {
       // The JSON is cut off mid-document; parsing it would throw and turn a
       // known condition into an opaque 500.
-      console.warn("TUTOR SUMMARY TRUNCATED at", response.usage?.output_tokens, "output tokens");
+      const head = response.content
+        .filter((b) => b.type === "text")
+        .map((b) => b.text)
+        .join("")
+        .slice(0, 400);
+      console.warn("TUTOR SUMMARY TRUNCATED at", response.usage?.output_tokens, "output tokens; starts:", JSON.stringify(head));
       return json(200, { summary: null, truncated: true });
     }
     const text = response.content
@@ -803,6 +819,7 @@ exports.costCents = costCents;
 exports.MODEL = MODEL;
 exports.CHAT_OUTPUT_CONFIG = CHAT_OUTPUT_CONFIG;
 exports.summaryThinking = summaryThinking;
+exports.SUMMARY_MAX_TOKENS = SUMMARY_MAX_TOKENS;
 exports.MODEL_PRICES_CENTS_PER_MTOK = MODEL_PRICES_CENTS_PER_MTOK;
 exports.contextBlock = contextBlock;
 exports.renderPreferences = renderPreferences;

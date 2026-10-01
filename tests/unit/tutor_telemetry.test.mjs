@@ -71,20 +71,24 @@ test("the summary handler does not return until the tutor_sessions row has been 
     assert.deepEqual(JSON.parse(res.body).summary, summaryDoc);
     assert.equal(insertStarted, true, "telemetry row attempted");
     assert.equal(insertFinished, true, "handler waited for the telemetry insert to complete");
-    // Sonnet 5.5 (Nekh 2026-09-29): the summary sends the model's own
-    // "no thinking" spelling plus low effort, and the schema still rides.
+    // Nekh 2026-10-01: the summary runs with the SAME thinking
+    // configuration as the chat turns (no `thinking` field, low effort):
+    // `between_tools` hit the 2048 output cap on four-turn sessions and
+    // broke the prompt cache. The ceiling bounds runaway output only.
     const params = createCalls.at(-1);
     assert.equal(params.model, "claude-sonnet-5-5");
-    assert.deepEqual(params.thinking, { type: "between_tools" });
+    assert.equal("thinking" in params, false, "summary thinking config equals chat's (none)");
     assert.equal(params.output_config.effort, "low");
     assert.equal(params.output_config.format.type, "json_schema");
+    assert.equal(params.max_tokens, tutorFn.SUMMARY_MAX_TOKENS);
+    assert.ok(tutorFn.SUMMARY_MAX_TOKENS >= 4096);
   } finally {
     globalThis.fetch = realFetch;
   }
 });
 
-test("summaryThinking spells 'no thinking' the way each model accepts it", () => {
-  assert.deepEqual(tutorFn.summaryThinking("claude-sonnet-5-5"), { type: "between_tools" });
+test("summaryThinking matches the chat turns' thinking config per model", () => {
+  assert.equal(tutorFn.summaryThinking("claude-sonnet-5-5"), null, "Sonnet 5.5: adaptive at low effort, like chat");
   assert.deepEqual(tutorFn.summaryThinking("claude-sonnet-5"), { type: "disabled" });
   assert.deepEqual(tutorFn.summaryThinking("claude-opus-4-8"), { type: "disabled" });
   assert.equal(tutorFn.summaryThinking("claude-opus-5-5"), null, "Opus 5.5 rejects both: adaptive at low effort");

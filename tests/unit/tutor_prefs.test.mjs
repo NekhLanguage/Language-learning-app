@@ -99,7 +99,10 @@ test("the per-turn trailer carries the exchange number and the recycle nudge; th
   assert.match(instructions, /Recycling is opportunistic, every turn/);
   assert.match(instructions, /The learner's own words count/);
   assert.doesNotMatch(instructions, /at most \*\*1–2 new words per session\*\*/);
-  assert.match(steeringTrailer({}, "", 5), /Exchange 5\. Use a personal-vocabulary word marked one use from admission when one fits\./);
+  assert.match(steeringTrailer({}, "", 5), /Exchange 5\. Use a personal-vocabulary word marked one use from admission when one fits — silently/);
+  // Nekh 2026-10-01: Anna explained the admission system to him mid-chat.
+  assert.match(instructions, /The bookkeeping is invisible\./);
+  assert.match(steeringTrailer({}, "", 5), /never mentioned to the learner/);
   assert.doesNotMatch(steeringTrailer({}), /Exchange/);
   assert.match(renderPreferences({ challenge: "comfort" }), /not the one or two new words a conversation naturally needs/);
 });
