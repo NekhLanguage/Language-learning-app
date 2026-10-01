@@ -92,7 +92,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.80";
+const APP_DATA_VERSION = "1.2.81";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1887,7 +1887,12 @@ function showRoadmap(opts) {
   const WINDOW_BEFORE = 1;
   const WINDOW_AFTER = 2;
   const start = Math.max(0, focusIdx - WINDOW_BEFORE);
-  const end = Math.min(stops.length, focusIdx + WINDOW_AFTER + 1);
+  let end = Math.min(stops.length, focusIdx + WINDOW_AFTER + 1);
+  // Free tier: always keep the first paywalled stop in the window so the
+  // lesson-4 lock is visible from lesson 1 (Emi -182).
+  if (isTrialAccount() && FREE_LESSONS < stops.length) {
+    end = Math.max(end, FREE_LESSONS + 1);
+  }
   const hiddenBefore = start;
   const hiddenAfter = stops.length - end;
   const windowed = stops.slice(start, end);
