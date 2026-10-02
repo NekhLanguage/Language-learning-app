@@ -22,3 +22,19 @@
 # Referral discount run: 06:00 UTC on the 1st of every month (see the function).
 [functions.referralDiscountRun]
   schedule = "0 6 1 * *"
+
+# Long-lived static assets. The font files and the vendored supabase-js
+# carry their identity in the file name (a new version is a new name), so
+# a returning browser never needs to revalidate them. Everything else keeps
+# Netlify's default (max-age=0, must-revalidate): app.js and the data files
+# are cache-busted by `?v=APP_DATA_VERSION`, the un-versioned modules rely
+# on ETag revalidation to pick up a deploy.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

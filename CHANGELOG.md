@@ -6,6 +6,16 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-02
+
+### A leaderboard
+
+There is a new Leaderboard button on the start screen. It ranks learners two ways: words mastered at level 7 (the top of the ladder, counted across every language you study) and words you've met with Anna, the tutor. You are not on the board until you choose a display name there; only that name is ever shown, never your email, and you can rename or leave at any time. Your own counts show the moment you open it, whether or not you've joined.
+
+### The app starts faster
+
+The browser now fetches every part of the app at once instead of discovering them one after another, and the grammar notes, mnemonics and coaching lines, which are only needed inside a lesson, no longer compete with your progress download while the start screen is loading. Nothing about the leaderboard runs until you press its button.
+
 ## 2026-09-30
 
 ### Try the first three lessons free

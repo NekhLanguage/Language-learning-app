@@ -1,4 +1,6 @@
-import { AVAILABLE_LANGUAGES } from "./languages.js?v=0.9.99.14";
+// Same specifier capabilities.mjs uses, so the browser loads ONE copy of
+// the registry (the old `?v=0.9.99.14` query made it a second module).
+import { AVAILABLE_LANGUAGES } from "./languages.js";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap, getAudioFallbacks } from "./audioengine.js";
 import { createProgress, passesSpacing, levelCapFor, applyAnswer, MAX_LEVEL } from "./progression.mjs";
 import { langRuleValue } from "./language_rules.mjs";
@@ -92,7 +94,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.81";
+const APP_DATA_VERSION = "1.2.82";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -595,26 +597,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   // rule id → support language. Loaded in the background; exposure cards
   // simply skip the "why?" chips until it arrives (or if it never does).
   let GRAMMAR_NOTES = null;
-  fetch(dataUrl("grammar_notes.json"))
-    .then(r => (r.ok ? r.json() : null))
-    .then(d => { GRAMMAR_NOTES = d?.notes || null; })
-    .catch(() => {});
 
   // Optional per-word mnemonic hooks (word_notes.json), keyed
   // concept → target language → support language. Same graceful loading.
   let WORD_NOTES = null;
-  fetch(dataUrl("word_notes.json"))
-    .then(r => (r.ok ? r.json() : null))
-    .then(d => { WORD_NOTES = d?.notes || null; })
-    .catch(() => {});
 
   // Personalized coaching lines (milestones + session-complete variety).
   // Falls back to the legacy uiStrings templates when absent.
   let COACHING_LINES = null;
-  fetch(dataUrl("coaching_lines.json"))
-    .then(r => (r.ok ? r.json() : null))
-    .then(d => { COACHING_LINES = d || null; })
-    .catch(() => {});
+
+  // The three lesson-only data files (~55 KB gzipped together) used to be
+  // fetched the moment the module ran, sharing the connection with the
+  // boot-critical lang file, checkAccess and loadUser. They are needed
+  // only once a lesson renders, so they now start after the start screen
+  // has painted (idle), and again — idempotently — on language entry.
+  // Every consumer already tolerates them being absent.
+  let backgroundNotesStarted = false;
+  function loadBackgroundNotes() {
+    if (backgroundNotesStarted) return;
+    backgroundNotesStarted = true;
+    fetch(dataUrl("grammar_notes.json"))
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => { GRAMMAR_NOTES = d?.notes || null; })
+      .catch(() => {});
+    fetch(dataUrl("word_notes.json"))
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => { WORD_NOTES = d?.notes || null; })
+      .catch(() => {});
+    fetch(dataUrl("coaching_lines.json"))
+      .then(r => (r.ok ? r.json() : null))
+      .then(d => { COACHING_LINES = d || null; })
+      .catch(() => {});
+  }
+  function scheduleBackgroundNotes() {
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 250));
+    idle(loadBackgroundNotes);
+  }
   const DEV_START_AT_LEVEL_7 = false; // set false after stress testing
   const CONTENT_VERSION = 13;
   // Caps the upper bound on session length so later sessions (with many
@@ -988,6 +1006,7 @@ langP.then(() => {
   if (!document.getElementById("open-app")) return;
   updateUIStrings(languageState.support);
   renderLanguageButtons();
+  scheduleBackgroundNotes();
 });
 
 // Once the server has caught up, reconcile: a different device may have changed
@@ -2562,6 +2581,9 @@ if (offerLink) {
   offerLink.textContent = strings.offer;
   offerLink.href = EXTERNAL_LINKS.offer;
 }
+
+const leaderboardLink = document.getElementById("link-leaderboard");
+if (leaderboardLink) leaderboardLink.textContent = ui("leaderboard");
 
   const languageTitle = document.querySelector("#language-screen .title");
   const languageSubtitle = document.querySelector("#language-screen .subtitle");
@@ -5118,6 +5140,7 @@ function renderAlphabetOverlay(langCode) {
   const gen = ++enterGeneration;
 
   languageState.target = langCode;
+  loadBackgroundNotes();
 
   // Persist the active language. This field existed since v1 but was never
   // written; the tutor (and feedback context) read it to know which run is
@@ -6143,6 +6166,27 @@ window.__app = {
 // Stripe customer portal (cancel at period end, card, invoices; asks for
 // the checkout email). Module scope: this block runs outside the boot
 // handler that owns EXTERNAL_LINKS.
+
+// Leaderboard v1 (Nekh 2026-10-02). The board's code lives in
+// leaderboard.mjs and is imported the first time the button is pressed, so
+// it costs the boot path nothing — no bytes, no parse, no fetch.
+(function initLeaderboard() {
+  const openBtn = document.getElementById("link-leaderboard");
+  if (!openBtn) return;
+  let modulePromise = null;
+  openBtn.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    // A dynamic import needs a relative specifier; dataUrl() gives a bare one.
+    if (!modulePromise) modulePromise = import(`./${dataUrl("leaderboard.mjs")}`);
+    modulePromise
+      .then((mod) => mod.openLeaderboard())
+      .catch((err) => {
+        console.warn("Leaderboard failed to load:", err);
+        modulePromise = null;
+      });
+  });
+})();
+
 const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgIahS2Gs9sk00";
 
 (async function initTutorEntry() {

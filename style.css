@@ -837,6 +837,156 @@ button.wrong {
   font-size: 0.9rem;
 }
 
+/* Leaderboard panel (start screen; built by leaderboard.mjs on first open).
+   Accents are rose / cyan — never purple on the purple panel. */
+.leaderboard-body{
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.leaderboard-tabs{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.leaderboard-tab{
+  flex: 1;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  background: var(--glass-bg);
+  color: #fff;
+  border: 1px solid var(--glass-brd-strong);
+}
+
+.leaderboard-tab[aria-selected="true"]{
+  background: #fff;
+  color: var(--btnInk);
+}
+
+.leaderboard-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.leaderboard-row{
+  display: grid;
+  grid-template-columns: 2.2rem 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--r-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-brd);
+}
+
+.leaderboard-row.is-me{
+  border-color: #fb7185;
+  background: rgba(251, 113, 133, 0.16);
+}
+
+.leaderboard-rank{
+  opacity: 0.7;
+}
+
+.leaderboard-name{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.leaderboard-you{
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fda4af;
+  margin-left: 0.4rem;
+}
+
+.leaderboard-count{
+  font-weight: 700;
+  color: #67e8f9;
+}
+
+.leaderboard-empty,
+.leaderboard-loading,
+.leaderboard-note{
+  font-size: 0.82rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.leaderboard-me{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--glass-brd);
+}
+
+.leaderboard-standing{
+  margin: 0;
+}
+
+.leaderboard-form{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.leaderboard-input{
+  flex: 1;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-brd-strong);
+  background: var(--glass-bg);
+  color: #fff;
+  outline: none;
+}
+
+.leaderboard-input:focus{
+  border-color: #67e8f9;
+}
+
+.leaderboard-btn{
+  white-space: nowrap;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+.leaderboard-leave{
+  align-self: flex-start;
+  font-size: 0.78rem;
+}
+
+.leaderboard-status{
+  margin: 0;
+  min-height: 1.2em;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.leaderboard-status.is-error,
+.leaderboard-error{
+  color: #ffd9d9;
+  font-size: 0.9rem;
+}
+
 /* Start screen: "Manage subscription" text link under the buttons */
 .manage-subscription{
   grid-column: 1 / -1;
