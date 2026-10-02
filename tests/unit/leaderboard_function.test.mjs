@@ -98,6 +98,9 @@ function fakeSupabase({ rows, migrated = true, patchStatus = 204 } = {}) {
     if (query.has("email")) {
       const email = decodeURIComponent(query.get("email").replace(/^eq\./, ""));
       const row = rows[email];
+      if (String(query.get("select")) === "data") {
+        return new Response(JSON.stringify(row ? [{ data: row.data || null }] : []), { status: 200 });
+      }
       return new Response(JSON.stringify(row ? [row] : []), { status: 200 });
     }
 
@@ -112,9 +115,10 @@ function fakeSupabase({ rows, migrated = true, patchStatus = 204 } = {}) {
   return { fetchImpl, calls };
 }
 
+const STAMP = "2026-10-02T11:57:15.313Z";
 function sampleRows() {
   return {
-    "alice@example.com": { email: "alice@example.com", lb_name: null, lb_words: 12, lb_anna: 3 },
+    "alice@example.com": { email: "alice@example.com", lb_name: null, lb_words: 12, lb_anna: 3, lb_updated_at: STAMP },
     "bob@example.com": { email: "bob@example.com", lb_name: "Bob", lb_words: 40, lb_anna: 1 },
     "cara@example.com": { email: "cara@example.com", lb_name: "Cara", lb_words: 5, lb_anna: 9 },
     "dan@example.com": { email: "dan@example.com", lb_name: "Dan", lb_words: 20, lb_anna: 0 },
@@ -170,6 +174,45 @@ test("POST {name}: joins under the normalized name and reports rank; a taken nam
 
     r = parse(await leaderboard.handler(req("POST", "bad", { name: "Mallory" })));
     assert.equal(r.status, 401);
+  }));
+});
+
+test("an account that never saved since the board shipped gets its counters computed from the blob on first open, once", async () => {
+  const rows = sampleRows();
+  rows["alice@example.com"] = {
+    email: "alice@example.com", lb_name: null, lb_words: 0, lb_anna: 0, lb_updated_at: null,
+    data: {
+      runs: {
+        uk: {
+          progress: {
+            WATER: { level: 7, completed: true, provenance: "pack" },
+            TEA: { level: 7, completed: true, provenance: "pack" },
+            TUTOR_KAVA: { level: 2, completed: false, provenance: "tutor" },
+          },
+          personalVocab: [{ word: "a" }, { word: "b" }],
+          pendingAdmission: [{ word: "c" }],
+        },
+      },
+    },
+  };
+  const { fetchImpl, calls } = fakeSupabase({ rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const { status, body } = parse(await leaderboard.handler(req("GET", "good")));
+    assert.equal(status, 200);
+    assert.equal(body.me.words, 2);
+    assert.equal(body.me.anna, 4);
+    const blobReads = calls.filter((c) => c.url.includes("select=data"));
+    assert.equal(blobReads.length, 1, "the blob is read once");
+    const patch = calls.find((c) => (c.init.method || "") === "PATCH");
+    const written = JSON.parse(patch.init.body);
+    assert.equal(written.lb_words, 2);
+    assert.equal(written.lb_anna, 4);
+    assert.ok(Date.parse(written.lb_updated_at) > 0);
+    assert.ok(rows["alice@example.com"].lb_updated_at, "the stamp is set so the next open is a column read");
+
+    calls.length = 0;
+    await leaderboard.handler(req("GET", "good"));
+    assert.equal(calls.filter((c) => c.url.includes("select=data")).length, 0, "second open: no blob read");
   }));
 });
 
