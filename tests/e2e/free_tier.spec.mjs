@@ -110,6 +110,25 @@ test("free path: three lessons, Anna screen, lesson-4 paywall, pay, lesson 4 ope
   expect((await events(request, email)).map((e) => e.event_type)).toContain("trial_convert");
 });
 
+// Emi Run 29 Finding #182 re-open: PR #192 claimed to make the lesson-4
+// "Full app" stop visible from lesson 1 but shipped only the paywall copy.
+// On lesson 1 the roadmap window was 1 behind and 2 ahead, so lesson 4 sat
+// behind "↓ N ahead". A free learner never saw that the next thing is a
+// paywall.
+test("free account sees the first paywalled stop on the lesson-1 roadmap", async ({ page }) => {
+  const email = `trial-${uniq()}@example.com`;
+  await startNewRun(page, { email });
+  expect(await page.evaluate(() => localStorage.getItem("zth_access_tier"))).toBe("trial");
+
+  // Lesson 1 (focus = stop 1): force the roadmap and check the window.
+  await page.evaluate(() => {
+    window.__app.run.sessionComplete = true;
+    window.__app.rerender();
+  });
+  await expect(page.locator("#roadmap-screen.active")).toBeVisible();
+  await expect(page.locator("#roadmap-path li.paywalled").first()).toContainText("Full app");
+});
+
 test("a paying account is never stopped at lesson 4", async ({ page }) => {
   await startNewRun(page);
   expect(await page.evaluate(() => localStorage.getItem("zth_access_tier"))).toBe("paid");
