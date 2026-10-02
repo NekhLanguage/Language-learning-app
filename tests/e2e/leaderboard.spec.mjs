@@ -98,10 +98,19 @@ test("the counters come from the saved progress: level-7 completions and Anna's 
   const name = uniqueName("Counter");
   await page.fill("#leaderboard-name", name);
   await page.click("#leaderboard-join");
-  await expect(page.locator(".leaderboard-row.is-me .leaderboard-count")).toHaveText("1");
+  // Both counts sit on the row, whichever ordering is selected — the Anna
+  // count must never be hidden behind the second tab.
+  const me = page.locator(".leaderboard-row.is-me");
+  await expect(me.locator(".leaderboard-words")).toHaveText("1");
+  await expect(me.locator(".leaderboard-anna")).toHaveText("3");
+  await expect(me.locator(".leaderboard-words")).toHaveClass(/is-sort/);
+  await expect(page.locator(".leaderboard-standing")).toContainText("#1 for words mastered");
+  await expect(page.locator(".leaderboard-standing")).toContainText("#1 for words with Anna");
 
   await page.click('.leaderboard-tab[data-tab="anna"]');
-  await expect(page.locator(".leaderboard-row.is-me .leaderboard-count")).toHaveText("3");
+  await expect(me.locator(".leaderboard-anna")).toHaveText("3");
+  await expect(me.locator(".leaderboard-anna")).toHaveClass(/is-sort/);
+  await expect(me.locator(".leaderboard-words")).toHaveText("1");
 });
 
 test("a name another learner holds is refused with a message, and the form stays usable", async ({ page, pageErrors }) => {

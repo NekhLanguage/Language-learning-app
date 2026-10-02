@@ -63,6 +63,9 @@ function plural(n, word) {
   return `${n} ${word}${n === 1 ? "" : "s"}`;
 }
 
+// Every row shows BOTH counts; the tab only decides the ordering and
+// which column is lit. (v1 showed one number per row and the Anna count
+// lived behind the second tab — Nekh read that as "Anna words missing".)
 function renderList(data) {
   const tab = state.tab;
   const rows = (data.top && data.top[tab]) || [];
@@ -71,15 +74,24 @@ function renderList(data) {
   if (!rows.length) {
     return '<p class="leaderboard-empty">Nobody is on the board yet — pick a name below and be the first.</p>';
   }
+  const sortWords = tab === "words";
   const items = rows.map((row, i) => {
     const isMe = myName !== null && row.name === myName;
     return `<li class="leaderboard-row${isMe ? " is-me" : ""}">
       <span class="leaderboard-rank">${i + 1}</span>
       <span class="leaderboard-name">${esc(row.name)}${isMe ? ' <span class="leaderboard-you">you</span>' : ""}</span>
-      <span class="leaderboard-count">${Number(row[tab]) || 0}</span>
+      <span class="leaderboard-count leaderboard-words${sortWords ? " is-sort" : ""}">${Number(row.words) || 0}</span>
+      <span class="leaderboard-count leaderboard-anna${sortWords ? "" : " is-sort"}">${Number(row.anna) || 0}</span>
     </li>`;
   });
-  return `<ol class="leaderboard-list">${items.join("")}</ol>`;
+  return `<ol class="leaderboard-list">
+    <li class="leaderboard-head" aria-hidden="true">
+      <span></span><span></span>
+      <span class="leaderboard-count${sortWords ? " is-sort" : ""}">L7</span>
+      <span class="leaderboard-count${sortWords ? "" : " is-sort"}">Anna</span>
+    </li>
+    ${items.join("")}
+  </ol>`;
 }
 
 function renderMe(data) {
@@ -90,10 +102,10 @@ function renderMe(data) {
   }
   const counts = `${plural(me.words, "word")} mastered · ${plural(me.anna, "word")} with Anna`;
   if (me.joined) {
-    const rank = state.tab === "words" ? me.rankWords : me.rankAnna;
+    const rank = (n) => `#${Number(n) || "–"}`;
     return `
       <div class="leaderboard-me">
-        <p class="leaderboard-standing">You're <strong>#${Number(rank) || "–"}</strong> as <strong>${esc(me.name)}</strong></p>
+        <p class="leaderboard-standing">You're <strong>${rank(me.rankWords)}</strong> for words mastered and <strong>${rank(me.rankAnna)}</strong> for words with Anna, as <strong>${esc(me.name)}</strong></p>
         <p class="leaderboard-note">${counts}</p>
         <form id="leaderboard-form" class="leaderboard-form">
           <input id="leaderboard-name" class="leaderboard-input" type="text" maxlength="${limits.maxName}" autocomplete="nickname" placeholder="Change your name" aria-label="New display name" />
@@ -119,8 +131,8 @@ function render() {
   const data = state.data;
   body.innerHTML = `
     <div class="leaderboard-tabs" role="tablist">
-      <button type="button" class="leaderboard-tab" data-tab="words" role="tab" aria-selected="${state.tab === "words"}">Words mastered</button>
-      <button type="button" class="leaderboard-tab" data-tab="anna" role="tab" aria-selected="${state.tab === "anna"}">Words with Anna</button>
+      <button type="button" class="leaderboard-tab" data-tab="words" role="tab" aria-selected="${state.tab === "words"}">By words mastered</button>
+      <button type="button" class="leaderboard-tab" data-tab="anna" role="tab" aria-selected="${state.tab === "anna"}">By words with Anna</button>
     </div>
     ${renderList(data)}
     ${renderMe(data)}`;

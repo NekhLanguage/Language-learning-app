@@ -17,10 +17,11 @@
 
 const { SUPABASE_URL, usersKey, restHeaders, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse } = require("./auth");
-const { normalizeDisplayName, MIN_NAME, MAX_NAME } = require("./leaderboardStats");
+const { normalizeDisplayName, computeLeaderboardStats, MIN_NAME, MAX_NAME } = require("./leaderboardStats");
 
 const TOP_N = 25;
 const ROW_SELECT = "lb_name,lb_words,lb_anna";
+const ME_SELECT = `${ROW_SELECT},lb_updated_at`;
 
 function json(statusCode, body) {
   return {
@@ -83,8 +84,29 @@ async function countAhead(key, column, value) {
   return m ? Number(m[1]) : 0;
 }
 
+// An account that has not saved since the board shipped still has the
+// column defaults (0 / 0, lb_updated_at NULL) although its blob may hold
+// months of progress. Compute the counters from the stored blob once, here,
+// and write them so every later read is the cheap column read again. The
+// blob read is the expensive part (a full account is ~450 KB), which is
+// why it only happens while lb_updated_at is NULL.
+async function refreshCounters(key, email) {
+  const res = await rest(key, `?select=data&email=eq.${encodeURIComponent(email)}`);
+  if (!res.ok) throw new Error(`leaderboard blob read returned ${res.status}: ${await res.text()}`);
+  const rows = await res.json();
+  const blob = Array.isArray(rows) && rows.length ? rows[0].data : null;
+  const stats = computeLeaderboardStats(blob);
+  const patch = await rest(key, `?email=eq.${encodeURIComponent(email)}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json", Prefer: "return=minimal" },
+    body: JSON.stringify({ lb_words: stats.words, lb_anna: stats.anna, lb_updated_at: new Date().toISOString() }),
+  });
+  if (!patch.ok) console.warn("leaderboard: counter refresh write failed:", patch.status, await patch.text());
+  return stats;
+}
+
 async function meFor(key, email) {
-  const res = await rest(key, `?select=${ROW_SELECT}&email=eq.${encodeURIComponent(email)}`);
+  const res = await rest(key, `?select=${ME_SELECT}&email=eq.${encodeURIComponent(email)}`);
   if (!res.ok) {
     const text = await res.text();
     if (notMigrated(text)) throw new NotMigratedError(text);
@@ -93,6 +115,11 @@ async function meFor(key, email) {
   const rows = await res.json();
   const row = Array.isArray(rows) && rows.length ? rows[0] : null;
   if (!row) return null;
+  if (!row.lb_updated_at) {
+    const stats = await refreshCounters(key, email);
+    row.lb_words = stats.words;
+    row.lb_anna = stats.anna;
+  }
   const entry = rowToEntry(row);
   const joined = !!row.lb_name;
   if (!joined) return { joined: false, name: null, words: entry.words, anna: entry.anna, rankWords: null, rankAnna: null };
