@@ -36,6 +36,7 @@ export default [
       "sentence_engine.mjs", "progression.mjs", "storage.mjs",
       "capabilities.mjs", "coaching.mjs", "display.mjs", "grading.mjs",
       "speech.mjs", "tutor.js", "tutor_profile.mjs", "auth.mjs",
+      "leaderboard.mjs",
     ],
     languageOptions: {
       ecmaVersion: 2023,

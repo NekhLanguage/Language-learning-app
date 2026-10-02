@@ -222,7 +222,10 @@ test("saveUser PATCHes the session's own row and ignores a body email", async ()
     const patch = calls.find((c) => c.init.method === "PATCH");
     assert.ok(patch, "saves go through PATCH, never an upsert that could create a row");
     assert.match(patch.url, /email=eq\.alice%40example\.com/);
-    assert.deepEqual(JSON.parse(patch.init.body), { data: { id: "x", runs: {} } });
+    const body = JSON.parse(patch.init.body);
+    assert.deepEqual(body.data, { id: "x", runs: {} });
+    // Leaderboard v1: the two counters ride the same PATCH (leaderboard_function.test.mjs covers them).
+    assert.deepEqual(Object.keys(body).sort(), ["data", "lb_anna", "lb_updated_at", "lb_words"]);
     assert.equal(patch.init.headers.apikey, SEC, "users writes use the secret key (the table is locked to it)");
   }));
 });

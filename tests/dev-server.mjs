@@ -35,6 +35,10 @@
 //        so <audio> playback resolves without hitting Google Cloud.
 //   GET  /__devserver/users               -> the in-memory user store, so
 //        tests can assert on what the app synced.
+//   GET/POST /.netlify/functions/leaderboard -> the board: counters are
+//        computed from the stored blobs with the real leaderboardStats.js;
+//        POST {name} joins / renames (409 when another learner holds the
+//        name, case-insensitively), POST {leave:true} leaves.
 //
 // Free tier (2026-09-30): an email containing "trial" is a free-tier
 // account (checkAccess tier "trial", Anna refused, saveUser refuses a blob
@@ -51,6 +55,11 @@ import http from "node:http";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const { computeLeaderboardStats, normalizeDisplayName, MIN_NAME, MAX_NAME } =
+  require("../netlify/functions/leaderboardStats.js");
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PORT = Number(process.env.PORT || 8888);
@@ -90,6 +99,9 @@ const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.
   .map((r) => (Array.isArray(r && r.releasedBundleIds) ? r.releasedBundleIds.length : 0)));
 // email -> referral code (referral stub).
 const referralCodes = new Map();
+// email -> leaderboard display name (users.lb_name in production).
+const leaderboardNames = new Map();
+const LEADERBOARD_TOP = 25;
 // Chat texts carrying __FAIL_ONCE__ that have already failed once (tutor stub).
 const tutorFailedOnce = new Set();
 // How many of the next trialEvent POSTs to answer with a 503, set via
@@ -168,6 +180,44 @@ async function handleFunction(name, req, res, url) {
         referralCodes.set(email, "ZTH-" + email.split("@")[0].replace(/[^a-z0-9]/gi, "").toUpperCase().slice(0, 8));
       }
       return sendJson(res, 200, state());
+    }
+    case "leaderboard": {
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
+      const limits = { minName: MIN_NAME, maxName: MAX_NAME, top: LEADERBOARD_TOP };
+      const rowFor = (e) => {
+        const stats = computeLeaderboardStats(userStore.get(e) || null);
+        return { name: leaderboardNames.get(e) || null, words: stats.words, anna: stats.anna };
+      };
+      const joined = () => [...leaderboardNames.keys()].map(rowFor);
+      const top = (col) => joined().sort((a, b) => b[col] - a[col]).slice(0, LEADERBOARD_TOP);
+      const me = () => {
+        const r = rowFor(email);
+        if (!r.name) return { joined: false, name: null, words: r.words, anna: r.anna, rankWords: null, rankAnna: null };
+        const all = joined();
+        return {
+          joined: true, name: r.name, words: r.words, anna: r.anna,
+          rankWords: all.filter((x) => x.words > r.words).length + 1,
+          rankAnna: all.filter((x) => x.anna > r.anna).length + 1,
+        };
+      };
+      if (req.method === "GET") {
+        return sendJson(res, 200, { top: { words: top("words"), anna: top("anna") }, me: me(), limits });
+      }
+      if (body.leave === true) {
+        leaderboardNames.delete(email);
+        return sendJson(res, 200, { me: me(), limits });
+      }
+      const name = normalizeDisplayName(body.name);
+      if (!name) {
+        return sendJson(res, 400, { error: `Pick a name between ${MIN_NAME} and ${MAX_NAME} characters, without < > & or quotes.`, code: "bad_name" });
+      }
+      for (const [e, n] of leaderboardNames) {
+        if (e !== email && n.toLowerCase() === name.toLowerCase()) {
+          return sendJson(res, 409, { error: "That name is already taken — try another.", code: "name_taken" });
+        }
+      }
+      leaderboardNames.set(email, name);
+      return sendJson(res, 200, { me: me(), limits });
     }
     case "checkAccess": {
       if (!email) return sendJson(res, 401, { allowed: false, error: "Sign in required", code: "unauthenticated" });
