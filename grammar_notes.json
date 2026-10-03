@@ -70,6 +70,14 @@
       "fi": {
         "title": "Verbi taipuu tekijän mukaan",
         "body": "Kielessä {lang} verbi saa eri muodon sen mukaan, kuka tekee — kuten 'minä syön' ja 'hän syö', mutta jokaiselle persoonalle."
+      },
+      "sv": {
+        "title": "Verbet ändras med subjektet",
+        "body": "I {lang} får verbet olika form beroende på vem som gör något — som 'I eat' och 'he eats' på engelska, men för varje person."
+      },
+      "ru": {
+        "title": "Глагол меняется вместе с подлежащим",
+        "body": "В языке {lang} глагол принимает разную форму в зависимости от того, кто совершает действие — как 'I eat' и 'he eats' в английском, но для каждого лица."
       }
     },
     "zero_copula": {
@@ -140,6 +148,14 @@
       "fi": {
         "title": "'Olla' jää pois preesensissä",
         "body": "Kieli {lang} jättää 'olla'-verbin pois preesenslauseista — sanatarkasti 'hän opettaja' tarkoittaa 'hän on opettaja'."
+      },
+      "sv": {
+        "title": "Inget 'att vara' i presens",
+        "body": "{lang} hoppar över ordet för 'att vara' i presens: 'Han är student' blir ordagrant 'Han student'."
+      },
+      "ru": {
+        "title": "Без «быть» в настоящем времени",
+        "body": "В языке {lang} слово «быть» в предложениях настоящего времени опускается: «Он есть студент» становится буквально «Он студент» — как и в русском."
       }
     },
     "zh_predicate_adjective": {
@@ -210,6 +226,14 @@
       "fi": {
         "title": "很 eikä 是 adjektiivin edellä",
         "body": "Kiinassa predikaattiadjektiivin eteen tulee 很 (hěn), ei 是 (shì) — '他很强', ei '他是强'."
+      },
+      "sv": {
+        "title": "很 i stället för 'är'",
+        "body": "Mandarin kopplar adjektiv till subjektet med 很 (hěn), inte 是 (shì): 他很强 betyder ordagrant 'han mycket stark' — aldrig 他是强."
+      },
+      "ru": {
+        "title": "很 вместо «есть»",
+        "body": "В китайском прилагательные присоединяются к подлежащему с помощью 很 (hěn), а не 是 (shì): 他很强 — буквально «он очень сильный», и никогда 他是强."
       }
     },
     "zh_predicate_color": {
@@ -280,6 +304,14 @@
       "fi": {
         "title": "Värit ottavat 是 X色的",
         "body": "Mandariinissa jonkin tietyn esineen väri ilmaistaan rakenteella 是 + väri + 色的: 这本书是红色的 ('tämä kirja on punainen'). Pelkkä 很红 tarkoittaa 'hyvin punainen' eikä nimeä esineen väriä."
+      },
+      "sv": {
+        "title": "Färger tar 是 X色的",
+        "body": "Mandarin anger färgen på en viss sak med 是 + färg + 色的: 这本书是红色的 ('den här boken är röd'). Bara 很红 betyder 'mycket röd' och namnger inte sakens färg."
+      },
+      "ru": {
+        "title": "Цвета берут 是 X色的",
+        "body": "В китайском цвет конкретной вещи выражают конструкцией 是 + цвет + 色的: 这本书是红色的 («эта книга красная»). Просто 很红 значит «очень красный» и не называет цвет предмета."
       }
     },
     "zh_locative_copula": {
@@ -350,6 +382,14 @@
       "fi": {
         "title": "'Olla jossain' on 在, ei 是",
         "body": "Mandariinissa 在 (zài) ilmaisee paikkaa ja 是 (shì) identiteettiä: 他在家 tarkoittaa 'hän on kotona' — ei koskaan 他是家, mikä sanoisi 'hän on koti'. Sijaintisanat tulevat substantiivin jälkeen: 书在桌子上面."
+      },
+      "sv": {
+        "title": "'Är hemma' använder 在, inte 是",
+        "body": "Mandarin använder 在 (zài) för plats och 是 (shì) för identitet: 他在家 betyder 'han är hemma' — aldrig 他是家, som skulle betyda 'han är ett hem'. Lägesord följer sedan substantivet: 书在桌子上面 ('boken är på bordet')."
+      },
+      "ru": {
+        "title": "«Быть дома» — 在, а не 是",
+        "body": "В китайском 在 (zài) — это местонахождение, а 是 (shì) — тождество: 他在家 значит «он дома», и никогда 他是家 (это значило бы «он — дом»). Слова положения идут после существительного: 书在桌子上面 («книга на столе»)."
       }
     },
     "post_nominal_adjective": {
@@ -420,6 +460,14 @@
       "fi": {
         "title": "Adjektiivi tulee substantiivin jälkeen",
         "body": "Kielessä {lang} adjektiivi seuraa yleensä substantiivia — sanajärjestys on 'kirja punainen', ei 'punainen kirja'."
+      },
+      "sv": {
+        "title": "Adjektivet kommer efter substantivet",
+        "body": "I {lang} kommer beskrivande ord oftast efter det de beskriver — 'hus stort' i stället för 'stort hus'."
+      },
+      "ru": {
+        "title": "Прилагательное стоит после существительного",
+        "body": "В языке {lang} описания обычно стоят после того, что они описывают — «дом большой» вместо «большой дом»."
       }
     },
     "french_elision": {
@@ -490,6 +538,14 @@
       "fi": {
         "title": "Sana lyhenee vokaalin edellä",
         "body": "Ranskassa pikkusanat kuten je, le ja la lyhenevät heittomerkilliseen muotoon vokaalin edellä: je aime → j'aime."
+      },
+      "sv": {
+        "title": "Små ord dras ihop",
+        "body": "På franska tappar små ord som je, le, la sin vokal före ett vokalljud: je aime → j'aime, la eau → l'eau."
+      },
+      "ru": {
+        "title": "Короткие слова сливаются",
+        "body": "Во французском короткие слова вроде je, le, la теряют гласную перед гласным звуком: je aime → j'aime, la eau → l'eau."
       }
     },
     "french_possessive_agreement": {
@@ -560,6 +616,14 @@
       "fi": {
         "title": "Omistussana taipuu omistettavan mukaan",
         "body": "Ranskan sa ja son valitaan omistettavan sanan suvun mukaan — ei omistajan, toisin kuin englannissa."
+      },
+      "sv": {
+        "title": "'Min/hans/hennes' böjs efter det ägda",
+        "body": "På franska böjs ord som mon/ma ('min') efter genus på det som ägs, inte efter ägaren: sa fille 'hans dotter', son père 'hennes far'."
+      },
+      "ru": {
+        "title": "«Мой/его/её» согласуется с тем, чем владеют",
+        "body": "Во французском слова вроде mon/ma («мой/моя») согласуются с родом того, чем владеют, а не с владельцем: sa fille «его дочь», son père «её отец»."
       }
     },
     "gender_agreement": {
@@ -630,6 +694,14 @@
       "fi": {
         "title": "Määrite taipuu pääsanan suvussa",
         "body": "Kielessä {lang} adjektiivit ja muut määritteet taipuvat pääsanansa kieliopillisen suvun mukaan."
+      },
+      "sv": {
+        "title": "Orden kongruerar i genus",
+        "body": "I {lang} har varje substantiv ett grammatiskt genus, och orden som beskriver det ändrar form för att passa — ett femininum kräver femininformen."
+      },
+      "ru": {
+        "title": "Слова согласуются в роде",
+        "body": "В языке {lang} у каждого существительного есть грамматический род, и описывающие его слова меняют форму — существительное женского рода требует женской формы."
       }
     },
     "sov_word_order": {
@@ -700,6 +772,14 @@
       "fi": {
         "title": "Verbi lauseen lopussa",
         "body": "Kieli {lang} sijoittaa verbin lauseen loppuun — järjestys on 'minä ruokaa syön'."
+      },
+      "sv": {
+        "title": "Verbet kommer sist",
+        "body": "{lang} sätter verbet i slutet av meningen: 'Jag mat äter' i stället för 'Jag äter mat'."
+      },
+      "ru": {
+        "title": "Глагол стоит в конце",
+        "body": "В языке {lang} глагол ставится в конце предложения: «Я еду ем» вместо «Я ем еду»."
       }
     },
     "vso_word_order": {
@@ -770,6 +850,14 @@
       "fi": {
         "title": "Verbi lauseen alussa",
         "body": "Arabian lause alkaa usein verbillä — 'syö mies ruokaa' -järjestys on täysin tavallinen."
+      },
+      "sv": {
+        "title": "Verbet kommer först",
+        "body": "{lang} börjar ofta meningen med verbet: 'Äter jag mat' i stället för 'Jag äter mat'."
+      },
+      "ru": {
+        "title": "Глагол идёт первым",
+        "body": "В языке {lang} предложение часто начинается с глагола: «Ем я еду» вместо «Я ем еду»."
       }
     },
     "indefinite_article": {
@@ -840,6 +928,14 @@
       "fi": {
         "title": "Epämääräinen artikkeli",
         "body": "Kieli {lang} käyttää epämääräistä artikkelia (kuten englannin a/an) uudesta tai mainitsemattomasta asiasta. Suomessa vastaavaa sanaa ei ole."
+      },
+      "sv": {
+        "title": "Att välja ordet för 'en'",
+        "body": "Det lilla ordet för 'en' ändras med substantivet — på engelska efter ljudet (a book, an apple), i {lang} efter substantivets genus eller form."
+      },
+      "ru": {
+        "title": "Как выбрать слово для «один»",
+        "body": "Маленькое слово со значением «один/какой-то» меняется в зависимости от существительного — в английском по звуку (a book, an apple), в языке {lang} по роду или форме существительного."
       }
     },
     "ja_counter": {
@@ -910,6 +1006,14 @@
       "fi": {
         "title": "Numero tarvitsee laskusanan",
         "body": "Japanissa numeron ja substantiivin väliin tulee laskusana ja の: 二つの本 — 'kaksi kappaletta kirjaa'."
+      },
+      "sv": {
+        "title": "Att räkna med räkneord",
+        "body": "På japanska fästs siffror vid substantiv genom ett räkneord plus の: 二つの食べ物 betyder ordagrant 'två-stycken av mat'."
+      },
+      "ru": {
+        "title": "Счёт со счётными словами",
+        "body": "В японском числа присоединяются к существительным через счётное слово и の: 二つの食べ物 — буквально «две штуки еды»."
       }
     },
     "classifier": {
@@ -980,6 +1084,14 @@
       "ar": {
         "title": "كلمات العدّ (المصنِّفات)",
         "body": "تَعُدّ الصينية والكورية الأسماء عبر كلمة عدّ: تضعها الصينية بين العدد والاسم (两本书؛ كما تعبّر 一本书 عن أداة التنكير a)، بينما تضع الكورية العدد + كلمة العدّ بعد الاسم (책 두 권)."
+      },
+      "sv": {
+        "title": "Måttsord och räkneord",
+        "body": "Kinesiska och koreanska räknar substantiv med ett måttsord: kinesiskan sätter det mellan talet och substantivet (两本书, 'två MÅ bok'; 一本书 täcker även 'en'), koreanskan sätter tal + räkneord efter substantivet (책 두 권, 'bok två MÅ')."
+      },
+      "ru": {
+        "title": "Классификаторы и счётные слова",
+        "body": "Китайский и корейский считают существительные через классификатор: в китайском он стоит между числом и существительным (两本书, «две КЛ книги»; 一本书 передаёт и «одна»), в корейском число + счётное слово стоят после существительного (책 두 권, «книга две КЛ»)."
       }
     },
     "accusative_object": {
@@ -1050,6 +1162,14 @@
       "fi": {
         "title": "Objekti saa oman päätteensä",
         "body": "Kielessä {lang} suoran objektin muoto muuttuu — samaan tapaan kuin suomen 'juon vettä', ei 'juon vesi'."
+      },
+      "sv": {
+        "title": "Substantivets ändelse visar dess roll",
+        "body": "{lang} har inget ord för 'en' eller 'den' — substantivets ändelse gör det jobbet i stället. Ett substantiv som tar emot handlingen byter ändelse, så håll koll på ordets sista bokstäver."
+      },
+      "ru": {
+        "title": "Окончание существительного показывает его роль",
+        "body": "В языке {lang} нет слов вроде 'a' или 'the' — эту работу выполняет окончание существительного. Существительное, на которое направлено действие, меняет окончание: следи за последними буквами слова."
       }
     },
     "prepositional_case": {
@@ -1120,6 +1240,14 @@
       "fi": {
         "title": "Prepositio määrää sijamuodon",
         "body": "Kielessä {lang} prepositio määrää sitä seuraavan sanan sijamuodon — pääte kertoo suhteen, kuten suomen sijapäätteet."
+      },
+      "sv": {
+        "title": "Små ord ändrar ändelsen",
+        "body": "I {lang} ändrar ett litet lägesord ändelsen på ordet efter — ändelsen talar om hur ordet hänger ihop med resten av meningen."
+      },
+      "ru": {
+        "title": "Предлог управляет падежом",
+        "body": "В языке {lang} маленькое слово-предлог меняет окончание следующего слова — окончание показывает, как это слово связано с остальным предложением."
       }
     },
     "definite_article": {
@@ -1190,6 +1318,14 @@
       "fi": {
         "title": "Määräinen artikkeli",
         "body": "Kieli {lang} käyttää määräistä artikkelia (kuten englannin the) jo tunnetusta asiasta. Suomessa vastaavaa sanaa ei ole."
+      },
+      "sv": {
+        "title": "Att tala om en viss sak",
+        "body": "När en mening beskriver en viss sak markerar {lang} den som bestämd — som engelskans 'the': The book is red, inte 'a book is red'."
+      },
+      "ru": {
+        "title": "Речь о конкретной вещи",
+        "body": "Когда предложение описывает конкретную вещь, {lang} отмечает её определённым артиклем — как the в английском: The book is red (Эта книга красная), а не 'a book' (какая-то книга)."
       }
     },
     "genitive_possessor": {
@@ -1260,6 +1396,14 @@
       "fi": {
         "title": "Omistaja genetiivissä",
         "body": "Turkissa omistaja on genetiivimuodossa: benim ('minun'), senin ('sinun') — ja omistettava saa oman päätteensä."
+      },
+      "sv": {
+        "title": "Ägaren får en särskild form",
+        "body": "I {lang} byter pronomenet som äger något form — ben (jag) blir benim (min), biz (vi) blir bizim (vår), o (han/hon/den) blir onun (hans/hennes/dess)."
+      },
+      "ru": {
+        "title": "Особая форма для владельца",
+        "body": "В языке {lang} местоимение владельца меняет форму — ben (я) становится benim (мой), biz (мы) становится bizim (наш), o (он/она) становится onun (его/её)."
       }
     },
     "have_existential": {
@@ -1330,6 +1474,14 @@
       "fi": {
         "title": "Omistaminen sanotaan 'on olemassa' -rakenteella",
         "body": "Turkissa ei sanota 'minä omistan kirjan' vaan 'minun kirjani on' — Benim kitabım var."
+      },
+      "sv": {
+        "title": "'Ha' betyder egentligen 'det finns'",
+        "body": "{lang} har inget verb för 'att ha'. Ägande uttrycks som 'mitt X finns' — Bizim bir işimiz var betyder ordagrant 'vårt jobb finns', med ägaren i genitiv och var som betyder 'det finns'."
+      },
+      "ru": {
+        "title": "«Иметь» — это на самом деле «существует»",
+        "body": "В языке {lang} нет глагола «иметь». Владение выражается как «моё X существует» — Bizim bir işimiz var буквально «наша работа существует», с владельцем в родительном падеже и var в значении «есть»."
       }
     },
     "predicate_instrumental": {
@@ -1400,6 +1552,14 @@
       "fi": {
         "title": "Predikatiivi instrumentaalissa",
         "body": "Puolassa 'olla'-verbin jälkeinen substantiivi on instrumentaalissa: Jestem mężczyzną — 'olen miehenä'-tyyppinen muoto."
+      },
+      "sv": {
+        "title": "'Vara' ändrar substantivets ändelse",
+        "body": "I {lang} får ett substantiv efter 'vara' en särskild ändelse — att säga vad någon ÄR använder en annan form av ordet än att bara namnge det."
+      },
+      "ru": {
+        "title": "«Быть» меняет окончание существительного",
+        "body": "В языке {lang} существительное после «быть» получает особое окончание — сказать, кем кто-то ЯВЛЯЕТСЯ, требует другой формы слова."
       }
     },
     "numeral_government": {
@@ -1470,6 +1630,14 @@
       "fi": {
         "title": "Numero määrää substantiivin muodon",
         "body": "Kielessä {lang} lukusanan jälkeinen substantiivi vaihtaa muotoa — kuten suomen 'kaksi kirjaa', ei 'kaksi kirjat'."
+      },
+      "sv": {
+        "title": "Siffror ändrar substantivets form",
+        "body": "I {lang} får ett substantiv efter en siffra en annan form än när det står ensamt — vilken form beror på siffran. Lägg märke till hur ändelsen skiftar när siffrorna ändras."
+      },
+      "ru": {
+        "title": "Числа меняют форму существительного",
+        "body": "В языке {lang} существительное после числа имеет другую форму, чем само по себе — какую именно, зависит от числа. Обращай внимание, как меняется окончание вместе с числами."
       }
     },
     "ar_numeral_placement": {
@@ -1540,6 +1708,14 @@
       "th": {
         "title": "จำนวน «หนึ่ง» อยู่หลังคำนาม",
         "body": "ในภาษา {lang} จำนวน «หนึ่ง» (واحد) อยู่หลังคำนามที่นับ เหมือนคำคุณศัพท์ — «كتاب واحد» («หนังสือ หนึ่ง») ไม่ใช่ «واحد كتاب» ตัวเลขที่มากกว่านั้นมีกฎแตกต่างกัน"
+      },
+      "sv": {
+        "title": "Räkneordet \"ett\" följer substantivet",
+        "body": "I {lang} kommer räkneordet \"ett\" (واحد) EFTER substantivet det räknar, som ett adjektiv — «كتاب واحد» (\"en bok en\"), inte «واحد كتاب». Högre tal beter sig annorlunda."
+      },
+      "ru": {
+        "title": "Числительное «один» стоит после существительного",
+        "body": "В языке {lang} числительное «один» (واحد) стоит ПОСЛЕ существительного, которое оно считает, как прилагательное — «كتاب واحد» («книга один»), а не «واحد كتاب». Другие числа ведут себя иначе."
       }
     },
     "apocope": {
@@ -1610,6 +1786,14 @@
       "fi": {
         "title": "Adjektiivi lyhenee substantiivin edellä",
         "body": "Espanjassa ja italiassa jotkin adjektiivit lyhenevät substantiivin edellä: bueno → buen (buen libro)."
+      },
+      "sv": {
+        "title": "Korta former före substantivet",
+        "body": "Vissa adjektiv förkortas när de står före ett maskulint substantiv i singular — spanskans bueno blir buen (un buen libro), italienskans buono blir buon (un buon libro)."
+      },
+      "ru": {
+        "title": "Краткие формы перед существительным",
+        "body": "Некоторые прилагательные сокращаются перед существительным мужского рода единственного числа — испанское bueno становится buen (un buen libro), итальянское buono становится buon (un buon libro)."
       }
     }
   }

@@ -54,6 +54,711 @@
   ],
 
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "POKEMON": {
+          "form": "покемон",
+          "gender": "m",
+          "genitive": "покемона",
+          "dative": "покемону",
+          "instrumental": "покемоном",
+          "locative": "покемоне",
+          "accusative": "покемона",
+          "plural": "покемоны",
+          "genitive_plural": "покемонов"
+        },
+        "TRAINER": {
+          "form": "тренер",
+          "gender": "m",
+          "genitive": "тренера",
+          "dative": "тренеру",
+          "instrumental": "тренером",
+          "locative": "тренере",
+          "accusative": "тренера",
+          "plural": "тренеры",
+          "genitive_plural": "тренеров"
+        },
+        "GYM": {
+          "form": "спортзал",
+          "gender": "m",
+          "genitive": "спортзала",
+          "dative": "спортзалу",
+          "instrumental": "спортзалом",
+          "locative": "спортзале",
+          "plural": "спортзалы",
+          "genitive_plural": "спортзалов"
+        },
+        "LEAGUE": {
+          "form": "лига",
+          "gender": "f",
+          "genitive": "лиги",
+          "dative": "лиге",
+          "instrumental": "лигой",
+          "locative": "лиге",
+          "accusative": "лигу",
+          "plural": "лиги",
+          "genitive_plural": "лиг"
+        },
+        "GYM_LEADER": {
+          "form": "лидер зала",
+          "gender": "m",
+          "genitive": "лидера зала",
+          "dative": "лидеру зала",
+          "instrumental": "лидером зала",
+          "locative": "лидере зала",
+          "accusative": "лидера зала",
+          "plural": "лидеры зала",
+          "genitive_plural": "лидеров зала"
+        },
+        "ELITE_FOUR": {
+          "form": "Элитная четвёрка",
+          "gender": "f",
+          "genitive": "Элитной четвёрки",
+          "dative": "Элитной четвёрке",
+          "instrumental": "Элитной четвёркой",
+          "locative": "Элитной четвёрке",
+          "accusative": "Элитную четвёрку",
+          "plural": "Элитные четвёрки",
+          "genitive_plural": "Элитных четвёрок"
+        },
+        "POKEMON_CENTER": {
+          "form": "Центр покемонов",
+          "gender": "m",
+          "genitive": "Центра покемонов",
+          "dative": "Центру покемонов",
+          "instrumental": "Центром покемонов",
+          "locative": "Центре покемонов",
+          "plural": "Центры покемонов",
+          "genitive_plural": "Центров покемонов"
+        },
+        "FOREST": {
+          "form": "лес",
+          "gender": "m",
+          "genitive": "леса",
+          "dative": "лесу",
+          "instrumental": "лесом",
+          "locative": "лесу",
+          "plural": "леса",
+          "genitive_plural": "лесов"
+        },
+        "CAVE": {
+          "form": "пещера",
+          "gender": "f",
+          "genitive": "пещеры",
+          "dative": "пещере",
+          "instrumental": "пещерой",
+          "locative": "пещере",
+          "accusative": "пещеру",
+          "plural": "пещеры",
+          "genitive_plural": "пещер"
+        },
+        "TOWN": {
+          "form": "город",
+          "gender": "m",
+          "genitive": "города",
+          "dative": "городу",
+          "instrumental": "городом",
+          "locative": "городе",
+          "plural": "города",
+          "genitive_plural": "городов"
+        },
+        "BATTLE": {
+          "form": "битва",
+          "gender": "f",
+          "genitive": "битвы",
+          "dative": "битве",
+          "instrumental": "битвой",
+          "locative": "битве",
+          "accusative": "битву",
+          "plural": "битвы",
+          "genitive_plural": "битв"
+        },
+        "MOVE": {
+          "form": "атака",
+          "gender": "f",
+          "genitive": "атаки",
+          "dative": "атаке",
+          "instrumental": "атакой",
+          "locative": "атаке",
+          "accusative": "атаку",
+          "plural": "атаки",
+          "genitive_plural": "атак"
+        },
+        "DAMAGE": {
+          "form": "урон",
+          "gender": "m",
+          "genitive": "урона",
+          "dative": "урону",
+          "instrumental": "уроном",
+          "locative": "уроне"
+        },
+        "DEFENSE": {
+          "form": "защита",
+          "gender": "f",
+          "genitive": "защиты",
+          "dative": "защите",
+          "instrumental": "защитой",
+          "locative": "защите",
+          "accusative": "защиту"
+        },
+        "SPEED": {
+          "form": "скорость",
+          "gender": "f",
+          "genitive": "скорости",
+          "dative": "скорости",
+          "instrumental": "скоростью",
+          "locative": "скорости",
+          "plural": "скорости",
+          "genitive_plural": "скоростей"
+        },
+        "STAT": {
+          "form": "характеристика",
+          "gender": "f",
+          "genitive": "характеристики",
+          "dative": "характеристике",
+          "instrumental": "характеристикой",
+          "locative": "характеристике",
+          "accusative": "характеристику",
+          "plural": "характеристики",
+          "genitive_plural": "характеристик"
+        },
+        "ABILITY": {
+          "form": "способность",
+          "gender": "f",
+          "genitive": "способности",
+          "dative": "способности",
+          "instrumental": "способностью",
+          "locative": "способности",
+          "plural": "способности",
+          "genitive_plural": "способностей"
+        },
+        "TYPE": {
+          "form": "тип",
+          "gender": "m",
+          "genitive": "типа",
+          "dative": "типу",
+          "instrumental": "типом",
+          "locative": "типе",
+          "plural": "типы",
+          "genitive_plural": "типов"
+        },
+        "POTION": {
+          "form": "зелье",
+          "gender": "n",
+          "genitive": "зелья",
+          "dative": "зелью",
+          "instrumental": "зельем",
+          "locative": "зелье",
+          "plural": "зелья",
+          "genitive_plural": "зелий"
+        },
+        "REVIVE": {
+          "form": "оживление",
+          "gender": "n",
+          "genitive": "оживления",
+          "dative": "оживлению",
+          "instrumental": "оживлением",
+          "locative": "оживлении",
+          "plural": "оживления",
+          "genitive_plural": "оживленй"
+        },
+        "TECHNICAL_MACHINE": {
+          "form": "техническая машина",
+          "gender": "f",
+          "genitive": "технической машины",
+          "dative": "технической машине",
+          "instrumental": "технической машиной",
+          "locative": "технической машине",
+          "accusative": "техническую машину",
+          "plural": "технические машины",
+          "genitive_plural": "технических машин"
+        },
+        "BADGE": {
+          "form": "значок",
+          "gender": "m",
+          "genitive": "значка",
+          "dative": "значку",
+          "instrumental": "значком",
+          "locative": "значке",
+          "plural": "значки",
+          "genitive_plural": "значков"
+        },
+        "ITEM": {
+          "form": "предмет",
+          "gender": "m",
+          "genitive": "предмета",
+          "dative": "предмету",
+          "instrumental": "предметом",
+          "locative": "предмете",
+          "plural": "предметы",
+          "genitive_plural": "предметов"
+        },
+        "LEVEL": {
+          "form": "уровень",
+          "gender": "m",
+          "genitive": "уровеня",
+          "dative": "уровеню",
+          "instrumental": "уровенем",
+          "locative": "уровене",
+          "plural": "уровени",
+          "genitive_plural": "уровеней"
+        },
+        "EXPERIENCE": {
+          "form": "опыт",
+          "gender": "m",
+          "genitive": "опыта",
+          "dative": "опыту",
+          "instrumental": "опытом",
+          "locative": "опыте"
+        },
+        "HEALTH": {
+          "form": "здоровье",
+          "gender": "n",
+          "genitive": "здоровья",
+          "dative": "здоровью",
+          "instrumental": "здоровьем",
+          "locative": "здоровье"
+        },
+        "BURN": {
+          "base": "сжигать",
+          "1_singular": "сжигаю",
+          "2_singular": "сжигаешь",
+          "3_singular": "сжигает",
+          "1_plural": "сжигаем",
+          "2_plural": "сжигаете",
+          "3_plural": "сжигают"
+        },
+        "POISON": {
+          "base": "отравлять",
+          "1_singular": "отравляю",
+          "2_singular": "отравляешь",
+          "3_singular": "отравляет",
+          "1_plural": "отравляем",
+          "2_plural": "отравляете",
+          "3_plural": "отравляют"
+        },
+        "SLEEP_STATUS": {
+          "form": "сон",
+          "gender": "m",
+          "genitive": "сна",
+          "dative": "сну",
+          "instrumental": "сном",
+          "locative": "сне"
+        },
+        "PARALYZE": {
+          "base": "парализовать",
+          "1_singular": "парализую",
+          "2_singular": "парализуешь",
+          "3_singular": "парализует",
+          "1_plural": "парализуем",
+          "2_plural": "парализуете",
+          "3_plural": "парализуют"
+        },
+        "SEEN": {
+          "form": "увиденное",
+          "gender": "n",
+          "genitive": "увиденного",
+          "dative": "увиденному",
+          "instrumental": "увиденным",
+          "locative": "увиденном"
+        },
+        "CAPTURED": {
+          "form": "пойманное",
+          "gender": "n",
+          "genitive": "пойманного",
+          "dative": "пойманному",
+          "instrumental": "пойманным",
+          "locative": "пойманном"
+        },
+        "ATTACK": {
+          "base": "атаковать",
+          "1_singular": "атакую",
+          "2_singular": "атакуешь",
+          "3_singular": "атакует",
+          "1_plural": "атакуем",
+          "2_plural": "атакуете",
+          "3_plural": "атакуют"
+        },
+        "RUN": {
+          "base": "убегать",
+          "1_singular": "убегаю",
+          "2_singular": "убегаешь",
+          "3_singular": "убегает",
+          "1_plural": "убегаем",
+          "2_plural": "убегаете",
+          "3_plural": "убегают"
+        },
+        "CATCH": {
+          "base": "ловить",
+          "1_singular": "ловлю",
+          "2_singular": "ловишь",
+          "3_singular": "ловит",
+          "1_plural": "ловим",
+          "2_plural": "ловите",
+          "3_plural": "ловят"
+        },
+        "DEFEAT": {
+          "base": "побеждать",
+          "1_singular": "побеждаю",
+          "2_singular": "побеждаешь",
+          "3_singular": "побеждает",
+          "1_plural": "побеждаем",
+          "2_plural": "побеждаете",
+          "3_plural": "побеждают"
+        },
+        "SWITCH": {
+          "base": "менять",
+          "1_singular": "меняю",
+          "2_singular": "меняешь",
+          "3_singular": "меняет",
+          "1_plural": "меняем",
+          "2_plural": "меняете",
+          "3_plural": "меняют"
+        },
+        "USE": {
+          "base": "использовать",
+          "1_singular": "использую",
+          "2_singular": "используешь",
+          "3_singular": "использует",
+          "1_plural": "используем",
+          "2_plural": "используете",
+          "3_plural": "используют"
+        },
+        "FLY": {
+          "base": "летать",
+          "1_singular": "летаю",
+          "2_singular": "летаешь",
+          "3_singular": "летает",
+          "1_plural": "летаем",
+          "2_plural": "летаете",
+          "3_plural": "летают"
+        },
+        "PLAY": {
+          "base": "играть",
+          "1_singular": "играю",
+          "2_singular": "играешь",
+          "3_singular": "играет",
+          "1_plural": "играем",
+          "2_plural": "играете",
+          "3_plural": "играют"
+        },
+        "HEAL": {
+          "base": "лечить",
+          "1_singular": "лечу",
+          "2_singular": "лечишь",
+          "3_singular": "лечит",
+          "1_plural": "лечим",
+          "2_plural": "лечите",
+          "3_plural": "лечат"
+        },
+        "RESTORE": {
+          "base": "восстанавливать",
+          "1_singular": "восстанавливаю",
+          "2_singular": "восстанавливаешь",
+          "3_singular": "восстанавливает",
+          "1_plural": "восстанавливаем",
+          "2_plural": "восстанавливаете",
+          "3_plural": "восстанавливают"
+        },
+        "GAIN_EXPERIENCE": {
+          "base": "получать опыт",
+          "1_singular": "получаю опыт",
+          "2_singular": "получаешь опыт",
+          "3_singular": "получает опыт",
+          "1_plural": "получаем опыт",
+          "2_plural": "получаете опыт",
+          "3_plural": "получают опыт"
+        },
+        "EVOLVE": {
+          "base": "эволюционировать",
+          "1_singular": "эволюционирую",
+          "2_singular": "эволюционируешь",
+          "3_singular": "эволюционирует",
+          "1_plural": "эволюционируем",
+          "2_plural": "эволюционируете",
+          "3_plural": "эволюционируют"
+        },
+        "WILD": {
+          "form": "дикий",
+          "f": "дикая",
+          "n": "дикое",
+          "plural": "дикие"
+        },
+        "STRONG": {
+          "form": "сильный",
+          "f": "сильная",
+          "n": "сильное",
+          "plural": "сильные"
+        },
+        "EFFECTIVE": {
+          "form": "эффективный",
+          "f": "эффективная",
+          "n": "эффективное",
+          "plural": "эффективные"
+        },
+        "SUPER_EFFECTIVE": {
+          "form": "сверхэффективный",
+          "f": "сверхэффективная",
+          "n": "сверхэффективное",
+          "plural": "сверхэффективные"
+        },
+        "VERY_EFFECTIVE": {
+          "form": "очень эффективный",
+          "f": "очень эффективная",
+          "n": "очень эффективное",
+          "plural": "очень эффективные"
+        },
+        "LEGENDARY": {
+          "form": "легендарный",
+          "f": "легендарная",
+          "n": "легендарное",
+          "plural": "легендарные"
+        },
+        "SHINY": {
+          "form": "блестящий",
+          "f": "блестящая",
+          "n": "блестящее",
+          "plural": "блестящие"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "POKEMON": {
+          "form": "pokémon",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "TRAINER": {
+          "form": "tränare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "GYM": {
+          "form": "gym",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "LEAGUE": {
+          "form": "liga",
+          "gender": "m",
+          "plural": "ligor"
+        },
+        "GYM_LEADER": {
+          "form": "gymledare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "ELITE_FOUR": {
+          "form": "Elitfyran",
+          "gender": "m"
+        },
+        "POKEMON_CENTER": {
+          "form": "pokémoncenter",
+          "gender": "n",
+          "invariantPlural": true,
+          "definiteForm": "pokémoncentret"
+        },
+        "FOREST": {
+          "form": "skog",
+          "gender": "m",
+          "plural": "skogar"
+        },
+        "CAVE": {
+          "form": "grotta",
+          "gender": "m",
+          "plural": "grottor"
+        },
+        "TOWN": {
+          "form": "stad",
+          "gender": "m",
+          "plural": "städer"
+        },
+        "BATTLE": {
+          "form": "strid",
+          "gender": "m",
+          "plural": "strider"
+        },
+        "MOVE": {
+          "form": "attack",
+          "gender": "m",
+          "plural": "attacker"
+        },
+        "DAMAGE": {
+          "form": "skada",
+          "gender": "m",
+          "plural": "skador"
+        },
+        "DEFENSE": {
+          "form": "försvar",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "SPEED": {
+          "form": "hastighet",
+          "gender": "m",
+          "plural": "hastigheter"
+        },
+        "STAT": {
+          "form": "statistik",
+          "gender": "m"
+        },
+        "ABILITY": {
+          "form": "förmåga",
+          "gender": "m",
+          "plural": "förmågor"
+        },
+        "TYPE": {
+          "form": "typ",
+          "gender": "m",
+          "plural": "typer"
+        },
+        "POTION": {
+          "form": "trolldryck",
+          "gender": "m",
+          "plural": "trolldrycker"
+        },
+        "REVIVE": {
+          "form": "återupplivning",
+          "gender": "m",
+          "plural": "återupplivningar"
+        },
+        "TECHNICAL_MACHINE": {
+          "form": "teknisk maskin",
+          "gender": "m",
+          "plural": "tekniska maskiner"
+        },
+        "BADGE": {
+          "form": "märke",
+          "gender": "n",
+          "plural": "märken"
+        },
+        "ITEM": {
+          "form": "föremål",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "LEVEL": {
+          "form": "nivå",
+          "gender": "m",
+          "plural": "nivåer"
+        },
+        "EXPERIENCE": {
+          "form": "erfarenhet",
+          "gender": "m",
+          "plural": "erfarenheter"
+        },
+        "HEALTH": {
+          "form": "hälsa",
+          "gender": "m"
+        },
+        "BURN": {
+          "base": "bränna",
+          "present": "bränner"
+        },
+        "POISON": {
+          "base": "förgifta",
+          "present": "förgiftar"
+        },
+        "SLEEP_STATUS": {
+          "form": "sömn",
+          "gender": "m"
+        },
+        "PARALYZE": {
+          "base": "förlama",
+          "present": "förlamar"
+        },
+        "SEEN": {
+          "form": "sedda"
+        },
+        "CAPTURED": {
+          "form": "fångade"
+        },
+        "ATTACK": {
+          "base": "attackera",
+          "present": "attackerar"
+        },
+        "RUN": {
+          "base": "fly",
+          "present": "flyr"
+        },
+        "CATCH": {
+          "base": "fånga",
+          "present": "fångar"
+        },
+        "DEFEAT": {
+          "base": "besegra",
+          "present": "besegrar"
+        },
+        "SWITCH": {
+          "base": "byta",
+          "present": "byter"
+        },
+        "USE": {
+          "base": "använda",
+          "present": "använder"
+        },
+        "FLY": {
+          "base": "flyga",
+          "present": "flyger"
+        },
+        "PLAY": {
+          "base": "spela",
+          "present": "spelar"
+        },
+        "HEAL": {
+          "base": "läka",
+          "present": "läker"
+        },
+        "RESTORE": {
+          "base": "återställa",
+          "present": "återställer"
+        },
+        "GAIN_EXPERIENCE": {
+          "base": "få erfarenhet",
+          "present": "får erfarenhet"
+        },
+        "EVOLVE": {
+          "base": "utvecklas",
+          "present": "utvecklas"
+        },
+        "WILD": {
+          "form": "vild",
+          "n": "vilt",
+          "plural": "vilda"
+        },
+        "STRONG": {
+          "form": "stark",
+          "n": "starkt",
+          "plural": "starka"
+        },
+        "EFFECTIVE": {
+          "form": "effektiv",
+          "n": "effektivt",
+          "plural": "effektiva"
+        },
+        "SUPER_EFFECTIVE": {
+          "form": "supereffektiv",
+          "n": "supereffektivt",
+          "plural": "supereffektiva"
+        },
+        "VERY_EFFECTIVE": {
+          "form": "mycket effektiv",
+          "n": "mycket effektivt",
+          "plural": "mycket effektiva"
+        },
+        "LEGENDARY": {
+          "form": "legendarisk",
+          "n": "legendariskt",
+          "plural": "legendariska"
+        },
+        "SHINY": [
+          "skinande"
+        ]
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

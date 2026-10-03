@@ -62,6 +62,717 @@
   ],
 
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "PITCH": {
+          "form": "поле",
+          "gender": "n",
+          "genitive": "поля",
+          "dative": "полю",
+          "instrumental": "полем",
+          "locative": "поле",
+          "plural": "поля",
+          "genitive_plural": "полей"
+        },
+        "GOAL": {
+          "form": "гол",
+          "gender": "m",
+          "genitive": "гола",
+          "dative": "голу",
+          "instrumental": "голом",
+          "locative": "голе",
+          "plural": "голы",
+          "genitive_plural": "голов"
+        },
+        "NET": {
+          "form": "сетка",
+          "gender": "f",
+          "genitive": "сетки",
+          "dative": "сетке",
+          "instrumental": "сеткой",
+          "locative": "сетке",
+          "accusative": "сетку",
+          "plural": "сетки",
+          "genitive_plural": "сеток"
+        },
+        "STADIUM": {
+          "form": "стадион",
+          "gender": "m",
+          "genitive": "стадиона",
+          "dative": "стадиону",
+          "instrumental": "стадионом",
+          "locative": "стадионе",
+          "plural": "стадионы",
+          "genitive_plural": "стадионов"
+        },
+        "WHISTLE": {
+          "form": "свисток",
+          "gender": "m",
+          "genitive": "свистка",
+          "dative": "свистку",
+          "instrumental": "свистком",
+          "locative": "свистке",
+          "plural": "свистки",
+          "genitive_plural": "свистков"
+        },
+        "STRIKER": {
+          "form": "нападающий",
+          "gender": "m",
+          "genitive": "нападающего",
+          "dative": "нападающему",
+          "instrumental": "нападающим",
+          "locative": "нападающем",
+          "accusative": "нападающего",
+          "plural": "нападающие",
+          "genitive_plural": "нападающих"
+        },
+        "GOALKEEPER": {
+          "form": "вратарь",
+          "gender": "m",
+          "genitive": "вратаря",
+          "dative": "вратарю",
+          "instrumental": "вратарём",
+          "locative": "вратаре",
+          "accusative": "вратаря",
+          "plural": "вратари",
+          "genitive_plural": "вратарей"
+        },
+        "CAPTAIN": {
+          "form": "капитан",
+          "gender": "m",
+          "genitive": "капитана",
+          "dative": "капитану",
+          "instrumental": "капитаном",
+          "locative": "капитане",
+          "accusative": "капитана",
+          "plural": "капитаны",
+          "genitive_plural": "капитанов"
+        },
+        "REFEREE": {
+          "form": "судья",
+          "gender": "m",
+          "genitive": "судьи",
+          "dative": "судье",
+          "instrumental": "судьёй",
+          "locative": "судье",
+          "accusative": "судью",
+          "plural": "судьи",
+          "genitive_plural": "судей"
+        },
+        "COACH": {
+          "form": "тренер",
+          "gender": "m",
+          "genitive": "тренера",
+          "dative": "тренеру",
+          "instrumental": "тренером",
+          "locative": "тренере",
+          "accusative": "тренера",
+          "plural": "тренеры",
+          "genitive_plural": "тренеров"
+        },
+        "KICK": {
+          "base": "бить",
+          "1_singular": "бью",
+          "2_singular": "бьёшь",
+          "3_singular": "бьёт",
+          "1_plural": "бьём",
+          "2_plural": "бьёте",
+          "3_plural": "бьют"
+        },
+        "PASS": {
+          "base": "пасовать",
+          "1_singular": "пасую",
+          "2_singular": "пасуешь",
+          "3_singular": "пасует",
+          "1_plural": "пасуем",
+          "2_plural": "пасуете",
+          "3_plural": "пасуют"
+        },
+        "SHOOT": {
+          "base": "бить по воротам",
+          "1_singular": "бью по воротам",
+          "2_singular": "бьёшь по воротам",
+          "3_singular": "бьёт по воротам",
+          "1_plural": "бьём по воротам",
+          "2_plural": "бьёте по воротам",
+          "3_plural": "бьют по воротам"
+        },
+        "DRIBBLE": {
+          "base": "вести мяч",
+          "1_singular": "веду мяч",
+          "2_singular": "ведёшь мяч",
+          "3_singular": "ведёт мяч",
+          "1_plural": "ведём мяч",
+          "2_plural": "ведёте мяч",
+          "3_plural": "ведут мяч"
+        },
+        "SCORE": {
+          "base": "забивать",
+          "1_singular": "забиваю",
+          "2_singular": "забиваешь",
+          "3_singular": "забивает",
+          "1_plural": "забиваем",
+          "2_plural": "забиваете",
+          "3_plural": "забивают"
+        },
+        "HEADER": {
+          "form": "удар головой",
+          "gender": "m",
+          "genitive": "удара головой",
+          "dative": "удару головой",
+          "instrumental": "ударом головой",
+          "locative": "ударе головой",
+          "plural": "удары головой",
+          "genitive_plural": "ударов головой"
+        },
+        "TACKLE": {
+          "base": "отбирать мяч",
+          "1_singular": "отбираю мяч",
+          "2_singular": "отбираешь мяч",
+          "3_singular": "отбирает мяч",
+          "1_plural": "отбираем мяч",
+          "2_plural": "отбираете мяч",
+          "3_plural": "отбирают мяч"
+        },
+        "CROSS": {
+          "base": "навешивать",
+          "1_singular": "навешиваю",
+          "2_singular": "навешиваешь",
+          "3_singular": "навешивает",
+          "1_plural": "навешиваем",
+          "2_plural": "навешиваете",
+          "3_plural": "навешивают"
+        },
+        "VOLLEY": {
+          "form": "удар с лёта",
+          "gender": "m",
+          "genitive": "удара с лёта",
+          "dative": "удару с лёта",
+          "instrumental": "ударом с лёта",
+          "locative": "ударе с лёта",
+          "plural": "удары с лёта",
+          "genitive_plural": "ударов с лёта"
+        },
+        "SPRINT": {
+          "base": "бежать",
+          "1_singular": "бегу",
+          "2_singular": "бежишь",
+          "3_singular": "бежит",
+          "1_plural": "бежим",
+          "2_plural": "бежите",
+          "3_plural": "бегут"
+        },
+        "FOUL": {
+          "form": "фол",
+          "gender": "m",
+          "genitive": "фола",
+          "dative": "фолу",
+          "instrumental": "фолом",
+          "locative": "фоле",
+          "plural": "фолы",
+          "genitive_plural": "фолов"
+        },
+        "PENALTY": {
+          "form": "пенальти",
+          "gender": "n",
+          "genitive": "пенальти",
+          "dative": "пенальти",
+          "instrumental": "пенальти",
+          "locative": "пенальти",
+          "invariantPlural": true,
+          "genitive_plural": "пенальти"
+        },
+        "CORNER": {
+          "form": "угловой",
+          "gender": "m",
+          "genitive": "углового",
+          "dative": "угловому",
+          "instrumental": "угловым",
+          "locative": "угловом",
+          "plural": "угловые",
+          "genitive_plural": "угловых"
+        },
+        "OFFSIDE": [
+          "офсайд"
+        ],
+        "HALFTIME": {
+          "form": "перерыв",
+          "gender": "m",
+          "genitive": "перерыва",
+          "dative": "перерыву",
+          "instrumental": "перерывом",
+          "locative": "перерыве",
+          "plural": "перерывы",
+          "genitive_plural": "перерывов"
+        },
+        "SQUAD": {
+          "form": "состав",
+          "gender": "m",
+          "genitive": "состава",
+          "dative": "составу",
+          "instrumental": "составом",
+          "locative": "составе",
+          "plural": "составы",
+          "genitive_plural": "составов"
+        },
+        "FORMATION": {
+          "form": "расстановка",
+          "gender": "f",
+          "genitive": "расстановки",
+          "dative": "расстановке",
+          "instrumental": "расстановкой",
+          "locative": "расстановке",
+          "accusative": "расстановку",
+          "plural": "расстановки",
+          "genitive_plural": "расстановок"
+        },
+        "LEAGUE": {
+          "form": "лига",
+          "gender": "f",
+          "genitive": "лиги",
+          "dative": "лиге",
+          "instrumental": "лигой",
+          "locative": "лиге",
+          "accusative": "лигу",
+          "plural": "лиги",
+          "genitive_plural": "лиг"
+        },
+        "SUBSTITUTE": {
+          "form": "запасной",
+          "gender": "m",
+          "genitive": "запасного",
+          "dative": "запасному",
+          "instrumental": "запасным",
+          "locative": "запасном",
+          "accusative": "запасного",
+          "plural": "запасные",
+          "genitive_plural": "запасных"
+        },
+        "ASSIST": {
+          "form": "голевая передача",
+          "gender": "f",
+          "genitive": "голевой передачи",
+          "dative": "голевой передаче",
+          "instrumental": "голевой передачей",
+          "locative": "голевой передаче",
+          "accusative": "голевую передачу",
+          "plural": "голевые передачи",
+          "genitive_plural": "голевых передач"
+        },
+        "MATCH": {
+          "form": "матч",
+          "gender": "m",
+          "genitive": "матча",
+          "dative": "матчу",
+          "instrumental": "матчем",
+          "locative": "матче",
+          "plural": "матчи",
+          "genitive_plural": "матчей"
+        },
+        "VICTORY": {
+          "form": "победа",
+          "gender": "f",
+          "genitive": "победы",
+          "dative": "победе",
+          "instrumental": "победой",
+          "locative": "победе",
+          "accusative": "победу",
+          "plural": "победы",
+          "genitive_plural": "побед"
+        },
+        "DEFEAT": {
+          "form": "поражение",
+          "gender": "n",
+          "genitive": "поражения",
+          "dative": "поражению",
+          "instrumental": "поражением",
+          "locative": "поражении",
+          "plural": "поражения",
+          "genitive_plural": "пораженй"
+        },
+        "DRAW": {
+          "form": "ничья",
+          "gender": "f",
+          "genitive": "ничьей",
+          "dative": "ничьей",
+          "instrumental": "ничьей",
+          "locative": "ничьей",
+          "accusative": "ничью",
+          "plural": "ничьи",
+          "genitive_plural": "ничьих"
+        },
+        "TROPHY": {
+          "form": "трофей",
+          "gender": "m",
+          "genitive": "трофея",
+          "dative": "трофею",
+          "instrumental": "трофеем",
+          "locative": "трофее",
+          "plural": "трофеи",
+          "genitive_plural": "трофеев"
+        },
+        "SWIFT": {
+          "form": "быстрый",
+          "f": "быстрая",
+          "n": "быстрое",
+          "plural": "быстрые"
+        },
+        "SKILLED": {
+          "form": "умелый",
+          "f": "умелая",
+          "n": "умелое",
+          "plural": "умелые"
+        },
+        "AGGRESSIVE": {
+          "form": "агрессивный",
+          "f": "агрессивная",
+          "n": "агрессивное",
+          "plural": "агрессивные"
+        },
+        "DECISIVE": {
+          "form": "решающий",
+          "f": "решающая",
+          "n": "решающее",
+          "plural": "решающие"
+        },
+        "CLINICAL": {
+          "form": "точный",
+          "f": "точная",
+          "n": "точное",
+          "plural": "точные"
+        },
+        "INTERCEPT": {
+          "base": "перехватывать",
+          "1_singular": "перехватываю",
+          "2_singular": "перехватываешь",
+          "3_singular": "перехватывает",
+          "1_plural": "перехватываем",
+          "2_plural": "перехватываете",
+          "3_plural": "перехватывают"
+        },
+        "DEFEND": {
+          "base": "защищать",
+          "1_singular": "защищаю",
+          "2_singular": "защищаешь",
+          "3_singular": "защищает",
+          "1_plural": "защищаем",
+          "2_plural": "защищаете",
+          "3_plural": "защищают"
+        },
+        "BLOCK": {
+          "base": "блокировать",
+          "1_singular": "блокирую",
+          "2_singular": "блокируешь",
+          "3_singular": "блокирует",
+          "1_plural": "блокируем",
+          "2_plural": "блокируете",
+          "3_plural": "блокируют"
+        },
+        "COUNTER": {
+          "base": "контратаковать",
+          "1_singular": "контратакую",
+          "2_singular": "контратакуешь",
+          "3_singular": "контратакует",
+          "1_plural": "контратакуем",
+          "2_plural": "контратакуете",
+          "3_plural": "контратакуют"
+        },
+        "DOMINATE": {
+          "base": "доминировать",
+          "1_singular": "доминирую",
+          "2_singular": "доминируешь",
+          "3_singular": "доминирует",
+          "1_plural": "доминируем",
+          "2_plural": "доминируете",
+          "3_plural": "доминируют"
+        },
+        "CHAMPION": {
+          "form": "чемпион",
+          "gender": "m",
+          "genitive": "чемпиона",
+          "dative": "чемпиону",
+          "instrumental": "чемпионом",
+          "locative": "чемпионе",
+          "accusative": "чемпиона",
+          "plural": "чемпионы",
+          "genitive_plural": "чемпионов"
+        },
+        "CROWD": {
+          "form": "толпа",
+          "gender": "f",
+          "genitive": "толпы",
+          "dative": "толпе",
+          "instrumental": "толпой",
+          "locative": "толпе",
+          "accusative": "толпу",
+          "plural": "толпы",
+          "genitive_plural": "толп"
+        },
+        "CELEBRATE": {
+          "base": "праздновать",
+          "1_singular": "праздную",
+          "2_singular": "празднуешь",
+          "3_singular": "празднует",
+          "1_plural": "празднуем",
+          "2_plural": "празднуете",
+          "3_plural": "празднуют"
+        },
+        "FINAL": {
+          "form": "финал",
+          "gender": "m",
+          "genitive": "финала",
+          "dative": "финалу",
+          "instrumental": "финалом",
+          "locative": "финале",
+          "plural": "финалы",
+          "genitive_plural": "финалов"
+        },
+        "UNBEATABLE": {
+          "form": "непобедимый",
+          "f": "непобедимая",
+          "n": "непобедимое",
+          "plural": "непобедимые"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "PITCH": {
+          "form": "plan",
+          "gender": "m",
+          "plural": "planer"
+        },
+        "GOAL": {
+          "form": "mål",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "NET": {
+          "form": "nät",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "STADIUM": {
+          "form": "stadion",
+          "gender": "m",
+          "plural": "stadioner",
+          "definiteForm": "stadion"
+        },
+        "WHISTLE": {
+          "form": "visselpipa",
+          "gender": "m",
+          "plural": "visselpipor"
+        },
+        "STRIKER": {
+          "form": "anfallare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "GOALKEEPER": {
+          "form": "målvakt",
+          "gender": "m",
+          "plural": "målvakter"
+        },
+        "CAPTAIN": {
+          "form": "kapten",
+          "gender": "m",
+          "plural": "kaptener"
+        },
+        "REFEREE": {
+          "form": "domare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "COACH": {
+          "form": "tränare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "KICK": {
+          "base": "sparka",
+          "present": "sparkar"
+        },
+        "PASS": {
+          "base": "passa",
+          "present": "passar"
+        },
+        "SHOOT": {
+          "base": "skjuta",
+          "present": "skjuter"
+        },
+        "DRIBBLE": {
+          "base": "dribbla",
+          "present": "dribblar"
+        },
+        "SCORE": {
+          "base": "göra mål",
+          "present": "gör mål"
+        },
+        "HEADER": {
+          "form": "nick",
+          "gender": "m",
+          "plural": "nickar"
+        },
+        "TACKLE": {
+          "base": "tackla",
+          "present": "tacklar"
+        },
+        "CROSS": {
+          "base": "slå ett inlägg",
+          "present": "slår ett inlägg"
+        },
+        "VOLLEY": {
+          "form": "volley",
+          "gender": "m",
+          "plural": "volleyer"
+        },
+        "SPRINT": {
+          "base": "spurta",
+          "present": "spurtar"
+        },
+        "FOUL": {
+          "form": "regelbrott",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "PENALTY": {
+          "form": "straff",
+          "gender": "m",
+          "plural": "straffar"
+        },
+        "CORNER": {
+          "form": "hörna",
+          "gender": "m",
+          "plural": "hörnor"
+        },
+        "OFFSIDE": [
+          "offside"
+        ],
+        "HALFTIME": {
+          "form": "halvtid",
+          "gender": "m",
+          "plural": "halvtider"
+        },
+        "SQUAD": {
+          "form": "trupp",
+          "gender": "m",
+          "plural": "trupper"
+        },
+        "FORMATION": {
+          "form": "uppställning",
+          "gender": "m",
+          "plural": "uppställningar"
+        },
+        "LEAGUE": {
+          "form": "liga",
+          "gender": "m",
+          "plural": "ligor"
+        },
+        "SUBSTITUTE": {
+          "form": "avbytare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "ASSIST": {
+          "form": "assist",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "MATCH": {
+          "form": "match",
+          "gender": "m",
+          "plural": "matcher"
+        },
+        "VICTORY": {
+          "form": "seger",
+          "gender": "m",
+          "plural": "segrar"
+        },
+        "DEFEAT": {
+          "form": "förlust",
+          "gender": "m",
+          "plural": "förluster",
+          "noArticle": true
+        },
+        "DRAW": {
+          "form": "oavgjort",
+          "gender": "n"
+        },
+        "TROPHY": {
+          "form": "pokal",
+          "gender": "m",
+          "plural": "pokaler"
+        },
+        "SWIFT": {
+          "form": "snabb",
+          "n": "snabbt",
+          "plural": "snabba"
+        },
+        "SKILLED": {
+          "form": "skicklig",
+          "n": "skickligt",
+          "plural": "skickliga"
+        },
+        "AGGRESSIVE": {
+          "form": "aggressiv",
+          "n": "aggressivt",
+          "plural": "aggressiva"
+        },
+        "DECISIVE": [
+          "avgörande"
+        ],
+        "CLINICAL": {
+          "form": "klinisk",
+          "n": "kliniskt",
+          "plural": "kliniska"
+        },
+        "INTERCEPT": {
+          "base": "bryta",
+          "present": "bryter"
+        },
+        "DEFEND": {
+          "base": "försvara",
+          "present": "försvarar"
+        },
+        "BLOCK": {
+          "base": "blockera",
+          "present": "blockerar"
+        },
+        "COUNTER": {
+          "base": "kontra",
+          "present": "kontrar"
+        },
+        "DOMINATE": {
+          "base": "dominera",
+          "present": "dominerar"
+        },
+        "CHAMPION": {
+          "form": "mästare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "CROWD": {
+          "form": "publik",
+          "gender": "m"
+        },
+        "CELEBRATE": {
+          "base": "fira",
+          "present": "firar"
+        },
+        "FINAL": {
+          "form": "final",
+          "gender": "m",
+          "plural": "finaler"
+        },
+        "UNBEATABLE": {
+          "form": "oslagbar",
+          "n": "oslagbart",
+          "plural": "oslagbara"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

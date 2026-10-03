@@ -95,7 +95,9 @@
     "es": "Español",
     "fr": "Francés",
     "zh": "Chino",
-    "pl": "Polaco"
+    "pl": "Polaco",
+    "sv": "Sueco",
+    "ru": "Ruso"
   },
   "forms": {
     "BIG": {

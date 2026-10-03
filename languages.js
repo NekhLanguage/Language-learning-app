@@ -35,7 +35,9 @@ export const AVAILABLE_LANGUAGES = [
   { code: "no", label: "Norwegian",  nativeLabel: "Norsk",       short: "NO", ttsCode: "nb-NO", isRTL: false, beta: false },
   { code: "pl", label: "Polish",     nativeLabel: "Polski",      short: "PL", ttsCode: "pl-PL", isRTL: false, beta: false  },
   { code: "pt", label: "Portuguese", nativeLabel: "Português",   short: "PT", ttsCode: "pt-BR", isRTL: false, beta: false },
+  { code: "ru", label: "Russian",    nativeLabel: "Русский",     short: "RU", ttsCode: "ru-RU", isRTL: false, beta: true,  hidden: true },
   { code: "es", label: "Spanish",    nativeLabel: "Español",     short: "ES", ttsCode: "es-ES", isRTL: false, beta: false },
+  { code: "sv", label: "Swedish",    nativeLabel: "Svenska",     short: "SV", ttsCode: "sv-SE", isRTL: false, beta: true,  hidden: true },
   { code: "th", label: "Thai",       nativeLabel: "ไทย",         short: "TH", ttsCode: "th-TH", isRTL: false, beta: false },
   { code: "tr", label: "Turkish",    nativeLabel: "Türkçe",      short: "TR", ttsCode: "tr-TR", isRTL: false, beta: false  },
   { code: "uk", label: "Ukrainian",  nativeLabel: "Українська",  short: "UK", ttsCode: "uk-UA", isRTL: false, beta: false  }

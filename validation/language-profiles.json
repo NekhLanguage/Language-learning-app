@@ -218,5 +218,43 @@
     "spacelessScript": false, "apocope": false,
     "politenessRegisters": false, "numeralInteraction": true,
     "specialPossession": false
+  },
+  "sv": {
+    "definiteArticles": true,
+    "indefiniteArticles": true,
+    "nounCaseOnObjects": false,
+    "prepositionalCase": false,
+    "verbPersonConjugation": false,
+    "verbGenderAgreement": false,
+    "grammaticalGender": true,
+    "adjectiveAgreement": true,
+    "classifiersOrCounters": false,
+    "topicOrCaseParticles": false,
+    "zeroOrSuffixalCopula": false,
+    "pluralInflection": true,
+    "spacelessScript": false,
+    "apocope": false,
+    "politenessRegisters": false,
+    "numeralInteraction": false,
+    "specialPossession": false
+  },
+  "ru": {
+    "definiteArticles": false,
+    "indefiniteArticles": false,
+    "nounCaseOnObjects": true,
+    "prepositionalCase": true,
+    "verbPersonConjugation": true,
+    "verbGenderAgreement": false,
+    "grammaticalGender": true,
+    "adjectiveAgreement": true,
+    "classifiersOrCounters": false,
+    "topicOrCaseParticles": false,
+    "zeroOrSuffixalCopula": true,
+    "pluralInflection": true,
+    "spacelessScript": false,
+    "apocope": false,
+    "politenessRegisters": false,
+    "numeralInteraction": true,
+    "specialPossession": true
   }
 }

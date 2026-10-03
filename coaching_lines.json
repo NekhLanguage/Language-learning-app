@@ -20,7 +20,9 @@
         "it": "{detail} è appena diventato un po' più vicino.",
         "th": "{detail} ใกล้เข้ามาอีกนิดแล้ว",
         "pl": "{detail} jest już trochę bliżej.",
-        "fi": "{detail} tuli juuri vähän lähemmäs."
+        "fi": "{detail} tuli juuri vähän lähemmäs.",
+        "sv": "{detail} kom precis lite närmare.",
+        "ru": "{detail} — ещё на несколько слов ближе."
       },
       "mid": {
         "en": "You're speaking in sentences now — {detail} is starting to feel real.",
@@ -39,7 +41,9 @@
         "it": "Ora parli per frasi intere — {detail} inizia a sembrare reale.",
         "th": "ตอนนี้คุณพูดเป็นประโยคแล้ว — {detail} เริ่มรู้สึกเป็นจริง",
         "pl": "Mówisz już całymi zdaniami — {detail} staje się coraz bardziej realne.",
-        "fi": "Puhut jo kokonaisia lauseita — {detail} alkaa tuntua todelta."
+        "fi": "Puhut jo kokonaisia lauseita — {detail} alkaa tuntua todelta.",
+        "sv": "Du pratar i meningar nu — {detail} börjar kännas verkligt.",
+        "ru": "Ты уже говоришь предложениями — {detail} становится реальностью."
       },
       "late": {
         "en": "You won't just visit {detail} — you'll understand it.",
@@ -58,7 +62,9 @@
         "it": "Non visiterai soltanto {detail} — lo capirai.",
         "th": "คุณจะไม่ได้แค่ไปเยือน {detail} — คุณจะเข้าใจมันด้วย",
         "pl": "Nie tylko odwiedzisz {detail} — naprawdę je zrozumiesz.",
-        "fi": "Et vain käy kohteessa {detail} — sinä ymmärrät sitä."
+        "fi": "Et vain käy kohteessa {detail} — sinä ymmärrät sitä.",
+        "sv": "Du kommer inte bara att besöka {detail} — du kommer att förstå det.",
+        "ru": "Ты не просто побываешь в {detail} — ты будешь понимать."
       }
     },
     "person": {
@@ -79,7 +85,9 @@
         "it": "Ogni nuova parola è una in più da condividere con {detail}.",
         "th": "ทุกคำใหม่คืออีกหนึ่งคำที่คุณจะได้ใช้กับ {detail}",
         "pl": "Każde nowe słowo to jedno więcej, którym podzielisz się z {detail}.",
-        "fi": "Jokainen uusi sana on yksi lisää jaettavaksi: {detail}."
+        "fi": "Jokainen uusi sana on yksi lisää jaettavaksi: {detail}.",
+        "sv": "Varje nytt ord är ett till du kan dela med {detail}.",
+        "ru": "Каждое новое слово — ещё одно, которым ты поделишься с {detail}."
       },
       "mid": {
         "en": "Real sentences now — the kind {detail} will actually hear.",
@@ -98,7 +106,9 @@
         "it": "Frasi vere, ora — quelle che {detail} sentirà davvero.",
         "th": "ประโยคจริงแล้วตอนนี้ — แบบที่ {detail} จะได้ยินจริงๆ",
         "pl": "Prawdziwe zdania — takie, które {detail} naprawdę usłyszy.",
-        "fi": "Oikeita lauseita nyt — sellaisia, jotka {detail} todella kuulee."
+        "fi": "Oikeita lauseita nyt — sellaisia, jotka {detail} todella kuulee.",
+        "sv": "Riktiga meningar nu — sådana som {detail} faktiskt kommer att höra.",
+        "ru": "Теперь настоящие предложения — те, которые {detail} действительно услышит."
       },
       "late": {
         "en": "Whole conversations with {detail} aren't far off now.",
@@ -117,7 +127,9 @@
         "it": "Intere conversazioni con {detail} non sono più così lontane.",
         "th": "การคุยกันเต็มบทสนทนากับ {detail} อยู่ไม่ไกลแล้ว",
         "pl": "Całe rozmowy z {detail} są już całkiem blisko.",
-        "fi": "Kokonaiset keskustelut — {detail} — eivät ole enää kaukana."
+        "fi": "Kokonaiset keskustelut — {detail} — eivät ole enää kaukana.",
+        "sv": "Hela samtal med {detail} är inte långt borta nu.",
+        "ru": "Целые разговоры с {detail} уже совсем близко."
       }
     },
     "career": {
@@ -138,7 +150,9 @@
         "it": "Passi silenziosi e costanti verso {detail}.",
         "th": "ก้าวเล็กๆ ที่มั่นคงสู่ {detail}",
         "pl": "Ciche, pewne kroki w stronę {detail}.",
-        "fi": "Hiljaisia, varmoja askelia kohti tavoitetta: {detail}."
+        "fi": "Hiljaisia, varmoja askelia kohti tavoitetta: {detail}.",
+        "sv": "Lugna, stadiga steg mot {detail}.",
+        "ru": "Тихие, уверенные шаги к {detail}."
       },
       "mid": {
         "en": "This is how {detail} gets built — word by word.",
@@ -157,7 +171,9 @@
         "it": "È così che si costruisce {detail} — parola dopo parola.",
         "th": "นี่คือวิธีสร้าง {detail} — ทีละคำ",
         "pl": "Tak właśnie buduje się {detail} — słowo po słowie.",
-        "fi": "Näin {detail} rakentuu — sana sanalta."
+        "fi": "Näin {detail} rakentuu — sana sanalta.",
+        "sv": "Så här byggs {detail} — ord för ord.",
+        "ru": "Так и строится {detail} — слово за словом."
       },
       "late": {
         "en": "{detail} is looking less like a dream and more like a plan.",
@@ -176,7 +192,9 @@
         "it": "{detail} somiglia sempre meno a un sogno e sempre più a un piano.",
         "th": "{detail} เริ่มดูเหมือนแผนมากกว่าความฝันแล้ว",
         "pl": "{detail} wygląda coraz mniej jak marzenie, a coraz bardziej jak plan.",
-        "fi": "{detail} näyttää yhä vähemmän unelmalta ja yhä enemmän suunnitelmalta."
+        "fi": "{detail} näyttää yhä vähemmän unelmalta ja yhä enemmän suunnitelmalta.",
+        "sv": "{detail} ser allt mindre ut som en dröm och allt mer som en plan.",
+        "ru": "{detail} всё меньше похоже на мечту и всё больше — на план."
       }
     },
     "heritage": {
@@ -197,7 +215,9 @@
         "it": "{detail} è in ogni parola che impari.",
         "th": "{detail} อยู่ในทุกคำที่คุณเรียน",
         "pl": "{detail} jest w każdym słowie, którego się uczysz.",
-        "fi": "{detail} on jokaisessa oppimassasi sanassa."
+        "fi": "{detail} on jokaisessa oppimassasi sanassa.",
+        "sv": "{detail} finns i varje ord du lär dig.",
+        "ru": "{detail} есть в каждом слове, которое ты учишь."
       },
       "mid": {
         "en": "These words were always part of {detail} — now they're part of you.",
@@ -216,7 +236,9 @@
         "it": "Queste parole sono sempre state parte di {detail} — ora sono parte di te.",
         "th": "คำเหล่านี้เป็นส่วนหนึ่งของ {detail} มาตลอด — ตอนนี้เป็นส่วนหนึ่งของคุณแล้ว",
         "pl": "Te słowa zawsze były częścią {detail} — teraz są częścią ciebie.",
-        "fi": "Nämä sanat kuuluivat aina osaan {detail} — nyt ne ovat osa sinua."
+        "fi": "Nämä sanat kuuluivat aina osaan {detail} — nyt ne ovat osa sinua.",
+        "sv": "De här orden har alltid varit en del av {detail} — nu är de en del av dig.",
+        "ru": "Эти слова всегда были частью {detail} — теперь они часть тебя."
       },
       "late": {
         "en": "You're carrying {detail} forward, one word at a time.",
@@ -235,7 +257,9 @@
         "it": "Stai portando avanti {detail}, una parola alla volta.",
         "th": "คุณกำลังสืบทอด {detail} ต่อไป ทีละคำ",
         "pl": "Niesiesz {detail} dalej, słowo po słowie.",
-        "fi": "Kannat eteenpäin perintöä {detail}, sana kerrallaan."
+        "fi": "Kannat eteenpäin perintöä {detail}, sana kerrallaan.",
+        "sv": "Du bär {detail} vidare, ett ord i taget.",
+        "ru": "Ты несёшь {detail} дальше, слово за словом."
       }
     },
     "culture": {
@@ -256,7 +280,9 @@
         "it": "{detail} ha una voce tutta sua — stai imparando a sentirla.",
         "th": "{detail} มีเสียงของตัวเอง — คุณกำลังหัดฟังมัน",
         "pl": "{detail} ma własny głos — uczysz się go słyszeć.",
-        "fi": "{detail} puhuu omalla äänellään — opit kuulemaan sitä."
+        "fi": "{detail} puhuu omalla äänellään — opit kuulemaan sitä.",
+        "sv": "{detail} har en egen röst — du lär dig att höra den.",
+        "ru": "У {detail} свой голос — ты учишься его слышать."
       },
       "mid": {
         "en": "You're starting to know {detail} from the inside.",
@@ -275,7 +301,9 @@
         "it": "Stai iniziando a conoscere {detail} dall'interno.",
         "th": "คุณเริ่มรู้จัก {detail} จากข้างในแล้ว",
         "pl": "Zaczynasz poznawać {detail} od środka.",
-        "fi": "Alat tuntea kohteen {detail} sisältäpäin."
+        "fi": "Alat tuntea kohteen {detail} sisältäpäin.",
+        "sv": "Du börjar lära känna {detail} inifrån.",
+        "ru": "Ты начинаешь узнавать {detail} изнутри."
       },
       "late": {
         "en": "Soon you'll take in {detail} with nothing lost in translation.",
@@ -294,7 +322,9 @@
         "it": "Presto vivrai {detail} senza perdere nulla nella traduzione.",
         "th": "อีกไม่นานคุณจะเสพ {detail} โดยไม่เสียอะไรไปกับการแปล",
         "pl": "Wkrótce będziesz chłonąć {detail} bez strat w tłumaczeniu.",
-        "fi": "Pian koet kohteen {detail} ilman, että mitään katoaa käännöksessä."
+        "fi": "Pian koet kohteen {detail} ilman, että mitään katoaa käännöksessä.",
+        "sv": "Snart tar du in {detail} utan att något går förlorat i översättningen.",
+        "ru": "Скоро ты будешь воспринимать {detail} без потерь при переводе."
       }
     },
     "fun": {
@@ -315,7 +345,9 @@
         "it": "{n} parole, solo perché ne avevi voglia.",
         "th": "{n} คำ เพียงเพราะคุณอยากเรียน",
         "pl": "{n} słów — po prostu dlatego, że tak chcesz.",
-        "fi": "{n} sanaa, ihan vain koska halusit."
+        "fi": "{n} sanaa, ihan vain koska halusit.",
+        "sv": "{n} ord, bara för att du ville.",
+        "ru": "{n} слов — просто потому, что захотелось."
       },
       "mid": {
         "en": "{lang} is turning into a genuinely good habit.",
@@ -334,7 +366,9 @@
         "it": "{lang} sta diventando davvero una buona abitudine.",
         "th": "{lang}กำลังกลายเป็นนิสัยที่ดีจริงๆ",
         "pl": "{lang} staje się naprawdę dobrym nawykiem.",
-        "fi": "Kielestä {lang} on tulossa aidosti hyvä tapa."
+        "fi": "Kielestä {lang} on tulossa aidosti hyvä tapa.",
+        "sv": "{lang} håller på att bli en riktigt bra vana.",
+        "ru": "{lang} превращается в по-настоящему хорошую привычку."
       },
       "late": {
         "en": "{n} words deep, purely for the joy of it!",
@@ -353,7 +387,9 @@
         "it": "{n} parole, per puro piacere!",
         "th": "{n} คำแล้ว เพื่อความสนุกล้วนๆ!",
         "pl": "{n} słów — czysto dla przyjemności!",
-        "fi": "{n} sanaa — puhtaasti ilosta!"
+        "fi": "{n} sanaa — puhtaasti ilosta!",
+        "sv": "{n} ord, bara för glädjens skull!",
+        "ru": "{n} слов — чисто ради удовольствия!"
       }
     },
     "generic": {
@@ -374,7 +410,9 @@
         "it": "{n} parole imparate — e nessuno può togliertele.",
         "th": "{n} คำแล้ว — และไม่มีใครเอาไปจากคุณได้",
         "pl": "{n} słów za tobą — i nikt ci ich nie odbierze.",
-        "fi": "{n} sanaa takana — eikä kukaan voi ottaa niitä sinulta pois."
+        "fi": "{n} sanaa takana — eikä kukaan voi ottaa niitä sinulta pois.",
+        "sv": "{n} ord — och ingen kan ta dem ifrån dig.",
+        "ru": "{n} слов позади — и никто их у тебя не отнимет."
       },
       "mid": {
         "en": "It's coming together — {lang} is starting to make sense.",
@@ -393,7 +431,9 @@
         "it": "Sta prendendo forma — {lang} inizia ad avere senso.",
         "th": "ทุกอย่างกำลังเข้าที่ — {lang}เริ่มมีเหตุผลแล้ว",
         "pl": "To się układa — {lang} zaczyna mieć sens.",
-        "fi": "Palaset loksahtelevat — {lang} alkaa käydä järkeen."
+        "fi": "Palaset loksahtelevat — {lang} alkaa käydä järkeen.",
+        "sv": "Det faller på plats — {lang} börjar ge mening.",
+        "ru": "Всё складывается — {lang} начинает обретать смысл."
       },
       "late": {
         "en": "{n} words — every one of them yours.",
@@ -412,7 +452,9 @@
         "it": "{n} parole — ognuna di loro tua.",
         "th": "{n} คำ — ทุกคำเป็นของคุณ",
         "pl": "{n} słów — każde z nich twoje.",
-        "fi": "{n} sanaa — jokainen niistä sinun."
+        "fi": "{n} sanaa — jokainen niistä sinun.",
+        "sv": "{n} ord — vart och ett av dem ditt.",
+        "ru": "{n} слов — и каждое из них твоё."
       }
     }
   },
@@ -518,6 +560,18 @@
       "Paikalle tuleminen on koko salaisuus.",
       "Hyvää työtä; anna sen nyt asettua.",
       "Huomisen sanat tulevat helpommin tämän päivän ansiosta."
+    ],
+    "sv": [
+      "Ett pass till avklarat — allt räknas.",
+      "Att dyka upp är hela hemligheten.",
+      "Bra jobbat; låt det sjunka in nu.",
+      "Morgondagens ord kommer lättare tack vare i dag."
+    ],
+    "ru": [
+      "Ещё одна сессия позади — всё это складывается.",
+      "Приходить каждый день — в этом весь секрет.",
+      "Отличная работа; теперь дай этому улечься.",
+      "Завтрашние слова дадутся легче благодаря сегодняшним."
     ]
   }
 }

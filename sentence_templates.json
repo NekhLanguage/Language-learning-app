@@ -24,7 +24,9 @@
         "it": "Io mangio cibo.",
         "th": "ฉันกินอาหาร",
         "pl": "Ja jem jedzenie.",
-        "fi": "Minä syön ruokaa."
+        "fi": "Minä syön ruokaa.",
+        "sv": "Jag äter mat.",
+        "ru": "Я ем еду."
       },
       "surface": {
         "en": {
@@ -111,6 +113,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "EAT": "syön",
           "FOOD": "ruokaa"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "EAT": "äter",
+          "FOOD": "mat"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "EAT": "ем",
+          "FOOD": "еду"
         }
       },
       "questions": {
@@ -132,7 +144,9 @@
             "it": "Chi mangia cibo?",
             "th": "ใครกินอาหาร",
             "pl": "Kto je jedzenie?",
-            "fi": "Kuka syö ruokaa?"
+            "fi": "Kuka syö ruokaa?",
+            "sv": "Vem äter mat?",
+            "ru": "Кто ест еду?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -160,7 +174,9 @@
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
             "pl": "Co ja robię?",
-            "fi": "Mitä minä teen?"
+            "fi": "Mitä minä teen?",
+            "sv": "Vad gör jag?",
+            "ru": "Что я делаю?"
           },
           "choices": [
             "EAT",
@@ -188,7 +204,9 @@
             "it": "Che cosa mangio?",
             "th": "ฉันกินอะไร",
             "pl": "Co ja jem?",
-            "fi": "Mitä minä syön?"
+            "fi": "Mitä minä syön?",
+            "sv": "Vad äter jag?",
+            "ru": "Что я ем?"
           },
           "choices": [
             "FOOD",
@@ -224,7 +242,9 @@
         "it": "Lui legge un libro.",
         "th": "เขาอ่านหนังสือ",
         "pl": "On czyta książkę.",
-        "fi": "Hän lukee kirjaa."
+        "fi": "Hän lukee kirjaa.",
+        "sv": "Han läser en bok.",
+        "ru": "Он читает книгу."
       },
       "surface": {
         "en": {
@@ -311,6 +331,16 @@
           "HE": "hän",
           "READ": "lukee",
           "BOOK": "kirjaa"
+        },
+        "sv": {
+          "HE": "Han",
+          "READ": "läser",
+          "BOOK": "bok"
+        },
+        "ru": {
+          "HE": "он",
+          "READ": "читает",
+          "BOOK": "книгу"
         }
       },
       "questions": {
@@ -332,7 +362,9 @@
             "it": "Chi legge un libro?",
             "th": "ใครอ่านหนังสือ",
             "pl": "Kto czyta książkę?",
-            "fi": "Kuka lukee kirjaa?"
+            "fi": "Kuka lukee kirjaa?",
+            "sv": "Vem läser en bok?",
+            "ru": "Кто читает книгу?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -360,7 +392,9 @@
             "it": "Che cosa fa lui?",
             "th": "เขาทำอะไร",
             "pl": "Co on robi?",
-            "fi": "Mitä hän tekee?"
+            "fi": "Mitä hän tekee?",
+            "sv": "Vad gör han?",
+            "ru": "Что он делает?"
           },
           "choices": [
             "READ",
@@ -388,7 +422,9 @@
             "it": "Che cosa legge lui?",
             "th": "เขาอ่านอะไร",
             "pl": "Co on czyta?",
-            "fi": "Mitä hän lukee?"
+            "fi": "Mitä hän lukee?",
+            "sv": "Vad läser han?",
+            "ru": "Что он читает?"
           },
           "choices": [
             "BOOK",
@@ -424,7 +460,9 @@
         "it": "Lei vede un telefono.",
         "th": "เธอเห็นโทรศัพท์",
         "pl": "Ona widzi telefon.",
-        "fi": "Hän näkee puhelimen."
+        "fi": "Hän näkee puhelimen.",
+        "sv": "Hon ser en telefon.",
+        "ru": "Она видит телефон."
       },
       "surface": {
         "en": {
@@ -511,6 +549,16 @@
           "SHE": "hän",
           "SEE": "näkee",
           "PHONE": "puhelimen"
+        },
+        "sv": {
+          "SHE": "Hon",
+          "SEE": "ser",
+          "PHONE": "telefon"
+        },
+        "ru": {
+          "SHE": "она",
+          "SEE": "видит",
+          "PHONE": "телефон"
         }
       },
       "questions": {
@@ -532,7 +580,9 @@
             "it": "Chi vede un telefono?",
             "th": "ใครเห็นโทรศัพท์",
             "pl": "Kto widzi telefon?",
-            "fi": "Kuka näkee puhelimen?"
+            "fi": "Kuka näkee puhelimen?",
+            "sv": "Vem ser en telefon?",
+            "ru": "Кто видит телефон?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -560,7 +610,9 @@
             "it": "Che cosa fa lei?",
             "th": "เธอทำอะไร",
             "pl": "Co ona robi?",
-            "fi": "Mitä hän tekee?"
+            "fi": "Mitä hän tekee?",
+            "sv": "Vad gör hon?",
+            "ru": "Что она делает?"
           },
           "choices": [
             "SEE",
@@ -588,7 +640,9 @@
             "it": "Che cosa vede lei?",
             "th": "เธอเห็นอะไร",
             "pl": "Co ona widzi?",
-            "fi": "Mitä hän näkee?"
+            "fi": "Mitä hän näkee?",
+            "sv": "Vad ser hon?",
+            "ru": "Что она видит?"
           },
           "choices": [
             "PHONE",
@@ -627,7 +681,9 @@
         "it": "Noi abbiamo un lavoro.",
         "th": "เรามีงาน",
         "pl": "My mamy pracę.",
-        "fi": "Meillä on työ."
+        "fi": "Meillä on työ.",
+        "sv": "Vi har ett jobb.",
+        "ru": "У нас есть работа."
       },
       "surface": {
         "en": {
@@ -714,6 +770,16 @@
           "FIRST_PERSON_PLURAL": "me",
           "HAVE": "on",
           "JOB": "työ"
+        },
+        "sv": {
+          "FIRST_PERSON_PLURAL": "Vi",
+          "HAVE": "har",
+          "JOB": "jobb"
+        },
+        "ru": {
+          "FIRST_PERSON_PLURAL": "мы",
+          "HAVE": "есть",
+          "JOB": "работа"
         }
       },
       "questions": {
@@ -735,7 +801,9 @@
             "it": "Chi ha un lavoro?",
             "th": "ใครมีงาน",
             "pl": "Kto ma pracę?",
-            "fi": "Kenellä on työ?"
+            "fi": "Kenellä on työ?",
+            "sv": "Vem har ett jobb?",
+            "ru": "У кого есть работа?"
           },
           "choices": [
             "FIRST_PERSON_PLURAL",
@@ -763,7 +831,9 @@
             "it": "Che cosa facciamo?",
             "th": "เราทำอะไร",
             "pl": "Co my robimy?",
-            "fi": "Mitä me teemme?"
+            "fi": "Mitä me teemme?",
+            "sv": "Vad gör vi?",
+            "ru": "Что мы делаем?"
           },
           "choices": [
             "HAVE",
@@ -791,7 +861,9 @@
             "it": "Che cosa abbiamo?",
             "th": "เรามีอะไร",
             "pl": "Co my mamy?",
-            "fi": "Mitä meillä on?"
+            "fi": "Mitä meillä on?",
+            "sv": "Vad har vi?",
+            "ru": "Что есть у нас?"
           },
           "choices": [
             "JOB",
@@ -827,7 +899,9 @@
         "it": "Io bevo acqua.",
         "th": "ฉันดื่มน้ำ",
         "pl": "Ja piję wodę.",
-        "fi": "Minä juon vettä."
+        "fi": "Minä juon vettä.",
+        "sv": "Jag dricker vatten.",
+        "ru": "Я пью воду."
       },
       "surface": {
         "en": {
@@ -914,6 +988,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "DRINK": "juon",
           "WATER": "vettä"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "DRINK": "dricker",
+          "WATER": "vatten"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "DRINK": "пью",
+          "WATER": "воду"
         }
       },
       "questions": {
@@ -935,7 +1019,9 @@
             "it": "Chi beve acqua?",
             "th": "ใครดื่มน้ำ",
             "pl": "Kto pije wodę?",
-            "fi": "Kuka juo vettä?"
+            "fi": "Kuka juo vettä?",
+            "sv": "Vem dricker vatten?",
+            "ru": "Кто пьёт воду?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -963,7 +1049,9 @@
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
             "pl": "Co ja robię?",
-            "fi": "Mitä minä teen?"
+            "fi": "Mitä minä teen?",
+            "sv": "Vad gör jag?",
+            "ru": "Что я делаю?"
           },
           "choices": [
             "DRINK",
@@ -991,7 +1079,9 @@
             "it": "Che cosa bevo?",
             "th": "ฉันดื่มอะไร",
             "pl": "Co ja piję?",
-            "fi": "Mitä minä juon?"
+            "fi": "Mitä minä juon?",
+            "sv": "Vad dricker jag?",
+            "ru": "Что я пью?"
           },
           "choices": [
             "WATER",
@@ -1027,7 +1117,9 @@
         "it": "Tu leggi un libro.",
         "th": "คุณอ่านหนังสือ",
         "pl": "Ty czytasz książkę.",
-        "fi": "Sinä luet kirjaa."
+        "fi": "Sinä luet kirjaa.",
+        "sv": "Du läser en bok.",
+        "ru": "Ты читаешь книгу."
       },
       "surface": {
         "en": {
@@ -1114,6 +1206,16 @@
           "SECOND_PERSON": "sinä",
           "READ": "luet",
           "BOOK": "kirjaa"
+        },
+        "sv": {
+          "SECOND_PERSON": "Du",
+          "READ": "läser",
+          "BOOK": "bok"
+        },
+        "ru": {
+          "SECOND_PERSON": "ты",
+          "READ": "читаешь",
+          "BOOK": "книгу"
         }
       },
       "questions": {
@@ -1135,7 +1237,9 @@
             "it": "Chi legge un libro?",
             "th": "ใครอ่านหนังสือ",
             "pl": "Kto czyta książkę?",
-            "fi": "Kuka lukee kirjaa?"
+            "fi": "Kuka lukee kirjaa?",
+            "sv": "Vem läser en bok?",
+            "ru": "Кто читает книгу?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -1163,7 +1267,9 @@
             "it": "Che cosa fai?",
             "th": "คุณทำอะไร",
             "pl": "Co ty robisz?",
-            "fi": "Mitä sinä teet?"
+            "fi": "Mitä sinä teet?",
+            "sv": "Vad gör du?",
+            "ru": "Что ты делаешь?"
           },
           "choices": [
             "READ",
@@ -1191,7 +1297,9 @@
             "it": "Che cosa leggi?",
             "th": "คุณอ่านอะไร",
             "pl": "Co ty czytasz?",
-            "fi": "Mitä sinä luet?"
+            "fi": "Mitä sinä luet?",
+            "sv": "Vad läser du?",
+            "ru": "Что ты читаешь?"
           },
           "choices": [
             "BOOK",
@@ -1227,7 +1335,9 @@
         "it": "Voi bevete acqua.",
         "th": "พวกคุณดื่มน้ำ",
         "pl": "Wy pijecie wodę.",
-        "fi": "Te juotte vettä."
+        "fi": "Te juotte vettä.",
+        "sv": "Ni dricker vatten.",
+        "ru": "Вы пьёте воду."
       },
       "surface": {
         "en": {
@@ -1314,6 +1424,16 @@
           "SECOND_PERSON_PLURAL": "te",
           "DRINK": "juotte",
           "WATER": "vettä"
+        },
+        "sv": {
+          "SECOND_PERSON_PLURAL": "Ni",
+          "DRINK": "dricker",
+          "WATER": "vatten"
+        },
+        "ru": {
+          "SECOND_PERSON_PLURAL": "вы",
+          "DRINK": "пьёте",
+          "WATER": "воду"
         }
       },
       "questions": {
@@ -1335,7 +1455,9 @@
             "it": "Chi beve acqua?",
             "th": "ใครดื่มน้ำ",
             "pl": "Kto pije wodę?",
-            "fi": "Kuka juo vettä?"
+            "fi": "Kuka juo vettä?",
+            "sv": "Vem dricker vatten?",
+            "ru": "Кто пьёт воду?"
           },
           "choices": [
             "SECOND_PERSON_PLURAL",
@@ -1363,7 +1485,9 @@
             "it": "Che cosa fate?",
             "th": "พวกคุณทำอะไร",
             "pl": "Co wy robicie?",
-            "fi": "Mitä sinä teet?"
+            "fi": "Mitä sinä teet?",
+            "sv": "Vad gör ni?",
+            "ru": "Что вы делаете?"
           },
           "choices": [
             "DRINK",
@@ -1391,7 +1515,9 @@
             "it": "Che cosa bevete?",
             "th": "พวกคุณดื่มอะไร",
             "pl": "Co wy pijecie?",
-            "fi": "Mitä sinä juot?"
+            "fi": "Mitä sinä juot?",
+            "sv": "Vad dricker ni?",
+            "ru": "Что вы пьёте?"
           },
           "choices": [
             "WATER",
@@ -1426,7 +1552,9 @@
         "it": "Loro dormono.",
         "th": "พวกเขานอน",
         "pl": "Oni śpią.",
-        "fi": "He nukkuvat."
+        "fi": "He nukkuvat.",
+        "sv": "De sover.",
+        "ru": "Они спят."
       },
       "surface": {
         "en": {
@@ -1496,6 +1624,14 @@
         "fi": {
           "THIRD_PERSON_PLURAL": "he",
           "SLEEP": "nukkuvat"
+        },
+        "sv": {
+          "THIRD_PERSON_PLURAL": "De",
+          "SLEEP": "sover"
+        },
+        "ru": {
+          "THIRD_PERSON_PLURAL": "они",
+          "SLEEP": "спят"
         }
       },
       "questions": {
@@ -1517,7 +1653,9 @@
             "it": "Chi dorme?",
             "th": "ใครนอน",
             "pl": "Kto śpi?",
-            "fi": "Kuka nukkuu?"
+            "fi": "Kuka nukkuu?",
+            "sv": "Vem sover?",
+            "ru": "Кто спит?"
           },
           "choices": [
             "THIRD_PERSON_PLURAL",
@@ -1545,7 +1683,9 @@
             "it": "Che cosa fanno?",
             "th": "พวกเขาทำอะไร",
             "pl": "Co oni robią?",
-            "fi": "Mitä he tekevät?"
+            "fi": "Mitä he tekevät?",
+            "sv": "Vad gör de?",
+            "ru": "Что они делают?"
           },
           "choices": [
             "SLEEP",
@@ -1581,7 +1721,9 @@
         "it": "Io sono un uomo.",
         "th": "ฉันเป็นผู้ชาย",
         "pl": "Ja jestem mężczyzną.",
-        "fi": "Minä olen mies."
+        "fi": "Minä olen mies.",
+        "sv": "Jag är en man.",
+        "ru": "Я мужчина."
       },
       "surface": {
         "en": {
@@ -1667,6 +1809,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "BE": "olen",
           "MAN": "mies"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "BE": "är",
+          "MAN": "man"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "BE": "есть",
+          "MAN": "мужчина"
         }
       },
       "questions": {
@@ -1688,7 +1840,9 @@
             "it": "Che cosa sono?",
             "th": "ฉันเป็นอะไร",
             "pl": "Kim ja jestem?",
-            "fi": "Mikä minä olen?"
+            "fi": "Mikä minä olen?",
+            "sv": "Vad är jag?",
+            "ru": "Кто я?"
           },
           "choices": [
             "BE",
@@ -1716,7 +1870,9 @@
             "it": "Che cosa sono?",
             "th": "ฉันเป็นอะไร",
             "pl": "Kim ja jestem?",
-            "fi": "Mikä minä olen?"
+            "fi": "Mikä minä olen?",
+            "sv": "Vad är jag?",
+            "ru": "Кто я?"
           },
           "choices": [
             "MAN",
@@ -1752,7 +1908,9 @@
         "it": "Lei è una donna.",
         "th": "เธอเป็นผู้หญิง",
         "pl": "Ona jest kobietą.",
-        "fi": "Hän on nainen."
+        "fi": "Hän on nainen.",
+        "sv": "Hon är en kvinna.",
+        "ru": "Она женщина."
       },
       "surface": {
         "en": {
@@ -1838,6 +1996,16 @@
           "SHE": "hän",
           "BE": "on",
           "WOMAN": "nainen"
+        },
+        "sv": {
+          "SHE": "Hon",
+          "BE": "är",
+          "WOMAN": "kvinna"
+        },
+        "ru": {
+          "SHE": "она",
+          "BE": "есть",
+          "WOMAN": "женщина"
         }
       },
       "questions": {
@@ -1859,7 +2027,9 @@
             "it": "Chi è una donna?",
             "th": "ใครเป็นผู้หญิง",
             "pl": "Kto jest kobietą?",
-            "fi": "Kuka on nainen?"
+            "fi": "Kuka on nainen?",
+            "sv": "Vem är en kvinna?",
+            "ru": "Кто женщина?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -1887,7 +2057,9 @@
             "it": "Che cos'è lei?",
             "th": "เธอเป็นอะไร",
             "pl": "Kim ona jest?",
-            "fi": "Mikä hän on?"
+            "fi": "Mikä hän on?",
+            "sv": "Vad är hon?",
+            "ru": "Кто она?"
           },
           "choices": [
             "BE",
@@ -1915,7 +2087,9 @@
             "it": "Che cos'è lei?",
             "th": "เธอเป็นอะไร",
             "pl": "Kim ona jest?",
-            "fi": "Mikä hän on?"
+            "fi": "Mikä hän on?",
+            "sv": "Vad är hon?",
+            "ru": "Кто она?"
           },
           "choices": [
             "WOMAN",
@@ -1951,7 +2125,9 @@
         "it": "Tu sei una ragazza.",
         "th": "คุณเป็นเด็กผู้หญิง",
         "pl": "Ty jesteś dziewczyną.",
-        "fi": "Sinä olet tyttö."
+        "fi": "Sinä olet tyttö.",
+        "sv": "Du är en flicka.",
+        "ru": "Ты девочка."
       },
       "surface": {
         "en": {
@@ -2037,6 +2213,16 @@
           "SECOND_PERSON": "sinä",
           "BE": "olet",
           "GIRL": "tyttö"
+        },
+        "sv": {
+          "SECOND_PERSON": "Du",
+          "BE": "är",
+          "GIRL": "flicka"
+        },
+        "ru": {
+          "SECOND_PERSON": "ты",
+          "BE": "есть",
+          "GIRL": "девочка"
         }
       },
       "questions": {
@@ -2058,7 +2244,9 @@
             "it": "Chi è una ragazza?",
             "th": "ใครเป็นเด็กผู้หญิง",
             "pl": "Kto jest dziewczyną?",
-            "fi": "Kuka on tyttö?"
+            "fi": "Kuka on tyttö?",
+            "sv": "Vem är en flicka?",
+            "ru": "Кто девочка?"
           },
           "choices": [
             "SECOND_PERSON",
@@ -2086,7 +2274,9 @@
             "it": "Che cosa sei?",
             "th": "คุณเป็นอะไร",
             "pl": "Kim ty jesteś?",
-            "fi": "Mikä sinä olet?"
+            "fi": "Mikä sinä olet?",
+            "sv": "Vad är du?",
+            "ru": "Кто ты?"
           },
           "choices": [
             "BE",
@@ -2114,7 +2304,9 @@
             "it": "Che cosa sei?",
             "th": "คุณเป็นอะไร",
             "pl": "Kim ty jesteś?",
-            "fi": "Mikä sinä olet?"
+            "fi": "Mikä sinä olet?",
+            "sv": "Vad är du?",
+            "ru": "Кто ты?"
           },
           "choices": [
             "GIRL",
@@ -2150,7 +2342,9 @@
         "it": "Lui è un ragazzo.",
         "th": "เขาเป็นเด็กผู้ชาย",
         "pl": "On jest chłopcem.",
-        "fi": "Hän on poika."
+        "fi": "Hän on poika.",
+        "sv": "Han är en pojke.",
+        "ru": "Он мальчик."
       },
       "surface": {
         "en": {
@@ -2236,6 +2430,16 @@
           "HE": "hän",
           "BE": "on",
           "BOY": "poika"
+        },
+        "sv": {
+          "HE": "Han",
+          "BE": "är",
+          "BOY": "pojke"
+        },
+        "ru": {
+          "HE": "он",
+          "BE": "есть",
+          "BOY": "мальчик"
         }
       },
       "questions": {
@@ -2257,7 +2461,9 @@
             "it": "Chi è un ragazzo?",
             "th": "ใครเป็นเด็กผู้ชาย",
             "pl": "Kto jest chłopcem?",
-            "fi": "Kuka on poika?"
+            "fi": "Kuka on poika?",
+            "sv": "Vem är en pojke?",
+            "ru": "Кто мальчик?"
           },
           "choices": [
             "HE",
@@ -2285,7 +2491,9 @@
             "it": "Che cos'è lui?",
             "th": "เขาเป็นอะไร",
             "pl": "Kim on jest?",
-            "fi": "Mikä hän on?"
+            "fi": "Mikä hän on?",
+            "sv": "Vad är han?",
+            "ru": "Кто он?"
           },
           "choices": [
             "BE",
@@ -2313,7 +2521,9 @@
             "it": "Che cos'è lui?",
             "th": "เขาเป็นอะไร",
             "pl": "Kim on jest?",
-            "fi": "Mikä hän on?"
+            "fi": "Mikä hän on?",
+            "sv": "Vad är han?",
+            "ru": "Кто он?"
           },
           "choices": [
             "BOY",
@@ -2349,7 +2559,9 @@
         "it": "Noi smettiamo di mangiare.",
         "th": "เราหยุดกิน",
         "pl": "My przestajemy jeść.",
-        "fi": "Me lopetamme syömisen."
+        "fi": "Me lopetamme syömisen.",
+        "sv": "Vi slutar äta.",
+        "ru": "Мы перестаём есть."
       },
       "surface": {
         "en": {
@@ -2436,6 +2648,16 @@
           "FIRST_PERSON_PLURAL": "me",
           "STOP": "lopetamme",
           "EAT": "syömisen"
+        },
+        "sv": {
+          "FIRST_PERSON_PLURAL": "Vi",
+          "STOP": "slutar",
+          "EAT": "äta"
+        },
+        "ru": {
+          "FIRST_PERSON_PLURAL": "мы",
+          "STOP": "перестаём",
+          "EAT": "есть"
         }
       },
       "questions": {
@@ -2457,7 +2679,9 @@
             "it": "Chi smette di mangiare?",
             "th": "ใครหยุดกิน",
             "pl": "Kto przestaje jeść?",
-            "fi": "Kuka lopettaa syömisen?"
+            "fi": "Kuka lopettaa syömisen?",
+            "sv": "Vem slutar äta?",
+            "ru": "Кто перестаёт есть?"
           },
           "choices": [
             "FIRST_PERSON_PLURAL",
@@ -2485,7 +2709,9 @@
             "it": "Che cosa facciamo?",
             "th": "เราทำอะไร",
             "pl": "Co my robimy?",
-            "fi": "Mitä me teemme?"
+            "fi": "Mitä me teemme?",
+            "sv": "Vad gör vi?",
+            "ru": "Что мы делаем?"
           },
           "choices": [
             "STOP",
@@ -2521,7 +2747,9 @@
         "it": "Loro iniziano a dormire.",
         "th": "พวกเขาเริ่มนอน",
         "pl": "Oni zaczynają spać.",
-        "fi": "He aloittavat nukkumisen."
+        "fi": "He aloittavat nukkumisen.",
+        "sv": "De börjar sova.",
+        "ru": "Они начинают спать."
       },
       "surface": {
         "en": {
@@ -2608,6 +2836,16 @@
           "THIRD_PERSON_PLURAL": "he",
           "START": "aloittavat",
           "SLEEP": "nukkumisen"
+        },
+        "sv": {
+          "THIRD_PERSON_PLURAL": "De",
+          "START": "börjar",
+          "SLEEP": "sova"
+        },
+        "ru": {
+          "THIRD_PERSON_PLURAL": "они",
+          "START": "начинают",
+          "SLEEP": "спать"
         }
       },
       "questions": {
@@ -2629,7 +2867,9 @@
             "it": "Chi inizia a dormire?",
             "th": "ใครเริ่มนอน",
             "pl": "Kto zaczyna spać?",
-            "fi": "Kuka aloittaa nukkumisen?"
+            "fi": "Kuka aloittaa nukkumisen?",
+            "sv": "Vem börjar sova?",
+            "ru": "Кто начинает спать?"
           },
           "choices": [
             "THIRD_PERSON_PLURAL",
@@ -2657,7 +2897,9 @@
             "it": "Che cosa fanno?",
             "th": "พวกเขาทำอะไร",
             "pl": "Co oni robią?",
-            "fi": "Mitä he tekevät?"
+            "fi": "Mitä he tekevät?",
+            "sv": "Vad gör de?",
+            "ru": "Что они делают?"
           },
           "choices": [
             "START",
@@ -2693,7 +2935,9 @@
         "it": "Lui vede una camicia.",
         "th": "เขาเห็นเสื้อ",
         "pl": "On widzi koszulę.",
-        "fi": "Hän näkee paidan."
+        "fi": "Hän näkee paidan.",
+        "sv": "Han ser en skjorta.",
+        "ru": "Он видит рубашку."
       },
       "surface": {
         "en": {
@@ -2780,6 +3024,16 @@
           "HE": "hän",
           "SEE": "näkee",
           "SHIRT": "paidan"
+        },
+        "sv": {
+          "HE": "Han",
+          "SEE": "ser",
+          "SHIRT": "skjorta"
+        },
+        "ru": {
+          "HE": "он",
+          "SEE": "видит",
+          "SHIRT": "рубашку"
         }
       },
       "questions": {
@@ -2801,7 +3055,9 @@
             "it": "Chi vede una camicia?",
             "th": "ใครเห็นเสื้อ",
             "pl": "Kto widzi koszulę?",
-            "fi": "Kuka näkee paidan?"
+            "fi": "Kuka näkee paidan?",
+            "sv": "Vem ser en skjorta?",
+            "ru": "Кто видит рубашку?"
           },
           "choices": [
             "HE",
@@ -2829,7 +3085,9 @@
             "it": "Che cosa fa lui?",
             "th": "เขาทำอะไร",
             "pl": "Co on robi?",
-            "fi": "Mitä hän tekee?"
+            "fi": "Mitä hän tekee?",
+            "sv": "Vad gör han?",
+            "ru": "Что он делает?"
           },
           "choices": [
             "SEE",
@@ -2857,7 +3115,9 @@
             "it": "Che cosa vede lui?",
             "th": "เขาเห็นอะไร",
             "pl": "Co on widzi?",
-            "fi": "Mitä hän näkee?"
+            "fi": "Mitä hän näkee?",
+            "sv": "Vad ser han?",
+            "ru": "Что он видит?"
           },
           "choices": [
             "SHIRT",
@@ -2893,7 +3153,9 @@
         "it": "Io vado a casa.",
         "th": "ฉันไปบ้าน",
         "pl": "Ja idę do domu.",
-        "fi": "Minä menen kotiin."
+        "fi": "Minä menen kotiin.",
+        "sv": "Jag går hem.",
+        "ru": "Я иду домой."
       },
       "surface": {
         "en": {
@@ -2980,6 +3242,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "GO": "menen",
           "HOME": "kotiin"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "GO": "går",
+          "HOME": "hem"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "GO": "иду",
+          "HOME": "домой"
         }
       },
       "questions": {
@@ -3001,7 +3273,9 @@
             "it": "Chi va a casa?",
             "th": "ใครไปบ้าน",
             "pl": "Kto idzie do domu?",
-            "fi": "Kuka menee kotiin?"
+            "fi": "Kuka menee kotiin?",
+            "sv": "Vem går hem?",
+            "ru": "Кто идёт домой?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -3029,7 +3303,9 @@
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
             "pl": "Co ja robię?",
-            "fi": "Mitä minä teen?"
+            "fi": "Mitä minä teen?",
+            "sv": "Vad gör jag?",
+            "ru": "Что я делаю?"
           },
           "choices": [
             "GO",
@@ -3057,7 +3333,9 @@
             "it": "Dove vado?",
             "th": "ฉันไปที่ไหน",
             "pl": "Dokąd ja idę?",
-            "fi": "Minne minä menen?"
+            "fi": "Minne minä menen?",
+            "sv": "Vart går jag?",
+            "ru": "Куда я иду?"
           },
           "choices": [
             "HOME",
@@ -3093,7 +3371,9 @@
         "it": "Io uso un telefono.",
         "th": "ฉันใช้โทรศัพท์",
         "pl": "Ja używam telefonu.",
-        "fi": "Minä käytän puhelinta."
+        "fi": "Minä käytän puhelinta.",
+        "sv": "Jag använder en telefon.",
+        "ru": "Я использую телефон."
       },
       "surface": {
         "en": {
@@ -3180,6 +3460,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "USE": "käytän",
           "PHONE": "puhelinta"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "USE": "använder",
+          "PHONE": "telefon"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "USE": "использую",
+          "PHONE": "телефон"
         }
       },
       "questions": {
@@ -3201,7 +3491,9 @@
             "it": "Chi usa un telefono?",
             "th": "ใครใช้โทรศัพท์",
             "pl": "Kto używa telefonu?",
-            "fi": "Kuka käyttää puhelinta?"
+            "fi": "Kuka käyttää puhelinta?",
+            "sv": "Vem använder en telefon?",
+            "ru": "Кто использует телефон?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -3229,7 +3521,9 @@
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
             "pl": "Co ja robię?",
-            "fi": "Mitä minä teen?"
+            "fi": "Mitä minä teen?",
+            "sv": "Vad gör jag?",
+            "ru": "Что я делаю?"
           },
           "choices": [
             "USE",
@@ -3257,7 +3551,9 @@
             "it": "Che cosa uso?",
             "th": "ฉันใช้อะไร",
             "pl": "Czego ja używam?",
-            "fi": "Mitä minä käytän?"
+            "fi": "Mitä minä käytän?",
+            "sv": "Vad använder jag?",
+            "ru": "Что я использую?"
           },
           "choices": [
             "PHONE",
@@ -3293,7 +3589,9 @@
         "it": "Io prendo un libro.",
         "th": "ฉันได้รับหนังสือ",
         "pl": "Ja dostaję książkę.",
-        "fi": "Minä saan kirjan."
+        "fi": "Minä saan kirjan.",
+        "sv": "Jag får en bok.",
+        "ru": "Я получаю книгу."
       },
       "surface": {
         "en": {
@@ -3380,6 +3678,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "GET": "saan",
           "BOOK": "kirjan"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "GET": "får",
+          "BOOK": "bok"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "GET": "получаю",
+          "BOOK": "книгу"
         }
       },
       "questions": {
@@ -3401,7 +3709,9 @@
             "it": "Chi prende un libro?",
             "th": "ใครได้รับหนังสือ",
             "pl": "Kto dostaje książkę?",
-            "fi": "Kuka saa kirjan?"
+            "fi": "Kuka saa kirjan?",
+            "sv": "Vem får en bok?",
+            "ru": "Кто получает книгу?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -3429,7 +3739,9 @@
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
             "pl": "Co ja robię?",
-            "fi": "Mitä minä teen?"
+            "fi": "Mitä minä teen?",
+            "sv": "Vad gör jag?",
+            "ru": "Что я делаю?"
           },
           "choices": [
             "GET",
@@ -3457,7 +3769,9 @@
             "it": "Che cosa prendo?",
             "th": "ฉันได้รับอะไร",
             "pl": "Co ja dostaję?",
-            "fi": "Mitä minä saan?"
+            "fi": "Mitä minä saan?",
+            "sv": "Vad får jag?",
+            "ru": "Что я получаю?"
           },
           "choices": [
             "BOOK",
@@ -3493,7 +3807,9 @@
         "it": "Io vedo una casa.",
         "th": "ฉันเห็นบ้าน",
         "pl": "Ja widzę dom.",
-        "fi": "Minä näen talon."
+        "fi": "Minä näen talon.",
+        "sv": "Jag ser ett hus.",
+        "ru": "Я вижу дом."
       },
       "surface": {
         "en": {
@@ -3580,6 +3896,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "SEE": "näen",
           "HOUSE": "talon"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "SEE": "ser",
+          "HOUSE": "hus"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "SEE": "вижу",
+          "HOUSE": "дом"
         }
       },
       "questions": {
@@ -3601,7 +3927,9 @@
             "it": "Chi vede una casa?",
             "th": "ใครเห็นบ้าน",
             "pl": "Kto widzi dom?",
-            "fi": "Kuka näkee talon?"
+            "fi": "Kuka näkee talon?",
+            "sv": "Vem ser ett hus?",
+            "ru": "Кто видит дом?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -3629,7 +3957,9 @@
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
             "pl": "Co ja robię?",
-            "fi": "Mitä minä teen?"
+            "fi": "Mitä minä teen?",
+            "sv": "Vad gör jag?",
+            "ru": "Что я делаю?"
           },
           "choices": [
             "SEE",
@@ -3657,7 +3987,9 @@
             "it": "Che cosa vedo?",
             "th": "ฉันเห็นอะไร",
             "pl": "Co ja widzę?",
-            "fi": "Mitä minä näen?"
+            "fi": "Mitä minä näen?",
+            "sv": "Vad ser jag?",
+            "ru": "Что я вижу?"
           },
           "choices": [
             "HOUSE",
@@ -3693,7 +4025,9 @@
         "it": "Lei vede una stanza.",
         "th": "เธอเห็นห้อง",
         "pl": "Ona widzi pokój.",
-        "fi": "Hän näkee huoneen."
+        "fi": "Hän näkee huoneen.",
+        "sv": "Hon ser ett rum.",
+        "ru": "Она видит комнату."
       },
       "surface": {
         "en": {
@@ -3780,6 +4114,16 @@
           "SHE": "hän",
           "SEE": "näkee",
           "ROOM": "huoneen"
+        },
+        "sv": {
+          "SHE": "Hon",
+          "SEE": "ser",
+          "ROOM": "rum"
+        },
+        "ru": {
+          "SHE": "она",
+          "SEE": "видит",
+          "ROOM": "комнату"
         }
       },
       "questions": {
@@ -3801,7 +4145,9 @@
             "it": "Chi vede una stanza?",
             "th": "ใครเห็นห้อง",
             "pl": "Kto widzi pokój?",
-            "fi": "Kuka näkee huoneen?"
+            "fi": "Kuka näkee huoneen?",
+            "sv": "Vem ser ett rum?",
+            "ru": "Кто видит комнату?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -3829,7 +4175,9 @@
             "it": "Che cosa fa lei?",
             "th": "เธอทำอะไร",
             "pl": "Co ona robi?",
-            "fi": "Mitä hän tekee?"
+            "fi": "Mitä hän tekee?",
+            "sv": "Vad gör hon?",
+            "ru": "Что она делает?"
           },
           "choices": [
             "SEE",
@@ -3857,7 +4205,9 @@
             "it": "Che cosa vede lei?",
             "th": "เธอเห็นอะไร",
             "pl": "Co ona widzi?",
-            "fi": "Mitä hän näkee?"
+            "fi": "Mitä hän näkee?",
+            "sv": "Vad ser hon?",
+            "ru": "Что она видит?"
           },
           "choices": [
             "ROOM",
@@ -3896,7 +4246,9 @@
         "it": "Io ho una camicia.",
         "th": "ฉันมีเสื้อ",
         "pl": "Ja mam koszulę.",
-        "fi": "Minulla on paita."
+        "fi": "Minulla on paita.",
+        "sv": "Jag har en skjorta.",
+        "ru": "У меня есть рубашка."
       },
       "surface": {
         "en": {
@@ -3983,6 +4335,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "HAVE": "on",
           "SHIRT": "paita"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "HAVE": "har",
+          "SHIRT": "skjorta"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "HAVE": "есть",
+          "SHIRT": "рубашка"
         }
       },
       "questions": {
@@ -4004,7 +4366,9 @@
             "it": "Chi ha una camicia?",
             "th": "ใครมีเสื้อ",
             "pl": "Kto ma koszulę?",
-            "fi": "Kenellä on paita?"
+            "fi": "Kenellä on paita?",
+            "sv": "Vem har en skjorta?",
+            "ru": "У кого есть рубашка?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -4032,7 +4396,9 @@
             "it": "Che cosa faccio?",
             "th": "ฉันทำอะไร",
             "pl": "Co ja robię?",
-            "fi": "Mitä minä teen?"
+            "fi": "Mitä minä teen?",
+            "sv": "Vad gör jag?",
+            "ru": "Что я делаю?"
           },
           "choices": [
             "HAVE",
@@ -4060,7 +4426,9 @@
             "it": "Che cosa ho?",
             "th": "ฉันมีอะไร",
             "pl": "Co ja mam?",
-            "fi": "Mitä minulla on?"
+            "fi": "Mitä minulla on?",
+            "sv": "Vad har jag?",
+            "ru": "Что есть у меня?"
           },
           "choices": [
             "SHIRT",
@@ -4096,7 +4464,9 @@
         "it": "Lei ha delle scarpe.",
         "th": "เธอมีรองเท้า",
         "pl": "Ona ma buty.",
-        "fi": "Hänellä on kengät."
+        "fi": "Hänellä on kengät.",
+        "sv": "Hon har skor.",
+        "ru": "У неё есть обувь."
       },
       "surface": {
         "en": {
@@ -4183,6 +4553,16 @@
           "SHE": "hän",
           "HAVE": "on",
           "SHOES": "kengät"
+        },
+        "sv": {
+          "SHE": "Hon",
+          "HAVE": "har",
+          "SHOES": "skor"
+        },
+        "ru": {
+          "SHE": "она",
+          "HAVE": "есть",
+          "SHOES": "обувь"
         }
       },
       "questions": {
@@ -4204,7 +4584,9 @@
             "it": "Chi ha delle scarpe?",
             "th": "ใครมีรองเท้า",
             "pl": "Kto ma buty?",
-            "fi": "Kenellä on kengät?"
+            "fi": "Kenellä on kengät?",
+            "sv": "Vem har skor?",
+            "ru": "У кого есть обувь?"
           },
           "choices": [
             "FIRST_PERSON_SINGULAR",
@@ -4232,7 +4614,9 @@
             "it": "Che cosa fa lei?",
             "th": "เธอทำอะไร",
             "pl": "Co ona robi?",
-            "fi": "Mitä hän tekee?"
+            "fi": "Mitä hän tekee?",
+            "sv": "Vad gör hon?",
+            "ru": "Что она делает?"
           },
           "choices": [
             "HAVE",
@@ -4260,7 +4644,9 @@
             "it": "Che cosa ha lei?",
             "th": "เธอมีอะไร",
             "pl": "Co ona ma?",
-            "fi": "Mitä hänellä on?"
+            "fi": "Mitä hänellä on?",
+            "sv": "Vad har hon?",
+            "ru": "Что есть у неё?"
           },
           "choices": [
             "SHOES",
@@ -4296,7 +4682,9 @@
         "it": "Loro hanno dei pantaloni.",
         "th": "พวกเขามีกางเกง",
         "pl": "Oni mają spodnie.",
-        "fi": "Heillä on housut."
+        "fi": "Heillä on housut.",
+        "sv": "De har byxor.",
+        "ru": "У них есть брюки."
       },
       "surface": {
         "en": {
@@ -4383,6 +4771,16 @@
           "THIRD_PERSON_PLURAL": "he",
           "HAVE": "on",
           "PANTS": "housut"
+        },
+        "sv": {
+          "THIRD_PERSON_PLURAL": "De",
+          "HAVE": "har",
+          "PANTS": "byxor"
+        },
+        "ru": {
+          "THIRD_PERSON_PLURAL": "они",
+          "HAVE": "есть",
+          "PANTS": "брюки"
         }
       }
     },
@@ -4410,7 +4808,9 @@
         "it": "Noi abbiamo dei vestiti.",
         "th": "เรามีเสื้อผ้า",
         "pl": "My mamy ubrania.",
-        "fi": "Meillä on vaatteet."
+        "fi": "Meillä on vaatteet.",
+        "sv": "Vi har kläder.",
+        "ru": "У нас есть одежда."
       },
       "surface": {
         "en": {
@@ -4497,6 +4897,16 @@
           "FIRST_PERSON_PLURAL": "me",
           "HAVE": "on",
           "CLOTHES": "vaatteet"
+        },
+        "sv": {
+          "FIRST_PERSON_PLURAL": "Vi",
+          "HAVE": "har",
+          "CLOTHES": "kläder"
+        },
+        "ru": {
+          "FIRST_PERSON_PLURAL": "мы",
+          "HAVE": "есть",
+          "CLOTHES": "одежда"
         }
       }
     },
@@ -4524,7 +4934,9 @@
         "it": "Io mangio la colazione.",
         "th": "ฉันกินอาหารเช้า",
         "pl": "Ja jem śniadanie.",
-        "fi": "Minä syön aamiaisen."
+        "fi": "Minä syön aamiaisen.",
+        "sv": "Jag äter frukost.",
+        "ru": "Я ем завтрак."
       },
       "surface": {
         "en": {
@@ -4611,6 +5023,16 @@
           "FIRST_PERSON_SINGULAR": "minä",
           "EAT": "syön",
           "BREAKFAST": "aamiaisen"
+        },
+        "sv": {
+          "FIRST_PERSON_SINGULAR": "Jag",
+          "EAT": "äter",
+          "BREAKFAST": "frukost"
+        },
+        "ru": {
+          "FIRST_PERSON_SINGULAR": "я",
+          "EAT": "ем",
+          "BREAKFAST": "завтрак"
         }
       }
     },
@@ -4638,7 +5060,9 @@
         "it": "Noi mangiamo il pranzo.",
         "th": "เรากินอาหารกลางวัน",
         "pl": "My jemy obiad.",
-        "fi": "Me syömme lounaan."
+        "fi": "Me syömme lounaan.",
+        "sv": "Vi äter lunch.",
+        "ru": "Мы едим обед."
       },
       "surface": {
         "en": {
@@ -4725,6 +5149,16 @@
           "FIRST_PERSON_PLURAL": "me",
           "EAT": "syömme",
           "LUNCH": "lounaan"
+        },
+        "sv": {
+          "FIRST_PERSON_PLURAL": "Vi",
+          "EAT": "äter",
+          "LUNCH": "lunch"
+        },
+        "ru": {
+          "FIRST_PERSON_PLURAL": "мы",
+          "EAT": "едим",
+          "LUNCH": "обед"
         }
       }
     },
@@ -4752,7 +5186,9 @@
         "it": "Loro mangiano la cena.",
         "th": "พวกเขากินอาหารเย็น",
         "pl": "Oni jedzą kolację.",
-        "fi": "He syövät illallisen."
+        "fi": "He syövät illallisen.",
+        "sv": "De äter middag.",
+        "ru": "Они едят ужин."
       },
       "surface": {
         "en": {
@@ -4839,6 +5275,16 @@
           "THIRD_PERSON_PLURAL": "he",
           "EAT": "syövät",
           "DINNER": "illallisen"
+        },
+        "sv": {
+          "THIRD_PERSON_PLURAL": "De",
+          "EAT": "äter",
+          "DINNER": "middag"
+        },
+        "ru": {
+          "THIRD_PERSON_PLURAL": "они",
+          "EAT": "едят",
+          "DINNER": "ужин"
         }
       }
     },
@@ -4867,7 +5313,9 @@
         "it": "Questa è la mia mano.",
         "th": "นี่คือมือของฉัน",
         "pl": "To jest moja ręka.",
-        "fi": "Tämä on minun käteni."
+        "fi": "Tämä on minun käteni.",
+        "sv": "Det här är min hand.",
+        "ru": "Это моя рука."
       },
       "surface": {
         "en": {
@@ -4970,6 +5418,18 @@
           "BE": "on",
           "MY": "minun",
           "HAND": "käsi"
+        },
+        "sv": {
+          "THIS": "Det här",
+          "BE": "är",
+          "MY": "min",
+          "HAND": "hand"
+        },
+        "ru": {
+          "THIS": "это",
+          "BE": "есть",
+          "MY": "моя",
+          "HAND": "рука"
         }
       }
     },
@@ -4998,7 +5458,9 @@
         "it": "Questa è la tua testa.",
         "th": "นี่คือหัวของคุณ",
         "pl": "To jest twoja głowa.",
-        "fi": "Tämä on sinun pääsi."
+        "fi": "Tämä on sinun pääsi.",
+        "sv": "Det här är ditt huvud.",
+        "ru": "Это твоя голова."
       },
       "surface": {
         "en": {
@@ -5101,6 +5563,18 @@
           "BE": "on",
           "YOUR": "sinun",
           "HEAD": "pää"
+        },
+        "sv": {
+          "THIS": "Det här",
+          "BE": "är",
+          "YOUR": "ditt",
+          "HEAD": "huvud"
+        },
+        "ru": {
+          "THIS": "это",
+          "BE": "есть",
+          "YOUR": "твоя",
+          "HEAD": "голова"
         }
       }
     },
@@ -5129,7 +5603,9 @@
         "it": "Quello è il mio braccio.",
         "th": "นั่นคือแขนของฉัน",
         "pl": "Tamto jest moje ramię.",
-        "fi": "Tuo on minun käsivarteni."
+        "fi": "Tuo on minun käsivarteni.",
+        "sv": "Det där är min arm.",
+        "ru": "То моя рука."
       },
       "surface": {
         "en": {
@@ -5232,6 +5708,18 @@
           "BE": "on",
           "MY": "minun",
           "ARM": "käsivarsi"
+        },
+        "sv": {
+          "THAT": "Det där",
+          "BE": "är",
+          "MY": "min",
+          "ARM": "arm"
+        },
+        "ru": {
+          "THAT": "то",
+          "BE": "есть",
+          "MY": "моя",
+          "ARM": "рука"
         }
       }
     },
@@ -5260,7 +5748,9 @@
         "it": "Quella è la tua gamba.",
         "th": "นั่นคือขาของคุณ",
         "pl": "Tamto jest twoja noga.",
-        "fi": "Tuo on sinun jalkasi."
+        "fi": "Tuo on sinun jalkasi.",
+        "sv": "Det där är ditt ben.",
+        "ru": "То твоя нога."
       },
       "surface": {
         "en": {
@@ -5363,6 +5853,18 @@
           "BE": "on",
           "YOUR": "sinun",
           "LEG": "jalka"
+        },
+        "sv": {
+          "THAT": "Det där",
+          "BE": "är",
+          "YOUR": "ditt",
+          "LEG": "ben"
+        },
+        "ru": {
+          "THAT": "то",
+          "BE": "есть",
+          "YOUR": "твоя",
+          "LEG": "нога"
         }
       }
     },
@@ -5391,7 +5893,9 @@
         "it": "Lei è la mia mamma.",
         "th": "เธอเป็นแม่ของฉัน",
         "pl": "Ona jest moją mamą.",
-        "fi": "Hän on minun äitini."
+        "fi": "Hän on minun äitini.",
+        "sv": "Hon är min mamma.",
+        "ru": "Она моя мама."
       },
       "surface": {
         "en": {
@@ -5494,6 +5998,18 @@
           "BE": "on",
           "MY": "minun",
           "MOM": "äiti"
+        },
+        "sv": {
+          "SHE": "Hon",
+          "BE": "är",
+          "MY": "min",
+          "MOM": "mamma"
+        },
+        "ru": {
+          "SHE": "она",
+          "BE": "есть",
+          "MY": "моя",
+          "MOM": "мама"
         }
       }
     },
@@ -5522,7 +6038,9 @@
         "it": "Lui è il mio papà.",
         "th": "เขาเป็นพ่อของฉัน",
         "pl": "On jest moim tatą.",
-        "fi": "Hän on minun isäni."
+        "fi": "Hän on minun isäni.",
+        "sv": "Han är min pappa.",
+        "ru": "Он мой папа."
       },
       "surface": {
         "en": {
@@ -5625,6 +6143,18 @@
           "BE": "on",
           "MY": "minun",
           "DAD": "isä"
+        },
+        "sv": {
+          "HE": "Han",
+          "BE": "är",
+          "MY": "min",
+          "DAD": "pappa"
+        },
+        "ru": {
+          "HE": "он",
+          "BE": "есть",
+          "MY": "мой",
+          "DAD": "папа"
         }
       }
     },
@@ -5658,7 +6188,9 @@
         "it": "Questa è la mia mano e questa è la tua testa.",
         "th": "นี่คือมือของฉันและนี่คือหัวของคุณ",
         "pl": "To jest moja ręka i to jest twoja głowa.",
-        "fi": "Tämä on minun käteni ja tämä on sinun pääsi."
+        "fi": "Tämä on minun käteni ja tämä on sinun pääsi.",
+        "sv": "Det här är min hand och det här är ditt huvud.",
+        "ru": "Это моя рука, а это твоя голова."
       }
     },
     {
@@ -5691,7 +6223,9 @@
         "it": "Lei è la mia mamma e lui è il mio papà.",
         "th": "เธอเป็นแม่ของฉันและเขาเป็นพ่อของฉัน",
         "pl": "Ona jest moją mamą i on jest moim tatą.",
-        "fi": "Hän on minun äitini ja hän on minun isäni."
+        "fi": "Hän on minun äitini ja hän on minun isäni.",
+        "sv": "Hon är min mamma och han är min pappa.",
+        "ru": "Она моя мама, а он мой папа."
       }
     },
     {
@@ -5719,7 +6253,9 @@
         "it": "Io mangio e bevo.",
         "th": "ฉันกินและดื่ม",
         "pl": "Ja jem i piję.",
-        "fi": "Minä syön ja juon."
+        "fi": "Minä syön ja juon.",
+        "sv": "Jag äter och dricker.",
+        "ru": "Я ем и пью."
       }
     },
     {
@@ -5749,7 +6285,9 @@
         "it": "Lui mangia la colazione ma non il pranzo.",
         "th": "เขากินอาหารเช้าแต่ไม่กินอาหารกลางวัน",
         "pl": "On je śniadanie, ale nie obiad.",
-        "fi": "Hän syö aamiaisen, mutta ei lounasta."
+        "fi": "Hän syö aamiaisen, mutta ei lounasta.",
+        "sv": "Han äter frukost men inte lunch.",
+        "ru": "Он ест завтрак, но не обед."
       }
     },
     {
@@ -5778,7 +6316,9 @@
         "it": "Lei va nella sua stanza.",
         "th": "เธอไปที่ห้องของเธอ",
         "pl": "Ona idzie do swojego pokoju.",
-        "fi": "Hän menee huoneeseensa."
+        "fi": "Hän menee huoneeseensa.",
+        "sv": "Hon går till sitt rum.",
+        "ru": "Она идёт к своей комнате."
       }
     },
     {
@@ -5815,7 +6355,9 @@
         "it": "Questo è un buon libro.",
         "th": "นี่คือหนังสือที่ดี",
         "pl": "To jest dobra książka.",
-        "fi": "Tämä on hyvä kirja."
+        "fi": "Tämä on hyvä kirja.",
+        "sv": "Det här är en bra bok.",
+        "ru": "Это хорошая книга."
       }
     },
     {
@@ -5852,7 +6394,9 @@
         "it": "È quello il tuo telefono?",
         "th": "นั่นคือโทรศัพท์ของคุณใช่ไหม",
         "pl": "Czy to twój telefon?",
-        "fi": "Onko tuo sinun puhelimesi?"
+        "fi": "Onko tuo sinun puhelimesi?",
+        "sv": "Är det där din telefon?",
+        "ru": "Это твой телефон?"
       }
     },
     {
@@ -5902,7 +6446,9 @@
         "it": "Lui mangia la cena con la sua mamma perché è a casa.",
         "th": "เขากินอาหารเย็นกับแม่ของเขาเพราะเขาอยู่บ้าน",
         "pl": "On je kolację ze swoją mamą, ponieważ on jest w domu.",
-        "fi": "Hän syö illallisen äitinsä kanssa, koska hän on kotona."
+        "fi": "Hän syö illallisen äitinsä kanssa, koska hän on kotona.",
+        "sv": "Han äter middag med sin mamma eftersom han är hemma.",
+        "ru": "Он ест ужин со своей мамой, потому что он дома."
       }
     },
     {
@@ -5950,7 +6496,9 @@
         "it": "Se lui è a casa, mangia con sua figlia.",
         "th": "ถ้าเขาอยู่บ้าน เขากินกับลูกสาวของเขา",
         "pl": "Jeśli on jest w domu, on je ze swoją córką.",
-        "fi": "Jos hän on kotona, hän syö tyttärensä kanssa."
+        "fi": "Jos hän on kotona, hän syö tyttärensä kanssa.",
+        "sv": "Om han är hemma, äter han med sin dotter.",
+        "ru": "Если он дома, он ест со своей дочерью."
       }
     },
     {
@@ -5985,7 +6533,9 @@
         "it": "Il libro è rosso.",
         "th": "หนังสือสีแดง",
         "pl": "Książka jest czerwona.",
-        "fi": "Kirja on punainen."
+        "fi": "Kirja on punainen.",
+        "sv": "Boken är röd.",
+        "ru": "Книга красная."
       }
     },
     {
@@ -6020,7 +6570,9 @@
         "it": "Il telefono è blu.",
         "th": "โทรศัพท์สีน้ำเงิน",
         "pl": "Telefon jest niebieski.",
-        "fi": "Puhelin on sininen."
+        "fi": "Puhelin on sininen.",
+        "sv": "Telefonen är blå.",
+        "ru": "Телефон синий."
       }
     },
     {
@@ -6050,7 +6602,9 @@
         "it": "La camicia è verde.",
         "th": "เสื้อสีเขียว",
         "pl": "Koszula jest zielona.",
-        "fi": "Paita on vihreä."
+        "fi": "Paita on vihreä.",
+        "sv": "Skjortan är grön.",
+        "ru": "Рубашка зелёная."
       }
     },
     {
@@ -6080,7 +6634,9 @@
         "it": "La casa è bianca.",
         "th": "บ้านสีขาว",
         "pl": "Dom jest biały.",
-        "fi": "Talo on valkoinen."
+        "fi": "Talo on valkoinen.",
+        "sv": "Huset är vitt.",
+        "ru": "Дом белый."
       }
     },
     {
@@ -6110,7 +6666,9 @@
         "it": "I pantaloni sono neri.",
         "th": "กางเกงสีดำ",
         "pl": "Spodnie są czarne.",
-        "fi": "Housut ovat mustat."
+        "fi": "Housut ovat mustat.",
+        "sv": "Byxorna är svarta.",
+        "ru": "Брюки чёрные."
       }
     },
     {
@@ -6140,7 +6698,9 @@
         "it": "Io mangio oggi.",
         "th": "ฉันกินวันนี้",
         "pl": "Ja jem dziś.",
-        "fi": "Minä syön tänään."
+        "fi": "Minä syön tänään.",
+        "sv": "Jag äter i dag.",
+        "ru": "Я ем сегодня."
       }
     },
     {
@@ -6170,7 +6730,9 @@
         "it": "Lui legge oggi.",
         "th": "เขาอ่านวันนี้",
         "pl": "On czyta dziś.",
-        "fi": "Hän lukee tänään."
+        "fi": "Hän lukee tänään.",
+        "sv": "Han läser i dag.",
+        "ru": "Он читает сегодня."
       }
     },
     {
@@ -6200,7 +6762,9 @@
         "it": "Noi andiamo domani.",
         "th": "เราไปพรุ่งนี้",
         "pl": "My idziemy jutro.",
-        "fi": "Me menemme huomenna."
+        "fi": "Me menemme huomenna.",
+        "sv": "Vi går i morgon.",
+        "ru": "Мы идём завтра."
       }
     },
     {
@@ -6230,7 +6794,9 @@
         "it": "Io leggo adesso.",
         "th": "ฉันอ่านตอนนี้",
         "pl": "Ja czytam teraz.",
-        "fi": "Minä luen nyt."
+        "fi": "Minä luen nyt.",
+        "sv": "Jag läser nu.",
+        "ru": "Я читаю сейчас."
       }
     },
     {
@@ -6260,7 +6826,9 @@
         "it": "Lui ha lavorato ieri.",
         "th": "เมื่อวานเขาทำงาน",
         "pl": "On pracował wczoraj.",
-        "fi": "Hän työskenteli eilen."
+        "fi": "Hän työskenteli eilen.",
+        "sv": "Han jobbade i går.",
+        "ru": "Он работал вчера."
       }
     },
     {
@@ -6289,7 +6857,9 @@
         "it": "Chi mangia?",
         "th": "ใครกิน",
         "pl": "Kto je?",
-        "fi": "Kuka syö?"
+        "fi": "Kuka syö?",
+        "sv": "Vem äter?",
+        "ru": "Кто ест?"
       }
     },
     {
@@ -6319,7 +6889,9 @@
         "it": "Perché vai?",
         "th": "คุณไปทำไม",
         "pl": "Dlaczego idziesz?",
-        "fi": "Miksi sinä menet?"
+        "fi": "Miksi sinä menet?",
+        "sv": "Varför går du?",
+        "ru": "Почему ты идёшь?"
       }
     },
     {
@@ -6349,7 +6921,9 @@
         "it": "Quando mangiamo?",
         "th": "เรากินเมื่อไหร่",
         "pl": "Kiedy jemy?",
-        "fi": "Milloin me syömme?"
+        "fi": "Milloin me syömme?",
+        "sv": "När äter vi?",
+        "ru": "Когда мы едим?"
       }
     },
     {
@@ -6379,7 +6953,9 @@
         "it": "Io mangio prima.",
         "th": "ฉันกินก่อน",
         "pl": "Ja jem przedtem.",
-        "fi": "Minä syön ennen."
+        "fi": "Minä syön ennen.",
+        "sv": "Jag äter före.",
+        "ru": "Я ем до этого."
       }
     },
     {
@@ -6409,7 +6985,9 @@
         "it": "Noi andiamo dopo.",
         "th": "เราไปหลังจากนั้น",
         "pl": "My idziemy potem.",
-        "fi": "Me menemme sen jälkeen."
+        "fi": "Me menemme sen jälkeen.",
+        "sv": "Vi går efteråt.",
+        "ru": "Мы идём потом."
       }
     },
     {
@@ -6439,7 +7017,9 @@
         "it": "Dov'è il libro?",
         "th": "หนังสืออยู่ที่ไหน",
         "pl": "Gdzie jest książka?",
-        "fi": "Missä kirja on?"
+        "fi": "Missä kirja on?",
+        "sv": "Var är boken?",
+        "ru": "Где книга?"
       }
     },
     {
@@ -6469,7 +7049,9 @@
         "it": "Come leggi?",
         "th": "คุณอ่านอย่างไร",
         "pl": "Jak czytasz?",
-        "fi": "Miten sinä luet?"
+        "fi": "Miten sinä luet?",
+        "sv": "Hur läser du?",
+        "ru": "Как ты читаешь?"
       }
     },
     {
@@ -6499,7 +7081,9 @@
         "it": "Che cosa ho?",
         "th": "ฉันมีอะไร",
         "pl": "Co ja mam?",
-        "fi": "Mitä minulla on?"
+        "fi": "Mitä minulla on?",
+        "sv": "Vad har jag?",
+        "ru": "Что у меня есть?"
       }
     },
     {
@@ -6528,7 +7112,9 @@
         "it": "Quale libro?",
         "th": "หนังสือเล่มไหน",
         "pl": "Która książka?",
-        "fi": "Mikä kirja?"
+        "fi": "Mikä kirja?",
+        "sv": "Vilken bok?",
+        "ru": "Какая книга?"
       }
     },
     {
@@ -6558,7 +7144,9 @@
         "it": "Noi mangiamo tutto.",
         "th": "เรากินทั้งหมด",
         "pl": "My jemy wszystko.",
-        "fi": "Me syömme kaiken."
+        "fi": "Me syömme kaiken.",
+        "sv": "Vi äter allt.",
+        "ru": "Мы едим всё."
       }
     },
     {
@@ -6589,7 +7177,9 @@
         "it": "Il libro è su questo.",
         "th": "หนังสืออยู่บนนี้",
         "pl": "Książka jest na tym.",
-        "fi": "Kirja on tällä."
+        "fi": "Kirja on tällä.",
+        "sv": "Boken är på det här.",
+        "ru": "Книга на этом."
       }
     },
     {
@@ -6620,7 +7210,9 @@
         "it": "Il telefono è in quello.",
         "th": "โทรศัพท์อยู่ในนั้น",
         "pl": "Telefon jest w tamtym.",
-        "fi": "Puhelin on tuossa."
+        "fi": "Puhelin on tuossa.",
+        "sv": "Telefonen är i det där.",
+        "ru": "Телефон в том."
       }
     },
     {
@@ -6651,7 +7243,9 @@
         "it": "Le scarpe sono sotto questo.",
         "th": "รองเท้าอยู่ใต้นี้",
         "pl": "Buty są pod tym.",
-        "fi": "Kengät ovat tämän alla."
+        "fi": "Kengät ovat tämän alla.",
+        "sv": "Skorna är under det här.",
+        "ru": "Обувь под этим."
       },
       "order": {
         "fi": [
@@ -6690,7 +7284,9 @@
         "it": "Il libro è accanto al telefono.",
         "th": "หนังสืออยู่ข้างๆโทรศัพท์",
         "pl": "Książka jest obok telefonu.",
-        "fi": "Kirja on puhelimen vieressä."
+        "fi": "Kirja on puhelimen vieressä.",
+        "sv": "Boken är bredvid telefonen.",
+        "ru": "Книга рядом с телефоном."
       },
       "order": {
         "fi": [
@@ -6729,7 +7325,9 @@
         "it": "Il telefono è davanti al libro.",
         "th": "โทรศัพท์อยู่ข้างหน้าหนังสือ",
         "pl": "Telefon jest przed książką.",
-        "fi": "Puhelin on kirjan edessä."
+        "fi": "Puhelin on kirjan edessä.",
+        "sv": "Telefonen är framför boken.",
+        "ru": "Телефон перед книгой."
       },
       "order": {
         "fi": [
@@ -6768,7 +7366,9 @@
         "it": "Il libro è dietro il telefono.",
         "th": "หนังสืออยู่ข้างหลังโทรศัพท์",
         "pl": "Książka jest za telefonem.",
-        "fi": "Kirja on puhelimen takana."
+        "fi": "Kirja on puhelimen takana.",
+        "sv": "Boken är bakom telefonen.",
+        "ru": "Книга за телефоном."
       },
       "order": {
         "fi": [
@@ -6807,7 +7407,9 @@
         "it": "Il libro è sul tavolo.",
         "th": "หนังสืออยู่บนโต๊ะ",
         "pl": "Książka jest na stole.",
-        "fi": "Kirja on pöydällä."
+        "fi": "Kirja on pöydällä.",
+        "sv": "Boken är på bordet.",
+        "ru": "Книга на столе."
       }
     },
     {
@@ -6838,7 +7440,9 @@
         "it": "Il telefono è sotto il tavolo.",
         "th": "โทรศัพท์อยู่ใต้โต๊ะ",
         "pl": "Telefon jest pod stołem.",
-        "fi": "Puhelin on pöydän alla."
+        "fi": "Puhelin on pöydän alla.",
+        "sv": "Telefonen är under bordet.",
+        "ru": "Телефон под столом."
       },
       "order": {
         "fi": [
@@ -6877,7 +7481,9 @@
         "it": "Il libro è accanto al tavolo.",
         "th": "หนังสืออยู่ข้างๆโต๊ะ",
         "pl": "Książka jest obok stołu.",
-        "fi": "Kirja on pöydän vieressä."
+        "fi": "Kirja on pöydän vieressä.",
+        "sv": "Boken är bredvid bordet.",
+        "ru": "Книга рядом со столом."
       },
       "order": {
         "fi": [
@@ -6916,7 +7522,9 @@
         "it": "Il telefono è dietro il tavolo.",
         "th": "โทรศัพท์อยู่ข้างหลังโต๊ะ",
         "pl": "Telefon jest za stołem.",
-        "fi": "Puhelin on pöydän takana."
+        "fi": "Puhelin on pöydän takana.",
+        "sv": "Telefonen är bakom bordet.",
+        "ru": "Телефон за столом."
       },
       "order": {
         "fi": [
@@ -6955,7 +7563,9 @@
         "it": "Io vado al tavolo.",
         "th": "ฉันไปที่โต๊ะ",
         "pl": "Ja idę do stołu.",
-        "fi": "Minä menen pöydän luo."
+        "fi": "Minä menen pöydän luo.",
+        "sv": "Jag går till bordet.",
+        "ru": "Я иду к столу."
       }
     },
     {
@@ -6986,7 +7596,9 @@
         "it": "Il telefono è fuori da questo.",
         "th": "โทรศัพท์ไม่ได้อยู่บนนี้",
         "pl": "Telefon nie jest na tym.",
-        "fi": "Puhelin ei ole tällä."
+        "fi": "Puhelin ei ole tällä.",
+        "sv": "Telefonen är inte på det här.",
+        "ru": "Телефон не на этом."
       }
     },
     {
@@ -7019,7 +7631,9 @@
         "it": "Il libro è tra questo e quello.",
         "th": "หนังสืออยู่ระหว่างนี้และนั้น",
         "pl": "Książka jest między tym i tamtym.",
-        "fi": "Kirja on tämän ja tuon välissä."
+        "fi": "Kirja on tämän ja tuon välissä.",
+        "sv": "Boken är mellan det här och det där.",
+        "ru": "Книга между этим и тем."
       },
       "order": {
         "fi": [
@@ -7060,7 +7674,9 @@
         "it": "Le scarpe sono in questo.",
         "th": "รองเท้าอยู่ในนี้",
         "pl": "Buty są w tym.",
-        "fi": "Kengät ovat tässä."
+        "fi": "Kengät ovat tässä.",
+        "sv": "Skorna är i det här.",
+        "ru": "Обувь в этом."
       }
     },
     {
@@ -7091,7 +7707,9 @@
         "it": "Il telefono è su quello.",
         "th": "โทรศัพท์อยู่บนนั้น",
         "pl": "Telefon jest na tamtym.",
-        "fi": "Puhelin on tuolla."
+        "fi": "Puhelin on tuolla.",
+        "sv": "Telefonen är på det där.",
+        "ru": "Телефон на том."
       }
     },
     {
@@ -7121,7 +7739,9 @@
         "it": "Noi torniamo indietro.",
         "th": "เรากลับไป",
         "pl": "My wracamy.",
-        "fi": "Me menemme takaisin."
+        "fi": "Me menemme takaisin.",
+        "sv": "Vi går tillbaka.",
+        "ru": "Мы идём назад."
       }
     },
     {
@@ -7151,7 +7771,9 @@
         "it": "Io esco.",
         "th": "ฉันออกไป",
         "pl": "Ja wychodzę.",
-        "fi": "Minä menen ulos."
+        "fi": "Minä menen ulos.",
+        "sv": "Jag går ut.",
+        "ru": "Я выхожу."
       }
     },
     {
@@ -7181,7 +7803,9 @@
         "it": "Noi andiamo a nord.",
         "th": "เราไปทางทิศเหนือ",
         "pl": "My idziemy na północ.",
-        "fi": "Me menemme pohjoiseen."
+        "fi": "Me menemme pohjoiseen.",
+        "sv": "Vi går norrut.",
+        "ru": "Мы идём на север."
       }
     },
     {
@@ -7211,7 +7835,9 @@
         "it": "Noi andiamo a sud.",
         "th": "เราไปทางทิศใต้",
         "pl": "My idziemy na południe.",
-        "fi": "Me menemme etelään."
+        "fi": "Me menemme etelään.",
+        "sv": "Vi går söderut.",
+        "ru": "Мы идём на юг."
       }
     },
     {
@@ -7241,7 +7867,9 @@
         "it": "Noi andiamo a est.",
         "th": "เราไปทางทิศตะวันออก",
         "pl": "My idziemy na wschód.",
-        "fi": "Me menemme itään."
+        "fi": "Me menemme itään.",
+        "sv": "Vi går österut.",
+        "ru": "Мы идём на восток."
       }
     },
     {
@@ -7271,7 +7899,9 @@
         "it": "Noi andiamo a ovest.",
         "th": "เราไปทางทิศตะวันตก",
         "pl": "My idziemy na zachód.",
-        "fi": "Me menemme länteen."
+        "fi": "Me menemme länteen.",
+        "sv": "Vi går västerut.",
+        "ru": "Мы идём на запад."
       }
     },
     {
@@ -7301,7 +7931,9 @@
         "it": "Il libro è lungo.",
         "th": "หนังสือยาว",
         "pl": "Książka jest długa.",
-        "fi": "Kirja on pitkä."
+        "fi": "Kirja on pitkä.",
+        "sv": "Boken är lång.",
+        "ru": "Книга длинная."
       }
     },
     {
@@ -7331,7 +7963,9 @@
         "it": "Il giorno è corto.",
         "th": "กลางวันสั้น",
         "pl": "Dzień jest krótki.",
-        "fi": "Päivä on lyhyt."
+        "fi": "Päivä on lyhyt.",
+        "sv": "Dagen är kort.",
+        "ru": "День короткий."
       }
     },
     {
@@ -7361,7 +7995,9 @@
         "it": "Il libro è pesante.",
         "th": "หนังสือหนัก",
         "pl": "Książka jest ciężka.",
-        "fi": "Kirja on painava."
+        "fi": "Kirja on painava.",
+        "sv": "Boken är tung.",
+        "ru": "Книга тяжёлая."
       }
     },
     {
@@ -7391,7 +8027,9 @@
         "it": "Il telefono è leggero.",
         "th": "โทรศัพท์เบา",
         "pl": "Telefon jest lekki.",
-        "fi": "Puhelin on kevyt."
+        "fi": "Puhelin on kevyt.",
+        "sv": "Telefonen är lätt.",
+        "ru": "Телефон лёгкий."
       }
     },
     {
@@ -7421,7 +8059,9 @@
         "it": "La notte è buia.",
         "th": "กลางคืนมืด",
         "pl": "Noc jest ciemna.",
-        "fi": "Yö on pimeä."
+        "fi": "Yö on pimeä.",
+        "sv": "Natten är mörk.",
+        "ru": "Ночь тёмная."
       }
     },
     {
@@ -7451,7 +8091,9 @@
         "it": "Il ragazzo è giovane.",
         "th": "เด็กผู้ชายอายุน้อย",
         "pl": "Chłopiec jest młody.",
-        "fi": "Poika on nuori."
+        "fi": "Poika on nuori.",
+        "sv": "Pojken är ung.",
+        "ru": "Мальчик молодой."
       }
     },
     {
@@ -7481,7 +8123,9 @@
         "it": "Il libro è facile.",
         "th": "หนังสือง่าย",
         "pl": "Książka jest łatwa.",
-        "fi": "Kirja on helppo."
+        "fi": "Kirja on helppo.",
+        "sv": "Boken är lätt.",
+        "ru": "Книга лёгкая."
       }
     },
     {
@@ -7511,7 +8155,9 @@
         "it": "Il libro è difficile.",
         "th": "หนังสือยาก",
         "pl": "Książka jest trudna.",
-        "fi": "Kirja on vaikea."
+        "fi": "Kirja on vaikea.",
+        "sv": "Boken är svår.",
+        "ru": "Книга трудная."
       }
     },
     {
@@ -7541,7 +8187,9 @@
         "it": "Questo è a destra.",
         "th": "นี่อยู่ทางขวา",
         "pl": "To jest po prawej.",
-        "fi": "Tämä on oikealla."
+        "fi": "Tämä on oikealla.",
+        "sv": "Det här är höger.",
+        "ru": "Это справа."
       }
     },
     {
@@ -7571,7 +8219,9 @@
         "it": "Questo è a sinistra.",
         "th": "นี่อยู่ทางซ้าย",
         "pl": "To jest po lewej.",
-        "fi": "Tämä on vasemmalla."
+        "fi": "Tämä on vasemmalla.",
+        "sv": "Det här är vänster.",
+        "ru": "Это слева."
       }
     },
     {
@@ -7601,7 +8251,9 @@
         "it": "Questo è corretto.",
         "th": "นี่ถูกต้อง",
         "pl": "To jest poprawne.",
-        "fi": "Tämä on oikein."
+        "fi": "Tämä on oikein.",
+        "sv": "Det här är rätt.",
+        "ru": "Это правильно."
       }
     },
     {
@@ -7631,7 +8283,9 @@
         "it": "Questo è sbagliato.",
         "th": "นี่ผิด",
         "pl": "To jest błędne.",
-        "fi": "Tämä on väärin."
+        "fi": "Tämä on väärin.",
+        "sv": "Det här är fel.",
+        "ru": "Это неправильно."
       }
     },
     {
@@ -7661,7 +8315,9 @@
         "it": "Questo è bello.",
         "th": "นี่ดี",
         "pl": "To jest ładne.",
-        "fi": "Tämä on mukavaa."
+        "fi": "Tämä on mukavaa.",
+        "sv": "Det här är trevligt.",
+        "ru": "Это приятно."
       }
     },
     {
@@ -7691,7 +8347,9 @@
         "it": "L'anno è lungo.",
         "th": "ปียาว",
         "pl": "Rok jest długi.",
-        "fi": "Vuosi on pitkä."
+        "fi": "Vuosi on pitkä.",
+        "sv": "Året är långt.",
+        "ru": "Год длинный."
       }
     },
     {
@@ -7721,7 +8379,9 @@
         "it": "Il mese è lungo.",
         "th": "เดือนยาว",
         "pl": "Miesiąc jest długi.",
-        "fi": "Kuukausi on pitkä."
+        "fi": "Kuukausi on pitkä.",
+        "sv": "Månaden är lång.",
+        "ru": "Месяц длинный."
       }
     },
     {
@@ -7751,7 +8411,9 @@
         "it": "La settimana è corta.",
         "th": "สัปดาห์สั้น",
         "pl": "Tydzień jest krótki.",
-        "fi": "Viikko on lyhyt."
+        "fi": "Viikko on lyhyt.",
+        "sv": "Veckan är kort.",
+        "ru": "Неделя короткая."
       }
     },
     {
@@ -7781,7 +8443,9 @@
         "it": "Il giorno è lungo.",
         "th": "กลางวันยาว",
         "pl": "Dzień jest długi.",
-        "fi": "Päivä on pitkä."
+        "fi": "Päivä on pitkä.",
+        "sv": "Dagen är lång.",
+        "ru": "День длинный."
       }
     },
     {
@@ -7811,7 +8475,9 @@
         "it": "L'ora è corta.",
         "th": "ชั่วโมงสั้น",
         "pl": "Godzina jest krótka.",
-        "fi": "Tunti on lyhyt."
+        "fi": "Tunti on lyhyt.",
+        "sv": "Timmen är kort.",
+        "ru": "Час короткий."
       }
     },
     {
@@ -7841,7 +8507,9 @@
         "it": "Il minuto è corto.",
         "th": "นาทีสั้น",
         "pl": "Minuta jest krótka.",
-        "fi": "Minuutti on lyhyt."
+        "fi": "Minuutti on lyhyt.",
+        "sv": "Minuten är kort.",
+        "ru": "Минута короткая."
       }
     },
     {
@@ -7871,7 +8539,9 @@
         "it": "Il secondo è corto.",
         "th": "วินาทีสั้น",
         "pl": "Sekunda jest krótka.",
-        "fi": "Sekunti on lyhyt."
+        "fi": "Sekunti on lyhyt.",
+        "sv": "Sekunden är kort.",
+        "ru": "Секунда короткая."
       }
     },
     {
@@ -7901,7 +8571,9 @@
         "it": "La mattina è buona.",
         "th": "ตอนเช้าดี",
         "pl": "Poranek jest dobry.",
-        "fi": "Aamu on hyvä."
+        "fi": "Aamu on hyvä.",
+        "sv": "Morgonen är bra.",
+        "ru": "Утро хорошее."
       }
     },
     {
@@ -7931,7 +8603,9 @@
         "it": "La notte è cattiva.",
         "th": "กลางคืนแย่",
         "pl": "Noc jest zła.",
-        "fi": "Yö on huono."
+        "fi": "Yö on huono.",
+        "sv": "Natten är dålig.",
+        "ru": "Ночь плохая."
       }
     },
     {
@@ -7961,7 +8635,9 @@
         "it": "L'inverno è freddo.",
         "th": "ฤดูหนาวหนาว",
         "pl": "Zima jest zimna.",
-        "fi": "Talvi on kylmä."
+        "fi": "Talvi on kylmä.",
+        "sv": "Vintern är kall.",
+        "ru": "Зима холодная."
       }
     },
     {
@@ -7991,7 +8667,9 @@
         "it": "L'estate è buona.",
         "th": "ฤดูร้อนดี",
         "pl": "Lato jest dobre.",
-        "fi": "Kesä on hyvä."
+        "fi": "Kesä on hyvä.",
+        "sv": "Sommaren är bra.",
+        "ru": "Лето хорошее."
       }
     },
     {
@@ -8021,7 +8699,9 @@
         "it": "La primavera è nuova.",
         "th": "ฤดูใบไม้ผลิใหม่",
         "pl": "Wiosna jest nowa.",
-        "fi": "Kevät on uusi."
+        "fi": "Kevät on uusi.",
+        "sv": "Våren är ny.",
+        "ru": "Весна новая."
       }
     },
     {
@@ -8051,7 +8731,9 @@
         "it": "L'autunno è vecchio.",
         "th": "ฤดูใบไม้ร่วงเก่า",
         "pl": "Jesień jest stara.",
-        "fi": "Syksy on vanha."
+        "fi": "Syksy on vanha.",
+        "sv": "Hösten är gammal.",
+        "ru": "Осень старая."
       }
     },
     {
@@ -8081,7 +8763,9 @@
         "it": "Questa è una cosa.",
         "th": "นี่คือสิ่งของ",
         "pl": "To jest rzecz.",
-        "fi": "Tämä on asia."
+        "fi": "Tämä on asia.",
+        "sv": "Det här är en sak.",
+        "ru": "Это вещь."
       }
     },
     {
@@ -8110,7 +8794,9 @@
         "it": "Per favore, leggi.",
         "th": "กรุณาอ่าน",
         "pl": "Proszę, czytaj.",
-        "fi": "Ole hyvä ja lue."
+        "fi": "Ole hyvä ja lue.",
+        "sv": "Snälla, läs.",
+        "ru": "Пожалуйста, читай."
       }
     },
     {
@@ -8140,7 +8826,9 @@
         "it": "Forse vado.",
         "th": "บางทีฉันอาจจะไป",
         "pl": "Może pójdę.",
-        "fi": "Ehkä minä menen."
+        "fi": "Ehkä minä menen.",
+        "sv": "Kanske går jag.",
+        "ru": "Может быть, я пойду."
       }
     },
     {
@@ -8168,7 +8856,9 @@
         "it": "Grazie.",
         "th": "ขอบคุณ",
         "pl": "Dziękuję.",
-        "fi": "Kiitos."
+        "fi": "Kiitos.",
+        "sv": "Tack.",
+        "ru": "Спасибо."
       }
     },
     {
@@ -8199,7 +8889,9 @@
         "it": "Io vado a prendere del cibo.",
         "th": "ฉันไปเอาอาหาร",
         "pl": "Ja idę po jedzenie.",
-        "fi": "Minä menen hakemaan ruokaa."
+        "fi": "Minä menen hakemaan ruokaa.",
+        "sv": "Jag går för att hämta mat.",
+        "ru": "Я иду за едой."
       }
     },
     {
@@ -8229,7 +8921,9 @@
         "it": "Io ho qualcosa.",
         "th": "ฉันมีบางอย่าง",
         "pl": "Ja mam coś.",
-        "fi": "Minulla on jotakin."
+        "fi": "Minulla on jotakin.",
+        "sv": "Jag har något.",
+        "ru": "У меня есть что-то."
       }
     },
     {
@@ -8260,7 +8954,9 @@
         "it": "Io ho un altro libro.",
         "th": "ฉันมีหนังสืออีกเล่ม",
         "pl": "Ja mam inną książkę.",
-        "fi": "Minulla on toinen kirja."
+        "fi": "Minulla on toinen kirja.",
+        "sv": "Jag har en annan bok.",
+        "ru": "У меня есть другая книга."
       }
     },
     {
@@ -8291,7 +8987,9 @@
         "it": "Io leggo solo il libro.",
         "th": "ฉันอ่านแค่หนังสือ",
         "pl": "Ja czytam tylko książkę.",
-        "fi": "Minä luen vain kirjaa."
+        "fi": "Minä luen vain kirjaa.",
+        "sv": "Jag läser bara boken.",
+        "ru": "Я читаю только книгу."
       }
     },
     {
@@ -8322,7 +9020,9 @@
         "it": "Io vado via da casa.",
         "th": "ฉันออกจากบ้าน",
         "pl": "Ja idę z domu.",
-        "fi": "Minä lähden kotoa."
+        "fi": "Minä lähden kotoa.",
+        "sv": "Jag går hemifrån.",
+        "ru": "Я иду из дома."
       }
     },
     {
@@ -8353,7 +9053,9 @@
         "it": "Io vado alla casa.",
         "th": "ฉันไปที่บ้าน",
         "pl": "Ja idę do domu.",
-        "fi": "Minä menen taloon."
+        "fi": "Minä menen taloon.",
+        "sv": "Jag går till huset.",
+        "ru": "Я иду к дому."
       }
     },
     {
@@ -8383,7 +9085,9 @@
         "it": "Io vado in giro.",
         "th": "ฉันไปรอบๆ",
         "pl": "Ja idę dookoła.",
-        "fi": "Minä kuljen ympäriinsä."
+        "fi": "Minä kuljen ympäriinsä.",
+        "sv": "Jag går runt.",
+        "ru": "Я иду вокруг."
       }
     },
     {
@@ -8475,6 +9179,14 @@
         "zh": {
           "BY": "用",
           "HAND": "手"
+        },
+        "sv": {
+          "BY": "för",
+          "HAND": "hand"
+        },
+        "ru": {
+          "BY": "с помощью",
+          "HAND": "рука"
         }
       },
       "render": {
@@ -8494,7 +9206,9 @@
         "it": "Io faccio questo a mano.",
         "th": "ฉันทำสิ่งนี้ด้วยมือ",
         "pl": "Ja robię to ręką.",
-        "fi": "Minä teen tämän kädellä."
+        "fi": "Minä teen tämän kädellä.",
+        "sv": "Jag gör det här för hand.",
+        "ru": "Я делаю это рукой."
       }
     },
     {
@@ -8524,7 +9238,9 @@
         "it": "Sì, lo faccio.",
         "th": "ใช่ ฉันทำ",
         "pl": "Tak, robię.",
-        "fi": "Kyllä, minä teen."
+        "fi": "Kyllä, minä teen.",
+        "sv": "Ja, det gör jag.",
+        "ru": "Да, я делаю."
       }
     },
     {
@@ -8555,7 +9271,9 @@
         "it": "No, non lo faccio.",
         "th": "ไม่ ฉันไม่ทำ",
         "pl": "Nie, nie robię.",
-        "fi": "Ei, minä en tee."
+        "fi": "Ei, minä en tee.",
+        "sv": "Nej, det gör jag inte.",
+        "ru": "Нет, я не делаю."
       }
     },
     {
@@ -8585,7 +9303,9 @@
         "it": "Questo è mio.",
         "th": "นี่คือของฉัน",
         "pl": "To jest moje.",
-        "fi": "Tämä on minun."
+        "fi": "Tämä on minun.",
+        "sv": "Det här är mitt.",
+        "ru": "Это моё."
       }
     },
     {
@@ -8615,7 +9335,9 @@
         "it": "Questo è tuo.",
         "th": "นี่คือของคุณ",
         "pl": "To jest twoje.",
-        "fi": "Tämä on sinun."
+        "fi": "Tämä on sinun.",
+        "sv": "Det här är ditt.",
+        "ru": "Это твоё."
       }
     },
     {
@@ -8645,7 +9367,9 @@
         "it": "Questo è suo.",
         "th": "นี่คือของเธอ",
         "pl": "To jest jej.",
-        "fi": "Tämä on hänen."
+        "fi": "Tämä on hänen.",
+        "sv": "Det här är hennes.",
+        "ru": "Это её."
       }
     },
     {
@@ -8675,7 +9399,9 @@
         "it": "Questo è nostro.",
         "th": "นี่คือของเรา",
         "pl": "To jest nasze.",
-        "fi": "Tämä on meidän."
+        "fi": "Tämä on meidän.",
+        "sv": "Det här är vårt.",
+        "ru": "Это наше."
       }
     },
     {
@@ -8705,7 +9431,9 @@
         "it": "Questo è loro.",
         "th": "นี่คือของพวกเขา",
         "pl": "To jest ich.",
-        "fi": "Tämä on heidän."
+        "fi": "Tämä on heidän.",
+        "sv": "Det här är deras.",
+        "ru": "Это их."
       }
     }
   ]

@@ -1,0 +1,1509 @@
+{
+  "uiStrings": {
+    "openApp": "ОТКРЫТЬ ПРИЛОЖЕНИЕ",
+    "languagesTitle": "ЯЗЫКИ",
+    "chooseLanguage": "Выберите язык для изучения",
+    "quitLearning": "ЗАВЕРШИТЬ",
+    "sessionTitle": "СЕГОДНЯШНЯЯ СЕССИЯ",
+    "runCompleteTitle": "ВЫ ЗАКОНЧИЛИ!",
+    "runCompleteBody": "Вы освоили все понятия, доступные в ваших пакетах.",
+    "runCompleteStats": "{concepts} понятий освоено · {sessions} сессий пройдено",
+    "runCompleteBack": "Назад к языкам",
+    "startSubtitle": "Изучение языков",
+    "chooseTranslation": "Выберите правильный перевод для:",
+    "originalSentence": "Исходное предложение:",
+    "fillMissing": "Вставьте пропущенное слово:",
+    "inThisSentence": "В этом предложении:",
+    "check": "Проверить",
+    "continue": "Продолжить",
+    "correct": "Верно.",
+    "incorrect": "Неверно.",
+    "syncFailedLocalCopy": "Не удалось связаться с сервером — показан прогресс, сохранённый на этом устройстве.",
+    "syncFailedReloadNeeded": "Не удалось связаться с сервером — перезагрузите страницу, чтобы попробовать снова.",
+    "l7Placeholder": "Введите свой перевод",
+    "level": "Уровень",
+    "blueprint": "Nekh's Language Blueprint",
+    "skool": "Сообщество Skool",
+    "offer": "Улучшите свою языковую систему",
+    "leaderboard": "🏆 Таблица лидеров",
+    "sessionComplete": "Сессия завершена",
+    "sessionFinished": "Сессия {n} завершена.",
+    "enterEmail": "Введите свой e-mail",
+    "buyAccess": "Не пользователь? Получить доступ",
+    "noAccess": "Для этого e-mail доступ не найден",
+    "tutorIntro": "Анна — ваш личный репетитор. Она использует слова, которые вы уже показали, что знаете, и то, что вы отработали в приложении, чтобы вести уроки. То, что вы отрабатываете в разговорах с Анной, тоже добавляется в приложение — для ещё более личного опыта.",
+    "signIn": "Войти",
+    "password": "Пароль",
+    "or": "или",
+    "continueWithGoogle": "Продолжить с Google",
+    "setPassword": "Задать или сбросить пароль",
+    "enterEmailAndPassword": "Введите свой e-mail и пароль.",
+    "enterEmailForPassword": "Сначала введите e-mail выше, затем нажмите здесь ещё раз.",
+    "passwordEmailSent": "Если у этого e-mail есть доступ, ссылка для задания пароля уже в пути — проверьте почту (и папку «Спам»).",
+    "serverError": "Ошибка сервера — попробуйте ещё раз.",
+    "resourcePacks": "ТЕМАТИЧЕСКИЕ ПАКЕТЫ",
+    "choosePacks": "Выберите до 2 пакетов",
+    "start": "НАЧАТЬ",
+    "selectPack": "Выберите хотя бы 1 пакет",
+    "feedbackOpen": "Сообщить об ошибке или оставить отзыв",
+    "feedbackClose": "Закрыть отзыв",
+    "feedbackTitle": "Сообщить об ошибке",
+    "feedbackSubtitle": "Расскажите, что пошло не так — мы читаем каждое сообщение.",
+    "feedbackPlaceholder": "Опишите проблему...",
+    "feedbackSubmit": "Отправить",
+    "feedbackSending": "Отправляем…",
+    "feedbackSent": "✓ Сообщение отправлено — спасибо!",
+    "feedbackFailed": "Не удалось отправить — попробуйте ещё раз.",
+    "reasonTitle": "ПОЧЕМУ {lang}?",
+    "reasonSubtitle": "Неправильных ответов нет — это просто помогает нам отмечать моменты, важные для вас.",
+    "reasonContinue": "ПРОДОЛЖИТЬ",
+    "reasonOptionTravel": "Путешествия",
+    "reasonOptionPerson": "Близкий человек",
+    "reasonOptionCareer": "Работа или учёба",
+    "reasonOptionHeritage": "Корни",
+    "reasonOptionCulture": "Книги, кино и музыка",
+    "reasonOptionFun": "Просто для удовольствия",
+    "reasonDetailTravel": "Куда вы собираетесь?",
+    "reasonDetailPerson": "Кто это?",
+    "reasonDetailCareer": "Какая цель?",
+    "reasonDetailHeritage": "Какая связь?",
+    "reasonDetailCulture": "Что вас привлекает?",
+    "reasonDetailPlaceholderTravel": "напр., Лиссабон",
+    "reasonDetailPlaceholderPerson": "напр., мой партнёр",
+    "reasonDetailPlaceholderCareer": "напр., клиент в Мадриде",
+    "reasonDetailPlaceholderHeritage": "напр., моя семья из Норвегии",
+    "reasonDetailPlaceholderCulture": "напр., Studio Ghibli",
+    "reasonDetailHint": "Необязательно — можно пропустить.",
+    "roadmapTitle": "ВАШ ПУТЬ",
+    "roadmapCounter": "{done} из {total} остановок открыто",
+    "roadmapCounterFull": "{done} пройдено · {inprogress} в процессе · {ahead} впереди",
+    "roadmapSessionFinished": "Сессия {n} завершена. Ещё одна остановка позади.",
+    "roadmapBegin": "НАЧАТЬ ПУТЬ",
+    "roadmapBack": "← НАЗАД",
+    "roadmapBehindLabel": "{n} позади",
+    "roadmapAheadLabel": "{n} впереди",
+    "journeyBtn": "ПУТЬ",
+    "milestoneHeadline": "{n} СЛОВ",
+    "milestoneGeneric": "Каждое из них — ваше.",
+    "milestoneReasonTravel": "{detail} становится ближе с каждым словом.",
+    "milestoneReasonPerson": "{detail} ближе с каждым словом.",
+    "milestoneReasonCareer": "Ещё один шаг к {detail}.",
+    "milestoneReasonHeritage": "{detail} живёт в этих словах.",
+    "milestoneReasonCulture": "{detail} — своим голосом.",
+    "milestoneReasonFun": "И это только начало."
+  },
+  "hubNames": {
+    "fi": "Финский",
+    "th": "Тайский",
+    "it": "Итальянский",
+    "en": "Английский",
+    "pt": "Португальский",
+    "ja": "Японский",
+    "no": "Норвежский",
+    "ar": "Арабский",
+    "ko": "Корейский",
+    "uk": "Украинский",
+    "de": "Немецкий",
+    "el": "Греческий",
+    "tr": "Турецкий",
+    "es": "Испанский",
+    "fr": "Французский",
+    "zh": "Китайский",
+    "pl": "Польский",
+    "sv": "Шведский",
+    "ru": "Русский"
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Русский алфавит",
+        "letters": [
+          {
+            "char": "А",
+            "romanization": "a",
+            "ttsText": "А"
+          },
+          {
+            "char": "Б",
+            "romanization": "b",
+            "ttsText": "Бэ"
+          },
+          {
+            "char": "В",
+            "romanization": "v",
+            "ttsText": "Вэ"
+          },
+          {
+            "char": "Г",
+            "romanization": "g",
+            "ttsText": "Гэ"
+          },
+          {
+            "char": "Д",
+            "romanization": "d",
+            "ttsText": "Дэ"
+          },
+          {
+            "char": "Е",
+            "romanization": "ye",
+            "ttsText": "Е"
+          },
+          {
+            "char": "Ё",
+            "romanization": "yo",
+            "ttsText": "Ё"
+          },
+          {
+            "char": "Ж",
+            "romanization": "zh",
+            "ttsText": "Жэ"
+          },
+          {
+            "char": "З",
+            "romanization": "z",
+            "ttsText": "Зэ"
+          },
+          {
+            "char": "И",
+            "romanization": "i",
+            "ttsText": "И"
+          },
+          {
+            "char": "Й",
+            "romanization": "y",
+            "ttsText": "И краткое"
+          },
+          {
+            "char": "К",
+            "romanization": "k",
+            "ttsText": "Ка"
+          },
+          {
+            "char": "Л",
+            "romanization": "l",
+            "ttsText": "Эль"
+          },
+          {
+            "char": "М",
+            "romanization": "m",
+            "ttsText": "Эм"
+          },
+          {
+            "char": "Н",
+            "romanization": "n",
+            "ttsText": "Эн"
+          },
+          {
+            "char": "О",
+            "romanization": "o",
+            "ttsText": "О"
+          },
+          {
+            "char": "П",
+            "romanization": "p",
+            "ttsText": "Пэ"
+          },
+          {
+            "char": "Р",
+            "romanization": "r",
+            "ttsText": "Эр"
+          },
+          {
+            "char": "С",
+            "romanization": "s",
+            "ttsText": "Эс"
+          },
+          {
+            "char": "Т",
+            "romanization": "t",
+            "ttsText": "Тэ"
+          },
+          {
+            "char": "У",
+            "romanization": "u",
+            "ttsText": "У"
+          },
+          {
+            "char": "Ф",
+            "romanization": "f",
+            "ttsText": "Эф"
+          },
+          {
+            "char": "Х",
+            "romanization": "kh",
+            "ttsText": "Ха"
+          },
+          {
+            "char": "Ц",
+            "romanization": "ts",
+            "ttsText": "Цэ"
+          },
+          {
+            "char": "Ч",
+            "romanization": "ch",
+            "ttsText": "Че"
+          },
+          {
+            "char": "Ш",
+            "romanization": "sh",
+            "ttsText": "Ша"
+          },
+          {
+            "char": "Щ",
+            "romanization": "shch",
+            "ttsText": "Ща"
+          },
+          {
+            "char": "Ъ",
+            "romanization": "hard sign",
+            "ttsText": "Твёрдый знак"
+          },
+          {
+            "char": "Ы",
+            "romanization": "y",
+            "ttsText": "Ы"
+          },
+          {
+            "char": "Ь",
+            "romanization": "soft sign",
+            "ttsText": "Мягкий знак"
+          },
+          {
+            "char": "Э",
+            "romanization": "e",
+            "ttsText": "Э"
+          },
+          {
+            "char": "Ю",
+            "romanization": "yu",
+            "ttsText": "Ю"
+          },
+          {
+            "char": "Я",
+            "romanization": "ya",
+            "ttsText": "Я"
+          }
+        ]
+      }
+    ]
+  },
+  "forms": {
+    "WATER": {
+      "form": "вода",
+      "gender": "f",
+      "genitive": "воды",
+      "dative": "воде",
+      "instrumental": "водой",
+      "locative": "воде",
+      "accusative": "воду"
+    },
+    "FOOD": {
+      "form": "еда",
+      "gender": "f",
+      "genitive": "еды",
+      "dative": "еде",
+      "instrumental": "едой",
+      "locative": "еде",
+      "accusative": "еду"
+    },
+    "HOUSE": {
+      "form": "дом",
+      "gender": "m",
+      "genitive": "дома",
+      "dative": "дому",
+      "instrumental": "домом",
+      "locative": "доме",
+      "plural": "дома",
+      "genitive_plural": "домов"
+    },
+    "HOME": {
+      "form": "дом",
+      "gender": "m",
+      "genitive": "дома",
+      "dative": "дому",
+      "instrumental": "домом",
+      "locative": "доме",
+      "predicative": "дома",
+      "fused": {
+        "to": "домой"
+      }
+    },
+    "BOOK": {
+      "form": "книга",
+      "gender": "f",
+      "genitive": "книги",
+      "dative": "книге",
+      "instrumental": "книгой",
+      "locative": "книге",
+      "accusative": "книгу",
+      "plural": "книги",
+      "genitive_plural": "книг"
+    },
+    "THING": {
+      "form": "вещь",
+      "gender": "f",
+      "genitive": "вещи",
+      "dative": "вещи",
+      "instrumental": "вещью",
+      "locative": "вещи",
+      "plural": "вещи",
+      "genitive_plural": "вещей"
+    },
+    "JOB": {
+      "form": "работа",
+      "gender": "f",
+      "genitive": "работы",
+      "dative": "работе",
+      "instrumental": "работой",
+      "locative": "работе",
+      "accusative": "работу",
+      "plural": "работы",
+      "genitive_plural": "работ"
+    },
+    "ROOM": {
+      "form": "комната",
+      "gender": "f",
+      "genitive": "комнаты",
+      "dative": "комнате",
+      "instrumental": "комнатой",
+      "locative": "комнате",
+      "accusative": "комнату",
+      "plural": "комнаты",
+      "genitive_plural": "комнат"
+    },
+    "BOY": {
+      "form": "мальчик",
+      "gender": "m",
+      "genitive": "мальчика",
+      "dative": "мальчику",
+      "instrumental": "мальчиком",
+      "locative": "мальчике",
+      "accusative": "мальчика",
+      "plural": "мальчики",
+      "genitive_plural": "мальчиков"
+    },
+    "GIRL": {
+      "form": "девочка",
+      "gender": "f",
+      "genitive": "девочки",
+      "dative": "девочке",
+      "instrumental": "девочкой",
+      "locative": "девочке",
+      "accusative": "девочку",
+      "plural": "девочки",
+      "genitive_plural": "девочек"
+    },
+    "MAN": {
+      "form": "мужчина",
+      "gender": "m",
+      "genitive": "мужчины",
+      "dative": "мужчине",
+      "instrumental": "мужчиной",
+      "locative": "мужчине",
+      "accusative": "мужчину",
+      "plural": "мужчины",
+      "genitive_plural": "мужчин"
+    },
+    "WOMAN": {
+      "form": "женщина",
+      "gender": "f",
+      "genitive": "женщины",
+      "dative": "женщине",
+      "instrumental": "женщиной",
+      "locative": "женщине",
+      "accusative": "женщину",
+      "plural": "женщины",
+      "genitive_plural": "женщин"
+    },
+    "MOM": {
+      "form": "мама",
+      "gender": "f",
+      "genitive": "мамы",
+      "dative": "маме",
+      "instrumental": "мамой",
+      "locative": "маме",
+      "accusative": "маму",
+      "plural": "мамы",
+      "genitive_plural": "мам"
+    },
+    "DAD": {
+      "form": "папа",
+      "gender": "m",
+      "genitive": "папы",
+      "dative": "папе",
+      "instrumental": "папой",
+      "locative": "папе",
+      "accusative": "папу",
+      "plural": "папы",
+      "genitive_plural": "пап"
+    },
+    "SON": {
+      "form": "сын",
+      "gender": "m",
+      "genitive": "сына",
+      "dative": "сыну",
+      "instrumental": "сыном",
+      "locative": "сыне",
+      "accusative": "сына",
+      "plural": "сыновья",
+      "genitive_plural": "сыновей"
+    },
+    "DAUGHTER": {
+      "form": "дочь",
+      "gender": "f",
+      "genitive": "дочери",
+      "dative": "дочери",
+      "instrumental": "дочерью",
+      "locative": "дочери",
+      "plural": "дочери",
+      "genitive_plural": "дочерей"
+    },
+    "BROTHER": {
+      "form": "брат",
+      "gender": "m",
+      "genitive": "брата",
+      "dative": "брату",
+      "instrumental": "братом",
+      "locative": "брате",
+      "accusative": "брата",
+      "plural": "братья",
+      "genitive_plural": "братьев"
+    },
+    "SISTER": {
+      "form": "сестра",
+      "gender": "f",
+      "genitive": "сестры",
+      "dative": "сестре",
+      "instrumental": "сестрой",
+      "locative": "сестре",
+      "accusative": "сестру",
+      "plural": "сёстры",
+      "genitive_plural": "сестёр"
+    },
+    "HEAD": {
+      "form": "голова",
+      "gender": "f",
+      "genitive": "головы",
+      "dative": "голове",
+      "instrumental": "головой",
+      "locative": "голове",
+      "accusative": "голову",
+      "plural": "головы",
+      "genitive_plural": "голов"
+    },
+    "ARM": {
+      "form": "рука",
+      "gender": "f",
+      "genitive": "руки",
+      "dative": "руке",
+      "instrumental": "рукой",
+      "locative": "руке",
+      "accusative": "руку",
+      "plural": "руки",
+      "genitive_plural": "рук"
+    },
+    "HAND": {
+      "form": "рука",
+      "gender": "f",
+      "genitive": "руки",
+      "dative": "руке",
+      "instrumental": "рукой",
+      "locative": "руке",
+      "accusative": "руку",
+      "plural": "руки",
+      "genitive_plural": "рук"
+    },
+    "LEG": {
+      "form": "нога",
+      "gender": "f",
+      "genitive": "ноги",
+      "dative": "ноге",
+      "instrumental": "ногой",
+      "locative": "ноге",
+      "accusative": "ногу",
+      "plural": "ноги",
+      "genitive_plural": "ног"
+    },
+    "FOOT": {
+      "form": "ступня",
+      "gender": "f",
+      "genitive": "ступни",
+      "dative": "ступне",
+      "instrumental": "ступней",
+      "locative": "ступне",
+      "accusative": "ступню",
+      "plural": "ступни",
+      "genitive_plural": "ступней"
+    },
+    "FINGER": {
+      "form": "палец",
+      "gender": "m",
+      "genitive": "пальца",
+      "dative": "пальцу",
+      "instrumental": "пальцем",
+      "locative": "пальце",
+      "plural": "пальцы",
+      "genitive_plural": "пальцев"
+    },
+    "EYE": {
+      "form": "глаз",
+      "gender": "m",
+      "genitive": "глаза",
+      "dative": "глазу",
+      "instrumental": "глазом",
+      "locative": "глазу",
+      "plural": "глаза",
+      "genitive_plural": "глаз"
+    },
+    "MOUTH": {
+      "form": "рот",
+      "gender": "m",
+      "genitive": "рта",
+      "dative": "рту",
+      "instrumental": "ртом",
+      "locative": "рту",
+      "plural": "рты",
+      "genitive_plural": "ртов"
+    },
+    "FACE": {
+      "form": "лицо",
+      "gender": "n",
+      "genitive": "лица",
+      "dative": "лицу",
+      "instrumental": "лицом",
+      "locative": "лице",
+      "plural": "лица",
+      "genitive_plural": "лиц"
+    },
+    "BREAKFAST": {
+      "form": "завтрак",
+      "gender": "m",
+      "genitive": "завтрака",
+      "dative": "завтраку",
+      "instrumental": "завтраком",
+      "locative": "завтраке",
+      "plural": "завтраки",
+      "genitive_plural": "завтраков"
+    },
+    "LUNCH": {
+      "form": "обед",
+      "gender": "m",
+      "genitive": "обеда",
+      "dative": "обеду",
+      "instrumental": "обедом",
+      "locative": "обеде",
+      "plural": "обеды",
+      "genitive_plural": "обедов"
+    },
+    "DINNER": {
+      "form": "ужин",
+      "gender": "m",
+      "genitive": "ужина",
+      "dative": "ужину",
+      "instrumental": "ужином",
+      "locative": "ужине",
+      "plural": "ужины",
+      "genitive_plural": "ужинов"
+    },
+    "CLOTHES": {
+      "form": "одежда",
+      "gender": "f",
+      "genitive": "одежды",
+      "dative": "одежде",
+      "instrumental": "одеждой",
+      "locative": "одежде",
+      "accusative": "одежду"
+    },
+    "SHIRT": {
+      "form": "рубашка",
+      "gender": "f",
+      "genitive": "рубашки",
+      "dative": "рубашке",
+      "instrumental": "рубашкой",
+      "locative": "рубашке",
+      "accusative": "рубашку",
+      "plural": "рубашки",
+      "genitive_plural": "рубашек"
+    },
+    "SHOES": {
+      "form": "обувь",
+      "gender": "f",
+      "genitive": "обуви",
+      "dative": "обуви",
+      "instrumental": "обувью",
+      "locative": "обуви"
+    },
+    "PHONE": {
+      "form": "телефон",
+      "gender": "m",
+      "genitive": "телефона",
+      "dative": "телефону",
+      "instrumental": "телефоном",
+      "locative": "телефоне",
+      "plural": "телефоны",
+      "genitive_plural": "телефонов"
+    },
+    "TABLE": {
+      "form": "стол",
+      "gender": "m",
+      "genitive": "стола",
+      "dative": "столу",
+      "instrumental": "столом",
+      "locative": "столе",
+      "plural": "столы",
+      "genitive_plural": "столов"
+    },
+    "PANTS": {
+      "form": "брюки",
+      "gender": "m",
+      "pluralOnly": true,
+      "genitive_plural": "брюк"
+    },
+    "DO": {
+      "base": "делать",
+      "1_singular": "делаю",
+      "2_singular": "делаешь",
+      "3_singular": "делает",
+      "1_plural": "делаем",
+      "2_plural": "делаете",
+      "3_plural": "делают"
+    },
+    "GO": {
+      "base": "идти",
+      "1_singular": "иду",
+      "2_singular": "идёшь",
+      "3_singular": "идёт",
+      "1_plural": "идём",
+      "2_plural": "идёте",
+      "3_plural": "идут"
+    },
+    "EAT": {
+      "base": "есть",
+      "1_singular": "ем",
+      "2_singular": "ешь",
+      "3_singular": "ест",
+      "1_plural": "едим",
+      "2_plural": "едите",
+      "3_plural": "едят"
+    },
+    "DRINK": {
+      "base": "пить",
+      "1_singular": "пью",
+      "2_singular": "пьёшь",
+      "3_singular": "пьёт",
+      "1_plural": "пьём",
+      "2_plural": "пьёте",
+      "3_plural": "пьют"
+    },
+    "READ": {
+      "base": "читать",
+      "1_singular": "читаю",
+      "2_singular": "читаешь",
+      "3_singular": "читает",
+      "1_plural": "читаем",
+      "2_plural": "читаете",
+      "3_plural": "читают"
+    },
+    "SEE": {
+      "base": "видеть",
+      "1_singular": "вижу",
+      "2_singular": "видишь",
+      "3_singular": "видит",
+      "1_plural": "видим",
+      "2_plural": "видите",
+      "3_plural": "видят"
+    },
+    "START": {
+      "base": "начинать",
+      "1_singular": "начинаю",
+      "2_singular": "начинаешь",
+      "3_singular": "начинает",
+      "1_plural": "начинаем",
+      "2_plural": "начинаете",
+      "3_plural": "начинают"
+    },
+    "STOP": {
+      "base": "переставать",
+      "1_singular": "перестаю",
+      "2_singular": "перестаёшь",
+      "3_singular": "перестаёт",
+      "1_plural": "перестаём",
+      "2_plural": "перестаёте",
+      "3_plural": "перестают"
+    },
+    "SLEEP": {
+      "base": "спать",
+      "1_singular": "сплю",
+      "2_singular": "спишь",
+      "3_singular": "спит",
+      "1_plural": "спим",
+      "2_plural": "спите",
+      "3_plural": "спят"
+    },
+    "HAVE": {
+      "base": "иметь",
+      "present": "есть"
+    },
+    "COME": {
+      "base": "приходить",
+      "1_singular": "прихожу",
+      "2_singular": "приходишь",
+      "3_singular": "приходит",
+      "1_plural": "приходим",
+      "2_plural": "приходите",
+      "3_plural": "приходят"
+    },
+    "USE": {
+      "base": "использовать",
+      "1_singular": "использую",
+      "2_singular": "используешь",
+      "3_singular": "использует",
+      "1_plural": "используем",
+      "2_plural": "используете",
+      "3_plural": "используют"
+    },
+    "GET": {
+      "base": "получать",
+      "1_singular": "получаю",
+      "2_singular": "получаешь",
+      "3_singular": "получает",
+      "1_plural": "получаем",
+      "2_plural": "получаете",
+      "3_plural": "получают"
+    },
+    "BE": {
+      "base": "быть",
+      "1_singular": "есть",
+      "2_singular": "есть",
+      "3_singular": "есть",
+      "1_plural": "есть",
+      "2_plural": "есть",
+      "3_plural": "есть"
+    },
+    "MAY": {
+      "base": "может"
+    },
+    "BIG": {
+      "form": "большой",
+      "f": "большая",
+      "n": "большое",
+      "plural": "большие"
+    },
+    "SMALL": {
+      "form": "маленький",
+      "f": "маленькая",
+      "n": "маленькое",
+      "plural": "маленькие"
+    },
+    "GOOD": {
+      "form": "хороший",
+      "f": "хорошая",
+      "n": "хорошее",
+      "plural": "хорошие"
+    },
+    "BAD": {
+      "form": "плохой",
+      "f": "плохая",
+      "n": "плохое",
+      "plural": "плохие"
+    },
+    "NEW": {
+      "form": "новый",
+      "f": "новая",
+      "n": "новое",
+      "plural": "новые"
+    },
+    "OLD": {
+      "form": "старый",
+      "f": "старая",
+      "n": "старое",
+      "plural": "старые"
+    },
+    "EASY": {
+      "form": "лёгкий",
+      "f": "лёгкая",
+      "n": "лёгкое",
+      "plural": "лёгкие"
+    },
+    "DIFFICULT": {
+      "form": "трудный",
+      "f": "трудная",
+      "n": "трудное",
+      "plural": "трудные"
+    },
+    "MY": {
+      "form": "мой",
+      "f": "моя",
+      "n": "моё",
+      "plural": "мои",
+      "genitive": "моего",
+      "f_genitive": "моей",
+      "dative": "моему",
+      "f_dative": "моей",
+      "instrumental": "моим",
+      "f_instrumental": "моей",
+      "locative": "моём",
+      "f_locative": "моей"
+    },
+    "YOUR": {
+      "form": "твой",
+      "f": "твоя",
+      "n": "твоё",
+      "plural": "твои",
+      "genitive": "твоего",
+      "f_genitive": "твоей",
+      "dative": "твоему",
+      "f_dative": "твоей",
+      "instrumental": "твоим",
+      "f_instrumental": "твоей",
+      "locative": "твоём",
+      "f_locative": "твоей"
+    },
+    "HIS": {
+      "form": "его",
+      "f": "его",
+      "n": "его",
+      "plural": "его"
+    },
+    "HER": {
+      "form": "её",
+      "f": "её",
+      "n": "её",
+      "plural": "её"
+    },
+    "OUR": {
+      "form": "наш",
+      "f": "наша",
+      "n": "наше",
+      "plural": "наши",
+      "genitive": "нашего",
+      "f_genitive": "нашей",
+      "dative": "нашему",
+      "f_dative": "нашей",
+      "instrumental": "нашим",
+      "f_instrumental": "нашей",
+      "locative": "нашем",
+      "f_locative": "нашей"
+    },
+    "THEIR": {
+      "form": "их",
+      "f": "их",
+      "n": "их",
+      "plural": "их"
+    },
+    "BLACK": {
+      "form": "чёрный",
+      "f": "чёрная",
+      "n": "чёрное",
+      "plural": "чёрные"
+    },
+    "WHITE": {
+      "form": "белый",
+      "f": "белая",
+      "n": "белое",
+      "plural": "белые"
+    },
+    "RED": {
+      "form": "красный",
+      "f": "красная",
+      "n": "красное",
+      "plural": "красные"
+    },
+    "BLUE": {
+      "form": "синий",
+      "f": "синяя",
+      "n": "синее",
+      "plural": "синие"
+    },
+    "GREEN": {
+      "form": "зелёный",
+      "f": "зелёная",
+      "n": "зелёное",
+      "plural": "зелёные"
+    },
+    "YELLOW": {
+      "form": "жёлтый",
+      "f": "жёлтая",
+      "n": "жёлтое",
+      "plural": "жёлтые"
+    },
+    "PURPLE": {
+      "form": "фиолетовый",
+      "f": "фиолетовая",
+      "n": "фиолетовое",
+      "plural": "фиолетовые"
+    },
+    "ORANGE": {
+      "form": "оранжевый",
+      "f": "оранжевая",
+      "n": "оранжевое",
+      "plural": "оранжевые"
+    },
+    "FAST": {
+      "form": "быстрый",
+      "f": "быстрая",
+      "n": "быстрое",
+      "plural": "быстрые"
+    },
+    "SLOW": {
+      "form": "медленный",
+      "f": "медленная",
+      "n": "медленное",
+      "plural": "медленные"
+    },
+    "LONG": {
+      "form": "длинный",
+      "f": "длинная",
+      "n": "длинное",
+      "plural": "длинные"
+    },
+    "SHORT": {
+      "form": "короткий",
+      "f": "короткая",
+      "n": "короткое",
+      "plural": "короткие"
+    },
+    "HEAVY": {
+      "form": "тяжёлый",
+      "f": "тяжёлая",
+      "n": "тяжёлое",
+      "plural": "тяжёлые"
+    },
+    "LIGHT": {
+      "form": "лёгкий",
+      "f": "лёгкая",
+      "n": "лёгкое",
+      "plural": "лёгкие"
+    },
+    "DARK": {
+      "form": "тёмный",
+      "f": "тёмная",
+      "n": "тёмное",
+      "plural": "тёмные"
+    },
+    "YOUNG": {
+      "form": "молодой",
+      "f": "молодая",
+      "n": "молодое",
+      "plural": "молодые"
+    },
+    "RIGHT": {
+      "form": "правый",
+      "f": "правая",
+      "n": "правое",
+      "plural": "правые"
+    },
+    "LEFT": {
+      "form": "левый",
+      "f": "левая",
+      "n": "левое",
+      "plural": "левые"
+    },
+    "CORRECT": {
+      "form": "правильный",
+      "f": "правильная",
+      "n": "правильное",
+      "plural": "правильные"
+    },
+    "WRONG": {
+      "form": "неправильный",
+      "f": "неправильная",
+      "n": "неправильное",
+      "plural": "неправильные"
+    },
+    "NICE": {
+      "form": "приятный",
+      "f": "приятная",
+      "n": "приятное",
+      "plural": "приятные"
+    },
+    "COLD": {
+      "form": "холодный",
+      "f": "холодная",
+      "n": "холодное",
+      "plural": "холодные"
+    },
+    "FIRST_PERSON_SINGULAR": {
+      "form": "я",
+      "genitive": "меня",
+      "dative": "мне",
+      "accusative": "меня",
+      "instrumental": "мной",
+      "locative": "мне"
+    },
+    "SECOND_PERSON": {
+      "form": "ты",
+      "genitive": "тебя",
+      "dative": "тебе",
+      "accusative": "тебя",
+      "instrumental": "тобой",
+      "locative": "тебе"
+    },
+    "SECOND_PERSON_PLURAL": {
+      "form": "вы",
+      "genitive": "вас",
+      "dative": "вам",
+      "accusative": "вас",
+      "instrumental": "вами",
+      "locative": "вас"
+    },
+    "HE": {
+      "form": "он",
+      "genitive": "него",
+      "dative": "нему",
+      "accusative": "его",
+      "instrumental": "ним",
+      "locative": "нём"
+    },
+    "SHE": {
+      "form": "она",
+      "genitive": "неё",
+      "dative": "ней",
+      "accusative": "её",
+      "instrumental": "ней",
+      "locative": "ней"
+    },
+    "FIRST_PERSON_PLURAL": {
+      "form": "мы",
+      "genitive": "нас",
+      "dative": "нам",
+      "accusative": "нас",
+      "instrumental": "нами",
+      "locative": "нас"
+    },
+    "THIRD_PERSON_PLURAL": {
+      "form": "они",
+      "genitive": "них",
+      "dative": "ним",
+      "accusative": "их",
+      "instrumental": "ними",
+      "locative": "них"
+    },
+    "THIS": {
+      "form": "это",
+      "genitive": "этого",
+      "dative": "этому",
+      "accusative": "это",
+      "instrumental": "этим",
+      "locative": "этом"
+    },
+    "THAT": {
+      "form": "то",
+      "genitive": "того",
+      "dative": "тому",
+      "accusative": "то",
+      "instrumental": "тем",
+      "locative": "том"
+    },
+    "IT": {
+      "form": "оно",
+      "genitive": "него",
+      "dative": "нему",
+      "accusative": "его",
+      "instrumental": "ним",
+      "locative": "нём"
+    },
+    "ITS": [
+      "его"
+    ],
+    "MINE": [
+      "моё"
+    ],
+    "YOURS": [
+      "твоё"
+    ],
+    "HERS": [
+      "её"
+    ],
+    "OURS": [
+      "наше"
+    ],
+    "THEIRS": [
+      "их"
+    ],
+    "ONE": {
+      "form": "один",
+      "f": "одна",
+      "n": "одно",
+      "f_accusative": "одну"
+    },
+    "TWO": {
+      "form": "два",
+      "f": "две"
+    },
+    "THREE": [
+      "три"
+    ],
+    "FOUR": [
+      "четыре"
+    ],
+    "FIVE": [
+      "пять"
+    ],
+    "SIX": [
+      "шесть"
+    ],
+    "SEVEN": [
+      "семь"
+    ],
+    "EIGHT": [
+      "восемь"
+    ],
+    "NINE": [
+      "девять"
+    ],
+    "TEN": [
+      "десять"
+    ],
+    "ELEVEN": [
+      "одиннадцать"
+    ],
+    "TWELVE": [
+      "двенадцать"
+    ],
+    "THIRTEEN": [
+      "тринадцать"
+    ],
+    "FOURTEEN": [
+      "четырнадцать"
+    ],
+    "FIFTEEN": [
+      "пятнадцать"
+    ],
+    "SIXTEEN": [
+      "шестнадцать"
+    ],
+    "SEVENTEEN": [
+      "семнадцать"
+    ],
+    "EIGHTEEN": [
+      "восемнадцать"
+    ],
+    "NINETEEN": [
+      "девятнадцать"
+    ],
+    "TWENTY": [
+      "двадцать"
+    ],
+    "WHO": [
+      "кто"
+    ],
+    "WHAT": [
+      "что"
+    ],
+    "WHEN": [
+      "когда"
+    ],
+    "WHERE": [
+      "где"
+    ],
+    "WHY": [
+      "почему"
+    ],
+    "HOW": [
+      "как"
+    ],
+    "WHICH": [
+      "какой"
+    ],
+    "TODAY": [
+      "сегодня"
+    ],
+    "YESTERDAY": [
+      "вчера"
+    ],
+    "TOMORROW": [
+      "завтра"
+    ],
+    "MORNING": {
+      "form": "утро",
+      "gender": "n",
+      "genitive": "утра",
+      "dative": "утру",
+      "instrumental": "утром",
+      "locative": "утре",
+      "plural": "утра",
+      "genitive_plural": "утр"
+    },
+    "DAY": {
+      "form": "день",
+      "gender": "m",
+      "genitive": "дня",
+      "dative": "дню",
+      "instrumental": "днём",
+      "locative": "дне",
+      "plural": "дни",
+      "genitive_plural": "дней"
+    },
+    "NIGHT": {
+      "form": "ночь",
+      "gender": "f",
+      "genitive": "ночи",
+      "dative": "ночи",
+      "instrumental": "ночью",
+      "locative": "ночи",
+      "plural": "ночи",
+      "genitive_plural": "ночей"
+    },
+    "WEEK": {
+      "form": "неделя",
+      "gender": "f",
+      "genitive": "недели",
+      "dative": "неделе",
+      "instrumental": "неделей",
+      "locative": "неделе",
+      "accusative": "неделю",
+      "plural": "недели",
+      "genitive_plural": "недель"
+    },
+    "MONTH": {
+      "form": "месяц",
+      "gender": "m",
+      "genitive": "месяца",
+      "dative": "месяцу",
+      "instrumental": "месяцем",
+      "locative": "месяце",
+      "plural": "месяцы",
+      "genitive_plural": "месяцев"
+    },
+    "YEAR": {
+      "form": "год",
+      "gender": "m",
+      "genitive": "года",
+      "dative": "году",
+      "instrumental": "годом",
+      "locative": "году",
+      "plural": "годы",
+      "genitive_plural": "лет"
+    },
+    "HOUR": {
+      "form": "час",
+      "gender": "m",
+      "genitive": "часа",
+      "dative": "часу",
+      "instrumental": "часом",
+      "locative": "часе",
+      "plural": "часы",
+      "genitive_plural": "часов"
+    },
+    "MINUTE": {
+      "form": "минута",
+      "gender": "f",
+      "genitive": "минуты",
+      "dative": "минуте",
+      "instrumental": "минутой",
+      "locative": "минуте",
+      "accusative": "минуту",
+      "plural": "минуты",
+      "genitive_plural": "минут"
+    },
+    "SECOND": {
+      "form": "секунда",
+      "gender": "f",
+      "genitive": "секунды",
+      "dative": "секунде",
+      "instrumental": "секундой",
+      "locative": "секунде",
+      "accusative": "секунду",
+      "plural": "секунды",
+      "genitive_plural": "секунд"
+    },
+    "NOW": [
+      "сейчас"
+    ],
+    "BEFORE": [
+      "до"
+    ],
+    "AFTER": [
+      "после"
+    ],
+    "LATER": [
+      "позже"
+    ],
+    "NEXT": [
+      "следующий"
+    ],
+    "SPRING": {
+      "form": "весна",
+      "gender": "f",
+      "genitive": "весны",
+      "dative": "весне",
+      "instrumental": "весной",
+      "locative": "весне",
+      "accusative": "весну",
+      "plural": "вёсны",
+      "genitive_plural": "вёсен"
+    },
+    "SUMMER": {
+      "form": "лето",
+      "gender": "n",
+      "genitive": "лета",
+      "dative": "лету",
+      "instrumental": "летом",
+      "locative": "лете",
+      "plural": "лета",
+      "genitive_plural": "лет"
+    },
+    "AUTUMN": {
+      "form": "осень",
+      "gender": "f",
+      "genitive": "осени",
+      "dative": "осени",
+      "instrumental": "осенью",
+      "locative": "осени",
+      "plural": "осени",
+      "genitive_plural": "осеней"
+    },
+    "WINTER": {
+      "form": "зима",
+      "gender": "f",
+      "genitive": "зимы",
+      "dative": "зиме",
+      "instrumental": "зимой",
+      "locative": "зиме",
+      "accusative": "зиму",
+      "plural": "зимы",
+      "genitive_plural": "зим"
+    },
+    "AND": [
+      "и"
+    ],
+    "BUT": [
+      "но"
+    ],
+    "ALSO": [
+      "также"
+    ],
+    "BECAUSE": [
+      "потому что"
+    ],
+    "IF": [
+      "если"
+    ],
+    "TOP": [
+      "верх"
+    ],
+    "BOTTOM": [
+      "низ"
+    ],
+    "UNDER": [
+      "под"
+    ],
+    "NEXT_TO": [
+      "рядом с"
+    ],
+    "FRONT": [
+      "перед"
+    ],
+    "BEHIND": [
+      "за"
+    ],
+    "IN": [
+      "в"
+    ],
+    "ON": [
+      "на"
+    ],
+    "OFF": [
+      "не на"
+    ],
+    "BETWEEN": [
+      "между"
+    ],
+    "BACK": [
+      "назад"
+    ],
+    "OUT": [
+      "наружу"
+    ],
+    "NORTH": [
+      "север"
+    ],
+    "SOUTH": [
+      "юг"
+    ],
+    "EAST": [
+      "восток"
+    ],
+    "WEST": [
+      "запад"
+    ],
+    "AROUND": [
+      "вокруг"
+    ],
+    "FOR": [
+      "для"
+    ],
+    "WITH": [
+      "с"
+    ],
+    "FROM": [
+      "из"
+    ],
+    "TO": [
+      "к"
+    ],
+    "BY": [
+      "с помощью"
+    ],
+    "WHILE": [
+      "пока"
+    ],
+    "AS": [
+      "как"
+    ],
+    "ANY": [
+      "любой"
+    ],
+    "ONLY": [
+      "только"
+    ],
+    "ANOTHER": {
+      "form": "другой",
+      "f": "другая",
+      "n": "другое",
+      "plural": "другие"
+    },
+    "SOMETHING": [
+      "что-то"
+    ],
+    "ALL": [
+      "всё"
+    ],
+    "PLEASE": [
+      "пожалуйста"
+    ],
+    "MAYBE": [
+      "может быть"
+    ],
+    "JUST": [
+      "просто"
+    ],
+    "YES": [
+      "да"
+    ],
+    "NO": [
+      "нет"
+    ],
+    "NOT": [
+      "не"
+    ],
+    "THANKS": [
+      "спасибо"
+    ],
+    "OWN": {
+      "form": "свой",
+      "f": "своя",
+      "n": "своё",
+      "plural": "свои",
+      "genitive": "своего",
+      "f_genitive": "своей",
+      "dative": "своему",
+      "f_dative": "своей",
+      "instrumental": "своим",
+      "f_instrumental": "своей",
+      "locative": "своём",
+      "f_locative": "своей"
+    }
+  }
+}

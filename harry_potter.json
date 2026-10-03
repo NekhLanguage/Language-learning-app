@@ -58,6 +58,734 @@
   ],
 
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "WAND": {
+          "form": "волшебная палочка",
+          "gender": "f",
+          "genitive": "волшебной палочки",
+          "dative": "волшебной палочке",
+          "instrumental": "волшебной палочкой",
+          "locative": "волшебной палочке",
+          "accusative": "волшебную палочку",
+          "plural": "волшебные палочки",
+          "genitive_plural": "волшебных палочек"
+        },
+        "MAGIC": {
+          "form": "магия",
+          "gender": "f",
+          "genitive": "магии",
+          "dative": "магии",
+          "instrumental": "магией",
+          "locative": "магии",
+          "accusative": "магию"
+        },
+        "WIZARD": {
+          "form": "волшебник",
+          "gender": "m",
+          "genitive": "волшебника",
+          "dative": "волшебнику",
+          "instrumental": "волшебником",
+          "locative": "волшебнике",
+          "accusative": "волшебника",
+          "plural": "волшебники",
+          "genitive_plural": "волшебников"
+        },
+        "WITCH": {
+          "form": "ведьма",
+          "gender": "f",
+          "genitive": "ведьмы",
+          "dative": "ведьме",
+          "instrumental": "ведьмой",
+          "locative": "ведьме",
+          "accusative": "ведьму",
+          "plural": "ведьмы",
+          "genitive_plural": "ведьм"
+        },
+        "SPELL": {
+          "form": "заклинание",
+          "gender": "n",
+          "genitive": "заклинания",
+          "dative": "заклинанию",
+          "instrumental": "заклинанием",
+          "locative": "заклинании",
+          "plural": "заклинания",
+          "genitive_plural": "заклинанй"
+        },
+        "POTION": {
+          "form": "зелье",
+          "gender": "n",
+          "genitive": "зелья",
+          "dative": "зелью",
+          "instrumental": "зельем",
+          "locative": "зелье",
+          "plural": "зелья",
+          "genitive_plural": "зелий"
+        },
+        "SCHOOL": {
+          "form": "школа",
+          "gender": "f",
+          "genitive": "школы",
+          "dative": "школе",
+          "instrumental": "школой",
+          "locative": "школе",
+          "accusative": "школу",
+          "plural": "школы",
+          "genitive_plural": "школ"
+        },
+        "CAULDRON": {
+          "form": "котёл",
+          "gender": "m",
+          "genitive": "котла",
+          "dative": "котлу",
+          "instrumental": "котлом",
+          "locative": "котле",
+          "plural": "котлы",
+          "genitive_plural": "котлов"
+        },
+        "BROOM": {
+          "form": "метла",
+          "gender": "f",
+          "genitive": "метлы",
+          "dative": "метле",
+          "instrumental": "метлой",
+          "locative": "метле",
+          "accusative": "метлу",
+          "plural": "мётлы",
+          "genitive_plural": "мётел"
+        },
+        "OWL": {
+          "form": "сова",
+          "gender": "f",
+          "genitive": "совы",
+          "dative": "сове",
+          "instrumental": "совой",
+          "locative": "сове",
+          "accusative": "сову",
+          "plural": "совы",
+          "genitive_plural": "сов"
+        },
+        "CASTLE": {
+          "form": "замок",
+          "gender": "m",
+          "genitive": "замка",
+          "dative": "замку",
+          "instrumental": "замком",
+          "locative": "замке",
+          "plural": "замки",
+          "genitive_plural": "замков"
+        },
+        "PROFESSOR": {
+          "form": "профессор",
+          "gender": "m",
+          "genitive": "профессора",
+          "dative": "профессору",
+          "instrumental": "профессором",
+          "locative": "профессоре",
+          "accusative": "профессора",
+          "plural": "профессора",
+          "genitive_plural": "профессоров"
+        },
+        "STUDENT": {
+          "form": "студент",
+          "gender": "m",
+          "feminine": "студентка",
+          "genitive": "студента",
+          "dative": "студенту",
+          "instrumental": "студентом",
+          "locative": "студенте",
+          "accusative": "студента",
+          "plural": "студенты",
+          "genitive_plural": "студентов"
+        },
+        "ELF": {
+          "form": "эльф",
+          "gender": "m",
+          "genitive": "эльфа",
+          "dative": "эльфу",
+          "instrumental": "эльфом",
+          "locative": "эльфе",
+          "accusative": "эльфа",
+          "plural": "эльфы",
+          "genitive_plural": "эльфов"
+        },
+        "UNICORN": {
+          "form": "единорог",
+          "gender": "m",
+          "genitive": "единорога",
+          "dative": "единорогу",
+          "instrumental": "единорогом",
+          "locative": "единороге",
+          "accusative": "единорога",
+          "plural": "единороги",
+          "genitive_plural": "единорогов"
+        },
+        "GIANT": {
+          "form": "великан",
+          "gender": "m",
+          "genitive": "великана",
+          "dative": "великану",
+          "instrumental": "великаном",
+          "locative": "великане",
+          "accusative": "великана",
+          "plural": "великаны",
+          "genitive_plural": "великанов"
+        },
+        "TROLL": {
+          "form": "тролль",
+          "gender": "m",
+          "genitive": "тролля",
+          "dative": "троллю",
+          "instrumental": "троллем",
+          "locative": "тролле",
+          "accusative": "тролля",
+          "plural": "тролли",
+          "genitive_plural": "троллей"
+        },
+        "GHOST": {
+          "form": "призрак",
+          "gender": "m",
+          "genitive": "призрака",
+          "dative": "призраку",
+          "instrumental": "призраком",
+          "locative": "призраке",
+          "accusative": "призрака",
+          "plural": "призраки",
+          "genitive_plural": "призраков"
+        },
+        "FOREST": {
+          "form": "лес",
+          "gender": "m",
+          "genitive": "леса",
+          "dative": "лесу",
+          "instrumental": "лесом",
+          "locative": "лесу",
+          "plural": "леса",
+          "genitive_plural": "лесов"
+        },
+        "SPIDER": {
+          "form": "паук",
+          "gender": "m",
+          "genitive": "паука",
+          "dative": "пауку",
+          "instrumental": "пауком",
+          "locative": "пауке",
+          "accusative": "паука",
+          "plural": "пауки",
+          "genitive_plural": "пауков"
+        },
+        "LIBRARY": {
+          "form": "библиотека",
+          "gender": "f",
+          "genitive": "библиотеки",
+          "dative": "библиотеке",
+          "instrumental": "библиотекой",
+          "locative": "библиотеке",
+          "accusative": "библиотеку",
+          "plural": "библиотеки",
+          "genitive_plural": "библиотек"
+        },
+        "CLASS": {
+          "form": "класс",
+          "gender": "m",
+          "genitive": "класса",
+          "dative": "классу",
+          "instrumental": "классом",
+          "locative": "классе",
+          "plural": "классы",
+          "genitive_plural": "классов"
+        },
+        "LESSON": {
+          "form": "урок",
+          "gender": "m",
+          "genitive": "урока",
+          "dative": "уроку",
+          "instrumental": "уроком",
+          "locative": "уроке",
+          "plural": "уроки",
+          "genitive_plural": "уроков"
+        },
+        "HOMEWORK": {
+          "form": "домашнее задание",
+          "gender": "n",
+          "genitive": "домашнего задания",
+          "dative": "домашнему заданию",
+          "instrumental": "домашним заданием",
+          "locative": "домашнем задании"
+        },
+        "EXAM": {
+          "form": "экзамен",
+          "gender": "m",
+          "genitive": "экзамена",
+          "dative": "экзамену",
+          "instrumental": "экзаменом",
+          "locative": "экзамене",
+          "plural": "экзамены",
+          "genitive_plural": "экзаменов"
+        },
+        "QUESTION": {
+          "form": "вопрос",
+          "gender": "m",
+          "genitive": "вопроса",
+          "dative": "вопросу",
+          "instrumental": "вопросом",
+          "locative": "вопросе",
+          "plural": "вопросы",
+          "genitive_plural": "вопросов"
+        },
+        "ANSWER": {
+          "form": "ответ",
+          "gender": "m",
+          "genitive": "ответа",
+          "dative": "ответу",
+          "instrumental": "ответом",
+          "locative": "ответе",
+          "plural": "ответы",
+          "genitive_plural": "ответов"
+        },
+        "IDEA": {
+          "form": "идея",
+          "gender": "f",
+          "genitive": "идеи",
+          "dative": "идее",
+          "instrumental": "идеей",
+          "locative": "идее",
+          "accusative": "идею",
+          "plural": "идеи",
+          "genitive_plural": "идей"
+        },
+        "CHANCE": {
+          "form": "шанс",
+          "gender": "m",
+          "genitive": "шанса",
+          "dative": "шансу",
+          "instrumental": "шансом",
+          "locative": "шансе",
+          "plural": "шансы",
+          "genitive_plural": "шансов"
+        },
+        "MYSTERY": {
+          "form": "тайна",
+          "gender": "f",
+          "genitive": "тайны",
+          "dative": "тайне",
+          "instrumental": "тайной",
+          "locative": "тайне",
+          "accusative": "тайну",
+          "plural": "тайны",
+          "genitive_plural": "тайн"
+        },
+        "SECRET": {
+          "form": "секрет",
+          "gender": "m",
+          "genitive": "секрета",
+          "dative": "секрету",
+          "instrumental": "секретом",
+          "locative": "секрете",
+          "plural": "секреты",
+          "genitive_plural": "секретов"
+        },
+        "FRIEND": {
+          "form": "друг",
+          "gender": "m",
+          "genitive": "друга",
+          "dative": "другу",
+          "instrumental": "другом",
+          "locative": "друге",
+          "accusative": "друга",
+          "plural": "друзья",
+          "genitive_plural": "друзей"
+        },
+        "ENEMY": {
+          "form": "враг",
+          "gender": "m",
+          "genitive": "врага",
+          "dative": "врагу",
+          "instrumental": "врагом",
+          "locative": "враге",
+          "accusative": "врага",
+          "plural": "враги",
+          "genitive_plural": "врагов"
+        },
+        "CLOAK": {
+          "form": "мантия",
+          "gender": "f",
+          "genitive": "мантии",
+          "dative": "мантии",
+          "instrumental": "мантией",
+          "locative": "мантии",
+          "accusative": "мантию",
+          "plural": "мантии",
+          "genitive_plural": "мантй"
+        },
+        "DOOR": {
+          "form": "дверь",
+          "gender": "f",
+          "genitive": "двери",
+          "dative": "двери",
+          "instrumental": "дверью",
+          "locative": "двери",
+          "plural": "двери",
+          "genitive_plural": "дверей"
+        },
+        "CAST": {
+          "base": "колдовать",
+          "1_singular": "колдую",
+          "2_singular": "колдуешь",
+          "3_singular": "колдует",
+          "1_plural": "колдуем",
+          "2_plural": "колдуете",
+          "3_plural": "колдуют"
+        },
+        "PROTECT": {
+          "base": "защищать",
+          "1_singular": "защищаю",
+          "2_singular": "защищаешь",
+          "3_singular": "защищает",
+          "1_plural": "защищаем",
+          "2_plural": "защищаете",
+          "3_plural": "защищают"
+        },
+        "CHARM": {
+          "base": "очаровывать",
+          "1_singular": "очаровываю",
+          "2_singular": "очаровываешь",
+          "3_singular": "очаровывает",
+          "1_plural": "очаровываем",
+          "2_plural": "очаровываете",
+          "3_plural": "очаровывают"
+        },
+        "CURSE": {
+          "base": "проклинать",
+          "1_singular": "проклинаю",
+          "2_singular": "проклинаешь",
+          "3_singular": "проклинает",
+          "1_plural": "проклинаем",
+          "2_plural": "проклинаете",
+          "3_plural": "проклинают"
+        },
+        "LEARN": {
+          "base": "учиться",
+          "1_singular": "учусь",
+          "2_singular": "учишься",
+          "3_singular": "учится",
+          "1_plural": "учимся",
+          "2_plural": "учитесь",
+          "3_plural": "учатся"
+        },
+        "WRITE": {
+          "base": "писать",
+          "1_singular": "пишу",
+          "2_singular": "пишешь",
+          "3_singular": "пишет",
+          "1_plural": "пишем",
+          "2_plural": "пишете",
+          "3_plural": "пишут"
+        },
+        "STUDY": {
+          "base": "изучать",
+          "1_singular": "изучаю",
+          "2_singular": "изучаешь",
+          "3_singular": "изучает",
+          "1_plural": "изучаем",
+          "2_plural": "изучаете",
+          "3_plural": "изучают"
+        },
+        "VANISH": {
+          "base": "исчезать",
+          "1_singular": "исчезаю",
+          "2_singular": "исчезаешь",
+          "3_singular": "исчезает",
+          "1_plural": "исчезаем",
+          "2_plural": "исчезаете",
+          "3_plural": "исчезают"
+        },
+        "TRANSFORM": {
+          "base": "превращать",
+          "1_singular": "превращаю",
+          "2_singular": "превращаешь",
+          "3_singular": "превращает",
+          "1_plural": "превращаем",
+          "2_plural": "превращаете",
+          "3_plural": "превращают"
+        },
+        "FLY": {
+          "base": "летать",
+          "1_singular": "летаю",
+          "2_singular": "летаешь",
+          "3_singular": "летает",
+          "1_plural": "летаем",
+          "2_plural": "летаете",
+          "3_plural": "летают"
+        },
+        "SHOUT": {
+          "base": "кричать",
+          "1_singular": "кричу",
+          "2_singular": "кричишь",
+          "3_singular": "кричит",
+          "1_plural": "кричим",
+          "2_plural": "кричите",
+          "3_plural": "кричат"
+        },
+        "MAGICAL": {
+          "form": "волшебный",
+          "f": "волшебная",
+          "n": "волшебное",
+          "plural": "волшебные"
+        },
+        "STRONG": {
+          "form": "сильный",
+          "f": "сильная",
+          "n": "сильное",
+          "plural": "сильные"
+        },
+        "BRAVE": {
+          "form": "храбрый",
+          "f": "храбрая",
+          "n": "храброе",
+          "plural": "храбрые"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "WAND": {
+          "form": "trollstav",
+          "gender": "m",
+          "plural": "trollstavar"
+        },
+        "MAGIC": {
+          "form": "magi",
+          "gender": "m"
+        },
+        "WIZARD": {
+          "form": "trollkarl",
+          "gender": "m",
+          "plural": "trollkarlar"
+        },
+        "WITCH": {
+          "form": "häxa",
+          "gender": "m",
+          "plural": "häxor"
+        },
+        "SPELL": {
+          "form": "trollformel",
+          "gender": "m",
+          "plural": "trollformler"
+        },
+        "POTION": {
+          "form": "trolldryck",
+          "gender": "m",
+          "plural": "trolldrycker"
+        },
+        "SCHOOL": {
+          "form": "skola",
+          "gender": "m",
+          "plural": "skolor"
+        },
+        "CAULDRON": {
+          "form": "kittel",
+          "gender": "m",
+          "plural": "kittlar"
+        },
+        "BROOM": {
+          "form": "kvast",
+          "gender": "m",
+          "plural": "kvastar"
+        },
+        "OWL": {
+          "form": "uggla",
+          "gender": "m",
+          "plural": "ugglor"
+        },
+        "CASTLE": {
+          "form": "slott",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "PROFESSOR": {
+          "form": "professor",
+          "gender": "m",
+          "plural": "professorer"
+        },
+        "STUDENT": {
+          "form": "elev",
+          "gender": "m",
+          "plural": "elever"
+        },
+        "ELF": {
+          "form": "alf",
+          "gender": "m",
+          "plural": "alfer"
+        },
+        "UNICORN": {
+          "form": "enhörning",
+          "gender": "m",
+          "plural": "enhörningar"
+        },
+        "GIANT": {
+          "form": "jätte",
+          "gender": "m",
+          "plural": "jättar"
+        },
+        "TROLL": {
+          "form": "troll",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "GHOST": {
+          "form": "spöke",
+          "gender": "n",
+          "plural": "spöken"
+        },
+        "FOREST": {
+          "form": "skog",
+          "gender": "m",
+          "plural": "skogar"
+        },
+        "SPIDER": {
+          "form": "spindel",
+          "gender": "m",
+          "plural": "spindlar"
+        },
+        "LIBRARY": {
+          "form": "bibliotek",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "CLASS": {
+          "form": "klass",
+          "gender": "m",
+          "plural": "klasser"
+        },
+        "LESSON": {
+          "form": "lektion",
+          "gender": "m",
+          "plural": "lektioner"
+        },
+        "HOMEWORK": {
+          "form": "läxor",
+          "gender": "m"
+        },
+        "EXAM": {
+          "form": "prov",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "QUESTION": {
+          "form": "fråga",
+          "gender": "m",
+          "plural": "frågor"
+        },
+        "ANSWER": {
+          "form": "svar",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "IDEA": {
+          "form": "idé",
+          "gender": "m",
+          "plural": "idéer"
+        },
+        "CHANCE": {
+          "form": "chans",
+          "gender": "m",
+          "plural": "chanser"
+        },
+        "MYSTERY": {
+          "form": "mysterium",
+          "gender": "n",
+          "plural": "mysterier",
+          "definiteForm": "mysteriet"
+        },
+        "SECRET": {
+          "form": "hemlighet",
+          "gender": "m",
+          "plural": "hemligheter"
+        },
+        "FRIEND": {
+          "form": "vän",
+          "gender": "m",
+          "plural": "vänner"
+        },
+        "ENEMY": {
+          "form": "fiende",
+          "gender": "m",
+          "plural": "fiender"
+        },
+        "CLOAK": {
+          "form": "mantel",
+          "gender": "m",
+          "plural": "mantlar"
+        },
+        "DOOR": {
+          "form": "dörr",
+          "gender": "m",
+          "plural": "dörrar"
+        },
+        "CAST": {
+          "base": "kasta",
+          "present": "kastar"
+        },
+        "PROTECT": {
+          "base": "skydda",
+          "present": "skyddar"
+        },
+        "CHARM": {
+          "base": "förtrolla",
+          "present": "förtrollar"
+        },
+        "CURSE": {
+          "base": "förbanna",
+          "present": "förbannar"
+        },
+        "LEARN": {
+          "base": "lära sig",
+          "present": "lär sig"
+        },
+        "WRITE": {
+          "base": "skriva",
+          "present": "skriver"
+        },
+        "STUDY": {
+          "base": "studera",
+          "present": "studerar"
+        },
+        "VANISH": {
+          "base": "försvinna",
+          "present": "försvinner"
+        },
+        "TRANSFORM": {
+          "base": "förvandla",
+          "present": "förvandlar"
+        },
+        "FLY": {
+          "base": "flyga",
+          "present": "flyger"
+        },
+        "SHOUT": {
+          "base": "ropa",
+          "present": "ropar"
+        },
+        "MAGICAL": {
+          "form": "magisk",
+          "n": "magiskt",
+          "plural": "magiska"
+        },
+        "STRONG": {
+          "form": "stark",
+          "n": "starkt",
+          "plural": "starka"
+        },
+        "BRAVE": {
+          "form": "modig",
+          "n": "modigt",
+          "plural": "modiga"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

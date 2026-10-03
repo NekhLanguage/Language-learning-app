@@ -99,7 +99,9 @@
     "ko": "Koreański",
     "zh": "Chiński",
     "th": "Tajski",
-    "pl": "Polski"
+    "pl": "Polski",
+    "sv": "Szwedzki",
+    "ru": "Rosyjski"
   },
   "alphabet": {
     "sections": [

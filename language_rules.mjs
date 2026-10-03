@@ -966,6 +966,10 @@ export const LANGUAGE_RULES = {
       declinesAttributiveAdjectives: true, verbSecond: true,
     },
     indefiniteArticle: true,
+    // The two-way article (en / et) and the suffixed definite (boken,
+    // huset, skoene) — declared so sv can share the mechanism.
+    indefiniteArticleForms: { default: "en", n: "et" },
+    definiteSuffix: "no",
     inflectsNounPlural: true, latinEncodingChecks: true,
     // ── Emi run-25 ──
     // «Hvis han er hjemme, spiser han med datteren sin» — the fronted
@@ -1070,6 +1074,44 @@ export const LANGUAGE_RULES = {
     // «embarco em um voo» — embarcar governs «em» (-105).
     verbGovernedPrepositions: true,
   },
+  ru: {
+    // Russian (standard) — modelled on the Ukrainian row, Nekh-ordered
+    // 2026-10-03 stress test. Differences from uk: possession is the
+    // existential «У меня есть книга» (possessor in the genitive behind
+    // «у», HAVE pinned to invariant «есть», possessed noun nominative);
+    // TO is «к» + dative (uk «до» + genitive); «за» + instrumental for
+    // «go for X»; с/в/к take -о before clusters («со своей мамой»). Not
+    // yet native-reviewed — Emi's run is the first read.
+    features: {
+      adjectivePosition: "pre", zeroPresentCopula: true,
+      marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
+      declinesAttributiveAdjectives: true,
+      numeralGovernment: true, numeralGenderAgreement: true,
+    },
+    zeroPresentCopula: true,
+    inflectsNounPlural: true, fullNounGender: true,
+    verbPersonParadigm: true,
+    numeralGenitivePlural: true, numeralGenderAgreement: true,
+    reflexivePossessive: true,
+    // «сажусь на рейс» — governedPreposition on the verb entry.
+    verbGovernedPrepositions: true,
+    motionPurpose: { form: "за", position: "pre", case: "instrumental" },
+    existentialPossession: { case: "genitive", prefix: "у" },
+    commaBeforeConjunctions: ["но", "потому что", "а"],
+    prepositionAllomorphy: "ru",
+    caseMarking: {
+      directObjectCase: "accusative",
+      prepositions: {
+        ON: "locative", IN: "locative", OFF: "locative",
+        UNDER: "instrumental", BEHIND: "instrumental", FRONT: "instrumental",
+        BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
+        WITH: "instrumental",
+        TO: "dative", FROM: "genitive", FOR: "genitive",
+      },
+      femAccusativeStrategy: "ru",
+      bareInstrumentalMeans: true,
+    },
+  },
   es: {
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
@@ -1100,6 +1142,44 @@ export const LANGUAGE_RULES = {
     definiteDestination: true,
     inflectsNounPlural: true, nounGenderForCountables: true,
     verbPersonParadigm: true,
+  },
+  sv: {
+    // Swedish (standard, rikssvenska) — modelled on the Norwegian row,
+    // Nekh-ordered 2026-10-03 stress test. Differences from no: the
+    // possessive is PREPOSED («min hand», «mitt rum») so no
+    // possessivePlacement; the indefinite is en/ett; the definite suffix
+    // follows the Swedish declensions (boken, huset, skorna). Not yet
+    // native-reviewed — Emi's run is the first read.
+    features: {
+      indefiniteArticle: true, adjectivePosition: "pre",
+      declinesAttributiveAdjectives: true, verbSecond: true,
+    },
+    indefiniteArticle: true,
+    indefiniteArticleForms: { default: "en", n: "ett" },
+    definiteSuffix: "sv",
+    inflectsNounPlural: true, nounGenderForCountables: true,
+    latinEncodingChecks: true,
+    // «Om han är hemma, äter han med sin dotter» — the fronted clause
+    // holds first position, the main clause inverts.
+    verbSecondAfterFrontedClause: true,
+    // The attributive adjective after a possessive takes the weak -a form
+    // («min stora bok», «mitt lilla rum») — `definite` on the entry wins
+    // where it differs from the plural (liten → lilla / små).
+    definiteAdjectiveAfterPossessive: true,
+    // «Jag går hemifrån», never «från hem» — the noun's `fused` map.
+    fusedAdpositionForms: true,
+    // «hälsar på en servitör» — governedPreposition on the verb entry.
+    verbGovernedPrepositions: true,
+    // A 3rd-person possessive whose possessor is the subject is «sin /
+    // sitt / sina» (the OWN entry), never hans/hennes.
+    reflexivePossessive: true,
+    // The free definite article before a weak adjective (den/det/de).
+    freeDefiniteArticle: { default: "den", n: "det", plural: "de" },
+    // «go for food» = «gå för att hämta»: «Jag går för att hämta mat».
+    motionPurpose: { form: "för att hämta", position: "pre" },
+    // A bare noun after the destination glue is definite («Jag går till
+    // bordet», «till huset»); a modified noun keeps the indefinite.
+    definiteDestination: true,
   },
   th: {
     // «go for X» after a motion verb is the purpose construction, not the

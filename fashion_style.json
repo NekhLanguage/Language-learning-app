@@ -52,6 +52,688 @@
     { "concept_id": "ICONIC", "type": "adjective" }
   ],
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "JACKET": {
+          "form": "куртка",
+          "gender": "f",
+          "genitive": "куртки",
+          "dative": "куртке",
+          "instrumental": "курткой",
+          "locative": "куртке",
+          "accusative": "куртку",
+          "plural": "куртки",
+          "genitive_plural": "курток"
+        },
+        "DRESS": {
+          "form": "платье",
+          "gender": "n",
+          "genitive": "платья",
+          "dative": "платью",
+          "instrumental": "платьем",
+          "locative": "платье",
+          "plural": "платья",
+          "genitive_plural": "платьев"
+        },
+        "SNEAKERS": {
+          "form": "кроссовки",
+          "gender": "m",
+          "pluralOnly": true,
+          "genitive_plural": "кроссовок"
+        },
+        "FABRIC": {
+          "form": "ткань",
+          "gender": "f",
+          "genitive": "ткани",
+          "dative": "ткани",
+          "instrumental": "тканью",
+          "locative": "ткани",
+          "plural": "ткани",
+          "genitive_plural": "тканей"
+        },
+        "LEATHER": {
+          "form": "кожа",
+          "gender": "f",
+          "genitive": "кожи",
+          "dative": "коже",
+          "instrumental": "кожей",
+          "locative": "коже",
+          "accusative": "кожу"
+        },
+        "SILK": {
+          "form": "шёлк",
+          "gender": "m",
+          "genitive": "шёлка",
+          "dative": "шёлку",
+          "instrumental": "шёлком",
+          "locative": "шёлке"
+        },
+        "PATTERN": {
+          "form": "узор",
+          "gender": "m",
+          "genitive": "узора",
+          "dative": "узору",
+          "instrumental": "узором",
+          "locative": "узоре",
+          "plural": "узоры",
+          "genitive_plural": "узоров"
+        },
+        "STITCH": {
+          "form": "стежок",
+          "gender": "m",
+          "genitive": "стежка",
+          "dative": "стежку",
+          "instrumental": "стежком",
+          "locative": "стежке",
+          "plural": "стежки",
+          "genitive_plural": "стежков"
+        },
+        "TAILOR": {
+          "form": "портной",
+          "gender": "m",
+          "genitive": "портного",
+          "dative": "портному",
+          "instrumental": "портным",
+          "locative": "портном",
+          "accusative": "портного",
+          "plural": "портные",
+          "genitive_plural": "портных"
+        },
+        "RUNWAY": {
+          "form": "подиум",
+          "gender": "m",
+          "genitive": "подиума",
+          "dative": "подиуму",
+          "instrumental": "подиумом",
+          "locative": "подиуме",
+          "plural": "подиумы",
+          "genitive_plural": "подиумов"
+        },
+        "MODEL": {
+          "form": "модель",
+          "gender": "f",
+          "genitive": "модели",
+          "dative": "модели",
+          "instrumental": "моделью",
+          "locative": "модели",
+          "plural": "модели",
+          "genitive_plural": "моделей"
+        },
+        "COLLECTION": {
+          "form": "коллекция",
+          "gender": "f",
+          "genitive": "коллекции",
+          "dative": "коллекции",
+          "instrumental": "коллекцией",
+          "locative": "коллекции",
+          "accusative": "коллекцию",
+          "plural": "коллекции",
+          "genitive_plural": "коллекцй"
+        },
+        "BOUTIQUE": {
+          "form": "бутик",
+          "gender": "m",
+          "genitive": "бутика",
+          "dative": "бутику",
+          "instrumental": "бутиком",
+          "locative": "бутике",
+          "plural": "бутики",
+          "genitive_plural": "бутиков"
+        },
+        "WARDROBE": {
+          "form": "гардероб",
+          "gender": "m",
+          "genitive": "гардероба",
+          "dative": "гардеробу",
+          "instrumental": "гардеробом",
+          "locative": "гардеробе",
+          "plural": "гардеробы",
+          "genitive_plural": "гардеробов"
+        },
+        "TREND": {
+          "form": "тренд",
+          "gender": "m",
+          "genitive": "тренда",
+          "dative": "тренду",
+          "instrumental": "трендом",
+          "locative": "тренде",
+          "plural": "тренды",
+          "genitive_plural": "трендов"
+        },
+        "NECKLACE": {
+          "form": "ожерелье",
+          "gender": "n",
+          "genitive": "ожерелья",
+          "dative": "ожерелью",
+          "instrumental": "ожерельем",
+          "locative": "ожерелье",
+          "plural": "ожерелья",
+          "genitive_plural": "ожерелий"
+        },
+        "BRACELET": {
+          "form": "браслет",
+          "gender": "m",
+          "genitive": "браслета",
+          "dative": "браслету",
+          "instrumental": "браслетом",
+          "locative": "браслете",
+          "plural": "браслеты",
+          "genitive_plural": "браслетов"
+        },
+        "SUNGLASSES": {
+          "form": "солнцезащитные очки",
+          "gender": "m",
+          "pluralOnly": true,
+          "genitive_plural": "солнцезащитных очков"
+        },
+        "MAKEUP": {
+          "form": "макияж",
+          "gender": "m",
+          "genitive": "макияжа",
+          "dative": "макияжу",
+          "instrumental": "макияжем",
+          "locative": "макияже"
+        },
+        "LIPSTICK": {
+          "form": "помада",
+          "gender": "f",
+          "genitive": "помады",
+          "dative": "помаде",
+          "instrumental": "помадой",
+          "locative": "помаде",
+          "accusative": "помаду",
+          "plural": "помады",
+          "genitive_plural": "помад"
+        },
+        "HAIRSTYLE": {
+          "form": "причёска",
+          "gender": "f",
+          "genitive": "причёски",
+          "dative": "причёске",
+          "instrumental": "причёской",
+          "locative": "причёске",
+          "accusative": "причёску",
+          "plural": "причёски",
+          "genitive_plural": "причёсок"
+        },
+        "OUTFIT": {
+          "form": "наряд",
+          "gender": "m",
+          "genitive": "наряда",
+          "dative": "наряду",
+          "instrumental": "нарядом",
+          "locative": "наряде",
+          "plural": "наряды",
+          "genitive_plural": "нарядов"
+        },
+        "LOOKBOOK": {
+          "form": "лукбук",
+          "gender": "m",
+          "genitive": "лукбука",
+          "dative": "лукбуку",
+          "instrumental": "лукбуком",
+          "locative": "лукбуке",
+          "plural": "лукбуки",
+          "genitive_plural": "лукбуков"
+        },
+        "AESTHETIC": {
+          "form": "эстетика",
+          "gender": "f",
+          "genitive": "эстетики",
+          "dative": "эстетике",
+          "instrumental": "эстетикой",
+          "locative": "эстетике",
+          "accusative": "эстетику"
+        },
+        "DESIGNER": {
+          "form": "дизайнер",
+          "gender": "m",
+          "genitive": "дизайнера",
+          "dative": "дизайнеру",
+          "instrumental": "дизайнером",
+          "locative": "дизайнере",
+          "accusative": "дизайнера",
+          "plural": "дизайнеры",
+          "genitive_plural": "дизайнеров"
+        },
+        "BRAND": {
+          "form": "бренд",
+          "gender": "m",
+          "genitive": "бренда",
+          "dative": "бренду",
+          "instrumental": "брендом",
+          "locative": "бренде",
+          "plural": "бренды",
+          "genitive_plural": "брендов"
+        },
+        "CAMPAIGN": {
+          "form": "кампания",
+          "gender": "f",
+          "genitive": "кампании",
+          "dative": "кампании",
+          "instrumental": "кампанией",
+          "locative": "кампании",
+          "accusative": "кампанию",
+          "plural": "кампании",
+          "genitive_plural": "кампанй"
+        },
+        "INFLUENCER": {
+          "form": "инфлюенсер",
+          "gender": "m",
+          "genitive": "инфлюенсера",
+          "dative": "инфлюенсеру",
+          "instrumental": "инфлюенсером",
+          "locative": "инфлюенсере",
+          "accusative": "инфлюенсера",
+          "plural": "инфлюенсеры",
+          "genitive_plural": "инфлюенсеров"
+        },
+        "EDITORIAL": {
+          "form": "фотосессия",
+          "gender": "f",
+          "genitive": "фотосессии",
+          "dative": "фотосессии",
+          "instrumental": "фотосессией",
+          "locative": "фотосессии",
+          "accusative": "фотосессию",
+          "plural": "фотосессии",
+          "genitive_plural": "фотосессй"
+        },
+        "COUTURE": {
+          "form": "кутюр",
+          "gender": "m",
+          "genitive": "кутюра",
+          "dative": "кутюру",
+          "instrumental": "кутюром",
+          "locative": "кутюре"
+        },
+        "EMBROIDER": {
+          "base": "вышивать",
+          "1_singular": "вышиваю",
+          "2_singular": "вышиваешь",
+          "3_singular": "вышивает",
+          "1_plural": "вышиваем",
+          "2_plural": "вышиваете",
+          "3_plural": "вышивают"
+        },
+        "DRAPE": {
+          "base": "драпировать",
+          "1_singular": "драпирую",
+          "2_singular": "драпируешь",
+          "3_singular": "драпирует",
+          "1_plural": "драпируем",
+          "2_plural": "драпируете",
+          "3_plural": "драпируют"
+        },
+        "DESIGN": {
+          "base": "проектировать",
+          "1_singular": "проектирую",
+          "2_singular": "проектируешь",
+          "3_singular": "проектирует",
+          "1_plural": "проектируем",
+          "2_plural": "проектируете",
+          "3_plural": "проектируют"
+        },
+        "STRUT": {
+          "base": "вышагивать",
+          "1_singular": "вышагиваю",
+          "2_singular": "вышагиваешь",
+          "3_singular": "вышагивает",
+          "1_plural": "вышагиваем",
+          "2_plural": "вышагиваете",
+          "3_plural": "вышагивают"
+        },
+        "BROWSE": {
+          "base": "просматривать",
+          "1_singular": "просматриваю",
+          "2_singular": "просматриваешь",
+          "3_singular": "просматривает",
+          "1_plural": "просматриваем",
+          "2_plural": "просматриваете",
+          "3_plural": "просматривают"
+        },
+        "ADORN": {
+          "base": "украшать",
+          "1_singular": "украшаю",
+          "2_singular": "украшаешь",
+          "3_singular": "украшает",
+          "1_plural": "украшаем",
+          "2_plural": "украшаете",
+          "3_plural": "украшают"
+        },
+        "CONTOUR": {
+          "base": "контурировать",
+          "1_singular": "контурирую",
+          "2_singular": "контурируешь",
+          "3_singular": "контурирует",
+          "1_plural": "контурируем",
+          "2_plural": "контурируете",
+          "3_plural": "контурируют"
+        },
+        "COORDINATE": {
+          "base": "сочетать",
+          "1_singular": "сочетаю",
+          "2_singular": "сочетаешь",
+          "3_singular": "сочетает",
+          "1_plural": "сочетаем",
+          "2_plural": "сочетаете",
+          "3_plural": "сочетают"
+        },
+        "UNVEIL": {
+          "base": "представлять",
+          "1_singular": "представляю",
+          "2_singular": "представляешь",
+          "3_singular": "представляет",
+          "1_plural": "представляем",
+          "2_plural": "представляете",
+          "3_plural": "представляют"
+        },
+        "SHOWCASE": {
+          "base": "демонстрировать",
+          "1_singular": "демонстрирую",
+          "2_singular": "демонстрируешь",
+          "3_singular": "демонстрирует",
+          "1_plural": "демонстрируем",
+          "2_plural": "демонстрируете",
+          "3_plural": "демонстрируют"
+        },
+        "ELEGANT": {
+          "form": "элегантный",
+          "f": "элегантная",
+          "n": "элегантное",
+          "plural": "элегантные"
+        },
+        "TEXTURED": {
+          "form": "фактурный",
+          "f": "фактурная",
+          "n": "фактурное",
+          "plural": "фактурные"
+        },
+        "VINTAGE": {
+          "form": "винтажный",
+          "f": "винтажная",
+          "n": "винтажное",
+          "plural": "винтажные"
+        },
+        "GLAMOROUS": {
+          "form": "гламурный",
+          "f": "гламурная",
+          "n": "гламурное",
+          "plural": "гламурные"
+        },
+        "AFFORDABLE": {
+          "form": "доступный",
+          "f": "доступная",
+          "n": "доступное",
+          "plural": "доступные"
+        },
+        "DAZZLING": {
+          "form": "ослепительный",
+          "f": "ослепительная",
+          "n": "ослепительное",
+          "plural": "ослепительные"
+        },
+        "FLAWLESS": {
+          "form": "безупречный",
+          "f": "безупречная",
+          "n": "безупречное",
+          "plural": "безупречные"
+        },
+        "CHIC": {
+          "form": "шикарный",
+          "f": "шикарная",
+          "n": "шикарное",
+          "plural": "шикарные"
+        },
+        "EXCLUSIVE": {
+          "form": "эксклюзивный",
+          "f": "эксклюзивная",
+          "n": "эксклюзивное",
+          "plural": "эксклюзивные"
+        },
+        "ICONIC": {
+          "form": "культовый",
+          "f": "культовая",
+          "n": "культовое",
+          "plural": "культовые"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "JACKET": {
+          "form": "jacka",
+          "gender": "m",
+          "plural": "jackor"
+        },
+        "DRESS": {
+          "form": "klänning",
+          "gender": "m",
+          "plural": "klänningar"
+        },
+        "SNEAKERS": {
+          "form": "sneakers",
+          "plural": "po"
+        },
+        "FABRIC": {
+          "form": "tyg",
+          "gender": "n",
+          "plural": "tyger"
+        },
+        "LEATHER": {
+          "form": "läder",
+          "gender": "n"
+        },
+        "SILK": {
+          "form": "siden",
+          "gender": "n"
+        },
+        "PATTERN": {
+          "form": "mönster",
+          "gender": "n",
+          "invariantPlural": true,
+          "definiteForm": "mönstret"
+        },
+        "STITCH": {
+          "form": "stygn",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "TAILOR": {
+          "form": "skräddare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "RUNWAY": {
+          "form": "catwalk",
+          "gender": "m",
+          "plural": "catwalker"
+        },
+        "MODEL": {
+          "form": "modell",
+          "gender": "m",
+          "plural": "modeller"
+        },
+        "COLLECTION": {
+          "form": "kollektion",
+          "gender": "m",
+          "plural": "kollektioner"
+        },
+        "BOUTIQUE": {
+          "form": "butik",
+          "gender": "m",
+          "plural": "butiker"
+        },
+        "WARDROBE": {
+          "form": "garderob",
+          "gender": "m",
+          "plural": "garderober"
+        },
+        "TREND": {
+          "form": "trend",
+          "gender": "m",
+          "plural": "trender"
+        },
+        "NECKLACE": {
+          "form": "halsband",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "BRACELET": {
+          "form": "armband",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "SUNGLASSES": {
+          "form": "solglasögon",
+          "plural": "po"
+        },
+        "MAKEUP": {
+          "form": "smink",
+          "gender": "n"
+        },
+        "LIPSTICK": {
+          "form": "läppstift",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "HAIRSTYLE": {
+          "form": "frisyr",
+          "gender": "m",
+          "plural": "frisyrer"
+        },
+        "OUTFIT": {
+          "form": "outfit",
+          "gender": "m",
+          "plural": "outfits"
+        },
+        "LOOKBOOK": {
+          "form": "lookbook",
+          "gender": "m",
+          "plural": "lookbooks"
+        },
+        "AESTHETIC": {
+          "form": "estetik",
+          "gender": "m"
+        },
+        "DESIGNER": {
+          "form": "designer",
+          "gender": "m",
+          "invariantPlural": true,
+          "definiteForm": "designern"
+        },
+        "BRAND": {
+          "form": "märke",
+          "gender": "n",
+          "plural": "märken"
+        },
+        "CAMPAIGN": {
+          "form": "kampanj",
+          "gender": "m",
+          "plural": "kampanjer"
+        },
+        "INFLUENCER": {
+          "form": "influerare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "EDITORIAL": {
+          "form": "reportage",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "COUTURE": {
+          "form": "couture",
+          "gender": "m"
+        },
+        "EMBROIDER": {
+          "base": "brodera",
+          "present": "broderar"
+        },
+        "DRAPE": {
+          "base": "drapera",
+          "present": "draperar"
+        },
+        "DESIGN": {
+          "base": "designa",
+          "present": "designar"
+        },
+        "STRUT": {
+          "base": "stoltsera",
+          "present": "stoltserar"
+        },
+        "BROWSE": {
+          "base": "bläddra",
+          "present": "bläddrar"
+        },
+        "ADORN": {
+          "base": "pryda",
+          "present": "pryder"
+        },
+        "CONTOUR": {
+          "base": "konturera",
+          "present": "konturerar"
+        },
+        "COORDINATE": {
+          "base": "samordna",
+          "present": "samordnar"
+        },
+        "UNVEIL": {
+          "base": "avtäcka",
+          "present": "avtäcker"
+        },
+        "SHOWCASE": {
+          "base": "visa upp",
+          "present": "visar upp"
+        },
+        "ELEGANT": {
+          "form": "elegant",
+          "n": "elegant",
+          "plural": "eleganta"
+        },
+        "TEXTURED": {
+          "form": "texturerad",
+          "n": "texturerat",
+          "plural": "texturerade"
+        },
+        "VINTAGE": [
+          "vintage"
+        ],
+        "GLAMOROUS": {
+          "form": "glamorös",
+          "n": "glamoröst",
+          "plural": "glamorösa"
+        },
+        "AFFORDABLE": {
+          "form": "prisvärd",
+          "n": "prisvärt",
+          "plural": "prisvärda"
+        },
+        "DAZZLING": [
+          "bländande"
+        ],
+        "FLAWLESS": {
+          "form": "felfri",
+          "n": "felfritt",
+          "plural": "felfria"
+        },
+        "CHIC": [
+          "chic"
+        ],
+        "EXCLUSIVE": {
+          "form": "exklusiv",
+          "n": "exklusivt",
+          "plural": "exklusiva"
+        },
+        "ICONIC": {
+          "form": "ikonisk",
+          "n": "ikoniskt",
+          "plural": "ikoniska"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {
