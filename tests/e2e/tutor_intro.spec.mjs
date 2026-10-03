@@ -111,18 +111,19 @@ test("a tutor concept found at L3 (stale blob) is lifted to L5 when it renders",
     .toBe(5);
 });
 
-test("L2 tutor recognition MCQ renders after intro-card continue", async ({ page }) => {
+test("L2 tutor recognition MCQ renders from run.tutorVocab", async ({ page }) => {
   await startNewRun(page);
+  // Seeded at L2 directly. Since 2026-10-03 a tutor word obeys the same
+  // L2 spacing as a pack word (four exercises after a correct answer, two
+  // after a wrong one), so it no longer re-renders straight after its own
+  // intro card — with nothing else live in this seeded run that would end
+  // the session instead.
   await seedOneTutorConcept(page, "TUTOR_MCQWORD", {
     word: "mcqword",
     translation: "correct-translation",
     note: "",
     pos: "noun",
-  });
-
-  // Advance past L1 intro (renderTutorIntro applies a correct answer on
-  // continue), which lands the concept at L2 with the recognition MCQ.
-  await page.click("#continue-btn");
+  }, { level: 2 });
 
   await expect(page.locator(".tutor-intro-badge")).toBeVisible();
   await expect(page.locator("#content h2")).toContainText("Mcqword");
@@ -141,13 +142,15 @@ test("two correct L2 answers mark the tutor concept completed", async ({ page })
     translation: "done-translation",
     note: "",
     pos: "noun",
-  });
-  await page.click("#continue-btn");
+  }, { level: 2 });
 
   for (let i = 0; i < 2; i++) {
     await expect(page.locator("#choices button")).toHaveCount(4);
     await page.locator('#choices button', { hasText: "done-translation" }).click();
     await page.click("#check-btn");
+    // Standard L2 spacing: a correct answer waits four exercises before
+    // the word may come back. Nothing else is live here, so skip ahead.
+    await page.evaluate(() => { window.__app.run.exerciseCounter += 4; });
     await page.click("#check-btn");
   }
 
@@ -279,4 +282,43 @@ test("no banked sentence: L6 falls back to typing the word itself", async ({ pag
   await page.click("#check-l7");
   const p = await page.evaluate(() => window.__app.run.progress.TUTOR_BAREWORD);
   expect(p.lastResult).toBe(true);
+});
+
+// Nekh 2026-10-03: "Anna's vocab isn't showing up at all past the level 1
+// exercise." His Ukrainian run was in review mode (release plan exhausted)
+// with six pack words at L2 that can never build an L2 question (NOT,
+// PLEASE, MAYBE, THANKS, YES, NO — no three same-type peers) sitting at the
+// top of the stalest-first pool, and every Anna word at L2 behind them. The
+// render loop excluded the blockers and re-drew a random level each time,
+// so a word seven places down the pool never surfaced. Reproduced here with
+// more blockers than the loop has attempts: before the fix the session
+// ended ("RenderNext fallback"), now the Anna word's L2 MCQ renders.
+test("review mode: an L2 tutor word is not starved by L2 pack words that cannot render", async ({ page }) => {
+  await startNewRun(page);
+  const cid = "TUTOR_ВИХІДНИЙ";
+  await seedOneTutorConcept(page, cid, { word: "вихідний", translation: "day off", note: "", pos: "noun" }, { level: 2 });
+  await page.evaluate(({ cid }) => {
+    const run = window.__app.run;
+    // Review mode: nothing left to release.
+    run.releasePlanIndex = run.releasePlan.length;
+    // Thirty L2 words with no sentence template and no same-type peers —
+    // the shape of NOT / PLEASE / MAYBE / THANKS / YES / NO in production —
+    // all staler than the Anna word.
+    for (let i = 0; i < 30; i++) {
+      const blocker = `BLOCKER_${i}`;
+      run.released.push(blocker);
+      run.progress[blocker] = {
+        level: 2, streak: 0, completed: false, lastShownAt: 100 + i, lastResult: true,
+        provenance: "pack", admittedFrom: null,
+      };
+    }
+    run.progress[cid].lastShownAt = 500;
+    run.exerciseCounter = 600;
+    window.__app.rerender();
+  }, { cid });
+
+  await expect(page.locator(".tutor-intro-badge")).toBeVisible();
+  await expect(page.locator("#choices button")).toHaveCount(4);
+  await expect(page.locator("#session-subtitle")).toContainText("2");
+  await expect(page.locator("#learning-screen.active")).toBeVisible();
 });
