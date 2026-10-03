@@ -6,6 +6,16 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-03
+
+### Anna's words come back after their intro card
+
+Words Anna added to your app vocabulary were introduced once and then never seen again. Once a language's lessons are all unlocked, the app picks the words that have waited longest at each level, and six core words (not, please, maybe, thanks, yes, no) have no way to be tested at level 2, so they sat at the front of that queue for ever and everything behind them, including every word from Anna, never got a turn. The app now skips words that cannot be shown at their level when it picks, so Anna's words come up at level 2 and climb the ladder like any other word. Those six core words still need a proper level-2 exercise; until then they stay at level 2 without blocking anyone.
+
+### Anna's words and the course words are now weighted the same
+
+Course words used to get a small head start in the pick order while the course was unfinished. That is gone: a word from Anna and a word from the course have the same chance of coming up.
+
 ## 2026-10-02
 
 ### A leaderboard

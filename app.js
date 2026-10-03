@@ -9,7 +9,7 @@ import { tutorProductionTask, tutorExampleTiles, gradeTyped, liftTutorLevel } fr
 import {
   baseCompletionRatio as computeBaseCompletionRatio,
   conceptSelectionWeight as pureConceptSelectionWeight,
-  weightedPickFrom,
+  pickFromLevelBuckets,
 } from "./selection.mjs";
 import { isFeatureAvailable } from "./capabilities.mjs";
 import {
@@ -94,7 +94,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.83";
+const APP_DATA_VERSION = "1.2.84";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -2701,11 +2701,6 @@ function canConceptBeTested(cid) {
   if (s.completed) return false;
   const level = s.level;
 
-// 🔥 LEVEL 2: no template dependency anymore
-if (level === 2) {
-  return true;
-}
-
   const attempts = run.sessionAttempts?.[cid] || 0;
   const levelUps = run.sessionLevelUps?.[cid] || 0;
 
@@ -2715,14 +2710,30 @@ if (level === 2) {
   // ❌ spacing rule
   if (!passesSpacingRule(cid)) return false;
 
-  // Tutor-admitted concepts render L5–L7 from run.tutorVocab — no template
-  // to require. Fatigue and spacing above still apply.
+  // Tutor-admitted concepts render L2 and L5–L7 from run.tutorVocab — no
+  // template to require. Fatigue and spacing above still apply.
   if (isTutorConcept(cid)) return true;
 
   const meta = window.GLOBAL_VOCAB.concepts[cid];
+  const isModifier = meta?.type === "adjective" || meta?.type === "number";
+
+  // Level 2 used to return true before any check ("no template dependency
+  // anymore") — but the L2 renderer needs a sentence template for context
+  // AND four same-type options with distinct support surfaces
+  // (buildLevel2Question). NOT, PLEASE, MAYBE, THANKS, YES and NO have no
+  // three same-type peers, so they can never render at L2; reported as
+  // testable, they sat at the top of review mode's stalest-first pool for
+  // ever and starved every L2 word behind them (Nekh 2026-10-03: Anna's
+  // words never seen past the intro card). Mirror what the renderer needs.
+  if (level === 2) {
+    if (!isModifier && !TEMPLATE_CACHE.some(tpl => tpl.concepts.includes(cid) && templateEligible(tpl))) {
+      return false;
+    }
+    return buildLevel2Question(cid, languageState.target, languageState.support) !== null;
+  }
 
   // modifiers always allowed
-  if (meta?.type === "adjective" || meta?.type === "number") {
+  if (isModifier) {
     return true;
   }
 
@@ -5310,19 +5321,15 @@ function endSession(targetLang, supportLang) {
   quantifier: 7
 };
 // Base-vocab selection weighting (Nekh 2026-08-14 requirement, scope spec
-// Q3 addendum). Pack concepts get a slight per-candidate boost so tutor-
-// admitted words don't crowd the curated 250-word method out of the
-// exercise stream. The boost decays with pack-base completion so the end-
-// game (pack fully mastered) doesn't starve the remaining tutor pool.
-//   - Applied on top of passesSpacing(), never as a hard block — tutor
-//     concepts stay eligible for every pick, they just weigh 1 while a pack
-//     concept weighs up to 1.5.
-//   - Mid-base (no pack completed): pack weight = 1.5, tutor = 1.
-//   - Full base mastery: both = 1.
+// Q3 addendum; REVERSED by Nekh 2026-10-03 — tutor-admitted words now weigh
+// exactly the same as pack words, PACK_SELECTION_BOOST_MAX = 0). The
+// machinery stays so the boost can be brought back with one constant:
+//   - Applied on top of passesSpacing(), never as a hard block.
 //   - Signal is per-concept `progress.provenance` (stamped on admission,
 //     defaults to "pack" via the v2 migration).
-// The pure math (baseCompletionRatio / packSelectionBoost / weightedPickFrom)
-// lives in selection.mjs so it's unit-testable outside the DOM.
+// The pure math (baseCompletionRatio / packSelectionBoost /
+// pickFromLevelBuckets) lives in selection.mjs so it's unit-testable
+// outside the DOM.
 function baseCompletionRatio() {
   return computeBaseCompletionRatio(run.released, run.progress);
 }
@@ -5364,49 +5371,25 @@ function chooseConcept(excluded = new Set()) {
   // of fresh L1 bundles starves L4+ concepts and the learner never sees
   // L5/L6/L7 at all.
   //
-  // We bucket candidates by level, weight each present level (L1=7 down to
-  // L7=1), then pick a level by weighted-random and a candidate within it.
-  const byLevel = new Map();
-  for (const c of candidates) {
-    const l = levelOf(c);
-    if (!byLevel.has(l)) byLevel.set(l, []);
-    byLevel.get(l).push(c);
-  }
   // Review mode: once the release plan is fully unlocked there is nothing
   // new to introduce, so stop favoring low levels — every present level gets
   // an equal shot, and within a level the least-recently-tested words go
   // first. Words drain upward steadily instead of L6/L7 being starved by a
   // large low-level backlog.
+  //
+  // Only words that can actually render at their level are considered
+  // (canRender below) — the bucket walk lives in selection.mjs, see
+  // pickFromLevelBuckets for the starvation this closes.
   const planExhausted = run.releasePlanIndex >= (run.releasePlan || []).length;
-
-  const levels = Array.from(byLevel.keys()).sort((a, b) => a - b);
-  const weights = levels.map(l => (planExhausted ? 1 : Math.max(1, 8 - l)));
-  const total = weights.reduce((acc, w) => acc + w, 0);
-  let r = Math.random() * total;
-  let chosenLevel = levels[0];
-  for (let i = 0; i < levels.length; i++) {
-    r -= weights[i];
-    if (r <= 0) { chosenLevel = levels[i]; break; }
-  }
-  const bucket = byLevel.get(chosenLevel);
   const baseCompletion = baseCompletionRatio();
 
-  if (planExhausted) {
-    // Stalest-first with a little variety: weighted-random among the 3
-    // words that have waited longest, so the pack boost still tilts the
-    // final pick without ever hard-blocking tutor concepts.
-    const byStaleness = [...bucket].sort((a, b) => {
-      const at = (c) => {
-        const shown = ensureProgress(c).lastShownAt;
-        return shown === -Infinity ? -1 : shown;
-      };
-      return at(a) - at(b);
-    });
-    const pool = byStaleness.slice(0, 3);
-    return weightedPickFrom(pool, c => conceptSelectionWeight(c, baseCompletion));
-  }
-
-  return weightedPickFrom(bucket, c => conceptSelectionWeight(c, baseCompletion));
+  return pickFromLevelBuckets(candidates, {
+    levelOf,
+    lastShownAt: c => ensureProgress(c).lastShownAt,
+    canRender: c => (levelOf(c) === 1 ? canConceptBeIntroduced(c) : canConceptBeTested(c)),
+    weightOf: c => conceptSelectionWeight(c, baseCompletion),
+    planExhausted,
+  });
 }
 // Rotate the subject pronoun in a template to a different one the learner
 // has already unlocked. Widens effective variety without writing new
