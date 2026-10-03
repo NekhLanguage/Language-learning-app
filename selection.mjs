@@ -119,6 +119,51 @@ export function pickFromLevelBuckets(candidates, {
   return null;
 }
 
+// Word types a function word should NOT be tested against before the
+// function-word tier is exhausted: a recognition round for "yes" reads
+// better against "and" / "with" / "I" than against "food" / "eat".
+export const CONTENT_WORD_TYPES = new Set(["noun", "verb", "adjective", "number"]);
+
+// Distractor candidates for a recognition round, in priority tiers:
+//   1. released words of the target's own type (shuffled),
+//   2. if that is short of `needed`: released function words of other
+//      types (anything outside CONTENT_WORD_TYPES), shuffled,
+//   3. if still short: every other released word, shuffled.
+// Nekh 2026-10-03: YES / NO / NOT / PLEASE / MAYBE / THANKS belong to
+// types with one or two members (response, modality, politeness), so a
+// strict same-type rule left them untestable at L2 for ever; they may be
+// tested against the other words. Pure: `typeOf(cid)` supplies the type,
+// `usable(cid)` can veto a word (orphan copula, no surface). Never includes
+// the target. The caller takes the first `needed` after its own dedupe.
+export function distractorTiers(targetConcept, released, { typeOf, needed = 3, usable = () => true, rng = Math.random } = {}) {
+  const list = Array.isArray(released) ? released : [];
+  const targetType = typeOf(targetConcept);
+  const shuffled = (items) => {
+    const out = [...items];
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  };
+  const have = new Set([targetConcept]);
+  const tier = (pred) => {
+    const out = [];
+    for (const cid of list) {
+      if (have.has(cid) || !usable(cid)) continue;
+      const t = typeOf(cid);
+      if (t === undefined || t === null || !pred(t)) continue;
+      out.push(cid);
+      have.add(cid);
+    }
+    return shuffled(out);
+  };
+  const ordered = tier((t) => t === targetType);
+  if (ordered.length < needed) ordered.push(...tier((t) => !CONTENT_WORD_TYPES.has(t)));
+  if (ordered.length < needed) ordered.push(...tier(() => true));
+  return ordered;
+}
+
 // Weighted random pick. `weightFn(item)` must return a non-negative number.
 // If every weight is zero (or the list is empty), returns null so the
 // caller can decide how to fall back.

@@ -9,6 +9,8 @@ import {
   conceptSelectionWeight,
   weightedPickFrom,
   pickFromLevelBuckets,
+  distractorTiers,
+  CONTENT_WORD_TYPES,
 } from "../../selection.mjs";
 
 const packProgress = (completed) => ({
@@ -172,6 +174,51 @@ test("while the plan still has bundles: weighted level draw, and an unrenderable
     if (r.l7.includes(p)) counts.l7++; else counts.l2++;
   }
   assert.ok(counts.l2 > counts.l7, `L2 should dominate while bundles remain: ${JSON.stringify(counts)}`);
+});
+
+// --- distractorTiers: the six peer-less core words ------------------------
+
+const TYPES = {
+  YES: "response", NO: "response", NOT: "modality", MAYBE: "modality",
+  PLEASE: "politeness", THANKS: "politeness",
+  AND: "connector", BUT: "connector", WITH: "glue", FOR: "glue",
+  FIRST_PERSON_SINGULAR: "pronoun", HE: "pronoun",
+  FOOD: "noun", WATER: "noun", BOOK: "noun", EAT: "verb", DRINK: "verb", BIG: "adjective",
+};
+const typeOf = (c) => TYPES[c];
+const RELEASED = Object.keys(TYPES);
+
+test("distractorTiers: same-type peers come first; enough of them and the list stops there", () => {
+  // Two noun peers only: they lead, then the tiers widen to fill.
+  const out = distractorTiers("FOOD", RELEASED, { typeOf, needed: 3 });
+  assert.deepEqual(out.slice(0, 2).sort(), ["BOOK", "WATER"]);
+  assert.ok(out.length > 2);
+  // Three noun peers: no widening at all.
+  const nounsOnly = distractorTiers("FOOD", [...RELEASED, "PHONE"], { typeOf: (c) => (c === "PHONE" ? "noun" : TYPES[c]), needed: 3 });
+  assert.deepEqual(nounsOnly.sort(), ["BOOK", "PHONE", "WATER"]);
+});
+
+test("distractorTiers: YES gets NO first, then other function words, never content words while function words suffice", () => {
+  const out = distractorTiers("YES", RELEASED, { typeOf, needed: 3 });
+  assert.equal(out[0], "NO", "the one same-type peer comes first");
+  const picked = out.slice(0, 3);
+  for (const c of picked) assert.ok(!CONTENT_WORD_TYPES.has(typeOf(c)), `${c} is a function word`);
+  assert.ok(!out.includes("YES"));
+  // Content words are present only after every function word.
+  const firstContent = out.findIndex((c) => CONTENT_WORD_TYPES.has(typeOf(c)));
+  const lastFunction = out.map((c) => !CONTENT_WORD_TYPES.has(typeOf(c))).lastIndexOf(true);
+  assert.ok(firstContent === -1 || firstContent > lastFunction);
+});
+
+test("distractorTiers: content words fill in only when function words run out; usable() vetoes; unknown types are skipped", () => {
+  const released = ["YES", "NO", "AND", "FOOD", "EAT", "MYSTERY"];
+  const out = distractorTiers("YES", released, { typeOf, needed: 3 });
+  assert.deepEqual(out.slice(0, 2), ["NO", "AND"]);
+  assert.ok(["FOOD", "EAT"].includes(out[2]));
+  assert.ok(!out.includes("MYSTERY"), "no type, no tile");
+  const vetoed = distractorTiers("YES", released, { typeOf, needed: 3, usable: (c) => c !== "AND" });
+  assert.ok(!vetoed.includes("AND"));
+  assert.deepEqual(distractorTiers("YES", [], { typeOf }), []);
 });
 
 test("pickFromLevelBuckets: empty input is null", () => {

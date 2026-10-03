@@ -507,3 +507,62 @@ test("L6 sentence builder never renders a blank tile (Emi run-19 -97, Turkish lo
     await page.evaluate(() => window.__app.rerender());
   }
 });
+
+// Nekh 2026-10-03: YES, NO, NOT, PLEASE, MAYBE and THANKS belong to word
+// types with one or two members, so the strict same-type rule in the L2
+// question builder left them untestable at level 2 for every learner for
+// ever (and, until #198, jamming review-mode selection). They may now be
+// tested against the other function words; L3 and L4 already fell back.
+// Seed every bundle, every word completed except the two "response" words
+// at the level under test, and assert the exercise renders and climbs.
+async function seedPeerlessWordsAt(page, level) {
+  await seedAllConceptsAt(page, level, { bundles: 999, restrictTypes: ["response"] });
+}
+
+test("L2: a word with no same-type peers (yes / no) is tested against other function words", async ({ page }) => {
+  await startNewRun(page);
+  await seedPeerlessWordsAt(page, 2);
+
+  await expect(page.locator("#session-subtitle")).toContainText("2");
+  await expect(page.locator("#choices button")).toHaveCount(4);
+  const cid = await lastTargetConcept(page);
+  expect(["YES", "NO"]).toContain(cid);
+
+  // The four tiles are distinct and none is the target's own gloss twice.
+  const tiles = (await page.locator("#choices button").allInnerTexts()).map((t) => t.trim().toLowerCase());
+  expect(new Set(tiles).size).toBe(4);
+
+  // Two correct answers (standard L2 spacing between) climb a word to L3.
+  // Both YES and NO are live and the pick between them is random, so
+  // answer four rounds: whichever way they split, at least one word has
+  // two correct answers. The correct tile carries the target's data-cid.
+  const levelsNow = () => page.evaluate(() => ({ YES: window.__app.run.progress.YES.level, NO: window.__app.run.progress.NO.level }));
+  for (let i = 0; i < 4; i++) {
+    const levels = await levelsNow();
+    if (Math.max(levels.YES, levels.NO) >= 3) break; // the L3 round has 8 tiles — done
+    await expect(page.locator("#session-subtitle")).toContainText("2");
+    await expect(page.locator("#choices button")).toHaveCount(4);
+    const target = await lastTargetConcept(page);
+    await page.locator(`#choices button[data-cid="${target}"]`).click();
+    await page.click("#check-btn");
+    await page.evaluate(() => { window.__app.run.exerciseCounter += 4; });
+    await page.click("#check-btn");
+  }
+  const levels = await levelsNow();
+  expect(Math.max(levels.YES, levels.NO)).toBeGreaterThanOrEqual(3);
+});
+
+test("L3 and L4: the peer-less words render a fill-the-blank and a recognition round", async ({ page }) => {
+  await startNewRun(page);
+  await seedPeerlessWordsAt(page, 3);
+  await expect(page.locator("#session-subtitle")).toContainText("3");
+  await expect(page.locator("#content")).toContainText("_____");
+  // L3 offers up to eight tiles; four is the floor.
+  expect(await page.locator("#choices button").count()).toBeGreaterThanOrEqual(4);
+  expect(["YES", "NO"]).toContain(await lastTargetConcept(page));
+
+  await seedPeerlessWordsAt(page, 4);
+  await expect(page.locator("#session-subtitle")).toContainText("4");
+  expect(await page.locator("#choices button").count()).toBeGreaterThanOrEqual(4);
+  expect(["YES", "NO"]).toContain(await lastTargetConcept(page));
+});
