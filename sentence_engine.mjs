@@ -512,9 +512,29 @@ function plFeminineAccusativeAdjective(form) {
 // declared caseMarking.femAccusativeStrategy (language_rules.mjs). An
 // explicit `accusative` field on the entry always wins; the strategy only
 // covers the regular pattern so not every feminine noun needs the field.
+// Russian regular feminine accusatives: noun -а→-у / -я→-ю («книга»→
+// «книгу», «неделя»→«неделю»); adjective -ая→-ую / -яя→-юю («большая»→
+// «большую», «синяя»→«синюю») and the possessives' short -я→-ю («моя»→
+// «мою»). Multi-word forms shift every word, like uk.
+function ruFeminineAccusativeNoun(form) {
+  return String(form).split(" ").map(w =>
+    w.endsWith("а") ? w.slice(0, -1) + "у" :
+    w.endsWith("я") ? w.slice(0, -1) + "ю" : w
+  ).join(" ");
+}
+function ruFeminineAccusativeAdjective(form) {
+  return String(form).split(" ").map(w =>
+    w.endsWith("ая") ? w.slice(0, -2) + "ую" :
+    w.endsWith("яя") ? w.slice(0, -2) + "юю" :
+    w.endsWith("а") ? w.slice(0, -1) + "у" :
+    w.endsWith("я") ? w.slice(0, -1) + "ю" : w
+  ).join(" ");
+}
+
 const FEM_ACC_STRATEGIES = {
   uk: { noun: ukFeminineAccusative, adjective: ukFeminineAccusative },
   pl: { noun: plFeminineAccusativeNoun, adjective: plFeminineAccusativeAdjective },
+  ru: { noun: ruFeminineAccusativeNoun, adjective: ruFeminineAccusativeAdjective },
 };
 
 // Gender-aware accusative strategies (caseMarking.accusativeStrategy) for
@@ -609,6 +629,26 @@ const ADJ_CASE_STRATEGIES = {
       if (s.includes(" ")) return s;
       if (s.endsWith("ій")) return s.slice(0, -2) + "ього";
       if (s.endsWith("ий")) return s.slice(0, -2) + "ого";
+      return s;
+    },
+  },
+  ru: {
+    // genitive plural from the plural form: «новые»→«новых», «синие»→
+    // «синих» («пять новых книг»).
+    genitivePluralFromPlural: (w) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (s.endsWith("ые")) return s.slice(0, -2) + "ых";
+      if (s.endsWith("ие")) return s.slice(0, -2) + "их";
+      return s;
+    },
+    // masc-animate accusative (= genitive): «новый»→«нового», «синий»→
+    // «синего», «большой»→«большого» («Я вижу нового тренера»).
+    animateAccusative: (w) => {
+      const s = String(w);
+      if (s.includes(" ")) return s;
+      if (s.endsWith("ий")) return s.slice(0, -2) + "его";
+      if (s.endsWith("ый") || s.endsWith("ой")) return s.slice(0, -2) + "ого";
       return s;
     },
   },
@@ -1124,6 +1164,21 @@ function caseMap(lang, ordered) {
 }
 
 // The declined form for a governed nominal, or null when no data exists.
+// Declared rule existentialPossession: the possessor of a HAVE clause in
+// the declared case — a bare case name (fi adessive «Minulla on kirja»)
+// or { case, prefix } when a preposition leads it (ru «У меня есть
+// книга»: genitive behind «у»). Null when the entry lacks the case field
+// (the caller then keeps the nominative, which the surface ratchet reports).
+function existentialPossessorForm(lang, cid) {
+  const spec = langRuleValue(lang, "existentialPossession");
+  if (!spec) return null;
+  const caseName = typeof spec === "object" ? spec.case : spec;
+  const form = caseFormFor(lang, cid, caseName);
+  if (!form) return null;
+  const prefix = typeof spec === "object" && spec.prefix ? spec.prefix + " " : "";
+  return prefix + form;
+}
+
 function caseFormFor(lang, cid, caseName) {
   if (!caseName) return null;
   const entry = vocab().languages?.[lang]?.forms?.[cid];
@@ -1275,11 +1330,19 @@ function definiteNounPhrase(lang, cid, opts = {}) {
     return greekDefiniteArticle(g, plural, opts.caseName) + " " +
       (opts.caseName === "accusative" && !plural ? accusativeNoun(lang, cid, base) : base);
   }
-  if (lang === "no") {
-    // Definite suffix: plural +ene (sko → skoene), -e final +n (bukse →
-    // buksen), neuter +et (hus → huset), else +en (bok → boken). An
-    // authored `definiteForm` wins where the suffix changes the stem
-    // (rom → rommet). (`definite` is the article-policy flag, not a form.)
+  // Declared rule definiteSuffix: the definite article is a suffix on the
+  // noun (Scandinavian). "no" — plural +ene (sko → skoene), -e final +n
+  // (bukse → buksen), neuter +et (hus → huset), else +en (bok → boken).
+  // "sv" — plural -or/-ar/-er +na (böcker → böckerna), -n plurals +a
+  // (äpplen → äpplena), zero plurals +en (hus → husen); singular neuter +t
+  // after a vowel / +et after a consonant (öga → ögat, hus → huset),
+  // common gender +n after a vowel or an unstressed -el/-er/-en (flicka →
+  // flickan, syster → systern), else +en (bok → boken). An authored
+  // `definiteForm` (singular) / `definitePlural` wins where the suffix
+  // changes the stem (rom → rommet, man → mannen / männen).
+  // (`definite` is the article-policy flag, not a form.)
+  const suffixStrategy = langRuleValue(lang, "definiteSuffix");
+  if (suffixStrategy === "no") {
     noteRule("definite_article");
     if (typeof entry.definiteForm === "string" && (!plural || entry.pluralOnly)) return entry.definiteForm;
     // -er plurals swap the ending («hender» → «hendene», «bøker» →
@@ -1288,6 +1351,20 @@ function definiteNounPhrase(lang, cid, opts = {}) {
     if (plural) return base.endsWith("er") ? base.slice(0, -2) + "ene" : base + "ene";
     if (g === "n") return base + (base.endsWith("e") ? "t" : "et");
     if (base.endsWith("e")) return base + "n";
+    return base + "en";
+  }
+  if (suffixStrategy === "sv") {
+    noteRule("definite_article");
+    if (typeof entry.definiteForm === "string" && (!plural || entry.pluralOnly)) return entry.definiteForm;
+    if (plural) {
+      if (typeof entry.definitePlural === "string") return entry.definitePlural;
+      if (/(or|ar|er)$/.test(base)) return base + "na";
+      if (base.endsWith("n")) return base + "a";
+      return base + "en";
+    }
+    const vowelFinal = /[aeiouyåäö]$/i.test(base);
+    if (g === "n") return base + (vowelFinal ? "t" : "et");
+    if (vowelFinal || /(el|er|en)$/.test(base)) return base + "n";
     return base + "en";
   }
   if (lang === "it") {
@@ -1432,12 +1509,15 @@ function nounPhrase(lang, cid, opts = {}) {
     return article + " " + base;
   }
 
-  if (lang === "no") {
+  // Declared rule indefiniteArticleForms ({ default, n }): a two-way
+  // article split on the neuter only — no «en bok» / «et hus» (Bokmål:
+  // feminine nouns take "en" in the common-gender style the authored
+  // corpus uses throughout, "en kvinne" not "ei kvinne"), sv «en bok» /
+  // «ett hus».
+  const articleForms = langRuleValue(lang, "indefiniteArticleForms");
+  if (articleForms) {
     noteRule("indefinite_article");
-    // Bokmål: feminine nouns take "en" in the common-gender style the
-    // authored corpus uses throughout ("en kvinne", not "ei kvinne").
-    if (entry.gender === "n") return "et " + base;
-    return "en " + base;
+    return (entry.gender === "n" ? articleForms.n : articleForms.default) + " " + base;
   }
 
   if (lang === "de") {
@@ -1881,7 +1961,7 @@ function preverbalAdjunctOrder(lang, ordered) {
       const exPoss = langRuleValue(targetLang, "existentialPossession");
       if (exPoss && targetConcept === subjectCid &&
           (tpl.concepts || []).includes("HAVE")) {
-        const possForm = caseFormFor(targetLang, targetConcept, exPoss);
+        const possForm = existentialPossessorForm(targetLang, targetConcept);
         if (possForm) return possForm;
       }
     }
@@ -2298,6 +2378,14 @@ function preverbalAdjunctOrder(lang, ordered) {
     if (!meta) return null;
     if (meta.type === "verb") {
       return safeSurfaceForConcept(tpl, targetLang, cid);
+    }
+    // Existential possession (ru «У клана есть мастер», fi «Minulla on
+    // kirja»): every tile in the HAVE-subject slot carries the possessor
+    // form the blank holds («у клана» / «у покемона»), never the nominative.
+    if (slot?.position === "subject" && langRuleValue(targetLang, "existentialPossession") &&
+        (tpl.concepts || []).includes("HAVE")) {
+      const possForm = existentialPossessorForm(targetLang, cid);
+      if (possForm) return possForm;
     }
     // The tr have-slot: every tile carries the possessor's person suffix
     // («Benim _____ var» offers «yiyeceğim» / «kitabım» / «tavam»), the
@@ -2888,8 +2976,37 @@ function greekEncliticStress(s) {
     });
 }
 
+// Declared rule commaBeforeConjunctions (ru «но», «потому что», «а»): a
+// clause-joining conjunction is set off with a comma on the finished
+// string, since clauses are assembled by several builders (the same pass
+// uk/pl carry in their own branches below).
+function commaBeforeConjunctions(lang, sentence) {
+  const words = langRuleValue(lang, "commaBeforeConjunctions");
+  if (!Array.isArray(words) || !words.length) return sentence;
+  const alt = words.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+  return sentence.replace(new RegExp(`([^,])\\s+(${alt})\\s`, "g"), "$1, $2 ");
+}
+
+// Declared rule prepositionAllomorphy "ru": the one-consonant prepositions
+// take a vowel before a consonant cluster — «со своей мамой», «со
+// стола», «во вторник», «ко мне» — never «с своей» / «в вторник».
+function ruPrepositionAllomorphy(sentence) {
+  const C = "бвгджзйклмнпрстфхцчшщ";
+  return sentence
+    .replace(new RegExp(`(^|\\s)([сС])\\s+(?=(?:[сзшж][${C}]|мн|вс|ль))`, "g"),
+      (m, pre, c) => pre + (c === "С" ? "Со " : "со "))
+    .replace(new RegExp(`(^|\\s)([вВ])\\s+(?=(?:[вф][${C}]|мн))`, "g"),
+      (m, pre, v) => pre + (v === "В" ? "Во " : "во "))
+    .replace(/(^|\s)([кК])\s+(?=(?:мн|вс))/g,
+      (m, pre, k) => pre + (k === "К" ? "Ко " : "ко "));
+}
+
 // Single hook for per-language final passes on an assembled sentence.
-function finalizeSentence(lang, sentence) {
+function finalizeSentence(lang, rawSentence) {
+  let sentence = commaBeforeConjunctions(lang, rawSentence);
+  if (langRuleValue(lang, "prepositionAllomorphy") === "ru") {
+    sentence = ruPrepositionAllomorphy(sentence);
+  }
   if (lang === "fr") {
     const elided = frenchElision(sentence);
     if (elided !== sentence) noteRule("french_elision");
@@ -4879,8 +4996,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     }
 
     if (existentialHave && cid === subjectCid) {
-      const possForm = caseFormFor(lang, cid,
-        langRuleValue(lang, "existentialPossession"));
+      const possForm = existentialPossessorForm(lang, cid);
       if (possForm) return possForm;
     }
 
@@ -6212,7 +6328,9 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         vocab().concepts[ordered[idx + 1]]?.type === "noun") {
       const nextCid = ordered[idx + 1];
       let form = genderedFormOf(lang, cid, nextCid);
-      if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
+      // The possessed noun of an existential-possession clause stays
+      // nominative (ru «У меня есть другая книга»), so its modifier does too.
+      if (femAccStrategy(lang) && ukObjectCaseApplies(lang) && !existentialHave &&
           isDirectObjectPosition(ordered, idx + 1, lang) && !pluralAgreement &&
           vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
         form = femAccusativeShift(lang, form, "adjective");
@@ -6317,7 +6435,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           const declinedPoss = possessiveCaseForm(lang, pcid, nextCid, doCase);
           if (declinedPoss) return declinedPoss;
         }
-        if (femAccStrategy(lang) && ukObjectCaseApplies(lang) &&
+        if (femAccStrategy(lang) && ukObjectCaseApplies(lang) && !existentialHave &&
             isDirectObjectPosition(ordered, idx + 1, lang) && !pluralAgreement &&
             vocab().languages?.[lang]?.forms?.[nextCid]?.gender === "f") {
           form = femAccusativeShift(lang, form, "adjective");

@@ -109,7 +109,9 @@
     "es": "Spanish",
     "fr": "French",
     "zh": "Mandarin",
-    "pl": "Polish"
+    "pl": "Polish",
+    "sv": "Swedish",
+    "ru": "Russian"
   },
   "forms": {
     "BIG": [

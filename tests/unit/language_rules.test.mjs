@@ -78,7 +78,7 @@ test("derived sets keep their pre-consolidation memberships", () => {
   // noun, but it still IS an indefinite article — Emi cycle-15 was 51/128
   // tr divergences on this missing mechanism.
   assert.deepEqual([...langsWith("indefiniteArticle")].sort(),
-    ["de", "el", "en", "es", "fr", "it", "no", "pt", "tr"]);
+    ["de", "el", "en", "es", "fr", "it", "no", "pt", "sv", "tr"]);
   // fr/es joined 2026-08-27: post-nominal is their correct DEFAULT (the
   // missing flag shipped «un noir livre» — Emi -12); role-based
   // pre-nominal placement refines it per language.
@@ -87,7 +87,7 @@ test("derived sets keep their pre-consolidation memberships", () => {
   // ko joined 2026-08-28: the present copula is the 이에요/예요 suffix on
   // the nominal predicate, never a standalone word (Emi run 6).
   assert.deepEqual([...langsWith("zeroPresentCopula")].sort(),
-    ["ar", "ko", "tr", "uk"]);
+    ["ar", "ko", "ru", "tr", "uk"]);
   assert.deepEqual([...langsWith("spacelessJoin")].sort(), ["th"]);
   assert.deepEqual([...langsWith("spacelessTiles")].sort(), ["ja", "th", "zh"]);
 });
@@ -780,9 +780,9 @@ test("uk: 2–4 take the nominative plural and «два» agrees in gender", () 
 // merged superset) — extra pins on a different template plus the membership
 // and gate guards its suite added.
 
-test("uk: numeralGenitivePlural membership is exactly pl + uk", () => {
+test("uk: numeralGenitivePlural membership is exactly pl + ru + uk", () => {
   assert.equal(langRule("uk", "numeralGenitivePlural"), true);
-  assert.deepEqual([...langsWith("numeralGenitivePlural")].sort(), ["pl", "uk"]);
+  assert.deepEqual([...langsWith("numeralGenitivePlural")].sort(), ["pl", "ru", "uk"]);
 });
 
 test("uk: forced 5+ numbers govern the genitive plural on YOU_READ_BOOK", () => {
@@ -2284,4 +2284,129 @@ test("motionPurpose: «go for food» is the purpose construction after a motion 
   assert.equal(buildSentence("en", t), "I go for food.");
   // The rule only fires after a MOTION verb: a plain «for» elsewhere is untouched.
   assert.equal(buildSentence("uk", { ...t, template_id: "X", concepts: ["FIRST_PERSON_SINGULAR", "COOK", "FOR", "FOOD"] }), "Я готую для їжі.");
+});
+
+// ---------------------------------------------------------------------
+// sv: Swedish, Nekh-ordered stress test 2026-10-03 — modelled on the
+// Norwegian row with a preposed possessive, en/ett articles and the
+// Swedish definite suffix. Not native-reviewed (Emi's run is the first read).
+// ---------------------------------------------------------------------
+
+test("sv: en/ett articles and the suffixed definite follow the declensions", () => {
+  assert.equal(buildSentence("sv", tplById("HE_READ_BOOK")), "Han läser en bok.");
+  assert.equal(buildSentence("sv", tplById("I_SEE_HOUSE")), "Jag ser ett hus.");
+  assert.equal(buildSentence("sv", tplById("BOOK_IS_RED")), "Boken är röd.");
+  assert.equal(buildSentence("sv", tplById("HOUSE_IS_WHITE")), "Huset är vitt.");
+  assert.equal(buildSentence("sv", tplById("PANTS_ARE_BLACK")), "Byxorna är svarta.");
+  assert.equal(buildSentence("sv", tplById("SHOES_UNDER_THIS")), "Skorna är under det här.");
+  // Definite plural by declension class: -er plurals take -na, zero plurals -en.
+  assert.equal(buildSentence("sv", tplById("YOU_READ_BOOK"), "FIVE", {}), "Du läser fem böcker.");
+  assert.equal(buildSentence("sv", tplById("I_SEE_HOUSE"), "EIGHT", {}), "Jag ser åtta hus.");
+  // Meals and the destination: no article on frukost, definite after «till».
+  assert.equal(buildSentence("sv", tplById("I_EAT_BREAKFAST")), "Jag äter frukost.");
+  assert.equal(buildSentence("sv", tplById("I_GO_TO_TABLE")), "Jag går till bordet.");
+});
+
+test("sv: the possessive is preposed and the adjective after it takes the weak form", () => {
+  assert.equal(buildSentence("sv", tplById("THIS_IS_MY_HAND")), "Det här är min hand.");
+  assert.equal(buildSentence("sv", tplById("THIS_IS_YOUR_HEAD")), "Det här är ditt huvud.");
+  assert.equal(buildSentence("sv", tplById("SHE_IS_MY_MOM"), "SMALL", {}), "Hon är min lilla mamma.");
+  assert.equal(buildSentence("sv", tplById("I_HAVE_SHIRT"), "BIG", {}), "Jag har en stor skjorta.");
+  // Reflexive «sitt» when the subject owns the room; agreement with the neuter.
+  assert.equal(buildSentence("sv", tplById("SHE_GO_TO_HER_ROOM")), "Hon går till sitt rum.");
+  assert.equal(buildSentence("sv", tplById("SHE_GO_TO_HER_ROOM"), "WHITE", {}), "Hon går till sitt vita rum.");
+  assert.equal(buildSentence("sv", tplById("SHE_SEES_ROOM"), "MY", {}), "Hon ser mitt rum.");
+});
+
+test("sv: V2 after a fronted clause, hemifrån, hälsa på, för att hämta, yes/no inversion", () => {
+  assert.equal(buildSentence("sv", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "Om han är hemma, äter han med sin dotter.");
+  assert.equal(buildSentence("sv", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
+    "Han äter middag med sin mamma eftersom han är hemma.");
+  assert.equal(buildSentence("sv", tplById("I_GO_FROM_HOME")), "Jag går hemifrån.");
+  assert.equal(buildSentence("sv", tplById("I_GO_HOME")), "Jag går hem.");
+  assert.equal(buildSentence("sv", tplById("I_GREET_WAITER")), "Jag hälsar på en servitör.");
+  assert.equal(buildSentence("sv", tplById("I_GO_FOR_FOOD")), "Jag går för att hämta mat.");
+  assert.equal(buildSentence("sv", tplById("IS_THAT_YOUR_PHONE")), "Är det där din telefon?");
+});
+
+test("sv/no: the declared article and definite-suffix rules keep Norwegian unchanged", () => {
+  assert.equal(buildSentence("no", tplById("HE_READ_BOOK")), "Han leser en bok.");
+  assert.equal(buildSentence("no", tplById("I_SEE_HOUSE")), "Jeg ser et hus.");
+  assert.equal(buildSentence("no", tplById("BOOK_ON_TABLE")), "Boken er på bordet.");
+  assert.equal(buildSentence("no", tplById("SHOES_UNDER_THIS")), "Skoene er under dette.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er hånden min.");
+  assert.deepEqual([...langsWith("definiteSuffix")].sort(), ["no", "sv"]);
+  assert.deepEqual([...langsWith("indefiniteArticleForms")].sort(), ["no", "sv"]);
+});
+
+// ---------------------------------------------------------------------
+// ru: Russian, Nekh-ordered stress test 2026-10-03 — modelled on the
+// Ukrainian row: zero copula, accusative objects, preposition-governed
+// cases, 5+ genitive plural, reflexive «свой», plus the existential
+// «У меня есть …» possession the uk row does not need.
+// ---------------------------------------------------------------------
+
+test("ru: zero copula, accusative objects, feminine strategy, animate masculines", () => {
+  assert.equal(buildSentence("ru", tplById("I_AM_MAN")), "Я мужчина.");
+  assert.equal(buildSentence("ru", tplById("SHE_IS_MY_MOM")), "Она моя мама.");
+  assert.equal(buildSentence("ru", tplById("I_DRINK_WATER")), "Я пью воду.");
+  assert.equal(buildSentence("ru", tplById("HE_READ_BOOK")), "Он читает книгу.");
+  assert.equal(buildSentence("ru", tplById("SHE_SEES_PHONE")), "Она видит телефон.");
+  assert.equal(buildSentence("ru", tplById("HE_READ_BOOK"), "NEW", {}), "Он читает новую книгу.");
+  assert.equal(buildSentence("ru", tplById("HE_SEES_SHIRT"), "MY", {}), "Он видит мою рубашку.");
+  // Animate masculine object = genitive, on the noun and its adjective.
+  assert.equal(buildSentence("ru", tplById("I_GREET_WAITER")), "Я приветствую официанта.");
+  assert.equal(buildSentence("ru", tplById("I_GREET_WAITER"), "GOOD", {}), "Я приветствую хорошего официанта.");
+});
+
+test("ru: existential possession «У меня есть …» with a nominative possessed noun", () => {
+  assert.equal(buildSentence("ru", tplById("I_HAVE_SHIRT")), "У меня есть рубашка.");
+  assert.equal(buildSentence("ru", tplById("WE_HAVE_JOB")), "У нас есть работа.");
+  assert.equal(buildSentence("ru", tplById("SHE_HAS_SHOES")), "У неё есть обувь.");
+  assert.equal(buildSentence("ru", tplById("THEY_HAVE_PANTS")), "У них есть брюки.");
+  // A noun possessor takes the genitive behind «у»; modifiers stay nominative.
+  assert.equal(buildSentence("ru", tplById("CLAN_HAS_MASTER")), "У клана есть мастер.");
+  assert.equal(buildSentence("ru", tplById("I_HAVE_ANOTHER_BOOK")), "У меня есть другая книга.");
+  assert.equal(buildSentence("ru", tplById("I_HAVE_SHIRT"), "BIG", {}), "У меня есть большая рубашка.");
+  assert.equal(buildSentence("ru", tplById("I_HAVE_SHIRT"), "TWO", {}), "У меня есть две рубашки.");
+  // The L3 blank and the tiles both carry the possessor form.
+  const shared = {};
+  buildSentence("ru", tplById("I_HAVE_SHIRT"), null, shared);
+  const slot = slotContextFor(tplById("CLAN_HAS_MASTER"), "ru", "CLAN");
+  assert.equal(optionSurfaceFor("ru", tplById("CLAN_HAS_MASTER"), "CLAN", slot), "у клана");
+  assert.equal(optionSurfaceFor("ru", tplById("CLAN_HAS_MASTER"), "POKEMON", slot), "у покемона");
+});
+
+test("ru: prepositions govern their cases; «со», «к» + dative, «за» + instrumental", () => {
+  assert.equal(buildSentence("ru", tplById("BOOK_ON_TABLE")), "Книга на столе.");
+  assert.equal(buildSentence("ru", tplById("PHONE_UNDER_TABLE")), "Телефон под столом.");
+  assert.equal(buildSentence("ru", tplById("BOOK_NEXT_TO_TABLE")), "Книга рядом со столом.");
+  assert.equal(buildSentence("ru", tplById("BOOK_BETWEEN_THIS_AND_THAT")), "Книга между этим и тем.");
+  assert.equal(buildSentence("ru", tplById("PHONE_OFF_THIS")), "Телефон не на этом.");
+  assert.equal(buildSentence("ru", tplById("I_GO_TO_TABLE")), "Я иду к столу.");
+  assert.equal(buildSentence("ru", tplById("I_GO_FROM_HOME")), "Я иду из дома.");
+  assert.equal(buildSentence("ru", tplById("I_GO_HOME")), "Я иду домой.");
+  assert.equal(buildSentence("ru", tplById("I_GO_FOR_FOOD")), "Я иду за едой.");
+  assert.equal(buildSentence("ru", tplById("I_DO_THIS_BY_HAND")), "Я делаю это рукой.");
+  assert.equal(buildSentence("ru", tplById("I_BOARD_FLIGHT")), "Я сажусь на рейс.");
+});
+
+test("ru: reflexive «свой», comma before «но»/«потому что», numerals 2 and 5+", () => {
+  assert.equal(buildSentence("ru", tplById("SHE_GO_TO_HER_ROOM")), "Она идёт к своей комнате.");
+  assert.equal(buildSentence("ru", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
+    "Он ест ужин со своей мамой, потому что он дома.");
+  assert.equal(buildSentence("ru", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")), "Он ест завтрак, но не обед.");
+  assert.equal(buildSentence("ru", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "Если он дома, он ест со своей дочерью.");
+  assert.equal(buildSentence("ru", tplById("HE_READ_BOOK"), "TWO", {}), "Он читает две книги.");
+  assert.equal(buildSentence("ru", tplById("YOU_READ_BOOK"), "FIVE", {}), "Ты читаешь пять книг.");
+  assert.equal(buildSentence("ru", tplById("I_SEE_HOUSE"), "FIVE", { adj_HOUSE: "BIG" }), "Я вижу пять больших домов.");
+});
+
+test("ru/uk: the Ukrainian row is untouched by the Russian strategies", () => {
+  assert.equal(buildSentence("uk", tplById("I_DRINK_WATER")), "Я п'ю воду.");
+  assert.equal(buildSentence("uk", tplById("WE_HAVE_JOB")), "Ми маємо роботу.");
+  assert.equal(buildSentence("uk", tplById("SHE_GO_TO_HER_ROOM")), "Вона йде до своєї кімнати.");
+  assert.deepEqual([...langsWith("existentialPossession")].sort(), ["fi", "ru"]);
 });

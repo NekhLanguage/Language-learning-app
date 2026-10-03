@@ -62,6 +62,714 @@
   ],
 
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "HERO": {
+          "form": "герой",
+          "gender": "m",
+          "genitive": "героя",
+          "dative": "герою",
+          "instrumental": "героем",
+          "locative": "герое",
+          "accusative": "героя",
+          "plural": "герои",
+          "genitive_plural": "героев"
+        },
+        "VILLAIN": {
+          "form": "злодей",
+          "gender": "m",
+          "genitive": "злодея",
+          "dative": "злодею",
+          "instrumental": "злодеем",
+          "locative": "злодее",
+          "accusative": "злодея",
+          "plural": "злодеи",
+          "genitive_plural": "злодеев"
+        },
+        "WARRIOR": {
+          "form": "воин",
+          "gender": "m",
+          "genitive": "воина",
+          "dative": "воину",
+          "instrumental": "воином",
+          "locative": "воине",
+          "accusative": "воина",
+          "plural": "воины",
+          "genitive_plural": "воинов"
+        },
+        "RIVAL": {
+          "form": "соперник",
+          "gender": "m",
+          "feminine": "соперница",
+          "genitive": "соперника",
+          "dative": "сопернику",
+          "instrumental": "соперником",
+          "locative": "сопернике",
+          "accusative": "соперника",
+          "plural": "соперники",
+          "genitive_plural": "соперников"
+        },
+        "BRAVE": {
+          "form": "храбрый",
+          "f": "храбрая",
+          "n": "храброе",
+          "plural": "храбрые"
+        },
+        "SWORD": {
+          "form": "меч",
+          "gender": "m",
+          "genitive": "меча",
+          "dative": "мечу",
+          "instrumental": "мечом",
+          "locative": "мече",
+          "plural": "мечи",
+          "genitive_plural": "мечей"
+        },
+        "ARMOR": {
+          "form": "броня",
+          "gender": "f",
+          "genitive": "брони",
+          "dative": "броне",
+          "instrumental": "броней",
+          "locative": "броне",
+          "accusative": "броню"
+        },
+        "SHIELD": {
+          "form": "щит",
+          "gender": "m",
+          "genitive": "щита",
+          "dative": "щиту",
+          "instrumental": "щитом",
+          "locative": "щите",
+          "plural": "щиты",
+          "genitive_plural": "щитов"
+        },
+        "ATTACK": {
+          "base": "атаковать",
+          "1_singular": "атакую",
+          "2_singular": "атакуешь",
+          "3_singular": "атакует",
+          "1_plural": "атакуем",
+          "2_plural": "атакуете",
+          "3_plural": "атакуют"
+        },
+        "DEFEND": {
+          "base": "защищать",
+          "1_singular": "защищаю",
+          "2_singular": "защищаешь",
+          "3_singular": "защищает",
+          "1_plural": "защищаем",
+          "2_plural": "защищаете",
+          "3_plural": "защищают"
+        },
+        "DRAGON": {
+          "form": "дракон",
+          "gender": "m",
+          "genitive": "дракона",
+          "dative": "дракону",
+          "instrumental": "драконом",
+          "locative": "драконе",
+          "accusative": "дракона",
+          "plural": "драконы",
+          "genitive_plural": "драконов"
+        },
+        "DEMON": {
+          "form": "демон",
+          "gender": "m",
+          "genitive": "демона",
+          "dative": "демону",
+          "instrumental": "демоном",
+          "locative": "демоне",
+          "accusative": "демона",
+          "plural": "демоны",
+          "genitive_plural": "демонов"
+        },
+        "SPIRIT": {
+          "form": "дух",
+          "gender": "m",
+          "genitive": "духа",
+          "dative": "духу",
+          "instrumental": "духом",
+          "locative": "духе",
+          "accusative": "духа",
+          "plural": "духи",
+          "genitive_plural": "духов"
+        },
+        "SUMMON": {
+          "base": "призывать",
+          "1_singular": "призываю",
+          "2_singular": "призываешь",
+          "3_singular": "призывает",
+          "1_plural": "призываем",
+          "2_plural": "призываете",
+          "3_plural": "призывают"
+        },
+        "SINISTER": {
+          "form": "зловещий",
+          "f": "зловещая",
+          "n": "зловещее",
+          "plural": "зловещие"
+        },
+        "NINJA": {
+          "form": "ниндзя",
+          "gender": "m",
+          "genitive": "ниндзя",
+          "dative": "ниндзя",
+          "instrumental": "ниндзя",
+          "locative": "ниндзя",
+          "invariantPlural": true,
+          "genitive_plural": "ниндзя",
+          "accusative": "ниндзя"
+        },
+        "SAMURAI": {
+          "form": "самурай",
+          "gender": "m",
+          "genitive": "самурая",
+          "dative": "самураю",
+          "instrumental": "самураем",
+          "locative": "самурае",
+          "accusative": "самурая",
+          "plural": "самураи",
+          "genitive_plural": "самураев"
+        },
+        "SENSEI": {
+          "form": "сэнсэй",
+          "gender": "m",
+          "genitive": "сэнсэя",
+          "dative": "сэнсэю",
+          "instrumental": "сэнсэем",
+          "locative": "сэнсэе",
+          "accusative": "сэнсэя",
+          "plural": "сэнсэи",
+          "genitive_plural": "сэнсэев"
+        },
+        "SHADOW": {
+          "form": "тень",
+          "gender": "f",
+          "genitive": "тени",
+          "dative": "тени",
+          "instrumental": "тенью",
+          "locative": "тени",
+          "plural": "тени",
+          "genitive_plural": "теней"
+        },
+        "STRIKE": {
+          "base": "бить",
+          "1_singular": "бью",
+          "2_singular": "бьёшь",
+          "3_singular": "бьёт",
+          "1_plural": "бьём",
+          "2_plural": "бьёте",
+          "3_plural": "бьют"
+        },
+        "TRANSFORM": {
+          "base": "преображаться",
+          "1_singular": "преображаюсь",
+          "2_singular": "преображаешься",
+          "3_singular": "преображается",
+          "1_plural": "преображаемся",
+          "2_plural": "преображаетесь",
+          "3_plural": "преображаются"
+        },
+        "POWER": {
+          "form": "сила",
+          "gender": "f",
+          "genitive": "силы",
+          "dative": "силе",
+          "instrumental": "силой",
+          "locative": "силе",
+          "accusative": "силу",
+          "plural": "силы",
+          "genitive_plural": "сил"
+        },
+        "CHANNEL": {
+          "base": "направлять",
+          "1_singular": "направляю",
+          "2_singular": "направляешь",
+          "3_singular": "направляет",
+          "1_plural": "направляем",
+          "2_plural": "направляете",
+          "3_plural": "направляют"
+        },
+        "UNLEASH": {
+          "base": "высвобождать",
+          "1_singular": "высвобождаю",
+          "2_singular": "высвобождаешь",
+          "3_singular": "высвобождает",
+          "1_plural": "высвобождаем",
+          "2_plural": "высвобождаете",
+          "3_plural": "высвобождают"
+        },
+        "POWERFUL": {
+          "form": "могущественный",
+          "f": "могущественная",
+          "n": "могущественное",
+          "plural": "могущественные"
+        },
+        "QUEST": {
+          "form": "квест",
+          "gender": "m",
+          "genitive": "квеста",
+          "dative": "квесту",
+          "instrumental": "квестом",
+          "locative": "квесте",
+          "plural": "квесты",
+          "genitive_plural": "квестов"
+        },
+        "DESTINY": {
+          "form": "судьба",
+          "gender": "f",
+          "genitive": "судьбы",
+          "dative": "судьбе",
+          "instrumental": "судьбой",
+          "locative": "судьбе",
+          "accusative": "судьбу",
+          "plural": "судьбы",
+          "genitive_plural": "судеб"
+        },
+        "KINGDOM": {
+          "form": "королевство",
+          "gender": "n",
+          "genitive": "королевства",
+          "dative": "королевству",
+          "instrumental": "королевством",
+          "locative": "королевстве",
+          "plural": "королевства",
+          "genitive_plural": "королевств"
+        },
+        "TEMPLE": {
+          "form": "храм",
+          "gender": "m",
+          "genitive": "храма",
+          "dative": "храму",
+          "instrumental": "храмом",
+          "locative": "храме",
+          "plural": "храмы",
+          "genitive_plural": "храмов"
+        },
+        "ANCIENT": {
+          "form": "древний",
+          "f": "древняя",
+          "n": "древнее",
+          "plural": "древние"
+        },
+        "BATTLE": {
+          "form": "битва",
+          "gender": "f",
+          "genitive": "битвы",
+          "dative": "битве",
+          "instrumental": "битвой",
+          "locative": "битве",
+          "accusative": "битву",
+          "plural": "битвы",
+          "genitive_plural": "битв"
+        },
+        "DODGE": {
+          "base": "уклоняться",
+          "1_singular": "уклоняюсь",
+          "2_singular": "уклоняешься",
+          "3_singular": "уклоняется",
+          "1_plural": "уклоняемся",
+          "2_plural": "уклоняетесь",
+          "3_plural": "уклоняются"
+        },
+        "PROTECT": {
+          "base": "защищать",
+          "1_singular": "защищаю",
+          "2_singular": "защищаешь",
+          "3_singular": "защищает",
+          "1_plural": "защищаем",
+          "2_plural": "защищаете",
+          "3_plural": "защищают"
+        },
+        "FIERCE": {
+          "form": "свирепый",
+          "f": "свирепая",
+          "n": "свирепое",
+          "plural": "свирепые"
+        },
+        "MIGHTY": {
+          "form": "могучий",
+          "f": "могучая",
+          "n": "могучее",
+          "plural": "могучие"
+        },
+        "CRYSTAL": {
+          "form": "кристалл",
+          "gender": "m",
+          "genitive": "кристалла",
+          "dative": "кристаллу",
+          "instrumental": "кристаллом",
+          "locative": "кристалле",
+          "plural": "кристаллы",
+          "genitive_plural": "кристаллов"
+        },
+        "SCROLL": {
+          "form": "свиток",
+          "gender": "m",
+          "genitive": "свитка",
+          "dative": "свитку",
+          "instrumental": "свитком",
+          "locative": "свитке",
+          "plural": "свитки",
+          "genitive_plural": "свитков"
+        },
+        "PORTAL": {
+          "form": "портал",
+          "gender": "m",
+          "genitive": "портала",
+          "dative": "порталу",
+          "instrumental": "порталом",
+          "locative": "портале",
+          "plural": "порталы",
+          "genitive_plural": "порталов"
+        },
+        "CURSED": {
+          "form": "проклятый",
+          "f": "проклятая",
+          "n": "проклятое",
+          "plural": "проклятые"
+        },
+        "SACRED": {
+          "form": "священный",
+          "f": "священная",
+          "n": "священное",
+          "plural": "священные"
+        },
+        "TRAIN": {
+          "base": "тренироваться",
+          "1_singular": "тренируюсь",
+          "2_singular": "тренируешься",
+          "3_singular": "тренируется",
+          "1_plural": "тренируемся",
+          "2_plural": "тренируетесь",
+          "3_plural": "тренируются"
+        },
+        "MASTER": {
+          "form": "мастер",
+          "gender": "m",
+          "genitive": "мастера",
+          "dative": "мастеру",
+          "instrumental": "мастером",
+          "locative": "мастере",
+          "accusative": "мастера",
+          "plural": "мастера",
+          "genitive_plural": "мастеров"
+        },
+        "CLAN": {
+          "form": "клан",
+          "gender": "m",
+          "genitive": "клана",
+          "dative": "клану",
+          "instrumental": "кланом",
+          "locative": "клане",
+          "plural": "кланы",
+          "genitive_plural": "кланов"
+        },
+        "AWAKEN": {
+          "base": "просыпаться",
+          "1_singular": "просыпаюсь",
+          "2_singular": "просыпаешься",
+          "3_singular": "просыпается",
+          "1_plural": "просыпаемся",
+          "2_plural": "просыпаетесь",
+          "3_plural": "просыпаются"
+        },
+        "LEGENDARY": {
+          "form": "легендарный",
+          "f": "легендарная",
+          "n": "легендарное",
+          "plural": "легендарные"
+        },
+        "MECHA": {
+          "form": "меха",
+          "gender": "m",
+          "genitive": "меха",
+          "dative": "меха",
+          "instrumental": "меха",
+          "locative": "меха",
+          "invariantPlural": true,
+          "genitive_plural": "меха"
+        },
+        "ARENA": {
+          "form": "арена",
+          "gender": "f",
+          "genitive": "арены",
+          "dative": "арене",
+          "instrumental": "ареной",
+          "locative": "арене",
+          "accusative": "арену",
+          "plural": "арены",
+          "genitive_plural": "арен"
+        },
+        "CONQUER": {
+          "base": "покорять",
+          "1_singular": "покоряю",
+          "2_singular": "покоряешь",
+          "3_singular": "покоряет",
+          "1_plural": "покоряем",
+          "2_plural": "покоряете",
+          "3_plural": "покоряют"
+        },
+        "TRANSCEND": {
+          "base": "превосходить",
+          "1_singular": "превосхожу",
+          "2_singular": "превосходишь",
+          "3_singular": "превосходит",
+          "1_plural": "превосходим",
+          "2_plural": "превосходите",
+          "3_plural": "превосходят"
+        },
+        "ETERNAL": {
+          "form": "вечный",
+          "f": "вечная",
+          "n": "вечное",
+          "plural": "вечные"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "HERO": {
+          "form": "hjälte",
+          "gender": "m",
+          "plural": "hjältar"
+        },
+        "VILLAIN": {
+          "form": "skurk",
+          "gender": "m",
+          "plural": "skurkar"
+        },
+        "WARRIOR": {
+          "form": "krigare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "RIVAL": {
+          "form": "rival",
+          "gender": "m",
+          "plural": "rivaler"
+        },
+        "BRAVE": {
+          "form": "modig",
+          "n": "modigt",
+          "plural": "modiga"
+        },
+        "SWORD": {
+          "form": "svärd",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "ARMOR": {
+          "form": "rustning",
+          "gender": "m",
+          "plural": "rustningar"
+        },
+        "SHIELD": {
+          "form": "sköld",
+          "gender": "m",
+          "plural": "sköldar"
+        },
+        "ATTACK": {
+          "base": "attackera",
+          "present": "attackerar"
+        },
+        "DEFEND": {
+          "base": "försvara",
+          "present": "försvarar"
+        },
+        "DRAGON": {
+          "form": "drake",
+          "gender": "m",
+          "plural": "drakar"
+        },
+        "DEMON": {
+          "form": "demon",
+          "gender": "m",
+          "plural": "demoner"
+        },
+        "SPIRIT": {
+          "form": "ande",
+          "gender": "m",
+          "plural": "andar"
+        },
+        "SUMMON": {
+          "base": "kalla",
+          "present": "kallar"
+        },
+        "SINISTER": [
+          "olycksbådande"
+        ],
+        "NINJA": {
+          "form": "ninja",
+          "gender": "m",
+          "plural": "ninjor"
+        },
+        "SAMURAI": {
+          "form": "samuraj",
+          "gender": "m",
+          "plural": "samurajer"
+        },
+        "SENSEI": {
+          "form": "sensei",
+          "gender": "m",
+          "plural": "senseier"
+        },
+        "SHADOW": {
+          "form": "skugga",
+          "gender": "m",
+          "plural": "skuggor"
+        },
+        "STRIKE": {
+          "base": "slå",
+          "present": "slår"
+        },
+        "TRANSFORM": {
+          "base": "förvandlas",
+          "present": "förvandlas"
+        },
+        "POWER": {
+          "form": "kraft",
+          "gender": "m",
+          "plural": "krafter"
+        },
+        "CHANNEL": {
+          "base": "kanalisera",
+          "present": "kanaliserar"
+        },
+        "UNLEASH": {
+          "base": "släppa lös",
+          "present": "släpper lös"
+        },
+        "POWERFUL": {
+          "form": "kraftfull",
+          "n": "kraftfullt",
+          "plural": "kraftfulla"
+        },
+        "QUEST": {
+          "form": "uppdrag",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "DESTINY": {
+          "form": "öde",
+          "gender": "n",
+          "plural": "öden"
+        },
+        "KINGDOM": {
+          "form": "kungarike",
+          "gender": "n",
+          "plural": "kungariken"
+        },
+        "TEMPLE": {
+          "form": "tempel",
+          "gender": "n",
+          "invariantPlural": true,
+          "definiteForm": "templet"
+        },
+        "ANCIENT": {
+          "form": "uråldrig",
+          "n": "uråldrigt",
+          "plural": "uråldriga"
+        },
+        "BATTLE": {
+          "form": "strid",
+          "gender": "m",
+          "plural": "strider"
+        },
+        "DODGE": {
+          "base": "undvika",
+          "present": "undviker"
+        },
+        "PROTECT": {
+          "base": "skydda",
+          "present": "skyddar"
+        },
+        "FIERCE": {
+          "form": "våldsam",
+          "n": "våldsamt",
+          "plural": "våldsamma"
+        },
+        "MIGHTY": {
+          "form": "mäktig",
+          "n": "mäktigt",
+          "plural": "mäktiga"
+        },
+        "CRYSTAL": {
+          "form": "kristall",
+          "gender": "m",
+          "plural": "kristaller"
+        },
+        "SCROLL": {
+          "form": "skriftrulle",
+          "gender": "m",
+          "plural": "skriftrullar"
+        },
+        "PORTAL": {
+          "form": "portal",
+          "gender": "m",
+          "plural": "portaler"
+        },
+        "CURSED": {
+          "form": "förbannad",
+          "n": "förbannat",
+          "plural": "förbannade"
+        },
+        "SACRED": {
+          "form": "helig",
+          "n": "heligt",
+          "plural": "heliga"
+        },
+        "TRAIN": {
+          "base": "träna",
+          "present": "tränar"
+        },
+        "MASTER": {
+          "form": "mästare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "CLAN": {
+          "form": "klan",
+          "gender": "m",
+          "plural": "klaner"
+        },
+        "AWAKEN": {
+          "base": "vakna",
+          "present": "vaknar"
+        },
+        "LEGENDARY": {
+          "form": "legendarisk",
+          "n": "legendariskt",
+          "plural": "legendariska"
+        },
+        "MECHA": {
+          "form": "mecha",
+          "gender": "m",
+          "plural": "mechor"
+        },
+        "ARENA": {
+          "form": "arena",
+          "gender": "m",
+          "plural": "arenor"
+        },
+        "CONQUER": {
+          "base": "erövra",
+          "present": "erövrar"
+        },
+        "TRANSCEND": {
+          "base": "överskrida",
+          "present": "överskrider"
+        },
+        "ETERNAL": {
+          "form": "evig",
+          "n": "evigt",
+          "plural": "eviga"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

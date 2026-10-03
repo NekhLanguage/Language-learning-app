@@ -203,6 +203,662 @@
     }
   ],
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "COOK": {
+          "base": "готовить",
+          "1_singular": "готовлю",
+          "2_singular": "готовишь",
+          "3_singular": "готовит",
+          "1_plural": "готовим",
+          "2_plural": "готовите",
+          "3_plural": "готовят"
+        },
+        "CUT": {
+          "base": "резать",
+          "1_singular": "режу",
+          "2_singular": "режешь",
+          "3_singular": "режет",
+          "1_plural": "режем",
+          "2_plural": "режете",
+          "3_plural": "режут"
+        },
+        "BOIL": {
+          "base": "варить",
+          "1_singular": "варю",
+          "2_singular": "варишь",
+          "3_singular": "варит",
+          "1_plural": "варим",
+          "2_plural": "варите",
+          "3_plural": "варят"
+        },
+        "PEEL": {
+          "base": "чистить",
+          "1_singular": "чищу",
+          "2_singular": "чистишь",
+          "3_singular": "чистит",
+          "1_plural": "чистим",
+          "2_plural": "чистите",
+          "3_plural": "чистят"
+        },
+        "FRY": {
+          "base": "жарить",
+          "1_singular": "жарю",
+          "2_singular": "жаришь",
+          "3_singular": "жарит",
+          "1_plural": "жарим",
+          "2_plural": "жарите",
+          "3_plural": "жарят"
+        },
+        "STIR": {
+          "base": "мешать",
+          "1_singular": "мешаю",
+          "2_singular": "мешаешь",
+          "3_singular": "мешает",
+          "1_plural": "мешаем",
+          "2_plural": "мешаете",
+          "3_plural": "мешают"
+        },
+        "MIX": {
+          "base": "смешивать",
+          "1_singular": "смешиваю",
+          "2_singular": "смешиваешь",
+          "3_singular": "смешивает",
+          "1_plural": "смешиваем",
+          "2_plural": "смешиваете",
+          "3_plural": "смешивают"
+        },
+        "WASH": {
+          "base": "мыть",
+          "1_singular": "мою",
+          "2_singular": "моешь",
+          "3_singular": "моет",
+          "1_plural": "моем",
+          "2_plural": "моете",
+          "3_plural": "моют"
+        },
+        "HEAT": {
+          "base": "нагревать",
+          "1_singular": "нагреваю",
+          "2_singular": "нагреваешь",
+          "3_singular": "нагревает",
+          "1_plural": "нагреваем",
+          "2_plural": "нагреваете",
+          "3_plural": "нагревают"
+        },
+        "PAN": {
+          "form": "сковорода",
+          "gender": "f",
+          "genitive": "сковороды",
+          "dative": "сковороде",
+          "instrumental": "сковородой",
+          "locative": "сковороде",
+          "accusative": "сковороду",
+          "plural": "сковороды",
+          "genitive_plural": "сковород"
+        },
+        "KNIFE": {
+          "form": "нож",
+          "gender": "m",
+          "genitive": "ножа",
+          "dative": "ножу",
+          "instrumental": "ножом",
+          "locative": "ноже",
+          "plural": "ножи",
+          "genitive_plural": "ножей"
+        },
+        "FORK": {
+          "form": "вилка",
+          "gender": "f",
+          "genitive": "вилки",
+          "dative": "вилке",
+          "instrumental": "вилкой",
+          "locative": "вилке",
+          "accusative": "вилку",
+          "plural": "вилки",
+          "genitive_plural": "вилок"
+        },
+        "SPOON": {
+          "form": "ложка",
+          "gender": "f",
+          "genitive": "ложки",
+          "dative": "ложке",
+          "instrumental": "ложкой",
+          "locative": "ложке",
+          "accusative": "ложку",
+          "plural": "ложки",
+          "genitive_plural": "ложек"
+        },
+        "SPATULA": {
+          "form": "лопатка",
+          "gender": "f",
+          "genitive": "лопатки",
+          "dative": "лопатке",
+          "instrumental": "лопаткой",
+          "locative": "лопатке",
+          "accusative": "лопатку",
+          "plural": "лопатки",
+          "genitive_plural": "лопаток"
+        },
+        "POT": {
+          "form": "кастрюля",
+          "gender": "f",
+          "genitive": "кастрюли",
+          "dative": "кастрюле",
+          "instrumental": "кастрюлей",
+          "locative": "кастрюле",
+          "accusative": "кастрюлю",
+          "plural": "кастрюли",
+          "genitive_plural": "кастрюль"
+        },
+        "GLASS": {
+          "form": "стакан",
+          "gender": "m",
+          "genitive": "стакана",
+          "dative": "стакану",
+          "instrumental": "стаканом",
+          "locative": "стакане",
+          "plural": "стаканы",
+          "genitive_plural": "стаканов"
+        },
+        "LITRE": {
+          "form": "литр"
+        },
+        "DECILITRE": {
+          "form": "децилитр"
+        },
+        "MILLILITRE": {
+          "form": "миллилитр"
+        },
+        "GRAM": {
+          "form": "грамм"
+        },
+        "KILOGRAM": {
+          "form": "килограмм"
+        },
+        "MEAT": {
+          "form": "мясо",
+          "gender": "n",
+          "genitive": "мяса",
+          "dative": "мясу",
+          "instrumental": "мясом",
+          "locative": "мясе"
+        },
+        "CHICKEN": {
+          "form": "курица",
+          "gender": "f",
+          "genitive": "курицы",
+          "dative": "курице",
+          "instrumental": "курицей",
+          "locative": "курице",
+          "accusative": "курицу",
+          "plural": "курицы",
+          "genitive_plural": "куриц"
+        },
+        "FISH": {
+          "form": "рыба",
+          "gender": "f",
+          "genitive": "рыбы",
+          "dative": "рыбе",
+          "instrumental": "рыбой",
+          "locative": "рыбе",
+          "accusative": "рыбу",
+          "plural": "рыбы",
+          "genitive_plural": "рыб"
+        },
+        "VEGETABLE": {
+          "form": "овощ",
+          "gender": "m",
+          "genitive": "овоща",
+          "dative": "овощу",
+          "instrumental": "овощем",
+          "locative": "овоще",
+          "plural": "овощи",
+          "genitive_plural": "овощей"
+        },
+        "POTATO": {
+          "form": "картошка",
+          "gender": "f",
+          "genitive": "картошки",
+          "dative": "картошке",
+          "instrumental": "картошкой",
+          "locative": "картошке",
+          "accusative": "картошку",
+          "plural": "картошки",
+          "genitive_plural": "картошек"
+        },
+        "SALAD": {
+          "form": "салат",
+          "gender": "m",
+          "genitive": "салата",
+          "dative": "салату",
+          "instrumental": "салатом",
+          "locative": "салате",
+          "plural": "салаты",
+          "genitive_plural": "салатов"
+        },
+        "FRUIT": {
+          "form": "фрукт",
+          "gender": "m",
+          "genitive": "фрукта",
+          "dative": "фрукту",
+          "instrumental": "фруктом",
+          "locative": "фрукте",
+          "plural": "фрукты",
+          "genitive_plural": "фруктов"
+        },
+        "BANANA": {
+          "form": "банан",
+          "gender": "m",
+          "genitive": "банана",
+          "dative": "банану",
+          "instrumental": "бананом",
+          "locative": "банане",
+          "plural": "бананы",
+          "genitive_plural": "бананов"
+        },
+        "SOUP": {
+          "form": "суп",
+          "gender": "m",
+          "genitive": "супа",
+          "dative": "супу",
+          "instrumental": "супом",
+          "locative": "супе",
+          "plural": "супы",
+          "genitive_plural": "супов"
+        },
+        "DOUGH": {
+          "form": "тесто",
+          "gender": "n",
+          "genitive": "теста",
+          "dative": "тесту",
+          "instrumental": "тестом",
+          "locative": "тесте"
+        },
+        "SAUCE": {
+          "form": "соус",
+          "gender": "m",
+          "genitive": "соуса",
+          "dative": "соусу",
+          "instrumental": "соусом",
+          "locative": "соусе",
+          "plural": "соусы",
+          "genitive_plural": "соусов"
+        },
+        "INGREDIENT": {
+          "form": "ингредиент",
+          "gender": "m",
+          "genitive": "ингредиента",
+          "dative": "ингредиенту",
+          "instrumental": "ингредиентом",
+          "locative": "ингредиенте",
+          "plural": "ингредиенты",
+          "genitive_plural": "ингредиентов"
+        },
+        "KITCHEN": {
+          "form": "кухня",
+          "gender": "f",
+          "genitive": "кухни",
+          "dative": "кухне",
+          "instrumental": "кухней",
+          "locative": "кухне",
+          "accusative": "кухню",
+          "plural": "кухни",
+          "genitive_plural": "кухонь"
+        },
+        "OVEN": {
+          "form": "духовка",
+          "gender": "f",
+          "genitive": "духовки",
+          "dative": "духовке",
+          "instrumental": "духовкой",
+          "locative": "духовке",
+          "accusative": "духовку",
+          "plural": "духовки",
+          "genitive_plural": "духовок"
+        },
+        "STOVE": {
+          "form": "плита",
+          "gender": "f",
+          "genitive": "плиты",
+          "dative": "плите",
+          "instrumental": "плитой",
+          "locative": "плите",
+          "accusative": "плиту",
+          "plural": "плиты",
+          "genitive_plural": "плит"
+        },
+        "SINK": {
+          "form": "раковина",
+          "gender": "f",
+          "genitive": "раковины",
+          "dative": "раковине",
+          "instrumental": "раковиной",
+          "locative": "раковине",
+          "accusative": "раковину",
+          "plural": "раковины",
+          "genitive_plural": "раковин"
+        },
+        "FREEZER": {
+          "form": "морозильник",
+          "gender": "m",
+          "genitive": "морозильника",
+          "dative": "морозильнику",
+          "instrumental": "морозильником",
+          "locative": "морозильнике",
+          "plural": "морозильники",
+          "genitive_plural": "морозильников"
+        },
+        "SALT": {
+          "form": "соль",
+          "gender": "f",
+          "genitive": "соли",
+          "dative": "соли",
+          "instrumental": "солью",
+          "locative": "соли"
+        },
+        "PEPPER": {
+          "form": "перец",
+          "gender": "m",
+          "genitive": "перца",
+          "dative": "перцу",
+          "instrumental": "перцем",
+          "locative": "перце"
+        },
+        "BUTTER": {
+          "form": "масло",
+          "gender": "n",
+          "genitive": "масла",
+          "dative": "маслу",
+          "instrumental": "маслом",
+          "locative": "масле"
+        },
+        "SPICE": {
+          "form": "специя",
+          "gender": "f",
+          "genitive": "специи",
+          "dative": "специи",
+          "instrumental": "специей",
+          "locative": "специи",
+          "accusative": "специю",
+          "plural": "специи",
+          "genitive_plural": "спецй"
+        },
+        "RECIPE": {
+          "form": "рецепт",
+          "gender": "m",
+          "genitive": "рецепта",
+          "dative": "рецепту",
+          "instrumental": "рецептом",
+          "locative": "рецепте",
+          "plural": "рецепты",
+          "genitive_plural": "рецептов"
+        },
+        "SWEET": {
+          "form": "сладкий",
+          "f": "сладкая",
+          "n": "сладкое",
+          "plural": "сладкие"
+        },
+        "SALTY": {
+          "form": "солёный",
+          "f": "солёная",
+          "n": "солёное",
+          "plural": "солёные"
+        },
+        "SOUR": {
+          "form": "кислый",
+          "f": "кислая",
+          "n": "кислое",
+          "plural": "кислые"
+        },
+        "FRESH": {
+          "form": "свежий",
+          "f": "свежая",
+          "n": "свежее",
+          "plural": "свежие"
+        },
+        "FROZEN": {
+          "form": "замороженный",
+          "f": "замороженная",
+          "n": "замороженное",
+          "plural": "замороженные"
+        },
+        "RAW": {
+          "form": "сырой",
+          "f": "сырая",
+          "n": "сырое",
+          "plural": "сырые"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "COOK": {
+          "base": "laga",
+          "present": "lagar"
+        },
+        "CUT": {
+          "base": "skära",
+          "present": "skär"
+        },
+        "BOIL": {
+          "base": "koka",
+          "present": "kokar"
+        },
+        "PEEL": {
+          "base": "skala",
+          "present": "skalar"
+        },
+        "FRY": {
+          "base": "steka",
+          "present": "steker"
+        },
+        "STIR": {
+          "base": "röra",
+          "present": "rör"
+        },
+        "MIX": {
+          "base": "blanda",
+          "present": "blandar"
+        },
+        "WASH": {
+          "base": "tvätta",
+          "present": "tvättar"
+        },
+        "HEAT": {
+          "base": "värma",
+          "present": "värmer"
+        },
+        "PAN": {
+          "form": "stekpanna",
+          "gender": "m",
+          "plural": "stekpannor"
+        },
+        "KNIFE": {
+          "form": "kniv",
+          "gender": "m",
+          "plural": "knivar"
+        },
+        "FORK": {
+          "form": "gaffel",
+          "gender": "m",
+          "plural": "gafflar"
+        },
+        "SPOON": {
+          "form": "sked",
+          "gender": "m",
+          "plural": "skedar"
+        },
+        "SPATULA": {
+          "form": "stekspade",
+          "gender": "m",
+          "plural": "stekspadar"
+        },
+        "POT": {
+          "form": "gryta",
+          "gender": "m",
+          "plural": "grytor"
+        },
+        "GLASS": {
+          "form": "glas",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "LITRE": {
+          "form": "liter"
+        },
+        "DECILITRE": {
+          "form": "deciliter"
+        },
+        "MILLILITRE": {
+          "form": "milliliter"
+        },
+        "GRAM": {
+          "form": "gram"
+        },
+        "KILOGRAM": {
+          "form": "kilogram"
+        },
+        "MEAT": {
+          "form": "kött",
+          "gender": "n"
+        },
+        "CHICKEN": {
+          "form": "kyckling",
+          "gender": "m",
+          "plural": "kycklingar"
+        },
+        "FISH": {
+          "form": "fisk",
+          "gender": "m",
+          "plural": "fiskar"
+        },
+        "VEGETABLE": {
+          "form": "grönsak",
+          "gender": "m",
+          "plural": "grönsaker"
+        },
+        "POTATO": {
+          "form": "potatis",
+          "gender": "m",
+          "plural": "potatisar"
+        },
+        "SALAD": {
+          "form": "sallad",
+          "gender": "m",
+          "plural": "sallader"
+        },
+        "FRUIT": {
+          "form": "frukt",
+          "gender": "m",
+          "plural": "frukter"
+        },
+        "BANANA": {
+          "form": "banan",
+          "gender": "m",
+          "plural": "bananer"
+        },
+        "SOUP": {
+          "form": "soppa",
+          "gender": "m",
+          "plural": "soppor"
+        },
+        "DOUGH": {
+          "form": "deg",
+          "gender": "m"
+        },
+        "SAUCE": {
+          "form": "sås",
+          "gender": "m",
+          "plural": "såser"
+        },
+        "INGREDIENT": {
+          "form": "ingrediens",
+          "gender": "m",
+          "plural": "ingredienser"
+        },
+        "KITCHEN": {
+          "form": "kök",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "OVEN": {
+          "form": "ugn",
+          "gender": "m",
+          "plural": "ugnar"
+        },
+        "STOVE": {
+          "form": "spis",
+          "gender": "m",
+          "plural": "spisar"
+        },
+        "SINK": {
+          "form": "diskho",
+          "gender": "m",
+          "plural": "diskhoar"
+        },
+        "FREEZER": {
+          "form": "frys",
+          "gender": "m",
+          "plural": "frysar"
+        },
+        "SALT": {
+          "form": "salt",
+          "gender": "n"
+        },
+        "PEPPER": {
+          "form": "peppar",
+          "gender": "m"
+        },
+        "BUTTER": {
+          "form": "smör",
+          "gender": "n"
+        },
+        "SPICE": {
+          "form": "krydda",
+          "gender": "m",
+          "plural": "kryddor"
+        },
+        "RECIPE": {
+          "form": "recept",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "SWEET": {
+          "form": "söt",
+          "n": "sött",
+          "plural": "söta"
+        },
+        "SALTY": {
+          "form": "salt",
+          "n": "salt",
+          "plural": "salta"
+        },
+        "SOUR": {
+          "form": "sur",
+          "n": "surt",
+          "plural": "sura"
+        },
+        "FRESH": {
+          "form": "färsk",
+          "n": "färskt",
+          "plural": "färska"
+        },
+        "FROZEN": {
+          "form": "fryst",
+          "n": "fryst",
+          "plural": "frysta"
+        },
+        "RAW": {
+          "form": "rå",
+          "n": "rått",
+          "plural": "råa"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

@@ -214,6 +214,698 @@
   }
  ],
  "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "WORKOUT": {
+          "form": "тренировка",
+          "gender": "f",
+          "genitive": "тренировки",
+          "dative": "тренировке",
+          "instrumental": "тренировкой",
+          "locative": "тренировке",
+          "accusative": "тренировку",
+          "plural": "тренировки",
+          "genitive_plural": "тренировок"
+        },
+        "MUSCLE": {
+          "form": "мышца",
+          "gender": "f",
+          "genitive": "мышцы",
+          "dative": "мышце",
+          "instrumental": "мышцей",
+          "locative": "мышце",
+          "accusative": "мышцу",
+          "plural": "мышцы",
+          "genitive_plural": "мышц"
+        },
+        "DUMBBELL": {
+          "form": "гантель",
+          "gender": "f",
+          "genitive": "гантели",
+          "dative": "гантели",
+          "instrumental": "гантелью",
+          "locative": "гантели",
+          "plural": "гантели",
+          "genitive_plural": "гантелей"
+        },
+        "TREADMILL": {
+          "form": "беговая дорожка",
+          "gender": "f",
+          "genitive": "беговой дорожки",
+          "dative": "беговой дорожке",
+          "instrumental": "беговой дорожкой",
+          "locative": "беговой дорожке",
+          "accusative": "беговую дорожку",
+          "plural": "беговые дорожки",
+          "genitive_plural": "беговых дорожек"
+        },
+        "WEIGHT": {
+          "form": "вес",
+          "gender": "m",
+          "genitive": "веса",
+          "dative": "весу",
+          "instrumental": "весом",
+          "locative": "весе",
+          "plural": "весы",
+          "genitive_plural": "весов"
+        },
+        "REPETITION": {
+          "form": "повторение",
+          "gender": "n",
+          "genitive": "повторения",
+          "dative": "повторению",
+          "instrumental": "повторением",
+          "locative": "повторении",
+          "plural": "повторения",
+          "genitive_plural": "повторенй"
+        },
+        "SWEAT": {
+          "form": "пот",
+          "gender": "m",
+          "genitive": "пота",
+          "dative": "поту",
+          "instrumental": "потом",
+          "locative": "поте"
+        },
+        "ENERGY": {
+          "form": "энергия",
+          "gender": "f",
+          "genitive": "энергии",
+          "dative": "энергии",
+          "instrumental": "энергией",
+          "locative": "энергии",
+          "accusative": "энергию"
+        },
+        "PROTEIN": {
+          "form": "белок",
+          "gender": "m",
+          "genitive": "белка",
+          "dative": "белку",
+          "instrumental": "белком",
+          "locative": "белке"
+        },
+        "HABIT": {
+          "form": "привычка",
+          "gender": "f",
+          "genitive": "привычки",
+          "dative": "привычке",
+          "instrumental": "привычкой",
+          "locative": "привычке",
+          "accusative": "привычку",
+          "plural": "привычки",
+          "genitive_plural": "привычек"
+        },
+        "PROGRESS": {
+          "form": "прогресс",
+          "gender": "m",
+          "genitive": "прогресса",
+          "dative": "прогрессу",
+          "instrumental": "прогрессом",
+          "locative": "прогрессе"
+        },
+        "TARGET": {
+          "form": "цель",
+          "gender": "f",
+          "genitive": "цели",
+          "dative": "цели",
+          "instrumental": "целью",
+          "locative": "цели",
+          "plural": "цели",
+          "genitive_plural": "целей"
+        },
+        "HEART": {
+          "form": "сердце",
+          "gender": "n",
+          "genitive": "сердца",
+          "dative": "сердцу",
+          "instrumental": "сердцем",
+          "locative": "сердце",
+          "plural": "сердца",
+          "genitive_plural": "сердец"
+        },
+        "KNEE": {
+          "form": "колено",
+          "gender": "n",
+          "genitive": "колена",
+          "dative": "колену",
+          "instrumental": "коленом",
+          "locative": "колене",
+          "plural": "колени",
+          "genitive_plural": "коленей"
+        },
+        "SHOULDER": {
+          "form": "плечо",
+          "gender": "n",
+          "genitive": "плеча",
+          "dative": "плечу",
+          "instrumental": "плечом",
+          "locative": "плече",
+          "plural": "плечи",
+          "genitive_plural": "плеч"
+        },
+        "CALORIE": {
+          "form": "калория",
+          "gender": "f",
+          "genitive": "калории",
+          "dative": "калории",
+          "instrumental": "калорией",
+          "locative": "калории",
+          "accusative": "калорию",
+          "plural": "калории",
+          "genitive_plural": "калорй"
+        },
+        "RUNNER": {
+          "form": "бегун",
+          "gender": "m",
+          "feminine": "бегунья",
+          "genitive": "бегуна",
+          "dative": "бегуну",
+          "instrumental": "бегуном",
+          "locative": "бегуне",
+          "accusative": "бегуна",
+          "plural": "бегуны",
+          "genitive_plural": "бегунов"
+        },
+        "RACE": {
+          "form": "забег",
+          "gender": "m",
+          "genitive": "забега",
+          "dative": "забегу",
+          "instrumental": "забегом",
+          "locative": "забеге",
+          "plural": "забеги",
+          "genitive_plural": "забегов"
+        },
+        "MARATHON": {
+          "form": "марафон",
+          "gender": "m",
+          "genitive": "марафона",
+          "dative": "марафону",
+          "instrumental": "марафоном",
+          "locative": "марафоне",
+          "plural": "марафоны",
+          "genitive_plural": "марафонов"
+        },
+        "WARMUP": {
+          "form": "разминка",
+          "gender": "f",
+          "genitive": "разминки",
+          "dative": "разминке",
+          "instrumental": "разминкой",
+          "locative": "разминке",
+          "accusative": "разминку",
+          "plural": "разминки",
+          "genitive_plural": "разминок"
+        },
+        "LOCKER_ROOM": {
+          "form": "раздевалка",
+          "gender": "f",
+          "genitive": "раздевалки",
+          "dative": "раздевалке",
+          "instrumental": "раздевалкой",
+          "locative": "раздевалке",
+          "accusative": "раздевалку",
+          "plural": "раздевалки",
+          "genitive_plural": "раздевалок"
+        },
+        "TOWEL": {
+          "form": "полотенце",
+          "gender": "n",
+          "genitive": "полотенца",
+          "dative": "полотенцу",
+          "instrumental": "полотенцем",
+          "locative": "полотенце",
+          "plural": "полотенца",
+          "genitive_plural": "полотенец"
+        },
+        "BOTTLE": {
+          "form": "бутылка",
+          "gender": "f",
+          "genitive": "бутылки",
+          "dative": "бутылке",
+          "instrumental": "бутылкой",
+          "locative": "бутылке",
+          "accusative": "бутылку",
+          "plural": "бутылки",
+          "genitive_plural": "бутылок"
+        },
+        "BICYCLE": {
+          "form": "велосипед",
+          "gender": "m",
+          "genitive": "велосипеда",
+          "dative": "велосипеду",
+          "instrumental": "велосипедом",
+          "locative": "велосипеде",
+          "plural": "велосипеды",
+          "genitive_plural": "велосипедов"
+        },
+        "POOL": {
+          "form": "бассейн",
+          "gender": "m",
+          "genitive": "бассейна",
+          "dative": "бассейну",
+          "instrumental": "бассейном",
+          "locative": "бассейне",
+          "plural": "бассейны",
+          "genitive_plural": "бассейнов"
+        },
+        "STRENGTH": {
+          "form": "сила",
+          "gender": "f",
+          "genitive": "силы",
+          "dative": "силе",
+          "instrumental": "силой",
+          "locative": "силе",
+          "accusative": "силу"
+        },
+        "INJURY": {
+          "form": "травма",
+          "gender": "f",
+          "genitive": "травмы",
+          "dative": "травме",
+          "instrumental": "травмой",
+          "locative": "травме",
+          "accusative": "травму",
+          "plural": "травмы",
+          "genitive_plural": "травм"
+        },
+        "REST": {
+          "form": "отдых",
+          "gender": "m",
+          "genitive": "отдыха",
+          "dative": "отдыху",
+          "instrumental": "отдыхом",
+          "locative": "отдыхе"
+        },
+        "LIFT": {
+          "base": "поднимать",
+          "1_singular": "поднимаю",
+          "2_singular": "поднимаешь",
+          "3_singular": "поднимает",
+          "1_plural": "поднимаем",
+          "2_plural": "поднимаете",
+          "3_plural": "поднимают"
+        },
+        "STRETCH": {
+          "base": "растягиваться",
+          "1_singular": "растягиваюсь",
+          "2_singular": "растягиваешься",
+          "3_singular": "растягивается",
+          "1_plural": "растягиваемся",
+          "2_plural": "растягиваетесь",
+          "3_plural": "растягиваются"
+        },
+        "BREATHE": {
+          "base": "дышать",
+          "1_singular": "дышу",
+          "2_singular": "дышишь",
+          "3_singular": "дышит",
+          "1_plural": "дышим",
+          "2_plural": "дышите",
+          "3_plural": "дышат"
+        },
+        "PEDAL": {
+          "base": "крутить педали",
+          "1_singular": "кручу педали",
+          "2_singular": "крутишь педали",
+          "3_singular": "крутит педали",
+          "1_plural": "крутим педали",
+          "2_plural": "крутите педали",
+          "3_plural": "крутят педали"
+        },
+        "PUSH": {
+          "base": "толкать",
+          "1_singular": "толкаю",
+          "2_singular": "толкаешь",
+          "3_singular": "толкает",
+          "1_plural": "толкаем",
+          "2_plural": "толкаете",
+          "3_plural": "толкают"
+        },
+        "PULL": {
+          "base": "тянуть",
+          "1_singular": "тяну",
+          "2_singular": "тянешь",
+          "3_singular": "тянет",
+          "1_plural": "тянем",
+          "2_plural": "тянете",
+          "3_plural": "тянут"
+        },
+        "MEASURE": {
+          "base": "измерять",
+          "1_singular": "измеряю",
+          "2_singular": "измеряешь",
+          "3_singular": "измеряет",
+          "1_plural": "измеряем",
+          "2_plural": "измеряете",
+          "3_plural": "измеряют"
+        },
+        "IMPROVE": {
+          "base": "улучшать",
+          "1_singular": "улучшаю",
+          "2_singular": "улучшаешь",
+          "3_singular": "улучшает",
+          "1_plural": "улучшаем",
+          "2_plural": "улучшаете",
+          "3_plural": "улучшают"
+        },
+        "RECOVER": {
+          "base": "восстанавливаться",
+          "1_singular": "восстанавливаюсь",
+          "2_singular": "восстанавливаешься",
+          "3_singular": "восстанавливается",
+          "1_plural": "восстанавливаемся",
+          "2_plural": "восстанавливаетесь",
+          "3_plural": "восстанавливаются"
+        },
+        "WEIGH": {
+          "base": "весить",
+          "1_singular": "вешу",
+          "2_singular": "весишь",
+          "3_singular": "весит",
+          "1_plural": "весим",
+          "2_plural": "весите",
+          "3_plural": "весят"
+        },
+        "FINISH": {
+          "base": "заканчивать",
+          "1_singular": "заканчиваю",
+          "2_singular": "заканчиваешь",
+          "3_singular": "заканчивает",
+          "1_plural": "заканчиваем",
+          "2_plural": "заканчиваете",
+          "3_plural": "заканчивают"
+        },
+        "REPEAT": {
+          "base": "повторять",
+          "1_singular": "повторяю",
+          "2_singular": "повторяешь",
+          "3_singular": "повторяет",
+          "1_plural": "повторяем",
+          "2_plural": "повторяете",
+          "3_plural": "повторяют"
+        },
+        "HEALTHY": {
+          "form": "здоровый",
+          "f": "здоровая",
+          "n": "здоровое",
+          "plural": "здоровые"
+        },
+        "ACTIVE": {
+          "form": "активный",
+          "f": "активная",
+          "n": "активное",
+          "plural": "активные"
+        },
+        "SORE": {
+          "form": "ноющий",
+          "f": "ноющая",
+          "n": "ноющее",
+          "plural": "ноющие"
+        },
+        "FLEXIBLE": {
+          "form": "гибкий",
+          "f": "гибкая",
+          "n": "гибкое",
+          "plural": "гибкие"
+        },
+        "INTENSE": {
+          "form": "интенсивный",
+          "f": "интенсивная",
+          "n": "интенсивное",
+          "plural": "интенсивные"
+        },
+        "WEAK": {
+          "form": "слабый",
+          "f": "слабая",
+          "n": "слабое",
+          "plural": "слабые"
+        },
+        "MOTIVATED": {
+          "form": "мотивированный",
+          "f": "мотивированная",
+          "n": "мотивированное",
+          "plural": "мотивированные"
+        },
+        "EXHAUSTED": {
+          "form": "измотанный",
+          "f": "измотанная",
+          "n": "измотанное",
+          "plural": "измотанные"
+        },
+        "DAILY": {
+          "form": "ежедневный",
+          "f": "ежедневная",
+          "n": "ежедневное",
+          "plural": "ежедневные"
+        },
+        "MUSCULAR": {
+          "form": "мускулистый",
+          "f": "мускулистая",
+          "n": "мускулистое",
+          "plural": "мускулистые"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "WORKOUT": {
+          "form": "träningspass",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "MUSCLE": {
+          "form": "muskel",
+          "gender": "m",
+          "plural": "muskler"
+        },
+        "DUMBBELL": {
+          "form": "hantel",
+          "gender": "m",
+          "plural": "hantlar"
+        },
+        "TREADMILL": {
+          "form": "löpband",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "WEIGHT": {
+          "form": "vikt",
+          "gender": "m",
+          "plural": "vikter"
+        },
+        "REPETITION": {
+          "form": "repetition",
+          "gender": "m",
+          "plural": "repetitioner"
+        },
+        "SWEAT": {
+          "form": "svett",
+          "gender": "m"
+        },
+        "ENERGY": {
+          "form": "energi",
+          "gender": "m"
+        },
+        "PROTEIN": {
+          "form": "protein",
+          "gender": "n"
+        },
+        "HABIT": {
+          "form": "vana",
+          "gender": "m",
+          "plural": "vanor"
+        },
+        "PROGRESS": {
+          "form": "framsteg",
+          "gender": "n"
+        },
+        "TARGET": {
+          "form": "mål",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "HEART": {
+          "form": "hjärta",
+          "gender": "n",
+          "plural": "hjärtan"
+        },
+        "KNEE": {
+          "form": "knä",
+          "gender": "n",
+          "plural": "knän"
+        },
+        "SHOULDER": {
+          "form": "axel",
+          "gender": "m",
+          "plural": "axlar"
+        },
+        "CALORIE": {
+          "form": "kalori",
+          "gender": "m",
+          "plural": "kalorier"
+        },
+        "RUNNER": {
+          "form": "löpare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "RACE": {
+          "form": "lopp",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "MARATHON": {
+          "form": "maraton",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "WARMUP": {
+          "form": "uppvärmning",
+          "gender": "m",
+          "plural": "uppvärmningar"
+        },
+        "LOCKER_ROOM": {
+          "form": "omklädningsrum",
+          "gender": "n",
+          "invariantPlural": true,
+          "definiteForm": "omklädningsrummet"
+        },
+        "TOWEL": {
+          "form": "handduk",
+          "gender": "m",
+          "plural": "handdukar"
+        },
+        "BOTTLE": {
+          "form": "flaska",
+          "gender": "m",
+          "plural": "flaskor"
+        },
+        "BICYCLE": {
+          "form": "cykel",
+          "gender": "m",
+          "plural": "cyklar"
+        },
+        "POOL": {
+          "form": "pool",
+          "gender": "m",
+          "plural": "pooler"
+        },
+        "STRENGTH": {
+          "form": "styrka",
+          "gender": "m"
+        },
+        "INJURY": {
+          "form": "skada",
+          "gender": "m",
+          "plural": "skador"
+        },
+        "REST": {
+          "form": "vila",
+          "gender": "m"
+        },
+        "LIFT": {
+          "base": "lyfta",
+          "present": "lyfter"
+        },
+        "STRETCH": {
+          "base": "stretcha",
+          "present": "stretchar"
+        },
+        "BREATHE": {
+          "base": "andas",
+          "present": "andas"
+        },
+        "PEDAL": {
+          "base": "trampa",
+          "present": "trampar"
+        },
+        "PUSH": {
+          "base": "trycka",
+          "present": "trycker"
+        },
+        "PULL": {
+          "base": "dra",
+          "present": "drar"
+        },
+        "MEASURE": {
+          "base": "mäta",
+          "present": "mäter"
+        },
+        "IMPROVE": {
+          "base": "förbättra",
+          "present": "förbättrar"
+        },
+        "RECOVER": {
+          "base": "återhämta sig",
+          "present": "återhämtar sig"
+        },
+        "WEIGH": {
+          "base": "väga",
+          "present": "väger"
+        },
+        "FINISH": {
+          "base": "avsluta",
+          "present": "avslutar"
+        },
+        "REPEAT": {
+          "base": "upprepa",
+          "present": "upprepar"
+        },
+        "HEALTHY": {
+          "form": "frisk",
+          "n": "friskt",
+          "plural": "friska"
+        },
+        "ACTIVE": {
+          "form": "aktiv",
+          "n": "aktivt",
+          "plural": "aktiva"
+        },
+        "SORE": {
+          "form": "öm",
+          "n": "ömt",
+          "plural": "ömma"
+        },
+        "FLEXIBLE": {
+          "form": "smidig",
+          "n": "smidigt",
+          "plural": "smidiga"
+        },
+        "INTENSE": {
+          "form": "intensiv",
+          "n": "intensivt",
+          "plural": "intensiva"
+        },
+        "WEAK": {
+          "form": "svag",
+          "n": "svagt",
+          "plural": "svaga"
+        },
+        "MOTIVATED": {
+          "form": "motiverad",
+          "n": "motiverat",
+          "plural": "motiverade"
+        },
+        "EXHAUSTED": {
+          "form": "utmattad",
+          "n": "utmattat",
+          "plural": "utmattade"
+        },
+        "DAILY": {
+          "form": "daglig",
+          "n": "dagligt",
+          "plural": "dagliga"
+        },
+        "MUSCULAR": {
+          "form": "muskulös",
+          "n": "muskulöst",
+          "plural": "muskulösa"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

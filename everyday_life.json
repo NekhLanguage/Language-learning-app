@@ -53,6 +53,706 @@
   ],
 
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "ALARM": {
+          "form": "будильник",
+          "gender": "m",
+          "genitive": "будильника",
+          "dative": "будильнику",
+          "instrumental": "будильником",
+          "locative": "будильнике",
+          "plural": "будильники",
+          "genitive_plural": "будильников"
+        },
+        "SHOWER": {
+          "form": "душ",
+          "gender": "m",
+          "genitive": "душа",
+          "dative": "душу",
+          "instrumental": "душем",
+          "locative": "душе",
+          "plural": "души",
+          "genitive_plural": "душей"
+        },
+        "TOOTHBRUSH": {
+          "form": "зубная щётка",
+          "gender": "f",
+          "genitive": "зубной щётки",
+          "dative": "зубной щётке",
+          "instrumental": "зубной щёткой",
+          "locative": "зубной щётке",
+          "accusative": "зубную щётку",
+          "plural": "зубные щётки",
+          "genitive_plural": "зубных щёток"
+        },
+        "APARTMENT": {
+          "form": "квартира",
+          "gender": "f",
+          "genitive": "квартиры",
+          "dative": "квартире",
+          "instrumental": "квартирой",
+          "locative": "квартире",
+          "accusative": "квартиру",
+          "plural": "квартиры",
+          "genitive_plural": "квартир"
+        },
+        "LIVING_ROOM": {
+          "form": "гостиная",
+          "gender": "f",
+          "genitive": "гостиной",
+          "dative": "гостиной",
+          "instrumental": "гостиной",
+          "locative": "гостиной",
+          "plural": "гостиные",
+          "genitive_plural": "гостиных"
+        },
+        "FURNITURE": {
+          "form": "мебель",
+          "gender": "f",
+          "genitive": "мебели",
+          "dative": "мебели",
+          "instrumental": "мебелью",
+          "locative": "мебели"
+        },
+        "NEIGHBOR": {
+          "form": "сосед",
+          "gender": "m",
+          "feminine": "соседка",
+          "genitive": "соседа",
+          "dative": "соседу",
+          "instrumental": "соседом",
+          "locative": "соседе",
+          "accusative": "соседа",
+          "plural": "соседи",
+          "genitive_plural": "соседей"
+        },
+        "GROCERY": {
+          "form": "продуктовый магазин",
+          "gender": "m",
+          "genitive": "продуктового магазина",
+          "dative": "продуктовому магазину",
+          "instrumental": "продуктовым магазином",
+          "locative": "продуктовом магазине",
+          "plural": "продуктовые магазины",
+          "genitive_plural": "продуктовых магазинов"
+        },
+        "PHARMACY": {
+          "form": "аптека",
+          "gender": "f",
+          "genitive": "аптеки",
+          "dative": "аптеке",
+          "instrumental": "аптекой",
+          "locative": "аптеке",
+          "accusative": "аптеку",
+          "plural": "аптеки",
+          "genitive_plural": "аптек"
+        },
+        "OFFICE": {
+          "form": "офис",
+          "gender": "m",
+          "genitive": "офиса",
+          "dative": "офису",
+          "instrumental": "офисом",
+          "locative": "офисе",
+          "plural": "офисы",
+          "genitive_plural": "офисов"
+        },
+        "MEETING": {
+          "form": "встреча",
+          "gender": "f",
+          "genitive": "встречи",
+          "dative": "встрече",
+          "instrumental": "встречей",
+          "locative": "встрече",
+          "accusative": "встречу",
+          "plural": "встречи",
+          "genitive_plural": "встреч"
+        },
+        "DEADLINE": {
+          "form": "дедлайн",
+          "gender": "m",
+          "genitive": "дедлайна",
+          "dative": "дедлайну",
+          "instrumental": "дедлайном",
+          "locative": "дедлайне",
+          "plural": "дедлайны",
+          "genitive_plural": "дедлайнов"
+        },
+        "STORM": {
+          "form": "буря",
+          "gender": "f",
+          "genitive": "бури",
+          "dative": "буре",
+          "instrumental": "бурей",
+          "locative": "буре",
+          "accusative": "бурю",
+          "plural": "бури",
+          "genitive_plural": "бурь"
+        },
+        "UMBRELLA": {
+          "form": "зонт",
+          "gender": "m",
+          "genitive": "зонта",
+          "dative": "зонту",
+          "instrumental": "зонтом",
+          "locative": "зонте",
+          "plural": "зонты",
+          "genitive_plural": "зонтов"
+        },
+        "FORECAST": {
+          "form": "прогноз",
+          "gender": "m",
+          "genitive": "прогноза",
+          "dative": "прогнозу",
+          "instrumental": "прогнозом",
+          "locative": "прогнозе",
+          "plural": "прогнозы",
+          "genitive_plural": "прогнозов"
+        },
+        "INVITATION": {
+          "form": "приглашение",
+          "gender": "n",
+          "genitive": "приглашения",
+          "dative": "приглашению",
+          "instrumental": "приглашением",
+          "locative": "приглашении",
+          "plural": "приглашения",
+          "genitive_plural": "приглашенй"
+        },
+        "CONVERSATION": {
+          "form": "разговор",
+          "gender": "m",
+          "genitive": "разговора",
+          "dative": "разговору",
+          "instrumental": "разговором",
+          "locative": "разговоре",
+          "plural": "разговоры",
+          "genitive_plural": "разговоров"
+        },
+        "COMPLIMENT": {
+          "form": "комплимент",
+          "gender": "m",
+          "genitive": "комплимента",
+          "dative": "комплименту",
+          "instrumental": "комплиментом",
+          "locative": "комплименте",
+          "plural": "комплименты",
+          "genitive_plural": "комплиментов"
+        },
+        "WALLET": {
+          "form": "кошелёк",
+          "gender": "m",
+          "genitive": "кошелька",
+          "dative": "кошельку",
+          "instrumental": "кошельком",
+          "locative": "кошельке",
+          "plural": "кошельки",
+          "genitive_plural": "кошельков"
+        },
+        "BILL": {
+          "form": "счёт",
+          "gender": "m",
+          "genitive": "счёта",
+          "dative": "счёту",
+          "instrumental": "счётом",
+          "locative": "счёте",
+          "plural": "счета",
+          "genitive_plural": "счётов"
+        },
+        "BUDGET": {
+          "form": "бюджет",
+          "gender": "m",
+          "genitive": "бюджета",
+          "dative": "бюджету",
+          "instrumental": "бюджетом",
+          "locative": "бюджете",
+          "plural": "бюджеты",
+          "genitive_plural": "бюджетов"
+        },
+        "HEADACHE": {
+          "form": "головная боль",
+          "gender": "f",
+          "genitive": "головной боли",
+          "dative": "головной боли",
+          "instrumental": "головной болью",
+          "locative": "головной боли",
+          "plural": "головные боли",
+          "genitive_plural": "головных болей"
+        },
+        "MEDICINE": {
+          "form": "лекарство",
+          "gender": "n",
+          "genitive": "лекарства",
+          "dative": "лекарству",
+          "instrumental": "лекарством",
+          "locative": "лекарстве",
+          "plural": "лекарства",
+          "genitive_plural": "лекарств"
+        },
+        "APPOINTMENT": {
+          "form": "запись",
+          "gender": "f",
+          "genitive": "записи",
+          "dative": "записи",
+          "instrumental": "записью",
+          "locative": "записи",
+          "plural": "записи",
+          "genitive_plural": "записей"
+        },
+        "LAUNDRY": {
+          "form": "стирка",
+          "gender": "f",
+          "genitive": "стирки",
+          "dative": "стирке",
+          "instrumental": "стиркой",
+          "locative": "стирке",
+          "accusative": "стирку"
+        },
+        "DISHES": {
+          "form": "посуда",
+          "gender": "f",
+          "genitive": "посуды",
+          "dative": "посуде",
+          "instrumental": "посудой",
+          "locative": "посуде",
+          "accusative": "посуду"
+        },
+        "GARBAGE": {
+          "form": "мусор",
+          "gender": "m",
+          "genitive": "мусора",
+          "dative": "мусору",
+          "instrumental": "мусором",
+          "locative": "мусоре"
+        },
+        "CANDLE": {
+          "form": "свеча",
+          "gender": "f",
+          "genitive": "свечи",
+          "dative": "свече",
+          "instrumental": "свечей",
+          "locative": "свече",
+          "accusative": "свечу",
+          "plural": "свечи",
+          "genitive_plural": "свечей"
+        },
+        "COUCH": {
+          "form": "диван",
+          "gender": "m",
+          "genitive": "дивана",
+          "dative": "дивану",
+          "instrumental": "диваном",
+          "locative": "диване",
+          "plural": "диваны",
+          "genitive_plural": "диванов"
+        },
+        "COMMUTE": {
+          "base": "ездить на работу",
+          "1_singular": "езжу на работу",
+          "2_singular": "ездишь на работу",
+          "3_singular": "ездит на работу",
+          "1_plural": "ездим на работу",
+          "2_plural": "ездите на работу",
+          "3_plural": "ездят на работу"
+        },
+        "OVERSLEEP": {
+          "base": "просыпать",
+          "1_singular": "просыпаю",
+          "2_singular": "просыпаешь",
+          "3_singular": "просыпает",
+          "1_plural": "просыпаем",
+          "2_plural": "просыпаете",
+          "3_plural": "просыпают"
+        },
+        "DELIVER": {
+          "base": "доставлять",
+          "1_singular": "доставляю",
+          "2_singular": "доставляешь",
+          "3_singular": "доставляет",
+          "1_plural": "доставляем",
+          "2_plural": "доставляете",
+          "3_plural": "доставляют"
+        },
+        "ORGANIZE": {
+          "base": "организовывать",
+          "1_singular": "организовываю",
+          "2_singular": "организовываешь",
+          "3_singular": "организовывает",
+          "1_plural": "организовываем",
+          "2_plural": "организовываете",
+          "3_plural": "организовывают"
+        },
+        "SCHEDULE": {
+          "base": "планировать",
+          "1_singular": "планирую",
+          "2_singular": "планируешь",
+          "3_singular": "планирует",
+          "1_plural": "планируем",
+          "2_plural": "планируете",
+          "3_plural": "планируют"
+        },
+        "DRIZZLE": {
+          "base": "моросить",
+          "1_singular": "морошу",
+          "2_singular": "моросишь",
+          "3_singular": "моросит",
+          "1_plural": "моросим",
+          "2_plural": "моросите",
+          "3_plural": "моросят"
+        },
+        "APOLOGIZE": {
+          "base": "извиняться",
+          "1_singular": "извиняюсь",
+          "2_singular": "извиняешься",
+          "3_singular": "извиняется",
+          "1_plural": "извиняемся",
+          "2_plural": "извиняетесь",
+          "3_plural": "извиняются"
+        },
+        "AFFORD": {
+          "base": "позволять себе",
+          "1_singular": "позволяю себе",
+          "2_singular": "позволяешь себе",
+          "3_singular": "позволяет себе",
+          "1_plural": "позволяем себе",
+          "2_plural": "позволяете себе",
+          "3_plural": "позволяют себе"
+        },
+        "EXERCISE": {
+          "base": "заниматься спортом",
+          "1_singular": "занимаюсь спортом",
+          "2_singular": "занимаешься спортом",
+          "3_singular": "занимается спортом",
+          "1_plural": "занимаемся спортом",
+          "2_plural": "занимаетесь спортом",
+          "3_plural": "занимаются спортом"
+        },
+        "REPAIR": {
+          "base": "чинить",
+          "1_singular": "чиню",
+          "2_singular": "чинишь",
+          "3_singular": "чинит",
+          "1_plural": "чиним",
+          "2_plural": "чините",
+          "3_plural": "чинят"
+        },
+        "RELAX": {
+          "base": "отдыхать",
+          "1_singular": "отдыхаю",
+          "2_singular": "отдыхаешь",
+          "3_singular": "отдыхает",
+          "1_plural": "отдыхаем",
+          "2_plural": "отдыхаете",
+          "3_plural": "отдыхают"
+        },
+        "UNWIND": {
+          "base": "расслабляться",
+          "1_singular": "расслабляюсь",
+          "2_singular": "расслабляешься",
+          "3_singular": "расслабляется",
+          "1_plural": "расслабляемся",
+          "2_plural": "расслабляетесь",
+          "3_plural": "расслабляются"
+        },
+        "COMFORTABLE": {
+          "form": "комфортный",
+          "f": "комфортная",
+          "n": "комфортное",
+          "plural": "комфортные"
+        },
+        "CONVENIENT": {
+          "form": "удобный",
+          "f": "удобная",
+          "n": "удобное",
+          "plural": "удобные"
+        },
+        "BUSY": {
+          "form": "занятой",
+          "f": "занятая",
+          "n": "занятое",
+          "plural": "занятые"
+        },
+        "CLOUDY": {
+          "form": "облачный",
+          "f": "облачная",
+          "n": "облачное",
+          "plural": "облачные"
+        },
+        "FRIENDLY": {
+          "form": "дружелюбный",
+          "f": "дружелюбная",
+          "n": "дружелюбное",
+          "plural": "дружелюбные"
+        },
+        "CHEAP": {
+          "form": "дешёвый",
+          "f": "дешёвая",
+          "n": "дешёвое",
+          "plural": "дешёвые"
+        },
+        "TIRED": {
+          "form": "усталый",
+          "f": "усталая",
+          "n": "усталое",
+          "plural": "усталые"
+        },
+        "MESSY": {
+          "form": "неряшливый",
+          "f": "неряшливая",
+          "n": "неряшливое",
+          "plural": "неряшливые"
+        },
+        "COZY": {
+          "form": "уютный",
+          "f": "уютная",
+          "n": "уютное",
+          "plural": "уютные"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "ALARM": {
+          "form": "väckarklocka",
+          "gender": "m",
+          "plural": "väckarklockor"
+        },
+        "SHOWER": {
+          "form": "dusch",
+          "gender": "m",
+          "plural": "duschar"
+        },
+        "TOOTHBRUSH": {
+          "form": "tandborste",
+          "gender": "m",
+          "plural": "tandborstar"
+        },
+        "APARTMENT": {
+          "form": "lägenhet",
+          "gender": "m",
+          "plural": "lägenheter"
+        },
+        "LIVING_ROOM": {
+          "form": "vardagsrum",
+          "gender": "n",
+          "invariantPlural": true,
+          "definiteForm": "vardagsrummet"
+        },
+        "FURNITURE": {
+          "form": "möbler",
+          "plural": "po"
+        },
+        "NEIGHBOR": {
+          "form": "granne",
+          "gender": "m",
+          "plural": "grannar"
+        },
+        "GROCERY": {
+          "form": "mataffär",
+          "gender": "m",
+          "plural": "mataffärer"
+        },
+        "PHARMACY": {
+          "form": "apotek",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "OFFICE": {
+          "form": "kontor",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "MEETING": {
+          "form": "möte",
+          "gender": "n",
+          "plural": "möten"
+        },
+        "DEADLINE": {
+          "form": "deadline",
+          "gender": "m",
+          "plural": "deadlines"
+        },
+        "STORM": {
+          "form": "storm",
+          "gender": "m",
+          "plural": "stormar"
+        },
+        "UMBRELLA": {
+          "form": "paraply",
+          "gender": "n",
+          "plural": "paraplyer",
+          "definiteForm": "paraplyet"
+        },
+        "FORECAST": {
+          "form": "väderprognos",
+          "gender": "m",
+          "plural": "väderprognoser"
+        },
+        "INVITATION": {
+          "form": "inbjudan",
+          "gender": "m",
+          "plural": "inbjudningar",
+          "definiteForm": "inbjudan"
+        },
+        "CONVERSATION": {
+          "form": "samtal",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "COMPLIMENT": {
+          "form": "komplimang",
+          "gender": "m",
+          "plural": "komplimanger"
+        },
+        "WALLET": {
+          "form": "plånbok",
+          "gender": "m",
+          "plural": "plånböcker"
+        },
+        "BILL": {
+          "form": "räkning",
+          "gender": "m",
+          "plural": "räkningar"
+        },
+        "BUDGET": {
+          "form": "budget",
+          "gender": "m",
+          "plural": "budgetar"
+        },
+        "HEADACHE": {
+          "form": "huvudvärk",
+          "gender": "m"
+        },
+        "MEDICINE": {
+          "form": "medicin",
+          "gender": "m",
+          "plural": "mediciner"
+        },
+        "APPOINTMENT": {
+          "form": "tid",
+          "gender": "m",
+          "plural": "tider"
+        },
+        "LAUNDRY": {
+          "form": "tvätt",
+          "gender": "m"
+        },
+        "DISHES": {
+          "form": "disk",
+          "gender": "m"
+        },
+        "GARBAGE": {
+          "form": "sopor",
+          "plural": "po"
+        },
+        "CANDLE": {
+          "form": "ljus",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "COUCH": {
+          "form": "soffa",
+          "gender": "m",
+          "plural": "soffor"
+        },
+        "COMMUTE": {
+          "base": "pendla",
+          "present": "pendlar"
+        },
+        "OVERSLEEP": {
+          "base": "försova sig",
+          "present": "försover sig"
+        },
+        "DELIVER": {
+          "base": "leverera",
+          "present": "levererar"
+        },
+        "ORGANIZE": {
+          "base": "organisera",
+          "present": "organiserar"
+        },
+        "SCHEDULE": {
+          "base": "planera",
+          "present": "planerar"
+        },
+        "DRIZZLE": {
+          "base": "duggregna",
+          "present": "duggregnar"
+        },
+        "APOLOGIZE": {
+          "base": "be om ursäkt",
+          "present": "ber om ursäkt"
+        },
+        "AFFORD": {
+          "base": "ha råd med",
+          "present": "har råd med"
+        },
+        "EXERCISE": {
+          "base": "träna",
+          "present": "tränar"
+        },
+        "REPAIR": {
+          "base": "reparera",
+          "present": "reparerar"
+        },
+        "RELAX": {
+          "base": "slappna av",
+          "present": "slappnar av"
+        },
+        "UNWIND": {
+          "base": "varva ner",
+          "present": "varvar ner"
+        },
+        "COMFORTABLE": {
+          "form": "bekväm",
+          "n": "bekvämt",
+          "plural": "bekväma"
+        },
+        "CONVENIENT": {
+          "form": "praktisk",
+          "n": "praktiskt",
+          "plural": "praktiska"
+        },
+        "BUSY": {
+          "form": "upptagen",
+          "n": "upptaget",
+          "plural": "upptagna"
+        },
+        "CLOUDY": {
+          "form": "molnig",
+          "n": "molnigt",
+          "plural": "molniga"
+        },
+        "FRIENDLY": {
+          "form": "vänlig",
+          "n": "vänligt",
+          "plural": "vänliga"
+        },
+        "CHEAP": {
+          "form": "billig",
+          "n": "billigt",
+          "plural": "billiga"
+        },
+        "TIRED": {
+          "form": "trött",
+          "n": "trött",
+          "plural": "trötta"
+        },
+        "MESSY": {
+          "form": "stökig",
+          "n": "stökigt",
+          "plural": "stökiga"
+        },
+        "COZY": {
+          "form": "mysig",
+          "n": "mysigt",
+          "plural": "mysiga"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

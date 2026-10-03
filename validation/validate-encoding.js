@@ -46,7 +46,7 @@ const SCRIPT_RULES = {
 // copy-paste leak from another language's data. Born from Emi run-7 -32:
 // a Finnish grammar note shipped with «книга → Я читаю книгу» in it, and
 // nothing ever looked.
-const LATIN_LANGS = new Set(['en', 'de', 'pt', 'no', 'tr', 'pl', 'fi']);
+const LATIN_LANGS = new Set(['en', 'de', 'pt', 'no', 'tr', 'pl', 'fi', 'sv']);
 
 // Any character of a script a Latin-language value must never contain:
 // Greek, Cyrillic, Arabic, Devanagari, Thai, Hangul (jamo + syllables),
@@ -284,7 +284,7 @@ function validateGrammarNotes() {
     const allowed = Object.entries(RULE_PREFIX_ALLOWED)
       .find(([prefix]) => rule.startsWith(prefix))?.[1];
     for (const [lang, note] of Object.entries(byLang)) {
-      if (lang === 'uk') continue; // Ukrainian text is legitimate there
+      if (lang === 'uk' || lang === 'ru') continue; // Ukrainian / Russian text is legitimate there
       let text = `${note?.title || ''} ${note?.body || ''}`;
       if (allowed) text = text.replace(allowed, '');
       if (CYRILLIC_RE.test(text)) {

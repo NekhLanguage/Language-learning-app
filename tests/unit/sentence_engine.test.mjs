@@ -121,7 +121,7 @@ test("pluralize -f/-fe class: knives, not knifes (Emi 2026-08-27-08)", () => {
 test("zero-copula languages are uk, ar, tr, ko", () => {
   // ko joined 2026-08-28: its present copula is the 이에요/예요 suffix on
   // the nominal predicate (language_rules copulaSuffix), never a word.
-  assert.deepEqual([...ZERO_PRESENT_COPULA].sort(), ["ar", "ko", "tr", "uk"]);
+  assert.deepEqual([...ZERO_PRESENT_COPULA].sort(), ["ar", "ko", "ru", "tr", "uk"]);
 });
 
 test("surface forms resolve from vocab data", () => {

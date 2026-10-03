@@ -53,6 +53,718 @@
   ],
 
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "PLANET": {
+          "form": "планета",
+          "gender": "f",
+          "genitive": "планеты",
+          "dative": "планете",
+          "instrumental": "планетой",
+          "locative": "планете",
+          "accusative": "планету",
+          "plural": "планеты",
+          "genitive_plural": "планет"
+        },
+        "STAR": {
+          "form": "звезда",
+          "gender": "f",
+          "genitive": "звезды",
+          "dative": "звезде",
+          "instrumental": "звездой",
+          "locative": "звезде",
+          "accusative": "звезду",
+          "plural": "звёзды",
+          "genitive_plural": "звёзд"
+        },
+        "GALAXY": {
+          "form": "галактика",
+          "gender": "f",
+          "genitive": "галактики",
+          "dative": "галактике",
+          "instrumental": "галактикой",
+          "locative": "галактике",
+          "accusative": "галактику",
+          "plural": "галактики",
+          "genitive_plural": "галактик"
+        },
+        "ASTEROID": {
+          "form": "астероид",
+          "gender": "m",
+          "genitive": "астероида",
+          "dative": "астероиду",
+          "instrumental": "астероидом",
+          "locative": "астероиде",
+          "plural": "астероиды",
+          "genitive_plural": "астероидов"
+        },
+        "ROCKET": {
+          "form": "ракета",
+          "gender": "f",
+          "genitive": "ракеты",
+          "dative": "ракете",
+          "instrumental": "ракетой",
+          "locative": "ракете",
+          "accusative": "ракету",
+          "plural": "ракеты",
+          "genitive_plural": "ракет"
+        },
+        "SPACECRAFT": {
+          "form": "космический корабль",
+          "gender": "m",
+          "genitive": "космического корабля",
+          "dative": "космическому кораблю",
+          "instrumental": "космическим кораблём",
+          "locative": "космическом корабле",
+          "plural": "космические корабли",
+          "genitive_plural": "космических кораблей"
+        },
+        "ASTRONAUT": {
+          "form": "астронавт",
+          "gender": "m",
+          "feminine": "астронавтка",
+          "genitive": "астронавта",
+          "dative": "астронавту",
+          "instrumental": "астронавтом",
+          "locative": "астронавте",
+          "accusative": "астронавта",
+          "plural": "астронавты",
+          "genitive_plural": "астронавтов"
+        },
+        "TELESCOPE": {
+          "form": "телескоп",
+          "gender": "m",
+          "genitive": "телескопа",
+          "dative": "телескопу",
+          "instrumental": "телескопом",
+          "locative": "телескопе",
+          "plural": "телескопы",
+          "genitive_plural": "телескопов"
+        },
+        "SATELLITE": {
+          "form": "спутник",
+          "gender": "m",
+          "genitive": "спутника",
+          "dative": "спутнику",
+          "instrumental": "спутником",
+          "locative": "спутнике",
+          "plural": "спутники",
+          "genitive_plural": "спутников"
+        },
+        "PROBE": {
+          "form": "зонд",
+          "gender": "m",
+          "genitive": "зонда",
+          "dative": "зонду",
+          "instrumental": "зондом",
+          "locative": "зонде",
+          "plural": "зонды",
+          "genitive_plural": "зондов"
+        },
+        "ALIEN": {
+          "form": "инопланетянин",
+          "gender": "m",
+          "genitive": "инопланетянина",
+          "dative": "инопланетянину",
+          "instrumental": "инопланетянином",
+          "locative": "инопланетянине",
+          "accusative": "инопланетянина",
+          "plural": "инопланетяне",
+          "genitive_plural": "инопланетян"
+        },
+        "CREATURE": {
+          "form": "существо",
+          "gender": "n",
+          "genitive": "существа",
+          "dative": "существу",
+          "instrumental": "существом",
+          "locative": "существе",
+          "plural": "существа",
+          "genitive_plural": "существ"
+        },
+        "SIGNAL": {
+          "form": "сигнал",
+          "gender": "m",
+          "genitive": "сигнала",
+          "dative": "сигналу",
+          "instrumental": "сигналом",
+          "locative": "сигнале",
+          "plural": "сигналы",
+          "genitive_plural": "сигналов"
+        },
+        "LASER": {
+          "form": "лазер",
+          "gender": "m",
+          "genitive": "лазера",
+          "dative": "лазеру",
+          "instrumental": "лазером",
+          "locative": "лазере",
+          "plural": "лазеры",
+          "genitive_plural": "лазеров"
+        },
+        "HOLOGRAM": {
+          "form": "голограмма",
+          "gender": "f",
+          "genitive": "голограммы",
+          "dative": "голограмме",
+          "instrumental": "голограммой",
+          "locative": "голограмме",
+          "accusative": "голограмму",
+          "plural": "голограммы",
+          "genitive_plural": "голограмм"
+        },
+        "ANDROID": {
+          "form": "андроид",
+          "gender": "m",
+          "genitive": "андроида",
+          "dative": "андроиду",
+          "instrumental": "андроидом",
+          "locative": "андроиде",
+          "accusative": "андроида",
+          "plural": "андроиды",
+          "genitive_plural": "андроидов"
+        },
+        "COCKPIT": {
+          "form": "кабина",
+          "gender": "f",
+          "genitive": "кабины",
+          "dative": "кабине",
+          "instrumental": "кабиной",
+          "locative": "кабине",
+          "accusative": "кабину",
+          "plural": "кабины",
+          "genitive_plural": "кабин"
+        },
+        "AIRLOCK": {
+          "form": "шлюз",
+          "gender": "m",
+          "genitive": "шлюза",
+          "dative": "шлюзу",
+          "instrumental": "шлюзом",
+          "locative": "шлюзе",
+          "plural": "шлюзы",
+          "genitive_plural": "шлюзов"
+        },
+        "HULL": {
+          "form": "корпус",
+          "gender": "m",
+          "genitive": "корпуса",
+          "dative": "корпусу",
+          "instrumental": "корпусом",
+          "locative": "корпусе",
+          "plural": "корпусы",
+          "genitive_plural": "корпусов"
+        },
+        "NEBULA": {
+          "form": "туманность",
+          "gender": "f",
+          "genitive": "туманности",
+          "dative": "туманности",
+          "instrumental": "туманностью",
+          "locative": "туманности",
+          "plural": "туманности",
+          "genitive_plural": "туманностей"
+        },
+        "WORMHOLE": {
+          "form": "червоточина",
+          "gender": "f",
+          "genitive": "червоточины",
+          "dative": "червоточине",
+          "instrumental": "червоточиной",
+          "locative": "червоточине",
+          "accusative": "червоточину",
+          "plural": "червоточины",
+          "genitive_plural": "червоточин"
+        },
+        "SUPERNOVA": {
+          "form": "сверхновая",
+          "gender": "f",
+          "genitive": "сверхновой",
+          "dative": "сверхновой",
+          "instrumental": "сверхновой",
+          "locative": "сверхновой",
+          "plural": "сверхновые",
+          "genitive_plural": "сверхновых"
+        },
+        "COLONY": {
+          "form": "колония",
+          "gender": "f",
+          "genitive": "колонии",
+          "dative": "колонии",
+          "instrumental": "колонией",
+          "locative": "колонии",
+          "accusative": "колонию",
+          "plural": "колонии",
+          "genitive_plural": "колонй"
+        },
+        "HABITAT": {
+          "form": "среда обитания",
+          "gender": "f",
+          "genitive": "среды обитания",
+          "dative": "среде обитания",
+          "instrumental": "средой обитания",
+          "locative": "среде обитания",
+          "accusative": "среду обитания",
+          "plural": "среды обитания",
+          "genitive_plural": "сред обитания"
+        },
+        "INVASION": {
+          "form": "вторжение",
+          "gender": "n",
+          "genitive": "вторжения",
+          "dative": "вторжению",
+          "instrumental": "вторжением",
+          "locative": "вторжении",
+          "plural": "вторжения",
+          "genitive_plural": "вторженй"
+        },
+        "FLEET": {
+          "form": "флот",
+          "gender": "m",
+          "genitive": "флота",
+          "dative": "флоту",
+          "instrumental": "флотом",
+          "locative": "флоте",
+          "plural": "флоты",
+          "genitive_plural": "флотов"
+        },
+        "BLASTER": {
+          "form": "бластер",
+          "gender": "m",
+          "genitive": "бластера",
+          "dative": "бластеру",
+          "instrumental": "бластером",
+          "locative": "бластере",
+          "plural": "бластеры",
+          "genitive_plural": "бластеров"
+        },
+        "DIMENSION": {
+          "form": "измерение",
+          "gender": "n",
+          "genitive": "измерения",
+          "dative": "измерению",
+          "instrumental": "измерением",
+          "locative": "измерении",
+          "plural": "измерения",
+          "genitive_plural": "измеренй"
+        },
+        "FRONTIER": {
+          "form": "граница",
+          "gender": "f",
+          "genitive": "границы",
+          "dative": "границе",
+          "instrumental": "границей",
+          "locative": "границе",
+          "accusative": "границу",
+          "plural": "границы",
+          "genitive_plural": "границ"
+        },
+        "LAUNCH": {
+          "base": "запускать",
+          "1_singular": "запускаю",
+          "2_singular": "запускаешь",
+          "3_singular": "запускает",
+          "1_plural": "запускаем",
+          "2_plural": "запускаете",
+          "3_plural": "запускают"
+        },
+        "DISCOVER": {
+          "base": "открывать",
+          "1_singular": "открываю",
+          "2_singular": "открываешь",
+          "3_singular": "открывает",
+          "1_plural": "открываем",
+          "2_plural": "открываете",
+          "3_plural": "открывают"
+        },
+        "ENCOUNTER": {
+          "base": "встречать",
+          "1_singular": "встречаю",
+          "2_singular": "встречаешь",
+          "3_singular": "встречает",
+          "1_plural": "встречаем",
+          "2_plural": "встречаете",
+          "3_plural": "встречают"
+        },
+        "ACTIVATE": {
+          "base": "активировать",
+          "1_singular": "активирую",
+          "2_singular": "активируешь",
+          "3_singular": "активирует",
+          "1_plural": "активируем",
+          "2_plural": "активируете",
+          "3_plural": "активируют"
+        },
+        "NAVIGATE": {
+          "base": "навигировать",
+          "1_singular": "навигирую",
+          "2_singular": "навигируешь",
+          "3_singular": "навигирует",
+          "1_plural": "навигируем",
+          "2_plural": "навигируете",
+          "3_plural": "навигируют"
+        },
+        "TERRAFORM": {
+          "base": "терраформировать",
+          "1_singular": "терраформирую",
+          "2_singular": "терраформируешь",
+          "3_singular": "терраформирует",
+          "1_plural": "терраформируем",
+          "2_plural": "терраформируете",
+          "3_plural": "терраформируют"
+        },
+        "COLONIZE": {
+          "base": "колонизировать",
+          "1_singular": "колонизирую",
+          "2_singular": "колонизируешь",
+          "3_singular": "колонизирует",
+          "1_plural": "колонизируем",
+          "2_plural": "колонизируете",
+          "3_plural": "колонизируют"
+        },
+        "ORBIT": {
+          "base": "вращаться",
+          "1_singular": "вращаюсь",
+          "2_singular": "вращаешься",
+          "3_singular": "вращается",
+          "1_plural": "вращаемся",
+          "2_plural": "вращаетесь",
+          "3_plural": "вращаются"
+        },
+        "TRANSMIT": {
+          "base": "передавать",
+          "1_singular": "передаю",
+          "2_singular": "передаёшь",
+          "3_singular": "передаёт",
+          "1_plural": "передаём",
+          "2_plural": "передаёте",
+          "3_plural": "передают"
+        },
+        "WARP": {
+          "base": "прыгать",
+          "1_singular": "прыгаю",
+          "2_singular": "прыгаешь",
+          "3_singular": "прыгает",
+          "1_plural": "прыгаем",
+          "2_plural": "прыгаете",
+          "3_plural": "прыгают"
+        },
+        "EVOLVE": {
+          "base": "эволюционировать",
+          "1_singular": "эволюционирую",
+          "2_singular": "эволюционируешь",
+          "3_singular": "эволюционирует",
+          "1_plural": "эволюционируем",
+          "2_plural": "эволюционируете",
+          "3_plural": "эволюционируют"
+        },
+        "COSMIC": {
+          "form": "космический",
+          "f": "космическая",
+          "n": "космическое",
+          "plural": "космические"
+        },
+        "ORBITAL": {
+          "form": "орбитальный",
+          "f": "орбитальная",
+          "n": "орбитальное",
+          "plural": "орбитальные"
+        },
+        "DISTANT": {
+          "form": "далёкий",
+          "f": "далёкая",
+          "n": "далёкое",
+          "plural": "далёкие"
+        },
+        "UNKNOWN": {
+          "form": "неизвестный",
+          "f": "неизвестная",
+          "n": "неизвестное",
+          "plural": "неизвестные"
+        },
+        "ADVANCED": {
+          "form": "передовой",
+          "f": "передовая",
+          "n": "передовое",
+          "plural": "передовые"
+        },
+        "ARTIFICIAL": {
+          "form": "искусственный",
+          "f": "искусственная",
+          "n": "искусственное",
+          "plural": "искусственные"
+        },
+        "INFINITE": {
+          "form": "бесконечный",
+          "f": "бесконечная",
+          "n": "бесконечное",
+          "plural": "бесконечные"
+        },
+        "SUSTAINABLE": {
+          "form": "устойчивый",
+          "f": "устойчивая",
+          "n": "устойчивое",
+          "plural": "устойчивые"
+        },
+        "HOSTILE": {
+          "form": "враждебный",
+          "f": "враждебная",
+          "n": "враждебное",
+          "plural": "враждебные"
+        },
+        "FUTURISTIC": {
+          "form": "футуристический",
+          "f": "футуристическая",
+          "n": "футуристическое",
+          "plural": "футуристические"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "PLANET": {
+          "form": "planet",
+          "gender": "m",
+          "plural": "planeter"
+        },
+        "STAR": {
+          "form": "stjärna",
+          "gender": "m",
+          "plural": "stjärnor"
+        },
+        "GALAXY": {
+          "form": "galax",
+          "gender": "m",
+          "plural": "galaxer"
+        },
+        "ASTEROID": {
+          "form": "asteroid",
+          "gender": "m",
+          "plural": "asteroider"
+        },
+        "ROCKET": {
+          "form": "raket",
+          "gender": "m",
+          "plural": "raketer"
+        },
+        "SPACECRAFT": {
+          "form": "rymdskepp",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "ASTRONAUT": {
+          "form": "astronaut",
+          "gender": "m",
+          "plural": "astronauter"
+        },
+        "TELESCOPE": {
+          "form": "teleskop",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "SATELLITE": {
+          "form": "satellit",
+          "gender": "m",
+          "plural": "satelliter"
+        },
+        "PROBE": {
+          "form": "sond",
+          "gender": "m",
+          "plural": "sonder"
+        },
+        "ALIEN": {
+          "form": "utomjording",
+          "gender": "m",
+          "plural": "utomjordingar"
+        },
+        "CREATURE": {
+          "form": "varelse",
+          "gender": "m",
+          "plural": "varelser"
+        },
+        "SIGNAL": {
+          "form": "signal",
+          "gender": "m",
+          "plural": "signaler"
+        },
+        "LASER": {
+          "form": "laser",
+          "gender": "m",
+          "plural": "lasrar"
+        },
+        "HOLOGRAM": {
+          "form": "hologram",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "ANDROID": {
+          "form": "android",
+          "gender": "m",
+          "plural": "androider"
+        },
+        "COCKPIT": {
+          "form": "cockpit",
+          "gender": "m",
+          "plural": "cockpitar"
+        },
+        "AIRLOCK": {
+          "form": "luftsluss",
+          "gender": "m",
+          "plural": "luftslussar"
+        },
+        "HULL": {
+          "form": "skrov",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "NEBULA": {
+          "form": "nebulosa",
+          "gender": "m",
+          "plural": "nebulosor"
+        },
+        "WORMHOLE": {
+          "form": "maskhål",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "SUPERNOVA": {
+          "form": "supernova",
+          "gender": "m",
+          "plural": "supernovor"
+        },
+        "COLONY": {
+          "form": "koloni",
+          "gender": "m",
+          "plural": "kolonier"
+        },
+        "HABITAT": {
+          "form": "habitat",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "INVASION": {
+          "form": "invasion",
+          "gender": "m",
+          "plural": "invasioner"
+        },
+        "FLEET": {
+          "form": "flotta",
+          "gender": "m",
+          "plural": "flottor"
+        },
+        "BLASTER": {
+          "form": "blaster",
+          "gender": "m",
+          "plural": "blasters"
+        },
+        "DIMENSION": {
+          "form": "dimension",
+          "gender": "m",
+          "plural": "dimensioner"
+        },
+        "FRONTIER": {
+          "form": "gräns",
+          "gender": "m",
+          "plural": "gränser"
+        },
+        "LAUNCH": {
+          "base": "skjuta upp",
+          "present": "skjuter upp"
+        },
+        "DISCOVER": {
+          "base": "upptäcka",
+          "present": "upptäcker"
+        },
+        "ENCOUNTER": {
+          "base": "möta",
+          "present": "möter"
+        },
+        "ACTIVATE": {
+          "base": "aktivera",
+          "present": "aktiverar"
+        },
+        "NAVIGATE": {
+          "base": "navigera",
+          "present": "navigerar"
+        },
+        "TERRAFORM": {
+          "base": "terraformera",
+          "present": "terraformerar"
+        },
+        "COLONIZE": {
+          "base": "kolonisera",
+          "present": "koloniserar"
+        },
+        "ORBIT": {
+          "base": "kretsa",
+          "present": "kretsar"
+        },
+        "TRANSMIT": {
+          "base": "sända",
+          "present": "sänder"
+        },
+        "WARP": {
+          "base": "warpa",
+          "present": "warpar"
+        },
+        "EVOLVE": {
+          "base": "utvecklas",
+          "present": "utvecklas"
+        },
+        "COSMIC": {
+          "form": "kosmisk",
+          "n": "kosmiskt",
+          "plural": "kosmiska"
+        },
+        "ORBITAL": {
+          "form": "orbital",
+          "n": "orbitalt",
+          "plural": "orbitala"
+        },
+        "DISTANT": {
+          "form": "avlägsen",
+          "n": "avlägset",
+          "plural": "avlägsna"
+        },
+        "UNKNOWN": {
+          "form": "okänd",
+          "n": "okänt",
+          "plural": "okända"
+        },
+        "ADVANCED": {
+          "form": "avancerad",
+          "n": "avancerat",
+          "plural": "avancerade"
+        },
+        "ARTIFICIAL": {
+          "form": "artificiell",
+          "n": "artificiellt",
+          "plural": "artificiella"
+        },
+        "INFINITE": {
+          "form": "oändlig",
+          "n": "oändligt",
+          "plural": "oändliga"
+        },
+        "SUSTAINABLE": {
+          "form": "hållbar",
+          "n": "hållbart",
+          "plural": "hållbara"
+        },
+        "HOSTILE": {
+          "form": "fientlig",
+          "n": "fientligt",
+          "plural": "fientliga"
+        },
+        "FUTURISTIC": {
+          "form": "futuristisk",
+          "n": "futuristiskt",
+          "plural": "futuristiska"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

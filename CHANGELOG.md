@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-03
 
+### Swedish and Russian join the app as hidden beta languages
+
+Two new target languages are wired through the whole pipeline — Swedish («Jag äter mat.», «Boken är röd.», «Hon går till sitt rum.») and Russian («Я ем еду.», «У меня есть книга.», «Книга рядом со столом.») — with all 128 core sentences, every resource pack, grammar notes, coaching lines and the interface strings. Both are hidden from the language pickers until a tester has read their generated sentences (Emi's run is next), so nothing changes for learners today; a tester reaches them with `?showHidden=1`. For the learner later: Swedish teaches the en/ett article and the suffixed definite, Russian teaches cases on objects and after prepositions and the natural «у меня есть» way of saying "I have".
+
 ### Yes, no, not, please, maybe and thanks can finally be tested
 
 These six words were introduced once and then sat at level 2 for ever: the level-2 question only ever picked wrong answers of the same word type, and these types have one or two words each. They are now tested against the other small words you know (and, with, I, …) when there aren't enough of their own kind, so they climb the ladder like everything else.

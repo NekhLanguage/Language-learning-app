@@ -62,6 +62,715 @@
   ],
 
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "GUITAR": {
+          "form": "гитара",
+          "gender": "f",
+          "genitive": "гитары",
+          "dative": "гитаре",
+          "instrumental": "гитарой",
+          "locative": "гитаре",
+          "accusative": "гитару",
+          "plural": "гитары",
+          "genitive_plural": "гитар"
+        },
+        "DRUM": {
+          "form": "барабан",
+          "gender": "m",
+          "genitive": "барабана",
+          "dative": "барабану",
+          "instrumental": "барабаном",
+          "locative": "барабане",
+          "plural": "барабаны",
+          "genitive_plural": "барабанов"
+        },
+        "PIANO": {
+          "form": "пианино",
+          "gender": "n",
+          "genitive": "пианино",
+          "dative": "пианино",
+          "instrumental": "пианино",
+          "locative": "пианино",
+          "invariantPlural": true,
+          "genitive_plural": "пианино"
+        },
+        "VIOLIN": {
+          "form": "скрипка",
+          "gender": "f",
+          "genitive": "скрипки",
+          "dative": "скрипке",
+          "instrumental": "скрипкой",
+          "locative": "скрипке",
+          "accusative": "скрипку",
+          "plural": "скрипки",
+          "genitive_plural": "скрипок"
+        },
+        "MICROPHONE": {
+          "form": "микрофон",
+          "gender": "m",
+          "genitive": "микрофона",
+          "dative": "микрофону",
+          "instrumental": "микрофоном",
+          "locative": "микрофоне",
+          "plural": "микрофоны",
+          "genitive_plural": "микрофонов"
+        },
+        "MELODY": {
+          "form": "мелодия",
+          "gender": "f",
+          "genitive": "мелодии",
+          "dative": "мелодии",
+          "instrumental": "мелодией",
+          "locative": "мелодии",
+          "accusative": "мелодию",
+          "plural": "мелодии",
+          "genitive_plural": "мелодй"
+        },
+        "RHYTHM": {
+          "form": "ритм",
+          "gender": "m",
+          "genitive": "ритма",
+          "dative": "ритму",
+          "instrumental": "ритмом",
+          "locative": "ритме",
+          "plural": "ритмы",
+          "genitive_plural": "ритмов"
+        },
+        "BEAT": {
+          "form": "бит",
+          "gender": "m",
+          "genitive": "бита",
+          "dative": "биту",
+          "instrumental": "битом",
+          "locative": "бите",
+          "plural": "биты",
+          "genitive_plural": "битов"
+        },
+        "CHORD": {
+          "form": "аккорд",
+          "gender": "m",
+          "genitive": "аккорда",
+          "dative": "аккорду",
+          "instrumental": "аккордом",
+          "locative": "аккорде",
+          "plural": "аккорды",
+          "genitive_plural": "аккордов"
+        },
+        "HARMONY": {
+          "form": "гармония",
+          "gender": "f",
+          "genitive": "гармонии",
+          "dative": "гармонии",
+          "instrumental": "гармонией",
+          "locative": "гармонии",
+          "accusative": "гармонию",
+          "plural": "гармонии",
+          "genitive_plural": "гармонй"
+        },
+        "SING": {
+          "base": "петь",
+          "1_singular": "пою",
+          "2_singular": "поёшь",
+          "3_singular": "поёт",
+          "1_plural": "поём",
+          "2_plural": "поёте",
+          "3_plural": "поют"
+        },
+        "STRUM": {
+          "base": "бренчать",
+          "1_singular": "бренчу",
+          "2_singular": "бренчишь",
+          "3_singular": "бренчит",
+          "1_plural": "бренчим",
+          "2_plural": "бренчите",
+          "3_plural": "бренчат"
+        },
+        "COMPOSE": {
+          "base": "сочинять",
+          "1_singular": "сочиняю",
+          "2_singular": "сочиняешь",
+          "3_singular": "сочиняет",
+          "1_plural": "сочиняем",
+          "2_plural": "сочиняете",
+          "3_plural": "сочиняют"
+        },
+        "PERFORM": {
+          "base": "выступать",
+          "1_singular": "выступаю",
+          "2_singular": "выступаешь",
+          "3_singular": "выступает",
+          "1_plural": "выступаем",
+          "2_plural": "выступаете",
+          "3_plural": "выступают"
+        },
+        "RECORD": {
+          "base": "записывать",
+          "1_singular": "записываю",
+          "2_singular": "записываешь",
+          "3_singular": "записывает",
+          "1_plural": "записываем",
+          "2_plural": "записываете",
+          "3_plural": "записывают"
+        },
+        "CONCERT": {
+          "form": "концерт",
+          "gender": "m",
+          "genitive": "концерта",
+          "dative": "концерту",
+          "instrumental": "концертом",
+          "locative": "концерте",
+          "plural": "концерты",
+          "genitive_plural": "концертов"
+        },
+        "STAGE": {
+          "form": "сцена",
+          "gender": "f",
+          "genitive": "сцены",
+          "dative": "сцене",
+          "instrumental": "сценой",
+          "locative": "сцене",
+          "accusative": "сцену",
+          "plural": "сцены",
+          "genitive_plural": "сцен"
+        },
+        "ENCORE": {
+          "form": "бис",
+          "gender": "m",
+          "genitive": "биса",
+          "dative": "бису",
+          "instrumental": "бисом",
+          "locative": "бисе",
+          "plural": "бисы",
+          "genitive_plural": "бисов"
+        },
+        "SPOTLIGHT": {
+          "form": "прожектор",
+          "gender": "m",
+          "genitive": "прожектора",
+          "dative": "прожектору",
+          "instrumental": "прожектором",
+          "locative": "прожекторе",
+          "plural": "прожекторы",
+          "genitive_plural": "прожекторов"
+        },
+        "TOUR": {
+          "form": "тур",
+          "gender": "m",
+          "genitive": "тура",
+          "dative": "туру",
+          "instrumental": "туром",
+          "locative": "туре",
+          "plural": "туры",
+          "genitive_plural": "туров"
+        },
+        "LYRIC": {
+          "form": "текст",
+          "gender": "m",
+          "genitive": "текста",
+          "dative": "тексту",
+          "instrumental": "текстом",
+          "locative": "тексте",
+          "plural": "тексты",
+          "genitive_plural": "текстов"
+        },
+        "CHORUS": {
+          "form": "припев",
+          "gender": "m",
+          "genitive": "припева",
+          "dative": "припеву",
+          "instrumental": "припевом",
+          "locative": "припеве",
+          "plural": "припевы",
+          "genitive_plural": "припевов"
+        },
+        "VERSE": {
+          "form": "куплет",
+          "gender": "m",
+          "genitive": "куплета",
+          "dative": "куплету",
+          "instrumental": "куплетом",
+          "locative": "куплете",
+          "plural": "куплеты",
+          "genitive_plural": "куплетов"
+        },
+        "SOLO": {
+          "form": "соло",
+          "gender": "n",
+          "genitive": "соло",
+          "dative": "соло",
+          "instrumental": "соло",
+          "locative": "соло",
+          "invariantPlural": true,
+          "genitive_plural": "соло"
+        },
+        "DUET": {
+          "form": "дуэт",
+          "gender": "m",
+          "genitive": "дуэта",
+          "dative": "дуэту",
+          "instrumental": "дуэтом",
+          "locative": "дуэте",
+          "plural": "дуэты",
+          "genitive_plural": "дуэтов"
+        },
+        "ROCK": {
+          "form": "рок",
+          "gender": "m",
+          "genitive": "рока",
+          "dative": "року",
+          "instrumental": "роком",
+          "locative": "роке"
+        },
+        "JAZZ": {
+          "form": "джаз",
+          "gender": "m",
+          "genitive": "джаза",
+          "dative": "джазу",
+          "instrumental": "джазом",
+          "locative": "джазе"
+        },
+        "CLASSICAL": {
+          "form": "классический",
+          "f": "классическая",
+          "n": "классическое",
+          "plural": "классические"
+        },
+        "ACOUSTIC": {
+          "form": "акустический",
+          "f": "акустическая",
+          "n": "акустическое",
+          "plural": "акустические"
+        },
+        "ELECTRONIC": {
+          "form": "электронный",
+          "f": "электронная",
+          "n": "электронное",
+          "plural": "электронные"
+        },
+        "STUDIO": {
+          "form": "студия",
+          "gender": "f",
+          "genitive": "студии",
+          "dative": "студии",
+          "instrumental": "студией",
+          "locative": "студии",
+          "accusative": "студию",
+          "plural": "студии",
+          "genitive_plural": "студй"
+        },
+        "TRACK": {
+          "form": "трек",
+          "gender": "m",
+          "genitive": "трека",
+          "dative": "треку",
+          "instrumental": "треком",
+          "locative": "треке",
+          "plural": "треки",
+          "genitive_plural": "треков"
+        },
+        "ALBUM": {
+          "form": "альбом",
+          "gender": "m",
+          "genitive": "альбома",
+          "dative": "альбому",
+          "instrumental": "альбомом",
+          "locative": "альбоме",
+          "plural": "альбомы",
+          "genitive_plural": "альбомов"
+        },
+        "REMIX": {
+          "form": "ремикс",
+          "gender": "m",
+          "genitive": "ремикса",
+          "dative": "ремиксу",
+          "instrumental": "ремиксом",
+          "locative": "ремиксе",
+          "plural": "ремиксы",
+          "genitive_plural": "ремиксов"
+        },
+        "SAMPLE": {
+          "form": "сэмпл",
+          "gender": "m",
+          "genitive": "сэмпла",
+          "dative": "сэмплу",
+          "instrumental": "сэмплом",
+          "locative": "сэмпле",
+          "plural": "сэмплы",
+          "genitive_plural": "сэмплов"
+        },
+        "REHEARSE": {
+          "base": "репетировать",
+          "1_singular": "репетирую",
+          "2_singular": "репетируешь",
+          "3_singular": "репетирует",
+          "1_plural": "репетируем",
+          "2_plural": "репетируете",
+          "3_plural": "репетируют"
+        },
+        "TUNE": {
+          "base": "настраивать",
+          "1_singular": "настраиваю",
+          "2_singular": "настраиваешь",
+          "3_singular": "настраивает",
+          "1_plural": "настраиваем",
+          "2_plural": "настраиваете",
+          "3_plural": "настраивают"
+        },
+        "IMPROVISE": {
+          "base": "импровизировать",
+          "1_singular": "импровизирую",
+          "2_singular": "импровизируешь",
+          "3_singular": "импровизирует",
+          "1_plural": "импровизируем",
+          "2_plural": "импровизируете",
+          "3_plural": "импровизируют"
+        },
+        "AMPLIFY": {
+          "base": "усиливать",
+          "1_singular": "усиливаю",
+          "2_singular": "усиливаешь",
+          "3_singular": "усиливает",
+          "1_plural": "усиливаем",
+          "2_plural": "усиливаете",
+          "3_plural": "усиливают"
+        },
+        "DROP": {
+          "base": "выпускать",
+          "1_singular": "выпускаю",
+          "2_singular": "выпускаешь",
+          "3_singular": "выпускает",
+          "1_plural": "выпускаем",
+          "2_plural": "выпускаете",
+          "3_plural": "выпускают"
+        },
+        "LOUD": {
+          "form": "громкий",
+          "f": "громкая",
+          "n": "громкое",
+          "plural": "громкие"
+        },
+        "SOULFUL": {
+          "form": "душевный",
+          "f": "душевная",
+          "n": "душевное",
+          "plural": "душевные"
+        },
+        "RHYTHMIC": {
+          "form": "ритмичный",
+          "f": "ритмичная",
+          "n": "ритмичное",
+          "plural": "ритмичные"
+        },
+        "LIVE": {
+          "form": "живой",
+          "f": "живая",
+          "n": "живое",
+          "plural": "живые"
+        },
+        "VIRAL": {
+          "form": "вирусный",
+          "f": "вирусная",
+          "n": "вирусное",
+          "plural": "вирусные"
+        },
+        "BAND": {
+          "form": "группа",
+          "gender": "f",
+          "genitive": "группы",
+          "dative": "группе",
+          "instrumental": "группой",
+          "locative": "группе",
+          "accusative": "группу",
+          "plural": "группы",
+          "genitive_plural": "групп"
+        },
+        "ANTHEM": {
+          "form": "гимн",
+          "gender": "m",
+          "genitive": "гимна",
+          "dative": "гимну",
+          "instrumental": "гимном",
+          "locative": "гимне",
+          "plural": "гимны",
+          "genitive_plural": "гимнов"
+        },
+        "PLAYLIST": {
+          "form": "плейлист",
+          "gender": "m",
+          "genitive": "плейлиста",
+          "dative": "плейлисту",
+          "instrumental": "плейлистом",
+          "locative": "плейлисте",
+          "plural": "плейлисты",
+          "genitive_plural": "плейлистов"
+        },
+        "FESTIVAL": {
+          "form": "фестиваль",
+          "gender": "m",
+          "genitive": "фестиваля",
+          "dative": "фестивалю",
+          "instrumental": "фестивалем",
+          "locative": "фестивале",
+          "plural": "фестивали",
+          "genitive_plural": "фестивалей"
+        },
+        "FANBASE": {
+          "form": "фан-база",
+          "gender": "f",
+          "genitive": "фан-базы",
+          "dative": "фан-базе",
+          "instrumental": "фан-базой",
+          "locative": "фан-базе",
+          "accusative": "фан-базу",
+          "plural": "фан-базы",
+          "genitive_plural": "фан-баз"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "GUITAR": {
+          "form": "gitarr",
+          "gender": "m",
+          "plural": "gitarrer"
+        },
+        "DRUM": {
+          "form": "trumma",
+          "gender": "m",
+          "plural": "trummor"
+        },
+        "PIANO": {
+          "form": "piano",
+          "gender": "n",
+          "plural": "pianon"
+        },
+        "VIOLIN": {
+          "form": "fiol",
+          "gender": "m",
+          "plural": "fioler"
+        },
+        "MICROPHONE": {
+          "form": "mikrofon",
+          "gender": "m",
+          "plural": "mikrofoner"
+        },
+        "MELODY": {
+          "form": "melodi",
+          "gender": "m",
+          "plural": "melodier"
+        },
+        "RHYTHM": {
+          "form": "rytm",
+          "gender": "m",
+          "plural": "rytmer"
+        },
+        "BEAT": {
+          "form": "takt",
+          "gender": "m",
+          "plural": "takter"
+        },
+        "CHORD": {
+          "form": "ackord",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "HARMONY": {
+          "form": "harmoni",
+          "gender": "m",
+          "plural": "harmonier"
+        },
+        "SING": {
+          "base": "sjunga",
+          "present": "sjunger"
+        },
+        "STRUM": {
+          "base": "spela",
+          "present": "spelar"
+        },
+        "COMPOSE": {
+          "base": "komponera",
+          "present": "komponerar"
+        },
+        "PERFORM": {
+          "base": "uppträda",
+          "present": "uppträder"
+        },
+        "RECORD": {
+          "base": "spela in",
+          "present": "spelar in"
+        },
+        "CONCERT": {
+          "form": "konsert",
+          "gender": "m",
+          "plural": "konserter"
+        },
+        "STAGE": {
+          "form": "scen",
+          "gender": "m",
+          "plural": "scener"
+        },
+        "ENCORE": {
+          "form": "extranummer",
+          "gender": "n",
+          "invariantPlural": true,
+          "definiteForm": "extranumret"
+        },
+        "SPOTLIGHT": {
+          "form": "strålkastare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "TOUR": {
+          "form": "turné",
+          "gender": "m",
+          "plural": "turnéer"
+        },
+        "LYRIC": {
+          "form": "text",
+          "gender": "m",
+          "plural": "texter"
+        },
+        "CHORUS": {
+          "form": "refräng",
+          "gender": "m",
+          "plural": "refränger"
+        },
+        "VERSE": {
+          "form": "vers",
+          "gender": "m",
+          "plural": "verser"
+        },
+        "SOLO": {
+          "form": "solo",
+          "gender": "n",
+          "plural": "solon"
+        },
+        "DUET": {
+          "form": "duett",
+          "gender": "m",
+          "plural": "duetter"
+        },
+        "ROCK": {
+          "form": "rock",
+          "gender": "m"
+        },
+        "JAZZ": {
+          "form": "jazz",
+          "gender": "m"
+        },
+        "CLASSICAL": {
+          "form": "klassisk",
+          "n": "klassiskt",
+          "plural": "klassiska"
+        },
+        "ACOUSTIC": {
+          "form": "akustisk",
+          "n": "akustiskt",
+          "plural": "akustiska"
+        },
+        "ELECTRONIC": {
+          "form": "elektronisk",
+          "n": "elektroniskt",
+          "plural": "elektroniska"
+        },
+        "STUDIO": {
+          "form": "studio",
+          "gender": "m",
+          "plural": "studior"
+        },
+        "TRACK": {
+          "form": "låt",
+          "gender": "m",
+          "plural": "låtar"
+        },
+        "ALBUM": {
+          "form": "album",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "REMIX": {
+          "form": "remix",
+          "gender": "m",
+          "plural": "remixer"
+        },
+        "SAMPLE": {
+          "form": "sampling",
+          "gender": "m",
+          "plural": "samplingar"
+        },
+        "REHEARSE": {
+          "base": "repetera",
+          "present": "repeterar"
+        },
+        "TUNE": {
+          "base": "stämma",
+          "present": "stämmer"
+        },
+        "IMPROVISE": {
+          "base": "improvisera",
+          "present": "improviserar"
+        },
+        "AMPLIFY": {
+          "base": "förstärka",
+          "present": "förstärker"
+        },
+        "DROP": {
+          "base": "släppa",
+          "present": "släpper"
+        },
+        "LOUD": {
+          "form": "hög",
+          "n": "högt",
+          "plural": "höga"
+        },
+        "SOULFUL": {
+          "form": "själfull",
+          "n": "själfullt",
+          "plural": "själfulla"
+        },
+        "RHYTHMIC": {
+          "form": "rytmisk",
+          "n": "rytmiskt",
+          "plural": "rytmiska"
+        },
+        "LIVE": [
+          "live"
+        ],
+        "VIRAL": {
+          "form": "viral",
+          "n": "viralt",
+          "plural": "virala"
+        },
+        "BAND": {
+          "form": "band",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "ANTHEM": {
+          "form": "hymn",
+          "gender": "m",
+          "plural": "hymner"
+        },
+        "PLAYLIST": {
+          "form": "spellista",
+          "gender": "m",
+          "plural": "spellistor"
+        },
+        "FESTIVAL": {
+          "form": "festival",
+          "gender": "m",
+          "plural": "festivaler"
+        },
+        "FANBASE": {
+          "form": "fanskara",
+          "gender": "m",
+          "plural": "fanskaror"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

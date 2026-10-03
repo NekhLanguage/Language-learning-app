@@ -1,0 +1,948 @@
+{
+  "uiStrings": {
+    "openApp": "ÖPPNA APPEN",
+    "languagesTitle": "SPRÅK",
+    "chooseLanguage": "Välj ett språk att studera",
+    "quitLearning": "AVSLUTA",
+    "sessionTitle": "DAGENS PASS",
+    "runCompleteTitle": "DU ÄR KLAR!",
+    "runCompleteBody": "Du behärskar varje begrepp i dina paket.",
+    "runCompleteStats": "{concepts} begrepp bemästrade · {sessions} pass spelade",
+    "runCompleteBack": "Tillbaka till språken",
+    "startSubtitle": "Språkinlärning",
+    "chooseTranslation": "Välj rätt översättning för:",
+    "originalSentence": "Ursprunglig mening:",
+    "fillMissing": "Fyll i det saknade ordet:",
+    "inThisSentence": "I den här meningen:",
+    "check": "Kontrollera",
+    "continue": "Fortsätt",
+    "correct": "Rätt.",
+    "incorrect": "Fel.",
+    "syncFailedLocalCopy": "Kunde inte nå servern — visar framstegen som är sparade på den här enheten.",
+    "syncFailedReloadNeeded": "Kunde inte nå servern — ladda om sidan för att försöka igen.",
+    "l7Placeholder": "Skriv din översättning",
+    "level": "Nivå",
+    "blueprint": "Nekh's Language Blueprint",
+    "skool": "Skool-communityn",
+    "offer": "Uppgradera ditt språksystem",
+    "leaderboard": "🏆 Topplista",
+    "sessionComplete": "Passet är klart",
+    "sessionFinished": "Pass {n} avslutat.",
+    "enterEmail": "Ange din e-post",
+    "buyAccess": "Inte användare? Skaffa tillgång",
+    "noAccess": "Ingen tillgång hittades för den här e-posten",
+    "tutorIntro": "Anna är din personliga lärare. Hon använder orden du har visat att du kan, och det hon vet att du har övat i appen, för att styra lektionerna. Det du övar i dina samtal med Anna läggs också till i appen, för en ännu mer personlig upplevelse.",
+    "signIn": "Logga in",
+    "password": "Lösenord",
+    "or": "eller",
+    "continueWithGoogle": "Fortsätt med Google",
+    "setPassword": "Skapa eller återställ ditt lösenord",
+    "enterEmailAndPassword": "Ange din e-post och ditt lösenord.",
+    "enterEmailForPassword": "Ange din e-post ovan först och tryck sedan här igen.",
+    "passwordEmailSent": "Om den e-posten har tillgång är en länk för att skapa lösenord på väg — kolla inkorgen (och skräpposten).",
+    "serverError": "Serverfel — försök igen.",
+    "resourcePacks": "RESURSPAKET",
+    "choosePacks": "Välj upp till 2 paket",
+    "start": "STARTA",
+    "selectPack": "Välj minst 1 resurspaket",
+    "feedbackOpen": "Rapportera en bugg eller ge feedback",
+    "feedbackClose": "Stäng feedback",
+    "feedbackTitle": "Rapportera en bugg",
+    "feedbackSubtitle": "Berätta vad som gick fel — vi läser varje rapport.",
+    "feedbackPlaceholder": "Beskriv problemet...",
+    "feedbackSubmit": "Skicka rapport",
+    "feedbackSending": "Skickar…",
+    "feedbackSent": "✓ Rapporten är skickad — tack!",
+    "feedbackFailed": "Kunde inte skicka — försök igen.",
+    "reasonTitle": "VARFÖR {lang}?",
+    "reasonSubtitle": "Det finns inga fel svar — det här hjälper oss bara att fira stunderna som betyder något för dig.",
+    "reasonContinue": "FORTSÄTT",
+    "reasonOptionTravel": "Resor",
+    "reasonOptionPerson": "Någon i mitt liv",
+    "reasonOptionCareer": "Jobb eller skola",
+    "reasonOptionHeritage": "Mina rötter",
+    "reasonOptionCulture": "Böcker, film & musik",
+    "reasonOptionFun": "Bara för skojs skull",
+    "reasonDetailTravel": "Vart ska du?",
+    "reasonDetailPerson": "Vem är det?",
+    "reasonDetailCareer": "Vad är målet?",
+    "reasonDetailHeritage": "Vad är kopplingen?",
+    "reasonDetailCulture": "Vad lockar dig?",
+    "reasonDetailPlaceholderTravel": "t.ex. Lissabon",
+    "reasonDetailPlaceholderPerson": "t.ex. min partner",
+    "reasonDetailPlaceholderCareer": "t.ex. en kund i Madrid",
+    "reasonDetailPlaceholderHeritage": "t.ex. min familj kommer från Norge",
+    "reasonDetailPlaceholderCulture": "t.ex. Studio Ghibli",
+    "reasonDetailHint": "Valfritt — det går bra att hoppa över.",
+    "roadmapTitle": "DIN RESA",
+    "roadmapCounter": "{done} av {total} stopp upplåsta",
+    "roadmapCounterFull": "{done} klara · {inprogress} pågår · {ahead} kvar",
+    "roadmapSessionFinished": "Pass {n} klart. Ett stopp till bakom dig.",
+    "roadmapBegin": "BÖRJA DIN RESA",
+    "roadmapBack": "← TILLBAKA",
+    "roadmapBehindLabel": "{n} bakom",
+    "roadmapAheadLabel": "{n} kvar",
+    "journeyBtn": "RESA",
+    "milestoneHeadline": "{n} ORD",
+    "milestoneGeneric": "Vart och ett av dem — ditt.",
+    "milestoneReasonTravel": "{detail} känns närmare för varje ord.",
+    "milestoneReasonPerson": "{detail} är närmare för varje ord.",
+    "milestoneReasonCareer": "Ett steg till mot {detail}.",
+    "milestoneReasonHeritage": "{detail} lever i de här orden.",
+    "milestoneReasonCulture": "{detail}, med sin egen röst.",
+    "milestoneReasonFun": "Och du har bara börjat."
+  },
+  "hubNames": {
+    "fi": "Finska",
+    "th": "Thailändska",
+    "it": "Italienska",
+    "en": "Engelska",
+    "pt": "Portugisiska",
+    "ja": "Japanska",
+    "no": "Norska",
+    "ar": "Arabiska",
+    "ko": "Koreanska",
+    "uk": "Ukrainska",
+    "de": "Tyska",
+    "el": "Grekiska",
+    "tr": "Turkiska",
+    "es": "Spanska",
+    "fr": "Franska",
+    "zh": "Mandarin",
+    "pl": "Polska",
+    "sv": "Svenska",
+    "ru": "Ryska"
+  },
+  "alphabet": {
+    "sections": [
+      {
+        "name": "Extra bokstäver",
+        "letters": [
+          {
+            "char": "Å",
+            "romanization": "å",
+            "sound": "like 'o' in 'more'"
+          },
+          {
+            "char": "å",
+            "romanization": "å",
+            "sound": "like 'o' in 'more'"
+          },
+          {
+            "char": "Ä",
+            "romanization": "ä",
+            "sound": "like 'a' in 'bad'"
+          },
+          {
+            "char": "ä",
+            "romanization": "ä",
+            "sound": "like 'a' in 'bad'"
+          },
+          {
+            "char": "Ö",
+            "romanization": "ö",
+            "sound": "like 'u' in 'burn'"
+          },
+          {
+            "char": "ö",
+            "romanization": "ö",
+            "sound": "like 'u' in 'burn'"
+          }
+        ]
+      }
+    ]
+  },
+  "forms": {
+    "WATER": {
+      "form": "vatten",
+      "gender": "n"
+    },
+    "FOOD": {
+      "form": "mat",
+      "gender": "m"
+    },
+    "HOUSE": {
+      "form": "hus",
+      "gender": "n",
+      "invariantPlural": true
+    },
+    "HOME": {
+      "form": "hem",
+      "gender": "n",
+      "predicative": "hemma",
+      "noArticle": true,
+      "fused": {
+        "from": "hemifrån"
+      }
+    },
+    "BOOK": {
+      "form": "bok",
+      "gender": "m",
+      "plural": "böcker"
+    },
+    "THING": {
+      "form": "sak",
+      "gender": "m",
+      "plural": "saker"
+    },
+    "JOB": {
+      "form": "jobb",
+      "gender": "n",
+      "invariantPlural": true
+    },
+    "ROOM": {
+      "form": "rum",
+      "gender": "n",
+      "invariantPlural": true,
+      "definiteForm": "rummet",
+      "definitePlural": "rummen"
+    },
+    "BOY": {
+      "form": "pojke",
+      "gender": "m",
+      "plural": "pojkar"
+    },
+    "GIRL": {
+      "form": "flicka",
+      "gender": "m",
+      "plural": "flickor"
+    },
+    "MAN": {
+      "form": "man",
+      "gender": "m",
+      "plural": "män",
+      "definiteForm": "mannen",
+      "definitePlural": "männen"
+    },
+    "WOMAN": {
+      "form": "kvinna",
+      "gender": "m",
+      "plural": "kvinnor"
+    },
+    "MOM": {
+      "form": "mamma",
+      "gender": "m",
+      "plural": "mammor"
+    },
+    "DAD": {
+      "form": "pappa",
+      "gender": "m",
+      "plural": "pappor"
+    },
+    "SON": {
+      "form": "son",
+      "gender": "m",
+      "plural": "söner"
+    },
+    "DAUGHTER": {
+      "form": "dotter",
+      "gender": "m",
+      "plural": "döttrar"
+    },
+    "BROTHER": {
+      "form": "bror",
+      "gender": "m",
+      "plural": "bröder",
+      "definiteForm": "brodern"
+    },
+    "SISTER": {
+      "form": "syster",
+      "gender": "m",
+      "plural": "systrar"
+    },
+    "HEAD": {
+      "form": "huvud",
+      "gender": "n",
+      "plural": "huvuden"
+    },
+    "ARM": {
+      "form": "arm",
+      "gender": "m",
+      "plural": "armar"
+    },
+    "HAND": {
+      "form": "hand",
+      "gender": "m",
+      "plural": "händer"
+    },
+    "LEG": {
+      "form": "ben",
+      "gender": "n",
+      "invariantPlural": true
+    },
+    "FOOT": {
+      "form": "fot",
+      "gender": "m",
+      "plural": "fötter"
+    },
+    "FINGER": {
+      "form": "finger",
+      "gender": "n",
+      "plural": "fingrar",
+      "definiteForm": "fingret"
+    },
+    "EYE": {
+      "form": "öga",
+      "gender": "n",
+      "plural": "ögon",
+      "definiteForm": "ögat",
+      "definitePlural": "ögonen"
+    },
+    "MOUTH": {
+      "form": "mun",
+      "gender": "m",
+      "plural": "munnar",
+      "definiteForm": "munnen"
+    },
+    "FACE": {
+      "form": "ansikte",
+      "gender": "n",
+      "plural": "ansikten"
+    },
+    "BREAKFAST": {
+      "form": "frukost",
+      "gender": "m",
+      "plural": "frukostar",
+      "noArticle": true
+    },
+    "LUNCH": {
+      "form": "lunch",
+      "gender": "m",
+      "plural": "luncher",
+      "noArticle": true
+    },
+    "DINNER": {
+      "form": "middag",
+      "gender": "m",
+      "plural": "middagar",
+      "noArticle": true
+    },
+    "CLOTHES": {
+      "form": "kläder",
+      "pluralOnly": true,
+      "definiteForm": "kläderna"
+    },
+    "SHIRT": {
+      "form": "skjorta",
+      "gender": "m",
+      "plural": "skjortor"
+    },
+    "SHOES": {
+      "form": "skor",
+      "pluralOnly": true,
+      "definiteForm": "skorna"
+    },
+    "PHONE": {
+      "form": "telefon",
+      "gender": "m",
+      "plural": "telefoner"
+    },
+    "TABLE": {
+      "form": "bord",
+      "gender": "n",
+      "invariantPlural": true
+    },
+    "PANTS": {
+      "form": "byxor",
+      "pluralOnly": true,
+      "definiteForm": "byxorna"
+    },
+    "DO": {
+      "base": "göra",
+      "present": "gör"
+    },
+    "GO": {
+      "base": "gå",
+      "present": "går"
+    },
+    "EAT": {
+      "base": "äta",
+      "present": "äter"
+    },
+    "DRINK": {
+      "base": "dricka",
+      "present": "dricker"
+    },
+    "READ": {
+      "base": "läsa",
+      "present": "läser"
+    },
+    "SEE": {
+      "base": "se",
+      "present": "ser"
+    },
+    "START": {
+      "base": "börja",
+      "present": "börjar"
+    },
+    "STOP": {
+      "base": "sluta",
+      "present": "slutar"
+    },
+    "SLEEP": {
+      "base": "sova",
+      "present": "sover"
+    },
+    "HAVE": {
+      "base": "ha",
+      "present": "har"
+    },
+    "COME": {
+      "base": "komma",
+      "present": "kommer"
+    },
+    "USE": {
+      "base": "använda",
+      "present": "använder"
+    },
+    "GET": {
+      "base": "få",
+      "present": "får"
+    },
+    "BE": {
+      "base": "vara",
+      "present": "är"
+    },
+    "MAY": {
+      "base": "kan"
+    },
+    "BIG": {
+      "form": "stor",
+      "n": "stort",
+      "plural": "stora"
+    },
+    "SMALL": {
+      "form": "liten",
+      "n": "litet",
+      "plural": "små",
+      "definite": "lilla"
+    },
+    "GOOD": {
+      "form": "bra",
+      "n": "bra",
+      "plural": "bra"
+    },
+    "BAD": {
+      "form": "dålig",
+      "n": "dåligt",
+      "plural": "dåliga"
+    },
+    "NEW": {
+      "form": "ny",
+      "n": "nytt",
+      "plural": "nya"
+    },
+    "OLD": {
+      "form": "gammal",
+      "n": "gammalt",
+      "plural": "gamla"
+    },
+    "EASY": {
+      "form": "lätt",
+      "n": "lätt",
+      "plural": "lätta"
+    },
+    "DIFFICULT": {
+      "form": "svår",
+      "n": "svårt",
+      "plural": "svåra"
+    },
+    "MY": {
+      "form": "min",
+      "n": "mitt",
+      "plural": "mina"
+    },
+    "YOUR": {
+      "form": "din",
+      "n": "ditt",
+      "plural": "dina"
+    },
+    "HIS": [
+      "hans"
+    ],
+    "HER": [
+      "hennes"
+    ],
+    "OUR": {
+      "form": "vår",
+      "n": "vårt",
+      "plural": "våra"
+    },
+    "THEIR": [
+      "deras"
+    ],
+    "BLACK": {
+      "form": "svart",
+      "n": "svart",
+      "plural": "svarta"
+    },
+    "WHITE": {
+      "form": "vit",
+      "n": "vitt",
+      "plural": "vita"
+    },
+    "RED": {
+      "form": "röd",
+      "n": "rött",
+      "plural": "röda"
+    },
+    "BLUE": {
+      "form": "blå",
+      "n": "blått",
+      "plural": "blå"
+    },
+    "GREEN": {
+      "form": "grön",
+      "n": "grönt",
+      "plural": "gröna"
+    },
+    "YELLOW": {
+      "form": "gul",
+      "n": "gult",
+      "plural": "gula"
+    },
+    "PURPLE": [
+      "lila"
+    ],
+    "ORANGE": [
+      "orange"
+    ],
+    "FAST": {
+      "form": "snabb",
+      "n": "snabbt",
+      "plural": "snabba"
+    },
+    "SLOW": {
+      "form": "långsam",
+      "n": "långsamt",
+      "plural": "långsamma"
+    },
+    "LONG": {
+      "form": "lång",
+      "n": "långt",
+      "plural": "långa"
+    },
+    "SHORT": {
+      "form": "kort",
+      "n": "kort",
+      "plural": "korta"
+    },
+    "HEAVY": {
+      "form": "tung",
+      "n": "tungt",
+      "plural": "tunga"
+    },
+    "LIGHT": {
+      "form": "lätt",
+      "n": "lätt",
+      "plural": "lätta"
+    },
+    "DARK": {
+      "form": "mörk",
+      "n": "mörkt",
+      "plural": "mörka"
+    },
+    "YOUNG": {
+      "form": "ung",
+      "n": "ungt",
+      "plural": "unga"
+    },
+    "RIGHT": [
+      "höger"
+    ],
+    "LEFT": [
+      "vänster"
+    ],
+    "CORRECT": [
+      "rätt"
+    ],
+    "WRONG": [
+      "fel"
+    ],
+    "NICE": {
+      "form": "trevlig",
+      "n": "trevligt",
+      "plural": "trevliga"
+    },
+    "COLD": {
+      "form": "kall",
+      "n": "kallt",
+      "plural": "kalla"
+    },
+    "FIRST_PERSON_SINGULAR": [
+      "jag",
+      "mig",
+      "min",
+      "mitt",
+      "mina"
+    ],
+    "SECOND_PERSON": [
+      "du",
+      "dig",
+      "din",
+      "ditt",
+      "dina"
+    ],
+    "SECOND_PERSON_PLURAL": [
+      "ni",
+      "er",
+      "era"
+    ],
+    "HE": [
+      "han",
+      "honom",
+      "hans"
+    ],
+    "SHE": [
+      "hon",
+      "henne",
+      "hennes"
+    ],
+    "FIRST_PERSON_PLURAL": [
+      "vi",
+      "oss",
+      "vår",
+      "vårt",
+      "våra"
+    ],
+    "THIRD_PERSON_PLURAL": [
+      "de",
+      "dem",
+      "deras"
+    ],
+    "THIS": [
+      "det här"
+    ],
+    "THAT": [
+      "det där"
+    ],
+    "IT": [
+      "det"
+    ],
+    "ITS": [
+      "dess"
+    ],
+    "MINE": [
+      "mitt"
+    ],
+    "YOURS": [
+      "ditt"
+    ],
+    "HERS": [
+      "hennes"
+    ],
+    "OURS": [
+      "vårt"
+    ],
+    "THEIRS": [
+      "deras"
+    ],
+    "ONE": [
+      "en",
+      "ett"
+    ],
+    "TWO": [
+      "två"
+    ],
+    "THREE": [
+      "tre"
+    ],
+    "FOUR": [
+      "fyra"
+    ],
+    "FIVE": [
+      "fem"
+    ],
+    "SIX": [
+      "sex"
+    ],
+    "SEVEN": [
+      "sju"
+    ],
+    "EIGHT": [
+      "åtta"
+    ],
+    "NINE": [
+      "nio"
+    ],
+    "TEN": [
+      "tio"
+    ],
+    "ELEVEN": [
+      "elva"
+    ],
+    "TWELVE": [
+      "tolv"
+    ],
+    "THIRTEEN": [
+      "tretton"
+    ],
+    "FOURTEEN": [
+      "fjorton"
+    ],
+    "FIFTEEN": [
+      "femton"
+    ],
+    "SIXTEEN": [
+      "sexton"
+    ],
+    "SEVENTEEN": [
+      "sjutton"
+    ],
+    "EIGHTEEN": [
+      "arton"
+    ],
+    "NINETEEN": [
+      "nitton"
+    ],
+    "TWENTY": [
+      "tjugo"
+    ],
+    "WHO": [
+      "vem"
+    ],
+    "WHAT": [
+      "vad"
+    ],
+    "WHEN": [
+      "när"
+    ],
+    "WHERE": [
+      "var"
+    ],
+    "WHY": [
+      "varför"
+    ],
+    "HOW": [
+      "hur"
+    ],
+    "WHICH": [
+      "vilken",
+      "vilket",
+      "vilka"
+    ],
+    "TODAY": [
+      "i dag"
+    ],
+    "YESTERDAY": [
+      "i går"
+    ],
+    "TOMORROW": [
+      "i morgon"
+    ],
+    "MORNING": {
+      "form": "morgon",
+      "gender": "m",
+      "plural": "morgnar"
+    },
+    "DAY": {
+      "form": "dag",
+      "gender": "m",
+      "plural": "dagar"
+    },
+    "NIGHT": {
+      "form": "natt",
+      "gender": "m",
+      "plural": "nätter"
+    },
+    "WEEK": {
+      "form": "vecka",
+      "gender": "m",
+      "plural": "veckor"
+    },
+    "MONTH": {
+      "form": "månad",
+      "gender": "m",
+      "plural": "månader"
+    },
+    "YEAR": {
+      "form": "år",
+      "gender": "n",
+      "invariantPlural": true
+    },
+    "HOUR": {
+      "form": "timme",
+      "gender": "m",
+      "plural": "timmar",
+      "definiteForm": "timmen"
+    },
+    "MINUTE": {
+      "form": "minut",
+      "gender": "m",
+      "plural": "minuter"
+    },
+    "SECOND": {
+      "form": "sekund",
+      "gender": "m",
+      "plural": "sekunder"
+    },
+    "NOW": [
+      "nu"
+    ],
+    "BEFORE": [
+      "före"
+    ],
+    "AFTER": [
+      "efter"
+    ],
+    "LATER": [
+      "senare"
+    ],
+    "NEXT": [
+      "nästa"
+    ],
+    "SPRING": {
+      "form": "vår",
+      "gender": "m",
+      "plural": "vårar"
+    },
+    "SUMMER": {
+      "form": "sommar",
+      "gender": "m",
+      "plural": "somrar",
+      "definiteForm": "sommaren"
+    },
+    "AUTUMN": {
+      "form": "höst",
+      "gender": "m",
+      "plural": "höstar"
+    },
+    "WINTER": {
+      "form": "vinter",
+      "gender": "m",
+      "plural": "vintrar",
+      "definiteForm": "vintern"
+    },
+    "AND": [
+      "och"
+    ],
+    "BUT": [
+      "men"
+    ],
+    "ALSO": [
+      "också"
+    ],
+    "BECAUSE": [
+      "eftersom"
+    ],
+    "IF": [
+      "om"
+    ],
+    "TOP": [
+      "topp"
+    ],
+    "BOTTOM": [
+      "botten"
+    ],
+    "UNDER": [
+      "under"
+    ],
+    "NEXT_TO": [
+      "bredvid"
+    ],
+    "FRONT": [
+      "framför"
+    ],
+    "BEHIND": [
+      "bakom"
+    ],
+    "IN": [
+      "i"
+    ],
+    "ON": [
+      "på"
+    ],
+    "OFF": [
+      "inte på"
+    ],
+    "BETWEEN": [
+      "mellan"
+    ],
+    "BACK": [
+      "tillbaka"
+    ],
+    "OUT": [
+      "ut"
+    ],
+    "NORTH": [
+      "norr"
+    ],
+    "SOUTH": [
+      "söder"
+    ],
+    "EAST": [
+      "öster"
+    ],
+    "WEST": [
+      "väster"
+    ],
+    "AROUND": [
+      "runt"
+    ],
+    "FOR": [
+      "för"
+    ],
+    "WITH": [
+      "med"
+    ],
+    "FROM": [
+      "från"
+    ],
+    "TO": [
+      "till"
+    ],
+    "BY": [
+      "med",
+      "av",
+      "för"
+    ],
+    "WHILE": [
+      "medan"
+    ],
+    "AS": [
+      "som"
+    ],
+    "ANY": [
+      "någon",
+      "vilken som helst"
+    ],
+    "ONLY": [
+      "bara"
+    ],
+    "ANOTHER": [
+      "en annan"
+    ],
+    "SOMETHING": [
+      "något"
+    ],
+    "ALL": [
+      "allt"
+    ],
+    "PLEASE": [
+      "snälla"
+    ],
+    "MAYBE": [
+      "kanske"
+    ],
+    "JUST": [
+      "bara"
+    ],
+    "YES": [
+      "ja"
+    ],
+    "NO": [
+      "nej"
+    ],
+    "NOT": [
+      "inte"
+    ],
+    "THANKS": [
+      "tack"
+    ],
+    "OWN": {
+      "form": "sin",
+      "n": "sitt",
+      "plural": "sina"
+    }
+  }
+}

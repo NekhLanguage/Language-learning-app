@@ -5,5 +5,6 @@
   "COVERAGE_GAP|el|declinesAttributiveAdjectives",
   "COVERAGE_GAP|es|declinesAttributiveAdjectives",
   "COVERAGE_GAP|no|declinesAttributiveAdjectives",
+  "COVERAGE_GAP|sv|declinesAttributiveAdjectives",
   "COVERAGE_GAP|tr|marksCaseOnDirectObjects"
 ]

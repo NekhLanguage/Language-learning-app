@@ -204,6 +204,721 @@
     }
   ],
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "AIRPORT": {
+          "form": "аэропорт",
+          "gender": "m",
+          "genitive": "аэропорта",
+          "dative": "аэропорту",
+          "instrumental": "аэропортом",
+          "locative": "аэропорте",
+          "plural": "аэропорты",
+          "genitive_plural": "аэропортов"
+        },
+        "PASSPORT": {
+          "form": "паспорт",
+          "gender": "m",
+          "genitive": "паспорта",
+          "dative": "паспорту",
+          "instrumental": "паспортом",
+          "locative": "паспорте",
+          "plural": "паспорта",
+          "genitive_plural": "паспортов"
+        },
+        "FLIGHT": {
+          "form": "рейс",
+          "gender": "m",
+          "genitive": "рейса",
+          "dative": "рейсу",
+          "instrumental": "рейсом",
+          "locative": "рейсе",
+          "plural": "рейсы",
+          "genitive_plural": "рейсов"
+        },
+        "LUGGAGE": {
+          "form": "багаж",
+          "gender": "m",
+          "genitive": "багажа",
+          "dative": "багажу",
+          "instrumental": "багажом",
+          "locative": "багаже"
+        },
+        "HOTEL": {
+          "form": "отель",
+          "gender": "m",
+          "genitive": "отеля",
+          "dative": "отелю",
+          "instrumental": "отелем",
+          "locative": "отеле",
+          "plural": "отели",
+          "genitive_plural": "отелей"
+        },
+        "RESERVATION": {
+          "form": "бронирование",
+          "gender": "n",
+          "genitive": "бронирования",
+          "dative": "бронированию",
+          "instrumental": "бронированием",
+          "locative": "бронировании",
+          "plural": "бронирования",
+          "genitive_plural": "бронированй"
+        },
+        "LOBBY": {
+          "form": "лобби",
+          "gender": "n",
+          "genitive": "лобби",
+          "dative": "лобби",
+          "instrumental": "лобби",
+          "locative": "лобби",
+          "invariantPlural": true,
+          "genitive_plural": "лобби"
+        },
+        "CHECKOUT": {
+          "form": "выезд",
+          "gender": "m",
+          "genitive": "выезда",
+          "dative": "выезду",
+          "instrumental": "выездом",
+          "locative": "выезде",
+          "plural": "выезды",
+          "genitive_plural": "выездов"
+        },
+        "TAXI": {
+          "form": "такси",
+          "gender": "n",
+          "genitive": "такси",
+          "dative": "такси",
+          "instrumental": "такси",
+          "locative": "такси",
+          "invariantPlural": true,
+          "genitive_plural": "такси"
+        },
+        "STATION": {
+          "form": "вокзал",
+          "gender": "m",
+          "genitive": "вокзала",
+          "dative": "вокзалу",
+          "instrumental": "вокзалом",
+          "locative": "вокзале",
+          "plural": "вокзалы",
+          "genitive_plural": "вокзалов"
+        },
+        "TICKET": {
+          "form": "билет",
+          "gender": "m",
+          "genitive": "билета",
+          "dative": "билету",
+          "instrumental": "билетом",
+          "locative": "билете",
+          "plural": "билеты",
+          "genitive_plural": "билетов"
+        },
+        "ROUTE": {
+          "form": "маршрут",
+          "gender": "m",
+          "genitive": "маршрута",
+          "dative": "маршруту",
+          "instrumental": "маршрутом",
+          "locative": "маршруте",
+          "plural": "маршруты",
+          "genitive_plural": "маршрутов"
+        },
+        "LANDMARK": {
+          "form": "достопримечательность",
+          "gender": "f",
+          "genitive": "достопримечательности",
+          "dative": "достопримечательности",
+          "instrumental": "достопримечательностью",
+          "locative": "достопримечательности",
+          "plural": "достопримечательности",
+          "genitive_plural": "достопримечательностей"
+        },
+        "MUSEUM": {
+          "form": "музей",
+          "gender": "m",
+          "genitive": "музея",
+          "dative": "музею",
+          "instrumental": "музеем",
+          "locative": "музее",
+          "plural": "музеи",
+          "genitive_plural": "музеев"
+        },
+        "MONUMENT": {
+          "form": "памятник",
+          "gender": "m",
+          "genitive": "памятника",
+          "dative": "памятнику",
+          "instrumental": "памятником",
+          "locative": "памятнике",
+          "plural": "памятники",
+          "genitive_plural": "памятников"
+        },
+        "RESTAURANT": {
+          "form": "ресторан",
+          "gender": "m",
+          "genitive": "ресторана",
+          "dative": "ресторану",
+          "instrumental": "рестораном",
+          "locative": "ресторане",
+          "plural": "рестораны",
+          "genitive_plural": "ресторанов"
+        },
+        "MENU": {
+          "form": "меню",
+          "gender": "n",
+          "genitive": "меню",
+          "dative": "меню",
+          "instrumental": "меню",
+          "locative": "меню",
+          "invariantPlural": true,
+          "genitive_plural": "меню"
+        },
+        "WAITER": {
+          "form": "официант",
+          "gender": "m",
+          "feminine": "официантка",
+          "genitive": "официанта",
+          "dative": "официанту",
+          "instrumental": "официантом",
+          "locative": "официанте",
+          "accusative": "официанта",
+          "plural": "официанты",
+          "genitive_plural": "официантов"
+        },
+        "MARKET": {
+          "form": "рынок",
+          "gender": "m",
+          "genitive": "рынка",
+          "dative": "рынку",
+          "instrumental": "рынком",
+          "locative": "рынке",
+          "plural": "рынки",
+          "genitive_plural": "рынков"
+        },
+        "SOUVENIR": {
+          "form": "сувенир",
+          "gender": "m",
+          "genitive": "сувенира",
+          "dative": "сувениру",
+          "instrumental": "сувениром",
+          "locative": "сувенире",
+          "plural": "сувениры",
+          "genitive_plural": "сувениров"
+        },
+        "BARGAIN": {
+          "form": "выгодная покупка",
+          "gender": "f",
+          "genitive": "выгодной покупки",
+          "dative": "выгодной покупке",
+          "instrumental": "выгодной покупкой",
+          "locative": "выгодной покупке",
+          "accusative": "выгодную покупку",
+          "plural": "выгодные покупки",
+          "genitive_plural": "выгодных покупок"
+        },
+        "PHRASEBOOK": {
+          "form": "разговорник",
+          "gender": "m",
+          "genitive": "разговорника",
+          "dative": "разговорнику",
+          "instrumental": "разговорником",
+          "locative": "разговорнике",
+          "plural": "разговорники",
+          "genitive_plural": "разговорников"
+        },
+        "BEACH": {
+          "form": "пляж",
+          "gender": "m",
+          "genitive": "пляжа",
+          "dative": "пляжу",
+          "instrumental": "пляжем",
+          "locative": "пляже",
+          "plural": "пляжи",
+          "genitive_plural": "пляжей"
+        },
+        "CATHEDRAL": {
+          "form": "собор",
+          "gender": "m",
+          "genitive": "собора",
+          "dative": "собору",
+          "instrumental": "собором",
+          "locative": "соборе",
+          "plural": "соборы",
+          "genitive_plural": "соборов"
+        },
+        "HARBOR": {
+          "form": "гавань",
+          "gender": "f",
+          "genitive": "гавани",
+          "dative": "гавани",
+          "instrumental": "гаванью",
+          "locative": "гавани",
+          "plural": "гавани",
+          "genitive_plural": "гаваней"
+        },
+        "CURRENCY": {
+          "form": "валюта",
+          "gender": "f",
+          "genitive": "валюты",
+          "dative": "валюте",
+          "instrumental": "валютой",
+          "locative": "валюте",
+          "accusative": "валюту",
+          "plural": "валюты",
+          "genitive_plural": "валют"
+        },
+        "CUSTOMS": {
+          "form": "таможня",
+          "gender": "f",
+          "genitive": "таможни",
+          "dative": "таможне",
+          "instrumental": "таможней",
+          "locative": "таможне",
+          "accusative": "таможню",
+          "plural": "таможни",
+          "genitive_plural": "таможен"
+        },
+        "EMBASSY": {
+          "form": "посольство",
+          "gender": "n",
+          "genitive": "посольства",
+          "dative": "посольству",
+          "instrumental": "посольством",
+          "locative": "посольстве",
+          "plural": "посольства",
+          "genitive_plural": "посольств"
+        },
+        "ADVENTURE": {
+          "form": "приключение",
+          "gender": "n",
+          "genitive": "приключения",
+          "dative": "приключению",
+          "instrumental": "приключением",
+          "locative": "приключении",
+          "plural": "приключения",
+          "genitive_plural": "приключенй"
+        },
+        "ITINERARY": {
+          "form": "план поездки",
+          "gender": "m",
+          "genitive": "плана поездки",
+          "dative": "плану поездки",
+          "instrumental": "планом поездки",
+          "locative": "плане поездки",
+          "plural": "планы поездки",
+          "genitive_plural": "планов поездки"
+        },
+        "GUIDE": {
+          "form": "гид",
+          "gender": "m",
+          "genitive": "гида",
+          "dative": "гиду",
+          "instrumental": "гидом",
+          "locative": "гиде",
+          "accusative": "гида",
+          "plural": "гиды",
+          "genitive_plural": "гидов"
+        },
+        "BOARD": {
+          "base": "садиться",
+          "1_singular": "сажусь",
+          "2_singular": "садишься",
+          "3_singular": "садится",
+          "1_plural": "садимся",
+          "2_plural": "садитесь",
+          "3_plural": "садятся",
+          "governedPreposition": "на"
+        },
+        "RESERVE": {
+          "base": "бронировать",
+          "1_singular": "бронирую",
+          "2_singular": "бронируешь",
+          "3_singular": "бронирует",
+          "1_plural": "бронируем",
+          "2_plural": "бронируете",
+          "3_plural": "бронируют"
+        },
+        "NAVIGATE": {
+          "base": "ориентироваться",
+          "1_singular": "ориентируюсь",
+          "2_singular": "ориентируешься",
+          "3_singular": "ориентируется",
+          "1_plural": "ориентируемся",
+          "2_plural": "ориентируетесь",
+          "3_plural": "ориентируются"
+        },
+        "PHOTOGRAPH": {
+          "base": "фотографировать",
+          "1_singular": "фотографирую",
+          "2_singular": "фотографируешь",
+          "3_singular": "фотографирует",
+          "1_plural": "фотографируем",
+          "2_plural": "фотографируете",
+          "3_plural": "фотографируют"
+        },
+        "ORDER": {
+          "base": "заказывать",
+          "1_singular": "заказываю",
+          "2_singular": "заказываешь",
+          "3_singular": "заказывает",
+          "1_plural": "заказываем",
+          "2_plural": "заказываете",
+          "3_plural": "заказывают"
+        },
+        "PURCHASE": {
+          "base": "покупать",
+          "1_singular": "покупаю",
+          "2_singular": "покупаешь",
+          "3_singular": "покупает",
+          "1_plural": "покупаем",
+          "2_plural": "покупаете",
+          "3_plural": "покупают"
+        },
+        "TRANSLATE": {
+          "base": "переводить",
+          "1_singular": "перевожу",
+          "2_singular": "переводишь",
+          "3_singular": "переводит",
+          "1_plural": "переводим",
+          "2_plural": "переводите",
+          "3_plural": "переводят"
+        },
+        "GREET": {
+          "base": "приветствовать",
+          "1_singular": "приветствую",
+          "2_singular": "приветствуешь",
+          "3_singular": "приветствует",
+          "1_plural": "приветствуем",
+          "2_plural": "приветствуете",
+          "3_plural": "приветствуют"
+        },
+        "PRONOUNCE": {
+          "base": "произносить",
+          "1_singular": "произношу",
+          "2_singular": "произносишь",
+          "3_singular": "произносит",
+          "1_plural": "произносим",
+          "2_plural": "произносите",
+          "3_plural": "произносят"
+        },
+        "EXPLORE": {
+          "base": "исследовать",
+          "1_singular": "исследую",
+          "2_singular": "исследуешь",
+          "3_singular": "исследует",
+          "1_plural": "исследуем",
+          "2_plural": "исследуете",
+          "3_plural": "исследуют"
+        },
+        "EXCHANGE": {
+          "base": "обменивать",
+          "1_singular": "обмениваю",
+          "2_singular": "обмениваешь",
+          "3_singular": "обменивает",
+          "1_plural": "обмениваем",
+          "2_plural": "обмениваете",
+          "3_plural": "обменивают"
+        },
+        "INSURE": {
+          "base": "страховать",
+          "1_singular": "страхую",
+          "2_singular": "страхуешь",
+          "3_singular": "страхует",
+          "1_plural": "страхуем",
+          "2_plural": "страхуете",
+          "3_plural": "страхуют"
+        },
+        "RECOMMEND": {
+          "base": "рекомендовать",
+          "1_singular": "рекомендую",
+          "2_singular": "рекомендуешь",
+          "3_singular": "рекомендует",
+          "1_plural": "рекомендуем",
+          "2_plural": "рекомендуете",
+          "3_plural": "рекомендуют"
+        },
+        "SCENIC": {
+          "form": "живописный",
+          "f": "живописная",
+          "n": "живописное",
+          "plural": "живописные"
+        },
+        "DELICIOUS": {
+          "form": "вкусный",
+          "f": "вкусная",
+          "n": "вкусное",
+          "plural": "вкусные"
+        },
+        "EXPENSIVE": {
+          "form": "дорогой",
+          "f": "дорогая",
+          "n": "дорогое",
+          "plural": "дорогие"
+        },
+        "FOREIGN": {
+          "form": "иностранный",
+          "f": "иностранная",
+          "n": "иностранное",
+          "plural": "иностранные"
+        },
+        "HISTORIC": {
+          "form": "исторический",
+          "f": "историческая",
+          "n": "историческое",
+          "plural": "исторические"
+        },
+        "UNFORGETTABLE": {
+          "form": "незабываемый",
+          "f": "незабываемая",
+          "n": "незабываемое",
+          "plural": "незабываемые"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "AIRPORT": {
+          "form": "flygplats",
+          "gender": "m",
+          "plural": "flygplatser"
+        },
+        "PASSPORT": {
+          "form": "pass",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "FLIGHT": {
+          "form": "flyg",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "LUGGAGE": {
+          "form": "bagage",
+          "gender": "n"
+        },
+        "HOTEL": {
+          "form": "hotell",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "RESERVATION": {
+          "form": "bokning",
+          "gender": "m",
+          "plural": "bokningar"
+        },
+        "LOBBY": {
+          "form": "lobby",
+          "gender": "m",
+          "plural": "lobbyer"
+        },
+        "CHECKOUT": {
+          "form": "utcheckning",
+          "gender": "m",
+          "plural": "utcheckningar"
+        },
+        "TAXI": {
+          "form": "taxi",
+          "gender": "m",
+          "plural": "taxibilar"
+        },
+        "STATION": {
+          "form": "station",
+          "gender": "m",
+          "plural": "stationer"
+        },
+        "TICKET": {
+          "form": "biljett",
+          "gender": "m",
+          "plural": "biljetter"
+        },
+        "ROUTE": {
+          "form": "rutt",
+          "gender": "m",
+          "plural": "rutter"
+        },
+        "LANDMARK": {
+          "form": "landmärke",
+          "gender": "n",
+          "plural": "landmärken"
+        },
+        "MUSEUM": {
+          "form": "museum",
+          "gender": "n",
+          "plural": "museer",
+          "definiteForm": "museet"
+        },
+        "MONUMENT": {
+          "form": "monument",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "RESTAURANT": {
+          "form": "restaurang",
+          "gender": "m",
+          "plural": "restauranger"
+        },
+        "MENU": {
+          "form": "meny",
+          "gender": "m",
+          "plural": "menyer"
+        },
+        "WAITER": {
+          "form": "servitör",
+          "gender": "m",
+          "plural": "servitörer"
+        },
+        "MARKET": {
+          "form": "marknad",
+          "gender": "m",
+          "plural": "marknader"
+        },
+        "SOUVENIR": {
+          "form": "souvenir",
+          "gender": "m",
+          "plural": "souvenirer"
+        },
+        "BARGAIN": {
+          "form": "fynd",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "PHRASEBOOK": {
+          "form": "parlör",
+          "gender": "m",
+          "plural": "parlörer"
+        },
+        "BEACH": {
+          "form": "strand",
+          "gender": "m",
+          "plural": "stränder"
+        },
+        "CATHEDRAL": {
+          "form": "katedral",
+          "gender": "m",
+          "plural": "katedraler"
+        },
+        "HARBOR": {
+          "form": "hamn",
+          "gender": "m",
+          "plural": "hamnar"
+        },
+        "CURRENCY": {
+          "form": "valuta",
+          "gender": "m",
+          "plural": "valutor"
+        },
+        "CUSTOMS": {
+          "form": "tull",
+          "gender": "m"
+        },
+        "EMBASSY": {
+          "form": "ambassad",
+          "gender": "m",
+          "plural": "ambassader"
+        },
+        "ADVENTURE": {
+          "form": "äventyr",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "ITINERARY": {
+          "form": "resplan",
+          "gender": "m",
+          "plural": "resplaner"
+        },
+        "GUIDE": {
+          "form": "guide",
+          "gender": "m",
+          "plural": "guider"
+        },
+        "BOARD": {
+          "base": "gå ombord på",
+          "present": "går ombord på"
+        },
+        "RESERVE": {
+          "base": "boka",
+          "present": "bokar"
+        },
+        "NAVIGATE": {
+          "base": "navigera",
+          "present": "navigerar"
+        },
+        "PHOTOGRAPH": {
+          "base": "fotografera",
+          "present": "fotograferar"
+        },
+        "ORDER": {
+          "base": "beställa",
+          "present": "beställer"
+        },
+        "PURCHASE": {
+          "base": "köpa",
+          "present": "köper"
+        },
+        "TRANSLATE": {
+          "base": "översätta",
+          "present": "översätter"
+        },
+        "GREET": {
+          "base": "hälsa",
+          "present": "hälsar",
+          "governedPreposition": "på"
+        },
+        "PRONOUNCE": {
+          "base": "uttala",
+          "present": "uttalar"
+        },
+        "EXPLORE": {
+          "base": "utforska",
+          "present": "utforskar"
+        },
+        "EXCHANGE": {
+          "base": "växla",
+          "present": "växlar"
+        },
+        "INSURE": {
+          "base": "försäkra",
+          "present": "försäkrar"
+        },
+        "RECOMMEND": {
+          "base": "rekommendera",
+          "present": "rekommenderar"
+        },
+        "SCENIC": {
+          "form": "naturskön",
+          "n": "naturskönt",
+          "plural": "natursköna"
+        },
+        "DELICIOUS": {
+          "form": "läcker",
+          "n": "läckert",
+          "plural": "läckra"
+        },
+        "EXPENSIVE": {
+          "form": "dyr",
+          "n": "dyrt",
+          "plural": "dyra"
+        },
+        "FOREIGN": {
+          "form": "utländsk",
+          "n": "utländskt",
+          "plural": "utländska"
+        },
+        "HISTORIC": {
+          "form": "historisk",
+          "n": "historiskt",
+          "plural": "historiska"
+        },
+        "UNFORGETTABLE": {
+          "form": "oförglömlig",
+          "n": "oförglömligt",
+          "plural": "oförglömliga"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {

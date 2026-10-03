@@ -52,6 +52,713 @@
     { "concept_id": "OVERPOWERED", "type": "adjective" }
   ],
   "languages": {
+    "ru": {
+      "label": "Русский",
+      "forms": {
+        "CONSOLE": {
+          "form": "консоль",
+          "gender": "f",
+          "genitive": "консоли",
+          "dative": "консоли",
+          "instrumental": "консолью",
+          "locative": "консоли",
+          "plural": "консоли",
+          "genitive_plural": "консолей"
+        },
+        "CONTROLLER": {
+          "form": "геймпад",
+          "gender": "m",
+          "genitive": "геймпада",
+          "dative": "геймпаду",
+          "instrumental": "геймпадом",
+          "locative": "геймпаде",
+          "plural": "геймпады",
+          "genitive_plural": "геймпадов"
+        },
+        "SCREEN": {
+          "form": "экран",
+          "gender": "m",
+          "genitive": "экрана",
+          "dative": "экрану",
+          "instrumental": "экраном",
+          "locative": "экране",
+          "plural": "экраны",
+          "genitive_plural": "экранов"
+        },
+        "TIER": {
+          "form": "уровень",
+          "gender": "m",
+          "genitive": "уровеня",
+          "dative": "уровеню",
+          "instrumental": "уровенем",
+          "locative": "уровене",
+          "plural": "уровени",
+          "genitive_plural": "уровеней"
+        },
+        "PIXEL": {
+          "form": "пиксель",
+          "gender": "m",
+          "genitive": "пикселя",
+          "dative": "пикселю",
+          "instrumental": "пикселем",
+          "locative": "пикселе",
+          "plural": "пиксели",
+          "genitive_plural": "пикселей"
+        },
+        "AVATAR": {
+          "form": "аватар",
+          "gender": "m",
+          "genitive": "аватара",
+          "dative": "аватару",
+          "instrumental": "аватаром",
+          "locative": "аватаре",
+          "plural": "аватары",
+          "genitive_plural": "аватаров"
+        },
+        "BOSS": {
+          "form": "босс",
+          "gender": "m",
+          "genitive": "босса",
+          "dative": "боссу",
+          "instrumental": "боссом",
+          "locative": "боссе",
+          "accusative": "босса",
+          "plural": "боссы",
+          "genitive_plural": "боссов"
+        },
+        "NPC": {
+          "form": "NPC",
+          "gender": "m",
+          "genitive": "NPC",
+          "dative": "NPC",
+          "instrumental": "NPC",
+          "locative": "NPC",
+          "invariantPlural": true,
+          "genitive_plural": "NPC",
+          "accusative": "NPC"
+        },
+        "COMPANION": {
+          "form": "спутник",
+          "gender": "m",
+          "genitive": "спутника",
+          "dative": "спутнику",
+          "instrumental": "спутником",
+          "locative": "спутнике",
+          "accusative": "спутника",
+          "plural": "спутники",
+          "genitive_plural": "спутников"
+        },
+        "COMBO": {
+          "form": "комбо",
+          "gender": "n",
+          "genitive": "комбо",
+          "dative": "комбо",
+          "instrumental": "комбо",
+          "locative": "комбо",
+          "invariantPlural": true,
+          "genitive_plural": "комбо"
+        },
+        "HARM": {
+          "form": "вред",
+          "gender": "m",
+          "genitive": "вреда",
+          "dative": "вреду",
+          "instrumental": "вредом",
+          "locative": "вреде"
+        },
+        "VITALITY": {
+          "form": "живучесть",
+          "gender": "f",
+          "genitive": "живучести",
+          "dative": "живучести",
+          "instrumental": "живучестью",
+          "locative": "живучести"
+        },
+        "MISSION": {
+          "form": "миссия",
+          "gender": "f",
+          "genitive": "миссии",
+          "dative": "миссии",
+          "instrumental": "миссией",
+          "locative": "миссии",
+          "accusative": "миссию",
+          "plural": "миссии",
+          "genitive_plural": "миссй"
+        },
+        "ACHIEVEMENT": {
+          "form": "достижение",
+          "gender": "n",
+          "genitive": "достижения",
+          "dative": "достижению",
+          "instrumental": "достижением",
+          "locative": "достижении",
+          "plural": "достижения",
+          "genitive_plural": "достиженй"
+        },
+        "UPGRADE": {
+          "form": "улучшение",
+          "gender": "n",
+          "genitive": "улучшения",
+          "dative": "улучшению",
+          "instrumental": "улучшением",
+          "locative": "улучшении",
+          "plural": "улучшения",
+          "genitive_plural": "улучшенй"
+        },
+        "DUNGEON": {
+          "form": "подземелье",
+          "gender": "n",
+          "genitive": "подземелья",
+          "dative": "подземелью",
+          "instrumental": "подземельем",
+          "locative": "подземелье",
+          "plural": "подземелья",
+          "genitive_plural": "подземелий"
+        },
+        "SPAWN": {
+          "form": "точка возрождения",
+          "gender": "f",
+          "genitive": "точки возрождения",
+          "dative": "точке возрождения",
+          "instrumental": "точкой возрождения",
+          "locative": "точке возрождения",
+          "accusative": "точку возрождения",
+          "plural": "точки возрождения",
+          "genitive_plural": "точек возрождения"
+        },
+        "MAP": {
+          "form": "карта",
+          "gender": "f",
+          "genitive": "карты",
+          "dative": "карте",
+          "instrumental": "картой",
+          "locative": "карте",
+          "accusative": "карту",
+          "plural": "карты",
+          "genitive_plural": "карт"
+        },
+        "PARTY": {
+          "form": "отряд",
+          "gender": "m",
+          "genitive": "отряда",
+          "dative": "отряду",
+          "instrumental": "отрядом",
+          "locative": "отряде",
+          "plural": "отряды",
+          "genitive_plural": "отрядов"
+        },
+        "RAID": {
+          "form": "рейд",
+          "gender": "m",
+          "genitive": "рейда",
+          "dative": "рейду",
+          "instrumental": "рейдом",
+          "locative": "рейде",
+          "plural": "рейды",
+          "genitive_plural": "рейдов"
+        },
+        "GUILD": {
+          "form": "гильдия",
+          "gender": "f",
+          "genitive": "гильдии",
+          "dative": "гильдии",
+          "instrumental": "гильдией",
+          "locative": "гильдии",
+          "accusative": "гильдию",
+          "plural": "гильдии",
+          "genitive_plural": "гильдй"
+        },
+        "INVENTORY": {
+          "form": "инвентарь",
+          "gender": "m",
+          "genitive": "инвентаря",
+          "dative": "инвентарю",
+          "instrumental": "инвентарём",
+          "locative": "инвентаре",
+          "plural": "инвентари",
+          "genitive_plural": "инвентарей"
+        },
+        "VIAL": {
+          "form": "флакон",
+          "gender": "m",
+          "genitive": "флакона",
+          "dative": "флакону",
+          "instrumental": "флаконом",
+          "locative": "флаконе",
+          "plural": "флаконы",
+          "genitive_plural": "флаконов"
+        },
+        "GEM": {
+          "form": "самоцвет",
+          "gender": "m",
+          "genitive": "самоцвета",
+          "dative": "самоцвету",
+          "instrumental": "самоцветом",
+          "locative": "самоцвете",
+          "plural": "самоцветы",
+          "genitive_plural": "самоцветов"
+        },
+        "LOADOUT": {
+          "form": "снаряжение",
+          "gender": "n",
+          "genitive": "снаряжения",
+          "dative": "снаряжению",
+          "instrumental": "снаряжением",
+          "locative": "снаряжении",
+          "plural": "снаряжения",
+          "genitive_plural": "снаряженй"
+        },
+        "COOLDOWN": {
+          "form": "перезарядка",
+          "gender": "f",
+          "genitive": "перезарядки",
+          "dative": "перезарядке",
+          "instrumental": "перезарядкой",
+          "locative": "перезарядке",
+          "accusative": "перезарядку",
+          "plural": "перезарядки",
+          "genitive_plural": "перезарядок"
+        },
+        "STRATEGY": {
+          "form": "стратегия",
+          "gender": "f",
+          "genitive": "стратегии",
+          "dative": "стратегии",
+          "instrumental": "стратегией",
+          "locative": "стратегии",
+          "accusative": "стратегию",
+          "plural": "стратегии",
+          "genitive_plural": "стратегй"
+        },
+        "LEADERBOARD": {
+          "form": "таблица лидеров",
+          "gender": "f",
+          "genitive": "таблицы лидеров",
+          "dative": "таблице лидеров",
+          "instrumental": "таблицей лидеров",
+          "locative": "таблице лидеров",
+          "accusative": "таблицу лидеров",
+          "plural": "таблицы лидеров",
+          "genitive_plural": "таблиц лидеров"
+        },
+        "RANK": {
+          "form": "ранг",
+          "gender": "m",
+          "genitive": "ранга",
+          "dative": "рангу",
+          "instrumental": "рангом",
+          "locative": "ранге",
+          "plural": "ранги",
+          "genitive_plural": "рангов"
+        },
+        "SPEEDRUN": {
+          "form": "спидран",
+          "gender": "m",
+          "genitive": "спидрана",
+          "dative": "спидрану",
+          "instrumental": "спидраном",
+          "locative": "спидране",
+          "plural": "спидраны",
+          "genitive_plural": "спидранов"
+        },
+        "RESPAWN": {
+          "base": "возрождаться",
+          "1_singular": "возрождаюсь",
+          "2_singular": "возрождаешься",
+          "3_singular": "возрождается",
+          "1_plural": "возрождаемся",
+          "2_plural": "возрождаетесь",
+          "3_plural": "возрождаются"
+        },
+        "LOOT": {
+          "base": "грабить",
+          "1_singular": "граблю",
+          "2_singular": "грабишь",
+          "3_singular": "грабит",
+          "1_plural": "грабим",
+          "2_plural": "грабите",
+          "3_plural": "грабят"
+        },
+        "CRAFT": {
+          "base": "создавать",
+          "1_singular": "создаю",
+          "2_singular": "создаёшь",
+          "3_singular": "создаёт",
+          "1_plural": "создаём",
+          "2_plural": "создаёте",
+          "3_plural": "создают"
+        },
+        "EQUIP": {
+          "base": "экипировать",
+          "1_singular": "экипирую",
+          "2_singular": "экипируешь",
+          "3_singular": "экипирует",
+          "1_plural": "экипируем",
+          "2_plural": "экипируете",
+          "3_plural": "экипируют"
+        },
+        "GRIND": {
+          "base": "гриндить",
+          "1_singular": "гринжу",
+          "2_singular": "гриндишь",
+          "3_singular": "гриндит",
+          "1_plural": "гриндим",
+          "2_plural": "гриндите",
+          "3_plural": "гриндят"
+        },
+        "SLAY": {
+          "base": "убивать",
+          "1_singular": "убиваю",
+          "2_singular": "убиваешь",
+          "3_singular": "убивает",
+          "1_plural": "убиваем",
+          "2_plural": "убиваете",
+          "3_plural": "убивают"
+        },
+        "UNLOCK": {
+          "base": "разблокировать",
+          "1_singular": "разблокирую",
+          "2_singular": "разблокируешь",
+          "3_singular": "разблокирует",
+          "1_plural": "разблокируем",
+          "2_plural": "разблокируете",
+          "3_plural": "разблокируют"
+        },
+        "ROAM": {
+          "base": "бродить",
+          "1_singular": "брожу",
+          "2_singular": "бродишь",
+          "3_singular": "бродит",
+          "1_plural": "бродим",
+          "2_plural": "бродите",
+          "3_plural": "бродят"
+        },
+        "STREAM": {
+          "base": "стримить",
+          "1_singular": "стримлю",
+          "2_singular": "стримишь",
+          "3_singular": "стримит",
+          "1_plural": "стримим",
+          "2_plural": "стримите",
+          "3_plural": "стримят"
+        },
+        "COLLECT": {
+          "base": "собирать",
+          "1_singular": "собираю",
+          "2_singular": "собираешь",
+          "3_singular": "собирает",
+          "1_plural": "собираем",
+          "2_plural": "собираете",
+          "3_plural": "собирают"
+        },
+        "AMBUSH": {
+          "base": "устраивать засаду",
+          "1_singular": "устраиваю засаду",
+          "2_singular": "устраиваешь засаду",
+          "3_singular": "устраивает засаду",
+          "1_plural": "устраиваем засаду",
+          "2_plural": "устраиваете засаду",
+          "3_plural": "устраивают засаду"
+        },
+        "CLUTCH": {
+          "base": "вытаскивать",
+          "1_singular": "вытаскиваю",
+          "2_singular": "вытаскиваешь",
+          "3_singular": "вытаскивает",
+          "1_plural": "вытаскиваем",
+          "2_plural": "вытаскиваете",
+          "3_plural": "вытаскивают"
+        },
+        "ELITE": {
+          "form": "элитный",
+          "f": "элитная",
+          "n": "элитное",
+          "plural": "элитные"
+        },
+        "CRITICAL": {
+          "form": "критический",
+          "f": "критическая",
+          "n": "критическое",
+          "plural": "критические"
+        },
+        "RARE": {
+          "form": "редкий",
+          "f": "редкая",
+          "n": "редкое",
+          "plural": "редкие"
+        },
+        "HIDDEN": {
+          "form": "скрытый",
+          "f": "скрытая",
+          "n": "скрытое",
+          "plural": "скрытые"
+        },
+        "COMPETITIVE": {
+          "form": "соревновательный",
+          "f": "соревновательная",
+          "n": "соревновательное",
+          "plural": "соревновательные"
+        },
+        "MYTHIC": {
+          "form": "мифический",
+          "f": "мифическая",
+          "n": "мифическое",
+          "plural": "мифические"
+        },
+        "TACTICAL": {
+          "form": "тактический",
+          "f": "тактическая",
+          "n": "тактическое",
+          "plural": "тактические"
+        },
+        "OVERPOWERED": {
+          "form": "слишком сильный",
+          "f": "слишком сильная",
+          "n": "слишком сильное",
+          "plural": "слишком сильные"
+        }
+      }
+    },
+    "sv": {
+      "label": "Svenska",
+      "forms": {
+        "CONSOLE": {
+          "form": "konsol",
+          "gender": "m",
+          "plural": "konsoler"
+        },
+        "CONTROLLER": {
+          "form": "handkontroll",
+          "gender": "m",
+          "plural": "handkontroller"
+        },
+        "SCREEN": {
+          "form": "skärm",
+          "gender": "m",
+          "plural": "skärmar"
+        },
+        "TIER": {
+          "form": "nivå",
+          "gender": "m",
+          "plural": "nivåer"
+        },
+        "PIXEL": {
+          "form": "pixel",
+          "gender": "m",
+          "plural": "pixlar"
+        },
+        "AVATAR": {
+          "form": "avatar",
+          "gender": "m",
+          "plural": "avatarer"
+        },
+        "BOSS": {
+          "form": "boss",
+          "gender": "m",
+          "plural": "bossar"
+        },
+        "NPC": {
+          "form": "NPC",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "COMPANION": {
+          "form": "följeslagare",
+          "gender": "m",
+          "invariantPlural": true
+        },
+        "COMBO": {
+          "form": "kombo",
+          "gender": "m",
+          "plural": "kombor"
+        },
+        "HARM": {
+          "form": "skada",
+          "gender": "m",
+          "plural": "skador"
+        },
+        "VITALITY": {
+          "form": "livskraft",
+          "gender": "m"
+        },
+        "MISSION": {
+          "form": "uppdrag",
+          "gender": "n",
+          "invariantPlural": true
+        },
+        "ACHIEVEMENT": {
+          "form": "prestation",
+          "gender": "m",
+          "plural": "prestationer"
+        },
+        "UPGRADE": {
+          "form": "uppgradering",
+          "gender": "m",
+          "plural": "uppgraderingar"
+        },
+        "DUNGEON": {
+          "form": "fängelsehåla",
+          "gender": "m",
+          "plural": "fängelsehålor"
+        },
+        "SPAWN": {
+          "form": "startpunkt",
+          "gender": "m",
+          "plural": "startpunkter"
+        },
+        "MAP": {
+          "form": "karta",
+          "gender": "m",
+          "plural": "kartor"
+        },
+        "PARTY": {
+          "form": "grupp",
+          "gender": "m",
+          "plural": "grupper"
+        },
+        "RAID": {
+          "form": "raid",
+          "gender": "m",
+          "plural": "raider"
+        },
+        "GUILD": {
+          "form": "gille",
+          "gender": "n",
+          "plural": "gillen"
+        },
+        "INVENTORY": {
+          "form": "inventarie",
+          "gender": "m",
+          "plural": "inventarier"
+        },
+        "VIAL": {
+          "form": "flaska",
+          "gender": "m",
+          "plural": "flaskor"
+        },
+        "GEM": {
+          "form": "ädelsten",
+          "gender": "m",
+          "plural": "ädelstenar"
+        },
+        "LOADOUT": {
+          "form": "utrustning",
+          "gender": "m",
+          "plural": "utrustningar"
+        },
+        "COOLDOWN": {
+          "form": "nedkylningstid",
+          "gender": "m",
+          "plural": "nedkylningstider"
+        },
+        "STRATEGY": {
+          "form": "strategi",
+          "gender": "m",
+          "plural": "strategier"
+        },
+        "LEADERBOARD": {
+          "form": "topplista",
+          "gender": "m",
+          "plural": "topplistor"
+        },
+        "RANK": {
+          "form": "rang",
+          "gender": "m",
+          "plural": "ranger"
+        },
+        "SPEEDRUN": {
+          "form": "speedrun",
+          "gender": "m",
+          "plural": "speedruns"
+        },
+        "RESPAWN": {
+          "base": "återuppstå",
+          "present": "återuppstår"
+        },
+        "LOOT": {
+          "base": "plundra",
+          "present": "plundrar"
+        },
+        "CRAFT": {
+          "base": "tillverka",
+          "present": "tillverkar"
+        },
+        "EQUIP": {
+          "base": "utrusta",
+          "present": "utrustar"
+        },
+        "GRIND": {
+          "base": "grinda",
+          "present": "grindar"
+        },
+        "SLAY": {
+          "base": "dräpa",
+          "present": "dräper"
+        },
+        "UNLOCK": {
+          "base": "låsa upp",
+          "present": "låser upp"
+        },
+        "ROAM": {
+          "base": "ströva",
+          "present": "strövar"
+        },
+        "STREAM": {
+          "base": "streama",
+          "present": "streamar"
+        },
+        "COLLECT": {
+          "base": "samla",
+          "present": "samlar"
+        },
+        "AMBUSH": {
+          "base": "överfalla",
+          "present": "överfaller"
+        },
+        "CLUTCH": {
+          "base": "rädda i sista sekunden",
+          "present": "räddar i sista sekunden"
+        },
+        "ELITE": [
+          "elit"
+        ],
+        "CRITICAL": {
+          "form": "kritisk",
+          "n": "kritiskt",
+          "plural": "kritiska"
+        },
+        "RARE": {
+          "form": "sällsynt",
+          "n": "sällsynt",
+          "plural": "sällsynta"
+        },
+        "HIDDEN": {
+          "form": "dold",
+          "n": "dolt",
+          "plural": "dolda"
+        },
+        "COMPETITIVE": {
+          "form": "konkurrenskraftig",
+          "n": "konkurrenskraftigt",
+          "plural": "konkurrenskraftiga"
+        },
+        "MYTHIC": {
+          "form": "mytisk",
+          "n": "mytiskt",
+          "plural": "mytiska"
+        },
+        "TACTICAL": {
+          "form": "taktisk",
+          "n": "taktiskt",
+          "plural": "taktiska"
+        },
+        "OVERPOWERED": {
+          "form": "alldeles för stark",
+          "n": "alldeles för starkt",
+          "plural": "alldeles för starka"
+        }
+      }
+    },
     "fi": {
       "label": "Suomi",
       "forms": {
