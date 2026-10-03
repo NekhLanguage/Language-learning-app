@@ -124,7 +124,8 @@
           "instrumental": "мечом",
           "locative": "мече",
           "plural": "мечи",
-          "genitive_plural": "мечей"
+          "genitive_plural": "мечей",
+          "accusative": "меч"
         },
         "ARMOR": {
           "form": "броня",
@@ -143,7 +144,8 @@
           "instrumental": "щитом",
           "locative": "щите",
           "plural": "щиты",
-          "genitive_plural": "щитов"
+          "genitive_plural": "щитов",
+          "accusative": "щит"
         },
         "ATTACK": {
           "base": "атаковать",
@@ -252,7 +254,8 @@
           "instrumental": "тенью",
           "locative": "тени",
           "plural": "тени",
-          "genitive_plural": "теней"
+          "genitive_plural": "теней",
+          "accusative": "тень"
         },
         "STRIKE": {
           "base": "бить",
@@ -315,7 +318,8 @@
           "instrumental": "квестом",
           "locative": "квесте",
           "plural": "квесты",
-          "genitive_plural": "квестов"
+          "genitive_plural": "квестов",
+          "accusative": "квест"
         },
         "DESTINY": {
           "form": "судьба",
@@ -336,7 +340,8 @@
           "instrumental": "королевством",
           "locative": "королевстве",
           "plural": "королевства",
-          "genitive_plural": "королевств"
+          "genitive_plural": "королевств",
+          "accusative": "королевство"
         },
         "TEMPLE": {
           "form": "храм",
@@ -346,7 +351,8 @@
           "instrumental": "храмом",
           "locative": "храме",
           "plural": "храмы",
-          "genitive_plural": "храмов"
+          "genitive_plural": "храмов",
+          "accusative": "храм"
         },
         "ANCIENT": {
           "form": "древний",
@@ -403,7 +409,8 @@
           "instrumental": "кристаллом",
           "locative": "кристалле",
           "plural": "кристаллы",
-          "genitive_plural": "кристаллов"
+          "genitive_plural": "кристаллов",
+          "accusative": "кристалл"
         },
         "SCROLL": {
           "form": "свиток",
@@ -413,7 +420,8 @@
           "instrumental": "свитком",
           "locative": "свитке",
           "plural": "свитки",
-          "genitive_plural": "свитков"
+          "genitive_plural": "свитков",
+          "accusative": "свиток"
         },
         "PORTAL": {
           "form": "портал",
@@ -423,7 +431,8 @@
           "instrumental": "порталом",
           "locative": "портале",
           "plural": "порталы",
-          "genitive_plural": "порталов"
+          "genitive_plural": "порталов",
+          "accusative": "портал"
         },
         "CURSED": {
           "form": "проклятый",
@@ -465,7 +474,8 @@
           "instrumental": "кланом",
           "locative": "клане",
           "plural": "кланы",
-          "genitive_plural": "кланов"
+          "genitive_plural": "кланов",
+          "accusative": "клан"
         },
         "AWAKEN": {
           "base": "просыпаться",

@@ -84,7 +84,8 @@
           "instrumental": "барабаном",
           "locative": "барабане",
           "plural": "барабаны",
-          "genitive_plural": "барабанов"
+          "genitive_plural": "барабанов",
+          "accusative": "барабан"
         },
         "PIANO": {
           "form": "пианино",
@@ -115,7 +116,8 @@
           "instrumental": "микрофоном",
           "locative": "микрофоне",
           "plural": "микрофоны",
-          "genitive_plural": "микрофонов"
+          "genitive_plural": "микрофонов",
+          "accusative": "микрофон"
         },
         "MELODY": {
           "form": "мелодия",
@@ -136,7 +138,8 @@
           "instrumental": "ритмом",
           "locative": "ритме",
           "plural": "ритмы",
-          "genitive_plural": "ритмов"
+          "genitive_plural": "ритмов",
+          "accusative": "ритм"
         },
         "BEAT": {
           "form": "бит",
@@ -146,7 +149,8 @@
           "instrumental": "битом",
           "locative": "бите",
           "plural": "биты",
-          "genitive_plural": "битов"
+          "genitive_plural": "битов",
+          "accusative": "бит"
         },
         "CHORD": {
           "form": "аккорд",
@@ -156,7 +160,8 @@
           "instrumental": "аккордом",
           "locative": "аккорде",
           "plural": "аккорды",
-          "genitive_plural": "аккордов"
+          "genitive_plural": "аккордов",
+          "accusative": "аккорд"
         },
         "HARMONY": {
           "form": "гармония",
@@ -222,7 +227,8 @@
           "instrumental": "концертом",
           "locative": "концерте",
           "plural": "концерты",
-          "genitive_plural": "концертов"
+          "genitive_plural": "концертов",
+          "accusative": "концерт"
         },
         "STAGE": {
           "form": "сцена",
@@ -243,7 +249,8 @@
           "instrumental": "бисом",
           "locative": "бисе",
           "plural": "бисы",
-          "genitive_plural": "бисов"
+          "genitive_plural": "бисов",
+          "accusative": "бис"
         },
         "SPOTLIGHT": {
           "form": "прожектор",
@@ -253,7 +260,8 @@
           "instrumental": "прожектором",
           "locative": "прожекторе",
           "plural": "прожекторы",
-          "genitive_plural": "прожекторов"
+          "genitive_plural": "прожекторов",
+          "accusative": "прожектор"
         },
         "TOUR": {
           "form": "тур",
@@ -263,7 +271,8 @@
           "instrumental": "туром",
           "locative": "туре",
           "plural": "туры",
-          "genitive_plural": "туров"
+          "genitive_plural": "туров",
+          "accusative": "тур"
         },
         "LYRIC": {
           "form": "текст",
@@ -273,7 +282,8 @@
           "instrumental": "текстом",
           "locative": "тексте",
           "plural": "тексты",
-          "genitive_plural": "текстов"
+          "genitive_plural": "текстов",
+          "accusative": "текст"
         },
         "CHORUS": {
           "form": "припев",
@@ -283,7 +293,8 @@
           "instrumental": "припевом",
           "locative": "припеве",
           "plural": "припевы",
-          "genitive_plural": "припевов"
+          "genitive_plural": "припевов",
+          "accusative": "припев"
         },
         "VERSE": {
           "form": "куплет",
@@ -293,7 +304,8 @@
           "instrumental": "куплетом",
           "locative": "куплете",
           "plural": "куплеты",
-          "genitive_plural": "куплетов"
+          "genitive_plural": "куплетов",
+          "accusative": "куплет"
         },
         "SOLO": {
           "form": "соло",
@@ -313,7 +325,8 @@
           "instrumental": "дуэтом",
           "locative": "дуэте",
           "plural": "дуэты",
-          "genitive_plural": "дуэтов"
+          "genitive_plural": "дуэтов",
+          "accusative": "дуэт"
         },
         "ROCK": {
           "form": "рок",
@@ -321,7 +334,8 @@
           "genitive": "рока",
           "dative": "року",
           "instrumental": "роком",
-          "locative": "роке"
+          "locative": "роке",
+          "accusative": "рок"
         },
         "JAZZ": {
           "form": "джаз",
@@ -329,7 +343,8 @@
           "genitive": "джаза",
           "dative": "джазу",
           "instrumental": "джазом",
-          "locative": "джазе"
+          "locative": "джазе",
+          "accusative": "джаз"
         },
         "CLASSICAL": {
           "form": "классический",
@@ -368,7 +383,8 @@
           "instrumental": "треком",
           "locative": "треке",
           "plural": "треки",
-          "genitive_plural": "треков"
+          "genitive_plural": "треков",
+          "accusative": "трек"
         },
         "ALBUM": {
           "form": "альбом",
@@ -378,7 +394,8 @@
           "instrumental": "альбомом",
           "locative": "альбоме",
           "plural": "альбомы",
-          "genitive_plural": "альбомов"
+          "genitive_plural": "альбомов",
+          "accusative": "альбом"
         },
         "REMIX": {
           "form": "ремикс",
@@ -388,7 +405,8 @@
           "instrumental": "ремиксом",
           "locative": "ремиксе",
           "plural": "ремиксы",
-          "genitive_plural": "ремиксов"
+          "genitive_plural": "ремиксов",
+          "accusative": "ремикс"
         },
         "SAMPLE": {
           "form": "сэмпл",
@@ -398,7 +416,8 @@
           "instrumental": "сэмплом",
           "locative": "сэмпле",
           "plural": "сэмплы",
-          "genitive_plural": "сэмплов"
+          "genitive_plural": "сэмплов",
+          "accusative": "сэмпл"
         },
         "REHEARSE": {
           "base": "репетировать",
@@ -494,7 +513,8 @@
           "instrumental": "гимном",
           "locative": "гимне",
           "plural": "гимны",
-          "genitive_plural": "гимнов"
+          "genitive_plural": "гимнов",
+          "accusative": "гимн"
         },
         "PLAYLIST": {
           "form": "плейлист",
@@ -504,7 +524,8 @@
           "instrumental": "плейлистом",
           "locative": "плейлисте",
           "plural": "плейлисты",
-          "genitive_plural": "плейлистов"
+          "genitive_plural": "плейлистов",
+          "accusative": "плейлист"
         },
         "FESTIVAL": {
           "form": "фестиваль",
@@ -514,7 +535,8 @@
           "instrumental": "фестивалем",
           "locative": "фестивале",
           "plural": "фестивали",
-          "genitive_plural": "фестивалей"
+          "genitive_plural": "фестивалей",
+          "accusative": "фестиваль"
         },
         "FANBASE": {
           "form": "фан-база",

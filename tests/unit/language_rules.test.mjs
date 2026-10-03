@@ -2393,7 +2393,7 @@ test("ru: prepositions govern their cases; «со», «к» + dative, «за» +
 });
 
 test("ru: reflexive «свой», comma before «но»/«потому что», numerals 2 and 5+", () => {
-  assert.equal(buildSentence("ru", tplById("SHE_GO_TO_HER_ROOM")), "Она идёт к своей комнате.");
+  assert.equal(buildSentence("ru", tplById("SHE_GO_TO_HER_ROOM")), "Она идёт в свою комнату.");
   assert.equal(buildSentence("ru", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
     "Он ест ужин со своей мамой, потому что он дома.");
   assert.equal(buildSentence("ru", tplById("HE_EAT_BREAKFAST_BUT_NOT_LUNCH")), "Он ест завтрак, но не обед.");
@@ -2409,4 +2409,59 @@ test("ru/uk: the Ukrainian row is untouched by the Russian strategies", () => {
   assert.equal(buildSentence("uk", tplById("WE_HAVE_JOB")), "Ми маємо роботу.");
   assert.equal(buildSentence("uk", tplById("SHE_GO_TO_HER_ROOM")), "Вона йде до своєї кімнати.");
   assert.deepEqual([...langsWith("existentialPossession")].sort(), ["fi", "ru"]);
+});
+
+// ── Emi run-30 (2026-10-03): the first sv/ru read ─────────────────────────
+
+test("sv: vänster/höger only exist in a determined slot and take the weak form there (run-30 -187)", () => {
+  assert.equal(buildSentence("sv", tplById("THAT_IS_MY_ARM"), "LEFT", {}), "Det där är min vänstra arm.");
+  assert.equal(buildSentence("sv", tplById("THAT_IS_YOUR_LEG"), "RIGHT", {}), "Det där är ditt högra ben.");
+  // An indefinite slot refuses them («ett höger finger» is not Swedish).
+  assert.equal(isModifierCompatible("sv", "LEFT", "ARM"), false);
+  assert.equal(isModifierCompatible("sv", "LEFT", "ARM", { determined: true }), true);
+  assert.equal(buildSentence("sv", tplById("I_SEE_HOUSE"), "LEFT", {}), "Jag ser ett hus.");
+  // Ordinary adjectives are untouched by the flag.
+  assert.equal(isModifierCompatible("sv", "BIG", "HOUSE"), true);
+});
+
+test("sv: rätt/fel drop the indefinite article; gå ombord strands no «på» (run-30 -188/-189)", () => {
+  assert.equal(buildSentence("sv", tplById("I_SEE_HOUSE"), "WRONG", {}), "Jag ser fel hus.");
+  assert.equal(buildSentence("sv", tplById("HE_READ_BOOK"), "CORRECT", {}), "Han läser rätt bok.");
+  assert.equal(buildSentence("sv", tplById("THIS_IS_WRONG")), "Det här är fel.");
+  assert.equal(buildSentence("sv", tplById("YOU_BOARD")), "Du går ombord.");
+  assert.equal(buildSentence("sv", tplById("I_BOARD_FLIGHT")), "Jag går ombord på ett flyg.");
+});
+
+test("ru: «Это» in every «X is Y», short answers echo the verb, TO is «в» + accusative (run-30 -190/-191/-193)", () => {
+  assert.equal(buildSentence("ru", tplById("THAT_IS_MY_ARM")), "Это моя рука.");
+  assert.equal(buildSentence("ru", tplById("IS_THAT_YOUR_PHONE")), "Это твой телефон?");
+  // Oblique demonstratives keep their «то» cases.
+  assert.equal(buildSentence("ru", tplById("PHONE_IN_THAT")), "Телефон в том.");
+  assert.equal(buildSentence("ru", tplById("YES_I_DO")), "Да, делаю.");
+  assert.equal(buildSentence("ru", tplById("NO_I_DO_NOT")), "Нет, не делаю.");
+  // A statement keeps its pronoun — only the response structure drops it.
+  assert.equal(buildSentence("ru", tplById("I_EAT_BREAKFAST")), "Я ем завтрак.");
+  assert.equal(buildSentence("ru", tplById("SHE_GO_TO_HER_ROOM")), "Она идёт в свою комнату.");
+  assert.equal(buildSentence("ru", tplById("I_GO_TO_HOUSE")), "Я иду в дом.");
+  assert.equal(buildSentence("ru", tplById("I_GO_TO_GYM")), "Я иду в спортзал.");
+  assert.equal(buildSentence("ru", tplById("I_GO_TO_LEAGUE")), "Я иду в лигу.");
+  // A person or object stays «к» + dative through the noun's fused form.
+  assert.equal(buildSentence("ru", tplById("I_GO_TO_TABLE")), "Я иду к столу.");
+});
+
+test("ru: «свой» for every person whose subject owns the noun; uk keeps 3rd person only (run-30 -194)", () => {
+  assert.equal(buildSentence("ru", tplById("I_INSURE_LUGGAGE")), "Я страхую свой багаж.");
+  assert.equal(buildSentence("ru", tplById("I_SEE_HOUSE"), "MY", {}), "Я вижу свой дом.");
+  assert.equal(buildSentence("ru", tplById("YOU_READ_BOOK"), "YOUR", {}), "Ты читаешь свою книгу.");
+  // Someone else's stays plain.
+  assert.equal(buildSentence("ru", tplById("YOU_READ_BOOK"), "MY", {}), "Ты читаешь мою книгу.");
+  // Copular predicates are never reflexive.
+  assert.equal(buildSentence("ru", tplById("SHE_IS_MY_MOM")), "Она моя мама.");
+  assert.equal(buildSentence("uk", tplById("I_INSURE_LUGGAGE")), "Я страхую мій багаж.");
+});
+
+test("uk: the short answers drop the pronoun with the same rule (Emi -140)", () => {
+  assert.equal(buildSentence("uk", tplById("YES_I_DO")), "Так, роблю.");
+  assert.equal(buildSentence("uk", tplById("NO_I_DO_NOT")), "Ні, не роблю.");
+  assert.equal(buildSentence("uk", tplById("I_EAT_BREAKFAST")), "Я їм сніданок.");
 });

@@ -97,7 +97,8 @@
           "instrumental": "астероидом",
           "locative": "астероиде",
           "plural": "астероиды",
-          "genitive_plural": "астероидов"
+          "genitive_plural": "астероидов",
+          "accusative": "астероид"
         },
         "ROCKET": {
           "form": "ракета",
@@ -118,7 +119,8 @@
           "instrumental": "космическим кораблём",
           "locative": "космическом корабле",
           "plural": "космические корабли",
-          "genitive_plural": "космических кораблей"
+          "genitive_plural": "космических кораблей",
+          "accusative": "космический корабль"
         },
         "ASTRONAUT": {
           "form": "астронавт",
@@ -140,7 +142,8 @@
           "instrumental": "телескопом",
           "locative": "телескопе",
           "plural": "телескопы",
-          "genitive_plural": "телескопов"
+          "genitive_plural": "телескопов",
+          "accusative": "телескоп"
         },
         "SATELLITE": {
           "form": "спутник",
@@ -150,7 +153,8 @@
           "instrumental": "спутником",
           "locative": "спутнике",
           "plural": "спутники",
-          "genitive_plural": "спутников"
+          "genitive_plural": "спутников",
+          "accusative": "спутник"
         },
         "PROBE": {
           "form": "зонд",
@@ -160,7 +164,8 @@
           "instrumental": "зондом",
           "locative": "зонде",
           "plural": "зонды",
-          "genitive_plural": "зондов"
+          "genitive_plural": "зондов",
+          "accusative": "зонд"
         },
         "ALIEN": {
           "form": "инопланетянин",
@@ -181,7 +186,8 @@
           "instrumental": "существом",
           "locative": "существе",
           "plural": "существа",
-          "genitive_plural": "существ"
+          "genitive_plural": "существ",
+          "accusative": "существо"
         },
         "SIGNAL": {
           "form": "сигнал",
@@ -191,7 +197,8 @@
           "instrumental": "сигналом",
           "locative": "сигнале",
           "plural": "сигналы",
-          "genitive_plural": "сигналов"
+          "genitive_plural": "сигналов",
+          "accusative": "сигнал"
         },
         "LASER": {
           "form": "лазер",
@@ -201,7 +208,8 @@
           "instrumental": "лазером",
           "locative": "лазере",
           "plural": "лазеры",
-          "genitive_plural": "лазеров"
+          "genitive_plural": "лазеров",
+          "accusative": "лазер"
         },
         "HOLOGRAM": {
           "form": "голограмма",
@@ -244,7 +252,8 @@
           "instrumental": "шлюзом",
           "locative": "шлюзе",
           "plural": "шлюзы",
-          "genitive_plural": "шлюзов"
+          "genitive_plural": "шлюзов",
+          "accusative": "шлюз"
         },
         "HULL": {
           "form": "корпус",
@@ -254,7 +263,8 @@
           "instrumental": "корпусом",
           "locative": "корпусе",
           "plural": "корпусы",
-          "genitive_plural": "корпусов"
+          "genitive_plural": "корпусов",
+          "accusative": "корпус"
         },
         "NEBULA": {
           "form": "туманность",
@@ -264,7 +274,8 @@
           "instrumental": "туманностью",
           "locative": "туманности",
           "plural": "туманности",
-          "genitive_plural": "туманностей"
+          "genitive_plural": "туманностей",
+          "accusative": "туманность"
         },
         "WORMHOLE": {
           "form": "червоточина",
@@ -285,7 +296,8 @@
           "instrumental": "сверхновой",
           "locative": "сверхновой",
           "plural": "сверхновые",
-          "genitive_plural": "сверхновых"
+          "genitive_plural": "сверхновых",
+          "accusative": "сверхновая"
         },
         "COLONY": {
           "form": "колония",
@@ -317,7 +329,8 @@
           "instrumental": "вторжением",
           "locative": "вторжении",
           "plural": "вторжения",
-          "genitive_plural": "вторженй"
+          "genitive_plural": "вторженй",
+          "accusative": "вторжение"
         },
         "FLEET": {
           "form": "флот",
@@ -327,7 +340,8 @@
           "instrumental": "флотом",
           "locative": "флоте",
           "plural": "флоты",
-          "genitive_plural": "флотов"
+          "genitive_plural": "флотов",
+          "accusative": "флот"
         },
         "BLASTER": {
           "form": "бластер",
@@ -337,7 +351,8 @@
           "instrumental": "бластером",
           "locative": "бластере",
           "plural": "бластеры",
-          "genitive_plural": "бластеров"
+          "genitive_plural": "бластеров",
+          "accusative": "бластер"
         },
         "DIMENSION": {
           "form": "измерение",
@@ -347,7 +362,8 @@
           "instrumental": "измерением",
           "locative": "измерении",
           "plural": "измерения",
-          "genitive_plural": "измеренй"
+          "genitive_plural": "измеренй",
+          "accusative": "измерение"
         },
         "FRONTIER": {
           "form": "граница",
@@ -397,13 +413,13 @@
           "3_plural": "активируют"
         },
         "NAVIGATE": {
-          "base": "навигировать",
-          "1_singular": "навигирую",
-          "2_singular": "навигируешь",
-          "3_singular": "навигирует",
-          "1_plural": "навигируем",
-          "2_plural": "навигируете",
-          "3_plural": "навигируют"
+          "base": "пилотировать",
+          "1_singular": "пилотирую",
+          "2_singular": "пилотируешь",
+          "3_singular": "пилотирует",
+          "1_plural": "пилотируем",
+          "2_plural": "пилотируете",
+          "3_plural": "пилотируют"
         },
         "TERRAFORM": {
           "base": "терраформировать",
@@ -1701,7 +1717,7 @@
         "DISCOVER":  { "base": "відкривати", "1_singular": "відкриваю", "2_singular": "відкриваєш", "3_singular": "відкриває", "1_plural": "відкриваємо", "2_plural": "відкриваєте", "3_plural": "відкривають" },
         "ENCOUNTER": { "base": "зустрічати", "1_singular": "зустрічаю", "2_singular": "зустрічаєш", "3_singular": "зустрічає", "1_plural": "зустрічаємо", "2_plural": "зустрічаєте", "3_plural": "зустрічають" },
         "ACTIVATE":  { "base": "активувати", "1_singular": "активую", "2_singular": "активуєш", "3_singular": "активує", "1_plural": "активуємо", "2_plural": "активуєте", "3_plural": "активують" },
-        "NAVIGATE":  { "base": "навігувати", "1_singular": "навігую", "2_singular": "навігуєш", "3_singular": "навігує", "1_plural": "навігуємо", "2_plural": "навігуєте", "3_plural": "навігують" },
+        "NAVIGATE":  { "base": "пілотувати", "1_singular": "пілотую", "2_singular": "пілотуєш", "3_singular": "пілотує", "1_plural": "пілотуємо", "2_plural": "пілотуєте", "3_plural": "пілотують" },
         "TERRAFORM": { "base": "терраформувати", "1_singular": "терраформую", "2_singular": "терраформуєш", "3_singular": "терраформує", "1_plural": "терраформуємо", "2_plural": "терраформуєте", "3_plural": "терраформують" },
         "COLONIZE":  { "base": "колонізувати", "1_singular": "колонізую", "2_singular": "колонізуєш", "3_singular": "колонізує", "1_plural": "колонізуємо", "2_plural": "колонізуєте", "3_plural": "колонізують" },
         "ORBIT":     { "base": "орбітувати", "1_singular": "орбітую", "2_singular": "орбітуєш", "3_singular": "орбітує", "1_plural": "орбітуємо", "2_plural": "орбітуєте", "3_plural": "орбітують" },

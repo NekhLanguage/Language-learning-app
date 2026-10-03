@@ -87,7 +87,8 @@
           "instrumental": "спортзалом",
           "locative": "спортзале",
           "plural": "спортзалы",
-          "genitive_plural": "спортзалов"
+          "genitive_plural": "спортзалов",
+          "accusative": "спортзал"
         },
         "LEAGUE": {
           "form": "лига",
@@ -130,7 +131,8 @@
           "instrumental": "Центром покемонов",
           "locative": "Центре покемонов",
           "plural": "Центры покемонов",
-          "genitive_plural": "Центров покемонов"
+          "genitive_plural": "Центров покемонов",
+          "accusative": "Центр покемонов"
         },
         "FOREST": {
           "form": "лес",
@@ -140,7 +142,8 @@
           "instrumental": "лесом",
           "locative": "лесу",
           "plural": "леса",
-          "genitive_plural": "лесов"
+          "genitive_plural": "лесов",
+          "accusative": "лес"
         },
         "CAVE": {
           "form": "пещера",
@@ -161,7 +164,8 @@
           "instrumental": "городом",
           "locative": "городе",
           "plural": "города",
-          "genitive_plural": "городов"
+          "genitive_plural": "городов",
+          "accusative": "город"
         },
         "BATTLE": {
           "form": "битва",
@@ -191,7 +195,8 @@
           "genitive": "урона",
           "dative": "урону",
           "instrumental": "уроном",
-          "locative": "уроне"
+          "locative": "уроне",
+          "accusative": "урон"
         },
         "DEFENSE": {
           "form": "защита",
@@ -210,7 +215,8 @@
           "instrumental": "скоростью",
           "locative": "скорости",
           "plural": "скорости",
-          "genitive_plural": "скоростей"
+          "genitive_plural": "скоростей",
+          "accusative": "скорость"
         },
         "STAT": {
           "form": "характеристика",
@@ -231,7 +237,8 @@
           "instrumental": "способностью",
           "locative": "способности",
           "plural": "способности",
-          "genitive_plural": "способностей"
+          "genitive_plural": "способностей",
+          "accusative": "способность"
         },
         "TYPE": {
           "form": "тип",
@@ -241,7 +248,8 @@
           "instrumental": "типом",
           "locative": "типе",
           "plural": "типы",
-          "genitive_plural": "типов"
+          "genitive_plural": "типов",
+          "accusative": "тип"
         },
         "POTION": {
           "form": "зелье",
@@ -251,7 +259,8 @@
           "instrumental": "зельем",
           "locative": "зелье",
           "plural": "зелья",
-          "genitive_plural": "зелий"
+          "genitive_plural": "зелий",
+          "accusative": "зелье"
         },
         "REVIVE": {
           "form": "оживление",
@@ -261,7 +270,8 @@
           "instrumental": "оживлением",
           "locative": "оживлении",
           "plural": "оживления",
-          "genitive_plural": "оживленй"
+          "genitive_plural": "оживленй",
+          "accusative": "оживление"
         },
         "TECHNICAL_MACHINE": {
           "form": "техническая машина",
@@ -282,7 +292,8 @@
           "instrumental": "значком",
           "locative": "значке",
           "plural": "значки",
-          "genitive_plural": "значков"
+          "genitive_plural": "значков",
+          "accusative": "значок"
         },
         "ITEM": {
           "form": "предмет",
@@ -292,7 +303,8 @@
           "instrumental": "предметом",
           "locative": "предмете",
           "plural": "предметы",
-          "genitive_plural": "предметов"
+          "genitive_plural": "предметов",
+          "accusative": "предмет"
         },
         "LEVEL": {
           "form": "уровень",
@@ -302,7 +314,8 @@
           "instrumental": "уровенем",
           "locative": "уровене",
           "plural": "уровени",
-          "genitive_plural": "уровеней"
+          "genitive_plural": "уровеней",
+          "accusative": "уровень"
         },
         "EXPERIENCE": {
           "form": "опыт",
@@ -310,7 +323,8 @@
           "genitive": "опыта",
           "dative": "опыту",
           "instrumental": "опытом",
-          "locative": "опыте"
+          "locative": "опыте",
+          "accusative": "опыт"
         },
         "HEALTH": {
           "form": "здоровье",
@@ -318,7 +332,8 @@
           "genitive": "здоровья",
           "dative": "здоровью",
           "instrumental": "здоровьем",
-          "locative": "здоровье"
+          "locative": "здоровье",
+          "accusative": "здоровье"
         },
         "BURN": {
           "base": "сжигать",
@@ -344,7 +359,8 @@
           "genitive": "сна",
           "dative": "сну",
           "instrumental": "сном",
-          "locative": "сне"
+          "locative": "сне",
+          "accusative": "сон"
         },
         "PARALYZE": {
           "base": "парализовать",
@@ -361,7 +377,8 @@
           "genitive": "увиденного",
           "dative": "увиденному",
           "instrumental": "увиденным",
-          "locative": "увиденном"
+          "locative": "увиденном",
+          "accusative": "увиденное"
         },
         "CAPTURED": {
           "form": "пойманное",
@@ -369,7 +386,8 @@
           "genitive": "пойманного",
           "dative": "пойманному",
           "instrumental": "пойманным",
-          "locative": "пойманном"
+          "locative": "пойманном",
+          "accusative": "пойманное"
         },
         "ATTACK": {
           "base": "атаковать",

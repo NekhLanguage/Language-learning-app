@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-03
 
+### Swedish and Russian: Emi's first read, eight fixes
+
+Emi read both new languages and the engine now gets these right. Swedish: «min vänstra arm» and «ditt högra ben» (the weak form after a possessive, and these two words are never offered where «ett höger finger» would come out), «fel äventyr» and «rätt bok» without an article, and «Du går ombord.» without a stranded «på». Russian: «Это моя рука.» for every "that is …" sentence (Russian does not split this/that there), short answers that echo the verb («Да, делаю.» / «Нет, не делаю.»), «в» + accusative for a place you go into («в свою комнату», «в спортзал», «в лигу») with «к столу» kept for objects, «свой» whenever the subject owns the thing («Я страхую свой багаж»), and «прокладывать» / «пилотировать» in place of the IT-jargon «навигировать». The Russian intro card for "have" now shows «у меня есть», with a note on «иметь». Ukrainian picks up the two shared fixes: «Так, роблю.» / «Ні, не роблю.» and «прокладати» / «пілотувати».
+
 ### Swedish and Russian join the app as hidden beta languages
 
 Two new target languages are wired through the whole pipeline — Swedish («Jag äter mat.», «Boken är röd.», «Hon går till sitt rum.») and Russian («Я ем еду.», «У меня есть книга.», «Книга рядом со столом.») — with all 128 core sentences, every resource pack, grammar notes, coaching lines and the interface strings. Both are hidden from the language pickers until a tester has read their generated sentences (Emi's run is next), so nothing changes for learners today; a tester reaches them with `?showHidden=1`. For the learner later: Swedish teaches the en/ett article and the suffixed definite, Russian teaches cases on objects and after prepositions and the natural «у меня есть» way of saying "I have".

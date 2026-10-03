@@ -63,7 +63,8 @@
           "instrumental": "консолью",
           "locative": "консоли",
           "plural": "консоли",
-          "genitive_plural": "консолей"
+          "genitive_plural": "консолей",
+          "accusative": "консоль"
         },
         "CONTROLLER": {
           "form": "геймпад",
@@ -73,7 +74,8 @@
           "instrumental": "геймпадом",
           "locative": "геймпаде",
           "plural": "геймпады",
-          "genitive_plural": "геймпадов"
+          "genitive_plural": "геймпадов",
+          "accusative": "геймпад"
         },
         "SCREEN": {
           "form": "экран",
@@ -83,7 +85,8 @@
           "instrumental": "экраном",
           "locative": "экране",
           "plural": "экраны",
-          "genitive_plural": "экранов"
+          "genitive_plural": "экранов",
+          "accusative": "экран"
         },
         "TIER": {
           "form": "уровень",
@@ -93,7 +96,8 @@
           "instrumental": "уровенем",
           "locative": "уровене",
           "plural": "уровени",
-          "genitive_plural": "уровеней"
+          "genitive_plural": "уровеней",
+          "accusative": "уровень"
         },
         "PIXEL": {
           "form": "пиксель",
@@ -103,7 +107,8 @@
           "instrumental": "пикселем",
           "locative": "пикселе",
           "plural": "пиксели",
-          "genitive_plural": "пикселей"
+          "genitive_plural": "пикселей",
+          "accusative": "пиксель"
         },
         "AVATAR": {
           "form": "аватар",
@@ -113,7 +118,8 @@
           "instrumental": "аватаром",
           "locative": "аватаре",
           "plural": "аватары",
-          "genitive_plural": "аватаров"
+          "genitive_plural": "аватаров",
+          "accusative": "аватар"
         },
         "BOSS": {
           "form": "босс",
@@ -164,7 +170,8 @@
           "genitive": "вреда",
           "dative": "вреду",
           "instrumental": "вредом",
-          "locative": "вреде"
+          "locative": "вреде",
+          "accusative": "вред"
         },
         "VITALITY": {
           "form": "живучесть",
@@ -172,7 +179,8 @@
           "genitive": "живучести",
           "dative": "живучести",
           "instrumental": "живучестью",
-          "locative": "живучести"
+          "locative": "живучести",
+          "accusative": "живучесть"
         },
         "MISSION": {
           "form": "миссия",
@@ -193,7 +201,8 @@
           "instrumental": "достижением",
           "locative": "достижении",
           "plural": "достижения",
-          "genitive_plural": "достиженй"
+          "genitive_plural": "достиженй",
+          "accusative": "достижение"
         },
         "UPGRADE": {
           "form": "улучшение",
@@ -203,7 +212,8 @@
           "instrumental": "улучшением",
           "locative": "улучшении",
           "plural": "улучшения",
-          "genitive_plural": "улучшенй"
+          "genitive_plural": "улучшенй",
+          "accusative": "улучшение"
         },
         "DUNGEON": {
           "form": "подземелье",
@@ -213,7 +223,8 @@
           "instrumental": "подземельем",
           "locative": "подземелье",
           "plural": "подземелья",
-          "genitive_plural": "подземелий"
+          "genitive_plural": "подземелий",
+          "accusative": "подземелье"
         },
         "SPAWN": {
           "form": "точка возрождения",
@@ -245,7 +256,8 @@
           "instrumental": "отрядом",
           "locative": "отряде",
           "plural": "отряды",
-          "genitive_plural": "отрядов"
+          "genitive_plural": "отрядов",
+          "accusative": "отряд"
         },
         "RAID": {
           "form": "рейд",
@@ -255,7 +267,8 @@
           "instrumental": "рейдом",
           "locative": "рейде",
           "plural": "рейды",
-          "genitive_plural": "рейдов"
+          "genitive_plural": "рейдов",
+          "accusative": "рейд"
         },
         "GUILD": {
           "form": "гильдия",
@@ -276,7 +289,8 @@
           "instrumental": "инвентарём",
           "locative": "инвентаре",
           "plural": "инвентари",
-          "genitive_plural": "инвентарей"
+          "genitive_plural": "инвентарей",
+          "accusative": "инвентарь"
         },
         "VIAL": {
           "form": "флакон",
@@ -286,7 +300,8 @@
           "instrumental": "флаконом",
           "locative": "флаконе",
           "plural": "флаконы",
-          "genitive_plural": "флаконов"
+          "genitive_plural": "флаконов",
+          "accusative": "флакон"
         },
         "GEM": {
           "form": "самоцвет",
@@ -296,7 +311,8 @@
           "instrumental": "самоцветом",
           "locative": "самоцвете",
           "plural": "самоцветы",
-          "genitive_plural": "самоцветов"
+          "genitive_plural": "самоцветов",
+          "accusative": "самоцвет"
         },
         "LOADOUT": {
           "form": "снаряжение",
@@ -306,7 +322,8 @@
           "instrumental": "снаряжением",
           "locative": "снаряжении",
           "plural": "снаряжения",
-          "genitive_plural": "снаряженй"
+          "genitive_plural": "снаряженй",
+          "accusative": "снаряжение"
         },
         "COOLDOWN": {
           "form": "перезарядка",
@@ -349,7 +366,8 @@
           "instrumental": "рангом",
           "locative": "ранге",
           "plural": "ранги",
-          "genitive_plural": "рангов"
+          "genitive_plural": "рангов",
+          "accusative": "ранг"
         },
         "SPEEDRUN": {
           "form": "спидран",
@@ -359,7 +377,8 @@
           "instrumental": "спидраном",
           "locative": "спидране",
           "plural": "спидраны",
-          "genitive_plural": "спидранов"
+          "genitive_plural": "спидранов",
+          "accusative": "спидран"
         },
         "RESPAWN": {
           "base": "возрождаться",

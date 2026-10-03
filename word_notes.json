@@ -135,7 +135,8 @@
   "START": { "pt": { "en": "começar — same root as 'commence'." } },
   "STOP": { "pt": { "en": "parar — same root as 'parry' and the para- in 'parachute' (it stops a fall)." } },
   "SLEEP": { "pt": { "en": "dormir — same root as 'dormitory' and 'dormant'." } },
-  "HAVE": { "pt": { "en": "ter — from Latin tenere; think 'retain' and 'tenant' (one who holds)." } },
+  "HAVE": { "pt": { "en": "ter — from Latin tenere; think 'retain' and 'tenant' (one who holds)." },
+            "ru": { "en": "у меня есть — literally 'at me there is': that is how Russian says 'I have'. The dictionary verb иметь exists, but everyday speech uses у + genitive + есть." } },
   "COME": { "pt": { "en": "vir — from Latin venire; think 'advent' (a coming) or 'venue'." } },
   "USE": { "pt": { "en": "usar — near-twin of English 'use'." } },
   "MAY": { "pt": { "en": "pode — from poder ('can'); same root as 'potent' and 'power'." } }

@@ -73,7 +73,8 @@
           "instrumental": "полем",
           "locative": "поле",
           "plural": "поля",
-          "genitive_plural": "полей"
+          "genitive_plural": "полей",
+          "accusative": "поле"
         },
         "GOAL": {
           "form": "гол",
@@ -83,7 +84,8 @@
           "instrumental": "голом",
           "locative": "голе",
           "plural": "голы",
-          "genitive_plural": "голов"
+          "genitive_plural": "голов",
+          "accusative": "гол"
         },
         "NET": {
           "form": "сетка",
@@ -104,7 +106,8 @@
           "instrumental": "стадионом",
           "locative": "стадионе",
           "plural": "стадионы",
-          "genitive_plural": "стадионов"
+          "genitive_plural": "стадионов",
+          "accusative": "стадион"
         },
         "WHISTLE": {
           "form": "свисток",
@@ -114,7 +117,8 @@
           "instrumental": "свистком",
           "locative": "свистке",
           "plural": "свистки",
-          "genitive_plural": "свистков"
+          "genitive_plural": "свистков",
+          "accusative": "свисток"
         },
         "STRIKER": {
           "form": "нападающий",
@@ -224,7 +228,8 @@
           "instrumental": "ударом головой",
           "locative": "ударе головой",
           "plural": "удары головой",
-          "genitive_plural": "ударов головой"
+          "genitive_plural": "ударов головой",
+          "accusative": "удар головой"
         },
         "TACKLE": {
           "base": "отбирать мяч",
@@ -252,7 +257,8 @@
           "instrumental": "ударом с лёта",
           "locative": "ударе с лёта",
           "plural": "удары с лёта",
-          "genitive_plural": "ударов с лёта"
+          "genitive_plural": "ударов с лёта",
+          "accusative": "удар с лёта"
         },
         "SPRINT": {
           "base": "бежать",
@@ -271,7 +277,8 @@
           "instrumental": "фолом",
           "locative": "фоле",
           "plural": "фолы",
-          "genitive_plural": "фолов"
+          "genitive_plural": "фолов",
+          "accusative": "фол"
         },
         "PENALTY": {
           "form": "пенальти",
@@ -291,7 +298,8 @@
           "instrumental": "угловым",
           "locative": "угловом",
           "plural": "угловые",
-          "genitive_plural": "угловых"
+          "genitive_plural": "угловых",
+          "accusative": "угловой"
         },
         "OFFSIDE": [
           "офсайд"
@@ -304,7 +312,8 @@
           "instrumental": "перерывом",
           "locative": "перерыве",
           "plural": "перерывы",
-          "genitive_plural": "перерывов"
+          "genitive_plural": "перерывов",
+          "accusative": "перерыв"
         },
         "SQUAD": {
           "form": "состав",
@@ -314,7 +323,8 @@
           "instrumental": "составом",
           "locative": "составе",
           "plural": "составы",
-          "genitive_plural": "составов"
+          "genitive_plural": "составов",
+          "accusative": "состав"
         },
         "FORMATION": {
           "form": "расстановка",
@@ -368,7 +378,8 @@
           "instrumental": "матчем",
           "locative": "матче",
           "plural": "матчи",
-          "genitive_plural": "матчей"
+          "genitive_plural": "матчей",
+          "accusative": "матч"
         },
         "VICTORY": {
           "form": "победа",
@@ -389,7 +400,8 @@
           "instrumental": "поражением",
           "locative": "поражении",
           "plural": "поражения",
-          "genitive_plural": "пораженй"
+          "genitive_plural": "пораженй",
+          "accusative": "поражение"
         },
         "DRAW": {
           "form": "ничья",
@@ -410,7 +422,8 @@
           "instrumental": "трофеем",
           "locative": "трофее",
           "plural": "трофеи",
-          "genitive_plural": "трофеев"
+          "genitive_plural": "трофеев",
+          "accusative": "трофей"
         },
         "SWIFT": {
           "form": "быстрый",
@@ -526,7 +539,8 @@
           "instrumental": "финалом",
           "locative": "финале",
           "plural": "финалы",
-          "genitive_plural": "финалов"
+          "genitive_plural": "финалов",
+          "accusative": "финал"
         },
         "UNBEATABLE": {
           "form": "непобедимый",

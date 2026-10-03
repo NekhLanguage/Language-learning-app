@@ -748,15 +748,26 @@ function reflexivePossessiveApplies(lang, possessiveCid, subjectCid) {
 // through the ordinary lookups — this returns the cid to look up. The
 // possessor matches by pronoun pair, or by gender for a noun subject.
 // Callers skip copular predicates («she is her mom» is not reflexive).
+// The value "allPersons" (ru) extends the pairing to every person: «Я
+// читаю свою книгу», «Ты страхуешь свой багаж» — the plain «мою/твою»
+// there is grammatical but marked (Emi run-30 -194). The default `true`
+// keeps the 3rd-person-only behaviour (sv/no/uk/pl).
 const REFLEXIVE_POSSESSOR = {
   HE: "HIS", SHE: "HER", IT: "ITS", THIRD_PERSON_PLURAL: "THEIR",
 };
+const REFLEXIVE_POSSESSOR_ALL_PERSONS = {
+  ...REFLEXIVE_POSSESSOR,
+  FIRST_PERSON_SINGULAR: "MY", FIRST_PERSON_PLURAL: "OUR",
+  SECOND_PERSON: "YOUR", SECOND_PERSON_PLURAL: "YOUR",
+};
 function reflexivePossessiveCid(lang, possessiveCid, subjectCid) {
   if (!subjectCid || !langRule(lang, "reflexivePossessive")) return possessiveCid;
+  const allPersons = langRuleValue(lang, "reflexivePossessive") === "allPersons";
   if (vocab().concepts?.[possessiveCid]?.semantic_role !== "possessive" ||
-      conceptPerson(possessiveCid) !== 3) return possessiveCid;
+      (!allPersons && conceptPerson(possessiveCid) !== 3)) return possessiveCid;
   if (!vocab().languages?.[lang]?.forms?.OWN) return possessiveCid;
-  let owns = REFLEXIVE_POSSESSOR[subjectCid] === possessiveCid;
+  const pairs = allPersons ? REFLEXIVE_POSSESSOR_ALL_PERSONS : REFLEXIVE_POSSESSOR;
+  let owns = pairs[subjectCid] === possessiveCid;
   if (!owns && vocab().concepts?.[subjectCid]?.type === "noun") {
     const g = vocab().languages?.[lang]?.forms?.[subjectCid]?.gender;
     owns = (g === "f" && possessiveCid === "HER") ||
@@ -2701,9 +2712,34 @@ function numberAgreementForm(lang, numberCid, headCid, accusative, caseName = nu
   return word;
 }
 
-function isModifierCompatible(lang, modifierCid, nounCid) {
+// Per-word adjective flags (data, not language rules):
+//   definiteOnly — the adjective exists only in a determined noun phrase
+//                  (see isModifierCompatible below).
+//   noArticle    — the attributive adjective takes no indefinite article in
+//                  front of its phrase: sv «fel äventyr», «rätt bok», never
+//                  «ett fel äventyr» (Emi run-30 -189).
+function adjectiveEntryFlag(lang, adjectiveCid, flag) {
+  const entry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
+  return !!(entry && typeof entry === "object" && !Array.isArray(entry) && entry[flag]);
+}
+function modifierRequiresDeterminer(lang, modifierCid) {
+  return adjectiveEntryFlag(lang, modifierCid, "definiteOnly");
+}
+function adjectiveDropsArticle(lang, adjectiveCid) {
+  return adjectiveEntryFlag(lang, adjectiveCid, "noArticle");
+}
+
+// `context.determined` says whether the noun slot is determined by the
+// template (a possessive right before it). A modifier entry flagged
+// `definiteOnly` only exists in that position — sv «vänster/höger» take
+// the weak «vänstra/högra» after a possessive but have no indefinite
+// phrase («ett höger finger» is wrong — Emi run-30 -187), so an undetermined
+// slot refuses them. Callers that cannot tell pass nothing and get the
+// safe answer (refused).
+function isModifierCompatible(lang, modifierCid, nounCid, context = {}) {
   const nounMeta  = vocab().concepts[nounCid];
   const nounEntry = vocab().languages?.[lang]?.forms?.[nounCid] || {};
+  if (modifierRequiresDeterminer(lang, modifierCid) && !context.determined) return false;
   // An explicit countable:false always wins — gender data (added for
   // article/agreement) must not re-open mass nouns to "tre acqua".
   if (nounMeta?.countable === false) return false;
@@ -5131,7 +5167,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // authored for the exact templates that need it; modifier injection is
   // skipped here — an injected adjective could not agree with an oblique
   // case anyway.
-  const governedForm = caseFormFor(lang, cid, caseAt[idx]);
+  // A fused adposition form («hjemmefra», ru TABLE «к столу») is the
+  // whole phrase and wins over the governed case field — its own branch
+  // below returns it; the adposition slot already rendered empty for it.
+  const fusedWhole = idx > 0 ? fusedAdpositionForm(lang, cid, ordered[idx - 1]) : null;
+  const governedForm = fusedWhole ? null : caseFormFor(lang, cid, caseAt[idx]);
   if (governedForm) {
     noteRule("prepositional_case");
     // A possessed governed noun keeps its person suffix under the case
@@ -5537,7 +5577,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       reflexivePossessiveApplies(lang, forcedConcept, subjectCid) &&
       !reflexiveSuffixedForm(lang, forcedConcept, cid, reflexiveSuffixKeyFor(cid, idx));
     if ((forcedPossessive && !reflexiveRefused) ||
-        (!forcedPossessive && isModifierCompatible(lang, forcedConcept, cid))) {
+        (!forcedPossessive &&
+         isModifierCompatible(lang, forcedConcept, cid, { determined: precededByPossessive }))) {
       adjectiveCid = forcedConcept;
       adjectiveWord = genderedFormOf(lang, possLookupCid(forcedConcept), cid, false, adjGenderOverride);
     }
@@ -5567,7 +5608,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (st.completed || st.level < 4) return false;
       // Only pair adjectives with nouns they make sense with — no
       // "shiny food" / "wild book" / "big water" style mismatches.
-      return isModifierCompatible(lang, c, cid);
+      return isModifierCompatible(lang, c, cid, { determined: precededByPossessive });
     });
 
     if (adjectives.length && rng() < 0.75) {
@@ -6100,7 +6141,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // The attributive linker rides here too — the classifier phrase
       // («一本书») is this branch's "article" for zh: «一本容易的书».
       const linked = adjForm + adjectiveLinker(lang, adjectiveCid);
-      phrase = langRule(lang, "articleAfterAdjective")
+      // A per-word noArticle adjective swallows the indefinite article
+      // (sv «fel äventyr» — Emi run-30 -189).
+      if (adjectiveDropsArticle(lang, adjectiveCid)) article = "";
+      phrase = !article
+        ? linked + " " + bare
+        : langRule(lang, "articleAfterAdjective")
         // «beyaz bir kitap» (tr, Emi run-18 -90): the article follows.
         ? linked + " " + article + " " + bare
         : article.endsWith("'")
@@ -6190,6 +6236,16 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         noteRule("prepositional_case");
         return "";
       }
+    }
+
+    // Declared rule (shortAnswerDropsPronoun — ru/uk): a yes/no short
+    // answer echoes the verb without its subject pronoun — «Да, делаю.»,
+    // «Ні, не роблю.» — never the full clause «Да, я делаю.» (Emi run-30
+    // -191, uk -140). Only the response structure; statements keep theirs.
+    if (meta.type === "pronoun" && cid === subjectCid &&
+        tpl.structure?.type === "response" &&
+        langRule(lang, "shortAnswerDropsPronoun")) {
+      return "";
     }
 
     // A preposition-governed pronoun/demonstrative declines like a governed

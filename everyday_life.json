@@ -64,7 +64,8 @@
           "instrumental": "будильником",
           "locative": "будильнике",
           "plural": "будильники",
-          "genitive_plural": "будильников"
+          "genitive_plural": "будильников",
+          "accusative": "будильник"
         },
         "SHOWER": {
           "form": "душ",
@@ -74,7 +75,8 @@
           "instrumental": "душем",
           "locative": "душе",
           "plural": "души",
-          "genitive_plural": "душей"
+          "genitive_plural": "душей",
+          "accusative": "душ"
         },
         "TOOTHBRUSH": {
           "form": "зубная щётка",
@@ -106,7 +108,8 @@
           "instrumental": "гостиной",
           "locative": "гостиной",
           "plural": "гостиные",
-          "genitive_plural": "гостиных"
+          "genitive_plural": "гостиных",
+          "accusative": "гостиная"
         },
         "FURNITURE": {
           "form": "мебель",
@@ -114,7 +117,8 @@
           "genitive": "мебели",
           "dative": "мебели",
           "instrumental": "мебелью",
-          "locative": "мебели"
+          "locative": "мебели",
+          "accusative": "мебель"
         },
         "NEIGHBOR": {
           "form": "сосед",
@@ -136,7 +140,8 @@
           "instrumental": "продуктовым магазином",
           "locative": "продуктовом магазине",
           "plural": "продуктовые магазины",
-          "genitive_plural": "продуктовых магазинов"
+          "genitive_plural": "продуктовых магазинов",
+          "accusative": "продуктовый магазин"
         },
         "PHARMACY": {
           "form": "аптека",
@@ -157,7 +162,8 @@
           "instrumental": "офисом",
           "locative": "офисе",
           "plural": "офисы",
-          "genitive_plural": "офисов"
+          "genitive_plural": "офисов",
+          "accusative": "офис"
         },
         "MEETING": {
           "form": "встреча",
@@ -178,7 +184,8 @@
           "instrumental": "дедлайном",
           "locative": "дедлайне",
           "plural": "дедлайны",
-          "genitive_plural": "дедлайнов"
+          "genitive_plural": "дедлайнов",
+          "accusative": "дедлайн"
         },
         "STORM": {
           "form": "буря",
@@ -199,7 +206,8 @@
           "instrumental": "зонтом",
           "locative": "зонте",
           "plural": "зонты",
-          "genitive_plural": "зонтов"
+          "genitive_plural": "зонтов",
+          "accusative": "зонт"
         },
         "FORECAST": {
           "form": "прогноз",
@@ -209,7 +217,8 @@
           "instrumental": "прогнозом",
           "locative": "прогнозе",
           "plural": "прогнозы",
-          "genitive_plural": "прогнозов"
+          "genitive_plural": "прогнозов",
+          "accusative": "прогноз"
         },
         "INVITATION": {
           "form": "приглашение",
@@ -219,7 +228,8 @@
           "instrumental": "приглашением",
           "locative": "приглашении",
           "plural": "приглашения",
-          "genitive_plural": "приглашенй"
+          "genitive_plural": "приглашенй",
+          "accusative": "приглашение"
         },
         "CONVERSATION": {
           "form": "разговор",
@@ -229,7 +239,8 @@
           "instrumental": "разговором",
           "locative": "разговоре",
           "plural": "разговоры",
-          "genitive_plural": "разговоров"
+          "genitive_plural": "разговоров",
+          "accusative": "разговор"
         },
         "COMPLIMENT": {
           "form": "комплимент",
@@ -239,7 +250,8 @@
           "instrumental": "комплиментом",
           "locative": "комплименте",
           "plural": "комплименты",
-          "genitive_plural": "комплиментов"
+          "genitive_plural": "комплиментов",
+          "accusative": "комплимент"
         },
         "WALLET": {
           "form": "кошелёк",
@@ -249,7 +261,8 @@
           "instrumental": "кошельком",
           "locative": "кошельке",
           "plural": "кошельки",
-          "genitive_plural": "кошельков"
+          "genitive_plural": "кошельков",
+          "accusative": "кошелёк"
         },
         "BILL": {
           "form": "счёт",
@@ -259,7 +272,8 @@
           "instrumental": "счётом",
           "locative": "счёте",
           "plural": "счета",
-          "genitive_plural": "счётов"
+          "genitive_plural": "счётов",
+          "accusative": "счёт"
         },
         "BUDGET": {
           "form": "бюджет",
@@ -269,7 +283,8 @@
           "instrumental": "бюджетом",
           "locative": "бюджете",
           "plural": "бюджеты",
-          "genitive_plural": "бюджетов"
+          "genitive_plural": "бюджетов",
+          "accusative": "бюджет"
         },
         "HEADACHE": {
           "form": "головная боль",
@@ -279,7 +294,8 @@
           "instrumental": "головной болью",
           "locative": "головной боли",
           "plural": "головные боли",
-          "genitive_plural": "головных болей"
+          "genitive_plural": "головных болей",
+          "accusative": "головная боль"
         },
         "MEDICINE": {
           "form": "лекарство",
@@ -289,7 +305,8 @@
           "instrumental": "лекарством",
           "locative": "лекарстве",
           "plural": "лекарства",
-          "genitive_plural": "лекарств"
+          "genitive_plural": "лекарств",
+          "accusative": "лекарство"
         },
         "APPOINTMENT": {
           "form": "запись",
@@ -299,7 +316,8 @@
           "instrumental": "записью",
           "locative": "записи",
           "plural": "записи",
-          "genitive_plural": "записей"
+          "genitive_plural": "записей",
+          "accusative": "запись"
         },
         "LAUNDRY": {
           "form": "стирка",
@@ -325,7 +343,8 @@
           "genitive": "мусора",
           "dative": "мусору",
           "instrumental": "мусором",
-          "locative": "мусоре"
+          "locative": "мусоре",
+          "accusative": "мусор"
         },
         "CANDLE": {
           "form": "свеча",
@@ -346,7 +365,8 @@
           "instrumental": "диваном",
           "locative": "диване",
           "plural": "диваны",
-          "genitive_plural": "диванов"
+          "genitive_plural": "диванов",
+          "accusative": "диван"
         },
         "COMMUTE": {
           "base": "ездить на работу",

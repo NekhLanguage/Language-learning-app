@@ -95,7 +95,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.86";
+const APP_DATA_VERSION = "1.2.87";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -3077,8 +3077,17 @@ return tpl;
 
   // Locale-aware for the target word (tr «İçmek», never «Içmek» — Emi run-18 -94).
   const headword = (s, lang) => s ? capitalizeFirst(s, lang) : s;
+  // A per-word `cardFace` on the target entry replaces the dictionary
+  // form on the intro card only (ru HAVE: «у меня есть», with «иметь»
+  // left to the word note — Emi run-30 item e). Sentences, tiles and
+  // options keep reading formOf.
+  const cardFace = (lang, cid) => {
+    const entry = window.GLOBAL_VOCAB.languages?.[lang]?.forms?.[cid];
+    return (entry && typeof entry === "object" && !Array.isArray(entry) &&
+      typeof entry.cardFace === "string" && entry.cardFace) || formOf(lang, cid);
+  };
   content.innerHTML = `
-    <h2>${safe(headword(formOf(targetLang, targetConcept), targetLang))} ${ttsHtml(formOf(targetLang, targetConcept), targetLang)}</h2>
+    <h2>${safe(headword(cardFace(targetLang, targetConcept), targetLang))} ${ttsHtml(cardFace(targetLang, targetConcept), targetLang)}</h2>
     <p>${safe(headword(formOf(supportLang, targetConcept), supportLang))}</p>
     ${wordNote ? `<p class="word-note">${ICON_SPARK} ${safe(wordNote)}</p>` : ""}
     <hr>
@@ -4468,9 +4477,16 @@ function seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang) {
   // forced path: they are determiners — "his water" / «il suo cibo» is fine
   // where "four waters" is not. The parity fence still verifies landing.
   const supportLang = languageState.support || "en";
+  // The engine refuses a definiteOnly adjective (sv «vänster») outside a
+  // determined slot, so tell it which nouns the template's possessive
+  // determines («min vänstra arm» drills; «ett vänster finger» never).
+  const determined = c => {
+    const i = (tpl.concepts || []).indexOf(c);
+    return i > 0 && window.GLOBAL_VOCAB.concepts[tpl.concepts[i - 1]]?.semantic_role === "possessive";
+  };
   const pairCompatible = c =>
-    isModifierCompatible(targetLang, targetConcept, c) &&
-    isModifierCompatible(supportLang, targetConcept, c);
+    isModifierCompatible(targetLang, targetConcept, c, { determined: determined(c) }) &&
+    isModifierCompatible(supportLang, targetConcept, c, { determined: determined(c) });
   const noun = isPossessive
     ? nouns.find(c => adjectiveSuitsNoun(targetConcept, c))
     : ((meta.type === "adjective"

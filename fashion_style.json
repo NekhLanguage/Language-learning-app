@@ -74,7 +74,8 @@
           "instrumental": "платьем",
           "locative": "платье",
           "plural": "платья",
-          "genitive_plural": "платьев"
+          "genitive_plural": "платьев",
+          "accusative": "платье"
         },
         "SNEAKERS": {
           "form": "кроссовки",
@@ -90,7 +91,8 @@
           "instrumental": "тканью",
           "locative": "ткани",
           "plural": "ткани",
-          "genitive_plural": "тканей"
+          "genitive_plural": "тканей",
+          "accusative": "ткань"
         },
         "LEATHER": {
           "form": "кожа",
@@ -107,7 +109,8 @@
           "genitive": "шёлка",
           "dative": "шёлку",
           "instrumental": "шёлком",
-          "locative": "шёлке"
+          "locative": "шёлке",
+          "accusative": "шёлк"
         },
         "PATTERN": {
           "form": "узор",
@@ -117,7 +120,8 @@
           "instrumental": "узором",
           "locative": "узоре",
           "plural": "узоры",
-          "genitive_plural": "узоров"
+          "genitive_plural": "узоров",
+          "accusative": "узор"
         },
         "STITCH": {
           "form": "стежок",
@@ -127,7 +131,8 @@
           "instrumental": "стежком",
           "locative": "стежке",
           "plural": "стежки",
-          "genitive_plural": "стежков"
+          "genitive_plural": "стежков",
+          "accusative": "стежок"
         },
         "TAILOR": {
           "form": "портной",
@@ -148,7 +153,8 @@
           "instrumental": "подиумом",
           "locative": "подиуме",
           "plural": "подиумы",
-          "genitive_plural": "подиумов"
+          "genitive_plural": "подиумов",
+          "accusative": "подиум"
         },
         "MODEL": {
           "form": "модель",
@@ -158,7 +164,8 @@
           "instrumental": "моделью",
           "locative": "модели",
           "plural": "модели",
-          "genitive_plural": "моделей"
+          "genitive_plural": "моделей",
+          "accusative": "модель"
         },
         "COLLECTION": {
           "form": "коллекция",
@@ -179,7 +186,8 @@
           "instrumental": "бутиком",
           "locative": "бутике",
           "plural": "бутики",
-          "genitive_plural": "бутиков"
+          "genitive_plural": "бутиков",
+          "accusative": "бутик"
         },
         "WARDROBE": {
           "form": "гардероб",
@@ -189,7 +197,8 @@
           "instrumental": "гардеробом",
           "locative": "гардеробе",
           "plural": "гардеробы",
-          "genitive_plural": "гардеробов"
+          "genitive_plural": "гардеробов",
+          "accusative": "гардероб"
         },
         "TREND": {
           "form": "тренд",
@@ -199,7 +208,8 @@
           "instrumental": "трендом",
           "locative": "тренде",
           "plural": "тренды",
-          "genitive_plural": "трендов"
+          "genitive_plural": "трендов",
+          "accusative": "тренд"
         },
         "NECKLACE": {
           "form": "ожерелье",
@@ -209,7 +219,8 @@
           "instrumental": "ожерельем",
           "locative": "ожерелье",
           "plural": "ожерелья",
-          "genitive_plural": "ожерелий"
+          "genitive_plural": "ожерелий",
+          "accusative": "ожерелье"
         },
         "BRACELET": {
           "form": "браслет",
@@ -219,7 +230,8 @@
           "instrumental": "браслетом",
           "locative": "браслете",
           "plural": "браслеты",
-          "genitive_plural": "браслетов"
+          "genitive_plural": "браслетов",
+          "accusative": "браслет"
         },
         "SUNGLASSES": {
           "form": "солнцезащитные очки",
@@ -233,7 +245,8 @@
           "genitive": "макияжа",
           "dative": "макияжу",
           "instrumental": "макияжем",
-          "locative": "макияже"
+          "locative": "макияже",
+          "accusative": "макияж"
         },
         "LIPSTICK": {
           "form": "помада",
@@ -265,7 +278,8 @@
           "instrumental": "нарядом",
           "locative": "наряде",
           "plural": "наряды",
-          "genitive_plural": "нарядов"
+          "genitive_plural": "нарядов",
+          "accusative": "наряд"
         },
         "LOOKBOOK": {
           "form": "лукбук",
@@ -275,7 +289,8 @@
           "instrumental": "лукбуком",
           "locative": "лукбуке",
           "plural": "лукбуки",
-          "genitive_plural": "лукбуков"
+          "genitive_plural": "лукбуков",
+          "accusative": "лукбук"
         },
         "AESTHETIC": {
           "form": "эстетика",
@@ -305,7 +320,8 @@
           "instrumental": "брендом",
           "locative": "бренде",
           "plural": "бренды",
-          "genitive_plural": "брендов"
+          "genitive_plural": "брендов",
+          "accusative": "бренд"
         },
         "CAMPAIGN": {
           "form": "кампания",
@@ -346,7 +362,8 @@
           "genitive": "кутюра",
           "dative": "кутюру",
           "instrumental": "кутюром",
-          "locative": "кутюре"
+          "locative": "кутюре",
+          "accusative": "кутюр"
         },
         "EMBROIDER": {
           "base": "вышивать",

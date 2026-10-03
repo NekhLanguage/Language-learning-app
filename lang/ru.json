@@ -314,7 +314,8 @@
       "instrumental": "домом",
       "locative": "доме",
       "plural": "дома",
-      "genitive_plural": "домов"
+      "genitive_plural": "домов",
+      "accusative": "дом"
     },
     "HOME": {
       "form": "дом",
@@ -326,7 +327,8 @@
       "predicative": "дома",
       "fused": {
         "to": "домой"
-      }
+      },
+      "accusative": "дом"
     },
     "BOOK": {
       "form": "книга",
@@ -347,7 +349,8 @@
       "instrumental": "вещью",
       "locative": "вещи",
       "plural": "вещи",
-      "genitive_plural": "вещей"
+      "genitive_plural": "вещей",
+      "accusative": "вещь"
     },
     "JOB": {
       "form": "работа",
@@ -456,7 +459,8 @@
       "instrumental": "дочерью",
       "locative": "дочери",
       "plural": "дочери",
-      "genitive_plural": "дочерей"
+      "genitive_plural": "дочерей",
+      "accusative": "дочь"
     },
     "BROTHER": {
       "form": "брат",
@@ -543,7 +547,8 @@
       "instrumental": "пальцем",
       "locative": "пальце",
       "plural": "пальцы",
-      "genitive_plural": "пальцев"
+      "genitive_plural": "пальцев",
+      "accusative": "палец"
     },
     "EYE": {
       "form": "глаз",
@@ -553,7 +558,8 @@
       "instrumental": "глазом",
       "locative": "глазу",
       "plural": "глаза",
-      "genitive_plural": "глаз"
+      "genitive_plural": "глаз",
+      "accusative": "глаз"
     },
     "MOUTH": {
       "form": "рот",
@@ -563,7 +569,8 @@
       "instrumental": "ртом",
       "locative": "рту",
       "plural": "рты",
-      "genitive_plural": "ртов"
+      "genitive_plural": "ртов",
+      "accusative": "рот"
     },
     "FACE": {
       "form": "лицо",
@@ -573,7 +580,8 @@
       "instrumental": "лицом",
       "locative": "лице",
       "plural": "лица",
-      "genitive_plural": "лиц"
+      "genitive_plural": "лиц",
+      "accusative": "лицо"
     },
     "BREAKFAST": {
       "form": "завтрак",
@@ -583,7 +591,8 @@
       "instrumental": "завтраком",
       "locative": "завтраке",
       "plural": "завтраки",
-      "genitive_plural": "завтраков"
+      "genitive_plural": "завтраков",
+      "accusative": "завтрак"
     },
     "LUNCH": {
       "form": "обед",
@@ -593,7 +602,8 @@
       "instrumental": "обедом",
       "locative": "обеде",
       "plural": "обеды",
-      "genitive_plural": "обедов"
+      "genitive_plural": "обедов",
+      "accusative": "обед"
     },
     "DINNER": {
       "form": "ужин",
@@ -603,7 +613,8 @@
       "instrumental": "ужином",
       "locative": "ужине",
       "plural": "ужины",
-      "genitive_plural": "ужинов"
+      "genitive_plural": "ужинов",
+      "accusative": "ужин"
     },
     "CLOTHES": {
       "form": "одежда",
@@ -631,7 +642,8 @@
       "genitive": "обуви",
       "dative": "обуви",
       "instrumental": "обувью",
-      "locative": "обуви"
+      "locative": "обуви",
+      "accusative": "обувь"
     },
     "PHONE": {
       "form": "телефон",
@@ -641,7 +653,8 @@
       "instrumental": "телефоном",
       "locative": "телефоне",
       "plural": "телефоны",
-      "genitive_plural": "телефонов"
+      "genitive_plural": "телефонов",
+      "accusative": "телефон"
     },
     "TABLE": {
       "form": "стол",
@@ -651,7 +664,11 @@
       "instrumental": "столом",
       "locative": "столе",
       "plural": "столы",
-      "genitive_plural": "столов"
+      "genitive_plural": "столов",
+      "fused": {
+        "to": "к столу"
+      },
+      "accusative": "стол"
     },
     "PANTS": {
       "form": "брюки",
@@ -742,7 +759,8 @@
     },
     "HAVE": {
       "base": "иметь",
-      "present": "есть"
+      "present": "есть",
+      "cardFace": "у меня есть"
     },
     "COME": {
       "base": "приходить",
@@ -843,7 +861,8 @@
       "instrumental": "моим",
       "f_instrumental": "моей",
       "locative": "моём",
-      "f_locative": "моей"
+      "f_locative": "моей",
+      "f_accusative": "мою"
     },
     "YOUR": {
       "form": "твой",
@@ -857,7 +876,8 @@
       "instrumental": "твоим",
       "f_instrumental": "твоей",
       "locative": "твоём",
-      "f_locative": "твоей"
+      "f_locative": "твоей",
+      "f_accusative": "твою"
     },
     "HIS": {
       "form": "его",
@@ -883,7 +903,8 @@
       "instrumental": "нашим",
       "f_instrumental": "нашей",
       "locative": "нашем",
-      "f_locative": "нашей"
+      "f_locative": "нашей",
+      "f_accusative": "нашу"
     },
     "THEIR": {
       "form": "их",
@@ -1088,7 +1109,7 @@
       "locative": "этом"
     },
     "THAT": {
-      "form": "то",
+      "form": "это",
       "genitive": "того",
       "dative": "тому",
       "accusative": "то",
@@ -1223,7 +1244,8 @@
       "instrumental": "утром",
       "locative": "утре",
       "plural": "утра",
-      "genitive_plural": "утр"
+      "genitive_plural": "утр",
+      "accusative": "утро"
     },
     "DAY": {
       "form": "день",
@@ -1233,7 +1255,8 @@
       "instrumental": "днём",
       "locative": "дне",
       "plural": "дни",
-      "genitive_plural": "дней"
+      "genitive_plural": "дней",
+      "accusative": "день"
     },
     "NIGHT": {
       "form": "ночь",
@@ -1243,7 +1266,8 @@
       "instrumental": "ночью",
       "locative": "ночи",
       "plural": "ночи",
-      "genitive_plural": "ночей"
+      "genitive_plural": "ночей",
+      "accusative": "ночь"
     },
     "WEEK": {
       "form": "неделя",
@@ -1264,7 +1288,8 @@
       "instrumental": "месяцем",
       "locative": "месяце",
       "plural": "месяцы",
-      "genitive_plural": "месяцев"
+      "genitive_plural": "месяцев",
+      "accusative": "месяц"
     },
     "YEAR": {
       "form": "год",
@@ -1274,7 +1299,8 @@
       "instrumental": "годом",
       "locative": "году",
       "plural": "годы",
-      "genitive_plural": "лет"
+      "genitive_plural": "лет",
+      "accusative": "год"
     },
     "HOUR": {
       "form": "час",
@@ -1284,7 +1310,8 @@
       "instrumental": "часом",
       "locative": "часе",
       "plural": "часы",
-      "genitive_plural": "часов"
+      "genitive_plural": "часов",
+      "accusative": "час"
     },
     "MINUTE": {
       "form": "минута",
@@ -1342,7 +1369,8 @@
       "instrumental": "летом",
       "locative": "лете",
       "plural": "лета",
-      "genitive_plural": "лет"
+      "genitive_plural": "лет",
+      "accusative": "лето"
     },
     "AUTUMN": {
       "form": "осень",
@@ -1352,7 +1380,8 @@
       "instrumental": "осенью",
       "locative": "осени",
       "plural": "осени",
-      "genitive_plural": "осеней"
+      "genitive_plural": "осеней",
+      "accusative": "осень"
     },
     "WINTER": {
       "form": "зима",
@@ -1441,7 +1470,7 @@
       "из"
     ],
     "TO": [
-      "к"
+      "в"
     ],
     "BY": [
       "с помощью"
@@ -1503,7 +1532,8 @@
       "instrumental": "своим",
       "f_instrumental": "своей",
       "locative": "своём",
-      "f_locative": "своей"
+      "f_locative": "своей",
+      "f_accusative": "свою"
     }
   }
 }
