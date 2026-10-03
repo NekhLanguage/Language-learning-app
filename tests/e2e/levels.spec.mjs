@@ -532,9 +532,15 @@ test("L2: a word with no same-type peers (yes / no) is tested against other func
   const tiles = (await page.locator("#choices button").allInnerTexts()).map((t) => t.trim().toLowerCase());
   expect(new Set(tiles).size).toBe(4);
 
-  // Answer correctly twice (standard L2 spacing between) → the word climbs
-  // to L3. The correct tile carries the target's own data-cid.
-  for (let i = 0; i < 2; i++) {
+  // Two correct answers (standard L2 spacing between) climb a word to L3.
+  // Both YES and NO are live and the pick between them is random, so
+  // answer four rounds: whichever way they split, at least one word has
+  // two correct answers. The correct tile carries the target's data-cid.
+  const levelsNow = () => page.evaluate(() => ({ YES: window.__app.run.progress.YES.level, NO: window.__app.run.progress.NO.level }));
+  for (let i = 0; i < 4; i++) {
+    const levels = await levelsNow();
+    if (Math.max(levels.YES, levels.NO) >= 3) break; // the L3 round has 8 tiles — done
+    await expect(page.locator("#session-subtitle")).toContainText("2");
     await expect(page.locator("#choices button")).toHaveCount(4);
     const target = await lastTargetConcept(page);
     await page.locator(`#choices button[data-cid="${target}"]`).click();
@@ -542,7 +548,7 @@ test("L2: a word with no same-type peers (yes / no) is tested against other func
     await page.evaluate(() => { window.__app.run.exerciseCounter += 4; });
     await page.click("#check-btn");
   }
-  const levels = await page.evaluate(() => ({ YES: window.__app.run.progress.YES.level, NO: window.__app.run.progress.NO.level }));
+  const levels = await levelsNow();
   expect(Math.max(levels.YES, levels.NO)).toBeGreaterThanOrEqual(3);
 });
 
