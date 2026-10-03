@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-03
 
+### Yes, no, not, please, maybe and thanks can finally be tested
+
+These six words were introduced once and then sat at level 2 for ever: the level-2 question only ever picked wrong answers of the same word type, and these types have one or two words each. They are now tested against the other small words you know (and, with, I, …) when there aren't enough of their own kind, so they climb the ladder like everything else.
+
 ### Anna's words come back after their intro card
 
 Words Anna added to your app vocabulary were introduced once and then never seen again. Once a language's lessons are all unlocked, the app picks the words that have waited longest at each level, and six core words (not, please, maybe, thanks, yes, no) have no way to be tested at level 2, so they sat at the front of that queue for ever and everything behind them, including every word from Anna, never got a turn. The app now skips words that cannot be shown at their level when it picks, so Anna's words come up at level 2 and climb the ladder like any other word. Those six core words still need a proper level-2 exercise; until then they stay at level 2 without blocking anyone.

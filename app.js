@@ -10,6 +10,7 @@ import {
   baseCompletionRatio as computeBaseCompletionRatio,
   conceptSelectionWeight as pureConceptSelectionWeight,
   pickFromLevelBuckets,
+  distractorTiers,
 } from "./selection.mjs";
 import { isFeatureAvailable } from "./capabilities.mjs";
 import {
@@ -94,7 +95,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.84";
+const APP_DATA_VERSION = "1.2.85";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -3628,39 +3629,36 @@ function buildLevel2Question(targetConcept, targetLang, supportLang) {
   const meta = window.GLOBAL_VOCAB.concepts[targetConcept];
   if (!meta) return null;
 
-  const type = meta.type;
-
   // Prompt = target word (clean + language agnostic)
   const prompt = formOf(targetLang, targetConcept);
 
- const pool = run.released.filter(cid => {
-  if (cid === targetConcept) return false;
+  // Distractors: same type first; when the type has too few released
+  // peers, other function words, then anything released (Nekh
+  // 2026-10-03 — YES / NO / NOT / PLEASE / MAYBE / THANKS were untestable
+  // at L2 for ever under the strict same-type rule). Same shape as the
+  // L3/L4 builders' fallback.
+  const ordered = distractorTiers(targetConcept, run.released, {
+    typeOf: cid => window.GLOBAL_VOCAB.concepts[cid]?.type,
+    needed: 3,
+  });
 
-  const m = window.GLOBAL_VOCAB.concepts[cid];
-  if (!m) return false;
+  // 🔥 REMOVE DUPLICATE MEANINGS — two options must never share a
+  // support-language surface, and an option must have one.
+  const usedSupport = new Set([String(surfaceForm(supportLang, targetConcept) || "").trim().toLowerCase()]);
+  const distractors = [];
+  for (const cid of ordered) {
+    const s = String(surfaceForm(supportLang, cid) || "").trim();
+    if (!s) continue;
+    const key = s.toLowerCase();
+    if (usedSupport.has(key)) continue;
+    usedSupport.add(key);
+    distractors.push(cid);
+    if (distractors.length === 3) break;
+  }
 
-  return m.type === type;
-});
+  if (distractors.length < 3) return null;
 
-// 🔥 REMOVE DUPLICATE MEANINGS
-const usedSupport = new Set();
-const filteredPool = [];
-
-for (const cid of pool) {
-  const s = surfaceForm(supportLang, cid);
-
-  if (usedSupport.has(s)) continue;
-
-  usedSupport.add(s);
-  filteredPool.push(cid);
-}
-
-if (filteredPool.length < 3) return null;
-
-const options = shuffle([
-  targetConcept,
-  ...shuffle(filteredPool).slice(0, 3)
-]);
+  const options = shuffle([targetConcept, ...distractors]);
 
   return {
     prompt,
@@ -4069,17 +4067,36 @@ if (!finalOptions.includes(targetConcept)) {
         return true;
       });
 
-      if (pool.length < 3) return [];
+      // Too few same-type peers (YES / NO / NOT / PLEASE / MAYBE / THANKS):
+      // widen to other function words, then anything released, in that
+      // order (Nekh 2026-10-03). This used to `return []` here, which
+      // never reached the fallback below and left those words untestable
+      // at L4 for ever. Same tiering as the L2 question builder.
+      const ordered = pool.length >= 3
+        ? shuffle([...pool])
+        : distractorTiers(targetConcept, run.released, {
+            typeOf: cid => window.GLOBAL_VOCAB.concepts[cid]?.type,
+            needed: 3,
+            usable: cid => {
+              const m = window.GLOBAL_VOCAB.concepts[cid];
+              if (!m) return false;
+              if (m.semantic_role === "possessive" &&
+                  langRuleValue(targetLang, "possessiveSuffix")) return false;
+              return formOf(supportLang, cid) !== promptSupport;
+            },
+          });
+      if (ordered.length < 3) return [];
 
       // Try to build up to 6 options, but always >= 4
-      const desiredTotal = Math.max(4, Math.min(6, pool.length + 1));
+      const desiredTotal = Math.max(4, Math.min(6, ordered.length + 1));
 
-      // Shuffle pool and pick distractors with unique support meanings AND
-      // unique rendered target surfaces. Two concepts can share a target
-      // form while their support glosses differ — pl HOME and HOUSE both
+      // Walk the pool (same-type peers shuffled, or the tiered widening)
+      // and pick distractors with unique support meanings AND unique
+      // rendered target surfaces. Two concepts can share a target form
+      // while their support glosses differ — pl HOME and HOUSE both
       // render «dom», so support-only dedupe showed the same tile twice
       // and only one of them counted as correct (Emi 2026-08-28-11).
-      const shuffled = shuffle([...pool]);
+      const shuffled = ordered;
       const chosen = [targetConcept];
       const usedSupport = new Set([promptSupport]);
       const usedTarget = new Set([resolveTargetSurface(targetConcept)]);
