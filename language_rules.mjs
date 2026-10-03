@@ -248,7 +248,13 @@
 //                            from the language's OWN entry — «свій»,
 //                            «swój», «sin» — with the same gender/number/
 //                            case fields as any possessive. Never on a
-//                            copular predicate («she is her mom»).
+//                            copular predicate («she is her mom»). The
+//                            value "allPersons" (ru) pairs every subject
+//                            with its possessive («Я читаю свою книгу»).
+//   shortAnswerDropsPronoun  a yes/no short answer (structure "response")
+//                            echoes the verb without its subject pronoun
+//                            — «Да, делаю.», «Ні, не роблю.» (Emi run-30
+//                            -191, uk -140).
 //   oneAsIndefiniteArticle   the numeral ONE in a drilled slot renders as
 //                            the noun's indefinite article, with the slot's
 //                            case and the article's allomorphy («einen
@@ -1079,7 +1085,7 @@ export const LANGUAGE_RULES = {
     // 2026-10-03 stress test. Differences from uk: possession is the
     // existential «У меня есть книга» (possessor in the genitive behind
     // «у», HAVE pinned to invariant «есть», possessed noun nominative);
-    // TO is «к» + dative (uk «до» + genitive); «за» + instrumental for
+    // TO is «в» + accusative (uk «до» + genitive); «за» + instrumental for
     // «go for X»; с/в/к take -о before clusters («со своей мамой»). Not
     // yet native-reviewed — Emi's run is the first read.
     features: {
@@ -1092,13 +1098,21 @@ export const LANGUAGE_RULES = {
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,
     numeralGenitivePlural: true, numeralGenderAgreement: true,
-    reflexivePossessive: true,
+    // «свой» for every person whose subject owns the noun («Я читаю свою
+    // книгу», «Ты страхуешь свой багаж» — Emi run-30 -194), not only 3rd.
+    reflexivePossessive: "allPersons",
+    // «Да, делаю.» / «Нет, не делаю.» — never «Да, я делаю» (run-30 -191).
+    shortAnswerDropsPronoun: true,
     // «сажусь на рейс» — governedPreposition on the verb entry.
     verbGovernedPrepositions: true,
     motionPurpose: { form: "за", position: "pre", case: "instrumental" },
     existentialPossession: { case: "genitive", prefix: "у" },
     commaBeforeConjunctions: ["но", "потому что", "а"],
     prepositionAllomorphy: "ru",
+    // TO a place entered is «в» + accusative («в свою комнату», «в
+    // спортзал», «в лигу»); a person or object is «к» + dative, carried
+    // by the noun's `fused.to` («к столу») — Emi run-30 -193.
+    fusedAdpositionForms: true,
     caseMarking: {
       directObjectCase: "accusative",
       prepositions: {
@@ -1106,7 +1120,7 @@ export const LANGUAGE_RULES = {
         UNDER: "instrumental", BEHIND: "instrumental", FRONT: "instrumental",
         BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
         WITH: "instrumental",
-        TO: "dative", FROM: "genitive", FOR: "genitive",
+        TO: "accusative", FROM: "genitive", FOR: "genitive",
       },
       femAccusativeStrategy: "ru",
       bareInstrumentalMeans: true,
@@ -1302,6 +1316,9 @@ export const LANGUAGE_RULES = {
     // never «сідаю рейс» (Emi run-25 -163) — governedPreposition on the
     // verb entry, the same data field as ar/no.
     verbGovernedPrepositions: true,
+    // «Так, роблю.» / «Ні, не роблю.» — the short answer echoes the verb
+    // without its pronoun (Emi -140, fixed with ru's run-30 -191).
+    shortAnswerDropsPronoun: true,
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,

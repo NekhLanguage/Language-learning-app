@@ -247,7 +247,8 @@
           "instrumental": "гантелью",
           "locative": "гантели",
           "plural": "гантели",
-          "genitive_plural": "гантелей"
+          "genitive_plural": "гантелей",
+          "accusative": "гантель"
         },
         "TREADMILL": {
           "form": "беговая дорожка",
@@ -268,7 +269,8 @@
           "instrumental": "весом",
           "locative": "весе",
           "plural": "весы",
-          "genitive_plural": "весов"
+          "genitive_plural": "весов",
+          "accusative": "вес"
         },
         "REPETITION": {
           "form": "повторение",
@@ -278,7 +280,8 @@
           "instrumental": "повторением",
           "locative": "повторении",
           "plural": "повторения",
-          "genitive_plural": "повторенй"
+          "genitive_plural": "повторенй",
+          "accusative": "повторение"
         },
         "SWEAT": {
           "form": "пот",
@@ -286,7 +289,8 @@
           "genitive": "пота",
           "dative": "поту",
           "instrumental": "потом",
-          "locative": "поте"
+          "locative": "поте",
+          "accusative": "пот"
         },
         "ENERGY": {
           "form": "энергия",
@@ -303,7 +307,8 @@
           "genitive": "белка",
           "dative": "белку",
           "instrumental": "белком",
-          "locative": "белке"
+          "locative": "белке",
+          "accusative": "белок"
         },
         "HABIT": {
           "form": "привычка",
@@ -322,7 +327,8 @@
           "genitive": "прогресса",
           "dative": "прогрессу",
           "instrumental": "прогрессом",
-          "locative": "прогрессе"
+          "locative": "прогрессе",
+          "accusative": "прогресс"
         },
         "TARGET": {
           "form": "цель",
@@ -332,7 +338,8 @@
           "instrumental": "целью",
           "locative": "цели",
           "plural": "цели",
-          "genitive_plural": "целей"
+          "genitive_plural": "целей",
+          "accusative": "цель"
         },
         "HEART": {
           "form": "сердце",
@@ -342,7 +349,8 @@
           "instrumental": "сердцем",
           "locative": "сердце",
           "plural": "сердца",
-          "genitive_plural": "сердец"
+          "genitive_plural": "сердец",
+          "accusative": "сердце"
         },
         "KNEE": {
           "form": "колено",
@@ -352,7 +360,8 @@
           "instrumental": "коленом",
           "locative": "колене",
           "plural": "колени",
-          "genitive_plural": "коленей"
+          "genitive_plural": "коленей",
+          "accusative": "колено"
         },
         "SHOULDER": {
           "form": "плечо",
@@ -362,7 +371,8 @@
           "instrumental": "плечом",
           "locative": "плече",
           "plural": "плечи",
-          "genitive_plural": "плеч"
+          "genitive_plural": "плеч",
+          "accusative": "плечо"
         },
         "CALORIE": {
           "form": "калория",
@@ -395,7 +405,8 @@
           "instrumental": "забегом",
           "locative": "забеге",
           "plural": "забеги",
-          "genitive_plural": "забегов"
+          "genitive_plural": "забегов",
+          "accusative": "забег"
         },
         "MARATHON": {
           "form": "марафон",
@@ -405,7 +416,8 @@
           "instrumental": "марафоном",
           "locative": "марафоне",
           "plural": "марафоны",
-          "genitive_plural": "марафонов"
+          "genitive_plural": "марафонов",
+          "accusative": "марафон"
         },
         "WARMUP": {
           "form": "разминка",
@@ -437,7 +449,8 @@
           "instrumental": "полотенцем",
           "locative": "полотенце",
           "plural": "полотенца",
-          "genitive_plural": "полотенец"
+          "genitive_plural": "полотенец",
+          "accusative": "полотенце"
         },
         "BOTTLE": {
           "form": "бутылка",
@@ -458,7 +471,8 @@
           "instrumental": "велосипедом",
           "locative": "велосипеде",
           "plural": "велосипеды",
-          "genitive_plural": "велосипедов"
+          "genitive_plural": "велосипедов",
+          "accusative": "велосипед"
         },
         "POOL": {
           "form": "бассейн",
@@ -468,7 +482,8 @@
           "instrumental": "бассейном",
           "locative": "бассейне",
           "plural": "бассейны",
-          "genitive_plural": "бассейнов"
+          "genitive_plural": "бассейнов",
+          "accusative": "бассейн"
         },
         "STRENGTH": {
           "form": "сила",
@@ -496,7 +511,8 @@
           "genitive": "отдыха",
           "dative": "отдыху",
           "instrumental": "отдыхом",
-          "locative": "отдыхе"
+          "locative": "отдыхе",
+          "accusative": "отдых"
         },
         "LIFT": {
           "base": "поднимать",

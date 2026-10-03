@@ -111,7 +111,8 @@
           "instrumental": "заклинанием",
           "locative": "заклинании",
           "plural": "заклинания",
-          "genitive_plural": "заклинанй"
+          "genitive_plural": "заклинанй",
+          "accusative": "заклинание"
         },
         "POTION": {
           "form": "зелье",
@@ -121,7 +122,8 @@
           "instrumental": "зельем",
           "locative": "зелье",
           "plural": "зелья",
-          "genitive_plural": "зелий"
+          "genitive_plural": "зелий",
+          "accusative": "зелье"
         },
         "SCHOOL": {
           "form": "школа",
@@ -142,7 +144,8 @@
           "instrumental": "котлом",
           "locative": "котле",
           "plural": "котлы",
-          "genitive_plural": "котлов"
+          "genitive_plural": "котлов",
+          "accusative": "котёл"
         },
         "BROOM": {
           "form": "метла",
@@ -174,7 +177,8 @@
           "instrumental": "замком",
           "locative": "замке",
           "plural": "замки",
-          "genitive_plural": "замков"
+          "genitive_plural": "замков",
+          "accusative": "замок"
         },
         "PROFESSOR": {
           "form": "профессор",
@@ -262,7 +266,8 @@
           "instrumental": "лесом",
           "locative": "лесу",
           "plural": "леса",
-          "genitive_plural": "лесов"
+          "genitive_plural": "лесов",
+          "accusative": "лес"
         },
         "SPIDER": {
           "form": "паук",
@@ -294,7 +299,8 @@
           "instrumental": "классом",
           "locative": "классе",
           "plural": "классы",
-          "genitive_plural": "классов"
+          "genitive_plural": "классов",
+          "accusative": "класс"
         },
         "LESSON": {
           "form": "урок",
@@ -304,7 +310,8 @@
           "instrumental": "уроком",
           "locative": "уроке",
           "plural": "уроки",
-          "genitive_plural": "уроков"
+          "genitive_plural": "уроков",
+          "accusative": "урок"
         },
         "HOMEWORK": {
           "form": "домашнее задание",
@@ -312,7 +319,8 @@
           "genitive": "домашнего задания",
           "dative": "домашнему заданию",
           "instrumental": "домашним заданием",
-          "locative": "домашнем задании"
+          "locative": "домашнем задании",
+          "accusative": "домашнее задание"
         },
         "EXAM": {
           "form": "экзамен",
@@ -322,7 +330,8 @@
           "instrumental": "экзаменом",
           "locative": "экзамене",
           "plural": "экзамены",
-          "genitive_plural": "экзаменов"
+          "genitive_plural": "экзаменов",
+          "accusative": "экзамен"
         },
         "QUESTION": {
           "form": "вопрос",
@@ -332,7 +341,8 @@
           "instrumental": "вопросом",
           "locative": "вопросе",
           "plural": "вопросы",
-          "genitive_plural": "вопросов"
+          "genitive_plural": "вопросов",
+          "accusative": "вопрос"
         },
         "ANSWER": {
           "form": "ответ",
@@ -342,7 +352,8 @@
           "instrumental": "ответом",
           "locative": "ответе",
           "plural": "ответы",
-          "genitive_plural": "ответов"
+          "genitive_plural": "ответов",
+          "accusative": "ответ"
         },
         "IDEA": {
           "form": "идея",
@@ -363,7 +374,8 @@
           "instrumental": "шансом",
           "locative": "шансе",
           "plural": "шансы",
-          "genitive_plural": "шансов"
+          "genitive_plural": "шансов",
+          "accusative": "шанс"
         },
         "MYSTERY": {
           "form": "тайна",
@@ -384,7 +396,8 @@
           "instrumental": "секретом",
           "locative": "секрете",
           "plural": "секреты",
-          "genitive_plural": "секретов"
+          "genitive_plural": "секретов",
+          "accusative": "секрет"
         },
         "FRIEND": {
           "form": "друг",
@@ -427,7 +440,8 @@
           "instrumental": "дверью",
           "locative": "двери",
           "plural": "двери",
-          "genitive_plural": "дверей"
+          "genitive_plural": "дверей",
+          "accusative": "дверь"
         },
         "CAST": {
           "base": "колдовать",

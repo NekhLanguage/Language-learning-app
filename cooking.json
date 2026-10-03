@@ -306,7 +306,8 @@
           "instrumental": "ножом",
           "locative": "ноже",
           "plural": "ножи",
-          "genitive_plural": "ножей"
+          "genitive_plural": "ножей",
+          "accusative": "нож"
         },
         "FORK": {
           "form": "вилка",
@@ -360,7 +361,8 @@
           "instrumental": "стаканом",
           "locative": "стакане",
           "plural": "стаканы",
-          "genitive_plural": "стаканов"
+          "genitive_plural": "стаканов",
+          "accusative": "стакан"
         },
         "LITRE": {
           "form": "литр"
@@ -383,7 +385,8 @@
           "genitive": "мяса",
           "dative": "мясу",
           "instrumental": "мясом",
-          "locative": "мясе"
+          "locative": "мясе",
+          "accusative": "мясо"
         },
         "CHICKEN": {
           "form": "курица",
@@ -415,7 +418,8 @@
           "instrumental": "овощем",
           "locative": "овоще",
           "plural": "овощи",
-          "genitive_plural": "овощей"
+          "genitive_plural": "овощей",
+          "accusative": "овощ"
         },
         "POTATO": {
           "form": "картошка",
@@ -436,7 +440,8 @@
           "instrumental": "салатом",
           "locative": "салате",
           "plural": "салаты",
-          "genitive_plural": "салатов"
+          "genitive_plural": "салатов",
+          "accusative": "салат"
         },
         "FRUIT": {
           "form": "фрукт",
@@ -446,7 +451,8 @@
           "instrumental": "фруктом",
           "locative": "фрукте",
           "plural": "фрукты",
-          "genitive_plural": "фруктов"
+          "genitive_plural": "фруктов",
+          "accusative": "фрукт"
         },
         "BANANA": {
           "form": "банан",
@@ -456,7 +462,8 @@
           "instrumental": "бананом",
           "locative": "банане",
           "plural": "бананы",
-          "genitive_plural": "бананов"
+          "genitive_plural": "бананов",
+          "accusative": "банан"
         },
         "SOUP": {
           "form": "суп",
@@ -466,7 +473,8 @@
           "instrumental": "супом",
           "locative": "супе",
           "plural": "супы",
-          "genitive_plural": "супов"
+          "genitive_plural": "супов",
+          "accusative": "суп"
         },
         "DOUGH": {
           "form": "тесто",
@@ -474,7 +482,8 @@
           "genitive": "теста",
           "dative": "тесту",
           "instrumental": "тестом",
-          "locative": "тесте"
+          "locative": "тесте",
+          "accusative": "тесто"
         },
         "SAUCE": {
           "form": "соус",
@@ -484,7 +493,8 @@
           "instrumental": "соусом",
           "locative": "соусе",
           "plural": "соусы",
-          "genitive_plural": "соусов"
+          "genitive_plural": "соусов",
+          "accusative": "соус"
         },
         "INGREDIENT": {
           "form": "ингредиент",
@@ -494,7 +504,8 @@
           "instrumental": "ингредиентом",
           "locative": "ингредиенте",
           "plural": "ингредиенты",
-          "genitive_plural": "ингредиентов"
+          "genitive_plural": "ингредиентов",
+          "accusative": "ингредиент"
         },
         "KITCHEN": {
           "form": "кухня",
@@ -548,7 +559,8 @@
           "instrumental": "морозильником",
           "locative": "морозильнике",
           "plural": "морозильники",
-          "genitive_plural": "морозильников"
+          "genitive_plural": "морозильников",
+          "accusative": "морозильник"
         },
         "SALT": {
           "form": "соль",
@@ -556,7 +568,8 @@
           "genitive": "соли",
           "dative": "соли",
           "instrumental": "солью",
-          "locative": "соли"
+          "locative": "соли",
+          "accusative": "соль"
         },
         "PEPPER": {
           "form": "перец",
@@ -564,7 +577,8 @@
           "genitive": "перца",
           "dative": "перцу",
           "instrumental": "перцем",
-          "locative": "перце"
+          "locative": "перце",
+          "accusative": "перец"
         },
         "BUTTER": {
           "form": "масло",
@@ -572,7 +586,8 @@
           "genitive": "масла",
           "dative": "маслу",
           "instrumental": "маслом",
-          "locative": "масле"
+          "locative": "масле",
+          "accusative": "масло"
         },
         "SPICE": {
           "form": "специя",
@@ -593,7 +608,8 @@
           "instrumental": "рецептом",
           "locative": "рецепте",
           "plural": "рецепты",
-          "genitive_plural": "рецептов"
+          "genitive_plural": "рецептов",
+          "accusative": "рецепт"
         },
         "SWEET": {
           "form": "сладкий",

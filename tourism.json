@@ -215,7 +215,8 @@
           "instrumental": "аэропортом",
           "locative": "аэропорте",
           "plural": "аэропорты",
-          "genitive_plural": "аэропортов"
+          "genitive_plural": "аэропортов",
+          "accusative": "аэропорт"
         },
         "PASSPORT": {
           "form": "паспорт",
@@ -225,7 +226,8 @@
           "instrumental": "паспортом",
           "locative": "паспорте",
           "plural": "паспорта",
-          "genitive_plural": "паспортов"
+          "genitive_plural": "паспортов",
+          "accusative": "паспорт"
         },
         "FLIGHT": {
           "form": "рейс",
@@ -235,7 +237,8 @@
           "instrumental": "рейсом",
           "locative": "рейсе",
           "plural": "рейсы",
-          "genitive_plural": "рейсов"
+          "genitive_plural": "рейсов",
+          "accusative": "рейс"
         },
         "LUGGAGE": {
           "form": "багаж",
@@ -243,7 +246,8 @@
           "genitive": "багажа",
           "dative": "багажу",
           "instrumental": "багажом",
-          "locative": "багаже"
+          "locative": "багаже",
+          "accusative": "багаж"
         },
         "HOTEL": {
           "form": "отель",
@@ -253,7 +257,8 @@
           "instrumental": "отелем",
           "locative": "отеле",
           "plural": "отели",
-          "genitive_plural": "отелей"
+          "genitive_plural": "отелей",
+          "accusative": "отель"
         },
         "RESERVATION": {
           "form": "бронирование",
@@ -263,7 +268,8 @@
           "instrumental": "бронированием",
           "locative": "бронировании",
           "plural": "бронирования",
-          "genitive_plural": "бронированй"
+          "genitive_plural": "бронированй",
+          "accusative": "бронирование"
         },
         "LOBBY": {
           "form": "лобби",
@@ -283,7 +289,8 @@
           "instrumental": "выездом",
           "locative": "выезде",
           "plural": "выезды",
-          "genitive_plural": "выездов"
+          "genitive_plural": "выездов",
+          "accusative": "выезд"
         },
         "TAXI": {
           "form": "такси",
@@ -303,7 +310,8 @@
           "instrumental": "вокзалом",
           "locative": "вокзале",
           "plural": "вокзалы",
-          "genitive_plural": "вокзалов"
+          "genitive_plural": "вокзалов",
+          "accusative": "вокзал"
         },
         "TICKET": {
           "form": "билет",
@@ -313,7 +321,8 @@
           "instrumental": "билетом",
           "locative": "билете",
           "plural": "билеты",
-          "genitive_plural": "билетов"
+          "genitive_plural": "билетов",
+          "accusative": "билет"
         },
         "ROUTE": {
           "form": "маршрут",
@@ -323,7 +332,8 @@
           "instrumental": "маршрутом",
           "locative": "маршруте",
           "plural": "маршруты",
-          "genitive_plural": "маршрутов"
+          "genitive_plural": "маршрутов",
+          "accusative": "маршрут"
         },
         "LANDMARK": {
           "form": "достопримечательность",
@@ -333,7 +343,8 @@
           "instrumental": "достопримечательностью",
           "locative": "достопримечательности",
           "plural": "достопримечательности",
-          "genitive_plural": "достопримечательностей"
+          "genitive_plural": "достопримечательностей",
+          "accusative": "достопримечательность"
         },
         "MUSEUM": {
           "form": "музей",
@@ -343,7 +354,8 @@
           "instrumental": "музеем",
           "locative": "музее",
           "plural": "музеи",
-          "genitive_plural": "музеев"
+          "genitive_plural": "музеев",
+          "accusative": "музей"
         },
         "MONUMENT": {
           "form": "памятник",
@@ -353,7 +365,8 @@
           "instrumental": "памятником",
           "locative": "памятнике",
           "plural": "памятники",
-          "genitive_plural": "памятников"
+          "genitive_plural": "памятников",
+          "accusative": "памятник"
         },
         "RESTAURANT": {
           "form": "ресторан",
@@ -363,7 +376,8 @@
           "instrumental": "рестораном",
           "locative": "ресторане",
           "plural": "рестораны",
-          "genitive_plural": "ресторанов"
+          "genitive_plural": "ресторанов",
+          "accusative": "ресторан"
         },
         "MENU": {
           "form": "меню",
@@ -395,7 +409,8 @@
           "instrumental": "рынком",
           "locative": "рынке",
           "plural": "рынки",
-          "genitive_plural": "рынков"
+          "genitive_plural": "рынков",
+          "accusative": "рынок"
         },
         "SOUVENIR": {
           "form": "сувенир",
@@ -405,7 +420,8 @@
           "instrumental": "сувениром",
           "locative": "сувенире",
           "plural": "сувениры",
-          "genitive_plural": "сувениров"
+          "genitive_plural": "сувениров",
+          "accusative": "сувенир"
         },
         "BARGAIN": {
           "form": "выгодная покупка",
@@ -426,7 +442,8 @@
           "instrumental": "разговорником",
           "locative": "разговорнике",
           "plural": "разговорники",
-          "genitive_plural": "разговорников"
+          "genitive_plural": "разговорников",
+          "accusative": "разговорник"
         },
         "BEACH": {
           "form": "пляж",
@@ -436,7 +453,8 @@
           "instrumental": "пляжем",
           "locative": "пляже",
           "plural": "пляжи",
-          "genitive_plural": "пляжей"
+          "genitive_plural": "пляжей",
+          "accusative": "пляж"
         },
         "CATHEDRAL": {
           "form": "собор",
@@ -446,7 +464,8 @@
           "instrumental": "собором",
           "locative": "соборе",
           "plural": "соборы",
-          "genitive_plural": "соборов"
+          "genitive_plural": "соборов",
+          "accusative": "собор"
         },
         "HARBOR": {
           "form": "гавань",
@@ -456,7 +475,8 @@
           "instrumental": "гаванью",
           "locative": "гавани",
           "plural": "гавани",
-          "genitive_plural": "гаваней"
+          "genitive_plural": "гаваней",
+          "accusative": "гавань"
         },
         "CURRENCY": {
           "form": "валюта",
@@ -488,7 +508,8 @@
           "instrumental": "посольством",
           "locative": "посольстве",
           "plural": "посольства",
-          "genitive_plural": "посольств"
+          "genitive_plural": "посольств",
+          "accusative": "посольство"
         },
         "ADVENTURE": {
           "form": "приключение",
@@ -498,7 +519,8 @@
           "instrumental": "приключением",
           "locative": "приключении",
           "plural": "приключения",
-          "genitive_plural": "приключенй"
+          "genitive_plural": "приключенй",
+          "accusative": "приключение"
         },
         "ITINERARY": {
           "form": "план поездки",
@@ -508,7 +530,8 @@
           "instrumental": "планом поездки",
           "locative": "плане поездки",
           "plural": "планы поездки",
-          "genitive_plural": "планов поездки"
+          "genitive_plural": "планов поездки",
+          "accusative": "план поездки"
         },
         "GUIDE": {
           "form": "гид",
@@ -541,13 +564,13 @@
           "3_plural": "бронируют"
         },
         "NAVIGATE": {
-          "base": "ориентироваться",
-          "1_singular": "ориентируюсь",
-          "2_singular": "ориентируешься",
-          "3_singular": "ориентируется",
-          "1_plural": "ориентируемся",
-          "2_plural": "ориентируетесь",
-          "3_plural": "ориентируются"
+          "base": "прокладывать",
+          "1_singular": "прокладываю",
+          "2_singular": "прокладываешь",
+          "3_singular": "прокладывает",
+          "1_plural": "прокладываем",
+          "2_plural": "прокладываете",
+          "3_plural": "прокладывают"
         },
         "PHOTOGRAPH": {
           "base": "фотографировать",
@@ -835,8 +858,9 @@
           "plural": "guider"
         },
         "BOARD": {
-          "base": "gå ombord på",
-          "present": "går ombord på"
+          "base": "gå ombord",
+          "present": "går ombord",
+          "governedPreposition": "på"
         },
         "RESERVE": {
           "base": "boka",
@@ -3669,13 +3693,13 @@
           "3_plural": "бронюють"
         },
         "NAVIGATE": {
-          "base": "орієнтуватися",
-          "1_singular": "орієнтуюся",
-          "2_singular": "орієнтуєшся",
-          "3_singular": "орієнтується",
-          "1_plural": "орієнтуємося",
-          "2_plural": "орієнтуєтеся",
-          "3_plural": "орієнтуються"
+          "base": "прокладати",
+          "1_singular": "прокладаю",
+          "2_singular": "прокладаєш",
+          "3_singular": "прокладає",
+          "1_plural": "прокладаємо",
+          "2_plural": "прокладаєте",
+          "3_plural": "прокладають"
         },
         "PHOTOGRAPH": {
           "base": "фотографувати",

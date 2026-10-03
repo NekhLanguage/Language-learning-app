@@ -547,18 +547,32 @@
       "n": "ungt",
       "plural": "unga"
     },
-    "RIGHT": [
-      "höger"
-    ],
-    "LEFT": [
-      "vänster"
-    ],
-    "CORRECT": [
-      "rätt"
-    ],
-    "WRONG": [
-      "fel"
-    ],
+    "RIGHT": {
+      "form": "höger",
+      "n": "höger",
+      "plural": "högra",
+      "definite": "högra",
+      "definiteOnly": true
+    },
+    "LEFT": {
+      "form": "vänster",
+      "n": "vänster",
+      "plural": "vänstra",
+      "definite": "vänstra",
+      "definiteOnly": true
+    },
+    "CORRECT": {
+      "form": "rätt",
+      "n": "rätt",
+      "plural": "rätta",
+      "noArticle": true
+    },
+    "WRONG": {
+      "form": "fel",
+      "n": "fel",
+      "plural": "fel",
+      "noArticle": true
+    },
     "NICE": {
       "form": "trevlig",
       "n": "trevligt",

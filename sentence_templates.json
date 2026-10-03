@@ -5605,7 +5605,7 @@
         "pl": "Tamto jest moje ramię.",
         "fi": "Tuo on minun käsivarteni.",
         "sv": "Det där är min arm.",
-        "ru": "То моя рука."
+        "ru": "Это моя рука."
       },
       "surface": {
         "en": {
@@ -5716,7 +5716,7 @@
           "ARM": "arm"
         },
         "ru": {
-          "THAT": "то",
+          "THAT": "это",
           "BE": "есть",
           "MY": "моя",
           "ARM": "рука"
@@ -5750,7 +5750,7 @@
         "pl": "Tamto jest twoja noga.",
         "fi": "Tuo on sinun jalkasi.",
         "sv": "Det där är ditt ben.",
-        "ru": "То твоя нога."
+        "ru": "Это твоя нога."
       },
       "surface": {
         "en": {
@@ -5861,7 +5861,7 @@
           "LEG": "ben"
         },
         "ru": {
-          "THAT": "то",
+          "THAT": "это",
           "BE": "есть",
           "YOUR": "твоя",
           "LEG": "нога"
@@ -6318,7 +6318,7 @@
         "pl": "Ona idzie do swojego pokoju.",
         "fi": "Hän menee huoneeseensa.",
         "sv": "Hon går till sitt rum.",
-        "ru": "Она идёт к своей комнате."
+        "ru": "Она идёт в свою комнату."
       }
     },
     {
@@ -9055,7 +9055,7 @@
         "pl": "Ja idę do domu.",
         "fi": "Minä menen taloon.",
         "sv": "Jag går till huset.",
-        "ru": "Я иду к дому."
+        "ru": "Я иду в дом."
       }
     },
     {
@@ -9231,7 +9231,7 @@
         "ko": "네, 해요.",
         "no": "Ja, det gjør jeg.",
         "tr": "Evet, yaparım.",
-        "uk": "Так, я роблю.",
+        "uk": "Так, роблю.",
         "zh": "是的，我做。",
         "pt": "Sim, eu faço.",
         "ar": "نعم، أفعل.",
@@ -9240,7 +9240,7 @@
         "pl": "Tak, robię.",
         "fi": "Kyllä, minä teen.",
         "sv": "Ja, det gör jag.",
-        "ru": "Да, я делаю."
+        "ru": "Да, делаю."
       }
     },
     {
@@ -9264,7 +9264,7 @@
         "ko": "아니요, 안 해요.",
         "no": "Nei, det gjør jeg ikke.",
         "tr": "Hayır, yapmam.",
-        "uk": "Ні, я не роблю.",
+        "uk": "Ні, не роблю.",
         "zh": "不，我不做。",
         "pt": "Não, eu não faço.",
         "ar": "لا، لا أفعل.",
@@ -9273,7 +9273,7 @@
         "pl": "Nie, nie robię.",
         "fi": "Ei, minä en tee.",
         "sv": "Nej, det gör jag inte.",
-        "ru": "Нет, я не делаю."
+        "ru": "Нет, не делаю."
       }
     },
     {
