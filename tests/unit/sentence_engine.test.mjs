@@ -564,7 +564,7 @@ test("fixed-form templates tokenize into faithful tiles", () => {
     ["THIS_IS_A_GOOD_BOOK", "uk", ["це", "добра", "книга"]],
     ["WE_GO_NORTH", "uk", ["ми", "йдемо", "на", "північ"]],
     ["WHO_EATS", "uk", ["хто", "їсть"]],
-    ["IS_THAT_YOUR_PHONE", "uk", ["то", "твій", "телефон"]],
+    ["IS_THAT_YOUR_PHONE", "uk", ["це", "твій", "телефон"]],
   ];
   for (const [id, lc, expected] of cases) {
     const tiles = sentenceTilesForTemplate(lc, tplById(id));

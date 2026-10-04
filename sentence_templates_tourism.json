@@ -639,6 +639,10 @@
       "render": {
         "en": "We have an adventure."
       }
-    }
+    },
+    {"template_id": "I_GO_TO_LOBBY", "concepts": ["FIRST_PERSON_SINGULAR", "GO", "TO", "LOBBY"], "render": {"en": "I go to a lobby."}},
+    {"template_id": "WE_GO_TO_CUSTOMS", "concepts": ["FIRST_PERSON_PLURAL", "GO", "TO", "CUSTOMS"], "render": {"en": "We go to customs."}},
+    {"template_id": "WE_GO_TO_CHECKOUT", "concepts": ["FIRST_PERSON_PLURAL", "GO", "TO", "CHECKOUT"], "render": {"en": "We go to checkout."}},
+    {"template_id": "SHE_SEES_BARGAIN", "concepts": ["SHE", "SEE", "BARGAIN"], "render": {"en": "She sees a bargain."}}
   ]
 }

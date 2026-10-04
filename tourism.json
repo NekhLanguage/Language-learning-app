@@ -278,6 +278,7 @@
           "dative": "лобби",
           "instrumental": "лобби",
           "locative": "лобби",
+          "accusative": "лобби",
           "invariantPlural": true,
           "genitive_plural": "лобби"
         },
@@ -299,6 +300,7 @@
           "dative": "такси",
           "instrumental": "такси",
           "locative": "такси",
+          "accusative": "такси",
           "invariantPlural": true,
           "genitive_plural": "такси"
         },
@@ -386,6 +388,7 @@
           "dative": "меню",
           "instrumental": "меню",
           "locative": "меню",
+          "accusative": "меню",
           "invariantPlural": true,
           "genitive_plural": "меню"
         },
@@ -1003,13 +1006,15 @@
           "plural": "aulat",
           "partitive": "aulaa",
           "accusative": "aulan",
-          "genitive": "aulan"
+          "genitive": "aulan",
+          "illative": "aulaan"
         },
         "CHECKOUT": {
           "form": "uloskirjautuminen",
           "partitive": "uloskirjautumista",
           "accusative": "uloskirjautumisen",
-          "genitive": "uloskirjautumisen"
+          "genitive": "uloskirjautumisen",
+          "illative": "uloskirjautumiseen"
         },
         "TAXI": {
           "form": "taksi",
@@ -1141,7 +1146,8 @@
           "form": "tulli",
           "partitive": "tullia",
           "accusative": "tullin",
-          "genitive": "tullin"
+          "genitive": "tullin",
+          "illative": "tulliin"
         },
         "EMBASSY": {
           "form": "suurlähetystö",
@@ -1965,14 +1971,14 @@
         },
         "NAVIGATE": {
           "governedPreposition": "في",
-          "base": "يتجول",
-          "1_singular": "أتجول",
-          "2_singular": "تتجول",
-          "3_singular": "يتجول",
-          "3_singular_feminine": "تتجول",
-          "1_plural": "نتجول",
-          "2_plural": "تتجولون",
-          "3_plural": "يتجولون"
+          "base": "يتنقل",
+          "1_singular": "أتنقل",
+          "2_singular": "تتنقل",
+          "3_singular": "يتنقل",
+          "3_singular_feminine": "تتنقل",
+          "1_plural": "نتنقل",
+          "2_plural": "تتنقلون",
+          "3_plural": "يتنقلون"
         },
         "PHOTOGRAPH": {
           "base": "يصور",
@@ -2429,7 +2435,7 @@
         "LOBBY": {
           "gender": "n",
           "form": "λόμπι",
-          "plural": "λόμπι"
+          "invariantPlural": true
         },
         "CHECKOUT": {
           "gender": "f",
@@ -3538,14 +3544,16 @@
         "LOBBY": {
           "gender": "n",
           "form": "лобі",
-          "plural": "лобі",
-          "genitive_plural": "лобі"
+          "genitive_plural": "лобі",
+          "invariantPlural": true,
+          "genitive": "лобі"
         },
         "CHECKOUT": {
           "gender": "m",
           "form": "виїзд",
           "plural": "виїзди",
-          "genitive_plural": "виїздів"
+          "genitive_plural": "виїздів",
+          "genitive": "виїзду"
         },
         "TAXI": {
           "gender": "n",
@@ -3656,7 +3664,8 @@
         },
         "CUSTOMS": {
           "gender": "f",
-          "form": "митниця"
+          "form": "митниця",
+          "genitive": "митниці"
         },
         "EMBASSY": {
           "gender": "n",
@@ -4621,12 +4630,12 @@
         "LOBBY": {
           "form": "hall",
           "gender": "f",
-          "plural": "hall"
+          "invariantPlural": true
         },
         "CHECKOUT": {
           "form": "check-out",
           "gender": "m",
-          "plural": "check-out"
+          "invariantPlural": true
         },
         "TAXI": {
           "form": "taxi",
@@ -5100,13 +5109,15 @@
           "form": "hol",
           "gender": "m",
           "plural": "hole",
-          "genitive_plural": "holi"
+          "genitive_plural": "holi",
+          "genitive": "holu"
         },
         "CHECKOUT": {
           "form": "wymeldowanie",
           "gender": "n",
           "plural": "wymeldowania",
-          "genitive_plural": "wymeldowań"
+          "genitive_plural": "wymeldowań",
+          "genitive": "wymeldowania"
         },
         "TAXI": {
           "form": "taksówka",
@@ -5225,7 +5236,8 @@
           "form": "odprawa celna",
           "gender": "f",
           "plural": "odprawy celne",
-          "genitive_plural": "odpraw celnych"
+          "genitive_plural": "odpraw celnych",
+          "genitive": "odprawy celnej"
         },
         "EMBASSY": {
           "form": "ambasada",

@@ -5598,7 +5598,7 @@
         "ko": "그것은 제 팔이에요.",
         "no": "Det er armen min.",
         "tr": "Şu benim kolumdur.",
-        "uk": "То моя рука.",
+        "uk": "Це моя рука.",
         "zh": "那是我的手臂。",
         "it": "Quello è il mio braccio.",
         "th": "นั่นคือแขนของฉัน",
@@ -5674,7 +5674,7 @@
           "ARM": "kolum"
         },
         "uk": {
-          "THAT": "то",
+          "THAT": "це",
           "BE": "є",
           "MY": "моя",
           "ARM": "рука"
@@ -5743,7 +5743,7 @@
         "ko": "그것은 당신의 다리예요.",
         "no": "Det er beinet ditt.",
         "tr": "Şu senin bacağındır.",
-        "uk": "То твоя нога.",
+        "uk": "Це твоя нога.",
         "zh": "那是你的腿。",
         "it": "Quella è la tua gamba.",
         "th": "นั่นคือขาของคุณ",
@@ -5819,7 +5819,7 @@
           "LEG": "bacağın"
         },
         "uk": {
-          "THAT": "то",
+          "THAT": "це",
           "BE": "є",
           "YOUR": "твоя",
           "LEG": "нога"

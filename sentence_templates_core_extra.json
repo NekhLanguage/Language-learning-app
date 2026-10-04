@@ -195,6 +195,151 @@
       "render": {
         "en": "He comes."
       }
+    },
+    {
+      "template_id": "CX_BOOK_IS_ON_TOP",
+      "concepts": [
+        "BOOK",
+        "BE",
+        "TOP"
+      ],
+      "structure": {
+        "type": "copular"
+      },
+      "render": {
+        "en": "The book is on top."
+      }
+    },
+    {
+      "template_id": "CX_PHONE_IS_AT_BOTTOM",
+      "concepts": [
+        "PHONE",
+        "BE",
+        "BOTTOM"
+      ],
+      "structure": {
+        "type": "copular"
+      },
+      "render": {
+        "en": "The phone is at the bottom."
+      }
+    },
+    {
+      "template_id": "CX_WINTER_IS_GOOD",
+      "concepts": [
+        "WINTER",
+        "BE",
+        "GOOD"
+      ],
+      "structure": {
+        "type": "time_description"
+      },
+      "render": {
+        "en": "Winter is good."
+      }
+    },
+    {
+      "template_id": "CX_I_USE_ANY_PHONE",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "USE",
+        "ANY",
+        "PHONE"
+      ],
+      "render": {
+        "en": "I use any phone."
+      }
+    },
+    {
+      "template_id": "CX_YOU_ARE_NEXT",
+      "concepts": [
+        "SECOND_PERSON",
+        "BE",
+        "NEXT"
+      ],
+      "structure": {
+        "type": "copular"
+      },
+      "render": {
+        "en": "You are next."
+      }
+    },
+    {
+      "template_id": "CX_WE_GO_LATER",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "GO",
+        "LATER"
+      ],
+      "structure": {
+        "type": "time_statement"
+      },
+      "render": {
+        "en": "We go later."
+      }
+    },
+    {
+      "template_id": "CX_I_EAT_WHILE_YOU_READ",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "EAT",
+        "WHILE",
+        "SECOND_PERSON",
+        "READ"
+      ],
+      "structure": {
+        "type": "complex_clause",
+        "linker": "WHILE",
+        "subordinate_first": false
+      },
+      "slots": {
+        "main_subject": "FIRST_PERSON_SINGULAR",
+        "main_verb": "EAT",
+        "sub_subject": "SECOND_PERSON",
+        "sub_verb": "READ"
+      },
+      "render": {
+        "en": "I eat while you read."
+      }
+    },
+    {
+      "template_id": "CX_HE_MAY_SLEEP",
+      "concepts": [
+        "HE",
+        "MAY",
+        "SLEEP"
+      ],
+      "render": {
+        "en": "He may sleep."
+      }
+    },
+    {
+      "template_id": "CX_I_JUST_EAT",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "JUST",
+        "EAT"
+      ],
+      "structure": {
+        "type": "modality"
+      },
+      "render": {
+        "en": "I just eat."
+      }
+    },
+    {
+      "template_id": "CX_IT_IS_BLACK",
+      "concepts": [
+        "IT",
+        "BE",
+        "BLACK"
+      ],
+      "structure": {
+        "type": "copular"
+      },
+      "render": {
+        "en": "It is black."
+      }
     }
   ]
 }

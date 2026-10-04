@@ -1013,9 +1013,16 @@
     "IT": [
       "ono"
     ],
-    "ITS": [
-      "jego"
-    ],
+    "ITS": {
+      "form": "jego",
+      "f": "jego",
+      "n": "jego",
+      "plural": "jego",
+      "fp": "jego",
+      "vp": "jego",
+      "instrumental": "jego",
+      "f_instrumental": "jego"
+    },
     "MINE": [
       "moje"
     ],
@@ -1148,10 +1155,10 @@
       "jako"
     ],
     "TOP": [
-      "góra"
+      "na górze"
     ],
     "BOTTOM": [
-      "dół"
+      "na dole"
     ],
     "UNDER": [
       "pod"

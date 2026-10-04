@@ -81,7 +81,8 @@
           "form": "кроссовки",
           "gender": "m",
           "pluralOnly": true,
-          "genitive_plural": "кроссовок"
+          "genitive_plural": "кроссовок",
+          "accusative": "кроссовки"
         },
         "FABRIC": {
           "form": "ткань",
@@ -237,7 +238,8 @@
           "form": "солнцезащитные очки",
           "gender": "m",
           "pluralOnly": true,
-          "genitive_plural": "солнцезащитных очков"
+          "genitive_plural": "солнцезащитных очков",
+          "accusative": "солнцезащитные очки"
         },
         "MAKEUP": {
           "form": "макияж",

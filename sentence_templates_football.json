@@ -637,6 +637,7 @@
       "render": {
         "en": "She sees a penalty."
       }
-    }
+    },
+    {"template_id": "WE_HAVE_DEFEAT", "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "DEFEAT_LOSS"], "render": {"en": "We have a defeat."}}
   ]
 }

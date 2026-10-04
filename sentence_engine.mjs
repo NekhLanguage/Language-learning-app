@@ -1767,7 +1767,9 @@ function orderedConceptsForTemplate(tpl, lang) {
   // generic subject-verb-object guess (which strands question words at
   // the end: "you go why").
   if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type) && Array.isArray(tpl.concepts)) {
-    return tpl.concepts.slice();
+    // A render-only modality template still places its adverb by the
+    // declared rule («Ich esse nur»); authored renders are untouched.
+    return postverbalAdverbOrder(lang, tpl.concepts.slice());
   }
 
   // 2) Fallback: derive order based on basic word order
@@ -1889,7 +1891,33 @@ if (orderType === "SOV") {
   // — «你从菜单点菜», «我只读一本书», «我用手做这» — never trail it in
   // English order (Emi run-14 -72: 3/3 从-phrases and 2/2 只 post-verbal;
   // #137's 一起 was the specific comitative case of this rule).
-  return motionPurposeOrder(lang, preverbalAdjunctOrder(lang, ordered.filter(Boolean)));
+  return motionPurposeOrder(lang,
+    postverbalAdverbOrder(lang, preverbalAdjunctOrder(lang, ordered.filter(Boolean))));
+}
+
+// Declared rule (postverbalAdverbs — de/sv/no/fr/it): a sentence adverb of
+// the listed modality roles follows the finite verb instead of standing
+// between subject and verb — «Ich esse nur», «Jag äter bara», «Je mange
+// seulement», never «Ich nur esse» (the JUST template, Emi -196 part 2).
+// English and the Slavic rows keep «I just eat» / «Я просто ем».
+function postverbalAdverbOrder(lang, ordered) {
+  const spec = langRuleValue(lang, "postverbalAdverbs");
+  if (!spec || !Array.isArray(spec.roles)) return ordered;
+  const roles = new Set(spec.roles);
+  const vIdx = ordered.findIndex(c =>
+    vocab().concepts[c]?.type === "verb" && !isCopulaConcept(c));
+  if (vIdx === -1) return ordered;
+  const moved = [];
+  const keep = [];
+  ordered.forEach((c, i) => {
+    const m = vocab().concepts[c];
+    if (i < vIdx && m?.type === "modality" && roles.has(m.semantic_role)) moved.push(c);
+    else keep.push(c);
+  });
+  if (!moved.length) return ordered;
+  const v = keep.indexOf(ordered[vIdx]);
+  keep.splice(v + 1, 0, ...moved);
+  return keep;
 }
 
 function preverbalAdjunctOrder(lang, ordered) {
@@ -6395,8 +6423,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           !Array.isArray(subjEntry) && subjEntry.pluralOnly);
         return genderedFormOf(lang, cid, subjectCid, subjPlural);
       }
-      if (subjMeta?.type === "pronoun" && subjMeta?.gender === "f") {
-        return genderedFormOf(lang, cid, subjectCid, false, "f");
+      // Gendered pronoun subjects: SHE («Вона вмотивована») and the
+      // neuter IT («Оно чёрное», «Ono jest czarne», «Αυτό είναι μαύρο»).
+      if (subjMeta?.type === "pronoun" && (subjMeta?.gender === "f" || subjMeta?.gender === "n")) {
+        return genderedFormOf(lang, cid, subjectCid, false, subjMeta.gender);
       }
     }
 

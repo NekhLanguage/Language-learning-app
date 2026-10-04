@@ -418,13 +418,13 @@
       }
     },
     {
-      "template_id": "HE_TRANSFORM",
+      "template_id": "HE_TRANSFIGURES",
       "concepts": [
         "HE",
-        "TRANSFORM"
+        "TRANSFIGURE"
       ],
       "render": {
-        "en": "He transforms."
+        "en": "He transfigures."
       }
     },
     {

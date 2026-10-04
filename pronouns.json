@@ -134,19 +134,10 @@
         "match": true,
         "sentence_use": true,
         "writing": true
-      }
-    },
-    {
-      "concept_id": "ITS",
-      "type": "pronoun",
-      "semantic_role": "possessive_pronoun",
-      "core": true,
-      "interaction_profile": {
-        "see_translate": true,
-        "match": true,
-        "sentence_use": true,
-        "writing": true
-      }
+      },
+      "person": 3,
+      "number": "singular",
+      "gender": "n"
     },
     {
       "concept_id": "MINE",

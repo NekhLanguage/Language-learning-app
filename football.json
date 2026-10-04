@@ -38,7 +38,7 @@
 
     { "concept_id": "MATCH",       "type": "noun" },
     { "concept_id": "VICTORY",     "type": "noun", "semantic_role": "abstract" },
-    { "concept_id": "DEFEAT",      "type": "noun", "semantic_role": "abstract" },
+    { "concept_id": "DEFEAT_LOSS",      "type": "noun", "semantic_role": "abstract" },
     { "concept_id": "DRAW",        "type": "noun" },
     { "concept_id": "TROPHY",      "type": "noun" },
 
@@ -287,6 +287,7 @@
           "dative": "пенальти",
           "instrumental": "пенальти",
           "locative": "пенальти",
+          "accusative": "пенальти",
           "invariantPlural": true,
           "genitive_plural": "пенальти"
         },
@@ -392,7 +393,7 @@
           "plural": "победы",
           "genitive_plural": "побед"
         },
-        "DEFEAT": {
+        "DEFEAT_LOSS": {
           "form": "поражение",
           "gender": "n",
           "genitive": "поражения",
@@ -704,11 +705,10 @@
           "gender": "m",
           "plural": "segrar"
         },
-        "DEFEAT": {
+        "DEFEAT_LOSS": {
           "form": "förlust",
           "gender": "m",
-          "plural": "förluster",
-          "noArticle": true
+          "plural": "förluster"
         },
         "DRAW": {
           "form": "oavgjort",
@@ -1029,7 +1029,7 @@
           "accusative": "voiton",
           "genitive": "voiton"
         },
-        "DEFEAT": {
+        "DEFEAT_LOSS": {
           "form": "tappio",
           "plural": "tappiot",
           "partitive": "tappiota",
@@ -1204,7 +1204,7 @@
 
         "MATCH":      { "form": "match", "article": "a" },
         "VICTORY":    { "form": "victory", "article": "a" },
-        "DEFEAT":     { "form": "defeat", "noArticle": true },
+        "DEFEAT_LOSS": { "form": "defeat", "article": "a" },
         "DRAW":       { "form": "draw", "article": "a" },
         "TROPHY":     { "form": "trophy", "article": "a" },
 
@@ -1269,7 +1269,7 @@
 
         "MATCH": { "form": "partida", "gender": "f", "plural": "partidas" },
         "VICTORY": { "form": "vitória", "gender": "f", "plural": "vitórias" },
-        "DEFEAT":     { "form": "derrota", "gender": "f" },
+        "DEFEAT_LOSS":     { "form": "derrota", "gender": "f" },
         "DRAW":       { "form": "empate", "gender": "m" },
         "TROPHY": { "form": "troféu", "gender": "m", "plural": "troféus" },
 
@@ -1334,7 +1334,7 @@
 
         "MATCH":      { "form": "مباراة", "gender": "f" },
         "VICTORY":    { "form": "نصر", "gender": "m" },
-        "DEFEAT":     { "form": "هزيمة", "gender": "f" },
+        "DEFEAT_LOSS":     { "form": "هزيمة", "gender": "f" },
         "DRAW":       { "form": "تعادل", "gender": "m" },
         "TROPHY":     { "form": "كأس", "gender": "m" },
 
@@ -1399,7 +1399,7 @@
 
         "MATCH": { "form": "Spiel", "gender": "n", "plural": "Spiele" },
         "VICTORY": { "form": "Sieg", "gender": "m", "plural": "Siege" },
-        "DEFEAT":     { "form": "Niederlage", "gender": "f" },
+        "DEFEAT_LOSS":     { "form": "Niederlage", "gender": "f" },
         "DRAW":       { "form": "Unentschieden", "gender": "n" },
         "TROPHY": { "form": "Pokal", "gender": "m", "plural": "Pokale" },
 
@@ -1464,7 +1464,7 @@
 
         "MATCH": { "gender": "m", "form": "αγώνας", "plural": "αγώνες" },
         "VICTORY": { "gender": "f", "form": "νίκη", "plural": "νίκες" },
-        "DEFEAT":     { "gender": "f", "form": "ήττα" },
+        "DEFEAT_LOSS":     { "gender": "f", "form": "ήττα" },
         "DRAW":       { "gender": "f", "form": "ισοπαλία" },
         "TROPHY": { "gender": "n", "form": "τρόπαιο", "plural": "τρόπαια" },
 
@@ -1529,7 +1529,7 @@
 
         "MATCH":      { "form": "試合" },
         "VICTORY":    { "form": "勝利" },
-        "DEFEAT":     { "form": "敗北" },
+        "DEFEAT_LOSS":     { "form": "敗北" },
         "DRAW":       { "form": "引き分け" },
         "TROPHY":     { "form": "トロフィー" },
 
@@ -1594,7 +1594,7 @@
 
         "MATCH":      { "form": "경기" },
         "VICTORY":    { "form": "승리" },
-        "DEFEAT":     { "form": "패배" },
+        "DEFEAT_LOSS":     { "form": "패배" },
         "DRAW":       { "form": "무승부" },
         "TROPHY":     { "form": "트로피" },
 
@@ -1659,7 +1659,7 @@
 
         "MATCH":      { "form": "kamp", "gender": "m", "plural": "kamper" },
         "VICTORY":    { "form": "seier", "gender": "m", "plural": "seire" },
-        "DEFEAT":     { "form": "tap", "gender": "n" },
+        "DEFEAT_LOSS":     { "form": "tap", "gender": "n" },
         "DRAW":       { "form": "uavgjort", "gender": "n" },
         "TROPHY":     { "form": "pokal", "gender": "m", "plural": "pokaler" },
 
@@ -1724,7 +1724,7 @@
 
         "MATCH":      { "form": "maç" },
         "VICTORY":    { "form": "zafer" },
-        "DEFEAT":     { "form": "yenilgi" },
+        "DEFEAT_LOSS":     { "form": "yenilgi" },
         "DRAW":       { "form": "beraberlik" },
         "TROPHY":     { "form": "kupa" },
 
@@ -1789,7 +1789,7 @@
 
         "MATCH": { "gender": "m", "form": "матч", "plural": "матчі" },
         "VICTORY": { "gender": "f", "form": "перемога", "plural": "перемоги" },
-        "DEFEAT":     { "gender": "f", "form": "поразка" },
+        "DEFEAT_LOSS":     { "gender": "f", "form": "поразка" },
         "DRAW":       { "gender": "f", "form": "нічия" },
         "TROPHY": { "gender": "m", "form": "трофей", "plural": "трофеї" },
 
@@ -1854,7 +1854,7 @@
 
         "MATCH": { "form": "partido", "gender": "m", "plural": "partidos" },
         "VICTORY": { "form": "victoria", "gender": "f", "plural": "victorias" },
-        "DEFEAT":     { "form": "derrota", "gender": "f" },
+        "DEFEAT_LOSS":     { "form": "derrota", "gender": "f" },
         "DRAW":       { "form": "empate", "gender": "m" },
         "TROPHY": { "form": "trofeo", "gender": "m", "plural": "trofeos" },
 
@@ -1912,7 +1912,7 @@
         "ASSIST": {"form":"passe décisive","gender":"f","plural":"passes décisives"},
         "MATCH": {"form":"match","gender":"m","plural":"matchs"},
         "VICTORY": {"form":"victoire","gender":"f","plural":"victoires"},
-        "DEFEAT": {"form":"défaite","gender":"f","plural":"défaites"},
+        "DEFEAT_LOSS": {"form":"défaite","gender":"f","plural":"défaites"},
         "DRAW": {"form":"match nul","gender":"m","plural":"matchs nuls"},
         "TROPHY": {"form":"trophée","gender":"m","plural":"trophées"},
         "SWIFT": ["rapide"],
@@ -1967,7 +1967,7 @@
         "ASSIST": {"form":"助攻"},
         "MATCH": {"form":"比赛"},
         "VICTORY": {"form":"胜利"},
-        "DEFEAT": {"form":"失败"},
+        "DEFEAT_LOSS": {"form":"失败"},
         "DRAW": {"form":"平局"},
         "TROPHY": {"form":"奖杯"},
         "SWIFT": ["迅捷"],
@@ -2022,7 +2022,7 @@
         "ASSIST": {"form":"assist","gender":"m","plural":"assist"},
         "MATCH": {"form":"partita","gender":"f","plural":"partite"},
         "VICTORY": {"form":"vittoria","gender":"f","plural":"vittorie"},
-        "DEFEAT": {"form":"sconfitta","gender":"f","plural":"sconfitte"},
+        "DEFEAT_LOSS": {"form":"sconfitta","gender":"f","plural":"sconfitte"},
         "DRAW": {"form":"pareggio","gender":"m","plural":"pareggi"},
         "TROPHY": {"form":"trofeo","gender":"m","plural":"trofei"},
         "SWIFT": ["veloce"],
@@ -2077,7 +2077,7 @@
         "ASSIST": {"form":"แอสซิสต์"},
         "MATCH": {"form":"แมตช์"},
         "VICTORY": {"form":"ชัยชนะ"},
-        "DEFEAT": {"form":"ความพ่ายแพ้"},
+        "DEFEAT_LOSS": {"form":"ความพ่ายแพ้"},
         "DRAW": {"form":"ผลเสมอ"},
         "TROPHY": {"form":"ถ้วยรางวัล"},
         "SWIFT": ["ว่องไว"],
@@ -2132,7 +2132,7 @@
         "ASSIST": {"form":"asysta","gender":"f","plural":"asysty","genitive_plural":"asyst"},
         "MATCH": {"form":"mecz","gender":"m","plural":"mecze","genitive_plural":"meczów"},
         "VICTORY": {"form":"zwycięstwo","gender":"n","plural":"zwycięstwa","genitive_plural":"zwycięstw"},
-        "DEFEAT": {"form":"porażka","gender":"f","plural":"porażki","genitive_plural":"porażek"},
+        "DEFEAT_LOSS": {"form":"porażka","gender":"f","plural":"porażki","genitive_plural":"porażek"},
         "DRAW": {"form":"remis","gender":"m","plural":"remisy","genitive_plural":"remisów"},
         "TROPHY": {"form":"trofeum","gender":"n","plural":"trofea","genitive_plural":"trofeów"},
         "SWIFT": ["szybki"],

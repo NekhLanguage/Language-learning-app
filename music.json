@@ -94,6 +94,7 @@
           "dative": "пианино",
           "instrumental": "пианино",
           "locative": "пианино",
+          "accusative": "пианино",
           "invariantPlural": true,
           "genitive_plural": "пианино"
         },
@@ -314,6 +315,7 @@
           "dative": "соло",
           "instrumental": "соло",
           "locative": "соло",
+          "accusative": "соло",
           "invariantPlural": true,
           "genitive_plural": "соло"
         },
