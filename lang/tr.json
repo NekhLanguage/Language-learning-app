@@ -224,9 +224,13 @@
     "BY": [
       "tarafından"
     ],
-    "WHILE": [
-      "iken"
-    ],
+    "WHILE": {
+      "form": "iken",
+      "clauseFinal": true,
+      "verbForm": "3_singular",
+      "attachedForm": "ken",
+      "attach": true
+    },
     "AS": [
       "olarak",
       "gibi"

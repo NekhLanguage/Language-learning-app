@@ -220,9 +220,11 @@
     "BY": [
       "由"
     ],
-    "WHILE": [
-      "当"
-    ],
+    "WHILE": {
+      "form": "的时候",
+      "clauseFinal": true,
+      "attach": true
+    },
     "AS": [
       "作为"
     ],

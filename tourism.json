@@ -403,7 +403,8 @@
           "accusative": "официанта",
           "plural": "официанты",
           "genitive_plural": "официантов",
-          "f_instrumental": "официанткой"
+          "f_instrumental": "официанткой",
+          "instrumental_plural": "официантами"
         },
         "MARKET": {
           "form": "рынок",
@@ -549,7 +550,8 @@
           "locative": "гиде",
           "accusative": "гида",
           "plural": "гиды",
-          "genitive_plural": "гидов"
+          "genitive_plural": "гидов",
+          "instrumental_plural": "гидами"
         },
         "BOARD": {
           "base": "садиться",
@@ -3625,7 +3627,8 @@
           "genitive_plural": "офіціантів",
           "instrumental": "офіціантом",
           "feminine": "офіціантка",
-          "f_instrumental": "офіціанткою"
+          "f_instrumental": "офіціанткою",
+          "instrumental_plural": "офіціантами"
         },
         "MARKET": {
           "gender": "m",
@@ -3704,7 +3707,8 @@
           "accusative": "гіда",
           "plural": "гіди",
           "genitive_plural": "гідів",
-          "instrumental": "гідом"
+          "instrumental": "гідом",
+          "instrumental_plural": "гідами"
         },
         "BOARD": {
           "base": "сідати",
@@ -4255,7 +4259,8 @@
         "BARGAIN": {
           "form": "bonne affaire",
           "gender": "f",
-          "plural": "bonnes affaires"
+          "plural": "bonnes affaires",
+          "noAdjective": true
         },
         "PHRASEBOOK": {
           "form": "guide de conversation",

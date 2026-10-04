@@ -638,7 +638,8 @@
       "3_singular": "używa",
       "1_plural": "używamy",
       "2_plural": "używacie",
-      "3_plural": "używają"
+      "3_plural": "używają",
+      "governedCase": "genitive"
     },
     "GET": {
       "base": "dostawać",
@@ -1107,9 +1108,17 @@
     "TWENTY": [
       "dwadzieścia"
     ],
-    "ANY": [
-      "jakikolwiek"
-    ],
+    "ANY": {
+      "form": "dowolny",
+      "f": "dowolna",
+      "n": "dowolne",
+      "plural": "dowolne",
+      "fp": "dowolne",
+      "vp": "dowolni",
+      "genitive": "dowolnego",
+      "f_genitive": "dowolnej",
+      "n_genitive": "dowolnego"
+    },
     "ONLY": [
       "tylko"
     ],

@@ -166,6 +166,7 @@
           "locative": "модели",
           "plural": "модели",
           "genitive_plural": "моделей",
+          "instrumental_plural": "моделями",
           "accusative": "модель"
         },
         "COLLECTION": {
@@ -1627,7 +1628,8 @@
           "gender": "f",
           "form": "модель",
           "plural": "моделі",
-          "instrumental": "моделлю"
+          "instrumental": "моделлю",
+          "instrumental_plural": "моделями"
         },
         "COLLECTION": { "gender": "f", "form": "колекція", "plural": "колекції" },
         "BOUTIQUE": { "gender": "m", "form": "бутік", "plural": "бутіки" },

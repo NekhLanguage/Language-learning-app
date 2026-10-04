@@ -921,9 +921,10 @@
       "som"
     ],
     "ANY": {
-      "form": "valfri",
-      "n": "valfritt",
-      "plural": "valfria"
+      "form": "vilken",
+      "n": "vilket",
+      "plural": "vilka",
+      "suffix": "som helst"
     },
     "ONLY": [
       "bara"

@@ -173,7 +173,8 @@
           "locative": "тренере",
           "accusative": "тренера",
           "plural": "тренеры",
-          "genitive_plural": "тренеров"
+          "genitive_plural": "тренеров",
+          "instrumental_plural": "тренерами"
         },
         "KICK": {
           "base": "бить",
@@ -1767,7 +1768,8 @@
           "form": "тренер",
           "accusative": "тренера",
           "plural": "тренери",
-          "instrumental": "тренером"
+          "instrumental": "тренером",
+          "instrumental_plural": "тренерами"
         },
 
         "KICK":       { "base": "бити", "1_singular": "б'ю", "2_singular": "б'єш", "3_singular": "б'є", "1_plural": "б'ємо", "2_plural": "б'єте", "3_plural": "б'ють" },

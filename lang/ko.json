@@ -230,9 +230,19 @@
     "BY": [
       "에 의해"
     ],
-    "WHILE": [
-      "동안"
-    ],
+    "WHILE": {
+      "form": "동안",
+      "clauseFinal": true,
+      "subjectParticle": {
+        "afterConsonant": "이",
+        "afterVowel": "가"
+      },
+      "verbSuffix": {
+        "afterVowel": "는",
+        "afterConsonant": "는",
+        "dropL": true
+      }
+    },
     "AS": [
       "로"
     ],
@@ -460,9 +470,13 @@
     "THIRD_PERSON_PLURAL": [
       "그들"
     ],
-    "ANY": [
-      "어떤"
-    ],
+    "ANY": {
+      "form": "아무",
+      "suffix": {
+        "afterConsonant": "이나",
+        "afterVowel": "나"
+      }
+    },
     "ONLY": [
       "오직"
     ],
