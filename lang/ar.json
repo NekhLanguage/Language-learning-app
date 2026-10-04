@@ -555,6 +555,16 @@
       "2_plural": "تأكلون",
       "3_plural": "يأكلون"
     },
+    "WORK": {
+      "base": "عمل",
+      "1_singular": "أعمل",
+      "2_singular": "تعمل",
+      "3_singular": "يعمل",
+      "3_singular_feminine": "تعمل",
+      "1_plural": "نعمل",
+      "2_plural": "تعملون",
+      "3_plural": "يعملون"
+    },
     "DRINK": {
       "base": "شرب",
       "1_singular": "أشرب",

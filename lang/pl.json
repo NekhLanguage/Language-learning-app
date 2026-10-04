@@ -550,6 +550,15 @@
       "2_plural": "jecie",
       "3_plural": "jedzą"
     },
+    "WORK": {
+      "base": "pracować",
+      "1_singular": "pracuję",
+      "2_singular": "pracujesz",
+      "3_singular": "pracuje",
+      "1_plural": "pracujemy",
+      "2_plural": "pracujecie",
+      "3_plural": "pracują"
+    },
     "DRINK": {
       "base": "pić",
       "1_singular": "piję",

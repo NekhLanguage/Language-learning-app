@@ -643,6 +643,8 @@
     {"template_id": "I_GO_TO_LOBBY", "concepts": ["FIRST_PERSON_SINGULAR", "GO", "TO", "LOBBY"], "render": {"en": "I go to a lobby."}},
     {"template_id": "WE_GO_TO_CUSTOMS", "concepts": ["FIRST_PERSON_PLURAL", "GO", "TO", "CUSTOMS"], "render": {"en": "We go to customs."}},
     {"template_id": "WE_GO_TO_CHECKOUT", "concepts": ["FIRST_PERSON_PLURAL", "GO", "TO", "CHECKOUT"], "render": {"en": "We go to checkout."}},
-    {"template_id": "SHE_SEES_BARGAIN", "concepts": ["SHE", "SEE", "BARGAIN"], "render": {"en": "She sees a bargain."}}
+    {"template_id": "SHE_SEES_BARGAIN", "concepts": ["SHE", "SEE", "BARGAIN"], "render": {"en": "She sees a bargain."}},
+    {"template_id": "I_WORK_AS_GUIDE", "concepts": ["FIRST_PERSON_SINGULAR", "WORK", "AS", "GUIDE"], "render": {"en": "I work as a guide."}},
+    {"template_id": "SHE_WORKS_AS_WAITER", "concepts": ["SHE", "WORK", "AS", "WAITER"], "render": {"en": "She works as a waiter."}}
   ]
 }

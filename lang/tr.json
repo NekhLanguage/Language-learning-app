@@ -228,8 +228,8 @@
       "iken"
     ],
     "AS": [
-      "gibi",
-      "olarak"
+      "olarak",
+      "gibi"
     ],
     "WATER": {
       "form": "su",
@@ -617,6 +617,15 @@
       "1_plural": "yeriz",
       "2_plural": "yersiniz",
       "3_plural": "yerler"
+    },
+    "WORK": {
+      "base": "çalışmak",
+      "1_singular": "çalışırım",
+      "2_singular": "çalışırsın",
+      "3_singular": "çalışır",
+      "1_plural": "çalışırız",
+      "2_plural": "çalışırsınız",
+      "3_plural": "çalışırlar"
     },
     "DRINK": {
       "base": "içmek",

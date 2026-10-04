@@ -1761,7 +1761,13 @@
         "GOALKEEPER": { "gender": "m", "form": "воротар", "accusative": "воротаря", "plural": "воротарі", "feminine": "воротарка" },
         "CAPTAIN": { "gender": "m", "form": "капітан", "accusative": "капітана", "plural": "капітани" },
         "REFEREE": { "gender": "m", "form": "суддя", "accusative": "суддю", "plural": "судді" },
-        "COACH": { "gender": "m", "form": "тренер", "accusative": "тренера", "plural": "тренери" },
+        "COACH": {
+          "gender": "m",
+          "form": "тренер",
+          "accusative": "тренера",
+          "plural": "тренери",
+          "instrumental": "тренером"
+        },
 
         "KICK":       { "base": "бити", "1_singular": "б'ю", "2_singular": "б'єш", "3_singular": "б'є", "1_plural": "б'ємо", "2_plural": "б'єте", "3_plural": "б'ють" },
         "PASS":       { "base": "пасувати", "1_singular": "пасую", "2_singular": "пасуєш", "3_singular": "пасує", "1_plural": "пасуємо", "2_plural": "пасуєте", "3_plural": "пасують" },

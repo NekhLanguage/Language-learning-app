@@ -281,6 +281,15 @@
       "2_plural": "syötte",
       "3_plural": "syövät"
     },
+    "WORK": {
+      "base": "työskennellä",
+      "1_singular": "työskentelen",
+      "2_singular": "työskentelet",
+      "3_singular": "työskentelee",
+      "1_plural": "työskentelemme",
+      "2_plural": "työskentelette",
+      "3_plural": "työskentelevät"
+    },
     "DRINK": {
       "base": "juoda",
       "1_singular": "juon",

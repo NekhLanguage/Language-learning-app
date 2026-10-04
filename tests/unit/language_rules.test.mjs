@@ -138,6 +138,7 @@ test("uk caseMarking declaration matches the engine's historic behaviour", () =>
     BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
     WITH: "instrumental",
     TO: "genitive", FROM: "genitive", FOR: "genitive",
+    AS: { case: "instrumental", suppressWord: true },
   });
 });
 
@@ -2564,4 +2565,31 @@ test("measures are countable nouns and ITS is a possessive determiner", () => {
   assert.equal(vocab.concepts.ITS.semantic_role, "possessive");
   assert.equal(buildSentence("de", tplById("HE_READ_BOOK"), "ITS", {}), "Er liest sein Buch.");
   assert.equal(buildSentence("en", tplById("HE_READ_BOOK"), "ITS", {}), "He reads its book.");
+});
+
+// ── Nekh 2026-10-04 later: WORK joins the core, AS gets its templates ──────
+
+test("WORK is a core verb with a sentence in every language; AS renders the role bare, instrumental, or postposed", () => {
+  assert.equal(vocab.concepts.WORK.type, "verb");
+  assert.equal(buildSentence("de", tplById("CX_I_WORK")), "Ich arbeite.");
+  assert.equal(buildSentence("ru", tplById("CX_WE_WORK_TODAY")), "Мы работаем сегодня.");
+  assert.equal(buildSentence("ja", tplById("CX_I_WORK")), "私は働きます。");
+  withPackForms("tourism.json", () => {
+    // Declared bareNounAfterGlueRoles: no article after the role glue.
+    assert.equal(buildSentence("de", tplById("I_WORK_AS_GUIDE")), "Ich arbeite als Reiseführer.");
+    assert.equal(buildSentence("fr", tplById("I_WORK_AS_GUIDE")), "Je travaille comme guide.");
+    assert.equal(buildSentence("it", tplById("SHE_WORKS_AS_WAITER")), "Lei lavora come cameriere.");
+    assert.equal(buildSentence("sv", tplById("I_WORK_AS_GUIDE")), "Jag arbetar som guide.");
+    // Declared case-only AS (suppressWord): the bare instrumental carries the role.
+    assert.equal(buildSentence("ru", tplById("I_WORK_AS_GUIDE")), "Я работаю гидом.");
+    assert.equal(buildSentence("uk", tplById("SHE_WORKS_AS_WAITER")), "Вона працює офіціантом.");
+    // Postposed role glue (ja として, tr olarak) and zh's preverbal 作为-phrase.
+    assert.equal(buildSentence("ja", tplById("I_WORK_AS_GUIDE")), "私はガイドとして働きます。");
+    assert.equal(buildSentence("tr", tplById("I_WORK_AS_GUIDE")), "Ben rehber olarak çalışırım.");
+    assert.equal(buildSentence("zh", tplById("I_WORK_AS_GUIDE")), "我作为导游工作。");
+    assert.equal(buildSentence("en", tplById("I_WORK_AS_GUIDE")), "I work as a guide.");
+  });
+  withPackForms("harry_potter.json", () => {
+    assert.equal(buildSentence("pl", tplById("HE_WORKS_AS_PROFESSOR")), "On pracuje jako profesor.");
+  });
 });

@@ -817,6 +817,7 @@
       "render": {
         "en": "He writes a lesson."
       }
-    }
+    },
+    {"template_id": "HE_WORKS_AS_PROFESSOR", "concepts": ["HE", "WORK", "AS", "PROFESSOR"], "render": {"en": "He works as a professor."}}
   ]
 }

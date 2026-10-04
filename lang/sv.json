@@ -359,6 +359,10 @@
       "base": "äta",
       "present": "äter"
     },
+    "WORK": {
+      "base": "arbeta",
+      "present": "arbetar"
+    },
     "DRINK": {
       "base": "dricka",
       "present": "dricker"

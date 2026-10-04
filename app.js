@@ -95,7 +95,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.89";
+const APP_DATA_VERSION = "1.2.90";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -188,7 +188,7 @@ const CORE_BUNDLES = [
 
 { id: "core_39", concepts: ["YES","NO","IT","ITS","MINE"] },
 
-{ id: "core_40", concepts: ["YOURS","HERS","OURS","THEIRS"] }
+{ id: "core_40", concepts: ["YOURS","HERS","OURS","THEIRS","WORK"] }
 ];
 // Bundles no longer in the release plan but still named by release plans
 // saved before they were retired. releaseNextBundle stops at an id it can't

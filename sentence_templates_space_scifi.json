@@ -724,6 +724,7 @@
       "render": {
         "en": "The habitat is sustainable."
       }
-    }
+    },
+    {"template_id": "HE_WORKS_AS_ASTRONAUT", "concepts": ["HE", "WORK", "AS", "ASTRONAUT"], "render": {"en": "He works as an astronaut."}}
   ]
 }

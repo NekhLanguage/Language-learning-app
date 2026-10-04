@@ -996,6 +996,7 @@
       "render": {
         "en": "He goes to the league."
       }
-    }
+    },
+    {"template_id": "I_WORK_AS_TRAINER", "concepts": ["FIRST_PERSON_SINGULAR", "WORK", "AS", "TRAINER"], "render": {"en": "I work as a trainer."}}
   ]
 }

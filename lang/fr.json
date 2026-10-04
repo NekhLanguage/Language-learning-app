@@ -635,6 +635,15 @@
       "2_plural": "mangez",
       "3_plural": "mangent"
     },
+    "WORK": {
+      "base": "travailler",
+      "1_singular": "travaille",
+      "2_singular": "travailles",
+      "3_singular": "travaille",
+      "1_plural": "travaillons",
+      "2_plural": "travaillez",
+      "3_plural": "travaillent"
+    },
     "DRINK": {
       "base": "boire",
       "1_singular": "bois",

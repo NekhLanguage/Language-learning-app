@@ -59,6 +59,17 @@
       "type": "verb"
     },
     {
+      "concept_id": "WORK",
+      "type": "verb",
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
       "concept_id": "MAY",
       "type": "verb",
       "core": true,

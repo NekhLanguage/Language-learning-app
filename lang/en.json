@@ -576,6 +576,10 @@
       "base": "eat",
       "3_singular": "eats"
     },
+    "WORK": {
+      "base": "work",
+      "3_singular": "works"
+    },
     "DRINK": {
       "base": "drink",
       "3_singular": "drinks"

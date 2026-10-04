@@ -317,6 +317,15 @@
       "2_plural": "mangiate",
       "3_plural": "mangiano"
     },
+    "WORK": {
+      "base": "lavorare",
+      "1_singular": "lavoro",
+      "2_singular": "lavori",
+      "3_singular": "lavora",
+      "1_plural": "lavoriamo",
+      "2_plural": "lavorate",
+      "3_plural": "lavorano"
+    },
     "DRINK": {
       "base": "bere",
       "1_singular": "bevo",

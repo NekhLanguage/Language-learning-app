@@ -5220,6 +5220,23 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // A fused adposition form («hjemmefra», ru TABLE «к столу») is the
   // whole phrase and wins over the governed case field — its own branch
   // below returns it; the adposition slot already rendered empty for it.
+  // Declared rule bareNounAfterGlueRoles (de/fr/es/it/pt/sv/no/el): the
+  // noun after a role glue is bare — «Ich arbeite als Reiseführer», «Je
+  // travaille comme guide» — never «als ein Reiseführer» (the AS template).
+  // Pinned modifier-free for the paired build like the fused form below.
+  {
+    const bareRoles = langRuleValue(lang, "bareNounAfterGlueRoles");
+    const prevGlue = idx > 0 ? vocab().concepts[ordered[idx - 1]] : null;
+    if (Array.isArray(bareRoles) && prevGlue?.type === "glue" &&
+        bareRoles.includes(prevGlue.semantic_role)) {
+      if (sharedChoices) {
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)) sharedChoices["adj_" + cid] = null;
+        if (!Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)) sharedChoices["num_" + cid] = null;
+      }
+      return formOf(lang, cid);
+    }
+  }
+
   const fusedWhole = idx > 0 ? fusedAdpositionForm(lang, cid, ordered[idx - 1]) : null;
   const governedForm = fusedWhole ? null : caseFormFor(lang, cid, caseAt[idx]);
   if (governedForm) {

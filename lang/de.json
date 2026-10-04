@@ -633,6 +633,15 @@
       "2_plural": "esst",
       "3_plural": "essen"
     },
+    "WORK": {
+      "base": "arbeiten",
+      "1_singular": "arbeite",
+      "2_singular": "arbeitest",
+      "3_singular": "arbeitet",
+      "1_plural": "arbeiten",
+      "2_plural": "arbeitet",
+      "3_plural": "arbeiten"
+    },
     "DRINK": {
       "base": "trinken",
       "1_singular": "trinke",

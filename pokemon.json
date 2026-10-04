@@ -1970,7 +1970,14 @@
   "forms": {
 
     "POKEMON": { "gender": "m", "form": "покемон", "accusative": "покемона", "invariantPlural": true },
-    "TRAINER": { "gender": "m", "form": "тренер", "accusative": "тренера", "plural": "тренери", "feminine": "тренерка" },
+    "TRAINER": {
+      "gender": "m",
+      "form": "тренер",
+      "accusative": "тренера",
+      "plural": "тренери",
+      "feminine": "тренерка",
+      "instrumental": "тренером"
+    },
     "GYM": { "gender": "m", "form": "зал", "genitive": "залу" },
     "LEAGUE": { "gender": "f", "form": "ліга", "plural": "ліги", "genitive": "ліги" },
     "GYM_LEADER": { "gender": "m", "form": "лідер залу", "accusative": "лідера залу", "plural": "лідери залів", "feminine": "лідерка залу" },

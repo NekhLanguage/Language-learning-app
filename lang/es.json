@@ -631,6 +631,15 @@
       "2_plural": "coméis",
       "3_plural": "comen"
     },
+    "WORK": {
+      "base": "trabajar",
+      "1_singular": "trabajo",
+      "2_singular": "trabajas",
+      "3_singular": "trabaja",
+      "1_plural": "trabajamos",
+      "2_plural": "trabajáis",
+      "3_plural": "trabajan"
+    },
     "DRINK": {
       "base": "beber",
       "1_singular": "bebo",

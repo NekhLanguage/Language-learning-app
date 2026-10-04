@@ -1689,7 +1689,13 @@
         "ASTEROID":   { "gender": "m", "form": "астероїд" },
         "ROCKET":     { "gender": "f", "form": "ракета" },
         "SPACECRAFT":  { "gender": "m", "form": "космічний корабель" },
-        "ASTRONAUT": { "gender": "m", "form": "астронавт", "accusative": "астронавта", "feminine": "астронавтка" },
+        "ASTRONAUT": {
+          "gender": "m",
+          "form": "астронавт",
+          "accusative": "астронавта",
+          "feminine": "астронавтка",
+          "instrumental": "астронавтом"
+        },
         "TELESCOPE":  { "gender": "m", "form": "телескоп" },
         "SATELLITE":  { "gender": "m", "form": "супутник" },
         "PROBE":      { "gender": "m", "form": "зонд" },
