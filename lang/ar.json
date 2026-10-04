@@ -851,7 +851,8 @@
       "شكرا"
     ],
     "MAY": {
-      "base": "قد"
+      "base": "قد",
+      "finiteComplement": true
     }
   },
   "alphabet": {

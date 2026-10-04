@@ -225,9 +225,14 @@
     "BY": [
       "で"
     ],
-    "WHILE": [
-      "間に"
-    ],
+    "WHILE": {
+      "form": "間に",
+      "clauseFinal": true,
+      "subjectParticle": "が",
+      "verbTe": true,
+      "verbSuffix": "いる",
+      "separator": "、"
+    },
     "AS": [
       "として"
     ],
@@ -442,7 +447,7 @@
       "たぶん"
     ],
     "JUST": [
-      "だけ"
+      "ただ"
     ],
     "YES": [
       "はい"
@@ -475,9 +480,11 @@
     "THIRD_PERSON_PLURAL": [
       "彼ら"
     ],
-    "ANY": [
-      "どれでも"
-    ],
+    "ANY": {
+      "form": "どの",
+      "suffix": "でも",
+      "suffixAttach": true
+    },
     "ONLY": [
       "だけ"
     ],
@@ -549,7 +556,8 @@
       "base": "飲みます"
     },
     "READ": {
-      "base": "読みます"
+      "base": "読みます",
+      "te": "読んで"
     },
     "SEE": {
       "base": "見ます"

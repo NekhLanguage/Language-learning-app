@@ -918,9 +918,10 @@
     "ANOTHER": [
       "toinen"
     ],
-    "ANY": [
-      "mitä tahansa"
-    ],
+    "ANY": {
+      "form": "mitä tahansa",
+      "objectCase": "partitive"
+    },
     "SOMETHING": [
       "jotakin"
     ],

@@ -612,7 +612,7 @@ test("zh: prepositional adjuncts and 只 precede the verb, adjunct nominals bare
   // Explicit template order goes through the same hook.
   assert.equal(buildSentence("zh", tplById("I_DO_THIS_BY_HAND"), null, {}), "我用手做这。");
   // Destinations stay after the verb; the comitative builder keeps 一起.
-  assert.equal(buildSentence("zh", tplById("I_GO_TO_TABLE"), null, {}), "我去到一张桌子。");
+  assert.equal(buildSentence("zh", tplById("I_GO_TO_TABLE"), null, {}), "我去一张桌子。");
   assert.ok(buildSentence("zh", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME"), null, {})
     .startsWith("他和他的妈妈一起吃晚餐"));
   // Other languages are untouched.
@@ -1831,7 +1831,7 @@ test("ar: the verb's own government supplies the preposition (Emi run-11 -53)", 
   assert.equal(buildSentence("ar", tplById("WE_STOP_EATING")), "نحن نتوقف عن الأكل.");
   assert.equal(buildSentence("ar", tplById("I_GO_HOME")), "أنا أذهب إلى المنزل.");
   // an explicit glue word already carries the relation — no doubling
-  assert.equal(buildSentence("ar", tplById("I_GO_TO_TABLE")), "أنا أذهب إلى طاولة.");
+  assert.equal(buildSentence("ar", tplById("I_GO_TO_TABLE")), "أنا أذهب إلى الطاولة.");
   // a time complement is not verb-governed
   assert.equal(buildSentence("ar", tplById("WE_GO_TOMORROW")), "نحن نذهب غداً.");
 });
@@ -2064,6 +2064,14 @@ test("es: apocope respects a plural-only head; ácida agrees (Emi run-22 -132/-1
   assert.equal(buildSentence("es", tplById("THEY_HAVE_PANTS"), "GOOD", {}), "Ellos tienen buenos pantalones.");
   assert.equal(buildSentence("es", tplById("SHE_EAT_FRUIT"), "SOUR", {}), "Ella come una fruta ácida.");
   assert.equal(buildSentence("es", tplById("HE_READ_BOOK"), "ONE", {}), "Él lee un libro.");
+});
+
+test("picker: Swedish and Russian are visible and out of BETA (Nekh 2026-10-04, on Emi's runs 30–32)", () => {
+  for (const code of ["sv", "ru"]) {
+    const row = AVAILABLE_LANGUAGES.find(l => l.code === code);
+    assert.equal(row?.hidden, undefined, code);
+    assert.equal(row?.beta, false, code);
+  }
 });
 
 test("picker: Korean, Turkish and German are out of BETA (Nekh 2026-09-06, on Emi's runs 19/21/22)", () => {
@@ -2683,12 +2691,85 @@ test("MAY conjugates with its subject; NEXT is a predicative article phrase; WHI
 
 test("ANY blocks a numeral injection; NICE is post-nominal in pt/es and apocopated in it (run-32 -205, -208)", () => {
   const tpl = tplById("CX_I_USE_ANY_PHONE");
-  assert.equal(buildSentence("sv", tpl, "THREE", { num_PHONE: "THREE" }), "Jag använder valfri telefon.");
+  assert.equal(buildSentence("sv", tpl, "THREE", { num_PHONE: "THREE" }), "Jag använder vilken telefon som helst.");
   assert.equal(buildSentence("ru", tpl, "THREE", { num_PHONE: "THREE" }), "Я использую любой телефон.");
   assert.equal(vocab.concepts.NICE.semantic_role, "property_evaluation");
   withPackForms("cooking.json", () => {
     assert.equal(buildSentence("pt", tplById("I_HAVE_SPATULA"), "NICE", { adj_SPATULA: "NICE" }), "Eu tenho uma espátula legal.");
     assert.equal(buildSentence("es", tplById("I_HAVE_SPATULA"), "NICE", { adj_SPATULA: "NICE" }), "Yo tengo una espátula agradable.");
     assert.equal(buildSentence("it", tplById("I_HAVE_SPATULA"), "NICE", { adj_SPATULA: "NICE" }), "Io ho una bella spatola.");
+  });
+});
+
+// ── Nekh 2026-10-04: the rest of Emi's run 32 (the deferred classes) ──
+
+test("SOV/zh: a trailing adverb precedes the verb; zh drops 到 after a motion verb (run-32 -199/-200)", () => {
+  assert.equal(buildSentence("ja", tplById("CX_WE_GO_LATER")), "私たちは後で行きます。");
+  assert.equal(buildSentence("ko", tplById("CX_WE_WORK_TODAY")), "우리는 오늘 일해요.");
+  assert.equal(buildSentence("zh", tplById("CX_WE_GO_LATER")), "我们以后去。");
+  assert.equal(buildSentence("tr", tplById("CX_WE_GO_LATER")), "Biz daha sonra gideriz.");
+  assert.equal(buildSentence("ja", tplById("CX_I_JUST_EAT")), "私はただ食べます。");
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("zh", tplById("I_GO_TO_LOBBY")), "我去大堂。");
+  });
+});
+
+test("MAY: ko -(으)ㄹ지도 몰라요 and tr -(y)Abilir on the complement; el να + finite; ar finite present (run-32 -198)", () => {
+  const we = { template_id: "CX_WE_MAY_SLEEP", concepts: ["FIRST_PERSON_PLURAL", "MAY", "SLEEP"], render: { en: "x" } };
+  const i = { template_id: "CX_I_MAY_EAT", concepts: ["FIRST_PERSON_SINGULAR", "MAY", "EAT"], render: { en: "x" } };
+  assert.equal(buildSentence("ko", tplById("CX_HE_MAY_SLEEP")), "그는 잘지도 몰라요.");
+  assert.equal(buildSentence("ko", i), "저는 먹을지도 몰라요.");
+  assert.equal(buildSentence("tr", tplById("CX_HE_MAY_SLEEP")), "O uyuyabilir.");
+  assert.equal(buildSentence("tr", we), "Biz uyuyabiliriz.");
+  assert.equal(buildSentence("tr", i), "Ben yiyebilirim.");
+  assert.equal(buildSentence("el", we), "Εμείς μπορούμε να κοιμόμαστε.");
+  assert.equal(buildSentence("ar", tplById("CX_HE_MAY_SLEEP")), "هو قد ينام.");
+});
+
+test("WHILE leads with a clause-final linker in ko/tr/zh/ja (run-32 -199/-200)", () => {
+  const tpl = tplById("CX_I_EAT_WHILE_YOU_READ");
+  assert.equal(buildSentence("ko", tpl), "당신이 읽는 동안 저는 먹어요.");
+  assert.equal(buildSentence("tr", tpl), "Sen okurken ben yerim.");
+  assert.equal(buildSentence("zh", tpl), "你读的时候我吃。");
+  assert.equal(buildSentence("ja", tpl), "あなたが読んでいる間に、私は食べます。");
+  // SVO languages keep the main clause first.
+  assert.equal(buildSentence("fr", tpl), "Je mange pendant que tu lis.");
+});
+
+test("ANY: circumfix in sv/ja/ko, postposed in th, partitive in fi, genitive after pl «używać» (run-32 -205, -202)", () => {
+  const tpl = tplById("CX_I_USE_ANY_PHONE");
+  assert.equal(buildSentence("sv", tpl), "Jag använder vilken telefon som helst.");
+  assert.equal(buildSentence("sv", tpl, "BLACK", {}), "Jag använder vilken svart telefon som helst.");
+  assert.equal(buildSentence("ja", tpl), "私はどの電話でも使います。");
+  assert.equal(buildSentence("ko", tpl), "저는 아무 전화나 사용해요.");
+  assert.equal(buildSentence("th", tpl), "ฉันใช้โทรศัพท์ใดก็ได้");
+  assert.equal(buildSentence("fi", tpl), "Minä käytän mitä tahansa puhelinta.");
+  assert.equal(buildSentence("fi", tpl, "BLACK", {}), "Minä käytän mitä tahansa mustaa puhelinta.");
+  assert.equal(buildSentence("pl", tpl), "Ja używam dowolnego telefonu.");
+  assert.equal(buildSentence("pl", tplById("I_USE_PHONE")), "Ja używam telefonu.");
+  // The tile/blank path carries the circumfix suffix with the noun.
+  const slot = slotContextFor(tpl, "ko", "PHONE");
+  assert.equal(optionSurfaceFor("ko", tpl, "PHONE", slot, {}), "전화나");
+  // th ANOTHER keeps its classifier placement.
+  assert.equal(buildSentence("th", tplById("I_HAVE_ANOTHER_BOOK")), "ฉันมีหนังสืออีกเล่ม");
+});
+
+test("ar: definite subjects, landmarks and destinations take ال; the role after كـ agrees (run-32 -207, -203, -201)", () => {
+  assert.equal(buildSentence("ar", tplById("CX_BOOK_IS_ON_TOP")), "الكتاب في الأعلى.");
+  assert.equal(buildSentence("ar", tplById("CX_WINTER_IS_GOOD")), "الشتاء جيد.");
+  assert.equal(buildSentence("ar", tplById("BOOK_ON_TABLE")), "الكتاب على الطاولة.");
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("ar", tplById("WE_GO_TO_CUSTOMS")), "نحن نذهب إلى الجمارك.");
+    assert.equal(buildSentence("ar", tplById("SHE_WORKS_AS_WAITER")), "هي تعمل كنادلة.");
+  });
+});
+
+test("ru/uk: a plural subject takes the instrumental plural after AS; fr «bonne affaire» refuses an adjective (run-32 -201, -209c)", () => {
+  const they = { template_id: "THEY_WORK_AS_GUIDE", concepts: ["THIRD_PERSON_PLURAL", "WORK", "AS", "GUIDE"], render: { en: "x" } };
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("ru", they), "Они работают гидами.");
+    assert.equal(buildSentence("uk", they), "Вони працюють гідами.");
+    assert.equal(buildSentence("fr", tplById("SHE_SEES_BARGAIN"), "GOOD", {}), "Elle voit une bonne affaire.");
+    assert.equal(buildSentence("fr", tplById("SHE_SEES_BARGAIN"), "TWO", {}), "Elle voit deux bonnes affaires.");
   });
 });

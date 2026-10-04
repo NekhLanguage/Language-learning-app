@@ -189,7 +189,8 @@
           "locative": "профессоре",
           "accusative": "профессора",
           "plural": "профессора",
-          "genitive_plural": "профессоров"
+          "genitive_plural": "профессоров",
+          "instrumental_plural": "профессорами"
         },
         "STUDENT": {
           "form": "студент",
@@ -1550,7 +1551,8 @@
       "plural": "професори",
       "feminine": "професорка",
       "instrumental": "професором",
-      "f_instrumental": "професоркою"
+      "f_instrumental": "професоркою",
+      "instrumental_plural": "професорами"
     },
     "STUDENT": { "gender": "m", "form": "студент", "plural": "студенти" },
     "ELF": { "gender": "m", "form": "ельф", "plural": "ельфи" },
@@ -2041,7 +2043,7 @@
         "WIZARD": {"form":"czarodziej","gender":"m","plural":"czarodzieje","genitive_plural":"czarodziejów","accusative":"czarodzieja","virile":true, "instrumental": "czarodziejem"},
         "WITCH": {"form":"czarownica","gender":"f","plural":"czarownice","genitive_plural":"czarownic", "instrumental": "czarownicą"},
         "SPELL": {"form":"zaklęcie","gender":"n","plural":"zaklęcia","genitive_plural":"zaklęć"},
-        "POTION": {"form":"eliksir","gender":"m","plural":"eliksiry","genitive_plural":"eliksirów"},
+        "POTION": {"form": "eliksir", "gender": "m", "plural": "eliksiry", "genitive_plural": "eliksirów", "genitive": "eliksiru"},
         "SCHOOL": {"form":"szkoła","gender":"f","plural":"szkoły","genitive_plural":"szkół"},
         "CAULDRON": {"form":"kociołek","gender":"m","plural":"kociołki","genitive_plural":"kociołków"},
         "BROOM": {"form":"miotła","gender":"f","plural":"miotły","genitive_plural":"mioteł"},

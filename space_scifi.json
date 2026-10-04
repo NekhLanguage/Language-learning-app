@@ -133,7 +133,8 @@
           "accusative": "астронавта",
           "plural": "астронавты",
           "genitive_plural": "астронавтов",
-          "f_instrumental": "астронавткой"
+          "f_instrumental": "астронавткой",
+          "instrumental_plural": "астронавтами"
         },
         "TELESCOPE": {
           "form": "телескоп",
@@ -1697,7 +1698,8 @@
           "accusative": "астронавта",
           "feminine": "астронавтка",
           "instrumental": "астронавтом",
-          "f_instrumental": "астронавткою"
+          "f_instrumental": "астронавткою",
+          "instrumental_plural": "астронавтами"
         },
         "TELESCOPE":  { "gender": "m", "form": "телескоп" },
         "SATELLITE":  { "gender": "m", "form": "супутник" },

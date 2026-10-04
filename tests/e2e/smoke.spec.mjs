@@ -75,7 +75,7 @@ test("a signed-out session forces the sign-in screen even with local progress", 
   await loginAs(page);
   // The hub buttons render only once the versioned lang-file fetch has
   // landed; reloading before that aborts it into a console error.
-  await expect(page.locator("#language-buttons button")).toHaveCount(16);
+  await expect(page.locator("#language-buttons button")).toHaveCount(18);
 
   // Simulate the cutover: the old email shim and local data are present but
   // there is no Supabase session behind them.
@@ -130,12 +130,12 @@ test("start screen leads to the language hub", async ({ page }) => {
   await page.click("#open-app");
   await expect(page.locator("#language-screen.active")).toBeVisible();
 
-  // 19 registered languages minus the support language (English) minus
-  // the two hidden ones (Swedish and Russian, gate-pending since
-  // 2026-10-03): the plain picker never shows a hidden language.
-  await expect(page.locator("#language-buttons button")).toHaveCount(16);
-  await expect(page.locator("#language-buttons button", { hasText: "Svenska" })).toHaveCount(0);
-  await expect(page.locator("#language-buttons button", { hasText: "Русский" })).toHaveCount(0);
+  // 19 registered languages minus the support language (English). Swedish
+  // and Russian were unhidden 2026-10-04 (Nekh, after Emi's runs 30–32),
+  // so no language is hidden today and the plain picker shows all 18.
+  await expect(page.locator("#language-buttons button")).toHaveCount(18);
+  await expect(page.locator("#language-buttons button", { hasText: "Svenska" })).toHaveCount(1);
+  await expect(page.locator("#language-buttons button", { hasText: "Русский" })).toHaveCount(1);
 });
 
 test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async ({ page }) => {
@@ -150,8 +150,9 @@ test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async (
 
   await page.click("#open-app");
   await expect(page.locator("#language-screen.active")).toBeVisible();
-  // 19 registered minus the support language: the hook also reveals the
-  // two hidden languages (Swedish and Russian, gate-pending 2026-10-03).
+  // 19 registered minus the support language. No language is hidden
+  // since Swedish and Russian were unhidden (2026-10-04), so the hook
+  // changes nothing today; it stays for the next language being built.
   await expect(page.locator("#language-buttons button")).toHaveCount(18);
   await expect(page.locator("#language-buttons button", { hasText: "Svenska" })).toHaveCount(1);
   await expect(page.locator("#language-buttons button", { hasText: "Русский" })).toHaveCount(1);

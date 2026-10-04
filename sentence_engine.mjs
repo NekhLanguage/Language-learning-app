@@ -1153,7 +1153,14 @@ function caseMap(lang, ordered) {
       pending = negCase; return null;
     }
     const t = vocab().concepts?.[cid]?.type;
-    if (t === "verb") { pending = null; return null; }
+    if (t === "verb") {
+      // A verb's own government (pl «używam telefonu» — the entry's
+      // `governedCase`) assigns its object's case like a preposition.
+      const ve = vocab().languages?.[lang]?.forms?.[cid];
+      pending = (ve && typeof ve === "object" && !Array.isArray(ve) &&
+        typeof ve.governedCase === "string") ? ve.governedCase : null;
+      return null;
+    }
     if (t === "noun" || t === "pronoun") return pending;
     return null; // modifiers / conjunctions pass the case along
   });
@@ -1388,6 +1395,18 @@ function definiteNounPhrase(lang, cid, opts = {}) {
     if (IT_VOWEL_INITIAL.test(base)) return "l'" + base;
     if (g === "f") return "la " + base;
     return (IT_LO_INITIAL.test(base) ? "lo " : "il ") + base;
+  }
+  // Declared rule definitePrefix (ar «ال»): the article is a prefix on the
+  // noun — «الكتاب في الأعلى», «الشتاء جيد», «إلى الجمارك» (Emi run-32
+  // -207/-203). An authored `definiteForm` wins (idafa compounds mark
+  // their last term); otherwise the prefix lands on the first word.
+  const definitePrefix = langRuleValue(lang, "definitePrefix");
+  if (typeof definitePrefix === "string" && definitePrefix) {
+    noteRule("definite_article");
+    if (typeof entry.definiteForm === "string") return entry.definiteForm;
+    // Authored-definite nouns («الليل», «الصباح») already carry it.
+    if (base.startsWith(definitePrefix)) return base;
+    return definitePrefix + base;
   }
   return base;
 }
@@ -1769,7 +1788,7 @@ function orderedConceptsForTemplate(tpl, lang) {
   if (AUTHORED_ONLY_STRUCTURES.has(tpl.structure?.type) && Array.isArray(tpl.concepts)) {
     // A render-only modality template still places its adverb by the
     // declared rule («Ich esse nur»); authored renders are untouched.
-    return postverbalAdverbOrder(lang, tpl.concepts.slice());
+    return preverbalAdverbOrder(lang, postverbalAdverbOrder(lang, tpl.concepts.slice()));
   }
 
   // 2) Fallback: derive order based on basic word order
@@ -1891,8 +1910,8 @@ if (orderType === "SOV") {
   // — «你从菜单点菜», «我只读一本书», «我用手做这» — never trail it in
   // English order (Emi run-14 -72: 3/3 从-phrases and 2/2 只 post-verbal;
   // #137's 一起 was the specific comitative case of this rule).
-  return motionPurposeOrder(lang,
-    postverbalAdverbOrder(lang, preverbalAdjunctOrder(lang, ordered.filter(Boolean))));
+  return postposedQuantifierOrder(lang, preverbalAdverbOrder(lang, motionPurposeOrder(lang,
+    postverbalAdverbOrder(lang, preverbalAdjunctOrder(lang, ordered.filter(Boolean))))));
 }
 
 // Declared rule (postverbalAdverbs — de/sv/no/fr/it): a sentence adverb of
@@ -1918,6 +1937,49 @@ function postverbalAdverbOrder(lang, ordered) {
   const v = keep.indexOf(ordered[vIdx]);
   keep.splice(v + 1, 0, ...moved);
   return keep;
+}
+
+// Declared rule preverbalAdverbs ({ types } — ja/ko/zh/tr): a sentence
+// adverb of the listed concept types that trails the main verb in the
+// authored (English) order moves before it — «私たちは後で行きます»,
+// «우리는 오늘 일해요», «我们以后去», «Biz daha sonra gideriz», never
+// «行きます後で» (Emi run-32 -199/-200). The subject stays first.
+function preverbalAdverbOrder(lang, ordered) {
+  const spec = langRuleValue(lang, "preverbalAdverbs");
+  if (!spec || !Array.isArray(spec.types)) return ordered;
+  const types = new Set(spec.types);
+  const vIdx = ordered.findIndex(c =>
+    vocab().concepts[c]?.type === "verb" && !isCopulaConcept(c));
+  if (vIdx === -1) return ordered;
+  const moved = [];
+  const keep = [];
+  ordered.forEach((c, i) => {
+    const m = vocab().concepts[c];
+    if (i > vIdx && m && types.has(m.type)) moved.push(c);
+    else keep.push(c);
+  });
+  if (!moved.length) return ordered;
+  keep.splice(keep.indexOf(ordered[vIdx]), 0, ...moved);
+  return keep;
+}
+
+// Declared rule postposedQuantifiers ([quantifier ids] — th ANY): the
+// listed quantifiers follow their noun — «โทรศัพท์ใดก็ได้», never
+// «ใดๆโทรศัพท์» (Emi run-32 -205). Others (ANOTHER, with its classifier
+// «อีกเล่ม») keep their own placement.
+function postposedQuantifierOrder(lang, ordered) {
+  const listed = langRuleValue(lang, "postposedQuantifiers");
+  if (!Array.isArray(listed)) return ordered;
+  const out = ordered.slice();
+  for (let i = 0; i < out.length - 1; i++) {
+    const m = vocab().concepts[out[i]];
+    if (m?.type === "quantifier" && listed.includes(out[i]) &&
+        vocab().concepts[out[i + 1]]?.type === "noun") {
+      [out[i], out[i + 1]] = [out[i + 1], out[i]];
+      i++;
+    }
+  }
+  return out;
 }
 
 function preverbalAdjunctOrder(lang, ordered) {
@@ -2328,6 +2390,24 @@ function preverbalAdjunctOrder(lang, ordered) {
     if (!surface) return surface;
     const meta = vocab().concepts[cid];
     const particles = langRuleValue(targetLang, "nominalParticles");
+    // Mirrors the circumfix pass: a noun slot after a suffixing quantifier
+    // carries the suffix («전화나», «telefon som helst») in the particle's
+    // place, blank and tiles alike.
+    if (slot?.concept && meta?.type === "noun") {
+      const orderedForSlot = orderedConceptsForTemplate(tpl, targetLang) || [];
+      const spec = quantifierSuffixSpec(targetLang, orderedForSlot, orderedForSlot.indexOf(slot.concept));
+      if (spec) return surface + circumfixSuffixText(spec, surface);
+    }
+    // Mirrors the render path's definite slots for a prefix-article
+    // language (declared definitePrefix — ar): a described subject or
+    // landmark («الكتاب على الطاولة») and a bare destination («إلى
+    // الجمارك») carry ال on the blank and every tile.
+    const definitePrefix = langRuleValue(targetLang, "definitePrefix");
+    if (typeof definitePrefix === "string" && definitePrefix && slot?.concept &&
+        ["noun", "time"].includes(meta?.type) && !surface.startsWith(definitePrefix) &&
+        definitePrefixSlot(targetLang, tpl, slot.concept)) {
+      return definitePrefix + surface;
+    }
     if (particles?.attach && meta) {
       // The dedicated clause builders mark their own slots — mirror them:
       // the contrastive "V O1 but not O2" (O1 object, O2 topic) and the
@@ -2819,6 +2899,9 @@ function isModifierCompatible(lang, modifierCid, nounCid, context = {}) {
   // noModifier: the noun's usual rendering is adverbial ("home" → «додому»),
   // so neither adjectives nor numbers can attach to it in any language.
   if (nounMeta?.noModifier) return false;
+  // A per-language `noAdjective` entry («bonne affaire» already holds its
+  // adjective — Emi run-32 -209c) refuses adjective injection only.
+  if (nounEntry.noAdjective && vocab().concepts[modifierCid]?.type === "adjective") return false;
   const canTakeModifier = nounMeta?.countable || nounEntry.article || nounEntry.gender;
   if (!canTakeModifier) return false;
 
@@ -4156,6 +4239,146 @@ function hangulHasBatchim(word) {
   return false;
 }
 
+// Hangul composition for suffixal morphology: a suffix that opens with
+// a compatibility jamo (ㄹ, ㄴ, ㅁ, ㅂ) fuses it as the final consonant of
+// a vowel-final stem («자» + «ㄹ지도» → «잘지도»); a stem already ending in
+// that jamo takes the rest («살» + «ㄹ지도» → «살지도»); {dropL} drops a
+// stem-final ㄹ before the suffix («살» + «는» → «사는»).
+const HANGUL_FINAL_INDEX = { "ㄱ": 1, "ㄴ": 4, "ㄹ": 8, "ㅁ": 16, "ㅂ": 17, "ㅅ": 19, "ㅇ": 21 };
+function hangulFinalIndex(word) {
+  const code = String(word || "").charCodeAt(String(word || "").length - 1);
+  if (!(code >= 0xac00 && code <= 0xd7a3)) return -1;
+  return (code - 0xac00) % 28;
+}
+function hangulWithFinal(word, jamo) {
+  const w = String(word || "");
+  const code = w.charCodeAt(w.length - 1);
+  const idx = HANGUL_FINAL_INDEX[jamo];
+  if (!(code >= 0xac00 && code <= 0xd7a3) || idx === undefined || (code - 0xac00) % 28 !== 0) return w + jamo;
+  return w.slice(0, -1) + String.fromCharCode(code + idx);
+}
+function hangulDropFinal(word) {
+  const w = String(word || "");
+  const code = w.charCodeAt(w.length - 1);
+  if (!(code >= 0xac00 && code <= 0xd7a3)) return w;
+  return w.slice(0, -1) + String.fromCharCode(code - (code - 0xac00) % 28);
+}
+function hangulSuffix(stem, spec) {
+  let s = String(stem || "");
+  if (!s) return null;
+  const lFinal = hangulFinalIndex(s) === HANGUL_FINAL_INDEX["ㄹ"];
+  if (spec && typeof spec === "object" && spec.dropL && lFinal) s = hangulDropFinal(s);
+  let suffix;
+  if (typeof spec === "string") suffix = spec;
+  else if (spec && typeof spec === "object") {
+    // An ㄹ-final stem takes the vowel-final allomorph of an -(으)ㄹ suffix
+    // («살지도», never «살을지도»).
+    const vowelLike = !hangulHasBatchim(s) ||
+      (lFinal && !spec.dropL && typeof spec.afterVowel === "string" && spec.afterVowel.startsWith("ㄹ"));
+    suffix = vowelLike ? spec.afterVowel : spec.afterConsonant;
+  }
+  if (typeof suffix !== "string") return null;
+  const first = suffix[0];
+  if (HANGUL_FINAL_INDEX[first] !== undefined) {
+    if (hangulFinalIndex(s) === HANGUL_FINAL_INDEX[first]) return s + suffix.slice(1);
+    if (!hangulHasBatchim(s)) return hangulWithFinal(s, first) + suffix.slice(1);
+  }
+  return s + suffix;
+}
+
+// Subject person/number key for suffixal paradigms ("1s", "2s", "3s",
+// "1p", "2p", "3p"); nouns and demonstratives count as third person.
+function subjectPersonKey(subjectCid) {
+  const subject = vocab().concepts?.[subjectCid] || {};
+  const person = subject.person || 3;
+  const plural = subject.number === "plural" || isPluralPronoun(subjectCid);
+  return `${person}${plural ? "p" : "s"}`;
+}
+
+// Turkish potential («-(y)Abil» + aorist + person): «uyumak» → «uyuyabilir»
+// / «uyuyabiliriz», «gelmek» → «gelebilir», «yemek» → «yiyebilir» (the
+// ye-/de- stems raise before the buffer y). Null when the base is not an
+// infinitive.
+function trPotentialForm(base, subjectCid) {
+  if (typeof base !== "string" || !/m[ae]k$/.test(base)) return null;
+  let stem = base.slice(0, -3);
+  const lower = stem.toLowerCase();
+  const vowelFinal = TR_VOWELS.has(lower[lower.length - 1]);
+  if (vowelFinal && /^(ye|de)$/.test(lower)) stem = stem[0] + "i";
+  const I = trHarmonyVowel(stem);
+  if (!I) return null;
+  const front = I === "i" || I === "ü";
+  const person = { "1s": "im", "2s": "sin", "3s": "", "1p": "iz", "2p": "siniz", "3p": "ler" }[subjectPersonKey(subjectCid)] || "";
+  return stem + (vowelFinal ? "y" : "") + (front ? "ebil" : "abil") + "ir" + person;
+}
+
+// The complement verb carrying a declared modal suffix (modalVerbSuffix):
+// a batchim-keyed Hangul spec on the verb stem (ko «잘지도 몰라요»), or
+// "potential" (tr «uyuyabilir»). Null when the data cannot build it, so
+// the caller keeps the plain complement.
+function modalSuffixedVerb(lang, cid, spec, subjectCid) {
+  const entry = vocab().languages?.[lang]?.forms?.[cid];
+  const base = entry && typeof entry === "object" && !Array.isArray(entry) ? entry.base : null;
+  if (typeof base !== "string") return null;
+  if (spec === "potential") return trPotentialForm(base, subjectCid);
+  const stem = verbStem(lang, base);
+  return stem ? hangulSuffix(stem, spec) : null;
+}
+
+// Whether the render path makes the slot of `cid` definite in a template
+// (the DEFINITE_SUBJECT_STRUCTURES subject / landmark rule and the declared
+// definiteDestination rule) — shared by decorateSlotSurface so a prefix-
+// article language's blank and tiles match the sentence.
+function definitePrefixSlot(lang, tpl, cid) {
+  const ordered = orderedConceptsForTemplate(tpl, lang) || [];
+  const idx = ordered.indexOf(cid);
+  if (idx === -1) return false;
+  const entry = vocab().languages?.[lang]?.forms?.[cid];
+  const e = entry && typeof entry === "object" && !Array.isArray(entry) ? entry : {};
+  if (DEFINITE_SUBJECT_STRUCTURES.has(effectiveStructureType(tpl))) {
+    const subjectCid = ordered.find(c => vocab().concepts[c]?.type === "pronoun") ||
+      ordered.find(c => ["noun", "time"].includes(vocab().concepts[c]?.type));
+    const subjectIsPersonal = !!vocab().concepts[subjectCid]?.person;
+    const afterPosition = idx > 0 && vocab().concepts[ordered[idx - 1]]?.type === "position";
+    const beforePosition = langRule(lang, "postposedAdpositions") &&
+      vocab().concepts[ordered[idx + 1]]?.type === "position";
+    if (afterPosition || beforePosition || (cid === subjectCid && !subjectIsPersonal)) return true;
+  }
+  if (langRule(lang, "definiteDestination") && idx > 0 &&
+      vocab().concepts[ordered[idx - 1]]?.semantic_role === "relation_target" &&
+      !e.noArticle && !e.pluralOnly && e.gender) {
+    return true;
+  }
+  return false;
+}
+
+// The circumfix suffix of the quantifier before ordered[idx] (a noun), or
+// null: the entry's `suffix` (string, or {afterConsonant, afterVowel}).
+function quantifierSuffixSpec(lang, ordered, idx) {
+  if (idx < 1 || vocab().concepts?.[ordered[idx]]?.type !== "noun") return null;
+  const prev = ordered[idx - 1];
+  if (vocab().concepts?.[prev]?.type !== "quantifier") return null;
+  const entry = vocab().languages?.[lang]?.forms?.[prev];
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return null;
+  if (typeof entry.suffix === "string" || (entry.suffix && typeof entry.suffix === "object")) {
+    return { suffix: entry.suffix, attach: !!entry.suffixAttach || typeof entry.suffix === "object" };
+  }
+  return null;
+}
+function circumfixSuffixText(spec, word) {
+  const text = particleAllomorph(spec.suffix, word);
+  return spec.attach ? text : " " + text;
+}
+
+// The object case a quantifier imposes on its noun (fi ANY `objectCase:
+// "partitive"»), or null.
+function quantifierObjectCase(lang, ordered, idx) {
+  if (idx < 1 || vocab().concepts?.[ordered[idx - 1]]?.type !== "quantifier") return null;
+  const entry = vocab().languages?.[lang]?.forms?.[ordered[idx - 1]];
+  return entry && typeof entry === "object" && !Array.isArray(entry) &&
+    typeof entry.objectCase === "string" ? entry.objectCase : null;
+}
+
 // A particle spec is either a fixed string (ja は) or a batchim-keyed
 // allomorph pair (ko {afterConsonant: "은", afterVowel: "는"}).
 function particleAllomorph(spec, word) {
@@ -4622,6 +4845,57 @@ function buildSubordinateFinalComplexClause(lang, tpl) {
   return joinWords(lang, parts);
 }
 
+// A verb-only subordinate clause under a clause-final linker (declared
+// subordinateClauseFinal; the linker entry carries clauseFinal): the
+// subordinate clause leads, its verb takes the linker's shape — ko stem +
+// 는 («당신이 읽는 동안 저는 먹어요»), tr aorist 3sg + ken («Sen okurken
+// ben yerim»), zh V + 的时候 («你读的时候我吃»), ja te + いる + 間に
+// («あなたが読んでいる間に、私は食べます») — Emi run-32 -199/-200. Null
+// when the linker is not clause-final, the clause has a noun, or the
+// verb data lacks the form, so the generic builder runs.
+function buildClauseFinalVerbClause(lang, tpl) {
+  const sl = tpl.slots || {};
+  if (!sl.sub_subject || !sl.sub_verb || !sl.main_subject || !sl.main_verb || sl.sub_noun) return null;
+  const forms = vocab().languages?.[lang]?.forms || {};
+  const linker = forms[tpl.structure?.linker];
+  if (!linker || Array.isArray(linker) || !linker.clauseFinal || typeof linker.form !== "string") return null;
+  const subEntry = forms[sl.sub_verb];
+  if (!subEntry || Array.isArray(subEntry)) return null;
+  let subVerb;
+  if (linker.verbTe) {
+    if (typeof subEntry.te !== "string") return null;
+    subVerb = subEntry.te + (typeof linker.verbSuffix === "string" ? linker.verbSuffix : "");
+  } else if (typeof linker.verbForm === "string") {
+    subVerb = typeof subEntry[linker.verbForm] === "string" ? subEntry[linker.verbForm] : null;
+  } else if (linker.verbSuffix) {
+    const stem = verbStem(lang, subEntry.base);
+    subVerb = stem ? hangulSuffix(stem, linker.verbSuffix) : null;
+  } else {
+    subVerb = getVerbForm(sl.sub_verb, sl.sub_subject, lang);
+  }
+  if (!subVerb) return null;
+  const linkerWord = typeof linker.attachedForm === "string" ? linker.attachedForm : linker.form;
+  const particles = langRuleValue(lang, "nominalParticles") || {};
+  const subSubject = formOf(lang, sl.sub_subject);
+  const subParticle = linker.subjectParticle ? particleAllomorph(linker.subjectParticle, subSubject) : "";
+  const mainSubject = formOf(lang, sl.main_subject);
+  const topic = particles.topic ? particleAllomorph(particles.topic, mainSubject) : "";
+  const attachTopic = !!particles.attach || typeof particles.topic === "string";
+  const object = sl.main_object
+    ? nounPhrase(lang, sl.main_object, { directObject: true }) +
+      (particles.object ? particleAllomorph(particles.object, formOf(lang, sl.main_object)) : "")
+    : "";
+  const parts = [
+    subSubject + subParticle,
+    linker.attach ? subVerb + linkerWord : subVerb, linker.attach ? "" : linkerWord,
+    typeof linker.separator === "string" ? linker.separator : "",
+    attachTopic ? mainSubject + topic : mainSubject, attachTopic ? "" : topic,
+    object, getVerbForm(sl.main_verb, sl.main_subject, lang),
+  ].filter(Boolean);
+  const joined = capitalizeFirst(joinWords(lang, parts), lang);
+  return SPACELESS_JOIN_LANGS.has(lang) || lang === "ja" || lang === "zh" ? joined : joined + ".";
+}
+
 function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subordinateFirst = false) {
   const linker = formOf(lang, linkerCid);
 
@@ -4700,6 +4974,8 @@ if (tpl.structure?.type === "complex_clause" &&
     langRule(lang, "subordinateClauseFinal")) {
   const built = buildSubordinateFinalComplexClause(lang, tpl);
   if (built) return built;
+  const verbBuilt = buildClauseFinalVerbClause(lang, tpl);
+  if (verbBuilt) return verbBuilt;
 }
 if (tpl.structure?.type === "complex_clause") {
   const s = tpl.slots;
@@ -5119,6 +5395,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
           glueSurface !== formOf(lang, cid)) {
         return glueSurface;
       }
+      // Declared rule suppressedGlueAfterMotion (zh ["TO"]): the motion
+      // verb already carries the goal — «我去大堂», never «我去到大堂»
+      // (Emi run-32 -200).
+      const suppressed = langRuleValue(lang, "suppressedGlueAfterMotion");
+      if (Array.isArray(suppressed) && suppressed.includes(cid) && idx > 0 &&
+          vocab().concepts[ordered[idx - 1]]?.type === "verb" &&
+          vocab().concepts[ordered[idx - 1]]?.semantic_role === "motion") {
+        return "";
+      }
       // Declared rule (fusedAdpositionForms — no): the noun absorbed this
       // adposition («hjemmefra»), so its own slot renders empty.
       if (fusedAdpositionForm(lang, ordered[idx + 1], cid)) return "";
@@ -5152,7 +5437,30 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const prevIsVerb = srcIdx >= 0
         ? (srcIdx > 0 && vocab().concepts[tpl.concepts[srcIdx - 1]]?.type === "verb")
         : (idx > 0 && vocab().concepts[ordered[idx - 1]]?.type === "verb");
+      // Declared rule modalVerbSuffix (ko/tr): the modal is a suffix on
+      // its complement («잘지도 몰라요», «uyuyabilir»), so the modal's own
+      // slot renders empty once a complement follows it.
+      const modalSpec = langRuleValue(lang, "modalVerbSuffix");
+      const nextIsVerb = srcIdx >= 0
+        ? vocab().concepts[tpl.concepts[srcIdx + 1]]?.type === "verb"
+        : vocab().concepts[ordered[idx + 1]]?.type === "verb";
+      if (modalSpec && modalSpec[cid] && nextIsVerb) return "";
       if (prevIsVerb) {
+        const prevVerbCid = srcIdx > 0 ? tpl.concepts[srcIdx - 1] : ordered[idx - 1];
+        if (modalSpec && modalSpec[prevVerbCid]) {
+          const suffixed = modalSuffixedVerb(lang, cid, modalSpec[prevVerbCid], subjectCid);
+          if (suffixed) return suffixed;
+        }
+        // The modal entry's own complement shape: `complementParticle`
+        // (el «μπορούμε να κοιμόμαστε» — the finite verb after να) or
+        // `finiteComplement` (ar «قد ينام») — Emi run-32 -198.
+        const prevEntry = vocab().languages?.[lang]?.forms?.[prevVerbCid];
+        if (prevEntry && typeof prevEntry === "object" && !Array.isArray(prevEntry)) {
+          if (typeof prevEntry.complementParticle === "string") {
+            return prevEntry.complementParticle + " " + getVerbForm(cid, subjectCid, lang);
+          }
+          if (prevEntry.finiteComplement) return getVerbForm(cid, subjectCid, lang);
+        }
         const surfaceOverride = tpl.surface?.[lang]?.[cid];
         if (surfaceOverride) return surfaceOverride;
         const entry = vocab().languages?.[lang]?.forms?.[cid];
@@ -5310,6 +5618,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const fem = vocab().languages?.[lang]?.forms?.[cid]?.["f_" + caseAt[idx]];
       if (typeof fem === "string") return fem;
     }
+    // …and in number with a plural subject: the entry's `<case>_plural`
+    // («Они работают гидами», uk «гідами»).
+    if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.type === "glue" &&
+        vocab().concepts[ordered[idx - 1]]?.semantic_role === "relation_role_or_time" &&
+        subjectIsPluralPronoun) {
+      const pl = vocab().languages?.[lang]?.forms?.[cid]?.[caseAt[idx] + "_plural"];
+      if (typeof pl === "string") return pl;
+    }
     // A possessed governed noun keeps its person suffix under the case
     // (tr «onun odasına», never «onun odaya» — run-18 -91/-95).
     if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive") {
@@ -5427,7 +5743,12 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // possessedPlural is mutually exclusive (ukObjectCase requires a
   // non-plural-agreement slot).
   if (ukObjectCase && bareDetermined && adjectiveAgreesWithCase(lang)) {
-    const acc = accusativeNoun(lang, cid, possessedForm);
+    // A quantifier's `objectCase` (fi ANY → partitive: «mitä tahansa
+    // puhelinta», Emi run-32 -202) replaces the noun's authored object
+    // case; the adjective follows through caseFieldUsedByNoun.
+    const qCase = quantifierObjectCase(lang, ordered, idx);
+    const acc = qCase && typeof nounEntry?.[qCase] === "string"
+      ? nounEntry[qCase] : accusativeNoun(lang, cid, possessedForm);
     if (acc !== possessedForm) {
       noteRule("accusative_object");
       possessedForm = acc;
@@ -6540,6 +6861,13 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         vocab().concepts[ordered[idx + 1]]?.type === "noun") {
       const nextCid = ordered[idx + 1];
       let form = genderedFormOf(lang, cid, nextCid);
+      // A governed head noun («używam dowolnego telefonu») declines its
+      // modifier through the entry's `<case>` / `f_<case>` fields, the
+      // possessive convention (Emi run-32 -205).
+      if (caseAt[idx + 1]) {
+        const declined = possessiveCaseForm(lang, cid, nextCid, caseAt[idx + 1]);
+        if (declined) form = declined;
+      }
       // The possessed noun of an existential-possession clause stays
       // nominative (ru «У меня есть другая книга»), so its modifier does too.
       if (femAccStrategy(lang) && ukObjectCaseApplies(lang) && !existentialHave &&
@@ -6740,6 +7068,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     return surfaceForm(lang, cid);
   });
 
+  // A quantifier with a circumfix `suffix` closes the noun phrase it
+  // opens — sv «vilken telefon som helst», ja «どの電話でも», ko «아무
+  // 전화나» (Emi run-32 -205); the suffix rides the noun's segment so the
+  // tile and the L3 blank carry it.
+  for (let i = 1; i < ordered.length; i++) {
+    const spec = quantifierSuffixSpec(lang, ordered, i);
+    if (spec && words[i]) words[i] += circumfixSuffixText(spec, words[i]);
+  }
   const segments = ordered.map((cid, idx) => ({ cid, text: words[idx] }));
 
   // Declared rule (verbGovernedPrepositions — ar): the verb's own
@@ -6821,7 +7157,10 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       // template's object bare beside it (declared: incorporatedObjectVerbs
       // — Emi run-17 -85: «감자를 껍질을 벗겨요»).
       const incorporated = nounIndex !== -1 && objectIncorporated(lang, ordered);
-      if (nounIndex !== -1 && !(particles.attach && overridden) && !incorporated) {
+      // A circumfixed object («아무 전화나», «どの電話でも») carries its
+      // quantifier's suffix in the particle's place.
+      const circumfixed = nounIndex !== -1 && !!quantifierSuffixSpec(lang, ordered, nounIndex);
+      if (nounIndex !== -1 && !(particles.attach && overridden) && !incorporated && !circumfixed) {
         // haveObject: every HAVE template in attach-mode languages (ko —
         // possession is existential across the board), but only flagged
         // existentialHave nouns where the split is per-noun (ja: «会議が

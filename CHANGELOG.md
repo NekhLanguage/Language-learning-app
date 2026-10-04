@@ -6,6 +6,34 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-04 (evening)
+
+### Russian and Swedish are open to everyone, without the BETA tag
+
+Both languages leave the hidden state and the BETA tag together (Nekh's call, after Emi's runs 30 to 32 and the fixed «два телефона» rule). Every learner sees «Русский» and «Svenska» in the picker; Finnish, Arabic and Mandarin keep BETA.
+
+### Korean, Japanese, Mandarin and Turkish put adverbs and clauses where they belong
+
+"We go later", "We work today" and "I just eat" put the adverb before the verb («私たちは後で行きます», «우리는 오늘 일해요», «我们今天工作», «Biz daha sonra gideriz»). "I eat while you read" leads with the "while" clause and ends it the way each language does («당신이 읽는 동안 저는 먹어요», «Sen okurken ben yerim», «你读的时候我吃», «あなたが読んでいる間に、私は食べます»). Mandarin no longer says «去到» for "go to". "He may sleep" is a real modal in Korean and Turkish now («그는 잘지도 몰라요», «O uyuyabilir», «Biz uyuyabiliriz»), takes «να» plus the conjugated verb in Greek («μπορούμε να κοιμόμαστε») and the present tense in Arabic («هو قد ينام»). Japanese "may" still needs the verbs' plain forms, which the data does not carry yet.
+
+### "Any phone" in nine more languages
+
+Swedish wraps the phrase («vilken svart telefon som helst»), Japanese and Korean do too («どの電話でも», «아무 전화나»), Thai puts it after the noun («โทรศัพท์ใดก็ได้»), Finnish takes the partitive («mitä tahansa mustaa puhelinta»), and Polish «używać» finally governs the genitive («używam dowolnego telefonu», «używam telefonu», «używam mikstury»). A Polish adjective in that slot is withheld until the adjectives carry case forms, the same rule Russian and Ukrainian already follow.
+
+### Arabic sentences get their definite article
+
+"The book is on top", "Winter is good" and "The book is on the table" carry ال on the subject and the landmark («الكتاب في الأعلى», «الشتاء جيد», «الكتاب على الطاولة»), and "we go to customs" is «إلى الجمارك». "She works as a waiter" is «كنادلة». Twenty-eight authored Arabic sentences that the engine used to get wrong now match the native text.
+
+### Smaller fixes
+
+"They work as guides" takes the instrumental plural in Russian and Ukrainian («гидами», «гідами»). French «bonne affaire» no longer takes a second «bonne». Polish «używam» objects carry their genitive in the Pokémon pack too.
+
+### Still open
+
+Japanese "may" (plain verb forms), the Japanese and Mandarin "we have a defeat" calque (the English template is the problem), and Korean "may" is not drilled at the fill-the-blank level because the modal lives inside the verb.
+
+---
+
 ## 2026-10-04 (later)
 
 ### Russian counts «два телефона» the way a Russian teacher expects

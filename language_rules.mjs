@@ -286,6 +286,32 @@
 //   procliticMarker          glue words written with this trailing marker
 //                            (ar tatweel «ـ») fuse onto the following word
 //                            on the finished string: «كـ مرشد» → «كمرشد».
+//   preverbalAdverbs         { types }: a sentence adverb of those concept
+//                            types that trails the main verb in English
+//                            order precedes it (ja/ko/zh/tr «後で行きます»).
+//   suppressedGlueAfterMotion [glue ids] dropped right after a motion verb
+//                            (zh «我去大堂», never «去到»).
+//   postposedQuantifiers     [quantifier ids] that follow their noun (th
+//                            ANY «โทรศัพท์ใดก็ได้»).
+//   modalVerbSuffix          { <modal id>: spec }: the modal is a suffix on
+//                            its complement's stem and renders no word of
+//                            its own — a batchim-keyed Hangul spec (ko MAY
+//                            «잘지도 몰라요») or "potential" (tr «uyuyabilir»
+//                            + aorist person). Entry-level complements for
+//                            word modals: `complementParticle` (el «να» +
+//                            finite verb), `finiteComplement` (ar «قد ينام»).
+//   definitePrefix           the definite article is a prefix on the noun
+//                            (ar «ال»): definite subjects, landmarks and
+//                            destinations take it; `definiteForm` overrides.
+//   Entry-level fields read by shared code: a quantifier's `suffix`
+//                            (circumfix close — sv «som helst», ja «でも», ko
+//                            {이나/나}; `suffixAttach` glues it) and
+//                            `objectCase` (fi ANY → partitive); a verb's
+//                            `governedCase` (pl «używam telefonu»); a noun's
+//                            `noAdjective` and `<case>_plural`; a linker's
+//                            clauseFinal / verbTe / verbForm / verbSuffix /
+//                            attachedForm / attach / subjectParticle /
+//                            separator (the verb-only WHILE clause).
 //   postposedAdpositions     adpositions follow their noun phrase (ja
 //                            «家から行きます», «テーブルに行きます») — the
 //                            SOV ordering emits noun before glue.
@@ -536,6 +562,12 @@ export const LANGUAGE_RULES = {
     motionPurpose: { form: "من أجل", position: "pre" },
     // «كـ» / «لـ» are proclitics: «كمرشد», never «كـ مرشد» (Emi run-32 -207).
     procliticMarker: "ـ",
+    // The definite article is the ال prefix: «الكتاب في الأعلى», «الشتاء
+    // جيد», «إلى الجمارك» (Emi run-32 -207/-203).
+    definitePrefix: "ال",
+    definiteDestination: true,
+    // The role after «كـ» agrees with the subject: «هي تعمل كنادلة» (-201).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,
@@ -826,6 +858,9 @@ export const LANGUAGE_RULES = {
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "取りに", position: "post" },
+    // «私たちは後で行きます», «私はただ食べます» — a trailing adverb moves
+    // before the verb (Emi run-32 -200).
+    preverbalAdverbs: { types: ["time", "time_word", "modality"] },
     features: {
       adjectivePosition: "pre",
       // は topics the subject, を marks the direct object — the same
@@ -937,6 +972,13 @@ export const LANGUAGE_RULES = {
     authoredVerbSurfaces: true,
     // Dictionary form minus 다 is the stem every suffixal form builds on.
     verbStem: { dictionaryEnding: "다" },
+    // «우리는 나중에 가요», «우리는 오늘 일해요» (Emi run-32 -199).
+    preverbalAdverbs: { types: ["time", "time_word", "modality"] },
+    // MAY is the -(으)ㄹ지도 몰라요 suffix on the verb stem: «그는 잘지도
+    // 몰라요», never «자다 일지도 모른다».
+    modalVerbSuffix: { MAY: { afterVowel: "ㄹ지도 몰라요", afterConsonant: "을지도 몰라요" } },
+    // «당신이 읽는 동안 저는 먹어요» — the WHILE entry is clause-final.
+    subordinateClauseFinal: true,
     // V-AND-V: «먹고 마셔요» (-84) — 고 on the first stem, no 그리고.
     verbCoordination: { stemSuffix: "고" },
     // Two copular clauses: «이것은 제 손이고 이것은 당신의 머리예요» (-84) —
@@ -1010,6 +1052,12 @@ export const LANGUAGE_RULES = {
     // Prepositional adjuncts (从/用/和/为了 + nominal, bare) and limiting
     // adverbs (只) precede the verb — «你从菜单点菜», «我只读一本书»
     // (Emi run-14 -72). Destinations (到) stay after the verb.
+    // «我们以后去», «我们今天工作» — a trailing time adverb precedes the
+    // verb; «我去大堂» — no 到 after a motion verb; «你读的时候我吃» — the
+    // WHILE clause leads with its clause-final 的时候 (Emi run-32 -200).
+    preverbalAdverbs: { types: ["time", "time_word"] },
+    suppressedGlueAfterMotion: ["TO"],
+    subordinateClauseFinal: true,
     preverbalAdjuncts: {
       glueRoles: ["relation_source", "relation_means", "relation_accompaniment", "relation_purpose", "relation_role_or_time"],
       adverbRoles: ["quantity_limit"],
@@ -1300,6 +1348,8 @@ export const LANGUAGE_RULES = {
     motionPurpose: { form: "เอา", position: "pre" },
     features: { adjectivePosition: "post", possessivePlacement: "enclitic" },
     postNominalAdjectives: true, spacelessJoin: true, spacelessTiles: true,
+    // «โทรศัพท์ใดก็ได้» — ANY follows its noun (Emi run-32 -205).
+    postposedQuantifiers: ["ANY"],
     possessiveEnclitic: true,
     // Yes/no questions keep declarative order and end with the tag particle
     // ใช่ไหม — no terminal punctuation (Thai's finalize strips . and ?).
@@ -1316,6 +1366,13 @@ export const LANGUAGE_RULES = {
     incorporatedObjectVerbs: { dropNoun: true },
   },
   tr: {
+    // «Biz daha sonra gideriz», «Biz bugün çalışırız» (Emi run-32 -200).
+    preverbalAdverbs: { types: ["time", "time_word", "modality"] },
+    // MAY is the potential «-(y)Abilir» on the verb: «O uyuyabilir»,
+    // «Biz uyuyabiliriz», never «O uyumak olabilir».
+    modalVerbSuffix: { MAY: "potential" },
+    // «Sen okurken ben yerim» — the WHILE entry is clause-final (-ken).
+    subordinateClauseFinal: true,
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true, postposedAdpositions: true,

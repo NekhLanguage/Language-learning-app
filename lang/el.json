@@ -1038,7 +1038,8 @@
       "3_singular": "μπορεί",
       "1_plural": "μπορούμε",
       "2_plural": "μπορείτε",
-      "3_plural": "μπορούν"
+      "3_plural": "μπορούν",
+      "complementParticle": "να"
     }
   },
   "alphabet": {

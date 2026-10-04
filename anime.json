@@ -222,7 +222,8 @@
           "locative": "ниндзя",
           "accusative": "ниндзя",
           "invariantPlural": true,
-          "genitive_plural": "ниндзя"
+          "genitive_plural": "ниндзя",
+          "instrumental_plural": "ниндзя"
         },
         "SAMURAI": {
           "form": "самурай",
@@ -1761,7 +1762,8 @@
         "NINJA": {
           "gender": "m",
           "form": "ніндзя",
-          "instrumental": "ніндзя"
+          "instrumental": "ніндзя",
+          "instrumental_plural": "ніндзя"
         },
         "SAMURAI":   { "gender": "m", "form": "самурай" },
         "SENSEI":    { "gender": "m", "form": "сенсей" },
