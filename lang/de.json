@@ -816,9 +816,14 @@
     "IT": [
       "es"
     ],
-    "ITS": [
-      "sein"
-    ],
+    "ITS": {
+      "form": "sein",
+      "f": "seine",
+      "plural": "seine",
+      "accusative": "seinen",
+      "dative": "seinem",
+      "f_dative": "seiner"
+    },
     "MINE": [
       "meins"
     ],

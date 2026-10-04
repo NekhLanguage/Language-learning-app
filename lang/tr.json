@@ -160,10 +160,10 @@
       "eğer"
     ],
     "TOP": [
-      "üst"
+      "üstte"
     ],
     "BOTTOM": [
-      "alt"
+      "altta"
     ],
     "UNDER": [
       "altında"
@@ -530,8 +530,8 @@
       "genitive": "Onların"
     },
     "ANY": [
-      "herhangi",
-      "herhangi bir"
+      "herhangi bir",
+      "herhangi"
     ],
     "ONLY": [
       "sadece"

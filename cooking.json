@@ -66,23 +66,23 @@
     },
     {
       "concept_id": "LITRE",
-      "type": "measure"
+      "type": "noun"
     },
     {
       "concept_id": "DECILITRE",
-      "type": "measure"
+      "type": "noun"
     },
     {
       "concept_id": "MILLILITRE",
-      "type": "measure"
+      "type": "noun"
     },
     {
       "concept_id": "GRAM",
-      "type": "measure"
+      "type": "noun"
     },
     {
       "concept_id": "KILOGRAM",
-      "type": "measure"
+      "type": "noun"
     },
     {
       "concept_id": "MEAT",
@@ -365,19 +365,59 @@
           "accusative": "стакан"
         },
         "LITRE": {
-          "form": "литр"
+          "form": "литр",
+          "gender": "m",
+          "genitive": "литра",
+          "dative": "литру",
+          "instrumental": "литром",
+          "locative": "литре",
+          "plural": "литры",
+          "genitive_plural": "литров",
+          "accusative": "литр"
         },
         "DECILITRE": {
-          "form": "децилитр"
+          "form": "децилитр",
+          "gender": "m",
+          "genitive": "децилитра",
+          "dative": "децилитру",
+          "instrumental": "децилитром",
+          "locative": "децилитре",
+          "plural": "децилитры",
+          "genitive_plural": "децилитров",
+          "accusative": "децилитр"
         },
         "MILLILITRE": {
-          "form": "миллилитр"
+          "form": "миллилитр",
+          "gender": "m",
+          "genitive": "миллилитра",
+          "dative": "миллилитру",
+          "instrumental": "миллилитром",
+          "locative": "миллилитре",
+          "plural": "миллилитры",
+          "genitive_plural": "миллилитров",
+          "accusative": "миллилитр"
         },
         "GRAM": {
-          "form": "грамм"
+          "form": "грамм",
+          "gender": "m",
+          "genitive": "грамма",
+          "dative": "грамму",
+          "instrumental": "граммом",
+          "locative": "грамме",
+          "plural": "граммы",
+          "genitive_plural": "граммов",
+          "accusative": "грамм"
         },
         "KILOGRAM": {
-          "form": "килограмм"
+          "form": "килограмм",
+          "gender": "m",
+          "genitive": "килограмма",
+          "dative": "килограмму",
+          "instrumental": "килограммом",
+          "locative": "килограмме",
+          "plural": "килограммы",
+          "genitive_plural": "килограммов",
+          "accusative": "килограмм"
         },
         "MEAT": {
           "form": "мясо",
@@ -724,19 +764,29 @@
           "invariantPlural": true
         },
         "LITRE": {
-          "form": "liter"
+          "form": "liter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "DECILITRE": {
-          "form": "deciliter"
+          "form": "deciliter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "MILLILITRE": {
-          "form": "milliliter"
+          "form": "milliliter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "GRAM": {
-          "form": "gram"
+          "form": "gram",
+          "gender": "n",
+          "invariantPlural": true
         },
         "KILOGRAM": {
-          "form": "kilogram"
+          "form": "kilogram",
+          "gender": "n",
+          "invariantPlural": true
         },
         "MEAT": {
           "form": "kött",
@@ -1280,19 +1330,24 @@
           "article": "a"
         },
         "LITRE": {
-          "form": "litre"
+          "form": "litre",
+          "article": "a"
         },
         "DECILITRE": {
-          "form": "decilitre"
+          "form": "decilitre",
+          "article": "a"
         },
         "MILLILITRE": {
-          "form": "millilitre"
+          "form": "millilitre",
+          "article": "a"
         },
         "GRAM": {
-          "form": "gram"
+          "form": "gram",
+          "article": "a"
         },
         "KILOGRAM": {
-          "form": "kilogram"
+          "form": "kilogram",
+          "article": "a"
         },
         "MEAT": {
           "form": "meat"
@@ -1511,19 +1566,29 @@
           "gender": "m"
         },
         "LITRE": {
-          "form": "litro"
+          "form": "litro",
+          "gender": "m",
+          "plural": "litros"
         },
         "DECILITRE": {
-          "form": "decilitro"
+          "form": "decilitro",
+          "gender": "m",
+          "plural": "decilitros"
         },
         "MILLILITRE": {
-          "form": "mililitro"
+          "form": "mililitro",
+          "gender": "m",
+          "plural": "mililitros"
         },
         "GRAM": {
-          "form": "grama"
+          "form": "grama",
+          "gender": "m",
+          "plural": "gramas"
         },
         "KILOGRAM": {
-          "form": "quilograma"
+          "form": "quilograma",
+          "gender": "m",
+          "plural": "quilogramas"
         },
         "MEAT": {
           "form": "carne",
@@ -1874,19 +1939,29 @@
           "gender": "n"
         },
         "LITRE": {
-          "form": "liter"
+          "form": "liter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "DECILITRE": {
-          "form": "desiliter"
+          "form": "desiliter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "MILLILITRE": {
-          "form": "milliliter"
+          "form": "milliliter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "GRAM": {
-          "form": "gram"
+          "form": "gram",
+          "gender": "n",
+          "invariantPlural": true
         },
         "KILOGRAM": {
-          "form": "kilogram"
+          "form": "kilogram",
+          "gender": "n",
+          "invariantPlural": true
         },
         "MEAT": {
           "form": "kjøtt",
@@ -2134,19 +2209,24 @@
           "form": "كوب"
         },
         "LITRE": {
-          "form": "لتر"
+          "form": "لتر",
+          "gender": "m"
         },
         "DECILITRE": {
-          "form": "ديسيلتر"
+          "form": "ديسيلتر",
+          "gender": "m"
         },
         "MILLILITRE": {
-          "form": "ملليلتر"
+          "form": "ملليلتر",
+          "gender": "m"
         },
         "GRAM": {
-          "form": "غرام"
+          "form": "غرام",
+          "gender": "m"
         },
         "KILOGRAM": {
-          "form": "كيلوغرام"
+          "form": "كيلوغرام",
+          "gender": "m"
         },
         "MEAT": {
           "gender": "m",
@@ -2551,19 +2631,34 @@
           "genitive_plural": "склянок"
         },
         "LITRE": {
-          "form": "літр"
+          "form": "літр",
+          "gender": "m",
+          "plural": "літри",
+          "genitive_plural": "літрів"
         },
         "DECILITRE": {
-          "form": "децилітр"
+          "form": "децилітр",
+          "gender": "m",
+          "plural": "децилітри",
+          "genitive_plural": "децилітрів"
         },
         "MILLILITRE": {
-          "form": "мілілітр"
+          "form": "мілілітр",
+          "gender": "m",
+          "plural": "мілілітри",
+          "genitive_plural": "мілілітрів"
         },
         "GRAM": {
-          "form": "грам"
+          "form": "грам",
+          "gender": "m",
+          "plural": "грами",
+          "genitive_plural": "грамів"
         },
         "KILOGRAM": {
-          "form": "кілограм"
+          "form": "кілограм",
+          "gender": "m",
+          "plural": "кілограми",
+          "genitive_plural": "кілограмів"
         },
         "MEAT": {
           "gender": "n",
@@ -2823,19 +2918,29 @@
           "gender": "m"
         },
         "LITRE": {
-          "form": "litro"
+          "form": "litro",
+          "gender": "m",
+          "plural": "litros"
         },
         "DECILITRE": {
-          "form": "decilitro"
+          "form": "decilitro",
+          "gender": "m",
+          "plural": "decilitros"
         },
         "MILLILITRE": {
-          "form": "mililitro"
+          "form": "mililitro",
+          "gender": "m",
+          "plural": "mililitros"
         },
         "GRAM": {
-          "form": "gramo"
+          "form": "gramo",
+          "gender": "m",
+          "plural": "gramos"
         },
         "KILOGRAM": {
-          "form": "kilogramo"
+          "form": "kilogramo",
+          "gender": "m",
+          "plural": "kilogramos"
         },
         "MEAT": {
           "form": "carne",
@@ -3069,7 +3174,7 @@
         "SPATULA": {
           "form": "Pfannenwender",
           "gender": "m",
-          "plural": "Pfannenwender"
+          "invariantPlural": true
         },
         "POT": {
           "form": "Topf",
@@ -3082,19 +3187,29 @@
           "plural": "Gläser"
         },
         "LITRE": {
-          "form": "Liter"
+          "form": "Liter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "DECILITRE": {
-          "form": "Deziliter"
+          "form": "Deziliter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "MILLILITRE": {
-          "form": "Milliliter"
+          "form": "Milliliter",
+          "gender": "m",
+          "invariantPlural": true
         },
         "GRAM": {
-          "form": "Gramm"
+          "form": "Gramm",
+          "gender": "n",
+          "invariantPlural": true
         },
         "KILOGRAM": {
-          "form": "Kilogramm"
+          "form": "Kilogramm",
+          "gender": "n",
+          "invariantPlural": true
         },
         "MEAT": {
           "form": "Fleisch",
@@ -3347,19 +3462,29 @@
           "plural": "ποτήρια"
         },
         "LITRE": {
-          "form": "λίτρο"
+          "form": "λίτρο",
+          "gender": "n",
+          "plural": "λίτρα"
         },
         "DECILITRE": {
-          "form": "δεκατόλιτρο"
+          "form": "δεκατόλιτρο",
+          "gender": "n",
+          "plural": "δεκατόλιτρα"
         },
         "MILLILITRE": {
-          "form": "χιλιοστόλιτρο"
+          "form": "χιλιοστόλιτρο",
+          "gender": "n",
+          "plural": "χιλιοστόλιτρα"
         },
         "GRAM": {
-          "form": "γραμμάριο"
+          "form": "γραμμάριο",
+          "gender": "n",
+          "plural": "γραμμάρια"
         },
         "KILOGRAM": {
-          "form": "κιλό"
+          "form": "κιλό",
+          "gender": "n",
+          "plural": "κιλά"
         },
         "MEAT": {
           "form": "κρέας",
@@ -3623,19 +3748,29 @@
           "plural": "verres"
         },
         "LITRE": {
-          "form": "litre"
+          "form": "litre",
+          "gender": "m",
+          "plural": "litres"
         },
         "DECILITRE": {
-          "form": "décilitre"
+          "form": "décilitre",
+          "gender": "m",
+          "plural": "décilitres"
         },
         "MILLILITRE": {
-          "form": "millilitre"
+          "form": "millilitre",
+          "gender": "m",
+          "plural": "millilitres"
         },
         "GRAM": {
-          "form": "gramme"
+          "form": "gramme",
+          "gender": "m",
+          "plural": "grammes"
         },
         "KILOGRAM": {
-          "form": "kilogramme"
+          "form": "kilogramme",
+          "gender": "m",
+          "plural": "kilogrammes"
         },
         "MEAT": {
           "form": "viande",
@@ -4280,19 +4415,29 @@
           "plural": "bicchieri"
         },
         "LITRE": {
-          "form": "litro"
+          "form": "litro",
+          "gender": "m",
+          "plural": "litri"
         },
         "DECILITRE": {
-          "form": "decilitro"
+          "form": "decilitro",
+          "gender": "m",
+          "plural": "decilitri"
         },
         "MILLILITRE": {
-          "form": "millilitro"
+          "form": "millilitro",
+          "gender": "m",
+          "plural": "millilitri"
         },
         "GRAM": {
-          "form": "grammo"
+          "form": "grammo",
+          "gender": "m",
+          "plural": "grammi"
         },
         "KILOGRAM": {
-          "form": "chilogrammo"
+          "form": "chilogrammo",
+          "gender": "m",
+          "plural": "chilogrammi"
         },
         "MEAT": {
           "form": "carne",
@@ -4718,19 +4863,34 @@
           "genitive_plural": "szklanek"
         },
         "LITRE": {
-          "form": "litr"
+          "form": "litr",
+          "gender": "m",
+          "plural": "litry",
+          "genitive_plural": "litrów"
         },
         "DECILITRE": {
-          "form": "decylitr"
+          "form": "decylitr",
+          "gender": "m",
+          "plural": "decylitry",
+          "genitive_plural": "decylitrów"
         },
         "MILLILITRE": {
-          "form": "mililitr"
+          "form": "mililitr",
+          "gender": "m",
+          "plural": "mililitry",
+          "genitive_plural": "mililitrów"
         },
         "GRAM": {
-          "form": "gram"
+          "form": "gram",
+          "gender": "m",
+          "plural": "gramy",
+          "genitive_plural": "gramów"
         },
         "KILOGRAM": {
-          "form": "kilogram"
+          "form": "kilogram",
+          "gender": "m",
+          "plural": "kilogramy",
+          "genitive_plural": "kilogramów"
         },
         "MEAT": {
           "form": "mięso",

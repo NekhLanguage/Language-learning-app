@@ -149,6 +149,19 @@
       }
     },
     {
+      "concept_id": "ITS",
+      "type": "adjective",
+      "semantic_role": "possessive",
+      "person": 3,
+      "core": true,
+      "interaction_profile": {
+        "see_translate": true,
+        "match": true,
+        "sentence_use": true,
+        "writing": true
+      }
+    },
+    {
       "concept_id": "OUR",
       "type": "adjective",
       "semantic_role": "possessive",

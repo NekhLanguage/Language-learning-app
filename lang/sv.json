@@ -843,10 +843,10 @@
       "om"
     ],
     "TOP": [
-      "topp"
+      "överst"
     ],
     "BOTTOM": [
-      "botten"
+      "underst"
     ],
     "UNDER": [
       "under"
@@ -917,8 +917,8 @@
       "som"
     ],
     "ANY": [
-      "någon",
-      "vilken som helst"
+      "vilken som helst",
+      "någon"
     ],
     "ONLY": [
       "bara"

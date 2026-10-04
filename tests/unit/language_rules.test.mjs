@@ -2492,8 +2492,8 @@ test("ru/uk: NAVIGATE is «прокладывать маршрут» with a rout
     assert.equal(buildSentence("uk", tplById("HE_NAVIGATES")), "Він орієнтується.");
   });
   withPackForms("space_scifi.json", () => {
-    assert.equal(buildSentence("ru", tplById("I_NAVIGATE_SPACECRAFT")), "Я пилотирую космический корабль.");
-    assert.equal(buildSentence("uk", tplById("I_NAVIGATE_SPACECRAFT")), "Я пілотую космічний корабель.");
+    assert.equal(buildSentence("ru", tplById("I_PILOT_SPACECRAFT")), "Я пилотирую космический корабль.");
+    assert.equal(buildSentence("uk", tplById("I_PILOT_SPACECRAFT")), "Я пілотую космічний корабель.");
   });
 });
 
@@ -2502,4 +2502,66 @@ test("ru: existential possession is never reflexive; sv: «Jag äter innan» (ru
   assert.equal(buildSentence("ru", tplById("I_SEE_HOUSE"), "MY", {}), "Я вижу свой дом.");
   assert.equal(buildSentence("sv", tplById("I_EAT_BEFORE")), "Jag äter innan.");
   assert.equal(buildSentence("sv", tplById("WE_GO_AFTER")), "Vi går efteråt.");
+});
+
+// ── Nekh 2026-10-04: templates for the untaught words, split pack ids, uk «Це» ──
+
+test("uk: «Це» in every «X is Y», matching Russian (Nekh 2026-10-04)", () => {
+  assert.equal(buildSentence("uk", tplById("THAT_IS_MY_ARM")), "Це моя рука.");
+  assert.equal(buildSentence("uk", tplById("IS_THAT_YOUR_PHONE")), "Це твій телефон?");
+  assert.equal(buildSentence("uk", tplById("PHONE_IN_THAT")), "Телефон у тому.");
+});
+
+test("split pack ids: pilot, transfigure and the football defeat render their own words", () => {
+  withPackForms("space_scifi.json", () => {
+    assert.equal(buildSentence("en", tplById("I_PILOT_SPACECRAFT")), "I pilot a spacecraft.");
+    assert.equal(buildSentence("ru", tplById("HE_PILOTS")), "Он пилотирует.");
+  });
+  withPackForms("harry_potter.json", () => {
+    assert.equal(buildSentence("en", tplById("HE_TRANSFIGURES")), "He transfigures.");
+    assert.equal(buildSentence("ru", tplById("HE_TRANSFIGURES")), "Он превращает.");
+  });
+  withPackForms("football.json", () => {
+    assert.equal(buildSentence("en", tplById("WE_HAVE_DEFEAT")), "We have a defeat.");
+    assert.equal(buildSentence("de", tplById("WE_HAVE_DEFEAT")), "Wir haben eine Niederlage.");
+  });
+  // The tourism verb is untouched by the split.
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("ru", tplById("I_NAVIGATE_ROUTE")), "Я прокладываю маршрут.");
+  });
+});
+
+test("the untaught core words have sentences: top, bottom, any, next, later, while, may, just, it", () => {
+  assert.equal(buildSentence("ru", tplById("CX_BOOK_IS_ON_TOP")), "Книга сверху.");
+  assert.equal(buildSentence("de", tplById("CX_PHONE_IS_AT_BOTTOM")), "Das Telefon ist unten.");
+  assert.equal(buildSentence("sv", tplById("CX_WINTER_IS_GOOD")), "Vintern är bra.");
+  assert.equal(buildSentence("ru", tplById("CX_I_USE_ANY_PHONE")), "Я использую любой телефон.");
+  assert.equal(buildSentence("no", tplById("CX_I_USE_ANY_PHONE")), "Jeg bruker hvilken som helst telefon.");
+  assert.equal(buildSentence("uk", tplById("CX_YOU_ARE_NEXT")), "Ти наступний.");
+  assert.equal(buildSentence("fr", tplById("CX_WE_GO_LATER")), "Nous allons plus tard.");
+  assert.equal(buildSentence("sv", tplById("CX_I_EAT_WHILE_YOU_READ")), "Jag äter medan du läser.");
+  assert.equal(buildSentence("ru", tplById("CX_HE_MAY_SLEEP")), "Он может спать.");
+  // Declared postverbalAdverbs: the adverb follows the finite verb.
+  assert.equal(buildSentence("de", tplById("CX_I_JUST_EAT")), "Ich esse nur.");
+  assert.equal(buildSentence("fr", tplById("CX_I_JUST_EAT")), "Je mange seulement.");
+  assert.equal(buildSentence("sv", tplById("CX_I_JUST_EAT")), "Jag äter bara.");
+  assert.equal(buildSentence("ru", tplById("CX_I_JUST_EAT")), "Я просто ем.");
+  assert.equal(buildSentence("en", tplById("CX_I_JUST_EAT")), "I just eat.");
+  // Neuter pronoun agreement.
+  assert.equal(buildSentence("ru", tplById("CX_IT_IS_BLACK")), "Оно чёрное.");
+  assert.equal(buildSentence("pl", tplById("CX_IT_IS_BLACK")), "Ono jest czarne.");
+  assert.equal(buildSentence("el", tplById("CX_IT_IS_BLACK")), "Αυτό είναι μαύρο.");
+  assert.equal(buildSentence("es", tplById("CX_IT_IS_BLACK")), "Eso es negro.");
+});
+
+test("measures are countable nouns and ITS is a possessive determiner", () => {
+  withPackForms("cooking.json", () => {
+    assert.equal(buildSentence("de", tplById("I_HAVE_LITRE")), "Ich habe einen Liter.");
+    assert.equal(buildSentence("fr", tplById("I_HAVE_LITRE")), "J'ai un litre.");
+    assert.equal(buildSentence("ru", tplById("WE_HAVE_GRAM")), "У нас есть грамм.");
+    assert.equal(buildSentence("sv", tplById("YOU_HAVE_KILOGRAM")), "Du har ett kilogram.");
+  });
+  assert.equal(vocab.concepts.ITS.semantic_role, "possessive");
+  assert.equal(buildSentence("de", tplById("HE_READ_BOOK"), "ITS", {}), "Er liest sein Buch.");
+  assert.equal(buildSentence("en", tplById("HE_READ_BOOK"), "ITS", {}), "He reads its book.");
 });

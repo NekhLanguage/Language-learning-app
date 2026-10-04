@@ -95,7 +95,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.88";
+const APP_DATA_VERSION = "1.2.89";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -247,7 +247,7 @@ const RESOURCE_PACKS = {
 
     { id: "hp_08", concepts: ["CAST","PROTECT","CHARM","CURSE","LEARN"] },
 
-    { id: "hp_09", concepts: ["WRITE","STUDY","VANISH","TRANSFORM","FLY"] },
+    { id: "hp_09", concepts: ["WRITE","STUDY","VANISH","TRANSFIGURE","FLY"] },
 
     { id: "hp_10", concepts: ["SHOUT","MAGICAL","BRAVE"] }
 
@@ -326,7 +326,7 @@ const RESOURCE_PACKS = {
 
     { id: "football_06", concepts: ["SQUAD","FORMATION","LEAGUE","SUBSTITUTE","ASSIST"] },
 
-    { id: "football_07", concepts: ["MATCH","VICTORY","DEFEAT","DRAW","TROPHY"] },
+    { id: "football_07", concepts: ["MATCH","VICTORY","DEFEAT_LOSS","DRAW","TROPHY"] },
 
     { id: "football_08", concepts: ["SWIFT","SKILLED","AGGRESSIVE","DECISIVE","CLINICAL"] },
 
@@ -492,7 +492,7 @@ const RESOURCE_PACKS = {
 
     { id: "space_05", concepts: ["LASER","HOLOGRAM","ANDROID","ACTIVATE","ADVANCED"] },
 
-    { id: "space_06", concepts: ["COCKPIT","AIRLOCK","HULL","NAVIGATE","ARTIFICIAL"] },
+    { id: "space_06", concepts: ["COCKPIT","AIRLOCK","HULL","PILOT","ARTIFICIAL"] },
 
     { id: "space_07", concepts: ["NEBULA","WORMHOLE","SUPERNOVA","ORBIT","INFINITE"] },
 

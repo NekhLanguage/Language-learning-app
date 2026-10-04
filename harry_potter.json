@@ -47,7 +47,7 @@
     { "concept_id": "WRITE", "type": "verb" },
     { "concept_id": "STUDY", "type": "verb" },
     { "concept_id": "VANISH", "type": "verb" },
-    { "concept_id": "TRANSFORM", "type": "verb" },
+    { "concept_id": "TRANSFIGURE", "type": "verb" },
     { "concept_id": "FLY", "type": "verb" },
     { "concept_id": "SHOUT", "type": "verb" },
 
@@ -515,7 +515,7 @@
           "2_plural": "исчезаете",
           "3_plural": "исчезают"
         },
-        "TRANSFORM": {
+        "TRANSFIGURE": {
           "base": "превращать",
           "1_singular": "превращаю",
           "2_singular": "превращаешь",
@@ -771,7 +771,7 @@
           "base": "försvinna",
           "present": "försvinner"
         },
-        "TRANSFORM": {
+        "TRANSFIGURE": {
           "base": "förvandla",
           "present": "förvandlar"
         },
@@ -1119,7 +1119,7 @@
           "2_plural": "katoatte",
           "3_plural": "katoavat"
         },
-        "TRANSFORM": {
+        "TRANSFIGURE": {
           "base": "muuttaa",
           "1_singular": "muutan",
           "2_singular": "muutat",
@@ -1217,7 +1217,7 @@
         "WRITE": { "base": "write", "3_singular": "writes" },
         "STUDY": { "base": "study", "3_singular": "studies" },
         "VANISH": { "base": "vanish", "3_singular": "vanishes" },
-        "TRANSFORM": { "base": "transform", "3_singular": "transforms" },
+        "TRANSFIGURE": { "base": "transfigure", "3_singular": "transfigures" },
         "FLY": { "base": "fly", "3_singular": "flies" },
         "SHOUT": { "base": "shout", "3_singular": "shouts" },
 
@@ -1277,7 +1277,7 @@
     "WRITE": { "base": "escrever", "1_singular": "escrevo", "2_singular": "escreves", "3_singular": "escreve", "1_plural": "escrevemos", "2_plural": "escrevem", "3_plural": "escrevem" },
     "STUDY": { "base": "estudar", "1_singular": "estudo", "2_singular": "estudas", "3_singular": "estuda", "1_plural": "estudamos", "2_plural": "estudam", "3_plural": "estudam" },
     "VANISH": { "base": "desaparecer", "1_singular": "desapareço", "2_singular": "desapareces", "3_singular": "desaparece", "1_plural": "desaparecemos", "2_plural": "desaparecem", "3_plural": "desaparecem" },
-    "TRANSFORM": { "base": "transformar", "1_singular": "transformo", "2_singular": "transformas", "3_singular": "transforma", "1_plural": "transformamos", "2_plural": "transformam", "3_plural": "transformam" },
+    "TRANSFIGURE": { "base": "transformar", "1_singular": "transformo", "2_singular": "transformas", "3_singular": "transforma", "1_plural": "transformamos", "2_plural": "transformam", "3_plural": "transformam" },
     "FLY": { "base": "voar", "1_singular": "voo", "2_singular": "voas", "3_singular": "voa", "1_plural": "voamos", "2_plural": "voam", "3_plural": "voam" },
     "SHOUT": { "base": "gritar", "1_singular": "grito", "2_singular": "gritas", "3_singular": "grita", "1_plural": "gritamos", "2_plural": "gritam", "3_plural": "gritam" },
 
@@ -1337,7 +1337,7 @@
     "WRITE": { "base": "書きます", "present": "書きます" },
     "STUDY": { "base": "勉強します", "present": "勉強します" },
     "VANISH": { "base": "消えます", "present": "消えます" },
-    "TRANSFORM": { "base": "変えます", "present": "変えます" },
+    "TRANSFIGURE": { "base": "変えます", "present": "変えます" },
     "FLY": { "base": "飛びます", "present": "飛びます" },
     "SHOUT": { "base": "叫びます", "present": "叫びます" },
 
@@ -1397,7 +1397,7 @@
     "WRITE": { "base": "skrive", "present": "skriver" },
     "STUDY": { "base": "studere", "present": "studerer" },
     "VANISH": { "base": "forsvinne", "present": "forsvinner" },
-    "TRANSFORM": { "base": "forvandle", "present": "forvandler" },
+    "TRANSFIGURE": { "base": "forvandle", "present": "forvandler" },
     "FLY": { "base": "fly", "present": "flyr" },
     "SHOUT": { "base": "rope", "present": "roper" },
 
@@ -1457,7 +1457,7 @@
     "WRITE": { "base": "يكتب", "1_singular": "أكتب", "2_singular": "تكتب","3_singular": "يكتب", "3_singular_feminine": "تكتب", "1_plural": "نكتب", "2_plural": "تكتبون", "3_plural": "يكتبون" },
     "STUDY": { "base": "يدرس", "1_singular": "أدرس", "2_singular": "تدرس","3_singular": "يدرس", "3_singular_feminine": "تدرس", "1_plural": "ندرس", "2_plural": "تدرسون", "3_plural": "يدرسون" },
     "VANISH": { "base": "يختفي", "1_singular": "أختفي", "2_singular": "تختفي","3_singular": "يختفي", "3_singular_feminine": "تختفي", "1_plural": "نختفي", "2_plural": "تختفون", "3_plural": "يختفون" },
-    "TRANSFORM": { "base": "يحول", "1_singular": "أحول", "2_singular": "تحول","3_singular": "يحول", "3_singular_feminine": "تحول", "1_plural": "نحول", "2_plural": "تحولون", "3_plural": "يحولون" },
+    "TRANSFIGURE": { "base": "يحول", "1_singular": "أحول", "2_singular": "تحول","3_singular": "يحول", "3_singular_feminine": "تحول", "1_plural": "نحول", "2_plural": "تحولون", "3_plural": "يحولون" },
     "FLY": { "base": "يطير", "1_singular": "أطير", "2_singular": "تطير","3_singular": "يطير", "3_singular_feminine": "تطير", "1_plural": "نطير", "2_plural": "تطيرون", "3_plural": "يطيرون" },
     "SHOUT": { "base": "يصرخ", "1_singular": "أصرخ", "2_singular": "تصرخ","3_singular": "يصرخ", "3_singular_feminine": "تصرخ", "1_plural": "نصرخ", "2_plural": "تصرخون", "3_plural": "يصرخون" },
 
@@ -1517,7 +1517,7 @@
     "WRITE": { "base": "쓰다", "present": "써요" },
     "STUDY": { "base": "공부하다", "present": "공부해요" },
     "VANISH": { "base": "사라지다", "present": "사라져요" },
-    "TRANSFORM": { "base": "변하다", "present": "변해요" },
+    "TRANSFIGURE": { "base": "변하다", "present": "변해요" },
     "FLY": { "base": "날다", "present": "날아요" },
     "SHOUT": { "base": "외치다", "present": "외쳐요" },
 
@@ -1577,7 +1577,7 @@
     "WRITE": { "base": "писати", "1_singular": "пишу", "2_singular": "пишеш", "3_singular": "пише", "1_plural": "пишемо", "2_plural": "пишете", "3_plural": "пишуть" },
     "STUDY": { "base": "вчитися", "1_singular": "вчуся", "2_singular": "вчишся", "3_singular": "вчиться", "1_plural": "вчимося", "2_plural": "вчитеся", "3_plural": "вчаться" },
     "VANISH": { "base": "зникати", "1_singular": "зникаю", "2_singular": "зникаєш", "3_singular": "зникає", "1_plural": "зникаємо", "2_plural": "зникаєте", "3_plural": "зникають" },
-    "TRANSFORM": { "base": "перетворювати", "1_singular": "перетворюю", "2_singular": "перетворюєш", "3_singular": "перетворює", "1_plural": "перетворюємо", "2_plural": "перетворюєте", "3_plural": "перетворюють" },
+    "TRANSFIGURE": { "base": "перетворювати", "1_singular": "перетворюю", "2_singular": "перетворюєш", "3_singular": "перетворює", "1_plural": "перетворюємо", "2_plural": "перетворюєте", "3_plural": "перетворюють" },
     "FLY": { "base": "літати", "1_singular": "літаю", "2_singular": "літаєш", "3_singular": "літає", "1_plural": "літаємо", "2_plural": "літаєте", "3_plural": "літають" },
     "SHOUT": { "base": "кричати", "1_singular": "кричу", "2_singular": "кричиш", "3_singular": "кричить", "1_plural": "кричимо", "2_plural": "кричите", "3_plural": "кричать" },
 
@@ -1637,7 +1637,7 @@
     "WRITE": { "base": "escribir", "1_singular": "escribo", "2_singular": "escribes", "3_singular": "escribe", "1_plural": "escribimos", "2_plural": "escribís", "3_plural": "escriben" },
     "STUDY": { "base": "estudiar", "1_singular": "estudio", "2_singular": "estudias", "3_singular": "estudia", "1_plural": "estudiamos", "2_plural": "estudiáis", "3_plural": "estudian" },
     "VANISH": { "base": "desaparecer", "1_singular": "desaparezco", "2_singular": "desapareces", "3_singular": "desaparece", "1_plural": "desaparecemos", "2_plural": "desaparecéis", "3_plural": "desaparecen" },
-    "TRANSFORM": { "base": "transformar", "1_singular": "transformo", "2_singular": "transformas", "3_singular": "transforma", "1_plural": "transformamos", "2_plural": "transformáis", "3_plural": "transforman" },
+    "TRANSFIGURE": { "base": "transformar", "1_singular": "transformo", "2_singular": "transformas", "3_singular": "transforma", "1_plural": "transformamos", "2_plural": "transformáis", "3_plural": "transforman" },
     "FLY": { "base": "volar", "1_singular": "vuelo", "2_singular": "vuelas", "3_singular": "vuela", "1_plural": "volamos", "2_plural": "voláis", "3_plural": "vuelan" },
     "SHOUT": { "base": "gritar", "1_singular": "grito", "2_singular": "gritas", "3_singular": "grita", "1_plural": "gritamos", "2_plural": "gritáis", "3_plural": "gritan" },
 
@@ -1693,7 +1693,7 @@
         "WRITE": {"base":"schreiben","1_singular":"schreibe","2_singular":"schreibst","3_singular":"schreibt","1_plural":"schreiben","2_plural":"schreibt","3_plural":"schreiben"},
         "STUDY": {"base":"studieren","1_singular":"studiere","2_singular":"studierst","3_singular":"studiert","1_plural":"studieren","2_plural":"studiert","3_plural":"studieren"},
         "VANISH": {"base":"verschwinden","1_singular":"verschwinde","2_singular":"verschwindest","3_singular":"verschwindet","1_plural":"verschwinden","2_plural":"verschwindet","3_plural":"verschwinden"},
-        "TRANSFORM": {"base":"verwandeln","1_singular":"verwandle","2_singular":"verwandelst","3_singular":"verwandelt","1_plural":"verwandeln","2_plural":"verwandelt","3_plural":"verwandeln"},
+        "TRANSFIGURE": {"base":"verwandeln","1_singular":"verwandle","2_singular":"verwandelst","3_singular":"verwandelt","1_plural":"verwandeln","2_plural":"verwandelt","3_plural":"verwandeln"},
         "FLY": {"base":"fliegen","1_singular":"fliege","2_singular":"fliegst","3_singular":"fliegt","1_plural":"fliegen","2_plural":"fliegt","3_plural":"fliegen"},
         "SHOUT": {"base":"schreien","1_singular":"schreie","2_singular":"schreist","3_singular":"schreit","1_plural":"schreien","2_plural":"schreit","3_plural":"schreien"},
         "MAGICAL": ["magisch"],
@@ -1747,7 +1747,7 @@
         "WRITE": {"base":"γράφω","1_singular":"γράφω","2_singular":"γράφεις","3_singular":"γράφει","1_plural":"γράφουμε","2_plural":"γράφετε","3_plural":"γράφουν"},
         "STUDY": {"base":"μελετώ","1_singular":"μελετώ","2_singular":"μελετάς","3_singular":"μελετά","1_plural":"μελετάμε","2_plural":"μελετάτε","3_plural":"μελετούν"},
         "VANISH": {"base":"εξαφανίζομαι","1_singular":"εξαφανίζομαι","2_singular":"εξαφανίζεσαι","3_singular":"εξαφανίζεται","1_plural":"εξαφανιζόμαστε","2_plural":"εξαφανίζεστε","3_plural":"εξαφανίζονται"},
-        "TRANSFORM": {"base":"μεταμορφώνω","1_singular":"μεταμορφώνω","2_singular":"μεταμορφώνεις","3_singular":"μεταμορφώνει","1_plural":"μεταμορφώνουμε","2_plural":"μεταμορφώνετε","3_plural":"μεταμορφώνουν"},
+        "TRANSFIGURE": {"base":"μεταμορφώνω","1_singular":"μεταμορφώνω","2_singular":"μεταμορφώνεις","3_singular":"μεταμορφώνει","1_plural":"μεταμορφώνουμε","2_plural":"μεταμορφώνετε","3_plural":"μεταμορφώνουν"},
         "FLY": {"base":"πετώ","1_singular":"πετώ","2_singular":"πετάς","3_singular":"πετά","1_plural":"πετάμε","2_plural":"πετάτε","3_plural":"πετούν"},
         "SHOUT": {"base":"φωνάζω","1_singular":"φωνάζω","2_singular":"φωνάζεις","3_singular":"φωνάζει","1_plural":"φωνάζουμε","2_plural":"φωνάζετε","3_plural":"φωνάζουν"},
         "MAGICAL": { "form": "μαγικός", "f": "μαγική", "n": "μαγικό" },
@@ -1801,7 +1801,7 @@
         "WRITE": {"base":"écrire","1_singular":"écris","2_singular":"écris","3_singular":"écrit","1_plural":"écrivons","2_plural":"écrivez","3_plural":"écrivent"},
         "STUDY": {"base":"étudier","1_singular":"étudie","2_singular":"étudies","3_singular":"étudie","1_plural":"étudions","2_plural":"étudiez","3_plural":"étudient"},
         "VANISH": {"base":"disparaître","1_singular":"disparais","2_singular":"disparais","3_singular":"disparaît","1_plural":"disparaissons","2_plural":"disparaissez","3_plural":"disparaissent"},
-        "TRANSFORM": {"base":"transformer","1_singular":"transforme","2_singular":"transformes","3_singular":"transforme","1_plural":"transformons","2_plural":"transformez","3_plural":"transforment"},
+        "TRANSFIGURE": {"base":"transformer","1_singular":"transforme","2_singular":"transformes","3_singular":"transforme","1_plural":"transformons","2_plural":"transformez","3_plural":"transforment"},
         "FLY": {"base":"voler","1_singular":"vole","2_singular":"voles","3_singular":"vole","1_plural":"volons","2_plural":"volez","3_plural":"volent"},
         "SHOUT": {"base":"crier","1_singular":"crie","2_singular":"cries","3_singular":"crie","1_plural":"crions","2_plural":"criez","3_plural":"crient"},
         "MAGICAL": ["magique"],
@@ -1855,7 +1855,7 @@
         "WRITE": { "base": "yazmak", "1_singular": "yazıyorum", "2_singular": "yazıyorsun", "3_singular": "yazıyor", "1_plural": "yazıyoruz", "2_plural": "yazıyorsunuz", "3_plural": "yazıyorlar" },
         "STUDY": { "base": "çalışmak", "1_singular": "çalışıyorum", "2_singular": "çalışıyorsun", "3_singular": "çalışıyor", "1_plural": "çalışıyoruz", "2_plural": "çalışıyorsunuz", "3_plural": "çalışıyorlar" },
         "VANISH": { "base": "kaybolmak", "1_singular": "kayboluyorum", "2_singular": "kayboluyorsun", "3_singular": "kayboluyor", "1_plural": "kayboluyoruz", "2_plural": "kayboluyorsunuz", "3_plural": "kayboluyorlar" },
-        "TRANSFORM": { "base": "dönüştürmek", "1_singular": "dönüştürüyorum", "2_singular": "dönüştürüyorsun", "3_singular": "dönüştürüyor", "1_plural": "dönüştürüyoruz", "2_plural": "dönüştürüyorsunuz", "3_plural": "dönüştürüyorlar" },
+        "TRANSFIGURE": { "base": "dönüştürmek", "1_singular": "dönüştürüyorum", "2_singular": "dönüştürüyorsun", "3_singular": "dönüştürüyor", "1_plural": "dönüştürüyoruz", "2_plural": "dönüştürüyorsunuz", "3_plural": "dönüştürüyorlar" },
         "FLY": { "base": "uçmak", "1_singular": "uçuyorum", "2_singular": "uçuyorsun", "3_singular": "uçuyor", "1_plural": "uçuyoruz", "2_plural": "uçuyorsunuz", "3_plural": "uçuyorlar" },
         "SHOUT": { "base": "bağırmak", "1_singular": "bağırıyorum", "2_singular": "bağırıyorsun", "3_singular": "bağırıyor", "1_plural": "bağırıyoruz", "2_plural": "bağırıyorsunuz", "3_plural": "bağırıyorlar" },
         "MAGICAL": ["büyülü"],
@@ -1909,7 +1909,7 @@
         "WRITE": {"base":"写"},
         "STUDY": {"base":"学习"},
         "VANISH": {"base":"消失"},
-        "TRANSFORM": {"base":"变形"},
+        "TRANSFIGURE": {"base":"变形"},
         "FLY": {"base":"飞"},
         "SHOUT": {"base":"喊"},
         "MAGICAL": ["魔法的"],
@@ -1963,7 +1963,7 @@
         "WRITE": {"base":"scrivere","1_singular":"scrivo","2_singular":"scrivi","3_singular":"scrive","1_plural":"scriviamo","2_plural":"scrivete","3_plural":"scrivono"},
         "STUDY": {"base":"studiare","1_singular":"studio","2_singular":"studi","3_singular":"studia","1_plural":"studiamo","2_plural":"studiate","3_plural":"studiano"},
         "VANISH": {"base":"sparire","1_singular":"sparisco","2_singular":"sparisci","3_singular":"sparisce","1_plural":"spariamo","2_plural":"sparite","3_plural":"spariscono"},
-        "TRANSFORM": {"base":"trasformare","1_singular":"trasformo","2_singular":"trasformi","3_singular":"trasforma","1_plural":"trasformiamo","2_plural":"trasformate","3_plural":"trasformano"},
+        "TRANSFIGURE": {"base":"trasformare","1_singular":"trasformo","2_singular":"trasformi","3_singular":"trasforma","1_plural":"trasformiamo","2_plural":"trasformate","3_plural":"trasformano"},
         "FLY": {"base":"volare","1_singular":"volo","2_singular":"voli","3_singular":"vola","1_plural":"voliamo","2_plural":"volate","3_plural":"volano"},
         "SHOUT": {"base":"gridare","1_singular":"grido","2_singular":"gridi","3_singular":"grida","1_plural":"gridiamo","2_plural":"gridate","3_plural":"gridano"},
         "MAGICAL": ["magico"],
@@ -2017,7 +2017,7 @@
         "WRITE": {"base":"เขียน"},
         "STUDY": {"base":"เรียน"},
         "VANISH": {"base":"หายไป"},
-        "TRANSFORM": {"base":"แปลงร่าง"},
+        "TRANSFIGURE": {"base":"แปลงร่าง"},
         "FLY": {"base":"บิน"},
         "SHOUT": {"base":"ตะโกน"},
         "MAGICAL": ["วิเศษ"],
@@ -2071,7 +2071,7 @@
         "WRITE": {"base":"pisać","1_singular":"piszę","2_singular":"piszesz","3_singular":"pisze","1_plural":"piszemy","2_plural":"piszecie","3_plural":"piszą"},
         "STUDY": {"base":"studiować","1_singular":"studiuję","2_singular":"studiujesz","3_singular":"studiuje","1_plural":"studiujemy","2_plural":"studiujecie","3_plural":"studiują"},
         "VANISH": {"base":"znikać","1_singular":"znikam","2_singular":"znikasz","3_singular":"znika","1_plural":"znikamy","2_plural":"znikacie","3_plural":"znikają"},
-        "TRANSFORM": {"base":"przemieniać","1_singular":"przemieniam","2_singular":"przemieniasz","3_singular":"przemienia","1_plural":"przemieniamy","2_plural":"przemieniacie","3_plural":"przemieniają"},
+        "TRANSFIGURE": {"base":"przemieniać","1_singular":"przemieniam","2_singular":"przemieniasz","3_singular":"przemienia","1_plural":"przemieniamy","2_plural":"przemieniacie","3_plural":"przemieniają"},
         "FLY": {"base":"latać","1_singular":"latam","2_singular":"latasz","3_singular":"lata","1_plural":"latamy","2_plural":"latacie","3_plural":"latają"},
         "SHOUT": {"base":"krzyczeć","1_singular":"krzyczę","2_singular":"krzyczysz","3_singular":"krzyczy","1_plural":"krzyczymy","2_plural":"krzyczycie","3_plural":"krzyczą"},
         "MAGICAL": ["magiczny"],

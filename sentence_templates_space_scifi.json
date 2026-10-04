@@ -354,34 +354,34 @@
       }
     },
     {
-      "template_id": "I_NAVIGATE_SPACECRAFT",
+      "template_id": "I_PILOT_SPACECRAFT",
       "concepts": [
         "FIRST_PERSON_SINGULAR",
-        "NAVIGATE",
+        "PILOT",
         "SPACECRAFT"
       ],
       "render": {
-        "en": "I navigate the spacecraft."
+        "en": "I pilot a spacecraft."
       }
     },
     {
-      "template_id": "HE_NAVIGATES",
+      "template_id": "HE_PILOTS",
       "concepts": [
         "HE",
-        "NAVIGATE"
+        "PILOT"
       ],
       "render": {
-        "en": "He navigates."
+        "en": "He pilots."
       }
     },
     {
-      "template_id": "THEY_NAVIGATE",
+      "template_id": "THEY_PILOT",
       "concepts": [
         "THIRD_PERSON_PLURAL",
-        "NAVIGATE"
+        "PILOT"
       ],
       "render": {
-        "en": "They navigate."
+        "en": "They pilot."
       }
     },
     {

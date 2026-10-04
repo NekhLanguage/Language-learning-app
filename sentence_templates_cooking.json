@@ -780,6 +780,15 @@
       "render": {
         "en": "She washes fruit."
       }
-    }
+    },
+    {"template_id": "I_HAVE_SPATULA", "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "SPATULA"], "render": {"en": "I have a spatula."}},
+    {"template_id": "SHE_HAS_GLASS", "concepts": ["SHE", "HAVE", "GLASS"], "render": {"en": "She has a glass."}},
+    {"template_id": "I_EAT_SALAD", "concepts": ["FIRST_PERSON_SINGULAR", "EAT", "SALAD"], "render": {"en": "I eat a salad."}},
+    {"template_id": "HE_EATS_BANANA", "concepts": ["HE", "EAT", "BANANA"], "render": {"en": "He eats a banana."}},
+    {"template_id": "I_HAVE_LITRE", "concepts": ["FIRST_PERSON_SINGULAR", "HAVE", "LITRE"], "render": {"en": "I have a litre."}},
+    {"template_id": "SHE_HAS_DECILITRE", "concepts": ["SHE", "HAVE", "DECILITRE"], "render": {"en": "She has a decilitre."}},
+    {"template_id": "HE_HAS_MILLILITRE", "concepts": ["HE", "HAVE", "MILLILITRE"], "render": {"en": "He has a millilitre."}},
+    {"template_id": "WE_HAVE_GRAM", "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "GRAM"], "render": {"en": "We have a gram."}},
+    {"template_id": "YOU_HAVE_KILOGRAM", "concepts": ["SECOND_PERSON", "HAVE", "KILOGRAM"], "render": {"en": "You have a kilogram."}}
   ]
 }

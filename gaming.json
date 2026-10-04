@@ -139,9 +139,9 @@
           "dative": "NPC",
           "instrumental": "NPC",
           "locative": "NPC",
+          "accusative": "NPC",
           "invariantPlural": true,
-          "genitive_plural": "NPC",
-          "accusative": "NPC"
+          "genitive_plural": "NPC"
         },
         "COMPANION": {
           "form": "спутник",
@@ -161,6 +161,7 @@
           "dative": "комбо",
           "instrumental": "комбо",
           "locative": "комбо",
+          "accusative": "комбо",
           "invariantPlural": true,
           "genitive_plural": "комбо"
         },

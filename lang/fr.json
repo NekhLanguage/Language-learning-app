@@ -505,7 +505,7 @@
       "peut-être"
     ],
     "JUST": [
-      "juste"
+      "seulement"
     ],
     "YES": [
       "oui"
@@ -876,7 +876,9 @@
       "il"
     ],
     "ITS": [
-      "son"
+      "son",
+      "sa",
+      "ses"
     ],
     "MINE": [
       "le mien"

@@ -872,11 +872,12 @@
       "standalone": "eso"
     },
     "IT": [
-      "él"
+      "eso"
     ],
-    "ITS": [
-      "su"
-    ],
+    "ITS": {
+      "form": "su",
+      "plural": "sus"
+    },
     "MINE": [
       "mío"
     ],

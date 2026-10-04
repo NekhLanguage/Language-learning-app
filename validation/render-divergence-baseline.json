@@ -93,7 +93,6 @@
   "sentence_templates.json|IS_THAT_YOUR_PHONE|fr",
   "sentence_templates.json|IS_THAT_YOUR_PHONE|pl",
   "sentence_templates.json|IS_THAT_YOUR_PHONE|pt",
-  "sentence_templates.json|IS_THAT_YOUR_PHONE|uk",
   "sentence_templates.json|IS_THAT_YOUR_PHONE|zh",
   "sentence_templates.json|I_DO_THIS_BY_HAND|ar",
   "sentence_templates.json|I_DO_THIS_BY_HAND|de",
@@ -345,7 +344,6 @@
   "sentence_templates_pokemon.json|THEY_GO_TO_LEAGUE|en",
   "sentence_templates_pokemon.json|YOU_SEE_ELITE_FOUR|en",
   "sentence_templates_space_scifi.json|I_ACTIVATE_ANDROID|en",
-  "sentence_templates_space_scifi.json|I_NAVIGATE_SPACECRAFT|en",
   "sentence_templates_tourism.json|I_EXPLORE_HARBOR|en",
   "sentence_templates_tourism.json|I_GREET_WAITER|en"
 ]

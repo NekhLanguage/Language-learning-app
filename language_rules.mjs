@@ -194,6 +194,9 @@
 //                            nominal, rendered bare) and adverb-like
 //                            quantifiers move before the main verb
 //                            (zh «我从菜单点菜», «我只读一本书»).
+//   postverbalAdverbs        { roles }: a sentence adverb of those modality
+//                            roles follows the finite verb («Ich esse nur»,
+//                            «Jag äter bara», «Je mange seulement»).
 //   encliticStress           a proparoxytone word before an enclitic
 //                            possessive takes a second accent on its
 //                            final syllable (el «τηλέφωνό σου»).
@@ -627,6 +630,8 @@ export const LANGUAGE_RULES = {
     },
   },
   fr: {
+    // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
+    postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "chercher", position: "pre" },
@@ -655,6 +660,8 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   de: {
+    // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
+    postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "holen", position: "post" },
@@ -743,6 +750,8 @@ export const LANGUAGE_RULES = {
     encliticStress: true,
   },
   it: {
+    // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
+    postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "a prendere", position: "pre" },
@@ -963,6 +972,8 @@ export const LANGUAGE_RULES = {
     comitativeBeforeVerb: "一起",
   },
   no: {
+    // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
+    postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // A 3rd-person possessive whose possessor is the subject is the
     // reflexive «OWN» entry (свій / swój / sin), never his/her — which
     // means someone else's here (Emi run-23 -142).
@@ -1158,6 +1169,8 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   sv: {
+    // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
+    postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // Swedish (standard, rikssvenska) — modelled on the Norwegian row,
     // Nekh-ordered 2026-10-03 stress test. Differences from no: the
     // possessive is PREPOSED («min hand», «mitt rum») so no

@@ -674,9 +674,12 @@
     "IT": [
       "esso"
     ],
-    "ITS": [
-      "suo"
-    ],
+    "ITS": {
+      "form": "suo",
+      "f": "sua",
+      "plural": "suoi",
+      "fp": "sue"
+    },
     "MINE": [
       "mio"
     ],
@@ -787,10 +790,10 @@
       "grazie"
     ],
     "TOP": [
-      "cima"
+      "in cima"
     ],
     "BOTTOM": [
-      "fondo"
+      "in fondo"
     ],
     "UNDER": [
       "sotto"
