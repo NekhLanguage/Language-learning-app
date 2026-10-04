@@ -6,6 +6,16 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-04
+
+### Numbers, colours and the other small words are taught again
+
+Since 2 October the app picked words it could not show: every number from one to twenty, small, big, fast, slow, our, their, yellow, purple, orange and delicious were unlocked on the roadmap but never got their first card, in every language, so a learner could finish a course without learning to count. These words reach sentences by being added to a noun, so no sentence lists them by name, and the check added on 2 October to skip words that cannot render took that as "cannot render". They are exempt again, and a test now fails if a released number is ever skipped.
+
+### A pack's own words stay in its own sentences
+
+Fourteen words live in two packs with different translations (navigate in tourism and space, defeat in Pokémon and football, potion, transform …). Until now the pack loaded last won everywhere, which is how "navigate a route" in Russian and Ukrainian came out as "pilot" (Emi's -192 and -141). Each pack's sentences now read that pack's own words. Russian and Ukrainian "navigate" is «прокладывать маршрут» / «прокладати маршрут» with a route and «ориентироваться» / «орієнтуватися» on its own; the space pack keeps «пилотировать» for the spacecraft. Also from Emi's re-read: Swedish «Jag äter innan» (not «före») and Russian «У него есть бронирование» without a stray «своё».
+
 ## 2026-10-03
 
 ### Swedish and Russian: Emi's first read, eight fixes

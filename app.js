@@ -95,7 +95,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.87";
+const APP_DATA_VERSION = "1.2.88";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -2443,7 +2443,7 @@ async function runEnterLanguage(btn, langCode) {
   // every Continue (553 clicks, 0 sessions). A failed load now leaves the
   // previous lexicon in place and rejects; the caller decides.
   async function loadAndMergeVocab() {
-    const next = { concepts: {}, languages: {} };
+    const next = { concepts: {}, languages: {}, packForms: {} };
 
     const targetLang = languageState.target;
 
@@ -2474,6 +2474,19 @@ async function runEnterLanguage(btn, langCode) {
           next.languages[langCode] = { forms: {} };
         }
         Object.assign(next.languages[langCode].forms, langData.forms || {});
+      }
+      // Fourteen concept ids live in two packs with different words
+      // (NAVIGATE: tourism «прокладывать маршрут», space «пилотировать»;
+      // DEFEAT, POTION, TRANSFORM, …). The flat merge above lets the last
+      // file win everywhere, so tourism sentences read the space verb (Emi
+      // run-31 -192/-141). Each pack's own forms are kept aside and laid
+      // over the merge while one of ITS templates renders (activeVocab).
+      const packId = Object.keys(RESOURCE_PACKS).find(id => RESOURCE_PACKS[id].vocabFile === source);
+      if (packId) {
+        next.packForms[packId] = {};
+        for (const [langCode, langData] of Object.entries(data.languages || {})) {
+          next.packForms[packId][langCode] = langData.forms || {};
+        }
       }
     }
 
@@ -2540,10 +2553,12 @@ async function loadTemplates(selectedPacks = []) {
   // be introduced or tested.
   const files = ["sentence_templates.json", "sentence_templates_core_extra.json"];
 
+  const packOfFile = {};
   (selectedPacks || []).forEach(packId => {
     const pack = RESOURCE_PACKS[packId];
     if (pack?.templateFile) {
       files.push(pack.templateFile);
+      packOfFile[pack.templateFile] = packId;
     }
   });
 
@@ -2552,7 +2567,10 @@ async function loadTemplates(selectedPacks = []) {
     if (!r.ok) throw new Error(`Failed to load ${file} (${r.status})`);
     return r.json();
   })));
-  TEMPLATE_CACHE = results.flatMap(data => data.templates || []);
+  // A pack's templates remember their pack so the engine can read that
+  // pack's own forms while they render (activeVocab).
+  TEMPLATE_CACHE = results.flatMap((data, i) => (data.templates || []).map(tpl =>
+    packOfFile[files[i]] ? { ...tpl, pack: packOfFile[files[i]] } : tpl));
 
   return TEMPLATE_CACHE;
 }
@@ -2664,8 +2682,32 @@ function ui(key) {
 // DOMContentLoaded closure because `run` and `ensureProgress` are scoped here,
 // not at module top level. The accessors stay lazy so the engine always reads
 // current state.
+
+// The lexicon the engine reads: the global merge, with the forms of the
+// pack whose template is rendering laid over it (see loadAndMergeVocab).
+// Core templates and packs without a collision see the merge unchanged.
+let activePackId = null;
+const packViewCache = new WeakMap();
+function activeVocab() {
+  const base = window.GLOBAL_VOCAB;
+  const packForms = base?.packForms?.[activePackId];
+  if (!packForms) return base;
+  let views = packViewCache.get(base);
+  if (!views) { views = {}; packViewCache.set(base, views); }
+  if (!views[activePackId]) {
+    const languages = {};
+    for (const [code, langData] of Object.entries(base.languages || {})) {
+      languages[code] = { ...langData, forms: { ...(langData.forms || {}), ...(packForms[code] || {}) } };
+    }
+    views[activePackId] = { ...base, languages };
+  }
+  return views[activePackId];
+}
+function setActivePack(tpl) {
+  activePackId = tpl?.pack || null;
+}
 configureEngine({
-  vocab: () => window.GLOBAL_VOCAB,
+  vocab: () => activeVocab(),
   getReleased: () => run.released,
   ensureProgress: (cid) => ensureProgress(cid),
   rng: () => Math.random(),
@@ -5370,6 +5412,11 @@ function conceptSelectionWeight(cid, baseCompletion) {
   return pureConceptSelectionWeight(isTutorConcept(cid), baseCompletion);
 }
 
+function isModifierConcept(cid) {
+  const meta = window.GLOBAL_VOCAB.concepts[cid];
+  return meta?.type === "adjective" || meta?.type === "number";
+}
+
 function chooseConcept(excluded = new Set()) {
   let candidates = run.released.filter(cid => {
     if (excluded.has(cid)) return false;
@@ -5419,7 +5466,15 @@ function chooseConcept(excluded = new Set()) {
   return pickFromLevelBuckets(candidates, {
     levelOf,
     lastShownAt: c => ensureProgress(c).lastShownAt,
-    canRender: c => (levelOf(c) === 1 ? canConceptBeIntroduced(c) : canConceptBeTested(c)),
+    // Modifiers (adjectives, numbers) reach sentences by injection, so no
+    // template lists them: the level-1 gate exempts them exactly as the
+    // intro gate above does, or ONE–TWENTY, SMALL, BIG, OUR, THEIR, the
+    // colours and DELICIOUS are picked and dropped at render for ever and
+    // no learner ever meets a number (Emi run-31 -196, 30 concepts dark
+    // in sv, ru and uk since v1.2.84).
+    canRender: c => (levelOf(c) === 1
+      ? (isModifierConcept(c) || canConceptBeIntroduced(c))
+      : canConceptBeTested(c)),
     weightOf: c => conceptSelectionWeight(c, baseCompletion),
     planExhausted,
   });
@@ -5617,7 +5672,9 @@ function chooseTemplateForConcept(cid) {
   if (!eligible.length) return null;
 
   const picked = eligible[Math.floor(Math.random() * eligible.length)];
-  return maybeVarySubject(picked, cid);
+  const chosen = maybeVarySubject(picked, cid);
+  setActivePack(chosen);
+  return chosen;
 }
 // Celebratory screen shown when the user has completed every released
 // concept and there are no more bundles to release. Replaces the silent
@@ -5743,7 +5800,7 @@ for (let attempts = 0; attempts < 25; attempts++) {
       const level = st.level;
 
       if (level === 1) {
-        return canConceptBeIntroduced(cid);
+        return isModifierConcept(cid) || canConceptBeIntroduced(cid);
       }
 
       return canConceptBeTested(cid);
