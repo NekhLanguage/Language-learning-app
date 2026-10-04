@@ -194,6 +194,9 @@
 //                            nominal, rendered bare) and adverb-like
 //                            quantifiers move before the main verb
 //                            (zh «我从菜单点菜», «我只读一本书»).
+//   bareNounAfterGlueRoles   [glue roles]: the noun after a glue of those
+//                            roles renders bare, no article — «als
+//                            Reiseführer», «comme guide», «som guide».
 //   postverbalAdverbs        { roles }: a sentence adverb of those modality
 //                            roles follows the finite verb («Ich esse nur»,
 //                            «Jag äter bara», «Je mange seulement»).
@@ -630,6 +633,8 @@ export const LANGUAGE_RULES = {
     },
   },
   fr: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
     postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // «go for X» after a motion verb is the purpose construction, not the
@@ -660,6 +665,8 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   de: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
     postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // «go for X» after a motion verb is the purpose construction, not the
@@ -706,6 +713,8 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true, latinEncodingChecks: true,
   },
   el: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, articleCaseMarking: true,
@@ -750,6 +759,8 @@ export const LANGUAGE_RULES = {
     encliticStress: true,
   },
   it: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
     postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // «go for X» after a motion verb is the purpose construction, not the
@@ -950,7 +961,7 @@ export const LANGUAGE_RULES = {
     // adverbs (只) precede the verb — «你从菜单点菜», «我只读一本书»
     // (Emi run-14 -72). Destinations (到) stay after the verb.
     preverbalAdjuncts: {
-      glueRoles: ["relation_source", "relation_means", "relation_accompaniment", "relation_purpose"],
+      glueRoles: ["relation_source", "relation_means", "relation_accompaniment", "relation_purpose", "relation_role_or_time"],
       adverbRoles: ["quantity_limit"],
     },
     // -39: locative copula 在 replaces 是 when the predicate is a position
@@ -972,6 +983,8 @@ export const LANGUAGE_RULES = {
     comitativeBeforeVerb: "一起",
   },
   no: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
     postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // A 3rd-person possessive whose possessor is the subject is the
@@ -1062,6 +1075,8 @@ export const LANGUAGE_RULES = {
     },
   },
   pt: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "buscar", position: "pre" },
@@ -1132,12 +1147,16 @@ export const LANGUAGE_RULES = {
         BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
         WITH: "instrumental",
         TO: "accusative", FROM: "genitive", FOR: "genitive",
+        // «работаю гидом»: the role is the bare instrumental, no word for AS.
+        AS: { case: "instrumental", suppressWord: true },
       },
       femAccusativeStrategy: "ru",
       bareInstrumentalMeans: true,
     },
   },
   es: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "a por", position: "pre" },
@@ -1169,6 +1188,8 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   sv: {
+    // «work as a guide»: the role noun takes no article (the AS template).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
     postverbalAdverbs: { roles: ["pragmatic_focus"] },
     // Swedish (standard, rikssvenska) — modelled on the Norwegian row,
@@ -1354,6 +1375,8 @@ export const LANGUAGE_RULES = {
         BETWEEN: "instrumental", NEXT_TO: "instrumental", BY: "instrumental",
         WITH: "instrumental",
         TO: "genitive", FROM: "genitive", FOR: "genitive",
+        // «працюю гідом»: the role is the bare instrumental, no word for AS.
+        AS: { case: "instrumental", suppressWord: true },
       },
       femAccusativeStrategy: "uk",
       bareInstrumentalMeans: true,

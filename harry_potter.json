@@ -1543,7 +1543,13 @@
     "OWL": { "gender": "f", "form": "сова", "plural": "сови" },
 
     "CASTLE": { "gender": "m", "form": "замок" },
-    "PROFESSOR": { "gender": "m", "form": "професор", "plural": "професори", "feminine": "професорка" },
+    "PROFESSOR": {
+      "gender": "m",
+      "form": "професор",
+      "plural": "професори",
+      "feminine": "професорка",
+      "instrumental": "професором"
+    },
     "STUDENT": { "gender": "m", "form": "студент", "plural": "студенти" },
     "ELF": { "gender": "m", "form": "ельф", "plural": "ельфи" },
     "UNICORN": { "gender": "m", "form": "єдиноріг", "accusative": "єдинорога", "plural": "єдинороги" },

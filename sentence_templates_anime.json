@@ -713,6 +713,7 @@
       "render": {
         "en": "She is a sensei."
       }
-    }
+    },
+    {"template_id": "SHE_WORKS_AS_NINJA", "concepts": ["SHE", "WORK", "AS", "NINJA"], "render": {"en": "She works as a ninja."}}
   ]
 }

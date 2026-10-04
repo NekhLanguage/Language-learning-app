@@ -627,6 +627,7 @@
       "render": {
         "en": "The trend is iconic."
       }
-    }
+    },
+    {"template_id": "I_WORK_AS_MODEL", "concepts": ["FIRST_PERSON_SINGULAR", "WORK", "AS", "MODEL"], "render": {"en": "I work as a model."}}
   ]
 }

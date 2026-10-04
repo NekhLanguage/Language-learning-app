@@ -340,6 +340,30 @@
       "render": {
         "en": "It is black."
       }
+    },
+    {
+      "template_id": "CX_I_WORK",
+      "concepts": [
+        "FIRST_PERSON_SINGULAR",
+        "WORK"
+      ],
+      "render": {
+        "en": "I work."
+      }
+    },
+    {
+      "template_id": "CX_WE_WORK_TODAY",
+      "concepts": [
+        "FIRST_PERSON_PLURAL",
+        "WORK",
+        "TODAY"
+      ],
+      "structure": {
+        "type": "time_statement"
+      },
+      "render": {
+        "en": "We work today."
+      }
     }
   ]
 }

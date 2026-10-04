@@ -638,6 +638,7 @@
         "en": "She sees a penalty."
       }
     },
-    {"template_id": "WE_HAVE_DEFEAT", "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "DEFEAT_LOSS"], "render": {"en": "We have a defeat."}}
+    {"template_id": "WE_HAVE_DEFEAT", "concepts": ["FIRST_PERSON_PLURAL", "HAVE", "DEFEAT_LOSS"], "render": {"en": "We have a defeat."}},
+    {"template_id": "HE_WORKS_AS_COACH", "concepts": ["HE", "WORK", "AS", "COACH"], "render": {"en": "He works as a coach."}}
   ]
 }

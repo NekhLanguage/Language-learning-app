@@ -640,6 +640,15 @@
       "2_plural": "comem",
       "3_plural": "comem"
     },
+    "WORK": {
+      "base": "trabalhar",
+      "1_singular": "trabalho",
+      "2_singular": "trabalha",
+      "3_singular": "trabalha",
+      "1_plural": "trabalhamos",
+      "2_plural": "trabalham",
+      "3_plural": "trabalham"
+    },
     "DRINK": {
       "base": "beber",
       "1_singular": "bebo",

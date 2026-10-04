@@ -3614,7 +3614,8 @@
           "form": "офіціант",
           "accusative": "офіціанта",
           "plural": "офіціанти",
-          "genitive_plural": "офіціантів"
+          "genitive_plural": "офіціантів",
+          "instrumental": "офіціантом"
         },
         "MARKET": {
           "gender": "m",
@@ -3689,7 +3690,8 @@
           "form": "гід",
           "accusative": "гіда",
           "plural": "гіди",
-          "genitive_plural": "гідів"
+          "genitive_plural": "гідів",
+          "instrumental": "гідом"
         },
         "BOARD": {
           "base": "сідати",

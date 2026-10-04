@@ -627,6 +627,10 @@
       "base": "spise",
       "present": "spiser"
     },
+    "WORK": {
+      "base": "jobbe",
+      "present": "jobber"
+    },
     "DRINK": {
       "base": "drikke",
       "present": "drikker"

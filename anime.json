@@ -1757,7 +1757,11 @@
         "SUMMON":    { "base": "закликати", "1_singular": "закликаю", "2_singular": "закликаєш", "3_singular": "закликає", "1_plural": "закликаємо", "2_plural": "закликаєте", "3_plural": "закликають" },
         "SINISTER":  ["зловісний"],
 
-        "NINJA":     { "gender": "m", "form": "ніндзя" },
+        "NINJA": {
+          "gender": "m",
+          "form": "ніндзя",
+          "instrumental": "ніндзя"
+        },
         "SAMURAI":   { "gender": "m", "form": "самурай" },
         "SENSEI":    { "gender": "m", "form": "сенсей" },
         "SHADOW": { "gender": "f", "form": "тінь", "plural": "тіні" },
