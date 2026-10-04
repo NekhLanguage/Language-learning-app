@@ -1598,8 +1598,23 @@ function surfaceForm(lang, cid) {
 
   return formOf(lang, cid); // ✅ THIS is the correct fallback
 }
-  function getVerbForm(verbCid, subjectCid, lang) {
-  const verbData = vocab().languages?.[lang]?.forms?.[verbCid];
+  // A per-word `objectless` paradigm on a verb entry (same shape as the
+  // entry) is the form the verb takes with no complement — ru NAVIGATE
+  // «прокладывать маршрут» but bare «Она ориентируется» (Emi run-31 -192 /
+  // uk -141). Returns the sub-entry when it applies at ordered[idx], else
+  // null; every verb render path reads it so tiles, blanks and the
+  // sentence agree.
+  function objectlessVerbData(lang, verbCid, ordered, idx) {
+  const entry = vocab().languages?.[lang]?.forms?.[verbCid];
+  const sub = entry && typeof entry === "object" && !Array.isArray(entry) ? entry.objectless : null;
+  if (!sub || typeof sub !== "object" || !Array.isArray(ordered) || idx < 0) return null;
+  const complement = ordered.slice(idx + 1).some(c =>
+    ["noun", "pronoun"].includes(vocab().concepts?.[c]?.type));
+  return complement ? null : sub;
+}
+
+  function getVerbForm(verbCid, subjectCid, lang, verbDataOverride = null) {
+  const verbData = verbDataOverride || vocab().languages?.[lang]?.forms?.[verbCid];
   if (!verbData) return verbCid;
 
   const subject = vocab().concepts[subjectCid];
@@ -1962,7 +1977,9 @@ function preverbalAdjunctOrder(lang, ordered) {
     );
 
     if (meta.type === "verb") {
-      return getVerbForm(targetConcept, subjectCid, targetLang);
+      const orderedForVerb = orderedConceptsForTemplate(tpl, targetLang) || tpl.concepts || [];
+      return getVerbForm(targetConcept, subjectCid, targetLang,
+        objectlessVerbData(targetLang, targetConcept, orderedForVerb, orderedForVerb.indexOf(targetConcept)));
     }
 
     // Existential possession (fi «Minulla on kirja»): the HAVE-subject
@@ -5064,6 +5081,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         }
         return formOf(lang, cid);
       }
+      // A verb with no complement renders its `objectless` paradigm when
+      // the entry carries one (ru «Она ориентируется», uk «Вона
+      // орієнтується»).
+      const objectless = objectlessVerbData(lang, cid, ordered, idx);
+      if (objectless) return getVerbForm(cid, subjectCid, lang, objectless);
       // Copula in a present-tense statement: dropped entirely in
       // copula-less languages (uk/ar), replaced by 很 before a Chinese
       // predicate adjective, split three ways in Thai (zero/อยู่/คือ),
@@ -5355,7 +5377,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // Same lookup the possessive's own slot makes: the reflexive OWN
     // entry when the subject owns the noun («rommet sitt»), never on a
     // copular predicate («Hun er mammaen hennes» stays non-reflexive).
-    const possCid = isCopularTemplate && isCopularPredicatePosition(ordered, idx, lang)
+    const possCid = (isCopularTemplate && isCopularPredicatePosition(ordered, idx, lang)) || existentialHave
       ? ordered[idx - 1] : reflexivePossessiveCid(lang, ordered[idx - 1], subjectCid);
     const possWord = genderedFormOf(lang, possCid, cid, possessedPlural);
     possessedForm = postposedPossessedNoun(lang, cid, possessedForm, possessedPlural);
@@ -5560,7 +5582,9 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   // The possessive entry to read for a drilled/cached possessive: the
   // reflexive OWN entry when the subject owns this noun («Він бачить
   // свої три таксі»), never on a copular predicate.
-  const possLookupCid = c => (isCopularTemplate && isCopularPredicatePosition(ordered, idx, lang))
+  // Existential possession is never reflexive either: «У него есть
+  // бронирование», not «своё бронирование» ("his own") — Emi run-31.
+  const possLookupCid = c => ((isCopularTemplate && isCopularPredicatePosition(ordered, idx, lang)) || existentialHave)
     ? c : reflexivePossessiveCid(lang, c, subjectCid);
   if (forcedMeta?.type === "adjective") {
     // The forced path must respect the same compatibility rule as random
@@ -6436,7 +6460,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       const nextCid = ordered[idx + 1];
       // The form to look up: the reflexive OWN entry when the subject
       // owns the noun («до своєї кімнати»), never on a copular predicate.
-      const pcid = isCopularTemplate && isCopularPredicatePosition(ordered, idx + 1, lang)
+      const pcid = (isCopularTemplate && isCopularPredicatePosition(ordered, idx + 1, lang)) || existentialHave
         ? cid : reflexivePossessiveCid(lang, cid, subjectCid);
       // Enclitic languages render the possessor inside the noun slot
       // (th มือของฉัน, el «το βιβλίο μου») — this slot stays empty.

@@ -12,6 +12,7 @@
 
 import { test, before } from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import { LANGUAGE_RULES, langRule, langsWith } from "../../language_rules.mjs";
 import { AVAILABLE_LANGUAGES } from "../../languages.js";
 import { loadVocab, loadLanguageCodes, loadTemplates } from "../../validation/load-vocab.mjs";
@@ -2464,4 +2465,41 @@ test("uk: the short answers drop the pronoun with the same rule (Emi -140)", () 
   assert.equal(buildSentence("uk", tplById("YES_I_DO")), "Так, роблю.");
   assert.equal(buildSentence("uk", tplById("NO_I_DO_NOT")), "Ні, не роблю.");
   assert.equal(buildSentence("uk", tplById("I_EAT_BREAKFAST")), "Я їм сніданок.");
+});
+
+// ── Emi run-31 (2026-10-04): the PR #201 re-read ──────────────────────────
+
+// The app lays a pack's own forms over the global merge while one of its
+// templates renders (app.js activeVocab); the unit loader merges last-wins,
+// so these tests build that view by hand from the pack file.
+function withPackForms(packFile, fn) {
+  const pack = JSON.parse(fs.readFileSync(new URL(`../../${packFile}`, import.meta.url), "utf8"));
+  const languages = {};
+  for (const [code, langData] of Object.entries(vocab.languages)) {
+    languages[code] = { ...langData, forms: { ...langData.forms, ...(pack.languages?.[code]?.forms || {}) } };
+  }
+  const view = { ...vocab, languages };
+  configureEngine({ vocab: () => view });
+  try { fn(); } finally { configureEngine({ vocab: () => vocab }); }
+}
+
+test("ru/uk: NAVIGATE is «прокладывать маршрут» with a route and «ориентироваться» bare; the space pack pilots (run-31 -192/-141)", () => {
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("ru", tplById("I_NAVIGATE_ROUTE")), "Я прокладываю маршрут.");
+    assert.equal(buildSentence("ru", tplById("HE_NAVIGATES")), "Он ориентируется.");
+    assert.equal(buildSentence("ru", tplById("THEY_NAVIGATE")), "Они ориентируются.");
+    assert.equal(buildSentence("uk", tplById("I_NAVIGATE_ROUTE")), "Я прокладаю маршрут.");
+    assert.equal(buildSentence("uk", tplById("HE_NAVIGATES")), "Він орієнтується.");
+  });
+  withPackForms("space_scifi.json", () => {
+    assert.equal(buildSentence("ru", tplById("I_NAVIGATE_SPACECRAFT")), "Я пилотирую космический корабль.");
+    assert.equal(buildSentence("uk", tplById("I_NAVIGATE_SPACECRAFT")), "Я пілотую космічний корабель.");
+  });
+});
+
+test("ru: existential possession is never reflexive; sv: «Jag äter innan» (run-31 side effect, -195)", () => {
+  assert.equal(buildSentence("ru", tplById("I_HAVE_SHIRT"), "MY", {}), "У меня есть моя рубашка.");
+  assert.equal(buildSentence("ru", tplById("I_SEE_HOUSE"), "MY", {}), "Я вижу свой дом.");
+  assert.equal(buildSentence("sv", tplById("I_EAT_BEFORE")), "Jag äter innan.");
+  assert.equal(buildSentence("sv", tplById("WE_GO_AFTER")), "Vi går efteråt.");
 });
