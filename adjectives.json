@@ -430,7 +430,7 @@
     {
       "concept_id": "NICE",
       "type": "adjective",
-      "semantic_role": "property_quality",
+      "semantic_role": "property_evaluation",
       "core": true,
       "interaction_profile": {
         "see_translate": true,

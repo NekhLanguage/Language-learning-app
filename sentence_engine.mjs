@@ -2354,6 +2354,34 @@ function preverbalAdjunctOrder(lang, ordered) {
         return surface + particleAllomorph(particles.topic, surface);
       }
     }
+    // Mirrors renderSegments' attachedPostpositions / procliticMarker
+    // passes: the noun phrase before an attached particle carries it
+    // («로비에», «가이드로»), the word after a proclitic glue carries the
+    // prefix («بمطعم», «كمرشد») — the blank and every tile alike.
+    const attached = langRuleValue(targetLang, "attachedPostpositions");
+    const proclitic = langRuleValue(targetLang, "procliticMarker");
+    if ((attached || (typeof proclitic === "string" && proclitic)) && slot?.concept && meta) {
+      const ordered = orderedConceptsForTemplate(tpl, targetLang) || [];
+      const i = ordered.indexOf(slot.concept);
+      if (attached && i !== -1 && ["noun", "pronoun", "time"].includes(meta.type)) {
+        const glue = ordered[i + 1];
+        if (vocab().concepts[glue]?.type === "glue" &&
+            (!Array.isArray(attached) || attached.includes(glue))) {
+          return surface + formOf(targetLang, glue);
+        }
+      }
+      if (typeof proclitic === "string" && proclitic && i > 0) {
+        const prev = ordered[i - 1];
+        const prevMeta = vocab().concepts[prev];
+        const prevEntry = vocab().languages?.[targetLang]?.forms?.[prev];
+        const word = prevMeta?.type === "glue" ? formOf(targetLang, prev)
+          : (prevMeta?.type === "verb" && typeof prevEntry?.governedPreposition === "string")
+            ? prevEntry.governedPreposition : null;
+        if (typeof word === "string" && word.endsWith(proclitic)) {
+          return word.slice(0, -proclitic.length) + surface;
+        }
+      }
+    }
     // The copular suffix belongs to the PREDICATE slot only — a subject-
     // slot distractor must not pick it up just because it isn't the
     // template's subject concept.
@@ -2943,9 +2971,9 @@ function joinSentence(words, punctuation = ".", lang = null) {
 // French sentence. Elision depends on the *following* word's initial sound, which
 // is only known once the sentence is linearized, so it runs on the finished
 // string rather than per word. Only a fixed closed set of words elide (never
-// ma/ta/sa, which become mon/ton/son instead). Known minor edge: aspirated-h
-// nouns (rare, e.g. «le héros») are over-elided; the mute-h words it fixes
-// («l'homme», «l'heure», «l'hôtel») are far more common.
+// ma/ta/sa, which become mon/ton/son instead). Aspirated-h nouns are the
+// closed ASPIRATED_H set below («le hall», «le héros»); every other h- word
+// is mute («l'homme», «l'heure», «l'hôtel»).
 function frenchElision(s) {
   if (!s) return s;
   const matchCase = (orig, repl) =>
@@ -2953,22 +2981,37 @@ function frenchElision(s) {
       ? repl[0].toUpperCase() + repl.slice(1)
       : repl;
 
-  // Preposition + definite-article contractions (before elision).
-  // Note: \b does not anchor before «à» (not a \w char), so match a leading
-  // start/space boundary explicitly for the à-contractions.
-  s = s
-    .replace(/\bde les\b/gi, m => matchCase(m, "des"))
-    .replace(/\bde le\b/gi,  m => matchCase(m, "du"))
-    .replace(/(^|\s)(à) les\b/gi, (m, pre, a) => pre + matchCase(a, "aux"))
-    .replace(/(^|\s)(à) le\b/gi,  (m, pre, a) => pre + matchCase(a, "au"));
-
-  // Elision before a vowel or h.
-  const ELIDE = { je: "j'", me: "m'", te: "t'", se: "s'", ne: "n'",
-                  de: "d'", ce: "c'", le: "l'", la: "l'", que: "qu'" };
   // Lowercase vowels + h only: rendered French words are lowercase mid-sentence,
   // so a case-sensitive lookahead avoids eliding before a leaked UPPERCASE concept
   // id (e.g. «ce AND» must not become «c'AND») while still covering every real case.
   const VOWEL_H = "aàâäeéèêëiîïoôöuùûüh";
+  // Aspirated-h words in the data block elision and keep the full article:
+  // «le hall», «au hall», «le héros» — never «l'hall» (Emi run-32 -203
+  // put LOBBY after «à»). Everything else in h- is mute («l'hôtel»).
+  const ASPIRATED_H = new Set(["hall", "halls", "haut", "haute", "hautes", "hauts",
+    "hibou", "hiboux", "héros", "hors", "hors-jeu", "huit"]);
+  const elidesBefore = word => {
+    if (!word || !VOWEL_H.includes(word[0])) return false;
+    return !ASPIRATED_H.has(word.replace(/[.,;?!]+$/, ""));
+  };
+  const nextWord = (str, from) => (str.slice(from).match(/^\s*(\S+)/) || [])[1];
+
+  // Preposition + definite-article contractions (before elision): «de le»
+  // → «du» and «à le» → «au» only before a consonant — before a vowel or
+  // mute h the article elides instead («à l'hôtel», «de l'homme»).
+  // Note: \b does not anchor before «à» (not a \w char), so match a leading
+  // start/space boundary explicitly for the à-contractions.
+  s = s
+    .replace(/\bde les\b/gi, m => matchCase(m, "des"))
+    .replace(/(^|\s)(à) les\b/gi, (m, pre, a) => pre + matchCase(a, "aux"))
+    .replace(/\b(de) le\b/gi, (m, d, offset, str) =>
+      elidesBefore(nextWord(str, offset + m.length)) ? m : matchCase(d, "du"))
+    .replace(/(^|\s)(à) le\b/gi, (m, pre, a, offset, str) =>
+      elidesBefore(nextWord(str, offset + m.length)) ? m : pre + matchCase(a, "au"));
+
+  // Elision before a vowel or mute h.
+  const ELIDE = { je: "j'", me: "m'", te: "t'", se: "s'", ne: "n'",
+                  de: "d'", ce: "c'", le: "l'", la: "l'", que: "qu'" };
   const W = "je|me|te|se|ne|de|ce|le|la|que";
   const Wcap = W.split("|").map(w => w[0].toUpperCase() + w.slice(1)).join("|");
   // Anchored on the sentence start or a space, never on \b: without the
@@ -2976,8 +3019,10 @@ function frenchElision(s) {
   // «te» and rendered «achèt'un» (Emi run-13 -67 — 3 of 3 «acheter»
   // sentences). Only a whole word from the closed set elides.
   s = s.replace(
-    new RegExp("(^|\\s)(" + W + "|" + Wcap + ")(\\s+)(?=[" + VOWEL_H + "])", "g"),
-    (m, pre, w) => pre + matchCase(w, ELIDE[w.toLowerCase()])
+    new RegExp("(^|\\s)(" + W + "|" + Wcap + ")(\\s+)(\\S+)", "g"),
+    (m, pre, w, sp, word) => elidesBefore(word)
+      ? pre + matchCase(w, ELIDE[w.toLowerCase()]) + word
+      : m
   );
 
   // «si» elides only before il / ils (never «si elle»).
@@ -3085,6 +3130,13 @@ function ruPrepositionAllomorphy(sentence) {
 // Single hook for per-language final passes on an assembled sentence.
 function finalizeSentence(lang, rawSentence) {
   let sentence = commaBeforeConjunctions(lang, rawSentence);
+  // Declared rule procliticMarker (ar «ـ»): a glue written with the
+  // marker is a proclitic and fuses onto the next word — «كمرشد», never
+  // «كـ مرشد» (Emi run-32 -207 / -171).
+  const proclitic = langRuleValue(lang, "procliticMarker");
+  if (typeof proclitic === "string" && proclitic) {
+    sentence = sentence.split(proclitic + " ").join("");
+  }
   if (langRuleValue(lang, "prepositionAllomorphy") === "ru") {
     sentence = ruPrepositionAllomorphy(sentence);
   }
@@ -5233,6 +5285,14 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         if (!Object.prototype.hasOwnProperty.call(sharedChoices, "adj_" + cid)) sharedChoices["adj_" + cid] = null;
         if (!Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)) sharedChoices["num_" + cid] = null;
       }
+      // The role agrees with the subject: «Sie arbeitet als Kellnerin»
+      // (the entry's `feminine`), «De arbetar som guider» (Emi run-32 -201).
+      if (subjectIsPluralPronoun) return pluralFormOf(lang, cid);
+      const roleEntry = vocab().languages?.[lang]?.forms?.[cid];
+      if (vocab().concepts[subjectCid]?.gender === "f" && roleEntry && !Array.isArray(roleEntry) &&
+          typeof roleEntry.feminine === "string") {
+        return roleEntry.feminine;
+      }
       return formOf(lang, cid);
     }
   }
@@ -5241,6 +5301,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const governedForm = fusedWhole ? null : caseFormFor(lang, cid, caseAt[idx]);
   if (governedForm) {
     noteRule("prepositional_case");
+    // The role after a case-only role glue agrees with a feminine subject:
+    // the entry's `f_<case>` field («Она работает официанткой», uk
+    // «офіціанткою» — Emi run-32 -201), the possessive f_<case> convention.
+    if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.type === "glue" &&
+        vocab().concepts[ordered[idx - 1]]?.semantic_role === "relation_role_or_time" &&
+        vocab().concepts[subjectCid]?.gender === "f") {
+      const fem = vocab().languages?.[lang]?.forms?.[cid]?.["f_" + caseAt[idx]];
+      if (typeof fem === "string") return fem;
+    }
     // A possessed governed noun keeps its person suffix under the case
     // (tr «onun odasına», never «onun odaya» — run-18 -91/-95).
     if (idx > 0 && vocab().concepts[ordered[idx - 1]]?.semantic_role === "possessive") {
@@ -5503,7 +5572,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       !bareDetermined && idx > 0 &&
       vocab().concepts[ordered[idx - 1]]?.semantic_role === "relation_target" &&
       !nounEntry?.noArticle && !nounEntry?.pluralOnly && nounEntry?.gender
-    ? definiteNounPhrase(lang, cid) : null;
+    ? definiteNounPhrase(lang, cid, { caseName: caseAt[idx] }) : null;
 
   let phrase = bareDetermined
     ? possessedForm
@@ -5692,11 +5761,15 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
   const cachedNum = sharedChoices && Object.prototype.hasOwnProperty.call(sharedChoices, "num_" + cid)
     ? sharedChoices["num_" + cid]
     : undefined;
+  // A quantifier the template already puts on this noun («any phone»)
+  // leaves no room for a numeral: «любой три телефона», «vilken som
+  // helst tolv telefoner» (Emi run-32 -205).
+  const quantified = idx > 0 && vocab().concepts[ordered[idx - 1]]?.type === "quantifier";
   if (forcedMeta?.type === "number") {
     // Same compatibility gate as random injection: a number never counts a
     // mass noun, in ANY language — «Io bevo quattro acqua» / "I drink eight
     // waters" both came from this path skipping the check.
-    if (isModifierCompatible(lang, forcedConcept, cid)) {
+    if (!quantified && isModifierCompatible(lang, forcedConcept, cid)) {
       numberCid = forcedConcept;
       numberWord = formOf(lang, forcedConcept);
     }
@@ -5720,7 +5793,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const subjectIsSingularPronoun = subjectCid && !subjectIsPluralPronoun;
     const skipPluralInjection = isTargetNoun ||
       (isCopularTemplate && subjectIsSingularPronoun);
-    const numbers = skipPluralInjection ? [] : getReleased().filter(c => {
+    const numbers = (skipPluralInjection || quantified) ? [] : getReleased().filter(c => {
       if (c === "ONE") return false;
       const m = vocab().concepts[c];
       if (m?.type !== "number") return false;
@@ -5842,6 +5915,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const isPlural = numberCid !== "ONE";
     let nounForm;
     let numeralGoverned = false;
+    let paucalGoverned = false;
     if (!isPlural) {
       nounForm = bare;
     } else if (lang === "en") {
@@ -5855,6 +5929,17 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       noteRule("numeral_government");
       nounForm = vocab().languages?.[lang]?.forms?.[cid].partitive;
       numeralGoverned = true;
+    } else if (langRule(lang, "numeralGenitiveSingular") &&
+               (NUMBER_VALUES[numberCid] || 0) >= 2 && (NUMBER_VALUES[numberCid] || 0) <= 4 &&
+               typeof vocab().languages?.[lang]?.forms?.[cid]?.genitive === "string") {
+      // Declared rule numeralGenitiveSingular (ru): two, three and four
+      // govern the GENITIVE SINGULAR — «два телефона», «четыре старых
+      // рецепта», never the nominative plural «два телефоны» (Emi run-32
+      // -204, 10 of 21 paucal lines). Adjectives on a masculine or neuter
+      // head take the genitive plural, on a feminine head the plural.
+      noteRule("numeral_government");
+      nounForm = vocab().languages?.[lang]?.forms?.[cid].genitive;
+      paucalGoverned = true;
     } else if (langRule(lang, "numeralGenitivePlural") &&
                (NUMBER_VALUES[numberCid] || 0) >= 5 &&
                typeof vocab().languages?.[lang]?.forms?.[cid]?.genitive_plural === "string") {
@@ -5997,7 +6082,7 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       if (partitiveGoverned) {
         const agreed = caseFormFor(lang, adjectiveCid, "partitive");
         if (agreed) adjForm = agreed;
-      } else if (numeralGoverned) {
+      } else if (numeralGoverned || (paucalGoverned && headEntry?.gender !== "f")) {
         const adjEntry = vocab().languages?.[lang]?.forms?.[adjectiveCid];
         if (typeof adjEntry?.genitive_plural === "string") {
           adjForm = adjEntry.genitive_plural;
@@ -6641,6 +6726,17 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       return "";
     }
 
+    // A per-word `predicative` form in copular predicate position for the
+    // remaining word types (time words: «Du bist der Nächste», «Tu es le
+    // prochain» — Emi run-32 -206); nouns and adjectives read theirs in
+    // their own branches above.
+    {
+      const entry = vocab().languages?.[lang]?.forms?.[cid];
+      if (isCopularTemplate && entry && typeof entry === "object" && !Array.isArray(entry) &&
+          typeof entry.predicative === "string" && isCopularPredicatePosition(ordered, idx, lang)) {
+        return entry.predicative;
+      }
+    }
     return surfaceForm(lang, cid);
   });
 
@@ -6765,6 +6861,39 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
         segments.splice(mark.idx + 1, 0,
           { cid: null, text: particleAllomorph(particles[mark.role], "") });
       }
+    }
+  }
+
+  // Declared rule procliticMarker (ar «ـ»): a glue segment written with
+  // the marker fuses onto the next segment («بمطعم», «كمرشد») so the
+  // tile and the L3 blank carry the fused word; finalizeSentence repeats
+  // the fusion on the finished string for the clause builders.
+  const proclitic = langRuleValue(lang, "procliticMarker");
+  if (typeof proclitic === "string" && proclitic) {
+    for (let i = 0; i < segments.length - 1; i++) {
+      const text = segments[i]?.text;
+      if (typeof text !== "string" || !text.endsWith(proclitic) || !segments[i + 1]?.text) continue;
+      segments[i + 1].text = text.slice(0, -proclitic.length) + segments[i + 1].text;
+      segments[i].text = "";
+    }
+  }
+
+  // Declared rule attachedPostpositions (ko): a free postposition joins
+  // its noun phrase as a suffix («로비에 가요», «가이드로 일해요» — never
+  // «로비 에», Emi run-32 -199), on the segment so the tile carries it.
+  const attached = langRuleValue(lang, "attachedPostpositions");
+  if (attached) {
+    for (let i = 1; i < segments.length; i++) {
+      if (vocab().concepts[ordered[i]]?.type !== "glue") continue;
+      if (Array.isArray(attached) && !attached.includes(ordered[i])) continue;
+      // Only a postposition that already follows its phrase — a glue
+      // still standing before its noun («함께 MOTHER») is not a suffix.
+      const next = vocab().concepts[ordered[i + 1]];
+      if (next && (["noun", "pronoun", "time"].includes(next.type) || isNounSlotModifier(next))) continue;
+      if (!["noun", "pronoun", "time"].includes(vocab().concepts[ordered[i - 1]]?.type)) continue;
+      if (!segments[i]?.text || !segments[i - 1]?.text) continue;
+      segments[i - 1].text += segments[i].text;
+      segments[i].text = "";
     }
   }
 

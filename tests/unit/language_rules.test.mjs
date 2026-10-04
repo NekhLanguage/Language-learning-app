@@ -1880,7 +1880,8 @@ test("ar: derived profession nouns take the feminine after a feminine subject (E
 
 test("ar: pack verb government — على / بـ / في, past a possessive (Emi run-12 -53 residual)", () => {
   assert.equal(buildSentence("ar", tplById("I_INSURE_LUGGAGE")), "أنا أؤمن على أمتعتي.");
-  assert.equal(buildSentence("ar", tplById("I_RECOMMEND_RESTAURANT")), "أنا أوصي بـ مطعم.");
+  // Declared procliticMarker: «بـ» fuses onto its noun (Emi run-32 -207 / -171).
+  assert.equal(buildSentence("ar", tplById("I_RECOMMEND_RESTAURANT")), "أنا أوصي بمطعم.");
   assert.equal(buildSentence("ar", tplById("I_NAVIGATE_ROUTE")), "أنا أتنقل في مسار.");
 });
 
@@ -2519,8 +2520,8 @@ test("split pack ids: pilot, transfigure and the football defeat render their ow
     assert.equal(buildSentence("ru", tplById("HE_PILOTS")), "Он пилотирует.");
   });
   withPackForms("harry_potter.json", () => {
-    assert.equal(buildSentence("en", tplById("HE_TRANSFIGURES")), "He transfigures.");
-    assert.equal(buildSentence("ru", tplById("HE_TRANSFIGURES")), "Он превращает.");
+    assert.equal(buildSentence("en", tplById("HE_TRANSFIGURES")), "He transfigures an owl.");
+    assert.equal(buildSentence("ru", tplById("HE_TRANSFIGURES")), "Он превращает сову.");
   });
   withPackForms("football.json", () => {
     assert.equal(buildSentence("en", tplById("WE_HAVE_DEFEAT")), "We have a defeat.");
@@ -2578,11 +2579,11 @@ test("WORK is a core verb with a sentence in every language; AS renders the role
     // Declared bareNounAfterGlueRoles: no article after the role glue.
     assert.equal(buildSentence("de", tplById("I_WORK_AS_GUIDE")), "Ich arbeite als Reiseführer.");
     assert.equal(buildSentence("fr", tplById("I_WORK_AS_GUIDE")), "Je travaille comme guide.");
-    assert.equal(buildSentence("it", tplById("SHE_WORKS_AS_WAITER")), "Lei lavora come cameriere.");
+    assert.equal(buildSentence("it", tplById("SHE_WORKS_AS_WAITER")), "Lei lavora come cameriera.");
     assert.equal(buildSentence("sv", tplById("I_WORK_AS_GUIDE")), "Jag arbetar som guide.");
     // Declared case-only AS (suppressWord): the bare instrumental carries the role.
     assert.equal(buildSentence("ru", tplById("I_WORK_AS_GUIDE")), "Я работаю гидом.");
-    assert.equal(buildSentence("uk", tplById("SHE_WORKS_AS_WAITER")), "Вона працює офіціантом.");
+    assert.equal(buildSentence("uk", tplById("SHE_WORKS_AS_WAITER")), "Вона працює офіціанткою.");
     // Postposed role glue (ja として, tr olarak) and zh's preverbal 作为-phrase.
     assert.equal(buildSentence("ja", tplById("I_WORK_AS_GUIDE")), "私はガイドとして働きます。");
     assert.equal(buildSentence("tr", tplById("I_WORK_AS_GUIDE")), "Ben rehber olarak çalışırım.");
@@ -2591,5 +2592,103 @@ test("WORK is a core verb with a sentence in every language; AS renders the role
   });
   withPackForms("harry_potter.json", () => {
     assert.equal(buildSentence("pl", tplById("HE_WORKS_AS_PROFESSOR")), "On pracuje jako profesor.");
+  });
+});
+
+// ── Emi run-32 (2026-10-04): the first read of the 24 templates + WORK/AS ──
+
+test("ru: 2–4 govern the genitive singular; the adjective stays genitive plural on masculine nouns (run-32 -204)", () => {
+  const force = (lang, id, num, adj = null) => {
+    const tpl = tplById(id);
+    const noun = tpl.concepts.filter(c => vocab.concepts[c]?.type === "noun").pop();
+    const sc = { ["num_" + noun]: num };
+    if (adj) sc["adj_" + noun] = adj;
+    return buildSentence(lang, tpl, num, sc);
+  };
+  assert.equal(langRule("ru", "numeralGenitiveSingular"), true);
+  assert.equal(force("ru", "I_SEE_HOUSE", "TWO"), "Я вижу два дома.");
+  assert.equal(force("ru", "I_SEE_HOUSE", "FOUR", "OLD"), "Я вижу четыре старых дома.");
+  assert.equal(force("ru", "HE_READ_BOOK", "TWO"), "Он читает две книги.");
+  // 5+ keeps the genitive plural; uk/pl keep the nominative plural for 2–4.
+  assert.equal(force("ru", "I_SEE_HOUSE", "FIVE", "OLD"), "Я вижу пять старых домов.");
+  assert.equal(force("uk", "I_SEE_HOUSE", "TWO"), "Я бачу два будинки.");
+  assert.equal(force("pl", "I_SEE_HOUSE", "TWO"), "Ja widzę dwa domy.");
+});
+
+test("the role after AS agrees with the subject: feminine (`feminine` / `f_<case>`) and plural (run-32 -201)", () => {
+  const they = { template_id: "THEY_WORK_AS_GUIDE", concepts: ["THIRD_PERSON_PLURAL", "WORK", "AS", "GUIDE"], render: { en: "x" } };
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("de", tplById("SHE_WORKS_AS_WAITER")), "Sie arbeitet als Kellnerin.");
+    assert.equal(buildSentence("fr", tplById("SHE_WORKS_AS_WAITER")), "Elle travaille comme serveuse.");
+    assert.equal(buildSentence("es", tplById("SHE_WORKS_AS_WAITER")), "Ella trabaja como camarera.");
+    assert.equal(buildSentence("pl", tplById("SHE_WORKS_AS_WAITER")), "Ona pracuje jako kelnerka.");
+    assert.equal(buildSentence("ru", tplById("SHE_WORKS_AS_WAITER")), "Она работает официанткой.");
+    assert.equal(buildSentence("sv", they), "De arbetar som guider.");
+    assert.equal(buildSentence("fr", they), "Ils travaillent comme guides.");
+    assert.equal(buildSentence("pl", they), "Oni pracują jako przewodnicy.");
+    // A masculine subject keeps the base form.
+    assert.equal(buildSentence("de", tplById("I_WORK_AS_GUIDE")), "Ich arbeite als Reiseführer.");
+  });
+});
+
+test("ko: particles 에/에서/로 suffix onto the noun phrase; nominal postpositions keep their space (run-32 -199)", () => {
+  assert.deepEqual(LANGUAGE_RULES.ko.attachedPostpositions, ["TO", "FROM", "AS"]);
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("ko", tplById("I_GO_TO_LOBBY")), "저는 로비에 가요.");
+    assert.equal(buildSentence("ko", tplById("WE_GO_TO_CUSTOMS")), "우리는 세관에 가요.");
+    assert.equal(buildSentence("ko", tplById("I_WORK_AS_GUIDE")), "저는 가이드로 일해요.");
+    // Predicative forms for the copular time/position words.
+    assert.equal(buildSentence("ko", tplById("CHECKOUT_IS_LATER")), "체크아웃은 나중이에요.");
+  });
+  assert.equal(buildSentence("ko", tplById("CX_YOU_ARE_NEXT")), "당신은 다음이에요.");
+  assert.equal(buildSentence("ko", tplById("CX_BOOK_IS_ON_TOP")), "책은 위에 있어요.");
+});
+
+test("fi: AS is the essive («oppaana»); a bare destination is definite in de/fr/pt/el (run-32 -202, -203)", () => {
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("fi", tplById("I_WORK_AS_GUIDE")), "Minä työskentelen oppaana.");
+    assert.equal(buildSentence("de", tplById("WE_GO_TO_CUSTOMS")), "Wir gehen zum Zoll.");
+    assert.equal(buildSentence("de", tplById("I_GO_TO_LOBBY")), "Ich gehe zur Lobby.");
+    assert.equal(buildSentence("fr", tplById("WE_GO_TO_CUSTOMS")), "Nous allons à la douane.");
+    assert.equal(buildSentence("fr", tplById("I_GO_TO_LOBBY")), "Je vais au hall.");
+    assert.equal(buildSentence("pt", tplById("WE_GO_TO_CUSTOMS")), "Nós vamos para a alfândega.");
+    assert.equal(buildSentence("el", tplById("WE_GO_TO_CUSTOMS")), "Εμείς πηγαίνουμε στο τελωνείο.");
+    assert.equal(buildSentence("sv", tplById("WE_GO_TO_CUSTOMS")), "Vi går till tullen.");
+    assert.equal(buildSentence("ru", tplById("WE_GO_TO_CUSTOMS")), "Мы идём на таможню.");
+    assert.equal(buildSentence("uk", tplById("WE_GO_TO_CUSTOMS")), "Ми йдемо до митниці.");
+  });
+  // fr: «à le» elides before a mute h, contracts before an aspirated one.
+  const hotel = { template_id: "I_GO_TO_HOTEL", concepts: ["FIRST_PERSON_SINGULAR", "GO", "TO", "HOTEL"], render: { en: "x" } };
+  withPackForms("tourism.json", () => {
+    assert.equal(buildSentence("fr", hotel), "Je vais à l'hôtel.");
+  });
+});
+
+test("MAY conjugates with its subject; NEXT is a predicative article phrase; WHILE takes its comma (run-32 -198, -206, -209b)", () => {
+  const we = { template_id: "CX_WE_MAY_SLEEP", concepts: ["FIRST_PERSON_PLURAL", "MAY", "SLEEP"], render: { en: "x" } };
+  assert.equal(buildSentence("de", we), "Wir dürfen schlafen.");
+  assert.equal(buildSentence("fr", we), "Nous pouvons dormir.");
+  assert.equal(buildSentence("ru", we), "Мы можем спать.");
+  assert.equal(buildSentence("uk", we), "Ми можемо спати.");
+  assert.equal(buildSentence("fi", we), "Me saatamme nukkua.");
+  assert.equal(buildSentence("de", tplById("CX_YOU_ARE_NEXT")), "Du bist der Nächste.");
+  assert.equal(buildSentence("fr", tplById("CX_YOU_ARE_NEXT")), "Tu es le prochain.");
+  assert.equal(buildSentence("es", tplById("CX_YOU_ARE_NEXT")), "Tú eres el siguiente.");
+  assert.equal(buildSentence("el", tplById("CX_YOU_ARE_NEXT")), "Εσύ είσαι επόμενος.");
+  assert.equal(buildSentence("de", tplById("CX_I_EAT_WHILE_YOU_READ")), "Ich esse, während du liest.");
+  assert.equal(buildSentence("ru", tplById("CX_I_EAT_WHILE_YOU_READ")), "Я ем, пока ты читаешь.");
+  assert.equal(buildSentence("pl", tplById("CX_I_EAT_WHILE_YOU_READ")), "Ja jem, podczas gdy ty czytasz.");
+  assert.equal(buildSentence("fi", tplById("CX_I_EAT_WHILE_YOU_READ")), "Minä syön, kun sinä luet.");
+});
+
+test("ANY blocks a numeral injection; NICE is post-nominal in pt/es and apocopated in it (run-32 -205, -208)", () => {
+  const tpl = tplById("CX_I_USE_ANY_PHONE");
+  assert.equal(buildSentence("sv", tpl, "THREE", { num_PHONE: "THREE" }), "Jag använder valfri telefon.");
+  assert.equal(buildSentence("ru", tpl, "THREE", { num_PHONE: "THREE" }), "Я использую любой телефон.");
+  assert.equal(vocab.concepts.NICE.semantic_role, "property_evaluation");
+  withPackForms("cooking.json", () => {
+    assert.equal(buildSentence("pt", tplById("I_HAVE_SPATULA"), "NICE", { adj_SPATULA: "NICE" }), "Eu tenho uma espátula legal.");
+    assert.equal(buildSentence("es", tplById("I_HAVE_SPATULA"), "NICE", { adj_SPATULA: "NICE" }), "Yo tengo una espátula agradable.");
+    assert.equal(buildSentence("it", tplById("I_HAVE_SPATULA"), "NICE", { adj_SPATULA: "NICE" }), "Io ho una bella spatola.");
   });
 });

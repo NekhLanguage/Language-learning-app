@@ -884,7 +884,8 @@
           "plural": "professorit",
           "partitive": "professoria",
           "accusative": "professorin",
-          "genitive": "professorin"
+          "genitive": "professorin",
+          "essive": "professorina"
         },
         "STUDENT": {
           "form": "oppilas",
@@ -1548,7 +1549,8 @@
       "form": "професор",
       "plural": "професори",
       "feminine": "професорка",
-      "instrumental": "професором"
+      "instrumental": "професором",
+      "f_instrumental": "професоркою"
     },
     "STUDENT": { "gender": "m", "form": "студент", "plural": "студенти" },
     "ELF": { "gender": "m", "form": "ельф", "plural": "ельфи" },
@@ -1721,7 +1723,7 @@
         "BROOM": {"form":"σκούπα","gender":"f","plural":"σκούπες"},
         "OWL": {"form":"κουκουβάγια","gender":"f","plural":"κουκουβάγιες"},
         "CASTLE": {"form":"κάστρο","gender":"n","plural":"κάστρα"},
-        "PROFESSOR": {"form":"καθηγητής","gender":"m","plural":"καθηγητές"},
+        "PROFESSOR": {"form": "καθηγητής", "gender": "m", "plural": "καθηγητές", "feminine": "καθηγήτρια"},
         "STUDENT": {"form":"μαθητής","gender":"m","plural":"μαθητές"},
         "ELF": {"form":"ξωτικό","gender":"n","plural":"ξωτικά"},
         "UNICORN": {"form":"μονόκερος","gender":"m","plural":"μονόκεροι"},
@@ -2045,7 +2047,7 @@
         "BROOM": {"form":"miotła","gender":"f","plural":"miotły","genitive_plural":"mioteł"},
         "OWL": {"form":"sowa","gender":"f","plural":"sowy","genitive_plural":"sów"},
         "CASTLE": {"form":"zamek","gender":"m","plural":"zamki","genitive_plural":"zamków"},
-        "PROFESSOR": {"form":"profesor","gender":"m","plural":"profesorowie","genitive_plural":"profesorów","accusative":"profesora","virile":true, "instrumental": "profesorem"},
+        "PROFESSOR": {"form": "profesor", "gender": "m", "plural": "profesorowie", "genitive_plural": "profesorów", "accusative": "profesora", "virile": true, "instrumental": "profesorem", "feminine": "profesorka"},
         "STUDENT": {"form":"uczeń","gender":"m","plural":"uczniowie","genitive_plural":"uczniów","accusative":"ucznia","virile":true, "instrumental": "uczniem"},
         "ELF": {"form":"skrzat","gender":"m","plural":"skrzaty","genitive_plural":"skrzatów","accusative":"skrzata"},
         "UNICORN": {"form":"jednorożec","gender":"m","plural":"jednorożce","genitive_plural":"jednorożców","accusative":"jednorożca"},

@@ -872,9 +872,10 @@
     "LATER": [
       "später"
     ],
-    "NEXT": [
-      "nächster"
-    ],
+    "NEXT": {
+      "form": "nächster",
+      "predicative": "der Nächste"
+    },
     "SPRING": {
       "form": "Frühling",
       "gender": "m"
@@ -901,7 +902,13 @@
       "danke"
     ],
     "MAY": {
-      "base": "darf"
+      "base": "dürfen",
+      "1_singular": "darf",
+      "2_singular": "darfst",
+      "3_singular": "darf",
+      "1_plural": "dürfen",
+      "2_plural": "dürft",
+      "3_plural": "dürfen"
     }
   },
   "alphabet": {

@@ -792,7 +792,8 @@
           "plural": "kouluttajat",
           "partitive": "kouluttajaa",
           "accusative": "kouluttajan",
-          "genitive": "kouluttajan"
+          "genitive": "kouluttajan",
+          "essive": "kouluttajana"
         },
         "GYM": {
           "form": "sali",
@@ -1976,7 +1977,8 @@
       "accusative": "тренера",
       "plural": "тренери",
       "feminine": "тренерка",
-      "instrumental": "тренером"
+      "instrumental": "тренером",
+      "f_instrumental": "тренеркою"
     },
     "GYM": { "gender": "m", "form": "зал", "genitive": "залу" },
     "LEAGUE": { "gender": "f", "form": "ліга", "plural": "ліги", "genitive": "ліги" },
@@ -2162,7 +2164,7 @@
       "label": "Greek",
       "forms": {
         "POKEMON": {"form":"Πόκεμον","gender":"n","plural":"Πόκεμον"},
-        "TRAINER": {"form":"εκπαιδευτής","gender":"m","plural":"εκπαιδευτές"},
+        "TRAINER": {"form": "εκπαιδευτής", "gender": "m", "plural": "εκπαιδευτές", "feminine": "εκπαιδεύτρια"},
         "GYM": {"form":"γυμναστήριο","gender":"n","plural":"γυμναστήρια"},
         "LEAGUE": {"form":"λίγκα","gender":"f","plural":"λίγκες"},
         "GYM_LEADER": {"form":"αρχηγός γυμναστηρίου","gender":"m","plural":"αρχηγοί γυμναστηρίου"},
@@ -2498,7 +2500,7 @@
       "label": "Polish",
       "forms": {
         "POKEMON": {"form":"Pokémon","gender":"m","plural":"Pokémony","genitive_plural":"Pokémonów","accusative":"Pokémona"},
-        "TRAINER": {"form":"trener","gender":"m","plural":"trenerzy","genitive_plural":"trenerów","accusative":"trenera","virile":true, "instrumental": "trenerem"},
+        "TRAINER": {"form": "trener", "gender": "m", "plural": "trenerzy", "genitive_plural": "trenerów", "accusative": "trenera", "virile": true, "instrumental": "trenerem", "feminine": "trenerka"},
         "GYM": {"form":"sala","gender":"f","plural":"sale","genitive_plural":"sal", "genitive": "sali"},
         "LEAGUE": {"form":"liga","gender":"f","plural":"ligi","genitive_plural":"lig", "genitive": "ligi"},
         "GYM_LEADER": {"form":"lider sali","gender":"m","plural":"liderzy sali","genitive_plural":"liderów sali","accusative":"lidera sali","virile":true, "instrumental": "liderem sali"},

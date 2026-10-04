@@ -643,7 +643,8 @@
       "form": "bello",
       "f": "bella",
       "plural": "belli",
-      "fp": "belle"
+      "fp": "belle",
+      "apocope": "bel"
     },
     "COLD": {
       "form": "freddo",
@@ -915,9 +916,10 @@
     "LATER": [
       "più tardi"
     ],
-    "NEXT": [
-      "prossimo"
-    ],
+    "NEXT": {
+      "form": "prossimo",
+      "predicative": "il prossimo"
+    },
     "SPRING": {
       "form": "primavera",
       "gender": "f",

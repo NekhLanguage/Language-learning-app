@@ -421,10 +421,11 @@
       "template_id": "HE_TRANSFIGURES",
       "concepts": [
         "HE",
-        "TRANSFIGURE"
+        "TRANSFIGURE",
+        "OWL"
       ],
       "render": {
-        "en": "He transfigures."
+        "en": "He transfigures an owl."
       }
     },
     {
