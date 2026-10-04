@@ -6,6 +6,34 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-04 (later)
+
+### Russian counts «два телефона» the way a Russian teacher expects
+
+After two, three and four, Russian puts the noun in a special form («два телефона», «четыре старых рецепта», «две книги»), and the app got it wrong in half of those sentences («два телефоны»). It is right now, with the adjective in the form each gender takes. This was the row between Russian and losing its BETA tag (Emi's run 32). A stray form, «двадцать бронированй», is «бронирований».
+
+### Korean sentences a learner can read again
+
+In Korean, "to" and "as" landed in front of the noun as separate words («에게 로비를 가요»); they now follow it and attach the way particles do («로비에 가요», «가이드로 일해요»), and "You are next", "Checkout is later" and "The book is on top" end with a proper predicate («다음이에요», «위에 있어요»). Nine of the eighteen broken Korean sentences in Emi's run 32 are fixed; the rest are the verb-before-adverb and "may" order, which is the same Korean/Japanese/Turkish/Mandarin word-order class as before and is still open.
+
+### "She works as a waitress", in every language that has the word
+
+The role after "as" now agrees with the subject: feminine in German, French, Spanish, Italian, Portuguese, Greek, Polish, Russian and Ukrainian («Elle travaille comme serveuse», «Sie arbeitet als Kellnerin», «Она работает официанткой», «Ona pracuje jako kelnerka»), and plural after "they" («De arbetar som guider», «Ils travaillent comme guides», «Oni pracują jako przewodnicy»). Finnish uses the essive («työskentelen oppaana») instead of «kuten opas». Arabic's «كـ» and «لـ» attach to their noun («كمرشد», «بمطعم») instead of standing apart.
+
+### Going to customs, the lobby and the hotel
+
+A bare destination is definite in German, French, Portuguese and Greek as it already was in Spanish and Italian: «zum Zoll», «zur Lobby», «à la douane», «à l'hôtel», «au hall», «para a alfândega», «στο τελωνείο». Russian says «на таможню», Ukrainian «на митницю». "We go to checkout" (which translated as "we go to departure") became "Checkout is later".
+
+### Smaller fixes from Emi's run 32
+
+"May" conjugates with its subject in German, French, Spanish, Portuguese, Finnish, Ukrainian, Russian and Greek («Wir dürfen schlafen», «Мы можем спать»). "You are next" takes its article where the language wants one («Du bist der Nächste», «Tu es le prochain», «Tú eres el siguiente», «Você é o próximo», «επόμενος», «คนต่อไป»). "Any" blocks a number («любой три телефоны» is gone) and Swedish says «valfri telefon». "Nice" follows the noun in Portuguese and Spanish («uma espátula legal») and shortens before it in Italian («un bel ristorante»). A comma sets off "while" in German, Polish, Finnish, Russian and Ukrainian. "Pilot" has its own verb in sixteen languages («piloter», «pilotar», «steuern», «조종하다», «操縦します»). "He transfigures" has an object («an owl»). Turkish "bargain" is «fırsat».
+
+### Still open from run 32 (known classes, not fixed here)
+
+Adverb and "while"/"may" order in Japanese, Korean, Mandarin and Turkish; the Greek and Arabic "may" complement («να κοιμηθούμε», «قد ينام»); the Arabic subject article in the new copular sentences; "any" in Polish, Thai, Japanese and Korean; Finnish partitive after "any"; the French «bonne bonne affaire» double adjective; the Japanese and Mandarin "defeat" calque.
+
+---
+
 ## 2026-10-04
 
 ### "Work" joins the first 200 words, and "as" finally has a sentence

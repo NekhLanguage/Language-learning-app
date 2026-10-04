@@ -858,7 +858,8 @@
           "plural": "valmentajat",
           "partitive": "valmentajaa",
           "accusative": "valmentajan",
-          "genitive": "valmentajan"
+          "genitive": "valmentajan",
+          "essive": "valmentajana"
         },
         "KICK": {
           "base": "potkaista",
@@ -1241,7 +1242,7 @@
         "GOALKEEPER": { "form": "goleiro", "gender": "m", "plural": "goleiros", "feminine": "goleira" },
         "CAPTAIN": { "form": "capitão", "gender": "m", "plural": "capitães" },
         "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros", "feminine": "árbitra" },
-        "COACH": { "form": "treinador", "gender": "m", "plural": "treinadores" },
+        "COACH": {"form": "treinador", "gender": "m", "plural": "treinadores", "feminine": "treinadora"},
 
         "KICK":       { "base": "chutar",     "1_singular": "chuto",      "2_singular": "chutas",     "3_singular": "chuta",      "1_plural": "chutamos",    "2_plural": "chutam",     "3_plural": "chutam" },
         "PASS":       { "base": "passar",     "1_singular": "passo",      "2_singular": "passas",     "3_singular": "passa",      "1_plural": "passamos",    "2_plural": "passam",     "3_plural": "passam" },
@@ -1371,7 +1372,7 @@
         "GOALKEEPER": { "form": "Torwart", "gender": "m", "plural": "Torwarte", "feminine": "Torhüterin" },
         "CAPTAIN": { "form": "Kapitän", "gender": "m", "plural": "Kapitäne" },
         "REFEREE": { "form": "Schiedsrichter", "gender": "m", "plural": "Schiedsrichter", "feminine": "Schiedsrichterin" },
-        "COACH": { "form": "Trainer", "gender": "m", "plural": "Trainer" },
+        "COACH": {"form": "Trainer", "gender": "m", "plural": "Trainer", "feminine": "Trainerin"},
 
         "KICK":       { "base": "treten",       "1_singular": "trete",        "2_singular": "trittst",      "3_singular": "tritt",        "1_plural": "treten",       "2_plural": "tretet",       "3_plural": "treten" },
         "PASS":       { "base": "passen",       "1_singular": "passe",        "2_singular": "passt",        "3_singular": "passt",        "1_plural": "passen",       "2_plural": "passt",        "3_plural": "passen" },
@@ -1436,7 +1437,7 @@
         "GOALKEEPER": { "gender": "m", "form": "τερματοφύλακας", "plural": "τερματοφύλακες" },
         "CAPTAIN": { "gender": "m", "form": "αρχηγός", "plural": "αρχηγοί" },
         "REFEREE": { "gender": "m", "form": "διαιτητής", "plural": "διαιτητές" },
-        "COACH": { "gender": "m", "form": "προπονητής", "plural": "προπονητές" },
+        "COACH": {"gender": "m", "form": "προπονητής", "plural": "προπονητές", "feminine": "προπονήτρια"},
 
         "KICK":       { "base": "κλωτσώ",     "1_singular": "κλωτσώ",     "2_singular": "κλωτσάς",    "3_singular": "κλωτσά",     "1_plural": "κλωτσάμε",    "2_plural": "κλωτσάτε",    "3_plural": "κλωτσούν" },
         "PASS":       { "base": "πασάρω",     "1_singular": "πασάρω",     "2_singular": "πασάρεις",   "3_singular": "πασάρει",    "1_plural": "πασάρουμε",   "2_plural": "πασάρετε",    "3_plural": "πασάρουν" },
@@ -1832,7 +1833,7 @@
         "GOALKEEPER": { "form": "portero", "gender": "m", "plural": "porteros", "feminine": "portera" },
         "CAPTAIN": { "form": "capitán", "gender": "m", "plural": "capitanes" },
         "REFEREE": { "form": "árbitro", "gender": "m", "plural": "árbitros", "feminine": "árbitra" },
-        "COACH": { "form": "entrenador", "gender": "m", "plural": "entrenadores" },
+        "COACH": {"form": "entrenador", "gender": "m", "plural": "entrenadores", "feminine": "entrenadora"},
 
         "KICK":       { "base": "patear",       "1_singular": "pateo",       "2_singular": "pateas",      "3_singular": "patea",       "1_plural": "pateamos",    "2_plural": "pateáis",    "3_plural": "patean" },
         "PASS":       { "base": "pasar",        "1_singular": "paso",        "2_singular": "pasas",       "3_singular": "pasa",        "1_plural": "pasamos",     "2_plural": "pasáis",     "3_plural": "pasan" },
@@ -1895,7 +1896,7 @@
         "GOALKEEPER": {"form":"gardien","gender":"m","plural":"gardiens", "feminine": "gardienne" },
         "CAPTAIN": {"form":"capitaine","gender":"m","plural":"capitaines"},
         "REFEREE": {"form":"arbitre","gender":"m","plural":"arbitres", "feminine": "arbitre" },
-        "COACH": {"form":"entraîneur","gender":"m","plural":"entraîneurs"},
+        "COACH": {"form": "entraîneur", "gender": "m", "plural": "entraîneurs", "feminine": "entraîneuse"},
         "KICK": {"base":"frapper","1_singular":"frappe","2_singular":"frappes","3_singular":"frappe","1_plural":"frappons","2_plural":"frappez","3_plural":"frappent"},
         "PASS": {"base":"passer","1_singular":"passe","2_singular":"passes","3_singular":"passe","1_plural":"passons","2_plural":"passez","3_plural":"passent"},
         "SHOOT": {"base":"tirer","1_singular":"tire","2_singular":"tires","3_singular":"tire","1_plural":"tirons","2_plural":"tirez","3_plural":"tirent"},
@@ -2005,7 +2006,7 @@
         "GOALKEEPER": {"form":"portiere","gender":"m","plural":"portieri", "feminine": "portiera" },
         "CAPTAIN": {"form":"capitano","gender":"m","plural":"capitani"},
         "REFEREE": {"form":"arbitro","gender":"m","plural":"arbitri", "feminine": "arbitra" },
-        "COACH": {"form":"allenatore","gender":"m","plural":"allenatori"},
+        "COACH": {"form": "allenatore", "gender": "m", "plural": "allenatori", "feminine": "allenatrice"},
         "KICK": {"base":"calciare","1_singular":"calcio","2_singular":"calci","3_singular":"calcia","1_plural":"calciamo","2_plural":"calciate","3_plural":"calciano"},
         "PASS": {"base":"passare","1_singular":"passo","2_singular":"passi","3_singular":"passa","1_plural":"passiamo","2_plural":"passate","3_plural":"passano"},
         "SHOOT": {"base":"tirare","1_singular":"tiro","2_singular":"tiri","3_singular":"tira","1_plural":"tiriamo","2_plural":"tirate","3_plural":"tirano"},
@@ -2115,7 +2116,7 @@
         "GOALKEEPER": {"form":"bramkarz","gender":"m","plural":"bramkarze","genitive_plural":"bramkarzy","accusative":"bramkarza","virile":true, "instrumental": "bramkarzem"},
         "CAPTAIN": {"form":"kapitan","gender":"m","plural":"kapitanowie","genitive_plural":"kapitanów","accusative":"kapitana","virile":true, "instrumental": "kapitanem"},
         "REFEREE": {"form":"sędzia","gender":"m","plural":"sędziowie","genitive_plural":"sędziów","accusative":"sędziego","virile":true, "instrumental": "sędzią"},
-        "COACH": {"form":"trener","gender":"m","plural":"trenerzy","genitive_plural":"trenerów","accusative":"trenera","virile":true, "instrumental": "trenerem"},
+        "COACH": {"form": "trener", "gender": "m", "plural": "trenerzy", "genitive_plural": "trenerów", "accusative": "trenera", "virile": true, "instrumental": "trenerem", "feminine": "trenerka"},
         "KICK": {"base":"kopać","1_singular":"kopię","2_singular":"kopiesz","3_singular":"kopie","1_plural":"kopiemy","2_plural":"kopiecie","3_plural":"kopią"},
         "PASS": {"base":"podawać","1_singular":"podaję","2_singular":"podajesz","3_singular":"podaje","1_plural":"podajemy","2_plural":"podajecie","3_plural":"podają"},
         "SHOOT": {"base":"strzelać","1_singular":"strzelam","2_singular":"strzelasz","3_singular":"strzela","1_plural":"strzelamy","2_plural":"strzelacie","3_plural":"strzelają"},

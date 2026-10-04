@@ -951,9 +951,10 @@
     "LATER": [
       "mais tarde"
     ],
-    "NEXT": [
-      "próximo"
-    ],
+    "NEXT": {
+      "form": "próximo",
+      "predicative": "o próximo"
+    },
     "SPRING": {
       "form": "primavera",
       "gender": "f"
@@ -980,7 +981,13 @@
       "obrigado"
     ],
     "MAY": {
-      "base": "pode"
+      "base": "poder",
+      "1_singular": "posso",
+      "2_singular": "pode",
+      "3_singular": "pode",
+      "1_plural": "podemos",
+      "2_plural": "podem",
+      "3_plural": "podem"
     }
   }
 }

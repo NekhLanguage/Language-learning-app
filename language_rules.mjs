@@ -107,6 +107,13 @@
 //                            plural («pięć książek») — the noun entry's
 //                            `genitive_plural` field; a number is skipped
 //                            (compat-gated) when the field is missing.
+//   numeralGenitiveSingular  numbers two to four govern the genitive
+//                            SINGULAR of the noun («два телефона», «четыре
+//                            рецепта») — the entry's `genitive` field;
+//                            the adjective stays genitive plural for
+//                            masculine/neuter nouns («четыре старых
+//                            рецепта») and nominative plural for
+//                            feminine ones («две новые книги»).
 //   statementOrderQuestion   yes/no questions keep declarative order and
 //                            ask with intonation («Esse é o seu
 //                            telefone?») instead of fronting the copula.
@@ -270,6 +277,15 @@
 //                            a preceding adposition (no HOME fused.from
 //                            «hjemmefra»); the adposition's slot renders
 //                            empty.
+//   attachedPostpositions    a free postposition suffixes onto its noun
+//                            phrase's segment («로비에», «가이드로») instead
+//                            of standing as a spaced word (ko). true for
+//                            every glue, or the list of glue ids that are
+//                            particles (ko 에/에서/로) — nominal
+//                            postpositions («동안», «위해») keep their space.
+//   procliticMarker          glue words written with this trailing marker
+//                            (ar tatweel «ـ») fuse onto the following word
+//                            on the finished string: «كـ مرشد» → «كمرشد».
 //   postposedAdpositions     adpositions follow their noun phrase (ja
 //                            «家から行きます», «テーブルに行きます») — the
 //                            SOV ordering emits noun before glue.
@@ -518,6 +534,8 @@ export const LANGUAGE_RULES = {
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "من أجل", position: "pre" },
+    // «كـ» / «لـ» are proclitics: «كمرشد», never «كـ مرشد» (Emi run-32 -207).
+    procliticMarker: "ـ",
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,
@@ -559,6 +577,9 @@ export const LANGUAGE_RULES = {
     inflectsNounPlural: true, latinEncodingChecks: true,
   },
   fi: {
+    // A subordinate clause is set off by a comma: «Luen, kun sinä
+    // kokkaat» (Emi run-32 -209b).
+    commaBeforeConjunctions: ["kun"],
     features: {
       adjectivePosition: "pre",
       // Objects change form — fi's `accusative` data field carries the
@@ -621,6 +642,9 @@ export const LANGUAGE_RULES = {
         FROM: { case: "elative", suppressWord: true },
         TO: { case: "illative", suppressWord: true },
         BY: { case: "adessive", suppressWord: true },
+        // «työskentelen oppaana» — the role is the essive, no word
+        // (Emi run-32 -202).
+        AS: { case: "essive", suppressWord: true },
         UNDER: { case: "genitive", postposed: true },
         BEHIND: { case: "genitive", postposed: true },
         FRONT: { case: "genitive", postposed: true },
@@ -633,6 +657,9 @@ export const LANGUAGE_RULES = {
     },
   },
   fr: {
+    // A bare destination is definite: «à la douane», «para a alfândega» —
+    // never «à une douane» (Emi run-32 -203; the es rule).
+    definiteDestination: true,
     // «work as a guide»: the role noun takes no article (the AS template).
     bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
@@ -665,6 +692,12 @@ export const LANGUAGE_RULES = {
     verbPersonParadigm: true,
   },
   de: {
+    // A subordinate clause is set off by a comma: «Ich lese, während du
+    // kochst» (Emi run-32 -209b).
+    commaBeforeConjunctions: ["während"],
+    // A bare destination is definite: «zum Zoll», «zur Lobby» — never
+    // «zu einem Zoll» (Emi run-32 -203; the es rule).
+    definiteDestination: true,
     // «work as a guide»: the role noun takes no article (the AS template).
     bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «just/only» follows the finite verb (Emi -196 part 2, the JUST template).
@@ -715,6 +748,9 @@ export const LANGUAGE_RULES = {
   el: {
     // «work as a guide»: the role noun takes no article (the AS template).
     bareNounAfterGlueRoles: ["relation_role_or_time"],
+    // A bare destination is definite: «στο τελωνείο», never «σε ένα
+    // τελωνείο» (Emi run-32 -203; the es rule).
+    definiteDestination: true,
     features: {
       indefiniteArticle: true, adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, articleCaseMarking: true,
@@ -775,7 +811,10 @@ export const LANGUAGE_RULES = {
     },
     indefiniteArticle: true,
     postNominalAdjectives: true,
-    preNominalAdjectiveRoles: ["property_quality"],
+    // Evaluative adjectives («bello», «buono») are pre-nominal like the
+    // quality set: «un bel ristorante», never «un ristorante bello»
+    // (Emi run-32 -208).
+    preNominalAdjectiveRoles: ["property_quality", "property_evaluation"],
     apocope: true,
     possessiveDefiniteArticle: true,
     proDrop: true,
@@ -854,6 +893,9 @@ export const LANGUAGE_RULES = {
       // Numerals count through a counter that follows the noun:
       // «책 한 권을 읽어요» — never «넷 나쁜 책» (Emi 2026-08-28-14).
       classifiersOrCounters: true,
+      // Postpositions follow (and suffix onto) their noun phrase: «로비에»,
+      // «가이드로» (Emi run-32 -199).
+      postposedAdpositions: true,
     },
     wordOrder: "SOV",
     zeroPresentCopula: true,
@@ -868,8 +910,16 @@ export const LANGUAGE_RULES = {
       topic: { afterConsonant: "은", afterVowel: "는" },
       object: { afterConsonant: "을", afterVowel: "를" },
       haveObject: { afterConsonant: "이", afterVowel: "가" },
+      // Bare destinations of a motion verb take 에, never 을/를:
+      // «집에 가요» (Emi run-32 -199, the ja run-10 -49 shape).
+      destination: "에",
       attach: true,
     },
+    // Postpositions follow their noun: «로비에 가요», «가이드로 일해요» —
+    // never «에 로비» (Emi run-32 -199; the ja/zh SOV emission), and they
+    // suffix onto the noun phrase's segment, never a spaced «로비 에».
+    postposedAdpositions: true,
+    attachedPostpositions: ["TO", "FROM", "AS"],
     // The suffixal present copula on nominal predicates: «소년이에요»,
     // «여자예요». Adjective predicates carry their own predicative verb
     // form from the data instead («책은 빨개요»). Locative and clause-
@@ -1035,6 +1085,13 @@ export const LANGUAGE_RULES = {
     motionPurpose: { form: "for å hente", position: "pre" },
   },
   pl: {
+    // A subordinate clause is set off by a comma: «Czytam, podczas gdy
+    // gotujesz» (Emi run-32 -209b).
+    commaBeforeConjunctions: ["podczas gdy"],
+    // «jako» takes the bare nominative role, agreeing with the subject:
+    // «Ona pracuje jako kelnerka», «Oni pracują jako przewodnicy» (Emi
+    // run-32 -201).
+    bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «go for X» after a motion verb is the purpose construction, not the
     // dictionary "for" (run-24 GO FOR X row) — see motionPurpose in the docs above.
     motionPurpose: { form: "po", position: "pre", case: "accusative" },
@@ -1075,6 +1132,9 @@ export const LANGUAGE_RULES = {
     },
   },
   pt: {
+    // A bare destination is definite: «à la douane», «para a alfândega» —
+    // never «à une douane» (Emi run-32 -203; the es rule).
+    definiteDestination: true,
     // «work as a guide»: the role noun takes no article (the AS template).
     bareNounAfterGlueRoles: ["relation_role_or_time"],
     // «go for X» after a motion verb is the purpose construction, not the
@@ -1124,6 +1184,9 @@ export const LANGUAGE_RULES = {
     inflectsNounPlural: true, fullNounGender: true,
     verbPersonParadigm: true,
     numeralGenitivePlural: true, numeralGenderAgreement: true,
+    // 2–4 take the genitive singular: «два телефона», never «два телефоны»
+    // (Emi run-32 -204, the Russian BETA blocker).
+    numeralGenitiveSingular: true,
     // «свой» for every person whose subject owns the noun («Я читаю свою
     // книгу», «Ты страхуешь свой багаж» — Emi run-30 -194), not only 3rd.
     reflexivePossessive: "allPersons",
@@ -1133,7 +1196,9 @@ export const LANGUAGE_RULES = {
     verbGovernedPrepositions: true,
     motionPurpose: { form: "за", position: "pre", case: "instrumental" },
     existentialPossession: { case: "genitive", prefix: "у" },
-    commaBeforeConjunctions: ["но", "потому что", "а"],
+    // «пока» (WHILE) opens a subordinate clause — comma before it
+    // (Emi run-32 -209b).
+    commaBeforeConjunctions: ["но", "потому что", "а", "пока"],
     prepositionAllomorphy: "ru",
     // TO a place entered is «в» + accusative («в свою комнату», «в
     // спортзал», «в лигу»); a person or object is «к» + dative, carried
@@ -1353,6 +1418,9 @@ export const LANGUAGE_RULES = {
     // «Так, роблю.» / «Ні, не роблю.» — the short answer echoes the verb
     // without its pronoun (Emi -140, fixed with ru's run-30 -191).
     shortAnswerDropsPronoun: true,
+    // «поки» (WHILE) opens a subordinate clause — comma before it
+    // (Emi run-32 -209b).
+    commaBeforeConjunctions: ["поки"],
     features: {
       adjectivePosition: "pre", zeroPresentCopula: true,
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,

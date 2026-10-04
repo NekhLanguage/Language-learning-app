@@ -390,7 +390,13 @@
       "3_plural": "saavat"
     },
     "MAY": {
-      "base": "saattaa"
+      "base": "saattaa",
+      "1_singular": "saatan",
+      "2_singular": "saatat",
+      "3_singular": "saattaa",
+      "1_plural": "saatamme",
+      "2_plural": "saatatte",
+      "3_plural": "saattavat"
     },
     "WATER": {
       "form": "vesi",

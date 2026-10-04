@@ -898,7 +898,8 @@
           "plural": "ninjat",
           "partitive": "ninjaa",
           "accusative": "ninjan",
-          "genitive": "ninjan"
+          "genitive": "ninjan",
+          "essive": "ninjana"
         },
         "SAMURAI": {
           "form": "samurai",

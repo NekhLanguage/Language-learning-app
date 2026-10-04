@@ -268,7 +268,7 @@
           "instrumental": "бронированием",
           "locative": "бронировании",
           "plural": "бронирования",
-          "genitive_plural": "бронированй",
+          "genitive_plural": "бронирований",
           "accusative": "бронирование"
         },
         "LOBBY": {
@@ -402,7 +402,8 @@
           "locative": "официанте",
           "accusative": "официанта",
           "plural": "официанты",
-          "genitive_plural": "официантов"
+          "genitive_plural": "официантов",
+          "f_instrumental": "официанткой"
         },
         "MARKET": {
           "form": "рынок",
@@ -501,7 +502,10 @@
           "locative": "таможне",
           "accusative": "таможню",
           "plural": "таможни",
-          "genitive_plural": "таможен"
+          "genitive_plural": "таможен",
+          "fused": {
+            "to": "на таможню"
+          }
         },
         "EMBASSY": {
           "form": "посольство",
@@ -1085,7 +1089,8 @@
           "plural": "tarjoilijat",
           "partitive": "tarjoilijaa",
           "accusative": "tarjoilijan",
-          "genitive": "tarjoilijan"
+          "genitive": "tarjoilijan",
+          "essive": "tarjoilijana"
         },
         "MARKET": {
           "form": "tori",
@@ -1175,7 +1180,8 @@
           "plural": "oppaat",
           "partitive": "opasta",
           "accusative": "oppaan",
-          "genitive": "oppaan"
+          "genitive": "oppaan",
+          "essive": "oppaana"
         },
         "BOARD": {
           "base": "nousta kyytiin",
@@ -2490,7 +2496,8 @@
         "WAITER": {
           "gender": "m",
           "form": "σερβιτόρος",
-          "plural": "σερβιτόροι"
+          "plural": "σερβιτόροι",
+          "feminine": "σερβιτόρα"
         },
         "MARKET": {
           "gender": "f",
@@ -2555,7 +2562,8 @@
         "GUIDE": {
           "gender": "m",
           "form": "ξεναγός",
-          "plural": "ξεναγοί"
+          "plural": "ξεναγοί",
+          "feminine": "ξεναγός"
         },
         "BOARD": {
           "base": "επιβιβάζομαι",
@@ -3335,7 +3343,7 @@
           "form": "hediyelik eşya"
         },
         "BARGAIN": {
-          "form": "pazarlık"
+          "form": "fırsat"
         },
         "PHRASEBOOK": {
           "form": "konuşma kılavuzu"
@@ -3615,7 +3623,9 @@
           "accusative": "офіціанта",
           "plural": "офіціанти",
           "genitive_plural": "офіціантів",
-          "instrumental": "офіціантом"
+          "instrumental": "офіціантом",
+          "feminine": "офіціантка",
+          "f_instrumental": "офіціанткою"
         },
         "MARKET": {
           "gender": "m",
@@ -3666,7 +3676,10 @@
         "CUSTOMS": {
           "gender": "f",
           "form": "митниця",
-          "genitive": "митниці"
+          "genitive": "митниці",
+          "fused": {
+            "to": "на митницю"
+          }
         },
         "EMBASSY": {
           "gender": "n",
@@ -3929,7 +3942,8 @@
         "WAITER": {
           "form": "camarero",
           "gender": "m",
-          "plural": "camareros"
+          "plural": "camareros",
+          "feminine": "camarera"
         },
         "MARKET": {
           "form": "mercado",
@@ -4225,7 +4239,8 @@
           "form": "serveur",
           "gender": "m",
           "plural": "serveurs",
-          "predicative": "serveur"
+          "predicative": "serveur",
+          "feminine": "serveuse"
         },
         "MARKET": {
           "form": "marché",
@@ -4687,7 +4702,8 @@
         "WAITER": {
           "form": "cameriere",
           "gender": "m",
-          "plural": "camerieri"
+          "plural": "camerieri",
+          "feminine": "cameriera"
         },
         "MARKET": {
           "form": "mercato",
@@ -5183,7 +5199,8 @@
           "genitive_plural": "kelnerów",
           "accusative": "kelnera",
           "virile": true,
-          "instrumental": "kelnerem"
+          "instrumental": "kelnerem",
+          "feminine": "kelnerka"
         },
         "MARKET": {
           "form": "targ",

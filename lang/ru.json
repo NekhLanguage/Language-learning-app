@@ -695,15 +695,6 @@
       "2_plural": "идёте",
       "3_plural": "идут"
     },
-    "EAT": {
-      "base": "есть",
-      "1_singular": "ем",
-      "2_singular": "ешь",
-      "3_singular": "ест",
-      "1_plural": "едим",
-      "2_plural": "едите",
-      "3_plural": "едят"
-    },
     "WORK": {
       "base": "работать",
       "1_singular": "работаю",
@@ -712,6 +703,15 @@
       "1_plural": "работаем",
       "2_plural": "работаете",
       "3_plural": "работают"
+    },
+    "EAT": {
+      "base": "есть",
+      "1_singular": "ем",
+      "2_singular": "ешь",
+      "3_singular": "ест",
+      "1_plural": "едим",
+      "2_plural": "едите",
+      "3_plural": "едят"
     },
     "DRINK": {
       "base": "пить",
@@ -809,7 +809,13 @@
       "3_plural": "есть"
     },
     "MAY": {
-      "base": "может"
+      "base": "мочь",
+      "1_singular": "могу",
+      "2_singular": "можешь",
+      "3_singular": "может",
+      "1_plural": "можем",
+      "2_plural": "можете",
+      "3_plural": "могут"
     },
     "BIG": {
       "form": "большой",

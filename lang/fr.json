@@ -928,9 +928,10 @@
     "LATER": [
       "plus tard"
     ],
-    "NEXT": [
-      "prochain"
-    ],
+    "NEXT": {
+      "form": "prochain",
+      "predicative": "le prochain"
+    },
     "SPRING": {
       "form": "printemps",
       "gender": "m"
@@ -957,7 +958,13 @@
       "merci"
     ],
     "MAY": {
-      "base": "peut"
+      "base": "pouvoir",
+      "1_singular": "peux",
+      "2_singular": "peux",
+      "3_singular": "peut",
+      "1_plural": "pouvons",
+      "2_plural": "pouvez",
+      "3_plural": "peuvent"
     }
   }
 }

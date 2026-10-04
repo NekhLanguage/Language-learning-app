@@ -355,13 +355,13 @@
       "base": "gå",
       "present": "går"
     },
-    "EAT": {
-      "base": "äta",
-      "present": "äter"
-    },
     "WORK": {
       "base": "arbeta",
       "present": "arbetar"
+    },
+    "EAT": {
+      "base": "äta",
+      "present": "äter"
     },
     "DRINK": {
       "base": "dricka",
@@ -920,10 +920,11 @@
     "AS": [
       "som"
     ],
-    "ANY": [
-      "vilken som helst",
-      "någon"
-    ],
+    "ANY": {
+      "form": "valfri",
+      "n": "valfritt",
+      "plural": "valfria"
+    },
     "ONLY": [
       "bara"
     ],
