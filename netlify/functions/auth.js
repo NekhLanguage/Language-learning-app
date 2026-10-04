@@ -34,7 +34,11 @@ async function verifySession(event) {
   const user = await res.json();
   const email = String((user && user.email) || "").toLowerCase().trim();
   if (!email) return null;
-  return { email, id: user.id || null };
+  // user_metadata carries what authProvision stored at account creation
+  // (the sign-up form's email-consent answer); empty for Google accounts.
+  const metadata = user && user.user_metadata && typeof user.user_metadata === "object"
+    ? user.user_metadata : {};
+  return { email, id: user.id || null, metadata };
 }
 
 function unauthorizedResponse(extraBody = {}) {
@@ -55,13 +59,23 @@ function subscriptionActive(accessUntil, now = Date.now()) {
   return Number.isFinite(t) && t > now;
 }
 
-// The learner's `users` row (email, access_until, access_tier) or null when
-// the email has no row. Throws on a Supabase error.
+// The learner's `users` row (email, access_until, access_tier, and the
+// email-consent timestamps) or null when the email has no row. Throws on a
+// Supabase error. Falls back to the pre-consent column set if the
+// migration (migrations/email_opt_in.sql) has not run yet, so a deploy
+// never locks learners out over a missing column.
+const ACCESS_ROW_SELECT = "email,access_until,access_tier,email_opt_in_at,email_opt_in_asked_at";
+const ACCESS_ROW_SELECT_LEGACY = "email,access_until,access_tier";
 async function fetchAccessRow(email, key) {
-  const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(email)}&select=email,access_until,access_tier`,
+  const lookup = (select) => fetch(
+    `${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(email)}&select=${select}`,
     { headers: restHeaders(key) }
   );
+  let res = await lookup(ACCESS_ROW_SELECT);
+  if (res.status === 400) {
+    console.error("users lookup: email_opt_in columns missing — run migrations/email_opt_in.sql");
+    res = await lookup(ACCESS_ROW_SELECT_LEGACY);
+  }
   if (!res.ok) throw new Error(`users lookup returned ${res.status}: ${await res.text()}`);
   const rows = await res.json();
   return Array.isArray(rows) && rows.length ? rows[0] : null;
@@ -69,14 +83,19 @@ async function fetchAccessRow(email, key) {
 
 // Make sure a Supabase Auth account exists for an email (secret key, admin
 // API). Idempotent: an already-registered email is not an error. Returns
-// "created", "exists" or "skipped" (secret key unset).
-async function ensureAuthUser(email) {
+// "created", "exists" or "skipped" (secret key unset). `metadata` (the
+// sign-up form's email-consent answer) is stored as user_metadata on a
+// NEW account only: an address that already has an account was not
+// signing up, so a stranger typing it cannot consent on its behalf.
+async function ensureAuthUser(email, metadata = null) {
   const key = secretKey();
   if (!key) return "skipped";
+  const body = { email, email_confirm: true };
+  if (metadata && typeof metadata === "object") body.user_metadata = metadata;
   const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
     method: "POST",
     headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ email, email_confirm: true }),
+    body: JSON.stringify(body),
   });
   if (res.ok) return "created";
   const text = await res.text();

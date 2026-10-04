@@ -13,6 +13,7 @@ const loadUser = require("../../netlify/functions/loadUser.js");
 const saveUser = require("../../netlify/functions/saveUser.js");
 const authProvision = require("../../netlify/functions/authProvision.js");
 const authConfig = require("../../netlify/functions/authConfig.js");
+const emailOptIn = require("../../netlify/functions/emailOptIn.js");
 
 const PUB = "publishable-test-key";
 const SEC = "secret-test-key";
@@ -62,6 +63,15 @@ function fakeSupabase({ tokens = {}, rows = {}, admin = null } = {}) {
       }
       const email = decodeURIComponent(/email=eq\.([^&]+)/.exec(u)[1]);
       if (init.method === "PATCH") {
+        // return=representation (emailOptIn): the patched rows, honouring
+        // the `email_opt_in_at=is.null` guard; other PATCHes answer 204.
+        if (/return=representation/.test(String(headers.Prefer || ""))) {
+          const row = rows[email];
+          const guarded = u.includes("email_opt_in_at=is.null") && row && row.email_opt_in_at;
+          if (!row || guarded) return new Response("[]", { status: 200 });
+          Object.assign(row, JSON.parse(init.body));
+          return new Response(JSON.stringify([row]), { status: 200 });
+        }
         return new Response(null, { status: 204 });
       }
       const row = rows[email];
@@ -121,7 +131,7 @@ test("verifySession: no token → null, bad token → null, good token → lower
     assert.equal(await auth.verifySession(req(null)), null);
     assert.equal(calls.length, 0, "no token means no round-trip");
     assert.equal(await auth.verifySession(req("bad")), null);
-    assert.deepEqual(await auth.verifySession(req("good")), { email: "alice@example.com", id: "u1" });
+    assert.deepEqual(await auth.verifySession(req("good")), { email: "alice@example.com", id: "u1", metadata: {} });
     const authCall = calls.filter((c) => c.url.includes("/auth/v1/user")).at(-1);
     assert.equal(authCall.init.headers.apikey, PUB, "the user lookup uses the publishable key as apikey");
     assert.equal(authCall.init.headers.Authorization, "Bearer good");
@@ -147,10 +157,10 @@ test("checkAccess: 401 without a session, ignores a body email, reports the subs
 
     const alice = await checkAccess.handler(req("alice", { email: "someone-else@example.com" }));
     assert.equal(alice.statusCode, 200);
-    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", tier: "paid", freeLessons: 3, subscribed: true });
+    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", tier: "paid", freeLessons: 3, subscribed: true, emailOptInAsked: true });
 
     const bob = await checkAccess.handler(req("bob"));
-    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", tier: "paid", freeLessons: 3, subscribed: false });
+    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", tier: "paid", freeLessons: 3, subscribed: false, emailOptInAsked: true });
   }));
 });
 
@@ -161,7 +171,7 @@ test("checkAccess: a verified email with no row becomes a free-tier account, onc
   const { fetchImpl, calls } = fakeSupabase({ tokens: { alice: ALICE, carol: { id: "u3", email: "carol@example.com" } }, rows });
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     const carol = await checkAccess.handler(req("carol"));
-    assert.deepEqual(JSON.parse(carol.body), { allowed: true, email: "carol@example.com", tier: "trial", freeLessons: 3, subscribed: false });
+    assert.deepEqual(JSON.parse(carol.body), { allowed: true, email: "carol@example.com", tier: "trial", freeLessons: 3, subscribed: false, emailOptInAsked: false });
     const insert = calls.find((c) => c.url.includes("/rest/v1/users") && c.init.method === "POST");
     assert.equal(insert.init.headers.apikey, SEC, "users writes use the secret key");
     assert.match(insert.init.headers.Prefer, /ignore-duplicates/, "an existing row can never be overwritten");
@@ -169,8 +179,7 @@ test("checkAccess: a verified email with no row becomes a free-tier account, onc
     const events = calls.filter((c) => c.url.includes("/rest/v1/site_events")).map((c) => JSON.parse(c.init.body));
     assert.deepEqual(events.map((e) => e.event_type), ["trial_start"]);
     assert.ok(!events[0].session_id_hash.includes("carol"), "the funnel id is not the email");
-    const sub = calls.find((c) => c.url.includes("/api/subscribe"));
-    assert.equal(JSON.parse(sub.init.body).source, "app-trial");
+    assert.ok(!calls.some((c) => c.url.includes("/api/subscribe")), "no consent → never handed to MailerLite");
 
     calls.length = 0;
     const again = await checkAccess.handler(req("carol"));
@@ -258,7 +267,12 @@ test("authProvision creates the auth account for any valid email, same answer fo
     const adminCall = calls.find((c) => c.url.includes("/auth/v1/admin/users"));
     assert.ok(adminCall, "known email → admin createUser");
     assert.equal(adminCall.init.headers.apikey, SEC, "admin API uses the secret key");
-    assert.deepEqual(JSON.parse(adminCall.init.body), { email: "alice@example.com", email_confirm: true });
+    const adminBody = JSON.parse(adminCall.init.body);
+    assert.equal(adminBody.email, "alice@example.com");
+    assert.equal(adminBody.email_confirm, true);
+    // The form's answer rides on the new account: asked now, not opted in.
+    assert.ok(adminBody.user_metadata.email_opt_in_asked_at);
+    assert.equal(adminBody.user_metadata.email_opt_in_at, null);
 
     calls.length = 0;
     const unknown = await authProvision.handler(req(null, { email: "nobody@example.com" }));
@@ -304,4 +318,81 @@ test("authConfig hands the browser the URL and publishable key from the environm
     const res = await authConfig.handler({ httpMethod: "GET", headers: {} });
     assert.equal(res.statusCode, 503);
   });
+});
+
+// ── Email consent (Austin via Nekh 2026-10-04) ──────────────────────────────
+
+test("authProvision stores a ticked box as user_metadata; the sign-in form's path sends none", async () => {
+  const { fetchImpl, calls } = fakeSupabase({ admin: { status: 200, body: { id: "new" } } });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    await authProvision.handler(req(null, { email: "dana@example.com", emailOptIn: true }));
+    const meta = JSON.parse(calls.find((c) => c.url.includes("/auth/v1/admin/users")).init.body).user_metadata;
+    assert.ok(meta.email_opt_in_at, "ticked → opted-in timestamp");
+    assert.equal(meta.email_opt_in_at, meta.email_opt_in_asked_at);
+    calls.length = 0;
+    await authProvision.handler(req(null, { email: "erin@example.com", emailOptIn: "yes" }));
+    const meta2 = JSON.parse(calls.find((c) => c.url.includes("/auth/v1/admin/users")).init.body).user_metadata;
+    assert.equal(meta2.email_opt_in_at, null, "only a literal true counts as consent");
+  }));
+});
+
+test("checkAccess: a first sign-in copies the form's consent onto the row and hands a ticked address to MailerLite", async () => {
+  const asked = "2026-10-04T12:00:00.000Z";
+  const tokens = {
+    ticked: { id: "u4", email: "dana@example.com", user_metadata: { email_opt_in_asked_at: asked, email_opt_in_at: asked } },
+    unticked: { id: "u5", email: "erin@example.com", user_metadata: { email_opt_in_asked_at: asked, email_opt_in_at: null } },
+  };
+  const rows = {};
+  const { fetchImpl, calls } = fakeSupabase({ tokens, rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const dana = await checkAccess.handler(req("ticked"));
+    assert.equal(JSON.parse(dana.body).emailOptInAsked, true);
+    assert.equal(rows["dana@example.com"].email_opt_in_at, asked);
+    assert.equal(rows["dana@example.com"].email_opt_in_asked_at, asked);
+    const sub = calls.find((c) => c.url.includes("/api/subscribe"));
+    assert.equal(JSON.parse(sub.init.body).source, "app-trial");
+    assert.equal(JSON.parse(sub.init.body).email, "dana@example.com");
+
+    calls.length = 0;
+    const erin = await checkAccess.handler(req("unticked"));
+    assert.equal(JSON.parse(erin.body).emailOptInAsked, true, "asked on the form → never asked again");
+    assert.equal(rows["erin@example.com"].email_opt_in_at, undefined);
+    assert.equal(rows["erin@example.com"].email_opt_in_asked_at, asked);
+    assert.ok(!calls.some((c) => c.url.includes("/api/subscribe")), "unticked → MailerLite never sees the address");
+  }));
+});
+
+test("emailOptIn: the one-time in-app answer stamps the row; ticked hands over once, unticked never; a paying row is never asked", async () => {
+  const rows = {
+    "frank@example.com": { email: "frank@example.com", access_until: null, access_tier: "trial", email_opt_in_at: null, email_opt_in_asked_at: null },
+    "gina@example.com": { email: "gina@example.com", access_until: null, access_tier: "trial", email_opt_in_at: null, email_opt_in_asked_at: null },
+    "alice@example.com": { email: "alice@example.com", access_until: "infinity", access_tier: null, email_opt_in_at: null, email_opt_in_asked_at: null },
+  };
+  const tokens = { frank: { id: "u6", email: "frank@example.com" }, gina: { id: "u7", email: "gina@example.com" }, alice: ALICE };
+  const { fetchImpl, calls } = fakeSupabase({ tokens, rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const anon = await emailOptIn.handler(req(null, { optIn: true }));
+    assert.equal(anon.statusCode, 401);
+
+    const yes = await emailOptIn.handler(req("frank", { optIn: true }));
+    assert.deepEqual(JSON.parse(yes.body), { ok: true, optedIn: true, emailOptInAsked: true });
+    assert.ok(rows["frank@example.com"].email_opt_in_at);
+    assert.ok(rows["frank@example.com"].email_opt_in_asked_at);
+    assert.equal(calls.filter((c) => c.url.includes("/api/subscribe")).length, 1);
+    calls.length = 0;
+    await emailOptIn.handler(req("frank", { optIn: true }));
+    assert.equal(calls.filter((c) => c.url.includes("/api/subscribe")).length, 0, "a second answer never re-subscribes");
+
+    calls.length = 0;
+    const no = await emailOptIn.handler(req("gina", { optIn: false }));
+    assert.deepEqual(JSON.parse(no.body), { ok: true, optedIn: false, emailOptInAsked: true });
+    assert.equal(rows["gina@example.com"].email_opt_in_at, null);
+    assert.ok(rows["gina@example.com"].email_opt_in_asked_at);
+    assert.ok(!calls.some((c) => c.url.includes("/api/subscribe")));
+
+    const paid = await checkAccess.handler(req("alice"));
+    assert.equal(JSON.parse(paid.body).emailOptInAsked, true, "paying rows are never asked");
+    const frank = await checkAccess.handler(req("frank"));
+    assert.equal(JSON.parse(frank.body).emailOptInAsked, true, "answered once → asked");
+  }));
 });

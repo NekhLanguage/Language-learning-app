@@ -17,7 +17,15 @@
 //        `Authorization: Bearer stub-token:<email>`; the stubs below read
 //        the caller's email from that header, like the real functions read
 //        it from the verified Supabase session.
-//   POST /.netlify/functions/authProvision {email} -> {ok:true}.
+//   POST /.netlify/functions/authProvision {email, emailOptIn} -> {ok:true};
+//        records the weekly-email answer for a NEW address (first call wins,
+//        like the real function's user_metadata on account creation).
+//   POST /.netlify/functions/emailOptIn {optIn} -> the one-time in-app
+//        answer for a free-tier learner never asked on the form (Google).
+//        A ticked answer, either path, lands the email in the stub
+//        MailerLite list; an unticked one never does.
+//   GET  /__devserver/optins -> { optIns: {email: {askedAt, optInAt,
+//        source}}, mailerlite: [emails handed to app-trial] }.
 //   GET/POST /.netlify/functions/referral -> the learner's referral code,
 //        link and (zero) stats; POST {accept:true} creates the code for a
 //        subscriber (email without "nosub"/"noaccess").
@@ -93,6 +101,11 @@ const userStore = new Map();
 const convertedEmails = new Set();
 const trialStarted = new Set();
 const funnelEvents = [];
+// Email consent stub: email -> { askedAt, optInAt, source } (users.email_opt_in_*),
+// and the addresses handed to MailerLite's app-trial group (ticked only).
+const optIns = new Map();
+const mailerlite = [];
+const handToMailerlite = (email) => { if (!mailerlite.includes(email)) mailerlite.push(email); };
 const FREE_LESSONS = 3;
 const isTrialEmail = (email) => !!email && email.includes("trial") && !convertedEmails.has(email);
 const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.runs) || {})
@@ -152,7 +165,23 @@ async function handleFunction(name, req, res, url) {
       return sendJson(res, 200, { stub: true });
     }
     case "authProvision": {
+      const who = String(body.email || "").toLowerCase().trim();
+      if (who && !optIns.has(who)) {
+        const now = new Date().toISOString();
+        optIns.set(who, { askedAt: now, optInAt: body.emailOptIn === true ? now : null, source: "signup-form" });
+      }
       return sendJson(res, 200, { ok: true });
+    }
+    case "emailOptIn": {
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
+      const prev = optIns.get(email);
+      const now = new Date().toISOString();
+      if (!prev || !prev.optInAt) {
+        const optInAt = body.optIn === true ? now : null;
+        optIns.set(email, { askedAt: now, optInAt, source: "prompt" });
+        if (optInAt) handToMailerlite(email);
+      }
+      return sendJson(res, 200, { ok: true, optedIn: !!optIns.get(email).optInAt, emailOptInAsked: true });
     }
     case "referral": {
       // Referral code + stats for the signed-in learner. Subscribers
@@ -225,6 +254,10 @@ async function handleFunction(name, req, res, url) {
       if (trial && !trialStarted.has(email)) {
         trialStarted.add(email);
         funnelEvents.push({ event_type: "trial_start", email, props: null });
+        // The sign-up form's answer rides onto the row at provisioning;
+        // a ticked box is the only thing that reaches MailerLite.
+        const consent = optIns.get(email);
+        if (consent && consent.optInAt) handToMailerlite(email);
       }
       return sendJson(res, 200, {
         allowed: !email.includes("noaccess"),
@@ -232,6 +265,7 @@ async function handleFunction(name, req, res, url) {
         tier: trial ? "trial" : "paid",
         freeLessons: FREE_LESSONS,
         subscribed: !trial && !email.includes("noaccess") && !email.includes("nosub"),
+        emailOptInAsked: !trial || optIns.has(email),
       });
     }
     case "loadUser": {
@@ -433,6 +467,9 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === "/__devserver/events") {
       return sendJson(res, 200, funnelEvents);
+    }
+    if (url.pathname === "/__devserver/optins") {
+      return sendJson(res, 200, { optIns: Object.fromEntries(optIns), mailerlite });
     }
     if (url.pathname === "/__devserver/convert" && req.method === "POST") {
       const who = String(url.searchParams.get("email") || "").toLowerCase();

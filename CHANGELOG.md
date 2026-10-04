@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-04 (night)
+
+### The app asks before it emails you
+
+The free sign-up form has a new box under the email field: "Send me Nekh's weekly email on learning languages." It is unticked unless you tick it. A learner who signs in with Google for the first time sees the same question once, on the first screen after coming back from Google, and never again. Only a ticked answer puts an address on the weekly email; an unticked one is never sent anywhere, and the app keeps the time you ticked as the record of your choice. Nobody who signed up before today was added. The sign-in form for existing accounts is unchanged, and the "Get the app" line on that screen reads "Get the app for $19, first month of Anna included".
+
+---
+
 ## 2026-10-04 (evening)
 
 ### Russian and Swedish are open to everyone, without the BETA tag

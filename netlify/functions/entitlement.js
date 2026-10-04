@@ -22,7 +22,10 @@ const { SUPABASE_URL, usersKey, restHeaders } = require("./supabase");
 const FREE_LESSONS = 3;
 
 // Where the website's MailerLite hand-off lives. `source: app-trial` routes
-// to the trial group there (MAILERLITE_TRIAL_GROUP_ID on the site).
+// to the trial group there (MAILERLITE_TRIAL_GROUP_ID on the site). Only an
+// address with `email_opt_in_at` set is ever handed over (Austin via Nekh
+// 2026-10-04): the sign-up form's box, or the one-time question after a
+// first Google sign-in, both unticked by default. No backfill.
 const SUBSCRIBE_URL = process.env.SITE_SUBSCRIBE_URL || "https://nekhslanguageblueprint.com/api/subscribe";
 
 function isTrialRow(row) {
@@ -116,34 +119,78 @@ async function subscribeTrial(email) {
   }
 }
 
+// The email-consent answer stored on an auth account by authProvision
+// (user_metadata), as { askedAt, optInAt } ISO strings or nulls. A Google
+// account carries none, so its learner is asked once in the app.
+function consentFromMetadata(metadata) {
+  const m = metadata && typeof metadata === "object" ? metadata : {};
+  const iso = (v) => (typeof v === "string" && Number.isFinite(Date.parse(v)) ? v : null);
+  return { askedAt: iso(m.email_opt_in_asked_at), optInAt: iso(m.email_opt_in_at) };
+}
+
 // First verified session for an email with no users row: create the
 // free-tier row. `ignore-duplicates` means an existing row — any paying
-// learner — is never touched, even in a race. Returns the row that now
-// governs the account, and whether this call created it.
-async function provisionTrial(email) {
+// learner — is never touched, even in a race. `consent` ({ askedAt,
+// optInAt }) is copied onto the row; the MailerLite hand-off runs only for
+// a ticked box. Returns the row that now governs the account, and whether
+// this call created it. If the consent columns are missing (migration not
+// run) the row is created without them and the hand-off is skipped — no
+// address reaches MailerLite without a stored consent.
+async function provisionTrial(email, consent = null) {
   const key = usersKey();
   if (!key) throw new Error("no Supabase key for users");
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/users?on_conflict=email`, {
+  const base = { email, access_tier: "trial", trial_started_at: new Date().toISOString() };
+  const withConsent = { ...base };
+  if (consent && consent.askedAt) withConsent.email_opt_in_asked_at = consent.askedAt;
+  if (consent && consent.optInAt) withConsent.email_opt_in_at = consent.optInAt;
+  const insert = (row) => fetch(`${SUPABASE_URL}/rest/v1/users?on_conflict=email`, {
     method: "POST",
     headers: restHeaders(key, {
       "Content-Type": "application/json",
       Prefer: "resolution=ignore-duplicates,return=representation",
     }),
-    body: JSON.stringify({
-      email,
-      access_tier: "trial",
-      trial_started_at: new Date().toISOString(),
-    }),
+    body: JSON.stringify(row),
   });
+  let consentStored = true;
+  let res = await insert(withConsent);
+  if (res.status === 400 && (withConsent.email_opt_in_asked_at || withConsent.email_opt_in_at)) {
+    console.error("provisionTrial: email_opt_in columns missing — run migrations/email_opt_in.sql; consent not stored, no MailerLite hand-off");
+    consentStored = false;
+    res = await insert(base);
+  }
   if (!res.ok) throw new Error(`trial insert returned ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const rows = await res.json();
   const created = Array.isArray(rows) && rows.length > 0;
   if (created) {
     await recordFunnelEvent("trial_start", email);
-    await subscribeTrial(email);
+    if (consentStored && consent && consent.optInAt) await subscribeTrial(email);
     return { created, row: rows[0] };
   }
   return { created, row: null };
+}
+
+// The one-time answer from the in-app question (a first Google sign-in):
+// stamps `email_opt_in_asked_at` now, and `email_opt_in_at` too when the
+// box was ticked — only on a row that has no consent yet, so an earlier
+// consent is never overwritten and the hand-off never runs twice. Returns
+// { recorded, optedIn }.
+async function recordEmailOptIn(email, optIn) {
+  const key = usersKey();
+  if (!key) throw new Error("no Supabase key for users");
+  const now = new Date().toISOString();
+  const patch = { email_opt_in_asked_at: now };
+  if (optIn) patch.email_opt_in_at = now;
+  const filter = `email=eq.${encodeURIComponent(email)}` + (optIn ? "&email_opt_in_at=is.null" : "");
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/users?${filter}`, {
+    method: "PATCH",
+    headers: restHeaders(key, { "Content-Type": "application/json", Prefer: "return=representation" }),
+    body: JSON.stringify(patch),
+  });
+  if (!res.ok) throw new Error(`opt-in update returned ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const rows = await res.json();
+  const recorded = Array.isArray(rows) && rows.length > 0;
+  if (recorded && optIn) await subscribeTrial(email);
+  return { recorded, optedIn: !!optIn };
 }
 
 module.exports = {
@@ -155,5 +202,7 @@ module.exports = {
   funnelId,
   recordFunnelEvent,
   subscribeTrial,
+  consentFromMetadata,
   provisionTrial,
+  recordEmailOptIn,
 };
