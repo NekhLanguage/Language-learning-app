@@ -1,6 +1,6 @@
 const { usersKey, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive } = require("./auth");
-const { FREE_LESSONS, provisionTrial, tierOf, isTrialRow } = require("./entitlement");
+const { FREE_LESSONS, provisionTrial, tierOf, isTrialRow, consentFromMetadata } = require("./entitlement");
 
 // Who may use the app: the signed-in learner (Supabase Auth session token in
 // the Authorization header — the request body is ignored).
@@ -14,10 +14,13 @@ const { FREE_LESSONS, provisionTrial, tierOf, isTrialRow } = require("./entitlem
 // To grant full access by hand: scripts/grant-access.sh <email> [months]
 // (sets access_tier = 'paid'; `months` also opens Anna).
 //
-// Response: { allowed, email, tier, freeLessons, subscribed } — `tier` is
-// "trial" or "paid"; `subscribed` is the Anna window and is always false
-// for a trial account. The client uses these to lock lessons and Anna;
-// the server re-checks both (saveUser, tutor.js).
+// Response: { allowed, email, tier, freeLessons, subscribed,
+// emailOptInAsked } — `tier` is "trial" or "paid"; `subscribed` is the Anna
+// window and is always false for a trial account. The client uses these to
+// lock lessons and Anna; the server re-checks both (saveUser, tutor.js).
+// `emailOptInAsked` is false only for a free-tier learner who has never
+// been asked the weekly-email question (a first Google sign-in): the app
+// asks once, then emailOptIn records the answer.
 
 function json(statusCode, body) {
   return {
@@ -37,15 +40,17 @@ exports.handler = async (event) => {
 
     let row = await fetchAccessRow(session.email, key);
     if (!row) {
-      await provisionTrial(session.email);
+      await provisionTrial(session.email, consentFromMetadata(session.metadata));
       row = await fetchAccessRow(session.email, key);
     }
+    const asked = !!row && !!(row.email_opt_in_asked_at || row.email_opt_in_at);
     return json(200, {
       allowed: !!row,
       email: session.email,
       tier: tierOf(row),
       freeLessons: FREE_LESSONS,
       subscribed: !!row && !isTrialRow(row) && subscriptionActive(row.access_until),
+      emailOptInAsked: !isTrialRow(row) || asked,
     });
   } catch (err) {
     console.error("checkAccess error:", err);

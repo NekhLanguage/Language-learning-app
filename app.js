@@ -95,7 +95,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.92";
+const APP_DATA_VERSION = "1.2.93";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -970,7 +970,11 @@ const langP = getLangFileData(languageState.support);
 // this device's local copy and should know it (Emi 2026-08-27-07).
 // Refresh the free-tier flag from the server on every signed-in boot, so a
 // payment made elsewhere (Stripe tab, another device) unlocks lesson 4 here.
-if (email) checkAccessForSession().catch(() => { /* cached tier stands */ });
+if (email) {
+  checkAccessForSession()
+    .then((verdict) => { if (verdict.allowed && verdict.tier === "trial" && verdict.emailOptInAsked === false) showEmailOptInQuestion(); })
+    .catch(() => { /* cached tier stands */ });
+}
 const serverSyncP = email
   ? loadUserFromServer(email).catch(err => {
       console.warn("Server sync failed:", err);
@@ -1048,7 +1052,13 @@ async function checkAccessForSession() {
     const data = await res.json();
     if (!data || !data.allowed) return { allowed: false, reason: "noaccess" };
     rememberAccessTier(data);
-    return { allowed: true, subscribed: !!data.subscribed, email: data.email || null, tier: data.tier || "paid" };
+    return {
+      allowed: true, subscribed: !!data.subscribed, email: data.email || null, tier: data.tier || "paid",
+      // false only for a free-tier learner never asked the weekly-email
+      // question (a first Google sign-in); undefined from an older server
+      // reads as "asked", so the question is never shown by mistake.
+      emailOptInAsked: data.emailOptInAsked !== false,
+    };
   } catch (err) {
     console.warn("checkAccess failed:", err);
     return { allowed: false, reason: "server" };
@@ -1075,6 +1085,52 @@ function rememberAccessTier(data) {
 
 function isTrialAccount() {
   try { return localStorage.getItem(ACCESS_TIER_KEY) === "trial"; } catch (_) { return false; }
+}
+
+// Email consent (Austin via Nekh 2026-10-04): a free-tier learner whose
+// account never answered the weekly-email question — a first Google
+// sign-in; the sign-up form asks before the account exists — sees it once,
+// as a card at the top of the first screen after they come back. It
+// blocks nothing; it stays until Continue is tapped. Unticked by default;
+// the answer goes to emailOptIn, which stamps the row and hands only a
+// ticked address to MailerLite. Asked once: the server's asked-at
+// timestamp keeps every later boot, on any device, silent.
+function showEmailOptInQuestion() {
+  if (document.getElementById("email-optin-modal")) return;
+  const host = document.getElementById("start-screen");
+  if (!host) return;
+  const strings = LANG_FILE_CACHE[languageState.support]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings || {};
+  const tr = (key, fallback) => strings[key] || fallback;
+  const modal = document.createElement("section");
+  modal.id = "email-optin-modal";
+  modal.className = "email-optin-card";
+  modal.setAttribute("role", "group");
+  modal.setAttribute("aria-labelledby", "email-optin-title");
+  modal.innerHTML = `
+    <h2 class="email-optin-title" id="email-optin-title">${tr("emailOptInTitle", "One question")}</h2>
+    <p class="email-optin-text">${tr("emailOptInText", "Nekh writes a weekly email on learning languages. Want it?")}</p>
+    <label class="gate-check email-optin-check" for="email-optin-box">
+      <input id="email-optin-box" type="checkbox" />
+      <span>${tr("emailOptInLabel", "Send me Nekh's weekly email on learning languages.")}</span>
+    </label>
+    <button id="email-optin-continue" class="primary" type="button">${tr("continue", "Continue")}</button>`;
+  host.prepend(modal);
+  const box = modal.querySelector("#email-optin-box");
+  const btn = modal.querySelector("#email-optin-continue");
+  btn.onclick = async () => {
+    btn.disabled = true;
+    try {
+      await authFetch("/.netlify/functions/emailOptIn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ optIn: !!box.checked }),
+      });
+    } catch (err) {
+      // The server keeps asked-at null, so the question returns next boot.
+      console.warn("emailOptIn failed:", err);
+    }
+    modal.remove();
+  };
 }
 
 // A free run has finished its free lessons: the next lesson is behind the
@@ -1356,6 +1412,10 @@ if (!hasAccess()) {
             autocomplete="email"
             aria-label="${t("enterEmail", "Enter your email")}"
           />
+          <label class="gate-check" for="start-free-optin">
+            <input id="start-free-optin" type="checkbox" />
+            <span>${t("emailOptInLabel", "Send me Nekh's weekly email on learning languages.")}</span>
+          </label>
           <button id="start-free-btn" class="gate-btn" type="submit">
             ${t("startFree", "Start free")}
           </button>
@@ -1413,7 +1473,7 @@ if (!hasAccess()) {
   const buyAccess = document.getElementById("link-buy-access");
 
 if (buyAccess) {
-  buyAccess.textContent = "Get the app — $19, first month of Anna included";
+  buyAccess.textContent = "Get the app for $19, first month of Anna included";
 
   buyAccess.onclick = () => {
   window.open(EXTERNAL_LINKS.buyAccess, "_blank");
@@ -1504,6 +1564,7 @@ if (buyAccess) {
   // (checkAccess). Google sign-in reaches the same place in one step.
   const startFreeForm = document.getElementById("start-free-form");
   const startFreeEmail = document.getElementById("start-free-email");
+  const startFreeOptIn = document.getElementById("start-free-optin");
   const startFreeBtn = document.getElementById("start-free-btn");
   const startFreeMsg = document.getElementById("start-free-message");
   const startFreeSay = (text, kind = "error") => {
@@ -1521,7 +1582,10 @@ if (buyAccess) {
     }
     startFreeBtn.disabled = true;
     try {
-      await sendPasswordEmail(email);
+      // Email consent (Austin via Nekh 2026-10-04): the box is unticked by
+      // default and its answer rides with the account; only a ticked,
+      // verified signup ever reaches MailerLite.
+      await sendPasswordEmail(email, { emailOptIn: !!(startFreeOptIn && startFreeOptIn.checked) });
       startFreeSay(t("startFreeSent", "Check your inbox (and spam) for a link to set your password. Then you're in."), "ok");
     } catch (err) {
       startFreeSay(describeAuthError(err));

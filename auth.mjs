@@ -229,13 +229,15 @@ export async function signInWithGoogle() {
 // "Set or reset your password": make sure the account exists for a learner
 // who bought access before the app had passwords (authProvision), then let
 // Supabase send the email. Both answer the same for unknown addresses.
-export async function sendPasswordEmail(email) {
+// `emailOptIn` is the sign-up form's weekly-email box (unticked by
+// default); authProvision stores the answer on a NEW account only.
+export async function sendPasswordEmail(email, { emailOptIn = false } = {}) {
   const normalized = String(email || "").toLowerCase().trim();
   if (!normalized) throw new Error("Email required");
   const provision = await fetch("/.netlify/functions/authProvision", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: normalized }),
+    body: JSON.stringify({ email: normalized, emailOptIn: emailOptIn === true }),
   });
   if (!provision.ok) throw new Error(`Account setup failed (${provision.status})`);
   await (await adapter()).sendPasswordEmail(normalized);
