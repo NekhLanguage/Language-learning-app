@@ -38,6 +38,20 @@ import {
   acceptTopicProposal,
   dismissTopicProposal,
 } from "./tutor_topics.mjs";
+import {
+  OPINIONS_KIND,
+  OPINIONS_LAST_KEY,
+  OPINION_THEMES,
+  themeById,
+  themeLabel,
+  findOpinionsTopic,
+  ensureOpinionsTopic,
+  rollOpinionTheme,
+  renderThemeText,
+  themeProgress,
+  themeSessions,
+  themePickLine,
+} from "./tutor_opinions.mjs";
 
 const VOCAB_FILES = [
   "adjectives.json", "connectors.json", "directions_positions.json",
@@ -112,6 +126,9 @@ const state = {
   beta: { topics: false },
   // The conversation topic picked for the current conversation (beta).
   topicId: null,
+  // The Opinions theme rolled for this conversation (tutor_opinions.mjs),
+  // null for any other topic.
+  theme: null,
   topicPicker: null, // the picker element while it is on screen
 };
 
@@ -436,8 +453,43 @@ function renderMemory() {
   });
 }
 
+// Opinions subject: the themes played in this language, with Anna's last
+// note on each — read-only, under the facts list. Nothing when none yet.
+function renderThemeProgress() {
+  let box = document.getElementById("tutor-theme-progress");
+  if (!box) {
+    box = document.createElement("div");
+    box.id = "tutor-theme-progress";
+    box.className = "tutor-theme-progress";
+    els.memoryList.insertAdjacentElement("afterend", box);
+  }
+  box.innerHTML = "";
+  if (!state.beta.topics) return;
+  const sessions = tutorMemory().sessions;
+  const played = OPINION_THEMES.map((t) => ({ theme: t, sessions: themeSessions(sessions, t.id) })).filter((x) => x.sessions.length);
+  if (!played.length) return;
+  const h = document.createElement("p");
+  h.className = "tutor-theme-progress-title";
+  h.textContent = `Opinions themes in ${state.targetLabel}: ${played.length} of ${OPINION_THEMES.length}`;
+  box.appendChild(h);
+  const ul = document.createElement("ul");
+  ul.className = "tutor-memory-list";
+  for (const { theme, sessions: s } of played) {
+    const li = document.createElement("li");
+    li.className = "tutor-memory-item";
+    const span = document.createElement("span");
+    span.className = "tutor-memory-text";
+    const last = s[0];
+    span.textContent = `${themeLabel(theme, state.uiStrings)} · ${s.length}${last?.themeNote ? ` — ${last.themeNote}` : ""}`;
+    li.appendChild(span);
+    ul.appendChild(li);
+  }
+  box.appendChild(ul);
+}
+
 function openMemory() {
   renderMemory();
+  renderThemeProgress();
   els.memory.hidden = false;
 }
 
@@ -490,7 +542,7 @@ function clearDraft() {
 }
 
 function saveLiveTranscript() {
-  writeJson(liveKey(), state.messages.length ? { at: Date.now(), messages: state.messages, topicId: state.topicId } : null);
+  writeJson(liveKey(), state.messages.length ? { at: Date.now(), messages: state.messages, topicId: state.topicId, themeId: state.theme?.id || null } : null);
 }
 
 function clearLiveTranscript() {
@@ -578,7 +630,7 @@ async function loadForms() {
 // cache-write tokens per summary, 3 of its 4.7 cents; tutor_sessions,
 // 2026-09-29). Leaving it out keeps the summary's system prompt
 // byte-identical to the conversation's.
-function buildRequestBody(mode, messages = state.messages, { topicId = state.topicId, excludeRecord = null } = {}) {
+function buildRequestBody(mode, messages = state.messages, { topicId = state.topicId, theme = state.theme, excludeRecord = null } = {}) {
   const sessions = tutorMemory().sessions.filter((s) => s !== excludeRecord);
   const body = {
     mode,
@@ -607,9 +659,13 @@ function buildRequestBody(mode, messages = state.messages, { topicId = state.top
   // Beta: the learner's conversation topics and the one this conversation
   // is about. The server ignores the field for non-beta accounts.
   if (state.beta.topics) {
-    body.topics = renderTopicsText(state.user, topicId, sessions);
+    // The Opinions theme's brief and previous notes ride inside the topics
+    // text (same string on the chat turns and the summary, see above).
+    const themeText = theme && findTopic(state.user, topicId) ? renderThemeText(theme, sessions) : "";
+    body.topics = renderTopicsText(state.user, topicId, sessions, themeText);
     // Restated by the server on every turn next to the learner's note.
     body.activeTopic = findTopic(state.user, topicId)?.name || "";
+    body.topicBrief = themeText ? theme.brief : "";
   }
   return body;
 }
@@ -962,7 +1018,11 @@ async function endSession() {
   const when = todayStamp();
   const messages = state.messages.slice();
   const record = fallbackSessionRecord(messages, when);
-  if (state.beta.topics) record.topicId = findTopic(state.user, state.topicId) ? state.topicId : null;
+  if (state.beta.topics) {
+    record.topicId = findTopic(state.user, state.topicId) ? state.topicId : null;
+    if (record.topicId && state.theme) record.themeId = state.theme.id;
+  }
+  const theme = record.themeId ? state.theme : null;
   let saved;
   try {
     pushSessionRecord(record);
@@ -990,16 +1050,16 @@ async function endSession() {
   const topicId = record.topicId || null;
   // Next conversation: pick again (beta; no-op otherwise).
   showTopicPicker();
-  writeSessionNotes(record, messages, when, saved, topicId).catch((err) => console.warn("tutor: session notes:", err));
+  writeSessionNotes(record, messages, when, saved, topicId, theme).catch((err) => console.warn("tutor: session notes:", err));
 }
 
 // Background half of End session: ask Anna for the structured record,
 // swap it into the saved session, apply the vocabulary and facts, sync.
-async function writeSessionNotes(record, messages, when, savedLine, topicId = null) {
+async function writeSessionNotes(record, messages, when, savedLine, topicId = null, theme = null) {
   let summary = null;
   let failure = "";
   try {
-    const data = await callTutor("summary", messages, { topicId, excludeRecord: record });
+    const data = await callTutor("summary", messages, { topicId, theme, excludeRecord: record });
     summary = data.summary || null;
     if (!summary) failure = data.truncated ? "notes came back cut off" : data.refused ? "notes were declined" : "no notes came back";
   } catch (err) {
@@ -1028,6 +1088,7 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
     delete record.pending;
     ({ admissions } = await applySummary(summary, messages, when));
     topicNote = applyTopics(record, summary, topicId, when);
+    applyThemeNote(record, summary);
     await persistUser();
   } catch (err) {
     console.error("tutor: applying session notes failed:", err);
@@ -1036,6 +1097,7 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
   }
   say("Session saved. Your tutor will remember this next time.");
   if (topicNote) addMessage("status", topicNote);
+  if (record.themeNote) addMessage("status", `Anna's note on this theme: ${record.themeNote}`);
   if (summary.nextFocus) addMessage("status", `Next focus: ${summary.nextFocus}`);
   const added = (summary.newWords || []).length + (summary.learnerWords || []).length;
   if (added) addMessage("status", `New words added to your personal vocabulary: ${added}.`);
@@ -1046,6 +1108,14 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
     );
   }
   renderTopicProposals();
+}
+
+// Opinions subject: Anna's progress note on the rolled theme, kept on the
+// session record so the next conversation on that theme can compare.
+function applyThemeNote(record, summary) {
+  if (!record.themeId) return;
+  const note = typeof summary.themeNote === "string" ? summary.themeNote.trim().slice(0, 600) : "";
+  if (note) record.themeNote = note;
 }
 
 // Beta: file the session under a topic and queue Anna's proposals. Returns
@@ -1071,11 +1141,12 @@ async function retryPendingSummaries() {
     record.pending.attempts = (record.pending.attempts || 0) + 1;
     changed = true;
     try {
-      const data = await callTutor("summary", record.pending.messages, { topicId: record.topicId || null, excludeRecord: record });
+      const data = await callTutor("summary", record.pending.messages, { topicId: record.topicId || null, theme: themeById(record.themeId), excludeRecord: record });
       if (!data.summary) throw new Error("no summary");
       Object.assign(record, sessionRecordFromSummary(data.summary, record.when));
       await applySummary(data.summary, record.pending.messages, record.when);
       applyTopics(record, data.summary, record.topicId || null, record.when);
+      applyThemeNote(record, data.summary);
       delete record.pending;
       addMessage("status", `Anna finished her notes from ${record.when}.`);
     } catch (err) {
@@ -1098,7 +1169,35 @@ async function retryPendingSummaries() {
 
 function topicLabel() {
   const topic = findTopic(state.user, state.topicId);
-  els.langLabel.textContent = `· ${state.targetLabel}${topic ? ` · ${topic.name}` : ""}`;
+  const theme = topic && state.theme ? ` · ${themeLabel(state.theme, state.uiStrings)}` : "";
+  els.langLabel.textContent = `· ${state.targetLabel}${topic ? ` · ${topic.name}${theme}` : ""}`;
+}
+
+// A support-language UI string, English when the lang file has none.
+function uiStr(key, fallback) {
+  const v = state.uiStrings && state.uiStrings[key];
+  return typeof v === "string" && v.trim() ? v : fallback;
+}
+
+// The Opinions subject: roll a theme, start the conversation on it.
+function pickOpinions() {
+  const topic = ensureOpinionsTopic(state.user, todayStamp());
+  if (!topic) {
+    addMessage("status", "Your topic list is full — delete a topic to start Opinions.");
+    return;
+  }
+  persistUser();
+  const sessions = tutorMemory().sessions;
+  let lastId = null;
+  try { lastId = localStorage.getItem(OPINIONS_LAST_KEY); } catch { /* storage blocked */ }
+  const theme = rollOpinionTheme(sessions, { lastId });
+  try { localStorage.setItem(OPINIONS_LAST_KEY, theme.id); } catch { /* storage blocked */ }
+  closeTopicPicker();
+  state.topicId = topic.id;
+  state.theme = theme;
+  topicLabel();
+  addMessage("status", themePickLine(themeLabel(theme, state.uiStrings), sessions, theme.id));
+  els.input.focus();
 }
 
 function closeTopicPicker() {
@@ -1109,6 +1208,7 @@ function closeTopicPicker() {
 function pickTopic(topic) {
   closeTopicPicker();
   state.topicId = topic ? topic.id : null;
+  state.theme = null;
   topicLabel();
   if (topic) {
     addMessage("status", topic.notes
@@ -1124,6 +1224,7 @@ function showTopicPicker() {
   if (!state.beta.topics || state.messages.length) return;
   closeTopicPicker();
   state.topicId = null;
+  state.theme = null;
   topicLabel();
   const box = document.createElement("div");
   box.className = "tutor-topics";
@@ -1135,7 +1236,50 @@ function showTopicPicker() {
 
   const list = document.createElement("div");
   list.className = "tutor-topics-list";
+
+  // The built-in Opinions subject comes first: it rolls a discussion theme
+  // every time, and the row shows how far through the themes the learner is.
+  {
+    const opinions = findOpinionsTopic(state.user);
+    const progress = themeProgress(tutorMemory().sessions);
+    const row = document.createElement("div");
+    row.className = "tutor-topic-row";
+    const b = document.createElement("button");
+    b.type = "button";
+    // Not `.tutor-topic`: that class means one of the learner's own topics
+    // (tests and styles count on it); the roller has its own.
+    b.className = "tutor-btn secondary tutor-topic-opinions";
+    b.dataset.topicId = opinions ? opinions.id : "";
+    b.textContent = uiStr("opinionsPick", "Opinions — a new theme every time");
+    const small = document.createElement("span");
+    small.className = "tutor-topic-progress";
+    small.textContent = uiStr("opinionsProgress", "{done} of {total} themes · {sessions} conversations")
+      .replace("{done}", progress.done)
+      .replace("{total}", progress.total)
+      .replace("{sessions}", progress.conversations);
+    b.appendChild(small);
+    b.title = (opinions && opinions.notes) || "Anna asks what you think about a theme and why — a different theme every time.";
+    b.addEventListener("click", pickOpinions);
+    row.appendChild(b);
+    if (opinions) {
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "tutor-topic-remove";
+      del.textContent = "✕";
+      del.setAttribute("aria-label", `Delete topic: ${opinions.name}`);
+      del.addEventListener("click", () => {
+        if (!confirm(`Delete the topic "${opinions.name}"? Anna forgets her notes on it. Your saved sessions and theme progress stay.`)) return;
+        removeTopic(state.user, opinions.id);
+        persistUser();
+        showTopicPicker();
+      });
+      row.appendChild(del);
+    }
+    list.appendChild(row);
+  }
+
   for (const { topic, depth } of orderedTopics(state.user)) {
+    if (topic.kind === OPINIONS_KIND) continue;
     const row = document.createElement("div");
     row.className = "tutor-topic-row";
     row.style.marginInlineStart = `${Math.min(depth, 3) * 1.25}rem`;
@@ -1398,6 +1542,7 @@ async function startWithRun(targetLang, run) {
   if (Array.isArray(live?.messages) && live.messages.length) {
     state.messages = live.messages.filter((m) => m && typeof m.content === "string");
     state.topicId = typeof live.topicId === "string" ? live.topicId : null;
+    state.theme = state.topicId ? themeById(live.themeId) : null;
     renderTranscript(state.messages);
     const when = live.at ? new Date(live.at).toLocaleDateString() : "earlier";
     addMessage("status", `Picked up your unfinished conversation from ${when}. Keep going, or press End session to save it.`);

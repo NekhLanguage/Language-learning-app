@@ -375,6 +375,10 @@ async function handleFunction(name, req, res, url) {
                   newTopicName: active ? "" : "Dev stub topic",
                   topicNotes: "Dev-stub topic notes: talked about chapter 1.",
                 },
+                // Opinions subject: the progress note on the rolled theme.
+                themeNote: typeof body.topicBrief === "string" && body.topicBrief
+                  ? "Dev-stub theme note: took a position and gave two reasons."
+                  : "",
                 proposedTopics: [{
                   name: "Books in general",
                   question: "Should I group these under a broader topic, Books in general?",

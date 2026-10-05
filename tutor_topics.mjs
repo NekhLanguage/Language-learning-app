@@ -5,7 +5,9 @@
 // subject stopped. Topics are user-level (USER.tutor.topics, schema v5):
 // a subject is the same subject whichever language it is practiced in.
 //
-//   topic = { id, name, notes, parentId, createdAt, lastUsed, sessions }
+//   topic = { id, name, notes, parentId, createdAt, lastUsed, sessions, kind? }
+//
+// `kind: "opinions"` marks the built-in Opinions subject (tutor_opinions.mjs).
 //
 // `notes` is Anna's running memory of the subject (chapters read,
 // favourite characters, opinions given) — rewritten by her at the end of
@@ -134,13 +136,17 @@ function isDescendant(topics, id, ancestorId) {
 // The TOPICS text block the server renders into Anna's context. Lists
 // every topic by id (so the end-of-session record can name one) and, for
 // the active topic, its notes and the last few sessions filed under it.
-export function renderTopicsText(user, activeId, sessions = []) {
+// `themeText` (Opinions subject, tutor_opinions.mjs renderThemeText) is the
+// brief and the previous notes on the rolled theme; it sits right under the
+// active topic so Anna reads it before the topic's general notes.
+export function renderTopicsText(user, activeId, sessions = [], themeText = "") {
   const ordered = orderedTopics(user);
   const lines = [];
   const active = findTopic(user, activeId);
   if (active) {
     const parent = findTopic(user, active.parentId);
     lines.push(`ACTIVE TOPIC: "${active.name}" (id ${active.id})${parent ? ` — part of "${parent.name}"` : ""}`);
+    if (themeText) lines.push(themeText);
     lines.push(`Your notes on this topic: ${active.notes || "(none yet — this is the first conversation on it)"}`);
     const recent = sessions.filter((s) => s && s.topicId === active.id).slice(0, TOPIC_SESSIONS_IN_PROMPT);
     if (recent.length) {

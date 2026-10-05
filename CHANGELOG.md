@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-05
+
+### Opinions: a fresh discussion theme for Anna, every time (beta topics)
+
+The topic picker ("What do you want to talk about?") now opens with a built-in subject, **Opinions**. Pick it and Anna rolls one of 19 discussion themes — phones in school, city or countryside, working from home, what makes a good life — and asks what you think and why, as a normal short-exchange conversation in your target language. Every theme comes up once before any repeats. The second time round, Anna reads her note from your last conversation on that theme, tells you what got better and pushes one step further. The picker row shows how many themes you have met; the memory panel lists them with Anna's last note on each. Theme labels are in your support language. Vocabulary from these conversations is added exactly as from any other session.
+
+---
+
 ## 2026-10-04 (night)
 
 ### The app asks before it emails you
