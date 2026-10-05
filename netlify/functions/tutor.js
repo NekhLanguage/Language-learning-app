@@ -114,6 +114,8 @@ const MAX_NOTE_CHARS = 1000;
 // The conversation-topics block (beta). Client-rendered; bounded there too.
 const MAX_TOPICS_CHARS = 6000;
 const MAX_TOPIC_NAME_CHARS = 60;
+// The Opinions subject's brief for this conversation (tutor_opinions.mjs).
+const MAX_TOPIC_BRIEF_CHARS = 300;
 
 // Anna's replies are short (98 output tokens on average over the last two
 // weeks) and a chat turn is latency-bound, so thinking is kept minimal.
@@ -267,7 +269,7 @@ async function hasAccess(email) {
 // dump as one line of raw JSON, and Anna treated them as background noise.
 // Rendered as explicit rules, in prose, and repeated per turn (see
 // `steeringTrailer`) so they hold across a long conversation.
-function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts, topics, today }) {
+function contextBlock({ targetLang, supportLang, profile, preferences, memory, learnerFacts, topics, topicBrief, today }) {
   const lines = [
     // Today's date, so the dated memory entries mean something: Anna can
     // tell a five-day gap from yesterday and not quiz the learner on
@@ -286,7 +288,7 @@ function contextBlock({ targetLang, supportLang, profile, preferences, memory, l
   // and ABOVE memory, because it overrides both on subject (see
   // renderTopicsBlock) — below a 10-session memory it lost (Nekh
   // 2026-09-26: picked "Useful verbs and small words", got Rave Master).
-  if (topics) lines.push(renderTopicsBlock(topics), "");
+  if (topics) lines.push(renderTopicsBlock(topics, topicBrief), "");
   lines.push(
     "=== LEARNER PROFILE (from app exercise data — ground truth) ===",
     profile || "(no profile data — treat as a brand-new learner)",
@@ -299,12 +301,20 @@ function contextBlock({ targetLang, supportLang, profile, preferences, memory, l
 
 // Conversation topics (beta). Only rendered for beta testers, so every
 // other learner's prompt is byte-identical to before the feature.
-function renderTopicsBlock(topics) {
+function renderTopicsBlock(topics, topicBrief = "") {
   return [
     "=== CONVERSATION TOPICS (the learner groups conversations into topics) ===",
     topics,
     "",
     "How to use topics:",
+    // The Opinions subject: the learner rolled a discussion theme and the
+    // block carries its brief plus Anna's notes from earlier sessions on
+    // the same theme. A conversation, not an exam monologue; on a repeat,
+    // the comparison IS the progress the learner came for.
+    ...(topicBrief ? [
+      `- THIS CONVERSATION'S BRIEF (an Opinions theme the learner rolled): "${topicBrief}". Open by asking that question in the target language, in your own words and at the learner's level. Then ask why, ask for an example from their life, and offer ONE opposing view for them to answer — keep every exchange short and conversational, as a normal chat about the question, never a request to speak at length. Help them say what they think and give reasons (because, so, on the one hand / on the other, firstly), inside the learner's settings.`,
+      "- If PREVIOUS CONVERSATIONS ON THIS THEME are listed, read them first. Early on, say once and specifically what is better than last time. Pick ONE thing that still tripped them and push a step further (a harder follow-up or the opposite view). Do not re-ask last time's follow-ups word for word.",
+    ] : []),
     "- The ACTIVE TOPIC is what the learner chose for THIS conversation, a moment ago. On SUBJECT it outranks everything else you have been given: a subject named in the LEARNER'S OWN INSTRUCTIONS (those were written earlier, for conversations in general), the MEMORY block, and the next focus. Keep every STYLE rule from the instructions and preferences (length, language mix, corrections, tone) — take only the subject from the topic. Do not open with, steer toward, or drift back to another subject because memory is full of it.",
     "- With an active topic, this conversation continues it: use your notes and the recent sessions on THAT topic to pick up where you left off (what was read or watched, opinions given, what you promised to come back to) and stay on that subject unless the learner steers away.",
     "- With no active topic, talk about whatever the learner brings; the session is filed at the end.",
@@ -367,7 +377,7 @@ function renderPreferences(preferences) {
 // that live only in the system prompt fade over a long conversation; a
 // short per-turn restatement next to the text being answered keeps them
 // live. The client never sees or stores this text.
-function steeringTrailer(preferences, activeTopic = "", exchange = 0) {
+function steeringTrailer(preferences, activeTopic = "", exchange = 0, topicBrief = "") {
   const p = normalizePrefs(preferences);
   const parts = [
     `corrections=${p.correctionDepth}`,
@@ -382,6 +392,7 @@ function steeringTrailer(preferences, activeTopic = "", exchange = 0) {
   // subject, otherwise a note like "help me read X" drags every
   // conversation back to X.
   if (activeTopic) text += ` The topic the learner chose for THIS conversation: "${activeTopic}" — it decides the subject, over any subject in the instructions above and over past sessions; keep the instructions' style rules.`;
+  if (activeTopic && topicBrief) text += ` The brief for this conversation: "${topicBrief}" — stay on that question, short exchanges, and compare with the previous notes on it if there are any.`;
   // Sessions have no fixed length, so vocabulary growth is steered per
   // turn, not per session: the exchange number gives the "by about
   // exchange 5" rule a clock, and the recycle nudge sits next to the
@@ -506,6 +517,11 @@ const TOPIC_SUMMARY_FIELDS = {
     required: ["assignedTopicId", "newTopicName", "topicNotes"],
     additionalProperties: false,
   },
+  themeNote: {
+    type: "string",
+    description:
+      "Only when the system prompt has THIS CONVERSATION'S BRIEF (an Opinions theme): a progress note on how the learner handled the brief's question — the position they took, the reasons they managed, the linking words and structures they used well, the two or three errors that cost most, and what to push next time on this theme. Plain prose, max ~80 words, written so a future session can compare. Empty string when there was no brief.",
+  },
   proposedTopics: {
     type: "array",
     description: "New topics to ask the learner about — usually a broader topic grouping several existing ones (e.g. \"Books and reading\" over two specific manga), or a subject that came up but deserves its own topic. The app asks the learner each question; nothing is created unless they say yes. Empty array when nothing is worth proposing — most sessions. At most 2.",
@@ -529,7 +545,7 @@ const TOPIC_SUMMARY_FIELDS = {
 const SUMMARY_SCHEMA_WITH_TOPICS = {
   ...SUMMARY_SCHEMA,
   properties: { ...SUMMARY_SCHEMA.properties, ...TOPIC_SUMMARY_FIELDS },
-  required: [...SUMMARY_SCHEMA.required, "topic", "proposedTopics"],
+  required: [...SUMMARY_SCHEMA.required, "topic", "themeNote", "proposedTopics"],
 };
 
 // Everything a model call needs, or the error to send instead. Shared by
@@ -560,11 +576,12 @@ async function buildConversation(body, mode) {
   const beta = betaFeatures(body.email).topics;
   const topics = beta && typeof body.topics === "string" ? body.topics.trim().slice(0, MAX_TOPICS_CHARS) : "";
   const activeTopic = beta && topics && typeof body.activeTopic === "string" ? body.activeTopic.trim().slice(0, MAX_TOPIC_NAME_CHARS) : "";
+  const topicBrief = activeTopic && typeof body.topicBrief === "string" ? body.topicBrief.trim().slice(0, MAX_TOPIC_BRIEF_CHARS) : "";
 
   // Per-turn steering (chat only — the summary has its own closing turn).
   if (mode === "chat") {
     const last = messages[messages.length - 1];
-    if (last.role === "user") last.content += steeringTrailer(body.preferences, activeTopic, Math.floor(messages.length / 2) + 1);
+    if (last.role === "user") last.content += steeringTrailer(body.preferences, activeTopic, Math.floor(messages.length / 2) + 1, topicBrief);
   }
   // Cache the conversation history too. The system blocks below are
   // cached, but without a breakpoint in `messages` every turn re-bills the
@@ -600,11 +617,12 @@ async function buildConversation(body, mode) {
         memory: String(body.memory || "").slice(0, MAX_MEMORY_CHARS),
         learnerFacts: String(body.learnerFacts || "").slice(0, MAX_LEARNER_FACTS_CHARS),
         topics,
+        topicBrief,
       }),
       cache_control: { type: "ephemeral" },
     },
   ];
-  return { system, messages, targetLang, supportLang, topicsOn: !!topics };
+  return { system, messages, targetLang, supportLang, topicsOn: !!topics, briefOn: !!topicBrief };
 }
 
 exports.handler = async (event) => {
@@ -681,7 +699,7 @@ exports.handler = async (event) => {
     const mode = body.mode === "summary" ? "summary" : "chat";
     const built = await buildConversation(body, mode);
     if (built.error) return json(built.error.status, built.error.body);
-    const { system, messages, targetLang, supportLang, topicsOn } = built;
+    const { system, messages, targetLang, supportLang, topicsOn, briefOn } = built;
 
     const client = getClient();
 
@@ -738,6 +756,7 @@ exports.handler = async (event) => {
         "(The session is over. Produce the end-of-session record as JSON. " +
         "Only include in newWords the target-language words you introduced that are outside the app's taught vocabulary in the profile, and in learnerWords the words the learner produced that are outside it." +
         (topicsOn ? " File the session under the learner's CONVERSATION TOPICS — the ACTIVE TOPIC they chose unless they themselves moved to another topic's subject — and propose new topics only if genuinely useful." : "") +
+        (briefOn ? " Write themeNote for THIS CONVERSATION'S BRIEF so the next conversation on the same theme can compare." : "") +
         ")",
     });
     // Thinking as on the chat turns (see summaryThinking); the JSON schema
@@ -826,3 +845,4 @@ exports.renderPreferences = renderPreferences;
 exports.steeringTrailer = steeringTrailer;
 exports.tutorEnabled = tutorEnabled;
 exports.betaFeatures = betaFeatures;
+exports.MAX_TOPIC_BRIEF_CHARS = MAX_TOPIC_BRIEF_CHARS;
