@@ -97,5 +97,6 @@ test("a paying account is never asked, and the sign-in form itself has no box", 
   await page.evaluate(() => localStorage.clear());
   await page.goto("/");
   await expect(page.locator("#login-form input[type=checkbox]")).toHaveCount(0);
+  await expect(page.locator("#link-buy-access")).toBeVisible();
   await expect(page.locator("#link-buy-access")).toHaveText("Get the app for $19, first month of Anna included");
 });

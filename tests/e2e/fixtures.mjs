@@ -39,8 +39,18 @@ export { expect };
 // allows any email that doesn't contain "noaccess".
 export const TEST_PASSWORD = "correct horse battery";
 
+// The gate shows one form at a time: "Start free" for a device that has
+// never signed in, "Sign in" for one that has. This opens the sign-in form
+// either way, the way a learner would (the "Already have an account?" link).
+export async function openSignIn(page, url = "/") {
+  if (url) await page.goto(url);
+  await page.waitForSelector(".gate-screen");
+  if (await page.locator("#gate-to-signin").isVisible()) await page.click("#gate-to-signin");
+  await expect(page.locator("#email-input")).toBeVisible();
+}
+
 export async function loginAs(page, email = "test@example.com", password = TEST_PASSWORD) {
-  await page.goto("/");
+  await openSignIn(page);
   await page.fill("#email-input", email);
   await page.fill("#password-input", password);
   await page.click("#login-btn");

@@ -10,8 +10,14 @@
 </head>
 <body>
   <div class="gate-screen">
+    <label class="gate-lang">
+      <span class="gate-lang-icon" aria-hidden="true">🌐</span>
+      <span class="visually-hidden" data-i18n="languageLabel">Language</span>
+      <select id="gate-lang" class="gate-lang-select"></select>
+    </label>
+
     <h1 class="title">ZERO TO HERO</h1>
-    <h2 class="gate-heading" id="auth-heading">Choose your password</h2>
+    <h2 class="gate-heading" id="auth-heading" data-i18n="authChooseTitle">Choose your password</h2>
 
     <form id="password-form" class="gate-form" novalidate>
       <input
@@ -19,34 +25,40 @@
         class="gate-input"
         type="password"
         placeholder="New password (8+ characters)"
+        data-i18n-placeholder="authNewPassword"
         autocomplete="new-password"
         minlength="8"
         aria-label="New password"
+        data-i18n-aria-label="authNewPasswordLabel"
       />
       <input
         id="new-password-repeat"
         class="gate-input"
         type="password"
         placeholder="Repeat the password"
+        data-i18n-placeholder="authRepeatPassword"
         autocomplete="new-password"
         aria-label="Repeat the password"
+        data-i18n-aria-label="authRepeatPassword"
       />
-      <button id="save-password" class="gate-btn" type="submit">Save password</button>
+      <button id="save-password" class="gate-btn cta" type="submit" data-i18n="authSave">Save password</button>
     </form>
 
     <p id="auth-message" class="gate-message" role="status" aria-live="polite"></p>
 
-    <div class="gate-note">
-      This page opens from the "Set or reset your password" email.
+    <div class="gate-note" data-i18n="authPageNote">
+      This page opens from the “Set or reset your password” email.
       If the link has expired, go back to the app and request a new one.
     </div>
 
-    <a class="gate-link" href="index.html">Back to the app</a>
+    <a class="gate-link" href="index.html" data-i18n="authBack">Back to the app</a>
   </div>
 
   <script src="vendor/supabase-js-2.116.0.umd.js"></script>
   <script type="module">
-    import { getSession, updatePassword, cleanAuthUrl, describeAuthError } from "./auth.mjs?v=1.2.76";
+    import { getSession, updatePassword, cleanAuthUrl, describeAuthError } from "./auth.mjs?v=1.2.95";
+    import { makeTranslator, gateLanguage, rememberSupportLanguage } from "./ui_text.mjs?v=1.2.95";
+    import { AVAILABLE_LANGUAGES } from "./languages.js?v=1.2.95";
 
     const form = document.getElementById("password-form");
     const pw = document.getElementById("new-password");
@@ -54,12 +66,55 @@
     const btn = document.getElementById("save-password");
     const msg = document.getElementById("auth-message");
     const heading = document.getElementById("auth-heading");
+    const picker = document.getElementById("gate-lang");
 
-    const say = (text, kind = "error") => {
-      msg.textContent = text || "";
-      msg.classList.toggle("is-ok", kind === "ok");
-      msg.classList.toggle("is-error", kind === "error" && !!text);
+    // Same rule as the sign-in gate (ui_text.mjs): the learner's support
+    // language as remembered on this device, with a picker for a device that
+    // has none (the email opened on a phone, say).
+    const langs = AVAILABLE_LANGUAGES.filter(l => !l.hidden);
+    let lang = gateLanguage(langs.map(l => l.code));
+    const cache = {};
+    const load = async (code) => {
+      if (!cache[code]) {
+        try {
+          const res = await fetch(`lang/${code}.json?v=1.2.95`);
+          cache[code] = res.ok ? (await res.json()).uiStrings || {} : {};
+        } catch (_) { cache[code] = {}; }
+      }
+      return cache[code];
     };
+    let t = (_key, fallback) => fallback;
+    let current = null; // {key, fallback, vars, kind} | {text, kind}
+
+    const paint = () => {
+      const text = !current ? "" : current.text ?? t(current.key, current.fallback, current.vars);
+      msg.textContent = text;
+      msg.classList.toggle("is-ok", current?.kind === "ok");
+      msg.classList.toggle("is-error", !!text && current?.kind !== "ok");
+    };
+    const say = (m) => { current = m; paint(); };
+
+    const applyLanguage = async () => {
+      const [primary, english] = await Promise.all([load(lang), load("en")]);
+      t = makeTranslator(primary, english);
+      const meta = langs.find(l => l.code === lang);
+      document.documentElement.lang = lang;
+      document.documentElement.dir = meta?.isRTL ? "rtl" : "ltr";
+      document.title = t("authPageTitle", "Zero to Hero — set your password");
+      for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = t(el.dataset.i18n, el.textContent.trim());
+      for (const el of document.querySelectorAll("[data-i18n-placeholder]")) el.placeholder = t(el.dataset.i18nPlaceholder, el.placeholder);
+      for (const el of document.querySelectorAll("[data-i18n-aria-label]")) el.setAttribute("aria-label", t(el.dataset.i18nAriaLabel, el.getAttribute("aria-label")));
+      paint();
+    };
+
+    picker.innerHTML = langs.map(l => `<option value="${l.code}"${l.code === lang ? " selected" : ""}>${l.nativeLabel}</option>`).join("");
+    picker.onchange = async () => {
+      lang = picker.value;
+      rememberSupportLanguage(lang);
+      await applyLanguage();
+    };
+    await applyLanguage();
+
     const busy = (on) => { for (const el of [pw, pw2, btn]) el.disabled = on; };
 
     // The recovery link signs the learner in (session in the URL hash,
@@ -67,29 +122,30 @@
     const session = await getSession();
     cleanAuthUrl();
     if (!session) {
-      heading.textContent = "This link has expired";
-      say("Open the app, enter your email and tap “Set or reset your password” to get a fresh link.");
+      heading.dataset.i18n = "authExpiredTitle";
+      heading.textContent = t("authExpiredTitle", "This link has expired");
+      say({ key: "authExpiredText", fallback: "Open the app, enter your email and tap “Set or reset your password” to get a fresh link." });
       busy(true);
     } else {
-      say(`Setting the password for ${session.email}.`, "ok");
+      say({ key: "authSettingFor", fallback: "Setting the password for {email}.", vars: { email: session.email }, kind: "ok" });
     }
 
     form.onsubmit = async (ev) => {
       ev.preventDefault();
       if (!session) return;
-      if (pw.value.length < 8) { say("Passwords need at least 8 characters."); pw.focus(); return; }
-      if (pw.value !== pw2.value) { say("The two passwords don't match."); pw2.focus(); return; }
+      if (pw.value.length < 8) { say({ key: "authPasswordShort", fallback: "Passwords need at least 8 characters." }); pw.focus(); return; }
+      if (pw.value !== pw2.value) { say({ key: "authMismatch", fallback: "The two passwords don't match." }); pw2.focus(); return; }
       busy(true);
       try {
         await updatePassword(pw.value);
       } catch (err) {
-        say(describeAuthError(err));
+        say({ text: describeAuthError(err, t) });
         busy(false);
         return;
       }
       // The recovery link already signed the learner in; the app's boot
       // adopts this session (checkAccess → server copy) on arrival.
-      say("Password saved. Opening the app…", "ok");
+      say({ key: "authSaved", fallback: "Password saved. Opening the app…", kind: "ok" });
       setTimeout(() => location.assign("index.html"), 900);
     };
   </script>

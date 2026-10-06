@@ -2,11 +2,16 @@
 // language hub — all with zero console/page/network errors (enforced by the
 // pageErrors fixture in fixtures.mjs).
 
-import { test, expect, loginAs, TEST_PASSWORD } from "./fixtures.mjs";
+import { test, expect, loginAs, openSignIn, TEST_PASSWORD } from "./fixtures.mjs";
 
 test("logged-out visit shows the sign-in screen", async ({ page }) => {
   await page.goto("/");
 
+  // A device that never signed in opens on "Start free", with the sign-in
+  // form one link away.
+  await expect(page.locator("#start-free-email")).toBeVisible();
+  await expect(page.locator("#email-input")).toBeHidden();
+  await page.click("#gate-to-signin");
   await expect(page.locator("#email-input")).toBeVisible();
   await expect(page.locator("#password-input")).toBeVisible();
   await expect(page.locator("#login-btn")).toBeVisible();
@@ -16,7 +21,7 @@ test("logged-out visit shows the sign-in screen", async ({ page }) => {
 });
 
 test("a signed-in email without access is rejected with a notice and signed out", async ({ page }) => {
-  await page.goto("/");
+  await openSignIn(page);
 
   await page.fill("#email-input", "noaccess@example.com");
   await page.fill("#password-input", TEST_PASSWORD);
@@ -30,7 +35,7 @@ test("a signed-in email without access is rejected with a notice and signed out"
 });
 
 test("a wrong password never reaches the access check", async ({ page }) => {
-  await page.goto("/");
+  await openSignIn(page);
 
   await page.fill("#email-input", "test@example.com");
   await page.fill("#password-input", "wrongpassword");
@@ -41,7 +46,7 @@ test("a wrong password never reaches the access check", async ({ page }) => {
 });
 
 test("set-or-reset password asks for the email first, then confirms", async ({ page }) => {
-  await page.goto("/");
+  await openSignIn(page);
 
   await page.click("#link-set-password");
   await expect(page.locator("#gate-message")).toContainText("Enter your email above first");
@@ -142,7 +147,7 @@ test("?showHidden=1 reveals gate-pending languages to QA (and only QA)", async (
   // The QA hook Emi's run-7 needed: hidden languages are filtered at
   // module load, so without this a sweeper can never test them as the
   // interface language. A plain reload (no query) restores hiding.
-  await page.goto("/?showHidden=1");
+  await openSignIn(page, "/?showHidden=1");
   await page.fill("#email-input", "showhidden-qa@example.com");
   await page.fill("#password-input", TEST_PASSWORD);
   await page.click("#login-btn");

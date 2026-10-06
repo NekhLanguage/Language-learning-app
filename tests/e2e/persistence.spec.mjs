@@ -2,7 +2,7 @@
 // backend (saveUser), and restore onto a fresh device (loadUser). The dev
 // server keeps saved users in memory and exposes them at /__devserver/users.
 
-import { test, expect, startNewRun, authHeadersFor, TEST_PASSWORD } from "./fixtures.mjs";
+import { test, expect, startNewRun, authHeadersFor, TEST_PASSWORD, openSignIn } from "./fixtures.mjs";
 
 test("run state survives a page reload", async ({ page }) => {
   await startNewRun(page);
@@ -90,7 +90,7 @@ test("a fresh device restores the account from the server", async ({ page }) => 
   // Simulate a new device: wipe local state entirely.
   await page.evaluate(() => localStorage.clear());
   await page.reload();
-  await expect(page.locator("#email-input")).toBeVisible();
+  await openSignIn(page, null);
 
   // Signing in again must pull the account back from the server.
   await page.fill("#email-input", email);

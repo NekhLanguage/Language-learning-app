@@ -6,6 +6,16 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-06
+
+### A cleaner sign-in screen, in your language
+
+The sign-in screen now shows one form at a time. A new visitor sees "Try the first three lessons free": one Google button, one email box and the weekly-email box. An "Already have an account? Sign in" link swaps in the sign-in form. A device that has signed in before opens straight on the sign-in form. The two stacked email forms, the filler line and the large "Get the app" button are gone; the $19 offer is now a small link at the bottom.
+
+A language picker sits in the top corner. Everything on the sign-in screen, its messages and the set-password page switches to the language you pick, and Arabic reads right-to-left. Your pick becomes your support language when you sign in, and this device remembers it after you log out. The app never guesses the language from your browser: until you pick, the screen is in English.
+
+---
+
 ## 2026-10-05
 
 ### Opinions: a fresh discussion theme for Anna, every time (beta topics)
