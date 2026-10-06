@@ -23,6 +23,7 @@ import {
   cleanAuthUrl,
   describeAuthError,
 } from "./auth.mjs";
+import { makeTranslator, gateLanguage, rememberSupportLanguage, markGatePick, takeGatePick } from "./ui_text.mjs";
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import { chooseSupportSentence } from "./display.mjs";
 import { promptApiAvailable, gradeSemantically } from "./grading.mjs";
@@ -95,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.94";
+const APP_DATA_VERSION = "1.2.95";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -945,6 +946,7 @@ if (!authSession) {
   if (verdict.allowed) {
     localStorage.setItem("zth_email", authSession.email);
     await loadUserFromServer(authSession.email, { force: true });
+    await applyGateLanguagePick();
     location.reload();
     return;
   }
@@ -961,6 +963,8 @@ const email = localStorage.getItem("zth_email")?.toLowerCase();
 loadUser();
 reconcileRecognitionCompletion(USER);
 languageState.support = USER.supportLanguage || "en";
+// The gate after a logout opens in this learner's language (ui_text.mjs).
+if (email) rememberSupportLanguage(languageState.support);
 
 // Kick off both network fetches without awaiting. The <link rel="preload"> in
 // index.html primes the lang file during HTML parse, so it's typically already
@@ -1022,6 +1026,7 @@ if (serverSyncP) {
     const newSupport = USER.supportLanguage || "en";
     if (newSupport !== languageState.support) {
       languageState.support = newSupport;
+      rememberSupportLanguage(newSupport);
       await getLangFileData(newSupport);
       updateSupportUI(languageState.support);
       updateUIStrings(languageState.support);
@@ -1371,6 +1376,21 @@ if (run.contentVersion !== CONTENT_VERSION) {
   if (merged.pushUp) await saveUser({ reload: false });
 }
 
+// Set on every successful sign-in: the gate opens on "Sign in" instead of
+// "Start free" for a device that has had an account (survives logout).
+const RETURNING_KEY = "zth_returning";
+
+// A support language the learner picked ON the sign-in gate becomes the
+// account's support language at the sign-in that follows — password or
+// Google (whose round trip carries the pick in sessionStorage).
+async function applyGateLanguagePick() {
+  try { localStorage.setItem(RETURNING_KEY, "1"); } catch (_) { /* fine */ }
+  const pick = takeGatePick(Object.keys(SUPPORT_LANGUAGES));
+  if (!pick || !USER || USER.supportLanguage === pick) return;
+  USER.supportLanguage = pick;
+  await saveUser({ reload: false });
+}
+
 function hasAccess() {
   const email = localStorage.getItem("zth_email");
   return !!email;
@@ -1378,242 +1398,258 @@ function hasAccess() {
 
 if (!hasAccess()) {
 
-  const supportLang = USER?.supportLanguage || "en";
+  // Sign-in screen (Nekh 2026-10-06): one column, one form at a time —
+  // "Start free" for new learners, "Sign in" for accounts, swapped by a text
+  // link — one Google button that serves both, and a support-language picker. Everything on it speaks the
+  // language picked here (never a browser guess); see ui_text.mjs.
+  const gateCodes = Object.keys(SUPPORT_LANGUAGES);
+  let gateLang = gateLanguage(gateCodes, localStorage, USER?.supportLanguage);
+  const params = new URLSearchParams(location.search);
+  // A notice (a Google return without access, a server error) is written
+  // on the sign-in form, so that form must be the one showing.
+  let gateMode = params.get("start") === "free" ? "free"
+    : (gateNotice || localStorage.getItem(RETURNING_KEY) ? "signin" : "free");
+  let gateMessages = { signin: gateNotice ? { reason: gateNotice } : null, free: null };
 
-  // UI strings come from the lang file cache (loaded at startup)
-  let strings = LANG_FILE_CACHE[supportLang]?.uiStrings || LANG_FILE_CACHE["en"]?.uiStrings;
+  const renderGate = async () => {
+    await Promise.all([getLangFileData("en"), getLangFileData(gateLang)]);
+    const t = makeTranslator(LANG_FILE_CACHE[gateLang]?.uiStrings, LANG_FILE_CACHE.en?.uiStrings);
+    const langMeta = AVAILABLE_LANGUAGES.find(l => l.code === gateLang);
+    document.documentElement.lang = gateLang;
+    document.documentElement.dir = langMeta?.isRTL ? "rtl" : "ltr";
 
-  if (!strings) {
-    strings = {
-      enterEmail: "Enter your email",
-      continue: "Continue",
-      buyAccess: "Not a user? Get access",
-      noAccess: "No access found for this email"
-    };
-  }
-  const t = (key, fallback) => strings[key] || fallback;
+    // Keep what the learner already typed across a language switch.
+    const keep = (id) => document.getElementById(id)?.value || "";
+    const kept = { free: keep("start-free-email"), email: keep("email-input"), optin: !!document.getElementById("start-free-optin")?.checked };
 
-  // Sign-in screen: email + password, Google, and the "set or reset your
-  // password" path that also serves as first-time setup for learners who
-  // bought access before the app had passwords.
-  document.body.innerHTML = `
-    <div class="gate-screen">
+    const options = gateCodes
+      .map(code => `<option value="${code}"${code === gateLang ? " selected" : ""}>${SUPPORT_LANGUAGES[code].label}</option>`)
+      .join("");
+
+    document.body.innerHTML = `
+    <div class="gate-screen" data-mode="${gateMode}">
+      <label class="gate-lang">
+        <span class="gate-lang-icon" aria-hidden="true">🌐</span>
+        <span class="visually-hidden">${t("languageLabel", "Language")}</span>
+        <select id="gate-lang" class="gate-lang-select">${options}</select>
+      </label>
+
       <h1 class="title">ZERO TO HERO</h1>
 
-      <section id="gate-start-free" class="gate-start-free" aria-labelledby="gate-start-free-heading">
-        <h2 id="gate-start-free-heading" class="gate-heading">${t("startFreeHeading", "Try the first three lessons free")}</h2>
-        <p class="gate-note">${t("startFreeNote", "Just an email. No card.")}</p>
-        <form id="start-free-form" class="gate-form" novalidate>
-          <input
-            id="start-free-email"
-            class="gate-input"
-            type="email"
-            placeholder="your@email.com"
-            autocomplete="email"
-            aria-label="${t("enterEmail", "Enter your email")}"
-          />
-          <label class="gate-check" for="start-free-optin">
-            <input id="start-free-optin" type="checkbox" />
-            <span>${t("emailOptInLabel", "Send me Nekh's weekly email on learning languages.")}</span>
-          </label>
-          <button id="start-free-btn" class="gate-btn" type="submit">
-            ${t("startFree", "Start free")}
-          </button>
-        </form>
-        <p id="start-free-message" class="gate-message" role="status" aria-live="polite"></p>
-      </section>
-
-      <div class="gate-divider" aria-hidden="true">${t("alreadyHaveAccount", "Already have an account?")}</div>
-
-      <h2 class="gate-heading">${t("signIn", "Sign in")}</h2>
-
-      <form id="login-form" class="gate-form" novalidate>
-        <input
-          id="email-input"
-          class="gate-input"
-          type="email"
-          placeholder="your@email.com"
-          autocomplete="email"
-          aria-label="${t("enterEmail", "Enter your email")}"
-        />
-        <input
-          id="password-input"
-          class="gate-input"
-          type="password"
-          placeholder="${t("password", "Password")}"
-          autocomplete="current-password"
-          aria-label="${t("password", "Password")}"
-        />
-        <button id="login-btn" class="gate-btn" type="submit">
-          ${t("continue", "Continue")}
-        </button>
-      </form>
-
-      <p id="gate-message" class="gate-message" role="status" aria-live="polite"></p>
-
-      <div class="gate-divider" aria-hidden="true">${t("or", "or")}</div>
+      <h2 id="gate-start-free-heading" class="gate-heading gate-only-free">${t("startFreeHeading", "Try the first three lessons free")}</h2>
+      <h2 class="gate-heading gate-only-signin">${t("signIn", "Sign in")}</h2>
 
       <button id="google-btn" class="gate-btn gate-google" type="button">
         ${t("continueWithGoogle", "Continue with Google")}
       </button>
+      <div class="gate-divider" aria-hidden="true">${t("or", "or")}</div>
 
-      <button id="link-set-password" class="gate-link" type="button">
-        ${t("setPassword", "Set or reset your password")}
-      </button>
+      <section id="gate-start-free" class="gate-start-free gate-only-free" aria-labelledby="gate-start-free-heading">
+        <form id="start-free-form" class="gate-form" novalidate>
+          <input id="start-free-email" class="gate-input" type="email"
+            placeholder="${t("emailPlaceholder", "your@email.com")}" autocomplete="email"
+            aria-label="${t("enterEmail", "Enter your email")}" />
+          <label class="gate-check" for="start-free-optin">
+            <input id="start-free-optin" type="checkbox" />
+            <span>${t("emailOptInLabel", "Send me Nekh's weekly email on learning languages.")}</span>
+          </label>
+          <button id="start-free-btn" class="gate-btn cta" type="submit">${t("startFree", "Start free")}</button>
+        </form>
+        <p id="start-free-message" class="gate-message" role="status" aria-live="polite"></p>
+        <button id="gate-to-signin" class="gate-link gate-switch" type="button" data-mode="signin">${t("haveAccountSignIn", "Already have an account? Sign in")}</button>
+      </section>
 
-      <div class="gate-note">
-        Start learning with the Zero to Hero app
-      </div>
+      <section class="gate-signin gate-only-signin">
+        <form id="login-form" class="gate-form" novalidate>
+          <input id="email-input" class="gate-input" type="email"
+            placeholder="${t("emailPlaceholder", "your@email.com")}" autocomplete="email"
+            aria-label="${t("enterEmail", "Enter your email")}" />
+          <input id="password-input" class="gate-input" type="password"
+            placeholder="${t("password", "Password")}" autocomplete="current-password"
+            aria-label="${t("password", "Password")}" />
+          <button id="login-btn" class="gate-btn" type="submit">${t("signIn", "Sign in")}</button>
+        </form>
+        <p id="gate-message" class="gate-message" role="status" aria-live="polite"></p>
+        <button id="link-set-password" class="gate-link" type="button">${t("setPassword", "Set or reset your password")}</button>
+        <button id="gate-to-free" class="gate-link gate-switch" type="button" data-mode="free">${t("newHereStartFree", "New here? Start free")}</button>
+      </section>
 
-      <button id="link-buy-access" class="gate-secondary" type="button"></button>
+      <button id="link-buy-access" class="gate-link gate-buy" type="button">${t("buyApp", "Get the app for $19, first month of Anna included")}</button>
     </div>
   `;
-
-  // 🔗 Wire BUY ACCESS link
-  const buyAccess = document.getElementById("link-buy-access");
-
-if (buyAccess) {
-  buyAccess.textContent = "Get the app for $19, first month of Anna included";
-
-  buyAccess.onclick = () => {
-  window.open(EXTERNAL_LINKS.buyAccess, "_blank");
-};
-}
-
-  const emailInput = document.getElementById("email-input");
-  const passwordInput = document.getElementById("password-input");
-  const loginBtn = document.getElementById("login-btn");
-  const googleBtn = document.getElementById("google-btn");
-  const setPasswordBtn = document.getElementById("link-set-password");
-  const messageEl = document.getElementById("gate-message");
-
-  const setMessage = (text, kind = "error") => {
-    messageEl.textContent = text || "";
-    messageEl.classList.toggle("is-ok", kind === "ok");
-    messageEl.classList.toggle("is-error", kind === "error" && !!text);
+    wireGate(t, kept);
   };
-  const setBusy = (busy) => {
-    for (const el of [loginBtn, googleBtn, setPasswordBtn, emailInput, passwordInput]) el.disabled = busy;
-  };
-  const noticeFor = (reason) => {
-    if (reason === "noaccess") return t("noAccess", "No access found for this email");
-    if (reason === "server") return t("serverError", "Server error — please try again.");
-    return "";
-  };
-  if (gateNotice) setMessage(noticeFor(gateNotice));
 
-  // Signed in (any provider) → confirm the email has access → adopt that
-  // account's server copy → boot again. Same shape for password and for the
-  // Google return handled at boot above.
-  const finishSignIn = async (fallbackEmail) => {
-    const verdict = await checkAccessForSession();
-    if (!verdict.allowed) {
-      await authSignOut();
-      setMessage(noticeFor(verdict.reason) || noticeFor("server"));
+  const wireGate = (t, kept) => {
+    const screen = document.querySelector(".gate-screen");
+    const emailInput = document.getElementById("email-input");
+    const passwordInput = document.getElementById("password-input");
+    const loginBtn = document.getElementById("login-btn");
+    const googleBtn = document.getElementById("google-btn");
+    const setPasswordBtn = document.getElementById("link-set-password");
+    const messageEl = document.getElementById("gate-message");
+    const startFreeForm = document.getElementById("start-free-form");
+    const startFreeEmail = document.getElementById("start-free-email");
+    const startFreeOptIn = document.getElementById("start-free-optin");
+    const startFreeBtn = document.getElementById("start-free-btn");
+    const startFreeMsg = document.getElementById("start-free-message");
+
+    startFreeEmail.value = kept.free;
+    emailInput.value = kept.email;
+    startFreeOptIn.checked = kept.optin;
+
+    // Messages are stored as {key, fallback, kind} (or a gate notice
+    // reason) so a language switch re-renders them in the new language.
+    const paint = (el, m) => {
+      const text = !m ? "" : m.reason ? noticeFor(m.reason) : m.text ?? t(m.key, m.fallback);
+      el.textContent = text || "";
+      el.classList.toggle("is-ok", m?.kind === "ok");
+      el.classList.toggle("is-error", !!text && m?.kind !== "ok");
+    };
+    const noticeFor = (reason) => {
+      if (reason === "noaccess") return t("noAccess", "No access found for this email");
+      if (reason === "server") return t("serverError", "Server error — please try again.");
+      return "";
+    };
+    const say = (mode, m) => {
+      gateMessages[mode] = m;
+      paint(mode === "free" ? startFreeMsg : messageEl, m);
+    };
+    paint(messageEl, gateMessages.signin);
+    paint(startFreeMsg, gateMessages.free);
+
+    const setBusy = (busy) => {
+      for (const el of [loginBtn, googleBtn, setPasswordBtn, emailInput, passwordInput, startFreeBtn]) el.disabled = busy;
+    };
+
+    // 🌐 Support language: re-render in place, remember on this device,
+    // and flag it so the sign-in that follows carries it onto the account.
+    document.getElementById("gate-lang").onchange = (ev) => {
+      gateLang = ev.target.value;
+      rememberSupportLanguage(gateLang);
+      markGatePick(gateLang);
+      renderGate();
+    };
+
+    // "Already have an account?" / "New here?" swap the two forms in place.
+    for (const link of document.querySelectorAll(".gate-switch")) {
+      link.onclick = () => {
+        gateMode = link.dataset.mode;
+        screen.dataset.mode = gateMode;
+        (gateMode === "free" ? startFreeEmail : emailInput).focus();
+      };
+    }
+
+    document.getElementById("link-buy-access").onclick = () => {
+      window.open(EXTERNAL_LINKS.buyAccess, "_blank");
+    };
+
+    // Signed in (any provider) → confirm the email has access → adopt that
+    // account's server copy → boot again. Same shape for password and for the
+    // Google return handled at boot above.
+    const finishSignIn = async (fallbackEmail) => {
+      const verdict = await checkAccessForSession();
+      if (!verdict.allowed) {
+        await authSignOut();
+        say("signin", { reason: verdict.reason === "noaccess" ? "noaccess" : "server" });
+        setBusy(false);
+        return;
+      }
+      const signedInAs = (verdict.email || fallbackEmail || "").toLowerCase();
+      localStorage.setItem("zth_email", signedInAs);
+
+      // The learner just asked for this account: the server copy wins
+      // over whatever anonymous local state this device holds.
+      await loadUserFromServer(signedInAs, { force: true });
+      await applyGateLanguagePick();
+
+      location.reload();
+    };
+
+    // 🔐 Email + password
+    document.getElementById("login-form").onsubmit = async (ev) => {
+      ev.preventDefault();
+      const email = emailInput.value.trim().toLowerCase();
+      const password = passwordInput.value;
+      if (!email || !password) {
+        say("signin", { key: "enterEmailAndPassword", fallback: "Enter your email and password." });
+        (email ? passwordInput : emailInput).focus();
+        return;
+      }
+      say("signin", null);
+      setBusy(true);
+      try {
+        await signInWithPassword(email, password);
+      } catch (err) {
+        say("signin", { text: describeAuthError(err, t) });
+        setBusy(false);
+        return;
+      }
+      await finishSignIn(email);
+    };
+
+    // 🔐 Google (identity scopes only — see auth.mjs). The browser leaves
+    // for Google and comes back to "/" with a session; boot handles the rest,
+    // including a language picked here (the flag rides in sessionStorage).
+    googleBtn.onclick = async () => {
+      say(gateMode, null);
+      setBusy(true);
+      try {
+        await signInWithGoogle();
+      } catch (err) {
+        say(gateMode, { text: describeAuthError(err, t) });
+        setBusy(false);
+      }
+    };
+
+    // 🆓 Free tier (Nekh 2026-09-30): the gate is an account with an email.
+    // authProvision makes sure the account exists; Supabase emails the
+    // set-password link; the free-tier row is created on that first sign-in
+    // (checkAccess). Google sign-in reaches the same place in one step.
+    startFreeForm.onsubmit = async (ev) => {
+      ev.preventDefault();
+      const email = startFreeEmail.value.trim().toLowerCase();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        say("free", { key: "enterEmail", fallback: "Enter your email" });
+        startFreeEmail.focus();
+        return;
+      }
+      startFreeBtn.disabled = true;
+      try {
+        // Email consent (Austin via Nekh 2026-10-04): the box is unticked by
+        // default and its answer rides with the account; only a ticked,
+        // verified signup ever reaches MailerLite.
+        await sendPasswordEmail(email, { emailOptIn: !!startFreeOptIn.checked });
+        say("free", { key: "startFreeSent", fallback: "Check your inbox (and spam) for a link to set your password. Then you're in.", kind: "ok" });
+      } catch (err) {
+        say("free", { text: describeAuthError(err, t) });
+      }
+      startFreeBtn.disabled = false;
+    };
+
+    // ✉️ Set or reset your password: also the first-time setup for a learner
+    // who bought access before passwords existed. The email lands on
+    // auth.html, which asks for the new password.
+    setPasswordBtn.onclick = async () => {
+      const email = emailInput.value.trim().toLowerCase();
+      if (!email) {
+        say("signin", { key: "enterEmailForPassword", fallback: "Enter your email above first, then tap this again." });
+        emailInput.focus();
+        return;
+      }
+      setBusy(true);
+      try {
+        await sendPasswordEmail(email);
+        say("signin", { key: "passwordEmailSent", fallback: "A link to set your password is on its way — check your inbox (and spam).", kind: "ok" });
+      } catch (err) {
+        say("signin", { text: describeAuthError(err, t) });
+      }
       setBusy(false);
-      return;
-    }
-    const signedInAs = (verdict.email || fallbackEmail || "").toLowerCase();
-    localStorage.setItem("zth_email", signedInAs);
-
-    // The learner just asked for this account: the server copy wins
-    // over whatever anonymous local state this device holds.
-    await loadUserFromServer(signedInAs, { force: true });
-
-    location.reload();
+    };
   };
 
-  // 🔐 Email + password
-  document.getElementById("login-form").onsubmit = async (ev) => {
-    ev.preventDefault();
-    const email = emailInput.value.trim().toLowerCase();
-    const password = passwordInput.value;
-    if (!email || !password) {
-      setMessage(t("enterEmailAndPassword", "Enter your email and password."));
-      (email ? passwordInput : emailInput).focus();
-      return;
-    }
-    setMessage("");
-    setBusy(true);
-    try {
-      await signInWithPassword(email, password);
-    } catch (err) {
-      setMessage(describeAuthError(err));
-      setBusy(false);
-      return;
-    }
-    await finishSignIn(email);
-  };
-
-  // 🔐 Google (identity scopes only — see auth.mjs). The browser leaves
-  // for Google and comes back to "/" with a session; boot handles the rest.
-  googleBtn.onclick = async () => {
-    setMessage("");
-    setBusy(true);
-    try {
-      await signInWithGoogle();
-    } catch (err) {
-      setMessage(describeAuthError(err));
-      setBusy(false);
-    }
-  };
-
-  // 🆓 Free tier (Nekh 2026-09-30): the gate is an account with an email.
-  // authProvision makes sure the account exists; Supabase emails the
-  // set-password link; the free-tier row is created on that first sign-in
-  // (checkAccess). Google sign-in reaches the same place in one step.
-  const startFreeForm = document.getElementById("start-free-form");
-  const startFreeEmail = document.getElementById("start-free-email");
-  const startFreeOptIn = document.getElementById("start-free-optin");
-  const startFreeBtn = document.getElementById("start-free-btn");
-  const startFreeMsg = document.getElementById("start-free-message");
-  const startFreeSay = (text, kind = "error") => {
-    startFreeMsg.textContent = text || "";
-    startFreeMsg.classList.toggle("is-ok", kind === "ok");
-    startFreeMsg.classList.toggle("is-error", kind === "error" && !!text);
-  };
-  startFreeForm.onsubmit = async (ev) => {
-    ev.preventDefault();
-    const email = startFreeEmail.value.trim().toLowerCase();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      startFreeSay(t("enterEmail", "Enter your email"));
-      startFreeEmail.focus();
-      return;
-    }
-    startFreeBtn.disabled = true;
-    try {
-      // Email consent (Austin via Nekh 2026-10-04): the box is unticked by
-      // default and its answer rides with the account; only a ticked,
-      // verified signup ever reaches MailerLite.
-      await sendPasswordEmail(email, { emailOptIn: !!(startFreeOptIn && startFreeOptIn.checked) });
-      startFreeSay(t("startFreeSent", "Check your inbox (and spam) for a link to set your password. Then you're in."), "ok");
-    } catch (err) {
-      startFreeSay(describeAuthError(err));
-    }
-    startFreeBtn.disabled = false;
-  };
-  if (new URLSearchParams(location.search).get("start") === "free") startFreeEmail.focus();
-
-  // ✉️ Set or reset your password: also the first-time setup for a learner
-  // who bought access before passwords existed. The email lands on
-  // auth.html, which asks for the new password.
-  setPasswordBtn.onclick = async () => {
-    const email = emailInput.value.trim().toLowerCase();
-    if (!email) {
-      setMessage(t("enterEmailForPassword", "Enter your email above first, then tap this again."));
-      emailInput.focus();
-      return;
-    }
-    setBusy(true);
-    try {
-      await sendPasswordEmail(email);
-      setMessage(t("passwordEmailSent", "A link to set your password is on its way — check your inbox (and spam)."), "ok");
-    } catch (err) {
-      setMessage(describeAuthError(err));
-    }
-    setBusy(false);
-  };
-
+  await renderGate();
+  if (params.get("start") === "free") document.getElementById("start-free-email")?.focus();
   return;
 }
 
@@ -2330,6 +2366,7 @@ function renderSupportOptions() {
     option.onclick = async () => {
       languageState.support = code;
       USER.supportLanguage = code;
+      rememberSupportLanguage(code);
       saveUser();
       await getLangFileData(code);
       updateSupportUI(code);

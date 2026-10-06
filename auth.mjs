@@ -272,12 +272,17 @@ export function cleanAuthUrl() {
 }
 
 // A human-readable line for an auth error.
-export function describeAuthError(err) {
+// `t` (ui_text.mjs makeTranslator) puts the message in the learner's
+// support language; without one the English below shows.
+export function describeAuthError(err, t = (_key, fallback) => fallback) {
   const msg = String((err && err.message) || err || "");
-  if (/invalid login credentials/i.test(msg)) return "Wrong email or password. New here, or bought access before passwords existed? Use “Set or reset your password”.";
-  if (/email not confirmed/i.test(msg)) return "This email hasn't been confirmed yet — check your inbox.";
-  if (/rate limit|too many/i.test(msg)) return "Too many attempts — wait a minute and try again.";
-  if (/password should be|at least/i.test(msg)) return "Passwords need at least 8 characters.";
-  if (/failed to fetch|network/i.test(msg)) return "Could not reach the sign-in service — check your connection and try again.";
-  return msg || "Something went wrong — please try again.";
+  if (/invalid login credentials/i.test(msg)) return t("authWrongPassword", "Wrong email or password. New here, or bought access before passwords existed? Use “Set or reset your password”.");
+  if (/email not confirmed/i.test(msg)) return t("authNotConfirmed", "This email hasn't been confirmed yet — check your inbox.");
+  if (/rate limit|too many/i.test(msg)) return t("authRateLimit", "Too many attempts — wait a minute and try again.");
+  if (/password should be|at least/i.test(msg)) return t("authPasswordShort", "Passwords need at least 8 characters.");
+  if (/failed to fetch|network/i.test(msg)) return t("authNetwork", "Could not reach the sign-in service — check your connection and try again.");
+  const generic = t("authGeneric", "Something went wrong — please try again.");
+  // The raw text is English from Supabase or our own functions; keep it in
+  // brackets so a learner's report still says what failed.
+  return msg ? `${generic} (${msg})` : generic;
 }
