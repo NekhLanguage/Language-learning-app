@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-07 (fix)
+
+### No more code names on the trial, paywall and exercise screens
+
+Since this morning's update, learners whose support language isn't English saw internal names such as "trialKeepGoing", "paywallBuy" and "sayIt" instead of text on the "three lessons done" screen, the lesson-4 paywall and the exercise screen. The app now always loads English as the fallback, so those lines read in English until their translations arrive.
+
+---
+
 ## 2026-10-07 (later)
 
 ### Anna's page is ready for your language

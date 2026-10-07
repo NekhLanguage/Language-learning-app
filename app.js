@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.98";
+const APP_DATA_VERSION = "1.2.99";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -969,7 +969,12 @@ if (email) rememberSupportLanguage(languageState.support);
 // Kick off both network fetches without awaiting. The <link rel="preload"> in
 // index.html primes the lang file during HTML parse, so it's typically already
 // in cache by the time this line runs.
-const langP = getLangFileData(languageState.support);
+// English always loads alongside the support language: it is the fallback
+// for every key a support language has not translated yet, and without it
+// ui() returns the raw key name («trialKeepGoing» on the paywall path —
+// v1.2.97 shipped that for every non-English learner).
+const langP = Promise.all([getLangFileData(languageState.support), getLangFileData("en")])
+  .then(([support]) => support);
 // -07: a failed server load must not be silent — the learner is looking at
 // this device's local copy and should know it (Emi 2026-08-27-07).
 // Refresh the free-tier flag from the server on every signed-in boot, so a
