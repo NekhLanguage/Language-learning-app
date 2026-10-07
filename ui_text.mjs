@@ -60,3 +60,14 @@ export function takeGatePick(validCodes, storage = globalThis.sessionStorage) {
   safeRemove(storage, GATE_LANG_PICK_KEY);
   return code && validCodes.includes(code) ? code : null;
 }
+
+// A count in the support language's plural form: `${key}_${category}`
+// (Intl.PluralRules: one / few / many / other …), then `${key}_other`,
+// then the English fallback for n. {n} is filled in.
+export function pluralText(t, lang, key, n, fallbackOne, fallbackOther) {
+  let category = "other";
+  try { category = new Intl.PluralRules(lang).select(n); } catch (_) { /* unknown locale */ }
+  const english = n === 1 ? fallbackOne : fallbackOther;
+  const other = t(`${key}_other`, english, { n });
+  return t(`${key}_${category}`, other, { n });
+}
