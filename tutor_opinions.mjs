@@ -141,10 +141,20 @@ export function renderThemeText(theme, sessions) {
   return lines.join("\n");
 }
 
-// The learner-facing line when a theme is picked.
-export function themePickLine(label, sessions, themeId) {
+// The learner-facing line when a theme is picked. `t` (ui_text.mjs
+// makeTranslator) puts it in the support language; {nth} is the English
+// ordinal, {n} the bare count for languages that write ordinals otherwise.
+export function themePickLine(label, sessions, themeId, t = (_k, fallback, vars) => fillVars(fallback, vars)) {
   const previous = themeSessions(sessions, themeId);
-  if (!previous.length) return `Theme: ${label} — new theme. Anna asks what you think and why; say hi to start.`;
-  const last = previous[0]?.when || "earlier";
-  return `Theme: ${label} — your ${ordinal(previous.length + 1)} time (last ${last}). Anna compares with last time; say hi to start.`;
+  if (!previous.length) {
+    return t("themePickNew", "Theme: {label} — new theme. Anna asks what you think and why; say hi to start.", { label });
+  }
+  const n = previous.length + 1;
+  const last = previous[0]?.when || t("tutorEarlier", "earlier");
+  return t("themePickRepeat", "Theme: {label} — your {nth} time (last {last}). Anna compares with last time; say hi to start.",
+    { label, n, nth: ordinal(n), last });
+}
+
+function fillVars(s, vars) {
+  return vars ? String(s).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : s;
 }
