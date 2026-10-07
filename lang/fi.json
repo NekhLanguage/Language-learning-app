@@ -122,7 +122,7 @@
     "buyApp": "Hanki sovellus 19 $:lla, ensimmäinen kuukausi Annan kanssa sisältyy",
     "authWrongPassword": "Väärä sähköposti tai salasana. Oletko uusi, tai ostitko pääsyn ennen salasanoja? Käytä kohtaa ”Luo tai vaihda salasana”.",
     "authNotConfirmed": "Tätä sähköpostia ei ole vielä vahvistettu – katso saapuneet viestit.",
-    "authRateLimit": "Liian monta yritystä – odota hetki ja yritä uudelleen.",
+    "authRateLimit": "Liian monta yritystä – odota minuutti ja yritä uudelleen.",
     "authPasswordShort": "Salasanassa on oltava vähintään 8 merkkiä.",
     "authNetwork": "Kirjautumispalveluun ei saatu yhteyttä – tarkista yhteys ja yritä uudelleen.",
     "authGeneric": "Jokin meni pieleen – yritä uudelleen.",
@@ -140,7 +140,7 @@
     "authMismatch": "Salasanat eivät täsmää.",
     "authSaved": "Salasana tallennettu. Avataan sovellus…",
     "haveAccountSignIn": "Onko sinulla jo tili? Kirjaudu sisään",
-    "newHereStartFree": "Uusi täällä? Aloita ilmaiseksi"
+    "newHereStartFree": "Ensimmäistä kertaa täällä? Aloita ilmaiseksi"
   },
   "hubNames": {
     "ar": "arabia",
