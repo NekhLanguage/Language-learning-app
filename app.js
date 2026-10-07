@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.99";
+const APP_DATA_VERSION = "1.2.100";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -585,7 +585,20 @@ function reconcileRecognitionCompletion(user) {
 }
 
 let USER = null;
+// The module-scope blocks after the boot handler (Anna entry, leaderboard,
+// referral) reach its translator through this bridge; the handler wires it
+// as its first statement. English (the inline fallback) until then.
+const appText = {
+  t: (_key, fallback, vars) => (vars ? String(fallback).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? String(vars[k]) : m)) : fallback),
+  ui: (key) => key,
+  lang: () => "en",
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
+  // Hoisted declarations below; see appText above.
+  appText.t = uiT;
+  appText.ui = ui;
+  appText.lang = () => languageState.support || "en";
   // Derived from APP_DATA_VERSION — the single version constant — so the
   // displayed build string can never drift from the cache-bust again. (A
   // hand-maintained copy here sat at "v1.2.2" through four releases and
@@ -2115,7 +2128,7 @@ function renderPackSelection() {
     const btn = document.createElement("button");
     btn.className = "primary";
     const packLabel = packId.replace("_", " ").toUpperCase();
-    const betaBadge = RESOURCE_PACKS[packId].beta ? ' <span class="beta-badge">BETA</span>' : '';
+    const betaBadge = RESOURCE_PACKS[packId].beta ? ` <span class="beta-badge">${safe(ui("betaBadge"))}</span>` : '';
     btn.innerHTML = packLabel + betaBadge;
 
     btn.dataset.pack = packId;
@@ -2360,7 +2373,7 @@ function renderSupportOptions() {
   if (entries.length === 0) {
     const empty = document.createElement("div");
     empty.className = "support-option support-option-empty";
-    empty.textContent = "No matches";
+    empty.textContent = ui("noMatches");
     supportOptionsContainer.appendChild(empty);
     return;
   }
@@ -2463,7 +2476,7 @@ function updateSupportUI(code) {
   if (entries.length === 0) {
     const empty = document.createElement("div");
     empty.className = "language-empty";
-    empty.textContent = "No languages match your search.";
+    empty.textContent = ui("noLanguagesMatch");
     languageButtonsContainer.appendChild(empty);
     return;
   }
@@ -2475,7 +2488,7 @@ function updateSupportUI(code) {
     // Endonym as a secondary line, unless it just repeats the hub name.
     const native = lang.nativeLabel && lang.nativeLabel !== name ? lang.nativeLabel : "";
     btn.innerHTML = `
-      <span class="lang-card-top"><span class="lang-card-name">${name}</span>${lang.beta ? '<span class="beta-badge">BETA</span>' : ''}</span>
+      <span class="lang-card-top"><span class="lang-card-name">${name}</span>${lang.beta ? `<span class="beta-badge">${safe(ui("betaBadge"))}</span>` : ''}</span>
       ${native ? `<span class="lang-card-native">${native}</span>` : ""}
       <span class="lang-card-meter" aria-hidden="true">
         <span class="lang-card-track"><span class="lang-card-fill" style="width:${pct}%"></span></span>
@@ -2695,6 +2708,8 @@ function updateUIStrings(lang) {
   // (trial + paywall screens, screen labels): one pass, English fallback.
   for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = ui(el.dataset.i18n);
   for (const el of document.querySelectorAll("[data-i18n-aria-label]")) el.setAttribute("aria-label", ui(el.dataset.i18nAriaLabel));
+  for (const el of document.querySelectorAll("[data-i18n-placeholder]")) el.setAttribute("placeholder", ui(el.dataset.i18nPlaceholder));
+  for (const el of document.querySelectorAll("[data-i18n-title]")) el.title = ui(el.dataset.i18nTitle);
 
   document.getElementById("open-app").textContent = strings.openApp;
   const blueprintLink = document.getElementById("link-blueprint");
@@ -2777,6 +2792,12 @@ if (startSubtitle) {
   if (feedbackSubmitEl && strings.feedbackSubmit) {
     feedbackSubmitEl.textContent = strings.feedbackSubmit;
   }
+}
+// ui() with an inline English fallback and {placeholders} — the same
+// translator the sign-in screen, Anna and the leaderboard use.
+function uiT(key, fallback, vars) {
+  const lang = languageState.support || "en";
+  return makeTranslator(LANG_FILE_CACHE[lang]?.uiStrings, LANG_FILE_CACHE["en"]?.uiStrings)(key, fallback, vars);
 }
 function ui(key) {
   const lang = languageState.support || "en";
@@ -6276,11 +6297,11 @@ if (resetBtn) {
     // Destructive and irreversible across every language — one mis-tap
     // must not be enough (Emi 2026-08-26-12). Two explicit confirms.
     const confirmed = confirm(
-      "Reset ALL progress in ALL languages? This cannot be undone."
+      ui("resetConfirm")
     );
     if (!confirmed) return;
     const doubleChecked = confirm(
-      "Last check: every language's progress will be permanently erased. Reset everything?"
+      ui("resetConfirmFinal")
     );
     if (!doubleChecked) return;
 
@@ -6307,7 +6328,7 @@ if (resetBtn) {
 if (logoutBtn) {
   logoutBtn.onclick = async () => {
 
-    const confirmed = confirm("Log out and reset local data?");
+    const confirmed = confirm(ui("logoutConfirm"));
     if (!confirmed) return;
 
     // End the Supabase session first so a reload lands on the sign-in
@@ -6369,7 +6390,7 @@ window.__app = {
     // A dynamic import needs a relative specifier; dataUrl() gives a bare one.
     if (!modulePromise) modulePromise = import(`./${dataUrl("leaderboard.mjs")}`);
     modulePromise
-      .then((mod) => mod.openLeaderboard())
+      .then((mod) => mod.openLeaderboard({ t: appText.t, lang: appText.lang() }))
       .catch((err) => {
         console.warn("Leaderboard failed to load:", err);
         modulePromise = null;
@@ -6405,12 +6426,16 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
       btn.classList.remove("locked");
       btn.removeAttribute("aria-disabled");
       btn.href = "tutor.html";
-      btn.textContent = "Anna — AI Tutor";
+      // data-i18n keeps the unlocked label when updateUIStrings runs again.
+      btn.dataset.i18n = "tutorLink";
+      btn.textContent = appText.ui("tutorLink");
     } else if (localStorage.getItem("zth_access_tier") === "trial") {
       // Free tier: Anna is visible and locked (Nekh 2026-09-30), never hidden.
-      btn.title = "Anna comes with the full app, from lesson 4";
+      btn.dataset.i18nTitle = "tutorLockedTrial";
+      btn.title = appText.ui("tutorLockedTrial");
     } else if (data && data.subscribed === false) {
-      btn.title = "Anna needs an active subscription — renew at nekhslanguageblueprint.com/zero-to-hero";
+      btn.dataset.i18nTitle = "tutorLockedRenew";
+      btn.title = appText.ui("tutorLockedRenew");
     }
   } catch (_) {
     // Network failure: button simply stays locked.
@@ -6454,23 +6479,23 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
     const cfg = cfgOf(state);
     body.innerHTML = `
       <ul class="referral-points">
-        <li>Your friend pays ${money(cfg.monthlyPriceCents)}/month for the app with Anna, same as you.</li>
-        <li>${pct(cfg.rateBps)} of every payment they make comes off your own subscription — ${money(perFriend(cfg))} a month per friend — while you both subscribe.</li>
-        <li>${friendsForFree(cfg)} friends and your subscription costs nothing. The discount is capped at ${money(cfg.capCents)} per calendar year.</li>
+        <li>${esc(appText.t("referralPointPrice", "Your friend pays {price}/month for the app with Anna, same as you.", { price: money(cfg.monthlyPriceCents) }))}</li>
+        <li>${esc(appText.t("referralPointShare", "{pct} of every payment they make comes off your own subscription — {perFriend} a month per friend — while you both subscribe.", { pct: pct(cfg.rateBps), perFriend: money(perFriend(cfg)) }))}</li>
+        <li>${esc(appText.t("referralPointFree", "{friends} friends and your subscription costs nothing. The discount is capped at {cap} per calendar year.", { friends: friendsForFree(cfg), cap: money(cfg.capCents) }))}</li>
       </ul>
       <label class="referral-terms">
         <input id="referral-accept" type="checkbox" />
-        <span>I accept the <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">referral terms</a>.</span>
+        <span>${appText.t("referralAccept", "I accept the {terms}.", { terms: `<a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">${esc(appText.t("referralTermsLink", "referral terms"))}</a>` })}</span>
       </label>
-      <button id="referral-get-code" class="primary" type="button" disabled>Get my code</button>
-      ${state.eligible ? "" : '<p class="referral-note">Referral codes are for active subscribers.</p>'}
+      <button id="referral-get-code" class="primary" type="button" disabled>${esc(appText.t("referralGetCode", "Get my code"))}</button>
+      ${state.eligible ? "" : `<p class="referral-note">${esc(appText.t("referralSubscribersOnly", "Referral codes are for active subscribers."))}</p>`}
     `;
     const accept = document.getElementById("referral-accept");
     const get = document.getElementById("referral-get-code");
     accept.onchange = () => { get.disabled = !(accept.checked && state.eligible); };
     get.onclick = async () => {
       get.disabled = true;
-      get.textContent = "One moment…";
+      get.textContent = appText.t("oneMoment", "One moment…");
       try {
         const res = await authFetch("/.netlify/functions/referral", {
           method: "POST",
@@ -6478,10 +6503,10 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
           body: JSON.stringify({ accept: true }),
         });
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data.error || `Could not create your code (${res.status})`);
+        if (!res.ok) throw new Error(data.error || appText.t("referralCodeFailed", "Could not create your code ({status})", { status: res.status }));
         renderCode(data);
       } catch (err) {
-        renderError(err.message || "Something went wrong — please try again.");
+        renderError(err.message || appText.t("authGeneric", "Something went wrong — please try again."));
       }
     };
   }
@@ -6492,17 +6517,17 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
     body.innerHTML = `
       <div class="referral-code" id="referral-code">${esc(state.code)}</div>
       <div class="referral-link-row">
-        <input id="referral-link" class="referral-link" type="text" readonly value="${esc(state.link)}" aria-label="Your referral link" />
-        <button id="referral-copy" class="primary referral-copy" type="button">Copy link</button>
+        <input id="referral-link" class="referral-link" type="text" readonly value="${esc(state.link)}" aria-label="${esc(appText.t("referralLinkLabel", "Your referral link"))}" />
+        <button id="referral-copy" class="primary referral-copy" type="button">${esc(appText.t("referralCopy", "Copy link"))}</button>
       </div>
-      <p class="referral-note">Your friend opens the link, or types the code into “Referral code” at checkout.</p>
+      <p class="referral-note">${esc(appText.t("referralHowFriendUses", "Your friend opens the link, or types the code into “Referral code” at checkout."))}</p>
       <dl class="referral-stats">
-        <dt>Active referrals</dt><dd id="referral-active">${Number(st.activeReferrals) || 0}</dd>
-        <dt>Earned, waiting for your next invoice</dt><dd>${money(st.availableCents)}</dd>
-        <dt>Taken off your subscription so far</dt><dd>${money(st.appliedCents)}</dd>
-        <dt>This year</dt><dd id="referral-ytd">${money(st.appliedThisYearCents)} of ${money(cfg.capCents)}</dd>
+        <dt>${esc(appText.t("referralActive", "Active referrals"))}</dt><dd id="referral-active">${Number(st.activeReferrals) || 0}</dd>
+        <dt>${esc(appText.t("referralAvailable", "Earned, waiting for your next invoice"))}</dt><dd>${money(st.availableCents)}</dd>
+        <dt>${esc(appText.t("referralApplied", "Taken off your subscription so far"))}</dt><dd>${money(st.appliedCents)}</dd>
+        <dt>${esc(appText.t("referralThisYear", "This year"))}</dt><dd id="referral-ytd">${esc(appText.t("referralOfCap", "{amount} of {cap}", { amount: money(st.appliedThisYearCents), cap: money(cfg.capCents) }))}</dd>
       </dl>
-      <p class="referral-note">On the 1st of each month your earnings become a discount line on your next invoice, up to the price of one month; the rest waits for a later month. Earnings are only ever a discount on your own subscription. <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">Terms</a>.</p>
+      <p class="referral-note">${esc(appText.t("referralHowItWorks", "On the 1st of each month your earnings become a discount line on your next invoice, up to the price of one month; the rest waits for a later month. Earnings are only ever a discount on your own subscription."))} <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">${esc(appText.t("referralTerms", "Terms"))}</a>.</p>
     `;
     const input = document.getElementById("referral-link");
     const copy = document.getElementById("referral-copy");
@@ -6513,21 +6538,21 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
         input.select();
         document.execCommand && document.execCommand("copy");
       }
-      copy.textContent = "Copied";
-      setTimeout(() => { copy.textContent = "Copy link"; }, 1500);
+      copy.textContent = appText.t("referralCopied", "Copied");
+      setTimeout(() => { copy.textContent = appText.t("referralCopy", "Copy link"); }, 1500);
     };
   }
 
   async function load() {
-    body.innerHTML = '<p class="referral-loading">Loading…</p>';
+    body.innerHTML = `<p class="referral-loading">${esc(appText.t("loading", "Loading…"))}</p>`;
     try {
       const res = await authFetch("/.netlify/functions/referral");
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || `Could not load your referral details (${res.status})`);
+      if (!res.ok) throw new Error(data.error || appText.t("referralLoadFailed", "Could not load your referral details ({status})", { status: res.status }));
       if (data.code) renderCode(data);
       else renderAccept(data);
     } catch (err) {
-      renderError(err.message || "Something went wrong — please try again.");
+      renderError(err.message || appText.t("authGeneric", "Something went wrong — please try again."));
     }
   }
 

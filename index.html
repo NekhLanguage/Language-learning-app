@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
-  <link rel="modulepreload" href="app.js?v=1.2.99" />
+  <link rel="modulepreload" href="app.js?v=1.2.100" />
   <!-- app.js's whole static import graph. Without these the browser only
        discovers the second level (sentence_engine, storage, auth, …) after
        app.js has arrived and parsed, and language_rules.mjs one level after
@@ -53,10 +53,8 @@
   <div id="app">
 
     <!-- START SCREEN -->
-    <section id="start-screen" class="screen active" aria-label="Start screen">
-      <button id="logout-btn" class="quit-button" type="button">
-  LOG OUT
-</button>
+    <section id="start-screen" class="screen active" aria-label="Start screen" data-i18n-aria-label="startScreenLabel">
+      <button id="logout-btn" class="quit-button" type="button" data-i18n="logOut">LOG OUT</button>
       <h1 class="title">ZERO TO HERO</h1>
       <p class="subtitle" id="start-subtitle"></p>
 
@@ -75,15 +73,17 @@
       autocomplete="off"
       placeholder="Search"
       aria-label="Search support languages"
+      data-i18n-placeholder="searchPlaceholder"
+      data-i18n-aria-label="searchSupportLabel"
     />
     <div id="support-options" class="support-options"></div>
   </div>
 </div>
 
-      <div class="button-grid" role="navigation" aria-label="Main actions">
+      <div class="button-grid" role="navigation" aria-label="Main actions" data-i18n-aria-label="mainActionsLabel">
         <button class="primary" id="open-app" type="button">OPEN APP</button>
 
-        <a class="secondary locked" id="link-tutor" aria-disabled="true">🔒 Anna — AI Tutor</a>
+        <a class="secondary locked" id="link-tutor" aria-disabled="true" data-i18n="tutorLinkLocked">🔒 Anna — AI Tutor</a>
 
         <a class="secondary" id="link-leaderboard" href="#">🏆 Leaderboard</a>
 
@@ -91,16 +91,16 @@
 
 <a class="secondary" id="link-skool" target="_blank" rel="noopener noreferrer"></a>
 
-        <a class="secondary" id="link-refer" href="#" hidden>Refer a friend — earn 20%</a>
+        <a class="secondary" id="link-refer" href="#" hidden data-i18n="referButton">Refer a friend — earn 20%</a>
 
-        <a class="manage-subscription" id="link-manage-subscription" target="_blank" rel="noopener noreferrer" hidden>Manage subscription</a>
+        <a class="manage-subscription" id="link-manage-subscription" target="_blank" rel="noopener noreferrer" hidden data-i18n="manageSubscription">Manage subscription</a>
 
 <a class="secondary" id="link-offer" target="_blank" rel="noopener noreferrer"></a>
 
       </div>
     </section>
     <!-- Language hub -->
-    <section id="language-screen" class="screen" aria-label="Language hub">
+    <section id="language-screen" class="screen" aria-label="Language hub" data-i18n-aria-label="languageHubLabel">
   <h2 class="title small">LANGUAGES</h2>
   <p class="subtitle">Choose a language to study</p>
   <p id="sync-status" class="subtitle sync-status hidden" role="status"></p>
@@ -112,6 +112,8 @@
     autocomplete="off"
     placeholder="Search languages"
     aria-label="Search languages"
+    data-i18n-placeholder="searchLanguages"
+    data-i18n-aria-label="searchLanguages"
   />
 
   <div class="button-grid" id="language-buttons">
@@ -122,9 +124,7 @@
     QUIT LEARNING
   </button>
 
-  <button id="reset-user" class="quit-button quit-button--right quit-button--danger" type="button">
-    RESET PROGRESS
-  </button>
+  <button id="reset-user" class="quit-button quit-button--right quit-button--danger" type="button" data-i18n="resetProgress">RESET PROGRESS</button>
 
 </section>
     <!-- LEARNING SCREEN -->
@@ -241,11 +241,11 @@
   <!-- Refer a friend (subscribers) -->
   <div id="referral-modal" class="feedback-modal hidden" role="dialog" aria-modal="true" aria-labelledby="referral-modal-title">
     <div class="feedback-panel referral-panel">
-      <button id="referral-close" class="alphabet-close" type="button" aria-label="Close">✕</button>
-      <h2 class="feedback-modal-title" id="referral-modal-title">Refer a friend</h2>
-      <p class="feedback-modal-subtitle">Earn 20% of every payment from the friends you bring in, for as long as you both subscribe.</p>
+      <button id="referral-close" class="alphabet-close" type="button" aria-label="Close" data-i18n-aria-label="closeLabel">✕</button>
+      <h2 class="feedback-modal-title" id="referral-modal-title" data-i18n="referralTitle">Refer a friend</h2>
+      <p class="feedback-modal-subtitle" data-i18n="referralSubtitle">Earn 20% of every payment from the friends you bring in, for as long as you both subscribe.</p>
       <div id="referral-body" class="referral-body" aria-live="polite">
-        <p class="referral-loading">Loading…</p>
+        <p class="referral-loading" data-i18n="loading">Loading…</p>
       </div>
     </div>
   </div>
@@ -253,6 +253,6 @@
   <!-- User + run persistence (non-module) -->
 <script src="vendor/supabase-js-2.116.0.umd.js"></script>
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=1.2.99"></script>
+<script type="module" src="app.js?v=1.2.100"></script>
 </body>
 </html>

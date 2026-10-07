@@ -59,3 +59,16 @@ test("storage that throws (private mode) never breaks the gate", () => {
   markGatePick("de", broken);
   assert.equal(takeGatePick(["de"], broken), null);
 });
+
+test("pluralText picks the language's plural category, then _other, then English", async () => {
+  const { pluralText } = await import("../../ui_text.mjs");
+  const en = makeTranslator({}, { w_one: "{n} word", w_other: "{n} words" });
+  assert.equal(pluralText(en, "en", "w", 1, "x", "y"), "1 word");
+  assert.equal(pluralText(en, "en", "w", 5, "x", "y"), "5 words");
+  const ru = makeTranslator({ w_one: "{n} слово", w_few: "{n} слова", w_many: "{n} слов" }, {});
+  assert.equal(pluralText(ru, "ru", "w", 1, "", ""), "1 слово");
+  assert.equal(pluralText(ru, "ru", "w", 3, "", ""), "3 слова");
+  assert.equal(pluralText(ru, "ru", "w", 7, "", ""), "7 слов");
+  const none = makeTranslator({}, {});
+  assert.equal(pluralText(none, "de", "w", 2, "{n} word", "{n} words"), "2 words");
+});

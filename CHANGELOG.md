@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-07 (evening)
+
+### Start screen, language hub, leaderboard and referral card are ready for your language
+
+The rest of the app's screens now come from the translation files: the start screen (LOG OUT, the Anna button and its tooltips, Refer a friend, Manage subscription, search), the language hub (search, RESET PROGRESS and its two confirmations, BETA badges), the whole leaderboard and the referral card. Counts on the leaderboard follow each language's plural rules ("1 word", "5 words"; Russian's three forms). Translations for the other 18 languages follow in a later update; until then these lines stay English.
+
+---
+
 ## 2026-10-07 (fix)
 
 ### No more code names on the trial, paywall and exercise screens
