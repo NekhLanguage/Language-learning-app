@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-07 (night)
+
+### Arabic: «لأنه» and «إذا كان … فهو»
+
+Arabic sentences with "because" and "if" now follow Arabic grammar instead of English word order. "Because he is at home" is «لأنه في المنزل» (the pronoun joins «لأن»), not «لأن هو في المنزل». "If he is at home, he eats…" is «إذا كان في المنزل، فهو يأكل…», with «كان» after «إذا» and «فـ» on the second half, not «إذا هو في المنزل، هو يأكل…».
+
+---
+
 ## 2026-10-07 (evening)
 
 ### Start screen, language hub, leaderboard and referral card are ready for your language

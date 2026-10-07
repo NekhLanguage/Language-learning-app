@@ -277,6 +277,16 @@
 //                            a preceding adposition (no HOME fused.from
 //                            «hjemmefra»); the adposition's slot renders
 //                            empty.
+//   linkerSubjectSuffix      { LINKER: { PRONOUN: suffix } } — in a
+//                            complex clause a pronoun subject after that
+//                            linker attaches to it as a suffix (ar «لأنه»).
+//   linkerCopula             { LINKER: { PRONOUN: copula } } — after that
+//                            linker a zero-copula language states the
+//                            copula and drops the pronoun (ar «إذا كان في
+//                            المنزل»); only for a predicate with a
+//                            `predicative` form (no case after the copula).
+//   linkerResultPrefix       { LINKER: proclitic } — the answer clause of a
+//                            fronted linker takes it (ar «فهو يأكل»).
 //   attachedPostpositions    a free postposition suffixes onto its noun
 //                            phrase's segment («로비에», «가이드로») instead
 //                            of standing as a spaced word (ko). true for
@@ -571,6 +581,16 @@ export const LANGUAGE_RULES = {
     // «أنا أذهب من المنزل»: HOME's `fused.from` carries the article the
     // other GO lines have (Emi run-34 -214, the de/no mechanism).
     fusedAdpositionForms: true,
+    // Linker clauses (Emi run-34 -213): «لأنه في المنزل» (the pronoun
+    // fuses onto «لأن»), «إذا كان في المنزل، فهو يأكل…» (overt «كان»
+    // after «إذا», فاء الجواب on the answer clause).
+    linkerSubjectSuffix: {
+      BECAUSE: { FIRST_PERSON: "ني", SECOND_PERSON: "ك", HE: "ه", SHE: "ها", WE: "نا", THEY: "هم" },
+    },
+    linkerCopula: {
+      IF: { FIRST_PERSON: "كنت", SECOND_PERSON: "كنت", HE: "كان", SHE: "كانت", WE: "كنا", THEY: "كانوا" },
+    },
+    linkerResultPrefix: { IF: "ف" },
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,

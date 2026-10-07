@@ -4700,11 +4700,15 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
     : [beFronted, subject, complement];
   return capitalizeFirst(words.filter(Boolean).join(" ") + "?", lang);
 }
-function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid) {
-  const subject = attachParticle(lang, formOf(lang, subjectCid), "topic");
+// `opts.omitSubject`: the subject is carried elsewhere (fused onto the
+// linker, or implied by an overt copula). `opts.be`: a copula form that
+// replaces the language's own (linkerCopula).
+function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid, opts = {}) {
+  const subject = opts.omitSubject ? "" : attachParticle(lang, formOf(lang, subjectCid), "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid,
     "complex_clause");
-  const be = override !== null ? override : copulaForm(lang, beCid, subjectCid);
+  const be = typeof opts.be === "string" ? opts.be
+    : override !== null ? override : copulaForm(lang, beCid, subjectCid);
   // A predicate noun may carry a dedicated predicative form — uk HOME is
   // «удома» ("he is at home"), not the dictionary «дім» ("he is a house").
   const entry = vocab().languages?.[lang]?.forms?.[nounCid];
@@ -4896,8 +4900,8 @@ function buildClauseFinalVerbClause(lang, tpl) {
   return SPACELESS_JOIN_LANGS.has(lang) || lang === "ja" || lang === "zh" ? joined : joined + ".";
 }
 
-function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subordinateFirst = false) {
-  const linker = formOf(lang, linkerCid);
+function buildComplexClauseSentence(lang, linkerCid, subClause, mainClause, subordinateFirst = false, linkerText = null) {
+  const linker = linkerText ?? formOf(lang, linkerCid);
 
   // Thai joins clauses without commas; the clause boundary is a space
   // (ถ้าเขาอยู่บ้าน เขากิน...) and a trailing linker attaches directly.
@@ -4979,12 +4983,33 @@ if (tpl.structure?.type === "complex_clause" &&
 }
 if (tpl.structure?.type === "complex_clause") {
   const s = tpl.slots;
+  const linkerCid = tpl.structure.linker;
+
+  // Declared: linkerCopula — after this linker a zero-copula language
+  // states the copula (past form, per subject) and drops the pronoun:
+  // ar «إذا كان في المنزل», not «إذا هو في المنزل». Only for a predicate
+  // that takes no case after the copula (a `predicative` form such as
+  // «في المنزل»); a bare noun would need its accusative («ساحرًا»), which
+  // the data does not carry, so it keeps the plain clause.
+  // Declared: linkerSubjectSuffix — a pronoun subject attaches to the
+  // linker as a suffix: ar «لأن» + «هو» → «لأنه».
+  const copulaSpec = langRuleValue(lang, "linkerCopula")?.[linkerCid];
+  const suffixSpec = langRuleValue(lang, "linkerSubjectSuffix")?.[linkerCid];
+  const predEntry = vocab().languages?.[lang]?.forms?.[s.sub_noun];
+  const hasPredicative = !!(predEntry && !Array.isArray(predEntry) &&
+    typeof predEntry === "object" && typeof predEntry.predicative === "string");
+  const overtCopula = copulaSpec && isCopulaConcept(s.sub_verb) && hasPredicative
+    ? copulaSpec[s.sub_subject] : null;
+  const subjectSuffix = !overtCopula && suffixSpec ? suffixSpec[s.sub_subject] : null;
+  const linkerText = typeof subjectSuffix === "string"
+    ? formOf(lang, linkerCid) + subjectSuffix : null;
 
   const subClause = buildSubjectBeNounClause(
     lang,
     s.sub_subject,
     s.sub_verb,
-    s.sub_noun
+    s.sub_noun,
+    { omitSubject: !!overtCopula || linkerText !== null, be: overtCopula || undefined }
   );
 
   let mainClause;
@@ -5019,12 +5044,20 @@ if (tpl.structure?.type === "complex_clause") {
     );
   }
 
+  // Declared: linkerResultPrefix — the clause that answers this linker
+  // takes a proclitic: ar «إذا …، فهو يأكل …» (فاء الجواب before a
+  // nominal clause).
+  const resultPrefix = tpl.structure.subordinate_first
+    ? langRuleValue(lang, "linkerResultPrefix")?.[linkerCid] : null;
+  if (typeof resultPrefix === "string" && mainClause) mainClause = resultPrefix + mainClause;
+
   return buildComplexClauseSentence(
     lang,
-    tpl.structure.linker,
+    linkerCid,
     subClause,
     mainClause,
-    tpl.structure.subordinate_first
+    tpl.structure.subordinate_first,
+    linkerText
   );
 }
   const segments = renderSegments(lang, tpl, forcedConcept, sharedChoices);
