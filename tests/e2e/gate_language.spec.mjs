@@ -75,3 +75,27 @@ test("the set-password page follows the device's language and has its own picker
   await expect(page.locator("#auth-heading")).toHaveText("Questo link è scaduto");
   await expect(page.locator("#auth-message")).toContainText("Apri l'app");
 });
+
+test("a malformed email gets its own message, an empty box the old one (Emi -222)", async ({ page }) => {
+  await page.goto("/");
+  await page.click("#start-free-btn");
+  await expect(page.locator("#start-free-message")).toHaveText("Enter your email");
+  await page.fill("#start-free-email", "bad@");
+  await page.click("#start-free-btn");
+  await expect(page.locator("#start-free-message")).toContainText("doesn't look like an email");
+});
+
+test("a typed password survives a language switch (Emi -223)", async ({ page }) => {
+  await openSignIn(page);
+  await page.fill("#password-input", "kept-secret");
+  await page.selectOption("#gate-lang", "de");
+  await expect(page.locator("#login-btn")).toHaveText("Anmelden");
+  await expect(page.locator("#password-input")).toHaveValue("kept-secret");
+});
+
+test("an expired set-password link shows the message without a dead form (Emi -229)", async ({ page }) => {
+  await page.goto("/auth.html");
+  await expect(page.locator("#auth-heading")).toHaveText("This link has expired");
+  await expect(page.locator("#password-form")).toBeHidden();
+  await expect(page.locator("#auth-message")).toContainText("fresh link");
+});

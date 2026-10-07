@@ -1983,6 +1983,16 @@ test("de: home is «nach Hause» / «von zu Hause weg» / «zu Hause» (Emi run-
   assert.ok(buildSentence("de", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")).endsWith("zu Hause."));
 });
 
+test("ar: home as a predicate is «في المنزل», never «منزل» (a house); «من المنزل» keeps the article (Emi run-34 -213/-214)", () => {
+  assert.equal(buildSentence("ar", tplById("I_GO_FROM_HOME")), "أنا أذهب من المنزل.");
+  const ifHome = buildSentence("ar", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER"));
+  const becauseHome = buildSentence("ar", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME"));
+  for (const s of [ifHome, becauseHome]) {
+    assert.ok(s.includes("في المنزل"), s);
+    assert.ok(!/(^|\s)منزل/.test(s), s);
+  }
+});
+
 test("de: a drilled possessive takes the slot's case; the adjective after a possessive is weak (Emi run-21 -125)", () => {
   assert.equal(buildSentence("de", tplById("WE_HAVE_JOB"), "MY", {}), "Wir haben meinen Job.");
   assert.equal(buildSentence("de", tplById("SHE_SEES_STATION"), "MY", {}), "Sie sieht meinen Bahnhof.");

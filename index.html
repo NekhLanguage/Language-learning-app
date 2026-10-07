@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
-  <link rel="modulepreload" href="app.js?v=1.2.96" />
+  <link rel="modulepreload" href="app.js?v=1.2.97" />
   <!-- app.js's whole static import graph. Without these the browser only
        discovers the second level (sentence_engine, storage, auth, …) after
        app.js has arrived and parsed, and language_rules.mjs one level after
@@ -128,10 +128,10 @@
 
 </section>
     <!-- LEARNING SCREEN -->
-    <section id="learning-screen" class="screen" aria-label="Learning screen">
+    <section id="learning-screen" class="screen" aria-label="Learning screen" data-i18n-aria-label="learningScreenLabel">
       <button id="quit-learning" class="quit-button" type="button">QUIT LEARNING</button>
-      <button id="alphabet-btn" class="quit-button alphabet-btn hidden" type="button" aria-label="Open alphabet guide">ABC</button>
-      <button id="journey-btn" class="quit-button journey-btn" type="button" aria-label="Open journey roadmap">JOURNEY</button>
+      <button id="alphabet-btn" class="quit-button alphabet-btn hidden" type="button" aria-label="Open alphabet guide" data-i18n-aria-label="alphabetOpenLabel">ABC</button>
+      <button id="journey-btn" class="quit-button journey-btn" type="button" aria-label="Open journey roadmap" data-i18n-aria-label="journeyOpenLabel">JOURNEY</button>
 
       <div class="learning-wrap">
        <h2 class="title small">TODAY'S SESSION</h2>
@@ -148,7 +148,7 @@
 
   </div>
   <!-- REASON SCREEN (first-time per language) -->
-  <section id="reason-screen" class="screen" aria-label="Why you're learning this language">
+  <section id="reason-screen" class="screen" aria-label="Why you're learning this language" data-i18n-aria-label="reasonScreenLabel">
     <h2 class="title small" id="reason-title">WHY THIS LANGUAGE?</h2>
     <p class="subtitle" id="reason-subtitle">There are no wrong answers — this just helps us celebrate the moments that matter to you.</p>
 
@@ -164,7 +164,7 @@
   </section>
 
   <!-- ROADMAP SCREEN (journey view) -->
-  <section id="roadmap-screen" class="screen" aria-label="Your learning journey">
+  <section id="roadmap-screen" class="screen" aria-label="Your learning journey" data-i18n-aria-label="roadmapScreenLabel">
     <button id="roadmap-back" class="quit-button" type="button">← BACK</button>
     <div class="roadmap-wrap">
       <div id="roadmap-milestone" class="roadmap-milestone hidden" role="status" aria-live="polite"></div>
@@ -188,24 +188,24 @@
 
   <!-- FREE TIER, Screen A (Millie copy v2, 2026-09-30): once, when a free
        learner finishes lesson 3. No price here on purpose. -->
-  <section id="trial-anna-screen" class="screen trial-screen" aria-label="Three lessons done">
-    <h1 class="title small">THREE LESSONS DONE</h1>
-    <p class="subtitle trial-line">From lesson 4 on, you also get Anna, a tutor who adds the words you actually use to your own list.</p>
-    <p class="subtitle trial-line">Your first month with her is included.</p>
-    <button id="trial-anna-continue" class="primary" type="button">Keep going</button>
+  <section id="trial-anna-screen" class="screen trial-screen" aria-label="Three lessons done" data-i18n-aria-label="trialDoneLabel">
+    <h1 class="title small" data-i18n="trialDoneTitle">THREE LESSONS DONE</h1>
+    <p class="subtitle trial-line" data-i18n="trialAnnaLine">From lesson 4 on, you also get Anna, a tutor who adds the words you actually use to your own list.</p>
+    <p class="subtitle trial-line" data-i18n="trialAnnaIncluded">Your first month with her is included.</p>
+    <button id="trial-anna-continue" class="primary" type="button" data-i18n="trialKeepGoing">Keep going</button>
   </section>
 
   <!-- FREE TIER, Screen B: the lesson-4 paywall. One line, Nekh 2026-09-30
        (replaces Millie v2's title, two lines and fine print). -->
-  <section id="paywall-screen" class="screen trial-screen" aria-label="Unlock lesson 4">
-    <button id="paywall-back" class="quit-button" type="button">← BACK</button>
-    <a id="paywall-buy" class="primary paywall-buy" href="https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05" target="_blank" rel="noopener">Get the app + 1 month of Anna for $19</a>
-    <p class="paywall-renewal">After that, keeping Anna costs $19 a month. The app stays yours.</p>
-    <button id="paywall-refresh" class="gate-link" type="button">Already paid? Continue</button>
+  <section id="paywall-screen" class="screen trial-screen" aria-label="Unlock lesson 4" data-i18n-aria-label="paywallLabel">
+    <button id="paywall-back" class="quit-button" type="button" data-i18n="roadmapBack">← BACK</button>
+    <a id="paywall-buy" class="primary paywall-buy" href="https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05" target="_blank" rel="noopener" data-i18n="paywallBuy">Get the app + 1 month of Anna for $19</a>
+    <p class="paywall-renewal" data-i18n="paywallRenewal">After that, keeping Anna costs $19 a month. The app stays yours.</p>
+    <button id="paywall-refresh" class="gate-link" type="button" data-i18n="paywallRefresh">Already paid? Continue</button>
     <p id="paywall-status" class="gate-message" role="status" aria-live="polite"></p>
   </section>
 
-  <section id="run-complete-screen" class="screen" aria-label="Run complete">
+  <section id="run-complete-screen" class="screen" aria-label="Run complete" data-i18n-aria-label="runCompleteLabel">
     <h1 class="title"></h1>
     <p class="subtitle" id="run-complete-body"></p>
     <p id="run-complete-stats" class="run-complete-stats"></p>
@@ -216,7 +216,7 @@
   <!-- ALPHABET OVERLAY -->
   <div id="alphabet-overlay" class="alphabet-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="alphabet-overlay-title">
     <div class="alphabet-panel">
-      <button id="alphabet-close" class="alphabet-close" type="button" aria-label="Close alphabet guide">✕</button>
+      <button id="alphabet-close" class="alphabet-close" type="button" aria-label="Close alphabet guide" data-i18n-aria-label="alphabetCloseLabel">✕</button>
       <h2 class="alphabet-overlay-title" id="alphabet-overlay-title"></h2>
       <div id="alphabet-content" class="alphabet-content"></div>
     </div>
@@ -253,6 +253,6 @@
   <!-- User + run persistence (non-module) -->
 <script src="vendor/supabase-js-2.116.0.umd.js"></script>
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=1.2.96"></script>
+<script type="module" src="app.js?v=1.2.97"></script>
 </body>
 </html>
