@@ -96,6 +96,28 @@ NEW divergence fails CI, fixed ones can be pruned with
 --lang <code>` lists every current divergence for one language — that list is
 the priority queue for engine grammar work.
 
+### UI text
+
+Every screen speaks the learner's support language (Nekh 2026-10-06): no
+user-visible English literal in code or markup. Text goes through
+`uiStrings` keys in `lang/<code>.json` — `ui()` / `uiT()` in app.js (and
+`appText.t` / `appText.ui` in the module-scope blocks after the boot
+handler), `t()` in tutor.js, leaderboard.mjs and the sign-in screen
+(`ui_text.mjs makeTranslator`), `pluralText()` for counts, and
+`data-i18n` / `-placeholder` / `-aria-label` / `-title` on static markup.
+English is the fallback, so a new key ships English-only until Angus's
+translations land.
+
+`validation/validate-ui-strings.mjs` hard-fails on a key used in code that
+`en.json` lacks and on a translation using a `{placeholder}` English does
+not offer; missing and English-identical translations are ratcheted via
+`validation/ui-strings-baseline.json` (`npm run validate:ui:update` — the
+diff is the visible translation debt). `tests/e2e/pseudo_locale.spec.mjs`
+serves every uiStrings value wrapped in ⟦…⟧ and fails on any visible word
+outside the brackets on the sign-in, start, hub, leaderboard, referral and
+Anna screens — that is how a hardcoded literal gets caught. A new screen
+gets a block in that spec.
+
 ### Adding a new language
 
 The engine renders the TARGET language from concept data — an unhandled
