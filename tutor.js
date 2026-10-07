@@ -18,6 +18,7 @@
 import { recoverUser, mergeUserStates, USER_KEY, USER_BACKUP_KEY } from "./storage.mjs";
 import { getSession as getAuthSession, authFetch } from "./auth.mjs";
 import { AVAILABLE_LANGUAGES } from "./languages.js";
+import { makeTranslator, gateLanguage } from "./ui_text.mjs";
 import { buildProfileText, buildMemoryText, pickTutorRun, mergePersonalVocab, wordCountLabel } from "./tutor_profile.mjs";
 import { processTutorSession, applyAdmissions } from "./tutor_admission.mjs";
 import {
@@ -109,8 +110,12 @@ const state = {
   email: "",
   targetLang: "",
   supportLang: "",
-  targetLabel: "",
+  targetLabel: "",  // English name, for Anna's prompt
   supportLabel: "",
+  targetName: "",   // the target language's name in the support language (UI)
+  uiStrings: {},    // support-language UI text (lang/<code>.json uiStrings)
+  uiStringsEn: {},  // English fallback
+  hubNames: {},     // language names in the support language
   user: null,       // the full migrated USER blob (run below points into it)
   run: null,
   forms: {},        // lang -> cid -> entry
@@ -381,13 +386,13 @@ const TUTOR_INTRO_EN = "Anna is your personal tutor. She uses the vocabulary you
 // One panel, two modes: "setup" (first visit, blocking, no close) and
 // "settings" (later edits via the ⚙️ button, closable without saving).
 function openSettings(mode) {
-  els.settingsTitle.textContent = mode === "setup" ? "Set up Anna" : "Settings";
+  els.settingsTitle.textContent = mode === "setup" ? t("tutorSetupTitle", "Set up Anna") : t("tutorSettingsTitle", "Settings");
   // First visit only: who Anna is and what she does with your progress,
   // in the support language (lang/<code>.json uiStrings.tutorIntro;
   // Nekh 2026-09-16).
-  els.intro.textContent = (state.uiStrings && state.uiStrings.tutorIntro) || TUTOR_INTRO_EN;
+  els.intro.textContent = t("tutorIntro", TUTOR_INTRO_EN);
   els.intro.hidden = mode !== "setup";
-  els.settingsSave.textContent = mode === "setup" ? "Start talking" : "Save";
+  els.settingsSave.textContent = mode === "setup" ? t("tutorStartTalking", "Start talking") : t("tutorSave", "Save");
   els.settingsClose.hidden = mode === "setup";
   els.settingsHint.hidden = mode !== "setup";
   els.settings.dataset.mode = mode;
@@ -399,12 +404,12 @@ function saveSettings() {
   persistPreferences();
   els.settings.hidden = true;
   if (mode === "setup") {
-    addMessage("status", "Saved — change these anytime with the ⚙️ button.");
-    addMessage("status", `Say hi to start — try greeting Anna in ${state.targetLabel}.`);
+    addMessage("status", t("tutorSavedFirst", "Saved — change these anytime with the ⚙️ button."));
+    addMessage("status", t("tutorSayHi", "Say hi to start — try greeting Anna in {lang}.", { lang: state.targetName }));
   } else {
     addMessage("status", state.messages.length
-      ? "Settings saved — Anna follows them from her next reply."
-      : "Settings saved.");
+      ? t("tutorSettingsSavedMid", "Settings saved — Anna follows them from her next reply.")
+      : t("tutorSettingsSaved", "Settings saved."));
   }
   els.input.focus();
 }
@@ -421,7 +426,7 @@ function renderMemory() {
   if (!facts.length) {
     const empty = document.createElement("p");
     empty.className = "tutor-memory-empty";
-    empty.textContent = "Nothing yet. Anna will start remembering identity and subject facts as you talk — you can come back here to remove any that miss the mark.";
+    empty.textContent = t("tutorMemoryEmpty", "Nothing yet. Anna will start remembering identity and subject facts as you talk — you can come back here to remove any that miss the mark.");
     els.memoryList.appendChild(empty);
     return;
   }
@@ -435,7 +440,7 @@ function renderMemory() {
     btn.type = "button";
     btn.className = "tutor-memory-remove";
     btn.textContent = "✕";
-    btn.setAttribute("aria-label", `Remove: ${fact?.text || ""}`);
+    btn.setAttribute("aria-label", t("tutorMemoryRemove", "Remove: {fact}", { fact: fact?.text || "" }));
     btn.addEventListener("click", () => {
       // Splice by INDEX (not text) so two facts with identical text — the
       // store dedupes case-insensitively on add but not on correction — can
@@ -470,7 +475,7 @@ function renderThemeProgress() {
   if (!played.length) return;
   const h = document.createElement("p");
   h.className = "tutor-theme-progress-title";
-  h.textContent = `Opinions themes in ${state.targetLabel}: ${played.length} of ${OPINION_THEMES.length}`;
+  h.textContent = t("opinionsThemesIn", "Opinions themes in {lang}: {done} of {total}", { lang: state.targetName, done: played.length, total: OPINION_THEMES.length });
   box.appendChild(h);
   const ul = document.createElement("ul");
   ul.className = "tutor-memory-list";
@@ -497,11 +502,71 @@ function closeMemory() {
   els.memory.hidden = true;
 }
 
+// --- UI text ----------------------------------------------------------------
+
+// Everything Anna's page says to the learner is in their support language
+// (Nekh 2026-10-06): the support language's uiStrings, then English, then
+// the inline fallback. The lang files are fetched once and shared with
+// loadForms.
+const langFiles = {};
+function langFile(code) {
+  if (!langFiles[code]) langFiles[code] = fetchJson(`lang/${code}.json`).catch(() => ({ forms: {} }));
+  return langFiles[code];
+}
+
+function t(key, fallback, vars) {
+  return makeTranslator(state.uiStrings, state.uiStringsEn)(key, fallback, vars);
+}
+
+async function loadUiStrings(code) {
+  const [own, en] = await Promise.all([langFile(code), langFile("en")]);
+  state.uiStrings = own?.uiStrings || {};
+  state.uiStringsEn = en?.uiStrings || {};
+  state.hubNames = own?.hubNames || {};
+  const meta = AVAILABLE_LANGUAGES.find((l) => l.code === code);
+  document.documentElement.lang = code;
+  document.documentElement.dir = meta?.isRTL ? "rtl" : "ltr";
+  applyStaticStrings();
+}
+
+// tutor.html text marked data-i18n / -placeholder / -aria-label / -title.
+// The English in the markup is the fallback.
+function applyStaticStrings() {
+  document.title = t("tutorPageTitle", document.title);
+  for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = t(el.dataset.i18n, el.textContent.trim());
+  for (const el of document.querySelectorAll("[data-i18n-placeholder]")) el.placeholder = t(el.dataset.i18nPlaceholder, el.placeholder);
+  for (const el of document.querySelectorAll("[data-i18n-aria-label]")) el.setAttribute("aria-label", t(el.dataset.i18nAriaLabel, el.getAttribute("aria-label")));
+  for (const el of document.querySelectorAll("[data-i18n-title]")) el.title = t(el.dataset.i18nTitle, el.title);
+}
+
+// A language's name as the support language writes it (UI only — the
+// prompt keeps the English label).
+function displayName(code, fallback) {
+  return state.hubNames?.[code] || fallback || code;
+}
+
+// The Opinions subject's stored name is English; show it translated.
+function topicName(topic) {
+  return topic?.kind === "opinions" ? t("opinionsTopicName", topic.name) : topic?.name || "";
+}
+
 // --- Chat UI ----------------------------------------------------------------
 
-function showGate(html) {
+// A blocking message on the tutor page, optionally with the way back.
+function showGate(text, { appLink = false } = {}) {
   els.gate.hidden = false;
-  els.gate.innerHTML = html;
+  els.gate.innerHTML = "";
+  const p = document.createElement("p");
+  p.textContent = text;
+  els.gate.appendChild(p);
+  if (appLink) {
+    const back = document.createElement("p");
+    const a = document.createElement("a");
+    a.href = "index.html";
+    a.textContent = t("tutorGoToApp", "Go to the app");
+    back.appendChild(a);
+    els.gate.appendChild(back);
+  }
 }
 
 function addMessage(role, text) {
@@ -563,7 +628,7 @@ function markUndelivered(bubble, reason) {
     const retry = document.createElement("button");
     retry.type = "button";
     retry.className = "tutor-retry";
-    retry.textContent = "Retry";
+    retry.textContent = t("tutorRetry", "Retry");
     retry.addEventListener("click", () => {
       if (state.pending && !els.input.value.trim()) els.input.value = state.pending.msg.content;
       sendMessage();
@@ -571,7 +636,7 @@ function markUndelivered(bubble, reason) {
     bar.append(label, retry);
     bubble.appendChild(bar);
   }
-  bar.querySelector(".tutor-msg-failed-label").textContent = `Not delivered — ${reason}. Your message is kept.`;
+  bar.querySelector(".tutor-msg-failed-label").textContent = t("tutorNotDelivered", "Not delivered — {reason}. Your message is kept.", { reason });
 }
 
 function markDelivered(bubble) {
@@ -598,12 +663,8 @@ async function loadForms() {
   const langs = [...new Set([state.targetLang, state.supportLang])];
   for (const code of langs) state.forms[code] = {};
 
-  const langResults = await Promise.all(
-    langs.map((code) => fetchJson(`lang/${code}.json`).catch(() => ({ forms: {} })))
-  );
+  const langResults = await Promise.all(langs.map((code) => langFile(code)));
   langs.forEach((code, i) => Object.assign(state.forms[code], langResults[i].forms || {}));
-  // UI strings in the learner's support language (the first-visit intro).
-  state.uiStrings = langResults[langs.indexOf(state.supportLang)]?.uiStrings || {};
 
   const packResults = await Promise.all(
     VOCAB_FILES.map((f) => fetchJson(f).catch(() => ({})))
@@ -693,7 +754,7 @@ async function callTutor(mode, messages, opts) {
       const missingKey = res.status === 503 && /api key/i.test(payload.error || "");
       const err = new Error(
         missingKey
-          ? "Anna isn't fully set up on the server yet — missing API key"
+          ? t("tutorErrNoKey", "Anna isn't fully set up on the server yet — missing API key")
           : payload.error || `Tutor request failed (${res.status})`
       );
       err.retryable = !missingKey && (res.status === 408 || res.status === 429 || res.status >= 500);
@@ -701,7 +762,7 @@ async function callTutor(mode, messages, opts) {
       lastErr = err;
     } catch (err) {
       if (err.retryable === false) throw err;
-      lastErr = err.name === "AbortError" ? new Error("no answer in time") : err;
+      lastErr = err.name === "AbortError" ? new Error(t("tutorErrTimeout", "no answer in time")) : err;
     } finally {
       clearTimeout(timer);
     }
@@ -745,7 +806,7 @@ async function streamTutor(onText) {
         signal: ctrl.signal,
       });
     } catch (err) {
-      throw fallback(err.name === "AbortError" ? "no answer in time" : err.message);
+      throw fallback(err.name === "AbortError" ? t("tutorErrTimeout", "no answer in time") : err.message);
     }
     if (!res.ok) {
       const payload = await res.json().catch(() => ({}));
@@ -782,7 +843,7 @@ async function streamTutor(onText) {
         if (evt.done) { done = true; refused = !!evt.refused; break; }
       }
     }
-    if (!done) throw reply ? new Error("the reply was cut off") : fallback("no answer came back");
+    if (!done) throw reply ? new Error(t("tutorErrCutOff", "the reply was cut off")) : fallback(t("tutorErrNoAnswer", "no answer came back"));
     return { reply: refused ? "" : reply, refused };
   } finally {
     clearTimeout(timer);
@@ -792,7 +853,7 @@ async function streamTutor(onText) {
 function addTypingIndicator() {
   const div = addMessage("status", "");
   div.classList.add("typing");
-  div.setAttribute("aria-label", "Anna is typing");
+  div.setAttribute("aria-label", t("tutorTyping", "Anna is typing"));
   for (let i = 0; i < 3; i++) div.appendChild(document.createElement("span"));
   return div;
 }
@@ -846,7 +907,7 @@ async function sendMessage() {
     clearDraft();
     if (data.refused || !data.reply) {
       if (live) live.remove();
-      addMessage("status", "The tutor couldn't answer that one — try rephrasing.");
+      addMessage("status", t("tutorCouldNotAnswer", "The tutor couldn't answer that one — try rephrasing."));
       return;
     }
     state.messages.push({ role: "assistant", content: data.reply });
@@ -1003,7 +1064,7 @@ async function endSession() {
     clearLiveTranscript();
     els.chat.innerHTML = "";
     state.topicPicker = null;
-    addMessage("status", "Session cleared.");
+    addMessage("status", t("tutorSessionCleared", "Session cleared."));
     showTopicPicker();
     return;
   }
@@ -1032,7 +1093,7 @@ async function endSession() {
     els.chat.innerHTML = "";
     state.topicPicker = null;
     await persistUser();
-    saved = addMessage("status", "Session saved. Anna is writing her notes…");
+    saved = addMessage("status", t("tutorSavedWriting", "Session saved. Anna is writing her notes…"));
   } catch (err) {
     // Only a local bug can land here. Keep the conversation on screen so
     // nothing is lost.
@@ -1040,7 +1101,7 @@ async function endSession() {
     const mem = tutorMemory();
     mem.sessions = mem.sessions.filter((r) => r !== record);
     state.messages = messages;
-    addMessage("status", `Couldn't save the session (${err.message}). The conversation is still here — try End session again.`);
+    addMessage("status", t("tutorSaveFailed", "Couldn't save the session ({error}). The conversation is still here — try End session again.", { error: err.message }));
     setBusy(false);
     return;
   }
@@ -1061,7 +1122,11 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
   try {
     const data = await callTutor("summary", messages, { topicId, theme, excludeRecord: record });
     summary = data.summary || null;
-    if (!summary) failure = data.truncated ? "notes came back cut off" : data.refused ? "notes were declined" : "no notes came back";
+    if (!summary) {
+      failure = data.truncated ? t("tutorNotesCutOff", "notes came back cut off")
+        : data.refused ? t("tutorNotesDeclined", "notes were declined")
+        : t("tutorNotesNone", "no notes came back");
+    }
   } catch (err) {
     console.warn("tutor summary failed:", err);
     failure = err.message;
@@ -1077,7 +1142,7 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
     addMessage("status", text);
   };
   if (!summary) {
-    say(`Session saved. Anna couldn't write her notes just now (${failure}) — she'll finish them next time you open the tutor.`);
+    say(t("tutorNotesLater", "Session saved. Anna couldn't write her notes just now ({failure}) — she'll finish them next time you open the tutor.", { failure }));
     return;
   }
   if (!stillPending) return;
@@ -1092,19 +1157,19 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
     await persistUser();
   } catch (err) {
     console.error("tutor: applying session notes failed:", err);
-    say(`Session saved. Anna's notes couldn't be applied (${err.message}).`);
+    say(t("tutorNotesNotApplied", "Session saved. Anna's notes couldn't be applied ({error}).", { error: err.message }));
     return;
   }
-  say("Session saved. Your tutor will remember this next time.");
+  say(t("tutorSavedDone", "Session saved. Your tutor will remember this next time."));
   if (topicNote) addMessage("status", topicNote);
-  if (record.themeNote) addMessage("status", `Anna's note on this theme: ${record.themeNote}`);
-  if (summary.nextFocus) addMessage("status", `Next focus: ${summary.nextFocus}`);
+  if (record.themeNote) addMessage("status", t("tutorThemeNote", "Anna's note on this theme: {note}", { note: record.themeNote }));
+  if (summary.nextFocus) addMessage("status", t("tutorNextFocus", "Next focus: {focus}", { focus: summary.nextFocus }));
   const added = (summary.newWords || []).length + (summary.learnerWords || []).length;
-  if (added) addMessage("status", `New words added to your personal vocabulary: ${added}.`);
+  if (added) addMessage("status", t("tutorWordsAdded", "New words added to your personal vocabulary: {n}.", { n: added }));
   if (admissions.length) {
     addMessage(
       "status",
-      `Added to your app vocabulary (seen in 3 sessions): ${admissions.map((a) => a.word).join(", ")}.`
+      t("tutorWordsAdmitted", "Added to your app vocabulary (seen in 3 sessions): {words}.", { words: admissions.map((a) => a.word).join(", ") })
     );
   }
   renderTopicProposals();
@@ -1124,9 +1189,9 @@ function applyTopics(record, summary, chosenId, when) {
   if (!state.beta.topics || !summary.topic) return "";
   const { topicId, created } = applyTopicSummary(state.user, record, summary.topic, chosenId, when);
   queueTopicProposals(state.user, summary.proposedTopics, when);
-  if (created) return `Anna started a new topic for this conversation: ${created.name}.`;
+  if (created) return t("tutorTopicCreated", "Anna started a new topic for this conversation: {name}.", { name: topicName(created) });
   const topic = findTopic(state.user, topicId);
-  return topic ? `Filed under your topic: ${topic.name}.` : "";
+  return topic ? t("tutorTopicFiled", "Filed under your topic: {name}.", { name: topicName(topic) }) : "";
 }
 
 // Sessions saved without Anna's notes (see fallbackSessionRecord) get their
@@ -1148,7 +1213,7 @@ async function retryPendingSummaries() {
       applyTopics(record, data.summary, record.topicId || null, record.when);
       applyThemeNote(record, data.summary);
       delete record.pending;
-      addMessage("status", `Anna finished her notes from ${record.when}.`);
+      addMessage("status", t("tutorNotesFinished", "Anna finished her notes from {when}.", { when: record.when }));
     } catch (err) {
       console.warn("tutor: pending summary retry failed:", err);
       if (record.pending.attempts >= MAX_PENDING_SUMMARY_ATTEMPTS) {
@@ -1170,20 +1235,19 @@ async function retryPendingSummaries() {
 function topicLabel() {
   const topic = findTopic(state.user, state.topicId);
   const theme = topic && state.theme ? ` · ${themeLabel(state.theme, state.uiStrings)}` : "";
-  els.langLabel.textContent = `· ${state.targetLabel}${topic ? ` · ${topic.name}${theme}` : ""}`;
+  els.langLabel.textContent = `· ${state.targetName}${topic ? ` · ${topicName(topic)}${theme}` : ""}`;
 }
 
 // A support-language UI string, English when the lang file has none.
 function uiStr(key, fallback) {
-  const v = state.uiStrings && state.uiStrings[key];
-  return typeof v === "string" && v.trim() ? v : fallback;
+  return t(key, fallback);
 }
 
 // The Opinions subject: roll a theme, start the conversation on it.
 function pickOpinions() {
   const topic = ensureOpinionsTopic(state.user, todayStamp());
   if (!topic) {
-    addMessage("status", "Your topic list is full — delete a topic to start Opinions.");
+    addMessage("status", t("tutorTopicsFull", "Your topic list is full — delete a topic to start Opinions."));
     return;
   }
   persistUser();
@@ -1196,7 +1260,7 @@ function pickOpinions() {
   state.topicId = topic.id;
   state.theme = theme;
   topicLabel();
-  addMessage("status", themePickLine(themeLabel(theme, state.uiStrings), sessions, theme.id));
+  addMessage("status", themePickLine(themeLabel(theme, state.uiStrings), sessions, theme.id, t));
   els.input.focus();
 }
 
@@ -1212,10 +1276,10 @@ function pickTopic(topic) {
   topicLabel();
   if (topic) {
     addMessage("status", topic.notes
-      ? `Topic: ${topic.name}. Anna will pick up where you left off — say hi to start.`
-      : `Topic: ${topic.name}. Say hi to start.`);
+      ? t("tutorTopicResume", "Topic: {name}. Anna will pick up where you left off — say hi to start.", { name: topicName(topic) })
+      : t("tutorTopicStart", "Topic: {name}. Say hi to start.", { name: topicName(topic) }));
   } else {
-    addMessage("status", `Free conversation. Say hi to start — Anna files it under a topic at the end if it has one.`);
+    addMessage("status", t("tutorFreeChat", "Free conversation. Say hi to start — Anna files it under a topic at the end if it has one."));
   }
   els.input.focus();
 }
@@ -1231,7 +1295,11 @@ function showTopicPicker() {
   box.id = "tutor-topics";
   const h = document.createElement("p");
   h.className = "tutor-topics-title";
-  h.innerHTML = 'What do you want to talk about? <span class="beta-badge">BETA</span>';
+  h.textContent = `${t("tutorTopicsTitle", "What do you want to talk about?")} `;
+  const badge = document.createElement("span");
+  badge.className = "beta-badge";
+  badge.textContent = t("betaBadge", "BETA");
+  h.appendChild(badge);
   box.appendChild(h);
 
   const list = document.createElement("div");
@@ -1258,7 +1326,7 @@ function showTopicPicker() {
       .replace("{total}", progress.total)
       .replace("{sessions}", progress.conversations);
     b.appendChild(small);
-    b.title = (opinions && opinions.notes) || "Anna asks what you think about a theme and why — a different theme every time.";
+    b.title = (opinions && opinions.notes) || t("opinionsPickHint", "Anna asks what you think about a theme and why — a different theme every time.");
     b.addEventListener("click", pickOpinions);
     row.appendChild(b);
     if (opinions) {
@@ -1266,9 +1334,9 @@ function showTopicPicker() {
       del.type = "button";
       del.className = "tutor-topic-remove";
       del.textContent = "✕";
-      del.setAttribute("aria-label", `Delete topic: ${opinions.name}`);
+      del.setAttribute("aria-label", t("tutorTopicDeleteLabel", "Delete topic: {name}", { name: topicName(opinions) }));
       del.addEventListener("click", () => {
-        if (!confirm(`Delete the topic "${opinions.name}"? Anna forgets her notes on it. Your saved sessions and theme progress stay.`)) return;
+        if (!confirm(t("tutorTopicDeleteOpinions", "Delete the topic \"{name}\"? Anna forgets her notes on it. Your saved sessions and theme progress stay.", { name: topicName(opinions) }))) return;
         removeTopic(state.user, opinions.id);
         persistUser();
         showTopicPicker();
@@ -1288,15 +1356,15 @@ function showTopicPicker() {
     b.className = "tutor-btn secondary tutor-topic";
     b.dataset.topicId = topic.id;
     b.textContent = topic.sessions ? `${topic.name} · ${topic.sessions}` : topic.name;
-    b.title = topic.notes || "No conversations yet";
+    b.title = topic.notes || t("tutorTopicNoSessions", "No conversations yet");
     b.addEventListener("click", () => pickTopic(topic));
     const del = document.createElement("button");
     del.type = "button";
     del.className = "tutor-topic-remove";
     del.textContent = "✕";
-    del.setAttribute("aria-label", `Delete topic: ${topic.name}`);
+    del.setAttribute("aria-label", t("tutorTopicDeleteLabel", "Delete topic: {name}", { name: topic.name }));
     del.addEventListener("click", () => {
-      if (!confirm(`Delete the topic "${topic.name}"? Anna forgets her notes on it. Your saved sessions stay.`)) return;
+      if (!confirm(t("tutorTopicDelete", "Delete the topic \"{name}\"? Anna forgets her notes on it. Your saved sessions stay.", { name: topic.name }))) return;
       removeTopic(state.user, topic.id);
       persistUser();
       showTopicPicker();
@@ -1309,7 +1377,7 @@ function showTopicPicker() {
   const free = document.createElement("button");
   free.type = "button";
   free.className = "tutor-btn secondary tutor-topic-free";
-  free.textContent = "Just chat (no topic)";
+  free.textContent = t("tutorJustChat", "Just chat (no topic)");
   free.addEventListener("click", () => pickTopic(null));
   box.appendChild(free);
 
@@ -1318,12 +1386,12 @@ function showTopicPicker() {
   const input = document.createElement("input");
   input.type = "text";
   input.maxLength = 60;
-  input.placeholder = "New topic, e.g. One Piece";
-  input.setAttribute("aria-label", "New topic name");
+  input.placeholder = t("tutorNewTopicPlaceholder", "New topic, e.g. One Piece");
+  input.setAttribute("aria-label", t("tutorNewTopicLabel", "New topic name"));
   const add = document.createElement("button");
   add.type = "submit";
   add.className = "tutor-btn";
-  add.textContent = "Start topic";
+  add.textContent = t("tutorStartTopic", "Start topic");
   form.append(input, add);
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -1354,19 +1422,20 @@ function renderTopicProposals() {
   box.id = "tutor-topic-proposal";
   box.dir = "auto";
   const q = document.createElement("p");
-  q.textContent = p.question;
+  // Anna writes the question; the fallback is ours (tutor_topics.mjs).
+  q.textContent = p.question || t("tutorProposalQuestion", "Should I start a topic called \"{name}\"?", { name: p.name });
   const yes = document.createElement("button");
   yes.type = "button";
   yes.className = "tutor-btn";
-  yes.textContent = `Yes, add "${p.name}"`;
+  yes.textContent = t("tutorProposalYes", "Yes, add \"{name}\"", { name: p.name });
   const no = document.createElement("button");
   no.type = "button";
   no.className = "tutor-btn secondary";
-  no.textContent = "No thanks";
+  no.textContent = t("tutorProposalNo", "No thanks");
   const answer = (accept) => {
     const topic = accept ? acceptTopicProposal(state.user, 0, todayStamp()) : (dismissTopicProposal(state.user, 0), null);
     box.remove();
-    if (topic) addMessage("status", `New topic: ${topic.name}.`);
+    if (topic) addMessage("status", t("tutorTopicNew", "New topic: {name}.", { name: topic.name }));
     persistUser();
     if (state.topicPicker) showTopicPicker();
     renderTopicProposals();
@@ -1410,11 +1479,17 @@ async function init() {
   // (Nekh 2026-09-26). Pull the server copy and merge before starting.
   if (state.email) user = await pullServerUser(user);
 
+  // The page speaks the learner's support language from the first line,
+  // even the "log in first" gate (the device's remembered pick then).
+  const supportCodes = AVAILABLE_LANGUAGES.filter((l) => !l.hidden).map((l) => l.code);
+  // Signed in: the account's language. Signed out: the same choice the
+  // sign-in screen makes (ui_text.mjs gateLanguage).
+  await loadUiStrings(state.email && user && supportCodes.includes(user.supportLanguage)
+    ? user.supportLanguage
+    : gateLanguage(supportCodes, localStorage, user?.supportLanguage));
+
   if (!state.email || !user) {
-    showGate(
-      "<p>Log in and start learning in the app first — the tutor builds on your real progress.</p>" +
-      '<p><a href="index.html">Go to the app</a></p>'
-    );
+    showGate(t("tutorNeedLogin", "Log in and start learning in the app first — the tutor builds on your real progress."), { appLink: true });
     return;
   }
 
@@ -1438,7 +1513,10 @@ async function init() {
       return 0; // keep pickTutorRun's most-progress-first order otherwise
     });
     els.gate.hidden = false;
-    els.gate.innerHTML = "<p>Which language do you want to practice with Anna?</p>";
+    els.gate.innerHTML = "";
+    const ask = document.createElement("p");
+    ask.textContent = t("tutorPickLanguage", "Which language do you want to practice with Anna?");
+    els.gate.appendChild(ask);
     const wrap = document.createElement("div");
     wrap.className = "tutor-lang-choices";
     for (const c of candidates) {
@@ -1448,7 +1526,7 @@ async function init() {
       b.type = "button";
       // Pack + tutor-admitted counted separately ("284 + 5 words") so the
       // write-back is visible as a feature.
-      b.textContent = `${meta?.label || c.lang} · ${wordCountLabel(c.run)} words`;
+      b.textContent = t("tutorLanguageWords", "{lang} · {count} words", { lang: displayName(c.lang, meta?.label), count: wordCountLabel(c.run) });
       b.addEventListener("click", () => startWithRun(c.lang, c.run));
       wrap.appendChild(b);
     }
@@ -1459,10 +1537,7 @@ async function init() {
     return startWithRun(pick.targetLang, pick.run);
   }
 
-  showGate(
-    "<p>No active language found. Pick a language and do a few exercises in the app, then come back.</p>" +
-    '<p><a href="index.html">Go to the app</a></p>'
-  );
+  showGate(t("tutorNoLanguage", "No active language found. Pick a language and do a few exercises in the app, then come back."), { appLink: true });
 }
 
 // Fetches the server copy and merges it with the device's (same rule as
@@ -1497,13 +1572,14 @@ async function startWithRun(targetLang, run) {
   const supportMeta = AVAILABLE_LANGUAGES.find((l) => l.code === state.supportLang);
   state.targetLabel = targetMeta?.label || state.targetLang;
   state.supportLabel = supportMeta?.label || state.supportLang;
-  els.langLabel.textContent = `· ${state.targetLabel}`;
+  state.targetName = displayName(state.targetLang, state.targetLabel);
+  els.langLabel.textContent = `· ${state.targetName}`;
 
   try {
     await loadForms();
   } catch (err) {
     console.warn("vocab load failed:", err);
-    showGate("<p>Couldn't load vocabulary data. Check your connection and reload.</p>");
+    showGate(t("tutorVocabLoadFailed", "Couldn't load vocabulary data. Check your connection and reload."));
     return;
   }
 
@@ -1533,7 +1609,7 @@ async function startWithRun(targetLang, run) {
 
   const mem = tutorMemory();
   if (mem.sessions.length && mem.sessions[0].nextFocus) {
-    addMessage("status", `Last time's focus: ${mem.sessions[0].nextFocus}`);
+    addMessage("status", t("tutorLastFocus", "Last time's focus: {focus}", { focus: mem.sessions[0].nextFocus }));
   }
 
   // A conversation this device never finished (tab closed, reload, crash)
@@ -1544,8 +1620,8 @@ async function startWithRun(targetLang, run) {
     state.topicId = typeof live.topicId === "string" ? live.topicId : null;
     state.theme = state.topicId ? themeById(live.themeId) : null;
     renderTranscript(state.messages);
-    const when = live.at ? new Date(live.at).toLocaleDateString() : "earlier";
-    addMessage("status", `Picked up your unfinished conversation from ${when}. Keep going, or press End session to save it.`);
+    const when = live.at ? new Date(live.at).toLocaleDateString(state.supportLang) : t("tutorEarlier", "earlier");
+    addMessage("status", t("tutorResumed", "Picked up your unfinished conversation from {when}. Keep going, or press End session to save it.", { when }));
   }
   const draft = readJson(draftKey(), null);
   if (draft?.text) els.input.value = draft.text;
@@ -1555,10 +1631,7 @@ async function startWithRun(targetLang, run) {
   if (!hasSavedPrefs()) {
     openSettings("setup");
   } else if (!state.messages.length) {
-    addMessage(
-      "status",
-      `Say hi to start — try greeting Anna in ${state.targetLabel}.`
-    );
+    addMessage("status", t("tutorSayHi", "Say hi to start — try greeting Anna in {lang}.", { lang: state.targetName }));
   }
 
   els.send.addEventListener("click", sendMessage);

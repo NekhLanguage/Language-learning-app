@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-07 (later)
+
+### Anna's page is ready for your language
+
+Everything Anna's page says now comes from the app's translation files: the settings panel and its choices, the memory panel, the topic picker, the buttons, every status line ("Session saved…", "Next focus:", "Not delivered…"), the delete confirmations and the "log in first" screen. The language you're learning is named in your own language (a German speaker learning Portuguese sees «Portugiesisch»), and Arabic reads right-to-left. Translations for the other 18 languages follow in a later update; until then these lines stay English. Anna's own replies are unchanged.
+
+---
+
 ## 2026-10-07
 
 ### The exercise screen, the trial screens and the paywall are ready for your language

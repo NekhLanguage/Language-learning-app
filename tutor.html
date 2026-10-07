@@ -13,9 +13,9 @@
     <div class="tutor-header">
       <h1 class="title small">Anna <span id="tutor-lang-label"></span> <span id="tutor-version-tag"></span></h1>
       <div class="tutor-header-actions">
-        <button id="tutor-memory-btn" type="button" aria-label="What Anna remembers about you" title="What Anna remembers about you" hidden>🧠</button>
-        <button id="tutor-settings-btn" type="button" aria-label="Tutor settings" hidden>⚙️</button>
-        <a href="index.html">← back to the app</a>
+        <button id="tutor-memory-btn" type="button" aria-label="What Anna remembers about you" title="What Anna remembers about you" data-i18n-aria-label="tutorMemoryTitle" data-i18n-title="tutorMemoryTitle" hidden>🧠</button>
+        <button id="tutor-settings-btn" type="button" aria-label="Tutor settings" data-i18n-aria-label="tutorSettingsLabel" hidden>⚙️</button>
+        <a href="index.html" data-i18n="tutorBackToApp">← back to the app</a>
       </div>
     </div>
 
@@ -23,44 +23,44 @@
 
     <div id="tutor-settings" hidden>
       <div class="tutor-settings-panel">
-        <button id="tutor-settings-close" type="button" aria-label="Close settings" hidden>✕</button>
+        <button id="tutor-settings-close" type="button" aria-label="Close settings" data-i18n-aria-label="tutorSettingsClose" hidden>✕</button>
         <h2 id="tutor-settings-title">Set up Anna</h2>
         <p id="tutor-intro" class="tutor-intro" hidden></p>
-        <label>Corrections
+        <label><span data-i18n="tutorPrefCorrections">Corrections</span>
           <select id="pref-correction">
-            <option value="light">Light — just recast</option>
-            <option value="medium" selected>Medium — short notes</option>
-            <option value="deep">Deep — full explanations</option>
+            <option value="light" data-i18n="tutorPrefLight">Light — just recast</option>
+            <option value="medium" selected data-i18n="tutorPrefMedium">Medium — short notes</option>
+            <option value="deep" data-i18n="tutorPrefDeep">Deep — full explanations</option>
           </select>
         </label>
-        <label>Challenge
+        <label><span data-i18n="tutorPrefChallenge">Challenge</span>
           <select id="pref-challenge">
-            <option value="comfort">Comfort zone</option>
-            <option value="stretch" selected>Stretch me</option>
-            <option value="push">Push me</option>
+            <option value="comfort" data-i18n="tutorPrefComfort">Comfort zone</option>
+            <option value="stretch" selected data-i18n="tutorPrefStretch">Stretch me</option>
+            <option value="push" data-i18n="tutorPrefPush">Push me</option>
           </select>
         </label>
-        <label>Language
+        <label><span data-i18n="tutorPrefLanguage">Language</span>
           <select id="pref-languagemix">
-            <option value="immersion">Target language only</option>
-            <option value="balanced" selected>Balanced</option>
-            <option value="support">Explain freely</option>
+            <option value="immersion" data-i18n="tutorPrefImmersion">Target language only</option>
+            <option value="balanced" selected data-i18n="tutorPrefBalanced">Balanced</option>
+            <option value="support" data-i18n="tutorPrefSupport">Explain freely</option>
           </select>
         </label>
-        <label>Instructions for Anna
-          <textarea id="tutor-note" rows="4" maxlength="1000" placeholder="e.g. Push me hard on verb endings and don't let mistakes slide. Stay in Portuguese unless I ask. I'm learning for a trip in June — keep it about travel and food."></textarea>
-          <span class="tutor-note-meta"><span>Anna reads these before every reply, on any device. They outrank the dials above.</span><span id="tutor-note-count">0/1000</span></span>
+        <label><span data-i18n="tutorPrefNote">Instructions for Anna</span>
+          <textarea id="tutor-note" rows="4" maxlength="1000" data-i18n-placeholder="tutorNotePlaceholder" placeholder="e.g. Push me hard on verb endings and don't let mistakes slide. Stay in Portuguese unless I ask. I'm learning for a trip in June — keep it about travel and food."></textarea>
+          <span class="tutor-note-meta"><span data-i18n="tutorNoteHint">Anna reads these before every reply, on any device. They outrank the dials above.</span><span id="tutor-note-count">0/1000</span></span>
         </label>
-        <p class="tutor-settings-hint" id="tutor-settings-hint">You can change these anytime with the ⚙️ button.</p>
+        <p class="tutor-settings-hint" id="tutor-settings-hint" data-i18n="tutorSettingsHint">You can change these anytime with the ⚙️ button.</p>
         <button class="tutor-btn" id="tutor-settings-save" type="button">Start talking</button>
       </div>
     </div>
 
     <div id="tutor-memory" hidden>
       <div class="tutor-memory-panel">
-        <button id="tutor-memory-close" type="button" aria-label="Close memory">✕</button>
-        <h2>What Anna remembers about you</h2>
-        <p class="tutor-memory-hint">These identity and subject facts ride into every session's system prompt above your vocabulary. Anna writes them in when you correct her or share something durable. Remove any that are wrong or outdated.</p>
+        <button id="tutor-memory-close" type="button" aria-label="Close memory" data-i18n-aria-label="tutorMemoryClose">✕</button>
+        <h2 data-i18n="tutorMemoryTitle">What Anna remembers about you</h2>
+        <p class="tutor-memory-hint" data-i18n="tutorMemoryHint">These identity and subject facts ride into every session's system prompt above your vocabulary. Anna writes them in when you correct her or share something durable. Remove any that are wrong or outdated.</p>
         <ul id="tutor-memory-list" class="tutor-memory-list" aria-live="polite"></ul>
       </div>
     </div>
@@ -69,14 +69,14 @@
       <div id="tutor-chat" aria-live="polite"></div>
 
       <div id="tutor-input-row">
-        <input type="text" id="tutor-input" placeholder="Type your message…" autocomplete="off" />
-        <button class="tutor-btn" id="tutor-send" type="button">Send</button>
-        <button class="tutor-btn secondary" id="tutor-end" type="button" title="Wraps up and saves what your tutor learned about you">End session</button>
+        <input type="text" id="tutor-input" placeholder="Type your message…" data-i18n-placeholder="tutorInputPlaceholder" autocomplete="off" />
+        <button class="tutor-btn" id="tutor-send" type="button" data-i18n="tutorSend">Send</button>
+        <button class="tutor-btn secondary" id="tutor-end" type="button" title="Wraps up and saves what your tutor learned about you" data-i18n-title="tutorEndHint" data-i18n="tutorEnd">End session</button>
       </div>
     </div>
   </div>
 
   <script src="vendor/supabase-js-2.116.0.umd.js"></script>
-  <script type="module" src="tutor.js?v=1.2.97"></script>
+  <script type="module" src="tutor.js?v=1.2.98"></script>
 </body>
 </html>
