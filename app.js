@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.96";
+const APP_DATA_VERSION = "1.2.97";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1271,7 +1271,7 @@ function showPaywall(targetLang, supportLang) {
   };
   // Back from Stripe in this tab or another: ask the server again.
   document.getElementById("paywall-refresh").onclick = async () => {
-    status.textContent = "Checking…";
+    status.textContent = ui("paywallChecking");
     const verdict = await checkAccessForSession();
     if (verdict.allowed && verdict.tier !== "trial") {
       releaseHeldLesson(run);
@@ -1281,7 +1281,7 @@ function showPaywall(targetLang, supportLang) {
       renderNext(targetLang, supportLang);
       return;
     }
-    status.textContent = "No payment on this account yet. If you just paid, give it a minute and try again — use the same email you signed in with.";
+    status.textContent = ui("paywallNoPayment");
   };
 }
 
@@ -1420,7 +1420,7 @@ if (!hasAccess()) {
 
     // Keep what the learner already typed across a language switch.
     const keep = (id) => document.getElementById(id)?.value || "";
-    const kept = { free: keep("start-free-email"), email: keep("email-input"), optin: !!document.getElementById("start-free-optin")?.checked };
+    const kept = { free: keep("start-free-email"), email: keep("email-input"), password: keep("password-input"), optin: !!document.getElementById("start-free-optin")?.checked };
 
     const options = gateCodes
       .map(code => `<option value="${code}"${code === gateLang ? " selected" : ""}>${SUPPORT_LANGUAGES[code].label}</option>`)
@@ -1496,6 +1496,7 @@ if (!hasAccess()) {
 
     startFreeEmail.value = kept.free;
     emailInput.value = kept.email;
+    passwordInput.value = kept.password;
     startFreeOptIn.checked = kept.optin;
 
     // Messages are stored as {key, fallback, kind} (or a gate notice
@@ -1610,7 +1611,10 @@ if (!hasAccess()) {
       ev.preventDefault();
       const email = startFreeEmail.value.trim().toLowerCase();
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        say("free", { key: "enterEmail", fallback: "Enter your email" });
+        // Empty box and malformed address get different words (Emi -222).
+        say("free", email
+          ? { key: "emailInvalid", fallback: "That doesn't look like an email address — check it and try again." }
+          : { key: "enterEmail", fallback: "Enter your email" });
         startFreeEmail.focus();
         return;
       }
@@ -2047,7 +2051,7 @@ function showRoadmap(opts) {
     meta.className = "roadmap-stop-meta";
     const { track, num } = prettyTrackName(stop.bundleId);
     meta.textContent = num ? `${track} · ${num}` : track;
-    if (paywalled) meta.textContent += " · Full app";
+    if (paywalled) meta.textContent += ` · ${ui("roadmapFullApp")}`;
     body.appendChild(meta);
 
     if (stop.state !== "locked") {
@@ -2069,7 +2073,7 @@ function showRoadmap(opts) {
   }
 
   if (opts && opts.showCoaching) {
-    coachingEl.innerHTML = `Want to go faster? <a href="${EXTERNAL_LINKS.offer}" target="_blank" rel="noopener">Book a coaching session with Nekh</a>`;
+    coachingEl.innerHTML = `${safe(ui("coachingAsk"))} <a href="${EXTERNAL_LINKS.offer}" target="_blank" rel="noopener">${safe(ui("coachingLink"))}</a>`;
     coachingEl.classList.remove("hidden");
   } else {
     coachingEl.classList.add("hidden");
@@ -2244,7 +2248,7 @@ const ICON_SPARK = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" foc
 // TTS helper: inline speaker button for innerHTML templates
 function ttsHtml(text, lang) {
   const e = String(text).replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-  return `<button class="tts-inline" data-tts="${e}" data-lang="${lang}" type="button" aria-label="Play audio">${ICON_SPEAKER}</button>`;
+  return `<button class="tts-inline" data-tts="${e}" data-lang="${lang}" type="button" aria-label="${ui("playAudio")}">${ICON_SPEAKER}</button>`;
 }
 
 // Walks back from the speaker button to find the visible text node it belongs
@@ -2292,7 +2296,7 @@ function createTtsBtn(text, lang) {
   const btn = document.createElement("button");
   btn.className = "tts-inline";
   btn.innerHTML = ICON_SPEAKER;
-  btn.setAttribute("aria-label", "Play audio");
+  btn.setAttribute("aria-label", ui("playAudio"));
   btn.type = "button";
   btn.onclick = (e) => {
     e.stopPropagation();
@@ -2681,6 +2685,11 @@ function updateUIStrings(lang) {
 
   const data = LANG_FILE_CACHE[lang] || LANG_FILE_CACHE["en"] || {};
   const strings = data.uiStrings || {};
+
+  // Static index.html text marked with data-i18n / data-i18n-aria-label
+  // (trial + paywall screens, screen labels): one pass, English fallback.
+  for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = ui(el.dataset.i18n);
+  for (const el of document.querySelectorAll("[data-i18n-aria-label]")) el.setAttribute("aria-label", ui(el.dataset.i18nAriaLabel));
 
   document.getElementById("open-app").textContent = strings.openApp;
   const blueprintLink = document.getElementById("link-blueprint");
@@ -3236,7 +3245,7 @@ return tpl;
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
-    ${canSpeak ? `<button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="Say the sentence">${ICON_MIC} ${ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt")}</button><div id="spoken-diff" class="spoken-diff"></div>` : ""}
+    ${canSpeak ? `<button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="${ui("sayItLabel")}">${ICON_MIC} ${ui("sayIt")}</button><div id="spoken-diff" class="spoken-diff"></div>` : ""}
     ${grammarChipsHtml(grammarRules, targetLang, supportLang)}
     <button id="continue-btn">${ui("continue")}</button>
   `;
@@ -3252,7 +3261,7 @@ return tpl;
       const ttsCode = AVAILABLE_LANGUAGES.find(l => l.code === targetLang)?.ttsCode || targetLang;
       const transcript = await recognizeOnce({ lang: ttsCode });
       speakBtn.disabled = false;
-      speakBtn.innerHTML = `${ICON_MIC} ` + safe(ui("sayIt") === "sayIt" ? "Say it" : ui("sayIt"));
+      speakBtn.innerHTML = `${ICON_MIC} ` + safe(ui("sayIt"));
 
       if (transcript == null) {
         diffEl.textContent = "…";
@@ -3298,7 +3307,7 @@ return tpl;
     LAST_EXERCISE = { type: "tutor_intro", cid: targetConcept, word, translation, note };
 
     content.innerHTML = `
-    <div class="tutor-intro-badge" aria-label="Introduced by Anna">${ICON_SPARK} from Anna</div>
+    <div class="tutor-intro-badge" aria-label="${ui("fromAnnaLabel")}">${ICON_SPARK} ${ui("fromAnna")}</div>
     <h2>${safe(headword(word))} ${ttsHtml(word, targetLang)}</h2>
     ${translation ? `<p>${safe(headword(translation))}</p>` : ""}
     ${note ? `<p class="word-note">${ICON_BULB} ${safe(note)}</p>` : ""}
@@ -3383,7 +3392,7 @@ return tpl;
     let selectedTag = null;
 
     content.innerHTML = `
-    <div class="tutor-intro-badge" aria-label="Introduced by Anna">${ICON_SPARK} from Anna</div>
+    <div class="tutor-intro-badge" aria-label="${ui("fromAnnaLabel")}">${ICON_SPARK} ${ui("fromAnna")}</div>
     <p><strong>${ui("chooseTranslation")}</strong></p>
     <h2>${safe(capitalize(targetWord))} ${ttsHtml(targetWord, targetLang)}</h2>
     <div id="choices"></div>
@@ -3432,7 +3441,7 @@ return tpl;
   // in word mode the word's translation).
   function tutorPromptHtml(task) {
     return `
-    <div class="tutor-intro-badge" aria-label="Introduced by Anna">${ICON_SPARK} from Anna</div>
+    <div class="tutor-intro-badge" aria-label="${ui("fromAnnaLabel")}">${ICON_SPARK} ${ui("fromAnna")}</div>
     <div style="margin-bottom:20px;"><strong>${safe(task.prompt)}</strong></div>`;
   }
 
@@ -3616,11 +3625,11 @@ return tpl;
       if (resultType === "perfect") {
         feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}</div>`;
       } else if (resultType === "accent") {
-        feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}<br/>Proper form: ${expected}</div>`;
+        feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}<br/>${ui("properForm")} ${expected}</div>`;
       } else if (resultType === "semantic") {
-        feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>Expected: ${expected}</div>`;
+        feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>${ui("expected")} ${expected}</div>`;
       } else {
-        feedbackDiv.innerHTML = `<div style="color:var(--danger-text);">${ui("incorrect")}<br/>Correct answer: ${expected}</div>`;
+        feedbackDiv.innerHTML = `<div style="color:var(--danger-text);">${ui("incorrect")}<br/>${ui("correctAnswer")} ${expected}</div>`;
       }
       wireTts();
 
@@ -3892,7 +3901,7 @@ function buildRecognitionOptions(tpl, targetConcept, desiredTotalOptions, target
 }
 
   function renderRecognitionL3(targetLang, supportLang, tpl, targetConcept) {
-  subtitle.textContent = "Level " + levelOf(targetConcept);
+  subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
   // --- Modifier path ---
 if (isModifierConcept(targetConcept)) {
@@ -4174,7 +4183,7 @@ if (!finalOptions.includes(targetConcept)) {
     // Prompt in support language, options in target language (verbs use base form).
     // Does NOT change ladder rules or global option-builder behavior.
 
-    subtitle.textContent = "Level " + levelOf(targetConcept);
+    subtitle.textContent = ui("level") + " " + levelOf(targetConcept);
 
     const promptSupport = formOf(supportLang, targetConcept);
 
@@ -4368,7 +4377,7 @@ if (!finalOptions.includes(targetConcept)) {
 // -------------------------
 function renderMatchingL5(targetLang, supportLang) {
 
-  subtitle.textContent = "Level 5";
+  subtitle.textContent = ui("level") + " 5";
 
   // Gather eligible concepts, dedup by target-language form
   const allEligible = run.released.filter(cid => {
@@ -4646,7 +4655,7 @@ function seedDrilledModifier(sharedChoices, tpl, targetConcept, targetLang) {
 // -------------------------
 function renderSentenceBuilderL6(targetLang, supportLang, tpl, targetConcept) {
 
-  subtitle.textContent = "Level 6";
+  subtitle.textContent = ui("level") + " 6";
 
 let disambiguation = "";
 
@@ -4917,7 +4926,7 @@ if (tileSegments && tileSegments.length) {
 // -------------------------
 function renderFreeProductionL7(targetLang, supportLang, tpl, targetConcept) {
 
-  subtitle.textContent = "Level 7";
+  subtitle.textContent = ui("level") + " 7";
 
 let disambiguation = "";
 
@@ -5091,7 +5100,7 @@ checkBtn.onclick = async () => {
 
   if (resultType === "perfect") {
     inputField.style.borderColor = "var(--success-text)";
-    feedbackDiv.innerHTML = `<div style="color:var(--success-text);">Correct.</div>`;
+    feedbackDiv.innerHTML = `<div style="color:var(--success-text);">${ui("correct")}</div>`;
   }
 
   if (resultType === "accent") {
@@ -5099,7 +5108,7 @@ checkBtn.onclick = async () => {
     feedbackDiv.innerHTML = `
       <div style="color:var(--success-text);">
         ${ui("correct")}<br/>
-        Proper form: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+        ${ui("properForm")} <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
   }
@@ -5109,7 +5118,7 @@ checkBtn.onclick = async () => {
     feedbackDiv.innerHTML = `
       <div style="color:var(--success-text);">
         ${ui("correct")}${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>
-        Expected: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+        ${ui("expected")} <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
   }
@@ -5119,7 +5128,7 @@ checkBtn.onclick = async () => {
     feedbackDiv.innerHTML = `
       <div style="color:var(--danger-text);">
         ${ui("incorrect")}<br/>
-        Correct answer: <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+        ${ui("correctAnswer")} <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
   }
@@ -5270,7 +5279,9 @@ function renderAlphabetOverlay(langCode) {
   const titleEl   = document.getElementById("alphabet-overlay-title");
   const contentEl = document.getElementById("alphabet-content");
 
-  titleEl.textContent = langMeta ? langMeta.label + " — Script Guide" : "Script Guide";
+  // The target language's name as the support language writes it.
+  const langName = LANG_FILE_CACHE[languageState.support]?.hubNames?.[langCode] || langMeta?.label;
+  titleEl.textContent = langName ? ui("scriptGuideFor").replace("{lang}", langName) : ui("scriptGuide");
   contentEl.innerHTML = "";
 
   for (const section of data.alphabet.sections) {
@@ -5286,7 +5297,7 @@ function renderAlphabetOverlay(langCode) {
       const card = document.createElement("div");
       card.className = "letter-card";
       card.style.cursor = "pointer";
-      card.title = "Tap to hear";
+      card.title = ui("tapToHear");
 
       const charEl = document.createElement("span");
       charEl.className = "letter-char";

@@ -308,7 +308,11 @@
     },
     "HOME": {
       "form": "منزل",
-      "gender": "m"
+      "gender": "m",
+      "predicative": "في المنزل",
+      "fused": {
+        "from": "من المنزل"
+      }
     },
     "BOOK": {
       "form": "كتاب",

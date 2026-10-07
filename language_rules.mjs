@@ -568,6 +568,9 @@ export const LANGUAGE_RULES = {
     definiteDestination: true,
     // The role after «كـ» agrees with the subject: «هي تعمل كنادلة» (-201).
     bareNounAfterGlueRoles: ["relation_role_or_time"],
+    // «أنا أذهب من المنزل»: HOME's `fused.from` carries the article the
+    // other GO lines have (Emi run-34 -214, the de/no mechanism).
+    fusedAdpositionForms: true,
     features: {
       adjectivePosition: "post", zeroPresentCopula: true,
       declinesAttributiveAdjectives: true, definitenessAgreement: true,

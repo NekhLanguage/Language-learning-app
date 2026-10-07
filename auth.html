@@ -56,9 +56,9 @@
 
   <script src="vendor/supabase-js-2.116.0.umd.js"></script>
   <script type="module">
-    import { getSession, updatePassword, cleanAuthUrl, describeAuthError } from "./auth.mjs?v=1.2.95";
-    import { makeTranslator, gateLanguage, rememberSupportLanguage } from "./ui_text.mjs?v=1.2.95";
-    import { AVAILABLE_LANGUAGES } from "./languages.js?v=1.2.95";
+    import { getSession, updatePassword, cleanAuthUrl, describeAuthError } from "./auth.mjs?v=1.2.97";
+    import { makeTranslator, gateLanguage, rememberSupportLanguage } from "./ui_text.mjs?v=1.2.97";
+    import { AVAILABLE_LANGUAGES } from "./languages.js?v=1.2.97";
 
     const form = document.getElementById("password-form");
     const pw = document.getElementById("new-password");
@@ -77,7 +77,7 @@
     const load = async (code) => {
       if (!cache[code]) {
         try {
-          const res = await fetch(`lang/${code}.json?v=1.2.95`);
+          const res = await fetch(`lang/${code}.json?v=1.2.97`);
           cache[code] = res.ok ? (await res.json()).uiStrings || {} : {};
         } catch (_) { cache[code] = {}; }
       }
@@ -125,7 +125,10 @@
       heading.dataset.i18n = "authExpiredTitle";
       heading.textContent = t("authExpiredTitle", "This link has expired");
       say({ key: "authExpiredText", fallback: "Open the app, enter your email and tap “Set or reset your password” to get a fresh link." });
-      busy(true);
+      // Nothing to fill in on a dead link: no disabled form, and the
+      // generic note under it would repeat the message (Emi -229).
+      form.hidden = true;
+      document.querySelector(".gate-note")?.setAttribute("hidden", "");
     } else {
       say({ key: "authSettingFor", fallback: "Setting the password for {email}.", vars: { email: session.email }, kind: "ok" });
     }

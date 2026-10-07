@@ -6,6 +6,20 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-07
+
+### The exercise screen, the trial screens and the paywall are ready for your language
+
+Text that was always in English now goes through the app's translation files: "Say it", "Proper form:", "Expected:", "Correct answer:", the "from Anna" badge, the level label on every level, the play-audio and script-guide labels, the "Full app" mark on the roadmap, the coaching line, the "three lessons done" screen, the lesson-4 paywall and its "Checking…" messages. The translations for the other 18 languages follow in the next update; until then these lines stay English.
+
+German, Spanish, Norwegian, Portuguese and Turkish learners now see the reason picker, the roadmap and the milestone lines in their own language. Those 35 lines had shown in English.
+
+Arabic: "he is at home" no longer reads «هو منزل» ("he is a house"); it is «في المنزل». «أنا أذهب من المنزل» keeps its article.
+
+On the sign-in screen, a malformed email gets its own message, a typed password survives a language switch, and an expired set-password link no longer shows a dead form.
+
+---
+
 ## 2026-10-06
 
 ### A cleaner sign-in screen, in your language

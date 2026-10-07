@@ -2998,3 +2998,8 @@ a.primary.paywall-buy{
   padding: 0.25rem 0.2rem 0.25rem 1.3rem;
   background-position: 0.35rem 55%, 0.65rem 55%;
 }
+/* auth.html on an expired link hides its form (display:flex beats [hidden]). */
+.gate-form[hidden],
+.gate-note[hidden]{
+  display: none;
+}
