@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-08
+
+### Six free lessons instead of three
+
+A free account now gets the first six lessons before the paywall, up from three. Lessons 5 and 6 are the first words from the interest packs you picked (anime, football, cooking…), so the free start shows what learning with your own interests is like. If you'd already reached the old lesson-3 stop, open the app again and lesson 4 is waiting.
+
+---
+
 ## 2026-10-07 (night)
 
 ### Arabic: «لأنه» and «إذا كان … فهو»

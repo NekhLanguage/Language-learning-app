@@ -21,7 +21,7 @@ test("picking a language translates the gate and keeps what was typed", async ({
   await page.selectOption("#gate-lang", "de");
 
   await expect(page.locator("#start-free-btn")).toHaveText("Kostenlos starten");
-  await expect(page.locator("#gate-start-free-heading")).toHaveText("Probier die ersten drei Lektionen kostenlos");
+  await expect(page.locator("#gate-start-free-heading")).toHaveText("Probier die ersten 6 Lektionen kostenlos");
   await expect(page.locator("#google-btn")).toHaveText("Weiter mit Google");
   await expect(page.locator("#start-free-email")).toHaveValue("typed@example.com");
   await expect(page.locator("html")).toHaveAttribute("lang", "de");

@@ -109,7 +109,7 @@
     "serverError": "サーバーエラーです。もう一度お試しください。",
     "languageLabel": "言語",
     "startFree": "無料で始める",
-    "startFreeHeading": "最初の3レッスンを無料で体験",
+    "startFreeHeading": "最初の{freeLessons}レッスンを無料で体験",
     "startFreeSent": "受信トレイ（と迷惑メール）を確認してください。パスワード設定用のリンクが届いています。設定したらすぐ始められます。",
     "emailPlaceholder": "yamada@example.jp",
     "emailOptInLabel": "語学学習についてのNekhの週刊メールを受け取る",

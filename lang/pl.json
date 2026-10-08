@@ -113,7 +113,7 @@
     "serverError": "Błąd serwera — spróbuj ponownie.",
     "languageLabel": "Język",
     "startFree": "Zacznij za darmo",
-    "startFreeHeading": "Wypróbuj za darmo pierwsze trzy lekcje",
+    "startFreeHeading": "Wypróbuj za darmo pierwsze {freeLessons} lekcji",
     "startFreeSent": "Sprawdź skrzynkę (i spam): czeka tam link do ustawienia hasła. Potem możesz zaczynać.",
     "emailPlaceholder": "twoj@email.pl",
     "emailOptInLabel": "Wysyłaj mi cotygodniowy e-mail Nekha o nauce języków.",

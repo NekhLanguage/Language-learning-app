@@ -50,7 +50,7 @@
 //
 // Free tier (2026-09-30): an email containing "trial" is a free-tier
 // account (checkAccess tier "trial", Anna refused, saveUser refuses a blob
-// past lesson 3 with 403 like the real function). trial_start is recorded
+// past FREE_LESSONS with 403 like the real function). trial_start is recorded
 // on its first checkAccess.
 //   POST /.netlify/functions/trialEvent  {type, lesson?} -> 204; recorded.
 //   GET  /__devserver/events               -> recorded funnel events.
@@ -106,7 +106,8 @@ const funnelEvents = [];
 const optIns = new Map();
 const mailerlite = [];
 const handToMailerlite = (email) => { if (!mailerlite.includes(email)) mailerlite.push(email); };
-const FREE_LESSONS = 3;
+// The real function's cutoff, so the harness can never disagree with it.
+const { FREE_LESSONS } = require("../netlify/functions/entitlement.js");
 const isTrialEmail = (email) => !!email && email.includes("trial") && !convertedEmails.has(email);
 const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.runs) || {})
   .map((r) => (Array.isArray(r && r.releasedBundleIds) ? r.releasedBundleIds.length : 0)));
@@ -275,7 +276,7 @@ async function handleFunction(name, req, res, url) {
     case "saveUser": {
       if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
       if (isTrialEmail(email) && maxReleasedLessons(body.user) > FREE_LESSONS) {
-        return sendJson(res, 403, { error: "Lesson 4 onward needs the full app.", code: "paywall" });
+        return sendJson(res, 403, { error: `Lesson ${FREE_LESSONS + 1} onward needs the full app.`, code: "paywall" });
       }
       if (body.user) userStore.set(email, body.user);
       return sendJson(res, 200, { ok: true });

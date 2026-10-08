@@ -114,7 +114,7 @@
     "opinionThemeFamilyContact": "Близкая связь с семьёй",
     "languageLabel": "Язык",
     "startFree": "Начать бесплатно",
-    "startFreeHeading": "Первые три урока — бесплатно",
+    "startFreeHeading": "Первые {freeLessons} уроков — бесплатно",
     "startFreeSent": "Проверьте почту (и папку «Спам»): там ссылка, чтобы задать пароль. После этого можно начинать.",
     "emailPlaceholder": "vash@email.ru",
     "emailOptInLabel": "Присылайте мне еженедельное письмо Нэха об изучении языков.",

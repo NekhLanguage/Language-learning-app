@@ -109,7 +109,7 @@
     "serverError": "خطأ في الخادم — حاول مرة أخرى.",
     "languageLabel": "اللغة",
     "startFree": "ابدأ مجانًا",
-    "startFreeHeading": "جرّب الدروس الثلاثة الأولى مجانًا",
+    "startFreeHeading": "جرّب أول {freeLessons} دروس مجانًا",
     "startFreeSent": "تحقّق من صندوق الوارد (والرسائل غير المرغوب فيها): ستجد رابطًا لتعيين كلمة المرور. وبعدها تبدأ.",
     "emailPlaceholder": "name@example.com",
     "emailOptInLabel": "أرسل لي رسالة نيخ الأسبوعية عن تعلّم اللغات.",

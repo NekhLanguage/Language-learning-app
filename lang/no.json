@@ -109,7 +109,7 @@
     "serverError": "Serverfeil – prøv igjen.",
     "languageLabel": "Språk",
     "startFree": "Start gratis",
-    "startFreeHeading": "Prøv de tre første leksjonene gratis",
+    "startFreeHeading": "Prøv de {freeLessons} første leksjonene gratis",
     "startFreeSent": "Sjekk innboksen (og søppelposten) for en lenke til å lage passord. Så er du i gang.",
     "emailPlaceholder": "din@epost.no",
     "emailOptInLabel": "Send meg Nekhs ukentlige e-post om språklæring.",

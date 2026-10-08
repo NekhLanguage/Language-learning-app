@@ -109,7 +109,7 @@
     "serverError": "服务器错误——请重试。",
     "languageLabel": "语言",
     "startFree": "免费开始",
-    "startFreeHeading": "免费体验前三课",
+    "startFreeHeading": "免费体验前{freeLessons}课",
     "startFreeSent": "请查看收件箱（和垃圾邮件），里面有设置密码的链接。设置好就可以开始了。",
     "emailPlaceholder": "wang@example.cn",
     "emailOptInLabel": "给我发送 Nekh 每周一封的语言学习邮件。",

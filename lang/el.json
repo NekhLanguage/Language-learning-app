@@ -109,7 +109,7 @@
     "serverError": "Σφάλμα διακομιστή — δοκιμάστε ξανά.",
     "languageLabel": "Γλώσσα",
     "startFree": "Ξεκινήστε δωρεάν",
-    "startFreeHeading": "Δοκιμάστε δωρεάν τα τρία πρώτα μαθήματα",
+    "startFreeHeading": "Δοκιμάστε δωρεάν τα πρώτα {freeLessons} μαθήματα",
     "startFreeSent": "Ελέγξτε τα εισερχόμενα (και τα ανεπιθύμητα) για έναν σύνδεσμο ορισμού κωδικού. Και μετά είστε μέσα.",
     "emailPlaceholder": "to@email.gr",
     "emailOptInLabel": "Στείλτε μου το εβδομαδιαίο email του Nekh για την εκμάθηση γλωσσών.",
