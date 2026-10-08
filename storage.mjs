@@ -3,7 +3,7 @@
 // for the persisted `zth_user` blob. Pure functions — app.js owns the actual
 // localStorage reads/writes, unit tests exercise the logic directly.
 
-export const CURRENT_SCHEMA_VERSION = 5;
+export const CURRENT_SCHEMA_VERSION = 6;
 
 export const USER_KEY = "zth_user";
 export const USER_BACKUP_KEY = "zth_user_backup";
@@ -134,6 +134,24 @@ export function migrateUserState(user) {
     if (!Array.isArray(user.tutor.topics)) user.tutor.topics = [];
     if (!Array.isArray(user.tutor.topicProposals)) user.tutor.topicProposals = [];
     user.schemaVersion = 5;
+  }
+
+  if (user.schemaVersion < 6) {
+    // v5 → v6: fast track (progression.mjs applyAnswer). Every concept gets
+    // `fastTrack` (off: nobody starts on it; a word earns it by clearing
+    // its next level cleanly) and `missedAtLevel`, seeded from the last
+    // answer — a miss leaves the level unchanged, so lastResult false means
+    // a miss at the current level. A miss earlier in the level followed by
+    // a success is not recoverable from the old shape and counts as clean.
+    for (const run of Object.values(user.runs || {})) {
+      if (!run || typeof run !== "object") continue;
+      for (const p of Object.values(run.progress || {})) {
+        if (!p || typeof p !== "object") continue;
+        if (typeof p.fastTrack !== "boolean") p.fastTrack = false;
+        if (typeof p.missedAtLevel !== "boolean") p.missedAtLevel = p.lastResult === false;
+      }
+    }
+    user.schemaVersion = 6;
   }
 
   return user;
