@@ -109,7 +109,7 @@
     "serverError": "Sunucu hatası — lütfen tekrar deneyin.",
     "languageLabel": "Dil",
     "startFree": "Ücretsiz başla",
-    "startFreeHeading": "İlk üç dersi ücretsiz deneyin",
+    "startFreeHeading": "İlk {freeLessons} dersi ücretsiz deneyin",
     "startFreeSent": "Gelen kutunuza (ve spam klasörüne) bakın: şifrenizi oluşturmanız için bir bağlantı var. Sonra hazırsınız.",
     "emailPlaceholder": "adiniz@eposta.com",
     "emailOptInLabel": "Nekh'in dil öğrenme üzerine haftalık e-postasını bana gönder.",

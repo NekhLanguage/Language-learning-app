@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
-  <link rel="modulepreload" href="app.js?v=1.2.100" />
+  <link rel="modulepreload" href="app.js?v=1.2.101" />
   <!-- app.js's whole static import graph. Without these the browser only
        discovers the second level (sentence_engine, storage, auth, …) after
        app.js has arrived and parsed, and language_rules.mjs one level after
@@ -187,17 +187,17 @@
 </section>
 
   <!-- FREE TIER, Screen A (Millie copy v2, 2026-09-30): once, when a free
-       learner finishes lesson 3. No price here on purpose. -->
-  <section id="trial-anna-screen" class="screen trial-screen" aria-label="Three lessons done" data-i18n-aria-label="trialDoneLabel">
-    <h1 class="title small" data-i18n="trialDoneTitle">THREE LESSONS DONE</h1>
-    <p class="subtitle trial-line" data-i18n="trialAnnaLine">From lesson 4 on, you also get Anna, a tutor who adds the words you actually use to your own list.</p>
+       learner finishes the last free lesson. No price here on purpose. -->
+  <section id="trial-anna-screen" class="screen trial-screen" aria-label="Six lessons done" data-i18n-aria-label="trialDoneLabel">
+    <h1 class="title small" data-i18n="trialDoneTitle">SIX LESSONS DONE</h1>
+    <p class="subtitle trial-line" data-i18n="trialAnnaLine">From lesson 7 on, you also get Anna, a tutor who adds the words you actually use to your own list.</p>
     <p class="subtitle trial-line" data-i18n="trialAnnaIncluded">Your first month with her is included.</p>
     <button id="trial-anna-continue" class="primary" type="button" data-i18n="trialKeepGoing">Keep going</button>
   </section>
 
   <!-- FREE TIER, Screen B: the lesson-4 paywall. One line, Nekh 2026-09-30
        (replaces Millie v2's title, two lines and fine print). -->
-  <section id="paywall-screen" class="screen trial-screen" aria-label="Unlock lesson 4" data-i18n-aria-label="paywallLabel">
+  <section id="paywall-screen" class="screen trial-screen" aria-label="Unlock lesson 7" data-i18n-aria-label="paywallLabel">
     <button id="paywall-back" class="quit-button" type="button" data-i18n="roadmapBack">← BACK</button>
     <a id="paywall-buy" class="primary paywall-buy" href="https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05" target="_blank" rel="noopener" data-i18n="paywallBuy">Get the app + 1 month of Anna for $19</a>
     <p class="paywall-renewal" data-i18n="paywallRenewal">After that, keeping Anna costs $19 a month. The app stays yours.</p>
@@ -253,6 +253,6 @@
   <!-- User + run persistence (non-module) -->
 <script src="vendor/supabase-js-2.116.0.umd.js"></script>
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=1.2.100"></script>
+<script type="module" src="app.js?v=1.2.101"></script>
 </body>
 </html>

@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.100";
+const APP_DATA_VERSION = "1.2.101";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1093,11 +1093,26 @@ async function checkAccessForSession() {
 // paywalled. A "lesson" is one session / one release-plan bundle. The tier
 // comes from checkAccess (server truth) and is cached here only so first
 // paint knows it; nothing that costs money is decided client-side —
-// tutor.js refuses Anna and saveUser refuses a trial blob past lesson 3.
-// Locked, not hidden: free learners see lesson 4+ and Anna, both locked.
+// tutor.js refuses Anna and saveUser refuses a trial blob past the free
+// lessons. Locked, not hidden: free learners see the next lesson and Anna,
+// both locked.
 const ACCESS_TIER_KEY = "zth_access_tier";
 const TRIAL_ANNA_SEEN_KEY = "zth_trial_anna_seen";
-let FREE_LESSONS = 3;
+// 6 since Nekh 2026-10-08 (was 3): lessons 1-4 are core, 5-6 are the first
+// bundle of each chosen interest pack (buildReleasePlan), so a trial now
+// reaches the learner's own interests. The server's value (checkAccess)
+// wins; this default is what the sign-in screen shows before it answers.
+let FREE_LESSONS = 6;
+
+// UI text names the cutoff as {freeLessons} / {firstPaidLesson}, filled
+// from FREE_LESSONS, so changing it is one number (here + entitlement.js).
+function trialVars() {
+  return { freeLessons: FREE_LESSONS, firstPaidLesson: FREE_LESSONS + 1 };
+}
+function fillTrialVars(s) {
+  const vars = trialVars();
+  return typeof s === "string" ? s.replace(/\{(freeLessons|firstPaidLesson)\}/g, (_m, k) => String(vars[k])) : s;
+}
 
 function rememberAccessTier(data) {
   try {
@@ -1162,19 +1177,20 @@ function trialLocked(r) {
   return !!r && isTrialAccount() && (r.sessionNumber || 1) > FREE_LESSONS;
 }
 
-// A run held at the paywall that has since been paid for: session 4+ with
-// only the free lessons released (a paying run releases one per finished
-// session, so this shape only comes from the hold). Release the lesson the
-// paywall held back.
+// A run held at the paywall that may now continue: it is on a session
+// whose lesson was never released (a run releases one per finished
+// session, so released < sessionNumber only comes from the hold). That is
+// a run paid for since, or a free run held at an older, lower cutoff (3
+// before 2026-10-08) that the current one now covers. Release the lesson
+// the paywall held back.
 function releaseHeldLesson(r) {
-  if (!r || isTrialAccount()) return false;
+  if (!r) return false;
   const released = (r.releasedBundleIds || []).length;
-  if (released === FREE_LESSONS && (r.sessionNumber || 1) > FREE_LESSONS &&
-      r.releasePlan && r.releasePlanIndex < r.releasePlan.length) {
-    releaseNextBundle(r);
-    return true;
-  }
-  return false;
+  if (released >= (r.sessionNumber || 1)) return false;
+  if (isTrialAccount() && released >= FREE_LESSONS) return false;
+  if (!r.releasePlan || r.releasePlanIndex >= r.releasePlan.length) return false;
+  releaseNextBundle(r);
+  return true;
 }
 
 // trialEvent used to fire-once and drop on failure (Emi Run 28 Finding #181):
@@ -1264,7 +1280,8 @@ function showOnly(screenEl) {
   screenEl.classList.add("active");
 }
 
-// Screen A (Millie v2): shown once, when a free learner finishes lesson 3.
+// Screen A (Millie v2): shown once, when a free learner finishes the last
+// free lesson.
 function showTrialAnnaIntro(onContinue) {
   const screen = document.getElementById("trial-anna-screen");
   if (!screen) return onContinue();
@@ -1274,7 +1291,7 @@ function showTrialAnnaIntro(onContinue) {
   document.getElementById("trial-anna-continue").onclick = onContinue;
 }
 
-// Screen B (Millie v2): the lesson-4 paywall.
+// Screen B (Millie v2): the paywall at the first paid lesson.
 function showPaywall(targetLang, supportLang) {
   const screen = document.getElementById("paywall-screen");
   if (!screen) return;
@@ -1454,7 +1471,7 @@ if (!hasAccess()) {
 
       <h1 class="title">ZERO TO HERO</h1>
 
-      <h2 id="gate-start-free-heading" class="gate-heading gate-only-free">${t("startFreeHeading", "Try the first three lessons free")}</h2>
+      <h2 id="gate-start-free-heading" class="gate-heading gate-only-free">${t("startFreeHeading", "Try the first {freeLessons} lessons free", trialVars())}</h2>
       <h2 class="gate-heading gate-only-signin">${t("signIn", "Sign in")}</h2>
 
       <button id="google-btn" class="gate-btn gate-google" type="button">
@@ -2031,7 +2048,7 @@ function showRoadmap(opts) {
   const start = Math.max(0, focusIdx - WINDOW_BEFORE);
   let end = Math.min(stops.length, focusIdx + WINDOW_AFTER + 1);
   // Free tier: always keep the first paywalled stop in the window so the
-  // lesson-4 lock is visible from lesson 1 (Emi -182).
+  // first paid lesson's lock is visible from lesson 1 (Emi -182).
   if (isTrialAccount() && FREE_LESSONS < stops.length) {
     end = Math.max(end, FREE_LESSONS + 1);
   }
@@ -2053,7 +2070,7 @@ function showRoadmap(opts) {
     const li = document.createElement("li");
     li.className = "roadmap-stop " + stop.state;
     li.dataset.bundleId = stop.bundleId;
-    // Free tier: lesson 4 onward is visible but marked as the full app's.
+    // Free tier: the paid lessons are visible but marked as the full app's.
     const paywalled = trialAccount && stop.state === "locked" && stop.index >= FREE_LESSONS;
     if (paywalled) li.classList.add("paywalled");
 
@@ -2797,14 +2814,14 @@ if (startSubtitle) {
 // translator the sign-in screen, Anna and the leaderboard use.
 function uiT(key, fallback, vars) {
   const lang = languageState.support || "en";
-  return makeTranslator(LANG_FILE_CACHE[lang]?.uiStrings, LANG_FILE_CACHE["en"]?.uiStrings)(key, fallback, vars);
+  return makeTranslator(LANG_FILE_CACHE[lang]?.uiStrings, LANG_FILE_CACHE["en"]?.uiStrings)(key, fallback, { ...trialVars(), ...vars });
 }
 function ui(key) {
   const lang = languageState.support || "en";
   const primary = LANG_FILE_CACHE[lang]?.uiStrings;
-  if (primary && primary[key] !== undefined) return primary[key];
+  if (primary && primary[key] !== undefined) return fillTrialVars(primary[key]);
   const fallback = LANG_FILE_CACHE["en"]?.uiStrings;
-  if (fallback && fallback[key] !== undefined) return fallback[key];
+  if (fallback && fallback[key] !== undefined) return fillTrialVars(fallback[key]);
   return key;
 }
   function ensureProgress(cid) {
@@ -5875,8 +5892,9 @@ if (bar) {
   if (!run.setupComplete) return;
   if (learningScreen && !learningScreen.classList.contains("active")) return;
 
-  // Free tier: lesson 4 onward shows the paywall instead of exercises. A
-  // run held there that has since been paid for gets its lesson released.
+  // Free tier: the first paid lesson shows the paywall instead of
+  // exercises. A run held there that may now continue gets its lesson
+  // released.
   if (trialLocked(run)) return showPaywall(targetLang, supportLang);
   if (releaseHeldLesson(run)) {
     USER.runs[languageState.target] = run;

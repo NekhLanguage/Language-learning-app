@@ -109,7 +109,7 @@
     "serverError": "Serverfehler – bitte versuch es noch einmal.",
     "languageLabel": "Sprache",
     "startFree": "Kostenlos starten",
-    "startFreeHeading": "Probier die ersten drei Lektionen kostenlos",
+    "startFreeHeading": "Probier die ersten {freeLessons} Lektionen kostenlos",
     "startFreeSent": "Schau in dein Postfach (und in den Spam-Ordner): Dort wartet ein Link, um dein Passwort festzulegen. Dann bist du drin.",
     "emailPlaceholder": "deine@email.de",
     "emailOptInLabel": "Schick mir Nekhs wöchentliche E-Mail übers Sprachenlernen.",

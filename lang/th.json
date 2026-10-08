@@ -113,7 +113,7 @@
     "serverError": "เซิร์ฟเวอร์ขัดข้อง — โปรดลองอีกครั้ง",
     "languageLabel": "ภาษา",
     "startFree": "เริ่มฟรี",
-    "startFreeHeading": "ลองเรียนสามบทแรกฟรี",
+    "startFreeHeading": "ลองเรียน {freeLessons} บทแรกฟรี",
     "startFreeSent": "ตรวจดูกล่องจดหมาย (และสแปม) จะมีลิงก์ให้ตั้งรหัสผ่าน แล้วก็เริ่มได้เลย",
     "emailPlaceholder": "somchai@example.co.th",
     "emailOptInLabel": "ส่งอีเมลรายสัปดาห์ของ Nekh เรื่องการเรียนภาษาให้ฉัน",

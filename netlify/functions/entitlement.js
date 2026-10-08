@@ -1,5 +1,7 @@
-// Free tier (Nekh 2026-09-30): lessons 1-3 free behind an email account,
-// paywall at lesson 4, Anna fully paywalled.
+// Free tier (Nekh 2026-09-30): the first FREE_LESSONS lessons free behind
+// an email account, paywall at the next one, Anna fully paywalled.
+// FREE_LESSONS 3 -> 6 (Nekh 2026-10-08): lessons 5-6 are the first bundle
+// of each chosen interest pack, so a trial reaches the learner's interests.
 //
 // Entitlement lives in the same place the Stripe webhook already writes:
 // public.users. One column decides the tier (migrations/free_tier.sql):
@@ -19,7 +21,7 @@
 const { createHash } = require("crypto");
 const { SUPABASE_URL, usersKey, restHeaders } = require("./supabase");
 
-const FREE_LESSONS = 3;
+const FREE_LESSONS = 6;
 
 // Where the website's MailerLite hand-off lives. `source: app-trial` routes
 // to the trial group there (MAILERLITE_TRIAL_GROUP_ID on the site). Only an

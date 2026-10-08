@@ -114,7 +114,7 @@
     "opinionThemeFamilyContact": "Nära kontakt med familjen",
     "languageLabel": "Språk",
     "startFree": "Börja gratis",
-    "startFreeHeading": "Testa de tre första lektionerna gratis",
+    "startFreeHeading": "Testa de {freeLessons} första lektionerna gratis",
     "startFreeSent": "Kolla inkorgen (och skräpposten) efter en länk för att skapa lösenord. Sedan är du igång.",
     "emailPlaceholder": "din@epost.se",
     "emailOptInLabel": "Skicka mig Nekhs veckobrev om språkinlärning.",

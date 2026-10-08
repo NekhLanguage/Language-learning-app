@@ -1993,6 +1993,24 @@ test("ar: home as a predicate is «في المنزل», never «منزل» (a ho
   }
 });
 
+test("ar: linker clauses — «لأنه», «إذا كان … فهو» (linkerSubjectSuffix / linkerCopula / linkerResultPrefix, Emi run-34 -213)", () => {
+  assert.equal(buildSentence("ar", tplById("HE_EATS_DINNER_WITH_HIS_MOM_BECAUSE_HE_IS_HOME")),
+    "هو يأكل عشاء مع أمه لأنه في المنزل.");
+  assert.equal(buildSentence("ar", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")),
+    "إذا كان في المنزل، فهو يأكل مع ابنته.");
+  // A bare-noun predicate would need its accusative after «كان»
+  // («ساحرًا»), which the data lacks: the pronoun clause stays; the
+  // pronoun still fuses onto «لأن».
+  const wizard = buildSentence("ar", tplById("IF_HE_IS_WIZARD_HE_CAST_SPELL"));
+  assert.ok(!wizard.includes("كان"), wizard);
+  assert.ok(wizard.includes("، فهو "), wizard);
+  assert.ok(buildSentence("ar", tplById("HE_LEARN_MAGIC_BECAUSE_HE_IS_STUDENT")).includes("لأنه طالب"));
+  // A noun subject is not a pronoun: no suffix.
+  assert.ok(!buildSentence("ar", tplById("SHE_PROTECT_FRIEND_BECAUSE_ENEMY_IS_STRONG")).includes("لأنه"));
+  // Undeclared languages are untouched.
+  assert.equal(buildSentence("en", tplById("IF_HE_IS_HOME_HE_EATS_WITH_HIS_DAUGHTER")), "If he is home, he eats with his daughter.");
+});
+
 test("de: a drilled possessive takes the slot's case; the adjective after a possessive is weak (Emi run-21 -125)", () => {
   assert.equal(buildSentence("de", tplById("WE_HAVE_JOB"), "MY", {}), "Wir haben meinen Job.");
   assert.equal(buildSentence("de", tplById("SHE_SEES_STATION"), "MY", {}), "Sie sieht meinen Bahnhof.");

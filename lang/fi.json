@@ -113,7 +113,7 @@
     "serverError": "Palvelinvirhe – yritä uudelleen.",
     "languageLabel": "Kieli",
     "startFree": "Aloita ilmaiseksi",
-    "startFreeHeading": "Kokeile kolmea ensimmäistä oppituntia ilmaiseksi",
+    "startFreeHeading": "Kokeile {freeLessons} ensimmäistä oppituntia ilmaiseksi",
     "startFreeSent": "Katso saapuneet viestit (ja roskaposti): siellä on linkki salasanan luomiseen. Sitten pääset alkuun.",
     "emailPlaceholder": "sinun@sahkoposti.fi",
     "emailOptInLabel": "Lähetä minulle Nekhin viikoittainen sähköposti kielten oppimisesta.",

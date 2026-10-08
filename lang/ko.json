@@ -109,7 +109,7 @@
     "serverError": "서버 오류입니다. 다시 시도해 주세요.",
     "languageLabel": "언어",
     "startFree": "무료로 시작하기",
-    "startFreeHeading": "첫 세 레슨을 무료로 체험하세요",
+    "startFreeHeading": "첫 {freeLessons}개 레슨을 무료로 체험하세요",
     "startFreeSent": "받은편지함(과 스팸함)을 확인하세요. 비밀번호 설정 링크가 와 있어요. 설정하면 바로 시작할 수 있어요.",
     "emailPlaceholder": "hong@example.kr",
     "emailOptInLabel": "언어 학습에 관한 Nekh의 주간 이메일을 받을게요.",

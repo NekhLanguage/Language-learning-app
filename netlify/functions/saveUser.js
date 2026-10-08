@@ -25,8 +25,9 @@ exports.handler = async (event) => {
     const normalized = session.email;
 
     // Free-tier progression gate (Nekh 2026-09-30). The client stops a
-    // free account at the lesson-4 paywall; this is the server half, so a
-    // devtools edit that releases lesson 4 can't be stored and synced back.
+    // free account at the paywall after the free lessons; this is the
+    // server half, so a devtools edit that releases a paid lesson can't be
+    // stored and synced back.
     const row = await fetchAccessRow(normalized, key);
     if (isTrialRow(row)) {
       const violation = trialBlobViolation(user);
@@ -34,7 +35,7 @@ exports.handler = async (event) => {
         return {
           statusCode: 403,
           headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-          body: JSON.stringify({ error: "Lesson 4 onward needs the full app.", ...violation }),
+          body: JSON.stringify({ error: `Lesson ${violation.freeLessons + 1} onward needs the full app.`, ...violation }),
         };
       }
     }

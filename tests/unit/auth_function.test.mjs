@@ -157,10 +157,10 @@ test("checkAccess: 401 without a session, ignores a body email, reports the subs
 
     const alice = await checkAccess.handler(req("alice", { email: "someone-else@example.com" }));
     assert.equal(alice.statusCode, 200);
-    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", tier: "paid", freeLessons: 3, subscribed: true, emailOptInAsked: true });
+    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", tier: "paid", freeLessons: 6, subscribed: true, emailOptInAsked: true });
 
     const bob = await checkAccess.handler(req("bob"));
-    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", tier: "paid", freeLessons: 3, subscribed: false, emailOptInAsked: true });
+    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", tier: "paid", freeLessons: 6, subscribed: false, emailOptInAsked: true });
   }));
 });
 
@@ -171,7 +171,7 @@ test("checkAccess: a verified email with no row becomes a free-tier account, onc
   const { fetchImpl, calls } = fakeSupabase({ tokens: { alice: ALICE, carol: { id: "u3", email: "carol@example.com" } }, rows });
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     const carol = await checkAccess.handler(req("carol"));
-    assert.deepEqual(JSON.parse(carol.body), { allowed: true, email: "carol@example.com", tier: "trial", freeLessons: 3, subscribed: false, emailOptInAsked: false });
+    assert.deepEqual(JSON.parse(carol.body), { allowed: true, email: "carol@example.com", tier: "trial", freeLessons: 6, subscribed: false, emailOptInAsked: false });
     const insert = calls.find((c) => c.url.includes("/rest/v1/users") && c.init.method === "POST");
     assert.equal(insert.init.headers.apikey, SEC, "users writes use the secret key");
     assert.match(insert.init.headers.Prefer, /ignore-duplicates/, "an existing row can never be overwritten");
@@ -239,7 +239,7 @@ test("saveUser PATCHes the session's own row and ignores a body email", async ()
   }));
 });
 
-test("saveUser: a free-tier account cannot store a run past lesson 3; paying rows are not gated", async () => {
+test("saveUser: a free-tier account cannot store a run past lesson 6; paying rows are not gated", async () => {
   const blob = (n) => ({ runs: { pt: { releasedBundleIds: Array.from({ length: n }, (_, i) => `core_${i}`) } } });
   const rows = {
     "alice@example.com": { email: "alice@example.com", access_tier: null },
@@ -247,9 +247,9 @@ test("saveUser: a free-tier account cannot store a run past lesson 3; paying row
   };
   const { fetchImpl, calls } = fakeSupabase({ tokens: { alice: ALICE, tina: { id: "t", email: "tina@example.com" } }, rows });
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
-    assert.equal((await saveUser.handler(req("tina", { user: blob(3) }))).statusCode, 200);
+    assert.equal((await saveUser.handler(req("tina", { user: blob(6) }))).statusCode, 200);
     calls.length = 0;
-    const over = await saveUser.handler(req("tina", { user: blob(4) }));
+    const over = await saveUser.handler(req("tina", { user: blob(7) }));
     assert.equal(over.statusCode, 403);
     assert.equal(JSON.parse(over.body).code, "paywall");
     assert.ok(!calls.some((c) => c.init.method === "PATCH"), "the over-limit blob is never written");

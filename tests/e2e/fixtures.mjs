@@ -74,7 +74,7 @@ export function authHeadersFor(email) {
 
 // Drives a fresh account through setup (language → reason → pack → roadmap)
 // and lands on the learning screen with the first exercise rendered.
-export async function startNewRun(page, { language = "Portuguese", packId = "everyday_life", email } = {}) {
+export async function startNewRun(page, { language = "Portuguese", packId = "everyday_life", packIds = null, email } = {}) {
   // Unique email per run: the dev server's in-memory store is shared across
   // parallel tests, and a reused address would resume that account's state
   // instead of exercising the fresh-setup path.
@@ -85,7 +85,7 @@ export async function startNewRun(page, { language = "Portuguese", packId = "eve
   await expect(page.locator("#reason-screen.active")).toBeVisible();
   await page.locator("#reason-buttons button").first().click();
   await page.click("#reason-continue");
-  await page.locator(`#pack-buttons button[data-pack="${packId}"]`).click();
+  for (const id of packIds || [packId]) await page.locator(`#pack-buttons button[data-pack="${id}"]`).click();
   await page.click("#start-run");
   await expect(page.locator("#roadmap-screen.active")).toBeVisible();
   await page.click("#roadmap-continue");

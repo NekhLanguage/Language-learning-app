@@ -113,7 +113,7 @@
     "serverError": "Erro no servidor — tente de novo.",
     "languageLabel": "Idioma",
     "startFree": "Comece grátis",
-    "startFreeHeading": "Experimente grátis as três primeiras lições",
+    "startFreeHeading": "Experimente grátis as {freeLessons} primeiras lições",
     "startFreeSent": "Confira sua caixa de entrada (e o spam): tem um link para criar sua senha. Depois é só entrar.",
     "emailPlaceholder": "seu@email.com",
     "emailOptInLabel": "Quero receber o e-mail semanal do Nekh sobre aprender idiomas.",

@@ -113,7 +113,7 @@
     "serverError": "Помилка сервера — спробуйте ще раз.",
     "languageLabel": "Мова",
     "startFree": "Почати безкоштовно",
-    "startFreeHeading": "Перші три уроки — безкоштовно",
+    "startFreeHeading": "Перші {freeLessons} уроків — безкоштовно",
     "startFreeSent": "Перевірте вхідні (і спам): там посилання, щоб створити пароль. Після цього можна починати.",
     "emailPlaceholder": "vasha@poshta.ua",
     "emailOptInLabel": "Надсилайте мені щотижневий лист Нека про вивчення мов.",

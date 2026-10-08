@@ -113,7 +113,7 @@
     "serverError": "Errore del server: riprova.",
     "languageLabel": "Lingua",
     "startFree": "Inizia gratis",
-    "startFreeHeading": "Prova gratis le prime tre lezioni",
+    "startFreeHeading": "Prova gratis le prime {freeLessons} lezioni",
     "startFreeSent": "Controlla la posta in arrivo (e lo spam): c'è un link per impostare la password. Poi puoi iniziare.",
     "emailPlaceholder": "tua@email.it",
     "emailOptInLabel": "Mandami l'email settimanale di Nekh sull'imparare le lingue.",

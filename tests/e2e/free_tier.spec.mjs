@@ -1,11 +1,14 @@
-// Free tier (Nekh 2026-09-30): lessons 1-3 free behind an email account,
-// paywall at lesson 4, Anna fully paywalled, lesson 1 is ten words.
+// Free tier (Nekh 2026-09-30): the first lessons free behind an email
+// account, a paywall after them, Anna fully paywalled, lesson 1 is ten
+// words. Six free lessons since Nekh 2026-10-08 (was three), so the trial
+// reaches the learner's interest packs: lessons 5-6 are pack bundles.
 // The dev server treats an email containing "trial" as a free-tier account
 // and mirrors the real server gates (see tests/dev-server.mjs).
 
 import { test, expect, startNewRun, loginAs, authHeadersFor } from "./fixtures.mjs";
 
 const uniq = () => Math.random().toString(36).slice(2);
+const FREE = 6;
 
 // Finish the current lesson (session) the way the app does when the
 // session budget runs out, then continue past the roadmap.
@@ -51,38 +54,47 @@ test("a saved plan that still lists the retired core_02 keeps moving", async ({ 
 test("sign-in screen offers the free start with just an email", async ({ page }) => {
   await page.goto("/?start=free");
   await expect(page.locator("#gate-start-free")).toBeVisible();
-  await expect(page.locator("#gate-start-free-heading")).toHaveText("Try the first three lessons free");
+  await expect(page.locator("#gate-start-free-heading")).toHaveText("Try the first 6 lessons free");
   await page.fill("#start-free-email", `new-${uniq()}@example.com`);
   await page.click("#start-free-btn");
   await expect(page.locator("#start-free-message")).toContainText("inbox");
 });
 
-test("free path: three lessons, Anna screen, lesson-4 paywall, pay, lesson 4 opens", async ({ page, request }) => {
+test("free path: six lessons reach both interest packs, Anna screen, paywall, pay, lesson 7 opens", async ({ page, request }) => {
   const email = `trial-${uniq()}@example.com`;
-  await startNewRun(page, { email });
+  await startNewRun(page, { email, packIds: ["everyday_life", "music"] });
 
   // Anna is visible and locked for a free account.
   expect(await page.evaluate(() => localStorage.getItem("zth_access_tier"))).toBe("trial");
 
-  await finishLesson(page); // lesson 1 → lesson 2
-  await expect(page.locator("#learning-screen.active")).toBeVisible();
-  await finishLesson(page); // lesson 2 → lesson 3
-  await expect(page.locator("#learning-screen.active")).toBeVisible();
+  for (let lesson = 1; lesson < FREE; lesson++) {
+    await finishLesson(page); // lesson n → n + 1
+    await expect(page.locator("#learning-screen.active")).toBeVisible();
+  }
 
-  // Lesson 3 done: the roadmap marks lesson 4 as the full app's, and
-  // nothing past lesson 3 is released.
+  // The point of six: lessons 5 and 6 are the first bundle of each chosen
+  // pack, so a free learner meets their own interests before the paywall.
+  const free = await page.evaluate(() => window.__app.run.releasedBundleIds.slice());
+  expect(free).toHaveLength(FREE);
+  expect(free.slice(0, 4).every((id) => id.startsWith("core_"))).toBe(true);
+  expect(free.slice(4)).toEqual([expect.stringMatching(/^el_/), expect.stringMatching(/^music_/)]); // everyday_life's bundles are el_*
+
+  // Lesson 6 done: the roadmap marks lesson 7 as the full app's, and
+  // nothing past lesson 6 is released.
   await page.evaluate(() => {
     window.__app.run.sessionComplete = true;
     window.__app.rerender();
   });
   await expect(page.locator("#roadmap-screen.active")).toBeVisible();
   await expect(page.locator("#roadmap-path li.paywalled").first()).toContainText("Full app");
-  expect(await page.evaluate(() => window.__app.run.releasedBundleIds.length)).toBe(3);
+  expect(await page.evaluate(() => window.__app.run.releasedBundleIds.length)).toBe(FREE);
   await page.click("#roadmap-continue");
 
-  // Screen A, once: Anna is the added benefit.
+  // Screen A, once: Anna is the added benefit. The counts come from the
+  // cutoff, not from text.
   await expect(page.locator("#trial-anna-screen.active")).toBeVisible();
-  await expect(page.locator("#trial-anna-screen")).toContainText("Anna");
+  await expect(page.locator("#trial-anna-screen h1")).toHaveText("6 LESSONS DONE");
+  await expect(page.locator("#trial-anna-screen")).toContainText("From lesson 7 on, you also get Anna");
   await page.click("#trial-anna-continue");
 
   // Screen B: the paywall, one line naming the app, Anna and the price.
@@ -91,14 +103,16 @@ test("free path: three lessons, Anna screen, lesson-4 paywall, pay, lesson 4 ope
   await expect(page.locator("#paywall-screen .paywall-renewal")).toContainText("$19 a month");
   await expect(page.locator("#paywall-buy")).toHaveAttribute("href", new RegExp(`prefilled_email=${encodeURIComponent(email)}`));
 
-  // The server never stored a blob past lesson 3.
+  await expect(page.locator("#paywall-screen")).toHaveAttribute("aria-label", "Unlock lesson 7");
+
+  // The server never stored a blob past lesson 6.
   const stored = (await (await request.get("/__devserver/users")).json())[email];
-  expect(Math.max(...Object.values(stored.runs).map((r) => r.releasedBundleIds.length))).toBe(3);
+  expect(Math.max(...Object.values(stored.runs).map((r) => r.releasedBundleIds.length))).toBe(FREE);
 
   // Funnel rows.
   const got = (await events(request, email)).map((e) => e.event_type + (e.props?.lesson ? `:${e.props.lesson}` : ""));
   expect(got).toEqual(expect.arrayContaining([
-    "trial_start", "trial_lesson_complete:1", "trial_lesson_complete:2", "trial_lesson_complete:3",
+    "trial_start", "trial_lesson_complete:1", "trial_lesson_complete:3", "trial_lesson_complete:6",
     "trial_anna_intro_seen", "paywall_hit",
   ]));
 
@@ -106,11 +120,35 @@ test("free path: three lessons, Anna screen, lesson-4 paywall, pay, lesson 4 ope
   await request.post(`/__devserver/convert?email=${encodeURIComponent(email)}`);
   await page.click("#paywall-refresh");
   await expect(page.locator("#learning-screen.active")).toBeVisible();
-  expect(await page.evaluate(() => window.__app.run.releasedBundleIds.length)).toBe(4);
+  expect(await page.evaluate(() => window.__app.run.releasedBundleIds.length)).toBe(FREE + 1);
   expect((await events(request, email)).map((e) => e.event_type)).toContain("trial_convert");
 });
 
-// Emi Run 29 Finding #182 re-open: PR #192 claimed to make the lesson-4
+// Free learners stopped at the old lesson-3 paywall come back to a run on
+// session 4 with only three lessons released. The new cutoff covers lesson
+// 4, so it is released and they keep learning instead of replaying 1-3.
+test("a free run held at the old lesson-3 paywall gets lesson 4 under the six-lesson cutoff", async ({ page }) => {
+  const email = `trial-${uniq()}@example.com`;
+  await startNewRun(page, { email });
+  const after = await page.evaluate(() => {
+    const app = window.__app;
+    const run = app.run;
+    const ids = run.releasePlan.slice(0, 3);
+    run.releasedBundleIds = ids.slice();
+    run.releasePlanIndex = 3;
+    run.released = [...new Set(ids.flatMap((id) => app.bundleIndex[id]?.concepts || []))];
+    run.sessionNumber = 4;
+    app.rerender();
+    return { released: run.releasedBundleIds.length, fourth: run.releasedBundleIds[3], planned: run.releasePlan[3] };
+  });
+  expect(after.released).toBe(4);
+  expect(after.fourth).toBe(after.planned);
+  await expect(page.locator("#learning-screen.active")).toBeVisible();
+  await expect(page.locator("#paywall-screen.active")).toHaveCount(0);
+});
+
+// Emi Run 29 Finding #182 re-open (then lesson 4; lesson 7 since the cutoff
+// moved to six): PR #192 claimed to make the lesson-4
 // "Full app" stop visible from lesson 1 but shipped only the paywall copy.
 // On lesson 1 the roadmap window was 1 behind and 2 ahead, so lesson 4 sat
 // behind "↓ N ahead". A free learner never saw that the next thing is a
@@ -129,14 +167,14 @@ test("free account sees the first paywalled stop on the lesson-1 roadmap", async
   await expect(page.locator("#roadmap-path li.paywalled").first()).toContainText("Full app");
 });
 
-test("a paying account is never stopped at lesson 4", async ({ page }) => {
+test("a paying account is never stopped at the free cutoff", async ({ page }) => {
   await startNewRun(page);
   expect(await page.evaluate(() => localStorage.getItem("zth_access_tier"))).toBe("paid");
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < FREE; i++) {
     await finishLesson(page);
     await expect(page.locator("#learning-screen.active")).toBeVisible();
   }
-  expect(await page.evaluate(() => window.__app.run.releasedBundleIds.length)).toBe(4);
+  expect(await page.evaluate(() => window.__app.run.releasedBundleIds.length)).toBe(FREE + 1);
   await expect(page.locator("#paywall-screen.active")).toHaveCount(0);
 });
 
