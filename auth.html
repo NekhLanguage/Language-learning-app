@@ -56,9 +56,9 @@
 
   <script src="vendor/supabase-js-2.116.0.umd.js"></script>
   <script type="module">
-    import { getSession, updatePassword, cleanAuthUrl, describeAuthError } from "./auth.mjs?v=1.2.101";
-    import { makeTranslator, gateLanguage, rememberSupportLanguage } from "./ui_text.mjs?v=1.2.101";
-    import { AVAILABLE_LANGUAGES } from "./languages.js?v=1.2.101";
+    import { getSession, updatePassword, cleanAuthUrl, describeAuthError } from "./auth.mjs?v=1.2.102";
+    import { makeTranslator, gateLanguage, rememberSupportLanguage } from "./ui_text.mjs?v=1.2.102";
+    import { AVAILABLE_LANGUAGES } from "./languages.js?v=1.2.102";
 
     const form = document.getElementById("password-form");
     const pw = document.getElementById("new-password");
@@ -77,7 +77,7 @@
     const load = async (code) => {
       if (!cache[code]) {
         try {
-          const res = await fetch(`lang/${code}.json?v=1.2.101`);
+          const res = await fetch(`lang/${code}.json?v=1.2.102`);
           cache[code] = res.ok ? (await res.json()).uiStrings || {} : {};
         } catch (_) { cache[code] = {}; }
       }

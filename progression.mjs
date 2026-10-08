@@ -17,6 +17,11 @@ export function createProgress() {
     // metadata is only set for tutor-admitted concepts.
     provenance: "pack",
     admittedFrom: null,
+    // Fast track (schema v6, see applyAnswer): on after a level is cleared
+    // with no miss, off at the first miss. missedAtLevel records a miss at
+    // the current level and resets on every level-up.
+    fastTrack: false,
+    missedAtLevel: false,
   };
 }
 
@@ -52,6 +57,20 @@ export function levelCapFor({ isRecognition }) {
   return MAX_LEVEL;
 }
 
+// Fast track (Nekh 2026-10-08): a learner who already knows a word should
+// reach new words sooner. A level normally takes two correct answers. When
+// a word clears a level from L2 up with no miss at that level (two right,
+// first try), it goes on the fast track: from then on ONE correct answer
+// moves it up a level. The first miss takes it off, and it needs two again
+// until it clears another level cleanly, which puts it back on.
+// The last step — completing the word at its cap — always takes two: that
+// is the mastery check, and it is what the leaderboard counts.
+export function answersNeeded(state, levelCap) {
+  if (state.level === 1) return 1;
+  if (state.fastTrack && state.level < levelCap) return 1;
+  return 2;
+}
+
 // Applies one answer to a concept's progress state (mutating it, as the
 // app does) and reports what happened:
 //   { leveledUp, exhaustedLevelUps }
@@ -64,13 +83,15 @@ export function applyAnswer(state, { correct, exerciseIndex, levelCap, sessionLe
 
   if (!correct) {
     state.streak = 0;
+    state.missedAtLevel = true;
+    state.fastTrack = false;
     return { leveledUp: false, exhaustedLevelUps: false };
   }
 
   state.streak++;
 
   let leveledUp = false;
-  const needed = state.level === 1 ? 1 : 2;
+  const needed = answersNeeded(state, levelCap);
 
   if (state.streak >= needed) {
     if (sessionLevelUps >= 3) {
@@ -78,8 +99,13 @@ export function applyAnswer(state, { correct, exerciseIndex, levelCap, sessionLe
       return { leveledUp: false, exhaustedLevelUps: true };
     }
 
+    // A level from L2 up cleared with no miss earns (or keeps) the fast
+    // track. L1 is exposure only, so it says nothing about the learner.
+    if (state.level >= 2 && !state.missedAtLevel) state.fastTrack = true;
+
     if (state.level < levelCap) {
       state.level++;
+      state.missedAtLevel = false;
       leveledUp = true;
     } else {
       state.completed = true;

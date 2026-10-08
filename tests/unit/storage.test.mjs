@@ -126,7 +126,7 @@ test("v2 → v3 seeds an empty user-level learnerFacts array", () => {
     runs: { pt: { released: [], personalVocab: [], pendingAdmission: [] } },
   };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 5);
+  assert.equal(migrated.schemaVersion, CURRENT_SCHEMA_VERSION);
   assert.deepEqual(migrated.learnerFacts, []);
   // Existing run-level state is untouched.
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
@@ -140,7 +140,7 @@ test("v2 → v3 preserves an already-populated learnerFacts", () => {
     learnerFacts: [{ text: "learner is Norwegian", source: "tutor", addedAt: "2026-08-16" }],
   };
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 5);
+  assert.equal(migrated.schemaVersion, CURRENT_SCHEMA_VERSION);
   assert.equal(migrated.learnerFacts.length, 1);
   assert.equal(migrated.learnerFacts[0].text, "learner is Norwegian");
 });
@@ -148,7 +148,7 @@ test("v2 → v3 preserves an already-populated learnerFacts", () => {
 test("full migration path v0 → v5 stamps every field once", () => {
   const user = validUser();
   const migrated = migrateUserState(user);
-  assert.equal(migrated.schemaVersion, 5);
+  assert.equal(migrated.schemaVersion, CURRENT_SCHEMA_VERSION);
   assert.deepEqual(migrated.learnerFacts, []);
   assert.deepEqual(migrated.tutor, { prefs: {}, memory: {}, topics: [], topicProposals: [] });
   assert.deepEqual(migrated.runs.pt, { released: [], personalVocab: [], pendingAdmission: [] });
@@ -156,7 +156,7 @@ test("full migration path v0 → v5 stamps every field once", () => {
 
 test("v3 → v4 seeds the synced tutor store without touching existing prefs", () => {
   const fresh = migrateUserState({ id: "u1", schemaVersion: 3, runs: {}, learnerFacts: [] });
-  assert.equal(fresh.schemaVersion, 5);
+  assert.equal(fresh.schemaVersion, CURRENT_SCHEMA_VERSION);
   assert.deepEqual(fresh.tutor, { prefs: {}, memory: {}, topics: [], topicProposals: [] });
 
   // A blob written by a newer client that already carries tutor prefs keeps them.
@@ -177,7 +177,7 @@ test("v3 → v4 seeds the synced tutor store without touching existing prefs", (
 
 test("v4 → v5 seeds the topics store and keeps existing tutor state", () => {
   const fresh = migrateUserState({ id: "u1", schemaVersion: 4, runs: {}, learnerFacts: [], tutor: { prefs: {}, memory: {} } });
-  assert.equal(fresh.schemaVersion, 5);
+  assert.equal(fresh.schemaVersion, CURRENT_SCHEMA_VERSION);
   assert.deepEqual(fresh.tutor.topics, []);
   assert.deepEqual(fresh.tutor.topicProposals, []);
 
@@ -347,7 +347,8 @@ test("mergeUserStates: a newer lesson on this device no longer erases a topic ma
   assert.deepEqual(user.learnerFacts, [{ text: "reads manga" }]);
   assert.deepEqual(user.runs.pt.personalVocab, [{ word: "navio" }]);
   assert.deepEqual(user.runs.pt.released, ["WATER", "TUTOR_NAVIO"], "tutor-admitted concept joins the phone's ladder");
-  assert.deepEqual(user.runs.pt.progress.TUTOR_NAVIO, { level: 1 });
+  // (the v6 migration of the server copy adds fastTrack / missedAtLevel)
+  assert.equal(user.runs.pt.progress.TUTOR_NAVIO.level, 1);
 });
 
 test("mergeUserStates: server base keeps this device's newer Anna state and pushes it up", () => {
@@ -392,4 +393,33 @@ test("graftTutorState copies, never aliases, and skips runs the target lacks", (
   assert.notEqual(tgt.tutor, src.tutor);
   assert.deepEqual(tgt.tutor.topics, src.tutor.topics);
   assert.equal(tgt.runs.uk, undefined);
+});
+
+test("v5 → v6: every concept gets fastTrack off and missedAtLevel from its last answer", () => {
+  const user = {
+    id: "u1",
+    schemaVersion: 5,
+    learnerFacts: [],
+    tutor: { prefs: {}, memory: {}, topics: [], topicProposals: [] },
+    runs: {
+      no: {
+        progress: {
+          EAT: { level: 3, streak: 1, completed: false, lastShownAt: 4, lastResult: true },
+          SEE: { level: 2, streak: 0, completed: false, lastShownAt: 5, lastResult: false },
+          NEW: { level: 1, streak: 0, completed: false, lastShownAt: null, lastResult: null },
+          KEPT: { level: 4, streak: 0, lastResult: false, fastTrack: true, missedAtLevel: false },
+          BAD: null,
+        },
+      },
+      es: null,
+    },
+  };
+  const migrated = migrateUserState(user);
+  assert.equal(migrated.schemaVersion, CURRENT_SCHEMA_VERSION);
+  const p = migrated.runs.no.progress;
+  assert.deepEqual([p.EAT.fastTrack, p.EAT.missedAtLevel], [false, false]);
+  assert.deepEqual([p.SEE.fastTrack, p.SEE.missedAtLevel], [false, true]);
+  assert.deepEqual([p.NEW.fastTrack, p.NEW.missedAtLevel], [false, false]);
+  assert.deepEqual([p.KEPT.fastTrack, p.KEPT.missedAtLevel], [true, false], "set values are kept");
+  assert.equal(p.EAT.level, 3, "levels are untouched");
 });

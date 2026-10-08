@@ -9,6 +9,7 @@ import {
   passesSpacing,
   levelCapFor,
   applyAnswer,
+  answersNeeded,
 } from "../../progression.mjs";
 
 test("fresh progress always passes spacing", () => {
@@ -115,4 +116,72 @@ test("three session level-ups block further progress this session", () => {
   assert.deepEqual(out, { leveledUp: false, exhaustedLevelUps: true });
   assert.equal(s.level, 3);
   assert.equal(s.streak, 0);
+});
+
+// Fast track (Nekh 2026-10-08): a word cleared at a level with no miss
+// needs one correct answer per level after that, until its first miss.
+test("two first-try answers at L2 put a word on the fast track: L3 then takes one", () => {
+  const s = { ...createProgress(), level: 2 };
+  answer(s); answer(s);
+  assert.equal(s.level, 3);
+  assert.equal(s.fastTrack, true);
+  assert.equal(answersNeeded(s, MAX_LEVEL), 1);
+  assert.equal(answer(s).leveledUp, true);
+  assert.equal(s.level, 4);
+  assert.equal(answer(s).leveledUp, true);
+  assert.equal(s.level, 5);
+});
+
+test("a miss before clearing L2 means no fast track: L3 still takes two", () => {
+  const s = { ...createProgress(), level: 2 };
+  answer(s, { correct: false });
+  answer(s); answer(s);
+  assert.equal(s.level, 3);
+  assert.equal(s.fastTrack, false);
+  assert.equal(answer(s).leveledUp, false);
+  assert.equal(answer(s).leveledUp, true);
+  assert.equal(s.level, 4);
+});
+
+test("the first miss takes a word off the fast track; a clean level puts it back", () => {
+  const s = { ...createProgress(), level: 4, fastTrack: true };
+  answer(s, { correct: false });
+  assert.equal(s.fastTrack, false);
+  assert.equal(answersNeeded(s, MAX_LEVEL), 2);
+  // L4 now takes two, and the miss makes it an unclean level: still off.
+  answer(s); answer(s);
+  assert.equal(s.level, 5);
+  assert.equal(s.fastTrack, false);
+  // L5 cleared with two first-try answers: back on, L6 takes one.
+  answer(s); answer(s);
+  assert.equal(s.level, 6);
+  assert.equal(s.fastTrack, true);
+  assert.equal(answer(s).leveledUp, true);
+  assert.equal(s.level, 7);
+});
+
+test("completing a word at its cap always takes two, fast track or not", () => {
+  const top = { ...createProgress(), level: MAX_LEVEL, fastTrack: true };
+  assert.equal(answersNeeded(top, MAX_LEVEL), 2);
+  answer(top);
+  assert.equal(top.completed, false);
+  answer(top);
+  assert.equal(top.completed, true);
+
+  const rec = { ...createProgress(), level: 4, fastTrack: true };
+  assert.equal(answersNeeded(rec, 4), 2, "recognition words complete at L4");
+});
+
+test("level 1 stays one answer and never earns the fast track by itself", () => {
+  const s = createProgress();
+  answer(s);
+  assert.equal(s.level, 2);
+  assert.equal(s.fastTrack, false);
+});
+
+test("the session level-up cap still applies on the fast track", () => {
+  const s = { ...createProgress(), level: 4, fastTrack: true };
+  const out = answer(s, { sessionLevelUps: 3 });
+  assert.deepEqual(out, { leveledUp: false, exhaustedLevelUps: true });
+  assert.equal(s.level, 4);
 });

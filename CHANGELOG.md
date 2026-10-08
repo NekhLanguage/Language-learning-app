@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-08 (later)
+
+### Words you already know move up faster
+
+If you answer a word right twice in a row at a level, it goes on a fast track: from then on, one right answer moves it up a level instead of two. The first time you miss it, it goes back to needing two, until you get another level right twice in a row. The last step, marking a word as mastered, still takes two right answers. Learners who already know some of the language reach new words sooner, and words you're still learning get the same practice as before.
+
+---
+
 ## 2026-10-08
 
 ### Six free lessons instead of three
