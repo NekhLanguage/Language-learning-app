@@ -46,7 +46,8 @@
 //   GET/POST /.netlify/functions/leaderboard -> the board: counters are
 //        computed from the stored blobs with the real leaderboardStats.js;
 //        POST {name} joins / renames (409 when another learner holds the
-//        name, case-insensitively), POST {leave:true} leaves.
+//        name, case-insensitively), POST {leave:true} leaves. GET
+//        ?period=week answers with what each learner gained this week.
 //
 // Free tier (2026-09-30): an email containing "trial" is a free-tier
 // account (checkAccess tier "trial", Anna refused, saveUser refuses a blob
@@ -66,7 +67,7 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { computeLeaderboardStats, normalizeDisplayName, MIN_NAME, MAX_NAME } =
+const { computeLeaderboardStats, normalizeDisplayName, isoWeekKey, MIN_NAME, MAX_NAME } =
   require("../netlify/functions/leaderboardStats.js");
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -115,6 +116,22 @@ const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.
 const referralCodes = new Map();
 // email -> leaderboard display name (users.lb_name in production).
 const leaderboardNames = new Map();
+// email -> { week, words, anna }: the counters at the start of the week,
+// mirroring the users_lb_weekly trigger (migrations/leaderboard_weekly.sql):
+// the first save of a new week takes the counts from before that save.
+const weekBase = new Map();
+const noteWeeklyBase = (email, previousUser, nextUser) => {
+  const wk = isoWeekKey();
+  if (weekBase.get(email)?.week === wk) return;
+  const from = computeLeaderboardStats(previousUser ?? nextUser ?? null);
+  weekBase.set(email, { week: wk, words: from.words, anna: from.anna });
+};
+const weeklyStats = (email) => {
+  const base = weekBase.get(email);
+  if (!base || base.week !== isoWeekKey()) return { words: 0, anna: 0 };
+  const now = computeLeaderboardStats(userStore.get(email) || null);
+  return { words: Math.max(0, now.words - base.words), anna: Math.max(0, now.anna - base.anna) };
+};
 const LEADERBOARD_TOP = 25;
 // Chat texts carrying __FAIL_ONCE__ that have already failed once (tutor stub).
 const tutorFailedOnce = new Set();
@@ -214,12 +231,13 @@ async function handleFunction(name, req, res, url) {
     case "leaderboard": {
       if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
       const limits = { minName: MIN_NAME, maxName: MAX_NAME, top: LEADERBOARD_TOP };
+      const week = url.searchParams.get("period") === "week";
       const rowFor = (e) => {
-        const stats = computeLeaderboardStats(userStore.get(e) || null);
+        const stats = week ? weeklyStats(e) : computeLeaderboardStats(userStore.get(e) || null);
         return { name: leaderboardNames.get(e) || null, words: stats.words, anna: stats.anna };
       };
       const joined = () => [...leaderboardNames.keys()].map(rowFor);
-      const top = (col) => joined().sort((a, b) => b[col] - a[col]).slice(0, LEADERBOARD_TOP);
+      const top = (col) => joined().filter((r) => !week || r[col] > 0).sort((a, b) => b[col] - a[col]).slice(0, LEADERBOARD_TOP);
       const me = () => {
         const r = rowFor(email);
         if (!r.name) return { joined: false, name: null, words: r.words, anna: r.anna, rankWords: null, rankAnna: null };
@@ -231,7 +249,7 @@ async function handleFunction(name, req, res, url) {
         };
       };
       if (req.method === "GET") {
-        return sendJson(res, 200, { top: { words: top("words"), anna: top("anna") }, me: me(), limits });
+        return sendJson(res, 200, { period: week ? "week" : "all", ...(week ? { week: isoWeekKey() } : {}), top: { words: top("words"), anna: top("anna") }, me: me(), limits });
       }
       if (body.leave === true) {
         leaderboardNames.delete(email);
@@ -278,7 +296,10 @@ async function handleFunction(name, req, res, url) {
       if (isTrialEmail(email) && maxReleasedLessons(body.user) > FREE_LESSONS) {
         return sendJson(res, 403, { error: `Lesson ${FREE_LESSONS + 1} onward needs the full app.`, code: "paywall" });
       }
-      if (body.user) userStore.set(email, body.user);
+      if (body.user) {
+        noteWeeklyBase(email, userStore.get(email), body.user);
+        userStore.set(email, body.user);
+      }
       return sendJson(res, 200, { ok: true });
     }
     case "trialEvent": {

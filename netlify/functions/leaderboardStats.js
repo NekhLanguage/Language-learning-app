@@ -53,6 +53,19 @@ function countAnnaWords(user) {
   return n;
 }
 
+// The ISO week (UTC) a date falls in, as "2026-W41": the key the weekly
+// board filters on. Must match the users_lb_weekly trigger's
+// to_char(now() at time zone 'utc', 'IYYY-"W"IW') (migrations/
+// leaderboard_weekly.sql), which stamps lb_week on every save.
+function isoWeekKey(date = new Date()) {
+  const d = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const day = d.getUTCDay() || 7; // Monday = 1 … Sunday = 7
+  d.setUTCDate(d.getUTCDate() + 4 - day); // the Thursday of this week decides the year
+  const yearStart = Date.UTC(d.getUTCFullYear(), 0, 1);
+  const week = Math.ceil(((d.getTime() - yearStart) / 86400000 + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
+}
+
 function computeLeaderboardStats(user) {
   return { words: countMasteredWords(user), anna: countAnnaWords(user) };
 }
@@ -82,4 +95,5 @@ module.exports = {
   countAnnaWords,
   computeLeaderboardStats,
   normalizeDisplayName,
+  isoWeekKey,
 };

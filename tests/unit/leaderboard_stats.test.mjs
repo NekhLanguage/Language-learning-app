@@ -77,3 +77,15 @@ test("normalizeDisplayName: trims, collapses whitespace, keeps any script, refus
   assert.equal(stats.normalizeDisplayName(null), null);
   assert.equal(stats.normalizeDisplayName(123), null);
 });
+
+// The weekly board filters on this key; the users_lb_weekly trigger stamps
+// lb_week with Postgres's to_char(…, 'IYYY-"W"IW'). The two must agree,
+// including the ISO-year edges (2026-10-08 is what Postgres returned).
+test("isoWeekKey: ISO weeks in UTC, matching the trigger's Postgres key", () => {
+  assert.equal(stats.isoWeekKey(new Date("2026-10-08T17:00:00Z")), "2026-W41");
+  assert.equal(stats.isoWeekKey(new Date("2026-10-05T00:00:00Z")), "2026-W41", "Monday 00:00 UTC opens the week");
+  assert.equal(stats.isoWeekKey(new Date("2026-10-04T23:59:59Z")), "2026-W40", "Sunday night is still last week");
+  assert.equal(stats.isoWeekKey(new Date("2021-01-03T12:00:00Z")), "2020-W53", "early January can belong to last year's week 53");
+  assert.equal(stats.isoWeekKey(new Date("2024-12-30T12:00:00Z")), "2025-W01", "late December can belong to next year's week 1");
+  assert.equal(stats.isoWeekKey(new Date("2026-01-01T00:00:00Z")), "2026-W01");
+});

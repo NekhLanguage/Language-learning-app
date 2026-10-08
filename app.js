@@ -2,7 +2,7 @@
 // the registry (the old `?v=0.9.99.14` query made it a second module).
 import { AVAILABLE_LANGUAGES } from "./languages.js";
 import { speakAlways, speakWithHighlight, speakLetters, prefetchTTS, setVoiceMap, getAudioFallbacks } from "./audioengine.js";
-import { createProgress, passesSpacing, levelCapFor, applyAnswer, MAX_LEVEL } from "./progression.mjs";
+import { createProgress, passesSpacing, levelCapFor, applyAnswer, reopenBelowCap, MAX_LEVEL } from "./progression.mjs";
 import { langRuleValue } from "./language_rules.mjs";
 import { CURRENT_SCHEMA_VERSION, migrateUserState, recoverUser, compactUserForPersist, mergeUserStates } from "./storage.mjs";
 import { tutorProductionTask, tutorExampleTiles, gradeTyped, liftTutorLevel } from "./tutor_exercises.mjs";
@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.102";
+const APP_DATA_VERSION = "1.2.103";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -2956,6 +2956,13 @@ function isTutorConcept(cid) {
   return !!(run?.tutorVocab && run.tutorVocab[cid]);
 }
 
+// The level a concept climbs to. Tutor-admitted concepts climb to
+// MAX_LEVEL like any other word (scope-spec Q5); their L3/L4 gap is closed
+// by liftTutorLevel.
+function conceptCap(cid) {
+  return isTutorConcept(cid) ? MAX_LEVEL : levelCapFor({ isRecognition: RECOGNITION_CONCEPTS.has(cid) });
+}
+
 // The engine's surfaceForm for pack concepts; for a tutor concept the word
 // itself in the target language and its translation on the support side,
 // so the L5 matching round can mix tutor words with pack peers.
@@ -3044,15 +3051,8 @@ function backfillReleasedBundles(r) {
   run.sessionAttempts[cid] = (run.sessionAttempts[cid] || 0) + 1;
   run.sessionExerciseCount = (run.sessionExerciseCount || 0) + 1;
 
-  // The streak/level state machine lives in progression.mjs. Tutor-
-  // admitted concepts climb to MAX_LEVEL like any other word (scope-spec
-  // Q5); their L3/L4 gap is closed by liftTutorLevel below.
-  const cap = isTutorConcept(cid)
-    ? MAX_LEVEL
-    : levelCapFor({
-        isRecognition: RECOGNITION_CONCEPTS.has(cid),
-        isModifier: isModifierConcept(cid),
-      });
+  // The streak/level state machine lives in progression.mjs.
+  const cap = conceptCap(cid);
   const outcome = applyAnswer(state, {
     correct,
     exerciseIndex: run.exerciseCounter,
@@ -5413,6 +5413,9 @@ function renderAlphabetOverlay(langCode) {
   // shapes; a hand-edited or partially-written blob can.
   if (!Array.isArray(run.released)) run.released = [];
   if (!run.progress || typeof run.progress !== "object") run.progress = {};
+  // Words left completed below their cap (old L5 modifier cap) go back
+  // into practice so they can reach L7.
+  if (reopenBelowCap(run.progress, conceptCap)) saveUser();
   
   // 🔥 CONTENT VERSION CHECK
 if (!run.contentVersion || run.contentVersion !== CONTENT_VERSION) {

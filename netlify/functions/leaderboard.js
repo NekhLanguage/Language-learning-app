@@ -7,6 +7,11 @@
 //        request carries a session ({ joined, name, words, anna,
 //        rankWords, rankAnna }), null otherwise — the list itself is
 //        public to anyone signed in, the name is the only thing shown.
+//   GET ?period=week -> the same shape for THIS week (ISO week, UTC): the
+//        counts are what each learner gained since Monday 00:00 UTC
+//        (lb_words_week / lb_anna_week, kept by the users_lb_weekly trigger,
+//        migrations/leaderboard_weekly.sql). Fetched only when the learner
+//        opens the weekly view, so the default board costs nothing extra.
 //   POST { name }       -> join the board (or rename) under that name.
 //   POST { leave: true } -> leave the board (counters keep updating, the
 //        row just isn't shown).
@@ -17,7 +22,7 @@
 
 const { SUPABASE_URL, usersKey, restHeaders, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse } = require("./auth");
-const { normalizeDisplayName, computeLeaderboardStats, MIN_NAME, MAX_NAME } = require("./leaderboardStats");
+const { normalizeDisplayName, computeLeaderboardStats, isoWeekKey, MIN_NAME, MAX_NAME } = require("./leaderboardStats");
 
 const TOP_N = 25;
 const ROW_SELECT = "lb_name,lb_words,lb_anna";
@@ -35,7 +40,52 @@ function json(statusCode, body) {
 // until migrations/leaderboard.sql has run. Make that a clear 503 rather
 // than a generic failure.
 function notMigrated(text) {
-  return /lb_(name|words|anna|updated_at)/.test(String(text || ""));
+  return /lb_(name|words|anna|updated_at|week)/.test(String(text || ""));
+}
+
+// Only rows stamped with this week count on the weekly board.
+const weekFilter = (wk) => `&lb_week=eq.${encodeURIComponent(wk)}`;
+
+async function weekTopBy(key, column, wk) {
+  const res = await rest(
+    key,
+    `?select=lb_name,lb_words_week,lb_anna_week&lb_name=not.is.null${weekFilter(wk)}&${column}=gt.0&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
+  );
+  if (!res.ok) {
+    const text = await res.text();
+    if (notMigrated(text)) throw new NotMigratedError(text);
+    throw new Error(`leaderboard weekly read returned ${res.status}: ${text}`);
+  }
+  const rows = await res.json();
+  return (Array.isArray(rows) ? rows : []).map((row) => ({
+    name: String(row.lb_name || ""),
+    words: Math.max(0, Number(row.lb_words_week) || 0),
+    anna: Math.max(0, Number(row.lb_anna_week) || 0),
+  }));
+}
+
+// The caller's own row for this week: 0 / 0 when they haven't saved since
+// Monday (their lb_week is an older week). Rank counts learners strictly
+// ahead among this week's rows.
+async function weekMeFor(key, email, wk) {
+  const res = await rest(key, `?select=lb_name,lb_week,lb_words_week,lb_anna_week&email=eq.${encodeURIComponent(email)}`);
+  if (!res.ok) {
+    const text = await res.text();
+    if (notMigrated(text)) throw new NotMigratedError(text);
+    throw new Error(`leaderboard weekly me read returned ${res.status}: ${text}`);
+  }
+  const rows = await res.json();
+  const row = Array.isArray(rows) && rows.length ? rows[0] : null;
+  if (!row) return null;
+  const current = row.lb_week === wk;
+  const words = current ? Math.max(0, Number(row.lb_words_week) || 0) : 0;
+  const anna = current ? Math.max(0, Number(row.lb_anna_week) || 0) : 0;
+  if (!row.lb_name) return { joined: false, name: null, words, anna, rankWords: null, rankAnna: null };
+  const [aheadWords, aheadAnna] = await Promise.all([
+    countAhead(key, "lb_words_week", words, weekFilter(wk)),
+    countAhead(key, "lb_anna_week", anna, weekFilter(wk)),
+  ]);
+  return { joined: true, name: String(row.lb_name), words, anna, rankWords: aheadWords + 1, rankAnna: aheadAnna + 1 };
 }
 
 class NotMigratedError extends Error {}
@@ -72,10 +122,10 @@ async function topBy(key, column) {
 
 // How many learners on the board are strictly ahead on `column`: the
 // caller's rank is that plus one. A HEAD with count=exact costs no rows.
-async function countAhead(key, column, value) {
+async function countAhead(key, column, value, extra = "") {
   const res = await rest(
     key,
-    `?select=email&lb_name=not.is.null&${column}=gt.${encodeURIComponent(value)}`,
+    `?select=email&lb_name=not.is.null${extra}&${column}=gt.${encodeURIComponent(value)}`,
     { method: "HEAD", headers: { Prefer: "count=exact" } }
   );
   if (!res.ok) throw new Error(`leaderboard count returned ${res.status}`);
@@ -164,12 +214,22 @@ exports.handler = async (event) => {
       // the row shown for the caller comes from it.
       const session = await verifySession(event);
       if (!session) return unauthorizedResponse();
+      const period = event.queryStringParameters?.period === "week" ? "week" : "all";
+      if (period === "week") {
+        const wk = isoWeekKey();
+        const [words, anna, me] = await Promise.all([
+          weekTopBy(key, "lb_words_week", wk),
+          weekTopBy(key, "lb_anna_week", wk),
+          weekMeFor(key, session.email, wk),
+        ]);
+        return json(200, { period, week: wk, top: { words, anna }, me, limits });
+      }
       const [words, anna, me] = await Promise.all([
         topBy(key, "lb_words"),
         topBy(key, "lb_anna"),
         meFor(key, session.email),
       ]);
-      return json(200, { top: { words, anna }, me, limits });
+      return json(200, { period, top: { words, anna }, me, limits });
     }
 
     const session = await verifySession(event);

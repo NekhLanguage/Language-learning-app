@@ -6,6 +6,18 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-08 (evening)
+
+### Leaderboard: a "This week" view
+
+The leaderboard now has an All time / This week switch. This week shows the words each learner mastered and met with Anna since Monday, and it starts over every Monday.
+
+### Adjectives and numbers finished at level 5 are back in practice
+
+Some adjectives and numbers were marked finished at level 5, back when that was as far as they went. Since they can now go all the way to level 7, those words come back into your lessons where you left them. Once you pass level 7, they count as mastered on the leaderboard.
+
+---
+
 ## 2026-10-08 (later)
 
 ### Words you already know move up faster
