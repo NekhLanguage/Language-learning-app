@@ -192,3 +192,45 @@ test("the default board makes one request; the weekly one is fetched only when o
   await page.click('.leaderboard-period[data-period="week"]');
   await expect.poll(() => calls.some((u) => u.includes("period=week"))).toBe(true);
 });
+
+// Nekh 2026-10-08 (screenshot): before the weekly migration ran, opening
+// This week replaced the whole board with "Failed to fetch" — no switch, no
+// way back to All time. A failed period load now keeps the switch, shows a
+// translated message, and the other period still works; pressing the failed
+// period again retries.
+test("a failed weekly load keeps the switch and the all-time board reachable", async ({ page, pageErrors }) => {
+  await loginAs(page, uniqueEmail("weekfail"));
+  await openBoard(page);
+
+  let mode = "503";
+  await page.route("**/functions/leaderboard?period=week", (route) =>
+    mode === "503"
+      ? route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "The leaderboard isn't set up yet.", code: "not_migrated" }) })
+      : mode === "abort" ? route.abort() : route.continue()
+  );
+
+  await page.click('.leaderboard-period[data-period="week"]');
+  await expect(page.locator(".leaderboard-error")).toHaveText("The leaderboard isn't set up yet.");
+  await expect(page.locator(".leaderboard-periods")).toBeVisible();
+
+  // Back to All time: the board is still there.
+  await page.click('.leaderboard-period[data-period="all"]');
+  await expect(page.locator(".leaderboard-tabs")).toBeVisible();
+  await expect(page.locator(".leaderboard-standing")).toContainText("words mastered");
+
+  // A network failure shows the translated message, not the browser's text.
+  mode = "abort";
+  await page.click('.leaderboard-period[data-period="week"]');
+  await expect(page.locator(".leaderboard-error")).toHaveText("Could not load the leaderboard — please try again.");
+
+  // Pressing This week again retries, and it loads.
+  mode = "ok";
+  await page.click('.leaderboard-period[data-period="week"]');
+  await expect(page.locator(".leaderboard-week-note")).toBeVisible();
+  await expect(page.locator(".leaderboard-tabs")).toBeVisible();
+
+  // The 503 and the aborted request above are this test's own doing.
+  for (let i = pageErrors.length - 1; i >= 0; i--) {
+    if (/leaderboard\?period=week|status of 503|ERR_FAILED|net::/.test(pageErrors[i])) pageErrors.splice(i, 1);
+  }
+});

@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-08 (night)
+
+### Leaderboard: a failed "This week" load no longer hides the board
+
+If the weekly view can't load, the leaderboard now keeps the All time / This week switch and shows a short message in your language, so you can go back to All time or tap This week to try again. Before, the whole board was replaced by a "Failed to fetch" message.
+
+---
+
 ## 2026-10-08 (evening)
 
 ### Leaderboard: a "This week" view
