@@ -860,6 +860,34 @@ button.wrong {
   gap: 0.5rem;
 }
 
+/* All time / This week: a quieter switch above the sort tabs. */
+.leaderboard-periods{
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.leaderboard-period{
+  padding: 0.3rem 0.8rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.leaderboard-period[aria-pressed="true"]{
+  color: #fff;
+  border-color: var(--glass-brd-strong);
+  background: var(--glass-bg);
+}
+
+.leaderboard-week-note{
+  text-align: center;
+  margin: 0;
+}
+
 .leaderboard-tab{
   flex: 1;
   padding: 0.55rem 0.8rem;

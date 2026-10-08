@@ -10,6 +10,7 @@ import {
   levelCapFor,
   applyAnswer,
   answersNeeded,
+  reopenBelowCap,
 } from "../../progression.mjs";
 
 test("fresh progress always passes spacing", () => {
@@ -58,9 +59,8 @@ test("level caps: recognition 4, everything else — modifiers included — MAX_
 
 test("a modifier completed at the old level-5 cap stays completed", () => {
   // Live learner state written before the cap lift: level 5, completed:true.
-  // The cap only gates promotion — applyAnswer never un-completes, so the
-  // lift cannot retroactively re-open mastered modifiers (the app's
-  // selection already skips completed concepts entirely).
+  // applyAnswer itself never un-completes; re-opening those words is
+  // reopenBelowCap's job, run when the language opens (Nekh 2026-10-08).
   const s = { ...createProgress(), level: 5, completed: true, streak: 1 };
   applyAnswer(s, {
     correct: true, exerciseIndex: 3, levelCap: MAX_LEVEL, sessionLevelUps: 0,
@@ -184,4 +184,24 @@ test("the session level-up cap still applies on the fast track", () => {
   const out = answer(s, { sessionLevelUps: 3 });
   assert.deepEqual(out, { leveledUp: false, exhaustedLevelUps: true });
   assert.equal(s.level, 4);
+});
+
+// Nekh 2026-10-08: modifiers completed at the old L5 cap were stuck —
+// completed concepts are never practiced, so they could never reach L7.
+test("reopenBelowCap puts words completed below their cap back into practice", () => {
+  const progress = {
+    BIG: { ...createProgress(), level: 5, completed: true, streak: 1 },
+    ELEVEN: { ...createProgress(), level: 4, completed: true },
+    WATER: { ...createProgress(), level: 7, completed: true },
+    EAT: { ...createProgress(), level: 3 },
+    BROKEN: null,
+  };
+  const capOf = (cid) => levelCapFor({ isRecognition: cid === "ELEVEN" });
+  assert.equal(reopenBelowCap(progress, capOf), 1);
+  assert.deepEqual([progress.BIG.completed, progress.BIG.level, progress.BIG.streak], [false, 5, 0]);
+  assert.equal(progress.ELEVEN.completed, true, "a recognition word finished at its L4 cap stays done");
+  assert.equal(progress.WATER.completed, true);
+  assert.equal(progress.EAT.completed, false);
+  assert.equal(reopenBelowCap(progress, capOf), 0, "idempotent");
+  assert.equal(reopenBelowCap(null, capOf), 0);
 });

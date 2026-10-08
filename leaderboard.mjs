@@ -5,6 +5,9 @@
 // (netlify/functions/leaderboardStats.js):
 //   words — concepts mastered at level 7 across every language
 //   anna  — words encountered with Anna (admitted + still being captured)
+// Two periods (Nekh 2026-10-08): all time, and THIS week (what each
+// learner gained since Monday 00:00 UTC; GET ?period=week, fetched only when
+// the learner switches to it).
 // A learner appears on the board only after choosing a display name here
 // (opt-in); the counters are kept for everyone so joining shows them at
 // once.
@@ -20,7 +23,7 @@ const ENDPOINT = "/.netlify/functions/leaderboard";
 
 let modal = null;
 let body = null;
-let state = { data: null, tab: "words" };
+let state = { data: null, tab: "words", period: "all", byPeriod: {} };
 
 // UI text in the learner's support language (app.js passes ui_text.mjs's
 // makeTranslator for it); English until then.
@@ -75,7 +78,9 @@ function renderList(data) {
   const me = data.me;
   const myName = me && me.joined ? me.name : null;
   if (!rows.length) {
-    return `<p class="leaderboard-empty">${esc(t("leaderboardEmpty", "Nobody is on the board yet — pick a name below and be the first."))}</p>`;
+    return state.period === "week"
+      ? `<p class="leaderboard-empty">${esc(t("leaderboardWeekEmpty", "Nobody has added to their count this week yet — it starts over every Monday."))}</p>`
+      : `<p class="leaderboard-empty">${esc(t("leaderboardEmpty", "Nobody is on the board yet — pick a name below and be the first."))}</p>`;
   }
   const sortWords = tab === "words";
   const items = rows.map((row, i) => {
@@ -105,7 +110,8 @@ function renderMe(data) {
   }
   const words = Number(me.words) || 0;
   const anna = Number(me.anna) || 0;
-  const counts = `${esc(pluralText(t, lang, "leaderboardMastered", words, "{n} word mastered", "{n} words mastered"))} · ${esc(pluralText(t, lang, "leaderboardWithAnna", anna, "{n} word with Anna", "{n} words with Anna"))}`;
+  let counts = `${esc(pluralText(t, lang, "leaderboardMastered", words, "{n} word mastered", "{n} words mastered"))} · ${esc(pluralText(t, lang, "leaderboardWithAnna", anna, "{n} word with Anna", "{n} words with Anna"))}`;
+  if (state.period === "week") counts = esc(t("leaderboardThisWeek", "This week: {counts}", { counts }));
   if (me.joined) {
     const rank = (n) => `#${Number(n) || "–"}`;
     return `
@@ -138,13 +144,33 @@ function renderMe(data) {
 
 function render() {
   const data = state.data;
+  const period = state.period;
   body.innerHTML = `
+    <div class="leaderboard-periods" role="group" aria-label="${esc(t("leaderboardPeriodLabel", "Period"))}">
+      <button type="button" class="leaderboard-period" data-period="all" aria-pressed="${period === "all"}">${esc(t("leaderboardPeriodAll", "All time"))}</button>
+      <button type="button" class="leaderboard-period" data-period="week" aria-pressed="${period === "week"}">${esc(t("leaderboardPeriodWeek", "This week"))}</button>
+    </div>
+    ${period === "week" ? `<p class="leaderboard-note leaderboard-week-note">${esc(t("leaderboardWeekNote", "Words added since Monday. The week starts over every Monday."))}</p>` : ""}
     <div class="leaderboard-tabs" role="tablist">
       <button type="button" class="leaderboard-tab" data-tab="words" role="tab" aria-selected="${state.tab === "words"}">${esc(t("leaderboardTabWords", "By words mastered"))}</button>
       <button type="button" class="leaderboard-tab" data-tab="anna" role="tab" aria-selected="${state.tab === "anna"}">${esc(t("leaderboardTabAnna", "By words with Anna"))}</button>
     </div>
     ${renderList(data)}
     ${renderMe(data)}`;
+
+  body.querySelectorAll(".leaderboard-period").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = btn.dataset.period === "week" ? "week" : "all";
+      if (next === state.period) return;
+      state.period = next;
+      if (state.byPeriod[next]) {
+        state.data = state.byPeriod[next];
+        render();
+      } else {
+        load({ keepTab: true });
+      }
+    });
+  });
 
   body.querySelectorAll(".leaderboard-tab").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -186,8 +212,8 @@ async function onSubmitName(ev) {
   if (btn) btn.disabled = true;
   setStatus(t("oneMoment", "One moment…"));
   try {
-    const data = await post({ name });
-    state.data.me = data.me;
+    await post({ name });
+    state.byPeriod = {}; // the caller moved on both boards
     await load({ keepTab: true });
   } catch (err) {
     setStatus(err.message || t("authGeneric", "Something went wrong — please try again."), true);
@@ -200,8 +226,8 @@ async function onLeave() {
   if (btn) btn.disabled = true;
   setStatus(t("oneMoment", "One moment…"));
   try {
-    const data = await post({ leave: true });
-    state.data.me = data.me;
+    await post({ leave: true });
+    state.byPeriod = {};
     await load({ keepTab: true });
   } catch (err) {
     setStatus(err.message || t("authGeneric", "Something went wrong — please try again."), true);
@@ -210,13 +236,19 @@ async function onLeave() {
 }
 
 async function load({ keepTab = false } = {}) {
-  if (!keepTab) state.tab = "words";
-  if (!state.data) renderLoading();
+  if (!keepTab) {
+    state.tab = "words";
+    state.period = "all";
+  }
+  const period = state.period;
+  if (!state.data || state.data.period !== period) renderLoading();
   try {
-    const res = await authFetch(ENDPOINT);
+    const res = await authFetch(period === "week" ? `${ENDPOINT}?period=week` : ENDPOINT);
     const data = await res.json().catch(() => ({}));
     if (res.status === 401) throw new Error(t("leaderboardSignInToSee", "Sign in to see the leaderboard."));
     if (!res.ok) throw new Error(data.error || t("leaderboardLoadFailedStatus", "Could not load the leaderboard ({status})", { status: res.status }));
+    data.period = period;
+    state.byPeriod[period] = data;
     state.data = data;
     render();
   } catch (err) {
@@ -237,5 +269,6 @@ export function openLeaderboard(opts = {}) {
   }
   ensureModal();
   modal.classList.remove("hidden");
+  state.byPeriod = {};
   return load();
 }

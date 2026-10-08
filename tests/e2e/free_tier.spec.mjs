@@ -234,3 +234,27 @@ test("trialEvent 503s are queued and replayed on the next successful call", asyn
     }
   }
 });
+
+// Nekh 2026-10-08: words completed below their cap (modifiers finished at
+// the old L5 cap) never came back into practice, so they could never reach
+// L7. Opening the language puts them back; recognition words finished at
+// their L4 cap stay done.
+test("opening a language puts words completed below their cap back into practice", async ({ page }) => {
+  await startNewRun(page);
+  const cid = await page.evaluate(() => window.__app.run.released[0]);
+  await page.evaluate((cid) => {
+    const u = JSON.parse(localStorage.getItem("zth_user"));
+    const run = Object.values(u.runs)[0];
+    run.progress[cid] = { ...run.progress[cid], level: 5, completed: true, streak: 1 };
+    u.lastLocalChange = Date.now();
+    localStorage.setItem("zth_user", JSON.stringify(u));
+  }, cid);
+  await page.reload();
+  await page.waitForFunction(() => !!window.__app);
+  await page.click("#open-app");
+  await page.locator("#language-buttons button", { hasText: "Portuguese" }).click();
+  await expect(page.locator("#roadmap-screen.active, #learning-screen.active").first()).toBeVisible();
+  const state = await page.evaluate((cid) => window.__app.run.progress[cid], cid);
+  expect(state.completed).toBe(false);
+  expect(state.level).toBe(5);
+});

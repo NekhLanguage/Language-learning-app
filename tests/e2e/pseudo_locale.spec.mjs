@@ -123,6 +123,9 @@ test("start screen, language hub, leaderboard and referral card: no unkeyed text
   await page.click("#link-leaderboard");
   await expect(page.locator("#leaderboard-title")).toContainText("⟦");
   expect(await unkeyedText(page, "#leaderboard-modal", allow)).toEqual([]);
+  await page.click('.leaderboard-period[data-period="week"]');
+  await expect(page.locator(".leaderboard-week-note")).toContainText("⟦");
+  expect(await unkeyedText(page, "#leaderboard-modal", allow)).toEqual([]);
   await page.click("#leaderboard-close");
 
   if (await page.locator("#link-refer").isVisible()) {

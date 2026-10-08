@@ -137,3 +137,58 @@ test("a name another learner holds is refused with a message, and the form stays
   const consoleIdx = pageErrors.findIndex((e) => e.startsWith("console:") && e.includes("409"));
   if (consoleIdx >= 0) pageErrors.splice(consoleIdx, 1);
 });
+
+// Weekly tab (Nekh 2026-10-08): "This week" shows what each learner gained
+// since Monday; the dev server mirrors the users_lb_weekly trigger (the
+// first save of the week sets the starting point).
+test("This week shows what was gained since the week's first save; All time keeps the totals", async ({ page }) => {
+  const email = uniqueEmail("weekly");
+  await loginAs(page, email);
+  const save = (mastered) => page.request.post("/.netlify/functions/saveUser", {
+    headers: { ...authHeadersFor(email), "Content-Type": "application/json" },
+    data: {
+      user: {
+        runs: {
+          uk: {
+            progress: Object.fromEntries(
+              ["WATER", "EAT", "BOOK", "SLEEP", "DRINK"].map((cid, i) => [cid, { level: 7, completed: i < mastered, provenance: "pack" }])
+            ),
+          },
+        },
+      },
+    },
+  });
+  expect((await save(3)).ok()).toBe(true); // the week starts here: 3 already mastered
+  expect((await save(5)).ok()).toBe(true); // two more this week
+
+  await openBoard(page);
+  const name = uniqueName("Weekly");
+  await page.fill("#leaderboard-name", name);
+  await page.click("#leaderboard-join");
+  await expect(page.locator(".leaderboard-row.is-me .leaderboard-words")).toHaveText("5");
+
+  await page.click('.leaderboard-period[data-period="week"]');
+  await expect(page.locator('.leaderboard-period[data-period="week"]')).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".leaderboard-week-note")).toContainText("Monday");
+  await expect(page.locator(".leaderboard-row.is-me .leaderboard-words")).toHaveText("2");
+  await expect(page.locator(".leaderboard-me")).toContainText("This week: 2 words mastered");
+
+  // Back to All time: the totals, without another request.
+  const requests = [];
+  page.on("request", (req) => { if (req.url().includes("/functions/leaderboard")) requests.push(req.url()); });
+  await page.click('.leaderboard-period[data-period="all"]');
+  await expect(page.locator(".leaderboard-row.is-me .leaderboard-words")).toHaveText("5");
+  expect(requests).toEqual([]);
+});
+
+test("the default board makes one request; the weekly one is fetched only when opened", async ({ page }) => {
+  const calls = [];
+  page.on("request", (req) => { if (req.url().includes("/functions/leaderboard")) calls.push(req.url()); });
+  await loginAs(page, uniqueEmail("lazy"));
+  await openBoard(page);
+  await expect(page.locator(".leaderboard-standing")).toBeVisible();
+  expect(calls.length).toBe(1);
+  expect(calls[0]).not.toContain("period=week");
+  await page.click('.leaderboard-period[data-period="week"]');
+  await expect.poll(() => calls.some((u) => u.includes("period=week"))).toBe(true);
+});

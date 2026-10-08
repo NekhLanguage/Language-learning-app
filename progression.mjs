@@ -57,6 +57,26 @@ export function levelCapFor({ isRecognition }) {
   return MAX_LEVEL;
 }
 
+// Re-opens every concept marked completed below its level cap (Nekh
+// 2026-10-08). Modifiers used to cap at L5; when the full ladder came back
+// (2026-08-28) the ones already completed at L5 stayed completed, and a
+// completed concept is never practiced again — so they could never reach
+// L7, never count as mastered on the leaderboard, and never got their L6/L7
+// practice. They resume at the level they reached. `capOf(cid)` is the
+// concept's current cap. Returns how many were reopened.
+export function reopenBelowCap(progress, capOf) {
+  if (!progress || typeof progress !== "object") return 0;
+  let n = 0;
+  for (const [cid, p] of Object.entries(progress)) {
+    if (!p || typeof p !== "object" || p.completed !== true) continue;
+    if (!(Number(p.level) < capOf(cid))) continue;
+    p.completed = false;
+    p.streak = 0;
+    n++;
+  }
+  return n;
+}
+
 // Fast track (Nekh 2026-10-08): a learner who already knows a word should
 // reach new words sooner. A level normally takes two correct answers. When
 // a word clears a level from L2 up with no miss at that level (two right,
