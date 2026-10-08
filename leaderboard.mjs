@@ -23,7 +23,10 @@ const ENDPOINT = "/.netlify/functions/leaderboard";
 
 let modal = null;
 let body = null;
-let state = { data: null, tab: "words", period: "all", byPeriod: {} };
+// view: "loading" | "error" | "ready" for the selected period. The period
+// switch stays on screen in all three, so a failed weekly load never takes
+// the all-time board (or the way back to it) with it.
+let state = { data: null, tab: "words", period: "all", byPeriod: {}, view: "loading", error: "" };
 
 // UI text in the learner's support language (app.js passes ui_text.mjs's
 // makeTranslator for it); English until then.
@@ -60,13 +63,6 @@ function close() {
   modal.classList.add("hidden");
 }
 
-function renderLoading() {
-  body.innerHTML = `<p class="leaderboard-loading">${esc(t("loading", "Loading…"))}</p>`;
-}
-
-function renderError(text) {
-  body.innerHTML = `<p class="leaderboard-error">${esc(text)}</p>`;
-}
 
 
 // Every row shows BOTH counts; the tab only decides the ordering and
@@ -145,26 +141,34 @@ function renderMe(data) {
 function render() {
   const data = state.data;
   const period = state.period;
+  const ready = state.view === "ready" && data;
+  const content = ready
+    ? `<div class="leaderboard-tabs" role="tablist">
+      <button type="button" class="leaderboard-tab" data-tab="words" role="tab" aria-selected="${state.tab === "words"}">${esc(t("leaderboardTabWords", "By words mastered"))}</button>
+      <button type="button" class="leaderboard-tab" data-tab="anna" role="tab" aria-selected="${state.tab === "anna"}">${esc(t("leaderboardTabAnna", "By words with Anna"))}</button>
+    </div>
+    ${renderList(data)}
+    ${renderMe(data)}`
+    : state.view === "error"
+      ? `<p class="leaderboard-error">${esc(state.error)}</p>`
+      : `<p class="leaderboard-loading">${esc(t("loading", "Loading…"))}</p>`;
   body.innerHTML = `
     <div class="leaderboard-periods" role="group" aria-label="${esc(t("leaderboardPeriodLabel", "Period"))}">
       <button type="button" class="leaderboard-period" data-period="all" aria-pressed="${period === "all"}">${esc(t("leaderboardPeriodAll", "All time"))}</button>
       <button type="button" class="leaderboard-period" data-period="week" aria-pressed="${period === "week"}">${esc(t("leaderboardPeriodWeek", "This week"))}</button>
     </div>
     ${period === "week" ? `<p class="leaderboard-note leaderboard-week-note">${esc(t("leaderboardWeekNote", "Words added since Monday. The week starts over every Monday."))}</p>` : ""}
-    <div class="leaderboard-tabs" role="tablist">
-      <button type="button" class="leaderboard-tab" data-tab="words" role="tab" aria-selected="${state.tab === "words"}">${esc(t("leaderboardTabWords", "By words mastered"))}</button>
-      <button type="button" class="leaderboard-tab" data-tab="anna" role="tab" aria-selected="${state.tab === "anna"}">${esc(t("leaderboardTabAnna", "By words with Anna"))}</button>
-    </div>
-    ${renderList(data)}
-    ${renderMe(data)}`;
+    ${content}`;
 
   body.querySelectorAll(".leaderboard-period").forEach((btn) => {
     btn.addEventListener("click", () => {
       const next = btn.dataset.period === "week" ? "week" : "all";
-      if (next === state.period) return;
+      // Pressing the selected period again retries it after an error.
+      if (next === state.period && state.view !== "error") return;
       state.period = next;
       if (state.byPeriod[next]) {
         state.data = state.byPeriod[next];
+        state.view = "ready";
         render();
       } else {
         load({ keepTab: true });
@@ -241,7 +245,10 @@ async function load({ keepTab = false } = {}) {
     state.period = "all";
   }
   const period = state.period;
-  if (!state.data || state.data.period !== period) renderLoading();
+  if (!state.data || state.data.period !== period) {
+    state.view = "loading";
+    render();
+  }
   try {
     const res = await authFetch(period === "week" ? `${ENDPOINT}?period=week` : ENDPOINT);
     const data = await res.json().catch(() => ({}));
@@ -249,11 +256,19 @@ async function load({ keepTab = false } = {}) {
     if (!res.ok) throw new Error(data.error || t("leaderboardLoadFailedStatus", "Could not load the leaderboard ({status})", { status: res.status }));
     data.period = period;
     state.byPeriod[period] = data;
+    if (state.period !== period) return; // the learner already switched away
     state.data = data;
+    state.view = "ready";
     render();
   } catch (err) {
-    state.data = null;
-    renderError(err.message || t("leaderboardLoadFailed", "Could not load the leaderboard — please try again."));
+    if (state.period !== period) return; // the learner already switched away
+    state.view = "error";
+    // A network failure surfaces as the browser's own English text
+    // ("Failed to fetch"); show the translated message instead.
+    state.error = err instanceof TypeError || !err.message
+      ? t("leaderboardLoadFailed", "Could not load the leaderboard — please try again.")
+      : err.message;
+    render();
   }
 }
 
