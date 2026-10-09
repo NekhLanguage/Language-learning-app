@@ -18,7 +18,12 @@ const { SUPABASE_URL, secretKey } = require("./supabase");
 const { verifySession, unauthorizedResponse, subscriptionActive } = require("./auth");
 const { config, appliedInYear } = require("./referral_discount");
 
-const PAYMENT_LINK = "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05";
+// Two-sided referral (Dan 2026-10-09): the friend's link routes through
+// the referralCheckout function so Stripe applies the 20%-off-first-
+// payment coupon before the friend sees the price. `/r/<code>` is the
+// public, share-friendly path (netlify.toml rewrites it to the
+// function); the plain Stripe payment link stays for direct $19 buys.
+const REFERRAL_SHARE_BASE = "https://zerotoherolanguage.netlify.app/r";
 const MAX_CODE_ATTEMPTS = 20;
 
 function json(statusCode, body) {
@@ -43,7 +48,7 @@ function codeFor(email, attempt = 0) {
 }
 
 function linkFor(code) {
-  return `${PAYMENT_LINK}?client_reference_id=${encodeURIComponent(code)}`;
+  return `${REFERRAL_SHARE_BASE}/${encodeURIComponent(code)}`;
 }
 
 async function getRows(key, path) {

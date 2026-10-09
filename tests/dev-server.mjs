@@ -213,7 +213,7 @@ async function handleFunction(name, req, res, url) {
         const code = referralCodes.get(email) || null;
         return {
           code,
-          link: code ? `https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05?client_reference_id=${code}` : null,
+          link: code ? `https://zerotoherolanguage.netlify.app/r/${code}` : null,
           eligible,
           acceptedTermsAt: code ? new Date().toISOString() : null,
           stats,

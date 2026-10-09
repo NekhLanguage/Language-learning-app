@@ -92,7 +92,7 @@ test("codeFor: ZTH- plus the email's local part, numbered on collisions", () => 
   assert.equal(referral.codeFor("alice.smith@example.com", 1), "ZTH-ALICESMI01");
   assert.equal(referral.codeFor("émile@example.com"), "ZTH-MILE");
   assert.equal(referral.codeFor("@@@"), "ZTH-FRIEND");
-  assert.match(referral.linkFor("ZTH-ALICESMI"), /^https:\/\/buy\.stripe\.com\/.+\?client_reference_id=ZTH-ALICESMI$/);
+  assert.match(referral.linkFor("ZTH-ALICESMI"), /^https:\/\/zerotoherolanguage\.netlify\.app\/r\/ZTH-ALICESMI$/);
 });
 
 test("503 without the secret key, 401 without a session", async () => {
@@ -133,7 +133,7 @@ test("POST accept creates the code for a subscriber, skipping taken codes; not f
     assert.equal(res.statusCode, 200);
     const body = JSON.parse(res.body);
     assert.equal(body.code, "ZTH-ALICESMI01");
-    assert.match(body.link, /client_reference_id=ZTH-ALICESMI01$/);
+    assert.match(body.link, /\/r\/ZTH-ALICESMI01$/);
     assert.equal(codes["alice.smith@example.com"].code, "ZTH-ALICESMI01");
 
     // Idempotent: a second accept returns the same code.
