@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-10
 
+### After Check: every level now works the same way
+
+On every exercise, a correct answer now moves you on by itself after about a second, so you see the green and keep your pace. A wrong answer stays on screen with the right answer shown until you tap Continue. On level 7, an answer that's right except for accents counts as correct but waits too, so you can read the proper spelling. You can always tap Continue to move on straight away. Before this, some levels moved on automatically and others always waited for a tap.
+
 ### Say it: speaking practice after levels 6 and 7, and clear messages when the mic fails
 
 The "Say it" button now also appears on level 7 once you've checked your answer, and on level 6 when the correct sentence is revealed. Say the sentence and each word turns green if it came through or gets underlined if it didn't, with what the app actually heard. If nothing comes through, the microphone is blocked, or your browser can't check that language, you now get a message saying which, instead of a bare "…". It checks whether your words are understood, not your accent, and it shows in browsers that support speech recognition (Chrome, Safari).
