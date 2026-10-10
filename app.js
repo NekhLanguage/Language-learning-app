@@ -27,7 +27,7 @@ import { makeTranslator, gateLanguage, rememberSupportLanguage, markGatePick, ta
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import { chooseSupportSentence } from "./display.mjs";
 import { promptApiAvailable, gradeSemantically } from "./grading.mjs";
-import { speechRecognitionAvailable, recognizeOnce, compareSpoken } from "./speech.mjs";
+import { speechRecognitionAvailable, recognizeSpeech, compareSpoken } from "./speech.mjs";
 import {
   configureEngine,
   formOf,
@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.104";
+const APP_DATA_VERSION = "1.2.105";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -3198,6 +3198,49 @@ return tpl;
     content.appendChild(banner);
     wireTts();
   }
+  // Speaking practice ("Say it"): gated per language (capabilities) and per
+  // browser. The mic button recognises the learner saying `expected` and
+  // shows a per-word heard/missed diff — intelligibility, not accent
+  // scoring. Used on L1 (exposure) and after checking on L6/L7.
+  function canSpeakTarget(targetLang, supportLang) {
+    return isFeatureAvailable("speech_practice", { target: targetLang, support: supportLang }) &&
+      speechRecognitionAvailable();
+  }
+  const SPEECH_ERROR_KEYS = {
+    "no-speech": "sayItNoSpeech",
+    "mic-blocked": "sayItMicBlocked",
+    "unsupported": "sayItUnsupported",
+    "failed": "sayItFailed",
+  };
+  function speakCheckHtml() {
+    return `<div class="speak-check"><button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="${safe(ui("sayItLabel"))}">${ICON_MIC} ${safe(ui("sayIt"))}</button><div id="spoken-diff" class="spoken-diff" aria-live="polite"></div></div>`;
+  }
+  function wireSpeakCheck(expected, targetLang) {
+    const speakBtn = document.getElementById("speak-check-btn");
+    const diffEl = document.getElementById("spoken-diff");
+    if (!speakBtn || !diffEl) return;
+    const idle = () => { speakBtn.disabled = false; speakBtn.innerHTML = `${ICON_MIC} ` + safe(ui("sayIt")); };
+    speakBtn.onclick = async () => {
+      speakBtn.disabled = true;
+      speakBtn.innerHTML = `${ICON_MIC} ` + safe(ui("sayItListening"));
+      diffEl.textContent = "";
+      const ttsCode = AVAILABLE_LANGUAGES.find(l => l.code === targetLang)?.ttsCode || targetLang;
+      const { transcript, error } = await recognizeSpeech({ lang: ttsCode });
+      idle();
+      if (error) {
+        diffEl.innerHTML = `<span class="spoken-error">${safe(ui(SPEECH_ERROR_KEYS[error] || "sayItFailed"))}</span>`;
+        if (error === "unsupported") speakBtn.disabled = true; // retrying can't help
+        return;
+      }
+      const words = compareSpoken(expected, transcript);
+      LAST_EXERCISE = { ...(LAST_EXERCISE || {}), spoken: { transcript, words } };
+      const allHeard = words.every(w => w.heard);
+      diffEl.innerHTML =
+        words.map(w => `<span class="${w.heard ? "spoken-ok" : "spoken-miss"}">${safe(w.word)}</span>`).join(" ") +
+        `<div class="spoken-verdict">${safe(ui(allHeard ? "sayItAllHeard" : "sayItSomeMissed"))}</div>` +
+        (allHeard ? "" : `<div class="spoken-heard">${safe(uiT("sayItHeard", "We heard: {transcript}", { transcript }))}</div>`);
+    };
+  }
   function wordNoteFor(cid, targetLang, supportLang) {
     if (!WORD_NOTES) return null;
     if (!isFeatureAvailable("mnemonics", { target: targetLang, support: supportLang })) return null;
@@ -3265,10 +3308,7 @@ return tpl;
   const wordNote = wordNoteFor(targetConcept, targetLang, supportLang);
   LAST_EXERCISE = { type: "exposure", rules: grammarRules, note: wordNote, supportSource, sentence: targetSentence };
 
-  // Speaking practice: gated per language (capabilities) and per browser.
-  const canSpeak =
-    isFeatureAvailable("speech_practice", { target: targetLang, support: supportLang }) &&
-    speechRecognitionAvailable();
+  const canSpeak = canSpeakTarget(targetLang, supportLang);
 
   // Locale-aware for the target word (tr «İçmek», never «Içmek» — Emi run-18 -94).
   const headword = (s, lang) => s ? capitalizeFirst(s, lang) : s;
@@ -3288,35 +3328,14 @@ return tpl;
     <hr>
     <p>${safe(targetSentence)} ${ttsHtml(targetSentence, targetLang)}</p>
     <p>${safe(supportSentence)}</p>
-    ${canSpeak ? `<button id="speak-check-btn" type="button" class="speak-check-btn" aria-label="${ui("sayItLabel")}">${ICON_MIC} ${ui("sayIt")}</button><div id="spoken-diff" class="spoken-diff"></div>` : ""}
+    ${canSpeak ? speakCheckHtml() : ""}
     ${grammarChipsHtml(grammarRules, targetLang, supportLang)}
     <button id="continue-btn">${ui("continue")}</button>
   `;
   wireTts();
   wireGrammarChips(content);
 
-  const speakBtn = document.getElementById("speak-check-btn");
-  if (speakBtn) {
-    speakBtn.onclick = async () => {
-      const diffEl = document.getElementById("spoken-diff");
-      speakBtn.disabled = true;
-      speakBtn.innerHTML = `${ICON_MIC} …`;
-      const ttsCode = AVAILABLE_LANGUAGES.find(l => l.code === targetLang)?.ttsCode || targetLang;
-      const transcript = await recognizeOnce({ lang: ttsCode });
-      speakBtn.disabled = false;
-      speakBtn.innerHTML = `${ICON_MIC} ` + safe(ui("sayIt"));
-
-      if (transcript == null) {
-        diffEl.textContent = "…";
-        return;
-      }
-      const words = compareSpoken(targetSentence, transcript);
-      LAST_EXERCISE = { ...(LAST_EXERCISE || {}), spoken: { transcript, words } };
-      diffEl.innerHTML = words
-        .map(w => `<span class="${w.heard ? "spoken-ok" : "spoken-miss"}">${safe(w.word)}</span>`)
-        .join(" ");
-    };
-  }
+  if (canSpeak) wireSpeakCheck(targetSentence, targetLang);
 
   document.getElementById("continue-btn").onclick = () => {
     applyResult(targetConcept, true);
@@ -4958,6 +4977,13 @@ if (tileSegments && tileSegments.length) {
         : capitalizeFirst(correctWords.join(" "), targetLang) + ".";
       revealCorrectAnswerBanner(correctSentence, targetLang);
 
+      // Now that the answer is on screen, offer to say it. (A correct
+      // build auto-advances, so the mic only appears on this path.)
+      if (canSpeakTarget(targetLang, supportLang)) {
+        content.insertAdjacentHTML("beforeend", speakCheckHtml());
+        wireSpeakCheck(correctWords.join(" "), targetLang);
+      }
+
       checkL6Btn.disabled = false;
       checkL6Btn.textContent = ui("continue");
       checkL6Btn.onclick = () => renderNext(targetLang, supportLang);
@@ -5174,6 +5200,12 @@ checkBtn.onclick = async () => {
         ${ui("correctAnswer")} <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
+  }
+
+  // Say the sentence once it's on screen (every outcome shows or confirms it).
+  if (canSpeakTarget(targetLang, supportLang)) {
+    feedbackDiv.insertAdjacentHTML("beforeend", speakCheckHtml());
+    wireSpeakCheck(targetSentence, targetLang);
   }
 
   // 🔁 Replace Check with Continue

@@ -2248,6 +2248,19 @@ button.wrong {
   text-decoration: underline dotted;
 }
 
+.spoken-diff .spoken-verdict,
+.spoken-diff .spoken-heard,
+.spoken-diff .spoken-error {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.spoken-diff .spoken-heard {
+  font-style: italic;
+}
+
 /* Anna (AI tutor) start-screen entry: locked = visible but unclickable. */
 a.secondary.locked {
   opacity: 0.45;

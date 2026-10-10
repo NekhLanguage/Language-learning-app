@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-10
+
+### Say it: speaking practice after levels 6 and 7, and clear messages when the mic fails
+
+The "Say it" button now also appears on level 7 once you've checked your answer, and on level 6 when the correct sentence is revealed. Say the sentence and each word turns green if it came through or gets underlined if it didn't, with what the app actually heard. If nothing comes through, the microphone is blocked, or your browser can't check that language, you now get a message saying which, instead of a bare "…". It checks whether your words are understood, not your accent, and it shows in browsers that support speech recognition (Chrome, Safari).
+
+---
+
 ## 2026-10-09
 
 ### Referrals: 20% off your first payment for a friend who opens your link
