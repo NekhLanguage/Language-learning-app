@@ -140,7 +140,15 @@
     "authMismatch": "Salasanat eivät täsmää.",
     "authSaved": "Salasana tallennettu. Avataan sovellus…",
     "haveAccountSignIn": "Onko sinulla jo tili? Kirjaudu sisään",
-    "newHereStartFree": "Ensimmäistä kertaa täällä? Aloita ilmaiseksi"
+    "newHereStartFree": "Ensimmäistä kertaa täällä? Aloita ilmaiseksi",
+    "sayItListening": "Kuuntelee…",
+    "sayItNoSpeech": "En kuullut mitään. Napauta painiketta ja puhu heti.",
+    "sayItMicBlocked": "Mikrofonisi on estetty. Salli se tälle sivustolle selaimen asetuksista ja yritä uudelleen.",
+    "sayItUnsupported": "Tämä selain ei pysty tarkistamaan puhetta tällä kielellä. Kokeile Chromea tai Safaria.",
+    "sayItFailed": "Puheentarkistus ei toimi juuri nyt. Yritä hetken kuluttua uudelleen.",
+    "sayItAllHeard": "Jokainen sana kuului selvästi.",
+    "sayItSomeMissed": "Alleviivatut sanat eivät kuuluneet. Kuuntele uudelleen ja yritä toistamiseen.",
+    "sayItHeard": "Kuulimme: {transcript}"
   },
   "hubNames": {
     "ar": "arabia",
