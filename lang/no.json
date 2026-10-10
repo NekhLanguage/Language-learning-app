@@ -136,7 +136,15 @@
     "authMismatch": "De to passordene er ikke like.",
     "authSaved": "Passordet er lagret. Åpner appen …",
     "haveAccountSignIn": "Har du allerede en konto? Logg inn",
-    "newHereStartFree": "Ny her? Start gratis"
+    "newHereStartFree": "Ny her? Start gratis",
+    "sayItListening": "Lytter…",
+    "sayItNoSpeech": "Jeg hørte ingenting. Trykk på „Si det“ og snakk med en gang.",
+    "sayItMicBlocked": "Mikrofonen din er blokkert. Tillat den for dette nettstedet i nettleserinnstillingene og prøv igjen.",
+    "sayItUnsupported": "Denne nettleseren kan ikke sjekke tale på dette språket. Prøv Chrome eller Safari.",
+    "sayItFailed": "Talekontrollen virker ikke akkurat nå. Prøv igjen om et øyeblikk.",
+    "sayItAllHeard": "Hvert ord kom tydelig frem.",
+    "sayItSomeMissed": "De understrekede ordene kom ikke frem. Hør igjen og prøv på nytt.",
+    "sayItHeard": "Vi hørte: {transcript}"
   },
   "hubNames": {
     "fi": "finsk",

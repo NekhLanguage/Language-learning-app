@@ -136,7 +136,15 @@
     "authMismatch": "Die beiden Passwörter stimmen nicht überein.",
     "authSaved": "Passwort gespeichert. Die App wird geöffnet …",
     "haveAccountSignIn": "Schon ein Konto? Anmelden",
-    "newHereStartFree": "Neu hier? Kostenlos starten"
+    "newHereStartFree": "Neu hier? Kostenlos starten",
+    "sayItListening": "Hört zu…",
+    "sayItNoSpeech": "Ich habe nichts gehört. Tipp auf „Sag es“ und sprich sofort los.",
+    "sayItMicBlocked": "Dein Mikrofon ist blockiert. Erlaube es für diese Seite in den Browser-Einstellungen und versuch's noch mal.",
+    "sayItUnsupported": "Dieser Browser kann Sprache in dieser Sprache nicht prüfen. Versuch's mit Chrome oder Safari.",
+    "sayItFailed": "Die Sprachprüfung funktioniert gerade nicht. Versuch's gleich noch mal.",
+    "sayItAllHeard": "Jedes Wort war klar zu hören.",
+    "sayItSomeMissed": "Die unterstrichenen Wörter sind nicht angekommen. Hör noch mal zu und versuch's wieder.",
+    "sayItHeard": "Gehört: {transcript}"
   },
   "hubNames": {
     "fi": "Finnisch",

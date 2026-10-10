@@ -140,7 +140,15 @@
     "authMismatch": "Le due password non coincidono.",
     "authSaved": "Password salvata. Apro l'app…",
     "haveAccountSignIn": "Hai già un account? Accedi",
-    "newHereStartFree": "Sei nuovo? Inizia gratis"
+    "newHereStartFree": "Sei nuovo? Inizia gratis",
+    "sayItListening": "In ascolto…",
+    "sayItNoSpeech": "Non ho sentito nulla. Tocca il pulsante e parla subito.",
+    "sayItMicBlocked": "Il tuo microfono è bloccato. Consentilo per questo sito nelle impostazioni del browser e riprova.",
+    "sayItUnsupported": "Questo browser non riesce a controllare il parlato in questa lingua. Prova Chrome o Safari.",
+    "sayItFailed": "Il controllo del parlato non funziona in questo momento. Riprova fra un attimo.",
+    "sayItAllHeard": "Ogni parola si è sentita chiaramente.",
+    "sayItSomeMissed": "Le parole sottolineate non sono arrivate. Riascolta e riprova.",
+    "sayItHeard": "Abbiamo sentito: {transcript}"
   },
   "hubNames": {
     "fi": "finlandese",

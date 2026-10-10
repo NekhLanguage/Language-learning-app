@@ -140,7 +140,15 @@
     "authMismatch": "As duas senhas não são iguais.",
     "authSaved": "Senha salva. Abrindo o app…",
     "haveAccountSignIn": "Já tem uma conta? Entrar",
-    "newHereStartFree": "É novo por aqui? Comece grátis"
+    "newHereStartFree": "É novo por aqui? Comece grátis",
+    "sayItListening": "Ouvindo…",
+    "sayItNoSpeech": "Não ouvi nada. Toque em \"Fale\" e fale logo em seguida.",
+    "sayItMicBlocked": "Seu microfone está bloqueado. Permita-o para este site nas configurações do navegador e tente de novo.",
+    "sayItUnsupported": "Este navegador não consegue verificar a fala neste idioma. Tente com o Chrome ou Safari.",
+    "sayItFailed": "A verificação de fala não está funcionando no momento. Tente de novo daqui a pouco.",
+    "sayItAllHeard": "Todas as palavras saíram com clareza.",
+    "sayItSomeMissed": "As palavras sublinhadas não saíram. Ouça de novo e tente outra vez.",
+    "sayItHeard": "Ouvimos: {transcript}"
   },
   "hubNames": {
     "fi": "finlandês",
