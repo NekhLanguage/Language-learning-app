@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.105";
+const APP_DATA_VERSION = "1.2.106";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -3189,6 +3189,28 @@ return tpl;
   // Append a "Correto: <word>" / "Correct: <word>" banner under the current
   // exercise. Used by L3, L4, and L6 wrong-answer paths so the learner can
   // see what they should have chosen before the next exercise loads.
+  // One rule for every exercise after Check (Nekh 2026-10-10): a clean
+  // correct answer moves on by itself after AUTO_ADVANCE_MS; anything the
+  // learner should read first (a miss, or a correct answer that comes with
+  // a correction) waits for Continue. The button reads Continue either way,
+  // so a correct answer can also be skipped ahead.
+  const AUTO_ADVANCE_MS = 1000;
+  function finishCheck(btn, { autoAdvance }, targetLang, supportLang) {
+    let done = false;
+    let timer = null;
+    const next = () => {
+      // The timer can outlive the screen (Quit, Journey): never advance from
+      // an exercise that is no longer on screen.
+      if (done || !btn.isConnected) return;
+      done = true;
+      clearTimeout(timer);
+      renderNext(targetLang, supportLang);
+    };
+    btn.disabled = false;
+    btn.textContent = ui("continue");
+    btn.onclick = next;
+    if (autoAdvance) timer = setTimeout(next, AUTO_ADVANCE_MS);
+  }
   function revealCorrectAnswerBanner(text, targetLang) {
     if (!text) return;
     const label = String(ui("correct") || "Correct").replace(/[.\s]+$/, "");
@@ -3493,8 +3515,7 @@ return tpl;
 
       applyResult(targetConcept, correct);
 
-      checkBtn.textContent = ui("continue");
-      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+      finishCheck(checkBtn, { autoAdvance: correct }, targetLang, supportLang);
     };
   }
 
@@ -3605,15 +3626,9 @@ return tpl;
       });
       applyResult(targetConcept, isCorrect);
 
-      if (isCorrect) {
-        setTimeout(() => renderNext(targetLang, supportLang), 800);
-        return;
-      }
-      // The correct sentence isn't visible anywhere on screen — reveal it.
-      revealCorrectAnswerBanner(task.answer, targetLang);
-      checkBtn.disabled = false;
-      checkBtn.textContent = ui("continue");
-      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+      // The correct sentence isn't visible anywhere on screen after a miss — reveal it.
+      if (!isCorrect) revealCorrectAnswerBanner(task.answer, targetLang);
+      finishCheck(checkBtn, { autoAdvance: isCorrect }, targetLang, supportLang);
     };
   }
 
@@ -3695,8 +3710,9 @@ return tpl;
       }
       wireTts();
 
-      checkBtn.textContent = ui("continue");
-      checkBtn.onclick = () => setTimeout(() => renderNext(targetLang, supportLang), 0);
+      // Only a clean answer moves on by itself: an accent fix or a semantic
+      // accept shows the proper form, which the learner should read.
+      finishCheck(checkBtn, { autoAdvance: resultType === "perfect" }, targetLang, supportLang);
     };
   }
 
@@ -3771,8 +3787,7 @@ return tpl;
 
       applyResult(targetConcept, correct);
 
-      checkBtn.textContent = ui("continue");
-      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+      finishCheck(checkBtn, { autoAdvance: correct }, targetLang, supportLang);
     };
 
     return;
@@ -3839,8 +3854,7 @@ const options = shuffle([...releasedOptions]).slice(0, 4);
 
     applyResult(targetConcept, correct);
 
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    finishCheck(checkBtn, { autoAdvance: correct }, targetLang, supportLang);
   };
   return true;
 }
@@ -4066,9 +4080,7 @@ if (isModifierConcept(targetConcept)) {
 
     applyResult(targetConcept, correct);
 
-    checkBtn.disabled = false;
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    finishCheck(checkBtn, { autoAdvance: correct }, targetLang, supportLang);
   };
 
   return true; // 🔥 CRITICAL
@@ -4229,9 +4241,7 @@ if (!finalOptions.includes(targetConcept)) {
 
     applyResult(targetConcept, correct);
 
-    checkBtn.disabled = false;
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    finishCheck(checkBtn, { autoAdvance: correct }, targetLang, supportLang);
   };
 }
 
@@ -4429,9 +4439,7 @@ if (!finalOptions.includes(targetConcept)) {
 
       applyResult(targetConcept, correct);
 
-      checkBtn.disabled = false;
-      checkBtn.textContent = ui("continue");
-      checkBtn.onclick = () => renderNext(targetLang, supportLang);
+      finishCheck(checkBtn, { autoAdvance: correct }, targetLang, supportLang);
     };
   }
 // -------------------------
@@ -4644,20 +4652,8 @@ activeSelection = null;
     }
   });
 
-  if (allCorrect) {
-    setTimeout(() => {
-      renderNext(targetLang, supportLang);
-    }, 800);
-  } else {
-    // Match the L2 pattern: leave the visual feedback in place and let
-    // the learner advance on their own — no auto-rerender.
-    const checkMatchesBtn = document.getElementById("check-matches");
-    if (checkMatchesBtn) {
-      checkMatchesBtn.disabled = false;
-      checkMatchesBtn.textContent = ui("continue");
-      checkMatchesBtn.onclick = () => renderNext(targetLang, supportLang);
-    }
-  }
+  const checkMatchesBtn = document.getElementById("check-matches");
+  if (checkMatchesBtn) finishCheck(checkMatchesBtn, { autoAdvance: allCorrect }, targetLang, supportLang);
   };
 }
 
@@ -4954,7 +4950,7 @@ if (tileSegments && tileSegments.length) {
       // level 6 and never reaches level 7.
       applyResult(targetConcept, true);
 
-      setTimeout(() => renderNext(targetLang, supportLang), 800);
+      finishCheck(checkL6Btn, { autoAdvance: true }, targetLang, supportLang);
     } else {
       document.querySelectorAll(".sentence-slot").forEach(slot => {
         slot.classList.add("incorrect");
@@ -4984,9 +4980,7 @@ if (tileSegments && tileSegments.length) {
         wireSpeakCheck(correctWords.join(" "), targetLang);
       }
 
-      checkL6Btn.disabled = false;
-      checkL6Btn.textContent = ui("continue");
-      checkL6Btn.onclick = () => renderNext(targetLang, supportLang);
+      finishCheck(checkL6Btn, { autoAdvance: false }, targetLang, supportLang);
     }
   };
 }
@@ -5202,18 +5196,18 @@ checkBtn.onclick = async () => {
     wireTts();
   }
 
-  // Say the sentence once it's on screen (every outcome shows or confirms it).
-  if (canSpeakTarget(targetLang, supportLang)) {
+  // Only a clean answer moves on by itself: an accent fix or a semantic
+  // accept shows the proper form, which the learner should read first.
+  const autoAdvance = resultType === "perfect";
+
+  // Say the sentence while it's on screen — not on a clean answer, which
+  // moves on before the learner could use the mic.
+  if (!autoAdvance && canSpeakTarget(targetLang, supportLang)) {
     feedbackDiv.insertAdjacentHTML("beforeend", speakCheckHtml());
     wireSpeakCheck(targetSentence, targetLang);
   }
 
-  // 🔁 Replace Check with Continue
-  checkBtn.textContent = ui("continue");
-  checkBtn.onclick = () => {
-    setTimeout(() => renderNext(targetLang, supportLang), 0);
-return;
-  };
+  finishCheck(checkBtn, { autoAdvance }, targetLang, supportLang);
 };
 }
 
@@ -6127,8 +6121,7 @@ if (level === 2) {
 
     applyResult(targetConcept, correct);
 
-    checkBtn.textContent = ui("continue");
-    checkBtn.onclick = () => renderNext(targetLang, supportLang);
+    finishCheck(checkBtn, { autoAdvance: correct }, targetLang, supportLang);
   };
 
   run.exerciseCounter++;
