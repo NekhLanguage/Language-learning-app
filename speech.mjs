@@ -9,11 +9,16 @@ export function speechRecognitionAvailable(root = globalThis) {
   return !!(root.SpeechRecognition || root.webkitSpeechRecognition);
 }
 
-// Runs one recognition and resolves with the transcript, or null on
-// error/timeout/no-speech. Never rejects.
-export function recognizeOnce({ lang, timeoutMs = 8000 }, root = globalThis) {
+// Runs one recognition and resolves with { transcript } on success or
+// { error } otherwise, where error is one of:
+//   "no-speech"   — nothing heard (silence, timeout, ended without a result)
+//   "mic-blocked" — microphone permission denied or no microphone
+//   "unsupported" — no API, or the browser can't recognise this language
+//   "failed"      — anything else (network, service down)
+// Never rejects.
+export function recognizeSpeech({ lang, timeoutMs = 8000 }, root = globalThis) {
   const Ctor = root.SpeechRecognition || root.webkitSpeechRecognition;
-  if (!Ctor) return Promise.resolve(null);
+  if (!Ctor) return Promise.resolve({ error: "unsupported" });
 
   return new Promise((resolve) => {
     let settled = false;
@@ -28,27 +33,53 @@ export function recognizeOnce({ lang, timeoutMs = 8000 }, root = globalThis) {
     try {
       rec = new Ctor();
     } catch {
-      return settle(null);
+      return settle({ error: "unsupported" });
     }
 
     const timer = setTimeout(() => {
       try { rec.abort(); } catch { /* already stopped */ }
-      settle(null);
+      settle({ error: "no-speech" });
     }, timeoutMs);
 
     rec.lang = lang;
     rec.interimResults = false;
     rec.maxAlternatives = 1;
-    rec.onresult = (e) => settle(e?.results?.[0]?.[0]?.transcript ?? null);
-    rec.onerror = () => settle(null);
-    rec.onend = () => settle(null); // fires after onresult; settle() dedupes
+    rec.onresult = (e) => {
+      const transcript = e?.results?.[0]?.[0]?.transcript;
+      settle(transcript ? { transcript } : { error: "no-speech" });
+    };
+    rec.onerror = (e) => settle({ error: speechErrorKind(e?.error) });
+    rec.onend = () => settle({ error: "no-speech" }); // fires after onresult; settle() dedupes
 
     try {
       rec.start();
     } catch {
-      settle(null);
+      settle({ error: "failed" });
     }
   });
+}
+
+// Maps a SpeechRecognitionErrorEvent.error code to the kinds above.
+export function speechErrorKind(code) {
+  switch (code) {
+    case "no-speech":
+    case "aborted":
+      return "no-speech";
+    case "not-allowed":
+    case "service-not-allowed":
+    case "audio-capture":
+      return "mic-blocked";
+    case "language-not-supported":
+      return "unsupported";
+    default:
+      return "failed";
+  }
+}
+
+// Transcript-or-null form of recognizeSpeech.
+export async function recognizeOnce(opts, root = globalThis) {
+  const { transcript } = await recognizeSpeech(opts, root);
+  return transcript ?? null;
 }
 
 // Word-level comparison of the expected sentence against the transcript:

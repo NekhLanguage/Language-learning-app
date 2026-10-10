@@ -3,7 +3,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { speechRecognitionAvailable, recognizeOnce, compareSpoken } from "../../speech.mjs";
+import { speechRecognitionAvailable, recognizeOnce, recognizeSpeech, speechErrorKind, compareSpoken } from "../../speech.mjs";
 
 function fakeRoot(behavior) {
   return {
@@ -60,4 +60,25 @@ test("compareSpoken marks matched and missed words", () => {
     { word: "ich", heard: false },
     { word: "esse", heard: false },
   ]);
+});
+
+test("recognizeSpeech names why recognition failed", async () => {
+  const errorRoot = (code) => fakeRoot((rec) => setTimeout(() => rec.onerror({ error: code }), 5));
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO" }, errorRoot("not-allowed")), { error: "mic-blocked" });
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO" }, errorRoot("no-speech")), { error: "no-speech" });
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO" }, errorRoot("network")), { error: "failed" });
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO" }, errorRoot("language-not-supported")), { error: "unsupported" });
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO" }, {}), { error: "unsupported" });
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO", timeoutMs: 30 }, fakeRoot(() => {})), { error: "no-speech" });
+  const silent = fakeRoot((rec) => setTimeout(() => rec.onend(), 5));
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO" }, silent), { error: "no-speech" });
+  const ok = fakeRoot((rec) => setTimeout(() => rec.onresult({ results: [[{ transcript: "jeg drikker vann" }]] }), 5));
+  assert.deepEqual(await recognizeSpeech({ lang: "nb-NO" }, ok), { transcript: "jeg drikker vann" });
+});
+
+test("speechErrorKind maps every SpeechRecognition error code", () => {
+  for (const code of ["not-allowed", "service-not-allowed", "audio-capture"]) assert.equal(speechErrorKind(code), "mic-blocked");
+  for (const code of ["no-speech", "aborted"]) assert.equal(speechErrorKind(code), "no-speech");
+  assert.equal(speechErrorKind("language-not-supported"), "unsupported");
+  for (const code of ["network", "bad-grammar", undefined]) assert.equal(speechErrorKind(code), "failed");
 });
