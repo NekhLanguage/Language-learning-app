@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-09
+
+### Referrals: 20% off your first payment for a friend who opens your link
+
+A friend who signs up through your referral link now gets 20% off their first month, one time only. Your discount for referring them is unchanged. The share link routes through a quick redirect so the discount shows at checkout automatically; a friend who signs up without a referral link still pays the normal $19.
+
+---
+
 ## 2026-10-08 (night)
 
 ### Leaderboard: a failed "This week" load no longer hides the board

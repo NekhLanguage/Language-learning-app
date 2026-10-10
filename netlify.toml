@@ -23,6 +23,18 @@
 [functions.referralDiscountRun]
   schedule = "0 6 1 * *"
 
+# Two-sided referral (Dan 2026-10-09): /r/<CODE> is the share-friendly
+# path for referral links. Netlify rewrites to the Checkout Session
+# function (status 200 keeps the URL bar on /r/<CODE> during the hop),
+# the function then 302s the friend to Stripe with the 20%-off-first-
+# payment coupon pre-applied — the rewrite passes the function's 302
+# straight through.
+[[redirects]]
+  from = "/r/:code"
+  to = "/.netlify/functions/referralCheckout?code=:code"
+  status = 200
+  force = true
+
 # Long-lived static assets. The font files and the vendored supabase-js
 # carry their identity in the file name (a new version is a new name), so
 # a returning browser never needs to revalidate them. Everything else keeps
