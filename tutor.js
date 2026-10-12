@@ -428,7 +428,7 @@ function saveSettings() {
   els.settings.hidden = true;
   if (mode === "setup") {
     addMessage("status", t("tutorSavedFirst", "Saved — change these anytime with the ⚙️ button."));
-    addMessage("status", t("tutorSayHi", "Say hi to start — try greeting Anna in {lang}.", { lang: state.targetName }));
+    addAnnaStatus("greeting", t("tutorSayHi", "Say hi to start — try greeting Anna in {lang}.", { lang: state.targetName }));
   } else {
     addMessage("status", state.messages.length
       ? t("tutorSettingsSavedMid", "Settings saved — Anna follows them from her next reply.")
@@ -646,6 +646,7 @@ function markUndelivered(bubble, reason) {
   if (!bar) {
     bar = document.createElement("span");
     bar.className = "tutor-msg-failed";
+    bar.appendChild(annaPose("apologizing", "tutor-anna tutor-anna-small"));
     const label = document.createElement("span");
     label.className = "tutor-msg-failed-label";
     const retry = document.createElement("button");
@@ -873,10 +874,32 @@ async function streamTutor(onText) {
   }
 }
 
+// Anna's poses (img/anna/, cut from Nekh's sheet 1, 2026-10-12): thinking
+// while she writes, greeting when a conversation can start, apologizing
+// when a message did not reach her. Decorative — the text says it all.
+function annaPose(pose, cls = "tutor-anna") {
+  const img = document.createElement("img");
+  img.className = cls;
+  img.src = `img/anna/${pose}.webp`;
+  img.alt = "";
+  img.decoding = "async";
+  return img;
+}
+
+function addAnnaStatus(pose, text) {
+  const div = addMessage("status", "");
+  div.classList.add("with-anna");
+  const span = document.createElement("span");
+  span.textContent = text;
+  div.append(annaPose(pose), span);
+  return div;
+}
+
 function addTypingIndicator() {
   const div = addMessage("status", "");
   div.classList.add("typing");
   div.setAttribute("aria-label", t("tutorTyping", "Anna is typing"));
+  div.appendChild(annaPose("thinking"));
   for (let i = 0; i < 3; i++) div.appendChild(document.createElement("span"));
   return div;
 }
@@ -1665,7 +1688,7 @@ async function startWithRun(targetLang, run) {
   if (!hasSavedPrefs()) {
     openSettings("setup");
   } else if (!state.messages.length) {
-    addMessage("status", t("tutorSayHi", "Say hi to start — try greeting Anna in {lang}.", { lang: state.targetName }));
+    addAnnaStatus("greeting", t("tutorSayHi", "Say hi to start — try greeting Anna in {lang}.", { lang: state.targetName }));
   }
 
   els.send.addEventListener("click", sendMessage);

@@ -159,6 +159,8 @@
     "properForm": "Proper form:",
     "expected": "Expected:",
     "correctAnswer": "Correct answer:",
+    "pickedMeans": "You picked «{picked}», which means “{meaning}”.",
+    "pickedInTarget": "You picked “{picked}”. In {lang} that's «{meaning}».",
     "playAudio": "Play audio",
     "scriptGuide": "Script Guide",
     "scriptGuideFor": "{lang} — Script Guide",

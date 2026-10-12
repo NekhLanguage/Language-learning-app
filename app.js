@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.110";
+const APP_DATA_VERSION = "1.2.111";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -3207,8 +3207,15 @@ return tpl;
   // learner should read first (a miss, or a correct answer that comes with
   // a correction) waits for Continue. The button reads Continue either way,
   // so a correct answer can also be skipped ahead.
+  //
+  // The result lands in the feedback sheet (Nekh 2026-10-12): a card that
+  // slides up over the bottom of the screen with Anna, the verdict, the
+  // right answer and its grammar notes, and the Continue button where the
+  // thumb is. `feedback` is the list of nodes to show; without it the sheet
+  // says Correct / Incorrect and, for an option exercise, names the right
+  // option (the button the caller already marked .correct).
   const AUTO_ADVANCE_MS = 1000;
-  function finishCheck(btn, { autoAdvance }, targetLang, supportLang) {
+  function finishCheck(btn, { autoAdvance, correct = autoAdvance, feedback = null }, targetLang, supportLang) {
     let done = false;
     let timer = null;
     const next = () => {
@@ -3222,7 +3229,116 @@ return tpl;
     btn.disabled = false;
     btn.textContent = ui("continue");
     btn.onclick = next;
+    openFeedbackSheet({
+      correct,
+      pose: !correct ? "correcting" : autoAdvance ? "well-done" : "explaining",
+      nodes: feedback || defaultFeedbackNodes(correct, targetLang, supportLang),
+      btn,
+    });
     if (autoAdvance) timer = setTimeout(next, AUTO_ADVANCE_MS);
+  }
+
+  function sheetVerdict(correct) {
+    const p = document.createElement("p");
+    p.className = "sheet-verdict";
+    p.textContent = ui(correct ? "correct" : "incorrect");
+    return p;
+  }
+  // A missed option exercise already shows the right option in green, so
+  // the sheet explains the option the learner actually picked instead
+  // (Nekh 2026-10-12): «água» means "water". Target-language tiles (L3/L4,
+  // the ones with a speaker) get their meaning; support-language options
+  // (L2) get their word in the target language. Without a concept id on
+  // the picked button the sheet falls back to naming the right answer.
+  function pickedOptionNote(targetLang, supportLang) {
+    const picked = content.querySelector("button.incorrect[data-cid]");
+    const cid = picked?.dataset.cid;
+    if (!cid) return null;
+    const shown = picked.textContent.trim();
+    const inTarget = !!picked.closest(".word-bank-chip");
+    let meaning;
+    try {
+      meaning = String((inTarget ? formOf(supportLang, cid) : surfaceForm(targetLang, cid)) || "").trim();
+    } catch { meaning = ""; }
+    if (!meaning || meaning === cid || meaning.toLowerCase() === shown.toLowerCase()) return null;
+    const p = document.createElement("p");
+    p.className = "sheet-answer";
+    p.textContent = inTarget
+      ? uiT("pickedMeans", "You picked «{picked}», which means “{meaning}”.", { picked: shown, meaning })
+      : uiT("pickedInTarget", "You picked “{picked}”. In {lang} that's «{meaning}».",
+          { picked: shown, meaning, lang: localizedTargetLabel(targetLang) });
+    return p;
+  }
+  function defaultFeedbackNodes(correct, targetLang, supportLang) {
+    const nodes = [sheetVerdict(correct)];
+    if (correct) return nodes;
+    const note = pickedOptionNote(targetLang, supportLang);
+    if (note) return [...nodes, note];
+    const right = content.querySelector("button.correct");
+    if (right) {
+      const p = document.createElement("p");
+      p.className = "sheet-answer";
+      p.innerHTML = `${safe(ui("correctAnswer"))} <strong>${safe(right.textContent.trim())}</strong>`;
+      nodes.push(p);
+    }
+    return nodes;
+  }
+
+  const ANNA_POSE_SRC = (pose) => `img/anna/${pose}.webp`;
+  let feedbackSheetObserver = null;
+  function closeFeedbackSheet() {
+    feedbackSheetObserver?.disconnect();
+    feedbackSheetObserver = null;
+    document.getElementById("feedback-sheet")?.remove();
+    const screen = document.getElementById("learning-screen");
+    if (screen) screen.style.paddingBottom = "";
+    document.documentElement.style.removeProperty("--sheet-h");
+  }
+  // The sheet's live height: the exercise keeps that much room below it
+  // (so nothing hides under the sheet) and the floating buttons ride above
+  // it. Tracks growth when a grammar note opens.
+  function trackFeedbackSheet(sheet) {
+    const apply = () => {
+      if (!sheet.isConnected) return;
+      const h = sheet.offsetHeight;
+      document.documentElement.style.setProperty("--sheet-h", `${h}px`);
+      const screen = document.getElementById("learning-screen");
+      if (screen) screen.style.paddingBottom = `${h + 16}px`;
+    };
+    apply();
+    if (typeof ResizeObserver === "function") {
+      feedbackSheetObserver = new ResizeObserver(apply);
+      feedbackSheetObserver.observe(sheet);
+    }
+  }
+  function openFeedbackSheet({ correct, pose, nodes, btn }) {
+    closeFeedbackSheet();
+    const sheet = document.createElement("section");
+    sheet.id = "feedback-sheet";
+    sheet.className = `feedback-sheet ${correct ? "is-correct" : "is-wrong"}`;
+    sheet.setAttribute("role", "status");
+    sheet.setAttribute("aria-live", "polite");
+    sheet.innerHTML = `
+      <div class="feedback-sheet-inner">
+        <img class="feedback-anna" src="${ANNA_POSE_SRC(pose)}" alt="" width="64" height="150" decoding="async">
+        <div class="feedback-sheet-body"></div>
+      </div>`;
+    const body = sheet.querySelector(".feedback-sheet-body");
+    for (const n of nodes) if (n) body.appendChild(n);
+    const actions = document.createElement("div");
+    actions.className = "feedback-sheet-actions";
+    actions.appendChild(btn);
+    body.appendChild(actions);
+    // Opening a grammar note: Anna explains.
+    sheet.addEventListener("click", (e) => {
+      if (e.target.closest(".grammar-chip")) sheet.querySelector(".feedback-anna").src = ANNA_POSE_SRC("explaining");
+    });
+    document.body.appendChild(sheet);
+    requestAnimationFrame(() => {
+      sheet.classList.add("open");
+      trackFeedbackSheet(sheet);
+    });
+    return sheet;
   }
   function revealCorrectAnswerBanner(text, targetLang) {
     if (!text) return;
@@ -3232,6 +3348,7 @@ return tpl;
     banner.innerHTML = `${safe(label)}: <span>${safe(text)}</span> ${ttsHtml(text, targetLang)}`;
     content.appendChild(banner);
     wireTts();
+    return banner;
   }
   // Speaking practice ("Say it"): gated per language (capabilities) and per
   // browser. The mic button recognises the learner saying `expected` and
@@ -3646,8 +3763,11 @@ return tpl;
       applyResult(targetConcept, isCorrect);
 
       // The correct sentence isn't visible anywhere on screen after a miss — reveal it.
-      if (!isCorrect) revealCorrectAnswerBanner(task.answer, targetLang);
-      finishCheck(checkBtn, { autoAdvance: isCorrect }, targetLang, supportLang);
+      const banner = isCorrect ? null : revealCorrectAnswerBanner(task.answer, targetLang);
+      finishCheck(checkBtn, {
+        autoAdvance: isCorrect,
+        feedback: banner ? [sheetVerdict(false), banner] : null,
+      }, targetLang, supportLang);
     };
   }
 
@@ -3731,7 +3851,9 @@ return tpl;
 
       // Only a clean answer moves on by itself: an accent fix or a semantic
       // accept shows the proper form, which the learner should read.
-      finishCheck(checkBtn, { autoAdvance: resultType === "perfect" }, targetLang, supportLang);
+      finishCheck(checkBtn, {
+        autoAdvance: resultType === "perfect", correct, feedback: [feedbackDiv],
+      }, targetLang, supportLang);
     };
   }
 
@@ -4990,11 +5112,12 @@ if (tileSegments && tileSegments.length) {
       const correctSentence = tileSegments && tileSegments.length
         ? safe(buildSentence(targetLang, tpl, null, sharedChoices))
         : capitalizeFirst(correctWords.join(" "), targetLang) + ".";
-      revealCorrectAnswerBanner(correctSentence, targetLang);
+      const feedback = [sheetVerdict(false), revealCorrectAnswerBanner(correctSentence, targetLang)];
       const chips = grammarChipsHtml(targetBuild.rules, targetLang, supportLang);
       if (chips) {
         content.insertAdjacentHTML("beforeend", `<div class="miss-grammar">${chips}</div>`);
         wireGrammarChips(content.lastElementChild);
+        feedback.push(content.lastElementChild);
       }
 
       // Now that the answer is on screen, offer to say it. (A correct
@@ -5002,9 +5125,10 @@ if (tileSegments && tileSegments.length) {
       if (canSpeakTarget(targetLang, supportLang)) {
         content.insertAdjacentHTML("beforeend", speakCheckHtml());
         wireSpeakCheck(correctWords.join(" "), targetLang);
+        feedback.push(content.lastElementChild);
       }
 
-      finishCheck(checkL6Btn, { autoAdvance: false }, targetLang, supportLang);
+      finishCheck(checkL6Btn, { autoAdvance: false, feedback }, targetLang, supportLang);
     }
   };
 }
@@ -5235,7 +5359,9 @@ checkBtn.onclick = async () => {
     wireSpeakCheck(targetSentence, targetLang);
   }
 
-  finishCheck(checkBtn, { autoAdvance }, targetLang, supportLang);
+  finishCheck(checkBtn, {
+    autoAdvance, correct: resultType !== "incorrect", feedback: [feedbackDiv],
+  }, targetLang, supportLang);
 };
 }
 
@@ -5923,6 +6049,7 @@ function renderRunComplete(targetLang, supportLang) {
 }
 
 function renderNext(targetLang, supportLang) {
+  closeFeedbackSheet();
   // Retrigger the fade-in animation on every new exercise. Removing
   // and force-reflowing the class ensures the keyframes replay.
   if (content) {
@@ -6354,6 +6481,7 @@ if (journeyBtn) {
     
 
  function returnToHome() {
+  closeFeedbackSheet();
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   startScreen.classList.add("active");
 }
