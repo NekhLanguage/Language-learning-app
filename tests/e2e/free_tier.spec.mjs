@@ -55,9 +55,23 @@ test("sign-in screen offers the free start with just an email", async ({ page })
   await page.goto("/?start=free");
   await expect(page.locator("#gate-start-free")).toBeVisible();
   await expect(page.locator("#gate-start-free-heading")).toHaveText("Try the first 6 lessons free");
-  await page.fill("#start-free-email", `new-${uniq()}@example.com`);
+  const email = `new-${uniq()}@example.com`;
+  await expect(page.locator("#start-free-google")).toBeHidden();
+  await page.fill("#start-free-email", email);
   await page.click("#start-free-btn");
-  await expect(page.locator("#start-free-message")).toContainText("inbox");
+  // Names the address (a typo is visible), warns about the delay and spam,
+  // and offers Google if the email never comes.
+  await expect(page.locator("#start-free-message")).toContainText(email);
+  await expect(page.locator("#start-free-message")).toContainText("spam");
+  await expect(page.locator("#start-free-google")).toBeVisible();
+});
+
+test("a malformed address shows no Google fallback", async ({ page }) => {
+  await page.goto("/?start=free");
+  await page.fill("#start-free-email", "bad@");
+  await page.click("#start-free-btn");
+  await expect(page.locator("#start-free-message")).toContainText("doesn't look like an email");
+  await expect(page.locator("#start-free-google")).toBeHidden();
 });
 
 test("free path: six lessons reach both interest packs, Anna screen, paywall, pay, lesson 7 opens", async ({ page, request }) => {

@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-12
+
+### Start free: the confirmation names your address, and Google is one tap away
+
+After you tap Start free, the message now shows the address the link went to, so a typo is easy to spot. It also says the email can take a minute or two and may land in spam. If it doesn't come, a "Continue with Google instead" link right under the message gets you in without it.
+
+---
+
 ## 2026-10-10
 
 ### After Check: every level now works the same way
