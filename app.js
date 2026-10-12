@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.109";
+const APP_DATA_VERSION = "1.2.110";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -6472,6 +6472,19 @@ window.__app = {
   });
 })();
 
+// Last tutor ping per account on this device (see initTutorEntry; tutor.js
+// reads the same key for its beta flags).
+const TUTOR_PING_KEY = "zth_tutor_ping";
+function readTutorPing(email) {
+  try {
+    const c = JSON.parse(localStorage.getItem(TUTOR_PING_KEY) || "null");
+    return c && c.email === email ? c.data : null;
+  } catch { return null; }
+}
+function writeTutorPing(email, data) {
+  try { localStorage.setItem(TUTOR_PING_KEY, JSON.stringify({ email, data, at: Date.now() })); } catch { /* storage full or blocked */ }
+}
+
 const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgIahS2Gs9sk00";
 
 (async function initTutorEntry() {
@@ -6479,6 +6492,45 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
   if (!btn) return;
   const email = (localStorage.getItem("zth_email") || "").trim();
   if (!email) return;
+  const applyPing = (data) => {
+    // Subscribers get the portal link (cancel any time, keep the app)
+    // and the referral card (Nekh 2026-09-17: active subscribers only).
+    const manage = document.getElementById("link-manage-subscription");
+    if (manage) {
+      manage.href = MANAGE_SUBSCRIPTION_URL;
+      manage.hidden = data?.subscribed !== true;
+    }
+    const refer = document.getElementById("link-refer");
+    if (refer) refer.hidden = data?.subscribed !== true;
+    if (data && data.allowed) {
+      btn.classList.remove("locked");
+      btn.removeAttribute("aria-disabled");
+      btn.href = "tutor.html";
+      // data-i18n keeps the unlocked label when updateUIStrings runs again.
+      btn.dataset.i18n = "tutorLink";
+      btn.textContent = appText.ui("tutorLink");
+      return;
+    }
+    btn.classList.add("locked");
+    btn.setAttribute("aria-disabled", "true");
+    btn.removeAttribute("href");
+    btn.dataset.i18n = "tutorLinkLocked";
+    btn.textContent = appText.ui("tutorLinkLocked");
+    if (localStorage.getItem("zth_access_tier") === "trial") {
+      // Free tier: Anna is visible and locked (Nekh 2026-09-30), never hidden.
+      btn.dataset.i18nTitle = "tutorLockedTrial";
+      btn.title = appText.ui("tutorLockedTrial");
+    } else if (data && data.subscribed === false) {
+      btn.dataset.i18nTitle = "tutorLockedRenew";
+      btn.title = appText.ui("tutorLockedRenew");
+    }
+  };
+  // The ping is a cold function plus two database reads, so the start
+  // screen used to sit with Anna locked for a moment on every visit (Nekh
+  // 2026-10-12). Show this device's last answer for this account at once,
+  // then refresh it. Safe: the tutor re-checks access on every request.
+  const cached = readTutorPing(email);
+  if (cached) applyPing(cached);
   try {
     const res = await authFetch("/.netlify/functions/tutor", {
       method: "POST",
@@ -6487,32 +6539,10 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
     });
     if (!res.ok) return;
     const data = await res.json();
-    // Subscribers get the portal link (cancel any time, keep the app)
-    // and the referral card (Nekh 2026-09-17: active subscribers only).
-    const manage = document.getElementById("link-manage-subscription");
-    if (manage && data && data.subscribed === true) {
-      manage.href = MANAGE_SUBSCRIPTION_URL;
-      manage.hidden = false;
-    }
-    const refer = document.getElementById("link-refer");
-    if (refer && data && data.subscribed === true) refer.hidden = false;
-    if (data && data.allowed) {
-      btn.classList.remove("locked");
-      btn.removeAttribute("aria-disabled");
-      btn.href = "tutor.html";
-      // data-i18n keeps the unlocked label when updateUIStrings runs again.
-      btn.dataset.i18n = "tutorLink";
-      btn.textContent = appText.ui("tutorLink");
-    } else if (localStorage.getItem("zth_access_tier") === "trial") {
-      // Free tier: Anna is visible and locked (Nekh 2026-09-30), never hidden.
-      btn.dataset.i18nTitle = "tutorLockedTrial";
-      btn.title = appText.ui("tutorLockedTrial");
-    } else if (data && data.subscribed === false) {
-      btn.dataset.i18nTitle = "tutorLockedRenew";
-      btn.title = appText.ui("tutorLockedRenew");
-    }
+    writeTutorPing(email, data);
+    applyPing(data);
   } catch (_) {
-    // Network failure: button simply stays locked.
+    // Network failure: keep whatever the cache showed (locked if none).
   }
 })();
 

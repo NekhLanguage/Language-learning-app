@@ -30,7 +30,13 @@ test("a transient failure is retried without the learner noticing", async ({ pag
   await page.click("#tutor-settings-save");
 
   await page.fill("#tutor-input", "hei __FAIL_ONCE__");
-  await page.click("#tutor-send");
+  // The box empties the moment the message is sent, before any reply
+  // (Nekh 2026-10-12): checked in the same tick as the click.
+  const afterClick = await page.evaluate(() => {
+    document.getElementById("tutor-send").click();
+    return document.getElementById("tutor-input").value;
+  });
+  expect(afterClick).toBe("");
   // First attempt 502s, the automatic retry (1 s later) succeeds.
   await expect(page.locator(".tutor-msg.assistant")).toHaveCount(1, { timeout: 15_000 });
   await expect(page.locator(".tutor-msg.assistant")).toContainText("hei __FAIL_ONCE__");

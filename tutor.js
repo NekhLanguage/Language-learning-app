@@ -314,18 +314,41 @@ async function persistUser() {
 async function resolveFlags() {
   const override = localStorage.getItem("zth_tutor_writeback_override");
   let data = {};
+  let resOk = false;
   try {
     const res = await authFetch("/.netlify/functions/tutor", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ mode: "ping" }),
     });
-    if (res.ok) data = await res.json();
+    if (res.ok) { data = await res.json(); resOk = true; }
   } catch {
     // offline or unreachable: no write-back, no beta
   }
-  const vocabWriteback = override === "on" ? true : override === "off" ? false : data.vocabWriteback === true;
-  return { vocabWriteback, beta: { topics: data.beta?.topics === true } };
+  if (resOk) writeCachedPing(data);
+  return flagsFrom(data, override);
+}
+
+function flagsFrom(data, override = localStorage.getItem("zth_tutor_writeback_override")) {
+  const vocabWriteback = override === "on" ? true : override === "off" ? false : data?.vocabWriteback === true;
+  return { vocabWriteback, beta: { topics: data?.beta?.topics === true } };
+}
+
+// The app's start screen and this page share the last ping per account
+// (key zth_tutor_ping, written by app.js too), so the topic picker can show
+// at once instead of after a cold function round trip (Nekh 2026-10-12).
+// The server re-checks the flags on every request.
+function readCachedPing() {
+  try {
+    const c = JSON.parse(localStorage.getItem("zth_tutor_ping") || "null");
+    const email = (localStorage.getItem("zth_email") || "").trim();
+    return c && email && c.email === email ? c.data : null;
+  } catch { return null; }
+}
+function writeCachedPing(data) {
+  const email = (localStorage.getItem("zth_email") || "").trim();
+  if (!email) return;
+  try { localStorage.setItem("zth_tutor_ping", JSON.stringify({ email, data, at: Date.now() })); } catch { /* storage blocked */ }
 }
 
 // --- Preferences ------------------------------------------------------------
@@ -877,7 +900,9 @@ async function sendMessage() {
     state.pending = { msg: state.messages[state.messages.length - 1], bubble };
   }
   saveLiveTranscript();
-  // The input keeps the text until Anna has it; a failure costs no retyping.
+  // The message lives in its bubble now; the box clears at once (Nekh
+  // 2026-10-12). A failure puts the text back, so it costs no retyping.
+  els.input.value = "";
 
   let thinking = addTypingIndicator();
   let live = null; // the assistant bubble while the reply is streaming in
@@ -923,6 +948,7 @@ async function sendMessage() {
     thinking.remove();
     if (live) live.remove();
     markUndelivered(bubble, err.message);
+    if (!els.input.value) els.input.value = text;
   } finally {
     setBusy(false);
     els.input.focus();
@@ -1602,9 +1628,17 @@ async function startWithRun(targetLang, run) {
   // Write-back cohort + beta features. Non-blocking: the chat is usable
   // at once; the topic picker appears when the answer lands (and only if
   // the conversation hasn't started by then).
-  const flagsReady = resolveFlags().then((flags) => {
+  const cachedPing = readCachedPing();
+  if (cachedPing) {
+    const flags = flagsFrom(cachedPing);
     state.vocabWriteback = flags.vocabWriteback;
     state.beta = flags.beta;
+  }
+  const flagsReady = resolveFlags().then((flags) => {
+    const topicsChanged = flags.beta.topics !== state.beta.topics;
+    state.vocabWriteback = flags.vocabWriteback;
+    state.beta = flags.beta;
+    return { topicsChanged };
   });
 
   const mem = tutorMemory();
@@ -1654,12 +1688,19 @@ async function startWithRun(targetLang, run) {
   els.memoryClose.addEventListener("click", closeMemory);
   els.input.focus();
 
-  flagsReady.then(() => {
+  const showTopics = () => {
     if (!state.beta.topics) return;
     topicLabel();
     renderTopicProposals();
     // First visit: the setup panel is open; the picker waits behind it.
     showTopicPicker();
+  };
+  // Known beta learner on this device: topics show at once.
+  if (cachedPing) showTopics();
+  flagsReady.then(({ topicsChanged }) => {
+    if (!topicsChanged) return;
+    if (state.beta.topics) showTopics();
+    else closeTopicPicker();
   });
 
   // Background: finish any session records Anna could not write earlier.
