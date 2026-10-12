@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.108";
+const APP_DATA_VERSION = "1.2.109";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -3296,8 +3296,14 @@ return tpl;
     };
   }
 
+  // Agreement rules fire on almost every sentence; listing them last lets
+  // the two-chip cap keep the rule specific to THIS sentence (pl «swoją»
+  // was cut behind verb + case agreement in a quarter of its sentences).
+  const GENERIC_GRAMMAR_RULES = new Set(["verb_agreement", "gender_agreement"]);
   function grammarChipsHtml(rules, targetLang, supportLang) {
-    const items = (rules || [])
+    const ordered = [...(rules || [])].sort(
+      (a, b) => GENERIC_GRAMMAR_RULES.has(a) - GENERIC_GRAMMAR_RULES.has(b));
+    const items = ordered
       .map(rule => ({ rule, note: grammarNoteFor(rule, targetLang, supportLang) }))
       .filter(x => x.note)
       .slice(0, 2); // at most two chips — a hint, not a lesson page
@@ -4985,6 +4991,11 @@ if (tileSegments && tileSegments.length) {
         ? safe(buildSentence(targetLang, tpl, null, sharedChoices))
         : capitalizeFirst(correctWords.join(" "), targetLang) + ".";
       revealCorrectAnswerBanner(correctSentence, targetLang);
+      const chips = grammarChipsHtml(targetBuild.rules, targetLang, supportLang);
+      if (chips) {
+        content.insertAdjacentHTML("beforeend", `<div class="miss-grammar">${chips}</div>`);
+        wireGrammarChips(content.lastElementChild);
+      }
 
       // Now that the answer is on screen, offer to say it. (A correct
       // build auto-advances, so the mic only appears on this path.)
@@ -5184,7 +5195,7 @@ checkBtn.onclick = async () => {
     feedbackDiv.innerHTML = `
       <div style="color:var(--success-text);">
         ${ui("correct")}<br/>
-        ${ui("properForm")} <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+        ${ui("properForm")} <strong class="l7-answer">${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
   }
@@ -5194,19 +5205,23 @@ checkBtn.onclick = async () => {
     feedbackDiv.innerHTML = `
       <div style="color:var(--success-text);">
         ${ui("correct")}${semanticNote ? `<br/><span class="semantic-note">${safe(semanticNote)}</span>` : ""}<br/>
-        ${ui("expected")} <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+        ${ui("expected")} <strong class="l7-answer">${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
       </div>`;
     wireTts();
   }
 
   if (resultType === "incorrect") {
     inputField.style.borderColor = "var(--danger-text)";
+    // The grammar behind the answer, where the miss happens (a learner who
+    // typed «jego» needs the «swój» note here, not on the L1 card).
     feedbackDiv.innerHTML = `
       <div style="color:var(--danger-text);">
         ${ui("incorrect")}<br/>
-        ${ui("correctAnswer")} <strong>${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
-      </div>`;
+        ${ui("correctAnswer")} <strong class="l7-answer">${targetSentence}</strong> ${ttsHtml(targetSentence, targetLang)}
+      </div>
+      ${grammarChipsHtml(targetBuild.rules, targetLang, supportLang)}`;
     wireTts();
+    wireGrammarChips(feedbackDiv);
   }
 
   // Only a clean answer moves on by itself: an accent fix or a semantic

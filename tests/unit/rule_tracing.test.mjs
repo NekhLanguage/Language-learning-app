@@ -61,6 +61,19 @@ test("SOV word order fires for Japanese and Turkish, not English", () => {
   assert.ok(!buildSentenceWithRules("en", tpl).rules.includes("sov_word_order"));
 });
 
+test("reflexive possessive fires when the subject owns the thing, not otherwise", () => {
+  const tpl = tplById("HE_SEES_MUSEUM");
+  const pl = buildSentenceWithRules("pl", tpl, "HIS", {});
+  assert.equal(pl.sentence, "On widzi swoje muzeum.");
+  assert.ok(pl.rules.includes("reflexive_possessive"));
+  // English has no reflexive possessive: "his" stays "his".
+  assert.ok(!buildSentenceWithRules("en", tpl, "HIS", {}).rules.includes("reflexive_possessive"));
+  // Polish with a possessor that is NOT the subject keeps «jej»: he sees HER museum.
+  const other = buildSentenceWithRules("pl", tpl, "HER", {});
+  assert.ok(other.sentence.includes("jej"), other.sentence);
+  assert.ok(!other.rules.includes("reflexive_possessive"));
+});
+
 test("every language surfaces at least one rule somewhere in the core set", () => {
   // Sanity: the tracer is not silently dead for any language.
   const core = templates.filter((t) => t._file === "sentence_templates.json");
@@ -94,6 +107,7 @@ test("rule ids are stable and documented", () => {
       "post_nominal_adjective",
       "predicate_instrumental",
       "prepositional_case",
+      "reflexive_possessive",
       "sov_word_order",
       "verb_agreement",
       "vso_word_order",

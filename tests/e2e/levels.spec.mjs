@@ -183,7 +183,7 @@ test("L7 free production: a wrong answer reveals the correct sentence", async ({
   await page.click("#check-l7");
 
   await expect(page.locator("#l7-feedback")).toContainText("Incorrect");
-  await expect(page.locator("#l7-feedback strong")).toContainText(answer);
+  await expect(page.locator("#l7-feedback strong.l7-answer")).toContainText(answer);
 
   const cid = await lastTargetConcept(page);
   const progress = await page.evaluate((c) => window.__app.run.progress[c], cid);
@@ -400,13 +400,19 @@ test("pl L7: a drilled possessive appears in prompt and graded answer together",
   const cid = await lastTargetConcept(page);
   const data = await page.evaluate((c) => {
     const en = window.GLOBAL_VOCAB.languages.en?.forms?.[c];
-    const pl = window.GLOBAL_VOCAB.languages.pl?.forms?.[c];
     const enForm = Array.isArray(en) ? en[0] : (en?.form || en || "");
-    const plForms = Array.isArray(pl) ? pl
-      : (pl && typeof pl === "object")
-        ? Object.values(pl).filter((v) => typeof v === "string")
-        : [String(pl || "")];
-    return { enForm, plForms };
+    const formsOf = (cid) => {
+      const pl = window.GLOBAL_VOCAB.languages.pl?.forms?.[cid];
+      return Array.isArray(pl) ? pl
+        : (pl && typeof pl === "object")
+          ? Object.values(pl).filter((v) => typeof v === "string")
+          : pl ? [String(pl)] : [];
+    };
+    // Polish declares reflexivePossessive: a 3rd-person possessive whose
+    // owner is the subject renders as the reflexive OWN entry («On czyta
+    // swoją książkę»), never «jego» — that would be someone else's book.
+    // Either form satisfies the parity check.
+    return { enForm, plForms: [...formsOf(c), ...formsOf("OWN")] };
   }, cid);
 
   const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
@@ -565,4 +571,30 @@ test("L3 and L4: the peer-less words render a fill-the-blank and a recognition r
   await expect(page.locator("#session-subtitle")).toContainText("4");
   expect(await page.locator("#choices button").count()).toBeGreaterThanOrEqual(4);
   expect(["YES", "NO"]).toContain(await lastTargetConcept(page));
+});
+
+test("pl L7: a miss on a reflexive possessive explains «swój» right under the answer", async ({ page }) => {
+  // «He reads his book» is «On czyta swoją książkę» — a learner who types
+  // «jego» gets Incorrect, so the note has to be where the miss is.
+  await startNewRun(page, { language: "Polish" });
+  await seedAllConceptsAt(page, 7, { bundles: 12, restrictRoles: ["possessive"] });
+
+  // The template and possessive are random; re-roll until the subject owns
+  // the thing, with headroom for unlucky streaks.
+  let answer = "";
+  for (let i = 0; i < 150; i++) {
+    answer = (await page.evaluate(() => window.__app.lastExercise?.answer)) || "";
+    if (/\bsw(ój|oj)/i.test(answer)) break;
+    await page.evaluate(() => window.__app.rerender());
+  }
+  expect(answer, "no reflexive-possessive sentence in 150 re-rolls").toMatch(/\bsw(ój|oj)/i);
+
+  await page.fill("#l7-input", answer.replace(/\bsw(ój|oj)\w*/i, "jego"));
+  await page.click("#check-l7");
+  await expect(page.locator("#l7-feedback")).toContainText("Incorrect");
+
+  const chip = page.locator('#l7-feedback .grammar-chip[data-rule="reflexive_possessive"]');
+  await expect(chip).toBeVisible();
+  await chip.click();
+  await expect(page.locator('#l7-feedback [data-rule-panel="reflexive_possessive"]')).toContainText("someone else");
 });

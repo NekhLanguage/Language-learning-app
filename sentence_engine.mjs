@@ -54,6 +54,7 @@ export const GRAMMAR_RULE_IDS = [
   "numeral_government",      // pl numbers five+ govern the genitive plural
   "ar_numeral_placement",    // ar 1/2 postpose as appositive adjectives («كتاب واحد»)
   "apocope",                 // es/it pre-nominal masc-sg short forms (buen/buon)
+  "reflexive_possessive",    // pl/uk/ru/sv/no: the subject's own thing takes swój/свій/sin, not his/her
 ];
 
 let firedRules = null;
@@ -773,7 +774,9 @@ function reflexivePossessiveCid(lang, possessiveCid, subjectCid) {
     owns = (g === "f" && possessiveCid === "HER") ||
       (g === "m" && possessiveCid === "HIS");
   }
-  return owns ? "OWN" : possessiveCid;
+  if (!owns) return possessiveCid;
+  noteRule("reflexive_possessive");
+  return "OWN";
 }
 
 // --- Determiner-side case marking (German) ----------------------------------

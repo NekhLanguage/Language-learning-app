@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-12
 
+### Polish, Ukrainian, Russian, Swedish, Norwegian: why "his" became «swój»
+
+When the person doing the action owns the thing, these languages use a special word for "own" (Polish «swój», Ukrainian «свій», Russian «свой», Swedish and Norwegian «sin»), not the usual "his" or "her", which would mean someone else's. The app always wrote these correctly but never said why, so typing «jego» for "He reads his book" was just marked wrong. There's now a grammar note for it in every support language. On levels 6 and 7, a wrong answer shows the grammar notes for the correct sentence right under it, and the note specific to that sentence comes before the general verb and gender ones.
+
 ### Start free: the confirmation names your address, and Google is one tap away
 
 After you tap Start free, the message now shows the address the link went to, so a typo is easy to spot. It also says the email can take a minute or two and may land in spam. If it doesn't come, a "Continue with Google instead" link right under the message gets you in without it.

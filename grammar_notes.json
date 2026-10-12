@@ -1795,6 +1795,84 @@
         "title": "Краткие формы перед существительным",
         "body": "Некоторые прилагательные сокращаются перед существительным мужского рода единственного числа — испанское bueno становится buen (un buen libro), итальянское buono становится buon (un buon libro)."
       }
+    },
+    "reflexive_possessive": {
+      "en": {
+        "title": "'His own': a special word",
+        "body": "In {lang}, when the person doing the action is also the owner, a special word meaning 'own' replaces the usual word like 'his' or 'her'. The usual word there would mean the thing belongs to someone else."
+      },
+      "pt": {
+        "title": "'O próprio': uma palavra especial",
+        "body": "Em {lang}, quando quem faz a ação é também o dono, uma palavra especial que significa 'próprio' substitui a palavra de costume, como 'dele' ou 'dela'. A palavra de costume ali indicaria que a coisa é de outra pessoa."
+      },
+      "es": {
+        "title": "'Su propio': una palabra especial",
+        "body": "En {lang}, cuando quien hace la acción es también el dueño, una palabra especial que significa 'propio' sustituye a la palabra habitual, como 'su' (de él o de ella). La palabra habitual ahí indicaría que la cosa es de otra persona."
+      },
+      "fr": {
+        "title": "« Son propre » : un mot spécial",
+        "body": "En {lang}, quand la personne qui fait l'action est aussi le propriétaire, un mot spécial qui veut dire « propre » remplace le mot habituel comme « son » ou « sa ». Le mot habituel voudrait dire que la chose appartient à quelqu'un d'autre."
+      },
+      "de": {
+        "title": "'Sein eigenes': ein besonderes Wort",
+        "body": "In {lang} ersetzt ein besonderes Wort für 'eigen' das übliche Wort wie 'sein' oder 'ihr', wenn die handelnde Person auch der Besitzer ist. Das übliche Wort würde dort bedeuten, dass die Sache jemand anderem gehört."
+      },
+      "el": {
+        "title": "«Το δικό του»: μια ειδική λέξη",
+        "body": "Στα {lang}, όταν αυτός που κάνει την πράξη είναι και ο ιδιοκτήτης, μια ειδική λέξη που σημαίνει «δικός» αντικαθιστά τη συνηθισμένη λέξη όπως «του» ή «της». Η συνηθισμένη λέξη εκεί θα σήμαινε ότι το πράγμα ανήκει σε κάποιον άλλον."
+      },
+      "it": {
+        "title": "«Il proprio»: una parola speciale",
+        "body": "In {lang}, quando chi fa l'azione è anche il proprietario, una parola speciale che significa «proprio» sostituisce la parola solita come «suo» o «sua». La parola solita lì vorrebbe dire che la cosa è di qualcun altro."
+      },
+      "no": {
+        "title": "«Sin egen»: et eget ord",
+        "body": "I {lang} bruker man et eget ord — slik som «sin» på norsk — i stedet for det vanlige «hans» eller «hennes» når den som gjør handlingen, også eier tingen. Det vanlige ordet ville bety at tingen tilhører noen andre."
+      },
+      "sv": {
+        "title": "'Sin egen': ett eget ord",
+        "body": "I {lang} använder man ett eget ord — precis som 'sin' på svenska — i stället för det vanliga 'hans' eller 'hennes' när den som gör handlingen också äger saken. Det vanliga ordet skulle betyda att saken tillhör någon annan."
+      },
+      "pl": {
+        "title": "„Swój”: osobne słowo",
+        "body": "W języku {lang}, gdy osoba wykonująca czynność jest też właścicielem, zamiast zwykłego „jego” czy „jej” używa się osobnego słowa — tak jak polskie „swój”. Zwykłe słowo oznaczałoby tam, że rzecz należy do kogoś innego."
+      },
+      "uk": {
+        "title": "«Свій»: окреме слово",
+        "body": "У мові {lang}, коли той, хто виконує дію, є також власником, замість звичайного «його» чи «її» вживається окреме слово — як українське «свій». Звичайне слово означало б там, що річ належить комусь іншому."
+      },
+      "ru": {
+        "title": "«Свой»: отдельное слово",
+        "body": "В языке {lang}, когда тот, кто совершает действие, сам является владельцем, вместо обычного «его» или «её» употребляется отдельное слово — как русское «свой». Обычное слово означало бы там, что вещь принадлежит кому-то другому."
+      },
+      "fi": {
+        "title": "'Oma': erityinen sana",
+        "body": "Kielessä {lang}, kun tekijä on myös omistaja, tavallisen 'hänen'-sanan tilalla käytetään erityistä sanaa, joka tarkoittaa 'oma'. Tavallinen sana tarkoittaisi siinä, että asia kuuluu jollekulle muulle."
+      },
+      "ar": {
+        "title": "«الخاص به»: كلمة خاصة",
+        "body": "في {lang}، عندما يكون من يقوم بالفعل هو المالك أيضًا، تحلّ كلمة خاصة بمعنى «الخاص به» محلّ الكلمة المعتادة مثل «ـه» أو «ـها». الكلمة المعتادة هناك تعني أن الشيء ملك لشخص آخر."
+      },
+      "tr": {
+        "title": "'Kendi': özel bir sözcük",
+        "body": "{lang} dilinde eylemi yapan kişi aynı zamanda sahibiyse, 'onun' gibi alışılmış sözcüğün yerine 'kendi' anlamına gelen özel bir sözcük kullanılır. Alışılmış sözcük orada şeyin başka birine ait olduğu anlamına gelir."
+      },
+      "ja": {
+        "title": "「自分の」を表す特別な語",
+        "body": "{lang}では、動作をする人がその持ち主でもあるとき、「彼の」「彼女の」のような普通の語の代わりに「自分の」を意味する特別な語を使います。普通の語を使うと、ほかの人の物という意味になります。"
+      },
+      "ko": {
+        "title": "'자기의'를 뜻하는 특별한 단어",
+        "body": "{lang}에서는 행동하는 사람이 그 물건의 주인이기도 할 때, '그의'나 '그녀의' 같은 보통 단어 대신 '자기의'를 뜻하는 특별한 단어를 써요. 보통 단어를 쓰면 다른 사람의 물건이라는 뜻이 돼요."
+      },
+      "zh": {
+        "title": "'自己的'：一个特别的词",
+        "body": "在{lang}中，当做动作的人同时也是物主时，要用一个表示'自己的'的特别的词，而不是'他的''她的'这样的普通词。在那里用普通词，意思就成了东西是别人的。"
+      },
+      "th": {
+        "title": "'ของตัวเอง': คำพิเศษ",
+        "body": "ใน{lang} เมื่อผู้ทำกริยาเป็นเจ้าของสิ่งนั้นด้วย จะใช้คำพิเศษที่แปลว่า 'ของตัวเอง' แทนคำปกติอย่าง 'ของเขา' หรือ 'ของเธอ' ถ้าใช้คำปกติตรงนั้น จะหมายความว่าสิ่งนั้นเป็นของคนอื่น"
+      }
     }
   }
 }
