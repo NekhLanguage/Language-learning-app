@@ -136,7 +136,15 @@
     "authMismatch": "两次输入的密码不一致。",
     "authSaved": "密码已保存。正在打开应用…",
     "haveAccountSignIn": "已有账号？登录",
-    "newHereStartFree": "第一次来？免费开始"
+    "newHereStartFree": "第一次来？免费开始",
+    "sayItListening": "正在聆听…",
+    "sayItNoSpeech": "没有听到任何声音。点击按钮后立即说。",
+    "sayItMicBlocked": "你的麦克风被阻止。请在浏览器设置中允许本网站使用麦克风，然后重试。",
+    "sayItUnsupported": "此浏览器无法检查这种语言的发音。请尝试 Chrome 或 Safari。",
+    "sayItFailed": "语音检查暂时无法使用。请稍后再试。",
+    "sayItAllHeard": "每个词都清晰地听到了。",
+    "sayItSomeMissed": "下划线的词没听清。再听一遍，再试一次。",
+    "sayItHeard": "我们听到的是：{transcript}"
   },
   "hubNames": {
     "fi": "芬兰语",

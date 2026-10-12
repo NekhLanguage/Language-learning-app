@@ -140,7 +140,15 @@
     "authMismatch": "Hasła nie są takie same.",
     "authSaved": "Hasło zapisane. Otwieram aplikację…",
     "haveAccountSignIn": "Masz już konto? Zaloguj się",
-    "newHereStartFree": "Jesteś tu nowy? Zacznij za darmo"
+    "newHereStartFree": "Jesteś tu nowy? Zacznij za darmo",
+    "sayItListening": "Słucham…",
+    "sayItNoSpeech": "Nic nie usłyszałem. Dotknij przycisku i mów od razu.",
+    "sayItMicBlocked": "Twój mikrofon jest zablokowany. Zezwól na niego dla tej strony w ustawieniach przeglądarki i spróbuj ponownie.",
+    "sayItUnsupported": "Ta przeglądarka nie sprawdza mowy w tym języku. Spróbuj Chrome lub Safari.",
+    "sayItFailed": "Sprawdzanie mowy teraz nie działa. Spróbuj za chwilę jeszcze raz.",
+    "sayItAllHeard": "Każde słowo było słychać wyraźnie.",
+    "sayItSomeMissed": "Podkreślone słowa nie przeszły. Posłuchaj jeszcze raz i spróbuj ponownie.",
+    "sayItHeard": "Usłyszeliśmy: {transcript}"
   },
   "hubNames": {
     "fi": "fiński",

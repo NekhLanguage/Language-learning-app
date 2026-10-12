@@ -136,7 +136,15 @@
     "authMismatch": "İki şifre eşleşmiyor.",
     "authSaved": "Şifre kaydedildi. Uygulama açılıyor…",
     "haveAccountSignIn": "Zaten hesabınız var mı? Giriş yap",
-    "newHereStartFree": "Yeni misiniz? Ücretsiz başla"
+    "newHereStartFree": "Yeni misiniz? Ücretsiz başla",
+    "sayItListening": "Dinleniyor…",
+    "sayItNoSpeech": "Hiçbir şey duymadım. \"Söyle\"ye dokun ve hemen konuş.",
+    "sayItMicBlocked": "Mikrofonun engellenmiş. Tarayıcı ayarlarından bu siteye izin ver ve tekrar dene.",
+    "sayItUnsupported": "Bu tarayıcı bu dilde konuşmayı kontrol edemez. Chrome ya da Safari'yi dene.",
+    "sayItFailed": "Konuşma kontrolü şu an çalışmıyor. Birazdan tekrar dene.",
+    "sayItAllHeard": "Her kelime net duyuldu.",
+    "sayItSomeMissed": "Altı çizili kelimeler duyulmadı. Tekrar dinle ve bir daha dene.",
+    "sayItHeard": "Duyduğumuz: {transcript}"
   },
   "hubNames": {
     "fi": "Fince",

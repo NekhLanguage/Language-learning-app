@@ -136,7 +136,15 @@
     "authMismatch": "Les deux mots de passe ne correspondent pas.",
     "authSaved": "Mot de passe enregistré. Ouverture de l'appli…",
     "haveAccountSignIn": "Déjà un compte ? Se connecter",
-    "newHereStartFree": "Nouveau ici ? Commencer gratuitement"
+    "newHereStartFree": "Nouveau ici ? Commencer gratuitement",
+    "sayItListening": "À l'écoute…",
+    "sayItNoSpeech": "Je n'ai rien entendu. Appuie sur le bouton et parle tout de suite.",
+    "sayItMicBlocked": "Ton micro est bloqué. Autorise-le pour ce site dans les paramètres du navigateur, puis réessaie.",
+    "sayItUnsupported": "Ce navigateur ne peut pas vérifier la parole dans cette langue. Essaie Chrome ou Safari.",
+    "sayItFailed": "La vérification vocale ne fonctionne pas en ce moment. Réessaie dans un instant.",
+    "sayItAllHeard": "Chaque mot est passé clairement.",
+    "sayItSomeMissed": "Les mots soulignés ne sont pas passés. Réécoute et retente.",
+    "sayItHeard": "Entendu : {transcript}"
   },
   "hubNames": {
     "fi": "finnois",

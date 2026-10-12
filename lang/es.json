@@ -136,7 +136,15 @@
     "authMismatch": "Las dos contraseñas no coinciden.",
     "authSaved": "Contraseña guardada. Abriendo la app…",
     "haveAccountSignIn": "¿Ya tienes cuenta? Inicia sesión",
-    "newHereStartFree": "¿Eres nuevo? Empieza gratis"
+    "newHereStartFree": "¿Eres nuevo? Empieza gratis",
+    "sayItListening": "Escuchando…",
+    "sayItNoSpeech": "No escuché nada. Toca \"Dilo\" y habla enseguida.",
+    "sayItMicBlocked": "Tu micrófono está bloqueado. Permítelo para este sitio en los ajustes del navegador y vuelve a intentarlo.",
+    "sayItUnsupported": "Este navegador no puede comprobar el habla en este idioma. Prueba con Chrome o Safari.",
+    "sayItFailed": "La comprobación del habla no está funcionando ahora mismo. Vuelve a intentarlo en un momento.",
+    "sayItAllHeard": "Todas las palabras se escucharon con claridad.",
+    "sayItSomeMissed": "Las palabras subrayadas no se escucharon. Vuelve a escuchar e inténtalo otra vez.",
+    "sayItHeard": "Escuchamos: {transcript}"
   },
   "hubNames": {
     "fi": "finés",

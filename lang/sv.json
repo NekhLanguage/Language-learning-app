@@ -141,7 +141,15 @@
     "authMismatch": "De två lösenorden stämmer inte överens.",
     "authSaved": "Lösenordet är sparat. Öppnar appen …",
     "haveAccountSignIn": "Har du redan ett konto? Logga in",
-    "newHereStartFree": "Ny här? Börja gratis"
+    "newHereStartFree": "Ny här? Börja gratis",
+    "sayItListening": "Lyssnar…",
+    "sayItNoSpeech": "Jag hörde ingenting. Tryck på knappen och börja prata direkt.",
+    "sayItMicBlocked": "Din mikrofon är blockerad. Tillåt den för den här sidan i webbläsarens inställningar och försök igen.",
+    "sayItUnsupported": "Den här webbläsaren kan inte kontrollera tal på det här språket. Prova Chrome eller Safari.",
+    "sayItFailed": "Talkontrollen fungerar inte just nu. Försök igen om en stund.",
+    "sayItAllHeard": "Varje ord kom fram tydligt.",
+    "sayItSomeMissed": "De understrukna orden kom inte fram. Lyssna igen och försök på nytt.",
+    "sayItHeard": "Vi hörde: {transcript}"
   },
   "hubNames": {
     "fi": "Finska",

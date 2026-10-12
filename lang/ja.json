@@ -136,7 +136,15 @@
     "authMismatch": "2つのパスワードが一致しません。",
     "authSaved": "パスワードを保存しました。アプリを開いています…",
     "haveAccountSignIn": "アカウントをお持ちの方はログイン",
-    "newHereStartFree": "はじめての方は無料で始める"
+    "newHereStartFree": "はじめての方は無料で始める",
+    "sayItListening": "聞いています…",
+    "sayItNoSpeech": "何も聞こえませんでした。ボタンをタップしてすぐに話してください。",
+    "sayItMicBlocked": "マイクがブロックされています。ブラウザの設定でこのサイトを許可してから、もう一度試してください。",
+    "sayItUnsupported": "このブラウザではこの言語の音声チェックができません。Chrome か Safari を試してください。",
+    "sayItFailed": "音声チェックが今動作していません。少ししてからもう一度試してください。",
+    "sayItAllHeard": "どの言葉もはっきり聞こえました。",
+    "sayItSomeMissed": "下線の言葉が聞こえませんでした。もう一度聞いて、やり直してみてください。",
+    "sayItHeard": "聞こえたのは：{transcript}"
   },
   "hubNames": {
     "fi": "フィンランド語",
