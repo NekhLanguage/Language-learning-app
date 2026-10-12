@@ -88,7 +88,7 @@ test("L7: an answer right except for accents shows the proper form and waits", a
   const before = await counter(page);
   await page.fill("#l7-input", stripped);
   await page.click("#check-l7");
-  await expect(page.locator("#l7-feedback strong")).toContainText(answer);
+  await expect(page.locator("#l7-feedback strong.l7-answer")).toContainText(answer);
   await page.waitForTimeout(1_800);
   expect(await counter(page)).toBe(before);
 });

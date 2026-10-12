@@ -183,7 +183,7 @@ test("L7 free production: a wrong answer reveals the correct sentence", async ({
   await page.click("#check-l7");
 
   await expect(page.locator("#l7-feedback")).toContainText("Incorrect");
-  await expect(page.locator("#l7-feedback strong")).toContainText(answer);
+  await expect(page.locator("#l7-feedback strong.l7-answer")).toContainText(answer);
 
   const cid = await lastTargetConcept(page);
   const progress = await page.evaluate((c) => window.__app.run.progress[c], cid);
@@ -571,4 +571,30 @@ test("L3 and L4: the peer-less words render a fill-the-blank and a recognition r
   await expect(page.locator("#session-subtitle")).toContainText("4");
   expect(await page.locator("#choices button").count()).toBeGreaterThanOrEqual(4);
   expect(["YES", "NO"]).toContain(await lastTargetConcept(page));
+});
+
+test("pl L7: a miss on a reflexive possessive explains «swój» right under the answer", async ({ page }) => {
+  // «He reads his book» is «On czyta swoją książkę» — a learner who types
+  // «jego» gets Incorrect, so the note has to be where the miss is.
+  await startNewRun(page, { language: "Polish" });
+  await seedAllConceptsAt(page, 7, { bundles: 12, restrictRoles: ["possessive"] });
+
+  // The template and possessive are random; re-roll until the subject owns
+  // the thing, with headroom for unlucky streaks.
+  let answer = "";
+  for (let i = 0; i < 150; i++) {
+    answer = (await page.evaluate(() => window.__app.lastExercise?.answer)) || "";
+    if (/\bsw(ój|oj)/i.test(answer)) break;
+    await page.evaluate(() => window.__app.rerender());
+  }
+  expect(answer, "no reflexive-possessive sentence in 150 re-rolls").toMatch(/\bsw(ój|oj)/i);
+
+  await page.fill("#l7-input", answer.replace(/\bsw(ój|oj)\w*/i, "jego"));
+  await page.click("#check-l7");
+  await expect(page.locator("#l7-feedback")).toContainText("Incorrect");
+
+  const chip = page.locator('#l7-feedback .grammar-chip[data-rule="reflexive_possessive"]');
+  await expect(chip).toBeVisible();
+  await chip.click();
+  await expect(page.locator('#l7-feedback [data-rule-panel="reflexive_possessive"]')).toContainText("someone else");
 });
