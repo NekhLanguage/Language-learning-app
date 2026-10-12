@@ -400,13 +400,19 @@ test("pl L7: a drilled possessive appears in prompt and graded answer together",
   const cid = await lastTargetConcept(page);
   const data = await page.evaluate((c) => {
     const en = window.GLOBAL_VOCAB.languages.en?.forms?.[c];
-    const pl = window.GLOBAL_VOCAB.languages.pl?.forms?.[c];
     const enForm = Array.isArray(en) ? en[0] : (en?.form || en || "");
-    const plForms = Array.isArray(pl) ? pl
-      : (pl && typeof pl === "object")
-        ? Object.values(pl).filter((v) => typeof v === "string")
-        : [String(pl || "")];
-    return { enForm, plForms };
+    const formsOf = (cid) => {
+      const pl = window.GLOBAL_VOCAB.languages.pl?.forms?.[cid];
+      return Array.isArray(pl) ? pl
+        : (pl && typeof pl === "object")
+          ? Object.values(pl).filter((v) => typeof v === "string")
+          : pl ? [String(pl)] : [];
+    };
+    // Polish declares reflexivePossessive: a 3rd-person possessive whose
+    // owner is the subject renders as the reflexive OWN entry («On czyta
+    // swoją książkę»), never «jego» — that would be someone else's book.
+    // Either form satisfies the parity check.
+    return { enForm, plForms: [...formsOf(c), ...formsOf("OWN")] };
   }, cid);
 
   const prompt = (await page.locator("#content strong").first().innerText()).toLowerCase();
