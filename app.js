@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.107";
+const APP_DATA_VERSION = "1.2.108";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1491,6 +1491,7 @@ if (!hasAccess()) {
           <button id="start-free-btn" class="gate-btn cta" type="submit">${t("startFree", "Start free")}</button>
         </form>
         <p id="start-free-message" class="gate-message" role="status" aria-live="polite"></p>
+        <button id="start-free-google" class="gate-link" type="button" hidden>${t("startFreeNoEmailGoogle", "No email after a few minutes? Continue with Google instead")}</button>
         <button id="gate-to-signin" class="gate-link gate-switch" type="button" data-mode="signin">${t("haveAccountSignIn", "Already have an account? Sign in")}</button>
       </section>
 
@@ -1537,7 +1538,7 @@ if (!hasAccess()) {
     // Messages are stored as {key, fallback, kind} (or a gate notice
     // reason) so a language switch re-renders them in the new language.
     const paint = (el, m) => {
-      const text = !m ? "" : m.reason ? noticeFor(m.reason) : m.text ?? t(m.key, m.fallback);
+      const text = !m ? "" : m.reason ? noticeFor(m.reason) : m.text ?? t(m.key, m.fallback, m.vars);
       el.textContent = text || "";
       el.classList.toggle("is-ok", m?.kind === "ok");
       el.classList.toggle("is-error", !!text && m?.kind !== "ok");
@@ -1553,6 +1554,10 @@ if (!hasAccess()) {
     };
     paint(messageEl, gateMessages.signin);
     paint(startFreeMsg, gateMessages.free);
+    // After a Start-free send, offer Google as the way in if the email
+    // doesn't come (Nekh 2026-10-12: a learner gave up 59 s after sending).
+    const startFreeGoogle = document.getElementById("start-free-google");
+    startFreeGoogle.hidden = gateMessages.free?.key !== "startFreeSentTo";
 
     const setBusy = (busy) => {
       for (const el of [loginBtn, googleBtn, setPasswordBtn, emailInput, passwordInput, startFreeBtn]) el.disabled = busy;
@@ -1627,6 +1632,7 @@ if (!hasAccess()) {
     // 🔐 Google (identity scopes only — see auth.mjs). The browser leaves
     // for Google and comes back to "/" with a session; boot handles the rest,
     // including a language picked here (the flag rides in sessionStorage).
+    startFreeGoogle.onclick = () => googleBtn.click();
     googleBtn.onclick = async () => {
       say(gateMode, null);
       setBusy(true);
@@ -1659,9 +1665,16 @@ if (!hasAccess()) {
         // default and its answer rides with the account; only a ticked,
         // verified signup ever reaches MailerLite.
         await sendPasswordEmail(email, { emailOptIn: !!startFreeOptIn.checked });
-        say("free", { key: "startFreeSent", fallback: "Check your inbox (and spam) for a link to set your password. Then you're in.", kind: "ok" });
+        say("free", {
+          key: "startFreeSentTo",
+          fallback: "We sent a link to {email}. It can take a minute or two, so check spam too. Set your password from the link and you're in.",
+          vars: { email },
+          kind: "ok",
+        });
+        startFreeGoogle.hidden = false;
       } catch (err) {
         say("free", { text: describeAuthError(err, t) });
+        startFreeGoogle.hidden = true;
       }
       startFreeBtn.disabled = false;
     };

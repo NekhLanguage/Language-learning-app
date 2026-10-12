@@ -20,7 +20,7 @@ async function signUpFree(page, email, { tick }) {
   await page.fill("#start-free-email", email);
   if (tick) await box.check();
   await page.click("#start-free-btn");
-  await expect(page.locator("#start-free-message")).toContainText("inbox");
+  await expect(page.locator("#start-free-message")).toContainText(email);
 }
 
 test("free sign-up: the weekly-email box is unticked; an unticked sign-up never reaches MailerLite and is not asked again", async ({ page, request }) => {

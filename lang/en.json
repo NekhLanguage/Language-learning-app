@@ -116,6 +116,8 @@
     "startFree": "Start free",
     "startFreeHeading": "Try the first {freeLessons} lessons free",
     "startFreeSent": "Check your inbox (and spam) for a link to set your password. Then you're in.",
+    "startFreeSentTo": "We sent a link to {email}. It can take a minute or two, so check spam too. Set your password from the link and you're in.",
+    "startFreeNoEmailGoogle": "No email after a few minutes? Continue with Google instead",
     "emailPlaceholder": "your@email.com",
     "emailOptInLabel": "Send me Nekh's weekly email on learning languages.",
     "emailOptInTitle": "One question",
