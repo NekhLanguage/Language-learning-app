@@ -8,6 +8,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-12
 
+### After Check, the answer lands in a card at the bottom, with Anna
+
+When you check an answer, a card now slides up from the bottom of the screen. Get it right and Anna cheers in a short green card that moves on by itself after a second. Get it wrong and Anna explains: on the option levels, where the right answer already shows in green, she tells you what the option you picked means instead ("You picked «leio», which means 'read'"). On the sentence levels she shows the right sentence, its grammar notes and "Say it". Continue is right where your thumb is. Open a grammar note and she switches to explaining. The answer is now light text on a dark card instead of purple on purple, so it's easy to read. Anna also appears in her chat: she thinks while she's writing back, waves when you can start, and looks sorry when a message doesn't reach her.
+
+### Anna: faster to open, and your message leaves the box when you send it
+
+The start screen and Anna's page used to wait for a check with the server each time before unlocking Anna and showing your conversation topics. They now show what this device knew last time straight away and update quietly once the check comes back. When you send Anna a message, the box now empties at once instead of holding your text while she writes. If the message can't be delivered, the text comes back so you don't have to retype it.
+
 ### Polish, Ukrainian, Russian, Swedish, Norwegian: why "his" became «swój»
 
 When the person doing the action owns the thing, these languages use a special word for "own" (Polish «swój», Ukrainian «свій», Russian «свой», Swedish and Norwegian «sin»), not the usual "his" or "her", which would mean someone else's. The app always wrote these correctly but never said why, so typing «jego» for "He reads his book" was just marked wrong. There's now a grammar note for it in every support language. On levels 6 and 7, a wrong answer shows the grammar notes for the correct sentence right under it, and the note specific to that sentence comes before the general verb and gender ones.

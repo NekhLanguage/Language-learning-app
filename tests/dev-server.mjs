@@ -82,6 +82,7 @@ const MIME = {
   ".json": "application/json; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".png": "image/png",
+  ".webp": "image/webp",
   ".jpg": "image/jpeg",
   ".svg": "image/svg+xml",
   ".ico": "image/x-icon",

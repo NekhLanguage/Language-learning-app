@@ -92,3 +92,33 @@ test("L7: an answer right except for accents shows the proper form and waits", a
   await page.waitForTimeout(1_800);
   expect(await counter(page)).toBe(before);
 });
+
+test("L3: a miss explains the option the learner picked, not the one already shown in green", async ({ page }) => {
+  await startNewRun(page);
+  await seedAllConceptsAt(page, 3);
+  const cid = await lastTargetConcept(page);
+  await page.locator(`#choices button[data-cid]:not([data-cid="${cid}"])`).first().click();
+  await page.click("#check-btn");
+  await expect(page.locator("#feedback-sheet .sheet-verdict")).toContainText("Incorrect");
+  await expect(page.locator("#feedback-sheet .sheet-answer")).toContainText("You picked «");
+  await expect(page.locator("#feedback-sheet .sheet-answer")).toContainText("which means");
+});
+
+test("L2: a miss gives the picked word in the language being learned", async ({ page }) => {
+  await startNewRun(page);
+  await seedAllConceptsAt(page, 2);
+  const cid = await lastTargetConcept(page);
+  await page.locator(`#choices button[data-cid]:not([data-cid="${cid}"])`).first().click();
+  await page.click("#check-btn");
+  await expect(page.locator("#feedback-sheet .sheet-answer")).toContainText("In Portuguese that's «");
+});
+
+test("a correct answer slides up a short card and Continue lives in it", async ({ page }) => {
+  await startNewRun(page);
+  await seedAllConceptsAt(page, 2);
+  const cid = await lastTargetConcept(page);
+  await page.locator(`#choices button[data-cid="${cid}"]`).click();
+  await page.click("#check-btn");
+  await expect(page.locator("#feedback-sheet.is-correct #check-btn")).toBeVisible();
+  await expect(page.locator("#feedback-sheet .feedback-anna")).toHaveAttribute("src", /well-done/);
+});
