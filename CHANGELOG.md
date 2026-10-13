@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-13
 
+### Fewer odd extra words in practice sentences
+
+The app sometimes adds a describing word or a number to a sentence for variety. Those extras now only land where they make sense. The subject of a sentence stays plain, so no more "Ten moves does damage". Fixed phrases stay fixed: "by hand", "works as a guide", "goes to her room", and meals, body parts and units are no longer counted or decorated. A word that already has a describing word gets no second one. "Correct" and "wrong" are never added at random, "young" is only used for people and animals, a person is never "long", and ideas are never "cold". English plurals are fixed ("potatoes", "spacecraft", "champions"), and a handful of sentences now read naturally: "We eat everything", "This is on the left", "He sees a grocery store", "He has a destiny", "You see the Elite Four", "because the enemy is strong".
+
 ### No more "one shoes": numbers only go on words that can be counted
 
 Practice sentences sometimes put a number on a word that can't take one, like "She has one shoes" with «Вона має одне взуття» in Ukrainian. That was wrong on both sides: "one" can't go with a plural-only word like "shoes", and Ukrainian «взуття» means "footwear", which isn't counted at all. "One" no longer goes on plural-only words in any language. Words a language doesn't count with a plain number no longer get one: footwear and clothing in Ukrainian and Russian, "clothes" in English, German and Spanish, and "pants" where it's counted in pairs (English, Polish, Ukrainian, Russian, Finnish). These words still take adjectives, like «нове взуття».

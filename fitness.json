@@ -58,15 +58,18 @@
   },
   {
    "concept_id": "HEART",
-   "type": "noun"
+   "type": "noun",
+   "semantic_role": "body_part"
   },
   {
    "concept_id": "KNEE",
-   "type": "noun"
+   "type": "noun",
+   "semantic_role": "body_part"
   },
   {
    "concept_id": "SHOULDER",
-   "type": "noun"
+   "type": "noun",
+   "semantic_role": "body_part"
   },
   {
    "concept_id": "CALORIE",

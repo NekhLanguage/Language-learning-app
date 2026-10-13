@@ -1151,7 +1151,7 @@
         "LIVING_ROOM": { "form": "living room", "article": "a" },
         "FURNITURE": { "form": "furniture" },
         "NEIGHBOR": { "form": "neighbor", "article": "a" },
-        "GROCERY": { "form": "grocery", "article": "a" },
+        "GROCERY": { "form": "grocery store", "article": "a" },
         "PHARMACY": { "form": "pharmacy", "article": "a" },
         "OFFICE": { "form": "office", "article": "an" },
         "MEETING": { "form": "meeting", "article": "a" },

@@ -82,7 +82,7 @@
     {
       "concept_id": "JOB",
       "type": "noun",
-      "semantic_role": "role",
+      "semantic_role": "abstract",
       "countable": true,
       "core": true,
       "interaction_profile": {

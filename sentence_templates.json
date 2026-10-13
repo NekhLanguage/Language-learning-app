@@ -7128,7 +7128,7 @@
         "type": "quantifier"
       },
       "render": {
-        "en": "We eat all.",
+        "en": "We eat everything.",
         "de": "Wir essen alles.",
         "el": "Εμείς τα τρώμε όλα.",
         "es": "Nosotros comemos todo.",
@@ -7147,6 +7147,27 @@
         "fi": "Me syömme kaiken.",
         "sv": "Vi äter allt.",
         "ru": "Мы едим всё."
+      },
+      "surface": {
+        "en": {"ALL": "everything"},
+        "de": {"ALL": "alles"},
+        "el": {"ALL": "όλα"},
+        "es": {"ALL": "todo"},
+        "fr": {"ALL": "tout"},
+        "ja": {"ALL": "全部"},
+        "ko": {"ALL": "다"},
+        "no": {"ALL": "alt"},
+        "tr": {"ALL": "hepsini"},
+        "uk": {"ALL": "все"},
+        "zh": {"ALL": "全部"},
+        "pt": {"ALL": "tudo"},
+        "ar": {"ALL": "كل شيء"},
+        "it": {"ALL": "tutto"},
+        "th": {"ALL": "ทั้งหมด"},
+        "pl": {"ALL": "wszystko"},
+        "fi": {"ALL": "kaiken"},
+        "sv": {"ALL": "allt"},
+        "ru": {"ALL": "всё"}
       }
     },
     {
@@ -8171,7 +8192,7 @@
         "type": "evaluation"
       },
       "render": {
-        "en": "This is right.",
+        "en": "This is on the right.",
         "de": "Das ist rechts.",
         "el": "Αυτό είναι δεξιά.",
         "es": "Esto está a la derecha.",
@@ -8203,7 +8224,7 @@
         "type": "evaluation"
       },
       "render": {
-        "en": "This is left.",
+        "en": "This is on the left.",
         "de": "Das ist links.",
         "el": "Αυτό είναι αριστερά.",
         "es": "Esto está a la izquierda.",

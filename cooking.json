@@ -66,23 +66,28 @@
     },
     {
       "concept_id": "LITRE",
-      "type": "noun"
+      "type": "noun",
+      "semantic_role": "unit"
     },
     {
       "concept_id": "DECILITRE",
-      "type": "noun"
+      "type": "noun",
+      "semantic_role": "unit"
     },
     {
       "concept_id": "MILLILITRE",
-      "type": "noun"
+      "type": "noun",
+      "semantic_role": "unit"
     },
     {
       "concept_id": "GRAM",
-      "type": "noun"
+      "type": "noun",
+      "semantic_role": "unit"
     },
     {
       "concept_id": "KILOGRAM",
-      "type": "noun"
+      "type": "noun",
+      "semantic_role": "unit"
     },
     {
       "concept_id": "MEAT",
