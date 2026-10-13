@@ -5,7 +5,7 @@
     { "concept_id": "GYM", "type": "noun" },
     { "concept_id": "LEAGUE", "type": "noun" },
     { "concept_id": "GYM_LEADER", "type": "noun" },
-    { "concept_id": "ELITE_FOUR", "type": "noun" },
+    { "concept_id": "ELITE_FOUR", "type": "noun", "noModifier": true },
     { "concept_id": "POKEMON_CENTER", "type": "noun" },
     { "concept_id": "FOREST", "type": "noun" },
     { "concept_id": "CAVE", "type": "noun" },

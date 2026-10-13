@@ -473,6 +473,7 @@
       "definite": true
     },
     "CLOTHES": {
+      "noNumber": true,
       "form": "ropa",
       "gender": "f",
       "noArticle": true

@@ -540,6 +540,7 @@
       "genitive_plural": "вечерь"
     },
     "CLOTHES": {
+      "noNumber": true,
       "form": "одяг",
       "gender": "m"
     },
@@ -550,6 +551,7 @@
       "genitive_plural": "сорочок"
     },
     "SHOES": {
+      "noNumber": true,
       "form": "взуття",
       "gender": "n"
     },
@@ -570,6 +572,7 @@
       "genitive_plural": "телефонів"
     },
     "PANTS": {
+      "noNumber": true,
       "gender": "m",
       "form": "штани",
       "pluralOnly": true,

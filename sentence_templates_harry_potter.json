@@ -520,6 +520,9 @@
       },
       "render": {
         "en": "She protects a friend because the enemy is strong."
+      },
+      "surface": {
+        "en": {"ENEMY": "the enemy"}
       }
     },
     {

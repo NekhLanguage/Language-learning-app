@@ -1187,7 +1187,7 @@
         "POWERFUL":  ["powerful"],
 
         "QUEST":     { "form": "quest", "article": "a" },
-        "DESTINY":   { "form": "destiny" },
+        "DESTINY":   { "form": "destiny", "article": "a", "noNumber": true },
         "KINGDOM":   { "form": "kingdom", "article": "a" },
         "TEMPLE":    { "form": "temple", "article": "a" },
         "ANCIENT":   ["ancient"],

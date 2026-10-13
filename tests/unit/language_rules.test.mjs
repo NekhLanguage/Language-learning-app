@@ -37,6 +37,9 @@ import {
   slotContextFor,
   jaQuantifierPrefix,
   safeSurfaceForConcept,
+  randomModifierAllowed,
+  adjectiveSuitsNoun,
+  pluralize,
 } from "../../sentence_engine.mjs";
 
 let vocab, templates;
@@ -2800,4 +2803,109 @@ test("ru/uk: a plural subject takes the instrumental plural after AS; fr «bonne
     assert.equal(buildSentence("fr", tplById("SHE_SEES_BARGAIN"), "GOOD", {}), "Elle voit une bonne affaire.");
     assert.equal(buildSentence("fr", tplById("SHE_SEES_BARGAIN"), "TWO", {}), "Elle voit deux bonnes affaires.");
   });
+});
+
+test("noNumber: a noun a language does not count takes no number, but keeps adjectives", () => {
+  // Nekh 2026-10-13: «Вона має одне взуття» / "She has one shoes".
+  // uk «взуття» is footwear (collective), so no numeral, while the English
+  // plural "shoes" counts from two.
+  assert.equal(isModifierCompatible("uk", "ONE", "SHOES"), false);
+  assert.equal(isModifierCompatible("uk", "TWO", "SHOES"), false);
+  assert.equal(isModifierCompatible("ru", "THREE", "SHOES"), false);
+  assert.equal(isModifierCompatible("uk", "NEW", "SHOES"), true); // «нове взуття»
+  // Collective "clothes" / «Kleidung» / «ropa» / «одяг»: never counted.
+  for (const lc of ["en", "de", "es", "uk", "ru"]) {
+    assert.equal(isModifierCompatible(lc, "TWO", "CLOTHES"), false, lc);
+  }
+  // Pluralia tantum counted in pairs / collective numerals: no plain numeral.
+  for (const lc of ["en", "pl", "uk", "ru", "fi"]) {
+    assert.equal(isModifierCompatible(lc, "TWO", "PANTS"), false, lc);
+  }
+  // Countable plurals in the same family are untouched.
+  assert.equal(isModifierCompatible("fr", "TWO", "CLOTHES"), true); // «deux vêtements»
+  assert.equal(isModifierCompatible("pl", "TWO", "SHOES"), true); // «dwa buty»
+});
+
+test("'one' never counts a plural-only noun; two and up still do", () => {
+  // "one shoes", «um sapatos», «une chaussures» have no singular to agree with.
+  for (const lc of ["en", "pt", "fr", "es", "it", "de"]) {
+    assert.equal(isModifierCompatible(lc, "ONE", "SHOES"), false, lc);
+  }
+  assert.equal(isModifierCompatible("en", "TWO", "SHOES"), true); // "two shoes"
+  assert.equal(isModifierCompatible("pt", "THREE", "SHOES"), true); // «três sapatos»
+});
+
+// Nekh sentence review 2026-10-13: random adjective/number injection is
+// gated per template so the extras only land where they make sense.
+test("random modifiers skip the subject, fixed phrases and already-modified nouns", () => {
+  // Subject: "Ten moves does damage" / "A flexible shoulder is flexible".
+  assert.equal(randomModifierAllowed(tplById("MOVE_DO_DAMAGE"), "MOVE", "MOVE", "number"), false);
+  assert.equal(randomModifierAllowed(tplById("MOVE_DO_DAMAGE"), "MOVE", "MOVE", "adjective"), false);
+  // Already modified by the template: "I see shiny three new Pokémon".
+  assert.equal(randomModifierAllowed(tplById("I_SEE_SHINY_POKEMON"), "POKEMON", "FIRST_PERSON_SINGULAR", "adjective"), false);
+  // "by hand" is a fixed means phrase.
+  assert.equal(randomModifierAllowed(tplById("I_DO_THIS_BY_HAND"), "HAND", "FIRST_PERSON_SINGULAR", "adjective"), false);
+  // One role, one destination: no "works as three guides" / "to her five rooms"…
+  assert.equal(randomModifierAllowed(tplById("I_WORK_AS_GUIDE"), "GUIDE", "FIRST_PERSON_SINGULAR", "number"), false);
+  assert.equal(randomModifierAllowed(tplById("SHE_GO_TO_HER_ROOM"), "ROOM", "SHE", "number"), false);
+  // …but an adjective still fits ("works as a new guide").
+  assert.equal(randomModifierAllowed(tplById("I_WORK_AS_GUIDE"), "GUIDE", "FIRST_PERSON_SINGULAR", "adjective"), true);
+  // Meals take nothing ("I eat good breakfast"); body parts aren't counted.
+  assert.equal(randomModifierAllowed(tplById("I_EAT_BREAKFAST"), "BREAKFAST", "FIRST_PERSON_SINGULAR", "adjective"), false);
+  assert.equal(randomModifierAllowed(tplById("YOU_STRETCH_KNEE"), "KNEE", "SECOND_PERSON", "number"), false);
+  // An ordinary object stays open to both.
+  assert.equal(randomModifierAllowed(tplById("I_PEEL_POTATO"), "POTATO", "FIRST_PERSON_SINGULAR", "number"), true);
+});
+
+test("adjective fit: young only for living beings, people are never long, cold never on ideas", () => {
+  assert.equal(adjectiveSuitsNoun("YOUNG", "BOY"), true);
+  assert.equal(adjectiveSuitsNoun("YOUNG", "JOB"), false);
+  assert.equal(adjectiveSuitsNoun("YOUNG", "BOOK"), false);
+  assert.equal(adjectiveSuitsNoun("LONG", "WOMAN"), false);
+  assert.equal(adjectiveSuitsNoun("SHORT", "WOMAN"), true);
+  assert.equal(adjectiveSuitsNoun("COLD", "JOB"), false);
+  assert.equal(isModifierCompatible("en", "COLD", "DESTINY"), false);
+});
+
+test("random injection never picks correct/wrong", () => {
+  configureEngine({
+    vocab: () => vocab,
+    getReleased: () => ["CORRECT", "WRONG"],
+    ensureProgress: () => ({ level: 5, completed: false }),
+    rng: () => 0, // always inject when allowed
+  });
+  try {
+    const s = buildSentenceWithRules("en", tplById("I_PEEL_POTATO"), null, {}).sentence;
+    assert.doesNotMatch(s, /correct|wrong/i, s);
+  } finally {
+    configureEngine({
+      vocab: () => vocab,
+      getReleased: () => Object.keys(vocab.concepts),
+      ensureProgress: () => ({ level: 99, completed: false }),
+      rng: () => 0.999,
+    });
+  }
+});
+
+test("English plurals: -oes, zero plurals, and no double plural under copular agreement", () => {
+  assert.equal(pluralize("potato"), "potatoes");
+  assert.equal(pluralize("spacecraft"), "spacecraft");
+  assert.equal(pluralize("photo"), "photos");
+  configureEngine({
+    vocab: () => vocab,
+    getReleased: () => ["ELEVEN"],
+    ensureProgress: () => ({ level: 5, completed: false }),
+    rng: () => 0,
+  });
+  try {
+    const s = buildSentenceWithRules("en", tplById("THEY_ARE_CHAMPION"), null, {}).sentence;
+    assert.doesNotMatch(s, /championses/, s);
+  } finally {
+    configureEngine({
+      vocab: () => vocab,
+      getReleased: () => Object.keys(vocab.concepts),
+      ensureProgress: () => ({ level: 99, completed: false }),
+      rng: () => 0.999,
+    });
+  }
 });

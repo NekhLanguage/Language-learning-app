@@ -340,6 +340,17 @@ const PLURAL_EXCEPTIONS = {
   foot: "feet",
   goose: "geese",
   ox: "oxen",
+  // -o nouns that take -es (the default -s covers photo/piano/video).
+  potato: "potatoes",
+  tomato: "tomatoes",
+  hero: "heroes",
+  echo: "echoes",
+  // Zero plurals.
+  spacecraft: "spacecraft",
+  aircraft: "aircraft",
+  sheep: "sheep",
+  fish: "fish",
+  deer: "deer",
 };
 
 function pluralize(word) {
@@ -2727,9 +2738,17 @@ const ADJECTIVE_ROLE_COMPAT = {
   property_direction: new Set(["body_part"]),
   // Difficulty applies to tasks/skills/subjects and also to readable/usable
   // objects ("easy book"); excludes people, places, substances, meals.
+  // Difficulty applies to tasks/skills/subjects and also to readable/usable
+  // objects ("easy book"); excludes people, places, substances, meals.
   property_difficulty: new Set([
     "task","skill","subject","exercise","game_action","sport_action","spell",
     "object","generic_object"
+  ]),
+  // YOUNG describes the age of living beings only — "a young answer", "a
+  // young apple" (Nekh sentence review 2026-10-13). An allowlist, so an
+  // untagged pack noun never takes it.
+  property_youth: new Set([
+    "person","family","role","animal","creature","fictional_creature"
   ]),
   // Character traits (brave/strong-willed etc.) describe beings, not places
   // or things — never "a brave school".
@@ -2742,9 +2761,8 @@ const ADJECTIVE_ROLE_COMPAT = {
   // own roles so we can constrain them without affecting the broad ones:
   //   YOUNG          -> property_youth        (animate age; never "young answer")
   //   CORRECT, WRONG -> property_correctness  (evaluable things; never "wrong magic")
-  // These two have no allowlist (pack nouns rarely carry a semantic_role, so an
-  // allowlist would wrongly block them all); they are constrained by the
-  // exclusion table below instead.
+  // CORRECT/WRONG have no allowlist; the exclusion table below constrains
+  // them, and random injection never picks them (RANDOM_ONLY_EXCLUDED_ROLES).
 };
 
 // Per-adjective-role *exclusion* list. Unlike ADJECTIVE_ROLE_COMPAT (an
@@ -2753,11 +2771,13 @@ const ADJECTIVE_ROLE_COMPAT = {
 // suppress nonsense like "young answer" (youth -> abstract) and "wrong magic"
 // (correctness -> substance) without enumerating every concrete noun role.
 const ADJECTIVE_ROLE_BLOCK = {
-  property_youth:       new Set(["abstract", "substance", "meal"]),
   // CORRECT/WRONG never describe a body part — «一只正确眼睛» ("a correct
   // eye", Emi run-13 -63) is nonsense in every language, and zh's RIGHT
   // (右) already covers the directional reading.
   property_correctness: new Set(["substance", "body_part"]),
+  // COLD describes things with a temperature, not ideas: "a cold job", "a
+  // cold destiny" (Nekh sentence review 2026-10-13).
+  property_temperature: new Set(["abstract"]),
   // Animacy filter (Dan ruling 2026-08-27): OLD/NEW never modify people —
   // 古い女の子 ("old girl" with the inanimate 古い) was Emi's Japanese
   // catch, and the class is wrong-not-odd across languages. YOUNG stays the
@@ -2766,10 +2786,73 @@ const ADJECTIVE_ROLE_BLOCK = {
   property_time:        new Set(["person", "family", "role"]),
 };
 
+// Adjective roles that a drill may force but random injection never picks:
+// "correct"/"wrong" are judgements about an answer, and sprinkled onto a
+// random noun they say something false or odd ("I see a wrong cat").
+const RANDOM_ONLY_EXCLUDED_ROLES = new Set(["property_correctness"]);
+
+// Noun roles that random injection never counts: a meal is eaten once
+// ("I eat three breakfasts"), a body part comes in fixed numbers ("seven
+// knees"), and a unit only makes sense with a measured amount the
+// template does not have ("I buy four litres").
+const RANDOM_NO_NUMBER_NOUN_ROLES = new Set(["meal", "body_part", "unit"]);
+// Noun roles that take no random modifier at all: a meal in English goes
+// article-less and an adjective then needs "a" back ("I eat good
+// breakfast"); a unit's adjective is meaningless ("a big litre").
+const RANDOM_NO_MODIFIER_NOUN_ROLES = new Set(["meal", "unit"]);
+
+// Template-level gate on RANDOM modifier injection (Nekh sentence review
+// 2026-10-13). Language-independent and read from tpl.concepts — the
+// canonical order — so every language makes the same choice and the
+// target/support pair cannot diverge. Drilled (forced) modifiers do not
+// pass through here: a drill chooses its template on purpose.
+//   kind: "adjective" | "number"
+function randomModifierAllowed(tpl, nounCid, subjectCid, kind) {
+  const concepts = Array.isArray(tpl?.concepts) ? tpl.concepts : [];
+  const meta = c => vocab().concepts[c] || {};
+  const nounRole = meta(nounCid).semantic_role;
+  // The subject keeps its bare form: a counted subject breaks verb
+  // agreement ("Ten moves does damage") and an adjective on it can repeat
+  // the predicate ("A flexible shoulder is flexible").
+  if (nounCid === subjectCid) return false;
+  if (RANDOM_NO_MODIFIER_NOUN_ROLES.has(nounRole)) return false;
+  if (kind === "number" && RANDOM_NO_NUMBER_NOUN_ROLES.has(nounRole)) return false;
+  // A noun the template already modifies («shiny Pokémon», "three books")
+  // takes nothing more: "I see shiny three new Pokémon".
+  const pos = concepts.indexOf(nounCid);
+  const prev = pos > 0 ? meta(concepts[pos - 1]) : null;
+  if (prev && ((prev.type === "adjective" && prev.semantic_role !== "possessive") ||
+               prev.type === "number")) return false;
+  // The glue word governing this noun: the nearest preceding concept that
+  // is not a determiner/modifier ("to HER room", "as A guide").
+  let g = pos - 1;
+  while (g >= 0 && ["adjective", "number", "quantifier"].includes(meta(concepts[g]).type)) g--;
+  const governor = g >= 0 ? meta(concepts[g]).semantic_role : null;
+  // "by hand" is a fixed means phrase: "by two big hands" is not.
+  if (governor === "relation_means") return false;
+  // "works as a guide" names one role; "goes to her room" one destination:
+  // "works as three guides", "goes to her five rooms".
+  if (kind === "number" &&
+      (governor === "relation_role_or_time" || governor === "relation_target")) return false;
+  return true;
+}
+
 // Shared role-compatibility verdict used by both adjectiveSuitsNoun (forced
 // drilled adjectives) and isModifierCompatible (random modifier injection):
 // an allowlist hit must include the noun role; otherwise an exclusion hit
 // rejects it; otherwise allow (broad).
+// Per-adjective exclusions finer than its role: LONG shares property_size
+// with BIG/SMALL/SHORT, but a person is "tall", never "long" ("a long
+// woman", Nekh sentence review 2026-10-13). Read by both adjectiveSuitsNoun
+// and isModifierCompatible.
+const ADJECTIVE_CONCEPT_BLOCK = {
+  LONG: new Set(["person", "family", "role"]),
+};
+
+function adjectiveConceptAllowsNoun(adjCid, nounRole) {
+  return !ADJECTIVE_CONCEPT_BLOCK[adjCid]?.has(nounRole);
+}
+
 function adjectiveRoleAllowsNoun(adjRole, nounRole) {
   const allowed = ADJECTIVE_ROLE_COMPAT[adjRole];
   if (allowed) return allowed.has(nounRole);
@@ -2792,6 +2875,7 @@ function adjectiveSuitsNoun(adjCid, nounCid) {
   // Nouns whose usual rendering is adverbial ("home" → «додому», "eve")
   // never take attributive modifiers — "red home" isn't a noun phrase.
   if (nounMeta.noModifier) return false;
+  if (!adjectiveConceptAllowsNoun(adjCid, nounMeta.semantic_role)) return false;
   return adjectiveRoleAllowsNoun(adjMeta.semantic_role, nounMeta.semantic_role);
 }
 
@@ -2905,6 +2989,18 @@ function isModifierCompatible(lang, modifierCid, nounCid, context = {}) {
   // A per-language `noAdjective` entry («bonne affaire» already holds its
   // adjective — Emi run-32 -209c) refuses adjective injection only.
   if (nounEntry.noAdjective && vocab().concepts[modifierCid]?.type === "adjective") return false;
+  // A per-language `noNumber` entry is a noun this language does not count
+  // with a plain numeral: a collective («взуття» footwear, «одяг» clothing,
+  // "clothes", «Kleidung») or a plurale tantum that counts in pairs or with
+  // collective numerals ("two pairs of pants", «двоє штанів», «dwie pary
+  // spodni»). Numbers only; adjectives still attach («нове взуття»).
+  // Nekh 2026-10-13: «Вона має одне взуття» / "She has one shoes".
+  if (nounEntry.noNumber && vocab().concepts[modifierCid]?.type === "number") return false;
+  // "One" never counts a plural-only noun: there is no singular to agree
+  // with ("one shoes", «um sapatos», «une chaussures»). Two and up do
+  // ("two shoes").
+  if (nounEntry.pluralOnly && vocab().concepts[modifierCid]?.type === "number" &&
+      (NUMBER_VALUES[modifierCid] || 0) === 1) return false;
   const canTakeModifier = nounMeta?.countable || nounEntry.article || nounEntry.gender;
   if (!canTakeModifier) return false;
 
@@ -2914,7 +3010,8 @@ function isModifierCompatible(lang, modifierCid, nounCid, context = {}) {
   // Tighter semantic compatibility: an adjective role with an allowlist must
   // match the noun role; a role with an exclusion list rejects tagged nouns;
   // otherwise (broad quality/time adjectives) fall through to the source rule.
-  if (!adjectiveRoleAllowsNoun(modMeta.semantic_role, nounMeta?.semantic_role)) {
+  if (!adjectiveRoleAllowsNoun(modMeta.semantic_role, nounMeta?.semantic_role) ||
+      !adjectiveConceptAllowsNoun(modifierCid, nounMeta?.semantic_role)) {
     return false;
   }
 
@@ -4707,7 +4804,11 @@ function buildYesNoQuestionCopular(lang, subjectCid, beCid, possessiveCid, nounC
 // linker, or implied by an overt copula). `opts.be`: a copula form that
 // replaces the language's own (linkerCopula).
 function buildSubjectBeNounClause(lang, subjectCid, beCid, nounCid, opts = {}) {
-  const subject = opts.omitSubject ? "" : attachParticle(lang, formOf(lang, subjectCid), "topic");
+  // An authored subject surface ("the enemy") wins over the bare
+  // dictionary form — a noun subject otherwise loses its article.
+  const subjectWord = typeof opts.subjectSurface === "string" && opts.subjectSurface
+    ? opts.subjectSurface : formOf(lang, subjectCid);
+  const subject = opts.omitSubject ? "" : attachParticle(lang, subjectWord, "topic");
   const override = copulaOverride(lang, beCid, nounCid, subjectCid,
     "complex_clause");
   const be = typeof opts.be === "string" ? opts.be
@@ -5012,7 +5113,8 @@ if (tpl.structure?.type === "complex_clause") {
     s.sub_subject,
     s.sub_verb,
     s.sub_noun,
-    { omitSubject: !!overtCopula || linkerText !== null, be: overtCopula || undefined }
+    { omitSubject: !!overtCopula || linkerText !== null, be: overtCopula || undefined,
+      subjectSurface: tpl.surface?.[lang]?.[s.sub_subject] }
   );
 
   let mainClause;
@@ -5425,7 +5527,9 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     // Only an authored deviation counts: a surface equal to the dictionary
     // form is a no-op, so the declared drop/case rules (uk/pl bare
     // instrumental, fi case adpositions) keep their say.
-    if (meta.type === "glue" || meta.type === "position") {
+    // Quantifiers too: "we eat all" is "we eat everything" in English,
+    // while «все» / «alles» keep the dictionary form.
+    if (meta.type === "glue" || meta.type === "position" || meta.type === "quantifier") {
       const glueSurface = tpl.surface?.[lang]?.[cid];
       if (typeof glueSurface === "string" && glueSurface &&
           glueSurface !== formOf(lang, cid)) {
@@ -6095,10 +6199,11 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     adjectiveCid = cachedReflexiveRefused ? null : cachedAdj;
     adjectiveWord = adjectiveCid ? genderedFormOf(lang, possLookupCid(adjectiveCid), cid, false, adjGenderOverride) : null;
   } else {
-    const adjectives = getReleased().filter(c => {
+    const adjectives = !randomModifierAllowed(tpl, cid, subjectCid, "adjective") ? [] : getReleased().filter(c => {
       const m = vocab().concepts[c];
       if (m?.type !== "adjective") return false;
       if (m?.semantic_role === "possessive") return false; // possessives must not be randomly injected as modifiers
+      if (RANDOM_ONLY_EXCLUDED_ROLES.has(m?.semantic_role)) return false;
       const st = ensureProgress(c);
       if (st.completed || st.level < 4) return false;
       // Only pair adjectives with nouns they make sense with — no
@@ -6150,7 +6255,8 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
     const subjectIsSingularPronoun = subjectCid && !subjectIsPluralPronoun;
     const skipPluralInjection = isTargetNoun ||
       (isCopularTemplate && subjectIsSingularPronoun);
-    const numbers = (skipPluralInjection || quantified) ? [] : getReleased().filter(c => {
+    const numbers = (skipPluralInjection || quantified ||
+      !randomModifierAllowed(tpl, cid, subjectCid, "number")) ? [] : getReleased().filter(c => {
       if (c === "ONE") return false;
       const m = vocab().concepts[c];
       if (m?.type !== "number") return false;
@@ -6277,7 +6383,9 @@ function renderSegments(lang, tpl, forcedConcept = null, sharedChoices = null) {
       nounForm = bare;
     } else if (lang === "en") {
       const enEntry = vocab().languages?.en?.forms?.[cid] || {};
-      nounForm = (enEntry.invariantPlural || enEntry.pluralOnly) ? bare : pluralize(bare);
+      // bareNoun is already plural under copular agreement / a possessed
+      // plural — pluralizing it again gave "They are eleven championses".
+      nounForm = (enEntry.invariantPlural || enEntry.pluralOnly || bareNoun) ? bare : pluralize(bare);
     } else if (langRule(lang, "numeralPartitiveSingular") &&
                (NUMBER_VALUES[numberCid] || 0) >= 2 &&
                typeof vocab().languages?.[lang]?.forms?.[cid]?.partitive === "string") {
@@ -7370,6 +7478,7 @@ export {
   ADJECTIVE_ROLE_BLOCK,
   adjectiveRoleAllowsNoun,
   adjectiveSuitsNoun,
+  randomModifierAllowed,
   isModifierCompatible,
   buildSameTypeOptions,
   capitalizeFirst,

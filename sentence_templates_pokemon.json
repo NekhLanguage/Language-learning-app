@@ -728,7 +728,10 @@
         "ELITE_FOUR"
       ],
       "render": {
-        "en": "You see the elite four."
+        "en": "You see the Elite Four."
+      },
+      "surface": {
+        "en": {"ELITE_FOUR": "the Elite Four"}
       }
     },
     {
