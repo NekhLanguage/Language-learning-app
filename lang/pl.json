@@ -543,6 +543,7 @@
       "genitive": "telefonu"
     },
     "PANTS": {
+      "noNumber": true,
       "form": "spodnie",
       "gender": "m",
       "pluralOnly": true,

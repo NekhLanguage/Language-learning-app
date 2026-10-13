@@ -2905,6 +2905,18 @@ function isModifierCompatible(lang, modifierCid, nounCid, context = {}) {
   // A per-language `noAdjective` entry («bonne affaire» already holds its
   // adjective — Emi run-32 -209c) refuses adjective injection only.
   if (nounEntry.noAdjective && vocab().concepts[modifierCid]?.type === "adjective") return false;
+  // A per-language `noNumber` entry is a noun this language does not count
+  // with a plain numeral: a collective («взуття» footwear, «одяг» clothing,
+  // "clothes", «Kleidung») or a plurale tantum that counts in pairs or with
+  // collective numerals ("two pairs of pants", «двоє штанів», «dwie pary
+  // spodni»). Numbers only; adjectives still attach («нове взуття»).
+  // Nekh 2026-10-13: «Вона має одне взуття» / "She has one shoes".
+  if (nounEntry.noNumber && vocab().concepts[modifierCid]?.type === "number") return false;
+  // "One" never counts a plural-only noun: there is no singular to agree
+  // with ("one shoes", «um sapatos», «une chaussures»). Two and up do
+  // ("two shoes").
+  if (nounEntry.pluralOnly && vocab().concepts[modifierCid]?.type === "number" &&
+      (NUMBER_VALUES[modifierCid] || 0) === 1) return false;
   const canTakeModifier = nounMeta?.countable || nounEntry.article || nounEntry.gender;
   if (!canTakeModifier) return false;
 

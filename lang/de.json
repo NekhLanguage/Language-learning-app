@@ -477,6 +477,7 @@
       "noArticle": true
     },
     "CLOTHES": {
+      "noNumber": true,
       "form": "Kleidung",
       "gender": "f",
       "noArticle": true

@@ -680,6 +680,7 @@
       "partitive": "kenkiä"
     },
     "PANTS": {
+      "noNumber": true,
       "form": "housut",
       "pluralOnly": true,
       "partitive": "housuja"

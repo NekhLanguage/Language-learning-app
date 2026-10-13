@@ -625,6 +625,7 @@
       "noArticle": true
     },
     "CLOTHES": {
+      "noNumber": true,
       "form": "clothes",
       "pluralOnly": true
     },
@@ -645,6 +646,7 @@
       "article": "a"
     },
     "PANTS": {
+      "noNumber": true,
       "form": "pants",
       "pluralOnly": true
     },

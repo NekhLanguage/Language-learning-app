@@ -676,6 +676,7 @@
       "accusative": "ужин"
     },
     "CLOTHES": {
+      "noNumber": true,
       "form": "одежда",
       "gender": "f",
       "genitive": "одежды",
@@ -696,6 +697,7 @@
       "genitive_plural": "рубашек"
     },
     "SHOES": {
+      "noNumber": true,
       "form": "обувь",
       "gender": "f",
       "genitive": "обуви",
@@ -730,6 +732,7 @@
       "accusative": "стол"
     },
     "PANTS": {
+      "noNumber": true,
       "form": "брюки",
       "gender": "m",
       "pluralOnly": true,

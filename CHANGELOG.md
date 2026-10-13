@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-13
 
+### No more "one shoes": numbers only go on words that can be counted
+
+Practice sentences sometimes put a number on a word that can't take one, like "She has one shoes" with «Вона має одне взуття» in Ukrainian. That was wrong on both sides: "one" can't go with a plural-only word like "shoes", and Ukrainian «взуття» means "footwear", which isn't counted at all. "One" no longer goes on plural-only words in any language. Words a language doesn't count with a plain number no longer get one: footwear and clothing in Ukrainian and Russian, "clothes" in English, German and Spanish, and "pants" where it's counted in pairs (English, Polish, Ukrainian, Russian, Finnish). These words still take adjectives, like «нове взуття».
+
 ### Anna's card: she stands in front of it, moves into her pose, and a right answer needs no tap
 
 Anna now stands in front of the feedback card, taller than it, with her name on a tab, like a dialogue box in a game. She moves into each reaction through a couple of in-between poses instead of just appearing. A right answer no longer shows a Continue button: the card stays for a moment longer (1.25 seconds) and the next exercise comes on its own. Wrong answers still wait for you to tap Continue. The journey screen you see at the start and after each session now has a Back button to the menu too.
