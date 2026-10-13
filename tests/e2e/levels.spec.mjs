@@ -44,8 +44,10 @@ test("L2 multiple choice: correct answer marks green and advances", async ({ pag
   );
   expect(progress.lastResult).toBe(true);
 
-  // Check button becomes the advance button.
-  await page.click("#check-btn");
+  // A clean correct answer moves on by itself (no Continue to press).
+  const counter = () => page.evaluate(() => window.__app.run.exerciseCounter);
+  const before = await counter();
+  await expect.poll(counter, { timeout: 5_000 }).toBeGreaterThan(before);
   await expect(page.locator("#content h2, #content p").first()).toBeVisible();
 });
 
@@ -551,8 +553,10 @@ test("L2: a word with no same-type peers (yes / no) is tested against other func
     const target = await lastTargetConcept(page);
     await page.locator(`#choices button[data-cid="${target}"]`).click();
     await page.click("#check-btn");
-    await page.evaluate(() => { window.__app.run.exerciseCounter += 4; });
-    await page.click("#check-btn");
+    const spaced = await page.evaluate(() => (window.__app.run.exerciseCounter += 4));
+    // A correct answer moves on by itself (no Continue).
+    await expect.poll(() => page.evaluate(() => window.__app.run.exerciseCounter), { timeout: 5_000 })
+      .toBeGreaterThan(spaced);
   }
   const levels = await levelsNow();
   expect(Math.max(levels.YES, levels.NO)).toBeGreaterThanOrEqual(3);

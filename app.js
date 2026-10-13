@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.111";
+const APP_DATA_VERSION = "1.2.112";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -2132,12 +2132,10 @@ function showRoadmap(opts) {
     if (opts && typeof opts.onContinue === "function") opts.onContinue();
   };
 
-  if (opts && opts.backTo) {
-    backBtn.classList.remove("hidden");
-    backBtn.onclick = opts.backTo;
-  } else {
-    backBtn.classList.add("hidden");
-  }
+  // Every journey screen has a way out (Nekh 2026-10-13): back to where
+  // the learner came from, or to the menu after a session or at setup.
+  backBtn.classList.remove("hidden");
+  backBtn.onclick = opts?.backTo || returnToHome;
 
   // Hide every other screen so only roadmap is active.
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
@@ -3214,7 +3212,7 @@ return tpl;
   // thumb is. `feedback` is the list of nodes to show; without it the sheet
   // says Correct / Incorrect and, for an option exercise, names the right
   // option (the button the caller already marked .correct).
-  const AUTO_ADVANCE_MS = 1000;
+  const AUTO_ADVANCE_MS = 1250; // Nekh 2026-10-13: 1 s felt rushed with the card
   function finishCheck(btn, { autoAdvance, correct = autoAdvance, feedback = null }, targetLang, supportLang) {
     let done = false;
     let timer = null;
@@ -3229,11 +3227,15 @@ return tpl;
     btn.disabled = false;
     btn.textContent = ui("continue");
     btn.onclick = next;
+    // A clean correct answer moves on by itself, so it gets no button
+    // (Nekh 2026-10-13): the button stays hidden where it was, which keeps
+    // the timer's "still on screen" check working.
+    if (autoAdvance) btn.hidden = true;
     openFeedbackSheet({
       correct,
       pose: !correct ? "correcting" : autoAdvance ? "well-done" : "explaining",
       nodes: feedback || defaultFeedbackNodes(correct, targetLang, supportLang),
-      btn,
+      btn: autoAdvance ? null : btn,
     });
     if (autoAdvance) timer = setTimeout(next, AUTO_ADVANCE_MS);
   }
@@ -3285,8 +3287,39 @@ return tpl;
   }
 
   const ANNA_POSE_SRC = (pose) => `img/anna/${pose}.webp`;
+  // Anna's in-between frames (Nekh's sheet 2, the t-* files) played before
+  // the pose a result lands on, so she moves into it instead of popping.
+  const ANNA_TRANSITIONS = {
+    "correcting": ["t-thought", "t-ready-to-correct"],
+    "well-done": ["t-acknowledging"],
+    "explaining": ["t-almost-there"],
+  };
+  const ANNA_FRAME_MS = 140;
+  const reducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  let annaFrameTimer = null;
+  function playAnnaPose(img, pose) {
+    clearTimeout(annaFrameTimer);
+    const frames = reducedMotion() ? [pose] : [...(ANNA_TRANSITIONS[pose] || []), pose];
+    let i = 0;
+    const step = () => {
+      if (!img.isConnected && i > 0) return;
+      img.src = ANNA_POSE_SRC(frames[i]);
+      img.dataset.pose = frames[i];
+      if (++i < frames.length) annaFrameTimer = setTimeout(step, ANNA_FRAME_MS);
+    };
+    step();
+  }
+  // Fetch every pose once so a frame never flashes empty mid-transition.
+  let annaPosesWarm = false;
+  function warmAnnaPoses() {
+    if (annaPosesWarm) return;
+    annaPosesWarm = true;
+    const all = new Set(["well-done", "correcting", "explaining", ...Object.values(ANNA_TRANSITIONS).flat()]);
+    for (const pose of all) { const im = new Image(); im.src = ANNA_POSE_SRC(pose); }
+  }
   let feedbackSheetObserver = null;
   function closeFeedbackSheet() {
+    clearTimeout(annaFrameTimer);
     feedbackSheetObserver?.disconnect();
     feedbackSheetObserver = null;
     document.getElementById("feedback-sheet")?.remove();
@@ -3300,7 +3333,9 @@ return tpl;
   function trackFeedbackSheet(sheet) {
     const apply = () => {
       if (!sheet.isConnected) return;
-      const h = sheet.offsetHeight;
+      // Anna stands taller than the box; count her so nothing sits under her head.
+      const anna = sheet.querySelector(".feedback-anna");
+      const h = Math.max(sheet.offsetHeight, anna?.offsetHeight || 0);
       document.documentElement.style.setProperty("--sheet-h", `${h}px`);
       const screen = document.getElementById("learning-screen");
       if (screen) screen.style.paddingBottom = `${h + 16}px`;
@@ -3313,25 +3348,33 @@ return tpl;
   }
   function openFeedbackSheet({ correct, pose, nodes, btn }) {
     closeFeedbackSheet();
+    warmAnnaPoses();
+    // Dialogue-box layout (Nekh 2026-10-13, after Stardew Valley): Anna
+    // stands in front of the box on the right, taller than it, with her
+    // name on a tab above its top edge; the text and Continue sit beside
+    // her inside the box.
     const sheet = document.createElement("section");
     sheet.id = "feedback-sheet";
     sheet.className = `feedback-sheet ${correct ? "is-correct" : "is-wrong"}`;
     sheet.setAttribute("role", "status");
     sheet.setAttribute("aria-live", "polite");
     sheet.innerHTML = `
-      <div class="feedback-sheet-inner">
-        <img class="feedback-anna" src="${ANNA_POSE_SRC(pose)}" alt="" width="64" height="150" decoding="async">
-        <div class="feedback-sheet-body"></div>
-      </div>`;
+      <span class="feedback-sheet-name">Anna</span>
+      <div class="feedback-sheet-box"><div class="feedback-sheet-body"></div></div>
+      <img class="feedback-anna" alt="" width="265" height="360" decoding="async">`;
     const body = sheet.querySelector(".feedback-sheet-body");
     for (const n of nodes) if (n) body.appendChild(n);
-    const actions = document.createElement("div");
-    actions.className = "feedback-sheet-actions";
-    actions.appendChild(btn);
-    body.appendChild(actions);
+    if (btn) {
+      const actions = document.createElement("div");
+      actions.className = "feedback-sheet-actions";
+      actions.appendChild(btn);
+      body.appendChild(actions);
+    }
+    const anna = sheet.querySelector(".feedback-anna");
+    playAnnaPose(anna, pose);
     // Opening a grammar note: Anna explains.
     sheet.addEventListener("click", (e) => {
-      if (e.target.closest(".grammar-chip")) sheet.querySelector(".feedback-anna").src = ANNA_POSE_SRC("explaining");
+      if (e.target.closest(".grammar-chip") && anna.dataset.pose !== "explaining") playAnnaPose(anna, "explaining");
     });
     document.body.appendChild(sheet);
     requestAnimationFrame(() => {
