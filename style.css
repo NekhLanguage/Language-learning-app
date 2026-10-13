@@ -3045,48 +3045,78 @@ a.primary.paywall-buy{
   display: none;
 }
 
-/* ── Feedback sheet (after Check; Nekh 2026-10-12) ─────────────────────────
-   Slides up over the bottom of the screen with Anna, the verdict, the
-   right answer and its notes, and Continue in thumb reach. At least 20% of
-   the screen, grows to fit, scrolls past 70%. Dark ink, not purple: purple
-   text on the purple card was the hardest thing on screen to read. Accent
-   is teal for right, rose for wrong (never purple-on-purple). */
+/* ── Feedback sheet (after Check; Nekh 2026-10-12, layout 2026-10-13) ─────
+   A dialogue box over the bottom of the screen, after Stardew Valley's:
+   Anna stands in front of it on the right, taller than the box, with her
+   name on a tab above its top edge. The box is at least 20% of the screen,
+   grows to fit, scrolls inside past 70%. Dark ink, not purple: purple text
+   on the purple card was the hardest thing on screen to read. Accent is
+   teal for right, rose for wrong (never purple-on-purple). */
 .feedback-sheet {
   --sheet-accent: #2dd4bf;
+  --anna-h: 240px;
+  --anna-w: calc(var(--anna-h) * 265 / 360);
   position: fixed;
   left: 50%;
   bottom: 0;
   z-index: 40; /* under the journey/alphabet/feedback overlays (150+) */
   width: min(720px, 100%);
-  min-height: 20vh;
-  max-height: 70vh;
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom));
-  background: #1c0a21;
-  color: #fff;
-  text-align: left;
-  border-top: 3px solid var(--sheet-accent);
-  border-radius: var(--r-xl) var(--r-xl) 0 0;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.35);
   transform: translate(-50%, 100%);
   transition: transform 0.22s ease-out;
+  text-align: left;
+  color: #fff;
 }
 .feedback-sheet.open { transform: translate(-50%, 0); }
 .feedback-sheet.is-wrong { --sheet-accent: #fb7185; }
 
-.feedback-sheet-inner { display: flex; gap: 1rem; align-items: flex-end; }
+.feedback-sheet-box {
+  box-sizing: border-box;
+  min-height: 20vh;
+  max-height: 70vh;
+  overflow-y: auto;
+  /* Room on the right for Anna, who stands in front of this edge. */
+  padding: 1.1rem calc(var(--anna-w) * 0.78) calc(1rem + env(safe-area-inset-bottom)) 1.25rem;
+  background: #1c0a21;
+  border-top: 3px solid var(--sheet-accent);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Her name on a tab sitting on the box's top edge. */
+.feedback-sheet-name {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 100%;
+  margin-bottom: -3px;
+  padding: 0.2rem 0.85rem 0.25rem;
+  background: #1c0a21;
+  border: 3px solid var(--sheet-accent);
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--sheet-accent);
+}
+
+/* Anna, in front of the box's right side: feet at the bottom of the
+   screen, head well above the box's top edge. */
 .feedback-anna {
-  flex: none;
-  height: 128px;
+  position: absolute;
+  right: -0.25rem;
+  bottom: 0;
+  z-index: 1;
+  height: var(--anna-h);
   width: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45));
   animation: annaIn 0.28s ease-out;
 }
 @keyframes annaIn {
-  from { opacity: 0; transform: translateY(12px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-.feedback-sheet-body { flex: 1; min-width: 0; align-self: center; }
+.feedback-sheet-body { min-width: 0; }
 
 .feedback-sheet .sheet-verdict {
   margin: 0 0 0.35rem;
@@ -3104,6 +3134,10 @@ a.primary.paywall-buy{
 .feedback-sheet .speak-check { margin-top: 0.5rem; }
 .feedback-sheet .grammar-chips { justify-content: flex-start; }
 .feedback-sheet .speak-check { text-align: left; }
+.feedback-sheet .speak-check-btn { margin-left: 0; }
+
+.feedback-sheet-actions { margin-top: 0.75rem; }
+.feedback-sheet-actions button { margin: 0; }
 
 /* The floating buttons ride above the open sheet (--sheet-h is its live
    height, set by app.js) instead of covering Anna and Continue. */
@@ -3112,14 +3146,11 @@ a.primary.paywall-buy{
   bottom: calc(1.5rem + var(--sheet-h, 0px));
   transition: bottom 0.22s ease-out;
 }
-.feedback-sheet .speak-check-btn { margin-left: 0; }
-
-.feedback-sheet-actions { margin-top: 0.75rem; text-align: right; }
-.feedback-sheet-actions button { margin: 0; }
 
 @media (max-width: 520px) {
-  .feedback-anna { height: 104px; }
-  .feedback-sheet { padding-left: 1rem; padding-right: 1rem; }
+  .feedback-sheet { --anna-h: 210px; }
+  .feedback-sheet-box { padding-left: 1rem; }
+  .feedback-sheet-name { left: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

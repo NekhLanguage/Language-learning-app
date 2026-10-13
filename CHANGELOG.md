@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-13
+
+### Anna's card: she stands in front of it, moves into her pose, and a right answer needs no tap
+
+Anna now stands in front of the feedback card, taller than it, with her name on a tab, like a dialogue box in a game. She moves into each reaction through a couple of in-between poses instead of just appearing. A right answer no longer shows a Continue button: the card stays for a moment longer (1.25 seconds) and the next exercise comes on its own. Wrong answers still wait for you to tap Continue. The journey screen you see at the start and after each session now has a Back button to the menu too.
+
+---
+
 ## 2026-10-12
 
 ### After Check, the answer lands in a card at the bottom, with Anna

@@ -151,7 +151,9 @@ test("two correct L2 answers mark the tutor concept completed", async ({ page })
     // Standard L2 spacing: a correct answer waits four exercises before
     // the word may come back. Nothing else is live here, so skip ahead.
     await page.evaluate(() => { window.__app.run.exerciseCounter += 4; });
-    await page.click("#check-btn");
+    // A correct answer moves on by itself (no Continue); the card leaves
+    // with it (the second one may end the session, so watch the card).
+    await expect(page.locator("#feedback-sheet")).toHaveCount(0, { timeout: 5_000 });
   }
 
   const state = await page.evaluate(() => {
