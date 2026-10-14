@@ -115,6 +115,8 @@
     "startFree": "Почати безкоштовно",
     "startFreeHeading": "Перші {freeLessons} уроків — безкоштовно",
     "startFreeSent": "Перевірте вхідні (і спам): там посилання, щоб створити пароль. Після цього можна починати.",
+    "startFreeSentTo": "Ми надіслали посилання на {email}. Це може зайняти хвилину-дві, тож перевірте й спам. Задайте пароль за посиланням — і ви всередині.",
+    "startFreeNoEmailGoogle": "Немає листа за кілька хвилин? Продовжте через Google замість цього",
     "emailPlaceholder": "vasha@poshta.ua",
     "emailOptInLabel": "Надсилайте мені щотижневий лист Нека про вивчення мов.",
     "emailOptInTitle": "Одне запитання",
@@ -148,7 +150,9 @@
     "sayItFailed": "Перевірка мовлення зараз не працює. Спробуй за хвилину.",
     "sayItAllHeard": "Кожне слово було чітко чути.",
     "sayItSomeMissed": "Підкреслені слова не було чути. Послухай ще раз і спробуй знову.",
-    "sayItHeard": "Ми почули: {transcript}"
+    "sayItHeard": "Ми почули: {transcript}",
+    "pickedMeans": "Ви вибрали «{picked}» — це означає «{meaning}».",
+    "pickedInTarget": "Ви вибрали «{picked}». {lang} це «{meaning}»."
   },
   "hubNames": {
     "fi": "фінська",

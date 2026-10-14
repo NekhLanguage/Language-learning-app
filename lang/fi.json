@@ -115,6 +115,8 @@
     "startFree": "Aloita ilmaiseksi",
     "startFreeHeading": "Kokeile {freeLessons} ensimmäistä oppituntia ilmaiseksi",
     "startFreeSent": "Katso saapuneet viestit (ja roskaposti): siellä on linkki salasanan luomiseen. Sitten pääset alkuun.",
+    "startFreeSentTo": "Lähetimme linkin osoitteeseen {email}. Siinä voi mennä minuutti tai pari, joten tarkista myös roskaposti. Aseta salasana linkistä, ja olet sisällä.",
+    "startFreeNoEmailGoogle": "Ei sähköpostia muutaman minuutin jälkeen? Jatka Googlella sen sijaan",
     "emailPlaceholder": "sinun@sahkoposti.fi",
     "emailOptInLabel": "Lähetä minulle Nekhin viikoittainen sähköposti kielten oppimisesta.",
     "emailOptInTitle": "Yksi kysymys",
@@ -148,7 +150,9 @@
     "sayItFailed": "Puheentarkistus ei toimi juuri nyt. Yritä hetken kuluttua uudelleen.",
     "sayItAllHeard": "Jokainen sana kuului selvästi.",
     "sayItSomeMissed": "Alleviivatut sanat eivät kuuluneet. Kuuntele uudelleen ja yritä toistamiseen.",
-    "sayItHeard": "Kuulimme: {transcript}"
+    "sayItHeard": "Kuulimme: {transcript}",
+    "pickedMeans": "Valitsit «{picked}», mikä tarkoittaa ”{meaning}”.",
+    "pickedInTarget": "Valitsit ”{picked}”. {lang}ksi se on «{meaning}»."
   },
   "hubNames": {
     "ar": "arabia",

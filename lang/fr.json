@@ -111,6 +111,8 @@
     "startFree": "Commencer gratuitement",
     "startFreeHeading": "Essaie gratuitement les {freeLessons} premières leçons",
     "startFreeSent": "Regarde ta boîte de réception (et les spams) : un lien t'attend pour créer ton mot de passe. Ensuite, c'est parti.",
+    "startFreeSentTo": "On a envoyé un lien à {email}. Ça peut prendre une minute ou deux — vérifie aussi le spam. Définis ton mot de passe depuis le lien, et tu es dedans.",
+    "startFreeNoEmailGoogle": "Pas de mail au bout de quelques minutes ? Continue avec Google à la place",
     "emailPlaceholder": "ton@email.fr",
     "emailOptInLabel": "Envoie-moi l'e-mail hebdomadaire de Nekh sur l'apprentissage des langues.",
     "emailOptInTitle": "Une question",
@@ -144,7 +146,9 @@
     "sayItFailed": "La vérification vocale ne fonctionne pas en ce moment. Réessaie dans un instant.",
     "sayItAllHeard": "Chaque mot est passé clairement.",
     "sayItSomeMissed": "Les mots soulignés ne sont pas passés. Réécoute et retente.",
-    "sayItHeard": "Entendu : {transcript}"
+    "sayItHeard": "Entendu : {transcript}",
+    "pickedMeans": "Tu as choisi «{picked}», qui veut dire « {meaning} ».",
+    "pickedInTarget": "Tu as choisi « {picked} ». En {lang}, c'est «{meaning}»."
   },
   "hubNames": {
     "fi": "finnois",

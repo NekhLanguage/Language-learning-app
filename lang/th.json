@@ -115,6 +115,8 @@
     "startFree": "เริ่มฟรี",
     "startFreeHeading": "ลองเรียน {freeLessons} บทแรกฟรี",
     "startFreeSent": "ตรวจดูกล่องจดหมาย (และสแปม) จะมีลิงก์ให้ตั้งรหัสผ่าน แล้วก็เริ่มได้เลย",
+    "startFreeSentTo": "ส่งลิงก์ไปที่ {email} แล้ว อาจใช้เวลาสักครู่ ลองดูในสแปมด้วย ตั้งรหัสผ่านจากลิงก์แล้วเข้าใช้ได้เลย",
+    "startFreeNoEmailGoogle": "ไม่ได้รับอีเมลหลังจากผ่านไปสองสามนาทีใช่ไหม? ไปต่อด้วย Google แทน",
     "emailPlaceholder": "somchai@example.co.th",
     "emailOptInLabel": "ส่งอีเมลรายสัปดาห์ของ Nekh เรื่องการเรียนภาษาให้ฉัน",
     "emailOptInTitle": "คำถามข้อเดียว",
@@ -148,7 +150,9 @@
     "sayItFailed": "ตอนนี้ตรวจเสียงพูดไม่ได้ ลองใหม่สักครู่",
     "sayItAllHeard": "ได้ยินทุกคำอย่างชัดเจน",
     "sayItSomeMissed": "คำที่ขีดเส้นใต้ยังไม่ชัด ลองฟังอีกครั้งแล้วลองใหม่",
-    "sayItHeard": "เราได้ยิน: {transcript}"
+    "sayItHeard": "เราได้ยิน: {transcript}",
+    "pickedMeans": "คุณเลือก «{picked}» ซึ่งแปลว่า \"{meaning}\"",
+    "pickedInTarget": "คุณเลือก \"{picked}\" ใน {lang} คำนี้คือ «{meaning}»"
   },
   "hubNames": {
     "fi": "ภาษาฟินแลนด์",
