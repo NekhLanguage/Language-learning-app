@@ -116,6 +116,8 @@
     "startFree": "Börja gratis",
     "startFreeHeading": "Testa de {freeLessons} första lektionerna gratis",
     "startFreeSent": "Kolla inkorgen (och skräpposten) efter en länk för att skapa lösenord. Sedan är du igång.",
+    "startFreeSentTo": "Vi skickade en länk till {email}. Det kan ta en minut eller två, så kolla även skräpposten. Sätt lösenordet via länken, så är du inne.",
+    "startFreeNoEmailGoogle": "Ingen e-post efter några minuter? Fortsätt med Google i stället",
     "emailPlaceholder": "din@epost.se",
     "emailOptInLabel": "Skicka mig Nekhs veckobrev om språkinlärning.",
     "emailOptInTitle": "En fråga",
@@ -149,7 +151,9 @@
     "sayItFailed": "Talkontrollen fungerar inte just nu. Försök igen om en stund.",
     "sayItAllHeard": "Varje ord kom fram tydligt.",
     "sayItSomeMissed": "De understrukna orden kom inte fram. Lyssna igen och försök på nytt.",
-    "sayItHeard": "Vi hörde: {transcript}"
+    "sayItHeard": "Vi hörde: {transcript}",
+    "pickedMeans": "Du valde «{picked}», som betyder ”{meaning}”.",
+    "pickedInTarget": "Du valde ”{picked}”. På {lang} är det «{meaning}»."
   },
   "hubNames": {
     "fi": "Finska",

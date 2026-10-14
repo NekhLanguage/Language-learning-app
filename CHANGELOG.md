@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-14
+
+### Four more sign-in and feedback lines translated into 18 languages
+
+The two sign-in-screen lines added in v1.2.108 ("We sent a link to {email}…" and "No email after a few minutes? Continue with Google instead") and the two tutor-feedback lines added in v1.2.111 ("You picked X, which means Y" and its target-language variant) now read in each learner's support language, from German through Russian. Until now they fell back to English.
+
+---
+
 ## 2026-10-13
 
 ### Fewer odd extra words in practice sentences

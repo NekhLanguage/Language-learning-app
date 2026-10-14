@@ -111,6 +111,8 @@
     "startFree": "Empieza gratis",
     "startFreeHeading": "Prueba gratis las primeras {freeLessons} lecciones",
     "startFreeSent": "Revisa tu bandeja de entrada (y el spam): tienes un enlace para crear tu contraseña. Y listo.",
+    "startFreeSentTo": "Enviamos un enlace a {email}. Puede tardar un minuto o dos, así que mira también el spam. Define tu contraseña desde el enlace y ya estás dentro.",
+    "startFreeNoEmailGoogle": "¿Sin correo después de unos minutos? Continúa con Google en su lugar",
     "emailPlaceholder": "tu@correo.com",
     "emailOptInLabel": "Envíame el correo semanal de Nekh sobre aprender idiomas.",
     "emailOptInTitle": "Una pregunta",
@@ -144,7 +146,9 @@
     "sayItFailed": "La comprobación del habla no está funcionando ahora mismo. Vuelve a intentarlo en un momento.",
     "sayItAllHeard": "Todas las palabras se escucharon con claridad.",
     "sayItSomeMissed": "Las palabras subrayadas no se escucharon. Vuelve a escuchar e inténtalo otra vez.",
-    "sayItHeard": "Escuchamos: {transcript}"
+    "sayItHeard": "Escuchamos: {transcript}",
+    "pickedMeans": "Elegiste «{picked}», que significa “{meaning}”.",
+    "pickedInTarget": "Elegiste “{picked}”. En {lang} eso es «{meaning}»."
   },
   "hubNames": {
     "fi": "finés",

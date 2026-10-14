@@ -111,6 +111,8 @@
     "startFree": "無料で始める",
     "startFreeHeading": "最初の{freeLessons}レッスンを無料で体験",
     "startFreeSent": "受信トレイ（と迷惑メール）を確認してください。パスワード設定用のリンクが届いています。設定したらすぐ始められます。",
+    "startFreeSentTo": "{email} にリンクを送りました。1〜2分かかることがあるので、迷惑メールも確認してください。リンクからパスワードを設定すれば、入れます。",
+    "startFreeNoEmailGoogle": "数分経ってもメールが届かない？ 代わりに Google で続ける",
     "emailPlaceholder": "yamada@example.jp",
     "emailOptInLabel": "語学学習についてのNekhの週刊メールを受け取る",
     "emailOptInTitle": "ひとつ質問です",
@@ -144,7 +146,9 @@
     "sayItFailed": "音声チェックが今動作していません。少ししてからもう一度試してください。",
     "sayItAllHeard": "どの言葉もはっきり聞こえました。",
     "sayItSomeMissed": "下線の言葉が聞こえませんでした。もう一度聞いて、やり直してみてください。",
-    "sayItHeard": "聞こえたのは：{transcript}"
+    "sayItHeard": "聞こえたのは：{transcript}",
+    "pickedMeans": "«{picked}» を選びました —「{meaning}」という意味です。",
+    "pickedInTarget": "「{picked}」を選びました。{lang}では «{meaning}» です。"
   },
   "hubNames": {
     "fi": "フィンランド語",

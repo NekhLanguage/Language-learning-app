@@ -111,6 +111,8 @@
     "startFree": "ابدأ مجانًا",
     "startFreeHeading": "جرّب أول {freeLessons} دروس مجانًا",
     "startFreeSent": "تحقّق من صندوق الوارد (والرسائل غير المرغوب فيها): ستجد رابطًا لتعيين كلمة المرور. وبعدها تبدأ.",
+    "startFreeSentTo": "أرسلنا رابطًا إلى {email}. قد يستغرق الأمر دقيقة أو دقيقتين، تحقّق من مجلد الرسائل غير المرغوب فيها أيضًا. اضبط كلمة المرور من الرابط وتدخل مباشرة.",
+    "startFreeNoEmailGoogle": "لم تصل أي رسالة بعد بضع دقائق؟ تابع عبر Google بدلًا من ذلك",
     "emailPlaceholder": "name@example.com",
     "emailOptInLabel": "أرسل لي رسالة نيخ الأسبوعية عن تعلّم اللغات.",
     "emailOptInTitle": "سؤال واحد",
@@ -144,7 +146,9 @@
     "sayItFailed": "فحص النطق لا يعمل في الوقت الحالي. حاول مجددًا بعد قليل.",
     "sayItAllHeard": "كل كلمة وصلت بوضوح.",
     "sayItSomeMissed": "الكلمات التي تحتها خط لم تصل. استمع مرة أخرى وحاول من جديد.",
-    "sayItHeard": "سمعنا: {transcript}"
+    "sayItHeard": "سمعنا: {transcript}",
+    "pickedMeans": "اخترت «{picked}»، وتعني «{meaning}».",
+    "pickedInTarget": "اخترت «{picked}». بالـ{lang} يعني «{meaning}»."
   },
   "hubNames": {
     "fi": "الفنلندية",

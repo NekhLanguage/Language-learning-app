@@ -111,6 +111,8 @@
     "startFree": "免费开始",
     "startFreeHeading": "免费体验前{freeLessons}课",
     "startFreeSent": "请查看收件箱（和垃圾邮件），里面有设置密码的链接。设置好就可以开始了。",
+    "startFreeSentTo": "我们已经把链接发送到 {email}。可能需要一两分钟，请也查看垃圾邮件。通过链接设置密码后就可以进入了。",
+    "startFreeNoEmailGoogle": "过了几分钟还没收到邮件？改用 Google 继续",
     "emailPlaceholder": "wang@example.cn",
     "emailOptInLabel": "给我发送 Nekh 每周一封的语言学习邮件。",
     "emailOptInTitle": "一个问题",
@@ -144,7 +146,9 @@
     "sayItFailed": "语音检查暂时无法使用。请稍后再试。",
     "sayItAllHeard": "每个词都清晰地听到了。",
     "sayItSomeMissed": "下划线的词没听清。再听一遍，再试一次。",
-    "sayItHeard": "我们听到的是：{transcript}"
+    "sayItHeard": "我们听到的是：{transcript}",
+    "pickedMeans": "你选了«{picked}»，意思是\"{meaning}\"。",
+    "pickedInTarget": "你选了\"{picked}\"。在{lang}里是«{meaning}»。"
   },
   "hubNames": {
     "fi": "芬兰语",

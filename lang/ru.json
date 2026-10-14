@@ -116,6 +116,8 @@
     "startFree": "Начать бесплатно",
     "startFreeHeading": "Первые {freeLessons} уроков — бесплатно",
     "startFreeSent": "Проверьте почту (и папку «Спам»): там ссылка, чтобы задать пароль. После этого можно начинать.",
+    "startFreeSentTo": "Мы отправили ссылку на {email}. Это может занять минуту-другую — проверьте и спам. Задайте пароль по ссылке — и вы внутри.",
+    "startFreeNoEmailGoogle": "Нет письма через несколько минут? Продолжите через Google вместо этого",
     "emailPlaceholder": "vash@email.ru",
     "emailOptInLabel": "Присылайте мне еженедельное письмо Нэха об изучении языков.",
     "emailOptInTitle": "Один вопрос",
@@ -149,7 +151,9 @@
     "sayItFailed": "Проверка речи сейчас не работает. Попробуй через минуту.",
     "sayItAllHeard": "Каждое слово прозвучало чётко.",
     "sayItSomeMissed": "Подчёркнутые слова не прошли. Послушай ещё раз и попробуй снова.",
-    "sayItHeard": "Мы услышали: {transcript}"
+    "sayItHeard": "Мы услышали: {transcript}",
+    "pickedMeans": "Вы выбрали «{picked}» — это значит «{meaning}».",
+    "pickedInTarget": "Вы выбрали «{picked}». На {lang} это «{meaning}»."
   },
   "hubNames": {
     "fi": "Финский",

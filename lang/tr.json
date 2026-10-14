@@ -111,6 +111,8 @@
     "startFree": "Ücretsiz başla",
     "startFreeHeading": "İlk {freeLessons} dersi ücretsiz deneyin",
     "startFreeSent": "Gelen kutunuza (ve spam klasörüne) bakın: şifrenizi oluşturmanız için bir bağlantı var. Sonra hazırsınız.",
+    "startFreeSentTo": "{email} adresine bir bağlantı gönderdik. Bir iki dakika sürebilir, spam klasörünü de kontrol edin. Bağlantıdan şifrenizi belirleyin ve içeri girin.",
+    "startFreeNoEmailGoogle": "Birkaç dakika sonra e-posta gelmedi mi? Onun yerine Google ile devam edin",
     "emailPlaceholder": "adiniz@eposta.com",
     "emailOptInLabel": "Nekh'in dil öğrenme üzerine haftalık e-postasını bana gönder.",
     "emailOptInTitle": "Bir soru",
@@ -144,7 +146,9 @@
     "sayItFailed": "Konuşma kontrolü şu an çalışmıyor. Birazdan tekrar dene.",
     "sayItAllHeard": "Her kelime net duyuldu.",
     "sayItSomeMissed": "Altı çizili kelimeler duyulmadı. Tekrar dinle ve bir daha dene.",
-    "sayItHeard": "Duyduğumuz: {transcript}"
+    "sayItHeard": "Duyduğumuz: {transcript}",
+    "pickedMeans": "«{picked}» seçtiniz — anlamı: \"{meaning}\".",
+    "pickedInTarget": "\"{picked}\" seçtiniz. {lang} dilinde bu «{meaning}»."
   },
   "hubNames": {
     "fi": "Fince",
