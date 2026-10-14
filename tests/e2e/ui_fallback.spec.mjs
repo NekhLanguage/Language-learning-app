@@ -6,6 +6,14 @@
 import { test, expect, loginAs } from "./fixtures.mjs";
 
 test("a non-English learner never sees a raw uiStrings key after a reload", async ({ page }) => {
+  // Drop one German string so the fallback path is exercised: the button
+  // must show the English text, never the key name.
+  await page.route("**/lang/de.json*", async (route) => {
+    const res = await route.fetch();
+    const data = await res.json();
+    delete data.uiStrings.trialKeepGoing;
+    await route.fulfill({ response: res, json: data });
+  });
   await loginAs(page);
   // Through the app's own picker, so the server copy carries it too.
   await page.click("#support-pill");
@@ -24,13 +32,14 @@ test("a non-English learner never sees a raw uiStrings key after a reload", asyn
 });
 
 test("the leaderboard speaks the support language, falls back to English, and pluralises per language", async ({ page }) => {
-  // Inject two German strings (the real file has none yet) to prove the
-  // board reads the learner's language; everything else must fall back.
+  // Pin two German strings to prove the board reads the learner's
+  // language, and drop one so the untranslated path must fall back.
   await page.route("**/lang/de.json*", async (route) => {
     const res = await route.fetch();
     const data = await res.json();
     data.uiStrings.leaderboardTitle = "Bestenliste";
     data.uiStrings.leaderboardMastered_other = "{n} Wörter gemeistert";
+    delete data.uiStrings.leaderboardJoin;
     await route.fulfill({ response: res, json: data });
   });
   await loginAs(page, `lb-de-${Date.now()}@example.com`);
