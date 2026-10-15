@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-15
+
+### Anna's page now speaks your language too
+
+Anna's chat page was the last screen still in English for everyone: the settings, topics, buttons, notes and status messages. It now appears in all 18 support languages, so every screen of the app speaks the language you chose.
+
 ## 2026-10-14
 
 ### The home screen and leaderboard now speak your language
