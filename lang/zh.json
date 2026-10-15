@@ -198,7 +198,7 @@
     "referralCodeFailed": "无法生成你的推荐码（{status}）",
     "referralLinkLabel": "你的推荐链接",
     "referralCopy": "复制链接",
-    "referralHowFriendUses": "你的朋友打开链接，或在结账时把推荐码填入“推荐码”一栏即可。",
+    "referralHowFriendUses": "你的朋友打开链接，或在结账时把推荐码填入“Referral code”一栏即可。",
     "referralActive": "有效推荐",
     "referralAvailable": "已赚取，等待下一张账单抵扣",
     "referralApplied": "至今已抵扣的订阅费",

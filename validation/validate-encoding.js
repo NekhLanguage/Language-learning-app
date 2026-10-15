@@ -48,6 +48,14 @@ const SCRIPT_RULES = {
 // nothing ever looked.
 const LATIN_LANGS = new Set(['en', 'de', 'pt', 'no', 'tr', 'pl', 'fi', 'sv']);
 
+// uiStrings keys whose English value is an intentional brand/proper noun,
+// deliberately identical across every language family. Latin-script languages
+// render it as-is; non-Latin languages use the same Latin spelling so the
+// product's identity reads the same everywhere (Angus cycle 147 review:
+// 12-language Latin precedent on leaderboardColAnna; el/ja/ko keep Latin
+// "Anna" even inside their native-script particles).
+const BRAND_IDENTICAL_ALLOWLIST = new Set(['leaderboardColAnna']);
+
 // Any character of a script a Latin-language value must never contain:
 // Greek, Cyrillic, Arabic, Devanagari, Thai, Hangul (jamo + syllables),
 // kana, CJK. Whole script blocks on purpose — combining marks included,
@@ -195,7 +203,8 @@ function validateUiStrings(lang, uiStrings, enUiStrings) {
     const enVal   = enUiStrings[key];
 
     // Flag if identical to English (and the English value looks like real text)
-    if (enVal && trimmed === enVal && /[A-Za-z]{3,}/.test(enVal)) {
+    if (enVal && trimmed === enVal && /[A-Za-z]{3,}/.test(enVal)
+        && !BRAND_IDENTICAL_ALLOWLIST.has(key)) {
       errors.push(`UI STRING IDENTICAL TO ENGLISH — "${key}": "${trimmed}"`);
     }
   }

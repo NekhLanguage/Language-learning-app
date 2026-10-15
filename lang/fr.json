@@ -198,7 +198,7 @@
     "referralCodeFailed": "Impossible de créer ton code ({status})",
     "referralLinkLabel": "Ton lien de parrainage",
     "referralCopy": "Copier le lien",
-    "referralHowFriendUses": "Ton ami ouvre le lien, ou saisit le code dans « Code de parrainage » au moment du paiement.",
+    "referralHowFriendUses": "Ton ami ouvre le lien, ou saisit le code dans « Referral code » au moment du paiement.",
     "referralActive": "Parrainages actifs",
     "referralAvailable": "Gagné, en attente de ta prochaine facture",
     "referralApplied": "Déduit de ton abonnement jusqu'ici",

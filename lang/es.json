@@ -198,7 +198,7 @@
     "referralCodeFailed": "No se pudo crear tu código ({status})",
     "referralLinkLabel": "Tu enlace de recomendación",
     "referralCopy": "Copiar enlace",
-    "referralHowFriendUses": "Tu amigo abre el enlace o escribe el código en «Código de recomendación» al pagar.",
+    "referralHowFriendUses": "Tu amigo abre el enlace o escribe el código en «Referral code» al pagar.",
     "referralActive": "Recomendaciones activas",
     "referralAvailable": "Ganado, pendiente de tu próxima factura",
     "referralApplied": "Descontado de tu suscripción hasta ahora",

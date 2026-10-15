@@ -198,7 +198,7 @@
     "referralCodeFailed": "コードを作成できませんでした（{status}）",
     "referralLinkLabel": "あなたの紹介リンク",
     "referralCopy": "リンクをコピー",
-    "referralHowFriendUses": "友達はリンクを開くか、購入時に「紹介コード」欄にコードを入力します。",
+    "referralHowFriendUses": "友達はリンクを開くか、購入時に「Referral code」欄にコードを入力します。",
     "referralActive": "有効な紹介",
     "referralAvailable": "獲得済み（次回の請求で適用）",
     "referralApplied": "これまでに割り引かれた額",
