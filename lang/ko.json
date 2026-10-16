@@ -198,7 +198,7 @@
     "referralCodeFailed": "코드를 만들 수 없어요 ({status})",
     "referralLinkLabel": "내 추천 링크",
     "referralCopy": "링크 복사",
-    "referralHowFriendUses": "친구가 링크를 열거나, 결제할 때 ‘추천 코드’ 칸에 코드를 입력하면 돼요.",
+    "referralHowFriendUses": "친구가 링크를 열거나, 결제할 때 ‘Referral code’ 칸에 코드를 입력하면 돼요.",
     "referralActive": "활성 추천",
     "referralAvailable": "적립됨, 다음 청구서에 적용 예정",
     "referralApplied": "지금까지 구독료에서 할인된 금액",

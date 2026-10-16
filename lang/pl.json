@@ -198,7 +198,7 @@
     "referralCodeFailed": "Nie udało się utworzyć kodu ({status})",
     "referralLinkLabel": "Twój link polecający",
     "referralCopy": "Kopiuj link",
-    "referralHowFriendUses": "Znajomy otwiera link albo wpisuje kod w polu „Kod polecający” przy płatności.",
+    "referralHowFriendUses": "Znajomy otwiera link albo wpisuje kod w polu „Referral code” przy płatności.",
     "referralActive": "Aktywne polecenia",
     "referralAvailable": "Zarobione, czeka na kolejną fakturę",
     "referralApplied": "Dotąd odjęte od subskrypcji",
