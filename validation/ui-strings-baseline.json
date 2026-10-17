@@ -1,5 +1,96 @@
 {
-  "missing": {},
+  "missing": {
+    "ar": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "de": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "el": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "es": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "fi": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "fr": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "it": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "ja": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "ko": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "no": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "pl": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "pt": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "ru": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "sv": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "th": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "tr": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "uk": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ],
+    "zh": [
+      "sessionRecapCount",
+      "sessionRecapLabel",
+      "sessionRecapTitle"
+    ]
+  },
   "identical": {
     "fr": [
       "correct",
