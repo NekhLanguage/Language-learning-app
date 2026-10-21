@@ -93,6 +93,11 @@ body{
   font-family: var(--font-ui);
   background: radial-gradient(circle at top, var(--bg1), var(--bg2)) fixed;
   min-height: 100vh;
+  /* 100vh on mobile Chrome is the height with the address bar HIDDEN, so
+     with the bar showing the page was taller than the screen by the bar's
+     height and a swipe scrolled the QUIT / JOURNEY buttons out of view
+     (Nekh 2026-10-21). dvh tracks the visible area. */
+  min-height: 100dvh;
   color: var(--ink);
   overflow-x: hidden;
 }
@@ -1558,7 +1563,9 @@ button.wrong {
 
 #choices {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0, …): a plain 1fr column grows to its longest word and pushed
+     the second column off a 360px screen (Nekh 2026-10-21). */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
   margin: 1rem 0;
 }
@@ -1571,8 +1578,12 @@ button.wrong {
   border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 0.9rem 1rem;
   width: 100%;
+  min-width: 0;
   text-align: center;
   font-size: 1rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
   transition: background-color 0.2s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -3257,4 +3268,23 @@ a.primary.paywall-buy{
 }
 @media (prefers-reduced-motion: reduce) {
   .tutor-anna { animation: none; }
+}
+
+/* Matching (L5): the columns share the width and long words shrink, then
+   wrap, instead of running off the right edge («помаранчевий» at 412px,
+   Nekh 2026-10-21). */
+#matching-container { gap: clamp(1rem, 7vw, 80px) !important; }
+#left-column { flex: 1 1 0; min-width: 0; }
+#right-column { flex: 1.25 1 0; min-width: 0; } /* target words run longer */
+#right-column > div { min-width: 0; }
+#left-column > button, #right-column > div > button:not(.tts-inline) {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  padding-inline: clamp(0.6rem, 3vw, 1.6rem);
+  font-size: clamp(0.8rem, 3.6vw, 1rem);
+  letter-spacing: 0.01em;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
