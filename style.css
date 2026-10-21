@@ -2095,6 +2095,86 @@ button.wrong {
 }
 
 /* =========================
+   Session recap screen
+   (end-of-session word list, Dan cycle 157)
+   ========================= */
+
+#session-recap-screen {
+  justify-content: flex-start;
+  padding-top: 5rem;
+  padding-bottom: 6.5rem;
+}
+
+.session-recap-wrap {
+  width: min(560px, 92vw);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.session-recap-wrap .title,
+.session-recap-wrap .subtitle {
+  text-align: center;
+}
+
+.session-recap-list {
+  list-style: none;
+  margin: 1rem 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.session-recap-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+}
+
+.session-recap-target {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.session-recap-support {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  opacity: 0.75;
+  text-align: right;
+}
+
+.session-recap-continue {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  z-index: 5;
+}
+
+.session-recap-continue:hover {
+  transform: translateX(-50%) translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  #session-recap-screen {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* =========================
    Fit-to-viewport compression
    - exercises, feedback
    Goal: no scrolling in any direction on a normal phone viewport.

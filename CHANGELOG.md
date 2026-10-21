@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-17
+
+### See what you just practiced at the end of a lesson
+
+When a lesson ends, before the journey map, you now see a short recap: a count and the list of the words you worked on in that session, each with its translation. One tap on Continue moves on to the roadmap.
+
 ## 2026-10-15
 
 ### Anna's page now speaks your language too

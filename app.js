@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.117";
+const APP_DATA_VERSION = "1.2.118";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -5705,6 +5705,11 @@ function runIsExhausted(run) {
 
 function endSession(targetLang, supportLang) {
 
+  // Snapshot the concepts practiced this session before the reset below,
+  // so the end-of-session recap screen can list them (Dan cycle 157). The
+  // keys of sessionAttempts are the focus cid of each exercise.
+  const practicedWords = Object.keys(run.sessionAttempts || {});
+
   run.sessionNumber++;
 
   // Free tier: the lesson after the free ones is behind the paywall, so it
@@ -5745,7 +5750,7 @@ function endSession(targetLang, supportLang) {
     }
   } catch (_) { /* never let the beacon throw */ }
 
-  showRoadmap({
+  const roadmapOpts = {
     sessionNumber: finishedSession,
     showCoaching: finishedSession >= 3,
     milestone,
@@ -5765,7 +5770,59 @@ function endSession(targetLang, supportLang) {
         }
       }, 0);
     }
+  };
+
+  // End-of-session recap, before the roadmap: count + list of words the
+  // learner just practiced. No scheduleReview, no public.reviews write,
+  // no feature flag. Lead-in to the full day-based inter-session SR (§c).
+  // Skip when the session completed without any attempts.
+  if (practicedWords.length > 0) {
+    showSessionRecap({
+      words: practicedWords,
+      targetLang,
+      supportLang,
+      onContinue: () => showRoadmap(roadmapOpts),
+    });
+  } else {
+    showRoadmap(roadmapOpts);
+  }
+}
+
+function showSessionRecap({ words, targetLang, supportLang, onContinue }) {
+  const screen = document.getElementById("session-recap-screen");
+  const titleEl = document.getElementById("session-recap-title");
+  const countEl = document.getElementById("session-recap-count");
+  const listEl = document.getElementById("session-recap-list");
+  const continueBtn = document.getElementById("session-recap-continue");
+  const backBtn = document.getElementById("session-recap-back");
+
+  titleEl.textContent = ui("sessionRecapTitle");
+  countEl.textContent = uiT("sessionRecapCount", "Words practiced: {n}", { n: words.length });
+
+  listEl.innerHTML = "";
+  words.forEach(cid => {
+    const li = document.createElement("li");
+    li.className = "session-recap-item";
+    const target = document.createElement("span");
+    target.className = "session-recap-target";
+    target.textContent = formOf(targetLang, cid);
+    const support = document.createElement("span");
+    support.className = "session-recap-support";
+    support.textContent = formOf(supportLang, cid);
+    li.appendChild(target);
+    li.appendChild(support);
+    listEl.appendChild(li);
   });
+
+  continueBtn.textContent = ui("continue");
+  continueBtn.onclick = () => {
+    if (typeof onContinue === "function") onContinue();
+  };
+  backBtn.textContent = ui("roadmapBack");
+  backBtn.onclick = returnToHome;
+
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  screen.classList.add("active");
 }
   const TYPE_PRIORITY = {
   pronoun: 1,
