@@ -135,6 +135,39 @@ function validateLang(lang, langData, rawText, concepts) {
   return { errors, warnings };
 }
 
+const NOUN_CATEGORIES = new Set([
+  'person', 'animal', 'creature', 'plant', 'body_part', 'food', 'drink', 'substance',
+  'place', 'building', 'vehicle', 'clothing', 'object', 'document', 'media', 'abstract',
+  'activity', 'time', 'nature', 'group', 'meal', 'unit',
+]);
+
+function validateModifierFit() {
+  const errors = [];
+  const all = {};
+  for (const file of fs.readdirSync(ROOT).filter(f => f.endsWith('.json'))) {
+    let data;
+    try { data = JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8')); } catch { continue; }
+    if (!data || !Array.isArray(data.concepts)) continue;
+    for (const c of data.concepts) if (c && c.concept_id) all[c.concept_id] = { ...c, file };
+  }
+  for (const [cid, c] of Object.entries(all)) {
+    if (c.type === 'noun' && !NOUN_CATEGORIES.has(c.category)) {
+      errors.push(`${c.file}: noun ${cid} needs a "category" (one of: ${[...NOUN_CATEGORIES].join(', ')}), got ${JSON.stringify(c.category)}`);
+    }
+    if (c.type === 'adjective' && c.semantic_role !== 'possessive') {
+      if (!Array.isArray(c.fits)) {
+        errors.push(`${c.file}: adjective ${cid} needs a "fits" list of noun categories ([] = only in its own sentences)`);
+      } else {
+        for (const k of c.fits) if (!NOUN_CATEGORIES.has(k)) errors.push(`${c.file}: adjective ${cid} fits unknown category "${k}"`);
+      }
+      for (const n of c.fitsNouns || []) {
+        if (all[n]?.type !== 'noun') errors.push(`${c.file}: adjective ${cid} fitsNouns names "${n}", which is not a noun`);
+      }
+    }
+  }
+  return errors;
+}
+
 function main() {
   console.log('=== validate-structure.js ===\n');
 
@@ -179,6 +212,20 @@ function main() {
       for (const w of warnings) console.log(`         WARN : ${w}`);
       summary.push({ lang, status: 'FAILED', errors: errors.length, warnings: warnings.length });
     }
+  }
+
+  // Declared modifier fit (Nekh 2026-10-21): every noun in every vocab file —
+  // core and packs — names its `category`, and every descriptive adjective
+  // its `fits` list (plus optional `fitsNouns`). The engine only puts an
+  // adjective on a noun it fits, so a missing field would silently change
+  // what learners see; a new word must declare it.
+  const fitErrors = validateModifierFit();
+  if (fitErrors.length) {
+    anyFailed = true;
+    console.log(`\n[fit] FAILED  (${fitErrors.length} error${fitErrors.length !== 1 ? 's' : ''})`);
+    for (const e of fitErrors) console.log(`         ERROR: ${e}`);
+  } else {
+    console.log('\n[fit] PASS  (noun categories and adjective fit lists)');
   }
 
   // Summary table

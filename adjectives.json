@@ -3,6 +3,7 @@
     {
       "concept_id": "BIG",
       "type": "adjective",
+      "fits": ["person", "animal", "creature", "body_part", "place", "building", "vehicle", "clothing", "object", "group", "nature", "meal", "document", "food", "drink"],
       "semantic_role": "property_size",
       "core": true,
       "interaction_profile": {
@@ -15,6 +16,7 @@
     {
       "concept_id": "SMALL",
       "type": "adjective",
+      "fits": ["person", "animal", "creature", "body_part", "place", "building", "vehicle", "clothing", "object", "group", "nature", "meal", "document", "food", "drink"],
       "semantic_role": "property_size",
       "core": true,
       "interaction_profile": {
@@ -27,6 +29,7 @@
     {
       "concept_id": "GOOD",
       "type": "adjective",
+      "fits": ["person", "animal", "creature", "place", "building", "vehicle", "clothing", "object", "document", "media", "activity", "meal", "food", "drink", "group", "time", "abstract"],
       "semantic_role": "property_quality",
       "core": true,
       "interaction_profile": {
@@ -39,6 +42,7 @@
     {
       "concept_id": "BAD",
       "type": "adjective",
+      "fits": ["person", "animal", "creature", "place", "building", "vehicle", "clothing", "object", "document", "media", "activity", "meal", "food", "drink", "group", "time", "abstract"],
       "semantic_role": "property_quality",
       "core": true,
       "interaction_profile": {
@@ -51,6 +55,7 @@
     {
       "concept_id": "NEW",
       "type": "adjective",
+      "fits": ["place", "building", "vehicle", "clothing", "object", "document", "media", "activity", "group"],
       "semantic_role": "property_time",
       "core": true,
       "interaction_profile": {
@@ -63,6 +68,7 @@
     {
       "concept_id": "OLD",
       "type": "adjective",
+      "fits": ["place", "building", "vehicle", "clothing", "object", "document", "media"],
       "semantic_role": "property_time",
       "core": true,
       "interaction_profile": {
@@ -75,6 +81,8 @@
     {
       "concept_id": "EASY",
       "type": "adjective",
+      "fits": ["activity", "document"],
+      "fitsNouns": ["QUESTION", "ANSWER", "SPELL"],
       "semantic_role": "property_difficulty",
       "core": true,
       "interaction_profile": {
@@ -87,6 +95,8 @@
     {
       "concept_id": "DIFFICULT",
       "type": "adjective",
+      "fits": ["activity", "document"],
+      "fitsNouns": ["QUESTION", "ANSWER", "SPELL"],
       "semantic_role": "property_difficulty",
       "core": true,
       "interaction_profile": {
@@ -190,6 +200,7 @@
     {
       "concept_id": "BLACK",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "animal", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -202,6 +213,7 @@
     {
       "concept_id": "WHITE",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "animal", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -214,6 +226,7 @@
     {
       "concept_id": "RED",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -226,6 +239,7 @@
     {
       "concept_id": "BLUE",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -238,6 +252,7 @@
     {
       "concept_id": "GREEN",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -250,6 +265,7 @@
     {
       "concept_id": "YELLOW",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -262,6 +278,7 @@
     {
       "concept_id": "PURPLE",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -274,6 +291,7 @@
     {
       "concept_id": "ORANGE",
       "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "document", "building", "place"],
       "semantic_role": "property_color",
       "core": true,
       "interaction_profile": {
@@ -286,6 +304,7 @@
     {
       "concept_id": "FAST",
       "type": "adjective",
+      "fits": ["person", "animal", "creature", "vehicle", "activity", "media"],
       "semantic_role": "property_speed",
       "core": true,
       "interaction_profile": {
@@ -298,6 +317,7 @@
     {
       "concept_id": "SLOW",
       "type": "adjective",
+      "fits": ["person", "animal", "creature", "vehicle", "activity", "media"],
       "semantic_role": "property_speed",
       "core": true,
       "interaction_profile": {
@@ -310,6 +330,7 @@
     {
       "concept_id": "LONG",
       "type": "adjective",
+      "fits": ["time", "activity", "document", "media", "meal"],
       "semantic_role": "property_size",
       "core": true,
       "interaction_profile": {
@@ -322,6 +343,7 @@
     {
       "concept_id": "SHORT",
       "type": "adjective",
+      "fits": ["person", "time", "activity", "document", "media", "meal"],
       "semantic_role": "property_size",
       "core": true,
       "interaction_profile": {
@@ -334,6 +356,7 @@
     {
       "concept_id": "HEAVY",
       "type": "adjective",
+      "fits": ["vehicle", "clothing", "meal", "object", "document"],
       "semantic_role": "property_weight",
       "core": true,
       "interaction_profile": {
@@ -346,6 +369,7 @@
     {
       "concept_id": "LIGHT",
       "type": "adjective",
+      "fits": ["vehicle", "clothing", "meal", "object", "document"],
       "semantic_role": "property_weight",
       "core": true,
       "interaction_profile": {
@@ -358,6 +382,7 @@
     {
       "concept_id": "DARK",
       "type": "adjective",
+      "fits": ["building", "object", "clothing", "vehicle", "creature", "nature", "place", "time"],
       "semantic_role": "property_brightness",
       "core": true,
       "interaction_profile": {
@@ -370,6 +395,7 @@
     {
       "concept_id": "YOUNG",
       "type": "adjective",
+      "fits": ["person", "animal", "creature"],
       "semantic_role": "property_youth",
       "core": true,
       "interaction_profile": {
@@ -382,6 +408,8 @@
     {
       "concept_id": "RIGHT",
       "type": "adjective",
+      "fits": [],
+      "fitsNouns": ["ARM", "HAND", "LEG", "FOOT", "EYE", "KNEE", "SHOULDER"],
       "semantic_role": "property_direction",
       "core": true,
       "interaction_profile": {
@@ -394,6 +422,8 @@
     {
       "concept_id": "LEFT",
       "type": "adjective",
+      "fits": [],
+      "fitsNouns": ["ARM", "HAND", "LEG", "FOOT", "EYE", "KNEE", "SHOULDER"],
       "semantic_role": "property_direction",
       "core": true,
       "interaction_profile": {
@@ -406,6 +436,8 @@
     {
       "concept_id": "CORRECT",
       "type": "adjective",
+      "fits": [],
+      "fitsNouns": ["ANSWER", "QUESTION", "IDEA", "ROUTE", "MOVE"],
       "semantic_role": "property_correctness",
       "core": true,
       "interaction_profile": {
@@ -418,6 +450,8 @@
     {
       "concept_id": "WRONG",
       "type": "adjective",
+      "fits": [],
+      "fitsNouns": ["ANSWER", "QUESTION", "IDEA", "ROUTE", "MOVE"],
       "semantic_role": "property_correctness",
       "core": true,
       "interaction_profile": {
@@ -430,6 +464,7 @@
     {
       "concept_id": "NICE",
       "type": "adjective",
+      "fits": ["person", "animal", "creature", "place", "building", "vehicle", "clothing", "object", "document", "media", "activity", "meal", "food", "drink", "time"],
       "semantic_role": "property_evaluation",
       "core": true,
       "interaction_profile": {
@@ -442,6 +477,7 @@
     {
       "concept_id": "COLD",
       "type": "adjective",
+      "fits": ["drink", "meal", "building", "food", "place", "nature", "time", "body_part"],
       "semantic_role": "property_temperature",
       "core": true,
       "interaction_profile": {

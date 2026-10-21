@@ -7149,25 +7149,63 @@
         "ru": "Мы едим всё."
       },
       "surface": {
-        "en": {"ALL": "everything"},
-        "de": {"ALL": "alles"},
-        "el": {"ALL": "όλα"},
-        "es": {"ALL": "todo"},
-        "fr": {"ALL": "tout"},
-        "ja": {"ALL": "全部"},
-        "ko": {"ALL": "다"},
-        "no": {"ALL": "alt"},
-        "tr": {"ALL": "hepsini"},
-        "uk": {"ALL": "все"},
-        "zh": {"ALL": "全部"},
-        "pt": {"ALL": "tudo"},
-        "ar": {"ALL": "كل شيء"},
-        "it": {"ALL": "tutto"},
-        "th": {"ALL": "ทั้งหมด"},
-        "pl": {"ALL": "wszystko"},
-        "fi": {"ALL": "kaiken"},
-        "sv": {"ALL": "allt"},
-        "ru": {"ALL": "всё"}
+        "en": {
+          "ALL": "everything"
+        },
+        "de": {
+          "ALL": "alles"
+        },
+        "el": {
+          "ALL": "όλα"
+        },
+        "es": {
+          "ALL": "todo"
+        },
+        "fr": {
+          "ALL": "tout"
+        },
+        "ja": {
+          "ALL": "全部"
+        },
+        "ko": {
+          "ALL": "다"
+        },
+        "no": {
+          "ALL": "alt"
+        },
+        "tr": {
+          "ALL": "hepsini"
+        },
+        "uk": {
+          "ALL": "все"
+        },
+        "zh": {
+          "ALL": "全部"
+        },
+        "pt": {
+          "ALL": "tudo"
+        },
+        "ar": {
+          "ALL": "كل شيء"
+        },
+        "it": {
+          "ALL": "tutto"
+        },
+        "th": {
+          "ALL": "ทั้งหมด"
+        },
+        "pl": {
+          "ALL": "wszystko"
+        },
+        "fi": {
+          "ALL": "kaiken"
+        },
+        "sv": {
+          "ALL": "allt"
+        },
+        "ru": {
+          "ALL": "всё"
+        }
       }
     },
     {
@@ -8694,67 +8732,131 @@
       }
     },
     {
-      "template_id": "SPRING_IS_NEW",
+      "template_id": "SPRING_IS_SHORT",
       "concepts": [
         "SPRING",
+        "BE",
+        "SHORT"
+      ],
+      "structure": {
+        "type": "time_description"
+      },
+      "render": {
+        "en": "Spring is short.",
+        "pt": "A primavera é curta.",
+        "ar": "الربيع قصير.",
+        "de": "Der Frühling ist kurz.",
+        "el": "Η άνοιξη είναι σύντομη.",
+        "es": "La primavera es corta.",
+        "fr": "Le printemps est court.",
+        "ja": "春は短いです。",
+        "ko": "봄은 짧아요.",
+        "no": "Våren er kort.",
+        "tr": "İlkbahar kısadır.",
+        "uk": "Весна коротка.",
+        "zh": "春天很短。",
+        "it": "La primavera è corta.",
+        "th": "ฤดูใบไม้ผลิสั้น",
+        "pl": "Wiosna jest krótka.",
+        "fi": "Kevät on lyhyt.",
+        "sv": "Våren är kort.",
+        "ru": "Весна короткая."
+      }
+    },
+    {
+      "template_id": "BOOK_IS_NEW",
+      "concepts": [
+        "BOOK",
         "BE",
         "NEW"
       ],
       "structure": {
-        "type": "time_description"
+        "type": "copular"
       },
       "render": {
-        "en": "Spring is new.",
-        "de": "Der Frühling ist neu.",
-        "el": "Η άνοιξη είναι καινούργια.",
-        "es": "La primavera es nueva.",
-        "fr": "Le printemps est nouveau.",
-        "ja": "春は新しいです。",
-        "ko": "봄은 새로워요.",
-        "no": "Våren er ny.",
-        "tr": "İlkbahar yenidir.",
-        "uk": "Весна нова.",
-        "zh": "春天是新的。",
-        "pt": "A primavera é nova.",
-        "ar": "الربيع جديد.",
-        "it": "La primavera è nuova.",
-        "th": "ฤดูใบไม้ผลิใหม่",
-        "pl": "Wiosna jest nowa.",
-        "fi": "Kevät on uusi.",
-        "sv": "Våren är ny.",
-        "ru": "Весна новая."
+        "en": "The book is new.",
+        "pt": "O livro é novo.",
+        "ar": "الكتاب جديد.",
+        "de": "Das Buch ist neu.",
+        "el": "Το βιβλίο είναι καινούριο.",
+        "es": "El libro es nuevo.",
+        "fr": "Le livre est nouveau.",
+        "ja": "本は新しいです。",
+        "ko": "책은 새것이에요.",
+        "no": "Boken er ny.",
+        "tr": "Kitap yenidir.",
+        "uk": "Книга нова.",
+        "zh": "书很新。",
+        "it": "Il libro è nuovo.",
+        "th": "หนังสือใหม่",
+        "pl": "Książka jest nowa.",
+        "fi": "Kirja on uusi.",
+        "sv": "Boken är ny.",
+        "ru": "Книга новая."
       }
     },
     {
-      "template_id": "AUTUMN_IS_OLD",
+      "template_id": "AUTUMN_IS_LONG",
       "concepts": [
         "AUTUMN",
         "BE",
-        "OLD"
+        "LONG"
       ],
       "structure": {
         "type": "time_description"
       },
       "render": {
-        "en": "Autumn is old.",
-        "de": "Der Herbst ist alt.",
-        "el": "Το φθινόπωρο είναι παλιό.",
-        "es": "El otoño es viejo.",
-        "fr": "L'automne est vieux.",
-        "ja": "秋は古いです。",
-        "ko": "가을은 오래됐어요.",
-        "no": "Høsten er gammel.",
-        "tr": "Sonbahar eskidir.",
-        "uk": "Осінь стара.",
-        "zh": "秋天是旧的。",
-        "pt": "O outono é velho.",
-        "ar": "الخريف قديم.",
-        "it": "L'autunno è vecchio.",
-        "th": "ฤดูใบไม้ร่วงเก่า",
-        "pl": "Jesień jest stara.",
-        "fi": "Syksy on vanha.",
-        "sv": "Hösten är gammal.",
-        "ru": "Осень старая."
+        "en": "Autumn is long.",
+        "pt": "O outono é longo.",
+        "ar": "الخريف طويل.",
+        "de": "Der Herbst ist lang.",
+        "el": "Το φθινόπωρο είναι μακρύ.",
+        "es": "El otoño es largo.",
+        "fr": "L'automne est long.",
+        "ja": "秋は長いです。",
+        "ko": "가을은 길어요.",
+        "no": "Høsten er lang.",
+        "tr": "Sonbahar uzundur.",
+        "uk": "Осінь довга.",
+        "zh": "秋天很长。",
+        "it": "L'autunno è lungo.",
+        "th": "ฤดูใบไม้ร่วงยาว",
+        "pl": "Jesień jest długa.",
+        "fi": "Syksy on pitkä.",
+        "sv": "Hösten är lång.",
+        "ru": "Осень длинная."
+      }
+    },
+    {
+      "template_id": "HOUSE_IS_OLD",
+      "concepts": [
+        "HOUSE",
+        "BE",
+        "OLD"
+      ],
+      "structure": {
+        "type": "copular"
+      },
+      "render": {
+        "en": "The house is old.",
+        "pt": "A casa é velha.",
+        "ar": "البيت قديم.",
+        "de": "Das Haus ist alt.",
+        "el": "Το σπίτι είναι παλιό.",
+        "es": "La casa es vieja.",
+        "fr": "La maison est vieille.",
+        "ja": "家は古いです。",
+        "ko": "집은 오래됐어요.",
+        "no": "Huset er gammelt.",
+        "tr": "Ev eskidir.",
+        "uk": "Будинок старий.",
+        "zh": "房子很旧。",
+        "it": "La casa è vecchia.",
+        "th": "บ้านเก่า",
+        "pl": "Dom jest stary.",
+        "fi": "Talo on vanha.",
+        "sv": "Huset är gammalt.",
+        "ru": "Дом старый."
       }
     },
     {

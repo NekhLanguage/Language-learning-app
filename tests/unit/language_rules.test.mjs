@@ -39,6 +39,7 @@ import {
   safeSurfaceForConcept,
   randomModifierAllowed,
   adjectiveSuitsNoun,
+  adjectiveFitsNoun,
   pluralize,
 } from "../../sentence_engine.mjs";
 
@@ -346,7 +347,7 @@ test("fr: adjectives are post-nominal by default, BAGS roles pre-nominal", () =>
 test("zh: attributive adjectives of two+ characters take 的, monosyllabic stay bare (-62)", () => {
   assert.equal(buildSentence("zh", tplById("I_GET_BOOK"), "EASY", {}),
     "我得到一本容易的书。");
-  assert.equal(buildSentence("zh", tplById("I_HAVE_SHIRT"), "EASY", {}),
+  assert.equal(buildSentence("zh", tplById("I_HAVE_SHIRT"), null, { adj_SHIRT: "EASY", num_SHIRT: null }),
     "我有一件容易的衬衫。");
   assert.equal(buildSentence("zh", tplById("I_GET_BOOK"), "GOOD", {}),
     "我得到一本好书。");
@@ -577,7 +578,7 @@ test("el: direct and governed objects take the accusative — derived, article-b
   assert.equal(buildSentence("el", tplById("CX_HE_HAVE_BROTHER"), null, {}),
     "Αυτός έχει έναν αδερφό.");
   // The attributive adjective declines with it.
-  assert.equal(buildSentence("el", tplById("I_GREET_WAITER"), "OLD", {}),
+  assert.equal(buildSentence("el", tplById("I_GREET_WAITER"), null, { adj_WAITER: "OLD", num_WAITER: null }),
     "Εγώ χαιρετώ έναν παλιό σερβιτόρο.");
   // Possessed objects: the article carries the case (τον / τη(ν)).
   assert.equal(buildSentence("el", tplById("I_GREET_WAITER"), "MY", {}),
@@ -1254,7 +1255,7 @@ test("ko: the present copula is the 이에요/예요 suffix on the predicate", (
 
 test("ko: adjective predicates use their predicative verb form", () => {
   assert.equal(buildSentence("ko", tplById("BOOK_IS_RED")), "책은 빨개요.");
-  assert.equal(buildSentence("ko", tplById("AUTUMN_IS_OLD")), "가을은 오래됐어요.");
+  assert.equal(buildSentence("ko", tplById("HOUSE_IS_OLD")), "집은 오래됐어요.");
   // Attributive position keeps the ordinary form (좋은 above), and the
   // nominal predicate — not the adjective — carries the copula suffix.
 });
@@ -1960,7 +1961,8 @@ test("no: an adjective after a possessive takes the definite form (Emi run-20 -1
   assert.equal(buildSentence("no", tplById("HE_IS_MY_DAD"), "SMALL", {}), "Han er den lille pappaen min.");
   // «sitt» since run 23: the subject owns the room (reflexivePossessive).
   assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "WHITE", {}), "Hun går til det hvite rommet sitt.");
-  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), "GOOD", {}),
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), null,
+    { adj_HAND: "GOOD", num_HAND: null, adj_HEAD: "GOOD", num_HEAD: null }),
     "Dette er den gode hånden min og dette er det gode hodet ditt.");
 });
 
@@ -1969,7 +1971,7 @@ test("no: colour plurals, ting is masculine, ferskt, suvenir, begynner å, hjemm
   assert.equal(buildSentence("no", tplById("SHE_SEES_PHONE"), "SEVEN", { adj_PHONE: "LONG" }), "Hun ser sju lange telefoner.");
   assert.equal(buildSentence("no", tplById("WE_HAVE_CLOTHES"), "GREEN", {}), "Vi har grønne klær.");
   assert.equal(buildSentence("no", tplById("THIS_IS_THING"), "SMALL", {}), "Dette er en liten ting.");
-  assert.equal(buildSentence("no", tplById("I_SEE_KITCHEN"), "FRESH", {}), "Jeg ser et ferskt kjøkken.");
+  assert.equal(buildSentence("no", tplById("I_SEE_KITCHEN"), null, { adj_KITCHEN: "FRESH", num_KITCHEN: null }), "Jeg ser et ferskt kjøkken.");
   assert.equal(buildSentence("no", tplById("I_PURCHASE_SOUVENIR")), "Jeg kjøper en suvenir.");
   assert.equal(buildSentence("no", tplById("THEY_START_SLEEPING")), "De begynner å sove.");
   assert.equal(buildSentence("no", tplById("I_GO_FROM_HOME")), "Jeg går hjemmefra.");
@@ -2025,8 +2027,9 @@ test("de: a drilled possessive takes the slot's case; the adjective after a poss
 });
 
 test("de: orange/lila stay undeclined; a feminine subject takes the feminine profession (Emi run-21 -126/-127)", () => {
-  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FACE"), "ORANGE", {}), "Ich sehe ein orange Gesicht.");
-  assert.equal(buildSentence("de", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), "ORANGE", {}),
+  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FACE"), null, { adj_FACE: "ORANGE", num_FACE: null }), "Ich sehe ein orange Gesicht.");
+  assert.equal(buildSentence("de", tplById("THIS_IS_MY_HAND_AND_THIS_IS_YOUR_HEAD"), null,
+    { adj_HAND: "ORANGE", num_HAND: null, adj_HEAD: "ORANGE", num_HEAD: null }),
     "Das ist meine orange Hand und das ist dein orange Kopf.");
   const she = { ...tplById("HE_IS_WAITER"), concepts: ["SHE", "BE", "WAITER"] };
   assert.equal(buildSentence("de", she), "Sie ist eine Kellnerin.");
@@ -2074,8 +2077,9 @@ test("de: a drilled possessive on a neuter or genderless object stays bare; masc
 });
 
 test("de: rechts/links decline from their adjective stem; ONE is the article with its case; Obst is bare (Emi run-22 -131)", () => {
-  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FINGER"), "RIGHT", {}), "Ich sehe einen rechten Finger.");
-  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_MOUTH"), "LEFT", {}), "Ich sehe einen linken Mund.");
+  // Paired body parts only since 2026-10-21 (no "left mouth"); Fuß is masculine too.
+  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FOOT"), "RIGHT", {}), "Ich sehe einen rechten Fuß.");
+  assert.equal(buildSentence("de", tplById("CX_FIRST_PERSON_SINGULAR_SEE_FOOT"), "LEFT", {}), "Ich sehe einen linken Fuß.");
   assert.equal(buildSentence("de", tplById("WE_HAVE_JOB"), "ONE", {}), "Wir haben einen Job.");
   assert.equal(buildSentence("de", tplById("SHE_EAT_FRUIT")), "Sie isst Obst.");
   assert.equal(buildSentence("de", tplById("SHE_EAT_FRUIT"), "GOOD", {}), "Sie isst gutes Obst.");
@@ -2168,7 +2172,7 @@ test("no: a possessed predicate ignores the authored definite surface; blå stay
   assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND")), "Dette er hånden min.");
   assert.equal(buildSentence("no", tplById("THAT_IS_MY_ARM")), "Det er armen min.");
   assert.equal(buildSentence("no", tplById("THAT_IS_YOUR_LEG")), "Det er beinet ditt.");
-  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND"), "WHITE", {}), "Dette er den hvite hånden min.");
+  assert.equal(buildSentence("no", tplById("THIS_IS_MY_HAND"), null, { adj_HAND: "WHITE", num_HAND: null }), "Dette er den hvite hånden min.");
   assert.equal(buildSentence("no", tplById("SHE_GO_TO_HER_ROOM"), "BLUE", {}), "Hun går til det blå rommet sitt.");
   assert.equal(buildSentence("no", tplById("I_RECOMMEND_RESTAURANT")), "Jeg anbefaler en restaurant.");
 });
@@ -2238,7 +2242,7 @@ test("de: plural attributive ending on the stem, no numeral and counted; uk «п
   assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "NEW", {}), "Sie hat neue Schuhe.");
   assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "GOOD", {}), "Sie hat gute Schuhe.");
   // WRONG is a stem-only entry (no authored plural): the ending builds it.
-  assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "WRONG", {}), "Sie hat falsche Schuhe.");
+  assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), null, { adj_SHOES: "WRONG", num_SHOES: null }), "Sie hat falsche Schuhe.");
   assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "TWELVE", { adj_SHOES: "WRONG" }), "Sie hat zwölf falsche Schuhe.");
   assert.equal(buildSentence("de", tplById("SHE_HAS_SHOES"), "TWELVE", { adj_SHOES: "NEW" }), "Sie hat zwölf neue Schuhe.");
   // Singular paths untouched.
@@ -2467,8 +2471,8 @@ test("sv: vänster/höger only exist in a determined slot and take the weak form
 });
 
 test("sv: rätt/fel drop the indefinite article; gå ombord strands no «på» (run-30 -188/-189)", () => {
-  assert.equal(buildSentence("sv", tplById("I_SEE_HOUSE"), "WRONG", {}), "Jag ser fel hus.");
-  assert.equal(buildSentence("sv", tplById("HE_READ_BOOK"), "CORRECT", {}), "Han läser rätt bok.");
+  assert.equal(buildSentence("sv", tplById("I_SEE_HOUSE"), null, { adj_HOUSE: "WRONG", num_HOUSE: null }), "Jag ser fel hus.");
+  assert.equal(buildSentence("sv", tplById("HE_READ_BOOK"), null, { adj_BOOK: "CORRECT", num_BOOK: null }), "Han läser rätt bok.");
   assert.equal(buildSentence("sv", tplById("THIS_IS_WRONG")), "Det här är fel.");
   assert.equal(buildSentence("sv", tplById("YOU_BOARD")), "Du går ombord.");
   assert.equal(buildSentence("sv", tplById("I_BOARD_FLIGHT")), "Jag går ombord på ett flyg.");
@@ -2491,7 +2495,7 @@ test("ru: «Это» in every «X is Y», short answers echo the verb, TO is «�
   assert.equal(buildSentence("ru", tplById("I_GO_TO_TABLE")), "Я иду к столу.");
 });
 
-test("ru: «свой» for every person whose subject owns the noun; uk keeps 3rd person only (run-30 -194)", () => {
+test("ru/uk/pl: «свой/свій/swój» for every person whose subject owns the noun (run-30 -194; uk/pl Nekh 2026-10-21)", () => {
   assert.equal(buildSentence("ru", tplById("I_INSURE_LUGGAGE")), "Я страхую свой багаж.");
   assert.equal(buildSentence("ru", tplById("I_SEE_HOUSE"), "MY", {}), "Я вижу свой дом.");
   assert.equal(buildSentence("ru", tplById("YOU_READ_BOOK"), "YOUR", {}), "Ты читаешь свою книгу.");
@@ -2499,7 +2503,12 @@ test("ru: «свой» for every person whose subject owns the noun; uk keeps 3r
   assert.equal(buildSentence("ru", tplById("YOU_READ_BOOK"), "MY", {}), "Ты читаешь мою книгу.");
   // Copular predicates are never reflexive.
   assert.equal(buildSentence("ru", tplById("SHE_IS_MY_MOM")), "Она моя мама.");
-  assert.equal(buildSentence("uk", tplById("I_INSURE_LUGGAGE")), "Я страхую мій багаж.");
+  // uk/pl joined ru (Nekh 2026-10-21: «ти перемагаєш твого тренера» read
+  // wrong — the subject's own thing is «свій» in every person).
+  assert.equal(buildSentence("uk", tplById("I_INSURE_LUGGAGE")), "Я страхую свій багаж.");
+  assert.equal(buildSentence("uk", tplById("YOU_READ_BOOK"), "YOUR", {}), "Ти читаєш свою книгу.");
+  assert.equal(buildSentence("uk", tplById("YOU_READ_BOOK"), "MY", {}), "Ти читаєш мою книгу.");
+  assert.match(buildSentence("pl", tplById("YOU_READ_BOOK"), "YOUR", {}), /swoją książkę/);
 });
 
 test("uk: the short answers drop the pronoun with the same rule (Emi -140)", () => {
@@ -2907,5 +2916,34 @@ test("English plurals: -oes, zero plurals, and no double plural under copular ag
       ensureProgress: () => ({ level: 99, completed: false }),
       rng: () => 0.999,
     });
+  }
+});
+
+// Declared modifier fit (Nekh 2026-10-21): nouns carry a category, adjectives
+// the categories (or specific nouns) they fit — in drills and random alike.
+test("adjectives only go on nouns they fit", () => {
+  // Nekh's screenshots and the sentence review.
+  assert.equal(adjectiveSuitsNoun("WRONG", "WIZARD"), false);   // "I am a wrong wizard"
+  assert.equal(adjectiveSuitsNoun("CLOUDY", "GROCERY"), false); // "a cloudy grocery store"
+  assert.equal(adjectiveSuitsNoun("YOUNG", "ANSWER"), false);
+  assert.equal(adjectiveSuitsNoun("RED", "TRACK"), false);      // a song has no colour
+  // …while the natural pairs stay.
+  assert.equal(adjectiveSuitsNoun("WRONG", "ANSWER"), true);
+  assert.equal(adjectiveSuitsNoun("CLOUDY", "FORECAST"), true);
+  assert.equal(adjectiveSuitsNoun("ACOUSTIC", "GUITAR"), true);
+  assert.equal(adjectiveSuitsNoun("WHITE", "HOUSE"), true);
+  assert.equal(adjectiveSuitsNoun("RED", "BOOK"), true);
+  assert.equal(adjectiveSuitsNoun("YOUNG", "BOY"), true);
+  assert.equal(adjectiveSuitsNoun("RIGHT", "HAND"), true);
+  // The same gate guards random injection.
+  assert.equal(isModifierCompatible("en", "CLOUDY", "GROCERY"), false);
+  // Possessives are determiners, never filtered by fit.
+  assert.equal(adjectiveFitsNoun("MY", "WIZARD"), true);
+});
+
+test("every noun has a category and every adjective a fits list", () => {
+  for (const [cid, c] of Object.entries(vocab.concepts)) {
+    if (c.type === "noun") assert.ok(c.category, `${cid} has no category`);
+    if (c.type === "adjective" && c.semantic_role !== "possessive") assert.ok(Array.isArray(c.fits), `${cid} has no fits`);
   }
 });

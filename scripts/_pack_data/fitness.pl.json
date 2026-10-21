@@ -83,12 +83,6 @@
       "plural": "ramiona",
       "genitive_plural": "ramion"
     },
-    "CALORIE": {
-      "form": "kaloria",
-      "gender": "f",
-      "plural": "kalorie",
-      "genitive_plural": "kalorii"
-    },
     "RUNNER": {
       "form": "biegacz",
       "gender": "m",

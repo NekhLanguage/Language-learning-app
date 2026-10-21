@@ -1169,7 +1169,7 @@ export const LANGUAGE_RULES = {
     // A 3rd-person possessive whose possessor is the subject is the
     // reflexive «OWN» entry (свій / swój / sin), never his/her — which
     // means someone else's here (Emi run-23 -142).
-    reflexivePossessive: true,
+    reflexivePossessive: "allPersons", // свій/swój for every person (Nekh 2026-10-21: «ти перемагаєш свого тренера»)
     features: {
       adjectivePosition: "pre",
       marksCaseOnDirectObjects: true, marksCaseAfterPrepositions: true,
@@ -1490,7 +1490,7 @@ export const LANGUAGE_RULES = {
     // A 3rd-person possessive whose possessor is the subject is the
     // reflexive «OWN» entry (свій / swój / sin), never his/her — which
     // means someone else's here (Emi run-23 -142).
-    reflexivePossessive: true,
+    reflexivePossessive: "allPersons", // свій/swój for every person (Nekh 2026-10-21: «ти перемагаєш свого тренера»)
     // A verb's own government supplies its preposition: «сідаю на рейс»,
     // never «сідаю рейс» (Emi run-25 -163) — governedPreposition on the
     // verb entry, the same data field as ar/no.

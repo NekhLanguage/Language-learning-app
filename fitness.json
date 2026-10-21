@@ -2,128 +2,151 @@
  "concepts": [
   {
    "concept_id": "WORKOUT",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "MUSCLE",
-   "type": "noun"
+   "type": "noun",
+   "category": "body_part"
   },
   {
    "concept_id": "DUMBBELL",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "TREADMILL",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "WEIGHT",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "REPETITION",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "SWEAT",
    "type": "noun",
+   "category": "substance",
    "countable": false
   },
   {
    "concept_id": "ENERGY",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
   {
    "concept_id": "PROTEIN",
    "type": "noun",
+   "category": "food",
    "countable": false
   },
   {
    "concept_id": "HABIT",
    "type": "noun",
+   "category": "abstract",
    "semantic_role": "abstract"
   },
   {
    "concept_id": "PROGRESS",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
   {
    "concept_id": "TARGET",
    "type": "noun",
+   "category": "abstract",
    "semantic_role": "abstract"
   },
   {
    "concept_id": "HEART",
    "type": "noun",
+   "category": "body_part",
    "semantic_role": "body_part"
   },
   {
    "concept_id": "KNEE",
    "type": "noun",
+   "category": "body_part",
    "semantic_role": "body_part"
   },
   {
    "concept_id": "SHOULDER",
    "type": "noun",
+   "category": "body_part",
    "semantic_role": "body_part"
   },
   {
-   "concept_id": "CALORIE",
-   "type": "noun"
-  },
-  {
    "concept_id": "RUNNER",
-   "type": "noun"
+   "type": "noun",
+   "category": "person"
   },
   {
    "concept_id": "RACE",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "MARATHON",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "WARMUP",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "LOCKER_ROOM",
-   "type": "noun"
+   "type": "noun",
+   "category": "place"
   },
   {
    "concept_id": "TOWEL",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "BOTTLE",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "BICYCLE",
-   "type": "noun"
+   "type": "noun",
+   "category": "vehicle"
   },
   {
    "concept_id": "POOL",
-   "type": "noun"
+   "type": "noun",
+   "category": "place"
   },
   {
    "concept_id": "STRENGTH",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
   {
    "concept_id": "INJURY",
-   "type": "noun"
+   "type": "noun",
+   "category": "abstract"
   },
   {
    "concept_id": "REST",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
@@ -177,43 +200,53 @@
   },
   {
    "concept_id": "HEALTHY",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "meal", "body_part"]
   },
   {
    "concept_id": "ACTIVE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "creature", "group"]
   },
   {
    "concept_id": "SORE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["body_part"]
   },
   {
    "concept_id": "FLEXIBLE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": []
   },
   {
    "concept_id": "INTENSE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["activity"]
   },
   {
    "concept_id": "WEAK",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "creature"]
   },
   {
    "concept_id": "MOTIVATED",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person"]
   },
   {
    "concept_id": "EXHAUSTED",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "creature"]
   },
   {
    "concept_id": "DAILY",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["meal"]
   },
   {
    "concept_id": "MUSCULAR",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person"]
   }
  ],
  "languages": {
@@ -376,17 +409,6 @@
           "plural": "плечи",
           "genitive_plural": "плеч",
           "accusative": "плечо"
-        },
-        "CALORIE": {
-          "form": "калория",
-          "gender": "f",
-          "genitive": "калории",
-          "dative": "калории",
-          "instrumental": "калорией",
-          "locative": "калории",
-          "accusative": "калорию",
-          "plural": "калории",
-          "genitive_plural": "калорй"
         },
         "RUNNER": {
           "form": "бегун",
@@ -761,11 +783,6 @@
           "gender": "m",
           "plural": "axlar"
         },
-        "CALORIE": {
-          "form": "kalori",
-          "gender": "m",
-          "plural": "kalorier"
-        },
         "RUNNER": {
           "form": "löpare",
           "gender": "m",
@@ -1028,13 +1045,6 @@
           "partitive": "olkapäätä",
           "accusative": "olkapään",
           "genitive": "olkapään"
-        },
-        "CALORIE": {
-          "form": "kalori",
-          "plural": "kalorit",
-          "partitive": "kaloria",
-          "accusative": "kalorin",
-          "genitive": "kalorin"
         },
         "RUNNER": {
           "form": "juoksija",
@@ -1347,10 +1357,6 @@
      "form": "shoulder",
      "article": "a"
     },
-    "CALORIE": {
-     "form": "calorie",
-     "article": "a"
-    },
     "RUNNER": {
      "form": "runner",
      "article": "a"
@@ -1550,11 +1556,6 @@
      "form": "ombro",
      "gender": "m",
      "plural": "ombros"
-    },
-    "CALORIE": {
-     "form": "caloria",
-     "gender": "f",
-     "plural": "calorias"
     },
     "RUNNER": {
      "form": "corredor",
@@ -1815,10 +1816,6 @@
     "SHOULDER": {
      "form": "كتف",
      "gender": "m"
-    },
-    "CALORIE": {
-     "form": "سعرة حرارية",
-     "gender": "f"
     },
     "RUNNER": {
      "form": "عداء",
@@ -2105,11 +2102,6 @@
      "gender": "f",
      "plural": "Schultern"
     },
-    "CALORIE": {
-     "form": "Kalorie",
-     "gender": "f",
-     "plural": "Kalorien"
-    },
     "RUNNER": {
      "form": "Läufer",
      "gender": "m",
@@ -2383,11 +2375,6 @@
      "gender": "m",
      "plural": "ώμοι"
     },
-    "CALORIE": {
-     "form": "θερμίδα",
-     "gender": "f",
-     "plural": "θερμίδες"
-    },
     "RUNNER": {
      "form": "δρομέας",
      "gender": "m",
@@ -2654,9 +2641,6 @@
     "SHOULDER": {
      "form": "肩"
     },
-    "CALORIE": {
-     "form": "カロリー"
-    },
     "RUNNER": {
      "form": "ランナー"
     },
@@ -2798,9 +2782,6 @@
     },
     "SHOULDER": {
      "form": "어깨"
-    },
-    "CALORIE": {
-     "form": "칼로리"
     },
     "RUNNER": {
      "form": "러너"
@@ -2979,11 +2960,6 @@
      "form": "skulder",
      "gender": "m",
      "plural": "skuldre"
-    },
-    "CALORIE": {
-     "form": "kalori",
-     "gender": "m",
-     "plural": "kalorier"
     },
     "RUNNER": {
      "form": "løper",
@@ -3185,10 +3161,6 @@
     "SHOULDER": {
      "form": "omuz",
      "plural": "omuzlar"
-    },
-    "CALORIE": {
-     "form": "kalori",
-     "plural": "kaloriler"
     },
     "RUNNER": {
      "form": "koşucu",
@@ -3451,11 +3423,6 @@
      "form": "плече",
      "gender": "n",
      "plural": "плечі"
-    },
-    "CALORIE": {
-     "form": "калорія",
-     "gender": "f",
-     "plural": "калорії"
     },
     "RUNNER": {
      "form": "бігун",
@@ -3725,11 +3692,6 @@
      "form": "hombro",
      "gender": "m",
      "plural": "hombros"
-    },
-    "CALORIE": {
-     "form": "caloría",
-     "gender": "f",
-     "plural": "calorías"
     },
     "RUNNER": {
      "form": "corredor",
@@ -4002,11 +3964,6 @@
      "gender": "f",
      "plural": "épaules"
     },
-    "CALORIE": {
-     "form": "calorie",
-     "gender": "f",
-     "plural": "calories"
-    },
     "RUNNER": {
      "form": "coureur",
      "gender": "m",
@@ -4252,9 +4209,6 @@
     "SHOULDER": {
      "form": "肩膀"
     },
-    "CALORIE": {
-     "form": "卡路里"
-    },
     "RUNNER": {
      "form": "跑步者"
     },
@@ -4377,7 +4331,6 @@
         "HEART": {"form":"cuore","gender":"m","plural":"cuori"},
         "KNEE": {"form":"ginocchio","gender":"m","plural":"ginocchia"},
         "SHOULDER": {"form":"spalla","gender":"f","plural":"spalle"},
-        "CALORIE": {"form":"caloria","gender":"f","plural":"calorie"},
         "RUNNER": {"form":"corridore","gender":"m","plural":"corridori"},
         "RACE": {"form":"gara","gender":"f","plural":"gare"},
         "MARATHON": {"form":"maratona","gender":"f","plural":"maratone"},
@@ -4432,7 +4385,6 @@
         "HEART": {"form":"หัวใจ"},
         "KNEE": {"form":"เข่า"},
         "SHOULDER": {"form":"ไหล่"},
-        "CALORIE": {"form":"แคลอรี"},
         "RUNNER": {"form":"นักวิ่ง","classifier":"คน"},
         "RACE": {"form":"การแข่งขัน"},
         "MARATHON": {"form":"มาราธอน"},
@@ -4487,7 +4439,6 @@
         "HEART": {"form":"serce","gender":"n","plural":"serca","genitive_plural":"serc"},
         "KNEE": {"form":"kolano","gender":"n","plural":"kolana","genitive_plural":"kolan"},
         "SHOULDER": {"form":"ramię","gender":"n","plural":"ramiona","genitive_plural":"ramion"},
-        "CALORIE": {"form":"kaloria","gender":"f","plural":"kalorie","genitive_plural":"kalorii"},
         "RUNNER": {"form":"biegacz","gender":"m","plural":"biegacze","genitive_plural":"biegaczy","accusative":"biegacza","virile":true, "instrumental": "biegaczem"},
         "RACE": {"form":"wyścig","gender":"m","plural":"wyścigi","genitive_plural":"wyścigów"},
         "MARATHON": {"form":"maraton","gender":"m","plural":"maratony","genitive_plural":"maratonów"},

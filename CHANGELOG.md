@@ -8,6 +8,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ## 2026-10-21
 
+### Practice sentences that make sense
+
+Describing words now only go on nouns they fit. Every noun in the app has a type (person, food, place, song…) and every describing word a list of the types it suits, so no more "a cloudy grocery store", "a young answer" or "I am a wrong wizard". Practice rounds for a word use its own sentences or ones where it fits. "My/your/their" never lands on someone else's body part ("She sees their eye"), and nobody defeats their own trainer. In Ukrainian and Polish, your own thing is now «свій» / «swój» in every person («Ти перемагаєш свого тренера»). "Autumn is old" and "Spring is new" became "Autumn is long", "The house is old", "Spring is short" and "The book is new". A few odd fitness and fashion sentences were fixed or removed, and "calorie" left the fitness pack.
+
 ### Everything fits on your phone screen
 
 On Android the page could be scrolled a little, which pushed the QUIT and JOURNEY buttons off the top of the screen. The page now matches the visible screen exactly, and every new exercise starts at the top. Long words no longer run off the edge of the answer buttons either: they shrink to fit, and a word that still doesn't fit is split with a hyphen («достоприме-чательность»), so it never looks like two words.

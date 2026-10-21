@@ -56,11 +56,6 @@
       "render": { "en": "She measures progress." }
     },
     {
-      "template_id": "HE_MEASURES_CALORIE",
-      "concepts": ["HE", "MEASURE", "CALORIE"],
-      "render": { "en": "He measures a calorie." }
-    },
-    {
       "template_id": "THEY_MEASURE_STRENGTH",
       "concepts": ["THIRD_PERSON_PLURAL", "MEASURE", "STRENGTH"],
       "render": { "en": "They measure strength." }
@@ -109,11 +104,6 @@
       "template_id": "WE_REPEAT_WARMUP",
       "concepts": ["FIRST_PERSON_PLURAL", "REPEAT", "WARMUP"],
       "render": { "en": "We repeat a warm-up." }
-    },
-    {
-      "template_id": "I_REPEAT_REPETITION",
-      "concepts": ["FIRST_PERSON_SINGULAR", "REPEAT", "REPETITION"],
-      "render": { "en": "I repeat a repetition." }
     },
     {
       "template_id": "I_BREATHE",
@@ -339,16 +329,6 @@
       "template_id": "I_SEE_INJURY",
       "concepts": ["FIRST_PERSON_SINGULAR", "SEE", "INJURY"],
       "render": { "en": "I see an injury." }
-    },
-    {
-      "template_id": "THEY_HAVE_REST",
-      "concepts": ["THIRD_PERSON_PLURAL", "HAVE", "REST"],
-      "render": { "en": "They have rest." }
-    },
-    {
-      "template_id": "YOU_SEE_CALORIE",
-      "concepts": ["SECOND_PERSON", "SEE", "CALORIE"],
-      "render": { "en": "You see a calorie." }
     }
   ]
 }

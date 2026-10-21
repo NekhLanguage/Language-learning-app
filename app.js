@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.119";
+const APP_DATA_VERSION = "1.2.120";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -517,7 +517,7 @@ const RESOURCE_PACKS = {
 
     { id: "fit_03", concepts: ["PROGRESS","TARGET","HEART","KNEE","SHOULDER"] },
 
-    { id: "fit_04", concepts: ["CALORIE","RUNNER","RACE","MARATHON","WARMUP"] },
+    { id: "fit_04", concepts: ["RUNNER","RACE","MARATHON","WARMUP"] }, // CALORIE dropped (Nekh 2026-10-21)
 
     { id: "fit_05", concepts: ["LOCKER_ROOM","TOWEL","BOTTLE","BICYCLE","POOL"] },
 
@@ -6018,6 +6018,9 @@ function maybeVarySubject(tpl, targetConcept) {
     window.GLOBAL_VOCAB.concepts[c]?.semantic_role === "body_part"
   );
   if (isCopular && hasBodyPart) return tpl;
+  // A possessive drilled onto a body part was picked to match its subject
+  // ("She sees her eye"); a new subject would make it someone else's.
+  if (hasBodyPart && POSSESSIVE_IDS.has(targetConcept)) return tpl;
 
   const alternatives = run.released.filter(c => {
     if (c === currentSubject) return false;
@@ -6088,6 +6091,10 @@ const POSSESSIVE_SUBJECT_CLASH = {
   "THEIR": ["THIRD_PERSON_PLURAL"]
 };
 const POSSESSIVE_IDS = new Set(Object.keys(POSSESSIVE_SUBJECT_CLASH));
+function isBodyPartConcept(c) {
+  const m = window.GLOBAL_VOCAB.concepts[c];
+  return m?.type === "noun" && (m.semantic_role === "body_part" || m.category === "body_part");
+}
 
 function chooseTemplateForConcept(cid) {
 
@@ -6126,6 +6133,14 @@ function chooseTemplateForConcept(cid) {
       if (isPossessive) {
         if (tpl.concepts.includes("BE") && clashes.some(s => tpl.concepts.includes(s))) return false;
         if (tpl.concepts.some(c => c !== cid && POSSESSIVE_IDS.has(c))) return false;
+        // A body part belongs to the subject: "She sees her eye", never
+        // "She sees their eye" (Nekh 2026-10-21). Pointing glosses ("This
+        // is your head") stay — they're copular.
+        if (!tpl.concepts.includes("BE") && tpl.concepts.some(isBodyPartConcept) &&
+            !clashes.some(s => tpl.concepts.includes(s))) return false;
+        // Verbs flagged noPossessiveObject never take "my/your…" on their
+        // object: you don't defeat your own trainer (Nekh 2026-10-21).
+        if (tpl.concepts.some(c => window.GLOBAL_VOCAB.concepts[c]?.noPossessiveObject)) return false;
       }
       return true;
     });
@@ -6133,7 +6148,20 @@ function chooseTemplateForConcept(cid) {
     // The drilled adjective is forced onto the template's noun, so steer toward
     // a template whose noun the adjective actually makes sense with — avoids
     // "right revive" / "orange move".
-    if (meta.type === "adjective") {
+    if (meta.type === "adjective" && Array.isArray(meta.fits)) {
+      // Declared fit (Nekh 2026-10-21): only sentences where the word fits —
+      // the word's OWN sentences («The move is effective», «This is wrong»)
+      // plus released templates with a noun it fits. Never the old fallback
+      // onto any noun ("I am a wrong wizard"); with neither, no drill.
+      const own = TEMPLATE_CACHE.filter(tpl => tpl.concepts.includes(cid) && templateEligible(tpl));
+      const fitting = eligible.filter(tpl => tpl.concepts.some(c =>
+        window.GLOBAL_VOCAB.concepts[c]?.type === "noun" && adjectiveSuitsNoun(cid, c)));
+      eligible = [...own, ...fitting];
+      if (!eligible.length) {
+        eligible = TEMPLATE_CACHE.filter(tpl => tpl.concepts.includes(cid) &&
+          tpl.concepts.every(c => c === cid || run.released.includes(c)));
+      }
+    } else if (meta.type === "adjective") {
       const suitsNoun = tpl => tpl.concepts.some(c =>
         window.GLOBAL_VOCAB.concepts[c]?.type === "noun" && adjectiveSuitsNoun(cid, c)
       );
@@ -6743,6 +6771,8 @@ window.__app = {
   // silently-degraded state the 2026-08 billing outage hid for months.
   get audioFallbacks(){ return getAudioFallbacks(); },
   rerender(){ renderNext(languageState.target, languageState.support); },
+  // e2e: which sentence a drill for this word would use (possessive/fit rules).
+  chooseTemplate(cid){ return chooseTemplateForConcept(cid); },
   backfillReleasedBundles,
 };
 });
