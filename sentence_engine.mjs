@@ -2849,6 +2849,23 @@ const ADJECTIVE_CONCEPT_BLOCK = {
   LONG: new Set(["person", "family", "role"]),
 };
 
+// Declared fit (Nekh 2026-10-21, "PR B"): every noun carries a `category`
+// and every descriptive adjective a `fits` list of categories (plus optional
+// `fitsNouns`, specific nouns for adjectives no whole category takes —
+// «an acoustic guitar»). An adjective goes on a noun only when it fits, in
+// drills and random injection alike: "a cloudy grocery store", "a wrong
+// wizard", "a young answer" all fail here. Possessives are determiners and
+// exempt. An adjective with no `fits` field keeps the old behaviour
+// (validate-structure requires the field on every shipped adjective).
+function adjectiveFitsNoun(adjCid, nounCid) {
+  const adj = vocab().concepts[adjCid];
+  if (adj?.type !== "adjective" || adj.semantic_role === "possessive") return true;
+  if (!Array.isArray(adj.fits)) return true;
+  if (Array.isArray(adj.fitsNouns) && adj.fitsNouns.includes(nounCid)) return true;
+  const category = vocab().concepts[nounCid]?.category;
+  return !!category && adj.fits.includes(category);
+}
+
 function adjectiveConceptAllowsNoun(adjCid, nounRole) {
   return !ADJECTIVE_CONCEPT_BLOCK[adjCid]?.has(nounRole);
 }
@@ -2875,6 +2892,7 @@ function adjectiveSuitsNoun(adjCid, nounCid) {
   // Nouns whose usual rendering is adverbial ("home" → «додому», "eve")
   // never take attributive modifiers — "red home" isn't a noun phrase.
   if (nounMeta.noModifier) return false;
+  if (!adjectiveFitsNoun(adjCid, nounCid)) return false;
   if (!adjectiveConceptAllowsNoun(adjCid, nounMeta.semantic_role)) return false;
   return adjectiveRoleAllowsNoun(adjMeta.semantic_role, nounMeta.semantic_role);
 }
@@ -3011,7 +3029,8 @@ function isModifierCompatible(lang, modifierCid, nounCid, context = {}) {
   // match the noun role; a role with an exclusion list rejects tagged nouns;
   // otherwise (broad quality/time adjectives) fall through to the source rule.
   if (!adjectiveRoleAllowsNoun(modMeta.semantic_role, nounMeta?.semantic_role) ||
-      !adjectiveConceptAllowsNoun(modifierCid, nounMeta?.semantic_role)) {
+      !adjectiveConceptAllowsNoun(modifierCid, nounMeta?.semantic_role) ||
+      !adjectiveFitsNoun(modifierCid, nounCid)) {
     return false;
   }
 
@@ -7478,6 +7497,7 @@ export {
   ADJECTIVE_ROLE_BLOCK,
   adjectiveRoleAllowsNoun,
   adjectiveSuitsNoun,
+  adjectiveFitsNoun,
   randomModifierAllowed,
   isModifierCompatible,
   buildSameTypeOptions,

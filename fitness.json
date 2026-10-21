@@ -2,124 +2,151 @@
  "concepts": [
   {
    "concept_id": "WORKOUT",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "MUSCLE",
-   "type": "noun"
+   "type": "noun",
+   "category": "body_part"
   },
   {
    "concept_id": "DUMBBELL",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "TREADMILL",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "WEIGHT",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "REPETITION",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "SWEAT",
    "type": "noun",
+   "category": "substance",
    "countable": false
   },
   {
    "concept_id": "ENERGY",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
   {
    "concept_id": "PROTEIN",
    "type": "noun",
+   "category": "food",
    "countable": false
   },
   {
    "concept_id": "HABIT",
    "type": "noun",
+   "category": "abstract",
    "semantic_role": "abstract"
   },
   {
    "concept_id": "PROGRESS",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
   {
    "concept_id": "TARGET",
    "type": "noun",
+   "category": "abstract",
    "semantic_role": "abstract"
   },
   {
    "concept_id": "HEART",
    "type": "noun",
+   "category": "body_part",
    "semantic_role": "body_part"
   },
   {
    "concept_id": "KNEE",
    "type": "noun",
+   "category": "body_part",
    "semantic_role": "body_part"
   },
   {
    "concept_id": "SHOULDER",
    "type": "noun",
+   "category": "body_part",
    "semantic_role": "body_part"
   },
   {
    "concept_id": "RUNNER",
-   "type": "noun"
+   "type": "noun",
+   "category": "person"
   },
   {
    "concept_id": "RACE",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "MARATHON",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "WARMUP",
-   "type": "noun"
+   "type": "noun",
+   "category": "activity"
   },
   {
    "concept_id": "LOCKER_ROOM",
-   "type": "noun"
+   "type": "noun",
+   "category": "place"
   },
   {
    "concept_id": "TOWEL",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "BOTTLE",
-   "type": "noun"
+   "type": "noun",
+   "category": "object"
   },
   {
    "concept_id": "BICYCLE",
-   "type": "noun"
+   "type": "noun",
+   "category": "vehicle"
   },
   {
    "concept_id": "POOL",
-   "type": "noun"
+   "type": "noun",
+   "category": "place"
   },
   {
    "concept_id": "STRENGTH",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
   {
    "concept_id": "INJURY",
-   "type": "noun"
+   "type": "noun",
+   "category": "abstract"
   },
   {
    "concept_id": "REST",
    "type": "noun",
+   "category": "abstract",
    "countable": false,
    "semantic_role": "abstract"
   },
@@ -173,43 +200,53 @@
   },
   {
    "concept_id": "HEALTHY",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "meal", "body_part"]
   },
   {
    "concept_id": "ACTIVE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "creature", "group"]
   },
   {
    "concept_id": "SORE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["body_part"]
   },
   {
    "concept_id": "FLEXIBLE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": []
   },
   {
    "concept_id": "INTENSE",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["activity"]
   },
   {
    "concept_id": "WEAK",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "creature"]
   },
   {
    "concept_id": "MOTIVATED",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person"]
   },
   {
    "concept_id": "EXHAUSTED",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person", "animal", "creature"]
   },
   {
    "concept_id": "DAILY",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["meal"]
   },
   {
    "concept_id": "MUSCULAR",
-   "type": "adjective"
+   "type": "adjective",
+   "fits": ["person"]
   }
  ],
  "languages": {

@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.119";
+const APP_DATA_VERSION = "1.2.120";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -6148,7 +6148,20 @@ function chooseTemplateForConcept(cid) {
     // The drilled adjective is forced onto the template's noun, so steer toward
     // a template whose noun the adjective actually makes sense with — avoids
     // "right revive" / "orange move".
-    if (meta.type === "adjective") {
+    if (meta.type === "adjective" && Array.isArray(meta.fits)) {
+      // Declared fit (Nekh 2026-10-21): only sentences where the word fits —
+      // the word's OWN sentences («The move is effective», «This is wrong»)
+      // plus released templates with a noun it fits. Never the old fallback
+      // onto any noun ("I am a wrong wizard"); with neither, no drill.
+      const own = TEMPLATE_CACHE.filter(tpl => tpl.concepts.includes(cid) && templateEligible(tpl));
+      const fitting = eligible.filter(tpl => tpl.concepts.some(c =>
+        window.GLOBAL_VOCAB.concepts[c]?.type === "noun" && adjectiveSuitsNoun(cid, c)));
+      eligible = [...own, ...fitting];
+      if (!eligible.length) {
+        eligible = TEMPLATE_CACHE.filter(tpl => tpl.concepts.includes(cid) &&
+          tpl.concepts.every(c => c === cid || run.released.includes(c)));
+      }
+    } else if (meta.type === "adjective") {
       const suitsNoun = tpl => tpl.concepts.some(c =>
         window.GLOBAL_VOCAB.concepts[c]?.type === "noun" && adjectiveSuitsNoun(cid, c)
       );
@@ -6758,6 +6771,8 @@ window.__app = {
   // silently-degraded state the 2026-08 billing outage hid for months.
   get audioFallbacks(){ return getAudioFallbacks(); },
   rerender(){ renderNext(languageState.target, languageState.support); },
+  // e2e: which sentence a drill for this word would use (possessive/fit rules).
+  chooseTemplate(cid){ return chooseTemplateForConcept(cid); },
   backfillReleasedBundles,
 };
 });

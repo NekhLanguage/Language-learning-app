@@ -38,173 +38,213 @@
     },
     {
       "concept_id": "PAN",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "KNIFE",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "FORK",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "SPOON",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "SPATULA",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "POT",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "GLASS",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "LITRE",
       "type": "noun",
+      "category": "unit",
       "semantic_role": "unit"
     },
     {
       "concept_id": "DECILITRE",
       "type": "noun",
+      "category": "unit",
       "semantic_role": "unit"
     },
     {
       "concept_id": "MILLILITRE",
       "type": "noun",
+      "category": "unit",
       "semantic_role": "unit"
     },
     {
       "concept_id": "GRAM",
       "type": "noun",
+      "category": "unit",
       "semantic_role": "unit"
     },
     {
       "concept_id": "KILOGRAM",
       "type": "noun",
+      "category": "unit",
       "semantic_role": "unit"
     },
     {
       "concept_id": "MEAT",
       "type": "noun",
+      "category": "food",
       "countable": false
     },
     {
       "concept_id": "CHICKEN",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "FISH",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "VEGETABLE",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "POTATO",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "SALAD",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "FRUIT",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "BANANA",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "SOUP",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "DOUGH",
       "type": "noun",
+      "category": "food",
       "countable": false
     },
     {
       "concept_id": "SAUCE",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "INGREDIENT",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "KITCHEN",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "OVEN",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "STOVE",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "SINK",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "FREEZER",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "SALT",
       "type": "noun",
+      "category": "food",
       "countable": false
     },
     {
       "concept_id": "PEPPER",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "BUTTER",
       "type": "noun",
+      "category": "food",
       "countable": false
     },
     {
       "concept_id": "SPICE",
-      "type": "noun"
+      "type": "noun",
+      "category": "food"
     },
     {
       "concept_id": "RECIPE",
       "type": "noun",
+      "category": "document",
       "semantic_role": "abstract"
     },
     {
       "concept_id": "SWEET",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["food", "drink"]
     },
     {
       "concept_id": "SALTY",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["food"]
     },
     {
       "concept_id": "SOUR",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["food", "drink"]
     },
     {
       "concept_id": "FRESH",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["food", "drink"]
     },
     {
       "concept_id": "FROZEN",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["food"]
     },
     {
       "concept_id": "RAW",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["food"]
     }
   ],
   "languages": {

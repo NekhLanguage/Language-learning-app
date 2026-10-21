@@ -2,129 +2,160 @@
   "concepts": [
     {
       "concept_id": "AIRPORT",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "PASSPORT",
-      "type": "noun"
+      "type": "noun",
+      "category": "document"
     },
     {
       "concept_id": "FLIGHT",
-      "type": "noun"
+      "type": "noun",
+      "category": "activity"
     },
     {
       "concept_id": "LUGGAGE",
       "type": "noun",
+      "category": "object",
       "countable": false
     },
     {
       "concept_id": "HOTEL",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "RESERVATION",
-      "type": "noun"
+      "type": "noun",
+      "category": "abstract"
     },
     {
       "concept_id": "LOBBY",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "CHECKOUT",
-      "type": "noun"
+      "type": "noun",
+      "category": "activity"
     },
     {
       "concept_id": "TAXI",
-      "type": "noun"
+      "type": "noun",
+      "category": "vehicle"
     },
     {
       "concept_id": "STATION",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "TICKET",
-      "type": "noun"
+      "type": "noun",
+      "category": "document"
     },
     {
       "concept_id": "ROUTE",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "LANDMARK",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "MUSEUM",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "MONUMENT",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "RESTAURANT",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "MENU",
-      "type": "noun"
+      "type": "noun",
+      "category": "document"
     },
     {
       "concept_id": "WAITER",
-      "type": "noun"
+      "type": "noun",
+      "category": "person"
     },
     {
       "concept_id": "MARKET",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "SOUVENIR",
-      "type": "noun"
+      "type": "noun",
+      "category": "object"
     },
     {
       "concept_id": "BARGAIN",
-      "type": "noun"
+      "type": "noun",
+      "category": "abstract"
     },
     {
       "concept_id": "PHRASEBOOK",
-      "type": "noun"
+      "type": "noun",
+      "category": "document"
     },
     {
       "concept_id": "BEACH",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "CATHEDRAL",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "HARBOR",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "CURRENCY",
-      "type": "noun"
+      "type": "noun",
+      "category": "abstract"
     },
     {
       "concept_id": "CUSTOMS",
-      "type": "noun"
+      "type": "noun",
+      "category": "place"
     },
     {
       "concept_id": "EMBASSY",
-      "type": "noun"
+      "type": "noun",
+      "category": "building"
     },
     {
       "concept_id": "ADVENTURE",
       "type": "noun",
+      "category": "activity",
       "semantic_role": "abstract"
     },
     {
       "concept_id": "ITINERARY",
-      "type": "noun"
+      "type": "noun",
+      "category": "document"
     },
     {
       "concept_id": "GUIDE",
-      "type": "noun"
+      "type": "noun",
+      "category": "person"
     },
     {
       "concept_id": "BOARD",
@@ -180,27 +211,33 @@
     },
     {
       "concept_id": "SCENIC",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": []
     },
     {
       "concept_id": "DELICIOUS",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["food", "meal"]
     },
     {
       "concept_id": "EXPENSIVE",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["object", "clothing", "vehicle", "food", "meal", "drink"]
     },
     {
       "concept_id": "FOREIGN",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": []
     },
     {
       "concept_id": "HISTORIC",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["building"]
     },
     {
       "concept_id": "UNFORGETTABLE",
-      "type": "adjective"
+      "type": "adjective",
+      "fits": ["activity", "meal"]
     }
   ],
   "languages": {

@@ -111,6 +111,7 @@
     {
       "concept_id": "HOUR",
       "type": "noun",
+      "category": "time",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -122,6 +123,7 @@
     {
       "concept_id": "MINUTE",
       "type": "noun",
+      "category": "time",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -133,6 +135,7 @@
     {
       "concept_id": "SECOND",
       "type": "noun",
+      "category": "time",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -199,6 +202,7 @@
     {
       "concept_id": "SPRING",
       "type": "noun",
+      "category": "time",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -210,6 +214,7 @@
     {
       "concept_id": "SUMMER",
       "type": "noun",
+      "category": "time",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -221,6 +226,7 @@
     {
       "concept_id": "AUTUMN",
       "type": "noun",
+      "category": "time",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
@@ -232,6 +238,7 @@
     {
       "concept_id": "WINTER",
       "type": "noun",
+      "category": "time",
       "core": true,
       "interaction_profile": {
         "see_translate": true,
