@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-21
+
+### Everything fits on your phone screen
+
+On Android the page could be scrolled a little, which pushed the QUIT and JOURNEY buttons off the top of the screen. The page now matches the visible screen exactly, and every new exercise starts at the top. Long words no longer run off the edge of the answer buttons either: they shrink to fit, and a word that still doesn't fit is split with a hyphen («достоприме-чательность»), so it never looks like two words.
+
 ## 2026-10-17
 
 ### See what you just practiced at the end of a lesson

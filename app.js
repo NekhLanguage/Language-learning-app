@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.118";
+const APP_DATA_VERSION = "1.2.119";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -569,6 +569,12 @@ const RECOGNITION_CONCEPTS = new Set([
 // concept at Level 4 or higher, flip it to completed now so their roadmap and
 // milestone counts reflect the new bar immediately (rather than waiting until
 // the next exercise touches the concept).
+// A button's text without the soft hyphens the fit step may insert into a
+// long word (see fitButtonText) — answer checks compare against this.
+function plainText(el) {
+  return String(el?.textContent || "").replace(/\u00AD/g, "");
+}
+
 function reconcileRecognitionCompletion(user) {
   if (!user || !user.runs) return;
   for (const run of Object.values(user.runs)) {
@@ -663,6 +669,74 @@ const hubQuitBtn = document.getElementById("hub-quit");
 const resetBtn = document.getElementById("reset-user");
 const logoutBtn = document.getElementById("logout-btn");
 const content = document.getElementById("content");
+  // Answer buttons fit their box (Nekh 2026-10-21: «помаранчевий» ran off a
+  // 412px screen). A long word first shrinks — down to FIT_MIN_PX — and only
+  // wraps if it still doesn't fit, so words aren't split mid-letter. Runs on
+  // every content change, so every exercise type is covered.
+  // A word that still can't fit is split with a visible hyphen («достоприме-
+  // чательность»), never silently, so it can't read as two words (Nekh
+  // 2026-10-21): soft hyphens (U+00AD) go between its letters and the
+  // browser breaks at one and draws the "-". CSS `hyphens: auto` can't do
+  // this — mobile Chrome lacks dictionaries for most of our languages.
+  // Answer checks read button text through plainText(), which strips them.
+  const FIT_MIN_PX = 11;
+  const SOFT_HYPHEN = "\u00AD";
+  const FIT_SELECTOR = "#choices button:not(.tts-inline), #left-column > button, " +
+    "#right-column button:not(.tts-inline), .word-bank-chip button:not(.tts-inline)";
+  // Vowels of the alphabetic scripts we ship (Latin, Cyrillic, Greek).
+  const FIT_VOWELS = /[aeiouyäöüåæøéèêëáàâíìîïóòôõúùûœаеёиоуыэюяіїєαεηιοωυάέήίόώύ]/i;
+  const HYPHENATING_SCRIPT = /^[\p{Script=Latin}\p{Script=Cyrillic}\p{Script=Greek}'’-]+$/u;
+  function softHyphenate(word) {
+    // At least 3 letters on each side of a break; Thai/CJK don't hyphenate.
+    if (word.length < 7 || !HYPHENATING_SCRIPT.test(word)) return word;
+    const chars = [...word];
+    const allowed = (i) => i >= 3 && i <= chars.length - 3;
+    // Prefer syllable-like breaks: after a vowel, before a consonant
+    // («достопри-мечательность»); any position if the word has none.
+    const syllable = (i) => FIT_VOWELS.test(chars[i - 1]) && !FIT_VOWELS.test(chars[i]);
+    const anySyllable = chars.some((_, i) => allowed(i) && syllable(i));
+    return chars.map((ch, i) =>
+      (allowed(i) && (!anySyllable || syllable(i)) ? SOFT_HYPHEN : "") + ch).join("");
+  }
+  function fitButtonText(btn) {
+    const plainOnly = btn.children.length === 0;
+    if (plainOnly && btn.textContent.includes(SOFT_HYPHEN)) btn.textContent = plainText(btn);
+    btn.style.fontSize = "";
+    btn.style.overflowWrap = "";
+    btn.style.whiteSpace = "nowrap";
+    let size = parseFloat(getComputedStyle(btn).fontSize) || 16;
+    while (btn.scrollWidth > btn.clientWidth + 1 && size > FIT_MIN_PX) {
+      size -= 1;
+      btn.style.fontSize = `${size}px`;
+    }
+    if (btn.scrollWidth <= btn.clientWidth + 1) return;
+    btn.style.whiteSpace = "normal";
+    if (plainOnly) {
+      btn.textContent = btn.textContent.split(" ").map(softHyphenate).join(" ");
+      btn.style.overflowWrap = "normal";
+    }
+  }
+  let fitScheduled = false;
+  let fitObserver = null;
+  function fitExerciseText() {
+    fitScheduled = false;
+    if (!content) return;
+    // Our own text edits must not re-trigger the observer.
+    fitObserver?.disconnect();
+    content.querySelectorAll(FIT_SELECTOR).forEach(fitButtonText);
+    observeContent();
+  }
+  function observeContent() {
+    fitObserver?.observe(content, { childList: true, subtree: true, characterData: true });
+  }
+  if (content && typeof MutationObserver === "function") {
+    fitObserver = new MutationObserver(() => {
+      if (fitScheduled) return;
+      fitScheduled = true;
+      requestAnimationFrame(fitExerciseText);
+    });
+    observeContent();
+  }
   const subtitle = document.getElementById("session-subtitle");
   const languageScreen = document.getElementById("language-screen");
     const languageButtonsContainer = document.getElementById("language-buttons");
@@ -3256,7 +3330,7 @@ return tpl;
     const picked = content.querySelector("button.incorrect[data-cid]");
     const cid = picked?.dataset.cid;
     if (!cid) return null;
-    const shown = picked.textContent.trim();
+    const shown = plainText(picked).trim();
     const inTarget = !!picked.closest(".word-bank-chip");
     let meaning;
     try {
@@ -3787,7 +3861,7 @@ return tpl;
       const slot = e.target.closest(".sentence-slot");
       if (!slot) return;
       const slotIndex = Number(slot.dataset.index);
-      const word = selectedWord.textContent;
+      const word = plainText(selectedWord);
       if (assignments.has(slotIndex)) createBankWord(assignments.get(slotIndex));
       assignments.set(slotIndex, word);
       slot.textContent = word;
@@ -4031,7 +4105,7 @@ const options = shuffle([...releasedOptions]).slice(0, 4);
     const correct = selectedOption === q.answer;
 
     container.querySelectorAll("button").forEach(btn => {
-      const value = options.find(o => formOf(supportLang, o) === btn.textContent);
+      const value = options.find(o => formOf(supportLang, o) === plainText(btn));
       if (value === q.answer) btn.classList.add("correct");
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
@@ -4257,7 +4331,7 @@ if (isModifierConcept(targetConcept)) {
     const correct = selectedOption === targetConcept;
 
     container.querySelectorAll("button").forEach(btn => {
-      const value = options.find(o => optionText(o) === btn.textContent);
+      const value = options.find(o => optionText(o) === plainText(btn));
       if (value === targetConcept) btn.classList.add("correct");
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
@@ -5090,7 +5164,7 @@ if (tileSegments && tileSegments.length) {
     if (!slot) return;
 
     const slotIndex = Number(slot.dataset.index);
-    const word = selectedWord.textContent;
+    const word = plainText(selectedWord);
 
     // If slot already filled, return previous word
     if (assignments.has(slotIndex)) {
@@ -6150,6 +6224,9 @@ function renderRunComplete(targetLang, supportLang) {
 
 function renderNext(targetLang, supportLang) {
   closeFeedbackSheet();
+  // Every exercise starts at the top, so QUIT / JOURNEY are always in view
+  // even if the page was scrolled during the last one (Nekh 2026-10-21).
+  if (window.scrollY) window.scrollTo(0, 0);
   // Retrigger the fade-in animation on every new exercise. Removing
   // and force-reflowing the class ensures the keyframes replay.
   if (content) {
@@ -6369,7 +6446,7 @@ if (level === 2) {
     const correct = selectedOption === q.answer;
 
     container.querySelectorAll("button").forEach(btn => {
-      const value = q.options.find(o => surfaceForm(supportLang, o) === btn.textContent);
+      const value = q.options.find(o => surfaceForm(supportLang, o) === plainText(btn));
       if (value === q.answer) btn.classList.add("correct");
       if (value === selectedOption && !correct) btn.classList.add("incorrect");
     });
