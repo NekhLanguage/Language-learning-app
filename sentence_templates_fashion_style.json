@@ -329,23 +329,27 @@
       }
     },
     {
-      "template_id": "SHE_ADORNS",
+      "template_id": "SHE_ADORNS_HER_OUTFIT",
       "concepts": [
         "SHE",
-        "ADORN"
+        "ADORN",
+        "HER",
+        "OUTFIT"
       ],
       "render": {
-        "en": "She adorns."
+        "en": "She adorns her outfit."
       }
     },
     {
-      "template_id": "I_ADORN",
+      "template_id": "I_ADORN_MY_DRESS",
       "concepts": [
         "FIRST_PERSON_SINGULAR",
-        "ADORN"
+        "ADORN",
+        "MY",
+        "DRESS"
       ],
       "render": {
-        "en": "I adorn."
+        "en": "I adorn my dress."
       }
     },
     {

@@ -1,5 +1,4 @@
 [
-  "sentence_templates.json|AUTUMN_IS_OLD|zh",
   "sentence_templates.json|BOOK_BEHIND_PHONE|zh",
   "sentence_templates.json|BOOK_BETWEEN_THIS_AND_THAT|ar",
   "sentence_templates.json|BOOK_BETWEEN_THIS_AND_THAT|fr",
@@ -11,6 +10,7 @@
   "sentence_templates.json|BOOK_IS_EASY|zh",
   "sentence_templates.json|BOOK_IS_HEAVY|zh",
   "sentence_templates.json|BOOK_IS_LONG|zh",
+  "sentence_templates.json|BOOK_IS_NEW|ko",
   "sentence_templates.json|BOOK_IS_RED|zh",
   "sentence_templates.json|BOOK_NEXT_TO_PHONE|fr",
   "sentence_templates.json|BOOK_NEXT_TO_PHONE|zh",
@@ -220,8 +220,7 @@
   "sentence_templates.json|SHOES_UNDER_THIS|pt",
   "sentence_templates.json|SHOES_UNDER_THIS|tr",
   "sentence_templates.json|SHOES_UNDER_THIS|zh",
-  "sentence_templates.json|SPRING_IS_NEW|el",
-  "sentence_templates.json|SPRING_IS_NEW|zh",
+  "sentence_templates.json|SPRING_IS_SHORT|el",
   "sentence_templates.json|THAT_IS_YOUR_LEG|ar",
   "sentence_templates.json|THEY_EAT_DINNER|fr",
   "sentence_templates.json|THEY_EAT_DINNER|ko",

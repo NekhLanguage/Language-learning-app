@@ -16,7 +16,6 @@
     "HEART": { "form": "cuore", "gender": "m", "plural": "cuori" },
     "KNEE": { "form": "ginocchio", "gender": "m", "plural": "ginocchia" },
     "SHOULDER": { "form": "spalla", "gender": "f", "plural": "spalle" },
-    "CALORIE": { "form": "caloria", "gender": "f", "plural": "calorie" },
     "RUNNER": { "form": "corridore", "gender": "m", "plural": "corridori" },
     "RACE": { "form": "gara", "gender": "f", "plural": "gare" },
     "MARATHON": { "form": "maratona", "gender": "f", "plural": "maratone" },

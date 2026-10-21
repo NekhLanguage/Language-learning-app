@@ -265,10 +265,10 @@ test("Japanese noun-subject copular sentences take the topic marker は", () => 
   // Non-pronoun subject in an X_IS_ADJ sentence: the engine previously left
   // the subject unmarked ("本赤いです"), missing the topic particle every
   // authored render carries. Both structure.type "copular" (BOOK_IS_RED)
-  // and structure.type "time_description" (AUTUMN_IS_OLD) are covered.
+  // and structure.type "time_description" (AUTUMN_IS_LONG) are covered.
   assert.equal(buildSentence("ja", tplById("BOOK_IS_RED")), "本は赤いです。");
   assert.equal(buildSentence("ja", tplById("PANTS_ARE_BLACK")), "ズボンは黒いです。");
-  assert.equal(buildSentence("ja", tplById("AUTUMN_IS_OLD")), "秋は古いです。");
+  assert.equal(buildSentence("ja", tplById("AUTUMN_IS_LONG")), "秋は長いです。");
   assert.equal(buildSentence("ja", tplById("NIGHT_IS_DARK")), "夜は暗いです。");
   // Pronoun subjects still get は via the existing pronoun-based path —
   // the new branch only fires when no pronoun is present.

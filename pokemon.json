@@ -35,7 +35,7 @@
     { "concept_id": "ATTACK", "type": "verb" },
     { "concept_id": "RUN", "type": "verb" },
     { "concept_id": "CATCH", "type": "verb" },
-    { "concept_id": "DEFEAT", "type": "verb" },
+    { "concept_id": "DEFEAT", "type": "verb", "noPossessiveObject": true },
     { "concept_id": "SWITCH", "type": "verb" },
     { "concept_id": "USE", "type": "verb" },
     { "concept_id": "FLY", "type": "verb" },

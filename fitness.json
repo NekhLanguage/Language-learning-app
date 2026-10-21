@@ -72,10 +72,6 @@
    "semantic_role": "body_part"
   },
   {
-   "concept_id": "CALORIE",
-   "type": "noun"
-  },
-  {
    "concept_id": "RUNNER",
    "type": "noun"
   },
@@ -376,17 +372,6 @@
           "plural": "плечи",
           "genitive_plural": "плеч",
           "accusative": "плечо"
-        },
-        "CALORIE": {
-          "form": "калория",
-          "gender": "f",
-          "genitive": "калории",
-          "dative": "калории",
-          "instrumental": "калорией",
-          "locative": "калории",
-          "accusative": "калорию",
-          "plural": "калории",
-          "genitive_plural": "калорй"
         },
         "RUNNER": {
           "form": "бегун",
@@ -761,11 +746,6 @@
           "gender": "m",
           "plural": "axlar"
         },
-        "CALORIE": {
-          "form": "kalori",
-          "gender": "m",
-          "plural": "kalorier"
-        },
         "RUNNER": {
           "form": "löpare",
           "gender": "m",
@@ -1028,13 +1008,6 @@
           "partitive": "olkapäätä",
           "accusative": "olkapään",
           "genitive": "olkapään"
-        },
-        "CALORIE": {
-          "form": "kalori",
-          "plural": "kalorit",
-          "partitive": "kaloria",
-          "accusative": "kalorin",
-          "genitive": "kalorin"
         },
         "RUNNER": {
           "form": "juoksija",
@@ -1347,10 +1320,6 @@
      "form": "shoulder",
      "article": "a"
     },
-    "CALORIE": {
-     "form": "calorie",
-     "article": "a"
-    },
     "RUNNER": {
      "form": "runner",
      "article": "a"
@@ -1550,11 +1519,6 @@
      "form": "ombro",
      "gender": "m",
      "plural": "ombros"
-    },
-    "CALORIE": {
-     "form": "caloria",
-     "gender": "f",
-     "plural": "calorias"
     },
     "RUNNER": {
      "form": "corredor",
@@ -1815,10 +1779,6 @@
     "SHOULDER": {
      "form": "كتف",
      "gender": "m"
-    },
-    "CALORIE": {
-     "form": "سعرة حرارية",
-     "gender": "f"
     },
     "RUNNER": {
      "form": "عداء",
@@ -2105,11 +2065,6 @@
      "gender": "f",
      "plural": "Schultern"
     },
-    "CALORIE": {
-     "form": "Kalorie",
-     "gender": "f",
-     "plural": "Kalorien"
-    },
     "RUNNER": {
      "form": "Läufer",
      "gender": "m",
@@ -2383,11 +2338,6 @@
      "gender": "m",
      "plural": "ώμοι"
     },
-    "CALORIE": {
-     "form": "θερμίδα",
-     "gender": "f",
-     "plural": "θερμίδες"
-    },
     "RUNNER": {
      "form": "δρομέας",
      "gender": "m",
@@ -2654,9 +2604,6 @@
     "SHOULDER": {
      "form": "肩"
     },
-    "CALORIE": {
-     "form": "カロリー"
-    },
     "RUNNER": {
      "form": "ランナー"
     },
@@ -2798,9 +2745,6 @@
     },
     "SHOULDER": {
      "form": "어깨"
-    },
-    "CALORIE": {
-     "form": "칼로리"
     },
     "RUNNER": {
      "form": "러너"
@@ -2979,11 +2923,6 @@
      "form": "skulder",
      "gender": "m",
      "plural": "skuldre"
-    },
-    "CALORIE": {
-     "form": "kalori",
-     "gender": "m",
-     "plural": "kalorier"
     },
     "RUNNER": {
      "form": "løper",
@@ -3185,10 +3124,6 @@
     "SHOULDER": {
      "form": "omuz",
      "plural": "omuzlar"
-    },
-    "CALORIE": {
-     "form": "kalori",
-     "plural": "kaloriler"
     },
     "RUNNER": {
      "form": "koşucu",
@@ -3451,11 +3386,6 @@
      "form": "плече",
      "gender": "n",
      "plural": "плечі"
-    },
-    "CALORIE": {
-     "form": "калорія",
-     "gender": "f",
-     "plural": "калорії"
     },
     "RUNNER": {
      "form": "бігун",
@@ -3725,11 +3655,6 @@
      "form": "hombro",
      "gender": "m",
      "plural": "hombros"
-    },
-    "CALORIE": {
-     "form": "caloría",
-     "gender": "f",
-     "plural": "calorías"
     },
     "RUNNER": {
      "form": "corredor",
@@ -4002,11 +3927,6 @@
      "gender": "f",
      "plural": "épaules"
     },
-    "CALORIE": {
-     "form": "calorie",
-     "gender": "f",
-     "plural": "calories"
-    },
     "RUNNER": {
      "form": "coureur",
      "gender": "m",
@@ -4252,9 +4172,6 @@
     "SHOULDER": {
      "form": "肩膀"
     },
-    "CALORIE": {
-     "form": "卡路里"
-    },
     "RUNNER": {
      "form": "跑步者"
     },
@@ -4377,7 +4294,6 @@
         "HEART": {"form":"cuore","gender":"m","plural":"cuori"},
         "KNEE": {"form":"ginocchio","gender":"m","plural":"ginocchia"},
         "SHOULDER": {"form":"spalla","gender":"f","plural":"spalle"},
-        "CALORIE": {"form":"caloria","gender":"f","plural":"calorie"},
         "RUNNER": {"form":"corridore","gender":"m","plural":"corridori"},
         "RACE": {"form":"gara","gender":"f","plural":"gare"},
         "MARATHON": {"form":"maratona","gender":"f","plural":"maratone"},
@@ -4432,7 +4348,6 @@
         "HEART": {"form":"หัวใจ"},
         "KNEE": {"form":"เข่า"},
         "SHOULDER": {"form":"ไหล่"},
-        "CALORIE": {"form":"แคลอรี"},
         "RUNNER": {"form":"นักวิ่ง","classifier":"คน"},
         "RACE": {"form":"การแข่งขัน"},
         "MARATHON": {"form":"มาราธอน"},
@@ -4487,7 +4402,6 @@
         "HEART": {"form":"serce","gender":"n","plural":"serca","genitive_plural":"serc"},
         "KNEE": {"form":"kolano","gender":"n","plural":"kolana","genitive_plural":"kolan"},
         "SHOULDER": {"form":"ramię","gender":"n","plural":"ramiona","genitive_plural":"ramion"},
-        "CALORIE": {"form":"kaloria","gender":"f","plural":"kalorie","genitive_plural":"kalorii"},
         "RUNNER": {"form":"biegacz","gender":"m","plural":"biegacze","genitive_plural":"biegaczy","accusative":"biegacza","virile":true, "instrumental": "biegaczem"},
         "RACE": {"form":"wyścig","gender":"m","plural":"wyścigi","genitive_plural":"wyścigów"},
         "MARATHON": {"form":"maraton","gender":"m","plural":"maratony","genitive_plural":"maratonów"},

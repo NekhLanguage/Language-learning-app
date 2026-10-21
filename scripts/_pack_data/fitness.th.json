@@ -16,7 +16,6 @@
     "HEART": { "form": "หัวใจ" },
     "KNEE": { "form": "เข่า" },
     "SHOULDER": { "form": "ไหล่" },
-    "CALORIE": { "form": "แคลอรี" },
     "RUNNER": { "form": "นักวิ่ง", "classifier": "คน" },
     "RACE": { "form": "การแข่งขัน" },
     "MARATHON": { "form": "มาราธอน" },

@@ -1254,7 +1254,7 @@ test("ko: the present copula is the 이에요/예요 suffix on the predicate", (
 
 test("ko: adjective predicates use their predicative verb form", () => {
   assert.equal(buildSentence("ko", tplById("BOOK_IS_RED")), "책은 빨개요.");
-  assert.equal(buildSentence("ko", tplById("AUTUMN_IS_OLD")), "가을은 오래됐어요.");
+  assert.equal(buildSentence("ko", tplById("HOUSE_IS_OLD")), "집은 오래됐어요.");
   // Attributive position keeps the ordinary form (좋은 above), and the
   // nominal predicate — not the adjective — carries the copula suffix.
 });
@@ -2491,7 +2491,7 @@ test("ru: «Это» in every «X is Y», short answers echo the verb, TO is «�
   assert.equal(buildSentence("ru", tplById("I_GO_TO_TABLE")), "Я иду к столу.");
 });
 
-test("ru: «свой» for every person whose subject owns the noun; uk keeps 3rd person only (run-30 -194)", () => {
+test("ru/uk/pl: «свой/свій/swój» for every person whose subject owns the noun (run-30 -194; uk/pl Nekh 2026-10-21)", () => {
   assert.equal(buildSentence("ru", tplById("I_INSURE_LUGGAGE")), "Я страхую свой багаж.");
   assert.equal(buildSentence("ru", tplById("I_SEE_HOUSE"), "MY", {}), "Я вижу свой дом.");
   assert.equal(buildSentence("ru", tplById("YOU_READ_BOOK"), "YOUR", {}), "Ты читаешь свою книгу.");
@@ -2499,7 +2499,12 @@ test("ru: «свой» for every person whose subject owns the noun; uk keeps 3r
   assert.equal(buildSentence("ru", tplById("YOU_READ_BOOK"), "MY", {}), "Ты читаешь мою книгу.");
   // Copular predicates are never reflexive.
   assert.equal(buildSentence("ru", tplById("SHE_IS_MY_MOM")), "Она моя мама.");
-  assert.equal(buildSentence("uk", tplById("I_INSURE_LUGGAGE")), "Я страхую мій багаж.");
+  // uk/pl joined ru (Nekh 2026-10-21: «ти перемагаєш твого тренера» read
+  // wrong — the subject's own thing is «свій» in every person).
+  assert.equal(buildSentence("uk", tplById("I_INSURE_LUGGAGE")), "Я страхую свій багаж.");
+  assert.equal(buildSentence("uk", tplById("YOU_READ_BOOK"), "YOUR", {}), "Ти читаєш свою книгу.");
+  assert.equal(buildSentence("uk", tplById("YOU_READ_BOOK"), "MY", {}), "Ти читаєш мою книгу.");
+  assert.match(buildSentence("pl", tplById("YOU_READ_BOOK"), "YOUR", {}), /swoją książkę/);
 });
 
 test("uk: the short answers drop the pronoun with the same rule (Emi -140)", () => {
