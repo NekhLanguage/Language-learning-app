@@ -14,6 +14,7 @@ const saveUser = require("../../netlify/functions/saveUser.js");
 const authProvision = require("../../netlify/functions/authProvision.js");
 const authConfig = require("../../netlify/functions/authConfig.js");
 const emailOptIn = require("../../netlify/functions/emailOptIn.js");
+const trialEvent = require("../../netlify/functions/trialEvent.js");
 
 const PUB = "publishable-test-key";
 const SEC = "secret-test-key";
@@ -394,5 +395,55 @@ test("emailOptIn: the one-time in-app answer stamps the row; ticked hands over o
     assert.equal(JSON.parse(paid.body).emailOptInAsked, true, "paying rows are never asked");
     const frank = await checkAccess.handler(req("frank"));
     assert.equal(JSON.parse(frank.body).emailOptInAsked, true, "answered once → asked");
+  }));
+});
+
+test("trialEvent: free-tier events need a trial row; Anna-trial events (pricing rebuild) fire on paid rows too", async () => {
+  const rows = {
+    "alice@example.com": { email: "alice@example.com", access_until: "infinity", access_tier: "paid" },
+    "bob@example.com": { email: "bob@example.com", access_until: null, access_tier: "trial" },
+  };
+  const tokens = { alice: ALICE, bob: { id: "u2", email: "bob@example.com" } };
+  const { fetchImpl, calls } = fakeSupabase({ tokens, rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const anon = await trialEvent.handler(req(null, { type: "paywall_hit" }));
+    assert.equal(anon.statusCode, 204, "no session → quiet 204");
+
+    const unknown = await trialEvent.handler(req("bob", { type: "spoofed" }));
+    assert.equal(unknown.statusCode, 400);
+
+    calls.length = 0;
+    const paidTrial = await trialEvent.handler(req("alice", { type: "paywall_hit" }));
+    assert.equal(paidTrial.statusCode, 204);
+    assert.ok(!calls.some((c) => c.url.includes("site_events")), "paid rows never record trial-only events");
+
+    calls.length = 0;
+    const trialPaywall = await trialEvent.handler(req("bob", { type: "paywall_hit" }));
+    assert.equal(trialPaywall.statusCode, 204);
+    const trialEvents = calls.filter((c) => c.url.includes("site_events")).map((c) => JSON.parse(c.init.body));
+    assert.deepEqual(trialEvents.map((e) => e.event_type), ["paywall_hit"]);
+
+    for (const type of ["anna_trial_start", "anna_subscribe", "anna_lapse"]) {
+      calls.length = 0;
+      const res = await trialEvent.handler(req("alice", { type }));
+      assert.equal(res.statusCode, 204, `${type}: 204`);
+      const events = calls.filter((c) => c.url.includes("site_events")).map((c) => JSON.parse(c.init.body));
+      assert.deepEqual(events.map((e) => e.event_type), [type], `${type}: fires on a paid row`);
+    }
+
+    calls.length = 0;
+    const badThreshold = await trialEvent.handler(req("alice", { type: "anna_reminder_shown", threshold: "60d" }));
+    assert.equal(badThreshold.statusCode, 400);
+    assert.ok(!calls.some((c) => c.url.includes("site_events")), "a bad threshold never writes");
+
+    for (const threshold of ["welcome", "5d", "1d"]) {
+      calls.length = 0;
+      const ok = await trialEvent.handler(req("alice", { type: "anna_reminder_shown", threshold }));
+      assert.equal(ok.statusCode, 204);
+      const events = calls.filter((c) => c.url.includes("site_events")).map((c) => JSON.parse(c.init.body));
+      assert.equal(events.length, 1);
+      assert.equal(events[0].event_type, "anna_reminder_shown");
+      assert.deepEqual(events[0].props, { threshold }, `${threshold} rides on the event props`);
+    }
   }));
 });
