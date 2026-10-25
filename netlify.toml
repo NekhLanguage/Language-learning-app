@@ -19,9 +19,10 @@
   [headers.values]
     Content-Type = "text/javascript"
 
-# Referral discount run: 06:00 UTC on the 1st of every month (see the function).
-[functions.referralDiscountRun]
-  schedule = "0 6 1 * *"
+# Referral reward run: settles pending free-month rewards for Anna
+# subscribers as invoice credits, daily at 06:00 UTC (see the function).
+[functions.referralRewardRun]
+  schedule = "0 6 * * *"
 
 # Two-sided referral (Dan 2026-10-09): /r/<CODE> is the share-friendly
 # path for referral links. Netlify rewrites to the Checkout Session

@@ -1,6 +1,7 @@
 // Referral checkout (Dan 2026-10-09): the friend hits /r/<CODE>, the
-// function validates the code against Supabase and 302s on to a Stripe
-// Checkout Session with the 20%-off-first-payment coupon pre-applied.
+// function validates the code against Supabase and 302s on to a one-time
+// Stripe Checkout Session for the app with the 20% coupon pre-applied
+// (Dan 2026-10-22: the app is a single $19 payment, not a subscription).
 // Any failure (bad code, Stripe error, missing env) falls back to the
 // plain $19 payment link so the funnel never breaks.
 
@@ -103,7 +104,9 @@ test("valid code: creates a Checkout Session with the coupon pre-applied and 302
     assert.equal(res.headers.Location, STRIPE_URL);
     assert.equal(calls.stripe.length, 1);
     const body = String(calls.stripe[0].body);
-    assert.ok(body.includes("mode=subscription"));
+    assert.ok(body.includes("mode=payment"));
+    assert.ok(!body.includes("subscription_data"), "a one-time checkout carries no subscription settings");
+    assert.ok(!body.includes("payment_method_collection"), "payment_method_collection is subscription-mode only");
     assert.ok(body.includes(`line_items%5B0%5D%5Bprice%5D=${encodeURIComponent(checkout.DEFAULT_PRICE_ID)}`));
     assert.ok(body.includes(`discounts%5B0%5D%5Bcoupon%5D=${encodeURIComponent(checkout.DEFAULT_COUPON_ID)}`));
     assert.ok(body.includes("client_reference_id=ZTH-ALICESMI"));
@@ -133,9 +136,25 @@ test("Stripe 4xx: fallback to the plain link with the code attached", async () =
   }));
 });
 
-test("env override: REFERRAL_PRICE_ID / REFERRAL_COUPON_ID replace the defaults", async () => {
+test("defaults are the live one-time app price, REFERRAL20 and the one-time payment link", () => {
+  assert.equal(checkout.DEFAULT_PRICE_ID, "price_1UUMfMAxGblQBaSqsur1pYSH");
+  assert.equal(checkout.DEFAULT_COUPON_ID, "REFERRAL20");
+  assert.equal(checkout.PLAIN_PAYMENT_LINK, "https://buy.stripe.com/5kQaEWbcwfoQ3Tudl69sk06");
+});
+
+test("the retired REFERRAL_PRICE_ID (old monthly price) is ignored", async () => {
   const { impl, calls } = fakeFetch();
-  await withEnv({ ...ENV, REFERRAL_PRICE_ID: "price_other", REFERRAL_COUPON_ID: "coup_other" }, () => withFetch(impl, async () => {
+  await withEnv({ ...ENV, REFERRAL_PRICE_ID: "price_old_monthly", REFERRAL_COUPON_ID: "referral_friend_20_off" }, () => withFetch(impl, async () => {
+    await checkout.handler(event("ZTH-ALICESMI"));
+    const body = String(calls.stripe[0].body);
+    assert.ok(body.includes(`line_items%5B0%5D%5Bprice%5D=${checkout.DEFAULT_PRICE_ID}`));
+    assert.ok(body.includes("discounts%5B0%5D%5Bcoupon%5D=REFERRAL20"));
+  }));
+});
+
+test("env override: APP_PRICE_ID / REFERRAL_FRIEND_COUPON_ID replace the defaults", async () => {
+  const { impl, calls } = fakeFetch();
+  await withEnv({ ...ENV, APP_PRICE_ID: "price_other", REFERRAL_FRIEND_COUPON_ID: "coup_other" }, () => withFetch(impl, async () => {
     await checkout.handler(event("ZTH-ALICESMI"));
     const body = String(calls.stripe[0].body);
     assert.ok(body.includes("line_items%5B0%5D%5Bprice%5D=price_other"));

@@ -1,5 +1,6 @@
-// Referral program (Nekh 2026-09-17): the referral function hands a
-// subscriber a code and reads their stats; identity from the session.
+// Referral program (Nekh 2026-09-17; reworked with the one-time app, Dan
+// 2026-10-22): the referral function hands an app owner a code and reads
+// their free-month rewards; identity from the session.
 
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -33,7 +34,7 @@ async function withFetch(fetchImpl, fn) {
 }
 
 // Fake Supabase: auth by token; tables in memory.
-function fakeSupabase({ tokens = {}, users = {}, codes = {}, referrals = [], commissions = [], payouts = [], takenCodes = [] } = {}) {
+function fakeSupabase({ tokens = {}, users = {}, codes = {}, referrals = [], takenCodes = [], rewardColumns = true } = {}) {
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     const u = String(url);
@@ -63,15 +64,9 @@ function fakeSupabase({ tokens = {}, users = {}, codes = {}, referrals = [], com
       return new Response(JSON.stringify(row ? [row] : []), { status: 200 });
     }
     if (u.includes("/rest/v1/referrals?")) {
-      const mine = referrals.filter((r) => r.referrer_email === decodeURIComponent((/referrer_email=eq\.([^&]+)/.exec(u) || [])[1] || "") && r.status === "active");
-      return new Response(JSON.stringify(mine), { status: 200 });
-    }
-    if (u.includes("/rest/v1/commissions?")) {
-      const mine = commissions.filter((c) => c.referrer_email === decodeURIComponent((/referrer_email=eq\.([^&]+)/.exec(u) || [])[1] || ""));
-      return new Response(JSON.stringify(mine), { status: 200 });
-    }
-    if (u.includes("/rest/v1/payouts?")) {
-      const mine = payouts.filter((p) => p.referrer_email === decodeURIComponent((/referrer_email=eq\.([^&]+)/.exec(u) || [])[1] || "") && p.kind === "discount");
+      if (u.includes("anna_reward") && !rewardColumns) return new Response('{"code":"42703"}', { status: 400 });
+      let mine = referrals.filter((r) => r.referrer_email === decodeURIComponent((/referrer_email=eq\.([^&]+)/.exec(u) || [])[1] || ""));
+      if (u.includes("anna_reward_granted_at=not.is.null")) mine = mine.filter((r) => r.anna_reward_granted_at);
       return new Response(JSON.stringify(mine), { status: 200 });
     }
     throw new Error(`unexpected fetch ${u}`);
@@ -105,24 +100,29 @@ test("503 without the secret key, 401 without a session", async () => {
   }));
 });
 
-test("GET before accepting: no code, eligibility follows the subscription window", async () => {
+test("GET before accepting: no code; any app owner is eligible, a free-tier account is not", async () => {
   const { fetchImpl } = fakeSupabase({
-    tokens: { alice: ALICE, bob: { id: "u2", email: "bob@example.com" } },
-    users: { "alice.smith@example.com": { access_until: "infinity" }, "bob@example.com": { access_until: null } },
+    tokens: { alice: ALICE, bob: { id: "u2", email: "bob@example.com" }, lapsed: { id: "u3", email: "lapsed@example.com" } },
+    users: {
+      "alice.smith@example.com": { access_tier: "paid" },
+      "bob@example.com": { access_tier: "trial" },
+      "lapsed@example.com": { access_tier: null },
+    },
   });
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     const a = JSON.parse((await referral.handler(req("alice"))).body);
     assert.deepEqual({ code: a.code, link: a.link, eligible: a.eligible }, { code: null, link: null, eligible: true });
-    assert.equal(a.stats.lifetimeCents, 0);
-    const b = JSON.parse((await referral.handler(req("bob"))).body);
-    assert.equal(b.eligible, false);
+    assert.deepEqual(a.stats, { friends: 0, monthsEarned: 0, monthsPending: 0 });
+    assert.deepEqual(a.config, { appPriceCents: 1900, friendPriceCents: 1520, friendPct: 20, rewardDays: 30 });
+    assert.equal(JSON.parse((await referral.handler(req("bob"))).body).eligible, false, "free tier can't refer");
+    assert.equal(JSON.parse((await referral.handler(req("lapsed"))).body).eligible, true, "an owner whose Anna lapsed still can — the reward brings her back");
   }));
 });
 
-test("POST accept creates the code for a subscriber, skipping taken codes; not for a lapsed one", async () => {
+test("POST accept creates the code for an app owner, skipping taken codes; not for a free-tier account", async () => {
   const { fetchImpl, codes } = fakeSupabase({
     tokens: { alice: ALICE, bob: { id: "u2", email: "bob@example.com" } },
-    users: { "alice.smith@example.com": { access_until: "2099-01-01T00:00:00Z" }, "bob@example.com": { access_until: "2020-01-01T00:00:00Z" } },
+    users: { "alice.smith@example.com": { access_tier: "paid" }, "bob@example.com": { access_tier: "trial" } },
     takenCodes: ["ZTH-ALICESMI"],
   });
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
@@ -136,7 +136,6 @@ test("POST accept creates the code for a subscriber, skipping taken codes; not f
     assert.match(body.link, /\/r\/ZTH-ALICESMI01$/);
     assert.equal(codes["alice.smith@example.com"].code, "ZTH-ALICESMI01");
 
-    // Idempotent: a second accept returns the same code.
     const again = JSON.parse((await referral.handler(req("alice", "POST", { accept: true }))).body);
     assert.equal(again.code, "ZTH-ALICESMI01");
 
@@ -145,33 +144,26 @@ test("POST accept creates the code for a subscriber, skipping taken codes; not f
   }));
 });
 
-test("GET with a code sums the stats by status and reports the config", async () => {
-  const thisYear = new Date().getUTCFullYear();
-  const { fetchImpl } = fakeSupabase({
+test("GET with a code counts free months earned and the ones still pending", async () => {
+  const me = "alice.smith@example.com";
+  const opts = {
     tokens: { alice: ALICE },
-    users: { "alice.smith@example.com": { access_until: "infinity" } },
-    codes: { "alice.smith@example.com": { code: "ZTH-ALICESMI", accepted_terms_at: "2026-09-17T00:00:00Z" } },
+    users: { [me]: { access_tier: "paid" } },
+    codes: { [me]: { code: "ZTH-ALICESMI", accepted_terms_at: "2026-09-17T00:00:00Z" } },
     referrals: [
-      { referrer_email: "alice.smith@example.com", status: "active" },
-      { referrer_email: "alice.smith@example.com", status: "active" },
-      { referrer_email: "alice.smith@example.com", status: "ended" },
+      { referrer_email: me, anna_reward_granted_at: "2026-10-26T00:00:00Z", anna_reward_kind: "window", anna_reward_applied_at: "2026-10-26T00:00:00Z" },
+      { referrer_email: me, anna_reward_granted_at: "2026-10-27T00:00:00Z", anna_reward_kind: "pending", anna_reward_applied_at: null },
+      { referrer_email: me, anna_reward_granted_at: "2026-10-27T00:00:00Z", anna_reward_kind: "invoice_credit", anna_reward_applied_at: "2026-10-28T06:00:00Z" },
+      { referrer_email: me, anna_reward_granted_at: null },
     ],
-    commissions: [
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "available" },
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "applied" },
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "applied" },
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "reversed" },
-      { referrer_email: "alice.smith@example.com", amount_cents: 380, status: "forfeited" },
-    ],
-    payouts: [
-      { referrer_email: "alice.smith@example.com", kind: "discount", amount_cents: 380, created_at: `${thisYear}-02-01T06:00:00Z` },
-      { referrer_email: "alice.smith@example.com", kind: "discount", amount_cents: 380, created_at: `${thisYear - 1}-12-01T06:00:00Z` },
-    ],
-  });
-  await withEnv({ ...ENV, REFERRAL_RATE_BPS: undefined, REFERRAL_CAP_CENTS: undefined }, () => withFetch(fetchImpl, async () => {
+  };
+  await withEnv(ENV, () => withFetch(fakeSupabase(opts).fetchImpl, async () => {
     const body = JSON.parse((await referral.handler(req("alice"))).body);
     assert.equal(body.code, "ZTH-ALICESMI");
-    assert.deepEqual(body.stats, { activeReferrals: 2, availableCents: 380, appliedCents: 760, appliedThisYearCents: 380, lifetimeCents: 1140 });
-    assert.deepEqual(body.config, { rateBps: 2000, capCents: 19000, monthlyPriceCents: 1900 });
+    assert.deepEqual(body.stats, { friends: 3, monthsEarned: 3, monthsPending: 1 });
+  }));
+  await withEnv(ENV, () => withFetch(fakeSupabase({ ...opts, rewardColumns: false }).fetchImpl, async () => {
+    const body = JSON.parse((await referral.handler(req("alice"))).body);
+    assert.deepEqual(body.stats, { friends: 4, monthsEarned: 4, monthsPending: 0 }, "before the migration every referral counts as a month");
   }));
 });

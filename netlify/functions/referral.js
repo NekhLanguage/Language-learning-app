@@ -1,22 +1,23 @@
-// Referral program (Angus's v1 spec, Nekh 2026-09-17): the learner's own
-// referral code, link and earnings. A share of every payment a referred
-// subscriber makes (REFERRAL_RATE_BPS, 20% by default) comes off the
-// referrer's own subscription while both stay subscribed; the website's
-// Stripe webhook writes the attribution and commission rows, the monthly
-// discount run applies them, this function only reads them and creates
-// the code.
+// Referral program: the learner's own referral code, link and rewards.
+// Reworked with the one-time app (Dan 2026-10-22): a friend who buys the
+// app with the code pays 20% less, once; the referrer gets one free month
+// of Anna per friend who buys (the website's Stripe webhook grants it —
+// a window month, or for an Anna subscriber an invoice credit applied by
+// referralRewardRun). This function only reads the rows and creates the
+// code.
 //
 //   GET  → { code, link, eligible, acceptedTermsAt, stats, config }
 //          code/link are null until the learner has accepted the terms.
-//   POST { accept: true } → creates the code (active subscribers only) and
+//          stats: { friends, monthsEarned, monthsPending }.
+//   POST { accept: true } → creates the code (app owners only) and
 //          returns the same shape.
 //
 // Identity comes from the Supabase session token. The referral tables have
 // no anon policies, so this needs SUPABASE_SECRET_KEY (503 without it).
 
 const { SUPABASE_URL, secretKey } = require("./supabase");
-const { verifySession, unauthorizedResponse, subscriptionActive } = require("./auth");
-const { config, appliedInYear } = require("./referral_discount");
+const { verifySession, unauthorizedResponse } = require("./auth");
+const { tierOf } = require("./entitlement");
 
 // Two-sided referral (Dan 2026-10-09): the friend's link routes through
 // the referralCheckout function so Stripe applies the 20%-off-first-
@@ -25,6 +26,10 @@ const { config, appliedInYear } = require("./referral_discount");
 // function); the plain Stripe payment link stays for direct $19 buys.
 const REFERRAL_SHARE_BASE = "https://zerotoherolanguage.netlify.app/r";
 const MAX_CODE_ATTEMPTS = 20;
+
+// What the card shows. The coupon and the reward live in Stripe and the
+// webhook; these mirror them for the copy.
+const CONFIG = { appPriceCents: 1900, friendPriceCents: 1520, friendPct: 20, rewardDays: 30 };
 
 function json(statusCode, body) {
   return {
@@ -57,32 +62,35 @@ async function getRows(key, path) {
   return res.json();
 }
 
+// Referrals that earned a reward. Before migrations/referral_anna_reward.sql
+// runs, the reward columns don't exist (400): every referral counts as one
+// month, none pending.
+async function rewardRows(key, email) {
+  const base = `referrals?referrer_email=eq.${encodeURIComponent(email)}`;
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${base}&anna_reward_granted_at=not.is.null&select=anna_reward_kind,anna_reward_applied_at`, { headers: restHeaders(key) });
+  if (res.status === 400) {
+    const all = await getRows(key, `${base}&select=id`);
+    return all.map(() => ({ anna_reward_kind: "window", anna_reward_applied_at: null }));
+  }
+  if (!res.ok) throw new Error(`referrals read ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  return res.json();
+}
+
 async function loadState(key, email) {
-  const cfg = config();
   const [users, codes] = await Promise.all([
-    getRows(key, `users?email=eq.${encodeURIComponent(email)}&select=access_until`),
+    getRows(key, `users?email=eq.${encodeURIComponent(email)}&select=access_tier`),
     getRows(key, `referral_codes?email=eq.${encodeURIComponent(email)}&select=code,accepted_terms_at`),
   ]);
-  const eligible = !!users[0] && subscriptionActive(users[0].access_until);
+  // Anyone who owns the app can refer: the reward extends whatever Anna
+  // access they have, lapsed or not.
+  const eligible = tierOf(users[0] || null) === "paid";
   const row = codes[0] || null;
-  // availableCents: earned, waiting for the next monthly run.
-  // appliedCents: taken off invoices, lifetime. appliedThisYearCents counts
-  // against the yearly cap. lifetimeCents = available + applied.
-  const stats = { activeReferrals: 0, availableCents: 0, appliedCents: 0, appliedThisYearCents: 0, lifetimeCents: 0 };
+  const stats = { friends: 0, monthsEarned: 0, monthsPending: 0 };
   if (row) {
-    const [referrals, commissions, payouts] = await Promise.all([
-      getRows(key, `referrals?referrer_email=eq.${encodeURIComponent(email)}&status=eq.active&select=id`),
-      getRows(key, `commissions?referrer_email=eq.${encodeURIComponent(email)}&select=amount_cents,status`),
-      getRows(key, `payouts?referrer_email=eq.${encodeURIComponent(email)}&kind=eq.discount&select=amount_cents,kind,created_at`),
-    ]);
-    stats.activeReferrals = referrals.length;
-    for (const c of commissions) {
-      const cents = Number(c.amount_cents) || 0;
-      if (c.status === "available") stats.availableCents += cents;
-      else if (c.status === "applied") stats.appliedCents += cents;
-    }
-    stats.lifetimeCents = stats.availableCents + stats.appliedCents;
-    stats.appliedThisYearCents = appliedInYear(payouts);
+    const rewards = await rewardRows(key, email);
+    stats.friends = rewards.length;
+    stats.monthsEarned = rewards.length;
+    stats.monthsPending = rewards.filter((r) => r.anna_reward_kind === "pending" && !r.anna_reward_applied_at).length;
   }
   return {
     code: row ? row.code : null,
@@ -90,7 +98,7 @@ async function loadState(key, email) {
     eligible,
     acceptedTermsAt: row ? row.accepted_terms_at : null,
     stats,
-    config: cfg,
+    config: CONFIG,
   };
 }
 
@@ -137,7 +145,7 @@ exports.handler = async (event) => {
 
     const state = await loadState(key, email);
     if (state.code) return json(200, state);
-    if (!state.eligible) return json(403, { error: "Referral codes are for active subscribers", ...state });
+    if (!state.eligible) return json(403, { error: "Referral codes are for app owners", ...state });
 
     await createCode(key, email);
     return json(200, await loadState(key, email));

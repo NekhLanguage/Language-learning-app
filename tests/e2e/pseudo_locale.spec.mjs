@@ -158,3 +158,34 @@ test("Anna's page: no unkeyed text", async ({ page }) => {
   // The header carries the version tag (v1.2.x).
   expect(await unkeyedText(page, ".tutor-wrap", [...BRAND, ...names, "Anna"])).toEqual([]);
 });
+
+test("Anna's free-month popups: no unkeyed text", async ({ page, request }) => {
+  await servePseudo(page);
+  const email = `pseudo-anna-${Date.now()}@example.com`;
+  const day = 86400000;
+  const post = (daysLeft, extra = {}) => request.post(`/__devserver/anna?email=${encodeURIComponent(email)}`, {
+    data: { access_until: new Date(Date.now() + daysLeft * day).toISOString(), anna_trial_started_at: new Date(Date.now() - (30 - daysLeft) * day).toISOString(), ...extra },
+  });
+  // Pick the support language first (no free month yet, so no popup).
+  await loginAs(page, email);
+  await page.click("#support-pill");
+  await page.locator(".support-option", { hasText: "Deutsch" }).click();
+  await expect(page.locator("#open-app")).toContainText("⟦");
+  const names = await languageNames(page);
+  const allow = [...BRAND, ...names, "Anna"];
+  const popup = page.locator("#anna-popup");
+
+  await post(30);
+  await page.reload();
+  await expect(popup).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator("#anna-popup-title")).toContainText("⟦");
+  expect(await unkeyedText(page, "#anna-popup", allow)).toEqual([]);
+  await page.click("#anna-popup-primary");
+
+  // The 5-day popup carries {date}: digits + the month in the learner's locale.
+  await post(4.5, { anna_popup_welcome_at: new Date().toISOString() });
+  await page.reload();
+  await expect(page.locator("#anna-popup-secondary")).toBeVisible({ timeout: 10_000 });
+  const month = new Date(Date.now() + 4.5 * day).toLocaleDateString("de", { month: "short" }).replace(".", "");
+  expect(await unkeyedText(page, "#anna-popup", [...allow, month])).toEqual([]);
+});
