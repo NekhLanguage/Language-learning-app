@@ -27,7 +27,8 @@
     "validate:coverage": "node validation/validate-grammar-coverage.mjs",
     "validate:coverage:update": "node validation/validate-grammar-coverage.mjs --update-baseline",
     "validate:ui": "node validation/validate-ui-strings.mjs",
-    "validate:ui:update": "node validation/validate-ui-strings.mjs --update-baseline"
+    "validate:ui:update": "node validation/validate-ui-strings.mjs --update-baseline",
+    "check:migrations": "node scripts/check-migrations.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.0",
