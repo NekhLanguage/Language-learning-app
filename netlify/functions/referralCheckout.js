@@ -1,8 +1,9 @@
-// Referral checkout (two-sided referral program, Dan 2026-10-09): a
-// friend who opens a learner's referral link lands here. We validate
-// the code against public.referral_codes, then create a Stripe
-// Checkout Session with the first-payment coupon pre-applied, the
-// referral code copied onto `client_reference_id` for the website's
+// Referral checkout (two-sided referral program, Dan 2026-10-09; rewired
+// to one-time payment, Dan 2026-10-22 pricing rebuild PR B): a friend
+// who opens a learner's referral link lands here. We validate the code
+// against public.referral_codes, then create a Stripe Checkout Session
+// in mode=payment (one-time $19) with the 20%-off coupon pre-applied,
+// the referral code copied onto `client_reference_id` for the website's
 // existing attribution webhook, and the same success_url the plain
 // Stripe payment link uses. The friend is 302'd to the hosted session.
 //
@@ -15,17 +16,17 @@
 //                         Unset → fall back to the plain payment link.
 //   SUPABASE_SECRET_KEY   bypasses RLS on referral_codes (no anon
 //                         policy). Unset → fall back.
-//   REFERRAL_PRICE_ID     Stripe Price id for the $19 subscription.
-//                         Defaults to the current live price.
+//   REFERRAL_PRICE_ID     Stripe Price id for the one-time $19 app
+//                         purchase. Defaults to the current live price.
 //   REFERRAL_COUPON_ID    Stripe Coupon id with duration=once,
-//                         percent_off=20. Defaults to the one Gazi
-//                         created for Dan's two-sided referral spec.
+//                         percent_off=20. Defaults to the two-sided
+//                         referral coupon (kept until PR E lands).
 
 const { SUPABASE_URL, secretKey, restHeaders } = require("./supabase");
 
 const STRIPE_API = "https://api.stripe.com/v1";
-const PLAIN_PAYMENT_LINK = "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05";
-const DEFAULT_PRICE_ID = "price_1UGNyCAxGblQBaSqJ2BEpTcA";
+const PLAIN_PAYMENT_LINK = "https://buy.stripe.com/5kQaEWbcwfoQ3Tudl69sk06";
+const DEFAULT_PRICE_ID = "price_1UUMfMAxGblQBaSqsur1pYSH";
 const DEFAULT_COUPON_ID = "referral_friend_20_off";
 const SUCCESS_URL = "https://nekhslanguageblueprint.com/success?sku=app";
 const CANCEL_URL = "https://nekhslanguageblueprint.com/zero-to-hero";
@@ -50,7 +51,10 @@ async function codeExists(sbKey, code) {
 
 async function createSession(stripeSecret, code, { priceId, couponId }) {
   const form = new URLSearchParams();
-  form.set("mode", "subscription");
+  // One-time payment (Dan 2026-10-22 pricing rebuild). The app is a
+  // single $19 purchase; the free month of Anna is stamped by the
+  // website webhook on checkout.session.completed (mode=payment).
+  form.set("mode", "payment");
   form.set("line_items[0][price]", priceId);
   form.set("line_items[0][quantity]", "1");
   form.set("discounts[0][coupon]", couponId);
@@ -58,15 +62,13 @@ async function createSession(stripeSecret, code, { priceId, couponId }) {
   form.set("allow_promotion_codes", "false");
   form.set("consent_collection[terms_of_service]", "required");
   form.set("customer_creation", "if_required");
-  form.set("payment_method_collection", "always");
   form.set("success_url", SUCCESS_URL);
   form.set("cancel_url", CANCEL_URL);
   form.set("metadata[sku]", "zth_app");
   form.set("metadata[referral_code]", code);
   form.set("metadata[source]", "referral_v2_two_sided");
-  form.set("subscription_data[metadata][sku]", "zth_app");
-  form.set("subscription_data[metadata][referral_code]", code);
-  form.set("subscription_data[trial_settings][end_behavior][missing_payment_method]", "create_invoice");
+  form.set("payment_intent_data[metadata][sku]", "zth_app");
+  form.set("payment_intent_data[metadata][referral_code]", code);
 
   const res = await fetch(`${STRIPE_API}/checkout/sessions`, {
     method: "POST",

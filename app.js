@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.120";
+const APP_DATA_VERSION = "1.2.121";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -865,7 +865,7 @@ const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
   offer: "https://cal.com/fredrik-johansen-bw1mgs/discovery-call",
-  buyAccess: "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05"
+  buyAccess: "https://buy.stripe.com/5kQaEWbcwfoQ3Tudl69sk06"
 };
 
 // Launch-spike observability. Keep this tiny and self-contained: one global

@@ -1,8 +1,9 @@
-// Referral checkout (Dan 2026-10-09): the friend hits /r/<CODE>, the
+// Referral checkout (Dan 2026-10-09; rewired to one-time payment in
+// Dan 2026-10-22 pricing rebuild PR B): the friend hits /r/<CODE>, the
 // function validates the code against Supabase and 302s on to a Stripe
-// Checkout Session with the 20%-off-first-payment coupon pre-applied.
-// Any failure (bad code, Stripe error, missing env) falls back to the
-// plain $19 payment link so the funnel never breaks.
+// Checkout Session in mode=payment (one-time $19) with the 20%-off
+// coupon pre-applied. Any failure (bad code, Stripe error, missing env)
+// falls back to the plain $19 payment link so the funnel never breaks.
 
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -103,12 +104,14 @@ test("valid code: creates a Checkout Session with the coupon pre-applied and 302
     assert.equal(res.headers.Location, STRIPE_URL);
     assert.equal(calls.stripe.length, 1);
     const body = String(calls.stripe[0].body);
-    assert.ok(body.includes("mode=subscription"));
+    assert.ok(body.includes("mode=payment"));
+    assert.ok(!body.includes("subscription_data"));
     assert.ok(body.includes(`line_items%5B0%5D%5Bprice%5D=${encodeURIComponent(checkout.DEFAULT_PRICE_ID)}`));
     assert.ok(body.includes(`discounts%5B0%5D%5Bcoupon%5D=${encodeURIComponent(checkout.DEFAULT_COUPON_ID)}`));
     assert.ok(body.includes("client_reference_id=ZTH-ALICESMI"));
     assert.ok(body.includes("allow_promotion_codes=false"));
     assert.ok(body.includes("metadata%5Breferral_code%5D=ZTH-ALICESMI"));
+    assert.ok(body.includes("payment_intent_data%5Bmetadata%5D%5Breferral_code%5D=ZTH-ALICESMI"));
   }));
 });
 

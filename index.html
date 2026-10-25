@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
-  <link rel="modulepreload" href="app.js?v=1.2.120" />
+  <link rel="modulepreload" href="app.js?v=1.2.121" />
   <!-- app.js's whole static import graph. Without these the browser only
        discovers the second level (sentence_engine, storage, auth, …) after
        app.js has arrived and parsed, and language_rules.mjs one level after
@@ -210,8 +210,8 @@
        (replaces Millie v2's title, two lines and fine print). -->
   <section id="paywall-screen" class="screen trial-screen" aria-label="Unlock lesson 7" data-i18n-aria-label="paywallLabel">
     <button id="paywall-back" class="quit-button" type="button" data-i18n="roadmapBack">← BACK</button>
-    <a id="paywall-buy" class="primary paywall-buy" href="https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05" target="_blank" rel="noopener" data-i18n="paywallBuy">Get the app + 1 month of Anna for $19</a>
-    <p class="paywall-renewal" data-i18n="paywallRenewal">After that, keeping Anna costs $19 a month. The app stays yours.</p>
+    <a id="paywall-buy" class="primary paywall-buy" href="https://buy.stripe.com/5kQaEWbcwfoQ3Tudl69sk06" target="_blank" rel="noopener" data-i18n="paywallBuy">Get the app for $19</a>
+    <p class="paywall-renewal" data-i18n="paywallRenewal">One payment, forever. Your first month of Anna is on us. No subscription on the app.</p>
     <button id="paywall-refresh" class="gate-link" type="button" data-i18n="paywallRefresh">Already paid? Continue</button>
     <p id="paywall-status" class="gate-message" role="status" aria-live="polite"></p>
   </section>
@@ -264,6 +264,6 @@
   <!-- User + run persistence (non-module) -->
 <script src="vendor/supabase-js-2.116.0.umd.js"></script>
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=1.2.120"></script>
+<script type="module" src="app.js?v=1.2.121"></script>
 </body>
 </html>

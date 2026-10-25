@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-25
+
+### The app is $19, once
+
+Buying the app is now a single $19 payment, not a monthly subscription. The app is yours for keeps. Your first month of Anna, the AI tutor, comes with it, free. When that month is up, you can keep Anna for $19 a month if you want her, or do nothing and keep the app. No automatic charge, no card held for Anna unless you choose to subscribe.
+
 ## 2026-10-21
 
 ### Practice sentences that make sense
