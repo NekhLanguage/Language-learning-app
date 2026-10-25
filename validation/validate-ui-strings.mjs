@@ -46,7 +46,7 @@ const EXTRA_VARS = { themePickRepeat: ["n"] };
 
 // Values that are the same word in every language (or deliberately kept).
 const NEUTRAL_KEYS = new Set([
-  "betaBadge", "leaderboardColWords", "leaderboardColAnna", "tutorPageTitle",
+  "betaBadge", "leaderboardColXp", "leaderboardColAnna", "tutorPageTitle",
   "emailPlaceholder", "blueprint",
 ]);
 

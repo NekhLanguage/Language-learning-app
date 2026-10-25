@@ -1,5 +1,5 @@
-// Leaderboard v1 (Nekh 2026-10-02): the two counters, computed from a saved
-// user blob. Pure functions — no fetch, no env — shared by saveUser (which
+// Leaderboard (Nekh 2026-10-02; XP ranking Nekh 2026-10-25): the board's
+// counters, computed from a saved user blob. Pure functions — no fetch, no env — shared by saveUser (which
 // stores them on the users row in the same PATCH as the blob) and the dev
 // server stub, and exercised directly by the unit tests.
 //
@@ -29,6 +29,35 @@ function countMasteredWords(user) {
     for (const p of Object.values(progress)) {
       if (p && p.completed === true && Number(p.level) >= MASTERY_LEVEL) n++;
     }
+  }
+  return n;
+}
+
+// Experience points (Nekh 2026-10-25, the board's ranking): every level a
+// word clears is 1 XP, except clearing level 7 (mastery), which is 3. A word
+// at level L has cleared L-1 levels; a completed word has cleared its own
+// level too. So a new word moves the count in the first lesson, and a
+// mastered word is worth 6 + 3 = 9. Recognition-only concepts (capped at
+// level 4) top out at 4. Summed across every language run.
+const XP_PER_LEVEL = 1;
+const XP_MASTERY = 3;
+
+function conceptXp(p) {
+  if (!p || typeof p !== "object") return 0;
+  const level = Math.floor(Number(p.level) || 0);
+  if (level < 1) return 0;
+  const completed = p.completed === true;
+  const below = (level - 1) * XP_PER_LEVEL;
+  if (!completed) return below;
+  return below + (level >= MASTERY_LEVEL ? XP_MASTERY : XP_PER_LEVEL);
+}
+
+function countXp(user) {
+  let n = 0;
+  for (const run of runsOf(user)) {
+    const progress = run && typeof run === "object" ? run.progress : null;
+    if (!progress || typeof progress !== "object") continue;
+    for (const p of Object.values(progress)) n += conceptXp(p);
   }
   return n;
 }
@@ -67,7 +96,7 @@ function isoWeekKey(date = new Date()) {
 }
 
 function computeLeaderboardStats(user) {
-  return { words: countMasteredWords(user), anna: countAnnaWords(user) };
+  return { xp: countXp(user), words: countMasteredWords(user), anna: countAnnaWords(user) };
 }
 
 // A display name the board will show: trimmed, inner whitespace collapsed,
@@ -89,6 +118,10 @@ function normalizeDisplayName(raw) {
 
 module.exports = {
   MASTERY_LEVEL,
+  XP_PER_LEVEL,
+  XP_MASTERY,
+  conceptXp,
+  countXp,
   MIN_NAME,
   MAX_NAME,
   countMasteredWords,

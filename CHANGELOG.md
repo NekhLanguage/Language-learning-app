@@ -12,6 +12,10 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 The app is now a single $19 payment, not a subscription. It is yours for good, and your first month with Anna, the AI tutor, is included. Nothing is charged when that month ends. The app tells you when you sign in: once when you buy, again with 5 days left, and a last time the day before. If you want to keep Anna, tap "Keep Anna $19/mo" and your first payment lands on the day her free month would have ended, not before. If you do nothing, Anna locks and the app and your progress stay. Once she is locked, tapping her button on the start screen lets you subscribe at any time. The reminders sit fully on your screen, buttons included, on any phone.
 
+### The leaderboard counts from your first lesson
+
+The board used to rank words mastered at level 7, which takes weeks, so almost nobody had a score. It now ranks XP: every level a word climbs is 1 XP, and mastering a word at level 7 is worth 3, so a fully mastered word is 9. Your XP moves in your first lesson, and everything you have already learned counts. Words with Anna stay as the second column. New accounts join the board under a random name like "Brave Otter", never your real name or email. One tap gives you a new random name, you can type your own, and one tap takes you off the board.
+
 ### Refer a friend: 20% off for them, a free month of Anna for you
 
 A friend who buys the app with your link pays $15.20 instead of $19, once. You get one extra free month of Anna for every friend who buys, with no cap. If you already pay for Anna, the month comes off your next Anna payment instead. Every app owner can now get a referral code, including when Anna has lapsed. The card shows how many friends bought and how many free months you have earned.

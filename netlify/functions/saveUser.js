@@ -56,21 +56,29 @@ exports.handler = async (event) => {
     // the same PATCH as the blob — computed here from what is being
     // stored, never trusted from the client, and costing the save path
     // no extra round-trip. See leaderboardStats.js / leaderboard.js.
+    // XP (Nekh 2026-10-25) is the board's ranking; lb_words (mastery) and
+    // lb_anna stay alongside it.
     const stats = computeLeaderboardStats(user);
-    let res = await patchUser({
-      data: user,
+    const counters = {
       lb_words: stats.words,
       lb_anna: stats.anna,
       lb_updated_at: new Date().toISOString()
-    });
+    };
+    let res = await patchUser({ data: user, lb_xp: stats.xp, ...counters });
 
     if (!res.ok) {
-      const text = await res.text();
-      // Until migrations/leaderboard.sql has run, PostgREST rejects the
-      // unknown lb_* columns (PGRST204). The blob must still land: store
-      // it alone and let the board catch up once the columns exist.
+      let text = await res.text();
+      // Until migrations/leaderboard_xp.sql (lb_xp) or leaderboard.sql (the
+      // rest) has run, PostgREST rejects the unknown column (PGRST204). The
+      // blob must still land: drop the missing counters and let the board
+      // catch up once the columns exist.
+      if (/lb_xp/.test(text)) {
+        console.warn("saveUser: users.lb_xp missing — run migrations/leaderboard_xp.sql:", text);
+        res = await patchUser({ data: user, ...counters });
+        if (!res.ok) text = await res.text();
+      }
       let detail = text;
-      if (/lb_(words|anna|updated_at)/.test(text)) {
+      if (!res.ok && /lb_(words|anna|updated_at)/.test(text)) {
         console.warn("saveUser: users.lb_* columns missing — saving the blob alone:", text);
         res = await patchUser({ data: user });
         if (!res.ok) detail = await res.text();

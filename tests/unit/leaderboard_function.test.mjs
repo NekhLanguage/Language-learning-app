@@ -49,7 +49,7 @@ const req = (method, token, body) => ({
 const parse = (res) => ({ status: res.statusCode, body: JSON.parse(res.body) });
 
 // A fake users table with the lb_ columns. `rows` is email -> row.
-function fakeSupabase({ rows, migrated = true, patchStatus = 204 } = {}) {
+function fakeSupabase({ rows, migrated = true, xpMigrated = true, patchStatus = 204 } = {}) {
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     const u = String(url);
@@ -64,16 +64,21 @@ function fakeSupabase({ rows, migrated = true, patchStatus = 204 } = {}) {
     if (!u.includes("/rest/v1/users")) throw new Error(`unexpected fetch ${u}`);
     const query = new URL(u).searchParams;
     const method = (init.method || "GET").toUpperCase();
-    const onBoard = Object.values(rows).filter((r) => r.lb_name);
+    const onBoard = Object.values(rows).filter((r) => r.lb_name && !(query.get("lb_excluded") === "is.false" && r.lb_excluded));
 
     if (method === "PATCH") {
       const body = JSON.parse(init.body);
+      if (!xpMigrated && migrated && Object.keys(body).some((k) => k === "lb_xp" || k === "lb_enroll_checked_at")) {
+        return new Response(JSON.stringify({ code: "PGRST204", message: "Could not find the 'lb_xp' column of 'users' in the schema cache" }), { status: 400 });
+      }
       if (!migrated && Object.keys(body).some((k) => k.startsWith("lb_"))) {
         return new Response(JSON.stringify({ code: "PGRST204", message: "Could not find the 'lb_words' column of 'users' in the schema cache" }), { status: 400 });
       }
       if (patchStatus !== 204) return new Response("boom", { status: patchStatus });
       const email = decodeURIComponent(query.get("email").replace(/^eq\./, ""));
-      const row = rows[email];
+      let row = rows[email];
+      // Honour `<col>=is.null` guards (autoEnroll).
+      for (const [k, v] of query) if (v === "is.null" && row && row[k] != null) row = null;
       if ("lb_name" in body && body.lb_name) {
         const clash = Object.entries(rows).find(([e, r]) => e !== email && r.lb_name && r.lb_name.toLowerCase() === body.lb_name.toLowerCase());
         if (clash) return new Response(JSON.stringify({ code: "23505", message: "duplicate key value violates unique constraint \"users_lb_name_unique\"" }), { status: 409 });
@@ -89,7 +94,7 @@ function fakeSupabase({ rows, migrated = true, patchStatus = 204 } = {}) {
 
     if (method === "HEAD") {
       // count=exact: rows on the board with <col> > value.
-      const col = ["lb_words", "lb_anna"].find((c) => query.has(c));
+      const col = ["lb_xp", "lb_anna"].find((c) => query.has(c));
       const value = Number(query.get(col).replace(/^gt\./, ""));
       const n = onBoard.filter((r) => Number(r[col]) > value).length;
       return new Response(null, { status: 206, headers: { "content-range": `0-${Math.max(0, n - 1)}/${n}` } });
@@ -106,10 +111,10 @@ function fakeSupabase({ rows, migrated = true, patchStatus = 204 } = {}) {
 
     // top-N read
     const order = String(query.get("order") || "");
-    const col = order.startsWith("lb_anna") ? "lb_anna" : "lb_words";
+    const col = order.startsWith("lb_anna") ? "lb_anna" : "lb_xp";
     const limit = Number(query.get("limit") || 25);
     const sorted = [...onBoard].sort((a, b) => b[col] - a[col]).slice(0, limit)
-      .map(({ lb_name, lb_words, lb_anna }) => ({ lb_name, lb_words, lb_anna }));
+      .map(({ lb_name, lb_xp, lb_anna }) => ({ lb_name, lb_xp, lb_anna }));
     return new Response(JSON.stringify(sorted), { status: 200 });
   };
   return { fetchImpl, calls };
@@ -118,10 +123,10 @@ function fakeSupabase({ rows, migrated = true, patchStatus = 204 } = {}) {
 const STAMP = "2026-10-02T11:57:15.313Z";
 function sampleRows() {
   return {
-    "alice@example.com": { email: "alice@example.com", lb_name: null, lb_words: 12, lb_anna: 3, lb_updated_at: STAMP },
-    "bob@example.com": { email: "bob@example.com", lb_name: "Bob", lb_words: 40, lb_anna: 1 },
-    "cara@example.com": { email: "cara@example.com", lb_name: "Cara", lb_words: 5, lb_anna: 9 },
-    "dan@example.com": { email: "dan@example.com", lb_name: "Dan", lb_words: 20, lb_anna: 0 },
+    "alice@example.com": { email: "alice@example.com", lb_name: null, lb_xp: 12, lb_anna: 3, lb_updated_at: STAMP },
+    "bob@example.com": { email: "bob@example.com", lb_name: "Bob", lb_xp: 40, lb_anna: 1 },
+    "cara@example.com": { email: "cara@example.com", lb_name: "Cara", lb_xp: 5, lb_anna: 9 },
+    "dan@example.com": { email: "dan@example.com", lb_name: "Dan", lb_xp: 20, lb_anna: 0 },
   };
 }
 
@@ -139,11 +144,11 @@ test("GET: top lists by each counter (joined learners only), caller's own row wi
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     const { status, body } = parse(await leaderboard.handler(req("GET", "good")));
     assert.equal(status, 200);
-    assert.deepEqual(body.top.words.map((r) => r.name), ["Bob", "Dan", "Cara"]);
+    assert.deepEqual(body.top.xp.map((r) => r.name), ["Bob", "Dan", "Cara"]);
     assert.deepEqual(body.top.anna.map((r) => r.name), ["Cara", "Bob", "Dan"]);
-    assert.deepEqual(body.top.words[0], { name: "Bob", words: 40, anna: 1 });
+    assert.deepEqual(body.top.xp[0], { name: "Bob", xp: 40, anna: 1 });
     assert.ok(!JSON.stringify(body.top).includes("@"), "no email ever leaves the function");
-    assert.deepEqual(body.me, { joined: false, name: null, words: 12, anna: 3, rankWords: null, rankAnna: null });
+    assert.deepEqual(body.me, { joined: false, name: null, xp: 12, anna: 3, rankXp: null, rankAnna: null });
     assert.equal(body.limits.minName, 2);
     assert.equal(body.limits.maxName, 24);
   }));
@@ -158,7 +163,7 @@ test("POST {name}: joins under the normalized name and reports rank; a taken nam
     assert.equal(rows["alice@example.com"].lb_name, "Alice W");
     const patch = calls.find((c) => (c.init.method || "") === "PATCH");
     assert.deepEqual(JSON.parse(patch.init.body), { lb_name: "Alice W" }, "only the name is written — never the counters");
-    assert.deepEqual(r.body.me, { joined: true, name: "Alice W", words: 12, anna: 3, rankWords: 3, rankAnna: 2 });
+    assert.deepEqual(r.body.me, { joined: true, name: "Alice W", xp: 12, anna: 3, rankXp: 3, rankAnna: 2 });
 
     r = parse(await leaderboard.handler(req("POST", "good", { name: "bob" })));
     assert.equal(r.status, 409);
@@ -180,7 +185,7 @@ test("POST {name}: joins under the normalized name and reports rank; a taken nam
 test("an account that never saved since the board shipped gets its counters computed from the blob on first open, once", async () => {
   const rows = sampleRows();
   rows["alice@example.com"] = {
-    email: "alice@example.com", lb_name: null, lb_words: 0, lb_anna: 0, lb_updated_at: null,
+    email: "alice@example.com", lb_name: null, lb_xp: 0, lb_words: 0, lb_anna: 0, lb_updated_at: null,
     data: {
       runs: {
         uk: {
@@ -199,12 +204,13 @@ test("an account that never saved since the board shipped gets its counters comp
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     const { status, body } = parse(await leaderboard.handler(req("GET", "good")));
     assert.equal(status, 200);
-    assert.equal(body.me.words, 2);
+    assert.equal(body.me.xp, 9 + 9 + 1);
     assert.equal(body.me.anna, 4);
     const blobReads = calls.filter((c) => c.url.includes("select=data"));
     assert.equal(blobReads.length, 1, "the blob is read once");
     const patch = calls.find((c) => (c.init.method || "") === "PATCH");
     const written = JSON.parse(patch.init.body);
+    assert.equal(written.lb_xp, 19);
     assert.equal(written.lb_words, 2);
     assert.equal(written.lb_anna, 4);
     assert.ok(Date.parse(written.lb_updated_at) > 0);
@@ -224,7 +230,7 @@ test("POST {leave:true}: clears the name, counters stay", async () => {
     const { status, body } = parse(await leaderboard.handler(req("POST", "good", { leave: true })));
     assert.equal(status, 200);
     assert.equal(rows["alice@example.com"].lb_name, null);
-    assert.deepEqual(body.me, { joined: false, name: null, words: 12, anna: 3, rankWords: null, rankAnna: null });
+    assert.deepEqual(body.me, { joined: false, name: null, xp: 12, anna: 3, rankXp: null, rankAnna: null });
   }));
 });
 
@@ -274,10 +280,11 @@ test("saveUser stores the blob and both counters in ONE PATCH", async () => {
     assert.equal(patches.length, 1, "no extra round-trip for the board");
     const body = JSON.parse(patches[0].init.body);
     assert.deepEqual(body.data, blob);
+    assert.equal(body.lb_xp, 9 + 6 + 1, "XP: mastered 9, at level 7 6, level 2 1");
     assert.equal(body.lb_words, 1);
     assert.equal(body.lb_anna, 2);
     assert.ok(Date.parse(body.lb_updated_at) > 0);
-    assert.equal(rows["alice@example.com"].lb_words, 1);
+    assert.equal(rows["alice@example.com"].lb_xp, 16);
   }));
 });
 
@@ -300,5 +307,93 @@ test("saveUser reports a genuine write failure as 500 (no silent fallback)", asy
     const { status } = parse(await saveUser.handler(req("POST", "good", { user: blob })));
     assert.equal(status, 500);
     assert.equal(calls.filter((c) => (c.init.method || "") === "PATCH").length, 1);
+  }));
+});
+
+test("saveUser before migrations/leaderboard_xp.sql: drops lb_xp, keeps the other counters", async () => {
+  const rows = sampleRows();
+  const { fetchImpl, calls } = fakeSupabase({ rows, xpMigrated: false });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const { status } = parse(await saveUser.handler(req("POST", "good", { user: blob })));
+    assert.equal(status, 200);
+    const patches = calls.filter((c) => (c.init.method || "") === "PATCH");
+    assert.equal(patches.length, 2);
+    assert.deepEqual(Object.keys(JSON.parse(patches[1].init.body)).sort(), ["data", "lb_anna", "lb_updated_at", "lb_words"]);
+  }));
+});
+
+// --- auto-enrolment (Dan 2026-10-25) ----------------------------------------
+
+test("autoEnroll: a new account gets a positive adjective + animal handle, once; a taken handle tries another", async () => {
+  const { ADJECTIVES, ANIMALS, randomHandle } = require("../../netlify/functions/leaderboardNames.js");
+  const { normalizeDisplayName } = require("../../netlify/functions/leaderboardStats.js");
+  for (const a of ADJECTIVES) for (const n of ANIMALS) {
+    const name = `${a} ${n} 99`;
+    assert.equal(normalizeDisplayName(name), name, `${name} passes the name rule`);
+  }
+  assert.match(randomHandle(5, () => 0.5), / \d{2}$/, "later attempts carry a number");
+
+  const rows = {
+    "new@example.com": { email: "new@example.com", lb_name: null, lb_enroll_checked_at: null },
+    "old@example.com": { email: "old@example.com", lb_name: null, lb_enroll_checked_at: STAMP },
+    "taken@example.com": { email: "taken@example.com", lb_name: `${ADJECTIVES[0]} ${ANIMALS[0]}`, lb_enroll_checked_at: STAMP },
+  };
+  const { fetchImpl } = fakeSupabase({ rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    // rng 0 → the first adjective + animal, which "taken" already holds.
+    let i = 0;
+    const rng = () => (i++ < 2 ? 0 : 0.99);
+    const name = await leaderboard.autoEnroll("new@example.com", { rng });
+    assert.equal(name, `${ADJECTIVES.at(-1)} ${ANIMALS.at(-1)}`, "the clash retried with another handle");
+    assert.equal(rows["new@example.com"].lb_name, name);
+    assert.ok(rows["new@example.com"].lb_enroll_checked_at);
+
+    // Leaving afterwards sticks: the account is checked, never re-enrolled.
+    rows["new@example.com"].lb_name = null;
+    assert.equal(await leaderboard.autoEnroll("new@example.com"), null);
+    assert.equal(rows["new@example.com"].lb_name, null);
+
+    assert.equal(await leaderboard.autoEnroll("old@example.com"), null, "accounts older than the migration are left alone");
+    assert.equal(rows["old@example.com"].lb_name, null);
+  }));
+});
+
+test("autoEnroll is a quiet no-op before migrations/leaderboard_xp.sql", async () => {
+  const rows = { "new@example.com": { email: "new@example.com", lb_name: null } };
+  const { fetchImpl } = fakeSupabase({ rows, xpMigrated: false });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    assert.equal(await leaderboard.autoEnroll("new@example.com"), null);
+    assert.equal(rows["new@example.com"].lb_name, null);
+  }));
+});
+
+test("test accounts (Emi's QA logins) never show on the board or count in anyone's rank, but see themselves", async () => {
+  const rows = sampleRows();
+  rows["emi@test.com"] = { email: "emi@test.com", lb_name: "Emi QA", lb_xp: 999, lb_anna: 999, lb_excluded: true, lb_updated_at: STAMP };
+  rows["alice@example.com"].lb_name = "Alice";
+  const { fetchImpl } = fakeSupabase({ rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const { body } = parse(await leaderboard.handler(req("GET", "good")));
+    assert.ok(!body.top.xp.some((r) => r.name === "Emi QA"), "not in the XP list");
+    assert.ok(!body.top.anna.some((r) => r.name === "Emi QA"), "not in the Anna list");
+    assert.equal(body.me.rankXp, 3, "Alice's rank ignores the test account above her");
+  }));
+  const { isTestAccount } = require("../../netlify/functions/leaderboardNames.js");
+  assert.equal(isTestAccount("emi@test.com"), true);
+  assert.equal(isTestAccount("nekhbrazil+emi0930@gmail.com"), true);
+  assert.equal(isTestAccount("nekhbrazil@gmail.com"), false, "Nekh's own account stays on the board");
+  assert.equal(isTestAccount("emil@hotmail.com"), false);
+  const saved = process.env.LEADERBOARD_EXCLUDE_PATTERNS;
+  process.env.LEADERBOARD_EXCLUDE_PATTERNS = "emi.qa*@gmail.com";
+  try { assert.equal(isTestAccount("emi.qa2@gmail.com"), true, "extra patterns from the env"); }
+  finally { if (saved === undefined) delete process.env.LEADERBOARD_EXCLUDE_PATTERNS; else process.env.LEADERBOARD_EXCLUDE_PATTERNS = saved; }
+});
+
+test("autoEnroll flags a new test account as excluded", async () => {
+  const rows = { "emi@test.com": { email: "emi@test.com", lb_name: null, lb_enroll_checked_at: null } };
+  const { fetchImpl } = fakeSupabase({ rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    await leaderboard.autoEnroll("emi@test.com");
+    assert.equal(rows["emi@test.com"].lb_excluded, true);
   }));
 });
