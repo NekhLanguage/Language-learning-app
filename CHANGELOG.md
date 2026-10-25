@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-25 (later)
+
+### Small voice-pass fixes on the Refer button and the leaderboard subtitle
+
+Two spots still carried an em-dash from earlier ships. The Refer-a-friend button now reads "Refer a friend. Free months of Anna." The leaderboard subtitle now reads "XP from every level your words climb, and words you've met with Anna. Across every language you study." No change to what either does, just the way the sentences read. Bumped to v1.2.125 so the new text reaches you.
+
 ## 2026-10-25
 
 ### The app is one payment of $19, and Anna is your choice
