@@ -3331,3 +3331,33 @@ a.primary.paywall-buy{
 .anna-popup-actions .primary {
   width: 100%;
 }
+
+/* Start screen, compact (Nekh 2026-10-25, phone screenshot): the buttons
+   pair up two to a row on every width (Anna + Leaderboard, the two
+   community links side by side), and only OPEN APP and the long-label
+   links take a full row. LOG OUT no longer sits on the title, and the
+   bug-report bubble stays off this screen (it is for lessons). */
+#start-screen .button-grid{
+  width: min(560px, 100%);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+#start-screen #open-app,
+#start-screen #link-refer,
+#start-screen #link-offer{
+  grid-column: 1 / -1;
+}
+body:has(#start-screen.active) #feedback-btn{
+  display: none;
+}
+
+@media (max-width: 520px){
+  #start-screen{ padding-top: 4.25rem; }
+  #start-screen .button-grid{ gap: 0.6rem; }
+  #start-screen .button-grid a.secondary{
+    padding: 0.8rem 0.75rem;
+    font-size: 0.9rem;
+    min-width: 0;
+  }
+  #start-screen .subtitle{ margin-bottom: 1.5rem; }
+}
