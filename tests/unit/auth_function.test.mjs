@@ -238,8 +238,8 @@ test("saveUser PATCHes the session's own row and ignores a body email", async ()
     assert.match(patch.url, /email=eq\.alice%40example\.com/);
     const body = JSON.parse(patch.init.body);
     assert.deepEqual(body.data, { id: "x", runs: {} });
-    // Leaderboard v1: the two counters ride the same PATCH (leaderboard_function.test.mjs covers them).
-    assert.deepEqual(Object.keys(body).sort(), ["data", "lb_anna", "lb_updated_at", "lb_words"]);
+    // Leaderboard: the counters ride the same PATCH (leaderboard_function.test.mjs covers them).
+    assert.deepEqual(Object.keys(body).sort(), ["data", "lb_anna", "lb_updated_at", "lb_words", "lb_xp"]);
     assert.equal(patch.init.headers.apikey, SEC, "users writes use the secret key (the table is locked to it)");
   }));
 });
@@ -503,5 +503,22 @@ test("trialEvent: a reminder is stamped and recorded once, only when it is the p
     calls.length = 0;
     await trialEvent.handler(req("carol", { type: "anna_lapse" }));
     assert.deepEqual(posted().map((e) => e.event_type), ["anna_lapse"], "a lapsed free month is recorded");
+  }));
+});
+
+test("checkAccess puts a new account on the leaderboard under a generated handle; older rows are never written", async () => {
+  const rows = {
+    "alice@example.com": { email: "alice@example.com", access_until: null, access_tier: "trial", lb_name: null, lb_enroll_checked_at: null },
+    "bob@example.com": { email: "bob@example.com", access_until: null, access_tier: "paid", lb_name: null, lb_enroll_checked_at: "2026-10-25T00:00:00Z" },
+  };
+  const { fetchImpl, calls } = fakeSupabase({ tokens: { alice: ALICE, bob: { id: "u2", email: "bob@example.com" } }, rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    await checkAccess.handler(req("alice"));
+    assert.match(rows["alice@example.com"].lb_name, /^[A-Z][a-z]+ [A-Z][a-z]+$/, "Adjective Animal");
+    assert.ok(!/alice/i.test(rows["alice@example.com"].lb_name), "never the email or account name");
+    calls.length = 0;
+    await checkAccess.handler(req("bob"));
+    assert.ok(!calls.some((c) => c.init.method === "PATCH"), "a checked row is only read");
+    assert.equal(rows["bob@example.com"].lb_name, null);
   }));
 });

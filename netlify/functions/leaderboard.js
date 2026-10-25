@@ -1,20 +1,27 @@
-// Leaderboard v1 (Nekh 2026-10-02): the community board.
+// Leaderboard (Nekh 2026-10-02; XP ranking + auto-enrolment, Dan/Nekh
+// 2026-10-25): the community board.
 //
-//   GET  -> { top: { words: [...], anna: [...] }, me, limits }
-//        top.* are the TOP_N learners who joined, by words mastered at
-//        level 7 and by words encountered with Anna; each row is
-//        { name, words, anna }. `me` is the caller's own row when the
-//        request carries a session ({ joined, name, words, anna,
-//        rankWords, rankAnna }), null otherwise — the list itself is
-//        public to anyone signed in, the name is the only thing shown.
+//   GET  -> { top: { xp: [...], anna: [...] }, me, limits }
+//        top.* are the TOP_N learners on the board, by experience points
+//        (1 per level a word clears, 3 for clearing level 7 — see
+//        leaderboardStats.js) and by words encountered with Anna; each row
+//        is { name, xp, anna }. `me` is the caller's own row ({ joined,
+//        name, xp, anna, rankXp, rankAnna }) — the list itself is public
+//        to anyone signed in, the name is the only thing shown.
 //   GET ?period=week -> the same shape for THIS week (ISO week, UTC): the
 //        counts are what each learner gained since Monday 00:00 UTC
-//        (lb_words_week / lb_anna_week, kept by the users_lb_weekly trigger,
+//        (lb_xp_week / lb_anna_week, kept by the users_lb_weekly trigger,
 //        migrations/leaderboard_weekly.sql). Fetched only when the learner
 //        opens the weekly view, so the default board costs nothing extra.
 //   POST { name }       -> join the board (or rename) under that name.
+//   POST { random: true } -> rename to a fresh generated handle (one tap).
 //   POST { leave: true } -> leave the board (counters keep updating, the
 //        row just isn't shown).
+//
+// New accounts are put on the board under a generated handle ("Brave
+// Otter", leaderboardNames.js) the first time checkAccess sees them
+// (autoEnroll below) — never their Google name or email. Accounts that
+// existed before 2026-10-25 are left as they were.
 //
 // The counters themselves are written by saveUser on every save
 // (leaderboardStats.js), so this function only ever reads them. Nothing
@@ -23,9 +30,10 @@
 const { SUPABASE_URL, usersKey, restHeaders, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse } = require("./auth");
 const { normalizeDisplayName, computeLeaderboardStats, isoWeekKey, MIN_NAME, MAX_NAME } = require("./leaderboardStats");
+const { randomHandle } = require("./leaderboardNames");
 
 const TOP_N = 25;
-const ROW_SELECT = "lb_name,lb_words,lb_anna";
+const ROW_SELECT = "lb_name,lb_xp,lb_anna";
 const ME_SELECT = `${ROW_SELECT},lb_updated_at`;
 
 function json(statusCode, body) {
@@ -40,7 +48,7 @@ function json(statusCode, body) {
 // until migrations/leaderboard.sql has run. Make that a clear 503 rather
 // than a generic failure.
 function notMigrated(text) {
-  return /lb_(name|words|anna|updated_at|week)/.test(String(text || ""));
+  return /lb_(name|xp|anna|updated_at|week)/.test(String(text || ""));
 }
 
 // Only rows stamped with this week count on the weekly board.
@@ -49,7 +57,7 @@ const weekFilter = (wk) => `&lb_week=eq.${encodeURIComponent(wk)}`;
 async function weekTopBy(key, column, wk) {
   const res = await rest(
     key,
-    `?select=lb_name,lb_words_week,lb_anna_week&lb_name=not.is.null${weekFilter(wk)}&${column}=gt.0&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
+    `?select=lb_name,lb_xp_week,lb_anna_week&lb_name=not.is.null${weekFilter(wk)}&${column}=gt.0&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
   );
   if (!res.ok) {
     const text = await res.text();
@@ -59,7 +67,7 @@ async function weekTopBy(key, column, wk) {
   const rows = await res.json();
   return (Array.isArray(rows) ? rows : []).map((row) => ({
     name: String(row.lb_name || ""),
-    words: Math.max(0, Number(row.lb_words_week) || 0),
+    xp: Math.max(0, Number(row.lb_xp_week) || 0),
     anna: Math.max(0, Number(row.lb_anna_week) || 0),
   }));
 }
@@ -68,7 +76,7 @@ async function weekTopBy(key, column, wk) {
 // Monday (their lb_week is an older week). Rank counts learners strictly
 // ahead among this week's rows.
 async function weekMeFor(key, email, wk) {
-  const res = await rest(key, `?select=lb_name,lb_week,lb_words_week,lb_anna_week&email=eq.${encodeURIComponent(email)}`);
+  const res = await rest(key, `?select=lb_name,lb_week,lb_xp_week,lb_anna_week&email=eq.${encodeURIComponent(email)}`);
   if (!res.ok) {
     const text = await res.text();
     if (notMigrated(text)) throw new NotMigratedError(text);
@@ -78,14 +86,14 @@ async function weekMeFor(key, email, wk) {
   const row = Array.isArray(rows) && rows.length ? rows[0] : null;
   if (!row) return null;
   const current = row.lb_week === wk;
-  const words = current ? Math.max(0, Number(row.lb_words_week) || 0) : 0;
+  const xp = current ? Math.max(0, Number(row.lb_xp_week) || 0) : 0;
   const anna = current ? Math.max(0, Number(row.lb_anna_week) || 0) : 0;
-  if (!row.lb_name) return { joined: false, name: null, words, anna, rankWords: null, rankAnna: null };
-  const [aheadWords, aheadAnna] = await Promise.all([
-    countAhead(key, "lb_words_week", words, weekFilter(wk)),
+  if (!row.lb_name) return { joined: false, name: null, xp, anna, rankXp: null, rankAnna: null };
+  const [aheadXp, aheadAnna] = await Promise.all([
+    countAhead(key, "lb_xp_week", xp, weekFilter(wk)),
     countAhead(key, "lb_anna_week", anna, weekFilter(wk)),
   ]);
-  return { joined: true, name: String(row.lb_name), words, anna, rankWords: aheadWords + 1, rankAnna: aheadAnna + 1 };
+  return { joined: true, name: String(row.lb_name), xp, anna, rankXp: aheadXp + 1, rankAnna: aheadAnna + 1 };
 }
 
 class NotMigratedError extends Error {}
@@ -101,7 +109,7 @@ async function rest(key, path, init = {}) {
 function rowToEntry(row) {
   return {
     name: String(row.lb_name || ""),
-    words: Math.max(0, Number(row.lb_words) || 0),
+    xp: Math.max(0, Number(row.lb_xp) || 0),
     anna: Math.max(0, Number(row.lb_anna) || 0),
   };
 }
@@ -149,7 +157,7 @@ async function refreshCounters(key, email) {
   const patch = await rest(key, `?email=eq.${encodeURIComponent(email)}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json", Prefer: "return=minimal" },
-    body: JSON.stringify({ lb_words: stats.words, lb_anna: stats.anna, lb_updated_at: new Date().toISOString() }),
+    body: JSON.stringify({ lb_xp: stats.xp, lb_words: stats.words, lb_anna: stats.anna, lb_updated_at: new Date().toISOString() }),
   });
   if (!patch.ok) console.warn("leaderboard: counter refresh write failed:", patch.status, await patch.text());
   return stats;
@@ -167,17 +175,17 @@ async function meFor(key, email) {
   if (!row) return null;
   if (!row.lb_updated_at) {
     const stats = await refreshCounters(key, email);
-    row.lb_words = stats.words;
+    row.lb_xp = stats.xp;
     row.lb_anna = stats.anna;
   }
   const entry = rowToEntry(row);
   const joined = !!row.lb_name;
-  if (!joined) return { joined: false, name: null, words: entry.words, anna: entry.anna, rankWords: null, rankAnna: null };
-  const [aheadWords, aheadAnna] = await Promise.all([
-    countAhead(key, "lb_words", entry.words),
+  if (!joined) return { joined: false, name: null, xp: entry.xp, anna: entry.anna, rankXp: null, rankAnna: null };
+  const [aheadXp, aheadAnna] = await Promise.all([
+    countAhead(key, "lb_xp", entry.xp),
     countAhead(key, "lb_anna", entry.anna),
   ]);
-  return { joined: true, name: entry.name, words: entry.words, anna: entry.anna, rankWords: aheadWords + 1, rankAnna: aheadAnna + 1 };
+  return { joined: true, name: entry.name, xp: entry.xp, anna: entry.anna, rankXp: aheadXp + 1, rankAnna: aheadAnna + 1 };
 }
 
 async function setName(key, email, name) {
@@ -195,6 +203,40 @@ async function setName(key, email, name) {
   const rows = await res.json();
   if (!Array.isArray(rows) || !rows.length) return { ok: false, code: "no_row" };
   return { ok: true };
+}
+
+// Put a new account on the board under a generated handle, once. Only a row
+// still unchecked (lb_enroll_checked_at NULL — accounts created after
+// migrations/leaderboard_xp.sql, which stamps every older row) and still
+// nameless is touched, so a learner who left or renamed is never changed
+// again. A taken handle (409 on the unique name index) tries another.
+// Fail-soft: returns the handle, or null; never throws (checkAccess must
+// not fail over the board).
+async function autoEnroll(email, { key = usersKey(), rng = Math.random } = {}) {
+  if (!key || !email) return null;
+  try {
+    for (let attempt = 0; attempt < 6; attempt++) {
+      const name = randomHandle(attempt, rng);
+      const res = await rest(key, `?email=eq.${encodeURIComponent(email)}&lb_enroll_checked_at=is.null&lb_name=is.null&select=lb_name`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Prefer: "return=representation" },
+        body: JSON.stringify({ lb_name: name, lb_enroll_checked_at: new Date().toISOString() }),
+      });
+      if (res.status === 409) continue;
+      if (!res.ok) {
+        // 400 = migrations/leaderboard_xp.sql not applied yet: nothing to do.
+        if (res.status !== 400) console.warn("leaderboard autoEnroll:", res.status, (await res.text()).slice(0, 200));
+        return null;
+      }
+      const rows = await res.json();
+      return Array.isArray(rows) && rows.length ? name : null;
+    }
+    console.warn("leaderboard autoEnroll: no free handle after 6 tries");
+    return null;
+  } catch (err) {
+    console.warn("leaderboard autoEnroll error:", err && err.message);
+    return null;
+  }
 }
 
 exports.handler = async (event) => {
@@ -217,19 +259,19 @@ exports.handler = async (event) => {
       const period = event.queryStringParameters?.period === "week" ? "week" : "all";
       if (period === "week") {
         const wk = isoWeekKey();
-        const [words, anna, me] = await Promise.all([
-          weekTopBy(key, "lb_words_week", wk),
+        const [xp, anna, me] = await Promise.all([
+          weekTopBy(key, "lb_xp_week", wk),
           weekTopBy(key, "lb_anna_week", wk),
           weekMeFor(key, session.email, wk),
         ]);
-        return json(200, { period, week: wk, top: { words, anna }, me, limits });
+        return json(200, { period, week: wk, top: { xp, anna }, me, limits });
       }
-      const [words, anna, me] = await Promise.all([
-        topBy(key, "lb_words"),
+      const [xp, anna, me] = await Promise.all([
+        topBy(key, "lb_xp"),
         topBy(key, "lb_anna"),
         meFor(key, session.email),
       ]);
-      return json(200, { period, top: { words, anna }, me, limits });
+      return json(200, { period, top: { xp, anna }, me, limits });
     }
 
     const session = await verifySession(event);
@@ -249,6 +291,15 @@ exports.handler = async (event) => {
       return json(200, { me, limits });
     }
 
+    if (body.random === true) {
+      for (let attempt = 0; attempt < 6; attempt++) {
+        const result = await setName(key, session.email, randomHandle(attempt));
+        if (result.ok) return json(200, { me: await meFor(key, session.email), limits });
+        if (result.code !== "name_taken") return json(404, { error: "No account row to update", code: "no_row" });
+      }
+      return json(409, { error: "That name is already taken — try another.", code: "name_taken" });
+    }
+
     const name = normalizeDisplayName(body.name);
     if (!name) {
       return json(400, {
@@ -265,10 +316,12 @@ exports.handler = async (event) => {
     return json(200, { me, limits });
   } catch (err) {
     if (err instanceof NotMigratedError) {
-      console.error("leaderboard: users.lb_* columns missing — run migrations/leaderboard.sql:", err.message);
+      console.error("leaderboard: users.lb_* columns missing — run migrations/leaderboard.sql, leaderboard_xp.sql (and leaderboard_weekly.sql for the weekly view):", err.message);
       return json(503, { error: "The leaderboard isn't set up yet.", code: "not_migrated" });
     }
     console.error("leaderboard error:", err);
     return json(500, { error: "Leaderboard unavailable" });
   }
 };
+
+exports.autoEnroll = autoEnroll;

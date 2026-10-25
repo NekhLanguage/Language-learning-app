@@ -1,16 +1,20 @@
 // leaderboard.mjs
-// Leaderboard v1 (Nekh 2026-10-02): the community board panel.
+// Leaderboard (Nekh 2026-10-02; XP ranking + auto-enrolment 2026-10-25):
+// the community board panel.
 //
 // Two counters per learner, both computed server-side on every save
 // (netlify/functions/leaderboardStats.js):
-//   words — concepts mastered at level 7 across every language
-//   anna  — words encountered with Anna (admitted + still being captured)
+//   xp   — experience points: 1 per level a word clears, 3 for clearing
+//          level 7, across every language (Nekh 2026-10-25)
+//   anna — words encountered with Anna (admitted + still being captured)
 // Two periods (Nekh 2026-10-08): all time, and THIS week (what each
 // learner gained since Monday 00:00 UTC; GET ?period=week, fetched only when
 // the learner switches to it).
-// A learner appears on the board only after choosing a display name here
-// (opt-in); the counters are kept for everyone so joining shows them at
-// once.
+// A new account is on the board from its first sign-in under a generated
+// handle ("Brave Otter"); renaming and leaving are one tap each here. An
+// account that left (or predates 2026-10-25 and never joined) can join
+// under a name of its choice; the counters are kept for everyone so
+// joining shows them at once.
 //
 // This module is loaded by app.js with a dynamic import() the first time
 // the start-screen button is pressed — nothing here runs or downloads at
@@ -26,7 +30,7 @@ let body = null;
 // view: "loading" | "error" | "ready" for the selected period. The period
 // switch stays on screen in all three, so a failed weekly load never takes
 // the all-time board (or the way back to it) with it.
-let state = { data: null, tab: "words", period: "all", byPeriod: {}, view: "loading", error: "" };
+let state = { data: null, tab: "xp", period: "all", byPeriod: {}, view: "loading", error: "" };
 
 // UI text in the learner's support language (app.js passes ui_text.mjs's
 // makeTranslator for it); English until then.
@@ -47,7 +51,7 @@ function ensureModal() {
     <div class="feedback-panel leaderboard-panel">
       <button id="leaderboard-close" class="alphabet-close" type="button" aria-label="${esc(t("closeLabel", "Close"))}">✕</button>
       <h2 class="feedback-modal-title" id="leaderboard-title">${esc(t("leaderboardTitle", "Leaderboard"))}</h2>
-      <p class="feedback-modal-subtitle">${esc(t("leaderboardSubtitle", "Words mastered at level 7, and words you've met with Anna — across every language you study."))}</p>
+      <p class="feedback-modal-subtitle">${esc(t("leaderboardSubtitle", "XP from every level your words climb, and words you've met with Anna — across every language you study."))}</p>
       <div id="leaderboard-body" class="leaderboard-body" aria-live="polite"></div>
     </div>`;
   document.body.appendChild(modal);
@@ -78,21 +82,21 @@ function renderList(data) {
       ? `<p class="leaderboard-empty">${esc(t("leaderboardWeekEmpty", "Nobody has added to their count this week yet — it starts over every Monday."))}</p>`
       : `<p class="leaderboard-empty">${esc(t("leaderboardEmpty", "Nobody is on the board yet — pick a name below and be the first."))}</p>`;
   }
-  const sortWords = tab === "words";
+  const sortXp = tab === "xp";
   const items = rows.map((row, i) => {
     const isMe = myName !== null && row.name === myName;
     return `<li class="leaderboard-row${isMe ? " is-me" : ""}">
       <span class="leaderboard-rank">${i + 1}</span>
       <span class="leaderboard-name">${esc(row.name)}${isMe ? ` <span class="leaderboard-you">${esc(t("leaderboardYou", "you"))}</span>` : ""}</span>
-      <span class="leaderboard-count leaderboard-words${sortWords ? " is-sort" : ""}">${Number(row.words) || 0}</span>
-      <span class="leaderboard-count leaderboard-anna${sortWords ? "" : " is-sort"}">${Number(row.anna) || 0}</span>
+      <span class="leaderboard-count leaderboard-xp${sortXp ? " is-sort" : ""}">${Number(row.xp) || 0}</span>
+      <span class="leaderboard-count leaderboard-anna${sortXp ? "" : " is-sort"}">${Number(row.anna) || 0}</span>
     </li>`;
   });
   return `<ol class="leaderboard-list">
     <li class="leaderboard-head" aria-hidden="true">
       <span></span><span></span>
-      <span class="leaderboard-count${sortWords ? " is-sort" : ""}">${esc(t("leaderboardColWords", "L7"))}</span>
-      <span class="leaderboard-count${sortWords ? "" : " is-sort"}">${esc(t("leaderboardColAnna", "Anna"))}</span>
+      <span class="leaderboard-count${sortXp ? " is-sort" : ""}">${esc(t("leaderboardColXp", "XP"))}</span>
+      <span class="leaderboard-count${sortXp ? "" : " is-sort"}">${esc(t("leaderboardColAnna", "Anna"))}</span>
     </li>
     ${items.join("")}
   </ol>`;
@@ -104,16 +108,16 @@ function renderMe(data) {
   if (!me) {
     return `<p class="leaderboard-note">${esc(t("leaderboardSignInToJoin", "Sign in to join the board."))}</p>`;
   }
-  const words = Number(me.words) || 0;
+  const xp = Number(me.xp) || 0;
   const anna = Number(me.anna) || 0;
-  let counts = `${esc(pluralText(t, lang, "leaderboardMastered", words, "{n} word mastered", "{n} words mastered"))} · ${esc(pluralText(t, lang, "leaderboardWithAnna", anna, "{n} word with Anna", "{n} words with Anna"))}`;
+  let counts = `${esc(t("leaderboardXp", "{n} XP", { n: xp }))} · ${esc(pluralText(t, lang, "leaderboardWithAnna", anna, "{n} word with Anna", "{n} words with Anna"))}`;
   if (state.period === "week") counts = esc(t("leaderboardThisWeek", "This week: {counts}", { counts }));
   if (me.joined) {
     const rank = (n) => `#${Number(n) || "–"}`;
     return `
       <div class="leaderboard-me">
-        <p class="leaderboard-standing">${t("leaderboardStanding", "You're {rankWords} for words mastered and {rankAnna} for words with Anna, as {name}", {
-          rankWords: `<strong>${rank(me.rankWords)}</strong>`,
+        <p class="leaderboard-standing">${t("leaderboardStandingXp", "You're {rankXp} for XP and {rankAnna} for words with Anna, as {name}", {
+          rankXp: `<strong>${rank(me.rankXp)}</strong>`,
           rankAnna: `<strong>${rank(me.rankAnna)}</strong>`,
           name: `<strong>${esc(me.name)}</strong>`,
         })}</p>
@@ -122,6 +126,7 @@ function renderMe(data) {
           <input id="leaderboard-name" class="leaderboard-input" type="text" maxlength="${limits.maxName}" autocomplete="nickname" placeholder="${esc(t("leaderboardRenamePlaceholder", "Change your name"))}" aria-label="${esc(t("leaderboardRenameLabel", "New display name"))}" />
           <button id="leaderboard-join" class="primary leaderboard-btn" type="submit">${esc(t("leaderboardRename", "Rename"))}</button>
         </form>
+        <button id="leaderboard-random" class="secondary leaderboard-random" type="button">${esc(t("leaderboardRandomName", "New random name"))}</button>
         <button id="leaderboard-leave" class="gate-link leaderboard-leave" type="button">${esc(t("leaderboardLeave", "Leave the board"))}</button>
         <p id="leaderboard-status" class="leaderboard-status" role="status"></p>
       </div>`;
@@ -144,7 +149,7 @@ function render() {
   const ready = state.view === "ready" && data;
   const content = ready
     ? `<div class="leaderboard-tabs" role="tablist">
-      <button type="button" class="leaderboard-tab" data-tab="words" role="tab" aria-selected="${state.tab === "words"}">${esc(t("leaderboardTabWords", "By words mastered"))}</button>
+      <button type="button" class="leaderboard-tab" data-tab="xp" role="tab" aria-selected="${state.tab === "xp"}">${esc(t("leaderboardTabXp", "By XP"))}</button>
       <button type="button" class="leaderboard-tab" data-tab="anna" role="tab" aria-selected="${state.tab === "anna"}">${esc(t("leaderboardTabAnna", "By words with Anna"))}</button>
     </div>
     ${renderList(data)}
@@ -157,7 +162,7 @@ function render() {
       <button type="button" class="leaderboard-period" data-period="all" aria-pressed="${period === "all"}">${esc(t("leaderboardPeriodAll", "All time"))}</button>
       <button type="button" class="leaderboard-period" data-period="week" aria-pressed="${period === "week"}">${esc(t("leaderboardPeriodWeek", "This week"))}</button>
     </div>
-    ${period === "week" ? `<p class="leaderboard-note leaderboard-week-note">${esc(t("leaderboardWeekNote", "Words added since Monday. The week starts over every Monday."))}</p>` : ""}
+    ${period === "week" ? `<p class="leaderboard-note leaderboard-week-note">${esc(t("leaderboardWeekNoteXp", "XP and Anna words gained since Monday. The week starts over every Monday."))}</p>` : ""}
     ${content}`;
 
   body.querySelectorAll(".leaderboard-period").forEach((btn) => {
@@ -178,7 +183,7 @@ function render() {
 
   body.querySelectorAll(".leaderboard-tab").forEach((btn) => {
     btn.addEventListener("click", () => {
-      state.tab = btn.dataset.tab === "anna" ? "anna" : "words";
+      state.tab = btn.dataset.tab === "anna" ? "anna" : "xp";
       render();
     });
   });
@@ -187,6 +192,8 @@ function render() {
   if (form) form.addEventListener("submit", onSubmitName);
   const leave = body.querySelector("#leaderboard-leave");
   if (leave) leave.addEventListener("click", onLeave);
+  const random = body.querySelector("#leaderboard-random");
+  if (random) random.addEventListener("click", onRandomName);
 }
 
 function setStatus(text, isError) {
@@ -225,6 +232,21 @@ async function onSubmitName(ev) {
   }
 }
 
+// One tap: a fresh "Adjective Animal" handle from the server.
+async function onRandomName() {
+  const btn = body.querySelector("#leaderboard-random");
+  if (btn) btn.disabled = true;
+  setStatus(t("oneMoment", "One moment…"));
+  try {
+    await post({ random: true });
+    state.byPeriod = {};
+    await load({ keepTab: true });
+  } catch (err) {
+    setStatus(err.message || t("authGeneric", "Something went wrong — please try again."), true);
+    if (btn) btn.disabled = false;
+  }
+}
+
 async function onLeave() {
   const btn = body.querySelector("#leaderboard-leave");
   if (btn) btn.disabled = true;
@@ -241,7 +263,7 @@ async function onLeave() {
 
 async function load({ keepTab = false } = {}) {
   if (!keepTab) {
-    state.tab = "words";
+    state.tab = "xp";
     state.period = "all";
   }
   const period = state.period;

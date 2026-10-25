@@ -1,6 +1,7 @@
 const { usersKey, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive } = require("./auth");
 const { FREE_LESSONS, provisionTrial, tierOf, isTrialRow, consentFromMetadata, annaState } = require("./entitlement");
+const { autoEnroll } = require("./leaderboard");
 
 // Who may use the app: the signed-in learner (Supabase Auth session token in
 // the Authorization header — the request body is ignored).
@@ -46,6 +47,12 @@ exports.handler = async (event) => {
       await provisionTrial(session.email, consentFromMetadata(session.metadata));
       row = await fetchAccessRow(session.email, key);
     }
+    // Leaderboard (Dan 2026-10-25): a new account joins the board under a
+    // generated handle on its first sign-in. Only a row whose
+    // lb_enroll_checked_at is present and NULL qualifies (every row older
+    // than migrations/leaderboard_xp.sql is stamped), so nothing else is
+    // ever written here.
+    if (row && row.lb_enroll_checked_at === null) await autoEnroll(session.email, { key });
     const asked = !!row && !!(row.email_opt_in_asked_at || row.email_opt_in_at);
     return json(200, {
       allowed: !!row,

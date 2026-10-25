@@ -75,6 +75,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { computeLeaderboardStats, normalizeDisplayName, isoWeekKey, MIN_NAME, MAX_NAME } =
   require("../netlify/functions/leaderboardStats.js");
+const { randomHandle } = require("../netlify/functions/leaderboardNames.js");
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PORT = Number(process.env.PORT || 8888);
@@ -144,15 +145,27 @@ const noteWeeklyBase = (email, previousUser, nextUser) => {
   const wk = isoWeekKey();
   if (weekBase.get(email)?.week === wk) return;
   const from = computeLeaderboardStats(previousUser ?? nextUser ?? null);
-  weekBase.set(email, { week: wk, words: from.words, anna: from.anna });
+  weekBase.set(email, { week: wk, xp: from.xp, anna: from.anna });
 };
 const weeklyStats = (email) => {
   const base = weekBase.get(email);
-  if (!base || base.week !== isoWeekKey()) return { words: 0, anna: 0 };
+  if (!base || base.week !== isoWeekKey()) return { xp: 0, anna: 0 };
   const now = computeLeaderboardStats(userStore.get(email) || null);
-  return { words: Math.max(0, now.words - base.words), anna: Math.max(0, now.anna - base.anna) };
+  return { xp: Math.max(0, now.xp - base.xp), anna: Math.max(0, now.anna - base.anna) };
 };
 const LEADERBOARD_TOP = 25;
+// A generated handle nobody else holds (leaderboard.js autoEnroll / random).
+const freeHandle = (email) => {
+  for (let attempt = 0; ; attempt++) {
+    const name = randomHandle(attempt);
+    const clash = [...leaderboardNames].some(([e, n]) => e !== email && n.toLowerCase() === name.toLowerCase());
+    if (!clash) return name;
+  }
+};
+// Accounts the stub treats as created after the leaderboard_xp migration
+// (lb_enroll_checked_at NULL): emails containing "newacct". Everyone else
+// predates it, like every production row on 2026-10-25.
+const enrollChecked = new Set();
 // Chat texts carrying __FAIL_ONCE__ that have already failed once (tutor stub).
 const tutorFailedOnce = new Set();
 // How many of the next trialEvent POSTs to answer with a 503, set via
@@ -254,25 +267,29 @@ async function handleFunction(name, req, res, url) {
       const week = url.searchParams.get("period") === "week";
       const rowFor = (e) => {
         const stats = week ? weeklyStats(e) : computeLeaderboardStats(userStore.get(e) || null);
-        return { name: leaderboardNames.get(e) || null, words: stats.words, anna: stats.anna };
+        return { name: leaderboardNames.get(e) || null, xp: stats.xp, anna: stats.anna };
       };
       const joined = () => [...leaderboardNames.keys()].map(rowFor);
       const top = (col) => joined().filter((r) => !week || r[col] > 0).sort((a, b) => b[col] - a[col]).slice(0, LEADERBOARD_TOP);
       const me = () => {
         const r = rowFor(email);
-        if (!r.name) return { joined: false, name: null, words: r.words, anna: r.anna, rankWords: null, rankAnna: null };
+        if (!r.name) return { joined: false, name: null, xp: r.xp, anna: r.anna, rankXp: null, rankAnna: null };
         const all = joined();
         return {
-          joined: true, name: r.name, words: r.words, anna: r.anna,
-          rankWords: all.filter((x) => x.words > r.words).length + 1,
+          joined: true, name: r.name, xp: r.xp, anna: r.anna,
+          rankXp: all.filter((x) => x.xp > r.xp).length + 1,
           rankAnna: all.filter((x) => x.anna > r.anna).length + 1,
         };
       };
       if (req.method === "GET") {
-        return sendJson(res, 200, { period: week ? "week" : "all", ...(week ? { week: isoWeekKey() } : {}), top: { words: top("words"), anna: top("anna") }, me: me(), limits });
+        return sendJson(res, 200, { period: week ? "week" : "all", ...(week ? { week: isoWeekKey() } : {}), top: { xp: top("xp"), anna: top("anna") }, me: me(), limits });
       }
       if (body.leave === true) {
         leaderboardNames.delete(email);
+        return sendJson(res, 200, { me: me(), limits });
+      }
+      if (body.random === true) {
+        leaderboardNames.set(email, freeHandle(email));
         return sendJson(res, 200, { me: me(), limits });
       }
       const name = normalizeDisplayName(body.name);
@@ -289,6 +306,10 @@ async function handleFunction(name, req, res, url) {
     }
     case "checkAccess": {
       if (!email) return sendJson(res, 401, { allowed: false, error: "Sign in required", code: "unauthenticated" });
+      if (email.includes("newacct") && !enrollChecked.has(email)) {
+        enrollChecked.add(email);
+        if (!leaderboardNames.has(email)) leaderboardNames.set(email, freeHandle(email));
+      }
       const trial = isTrialEmail(email);
       if (trial && !trialStarted.has(email)) {
         trialStarted.add(email);

@@ -57,7 +57,7 @@ test("words with Anna: tutor-admitted concepts plus captured and pending words, 
 
 test("computeLeaderboardStats is zero-safe on empty, malformed and null blobs", () => {
   for (const blob of [null, undefined, 42, "x", {}, { runs: null }, { runs: [] }, { runs: { uk: 7 } }, { runs: { uk: { progress: "no", personalVocab: "no" } } }]) {
-    assert.deepEqual(stats.computeLeaderboardStats(blob), { words: 0, anna: 0 }, JSON.stringify(blob));
+    assert.deepEqual(stats.computeLeaderboardStats(blob), { xp: 0, words: 0, anna: 0 }, JSON.stringify(blob));
   }
 });
 
@@ -88,4 +88,23 @@ test("isoWeekKey: ISO weeks in UTC, matching the trigger's Postgres key", () => 
   assert.equal(stats.isoWeekKey(new Date("2021-01-03T12:00:00Z")), "2020-W53", "early January can belong to last year's week 53");
   assert.equal(stats.isoWeekKey(new Date("2024-12-30T12:00:00Z")), "2025-W01", "late December can belong to next year's week 1");
   assert.equal(stats.isoWeekKey(new Date("2026-01-01T00:00:00Z")), "2026-W01");
+});
+
+test("XP (Nekh 2026-10-25): 1 per level cleared, 3 for clearing level 7, summed across runs", () => {
+  assert.equal(stats.conceptXp(p(1, false)), 0, "a word just met has cleared nothing");
+  assert.equal(stats.conceptXp(p(2, false)), 1, "clearing level 1 is the first XP, on day one");
+  assert.equal(stats.conceptXp(p(7, false)), 6, "levels 1-6 cleared");
+  assert.equal(stats.conceptXp(p(7, true)), 9, "mastery: 6 + 3");
+  assert.equal(stats.conceptXp(p(4, true)), 4, "recognition-only words top out at level 4: 3 + 1");
+  assert.equal(stats.conceptXp(null), 0);
+  assert.equal(stats.conceptXp({ level: "x" }), 0);
+  const user = {
+    runs: {
+      uk: { progress: { WATER: p(7, true), BOOK: p(3, false), HELLO: p(4, true) } },
+      es: { progress: { EAT: p(2, false) } },
+      broken: null,
+    },
+  };
+  assert.equal(stats.countXp(user), 9 + 2 + 4 + 1);
+  assert.deepEqual(stats.computeLeaderboardStats(user), { xp: 16, words: 1, anna: 0 });
 });

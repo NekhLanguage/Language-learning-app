@@ -38,7 +38,7 @@ test("the leaderboard speaks the support language, falls back to English, and pl
     const res = await route.fetch();
     const data = await res.json();
     data.uiStrings.leaderboardTitle = "Bestenliste";
-    data.uiStrings.leaderboardMastered_other = "{n} Wörter gemeistert";
+    data.uiStrings.leaderboardWithAnna_other = "{n} Wörter mit Anna";
     delete data.uiStrings.leaderboardJoin;
     await route.fulfill({ response: res, json: data });
   });
@@ -50,7 +50,7 @@ test("the leaderboard speaks the support language, falls back to English, and pl
   await page.click("#link-leaderboard");
   await expect(page.locator("#leaderboard-modal")).toBeVisible();
   await expect(page.locator("#leaderboard-title")).toHaveText("Bestenliste");
-  await expect(page.locator(".leaderboard-standing")).toContainText("0 Wörter gemeistert");
+  await expect(page.locator(".leaderboard-standing")).toContainText("0 Wörter mit Anna");
   // Untranslated parts fall back to English, never to a key name.
   await expect(page.locator("#leaderboard-join")).toHaveText("Join");
   const text = await page.locator("#leaderboard-modal").innerText();

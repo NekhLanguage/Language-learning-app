@@ -68,7 +68,10 @@ function subscriptionActive(accessUntil, now = Date.now()) {
 // rides along: checkAccess turns it into the popup schedule, annaCheckout
 // into the first billing date.
 const ANNA_COLUMNS = "anna_trial_started_at,anna_trial_ends_at,anna_subscribed_at,anna_popup_welcome_at,anna_popup_5day_at,anna_popup_1day_at";
-const ACCESS_ROW_SELECT = `email,access_until,access_tier,email_opt_in_at,email_opt_in_asked_at,${ANNA_COLUMNS}`;
+const ACCESS_ROW_SELECT_BASE = `email,access_until,access_tier,email_opt_in_at,email_opt_in_asked_at,${ANNA_COLUMNS}`;
+// lb_enroll_checked_at tells checkAccess whether a new account still needs
+// its leaderboard handle (migrations/leaderboard_xp.sql).
+const ACCESS_ROW_SELECT = `${ACCESS_ROW_SELECT_BASE},lb_enroll_checked_at`;
 const ACCESS_ROW_SELECT_LEGACY = "email,access_until,access_tier";
 async function fetchAccessRow(email, key) {
   const lookup = (select) => fetch(
@@ -76,6 +79,10 @@ async function fetchAccessRow(email, key) {
     { headers: restHeaders(key) }
   );
   let res = await lookup(ACCESS_ROW_SELECT);
+  if (res.status === 400) {
+    console.error("users lookup: lb_enroll_checked_at missing — run migrations/leaderboard_xp.sql");
+    res = await lookup(ACCESS_ROW_SELECT_BASE);
+  }
   if (res.status === 400) {
     console.error("users lookup: email_opt_in or anna_* columns missing — run migrations/email_opt_in.sql and migrations/anna_subscription.sql");
     res = await lookup(ACCESS_ROW_SELECT_LEGACY);

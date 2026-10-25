@@ -1,4 +1,5 @@
-// Leaderboard v1 (Nekh 2026-10-02): the start-screen board. The dev server
+// Leaderboard (Nekh 2026-10-02; XP + auto-enrolment 2026-10-25): the
+// start-screen board. The dev server
 // computes the counters from the stored blobs with the real
 // leaderboardStats.js and keeps display names in memory, so join / rename /
 // leave and the counts can be driven end to end.
@@ -32,7 +33,7 @@ test("join with a name, see yourself on the board, rename, leave", async ({ page
   await openBoard(page);
 
   // Not joined yet: own counts shown, join form offered.
-  await expect(page.locator(".leaderboard-standing")).toContainText("0 words mastered");
+  await expect(page.locator(".leaderboard-standing")).toContainText("0 XP");
   await expect(page.locator("#leaderboard-join")).toHaveText("Join");
 
   const name = uniqueName("Learner");
@@ -62,7 +63,7 @@ test("join with a name, see yourself on the board, rename, leave", async ({ page
   await expect(page.locator(".leaderboard-row", { hasText: renamed })).toHaveCount(0);
 });
 
-test("the counters come from the saved progress: level-7 completions and Anna's words", async ({ page }) => {
+test("the counters come from the saved progress: XP per level climbed and Anna's words", async ({ page }) => {
   const email = uniqueEmail("counts");
   await loginAs(page, email);
 
@@ -92,7 +93,8 @@ test("the counters come from the saved progress: level-7 completions and Anna's 
   expect(res.ok()).toBe(true);
 
   await openBoard(page);
-  await expect(page.locator(".leaderboard-standing")).toContainText("1 word mastered");
+  // XP: WATER mastered 9, BOOK at L7 6, HELLO recognition done 4, KAVA at L3 2.
+  await expect(page.locator(".leaderboard-standing")).toContainText("21 XP");
   await expect(page.locator(".leaderboard-standing")).toContainText("3 words with Anna");
 
   const name = uniqueName("Counter");
@@ -101,16 +103,16 @@ test("the counters come from the saved progress: level-7 completions and Anna's 
   // Both counts sit on the row, whichever ordering is selected — the Anna
   // count must never be hidden behind the second tab.
   const me = page.locator(".leaderboard-row.is-me");
-  await expect(me.locator(".leaderboard-words")).toHaveText("1");
+  await expect(me.locator(".leaderboard-xp")).toHaveText("21");
   await expect(me.locator(".leaderboard-anna")).toHaveText("3");
-  await expect(me.locator(".leaderboard-words")).toHaveClass(/is-sort/);
-  await expect(page.locator(".leaderboard-standing")).toContainText("#1 for words mastered");
+  await expect(me.locator(".leaderboard-xp")).toHaveClass(/is-sort/);
+  await expect(page.locator(".leaderboard-standing")).toContainText("#1 for XP");
   await expect(page.locator(".leaderboard-standing")).toContainText("#1 for words with Anna");
 
   await page.click('.leaderboard-tab[data-tab="anna"]');
   await expect(me.locator(".leaderboard-anna")).toHaveText("3");
   await expect(me.locator(".leaderboard-anna")).toHaveClass(/is-sort/);
-  await expect(me.locator(".leaderboard-words")).toHaveText("1");
+  await expect(me.locator(".leaderboard-xp")).toHaveText("21");
 });
 
 test("a name another learner holds is refused with a message, and the form stays usable", async ({ page, pageErrors }) => {
@@ -165,19 +167,21 @@ test("This week shows what was gained since the week's first save; All time keep
   const name = uniqueName("Weekly");
   await page.fill("#leaderboard-name", name);
   await page.click("#leaderboard-join");
-  await expect(page.locator(".leaderboard-row.is-me .leaderboard-words")).toHaveText("5");
+  // 5 words at level 7: 3 mastered (9 each) + 2 at the top (6 each) = 39,
+  // then all 5 mastered = 45.
+  await expect(page.locator(".leaderboard-row.is-me .leaderboard-xp")).toHaveText("45");
 
   await page.click('.leaderboard-period[data-period="week"]');
   await expect(page.locator('.leaderboard-period[data-period="week"]')).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator(".leaderboard-week-note")).toContainText("Monday");
-  await expect(page.locator(".leaderboard-row.is-me .leaderboard-words")).toHaveText("2");
-  await expect(page.locator(".leaderboard-me")).toContainText("This week: 2 words mastered");
+  await expect(page.locator(".leaderboard-row.is-me .leaderboard-xp")).toHaveText("6");
+  await expect(page.locator(".leaderboard-me")).toContainText("This week: 6 XP");
 
   // Back to All time: the totals, without another request.
   const requests = [];
   page.on("request", (req) => { if (req.url().includes("/functions/leaderboard")) requests.push(req.url()); });
   await page.click('.leaderboard-period[data-period="all"]');
-  await expect(page.locator(".leaderboard-row.is-me .leaderboard-words")).toHaveText("5");
+  await expect(page.locator(".leaderboard-row.is-me .leaderboard-xp")).toHaveText("45");
   expect(requests).toEqual([]);
 });
 
@@ -216,7 +220,7 @@ test("a failed weekly load keeps the switch and the all-time board reachable", a
   // Back to All time: the board is still there.
   await page.click('.leaderboard-period[data-period="all"]');
   await expect(page.locator(".leaderboard-tabs")).toBeVisible();
-  await expect(page.locator(".leaderboard-standing")).toContainText("words mastered");
+  await expect(page.locator(".leaderboard-standing")).toContainText("XP");
 
   // A network failure shows the translated message, not the browser's text.
   mode = "abort";
@@ -233,4 +237,32 @@ test("a failed weekly load keeps the switch and the all-time board reachable", a
   for (let i = pageErrors.length - 1; i >= 0; i--) {
     if (/leaderboard\?period=week|status of 503|ERR_FAILED|net::/.test(pageErrors[i])) pageErrors.splice(i, 1);
   }
+});
+
+// Dan 2026-10-25: a new account is on the board from its first sign-in,
+// under a positive adjective + animal handle — never its email — with
+// one-tap rename and one-tap leave. ("newacct" marks an account created
+// after the leaderboard_xp migration in the dev server.)
+test("a new account is on the board under a generated handle; one tap renames, one tap leaves", async ({ page }) => {
+  const email = uniqueEmail("newacct");
+  await loginAs(page, email);
+  await openBoard(page);
+  const standing = page.locator(".leaderboard-standing");
+  await expect(standing).toContainText(/as [A-Z][a-z]+ [A-Z][a-z]+/);
+  const first = (await standing.locator("strong").last().innerText()).trim();
+  expect(first.toLowerCase()).not.toContain("newacct");
+  await expect(page.locator(".leaderboard-row.is-me")).toContainText(first);
+
+  await page.click("#leaderboard-random");
+  await expect(standing.locator("strong").last()).not.toHaveText(first);
+  await expect(standing).toContainText(/as [A-Z][a-z]+ [A-Z][a-z]+/);
+
+  await page.click("#leaderboard-leave");
+  await expect(page.locator("#leaderboard-join")).toHaveText("Join");
+
+  // Leaving sticks across sign-ins: the account is never re-enrolled.
+  await page.reload();
+  await page.waitForFunction(() => !!window.__app);
+  await openBoard(page);
+  await expect(page.locator("#leaderboard-join")).toHaveText("Join");
 });
