@@ -96,11 +96,14 @@ test("a signed-out session forces the sign-in screen even with local progress", 
   await page.waitForLoadState("networkidle");
 });
 
-test("Anna stays greyed out without an active subscription", async ({ page }) => {
+test("Anna stays greyed out once her month is over, and the button offers to keep her", async ({ page }) => {
   await loginAs(page, "nosub-learner@example.com");
   const anna = page.locator("#link-tutor");
   await expect(anna).toHaveClass(/locked/);
-  await expect(anna).toHaveAttribute("title", /active subscription/);
+  await expect(anna).toHaveAttribute("title", /keep her/);
+  // Tapping it opens the Anna opt-in checkout (the stub answers with a
+  // local URL instead of Stripe's).
+  await Promise.all([page.waitForURL(/anna=checkout-stub/), anna.click()]);
 });
 
 test("Anna unlocks for a subscribed learner, who also gets the Manage subscription link", async ({ page }) => {
@@ -177,8 +180,8 @@ test("a subscriber can accept the referral terms and get a code with a copyable 
   await expect(page.locator("#referral-code")).toHaveText("ZTH-SUBSCRIB");
   await expect(page.locator("#referral-link")).toHaveValue(/\/r\/ZTH-SUBSCRIB$/);
   await expect(page.locator("#referral-active")).toHaveText("0");
-  await expect(page.locator("#referral-ytd")).toHaveText("$0.00 of $190.00");
-  // Discount-only programme: the card never promises money.
+  await expect(page.locator("#referral-months")).toHaveText("0");
+  // The reward is Anna time: the card never promises money.
   await expect(page.locator("#referral-body")).not.toContainText(/paid out|cash|get paid|payout/i);
   // Reopening shows the code straight away.
   await page.click("#referral-close");
@@ -186,8 +189,8 @@ test("a subscriber can accept the referral terms and get a code with a copyable 
   await expect(page.locator("#referral-code")).toHaveText("ZTH-SUBSCRIB");
 });
 
-test("no referral button without an active subscription", async ({ page }) => {
+test("an owner whose Anna lapsed can still refer (the reward is Anna time)", async ({ page }) => {
   await loginAs(page, "nosub-learner@example.com");
   await expect(page.locator("#link-tutor")).toHaveClass(/locked/);
-  await expect(page.locator("#link-refer")).toBeHidden();
+  await expect(page.locator("#link-refer")).toBeVisible({ timeout: 10_000 });
 });

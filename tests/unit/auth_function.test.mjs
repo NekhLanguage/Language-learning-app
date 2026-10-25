@@ -68,7 +68,9 @@ function fakeSupabase({ tokens = {}, rows = {}, admin = null } = {}) {
         // the `email_opt_in_at=is.null` guard; other PATCHes answer 204.
         if (/return=representation/.test(String(headers.Prefer || ""))) {
           const row = rows[email];
-          const guarded = u.includes("email_opt_in_at=is.null") && row && row.email_opt_in_at;
+          // Honour every `<column>=is.null` guard (emailOptIn, popup stamps).
+          const guards = [...u.matchAll(/[?&](\w+)=is\.null/g)].map((m) => m[1]);
+          const guarded = row && guards.some((col) => row[col]);
           if (!row || guarded) return new Response("[]", { status: 200 });
           Object.assign(row, JSON.parse(init.body));
           return new Response(JSON.stringify([row]), { status: 200 });
@@ -79,6 +81,7 @@ function fakeSupabase({ tokens = {}, rows = {}, admin = null } = {}) {
       return new Response(JSON.stringify(row ? [row] : []), { status: 200 });
     }
     if (u.includes("/rest/v1/site_events")) {
+      if (!init.method || init.method === "GET") return new Response("[]", { status: 200 });
       return new Response(null, { status: 201 });
     }
     if (u.includes("/api/subscribe")) {
@@ -100,6 +103,7 @@ async function withFetch(fetchImpl, fn) {
 }
 
 const ENV = { SUPABASE_PUBLISHABLE_KEY: PUB, SUPABASE_SECRET_KEY: SEC };
+const NO_ANNA = { accessUntil: null, subscribed: false, lockDate: null, popup: null, lapsed: false };
 const ALICE = { id: "u1", email: "Alice@Example.com" };
 const req = (token, body = {}, extra = {}) => ({
   httpMethod: "POST",
@@ -158,10 +162,10 @@ test("checkAccess: 401 without a session, ignores a body email, reports the subs
 
     const alice = await checkAccess.handler(req("alice", { email: "someone-else@example.com" }));
     assert.equal(alice.statusCode, 200);
-    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", tier: "paid", freeLessons: 6, subscribed: true, emailOptInAsked: true });
+    assert.deepEqual(JSON.parse(alice.body), { allowed: true, email: "alice@example.com", tier: "paid", freeLessons: 6, subscribed: true, emailOptInAsked: true, anna: { ...NO_ANNA, accessUntil: "infinity" } });
 
     const bob = await checkAccess.handler(req("bob"));
-    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", tier: "paid", freeLessons: 6, subscribed: false, emailOptInAsked: true });
+    assert.deepEqual(JSON.parse(bob.body), { allowed: true, email: "bob@example.com", tier: "paid", freeLessons: 6, subscribed: false, emailOptInAsked: true, anna: NO_ANNA });
   }));
 });
 
@@ -172,7 +176,7 @@ test("checkAccess: a verified email with no row becomes a free-tier account, onc
   const { fetchImpl, calls } = fakeSupabase({ tokens: { alice: ALICE, carol: { id: "u3", email: "carol@example.com" } }, rows });
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     const carol = await checkAccess.handler(req("carol"));
-    assert.deepEqual(JSON.parse(carol.body), { allowed: true, email: "carol@example.com", tier: "trial", freeLessons: 6, subscribed: false, emailOptInAsked: false });
+    assert.deepEqual(JSON.parse(carol.body), { allowed: true, email: "carol@example.com", tier: "trial", freeLessons: 6, subscribed: false, emailOptInAsked: false, anna: NO_ANNA });
     const insert = calls.find((c) => c.url.includes("/rest/v1/users") && c.init.method === "POST");
     assert.equal(insert.init.headers.apikey, SEC, "users writes use the secret key");
     assert.match(insert.init.headers.Prefer, /ignore-duplicates/, "an existing row can never be overwritten");
@@ -423,7 +427,7 @@ test("trialEvent: free-tier events need a trial row; Anna-trial events (pricing 
     const trialEvents = calls.filter((c) => c.url.includes("site_events")).map((c) => JSON.parse(c.init.body));
     assert.deepEqual(trialEvents.map((e) => e.event_type), ["paywall_hit"]);
 
-    for (const type of ["anna_trial_start", "anna_subscribe", "anna_lapse"]) {
+    for (const type of ["anna_trial_start", "anna_subscribe"]) {
       calls.length = 0;
       const res = await trialEvent.handler(req("alice", { type }));
       assert.equal(res.statusCode, 204, `${type}: 204`);
@@ -436,14 +440,68 @@ test("trialEvent: free-tier events need a trial row; Anna-trial events (pricing 
     assert.equal(badThreshold.statusCode, 400);
     assert.ok(!calls.some((c) => c.url.includes("site_events")), "a bad threshold never writes");
 
-    for (const threshold of ["welcome", "5d", "1d"]) {
-      calls.length = 0;
-      const ok = await trialEvent.handler(req("alice", { type: "anna_reminder_shown", threshold }));
-      assert.equal(ok.statusCode, 204);
-      const events = calls.filter((c) => c.url.includes("site_events")).map((c) => JSON.parse(c.init.body));
-      assert.equal(events.length, 1);
-      assert.equal(events[0].event_type, "anna_reminder_shown");
-      assert.deepEqual(events[0].props, { threshold }, `${threshold} rides on the event props`);
-    }
+    calls.length = 0;
+    await trialEvent.handler(req("alice", { type: "anna_lapse" }));
+    assert.ok(!calls.some((c) => c.url.includes("site_events") && c.init.method === "POST"), "a permanent window never lapses");
+  }));
+});
+
+test("annaState: popup schedule over the free month (pricing rebuild, Dan 2026-10-22)", () => {
+  const { annaState } = require("../../netlify/functions/entitlement.js");
+  const DAY = 86400000;
+  const now = Date.parse("2026-11-01T12:00:00Z");
+  const iso = (ms) => new Date(ms).toISOString();
+  const row = (daysLeft, extra = {}) => ({
+    access_tier: "paid",
+    access_until: iso(now + daysLeft * DAY),
+    anna_trial_started_at: iso(now - (30 - daysLeft) * DAY),
+    anna_trial_ends_at: iso(now + daysLeft * DAY),
+    ...extra,
+  });
+  assert.equal(annaState(row(29), now).popup, "welcome");
+  assert.equal(annaState(row(29, { anna_popup_welcome_at: iso(now) }), now).popup, null, "welcome shows once");
+  assert.equal(annaState(row(5, { anna_popup_welcome_at: iso(now) }), now).popup, "5d");
+  assert.equal(annaState(row(3), now).popup, "5d", "a 5-day popup supersedes a welcome never shown");
+  assert.equal(annaState(row(3, { anna_popup_5day_at: iso(now) }), now).popup, null);
+  assert.equal(annaState(row(0.5, { anna_popup_5day_at: iso(now) }), now).popup, "1d");
+  assert.equal(annaState(row(0.5, { anna_popup_1day_at: iso(now) }), now).popup, null, "1d is the end of the chain");
+  assert.equal(annaState(row(3, { anna_subscribed_at: iso(now - DAY) }), now).popup, null, "subscribers get no reminders");
+  assert.equal(annaState(row(3, { anna_subscribed_at: iso(now - DAY) }), now).subscribed, true);
+  const lapsed = annaState(row(-2), now);
+  assert.equal(lapsed.popup, null);
+  assert.equal(lapsed.lapsed, true);
+  assert.equal(annaState({ access_tier: "paid", access_until: "infinity", anna_trial_started_at: iso(now) }, now).popup, null, "permanent windows (Kenneth) never nag");
+  assert.equal(annaState({ access_tier: null, access_until: iso(now + 3 * DAY) }, now).popup, null, "no free month on the row → no popups");
+  assert.equal(annaState({ access_tier: "trial", access_until: null }, now).popup, null, "free tier → nothing");
+});
+
+test("trialEvent: a reminder is stamped and recorded once, only when it is the popup due", async () => {
+  const DAY = 86400000;
+  const iso = (ms) => new Date(ms).toISOString();
+  const rows = {
+    "alice@example.com": { email: "alice@example.com", access_tier: "paid", access_until: iso(Date.now() + 3 * DAY), anna_trial_started_at: iso(Date.now() - 27 * DAY) },
+    "carol@example.com": { email: "carol@example.com", access_tier: "paid", access_until: iso(Date.now() - DAY), anna_trial_started_at: iso(Date.now() - 31 * DAY) },
+  };
+  const tokens = { alice: ALICE, carol: { id: "u3", email: "carol@example.com" } };
+  const { fetchImpl, calls } = fakeSupabase({ tokens, rows });
+  const posted = () => calls.filter((c) => c.url.includes("site_events") && c.init.method === "POST").map((c) => JSON.parse(c.init.body));
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    calls.length = 0;
+    await trialEvent.handler(req("alice", { type: "anna_reminder_shown", threshold: "welcome" }));
+    assert.deepEqual(posted(), [], "welcome is not the popup due with 3 days left");
+
+    calls.length = 0;
+    await trialEvent.handler(req("alice", { type: "anna_reminder_shown", threshold: "5d" }));
+    assert.deepEqual(posted().map((e) => [e.event_type, e.props]), [["anna_reminder_shown", { threshold: "5d" }]]);
+    assert.ok(rows["alice@example.com"].anna_popup_5day_at, "5d stamped");
+    assert.ok(rows["alice@example.com"].anna_popup_welcome_at, "the superseded welcome is stamped too");
+
+    calls.length = 0;
+    await trialEvent.handler(req("alice", { type: "anna_reminder_shown", threshold: "5d" }));
+    assert.deepEqual(posted(), [], "second time: nothing");
+
+    calls.length = 0;
+    await trialEvent.handler(req("carol", { type: "anna_lapse" }));
+    assert.deepEqual(posted().map((e) => e.event_type), ["anna_lapse"], "a lapsed free month is recorded");
   }));
 });

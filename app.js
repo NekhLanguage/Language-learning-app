@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.120";
+const APP_DATA_VERSION = "1.2.121";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -865,7 +865,7 @@ const EXTERNAL_LINKS = {
   blueprint: "https://nekhslanguageblueprint.com",
   skool: "https://www.skool.com/nekhs-language-blueprint-7842",
   offer: "https://cal.com/fredrik-johansen-bw1mgs/discovery-call",
-  buyAccess: "https://buy.stripe.com/00w00i2G0ekMblW6WI9sk05"
+  buyAccess: "https://buy.stripe.com/5kQaEWbcwfoQ3Tudl69sk06"
 };
 
 // Launch-spike observability. Keep this tiny and self-contained: one global
@@ -1068,7 +1068,13 @@ const langP = Promise.all([getLangFileData(languageState.support), getLangFileDa
 // payment made elsewhere (Stripe tab, another device) unlocks lesson 4 here.
 if (email) {
   checkAccessForSession()
-    .then((verdict) => { if (verdict.allowed && verdict.tier === "trial" && verdict.emailOptInAsked === false) showEmailOptInQuestion(); })
+    .then(async (verdict) => {
+      if (verdict.allowed && verdict.tier === "trial" && verdict.emailOptInAsked === false) showEmailOptInQuestion();
+      if (verdict.allowed && verdict.tier !== "trial" && verdict.anna) {
+        await langP.catch(() => {});
+        handleAnnaState(verdict.anna);
+      }
+    })
     .catch(() => { /* cached tier stands */ });
 }
 const serverSyncP = email
@@ -1155,6 +1161,9 @@ async function checkAccessForSession() {
       // question (a first Google sign-in); undefined from an older server
       // reads as "asked", so the question is never shown by mistake.
       emailOptInAsked: data.emailOptInAsked !== false,
+      // The Anna timeline (paid rows): which sign-in popup is due, whether
+      // a subscription is live. Null from an older server.
+      anna: data.anna && typeof data.anna === "object" ? data.anna : null,
     };
   } catch (err) {
     console.warn("checkAccess failed:", err);
@@ -1341,6 +1350,96 @@ function trialEvent(type, extra = {}) {
   enqueueTrialEvent(body);
   drainTrialEventQueue().catch(() => { /* analytics never blocks a learner */ });
 }
+
+// The Anna events (pricing rebuild) go through the same retrying queue as
+// the free-tier ones, but fire for paid accounts — every purchase carries
+// the free month.
+function annaEvent(type, extra = {}) {
+  enqueueTrialEvent({ type, lang: languageState.target || "", ...extra });
+  drainTrialEventQueue().catch(() => { /* analytics never blocks a learner */ });
+}
+
+// --- Anna's free month: sign-in popups + opt-in (Dan 2026-10-22) ---------
+// Every purchase comes with a month of Anna and nothing is charged when it
+// ends. checkAccess says which popup is due (entitlement.js annaState):
+// welcome, 5 days left, 1 day left — each once per account; trialEvent
+// stamps it server-side when shown, so another device never repeats it.
+// Copy: Millie, 2026-10-22. The popup is a fixed overlay sized to the
+// screen with its buttons outside the scrolling text, so nothing in it is
+// ever below the fold (Nekh 2026-10-25).
+function annaLockDateText(iso) {
+  const d = new Date(iso);
+  if (!Number.isFinite(d.getTime())) return "";
+  try {
+    return d.toLocaleDateString(languageState.support || "en", { day: "numeric", month: "short" });
+  } catch (_) {
+    return d.toISOString().slice(0, 10);
+  }
+}
+
+function handleAnnaState(anna) {
+  const manage = document.getElementById("link-manage-subscription");
+  if (manage) manage.hidden = anna.subscribed !== true;
+  if (anna.lapsed) annaEvent("anna_lapse");
+  if (anna.popup) showAnnaPopup(anna.popup, anna);
+}
+
+const ANNA_POPUP_KEYS = {
+  welcome: { title: "annaPopupWelcomeTitle", body: "annaPopupWelcomeBody", primary: "annaPopupWelcomeBtn" },
+  "5d": { title: "annaPopup5dTitle", body: "annaPopup5dBody", primary: "annaPopup5dSubscribe", secondary: "annaPopup5dLater" },
+  "1d": { title: "annaPopup1dTitle", body: "annaPopup1dBody", primary: "annaPopup1dSubscribe", secondary: "annaPopup1dDismiss" },
+};
+
+function showAnnaPopup(threshold, anna) {
+  const keys = ANNA_POPUP_KEYS[threshold];
+  const modal = document.getElementById("anna-popup");
+  if (!keys || !modal || !modal.classList.contains("hidden")) return;
+  const vars = { date: annaLockDateText(anna.lockDate) };
+  document.getElementById("anna-popup-title").textContent = uiT(keys.title, ui(keys.title), vars);
+  document.getElementById("anna-popup-body").textContent = uiT(keys.body, ui(keys.body), vars);
+  const primary = document.getElementById("anna-popup-primary");
+  const secondary = document.getElementById("anna-popup-secondary");
+  const status = document.getElementById("anna-popup-status");
+  status.textContent = "";
+  primary.textContent = ui(keys.primary);
+  primary.disabled = false;
+  secondary.hidden = !keys.secondary;
+  if (keys.secondary) secondary.textContent = ui(keys.secondary);
+  const close = () => modal.classList.add("hidden");
+  // Welcome: "Got it" closes. 5-day / 1-day: the primary opts in, the
+  // secondary closes and is the end of that reminder (the stamp is set
+  // when the popup is shown, not on a button).
+  primary.onclick = threshold === "welcome" ? close : () => startAnnaCheckout(primary, status);
+  secondary.onclick = close;
+  modal.classList.remove("hidden");
+  primary.focus();
+  annaEvent("anna_reminder_shown", { threshold });
+}
+
+// Opens the Stripe checkout for the Anna subscription (annaCheckout.js):
+// billing starts the day the free month would have ended, or today if it
+// already has.
+async function startAnnaCheckout(button, statusEl) {
+  if (button) button.disabled = true;
+  if (statusEl) statusEl.textContent = ui("oneMoment");
+  try {
+    const res = await authFetch("/.netlify/functions/annaCheckout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.url) {
+      location.assign(data.url);
+      return;
+    }
+    if (statusEl) statusEl.textContent = ui(data.code === "subscribed" ? "annaAlreadySubscribed" : "annaCheckoutFailed");
+  } catch (_) {
+    if (statusEl) statusEl.textContent = ui("annaCheckoutFailed");
+  }
+  if (button) button.disabled = false;
+}
+window.__annaCheckout = startAnnaCheckout;
 
 function checkoutUrl() {
   const email = (localStorage.getItem("zth_email") || "").trim();
@@ -1584,7 +1683,7 @@ if (!hasAccess()) {
         <button id="gate-to-free" class="gate-link gate-switch" type="button" data-mode="free">${t("newHereStartFree", "New here? Start free")}</button>
       </section>
 
-      <button id="link-buy-access" class="gate-link gate-buy" type="button">${t("buyApp", "Get the app for $19, first month of Anna included")}</button>
+      <button id="link-buy-access" class="gate-link gate-buy" type="button">${t("buyApp", "Get the app for $19")}</button>
     </div>
   `;
     wireGate(t, kept);
@@ -6828,15 +6927,17 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
   const email = (localStorage.getItem("zth_email") || "").trim();
   if (!email) return;
   const applyPing = (data) => {
-    // Subscribers get the portal link (cancel any time, keep the app)
-    // and the referral card (Nekh 2026-09-17: active subscribers only).
+    // The portal link is for Anna subscribers; checkAccess (handleAnnaState)
+    // decides whether it shows — a free month alone has nothing to manage.
+    // The referral card is for every app owner (Dan 2026-10-22: the reward
+    // is Anna time, which helps a lapsed owner most).
     const manage = document.getElementById("link-manage-subscription");
-    if (manage) {
-      manage.href = MANAGE_SUBSCRIPTION_URL;
-      manage.hidden = data?.subscribed !== true;
-    }
+    if (manage) manage.href = MANAGE_SUBSCRIPTION_URL;
+    const paidTier = localStorage.getItem("zth_access_tier") !== "trial";
     const refer = document.getElementById("link-refer");
-    if (refer) refer.hidden = data?.subscribed !== true;
+    if (refer) refer.hidden = !(data && paidTier);
+    btn.onclick = null;
+    btn.classList.remove("can-unlock");
     if (data && data.allowed) {
       btn.classList.remove("locked");
       btn.removeAttribute("aria-disabled");
@@ -6856,8 +6957,16 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
       btn.dataset.i18nTitle = "tutorLockedTrial";
       btn.title = appText.ui("tutorLockedTrial");
     } else if (data && data.subscribed === false) {
+      // An app owner whose Anna locked: the button opts in (annaCheckout).
       btn.dataset.i18nTitle = "tutorLockedRenew";
       btn.title = appText.ui("tutorLockedRenew");
+      btn.href = "#";
+      btn.classList.add("can-unlock");
+      btn.removeAttribute("aria-disabled");
+      btn.onclick = (ev) => {
+        ev.preventDefault();
+        if (window.__annaCheckout) window.__annaCheckout(null, null);
+      };
     }
   };
   // The ping is a cold function plus two database reads, so the start
@@ -6883,12 +6992,11 @@ const MANAGE_SUBSCRIPTION_URL = "https://billing.stripe.com/p/login/bJe00ibcwdgI
 
 // --- Refer a friend (start screen, subscribers) ---------------------------
 // The card lives behind the "Refer a friend" button that the tutor ping
-// reveals for active subscribers. First open: the terms checkbox and "Get
+// reveals for app owners. First open: the terms checkbox and "Get
 // my code" (POST {accept:true} → /.netlify/functions/referral). After
-// that: the code, the referral link with a copy button, and the earnings
-// summary. Discount-only (Angus's v1 spec, 2026-09-17): earnings come off
-// the referrer's own invoice, never out as cash. The server does all the
-// arithmetic; this only renders it.
+// that: the code, the referral link with a copy button, and the free Anna
+// months earned (Dan 2026-10-22). The server does all the counting; this
+// only renders it.
 const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
 
 (function initReferral() {
@@ -6906,28 +7014,24 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
     body.innerHTML = `<p class="referral-error">${esc(text)}</p>`;
   }
 
-  // Money and percentages come from the server's config so the card never
-  // disagrees with the ledger (rate and yearly cap are settings, not
-  // constants). Discount-only: the copy never says "paid" or "cash".
-  const cfgOf = (state) => Object.assign({ rateBps: 2000, capCents: 19000, monthlyPriceCents: 1900 }, state.config || {});
-  const pct = (bps) => `${(bps / 100).toFixed(bps % 100 ? 1 : 0)}%`;
-  const perFriend = (cfg) => Math.round(cfg.monthlyPriceCents * cfg.rateBps / 10000);
-  const friendsForFree = (cfg) => Math.ceil(cfg.monthlyPriceCents / Math.max(1, perFriend(cfg)));
+  // Prices come from the server's config so the card never disagrees with
+  // the coupon (Dan 2026-10-22: friend 20% off the app once, referrer one
+  // free Anna month per friend who buys). Copy: Millie, 2026-10-22.
+  const cfgOf = (state) => Object.assign({ appPriceCents: 1900, friendPriceCents: 1520, friendPct: 20, rewardDays: 30 }, state.config || {});
 
   function renderAccept(state) {
     const cfg = cfgOf(state);
     body.innerHTML = `
       <ul class="referral-points">
-        <li>${esc(appText.t("referralPointPrice", "Your friend pays {price}/month for the app with Anna, same as you.", { price: money(cfg.monthlyPriceCents) }))}</li>
-        <li>${esc(appText.t("referralPointShare", "{pct} of every payment they make comes off your own subscription — {perFriend} a month per friend — while you both subscribe.", { pct: pct(cfg.rateBps), perFriend: money(perFriend(cfg)) }))}</li>
-        <li>${esc(appText.t("referralPointFree", "{friends} friends and your subscription costs nothing. The discount is capped at {cap} per calendar year.", { friends: friendsForFree(cfg), cap: money(cfg.capCents) }))}</li>
+        <li>${esc(appText.t("referralPointShare", "Your friends get {pct}% off the app. {friendPrice} instead of {price}, one payment.", { pct: cfg.friendPct, friendPrice: money(cfg.friendPriceCents), price: money(cfg.appPriceCents) }))}</li>
+        <li>${esc(appText.t("referralPointFree", "You get one extra free month of Anna for every friend who buys. No cap. Five friends, five months."))}</li>
       </ul>
       <label class="referral-terms">
         <input id="referral-accept" type="checkbox" />
         <span>${appText.t("referralAccept", "I accept the {terms}.", { terms: `<a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">${esc(appText.t("referralTermsLink", "referral terms"))}</a>` })}</span>
       </label>
       <button id="referral-get-code" class="primary" type="button" disabled>${esc(appText.t("referralGetCode", "Get my code"))}</button>
-      ${state.eligible ? "" : `<p class="referral-note">${esc(appText.t("referralSubscribersOnly", "Referral codes are for active subscribers."))}</p>`}
+      ${state.eligible ? "" : `<p class="referral-note">${esc(appText.t("referralOwnersOnly", "Referral codes are for people who own the app."))}</p>`}
     `;
     const accept = document.getElementById("referral-accept");
     const get = document.getElementById("referral-get-code");
@@ -6952,7 +7056,6 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
 
   function renderCode(state) {
     const st = state.stats || {};
-    const cfg = cfgOf(state);
     body.innerHTML = `
       <div class="referral-code" id="referral-code">${esc(state.code)}</div>
       <div class="referral-link-row">
@@ -6961,12 +7064,10 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
       </div>
       <p class="referral-note">${esc(appText.t("referralHowFriendUses", "Your friend opens the link, or types the code into “Referral code” at checkout."))}</p>
       <dl class="referral-stats">
-        <dt>${esc(appText.t("referralActive", "Active referrals"))}</dt><dd id="referral-active">${Number(st.activeReferrals) || 0}</dd>
-        <dt>${esc(appText.t("referralAvailable", "Earned, waiting for your next invoice"))}</dt><dd>${money(st.availableCents)}</dd>
-        <dt>${esc(appText.t("referralApplied", "Taken off your subscription so far"))}</dt><dd>${money(st.appliedCents)}</dd>
-        <dt>${esc(appText.t("referralThisYear", "This year"))}</dt><dd id="referral-ytd">${esc(appText.t("referralOfCap", "{amount} of {cap}", { amount: money(st.appliedThisYearCents), cap: money(cfg.capCents) }))}</dd>
+        <dt>${esc(appText.t("referralFriends", "Friends who bought the app"))}</dt><dd id="referral-active">${Number(st.friends) || 0}</dd>
+        <dt>${esc(appText.t("referralApplied", "Extra free Anna months earned so far"))}</dt><dd id="referral-months">${Number(st.monthsEarned) || 0}</dd>
       </dl>
-      <p class="referral-note">${esc(appText.t("referralHowItWorks", "On the 1st of each month your earnings become a discount line on your next invoice, up to the price of one month; the rest waits for a later month. Earnings are only ever a discount on your own subscription."))} <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">${esc(appText.t("referralTerms", "Terms"))}</a>.</p>
+      <p class="referral-note">${esc(appText.t("referralHowItWorks", "When a friend buys the app with your code, their $19 becomes $15.20 for the one payment. Your Anna month extends by thirty days from whenever your access currently runs out, stackable with every other friend who buys."))} <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">${esc(appText.t("referralTerms", "Terms"))}</a>.</p>
     `;
     const input = document.getElementById("referral-link");
     const copy = document.getElementById("referral-copy");

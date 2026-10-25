@@ -59,6 +59,12 @@
 //        the account becomes paid (trial_convert recorded).
 //   POST /__devserver/trialEventFailNext?n=N -> the next N trialEvent POSTs
 //        return 503, so the client's localStorage-queue retry can be tested.
+//   POST /__devserver/anna?email=…  { access_until, anna_trial_started_at, … }
+//        -> set the account's Anna timeline (users.anna_* columns), so the
+//        popup e2e can time-travel the free month. checkAccess answers with
+//        the real entitlement.js annaState; trialEvent stamps popups like
+//        the real function; annaCheckout returns a fake Stripe URL.
+//   GET  /__devserver/anna?email=…   -> that timeline, stamps included.
 
 import http from "node:http";
 import { promises as fs } from "node:fs";
@@ -109,7 +115,20 @@ const optIns = new Map();
 const mailerlite = [];
 const handToMailerlite = (email) => { if (!mailerlite.includes(email)) mailerlite.push(email); };
 // The real function's cutoff, so the harness can never disagree with it.
-const { FREE_LESSONS } = require("../netlify/functions/entitlement.js");
+const { FREE_LESSONS, annaState } = require("../netlify/functions/entitlement.js");
+// email -> Anna timeline columns (users.anna_*, access_until); empty = none.
+const annaRows = new Map();
+const POPUP_STAMPS = { welcome: ["anna_popup_welcome_at"], "5d": ["anna_popup_5day_at", "anna_popup_welcome_at"], "1d": ["anna_popup_1day_at", "anna_popup_5day_at", "anna_popup_welcome_at"] };
+// Defaults by email, like the rest of the stub: "subscribed" = an Anna
+// subscriber, "nosub" = an owner whose Anna lapsed, anyone else = a
+// permanent window (no popups), free tier = no Anna at all.
+const annaDefaults = (email) => {
+  if (isTrialEmail(email)) return { access_tier: "trial", access_until: null };
+  if (email.includes("nosub")) return { access_tier: "paid", access_until: "2026-01-01T00:00:00Z" };
+  if (email.includes("subscribed")) return { access_tier: "paid", access_until: "2099-01-01T00:00:00Z", anna_subscribed_at: "2026-01-01T00:00:00Z" };
+  return { access_tier: "paid", access_until: "infinity" };
+};
+const annaRowFor = (email) => ({ ...annaDefaults(email), ...(annaRows.get(email) || {}) });
 const isTrialEmail = (email) => !!email && email.includes("trial") && !convertedEmails.has(email);
 const maxReleasedLessons = (user) => Math.max(0, ...Object.values((user && user.runs) || {})
   .map((r) => (Array.isArray(r && r.releasedBundleIds) ? r.releasedBundleIds.length : 0)));
@@ -203,13 +222,13 @@ async function handleFunction(name, req, res, url) {
       return sendJson(res, 200, { ok: true, optedIn: !!optIns.get(email).optInAt, emailOptInAsked: true });
     }
     case "referral": {
-      // Referral code + stats for the signed-in learner. Subscribers
-      // (no "nosub"/"noaccess" in the email) may create a code with
+      // Referral code + stats for the signed-in learner. App owners (not
+      // free tier, no "noaccess" in the email) may create a code with
       // POST {accept:true}; stats are zeros in the stub.
       if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
-      const eligible = !email.includes("noaccess") && !email.includes("nosub");
-      const stats = { activeReferrals: 0, availableCents: 0, appliedCents: 0, appliedThisYearCents: 0, lifetimeCents: 0 };
-      const config = { rateBps: 2000, capCents: 19000, monthlyPriceCents: 1900 };
+      const eligible = !email.includes("noaccess") && !isTrialEmail(email);
+      const stats = { friends: 0, monthsEarned: 0, monthsPending: 0 };
+      const config = { appPriceCents: 1900, friendPriceCents: 1520, friendPct: 20, rewardDays: 30 };
       const state = () => {
         const code = referralCodes.get(email) || null;
         return {
@@ -223,7 +242,7 @@ async function handleFunction(name, req, res, url) {
       };
       if (req.method === "GET") return sendJson(res, 200, state());
       if (body.accept !== true) return sendJson(res, 400, { error: "Accept the referral terms to get a code" });
-      if (!eligible && !referralCodes.has(email)) return sendJson(res, 403, { error: "Referral codes are for active subscribers", ...state() });
+      if (!eligible && !referralCodes.has(email)) return sendJson(res, 403, { error: "Referral codes are for app owners", ...state() });
       if (!referralCodes.has(email)) {
         referralCodes.set(email, "ZTH-" + email.split("@")[0].replace(/[^a-z0-9]/gi, "").toUpperCase().slice(0, 8));
       }
@@ -286,7 +305,14 @@ async function handleFunction(name, req, res, url) {
         freeLessons: FREE_LESSONS,
         subscribed: !trial && !email.includes("noaccess") && !email.includes("nosub"),
         emailOptInAsked: !trial || optIns.has(email),
+        anna: annaState(annaRowFor(email)),
       });
+    }
+    case "annaCheckout": {
+      if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
+      if (isTrialEmail(email)) return sendJson(res, 403, { error: "Anna comes with the full app", code: "needs_app" });
+      funnelEvents.push({ event_type: "anna_checkout_opened", email, props: null });
+      return sendJson(res, 200, { url: `http://${HOST}:${PORT}/?anna=checkout-stub`, firstCharge: "today" });
     }
     case "loadUser": {
       if (!email) return sendJson(res, 401, { error: "Sign in required", code: "unauthenticated" });
@@ -305,7 +331,25 @@ async function handleFunction(name, req, res, url) {
     }
     case "trialEvent": {
       const allowedTypes = ["trial_lesson_complete", "paywall_hit", "trial_anna_intro_seen"];
-      if (!allowedTypes.includes(body.type)) return sendJson(res, 400, { error: "Unknown event" });
+      const annaTypes = ["anna_trial_start", "anna_reminder_shown", "anna_subscribe", "anna_lapse"];
+      if (!allowedTypes.includes(body.type) && !annaTypes.includes(body.type)) return sendJson(res, 400, { error: "Unknown event" });
+      if (annaTypes.includes(body.type)) {
+        // Mirrors trialEvent.js: a reminder counts only when it is the popup
+        // due, and stamps itself plus the thresholds it supersedes.
+        const row = annaRowFor(email);
+        const state = annaState(row);
+        let record = body.type !== "anna_reminder_shown" && body.type !== "anna_lapse";
+        if (body.type === "anna_reminder_shown" && state.popup === body.threshold) {
+          const stamped = { ...(annaRows.get(email) || {}) };
+          for (const col of POPUP_STAMPS[body.threshold]) if (!stamped[col]) stamped[col] = new Date().toISOString();
+          annaRows.set(email, stamped);
+          record = true;
+        }
+        if (body.type === "anna_lapse" && state.lapsed && !funnelEvents.some((e) => e.email === email && e.event_type === "anna_lapse")) record = true;
+        if (record) funnelEvents.push({ event_type: body.type, email, props: body.threshold ? { threshold: body.threshold } : null });
+        res.writeHead(204);
+        return res.end();
+      }
       // Failure injection for the retry e2e: the real function returned 503
       // during Emi's Run 28 burst and lost the row. The queue must recover.
       if (trialEventFailNext > 0) {
@@ -497,6 +541,16 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === "/__devserver/optins") {
       return sendJson(res, 200, { optIns: Object.fromEntries(optIns), mailerlite });
+    }
+    if (url.pathname === "/__devserver/anna") {
+      const who = String(url.searchParams.get("email") || "").toLowerCase();
+      if (req.method === "POST") {
+        const chunks = [];
+        for await (const c of req) chunks.push(c);
+        annaRows.set(who, JSON.parse(Buffer.concat(chunks).toString() || "{}"));
+        return sendJson(res, 200, { ok: true });
+      }
+      return sendJson(res, 200, annaRowFor(who));
     }
     if (url.pathname === "/__devserver/convert" && req.method === "POST") {
       const who = String(url.searchParams.get("email") || "").toLowerCase();

@@ -7,16 +7,20 @@
 //
 // Pricing-rebuild events (Dan 2026-10-22, PR A of the pricing rebuild):
 //
-//   anna_trial_start       {}                the free month of Anna began
-//                                             (fired client-side on the welcome
-//                                             popup; the website webhook also
-//                                             stamps the trial timestamps).
 //   anna_reminder_shown    { threshold }     a popup fired on sign-in;
 //                                             threshold is 'welcome' | '5d' | '1d'.
-//   anna_subscribe         {}                the learner opted into the Anna
-//                                             subscription from a popup CTA.
+//                                             Stamps the row's anna_popup_*_at
+//                                             (entitlement.js stampAnnaPopup)
+//                                             and is recorded only by the call
+//                                             that stamped it: once per account.
 //   anna_lapse             {}                the free month ended and the
-//                                             learner never subscribed.
+//                                             learner never subscribed. Checked
+//                                             against the row (annaState) and
+//                                             recorded once per account.
+//
+// anna_trial_start and anna_subscribe stay accepted here for older clients
+// but the app no longer sends them: the website's Stripe webhook writes both
+// where they actually happen (purchase / Anna checkout completed).
 //
 // trial_start (checkAccess) and trial_convert (the website's Stripe
 // webhook) are written server-side where they happen, never from here.
@@ -27,7 +31,7 @@
 
 const { usersKey } = require("./supabase");
 const { verifySession, fetchAccessRow } = require("./auth");
-const { FREE_LESSONS, isTrialRow, recordFunnelEvent } = require("./entitlement");
+const { FREE_LESSONS, isTrialRow, recordFunnelEvent, annaState, stampAnnaPopup, hasFunnelEvent } = require("./entitlement");
 
 const TRIAL_ONLY_EVENTS = new Set(["trial_lesson_complete", "paywall_hit", "trial_anna_intro_seen"]);
 const ANNA_EVENTS = new Set(["anna_trial_start", "anna_reminder_shown", "anna_subscribe", "anna_lapse"]);
@@ -65,6 +69,12 @@ exports.handler = async (event) => {
         return { statusCode: 400, body: JSON.stringify({ error: "Bad reminder threshold" }) };
       }
       props = { threshold };
+      if (annaState(row).popup !== threshold) return NO_CONTENT;
+      if (!(await stampAnnaPopup(session.email, threshold))) return NO_CONTENT;
+    }
+    if (type === "anna_lapse") {
+      if (!annaState(row).lapsed) return NO_CONTENT;
+      if (await hasFunnelEvent("anna_lapse", session.email)) return NO_CONTENT;
     }
     if (typeof body.lang === "string" && body.lang) {
       props = { ...(props || {}), lang: body.lang.slice(0, 10) };

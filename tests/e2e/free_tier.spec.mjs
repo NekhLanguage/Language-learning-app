@@ -113,8 +113,9 @@ test("free path: six lessons reach both interest packs, Anna screen, paywall, pa
 
   // Screen B: the paywall, one line naming the app, Anna and the price.
   await expect(page.locator("#paywall-screen.active")).toBeVisible();
-  await expect(page.locator("#paywall-buy")).toHaveText("Get the app + 1 month of Anna for $19");
-  await expect(page.locator("#paywall-screen .paywall-renewal")).toContainText("$19 a month");
+  await expect(page.locator("#paywall-buy")).toHaveText("Get the app for $19");
+  // One-time app (Dan 2026-10-22): the paywall says one payment, no subscription.
+  await expect(page.locator("#paywall-screen .paywall-renewal")).toContainText("No subscription on the app.");
   await expect(page.locator("#paywall-buy")).toHaveAttribute("href", new RegExp(`prefilled_email=${encodeURIComponent(email)}`));
 
   await expect(page.locator("#paywall-screen")).toHaveAttribute("aria-label", "Unlock lesson 7");

@@ -195,8 +195,99 @@ async function recordEmailOptIn(email, optIn) {
   return { recorded, optedIn: !!optIn };
 }
 
+// --- Anna's free month (pricing rebuild, Dan 2026-10-22) -------------------
+// Every one-time purchase starts a free month of Anna (the website webhook
+// stamps anna_trial_started_at / _ends_at and opens access_until to the
+// trial end). Nothing is charged when it ends; the app reminds the learner
+// with three sign-in popups, each shown once per account (the
+// anna_popup_*_at stamps, set by trialEvent when one is shown):
+//   welcome  first sign-in after the purchase (more than 5 days left)
+//   5d       first sign-in with 5 days or fewer left
+//   1d       first sign-in with 1 day or less left
+// A later threshold supersedes an earlier one never shown (a learner who
+// first signs in with 3 days left sees the 5-day popup, not a welcome).
+// No popups once the learner subscribes, for a permanent window, or for
+// rows that never had the free month (legacy subscribers, manual grants).
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const POPUP_COLUMNS = { welcome: "anna_popup_welcome_at", "5d": "anna_popup_5day_at", "1d": "anna_popup_1day_at" };
+// The stamps a popup sets: its own and every earlier one, so a superseded
+// popup never shows up later.
+const POPUP_STAMPS = { welcome: ["welcome"], "5d": ["5d", "welcome"], "1d": ["1d", "5d", "welcome"] };
+
+function windowEndMs(accessUntil) {
+  if (!accessUntil || accessUntil === "infinity") return NaN;
+  return Date.parse(accessUntil);
+}
+
+// What the app should know about Anna for this row at `now`:
+// { accessUntil, subscribed, lockDate, popup, lapsed }. `subscribed` is a
+// live Anna subscription (opted in, window still running); `lapsed` is a
+// free month that ran out without one (the anna_lapse event).
+function annaState(row, now = Date.now()) {
+  const empty = { accessUntil: null, subscribed: false, lockDate: null, popup: null, lapsed: false };
+  if (!row || isTrialRow(row)) return empty;
+  const accessUntil = row.access_until || null;
+  const permanent = accessUntil === "infinity";
+  const end = windowEndMs(accessUntil);
+  const live = permanent || (Number.isFinite(end) && end > now);
+  const subscribed = !!row.anna_subscribed_at && live;
+  const state = { ...empty, accessUntil, subscribed, lockDate: Number.isFinite(end) ? new Date(end).toISOString() : null };
+  if (!row.anna_trial_started_at || permanent || subscribed) return state;
+  if (!live) return { ...state, lapsed: true };
+  const daysLeft = (end - now) / DAY_MS;
+  if (daysLeft <= 1) {
+    if (!row.anna_popup_1day_at) state.popup = "1d";
+  } else if (daysLeft <= 5) {
+    if (!row.anna_popup_5day_at && !row.anna_popup_1day_at) state.popup = "5d";
+  } else if (!row.anna_popup_welcome_at && !row.anna_popup_5day_at && !row.anna_popup_1day_at) {
+    state.popup = "welcome";
+  }
+  return state;
+}
+
+// Stamp the popup `threshold` (and the earlier ones it supersedes) on the
+// learner's row. Each column is set only while NULL, so two devices racing
+// stamp it once. Returns true when THIS call stamped the threshold's own
+// column — the caller records anna_reminder_shown only then.
+async function stampAnnaPopup(email, threshold) {
+  const key = usersKey();
+  if (!key) return false;
+  const now = new Date().toISOString();
+  let own = false;
+  for (const t of POPUP_STAMPS[threshold] || []) {
+    const col = POPUP_COLUMNS[t];
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/users?email=eq.${encodeURIComponent(email)}&${col}=is.null&select=email`, {
+      method: "PATCH",
+      headers: restHeaders(key, { "Content-Type": "application/json", Prefer: "return=representation" }),
+      body: JSON.stringify({ [col]: now }),
+    });
+    if (!res.ok) throw new Error(`popup stamp ${col} returned ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    const rows = await res.json();
+    if (t === threshold) own = Array.isArray(rows) && rows.length > 0;
+  }
+  return own;
+}
+
+// Whether this learner already has a funnel row of `eventType` (the
+// once-per-account events with no stamp column of their own: anna_lapse).
+async function hasFunnelEvent(eventType, email) {
+  const key = usersKey();
+  if (!key) return true;
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/site_events?event_type=eq.${encodeURIComponent(eventType)}&session_id_hash=eq.${funnelId(email)}&select=id&limit=1`,
+    { headers: restHeaders(key) },
+  );
+  if (!res.ok) return true; // unknown → don't risk a duplicate
+  const rows = await res.json();
+  return Array.isArray(rows) && rows.length > 0;
+}
+
 module.exports = {
   FREE_LESSONS,
+  annaState,
+  stampAnnaPopup,
+  hasFunnelEvent,
   isTrialRow,
   tierOf,
   maxReleasedLessons,

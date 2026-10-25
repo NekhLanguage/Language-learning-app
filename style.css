@@ -2359,6 +2359,14 @@ a.secondary.locked {
   cursor: default;
 }
 
+/* Anna locked for an app owner whose free month ended: still greyed, but
+   tapping it opens the Anna opt-in checkout (pricing rebuild 2026-10-22). */
+a.secondary.locked.can-unlock {
+  opacity: 0.6;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 /* =========================
    Anna — AI tutor page (tutor.html)
    Standalone page on the same stylesheet; these rules sit last so they
@@ -3287,4 +3295,39 @@ a.primary.paywall-buy{
   white-space: normal;
   overflow-wrap: anywhere;
   hyphens: auto;
+}
+
+/* Anna's free month: sign-in popups (pricing rebuild, Dan 2026-10-22).
+   The overlay is .feedback-modal (fixed, centred, inset 0); the panel is
+   capped to the visible screen. Only the text may scroll inside it; the
+   title and buttons never leave the screen (Nekh 2026-10-25). */
+.anna-popup {
+  z-index: 200;
+}
+
+.anna-popup-panel {
+  gap: 0.9rem;
+}
+
+.anna-popup-title {
+  padding-right: 0;
+  flex-shrink: 0;
+}
+
+.anna-popup-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+.anna-popup-actions {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.anna-popup-actions .primary {
+  width: 100%;
 }
