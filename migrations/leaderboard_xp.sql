@@ -18,9 +18,22 @@
 --                         are stamped now, so nobody already here is put
 --                         on the board without choosing to (Dan: "existing
 --                         opted-in names stay as they are").
+--   lb_excluded           test accounts (Nekh 2026-10-25: Emi's QA logins
+--                         stay out of the high scores). Never listed, never
+--                         counted in anyone's rank; the account still sees
+--                         its own row. Set below for Emi's test.com login
+--                         and Nekh's +alias test accounts; new matching
+--                         accounts are flagged at enrolment
+--                         (leaderboardNames.js isTestAccount). Flag another
+--                         by hand: update public.users set lb_excluded = true
+--                         where email = '…';
 
 alter table public.users add column if not exists lb_xp integer not null default 0;
 alter table public.users add column if not exists lb_enroll_checked_at timestamptz;
+alter table public.users add column if not exists lb_excluded boolean not null default false;
+
+update public.users set lb_excluded = true
+where email like '%@test.com' or email like 'nekhbrazil+%@gmail.com';
 
 update public.users u set lb_xp = coalesce((
   select sum(

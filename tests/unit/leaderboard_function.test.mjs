@@ -64,7 +64,7 @@ function fakeSupabase({ rows, migrated = true, xpMigrated = true, patchStatus = 
     if (!u.includes("/rest/v1/users")) throw new Error(`unexpected fetch ${u}`);
     const query = new URL(u).searchParams;
     const method = (init.method || "GET").toUpperCase();
-    const onBoard = Object.values(rows).filter((r) => r.lb_name);
+    const onBoard = Object.values(rows).filter((r) => r.lb_name && !(query.get("lb_excluded") === "is.false" && r.lb_excluded));
 
     if (method === "PATCH") {
       const body = JSON.parse(init.body);
@@ -364,5 +364,36 @@ test("autoEnroll is a quiet no-op before migrations/leaderboard_xp.sql", async (
   await withEnv(ENV, () => withFetch(fetchImpl, async () => {
     assert.equal(await leaderboard.autoEnroll("new@example.com"), null);
     assert.equal(rows["new@example.com"].lb_name, null);
+  }));
+});
+
+test("test accounts (Emi's QA logins) never show on the board or count in anyone's rank, but see themselves", async () => {
+  const rows = sampleRows();
+  rows["emi@test.com"] = { email: "emi@test.com", lb_name: "Emi QA", lb_xp: 999, lb_anna: 999, lb_excluded: true, lb_updated_at: STAMP };
+  rows["alice@example.com"].lb_name = "Alice";
+  const { fetchImpl } = fakeSupabase({ rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const { body } = parse(await leaderboard.handler(req("GET", "good")));
+    assert.ok(!body.top.xp.some((r) => r.name === "Emi QA"), "not in the XP list");
+    assert.ok(!body.top.anna.some((r) => r.name === "Emi QA"), "not in the Anna list");
+    assert.equal(body.me.rankXp, 3, "Alice's rank ignores the test account above her");
+  }));
+  const { isTestAccount } = require("../../netlify/functions/leaderboardNames.js");
+  assert.equal(isTestAccount("emi@test.com"), true);
+  assert.equal(isTestAccount("nekhbrazil+emi0930@gmail.com"), true);
+  assert.equal(isTestAccount("nekhbrazil@gmail.com"), false, "Nekh's own account stays on the board");
+  assert.equal(isTestAccount("emil@hotmail.com"), false);
+  const saved = process.env.LEADERBOARD_EXCLUDE_PATTERNS;
+  process.env.LEADERBOARD_EXCLUDE_PATTERNS = "emi.qa*@gmail.com";
+  try { assert.equal(isTestAccount("emi.qa2@gmail.com"), true, "extra patterns from the env"); }
+  finally { if (saved === undefined) delete process.env.LEADERBOARD_EXCLUDE_PATTERNS; else process.env.LEADERBOARD_EXCLUDE_PATTERNS = saved; }
+});
+
+test("autoEnroll flags a new test account as excluded", async () => {
+  const rows = { "emi@test.com": { email: "emi@test.com", lb_name: null, lb_enroll_checked_at: null } };
+  const { fetchImpl } = fakeSupabase({ rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    await leaderboard.autoEnroll("emi@test.com");
+    assert.equal(rows["emi@test.com"].lb_excluded, true);
   }));
 });

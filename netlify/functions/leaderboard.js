@@ -30,7 +30,7 @@
 const { SUPABASE_URL, usersKey, restHeaders, missingKeyResponse } = require("./supabase");
 const { verifySession, unauthorizedResponse } = require("./auth");
 const { normalizeDisplayName, computeLeaderboardStats, isoWeekKey, MIN_NAME, MAX_NAME } = require("./leaderboardStats");
-const { randomHandle } = require("./leaderboardNames");
+const { randomHandle, isTestAccount } = require("./leaderboardNames");
 
 const TOP_N = 25;
 const ROW_SELECT = "lb_name,lb_xp,lb_anna";
@@ -48,8 +48,15 @@ function json(statusCode, body) {
 // until migrations/leaderboard.sql has run. Make that a clear 503 rather
 // than a generic failure.
 function notMigrated(text) {
-  return /lb_(name|xp|anna|updated_at|week)/.test(String(text || ""));
+  return /lb_(name|xp|anna|updated_at|week|excluded)/.test(String(text || ""));
 }
+
+// Test accounts (Emi's QA logins, Nekh's +alias test accounts) never show
+// on the board and never count in anyone's rank (Nekh 2026-10-25):
+// users.lb_excluded, set by migrations/leaderboard_xp.sql for the known
+// ones and by autoEnroll for new accounts matching TEST_ACCOUNT_PATTERNS.
+// An excluded learner still sees their own row and counts.
+const VISIBLE = "&lb_excluded=is.false";
 
 // Only rows stamped with this week count on the weekly board.
 const weekFilter = (wk) => `&lb_week=eq.${encodeURIComponent(wk)}`;
@@ -57,7 +64,7 @@ const weekFilter = (wk) => `&lb_week=eq.${encodeURIComponent(wk)}`;
 async function weekTopBy(key, column, wk) {
   const res = await rest(
     key,
-    `?select=lb_name,lb_xp_week,lb_anna_week&lb_name=not.is.null${weekFilter(wk)}&${column}=gt.0&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
+    `?select=lb_name,lb_xp_week,lb_anna_week&lb_name=not.is.null${VISIBLE}${weekFilter(wk)}&${column}=gt.0&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
   );
   if (!res.ok) {
     const text = await res.text();
@@ -117,7 +124,7 @@ function rowToEntry(row) {
 async function topBy(key, column) {
   const res = await rest(
     key,
-    `?select=${ROW_SELECT}&lb_name=not.is.null&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
+    `?select=${ROW_SELECT}&lb_name=not.is.null${VISIBLE}&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
   );
   if (!res.ok) {
     const text = await res.text();
@@ -133,7 +140,7 @@ async function topBy(key, column) {
 async function countAhead(key, column, value, extra = "") {
   const res = await rest(
     key,
-    `?select=email&lb_name=not.is.null${extra}&${column}=gt.${encodeURIComponent(value)}`,
+    `?select=email&lb_name=not.is.null${VISIBLE}${extra}&${column}=gt.${encodeURIComponent(value)}`,
     { method: "HEAD", headers: { Prefer: "count=exact" } }
   );
   if (!res.ok) throw new Error(`leaderboard count returned ${res.status}`);
@@ -220,7 +227,7 @@ async function autoEnroll(email, { key = usersKey(), rng = Math.random } = {}) {
       const res = await rest(key, `?email=eq.${encodeURIComponent(email)}&lb_enroll_checked_at=is.null&lb_name=is.null&select=lb_name`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", Prefer: "return=representation" },
-        body: JSON.stringify({ lb_name: name, lb_enroll_checked_at: new Date().toISOString() }),
+        body: JSON.stringify({ lb_name: name, lb_enroll_checked_at: new Date().toISOString(), lb_excluded: isTestAccount(email) }),
       });
       if (res.status === 409) continue;
       if (!res.ok) {

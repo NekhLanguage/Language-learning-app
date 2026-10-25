@@ -75,7 +75,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { computeLeaderboardStats, normalizeDisplayName, isoWeekKey, MIN_NAME, MAX_NAME } =
   require("../netlify/functions/leaderboardStats.js");
-const { randomHandle } = require("../netlify/functions/leaderboardNames.js");
+const { randomHandle, isTestAccount } = require("../netlify/functions/leaderboardNames.js");
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PORT = Number(process.env.PORT || 8888);
@@ -269,7 +269,8 @@ async function handleFunction(name, req, res, url) {
         const stats = week ? weeklyStats(e) : computeLeaderboardStats(userStore.get(e) || null);
         return { name: leaderboardNames.get(e) || null, xp: stats.xp, anna: stats.anna };
       };
-      const joined = () => [...leaderboardNames.keys()].map(rowFor);
+      // Test accounts (users.lb_excluded) are never listed or ranked.
+      const joined = () => [...leaderboardNames.keys()].filter((e) => !isTestAccount(e)).map(rowFor);
       const top = (col) => joined().filter((r) => !week || r[col] > 0).sort((a, b) => b[col] - a[col]).slice(0, LEADERBOARD_TOP);
       const me = () => {
         const r = rowFor(email);

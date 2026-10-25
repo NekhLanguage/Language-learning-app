@@ -31,4 +31,27 @@ function randomHandle(attempt = 0, rng = Math.random) {
   return `${base} ${10 + Math.floor(rng() * 90)}`;
 }
 
-module.exports = { ADJECTIVES, ANIMALS, randomHandle };
+// Test accounts kept off the board (Nekh 2026-10-25: Emi's QA logins must
+// not sit in the high scores). Globs on the email, "*" = any run of
+// characters. Defaults cover Emi's test.com login and Nekh's +alias test
+// accounts; LEADERBOARD_EXCLUDE_PATTERNS (comma-separated) adds more, e.g.
+// a new QA Google account. Existing rows are flagged by
+// migrations/leaderboard_xp.sql; this catches new ones at enrolment.
+const DEFAULT_TEST_PATTERNS = ["*@test.com", "nekhbrazil+*@gmail.com"];
+
+function testPatterns() {
+  const extra = String(process.env.LEADERBOARD_EXCLUDE_PATTERNS || "")
+    .split(",").map((p) => p.trim().toLowerCase()).filter(Boolean);
+  return [...DEFAULT_TEST_PATTERNS, ...extra];
+}
+
+function globToRegExp(glob) {
+  return new RegExp(`^${glob.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*")}$`);
+}
+
+function isTestAccount(email) {
+  const e = String(email || "").toLowerCase().trim();
+  return !!e && testPatterns().some((p) => globToRegExp(p).test(e));
+}
+
+module.exports = { ADJECTIVES, ANIMALS, randomHandle, isTestAccount, DEFAULT_TEST_PATTERNS };
