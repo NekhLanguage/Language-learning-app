@@ -7062,12 +7062,12 @@ const REFERRAL_TERMS_URL = "https://nekhslanguageblueprint.com/referral-terms";
         <input id="referral-link" class="referral-link" type="text" readonly value="${esc(state.link)}" aria-label="${esc(appText.t("referralLinkLabel", "Your referral link"))}" />
         <button id="referral-copy" class="primary referral-copy" type="button">${esc(appText.t("referralCopy", "Copy link"))}</button>
       </div>
-      <p class="referral-note">${esc(appText.t("referralHowFriendUses", "Your friend opens the link, or types the code into “Referral code” at checkout."))}</p>
+      <p class="referral-note">${esc(appText.t("referralHowFriendUses", "Share your link. Your friend opens it and the 20% comes off at checkout."))}</p>
       <dl class="referral-stats">
         <dt>${esc(appText.t("referralFriends", "Friends who bought the app"))}</dt><dd id="referral-active">${Number(st.friends) || 0}</dd>
         <dt>${esc(appText.t("referralApplied", "Extra free Anna months earned so far"))}</dt><dd id="referral-months">${Number(st.monthsEarned) || 0}</dd>
       </dl>
-      <p class="referral-note">${esc(appText.t("referralHowItWorks", "When a friend buys the app with your code, their $19 becomes $15.20 for the one payment. Your Anna month extends by thirty days from whenever your access currently runs out, stackable with every other friend who buys."))} <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">${esc(appText.t("referralTerms", "Terms"))}</a>.</p>
+      <p class="referral-note">${esc(appText.t("referralHowItWorks", "When a friend buys the app through your link, their $19 becomes $15.20 for the one payment. Your Anna month extends by thirty days from whenever your access currently runs out, stackable with every other friend who buys."))} <a href="${REFERRAL_TERMS_URL}" target="_blank" rel="noopener noreferrer">${esc(appText.t("referralTerms", "Terms"))}</a>.</p>
     `;
     const input = document.getElementById("referral-link");
     const copy = document.getElementById("referral-copy");
