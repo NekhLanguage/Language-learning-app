@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-27
+
+### Your leaderboard name sits at the top
+
+Your standing, your name and the buttons to rename yourself, pick a new random name or leave the board now sit at the top of the leaderboard, above the rankings. You no longer scroll past the whole list to change your name.
+
 ## 2026-10-25 (later)
 
 ### Small voice-pass fixes on the Refer button and the leaderboard subtitle

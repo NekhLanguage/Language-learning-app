@@ -80,7 +80,7 @@ function renderList(data) {
   if (!rows.length) {
     return state.period === "week"
       ? `<p class="leaderboard-empty">${esc(t("leaderboardWeekEmpty", "Nobody has added to their count this week yet — it starts over every Monday."))}</p>`
-      : `<p class="leaderboard-empty">${esc(t("leaderboardEmpty", "Nobody is on the board yet — pick a name below and be the first."))}</p>`;
+      : `<p class="leaderboard-empty">${esc(t("leaderboardEmpty", "Nobody is on the board yet. Pick a name and be the first."))}</p>`;
   }
   const sortXp = tab === "xp";
   const items = rows.map((row, i) => {
@@ -148,12 +148,12 @@ function render() {
   const period = state.period;
   const ready = state.view === "ready" && data;
   const content = ready
-    ? `<div class="leaderboard-tabs" role="tablist">
+    ? `${renderMe(data)}
+    <div class="leaderboard-tabs" role="tablist">
       <button type="button" class="leaderboard-tab" data-tab="xp" role="tab" aria-selected="${state.tab === "xp"}">${esc(t("leaderboardTabXp", "By XP"))}</button>
       <button type="button" class="leaderboard-tab" data-tab="anna" role="tab" aria-selected="${state.tab === "anna"}">${esc(t("leaderboardTabAnna", "By words with Anna"))}</button>
     </div>
-    ${renderList(data)}
-    ${renderMe(data)}`
+    ${renderList(data)}`
     : state.view === "error"
       ? `<p class="leaderboard-error">${esc(state.error)}</p>`
       : `<p class="leaderboard-loading">${esc(t("loading", "Loading…"))}</p>`;

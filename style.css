@@ -988,8 +988,8 @@ button.wrong {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--glass-brd);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--glass-brd);
 }
 
 .leaderboard-standing{
