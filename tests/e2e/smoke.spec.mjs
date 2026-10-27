@@ -194,3 +194,28 @@ test("an owner whose Anna lapsed can still refer (the reward is Anna time)", asy
   await expect(page.locator("#link-tutor")).toHaveClass(/locked/);
   await expect(page.locator("#link-refer")).toBeVisible({ timeout: 10_000 });
 });
+
+// Nekh 2026-10-25 (phone screenshot): on a phone the start screen had LOG
+// OUT on top of the title and the bug-report bubble over the buttons, with
+// one button per row. Now: nothing overlaps, no bubble here, and Anna +
+// Leaderboard (and the two community links) share a row.
+test.describe("start screen on a phone", () => {
+  test.use({ viewport: { width: 360, height: 740 } });
+  test("no overlap, no bug bubble, paired buttons", async ({ page }) => {
+    await loginAs(page, "subscribed-learner@example.com");
+    await expect(page.locator("#link-refer")).toBeVisible({ timeout: 10_000 });
+    const box = (sel) => page.locator(sel).boundingBox();
+    const logout = await box("#logout-btn");
+    const title = await box("#start-screen .title");
+    expect(logout.y + logout.height).toBeLessThanOrEqual(title.y);
+    await expect(page.locator("#feedback-btn")).toBeHidden();
+    const anna = await box("#link-tutor");
+    const board = await box("#link-leaderboard");
+    expect(Math.abs(anna.y - board.y)).toBeLessThan(2);
+    expect(anna.x + anna.width).toBeLessThanOrEqual(board.x);
+    const blueprint = await box("#link-blueprint");
+    const skool = await box("#link-skool");
+    expect(Math.abs(blueprint.y - skool.y)).toBeLessThan(2);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+});

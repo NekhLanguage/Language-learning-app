@@ -14,6 +14,10 @@ Two spots still carried an em-dash from earlier ships. The Refer-a-friend button
 
 ## 2026-10-25
 
+### A tidier start screen on your phone
+
+The start screen now pairs its buttons two to a row: Anna next to the Leaderboard, and Nekh's Language Blueprint next to the Skool community. The menu no longer runs off the bottom of the screen. The log-out button no longer sits on top of the title, and the bug-report bubble is gone from this screen; it still appears in your lessons, where you'd report a problem.
+
 ### The app is one payment of $19, and Anna is your choice
 
 The app is now a single $19 payment, not a subscription. It is yours for good, and your first month with Anna, the AI tutor, is included. Nothing is charged when that month ends. The app tells you when you sign in: once when you buy, again with 5 days left, and a last time the day before. If you want to keep Anna, tap "Keep Anna $19/mo" and your first payment lands on the day her free month would have ended, not before. If you do nothing, Anna locks and the app and your progress stay. Once she is locked, tapping her button on the start screen lets you subscribe at any time. The reminders sit fully on your screen, buttons included, on any phone.
