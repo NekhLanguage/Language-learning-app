@@ -253,6 +253,15 @@ test("a new account is on the board under a generated handle; one tap renames, o
   expect(first.toLowerCase()).not.toContain("newacct");
   await expect(page.locator(".leaderboard-row.is-me")).toContainText(first);
 
+  // Nekh 2026-10-27: the name controls sit at the top, above the ranking,
+  // in view on a phone without scrolling the panel.
+  const nameBox = await page.locator("#leaderboard-name").boundingBox();
+  const listBox = await page.locator(".leaderboard-list").boundingBox();
+  expect(nameBox.y).toBeLessThan(listBox.y);
+  await page.setViewportSize({ width: 360, height: 740 });
+  await expect(page.locator("#leaderboard-name")).toBeInViewport();
+  await expect(page.locator("#leaderboard-random")).toBeInViewport();
+
   await page.click("#leaderboard-random");
   await expect(standing.locator("strong").last()).not.toHaveText(first);
   await expect(standing).toContainText(/as [A-Z][a-z]+ [A-Z][a-z]+/);
