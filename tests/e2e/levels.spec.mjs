@@ -111,7 +111,10 @@ test("L5 matching: pairing every word with itself passes", async ({ page }) => {
   const cids = await leftButtons.evaluateAll((els) => els.map((el) => el.dataset.cid));
   for (const cid of cids) {
     await page.locator(`#left-column button[data-cid="${cid}"]`).click();
+    await expect(page.locator(`#left-column button[data-cid="${cid}"]`)).toHaveClass(/selected/);
     await page.locator(`#right-column button[data-cid="${cid}"]`).click();
+    // Paired: the wire shows it, the highlight clears.
+    await expect(page.locator("#matching-wrapper button.selected")).toHaveCount(0);
   }
   const counter = await page.evaluate(() => window.__app.run.exerciseCounter);
   await page.click("#check-matches");

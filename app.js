@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.129";
+const APP_DATA_VERSION = "1.2.130";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -2333,6 +2333,7 @@ function renderPackSelection() {
     btn.innerHTML = packLabel + betaBadge;
 
     btn.dataset.pack = packId;
+    btn.setAttribute("aria-pressed", "false");
 
     btn.onclick = () => {
 
@@ -2341,10 +2342,12 @@ function renderPackSelection() {
       if (selected.has(packId)) {
         selected.delete(packId);
         btn.classList.remove("selected");
+        btn.setAttribute("aria-pressed", "false");
       } else {
         if (selected.size >= 2) return; // limit to 2
         selected.add(packId);
         btn.classList.add("selected");
+        btn.setAttribute("aria-pressed", "true");
       }
 
       run.selectedResourcePacks = Array.from(selected);
@@ -4955,6 +4958,8 @@ selectedPairs.set(leftCid, rightCid);
 const line = drawConnection(leftBtn, rightBtn);
 connectionLines.set(leftCid, line);
 
+// The wire marks the pair; only an unpaired tap stays highlighted.
+activeSelection.classList.remove("selected");
 activeSelection = null;
 
   };

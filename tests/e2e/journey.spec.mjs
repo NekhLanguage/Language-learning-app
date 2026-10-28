@@ -34,6 +34,12 @@ test("new learner reaches the first exercise", async ({ page }) => {
   await packs.nth(1).click();
   await packs.nth(2).click(); // over the cap — must be ignored
   await expect(page.locator("#pack-buttons button.selected")).toHaveCount(2);
+  // Nekh 2026-10-28: a chosen pack is filled, not just outlined, and says so.
+  await expect(packs.nth(0)).toHaveAttribute("aria-pressed", "true");
+  await expect(packs.nth(2)).toHaveAttribute("aria-pressed", "false");
+  const bg = (loc) => loc.evaluate((el) => getComputedStyle(el).backgroundImage);
+  expect(await bg(packs.nth(0))).toContain("gradient");
+  expect(await bg(packs.nth(2))).not.toContain("gradient");
   await packs.nth(1).click(); // deselect back down to one
   await expect(page.locator("#pack-buttons button.selected")).toHaveCount(1);
 
