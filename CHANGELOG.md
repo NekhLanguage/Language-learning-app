@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-28
+
+### You can see which packs you picked
+
+A pack you choose on the Resource Packs screen now fills with colour and gets a check mark, instead of the faint outline it had before. The same goes for your answer on the "Why are you learning?" screen and the word you tap first in a matching exercise. Once you pair it, the highlight clears and the line between the two words shows the pair, so the only highlighted word is the one you are matching right now. The Start button also has a little room above it now.
+
 ## 2026-10-27
 
 ### Your leaderboard name sits at the top

@@ -545,8 +545,30 @@ button.incorrect {
   animation: wrongShake 0.3s ease;
 }
 
+/* A chosen option (pack, reason, matching tile): filled, not just outlined.
+   A white outline on a white button was near-invisible (Nekh 2026-10-28). */
 button.selected {
+  background: var(--grad-cta);
+  color: #fff;
   outline: 3px solid #ffffff;
+  outline-offset: 2px;
+  box-shadow: 0 6px 18px rgba(244, 63, 94, 0.35);
+}
+
+/* Toggle lists also get a check mark. */
+#pack-buttons button.selected::before,
+#reason-buttons button.selected::before {
+  content: "✓";
+  margin-right: 0.45em;
+}
+
+button.selected .beta-badge {
+  background: #fff;
+}
+
+/* START sat flush against the last pack. */
+#pack-screen #start-run {
+  margin-top: 1.25rem;
 }
 
 button.paired {
@@ -1773,11 +1795,6 @@ button.wrong {
 .reason-grid {
   grid-template-columns: repeat(2, minmax(200px, 280px));
   margin-bottom: 1.75rem;
-}
-
-.reason-grid button.selected {
-  background: #f3e0f5;
-  outline: 3px solid #ffffff;
 }
 
 .reason-detail {
