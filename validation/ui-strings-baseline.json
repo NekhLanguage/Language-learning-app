@@ -3,92 +3,110 @@
     "ar": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "de": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "el": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "es": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "fi": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "fr": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "it": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "ja": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "ko": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "no": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "pl": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "pt": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "ru": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "sv": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "th": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "tr": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "uk": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ],
     "zh": [
       "sessionRecapCount",
       "sessionRecapLabel",
-      "sessionRecapTitle"
+      "sessionRecapTitle",
+      "tutorLoading"
     ]
   },
   "identical": {

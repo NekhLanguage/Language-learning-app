@@ -7,6 +7,18 @@
   <meta name="theme-color" content="#4a144c" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="style.css" />
+  <!-- tutor.js's whole static import graph, fetched in parallel with it
+       instead of one level at a time. Keep in sync with its imports. -->
+  <link rel="modulepreload" href="storage.mjs" />
+  <link rel="modulepreload" href="auth.mjs" />
+  <link rel="modulepreload" href="languages.js" />
+  <link rel="modulepreload" href="ui_text.mjs" />
+  <link rel="modulepreload" href="tutor_profile.mjs" />
+  <link rel="modulepreload" href="tutor_admission.mjs" />
+  <link rel="modulepreload" href="learner_facts.mjs" />
+  <link rel="modulepreload" href="tutor_topics.mjs" />
+  <link rel="modulepreload" href="tutor_opinions.mjs" />
+  <link rel="modulepreload" href="progression.mjs" />
 </head>
 <body>
   <div class="tutor-wrap">
@@ -19,7 +31,8 @@
       </div>
     </div>
 
-    <div id="tutor-gate" hidden></div>
+    <!-- Shown until init() replaces it: the page is never blank while Anna loads. -->
+    <div id="tutor-gate"><p class="tutor-loading" data-i18n="tutorLoading">Anna is getting ready…</p></div>
 
     <div id="tutor-settings" hidden>
       <div class="tutor-settings-panel">
@@ -77,6 +90,6 @@
   </div>
 
   <script src="vendor/supabase-js-2.116.0.umd.js"></script>
-  <script type="module" src="tutor.js?v=1.2.130"></script>
+  <script type="module" src="tutor.js?v=1.2.131"></script>
 </body>
 </html>

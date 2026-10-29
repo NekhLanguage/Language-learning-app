@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" href="fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="lang/en.json" as="fetch" type="application/json" />
-  <link rel="modulepreload" href="app.js?v=1.2.130" />
+  <link rel="modulepreload" href="app.js?v=1.2.131" />
   <!-- app.js's whole static import graph. Without these the browser only
        discovers the second level (sentence_engine, storage, auth, …) after
        app.js has arrived and parsed, and language_rules.mjs one level after
@@ -98,6 +98,48 @@
 <a class="secondary" id="link-offer" target="_blank" rel="noopener noreferrer"></a>
 
       </div>
+      <script>
+        // The start screen paints ~1 s before app.js has loaded and wired
+        // it on a phone, and a tap in that window used to do nothing
+        // (Nekh 2026-10-29: "people start thinking something is wrong").
+        // Anna unlocks at once from this device's last tutor ping
+        // (app.js's initTutorEntry re-checks it), and a tap on OPEN APP or
+        // Leaderboard is held, shown on the button, and replayed by
+        // __zthWired() the moment app.js wires that button.
+        (function () {
+          try {
+            var email = (localStorage.getItem("zth_email") || "").trim();
+            var ping = JSON.parse(localStorage.getItem("zth_tutor_ping") || "null");
+            var anna = document.getElementById("link-tutor");
+            if (anna && email && ping && ping.email === email && ping.data && ping.data.allowed) {
+              anna.classList.remove("locked");
+              anna.removeAttribute("aria-disabled");
+              anna.href = "tutor.html";
+              anna.setAttribute("data-i18n", "tutorLink");
+              anna.textContent = "Anna — AI Tutor";
+            }
+          } catch (e) { /* storage blocked: app.js decides */ }
+          var pending = null;
+          window.__zthWired = function (el) {
+            el.setAttribute("data-wired", "");
+            if (pending !== el) return;
+            pending = null;
+            el.classList.remove("is-waking");
+            el.click();
+          };
+          ["open-app", "link-leaderboard"].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener("click", function (ev) {
+              if (el.hasAttribute("data-wired")) return;
+              ev.preventDefault();
+              if (pending) pending.classList.remove("is-waking");
+              pending = el;
+              el.classList.add("is-waking");
+            });
+          });
+        })();
+      </script>
     </section>
     <!-- Language hub -->
     <section id="language-screen" class="screen" aria-label="Language hub" data-i18n-aria-label="languageHubLabel">
@@ -279,6 +321,6 @@
   <!-- User + run persistence (non-module) -->
 <script src="vendor/supabase-js-2.116.0.umd.js"></script>
 <script src="user_state.js"></script>
-<script type="module" src="app.js?v=1.2.130"></script>
+<script type="module" src="app.js?v=1.2.131"></script>
 </body>
 </html>
