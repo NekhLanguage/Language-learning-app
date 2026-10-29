@@ -681,18 +681,43 @@ async function fetchJson(url) {
   return res.json();
 }
 
-// Loads the forms maps for target + support: core lang files plus the
-// pack-specific languages sections, mirroring how app.js builds GLOBAL_VOCAB.
-async function loadForms() {
-  const langs = [...new Set([state.targetLang, state.supportLang])];
-  for (const code of langs) state.forms[code] = {};
+// One fetch per vocabulary file per page (init() starts them early).
+const vocabFileCache = {};
+function vocabFile(f) {
+  if (!vocabFileCache[f]) vocabFileCache[f] = fetchJson(f).catch(() => ({}));
+  return vocabFileCache[f];
+}
 
-  const langResults = await Promise.all(langs.map((code) => langFile(code)));
-  langs.forEach((code, i) => Object.assign(state.forms[code], langResults[i].forms || {}));
+// The files a run needs before Anna can talk: the core vocabulary plus the
+// run's own resource packs. The 12 packs together are ~220 KB compressed,
+// every language; fetching them all first held the chat back on a phone
+// (Nekh 2026-10-29). A run with no pack list (older state) takes them all.
+const PACK_FILE_IDS = new Set(["pokemon", "harry_potter", "cooking", "anime", "football", "music",
+  "everyday_life", "fashion_style", "gaming", "tourism", "space_scifi", "fitness"]);
+function neededVocabFiles(run) {
+  const packs = (run?.selectedResourcePacks || []).filter((id) => PACK_FILE_IDS.has(id));
+  if (!packs.length) return VOCAB_FILES;
+  const wanted = new Set(packs.map((id) => `${id}.json`));
+  return VOCAB_FILES.filter((f) => !PACK_FILE_IDS.has(f.replace(/\.json$/, "")) || wanted.has(f));
+}
 
-  const packResults = await Promise.all(
-    VOCAB_FILES.map((f) => fetchJson(f).catch(() => ({})))
-  );
+// The rest of the packs: only the admission step's cid-collision check
+// reads them, so they load when a session's notes are requested (the
+// summary call takes 10-30 s; these arrive well inside it), never while
+// the chat is starting or in use.
+let formsLangs = [];
+let allFormsPromise = null;
+function ensureAllForms() {
+  if (!allFormsPromise) {
+    const langs = formsLangs;
+    const rest = VOCAB_FILES.filter((f) => !(f in vocabFileCache));
+    allFormsPromise = Promise.all([...Object.values(vocabFileCache), ...rest.map(vocabFile)])
+      .then((results) => mergePackForms(langs, results));
+  }
+  return allFormsPromise;
+}
+
+function mergePackForms(langs, packResults) {
   for (const data of packResults) {
     for (const code of langs) {
       const packForms = data.languages?.[code]?.forms;
@@ -704,6 +729,22 @@ async function loadForms() {
       }
     }
   }
+}
+
+// Loads the forms maps for target + support: core lang files plus the
+// pack-specific languages sections, mirroring how app.js builds GLOBAL_VOCAB.
+async function loadForms() {
+  const langs = [...new Set([state.targetLang, state.supportLang])];
+  for (const code of langs) state.forms[code] = {};
+
+  const needed = neededVocabFiles(state.run);
+  const [langResults, packResults] = await Promise.all([
+    Promise.all(langs.map((code) => langFile(code))),
+    Promise.all(needed.map(vocabFile)),
+  ]);
+  langs.forEach((code, i) => Object.assign(state.forms[code], langResults[i].forms || {}));
+  mergePackForms(langs, packResults);
+  formsLangs = langs;
 }
 
 // --- Tutor requests ---------------------------------------------------------
@@ -1027,6 +1068,7 @@ function fallbackSessionRecord(messages, when) {
 async function applySummary(summary, messages, when) {
   let admissions = [];
   if (state.vocabWriteback) {
+    await ensureAllForms();
     // Full admission pipeline: capture + repeat-sighting + promotion +
     // threshold-3 admission, capped at 10/session. Repeat sightings come
     // from the summary (newWords re-reported, recycledWords the tutor
@@ -1169,6 +1211,7 @@ async function writeSessionNotes(record, messages, when, savedLine, topicId = nu
   let summary = null;
   let failure = "";
   try {
+    ensureAllForms();
     const data = await callTutor("summary", messages, { topicId, theme, excludeRecord: record });
     summary = data.summary || null;
     if (!summary) {
@@ -1255,6 +1298,7 @@ async function retryPendingSummaries() {
     record.pending.attempts = (record.pending.attempts || 0) + 1;
     changed = true;
     try {
+      ensureAllForms();
       const data = await callTutor("summary", record.pending.messages, { topicId: record.topicId || null, theme: themeById(record.themeId), excludeRecord: record });
       if (!data.summary) throw new Error("no summary");
       Object.assign(record, sessionRecordFromSummary(data.summary, record.when));
@@ -1513,16 +1557,27 @@ function showBuildVersion() {
 
 async function init() {
   showBuildVersion();
+  let { user } = recoverUser(
+    localStorage.getItem(USER_KEY),
+    localStorage.getItem(USER_BACKUP_KEY)
+  );
+  // Opening Anna used to wait on the session, then the server copy, then
+  // the language file, then 24 vocabulary files, one after another
+  // (~5 s on a phone, Nekh 2026-10-29). Start the downloads this device's
+  // copy already implies now, so they arrive while the account loads.
+  if (localStorage.getItem("zth_email")) {
+    langFile("en");
+    if (user?.supportLanguage) langFile(user.supportLanguage);
+    if (user?.lastActiveLanguage) langFile(user.lastActiveLanguage);
+    const localRun = user?.runs?.[user?.lastActiveLanguage];
+    neededVocabFiles(localRun).forEach(vocabFile);
+  }
   // The signed-in learner comes from the Supabase session; `zth_email` is
   // only the app's shim and must agree with it, otherwise the tutor could
   // run on one account's local progress and save under another.
   const session = await getAuthSession();
   const storedEmail = (localStorage.getItem("zth_email") || "").trim().toLowerCase();
   state.email = session && session.email === storedEmail ? session.email : "";
-  let { user } = recoverUser(
-    localStorage.getItem(USER_KEY),
-    localStorage.getItem(USER_BACKUP_KEY)
-  );
   // This page used to read only the device's copy, so a topic made on the
   // computer showed up on the phone only after the APP had booted there
   // (Nekh 2026-09-26). Pull the server copy and merge before starting.
@@ -1614,8 +1669,9 @@ async function pullServerUser(local) {
 async function startWithRun(targetLang, run) {
   state.targetLang = targetLang;
   state.run = run;
-  els.gate.hidden = true;
-  els.gate.innerHTML = "";
+  // The "getting ready" line stays up until the vocabulary has loaded.
+  showGate(t("tutorLoading", "Anna is getting ready…"));
+  els.gate.firstChild.className = "tutor-loading";
 
   const targetMeta = AVAILABLE_LANGUAGES.find((l) => l.code === state.targetLang);
   const supportMeta = AVAILABLE_LANGUAGES.find((l) => l.code === state.supportLang);
@@ -1631,6 +1687,8 @@ async function startWithRun(targetLang, run) {
     showGate(t("tutorVocabLoadFailed", "Couldn't load vocabulary data. Check your connection and reload."));
     return;
   }
+  els.gate.hidden = true;
+  els.gate.innerHTML = "";
 
   // Pre-v4 device-local prefs / sessions move into the synced record.
   let needsPersist = adoptLegacyTutorState();

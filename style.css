@@ -2846,6 +2846,22 @@ a.secondary.locked.can-unlock {
   color: #fff;
 }
 
+/* A start-screen button tapped before the app finished loading: it pulses
+   until app.js wires it and replays the tap (index.html). */
+.is-waking {
+  animation: loadingPulse 1s ease-in-out infinite;
+  cursor: progress;
+}
+
+/* "Anna is getting ready…": a gentle pulse so the wait reads as progress. */
+@keyframes loadingPulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.tutor-loading {
+  animation: loadingPulse 1.4s ease-in-out infinite;
+}
+
 /* Conversation topics (beta): the picker shown before a conversation and
    Anna's yes/no topic proposals. */
 .tutor-topics {

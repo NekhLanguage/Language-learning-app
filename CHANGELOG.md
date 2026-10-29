@@ -6,6 +6,14 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-29
+
+### Less waiting before you can start
+
+Anna opens in about half the time on a phone. She used to download the vocabulary for every resource pack before she could talk; now she starts with the packs you chose and fetches the rest while she writes her notes at the end of a session. While she loads, the page says "Anna is getting ready…" instead of sitting blank.
+
+On the start screen, the Anna button is ready as soon as the screen appears, and a tap on Open app or Leaderboard while the app is still loading is no longer lost: the button pulses and opens the moment the app is ready.
+
 ## 2026-10-28
 
 ### You can see which packs you picked

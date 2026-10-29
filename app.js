@@ -96,7 +96,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.130";
+const APP_DATA_VERSION = "1.2.131";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -6740,6 +6740,8 @@ return endSession(targetLang, supportLang);
   startScreen.classList.remove("active");
   languageScreen.classList.add("active");
 });
+// A tap that landed before this point (index.html) runs now.
+window.__zthWired?.(openAppBtn);
 document.getElementById("start-run").onclick = async () => {
 
   if (!run.selectedResourcePacks || run.selectedResourcePacks.length === 0) {
@@ -6909,6 +6911,7 @@ window.__app = {
         modulePromise = null;
       });
   });
+  window.__zthWired?.(openBtn);
 })();
 
 // Last tutor ping per account on this device (see initTutorEntry; tutor.js
