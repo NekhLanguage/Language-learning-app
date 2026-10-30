@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-10-30
+
+### "Anna is getting ready…" now reads in your support language
+
+The one-line note that shows while Anna loads was in English on every non-English support language. It now reads in each of the 18 supported support languages (German, Spanish, Norwegian, Portuguese, Turkish, French, Italian, Polish, Swedish, Finnish, Greek, Ukrainian, Russian, Korean, Japanese, Chinese, Arabic, Thai), in the same warm, informal register the rest of Anna's screen uses.
+
 ## 2026-10-29
 
 ### Less waiting before you can start
