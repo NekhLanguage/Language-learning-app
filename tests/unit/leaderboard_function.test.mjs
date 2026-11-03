@@ -113,7 +113,8 @@ function fakeSupabase({ rows, migrated = true, xpMigrated = true, patchStatus = 
     const order = String(query.get("order") || "");
     const col = order.startsWith("lb_anna") ? "lb_anna" : "lb_xp";
     const limit = Number(query.get("limit") || 25);
-    const sorted = [...onBoard].sort((a, b) => b[col] - a[col]).slice(0, limit)
+    const listed = query.get("lb_xp") === "gt.0" ? onBoard.filter((r) => Number(r.lb_xp) > 0) : onBoard;
+    const sorted = [...listed].sort((a, b) => b[col] - a[col]).slice(0, limit)
       .map(({ lb_name, lb_xp, lb_anna }) => ({ lb_name, lb_xp, lb_anna }));
     return new Response(JSON.stringify(sorted), { status: 200 });
   };
@@ -151,6 +152,23 @@ test("GET: top lists by each counter (joined learners only), caller's own row wi
     assert.deepEqual(body.me, { joined: false, name: null, xp: 12, anna: 3, rankXp: null, rankAnna: null });
     assert.equal(body.limits.minName, 2);
     assert.equal(body.limits.maxName, 24);
+  }));
+});
+
+test("GET: a joined learner with no XP yet is left off the all-time lists but still gets their own row", async () => {
+  const rows = sampleRows();
+  rows["alice@example.com"] = { email: "alice@example.com", lb_name: "Brave Otter", lb_xp: 0, lb_anna: 0, lb_updated_at: STAMP };
+  const { fetchImpl, calls } = fakeSupabase({ rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const { status, body } = parse(await leaderboard.handler(req("GET", "good")));
+    assert.equal(status, 200);
+    assert.ok(calls.some((c) => c.url.includes("lb_xp=gt.0") && c.url.includes("order=lb_xp")), "the XP list asks for XP > 0");
+    assert.ok(calls.some((c) => c.url.includes("lb_xp=gt.0") && c.url.includes("order=lb_anna")), "so does the Anna list");
+    assert.deepEqual(body.top.xp.map((r) => r.name), ["Bob", "Dan", "Cara"]);
+    assert.deepEqual(body.top.anna.map((r) => r.name), ["Cara", "Bob", "Dan"]);
+    assert.equal(body.me.joined, true);
+    assert.equal(body.me.name, "Brave Otter");
+    assert.equal(body.me.xp, 0);
   }));
 });
 

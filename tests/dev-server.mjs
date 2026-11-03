@@ -271,7 +271,8 @@ async function handleFunction(name, req, res, url) {
       };
       // Test accounts (users.lb_excluded) are never listed or ranked.
       const joined = () => [...leaderboardNames.keys()].filter((e) => !isTestAccount(e)).map(rowFor);
-      const top = (col) => joined().filter((r) => !week || r[col] > 0).sort((a, b) => b[col] - a[col]).slice(0, LEADERBOARD_TOP);
+      // All time: listed from the first XP (leaderboard.js HAS_XP).
+      const top = (col) => joined().filter((r) => (week ? r[col] > 0 : r.xp > 0)).sort((a, b) => b[col] - a[col]).slice(0, LEADERBOARD_TOP);
       const me = () => {
         const r = rowFor(email);
         if (!r.name) return { joined: false, name: null, xp: r.xp, anna: r.anna, rankXp: null, rankAnna: null };

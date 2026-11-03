@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-11-03
+
+### The leaderboard lists learners once they have XP
+
+New accounts join the board under a generated name, but until their first XP they no longer sit at the bottom of the all-time ranking with a zero. You still see your own name on the board screen, with a note that you'll appear once you earn your first XP, and you can rename yourself or leave as before. The weekly board already worked this way.
+
 ## 2026-10-30
 
 ### "Anna is getting ready…" now reads in your support language
