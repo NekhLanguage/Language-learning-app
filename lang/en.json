@@ -303,6 +303,7 @@
     "closeLabel": "Close",
     "leaderboardTitle": "Leaderboard",
     "leaderboardSubtitle": "XP from every level your words climb, and words you've met with Anna. Across every language you study.",
+    "leaderboardNoXpYet": "You're {name}. You'll appear on the board once you earn your first XP.",
     "leaderboardEmpty": "Nobody is on the board yet. Pick a name and be the first.",
     "leaderboardYou": "you",
     "leaderboardColAnna": "Anna",

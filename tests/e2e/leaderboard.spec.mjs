@@ -9,6 +9,16 @@ import { test, expect, loginAs, authHeadersFor } from "./fixtures.mjs";
 const uniqueEmail = (tag) => `${tag}-${Math.random().toString(36).slice(2)}@example.com`;
 const uniqueName = (tag) => `${tag} ${Math.random().toString(36).slice(2, 7)}`;
 
+// Gives the learner 9 XP (one word mastered at L7): the all-time board
+// lists a learner from their first XP (Nekh 2026-11-03).
+async function seedXp(page, email) {
+  const res = await page.request.post("/.netlify/functions/saveUser", {
+    headers: { ...authHeadersFor(email), "Content-Type": "application/json" },
+    data: { user: { runs: { uk: { releasedBundleIds: ["b1"], progress: { WATER: { level: 7, completed: true, provenance: "pack" } } } } } },
+  });
+  expect(res.ok()).toBe(true);
+}
+
 async function openBoard(page) {
   await page.click("#link-leaderboard");
   await expect(page.locator("#leaderboard-modal")).toBeVisible();
@@ -29,11 +39,13 @@ test("nothing about the leaderboard loads at boot; the button fetches the module
 });
 
 test("join with a name, see yourself on the board, rename, leave", async ({ page }) => {
-  await loginAs(page, uniqueEmail("join"));
+  const email = uniqueEmail("join");
+  await loginAs(page, email);
+  await seedXp(page, email);
   await openBoard(page);
 
   // Not joined yet: own counts shown, join form offered.
-  await expect(page.locator(".leaderboard-standing")).toContainText("0 XP");
+  await expect(page.locator(".leaderboard-standing")).toContainText("9 XP");
   await expect(page.locator("#leaderboard-join")).toHaveText("Join");
 
   const name = uniqueName("Learner");
@@ -248,10 +260,13 @@ test("a new account is on the board under a generated handle; one tap renames, o
   await loginAs(page, email);
   await openBoard(page);
   const standing = page.locator(".leaderboard-standing");
-  await expect(standing).toContainText(/as [A-Z][a-z]+ [A-Z][a-z]+/);
-  const first = (await standing.locator("strong").last().innerText()).trim();
+  const handle = standing.locator("strong").last();
+  await expect(handle).toHaveText(/^[A-Z][a-z]+ [A-Z][a-z]+$/);
+  const first = (await handle.innerText()).trim();
   expect(first.toLowerCase()).not.toContain("newacct");
-  await expect(page.locator(".leaderboard-row.is-me")).toContainText(first);
+  // Nekh 2026-11-03: no XP yet, so not listed until the first XP.
+  await expect(standing).toContainText("once you earn your first XP");
+  await expect(page.locator(".leaderboard-row.is-me")).toHaveCount(0);
 
   // Nekh 2026-10-27: the name controls sit at the top, above the ranking,
   // in view on a phone without scrolling the panel.
@@ -263,8 +278,8 @@ test("a new account is on the board under a generated handle; one tap renames, o
   await expect(page.locator("#leaderboard-random")).toBeInViewport();
 
   await page.click("#leaderboard-random");
-  await expect(standing.locator("strong").last()).not.toHaveText(first);
-  await expect(standing).toContainText(/as [A-Z][a-z]+ [A-Z][a-z]+/);
+  await expect(handle).not.toHaveText(first);
+  await expect(handle).toHaveText(/^[A-Z][a-z]+ [A-Z][a-z]+$/);
 
   await page.click("#leaderboard-leave");
   await expect(page.locator("#leaderboard-join")).toHaveText("Join");

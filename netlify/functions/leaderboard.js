@@ -121,10 +121,16 @@ function rowToEntry(row) {
   };
 }
 
+// A learner shows on the all-time board from their first XP (Nekh
+// 2026-11-03: freshly enrolled 0-XP handles were cluttering it). They
+// still see their own standing; the weekly board already lists only
+// learners with a count this week.
+const HAS_XP = "&lb_xp=gt.0";
+
 async function topBy(key, column) {
   const res = await rest(
     key,
-    `?select=${ROW_SELECT}&lb_name=not.is.null${VISIBLE}&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
+    `?select=${ROW_SELECT}&lb_name=not.is.null${VISIBLE}${HAS_XP}&order=${column}.desc,lb_updated_at.asc.nullslast&limit=${TOP_N}`
   );
   if (!res.ok) {
     const text = await res.text();

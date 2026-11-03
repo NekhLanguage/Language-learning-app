@@ -114,13 +114,20 @@ function renderMe(data) {
   if (state.period === "week") counts = esc(t("leaderboardThisWeek", "This week: {counts}", { counts }));
   if (me.joined) {
     const rank = (n) => `#${Number(n) || "–"}`;
+    // The all-time board lists a learner from their first XP (Nekh
+    // 2026-11-03); until then they see their name, not a rank.
+    const standing = state.period === "all" && xp === 0
+      ? t("leaderboardNoXpYet", "You're {name}. You'll appear on the board once you earn your first XP.", {
+        name: `<strong>${esc(me.name)}</strong>`,
+      })
+      : t("leaderboardStandingXp", "You're {rankXp} for XP and {rankAnna} for words with Anna, as {name}", {
+        rankXp: `<strong>${rank(me.rankXp)}</strong>`,
+        rankAnna: `<strong>${rank(me.rankAnna)}</strong>`,
+        name: `<strong>${esc(me.name)}</strong>`,
+      });
     return `
       <div class="leaderboard-me">
-        <p class="leaderboard-standing">${t("leaderboardStandingXp", "You're {rankXp} for XP and {rankAnna} for words with Anna, as {name}", {
-          rankXp: `<strong>${rank(me.rankXp)}</strong>`,
-          rankAnna: `<strong>${rank(me.rankAnna)}</strong>`,
-          name: `<strong>${esc(me.name)}</strong>`,
-        })}</p>
+        <p class="leaderboard-standing">${standing}</p>
         <p class="leaderboard-note">${counts}</p>
         <form id="leaderboard-form" class="leaderboard-form">
           <input id="leaderboard-name" class="leaderboard-input" type="text" maxlength="${limits.maxName}" autocomplete="nickname" placeholder="${esc(t("leaderboardRenamePlaceholder", "Change your name"))}" aria-label="${esc(t("leaderboardRenameLabel", "New display name"))}" />
