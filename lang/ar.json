@@ -369,6 +369,7 @@
     "referralOwnersOnly": "رموز الدعوة لمن يملكون التطبيق.",
     "tutorLockedRenew": "انتهى شهر آنا المجّاني. انقر للاحتفاظ بها بـ$19 شهريًا.",
     "leaderboardSubtitle": "نقاط الخبرة من كلّ مستوى تتسلّقه كلماتك، والكلمات التي قابلتها مع آنا. عبر كلّ لغة تدرسها.",
+    "leaderboardNoXpYet": "أنت {name}. ستظهر في اللوحة بمجرد حصولك على أوّل XP.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "حسب الـXP",
     "leaderboardXp": "{n} XP",

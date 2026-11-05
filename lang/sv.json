@@ -361,6 +361,7 @@
     "referralOwnersOnly": "Värvningskoder är för personer som äger appen.",
     "tutorLockedRenew": "Annas gratismånad är slut. Tryck för att behålla henne för $19 i månaden.",
     "leaderboardSubtitle": "XP för varje nivå dina ord klättrar, och ord du har mött med Anna. Över varje språk du studerar.",
+    "leaderboardNoXpYet": "Du är {name}. Du dyker upp på listan så snart du tjänar din första XP.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "Efter XP",
     "leaderboardXp": "{n} XP",

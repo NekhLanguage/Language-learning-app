@@ -361,6 +361,7 @@
     "referralOwnersOnly": "รหัสแนะนำสำหรับผู้ที่เป็นเจ้าของแอปเท่านั้น",
     "tutorLockedRenew": "เดือนฟรีของแอนนาสิ้นสุดแล้ว แตะเพื่อเก็บเธอไว้ $19 ต่อเดือน",
     "leaderboardSubtitle": "XP จากทุกระดับที่คำของคุณไต่ขึ้น และคำที่คุณได้พบกับแอนนา. ข้ามทุกภาษาที่คุณเรียน.",
+    "leaderboardNoXpYet": "คุณคือ {name} คุณจะปรากฏบนกระดานเมื่อได้รับ XP แรก",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "ตาม XP",
     "leaderboardXp": "{n} XP",

@@ -361,6 +361,7 @@
     "referralOwnersOnly": "Suosittelukoodit ovat niille, jotka omistavat sovelluksen.",
     "tutorLockedRenew": "Annan ilmainen kuukausi on päättynyt. Napauta pitääksesi hänet hintaan $19 kuukaudessa.",
     "leaderboardSubtitle": "XP jokaiselta tasolta, jonka sanasi kiipeävät, ja sanat, jotka olet kohdannut Annan kanssa. Jokaisella kielellä, jota opiskelet.",
+    "leaderboardNoXpYet": "Olet {name}. Ilmestyt listalle heti kun ansaitset ensimmäisen XP:si.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "XP:n mukaan",
     "leaderboardXp": "{n} XP",
