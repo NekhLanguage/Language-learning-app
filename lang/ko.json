@@ -361,6 +361,7 @@
     "referralOwnersOnly": "추천 코드는 앱을 보유한 사람 전용이에요.",
     "tutorLockedRenew": "안나의 무료 한 달이 끝났어요. 월 $19로 유지하려면 탭하세요.",
     "leaderboardSubtitle": "단어가 올라간 모든 레벨에서 얻은 XP, 그리고 안나와 만난 단어들. 공부하는 모든 언어에 걸쳐서.",
+    "leaderboardNoXpYet": "{name}님이에요. 첫 XP를 얻으면 리더보드에 올라가요.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "XP순",
     "leaderboardXp": "{n} XP",

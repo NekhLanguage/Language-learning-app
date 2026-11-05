@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-11-05
+
+### "You'll appear on the board once you earn your first XP" now reads in your support language
+
+The leaderboard line new accounts see before their first XP (added last week in English) now reads in each of the 18 supported support languages (German, Spanish, Norwegian, Portuguese, Turkish, French, Italian, Polish, Swedish, Finnish, Greek, Ukrainian, Russian, Korean, Japanese, Chinese, Arabic, Thai), in the same warm, informal register the rest of the app uses.
+
 ## 2026-11-03
 
 ### The leaderboard lists learners once they have XP

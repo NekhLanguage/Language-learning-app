@@ -361,6 +361,7 @@
     "referralOwnersOnly": "Vervekoder er for folk som eier appen.",
     "tutorLockedRenew": "Annas gratismåned er over. Trykk for å beholde henne for $19 i måneden.",
     "leaderboardSubtitle": "XP for hvert nivå ordene dine klatrer, og ord du har møtt med Anna. På tvers av hvert språk du lærer.",
+    "leaderboardNoXpYet": "Du er {name}. Du dukker opp på tavla så snart du tjener din første XP.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "Etter XP",
     "leaderboardXp": "{n} XP",

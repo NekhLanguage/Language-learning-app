@@ -361,6 +361,7 @@
     "referralOwnersOnly": "Davet kodları, uygulamaya sahip olan kişilere özeldir.",
     "tutorLockedRenew": "Anna'nın ücretsiz ayı sona erdi. Onu ayda $19'a tutmak için dokun.",
     "leaderboardSubtitle": "Kelimelerinin tırmandığı her seviyeden XP ve Anna ile tanıştığın kelimeler. Çalıştığın her dilde.",
+    "leaderboardNoXpYet": "Sen {name}. İlk XP'ni kazandığında tabloda görüneceksin.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "XP'ye göre",
     "leaderboardXp": "{n} XP",

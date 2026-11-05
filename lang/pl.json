@@ -365,6 +365,7 @@
     "referralOwnersOnly": "Kody polecające są dla osób, które mają aplikację.",
     "tutorLockedRenew": "Darmowy miesiąc z Anną się skończył. Dotknij, żeby ją zatrzymać za $19 miesięcznie.",
     "leaderboardSubtitle": "XP za każdy poziom, który pokonują twoje słowa, oraz słowa poznane z Anną. We wszystkich językach, których się uczysz.",
+    "leaderboardNoXpYet": "Jesteś {name}. Pojawisz się w tabeli, gdy zdobędziesz swoje pierwsze XP.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "Według XP",
     "leaderboardXp": "{n} XP",
