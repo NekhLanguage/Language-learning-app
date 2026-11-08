@@ -6,6 +6,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 ---
 
+## 2026-11-08
+
+### Internal: first-touch signup source tagging
+
+Not learner-facing. The app now reads `?source=` (or `?utm_source=` as a fallback) off the first URL a visitor lands on, sanitises it and keeps it on the device so it survives the Google sign-in round-trip. On the first sign-in the value is written to a new `users.signup_source` column at the moment the trial row is created, and never overwritten after that. Nothing on the sign-in screen, the trial flow, Anna, or the paywall changes. Expected tag shapes: `yt-v<NN>` per video, `fb-<group>`, `expo`, `newsletter`. Rows that existed before this ship stay NULL (unknown). Dan reads the column with SQL; no dashboard, no UI.
+
 ## 2026-11-03
 
 ### The leaderboard lists learners once they have XP

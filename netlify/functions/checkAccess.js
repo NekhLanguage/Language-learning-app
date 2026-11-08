@@ -3,6 +3,18 @@ const { verifySession, unauthorizedResponse, fetchAccessRow, subscriptionActive 
 const { FREE_LESSONS, provisionTrial, tierOf, isTrialRow, consentFromMetadata, annaState } = require("./entitlement");
 const { autoEnroll } = require("./leaderboard");
 
+// Server-side mirror of client sanitiser in signup_source.mjs. The client
+// already sanitises before storing, but anything hitting /checkAccess is
+// untrusted (another caller, a tampered localStorage, an older client),
+// so we re-check. Null = unknown, which keeps the row's signup_source NULL.
+const SIGNUP_SOURCE_PATTERN = /^[a-z0-9_-]{1,40}$/;
+function sanitiseSignupSource(raw) {
+  if (raw === null || raw === undefined) return null;
+  const trimmed = String(raw).trim().toLowerCase();
+  if (!trimmed) return null;
+  return SIGNUP_SOURCE_PATTERN.test(trimmed) ? trimmed : null;
+}
+
 // Who may use the app: the signed-in learner (Supabase Auth session token in
 // the Authorization header — the request body is ignored).
 //
@@ -44,7 +56,14 @@ exports.handler = async (event) => {
 
     let row = await fetchAccessRow(session.email, key);
     if (!row) {
-      await provisionTrial(session.email, consentFromMetadata(session.metadata));
+      let signupSource = null;
+      try {
+        const body = JSON.parse(event.body || "{}");
+        signupSource = sanitiseSignupSource(body.signupSource);
+      } catch {
+        // Malformed body: treat as no source. Fail-soft.
+      }
+      await provisionTrial(session.email, consentFromMetadata(session.metadata), { signupSource });
       row = await fetchAccessRow(session.email, key);
     }
     // Leaderboard (Dan 2026-10-25): a new account joins the board under a
