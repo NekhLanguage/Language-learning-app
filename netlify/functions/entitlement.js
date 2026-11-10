@@ -163,17 +163,19 @@ async function provisionTrial(email, consent = null, opts = {}) {
   });
   let consentStored = true;
   let res = await insert(withConsent);
+  // The source column is the newest (its migration runs after the deploy),
+  // so drop it first: its 400 must not be read as missing consent columns,
+  // which would skip an opted-in learner's MailerLite hand-off.
+  if (res.status === 400 && base.signup_source) {
+    console.error("provisionTrial: signup_source column missing — run migrations/users_signup_source.sql; source not stored");
+    delete base.signup_source;
+    delete withConsent.signup_source;
+    res = await insert(withConsent);
+  }
   if (res.status === 400 && (withConsent.email_opt_in_asked_at || withConsent.email_opt_in_at)) {
     console.error("provisionTrial: email_opt_in columns missing — run migrations/email_opt_in.sql; consent not stored, no MailerLite hand-off");
     consentStored = false;
-    const retry = { ...base };
-    res = await insert(retry);
-  }
-  if (res.status === 400 && base.signup_source) {
-    console.error("provisionTrial: signup_source column missing — run migrations/users_signup_source.sql; source not stored");
-    const retry = { ...withConsent };
-    delete retry.signup_source;
-    res = await insert(retry);
+    res = await insert(base);
   }
   if (!res.ok) throw new Error(`trial insert returned ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const rows = await res.json();
