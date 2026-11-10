@@ -138,10 +138,18 @@ function consentFromMetadata(metadata) {
 // this call created it. If the consent columns are missing (migration not
 // run) the row is created without them and the hand-off is skipped — no
 // address reaches MailerLite without a stored consent.
-async function provisionTrial(email, consent = null) {
+async function provisionTrial(email, consent = null, opts = {}) {
   const key = usersKey();
   if (!key) throw new Error("no Supabase key for users");
   const base = { email, access_tier: "trial", trial_started_at: new Date().toISOString() };
+  // Signup source (Dan, Nekh-approved 2026-11-08): first-touch tag the
+  // client captured. The on_conflict=ignore-duplicates insert below means
+  // an existing row is never touched, so a value that lands here only ever
+  // ends up on a brand-new row — never overwrites a prior tag. NULL
+  // (unknown) when the client sent nothing or the column isn't there yet.
+  if (opts && typeof opts.signupSource === "string" && opts.signupSource) {
+    base.signup_source = opts.signupSource;
+  }
   const withConsent = { ...base };
   if (consent && consent.askedAt) withConsent.email_opt_in_asked_at = consent.askedAt;
   if (consent && consent.optInAt) withConsent.email_opt_in_at = consent.optInAt;
@@ -155,6 +163,15 @@ async function provisionTrial(email, consent = null) {
   });
   let consentStored = true;
   let res = await insert(withConsent);
+  // The source column is the newest (its migration runs after the deploy),
+  // so drop it first: its 400 must not be read as missing consent columns,
+  // which would skip an opted-in learner's MailerLite hand-off.
+  if (res.status === 400 && base.signup_source) {
+    console.error("provisionTrial: signup_source column missing — run migrations/users_signup_source.sql; source not stored");
+    delete base.signup_source;
+    delete withConsent.signup_source;
+    res = await insert(withConsent);
+  }
   if (res.status === 400 && (withConsent.email_opt_in_asked_at || withConsent.email_opt_in_at)) {
     console.error("provisionTrial: email_opt_in columns missing — run migrations/email_opt_in.sql; consent not stored, no MailerLite hand-off");
     consentStored = false;

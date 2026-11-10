@@ -24,6 +24,7 @@ import {
   describeAuthError,
 } from "./auth.mjs";
 import { makeTranslator, gateLanguage, rememberSupportLanguage, markGatePick, takeGatePick } from "./ui_text.mjs";
+import { captureSignupSource, readStoredSignupSource } from "./signup_source.mjs";
 import { coachingMilestoneLine, sessionCompleteLine } from "./coaching.mjs";
 import { chooseSupportSentence } from "./display.mjs";
 import { promptApiAvailable, gradeSemantically } from "./grading.mjs";
@@ -96,7 +97,7 @@ import {
 // files, notes). Browsers may serve stale cached JSON across deploys —
 // learners then see sentences from data that no longer exists. Bump this
 // together with the app.js ?v= in index.html on every release.
-const APP_DATA_VERSION = "1.2.134";
+const APP_DATA_VERSION = "1.2.135";
 const dataUrl = (file) => `${file}?v=${APP_DATA_VERSION}`;
 
 // Tutor-admitted concepts (run.tutorVocab) climb the full ladder like pack
@@ -1023,6 +1024,12 @@ const supportDropdown = document.getElementById("support-dropdown");
 // device last used means a sign-in just completed (Google return, or a
 // password sign-in on a device that held another account): confirm access,
 // adopt that account's server copy, and boot again clean.
+// Signup source tagging (Dan, Nekh-approved 2026-11-08): read `?source=`
+// (or `?utm_source=`) off the first URL and persist it on first touch so
+// the value survives the Google OAuth round-trip. The trial-row insert in
+// checkAccessForSession below reads it back. Idempotent and fail-soft.
+captureSignupSource(window.localStorage, location.search);
+
 const authSession = await getAuthSession();
 cleanAuthUrl();
 let gateNotice = null;
@@ -1145,10 +1152,15 @@ if (serverSyncP) {
 // live session) or "server" (anything else).
 async function checkAccessForSession() {
   try {
+    // Signup source tagging: pass the first-touch tag so a brand-new trial
+    // row records it. Omitted when storage holds nothing usable, which
+    // leaves the row's signup_source NULL (unknown).
+    const signupSource = readStoredSignupSource(window.localStorage);
+    const body = signupSource ? { signupSource } : {};
     const res = await authFetch("/.netlify/functions/checkAccess", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({})
+      body: JSON.stringify(body)
     });
     if (res.status === 401) return { allowed: false, reason: "unauthenticated" };
     if (!res.ok) return { allowed: false, reason: "server" };

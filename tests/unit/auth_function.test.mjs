@@ -37,7 +37,9 @@ function withEnv(vars, fn) {
 }
 
 // A fake Supabase: /auth/v1/user answers by token, /rest/v1/users by email.
-function fakeSupabase({ tokens = {}, rows = {}, admin = null } = {}) {
+// `missingColumns`: users columns a migration has not added yet; an
+// insert naming one answers 400, as PostgREST does.
+function fakeSupabase({ tokens = {}, rows = {}, admin = null, missingColumns = [] } = {}) {
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     const u = String(url);
@@ -58,6 +60,8 @@ function fakeSupabase({ tokens = {}, rows = {}, admin = null } = {}) {
       if (init.method === "POST") {
         // Free-tier provisioning: insert with ignore-duplicates.
         const body = JSON.parse(init.body);
+        const missing = Object.keys(body).find((k) => missingColumns.includes(k));
+        if (missing) return new Response(JSON.stringify({ code: "PGRST204", message: `Could not find the '${missing}' column of 'users' in the schema cache` }), { status: 400 });
         if (rows[body.email]) return new Response("[]", { status: 201 });
         rows[body.email] = { access_until: null, ...body };
         return new Response(JSON.stringify([rows[body.email]]), { status: 201 });
@@ -364,6 +368,34 @@ test("checkAccess: a first sign-in copies the form's consent onto the row and ha
     assert.equal(rows["erin@example.com"].email_opt_in_at, undefined);
     assert.equal(rows["erin@example.com"].email_opt_in_asked_at, asked);
     assert.ok(!calls.some((c) => c.url.includes("/api/subscribe")), "unticked → MailerLite never sees the address");
+  }));
+});
+
+test("checkAccess: a first sign-in stores the sanitised signup source on the new row only", async () => {
+  const tokens = { carol: { id: "u3", email: "carol@example.com" }, alice: ALICE };
+  const rows = { "alice@example.com": { email: "alice@example.com", access_until: null } };
+  const { fetchImpl } = fakeSupabase({ tokens, rows });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    await checkAccess.handler(req("carol", { signupSource: " YT-V24 " }));
+    assert.equal(rows["carol@example.com"].signup_source, "yt-v24");
+    await checkAccess.handler(req("alice", { signupSource: "expo" }));
+    assert.equal(rows["alice@example.com"].signup_source, undefined, "an existing row is never written");
+  }));
+});
+
+test("checkAccess: before the signup_source migration runs, a ticked address still reaches MailerLite", async () => {
+  // The column ships with the code and the migration runs after the
+  // deploy. Its 400 must not be read as "consent columns missing".
+  const asked = "2026-11-08T12:00:00.000Z";
+  const tokens = { ticked: { id: "u6", email: "gina@example.com", user_metadata: { email_opt_in_asked_at: asked, email_opt_in_at: asked } } };
+  const rows = {};
+  const { fetchImpl, calls } = fakeSupabase({ tokens, rows, missingColumns: ["signup_source"] });
+  await withEnv(ENV, () => withFetch(fetchImpl, async () => {
+    const res = await checkAccess.handler(req("ticked", { signupSource: "yt-v24" }));
+    assert.equal(res.statusCode, 200);
+    assert.equal(rows["gina@example.com"].email_opt_in_at, asked);
+    assert.equal(rows["gina@example.com"].signup_source, undefined);
+    assert.ok(calls.some((c) => c.url.includes("/api/subscribe")), "the opted-in address is handed to MailerLite");
   }));
 });
 
