@@ -12,6 +12,12 @@ Written on 2026-07-29. Backfilled to 2026-06-29; earlier history lives in git.
 
 Not learner-facing. The app now reads `?source=` (or `?utm_source=` as a fallback) off the first URL a visitor lands on, sanitises it and keeps it on the device so it survives the Google sign-in round-trip. On the first sign-in the value is written to a new `users.signup_source` column at the moment the trial row is created, and never overwritten after that. Nothing on the sign-in screen, the trial flow, Anna, or the paywall changes. Expected tag shapes: `yt-v<NN>` per video, `fb-<group>`, `expo`, `newsletter`. Rows that existed before this ship stay NULL (unknown). Dan reads the column with SQL; no dashboard, no UI.
 
+## 2026-11-05
+
+### "You'll appear on the board once you earn your first XP" now reads in your support language
+
+The leaderboard line new accounts see before their first XP (added last week in English) now reads in each of the 18 supported support languages (German, Spanish, Norwegian, Portuguese, Turkish, French, Italian, Polish, Swedish, Finnish, Greek, Ukrainian, Russian, Korean, Japanese, Chinese, Arabic, Thai), in the same warm, informal register the rest of the app uses.
+
 ## 2026-11-03
 
 ### The leaderboard lists learners once they have XP

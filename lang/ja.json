@@ -361,6 +361,7 @@
     "referralOwnersOnly": "紹介コードはアプリを持っている人のためのものです。",
     "tutorLockedRenew": "アンナの無料1か月は終わりました。月$19で続けるにはタップしてください。",
     "leaderboardSubtitle": "単語が上がったレベルごとのXPと、アンナと出会った単語。あなたが学ぶすべての言語で。",
+    "leaderboardNoXpYet": "{name}さんですね。最初のXPを獲得すると、リーダーボードに表示されます。",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "XP順",
     "leaderboardXp": "{n} XP",

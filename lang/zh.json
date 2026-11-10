@@ -361,6 +361,7 @@
     "referralOwnersOnly": "推荐码仅供拥有应用的人使用。",
     "tutorLockedRenew": "安娜的免费一个月已结束。点击以每月 $19 把她留下。",
     "leaderboardSubtitle": "你的词汇攀升过的每一级累积的 XP，加上你跟安娜一起认识过的词汇。横跨你学习的每一门语言。",
+    "leaderboardNoXpYet": "你是 {name}。获得第一个 XP 后，你会出现在排行榜上。",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "按 XP",
     "leaderboardXp": "{n} XP",
