@@ -363,6 +363,7 @@
     "referralOwnersOnly": "Les codes de parrainage sont pour les personnes qui possèdent l'app.",
     "tutorLockedRenew": "Le mois gratuit d'Anna est terminé. Appuie pour la garder à $19 par mois.",
     "leaderboardSubtitle": "XP pour chaque niveau que tes mots gravissent, et les mots que tu as rencontrés avec Anna. Dans toutes les langues que tu étudies.",
+    "leaderboardNoXpYet": "Tu es {name}. Tu apparaîtras sur le tableau dès que tu gagneras ton premier XP.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "Par XP",
     "leaderboardXp": "{n} XP",

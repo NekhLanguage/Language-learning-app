@@ -363,6 +363,7 @@
     "referralOwnersOnly": "Os códigos de indicação são para quem já tem o app.",
     "tutorLockedRenew": "O mês grátis da Anna acabou. Toque para ficar com ela por $19 por mês.",
     "leaderboardSubtitle": "XP por cada nível que suas palavras sobem, e as palavras que você conheceu com Anna. Em todos os idiomas que você estuda.",
+    "leaderboardNoXpYet": "Você é {name}. Vai aparecer no quadro assim que ganhar seu primeiro XP.",
     "leaderboardColXp": "XP",
     "leaderboardTabXp": "Por XP",
     "leaderboardXp": "{n} XP",
